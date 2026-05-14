@@ -1,0 +1,25 @@
+{
+  "expo": {
+    "name": "MiSendero MVP",
+    "slug": "misendero-mvp",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "plugins": [
+      "expo-sqlite",
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "MiSendero necesita tu ubicacion para registrar el trekking."
+        }
+      ]
+    ],
+    "android": {
+      "package": "com.misendero.mvp"
+    },
+    "ios": {
+      "bundleIdentifier": "com.misendero.mvp"
+    }
+  }
+}
+

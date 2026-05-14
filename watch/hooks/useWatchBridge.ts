@@ -8,11 +8,19 @@ const INITIAL_WATCH_STATE: PhoneToWatchPayload = {
   alerts: [],
   distanceMeters: 0,
   durationSec: 0,
+  errorMessage: null,
   fatigue: 'bajo',
+  gpsMode: 'checking',
   heartRate: 92,
   lastSyncMessage: 'Reloj en espera.',
+  lastUpdatedAt: Date.now(),
+  pendingCommand: null,
+  phase: 'idle',
   speedMps: 0,
   startedAt: null,
+  statusMessage: 'Esperando datos del celular.',
+  statusTone: 'neutral',
+  storageLabel: 'Sincronizacion local pendiente.',
 };
 
 export function useWatchBridge() {
@@ -60,4 +68,3 @@ export function useWatchBridge() {
     },
   };
 }
-

@@ -1,7 +1,13 @@
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { LiveSessionMetrics, SyncLogEntry } from '../../types';
-import { formatDistance, formatDuration, formatSpeed, titleCaseFatigue } from '../../utils/format';
+import {
+  formatClockTime,
+  formatDistance,
+  formatDuration,
+  formatSpeed,
+  titleCaseFatigue,
+} from '../../utils/format';
 
 interface PhoneDashboardProps {
   metrics: LiveSessionMetrics;
@@ -16,20 +22,37 @@ export function PhoneDashboard({ metrics, syncLogs }: PhoneDashboardProps) {
       style={styles.container}
     >
       <View style={styles.card}>
-        <Text style={styles.cardTitle}>Celular: motor del trekking</Text>
+        <Text style={styles.cardTitle}>Celular: estado operativo</Text>
         <Text style={styles.cardSubtitle}>
-          Recibe datos del reloj, ejecuta la IA de fatiga, calcula tracking y guarda todo en
-          SQLite.
+          El telefono procesa telemetria, calcula fatiga y confirma en todo momento si la app
+          esta lista, guardando, en alerta o con error local.
         </Text>
 
-        <View style={styles.statusBanner}>
-          <Text style={styles.statusText}>
-            {metrics.active
-              ? `Sesion activa #${metrics.sessionId ?? '-'}`
-              : 'Esperando inicio desde el smartwatch'}
-          </Text>
-          <Text style={styles.statusMeta}>GPS: {metrics.gpsMode === 'real' ? 'real' : 'simulado'}</Text>
+        <View
+          style={[
+            styles.statusBanner,
+            metrics.statusTone === 'info' && styles.statusBannerInfo,
+            metrics.statusTone === 'success' && styles.statusBannerSuccess,
+            metrics.statusTone === 'warning' && styles.statusBannerWarning,
+            metrics.statusTone === 'danger' && styles.statusBannerDanger,
+          ]}
+        >
+          <Text style={styles.statusText}>{metrics.statusMessage}</Text>
+          <Text style={styles.statusMeta}>{phaseLabel(metrics)}</Text>
         </View>
+
+        <View style={styles.metaRow}>
+          <MetaPill label={gpsLabel(metrics)} />
+          <MetaPill label={storageLabel(metrics)} />
+          <MetaPill label={`Actualizado ${formatClockTime(metrics.lastUpdatedAt)}`} />
+        </View>
+
+        {metrics.errorMessage ? (
+          <View style={styles.errorBox}>
+            <Text style={styles.errorTitle}>Atencion</Text>
+            <Text style={styles.errorText}>{metrics.errorMessage}</Text>
+          </View>
+        ) : null}
 
         <View style={styles.metricsRow}>
           <Metric label="Duracion" value={formatDuration(metrics.durationSec)} />
@@ -43,14 +66,18 @@ export function PhoneDashboard({ metrics, syncLogs }: PhoneDashboardProps) {
 
         <View style={styles.metricsRow}>
           <Metric label="HR guardadas" value={String(metrics.samplesStored)} />
-          <Metric label="SOS" value={metrics.sosRaised ? 'Activado' : 'Sin evento'} />
+          <Metric label="SOS" value={metrics.sosRaised ? 'Registrado' : 'Sin evento'} />
         </View>
       </View>
 
       <View style={styles.card}>
-        <Text style={styles.cardTitle}>Alertas al reloj</Text>
+        <Text style={styles.cardTitle}>Alertas visibles</Text>
+        <Text style={styles.cardSubtitle}>
+          El smartwatch recibe alertas de seguridad y el celular deja trazabilidad del motivo.
+        </Text>
+
         {metrics.alerts.length === 0 ? (
-          <Text style={styles.neutralText}>Sin alertas visuales en este momento.</Text>
+          <Text style={styles.neutralText}>Sin alertas activas. El sistema sigue monitoreando.</Text>
         ) : (
           <View style={styles.alertRow}>
             {metrics.alerts.map((alert) => (
@@ -63,26 +90,23 @@ export function PhoneDashboard({ metrics, syncLogs }: PhoneDashboardProps) {
       </View>
 
       <View style={styles.card}>
-        <Text style={styles.cardTitle}>Offline-first</Text>
+        <Text style={styles.cardTitle}>Persistencia offline-first</Text>
         <Text style={styles.liveSyncText}>{metrics.lastSyncMessage}</Text>
-        <Text style={styles.neutralText}>
-          La sincronizacion se simula con logs: no depende de internet ni de APIs externas.
+        <Text style={styles.neutralText}>{metrics.storageLabel}</Text>
+        <Text style={styles.footnote}>
+          Todo el flujo se mantiene local: sin APIs externas, sin dependencia de internet y con
+          sincronizacion solo simulada por logs.
         </Text>
       </View>
 
       <View style={styles.card}>
-        <Text style={styles.cardTitle}>Log de sincronizacion</Text>
+        <Text style={styles.cardTitle}>Log de eventos</Text>
         {syncLogs.length === 0 ? (
           <Text style={styles.neutralText}>Aun no hay eventos para mostrar.</Text>
         ) : (
           syncLogs.map((entry) => (
             <View key={entry.id} style={styles.logRow}>
-              <Text style={styles.logTime}>
-                {new Date(entry.timestamp).toLocaleTimeString('es-AR', {
-                  hour: '2-digit',
-                  minute: '2-digit',
-                })}
-              </Text>
+              <Text style={styles.logTime}>{formatClockTime(entry.timestamp)}</Text>
               <Text style={styles.logText}>{entry.message}</Text>
             </View>
           ))
@@ -99,6 +123,50 @@ function Metric({ label, value }: { label: string; value: string }) {
       <Text style={styles.metricValue}>{value}</Text>
     </View>
   );
+}
+
+function MetaPill({ label }: { label: string }) {
+  return (
+    <View style={styles.metaPill}>
+      <Text style={styles.metaPillText}>{label}</Text>
+    </View>
+  );
+}
+
+function phaseLabel(metrics: LiveSessionMetrics) {
+  if (metrics.phase === 'starting') {
+    return 'Estado: iniciando sesion';
+  }
+
+  if (metrics.phase === 'stopping') {
+    return 'Estado: guardando cierre';
+  }
+
+  if (metrics.active) {
+    return `Estado: sesion activa #${metrics.sessionId ?? '-'}`;
+  }
+
+  return 'Estado: listo para iniciar';
+}
+
+function gpsLabel(metrics: LiveSessionMetrics) {
+  if (!metrics.active && metrics.phase === 'idle') {
+    return 'GPS en espera';
+  }
+
+  if (metrics.gpsMode === 'checking') {
+    return 'GPS comprobando...';
+  }
+
+  return metrics.gpsMode === 'real' ? 'GPS real' : 'GPS simulado';
+}
+
+function storageLabel(metrics: LiveSessionMetrics) {
+  return metrics.pendingCommand === 'stop'
+    ? 'Persistiendo resumen...'
+    : metrics.pendingCommand === 'start'
+      ? 'Preparando guardado...'
+      : 'SQLite local';
 }
 
 const styles = StyleSheet.create({
@@ -132,6 +200,18 @@ const styles = StyleSheet.create({
     marginBottom: 14,
     padding: 14,
   },
+  statusBannerInfo: {
+    backgroundColor: '#D7E8EE',
+  },
+  statusBannerSuccess: {
+    backgroundColor: '#DDE8D8',
+  },
+  statusBannerWarning: {
+    backgroundColor: '#F0E1BF',
+  },
+  statusBannerDanger: {
+    backgroundColor: '#F0D3CB',
+  },
   statusText: {
     color: '#26352A',
     fontSize: 16,
@@ -141,6 +221,41 @@ const styles = StyleSheet.create({
   statusMeta: {
     color: '#607163',
     fontSize: 13,
+  },
+  metaRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+    marginBottom: 14,
+  },
+  metaPill: {
+    backgroundColor: '#ECE3C7',
+    borderRadius: 999,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+  },
+  metaPillText: {
+    color: '#4A5A4D',
+    fontSize: 12,
+    fontWeight: '700',
+  },
+  errorBox: {
+    backgroundColor: '#F3D2CA',
+    borderRadius: 18,
+    marginBottom: 14,
+    padding: 12,
+  },
+  errorTitle: {
+    color: '#6A2618',
+    fontSize: 13,
+    fontWeight: '800',
+    marginBottom: 4,
+    textTransform: 'uppercase',
+  },
+  errorText: {
+    color: '#7B3423',
+    fontSize: 14,
+    lineHeight: 20,
   },
   metricsRow: {
     flexDirection: 'row',
@@ -191,6 +306,12 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     marginBottom: 8,
   },
+  footnote: {
+    color: '#718075',
+    fontSize: 12,
+    lineHeight: 18,
+    marginTop: 8,
+  },
   logRow: {
     borderTopColor: '#E2D8BC',
     borderTopWidth: 1,
@@ -208,4 +329,3 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
 });
-

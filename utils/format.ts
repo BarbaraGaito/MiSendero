@@ -42,3 +42,14 @@ export function titleCaseFatigue(level: FatigueLevel) {
   return level.charAt(0).toUpperCase() + level.slice(1);
 }
 
+export function formatClockTime(timestamp: number | null) {
+  if (!timestamp) {
+    return 'Sin datos';
+  }
+
+  return new Intl.DateTimeFormat('es-AR', {
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+  }).format(new Date(timestamp));
+}

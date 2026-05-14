@@ -1,9 +1,9 @@
 node_modules/
 .expo/
+.vs/
 dist/
 web-build/
 *.log
 npm-debug.*
 yarn-debug.*
 yarn-error.*
-

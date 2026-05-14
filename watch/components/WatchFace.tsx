@@ -1,7 +1,7 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import { PhoneToWatchPayload } from '../../types';
-import { formatDuration, titleCaseFatigue } from '../../utils/format';
+import { formatClockTime, formatDuration, titleCaseFatigue } from '../../utils/format';
 
 interface WatchFaceProps {
   onSos: () => void;
@@ -18,9 +18,24 @@ export function WatchFace({ onSos, onStart, onStop, state }: WatchFaceProps) {
         ? styles.fatigueMedium
         : styles.fatigueLow;
 
+  const actionInProgress = state.pendingCommand !== null;
+
   return (
     <View style={styles.shell}>
-      <Text style={styles.kicker}>Wear OS simulado</Text>
+      <View style={styles.headerRow}>
+        <Text style={styles.kicker}>Wear OS simulado</Text>
+        <View
+          style={[
+            styles.statusBadge,
+            state.statusTone === 'info' && styles.statusBadgeInfo,
+            state.statusTone === 'success' && styles.statusBadgeSuccess,
+            state.statusTone === 'warning' && styles.statusBadgeWarning,
+            state.statusTone === 'danger' && styles.statusBadgeDanger,
+          ]}
+        >
+          <Text style={styles.statusBadgeText}>{phaseLabel(state)}</Text>
+        </View>
+      </View>
 
       <View style={styles.face}>
         <View style={styles.metricHero}>
@@ -42,6 +57,23 @@ export function WatchFace({ onSos, onStart, onStop, state }: WatchFaceProps) {
         </View>
       </View>
 
+      <View style={styles.statusPanel}>
+        <Text style={styles.statusPanelTitle}>{state.statusMessage}</Text>
+        <Text style={styles.statusPanelText}>{state.lastSyncMessage}</Text>
+        <Text style={styles.statusPanelMeta}>
+          {gpsLabel(state)} - {state.storageLabel}
+        </Text>
+        <Text style={styles.statusPanelMeta}>
+          Ultima actualizacion: {formatClockTime(state.lastUpdatedAt)}
+        </Text>
+      </View>
+
+      {state.errorMessage ? (
+        <View style={styles.errorBox}>
+          <Text style={styles.errorText}>{state.errorMessage}</Text>
+        </View>
+      ) : null}
+
       <View style={styles.alertContainer}>
         {state.alerts.length === 0 ? (
           <Text style={styles.alertIdle}>Sin alertas visuales</Text>
@@ -56,13 +88,23 @@ export function WatchFace({ onSos, onStart, onStop, state }: WatchFaceProps) {
 
       <View style={styles.buttonRow}>
         <ActionButton
-          disabled={state.active}
-          label="Iniciar"
+          disabled={state.active || actionInProgress}
+          label={state.pendingCommand === 'start' ? 'Iniciando' : 'Iniciar'}
           onPress={onStart}
           tone="primary"
         />
-        <ActionButton disabled={!state.active} label="Detener" onPress={onStop} tone="muted" />
-        <ActionButton label="SOS" onPress={onSos} tone="danger" />
+        <ActionButton
+          disabled={!state.active || actionInProgress}
+          label={state.pendingCommand === 'stop' ? 'Guardando' : 'Detener'}
+          onPress={onStop}
+          tone="muted"
+        />
+        <ActionButton
+          disabled={!state.active || state.pendingCommand === 'stop'}
+          label="SOS"
+          onPress={onSos}
+          tone="danger"
+        />
       </View>
     </View>
   );
@@ -97,6 +139,34 @@ function ActionButton({
   );
 }
 
+function phaseLabel(state: PhoneToWatchPayload) {
+  if (state.pendingCommand === 'start' || state.phase === 'starting') {
+    return 'Iniciando';
+  }
+
+  if (state.pendingCommand === 'stop' || state.phase === 'stopping') {
+    return 'Guardando';
+  }
+
+  if (state.active) {
+    return 'Activo';
+  }
+
+  return 'En espera';
+}
+
+function gpsLabel(state: PhoneToWatchPayload) {
+  if (!state.active && state.phase === 'idle') {
+    return 'GPS en espera';
+  }
+
+  if (state.gpsMode === 'checking') {
+    return 'GPS comprobando';
+  }
+
+  return state.gpsMode === 'real' ? 'GPS real' : 'GPS simulado';
+}
+
 const styles = StyleSheet.create({
   shell: {
     backgroundColor: '#101714',
@@ -105,13 +175,41 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 18,
   },
+  headerRow: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 14,
+  },
   kicker: {
     color: '#AFC7A1',
     fontSize: 13,
     fontWeight: '700',
     letterSpacing: 1.1,
-    marginBottom: 14,
     textTransform: 'uppercase',
+  },
+  statusBadge: {
+    backgroundColor: '#2A3732',
+    borderRadius: 999,
+    paddingHorizontal: 12,
+    paddingVertical: 7,
+  },
+  statusBadgeInfo: {
+    backgroundColor: '#21414D',
+  },
+  statusBadgeSuccess: {
+    backgroundColor: '#294032',
+  },
+  statusBadgeWarning: {
+    backgroundColor: '#624C20',
+  },
+  statusBadgeDanger: {
+    backgroundColor: '#6B3226',
+  },
+  statusBadgeText: {
+    color: '#F8F5E8',
+    fontSize: 12,
+    fontWeight: '800',
   },
   face: {
     alignItems: 'center',
@@ -176,6 +274,40 @@ const styles = StyleSheet.create({
   fatigueHigh: {
     backgroundColor: '#743421',
   },
+  statusPanel: {
+    backgroundColor: '#1A2520',
+    borderRadius: 20,
+    marginTop: 14,
+    padding: 14,
+  },
+  statusPanelTitle: {
+    color: '#FFF8E8',
+    fontSize: 14,
+    fontWeight: '800',
+    marginBottom: 4,
+  },
+  statusPanelText: {
+    color: '#D3DDCB',
+    fontSize: 13,
+    lineHeight: 18,
+    marginBottom: 6,
+  },
+  statusPanelMeta: {
+    color: '#9FB2A3',
+    fontSize: 12,
+    lineHeight: 17,
+  },
+  errorBox: {
+    backgroundColor: '#542B24',
+    borderRadius: 18,
+    marginTop: 12,
+    padding: 12,
+  },
+  errorText: {
+    color: '#FFD8CF',
+    fontSize: 13,
+    lineHeight: 18,
+  },
   alertContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -230,4 +362,3 @@ const styles = StyleSheet.create({
     color: '#E6E7DE',
   },
 });
-

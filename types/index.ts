@@ -4,6 +4,12 @@ export type WatchAlert = 'Fatiga alta' | 'Detenido mucho tiempo';
 
 export type WatchCommand = 'start' | 'stop' | 'sos';
 
+export type SessionPhase = 'idle' | 'starting' | 'active' | 'stopping';
+
+export type StatusTone = 'neutral' | 'info' | 'success' | 'warning' | 'danger';
+
+export type GpsMode = 'checking' | 'real' | 'simulated';
+
 export interface FatigueInput {
   durationSec: number;
   heartRate: number;
@@ -26,11 +32,19 @@ export interface PhoneToWatchPayload {
   alerts: WatchAlert[];
   distanceMeters: number;
   durationSec: number;
+  errorMessage: string | null;
   fatigue: FatigueLevel;
+  gpsMode: GpsMode;
   heartRate: number;
   lastSyncMessage: string;
+  lastUpdatedAt: number | null;
+  pendingCommand: WatchCommand | null;
+  phase: SessionPhase;
   speedMps: number;
   startedAt: number | null;
+  statusMessage: string;
+  statusTone: StatusTone;
+  storageLabel: string;
 }
 
 export interface LocationSnapshot {
@@ -71,15 +85,22 @@ export interface LiveSessionMetrics {
   alerts: WatchAlert[];
   distanceMeters: number;
   durationSec: number;
+  errorMessage: string | null;
   fatigue: FatigueLevel;
-  gpsMode: 'real' | 'simulated';
+  gpsMode: GpsMode;
   heartRate: number;
   lastSyncMessage: string;
+  lastUpdatedAt: number | null;
+  pendingCommand: WatchCommand | null;
+  phase: SessionPhase;
   samplesStored: number;
   sessionId: number | null;
   sosRaised: boolean;
   speedMps: number;
   startedAt: number | null;
+  statusMessage: string;
+  statusTone: StatusTone;
+  storageLabel: string;
 }
 
 export interface SyncLogEntry {
@@ -87,4 +108,3 @@ export interface SyncLogEntry {
   message: string;
   timestamp: number;
 }
-

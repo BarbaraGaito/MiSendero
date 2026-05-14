@@ -42,7 +42,7 @@ MVP de una app de trekking con enfoque **wearable-first** y **offline-first**:
 ## Modulos
 
 - `watch/components/WatchFace.tsx`
-  Simula la UI del smartwatch con HR, tiempo, fatiga, alertas y botones `Iniciar`, `Detener`, `SOS`.
+  Simula la UI del smartwatch con HR, tiempo, fatiga, alertas, estados visibles y botones `Iniciar`, `Detener`, `SOS`.
 
 - `watch/hooks/useWatchBridge.ts`
   Escucha la respuesta del celular y actualiza el estado visible del reloj.
@@ -51,7 +51,7 @@ MVP de una app de trekking con enfoque **wearable-first** y **offline-first**:
   Orquesta todo el flujo: inicio de sesion, recepcion de HR, calculo de fatiga, tracking, guardado en SQLite y cierre de sesion.
 
 - `mobile/components/PhoneDashboard.tsx`
-  Vista principal del celular con metricas live, modo offline y logs de sincronizacion simulada.
+  Vista principal del celular con metricas live, modo offline, estados operativos claros, errores locales y logs de sincronizacion simulada.
 
 - `mobile/components/HistoryList.tsx`
   Historial de sesiones con duracion, distancia y fatiga promedio.
@@ -84,6 +84,13 @@ MVP de una app de trekking con enfoque **wearable-first** y **offline-first**:
 3. El celular recibe HR, calcula fatiga, actualiza tracking y persiste muestras en SQLite.
 4. El celular responde al reloj con el estado de fatiga y alertas visuales.
 5. Al detener la sesion, se guarda el resumen y aparece en historial.
+
+## Calidad y UX
+
+- Estados explicitos para `cargando`, `listo`, `iniciando`, `activo`, `guardando` y `error`.
+- Alertas y errores visibles tanto en reloj como en celular.
+- Botones bloqueados durante transiciones para evitar acciones duplicadas.
+- Persistencia local informada en pantalla para que el usuario siempre sepa si los datos quedaron guardados.
 
 ## Arranque
 

@@ -2,7 +2,7 @@
   "name": "misendero-mvp",
   "version": "0.1.0",
   "private": true,
-  "main": "node_modules/expo/AppEntry.js",
+  "main": "index.js",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
@@ -21,4 +21,3 @@
     "typescript": "~5.9.0"
   }
 }
-

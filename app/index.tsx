@@ -1,12 +1,6 @@
-import React, { useEffect } from "react";
-import HomeScreen from "../mobile/screens/HomeScreen";
-import { initDB } from "../database/database";
+import React from "react";
+import SplashScreen01 from "../mobile/screens/initial-flow/SplashScreen01";
 
 export default function App() {
-
-  useEffect(() => {
-    initDB();
-  }, []);
-
-  return <HomeScreen />;
+  return <SplashScreen01 />;
 }

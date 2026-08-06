@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { useFocusEffect } from "expo-router";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { getSessions } from "../../database/sessionsRepository";
 import { SessionRow } from "../../types";
 
@@ -36,7 +37,8 @@ export default function HistoryScreen() {
   );
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <SafeAreaView edges={["top", "bottom"]} style={styles.safeArea}>
+      <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.title}>Historial</Text>
       <Text style={styles.subtitle}>Sesiones guardadas localmente en el dispositivo</Text>
 
@@ -59,7 +61,8 @@ export default function HistoryScreen() {
           </View>
         ))
       )}
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
@@ -71,10 +74,15 @@ const HistoryMetric = ({ label, value }: { label: string; value: string }) => (
 );
 
 const styles = StyleSheet.create({
+  safeArea: {
+    backgroundColor: "#0B110E",
+    flex: 1,
+  },
   container: {
     backgroundColor: "#0B110E",
     flexGrow: 1,
     padding: 20,
+    paddingBottom: 28,
     gap: 14,
   },
   title: { color: "#F6FFF8", fontSize: 28, fontWeight: "800" },

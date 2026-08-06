@@ -22,3 +22,45 @@ export interface SessionRow {
   distance: number;
   avg_fatigue: FatigueLevel;
 }
+
+export interface Trail {
+  id: number;
+  name: string;
+  location: string;
+  difficulty: string;
+  duration: string | null;
+  distance_km: number | null;
+  description: string | null;
+  image_url: string | null;
+  created_at: string;
+}
+
+export interface Profile {
+  user: {
+    id: number;
+    name: string;
+    email: string;
+    created_at?: string;
+  } | null;
+  stats: {
+    completed_routes: number;
+    total_distance_km: number;
+  };
+}
+
+export interface AuthUser {
+  id: number;
+  name: string;
+  email: string;
+  created_at?: string;
+}
+
+export interface AuthResponse {
+  token: string;
+  user: AuthUser;
+}
+
+export interface AuthSession {
+  token: string;
+  user: AuthUser;
+}

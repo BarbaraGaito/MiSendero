@@ -273,12 +273,16 @@ export function TrailCard({
   location,
   image,
   difficulty,
+  distance = "4,2 km",
+  duration = "1h 35m",
   onPress,
 }: {
   title: string;
   location: string;
   image: string;
   difficulty: string;
+  distance?: string;
+  duration?: string;
   onPress?: () => void;
 }) {
   return (
@@ -292,8 +296,8 @@ export function TrailCard({
         <Text style={styles.cardTitle}>{title}</Text>
         <Text style={styles.cardMuted}>{location}</Text>
         <View style={styles.statRow}>
-          <StatPill icon="walk-outline" label="4,2 km" />
-          <StatPill icon="time-outline" label="1h 35m" />
+          <StatPill icon="walk-outline" label={distance} />
+          <StatPill icon="time-outline" label={duration} />
           <StatPill icon="star-outline" label="4.8" />
         </View>
       </View>

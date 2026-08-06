@@ -1,55 +1,112 @@
-import { Link } from "expo-router";
-import React from "react";
+import { router } from "expo-router";
+import React, { useEffect, useState } from "react";
 import { ImageBackground, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
-import { AppScreen, Card, ScreenTitle, colors } from "../components/MiSenderoUI";
-
-const routeMapPreview = require("../../assets/route-map-preview.png");
+import { AppScreen, Card, ScreenTitle, colors, trailImages } from "../components/MiSenderoUI";
+import { getTrails } from "../../services/api";
+import { Trail } from "../../types";
 
 export default function ExploreRoutesScreen() {
+  const [trails, setTrails] = useState<Trail[]>([]);
+  const [activeFilter, setActiveFilter] = useState("Todas");
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const filters = ["Todas", "Baja", "Media", "Alta"];
+  const filteredTrails =
+    activeFilter === "Todas"
+      ? trails
+      : trails.filter((trail) =>
+          trail.difficulty.toLowerCase().includes(activeFilter.toLowerCase())
+        );
+
+  useEffect(() => {
+    getTrails()
+      .then((data) => {
+        setTrails(data);
+        setError(null);
+      })
+      .catch(() => {
+        setError("No pudimos cargar los senderos en este momento.");
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, []);
+
   return (
     <AppScreen activeTab="explorar">
       <ScreenTitle
         eyebrow="Explorar rutas"
-        title="Encontrá tu próxima ruta"
-        subtitle="Filtrá por dificultad, distancia y disponibilidad offline."
+        title="Encontra tu proxima ruta"
+        subtitle="Filtra por dificultad, distancia y disponibilidad."
       />
 
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.filterRow}>
-          <Text style={styles.filterActive}>Cerca</Text>
-          <Text style={styles.filter}>Moderadas</Text>
-          <Text style={styles.filter}>Offline</Text>
+          {filters.map((filter) => {
+            const isActive = activeFilter === filter;
+
+            return (
+              <Pressable key={filter} onPress={() => setActiveFilter(filter)}>
+                <Text style={isActive ? styles.filterActive : styles.filter}>
+                  {filter}
+                </Text>
+              </Pressable>
+            );
+          })}
         </View>
 
-        <Text style={styles.sectionTitle}>Recomendadas para vos</Text>
-        <RouteCard title="Sendero Arrayanes" place="Bariloche, Río Negro" distance="6,8 km" />
-        <RouteCard title="Cerro Campanario" place="Circuito Chico" distance="3,2 km" />
+        <Text style={styles.sectionTitle}>Senderos disponibles</Text>
+
+        {isLoading ? <Text style={styles.statusText}>Cargando senderos...</Text> : null}
+        {error ? <Text style={styles.statusText}>{error}</Text> : null}
+        {!isLoading && !error && filteredTrails.length === 0 ? (
+          <Text style={styles.statusText}>No hay senderos disponibles por ahora.</Text>
+        ) : null}
+
+        {filteredTrails.map((trail, index) => (
+          <RouteCard
+            key={trail.id}
+            trail={trail}
+            image={trail.image_url || (index % 2 === 0 ? trailImages.mountain : trailImages.forest)}
+          />
+        ))}
 
         <Card tone="green">
           <Text style={styles.cardTitle}>Tip de seguridad</Text>
-          <Text style={styles.cardText}>Descargá el mapa antes de salir si la zona tiene poca señal.</Text>
+          <Text style={styles.cardText}>Descarga el mapa antes de salir si la zona tiene poca senal.</Text>
         </Card>
       </ScrollView>
     </AppScreen>
   );
 }
 
-function RouteCard({ title, place, distance }: { title: string; place: string; distance: string }) {
+function RouteCard({ trail, image }: { trail: Trail; image: string }) {
+  const distance = trail.distance_km ? `${trail.distance_km} km` : "Distancia a confirmar";
+
   return (
-    <Link href="/trail-detail" asChild>
-      <Pressable style={styles.routeCard}>
-        <ImageBackground source={routeMapPreview} imageStyle={styles.image} style={styles.imageBox}>
-          <View style={styles.badge}>
-            <Text style={styles.badgeText}>Offline</Text>
-          </View>
-        </ImageBackground>
-        <View style={styles.routeBody}>
-          <Text style={styles.routeTitle}>{title}</Text>
-          <Text style={styles.routePlace}>{place}</Text>
-          <Text style={styles.routeMeta}>{distance} • Moderada</Text>
+    <Pressable
+      style={styles.routeCard}
+      onPress={() =>
+        router.push({
+          pathname: "/trail-detail",
+          params: { id: String(trail.id) },
+        })
+      }
+    >
+      <ImageBackground source={{ uri: image }} imageStyle={styles.image} style={styles.imageBox}>
+        <View style={styles.badge}>
+          <Text style={styles.badgeText}>{trail.difficulty}</Text>
         </View>
-      </Pressable>
-    </Link>
+      </ImageBackground>
+      <View style={styles.routeBody}>
+        <Text style={styles.routeTitle}>{trail.name}</Text>
+        <Text style={styles.routePlace}>{trail.location}</Text>
+        <Text style={styles.routeMeta}>
+          {distance} - {trail.duration || "Duracion a confirmar"}
+        </Text>
+      </View>
+    </Pressable>
   );
 }
 
@@ -84,6 +141,12 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "800",
     marginBottom: 12,
+  },
+  statusText: {
+    color: colors.muted,
+    fontSize: 14,
+    fontWeight: "700",
+    marginBottom: 14,
   },
   routeCard: {
     backgroundColor: colors.surface,

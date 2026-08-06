@@ -1,19 +1,10 @@
-import React, { useEffect } from "react";
-import { router } from "expo-router";
+import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { colors } from "../../components/MiSenderoUI";
 
 export default function SplashScreen01() {
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      router.replace("/inicio");
-    }, 1600);
-
-    return () => clearTimeout(timeout);
-  }, []);
-
   return (
     <SafeAreaView edges={["top", "bottom"]} style={styles.safeArea}>
       <View style={styles.content}>

@@ -1,6 +1,5 @@
-import { Link } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   ImageBackground,
   Pressable,
@@ -9,9 +8,11 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { BottomNav } from "../components/MiSenderoUI";
-
-const routeMapPreview = require("../../assets/route-map-preview.png");
+import { router } from "expo-router";
+import { getProfile, getTrails } from "../../services/api";
+import { getAuthSession } from "../../services/authSession";
+import { Profile, Trail } from "../../types";
+import { BottomNav, trailImages } from "../components/MiSenderoUI";
 
 type TagProps = {
   label: string;
@@ -25,63 +26,120 @@ type RouteMetricProps = {
 };
 
 export default function HomeScreen() {
+  const [profile, setProfile] = useState<Profile | null>(null);
+  const [recommendedTrail, setRecommendedTrail] = useState<Trail | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const loadHome = async () => {
+      try {
+        const session = await getAuthSession();
+
+        if (!session) {
+          router.replace("/");
+          return;
+        }
+
+        const [profileData, trails] = await Promise.all([
+          getProfile(session.token),
+          getTrails(),
+        ]);
+
+        setProfile(profileData);
+        setRecommendedTrail(trails[0] || null);
+      } catch (loadError) {
+        setError("No pudimos actualizar tu inicio.");
+      }
+    };
+
+    loadHome();
+  }, []);
+
+  const userName = profile?.user?.name || "viajera";
+  const distance = recommendedTrail?.distance_km
+    ? `${recommendedTrail.distance_km} km`
+    : "Distancia a confirmar";
+  const duration = recommendedTrail?.duration || "Duracion a confirmar";
+  const difficulty = recommendedTrail?.difficulty || "A confirmar";
+
   return (
     <SafeAreaView edges={["top", "bottom"]} style={styles.safeArea}>
       <StatusBar style="dark" />
       <View style={styles.screen}>
-        <View style={styles.statusBar}>
-          <Text style={styles.statusTime}>9:41</Text>
-          <Text style={styles.statusMeta}>GPS • 82%</Text>
-        </View>
-
         <View style={styles.content}>
           <View style={styles.hero}>
-            <Text style={styles.title}>Buen día, Bárbara</Text>
+            <Text style={styles.title}>Buen dia, {userName}</Text>
             <Text style={styles.subtitle}>
-              Prepará tu próxima salida y llevá la ruta sin depender de la señal.
+              Prepara tu proxima salida y lleva la ruta sin depender de la senal.
             </Text>
           </View>
 
           <View style={styles.sectionHeader}>
             <Text style={styles.sectionTitle}>Recomendada para vos</Text>
-              <Link href="/explorar-rutas" style={styles.sectionAction}>
+            <Text
+              onPress={() => router.push("/explorar-rutas")}
+              style={styles.sectionAction}
+            >
               Ver rutas
-              </Link>
+            </Text>
           </View>
 
-          <Link href="/cargando-ruta" asChild>
-            <Pressable style={styles.routeCard}>
+          {error ? <Text style={styles.statusText}>{error}</Text> : null}
+
+          {recommendedTrail ? (
+            <Pressable
+              style={styles.routeCard}
+              onPress={() =>
+                router.push({
+                  pathname: "/trail-detail",
+                  params: { id: String(recommendedTrail.id) },
+                })
+              }
+            >
               <ImageBackground
-                source={routeMapPreview}
+                source={{ uri: recommendedTrail.image_url || trailImages.mountain }}
                 imageStyle={styles.mapImage}
                 style={styles.mapPreview}
               >
                 <View style={styles.mapShade} />
                 <View style={styles.tags}>
-                  <Tag label="Offline" tone="green" />
-                  <Tag label="Moderada" tone="orange" />
+                  <Tag label="Disponible" tone="green" />
+                  <Tag label={difficulty} tone="orange" />
                 </View>
-                <Text style={styles.mapTitle}>Sendero Laguna Esmeralda</Text>
+                <Text style={styles.mapTitle}>{recommendedTrail.name}</Text>
               </ImageBackground>
 
               <View style={styles.routeDetails}>
-                <Text style={styles.routeName}>Sendero Laguna Esmeralda</Text>
-                <Text style={styles.routeLocation}>Ushuaia, Tierra del Fuego</Text>
+                <Text style={styles.routeName}>{recommendedTrail.name}</Text>
+                <Text style={styles.routeLocation}>{recommendedTrail.location}</Text>
 
                 <View style={styles.metrics}>
-                  <RouteMetric icon="M" label="9,4 km" />
-                  <RouteMetric icon="T" label="4 h 10 min" />
-                  <RouteMetric icon="A" label="Moderada" accent />
+                  <RouteMetric icon="M" label={distance} />
+                  <RouteMetric icon="T" label={duration} />
+                  <RouteMetric icon="A" label={difficulty} accent />
                 </View>
               </View>
             </Pressable>
-          </Link>
+          ) : (
+            <View style={styles.emptyCard}>
+              <Text style={styles.routeName}>No hay rutas disponibles por ahora</Text>
+              <Text style={styles.routeLocation}>Cuando agregues senderos, apareceran aca.</Text>
+            </View>
+          )}
 
-          <Link href="/cargando-ruta" asChild>
-            <Pressable style={styles.primaryButton}>
+          {recommendedTrail ? (
+            <Pressable
+              style={styles.primaryButton}
+              onPress={() =>
+                router.push({
+                  pathname: "/trail-detail",
+                  params: { id: String(recommendedTrail.id) },
+                })
+              }
+            >
               <Text style={styles.primaryButtonText}>Ver detalle de la ruta</Text>
             </Pressable>
-          </Link>
+          ) : null}
         </View>
 
         <BottomNav active="inicio" />
@@ -117,7 +175,6 @@ const colors = {
   orange: "#D6801B",
   surface: "#FFFFFF",
   page: "#F7FAF6",
-  pageBottom: "#E8EFE7",
 };
 
 const styles = StyleSheet.create({
@@ -129,33 +186,12 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.page,
   },
-  statusBar: {
-    height: 44,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.border,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingHorizontal: 24,
-  },
-  statusTime: {
-    color: colors.ink,
-    fontSize: 12,
-    fontWeight: "500",
-    lineHeight: 17,
-  },
-  statusMeta: {
-    color: colors.muted,
-    fontSize: 12,
-    fontWeight: "500",
-    lineHeight: 17,
-  },
   content: {
     flex: 1,
     gap: 20,
+    paddingBottom: 112,
     paddingHorizontal: 24,
     paddingTop: 18,
-    paddingBottom: 112,
   },
   hero: {
     gap: 12,
@@ -189,17 +225,30 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     lineHeight: 18,
   },
+  statusText: {
+    color: colors.muted,
+    fontSize: 14,
+    fontWeight: "700",
+  },
   routeCard: {
     backgroundColor: colors.surface,
     borderColor: colors.border,
     borderRadius: 24,
     borderWidth: 1,
+    elevation: 3,
     overflow: "hidden",
     shadowColor: colors.ink,
     shadowOffset: { width: 0, height: 12 },
     shadowOpacity: 0.05,
     shadowRadius: 24,
-    elevation: 3,
+  },
+  emptyCard: {
+    backgroundColor: colors.surface,
+    borderColor: colors.border,
+    borderRadius: 24,
+    borderWidth: 1,
+    gap: 8,
+    padding: 18,
   },
   mapPreview: {
     height: 220,
@@ -279,6 +328,7 @@ const styles = StyleSheet.create({
   },
   metrics: {
     flexDirection: "row",
+    flexWrap: "wrap",
     gap: 16,
   },
   metric: {

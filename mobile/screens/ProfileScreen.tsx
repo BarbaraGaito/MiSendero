@@ -1,31 +1,79 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { router } from "expo-router";
 import { StyleSheet, Text, View } from "react-native";
-import { AppScreen, Card, ScreenTitle, SettingRow, colors } from "../components/MiSenderoUI";
+import { AppScreen, Card, PrimaryButton, ScreenTitle, SettingRow, colors } from "../components/MiSenderoUI";
+import { getProfile } from "../../services/api";
+import { clearAuthSession, getAuthSession } from "../../services/authSession";
+import { Profile } from "../../types";
 
 export default function ProfileScreen() {
+  const [profile, setProfile] = useState<Profile | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const loadProfile = async () => {
+      try {
+        const session = await getAuthSession();
+
+        if (!session) {
+          router.replace("/");
+          return;
+        }
+
+        const data = await getProfile(session.token);
+        setProfile(data);
+        setError(null);
+      } catch (loadError) {
+        setError("No pudimos cargar tu perfil en este momento.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadProfile();
+  }, []);
+
+  const logout = async () => {
+    await clearAuthSession();
+    router.replace("/");
+  };
+
+  const user = profile?.user;
+  const displayName = user?.name || "Invitado";
+  const email = user?.email || "Inicia sesion para ver tu cuenta";
+  const initial = displayName.trim().charAt(0).toUpperCase() || "U";
+  const completedRoutes = profile?.stats.completed_routes ?? 0;
+  const totalDistance = profile?.stats.total_distance_km ?? 0;
+
   return (
     <AppScreen activeTab="perfil">
       <ScreenTitle
         eyebrow="Perfil y ajustes"
-        title="Nombre"
+        title={displayName}
         subtitle="Tu cuenta y preferencias de seguridad."
       />
+
+      {isLoading ? <Text style={styles.statusText}>Cargando perfil...</Text> : null}
+      {error ? <Text style={styles.statusText}>{error}</Text> : null}
 
       <Card tone="green">
         <View style={styles.profileRow}>
           <View style={styles.avatar}>
-            <Text style={styles.avatarText}>A</Text>
+            <Text style={styles.avatarText}>{initial}</Text>
           </View>
-          <View>
-            <Text style={styles.profileName}>Nombre</Text>
-            <Text style={styles.profileMeta}>3 rutas completadas • 28,6 km</Text>
+          <View style={styles.profileText}>
+            <Text style={styles.profileName}>{displayName}</Text>
+            <Text style={styles.profileEmail}>{email}</Text>
+            <Text style={styles.profileMeta}>
+              {completedRoutes} rutas completadas - {totalDistance} km
+            </Text>
           </View>
         </View>
       </Card>
 
       <Card>
-        <Text style={styles.cardTitle}>Mapas sin conexión</Text>
+        <Text style={styles.cardTitle}>Mapas sin conexion</Text>
         <SettingRow
           label="Sendero Laguna Esmeralda"
           value="Actualizado"
@@ -46,23 +94,38 @@ export default function ProfileScreen() {
           onPress={() => router.push("/contacto-seguridad")}
         />
         <SettingRow label="Reloj o sensor externo" value="No vinculado" />
-        <SettingRow label="Modo ahorro de batería" value="Activo" />
+        <SettingRow label="Modo ahorro de bateria" value="Activo" />
       </Card>
 
       <Card>
         <Text style={styles.cardTitle}>Preferencias</Text>
         <SettingRow label="Notificaciones" value="Activadas" />
-        <SettingRow label="Unidades" value="Kilómetros" />
+        <SettingRow label="Unidades" value="Kilometros" />
       </Card>
+
+      <PrimaryButton
+        label="Cerrar sesion"
+        tone="secondary"
+        onPress={logout}
+      />
     </AppScreen>
   );
 }
 
 const styles = StyleSheet.create({
+  statusText: {
+    color: colors.muted,
+    fontSize: 14,
+    fontWeight: "700",
+    marginBottom: 14,
+  },
   profileRow: {
     alignItems: "center",
     flexDirection: "row",
     gap: 12,
+  },
+  profileText: {
+    flex: 1,
   },
   avatar: {
     alignItems: "center",
@@ -81,6 +144,12 @@ const styles = StyleSheet.create({
     color: colors.ink,
     fontSize: 18,
     fontWeight: "800",
+  },
+  profileEmail: {
+    color: colors.muted,
+    fontSize: 13,
+    fontWeight: "600",
+    marginTop: 3,
   },
   profileMeta: {
     color: colors.muted,

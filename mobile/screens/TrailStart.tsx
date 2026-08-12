@@ -1,5 +1,5 @@
 import React from "react";
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
@@ -20,6 +20,7 @@ const checklist = [
 
 export default function Screen05TrailStart() {
   const insets = useSafeAreaInsets();
+  const { id } = useLocalSearchParams<{ id?: string }>();
 
   return (
     <ScreenShell>
@@ -56,7 +57,16 @@ export default function Screen05TrailStart() {
       </ScrollView>
 
       <View style={[styles.footer, { paddingBottom: Math.max(20, insets.bottom + 14) }]}>
-        <PrimaryButton label="Comenzar ahora" icon="play-outline" href="/route-map" />
+        <PrimaryButton
+          label="Comenzar ahora"
+          icon="play-outline"
+          onPress={() =>
+            router.push({
+              pathname: "/route-map",
+              params: { active: "1", id: id || "1" },
+            })
+          }
+        />
       </View>
     </ScreenShell>
   );

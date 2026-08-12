@@ -1,6 +1,17 @@
 import { AuthResponse, Profile, Trail } from "../types";
+import Constants from "expo-constants";
+import { Platform } from "react-native";
 
-const API_URL = "http://192.168.0.137:3001/api";
+const API_PORT = "3001";
+
+const getApiUrl = () => {
+  const expoHost = Constants.expoConfig?.hostUri?.split(":")[0];
+  const host = expoHost || (Platform.OS === "android" ? "10.0.2.2" : "localhost");
+
+  return `http://${host}:${API_PORT}/api`;
+};
+
+const API_URL = getApiUrl();
 
 type RequestOptions = {
   method?: "GET" | "POST";
@@ -19,11 +30,17 @@ async function request<T>(path: string, options: RequestOptions = {}): Promise<T
     headers.Authorization = `Bearer ${options.token}`;
   }
 
-  const response = await fetch(`${API_URL}${path}`, {
-    method: options.method || "GET",
-    headers,
-    body: options.body ? JSON.stringify(options.body) : undefined,
-  });
+  let response: Response;
+
+  try {
+    response = await fetch(`${API_URL}${path}`, {
+      method: options.method || "GET",
+      headers,
+      body: options.body ? JSON.stringify(options.body) : undefined,
+    });
+  } catch (error) {
+    throw new Error(`No se pudo conectar con el backend en ${API_URL}.`);
+  }
 
   if (!response.ok) {
     const errorBody = await response.json().catch(() => null);

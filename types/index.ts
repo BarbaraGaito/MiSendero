@@ -32,6 +32,10 @@ export interface Trail {
   distance_km: number | null;
   description: string | null;
   image_url: string | null;
+  center_lat: number | null;
+  center_lng: number | null;
+  map_zoom: number | null;
+  route_coordinates: string | null;
   created_at: string;
 }
 

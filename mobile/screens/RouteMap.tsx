@@ -1,8 +1,11 @@
-import React from "react";
-import { router } from "expo-router";
-import { StyleSheet, Text, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
+import { router, useLocalSearchParams } from "expo-router";
+import React, { useEffect, useState } from "react";
+import { Pressable, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
+import { getTrailById } from "../../services/api";
+import { Trail } from "../../types";
+import { TrailMap } from "../components/TrailMap";
 import {
   InfoCard,
   PrimaryButton,
@@ -13,34 +16,105 @@ import {
 
 export default function Screen04RouteMap() {
   const insets = useSafeAreaInsets();
+  const { active, id } = useLocalSearchParams<{ active?: string; id?: string }>();
+  const trailId = Number(id) || 1;
+  const isActiveRoute = active === "1";
+  const [trail, setTrail] = useState<Trail | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    setIsLoading(true);
+
+    getTrailById(trailId)
+      .then((data) => {
+        setTrail(data);
+        setError(null);
+      })
+      .catch(() => {
+        setError("No pudimos cargar el mapa de este sendero.");
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, [trailId]);
+
+  if (isActiveRoute) {
+    return (
+      <SafeAreaView edges={["top", "bottom"]} style={styles.activeShell}>
+        <TrailMap
+          trail={trail}
+          fitRoute
+          immersive
+          initialPerspective
+          showDetailsCard={false}
+        />
+
+        <View style={styles.activeHeader}>
+          <Pressable onPress={() => router.back()} style={styles.activeIconButton}>
+            <Ionicons name="chevron-back" size={22} color={colors.ink} />
+          </Pressable>
+          <View style={styles.activeTitleBox}>
+            <Text style={styles.activeEyebrow}>Ruta en curso</Text>
+            <Text numberOfLines={1} style={styles.activeTitle}>
+              {trail?.name || "Mapa del recorrido"}
+            </Text>
+          </View>
+        </View>
+
+        {isLoading || error ? (
+          <View style={styles.activeStatus}>
+            <Text style={styles.statusText}>
+              {isLoading ? "Cargando mapa..." : error}
+            </Text>
+          </View>
+        ) : null}
+
+        <View style={[styles.activeFooter, { paddingBottom: Math.max(16, insets.bottom + 10) }]}>
+          <Pressable
+            onPress={() => router.push("/descanso")}
+            style={styles.activeAction}
+          >
+            <Ionicons name="pause-circle-outline" size={20} color={colors.greenDark} />
+            <Text style={styles.activeActionText}>Descanso</Text>
+          </Pressable>
+          <Pressable
+            onPress={() => router.push("/reportar-terreno")}
+            style={styles.activeAction}
+          >
+            <Ionicons name="warning-outline" size={20} color={colors.greenDark} />
+            <Text style={styles.activeActionText}>Terreno</Text>
+          </Pressable>
+          <Pressable
+            onPress={() => router.push("/confirmar-sos")}
+            style={[styles.activeAction, styles.activeDangerAction]}
+          >
+            <Ionicons name="alert-circle-outline" size={20} color={colors.white} />
+            <Text style={styles.activeDangerText}>SOS</Text>
+          </Pressable>
+        </View>
+      </SafeAreaView>
+    );
+  }
 
   return (
     <ScreenShell>
       <TopBar title="Mapa del recorrido" onBack={() => router.back()} />
 
-      <View style={styles.map}>
-        <View style={[styles.pathDot, styles.startDot]}>
-          <Ionicons name="flag-outline" size={18} color={colors.white} />
-        </View>
-        <View style={[styles.segment, styles.segmentOne]} />
-        <View style={[styles.segment, styles.segmentTwo]} />
-        <View style={[styles.segment, styles.segmentThree]} />
-        <View style={[styles.pathDot, styles.endDot]}>
-          <Ionicons name="location" size={18} color={colors.white} />
-        </View>
-        <View style={styles.mapCard}>
-          <Text style={styles.mapLabel}>Sendero del Bosque</Text>
-          <Text style={styles.mapMeta}>4,2 km - dificultad fácil</Text>
-        </View>
-      </View>
+      {isLoading ? <Text style={styles.statusText}>Cargando mapa...</Text> : null}
+      {error ? <Text style={styles.statusText}>{error}</Text> : null}
+
+      <TrailMap trail={trail} />
 
       <InfoCard style={styles.progressCard}>
-        <View>
+        <View style={styles.progressText}>
           <Text style={styles.cardTitle}>Ruta lista</Text>
-          <Text style={styles.cardText}>El mapa está disponible para usar sin conexión.</Text>
+          <Text style={styles.cardText}>
+            Usa Terreno para ver curvas de nivel y amplia el mapa para revisar detalles.
+          </Text>
         </View>
         <View style={styles.downloadBadge}>
-          <Ionicons name="cloud-done-outline" size={24} color={colors.green} />
+          <Ionicons name="map-outline" size={24} color={colors.green} />
         </View>
       </InfoCard>
 
@@ -48,7 +122,12 @@ export default function Screen04RouteMap() {
         <PrimaryButton
           label="Iniciar recorrido"
           icon="navigate-outline"
-          href="/trail-start"
+          onPress={() =>
+            router.push({
+              pathname: "/trail-start",
+              params: { id: String(trailId) },
+            })
+          }
         />
         <PrimaryButton
           label="Tomar descanso"
@@ -80,80 +159,107 @@ export default function Screen04RouteMap() {
 }
 
 const styles = StyleSheet.create({
-  map: {
-    backgroundColor: "#E8F2E9",
-    borderRadius: 30,
+  activeShell: {
+    backgroundColor: colors.softer,
     flex: 1,
-    marginBottom: 18,
-    overflow: "hidden",
-    position: "relative",
   },
-  segment: {
-    backgroundColor: colors.green,
-    borderRadius: 10,
-    height: 10,
-    position: "absolute",
-  },
-  segmentOne: {
-    left: 76,
-    top: 210,
-    transform: [{ rotate: "-28deg" }],
-    width: 128,
-  },
-  segmentTwo: {
-    left: 158,
-    top: 160,
-    transform: [{ rotate: "18deg" }],
-    width: 120,
-  },
-  segmentThree: {
-    left: 236,
-    top: 210,
-    transform: [{ rotate: "-42deg" }],
-    width: 112,
-  },
-  pathDot: {
+  activeHeader: {
     alignItems: "center",
-    backgroundColor: colors.green,
-    borderRadius: 22,
-    height: 44,
+    flexDirection: "row",
+    gap: 10,
+    left: 14,
+    position: "absolute",
+    right: 14,
+    top: 14,
+    zIndex: 20,
+  },
+  activeIconButton: {
+    alignItems: "center",
+    backgroundColor: "rgba(255,255,255,0.96)",
+    borderRadius: 18,
+    height: 42,
     justifyContent: "center",
-    position: "absolute",
-    width: 44,
-    zIndex: 2,
+    width: 42,
   },
-  startDot: {
-    left: 58,
-    top: 213,
+  activeTitleBox: {
+    backgroundColor: "rgba(255,255,255,0.96)",
+    borderRadius: 18,
+    flex: 1,
+    paddingHorizontal: 14,
+    paddingVertical: 8,
   },
-  endDot: {
-    right: 50,
-    top: 148,
-  },
-  mapCard: {
-    backgroundColor: colors.white,
-    borderRadius: 20,
-    bottom: 20,
-    left: 20,
-    padding: 16,
-    position: "absolute",
-    right: 20,
-  },
-  mapLabel: {
-    color: colors.ink,
-    fontSize: 17,
+  activeEyebrow: {
+    color: colors.green,
+    fontSize: 11,
     fontWeight: "900",
   },
-  mapMeta: {
-    color: colors.muted,
+  activeTitle: {
+    color: colors.ink,
+    fontSize: 15,
+    fontWeight: "900",
+    marginTop: 1,
+  },
+  activeStatus: {
+    backgroundColor: "rgba(255,255,255,0.94)",
+    borderRadius: 16,
+    left: 14,
+    paddingHorizontal: 12,
+    paddingVertical: 9,
+    position: "absolute",
+    right: 14,
+    top: 72,
+    zIndex: 20,
+  },
+  activeFooter: {
+    backgroundColor: "rgba(246,250,247,0.96)",
+    borderTopColor: colors.line,
+    borderTopWidth: 1,
+    bottom: 0,
+    flexDirection: "row",
+    gap: 10,
+    left: 0,
+    padding: 14,
+    position: "absolute",
+    right: 0,
+    zIndex: 20,
+  },
+  activeAction: {
+    alignItems: "center",
+    backgroundColor: colors.primarySoft,
+    borderRadius: 18,
+    flex: 1,
+    flexDirection: "row",
+    gap: 7,
+    justifyContent: "center",
+    minHeight: 48,
+  },
+  activeDangerAction: {
+    backgroundColor: colors.danger,
+  },
+  activeActionText: {
+    color: colors.greenDark,
     fontSize: 13,
-    marginTop: 4,
+    fontWeight: "900",
+  },
+  activeDangerText: {
+    color: colors.white,
+    fontSize: 13,
+    fontWeight: "900",
+  },
+  statusText: {
+    color: colors.muted,
+    fontSize: 14,
+    fontWeight: "700",
+    marginBottom: 10,
   },
   progressCard: {
     alignItems: "center",
     flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 350,
+    gap: 12,
+    marginBottom: 292,
+  },
+  progressText: {
+    flex: 1,
   },
   cardTitle: {
     color: colors.ink,
@@ -163,8 +269,8 @@ const styles = StyleSheet.create({
   cardText: {
     color: colors.muted,
     fontSize: 14,
+    lineHeight: 20,
     marginTop: 4,
-    maxWidth: 230,
   },
   downloadBadge: {
     alignItems: "center",

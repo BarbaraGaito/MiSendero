@@ -103,7 +103,12 @@ export default function Screen03TrailDetail() {
         <PrimaryButton
           label="Ver ruta"
           icon="map-outline"
-          href="/descargar-mapa"
+          onPress={() =>
+            router.push({
+              pathname: "/route-map",
+              params: { id: String(trail?.id || id || 1) },
+            })
+          }
         />
       </View>
     </ScreenShell>

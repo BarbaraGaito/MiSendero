@@ -31,7 +31,11 @@ router.post("/", (req, res) => {
     duration,
     distance_km,
     description,
-    image_url
+    image_url,
+    center_lat,
+    center_lng,
+    map_zoom,
+    route_coordinates
   } = req.body;
 
   if (!name || !location || !difficulty) {
@@ -47,18 +51,30 @@ router.post("/", (req, res) => {
         duration,
         distance_km,
         description,
-        image_url
+        image_url,
+        center_lat,
+        center_lng,
+        map_zoom,
+        route_coordinates
       )
-      VALUES (?, ?, ?, ?, ?, ?, ?)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `)
     .run(
       name.trim(),
       location.trim(),
       difficulty.trim(),
-      duration || null,
-      distance_km || null,
-      description || null,
-      image_url || null
+      duration ?? null,
+      distance_km ?? null,
+      description ?? null,
+      image_url ?? null,
+      center_lat ?? null,
+      center_lng ?? null,
+      map_zoom ?? null,
+      route_coordinates
+        ? typeof route_coordinates === "string"
+          ? route_coordinates
+          : JSON.stringify(route_coordinates)
+        : null
     );
 
   const trail = db

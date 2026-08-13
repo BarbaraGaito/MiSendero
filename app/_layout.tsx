@@ -32,6 +32,7 @@ export default function RootLayout() {
         <Stack.Screen name="filtros-mapas" />
         <Stack.Screen name="history" />
         <Stack.Screen name="inicio" />
+        <Stack.Screen name="onboarding-experiencia" />
         <Stack.Screen name="mapas-offline" />
         <Stack.Screen name="mis-actividades" />
         <Stack.Screen name="offline-buscar" />

@@ -38,7 +38,7 @@ export default function LoginScreen() {
 
     try {
       const auth = isRegister
-        ? await registerUser(name, email, password)
+        ? await registerUser(name, email, password, CURRENT_TERMS_VERSION)
         : await loginUser(email, password);
 
       if (isRegister) {
@@ -46,7 +46,7 @@ export default function LoginScreen() {
       }
 
       await saveAuthSession(auth);
-      router.replace("/inicio");
+      router.replace(isRegister ? "/onboarding-experiencia" : "/inicio");
     } catch (submitError) {
       setError(
         submitError instanceof Error

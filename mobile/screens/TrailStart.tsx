@@ -1,9 +1,10 @@
 import { Ionicons } from "@expo/vector-icons";
-import { router, useLocalSearchParams } from "expo-router";
-import React, { useEffect, useMemo, useState } from "react";
+import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Alert, ScrollView, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { getTrailById } from "../../services/api";
+import { hasEmergencyContact } from "../../services/emergencyContact";
 import {
   Coordinate,
   formatDistance,
@@ -35,6 +36,8 @@ export default function Screen05TrailStart() {
   const trailId = Number(id) || 1;
   const [trail, setTrail] = useState<Trail | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [hasSafetyContact, setHasSafetyContact] = useState(false);
+  const [isContactLoading, setIsContactLoading] = useState(true);
 
   useEffect(() => {
     getTrailById(trailId)
@@ -46,6 +49,25 @@ export default function Screen05TrailStart() {
         setError("No pudimos validar el inicio de la ruta.");
       });
   }, [trailId]);
+
+  useFocusEffect(
+    useCallback(() => {
+      let isActive = true;
+
+      setIsContactLoading(true);
+      hasEmergencyContact()
+        .then((exists) => {
+          if (isActive) setHasSafetyContact(exists);
+        })
+        .finally(() => {
+          if (isActive) setIsContactLoading(false);
+        });
+
+      return () => {
+        isActive = false;
+      };
+    }, [])
+  );
 
   const simulatedStartLocation = useMemo(() => {
     if (!trail) return null;
@@ -84,17 +106,54 @@ export default function Screen05TrailStart() {
   const beginRoute = () => {
     router.push({
       pathname: "/route-map",
-      params: { active: "1", id: String(trailId) },
+      params: {
+        active: "1",
+        id: String(trailId),
+        startedAt: String(Date.now()),
+      },
     });
   };
 
   const handleStart = () => {
+    if (isContactLoading) return;
+
+    if (!hasSafetyContact) {
+      Alert.alert(
+        "Contacto de emergencia requerido",
+        "Antes de iniciar una ruta tenes que guardar un contacto de emergencia. Ese dato habilita el uso de SOS durante el recorrido.",
+        [
+          { text: "Cancelar", style: "cancel" },
+          {
+            text: "Completar contacto",
+            onPress: () =>
+              router.push({
+                pathname: "/contacto-seguridad",
+                params: { id: String(trailId), returnTo: "trail-start" },
+              }),
+          },
+        ]
+      );
+      return;
+    }
+
     if (isFarFromStart && routeStartDistance !== null) {
       Alert.alert(
         "Estas lejos del inicio",
         `Estas a ${formatDistance(routeStartDistance)} del punto inicial. Te recomendamos acercarte al inicio real antes de comenzar.`,
         [
           { text: "Cancelar", style: "cancel" },
+          {
+            text: "Ver mapa",
+            onPress: () =>
+              router.push({
+                pathname: "/alerta-ruta",
+                params: {
+                  id: String(trailId),
+                  distance: String(Math.round(routeStartDistance)),
+                  reason: "start",
+                },
+              }),
+          },
           { text: "Comenzar igual", style: "destructive", onPress: beginRoute },
         ]
       );
@@ -137,6 +196,24 @@ export default function Screen05TrailStart() {
           </View>
         </InfoCard>
 
+        <InfoCard style={hasSafetyContact ? styles.contactReady : styles.contactRequired}>
+          <Ionicons
+            name={hasSafetyContact ? "shield-checkmark-outline" : "shield-outline"}
+            size={24}
+            color={hasSafetyContact ? colors.green : colors.danger}
+          />
+          <View style={styles.warningText}>
+            <Text style={styles.warningTitle}>Contacto de emergencia</Text>
+            <Text style={styles.warningBody}>
+              {isContactLoading
+                ? "Verificando contacto guardado..."
+                : hasSafetyContact
+                  ? "Contacto cargado. SOS queda habilitado durante el recorrido."
+                  : "Completa un contacto de emergencia para poder iniciar y usar SOS."}
+            </Text>
+          </View>
+        </InfoCard>
+
         <InfoCard style={isFarFromStart ? styles.startWarning : styles.locationCard}>
           <Ionicons
             name={isFarFromStart ? "warning-outline" : "navigate-outline"}
@@ -166,8 +243,14 @@ export default function Screen05TrailStart() {
 
       <View style={[styles.footer, { paddingBottom: Math.max(20, insets.bottom + 14) }]}>
         <PrimaryButton
-          label="Comenzar ahora"
-          icon="play-outline"
+          label={
+            isContactLoading
+              ? "Verificando contacto"
+              : hasSafetyContact
+                ? "Comenzar ahora"
+                : "Completar contacto"
+          }
+          icon={hasSafetyContact ? "play-outline" : "shield-checkmark-outline"}
           onPress={handleStart}
         />
       </View>
@@ -244,6 +327,22 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
   startWarning: {
+    alignItems: "center",
+    alignSelf: "stretch",
+    backgroundColor: "#FFF4F2",
+    flexDirection: "row",
+    gap: 12,
+    marginTop: 16,
+  },
+  contactReady: {
+    alignItems: "center",
+    alignSelf: "stretch",
+    backgroundColor: colors.white,
+    flexDirection: "row",
+    gap: 12,
+    marginTop: 16,
+  },
+  contactRequired: {
     alignItems: "center",
     alignSelf: "stretch",
     backgroundColor: "#FFF4F2",

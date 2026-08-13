@@ -1,40 +1,122 @@
-import React from "react";
+import { router, useLocalSearchParams } from "expo-router";
+import React, { useEffect, useMemo, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
+import { getTrailById } from "../../services/api";
+import { Trail } from "../../types";
 import { AppScreen, Card, PrimaryButton, ScreenTitle, colors } from "../components/MiSenderoUI";
 
 export default function RestBreakScreen() {
+  const { id, startedAt, totalMeters, traveledMeters } = useLocalSearchParams<{
+    id?: string;
+    startedAt?: string;
+    totalMeters?: string;
+    traveledMeters?: string;
+  }>();
+  const trailId = Number(id) || 1;
+  const fallbackStartedAt = useMemo(() => Date.now(), []);
+  const startedAtMs = Number(startedAt) || fallbackStartedAt;
+  const pauseStartedAt = useMemo(() => Date.now(), []);
+  const parsedTotalMeters = Number(totalMeters);
+  const parsedTraveledMeters = Number(traveledMeters);
+  const [trail, setTrail] = useState<Trail | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    getTrailById(trailId)
+      .then((data) => {
+        setTrail(data);
+        setError(null);
+      })
+      .catch(() => {
+        setError("No pudimos cargar los datos del sendero.");
+      });
+  }, [trailId]);
+
+  const realTotalMeters =
+    Number.isFinite(parsedTotalMeters) && parsedTotalMeters > 0
+      ? parsedTotalMeters
+      : trail?.distance_km
+        ? trail.distance_km * 1000
+        : 0;
+  const realTraveledMeters =
+    Number.isFinite(parsedTraveledMeters) && parsedTraveledMeters >= 0
+      ? Math.min(parsedTraveledMeters, realTotalMeters || parsedTraveledMeters)
+      : null;
+  const remainingMeters =
+    realTraveledMeters !== null && realTotalMeters > 0
+      ? Math.max(0, realTotalMeters - realTraveledMeters)
+      : null;
+  const progressPercent =
+    realTraveledMeters !== null && realTotalMeters > 0
+      ? Math.min(100, Math.round((realTraveledMeters / realTotalMeters) * 100))
+      : 0;
+  const activeMinutes = Math.max(0, Math.floor((pauseStartedAt - startedAtMs) / 60000));
+  const averageSpeedKmh =
+    realTraveledMeters !== null && activeMinutes > 0
+      ? (realTraveledMeters / 1000) / (activeMinutes / 60)
+      : null;
+
   return (
     <AppScreen activeTab="actividad">
       <ScreenTitle
         eyebrow="Recorrido en pausa"
         title="Tomate un respiro"
-        subtitle="El seguimiento queda pausado. Podés retomarlo cuando estés lista."
+        subtitle="El seguimiento queda pausado. Podes retomarlo cuando estes lista."
       />
 
       <Card tone="green">
-        <Text style={styles.cardTitle}>Sendero Laguna Esmeralda</Text>
-        <Text style={styles.cardText}>Progreso actual: 6,2 km de 9,4 km</Text>
+        <Text style={styles.cardTitle}>{trail?.name || "Ruta en curso"}</Text>
+        <Text style={styles.cardText}>
+          {realTraveledMeters !== null && realTotalMeters > 0
+            ? `Progreso actual: ${formatMeters(realTraveledMeters)} de ${formatMeters(realTotalMeters)}`
+            : "Progreso actual: esperando datos GPS de la ruta"}
+        </Text>
         <View style={styles.progressTrack}>
-          <View style={styles.progressFill} />
+          <View style={[styles.progressFill, { width: `${progressPercent}%` }]} />
         </View>
       </Card>
 
       <Card>
         <Text style={styles.cardTitle}>Estado del recorrido</Text>
-        <InfoRow label="Tiempo activo" value="2 h 48 min" />
-        <InfoRow label="Distancia restante" value="3,2 km" />
-        <InfoRow label="Batería estimada" value="1 h 35 min" />
+        <InfoRow label="Tiempo activo" value={formatDuration(activeMinutes)} />
+        <InfoRow
+          label="Distancia recorrida"
+          value={realTraveledMeters !== null ? formatMeters(realTraveledMeters) : "Sin GPS"}
+        />
+        <InfoRow
+          label="Distancia restante"
+          value={remainingMeters !== null ? formatMeters(remainingMeters) : "No disponible"}
+        />
+        <InfoRow
+          label="Velocidad promedio"
+          value={averageSpeedKmh !== null ? `${averageSpeedKmh.toFixed(1)} km/h` : "Calculando"}
+        />
+        <InfoRow label="Pausa iniciada" value={formatTime(pauseStartedAt)} />
       </Card>
 
       <Card tone="orange">
         <Text style={styles.cardTitle}>Sugerencia</Text>
         <Text style={styles.cardText}>
-          Aprovechá la pausa para revisar agua, abrigo y señal antes de seguir.
+          Aprovecha la pausa para revisar agua, abrigo y senal antes de seguir.
         </Text>
       </Card>
 
+      {error ? <Text style={styles.errorText}>{error}</Text> : null}
+
       <View style={styles.actions}>
-        <PrimaryButton label="Reanudar recorrido" href="/route-map" />
+        <PrimaryButton
+          label="Reanudar recorrido"
+          onPress={() =>
+            router.push({
+              pathname: "/route-map",
+              params: {
+                active: "1",
+                id: String(trailId),
+                startedAt: String(startedAtMs),
+              },
+            })
+          }
+        />
         <PrimaryButton label="Finalizar y guardar" href="/recorrido-finalizado" tone="secondary" />
       </View>
     </AppScreen>
@@ -50,6 +132,26 @@ function InfoRow({ label, value }: { label: string; value: string }) {
   );
 }
 
+function formatMeters(meters: number) {
+  if (meters >= 1000) return `${(meters / 1000).toFixed(1)} km`;
+  return `${Math.round(meters)} m`;
+}
+
+function formatDuration(totalMinutes: number) {
+  const hours = Math.floor(totalMinutes / 60);
+  const minutes = totalMinutes % 60;
+
+  if (hours <= 0) return `${minutes} min`;
+  return `${hours} h ${minutes.toString().padStart(2, "0")} min`;
+}
+
+function formatTime(timestamp: number) {
+  return new Intl.DateTimeFormat("es-AR", {
+    hour: "2-digit",
+    minute: "2-digit",
+  }).format(new Date(timestamp));
+}
+
 const styles = StyleSheet.create({
   cardTitle: {
     color: colors.ink,
@@ -60,40 +162,50 @@ const styles = StyleSheet.create({
     color: colors.muted,
     fontSize: 14,
     lineHeight: 20,
+    marginTop: 4,
   },
   progressTrack: {
     backgroundColor: colors.surface,
     borderRadius: 999,
     height: 10,
-    marginTop: 4,
+    marginTop: 10,
     overflow: "hidden",
   },
   progressFill: {
     backgroundColor: colors.primary,
     borderRadius: 999,
     height: "100%",
-    width: "66%",
   },
   row: {
     alignItems: "center",
     borderTopColor: colors.border,
     borderTopWidth: 1,
     flexDirection: "row",
+    gap: 12,
     justifyContent: "space-between",
     paddingVertical: 12,
   },
   rowLabel: {
     color: colors.muted,
+    flex: 1,
     fontSize: 14,
     fontWeight: "600",
   },
   rowValue: {
     color: colors.ink,
+    flexShrink: 0,
     fontSize: 14,
     fontWeight: "800",
+    textAlign: "right",
   },
   actions: {
     gap: 10,
     marginTop: "auto",
+  },
+  errorText: {
+    color: colors.danger,
+    fontSize: 13,
+    fontWeight: "800",
+    marginTop: 8,
   },
 });

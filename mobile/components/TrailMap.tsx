@@ -1,6 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
+  ActivityIndicator,
   Image,
   DimensionValue,
   LayoutChangeEvent,
@@ -21,6 +22,18 @@ import { colors } from "./MiSenderoUI";
 
 type MapLayer = "standard" | "terrain" | "satellite";
 
+type MapTile = {
+  key: string;
+  url: string;
+  left: number;
+  top: number;
+};
+
+type MapTouch = {
+  pageX: number;
+  pageY: number;
+};
+
 type TrailMapProps = {
   trail: Trail | null;
   fitRoute?: boolean;
@@ -28,16 +41,43 @@ type TrailMapProps = {
   initialPerspective?: boolean;
   showDetailsCard?: boolean;
   showUserLocation?: boolean;
+  controlsTopOffset?: number;
 };
 
 const TILE_SIZE = 256;
 const DEFAULT_ZOOM = 13;
 const DEFAULT_CENTER: Coordinate = [-41.1734, -71.4752];
 const MIN_ZOOM = 10;
+const MAX_TERRAIN_POINTS = 42;
 const MAX_ZOOM_BY_LAYER: Record<MapLayer, number> = {
   standard: 18,
   terrain: 17,
   satellite: 19,
+};
+
+const clamp = (value: number, min: number, max: number) =>
+  Math.max(min, Math.min(max, value));
+
+const getTouchDistance = (touches: readonly MapTouch[]) => {
+  if (touches.length < 2) return null;
+
+  const [firstTouch, secondTouch] = touches;
+  const dx = firstTouch.pageX - secondTouch.pageX;
+  const dy = firstTouch.pageY - secondTouch.pageY;
+
+  return Math.sqrt(dx * dx + dy * dy);
+};
+
+const getSampledRoutePoints = (points: Coordinate[], maxPoints: number) => {
+  if (points.length <= maxPoints) return points;
+
+  const lastIndex = points.length - 1;
+
+  return Array.from({ length: maxPoints }, (_, index) => {
+    const sourceIndex = Math.round((index / (maxPoints - 1)) * lastIndex);
+
+    return points[sourceIndex];
+  });
 };
 
 const project = ([latitude, longitude]: Coordinate, zoom: number) => {
@@ -101,7 +141,7 @@ const getTileUrl = (layer: MapLayer, zoom: number, x: number, y: number) => {
   const tileX = wrapTileX(x, zoom);
 
   if (layer === "terrain") {
-    return `https://tile.opentopomap.org/${zoom}/${tileX}/${y}.png`;
+    return `https://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/${zoom}/${y}/${tileX}`;
   }
 
   if (layer === "satellite") {
@@ -164,6 +204,7 @@ export function TrailMap({
   initialPerspective = false,
   showDetailsCard = true,
   showUserLocation = true,
+  controlsTopOffset = 12,
 }: TrailMapProps) {
   const [layout, setLayout] = useState({ width: 0, height: 0 });
   const [layer, setLayer] = useState<MapLayer>("terrain");
@@ -171,8 +212,23 @@ export function TrailMap({
   const [activeZoom, setActiveZoom] = useState(trail?.map_zoom || DEFAULT_ZOOM);
   const [activeCenter, setActiveCenter] = useState<Coordinate>(DEFAULT_CENTER);
   const [panOffset, setPanOffset] = useState({ x: 0, y: 0 });
+  const [terrainOffset, setTerrainOffset] = useState({ x: 0, y: 0 });
+  const [terrainScale, setTerrainScale] = useState(1);
+  const [pinchPreviewScale, setPinchPreviewScale] = useState(1);
+  const [cachedTiles, setCachedTiles] = useState<MapTile[]>([]);
+  const [isTileLoading, setIsTileLoading] = useState(false);
   const centerRef = useRef(activeCenter);
   const zoomRef = useRef(activeZoom);
+  const maxZoomRef = useRef(MAX_ZOOM_BY_LAYER.terrain);
+  const isPerspectiveRef = useRef(isPerspective);
+  const terrainOffsetRef = useRef(terrainOffset);
+  const terrainScaleRef = useRef(terrainScale);
+  const isPinchingRef = useRef(false);
+  const pinchStartDistanceRef = useRef<number | null>(null);
+  const pinchStartZoomRef = useRef(activeZoom);
+  const pinchStartTerrainScaleRef = useRef(terrainScale);
+  const lastPinchRatioRef = useRef(1);
+  const tileLoadRef = useRef(0);
   const centerLat = trail?.center_lat;
   const centerLng = trail?.center_lng;
   const hasRealCenter =
@@ -214,12 +270,19 @@ export function TrailMap({
     setActiveCenter(nextView.center);
     setActiveZoom(nextView.zoom);
     setPanOffset({ x: 0, y: 0 });
+    setTerrainOffset({ x: 0, y: 0 });
+    setTerrainScale(1);
+    setPinchPreviewScale(1);
   }, [trail?.id, trailCenter[0], trailCenter[1], layout.width, layout.height, fitRoute, layer]);
 
   useEffect(() => {
     centerRef.current = activeCenter;
     zoomRef.current = zoom;
-  }, [activeCenter, zoom]);
+    maxZoomRef.current = maxZoom;
+    isPerspectiveRef.current = isPerspective;
+    terrainOffsetRef.current = terrainOffset;
+    terrainScaleRef.current = terrainScale;
+  }, [activeCenter, isPerspective, maxZoom, terrainOffset, terrainScale, zoom]);
 
   useEffect(() => {
     if (activeZoom > maxZoom) {
@@ -230,12 +293,82 @@ export function TrailMap({
   const panResponder = useMemo(
     () =>
       PanResponder.create({
-        onMoveShouldSetPanResponder: (_, gesture) =>
-          Math.abs(gesture.dx) > 5 || Math.abs(gesture.dy) > 5,
-        onPanResponderMove: (_, gesture) => {
+        onStartShouldSetPanResponder: (event) => event.nativeEvent.touches.length >= 2,
+        onMoveShouldSetPanResponder: (event, gesture) =>
+          event.nativeEvent.touches.length >= 2 ||
+          Math.abs(gesture.dx) > 5 ||
+          Math.abs(gesture.dy) > 5,
+        onPanResponderGrant: (event) => {
+          const distance = getTouchDistance(event.nativeEvent.touches);
+
+          if (!distance) return;
+
+          isPinchingRef.current = true;
+          pinchStartDistanceRef.current = distance;
+          pinchStartZoomRef.current = zoomRef.current;
+          pinchStartTerrainScaleRef.current = terrainScaleRef.current;
+          lastPinchRatioRef.current = 1;
+          setPanOffset({ x: 0, y: 0 });
+          setPinchPreviewScale(1);
+        },
+        onPanResponderMove: (event, gesture) => {
+          const distance = getTouchDistance(event.nativeEvent.touches);
+
+          if (distance && pinchStartDistanceRef.current) {
+            const ratio = distance / pinchStartDistanceRef.current;
+            isPinchingRef.current = true;
+            lastPinchRatioRef.current = ratio;
+            setPanOffset({ x: 0, y: 0 });
+
+            if (isPerspectiveRef.current) {
+              setTerrainScale(
+                Number(
+                  clamp(pinchStartTerrainScaleRef.current * ratio, 0.7, 1.9).toFixed(2)
+                )
+              );
+              return;
+            }
+
+            setPinchPreviewScale(Number(clamp(ratio, 0.68, 1.55).toFixed(2)));
+            return;
+          }
+
+          if (isPinchingRef.current) return;
+
           setPanOffset({ x: gesture.dx, y: gesture.dy });
         },
         onPanResponderRelease: (_, gesture) => {
+          if (isPinchingRef.current) {
+            if (!isPerspectiveRef.current) {
+              const zoomDelta = Math.round(Math.log(lastPinchRatioRef.current) / Math.log(1.38));
+              const nextZoom = clamp(
+                pinchStartZoomRef.current + zoomDelta,
+                MIN_ZOOM,
+                maxZoomRef.current
+              );
+
+              setActiveZoom(nextZoom);
+            }
+
+            isPinchingRef.current = false;
+            pinchStartDistanceRef.current = null;
+            lastPinchRatioRef.current = 1;
+            setPanOffset({ x: 0, y: 0 });
+            setPinchPreviewScale(1);
+            return;
+          }
+
+          if (isPerspectiveRef.current) {
+            const currentOffset = terrainOffsetRef.current;
+
+            setTerrainOffset({
+              x: currentOffset.x + gesture.dx,
+              y: currentOffset.y + gesture.dy,
+            });
+            setPanOffset({ x: 0, y: 0 });
+            return;
+          }
+
           const centerPixel = project(centerRef.current, zoomRef.current);
 
           setActiveCenter(
@@ -250,13 +383,24 @@ export function TrailMap({
           setPanOffset({ x: 0, y: 0 });
         },
         onPanResponderTerminate: () => {
+          isPinchingRef.current = false;
+          pinchStartDistanceRef.current = null;
+          lastPinchRatioRef.current = 1;
           setPanOffset({ x: 0, y: 0 });
+          setPinchPreviewScale(1);
         },
       }),
     []
   );
 
   const changeZoom = (delta: number) => {
+    if (isPerspective) {
+      setTerrainScale((currentScale) =>
+        Math.max(0.7, Math.min(1.9, Number((currentScale + delta * 0.16).toFixed(2))))
+      );
+      return;
+    }
+
     setActiveZoom((currentZoom) =>
       Math.max(MIN_ZOOM, Math.min(maxZoom, currentZoom + delta))
     );
@@ -268,6 +412,9 @@ export function TrailMap({
     setActiveCenter(nextView.center);
     setActiveZoom(nextView.zoom);
     setPanOffset({ x: 0, y: 0 });
+    setTerrainOffset({ x: 0, y: 0 });
+    setTerrainScale(1);
+    setPinchPreviewScale(1);
   };
 
   const centerOnUser = () => {
@@ -279,10 +426,17 @@ export function TrailMap({
     setActiveCenter(location.coordinate);
     setActiveZoom((currentZoom) => Math.max(currentZoom, Math.min(16, maxZoom)));
     setPanOffset({ x: 0, y: 0 });
+    setTerrainOffset({ x: 0, y: 0 });
+    setTerrainScale(1);
+    setPinchPreviewScale(1);
   };
 
   const mapState = useMemo(() => {
     if (!layout.width || !layout.height) {
+      return { tiles: [], points: [], userPoint: null };
+    }
+
+    if (isPerspective) {
       return { tiles: [], points: [], userPoint: null };
     }
 
@@ -295,8 +449,8 @@ export function TrailMap({
     const maxTileX = Math.floor((topLeft.x + layout.width) / TILE_SIZE);
     const minTileY = Math.floor(topLeft.y / TILE_SIZE);
     const maxTileY = Math.floor((topLeft.y + layout.height) / TILE_SIZE);
-    const tileBuffer = isPerspective ? 2 : 1;
-    const tiles = [];
+    const tileBuffer = layer === "terrain" ? 0 : 1;
+    const tiles: MapTile[] = [];
 
     for (let x = minTileX - tileBuffer; x <= maxTileX + tileBuffer; x += 1) {
       for (let y = minTileY - tileBuffer; y <= maxTileY + tileBuffer; y += 1) {
@@ -330,6 +484,36 @@ export function TrailMap({
     return { tiles, points, userPoint };
   }, [activeCenter[0], activeCenter[1], isPerspective, layer, layout.height, layout.width, location, routePoints, zoom]);
 
+  const tileSignature = useMemo(
+    () => mapState.tiles.map((tile) => tile.key).join("|"),
+    [mapState.tiles]
+  );
+
+  useEffect(() => {
+    if (isPerspective || mapState.tiles.length === 0) {
+      setIsTileLoading(false);
+      return;
+    }
+
+    const nextTiles = mapState.tiles;
+    const generation = tileLoadRef.current + 1;
+    tileLoadRef.current = generation;
+    setIsTileLoading(true);
+    setCachedTiles((currentTiles) => (currentTiles.length > 0 ? currentTiles : nextTiles));
+
+    Promise.all(nextTiles.map((tile) => Image.prefetch(tile.url).catch(() => false)))
+      .then(() => {
+        if (tileLoadRef.current === generation) {
+          setCachedTiles(nextTiles);
+        }
+      })
+      .finally(() => {
+        if (tileLoadRef.current === generation) {
+          setIsTileLoading(false);
+        }
+      });
+  }, [isPerspective, tileSignature]);
+
   const terrainState = useMemo(() => {
     if (!layout.width || !layout.height) {
       return {
@@ -341,7 +525,8 @@ export function TrailMap({
       };
     }
 
-    const sourcePoints = routePoints.length > 1 ? routePoints : [trailCenter, trailCenter];
+    const rawSourcePoints = routePoints.length > 1 ? routePoints : [trailCenter, trailCenter];
+    const sourcePoints = getSampledRoutePoints(rawSourcePoints, MAX_TERRAIN_POINTS);
     const projectedPoints = sourcePoints.map((point) => project(point, DEFAULT_ZOOM));
     const xs = projectedPoints.map((point) => point.x);
     const ys = projectedPoints.map((point) => point.y);
@@ -362,7 +547,7 @@ export function TrailMap({
     const offsetX = (sceneWidth - mapWidth * fitScale) / 2;
     const offsetY = (sceneHeight - mapHeight * fitScale) / 2;
     const difficultyFactor = getDifficultyFactor(trail?.difficulty);
-    const distanceKm = trail?.distance_km || getRouteDistanceKm(sourcePoints);
+    const distanceKm = trail?.distance_km || getRouteDistanceKm(rawSourcePoints);
     const elevationGain = Math.round(
       Math.max(60, distanceKm * (80 + difficultyFactor * 95))
     );
@@ -371,11 +556,16 @@ export function TrailMap({
       const progress =
         projectedPoints.length <= 1 ? 0 : index / (projectedPoints.length - 1);
       const wave = Math.sin(progress * Math.PI * 2.4) * 18;
-      const climb = progress * elevationGain * 0.08 * difficultyFactor;
+      const localPeak = Math.sin(progress * Math.PI) * 58 * difficultyFactor;
+      const secondaryPeak = Math.max(0, Math.sin((progress - 0.18) * Math.PI * 2)) * 28;
+      const climb = progress * elevationGain * 0.045 * difficultyFactor;
+      const z = Math.max(18, 34 + localPeak + secondaryPeak + climb);
 
       return {
         x: offsetX + (point.x - minX) * fitScale,
-        y: offsetY + (point.y - minY) * fitScale - wave - climb,
+        y: offsetY + (point.y - minY) * fitScale - wave - z,
+        baseY: offsetY + (point.y - minY) * fitScale + 18,
+        z,
       };
     });
     const userPoint = location
@@ -388,13 +578,13 @@ export function TrailMap({
     const bands = Array.from({ length: 9 }, (_, index) => ({
       key: `terrain-band-${index}`,
       top: `${index * 11}%` as DimensionValue,
-      opacity: 0.84 - index * 0.035,
+      opacity: 0.7 - index * 0.025,
       color:
         index < 3
-          ? "#BFE7C4"
+          ? "#D5E8BE"
           : index < 6
-            ? "#86C79A"
-            : "#5A9B73",
+            ? "#A9D39B"
+            : "#6FAC77",
     }));
 
     return {
@@ -410,6 +600,12 @@ export function TrailMap({
     const { width, height } = event.nativeEvent.layout;
     setLayout({ width, height });
   };
+  const isZoomInDisabled = isPerspective ? terrainScale >= 1.9 : zoom >= maxZoom;
+  const isZoomOutDisabled = isPerspective ? terrainScale <= 0.7 : zoom <= MIN_ZOOM;
+  const isInitialTileLoad = cachedTiles.length === 0;
+  const loaderTop = isInitialTileLoad
+    ? Math.max(128, layout.height / 2 - 24)
+    : controlsTopOffset + 112;
 
   return (
     <View
@@ -420,86 +616,165 @@ export function TrailMap({
       {isPerspective ? (
         <View style={styles.terrain3dScene}>
           <View style={styles.terrainSky} />
+          <View style={styles.mountainFar} />
+          <View style={styles.mountainNear} />
           <View style={styles.terrainHorizon} />
           <View style={styles.terrainPlane}>
-            {terrainState.bands.map((band) => (
-              <View
-                key={band.key}
-                style={[
-                  styles.terrainBand,
-                  {
-                    backgroundColor: band.color,
-                    opacity: band.opacity,
-                    top: band.top,
-                  },
-                ]}
-              />
-            ))}
-
-            {terrainState.points.slice(0, -1).map((point, index) => {
-              const nextPoint = terrainState.points[index + 1];
-              const dx = nextPoint.x - point.x;
-              const dy = nextPoint.y - point.y;
-              const length = Math.sqrt(dx * dx + dy * dy);
-              const angle = `${Math.atan2(dy, dx)}rad`;
-
-              return (
+            <View
+              style={[
+                styles.terrainMovableContent,
+                {
+                  transform: [
+                    { translateX: terrainOffset.x + panOffset.x },
+                    { translateY: terrainOffset.y + panOffset.y },
+                    { scale: terrainScale },
+                  ],
+                },
+              ]}
+            >
+              {terrainState.bands.map((band) => (
                 <View
-                  key={`terrain-route-${index}`}
+                  key={band.key}
                   style={[
-                    styles.terrainRouteSegment,
+                    styles.terrainBand,
                     {
-                      left: point.x,
-                      top: point.y,
-                      width: length,
-                      transform: [{ rotate: angle }],
+                      backgroundColor: band.color,
+                      opacity: band.opacity,
+                      top: band.top,
                     },
                   ]}
                 />
-              );
-            })}
+              ))}
 
-            {terrainState.points[0] ? (
-              <View
-                style={[
-                  styles.terrainMarker,
-                  styles.startMarker,
-                  {
-                    left: terrainState.points[0].x - 16,
-                    top: terrainState.points[0].y - 16,
-                  },
-                ]}
-              >
-                <Ionicons name="flag-outline" size={15} color={colors.white} />
-              </View>
-            ) : null}
+              <View style={styles.terrainRidgeBack} />
+              <View style={styles.terrainRidgeFront} />
 
-            {terrainState.points.length > 1 ? (
-              <View
-                style={[
-                  styles.terrainMarker,
-                  styles.endMarker,
-                  {
-                    left: terrainState.points[terrainState.points.length - 1].x - 16,
-                    top: terrainState.points[terrainState.points.length - 1].y - 16,
-                  },
-                ]}
-              >
-                <Ionicons name="location" size={15} color={colors.white} />
-              </View>
-            ) : null}
+              {terrainState.points.map((point, index) => (
+                <View
+                  key={`terrain-pillar-${index}`}
+                  style={[
+                    styles.terrainPillar,
+                    {
+                      height: Math.max(18, point.baseY - point.y),
+                      left: point.x - 5,
+                      top: point.y + 8,
+                    },
+                  ]}
+                />
+              ))}
 
-            {terrainState.userPoint ? (
-              <View
-                style={[
-                  styles.terrainUserMarker,
-                  {
-                    left: terrainState.userPoint.x - 11,
-                    top: terrainState.userPoint.y - 11,
-                  },
-                ]}
-              />
-            ) : null}
+              {terrainState.points.slice(0, -1).map((point, index) => {
+                const nextPoint = terrainState.points[index + 1];
+                const dx = nextPoint.x - point.x;
+                const dy = nextPoint.y - point.y;
+                const length = Math.sqrt(dx * dx + dy * dy);
+                const angle = `${Math.atan2(dy, dx)}rad`;
+
+                return (
+                  <View
+                    key={`terrain-route-shadow-${index}`}
+                    style={[
+                      styles.terrainRouteShadow,
+                      {
+                        left: point.x + 5,
+                        top: Math.max(point.baseY, nextPoint.baseY) + 4,
+                        width: length,
+                        transform: [{ rotate: angle }],
+                      },
+                    ]}
+                  />
+                );
+              })}
+
+              {terrainState.points.slice(0, -1).map((point, index) => {
+                const nextPoint = terrainState.points[index + 1];
+                const dx = nextPoint.x - point.x;
+                const dy = nextPoint.y - point.y;
+                const length = Math.sqrt(dx * dx + dy * dy);
+                const angle = `${Math.atan2(dy, dx)}rad`;
+
+                return (
+                  <View
+                    key={`terrain-route-wall-${index}`}
+                    style={[
+                      styles.terrainRouteWall,
+                      {
+                        height: Math.max(18, (point.z + nextPoint.z) / 2),
+                        left: point.x,
+                        top: point.y + 5,
+                        width: length,
+                        transform: [{ rotate: angle }],
+                      },
+                    ]}
+                  />
+                );
+              })}
+
+              {terrainState.points.slice(0, -1).map((point, index) => {
+                const nextPoint = terrainState.points[index + 1];
+                const dx = nextPoint.x - point.x;
+                const dy = nextPoint.y - point.y;
+                const length = Math.sqrt(dx * dx + dy * dy);
+                const angle = `${Math.atan2(dy, dx)}rad`;
+
+                return (
+                  <View
+                    key={`terrain-route-${index}`}
+                    style={[
+                      styles.terrainRouteSegment,
+                      {
+                        left: point.x,
+                        top: point.y,
+                        width: length,
+                        transform: [{ rotate: angle }],
+                      },
+                    ]}
+                  />
+                );
+              })}
+
+              {terrainState.points[0] ? (
+                <View
+                  style={[
+                    styles.terrainMarker,
+                    styles.startMarker,
+                    {
+                      left: terrainState.points[0].x - 16,
+                      top: terrainState.points[0].y - 16,
+                    },
+                  ]}
+                >
+                  <Ionicons name="flag-outline" size={15} color={colors.white} />
+                </View>
+              ) : null}
+
+              {terrainState.points.length > 1 ? (
+                <View
+                  style={[
+                    styles.terrainMarker,
+                    styles.endMarker,
+                    {
+                      left: terrainState.points[terrainState.points.length - 1].x - 16,
+                      top: terrainState.points[terrainState.points.length - 1].y - 16,
+                    },
+                  ]}
+                >
+                  <Ionicons name="location" size={15} color={colors.white} />
+                </View>
+              ) : null}
+
+              {terrainState.userPoint ? (
+                <View
+                  style={[
+                    styles.terrainUserMarker,
+                    {
+                      left: terrainState.userPoint.x - 11,
+                      top: terrainState.userPoint.y - 11,
+                    },
+                  ]}
+                />
+              ) : null}
+            </View>
           </View>
 
           <View style={styles.terrainInfo}>
@@ -513,12 +788,34 @@ export function TrailMap({
         <View
           style={[
             styles.mapContent,
-            { transform: [{ translateX: panOffset.x }, { translateY: panOffset.y }] },
+            {
+              transform: [
+                { translateX: panOffset.x },
+                { translateY: panOffset.y },
+                { scale: pinchPreviewScale },
+              ],
+            },
           ]}
         >
+          {isTileLoading && cachedTiles.length > 0
+            ? cachedTiles.map((tile) => (
+                <Image
+                  key={`cached-${tile.key}`}
+                  fadeDuration={0}
+                  source={{ uri: tile.url }}
+                  style={[
+                    styles.tile,
+                    styles.cachedTile,
+                    { left: tile.left, top: tile.top },
+                  ]}
+                />
+              ))
+            : null}
+
           {mapState.tiles.map((tile) => (
             <Image
               key={tile.key}
+              fadeDuration={0}
               source={{ uri: tile.url }}
               style={[styles.tile, { left: tile.left, top: tile.top }]}
             />
@@ -593,8 +890,30 @@ export function TrailMap({
         </View>
       )}
 
+      {!isPerspective && isTileLoading ? (
+        <View pointerEvents="none" style={[styles.mapLoaderLayer, { top: loaderTop }]}>
+          <View
+            style={[
+              styles.mapLoaderPill,
+              !isInitialTileLoad && styles.mapLoaderPillCompact,
+            ]}
+          >
+            <ActivityIndicator size="small" color={colors.green} />
+            {isInitialTileLoad ? (
+              <Text style={styles.mapLoaderText}>Cargando mapa</Text>
+            ) : null}
+          </View>
+        </View>
+      ) : null}
+
       {!isPerspective ? (
-        <View style={[styles.layerControl, immersive && styles.immersiveLayerControl]}>
+        <View
+          style={[
+            styles.layerControl,
+            { top: controlsTopOffset },
+            immersive && styles.immersiveLayerControl,
+          ]}
+        >
         <Pressable
           onPress={() => setLayer("standard")}
           style={[styles.layerButton, layer === "standard" && styles.layerButtonActive]}
@@ -626,6 +945,7 @@ export function TrailMap({
         onPress={() => setIsPerspective((current) => !current)}
         style={[
           styles.perspectiveButton,
+          { top: controlsTopOffset + 50 },
           immersive && styles.immersivePerspectiveButton,
           isPerspective && styles.perspectiveButtonActive,
         ]}
@@ -645,19 +965,25 @@ export function TrailMap({
         </Text>
       </Pressable>
 
-      <View style={[styles.zoomControl, immersive && styles.immersiveZoomControl]}>
+      <View
+        style={[
+          styles.zoomControl,
+          { top: controlsTopOffset },
+          immersive && styles.immersiveZoomControl,
+        ]}
+      >
         <Pressable
           onPress={() => changeZoom(1)}
-          disabled={zoom >= maxZoom}
-          style={[styles.zoomButton, zoom >= maxZoom && styles.disabledControl]}
+          disabled={isZoomInDisabled}
+          style={[styles.zoomButton, isZoomInDisabled && styles.disabledControl]}
         >
           <Ionicons name="add" size={22} color={colors.ink} />
         </Pressable>
         <View style={styles.zoomDivider} />
         <Pressable
           onPress={() => changeZoom(-1)}
-          disabled={zoom <= MIN_ZOOM}
-          style={[styles.zoomButton, zoom <= MIN_ZOOM && styles.disabledControl]}
+          disabled={isZoomOutDisabled}
+          style={[styles.zoomButton, isZoomOutDisabled && styles.disabledControl]}
         >
           <Ionicons name="remove" size={22} color={colors.ink} />
         </Pressable>
@@ -665,10 +991,6 @@ export function TrailMap({
         <Pressable onPress={centerOnUser} style={styles.zoomButton}>
           <Ionicons name="locate-outline" size={20} color={colors.ink} />
         </Pressable>
-      </View>
-
-      <View style={[styles.zoomBadge, immersive && styles.immersiveZoomBadge]}>
-        <Text style={styles.zoomBadgeText}>z{zoom}</Text>
       </View>
 
       {showDetailsCard ? (
@@ -684,7 +1006,7 @@ export function TrailMap({
       {!isPerspective ? (
         <Text style={styles.attribution}>
           {layer === "terrain"
-            ? "OpenTopoMap | OpenStreetMap contributors"
+            ? "Esri World Topo Map"
             : layer === "satellite"
               ? "Esri World Imagery"
               : "OpenStreetMap contributors"}
@@ -737,6 +1059,38 @@ const styles = StyleSheet.create({
     position: "absolute",
     width: TILE_SIZE,
   },
+  cachedTile: {
+    opacity: 0.72,
+  },
+  mapLoaderLayer: {
+    alignItems: "center",
+    left: 0,
+    position: "absolute",
+    right: 0,
+    zIndex: 8,
+  },
+  mapLoaderPill: {
+    alignItems: "center",
+    backgroundColor: "rgba(255,255,255,0.95)",
+    borderRadius: 18,
+    flexDirection: "row",
+    gap: 8,
+    paddingHorizontal: 14,
+    paddingVertical: 10,
+    shadowColor: "#000",
+    shadowOpacity: 0.12,
+    shadowRadius: 12,
+  },
+  mapLoaderPillCompact: {
+    borderRadius: 999,
+    paddingHorizontal: 10,
+    paddingVertical: 9,
+  },
+  mapLoaderText: {
+    color: colors.ink,
+    fontSize: 13,
+    fontWeight: "800",
+  },
   terrain3dScene: {
     backgroundColor: "#CFE6F1",
     flex: 1,
@@ -744,44 +1098,116 @@ const styles = StyleSheet.create({
   },
   terrainSky: {
     backgroundColor: "#B8D9E8",
-    height: "42%",
+    height: "45%",
     left: 0,
     opacity: 0.95,
     position: "absolute",
     right: 0,
     top: 0,
   },
+  mountainFar: {
+    backgroundColor: "#D6E6C7",
+    height: "28%",
+    left: "-18%",
+    position: "absolute",
+    right: "-18%",
+    top: "25%",
+    transform: [{ rotate: "-5deg" }, { skewX: "-18deg" }],
+  },
+  mountainNear: {
+    backgroundColor: "#BED8A5",
+    height: "22%",
+    left: "-16%",
+    opacity: 0.92,
+    position: "absolute",
+    right: "-20%",
+    top: "35%",
+    transform: [{ rotate: "7deg" }, { skewX: "24deg" }],
+  },
   terrainHorizon: {
-    backgroundColor: "#E7F1D7",
+    backgroundColor: "#EEF5DF",
     borderTopColor: "rgba(255,255,255,0.72)",
     borderTopWidth: 2,
-    height: "18%",
+    height: "14%",
     left: "-8%",
     position: "absolute",
     right: "-8%",
-    top: "31%",
-    transform: [{ rotate: "-4deg" }],
+    top: "43%",
+    transform: [{ rotate: "-2deg" }],
   },
   terrainPlane: {
-    backgroundColor: "#8EC593",
+    backgroundColor: "#78B97B",
     borderTopColor: "rgba(255,255,255,0.56)",
     borderTopWidth: 2,
-    bottom: "-7%",
-    height: "74%",
-    left: "-18%",
+    bottom: "-10%",
+    height: "68%",
+    left: "-20%",
     overflow: "hidden",
     position: "absolute",
-    right: "-18%",
-    transform: [{ perspective: 900 }, { rotateX: "54deg" }],
+    right: "-20%",
+    shadowColor: "#174D31",
+    shadowOpacity: 0.25,
+    shadowRadius: 18,
+    transform: [{ perspective: 850 }, { rotateX: "42deg" }],
+  },
+  terrainMovableContent: {
+    bottom: 0,
+    left: 0,
+    position: "absolute",
+    right: 0,
+    top: 0,
   },
   terrainBand: {
-    borderTopColor: "rgba(255,255,255,0.38)",
+    borderTopColor: "rgba(255,255,255,0.26)",
     borderTopWidth: 1,
     height: "13%",
     left: "-5%",
     position: "absolute",
     right: "-5%",
     transform: [{ rotate: "-7deg" }],
+  },
+  terrainRidgeBack: {
+    backgroundColor: "rgba(42,112,70,0.16)",
+    borderRadius: 999,
+    height: "22%",
+    left: "-8%",
+    position: "absolute",
+    right: "20%",
+    top: "28%",
+    transform: [{ rotate: "-8deg" }],
+  },
+  terrainRidgeFront: {
+    backgroundColor: "rgba(14,78,48,0.18)",
+    borderRadius: 999,
+    bottom: "8%",
+    height: "24%",
+    left: "12%",
+    position: "absolute",
+    right: "-10%",
+    transform: [{ rotate: "-10deg" }],
+  },
+  terrainPillar: {
+    backgroundColor: "rgba(36,96,62,0.22)",
+    borderRadius: 999,
+    position: "absolute",
+    width: 10,
+    zIndex: 2,
+  },
+  terrainRouteShadow: {
+    backgroundColor: "rgba(23,70,43,0.24)",
+    borderRadius: 999,
+    height: 13,
+    position: "absolute",
+    transformOrigin: "left center",
+    zIndex: 1,
+  },
+  terrainRouteWall: {
+    backgroundColor: "rgba(168,59,50,0.34)",
+    borderBottomColor: "rgba(255,255,255,0.22)",
+    borderBottomWidth: 1,
+    position: "absolute",
+    transformOrigin: "left top",
+    zIndex: 3,
   },
   terrainRouteSegment: {
     backgroundColor: colors.danger,
@@ -801,8 +1227,11 @@ const styles = StyleSheet.create({
     height: 32,
     justifyContent: "center",
     position: "absolute",
+    shadowColor: "#000",
+    shadowOpacity: 0.22,
+    shadowRadius: 8,
     width: 32,
-    zIndex: 5,
+    zIndex: 7,
   },
   terrainUserMarker: {
     backgroundColor: "#2376D9",
@@ -811,8 +1240,11 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     height: 22,
     position: "absolute",
+    shadowColor: "#000",
+    shadowOpacity: 0.22,
+    shadowRadius: 7,
     width: 22,
-    zIndex: 6,
+    zIndex: 8,
   },
   terrainInfo: {
     backgroundColor: "rgba(255,255,255,0.94)",
@@ -843,12 +1275,9 @@ const styles = StyleSheet.create({
     left: 12,
     padding: 4,
     position: "absolute",
-    top: 12,
     zIndex: 6,
   },
-  immersiveLayerControl: {
-    top: 74,
-  },
+  immersiveLayerControl: {},
   layerButton: {
     borderRadius: 12,
     paddingHorizontal: 12,
@@ -871,12 +1300,9 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     position: "absolute",
     right: 12,
-    top: 12,
     zIndex: 6,
   },
-  immersiveZoomControl: {
-    top: 74,
-  },
+  immersiveZoomControl: {},
   zoomButton: {
     alignItems: "center",
     height: 42,
@@ -890,19 +1316,6 @@ const styles = StyleSheet.create({
   disabledControl: {
     opacity: 0.38,
   },
-  zoomBadge: {
-    backgroundColor: "rgba(255,255,255,0.94)",
-    borderRadius: 12,
-    paddingHorizontal: 9,
-    paddingVertical: 5,
-    position: "absolute",
-    right: 12,
-    top: 148,
-    zIndex: 6,
-  },
-  immersiveZoomBadge: {
-    top: 210,
-  },
   perspectiveButton: {
     alignItems: "center",
     backgroundColor: "rgba(255,255,255,0.94)",
@@ -913,12 +1326,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 9,
     position: "absolute",
-    top: 62,
     zIndex: 6,
   },
-  immersivePerspectiveButton: {
-    top: 124,
-  },
+  immersivePerspectiveButton: {},
   perspectiveButtonActive: {
     backgroundColor: colors.green,
   },
@@ -929,11 +1339,6 @@ const styles = StyleSheet.create({
   },
   perspectiveLabelActive: {
     color: colors.white,
-  },
-  zoomBadgeText: {
-    color: colors.ink,
-    fontSize: 11,
-    fontWeight: "900",
   },
   routeSegment: {
     backgroundColor: colors.danger,

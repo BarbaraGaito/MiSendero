@@ -40,12 +40,49 @@ export interface Trail {
   created_at: string;
 }
 
+export interface TrailWeather {
+  trail_id: number;
+  date: string;
+  temperature_c: number;
+  min_temperature_c: number;
+  max_temperature_c: number;
+  condition: string;
+  wind_kmh: number;
+  rain_probability: number;
+  risk_level: "bajo" | "medio" | "alto";
+  recommendation: string;
+  source: string;
+}
+
+export interface TrailReport {
+  id: number;
+  trail_id: number;
+  issue_summary: string;
+  severity: string;
+  trail_state: string;
+  cause: string | null;
+  blocks_path: number;
+  details: string | null;
+  reporter_name: string;
+  created_at: string;
+}
+
+export interface EmergencyContact {
+  id?: number;
+  name: string;
+  phone: string;
+  relationship: string;
+  updated_at: number;
+}
+
 export interface Profile {
   user: {
     id: number;
     name: string;
     email: string;
     role?: UserRole;
+    terms_version?: string | null;
+    terms_accepted_at?: string | null;
     created_at?: string;
   } | null;
   stats: {
@@ -59,6 +96,8 @@ export interface AuthUser {
   name: string;
   email: string;
   role?: UserRole;
+  terms_version?: string | null;
+  terms_accepted_at?: string | null;
   created_at?: string;
 }
 

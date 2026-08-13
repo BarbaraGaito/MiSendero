@@ -13,6 +13,11 @@ import { getProfile, getTrails } from "../../services/api";
 import { getAuthSession } from "../../services/authSession";
 import { Profile, Trail } from "../../types";
 import { BottomNav, trailImages } from "../components/MiSenderoUI";
+import {
+  ExperienceProfile,
+  getExperienceProfile,
+  getRecommendedTrailForProfile,
+} from "../../services/experienceProfile";
 
 type TagProps = {
   label: string;
@@ -27,6 +32,8 @@ type RouteMetricProps = {
 
 export default function HomeScreen() {
   const [profile, setProfile] = useState<Profile | null>(null);
+  const [experienceProfile, setExperienceProfile] =
+    useState<ExperienceProfile | null>(null);
   const [recommendedTrail, setRecommendedTrail] = useState<Trail | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -40,13 +47,15 @@ export default function HomeScreen() {
           return;
         }
 
-        const [profileData, trails] = await Promise.all([
+        const [profileData, trails, experience] = await Promise.all([
           getProfile(session.token),
           getTrails(),
+          getExperienceProfile(),
         ]);
 
         setProfile(profileData);
-        setRecommendedTrail(trails[0] || null);
+        setExperienceProfile(experience);
+        setRecommendedTrail(getRecommendedTrailForProfile(trails, experience));
       } catch (loadError) {
         setError("No pudimos actualizar tu inicio.");
       }
@@ -61,6 +70,7 @@ export default function HomeScreen() {
     : "Distancia a confirmar";
   const duration = recommendedTrail?.duration || "Duracion a confirmar";
   const difficulty = recommendedTrail?.difficulty || "A confirmar";
+  const canRecommend = experienceProfile?.completed;
 
   return (
     <SafeAreaView edges={["top", "bottom"]} style={styles.safeArea}>
@@ -86,7 +96,20 @@ export default function HomeScreen() {
 
           {error ? <Text style={styles.statusText}>{error}</Text> : null}
 
-          {recommendedTrail ? (
+          {!canRecommend ? (
+            <View style={styles.emptyCard}>
+              <Text style={styles.routeName}>Completa tu perfil de experiencia</Text>
+              <Text style={styles.routeLocation}>
+                Responde unas preguntas rapidas para recomendarte rutas acordes a tu nivel.
+              </Text>
+              <Pressable
+                onPress={() => router.push("/onboarding-experiencia")}
+                style={styles.inlineButton}
+              >
+                <Text style={styles.inlineButtonText}>Completar ahora</Text>
+              </Pressable>
+            </View>
+          ) : recommendedTrail ? (
             <Pressable
               style={styles.routeCard}
               onPress={() =>
@@ -127,7 +150,7 @@ export default function HomeScreen() {
             </View>
           )}
 
-          {recommendedTrail ? (
+          {canRecommend && recommendedTrail ? (
             <Pressable
               style={styles.primaryButton}
               onPress={() =>
@@ -249,6 +272,20 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     gap: 8,
     padding: 18,
+  },
+  inlineButton: {
+    alignItems: "center",
+    alignSelf: "flex-start",
+    backgroundColor: colors.primary,
+    borderRadius: 16,
+    marginTop: 8,
+    paddingHorizontal: 14,
+    paddingVertical: 10,
+  },
+  inlineButtonText: {
+    color: colors.surface,
+    fontSize: 13,
+    fontWeight: "800",
   },
   mapPreview: {
     height: 220,

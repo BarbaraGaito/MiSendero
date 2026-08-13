@@ -1,16 +1,19 @@
 import { Ionicons } from "@expo/vector-icons";
+import * as Network from "expo-network";
 import { router, useLocalSearchParams } from "expo-router";
 import React, { useEffect, useMemo, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
-import { getTrailById } from "../../services/api";
-import { Trail } from "../../types";
+import { getTrailById, getTrailReports, getTrailWeather } from "../../services/api";
+import { Trail, TrailReport, TrailWeather } from "../../types";
 import { TrailMap } from "../components/TrailMap";
 import { useDeviceLocation } from "../hooks/useDeviceLocation";
 import {
   Coordinate,
   formatDistance,
   getDistanceToRouteMeters,
+  getRouteLengthMeters,
+  getRouteProgressMeters,
   getRouteStart,
   parseRouteCoordinates,
   ROUTE_DEVIATION_WARNING_METERS,
@@ -25,27 +28,76 @@ import {
 
 export default function Screen04RouteMap() {
   const insets = useSafeAreaInsets();
-  const { active, id } = useLocalSearchParams<{ active?: string; id?: string }>();
+  const { active, id, startedAt } = useLocalSearchParams<{
+    active?: string;
+    id?: string;
+    startedAt?: string;
+  }>();
   const trailId = Number(id) || 1;
   const isActiveRoute = active === "1";
+  const fallbackStartedAt = useMemo(() => Date.now(), []);
+  const startedAtMs = Number(startedAt) || fallbackStartedAt;
   const [trail, setTrail] = useState<Trail | null>(null);
+  const [weather, setWeather] = useState<TrailWeather | null>(null);
+  const [reports, setReports] = useState<TrailReport[]>([]);
+  const [isWifiConnected, setIsWifiConnected] = useState(false);
+  const [isContextLoading, setIsContextLoading] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    setIsLoading(true);
+    let isMounted = true;
 
-    getTrailById(trailId)
-      .then((data) => {
-        setTrail(data);
+    setIsLoading(true);
+    setIsContextLoading(true);
+
+    Promise.all([
+      getTrailById(trailId),
+      getTrailReports(trailId).catch(() => []),
+      Network.getNetworkStateAsync().catch(() => null),
+    ])
+      .then(async ([trailData, reportsData, networkState]) => {
+        if (!isMounted) return;
+
+        const hasWifi =
+          networkState?.type === Network.NetworkStateType.WIFI &&
+          networkState.isConnected !== false &&
+          networkState.isInternetReachable !== false;
+
+        setTrail(trailData);
+        setReports(reportsData);
+        setIsWifiConnected(hasWifi);
         setError(null);
+
+        if (!hasWifi) {
+          setWeather(null);
+          return;
+        }
+
+        const weatherData = await getTrailWeather(trailId).catch(() => null);
+
+        if (isMounted) {
+          setWeather(weatherData);
+        }
       })
       .catch(() => {
+        if (!isMounted) return;
+
         setError("No pudimos cargar el mapa de este sendero.");
+        setWeather(null);
+        setReports([]);
+        setIsWifiConnected(false);
       })
       .finally(() => {
+        if (!isMounted) return;
+
         setIsLoading(false);
+        setIsContextLoading(false);
       });
+
+    return () => {
+      isMounted = false;
+    };
   }, [trailId]);
 
   const routePoints = useMemo(
@@ -77,9 +129,25 @@ export default function Screen04RouteMap() {
     if (!isActiveRoute || !location || routePoints.length === 0) return null;
     return getDistanceToRouteMeters(location.coordinate, routePoints);
   }, [isActiveRoute, location, routePoints]);
+  const totalRouteMeters = useMemo(() => {
+    if (trail?.distance_km) return trail.distance_km * 1000;
+    return getRouteLengthMeters(routePoints);
+  }, [routePoints, trail?.distance_km]);
+  const traveledMeters = useMemo(() => {
+    if (!isActiveRoute || !location || routePoints.length === 0) return null;
+    return getRouteProgressMeters(location.coordinate, routePoints);
+  }, [isActiveRoute, location, routePoints]);
   const isOffRoute =
+    !isTestingLocation &&
     routeDeviationMeters !== null &&
     routeDeviationMeters > ROUTE_DEVIATION_WARNING_METERS;
+  const activeTop = Math.max(22, insets.top + 14);
+  const activeBannerTop = activeTop + 68;
+  const mapControlsTop = activeBannerTop + (isOffRoute ? 116 : 8);
+  const hasBlockingReport = reports.some((report) => report.blocks_path === 1);
+  const severeReports = reports.filter((report) =>
+    ["Alta", "Critica"].includes(report.severity)
+  ).length;
 
   if (isActiveRoute) {
     return (
@@ -90,9 +158,10 @@ export default function Screen04RouteMap() {
           immersive
           initialPerspective
           showDetailsCard={false}
+          controlsTopOffset={mapControlsTop}
         />
 
-        <View style={styles.activeHeader}>
+        <View style={[styles.activeHeader, { top: activeTop }]}>
           <Pressable onPress={() => router.back()} style={styles.activeIconButton}>
             <Ionicons name="chevron-back" size={22} color={colors.ink} />
           </Pressable>
@@ -105,7 +174,7 @@ export default function Screen04RouteMap() {
         </View>
 
         {isLoading || error ? (
-          <View style={styles.activeStatus}>
+          <View style={[styles.activeStatus, { top: activeBannerTop }]}>
             <Text style={styles.statusText}>
               {isLoading ? "Cargando mapa..." : error}
             </Text>
@@ -113,7 +182,7 @@ export default function Screen04RouteMap() {
         ) : null}
 
         {!isLoading && !error && locationPermissionDenied ? (
-          <View style={styles.activeStatus}>
+          <View style={[styles.activeStatus, { top: activeBannerTop }]}>
             <Text style={styles.statusText}>
               Activa la ubicacion para detectar desvíos de ruta.
             </Text>
@@ -121,7 +190,7 @@ export default function Screen04RouteMap() {
         ) : null}
 
         {isOffRoute && routeDeviationMeters !== null ? (
-          <View style={styles.deviationBanner}>
+          <View style={[styles.deviationBanner, { top: activeBannerTop }]}>
             <Ionicons name="warning-outline" size={20} color={colors.danger} />
             <View style={styles.deviationText}>
               <Text style={styles.deviationTitle}>Te alejaste de la ruta</Text>
@@ -147,7 +216,7 @@ export default function Screen04RouteMap() {
         ) : null}
 
         {isTestingLocation ? (
-          <View style={styles.testingBanner}>
+          <View style={[styles.testingBanner, { top: activeBannerTop + 74 }]}>
             <Ionicons name="flask-outline" size={17} color={colors.greenDark} />
             <Text style={styles.testingBannerText}>
               Modo testing: ubicacion simulada en el inicio
@@ -157,18 +226,47 @@ export default function Screen04RouteMap() {
 
         <View style={[styles.activeFooter, { paddingBottom: Math.max(16, insets.bottom + 10) }]}>
           <Pressable
-            onPress={() => router.push("/descanso")}
+            onPress={() =>
+              router.push({
+                pathname: "/descanso",
+                params: {
+                  id: String(trailId),
+                  startedAt: String(startedAtMs),
+                  traveledMeters:
+                    traveledMeters !== null ? String(Math.round(traveledMeters)) : "",
+                  totalMeters:
+                    totalRouteMeters > 0 ? String(Math.round(totalRouteMeters)) : "",
+                },
+              })
+            }
             style={styles.activeAction}
           >
             <Ionicons name="pause-circle-outline" size={20} color={colors.greenDark} />
             <Text style={styles.activeActionText}>Descanso</Text>
           </Pressable>
           <Pressable
-            onPress={() => router.push("/reportar-terreno")}
+            onPress={() =>
+              router.push({
+                pathname: "/reportar-terreno",
+                params: { id: String(trailId) },
+              })
+            }
             style={styles.activeAction}
           >
             <Ionicons name="warning-outline" size={20} color={colors.greenDark} />
             <Text style={styles.activeActionText}>Terreno</Text>
+          </Pressable>
+          <Pressable
+            onPress={() =>
+              router.push({
+                pathname: "/alerta-ruta",
+                params: { id: String(trailId) },
+              })
+            }
+            style={styles.activeAction}
+          >
+            <Ionicons name="trail-sign-outline" size={20} color={colors.greenDark} />
+            <Text style={styles.activeActionText}>Alerta</Text>
           </Pressable>
           <Pressable
             onPress={() => router.push("/confirmar-sos")}
@@ -210,6 +308,125 @@ export default function Screen04RouteMap() {
           </View>
         </InfoCard>
 
+        {isWifiConnected ? (
+          <InfoCard style={styles.previewCard}>
+            <View style={styles.sectionHeader}>
+              <View style={styles.sectionHeaderText}>
+                <Text style={styles.cardTitle}>Clima de hoy</Text>
+                <Text style={styles.cardText}>
+                  {trail?.location || "Ubicacion de la ruta"}
+                </Text>
+              </View>
+              <View
+                style={[
+                  styles.riskBadge,
+                  weather?.risk_level === "alto" && styles.riskBadgeHigh,
+                  weather?.risk_level === "medio" && styles.riskBadgeMedium,
+                ]}
+              >
+                <Text
+                  style={[
+                    styles.riskBadgeText,
+                    weather?.risk_level === "alto" && styles.riskBadgeTextHigh,
+                    weather?.risk_level === "medio" && styles.riskBadgeTextMedium,
+                  ]}
+                >
+                  {weather ? weather.risk_level : "cargando"}
+                </Text>
+              </View>
+            </View>
+
+            {isContextLoading && !weather ? (
+              <Text style={styles.loadingText}>Consultando clima de la ruta...</Text>
+            ) : weather ? (
+              <>
+                <View style={styles.weatherGrid}>
+                  <WeatherMetric
+                    icon="thermometer-outline"
+                    label="Temp."
+                    value={`${weather.temperature_c} C`}
+                  />
+                  <WeatherMetric
+                    icon="cloud-outline"
+                    label="Estado"
+                    value={weather.condition}
+                  />
+                  <WeatherMetric
+                    icon="leaf-outline"
+                    label="Viento"
+                    value={`${weather.wind_kmh} km/h`}
+                  />
+                  <WeatherMetric
+                    icon="rainy-outline"
+                    label="Lluvia"
+                    value={`${weather.rain_probability}%`}
+                  />
+                </View>
+                <Text style={styles.recommendationText}>{weather.recommendation}</Text>
+                <Text style={styles.sourceText}>{weather.source}</Text>
+              </>
+            ) : (
+              <Text style={styles.loadingText}>No pudimos consultar el clima.</Text>
+            )}
+          </InfoCard>
+        ) : null}
+
+        <InfoCard style={styles.previewCard}>
+          <View style={styles.sectionHeader}>
+            <View style={styles.sectionHeaderText}>
+              <Text style={styles.cardTitle}>Reportes de usuarios</Text>
+              <Text style={styles.cardText}>
+                {reports.length > 0
+                  ? `${reports.length} reportes recientes`
+                  : "Sin reportes recientes"}
+              </Text>
+            </View>
+            {hasBlockingReport || severeReports > 0 ? (
+              <View style={[styles.riskBadge, styles.riskBadgeHigh]}>
+                <Text style={[styles.riskBadgeText, styles.riskBadgeTextHigh]}>
+                  revisar
+                </Text>
+              </View>
+            ) : null}
+          </View>
+
+          {isContextLoading && reports.length === 0 ? (
+            <Text style={styles.loadingText}>Cargando reportes del sendero...</Text>
+          ) : reports.length > 0 ? (
+            <View style={styles.reportList}>
+              {reports.slice(0, 3).map((report) => (
+                <View key={report.id} style={styles.reportItem}>
+                  <View style={styles.reportIcon}>
+                    <Ionicons
+                      name={report.blocks_path ? "alert-circle-outline" : "chatbubble-outline"}
+                      size={18}
+                      color={report.blocks_path ? colors.danger : colors.green}
+                    />
+                  </View>
+                  <View style={styles.reportText}>
+                    <Text style={styles.reportTitle}>{report.issue_summary}</Text>
+                    <Text style={styles.reportMeta}>
+                      {report.trail_state} - Riesgo {report.severity}
+                    </Text>
+                    <Text style={styles.reportDate}>
+                      {formatReportDateTime(report.created_at)}
+                    </Text>
+                    {report.details ? (
+                      <Text numberOfLines={2} style={styles.reportDetails}>
+                        {report.details}
+                      </Text>
+                    ) : null}
+                  </View>
+                </View>
+              ))}
+            </View>
+          ) : (
+            <Text style={styles.loadingText}>
+              Todavia no hay avisos recientes para esta ruta.
+            </Text>
+          )}
+        </InfoCard>
+
         <View style={styles.footer}>
           <PrimaryButton
             label="Iniciar recorrido"
@@ -221,33 +438,44 @@ export default function Screen04RouteMap() {
               })
             }
           />
-          <PrimaryButton
-            label="Tomar descanso"
-            icon="pause-circle-outline"
-            href="/descanso"
-            tone="secondary"
-          />
-          <PrimaryButton
-            label="Reportar terreno"
-            icon="warning-outline"
-            href="/reportar-terreno"
-            tone="secondary"
-          />
-          <PrimaryButton
-            label="Alerta de ruta"
-            icon="trail-sign-outline"
-            href="/alerta-ruta"
-            tone="secondary"
-          />
-          <PrimaryButton
-            label="SOS"
-            icon="alert-circle-outline"
-            href="/confirmar-sos"
-            tone="danger"
-          />
         </View>
       </ScrollView>
     </ScreenShell>
+  );
+}
+
+function formatReportDateTime(value: string) {
+  const normalizedValue = value.includes("T") ? value : `${value.replace(" ", "T")}Z`;
+  const date = new Date(normalizedValue);
+
+  if (Number.isNaN(date.getTime())) return value;
+
+  return new Intl.DateTimeFormat("es-AR", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+  }).format(date);
+}
+
+function WeatherMetric({
+  icon,
+  label,
+  value,
+}: {
+  icon: keyof typeof Ionicons.glyphMap;
+  label: string;
+  value: string;
+}) {
+  return (
+    <View style={styles.weatherMetric}>
+      <Ionicons name={icon} size={18} color={colors.green} />
+      <Text style={styles.weatherLabel}>{label}</Text>
+      <Text style={styles.weatherValue}>
+        {value}
+      </Text>
+    </View>
   );
 }
 
@@ -263,7 +491,6 @@ const styles = StyleSheet.create({
     left: 14,
     position: "absolute",
     right: 14,
-    top: 14,
     zIndex: 20,
   },
   activeIconButton: {
@@ -300,7 +527,6 @@ const styles = StyleSheet.create({
     paddingVertical: 9,
     position: "absolute",
     right: 14,
-    top: 72,
     zIndex: 20,
   },
   deviationBanner: {
@@ -316,7 +542,6 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     position: "absolute",
     right: 14,
-    top: 76,
     zIndex: 21,
   },
   deviationText: {
@@ -357,7 +582,6 @@ const styles = StyleSheet.create({
     paddingVertical: 9,
     position: "absolute",
     right: 14,
-    top: 136,
     zIndex: 21,
   },
   testingBannerText: {
@@ -372,7 +596,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     bottom: 0,
     flexDirection: "row",
-    gap: 10,
+    gap: 8,
     left: 0,
     padding: 14,
     position: "absolute",
@@ -385,7 +609,7 @@ const styles = StyleSheet.create({
     borderRadius: 18,
     flex: 1,
     flexDirection: "row",
-    gap: 7,
+    gap: 5,
     justifyContent: "center",
     minHeight: 48,
   },
@@ -394,12 +618,12 @@ const styles = StyleSheet.create({
   },
   activeActionText: {
     color: colors.greenDark,
-    fontSize: 13,
+    fontSize: 12,
     fontWeight: "900",
   },
   activeDangerText: {
     color: colors.white,
-    fontSize: 13,
+    fontSize: 12,
     fontWeight: "900",
   },
   statusText: {
@@ -412,33 +636,179 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   progressCard: {
-    alignItems: "center",
+    alignItems: "flex-start",
     flexDirection: "row",
     gap: 12,
     marginBottom: 16,
     marginTop: 2,
   },
+  previewCard: {
+    marginBottom: 16,
+  },
+  sectionHeader: {
+    alignItems: "flex-start",
+    flexDirection: "row",
+    gap: 12,
+    justifyContent: "space-between",
+    marginBottom: 14,
+  },
+  sectionHeaderText: {
+    flex: 1,
+    minWidth: 0,
+  },
   progressText: {
     flex: 1,
+    minWidth: 0,
   },
   cardTitle: {
     color: colors.ink,
     fontSize: 18,
     fontWeight: "900",
+    lineHeight: 23,
   },
   cardText: {
     color: colors.muted,
     fontSize: 14,
-    lineHeight: 20,
+    lineHeight: 21,
     marginTop: 4,
   },
   downloadBadge: {
     alignItems: "center",
     backgroundColor: colors.soft,
     borderRadius: 20,
+    flexShrink: 0,
     height: 48,
     justifyContent: "center",
+    marginTop: 3,
     width: 48,
+  },
+  riskBadge: {
+    alignSelf: "flex-start",
+    backgroundColor: colors.primarySoft,
+    borderRadius: 999,
+    flexShrink: 0,
+    maxWidth: 104,
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+  },
+  riskBadgeMedium: {
+    backgroundColor: "#FFF4D8",
+  },
+  riskBadgeHigh: {
+    backgroundColor: colors.redSoft,
+  },
+  riskBadgeText: {
+    color: colors.greenDark,
+    fontSize: 10,
+    fontWeight: "900",
+    lineHeight: 13,
+    textTransform: "uppercase",
+  },
+  riskBadgeTextMedium: {
+    color: "#8A5A00",
+  },
+  riskBadgeTextHigh: {
+    color: colors.danger,
+  },
+  loadingText: {
+    color: colors.muted,
+    fontSize: 14,
+    fontWeight: "700",
+    lineHeight: 20,
+  },
+  weatherGrid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 8,
+  },
+  weatherMetric: {
+    backgroundColor: colors.page,
+    borderColor: colors.border,
+    borderRadius: 14,
+    borderWidth: 1,
+    flexBasis: "47%",
+    flexGrow: 1,
+    minHeight: 92,
+    minWidth: 126,
+    padding: 11,
+  },
+  weatherLabel: {
+    color: colors.muted,
+    fontSize: 11,
+    fontWeight: "800",
+    marginTop: 6,
+  },
+  weatherValue: {
+    color: colors.ink,
+    flexShrink: 1,
+    fontSize: 13,
+    fontWeight: "900",
+    lineHeight: 17,
+    marginTop: 2,
+  },
+  recommendationText: {
+    color: colors.ink,
+    fontSize: 13,
+    fontWeight: "700",
+    lineHeight: 19,
+    marginTop: 12,
+  },
+  sourceText: {
+    color: colors.muted,
+    fontSize: 11,
+    fontWeight: "700",
+    marginTop: 8,
+  },
+  reportList: {
+    gap: 10,
+  },
+  reportItem: {
+    alignItems: "flex-start",
+    backgroundColor: colors.page,
+    borderColor: colors.border,
+    borderRadius: 14,
+    borderWidth: 1,
+    flexDirection: "row",
+    gap: 10,
+    padding: 11,
+  },
+  reportIcon: {
+    alignItems: "center",
+    backgroundColor: colors.soft,
+    borderRadius: 999,
+    height: 34,
+    justifyContent: "center",
+    width: 34,
+  },
+  reportText: {
+    flex: 1,
+  },
+  reportTitle: {
+    color: colors.ink,
+    fontSize: 14,
+    fontWeight: "900",
+    lineHeight: 18,
+  },
+  reportMeta: {
+    color: colors.greenDark,
+    fontSize: 12,
+    fontWeight: "800",
+    lineHeight: 16,
+    marginTop: 3,
+  },
+  reportDate: {
+    color: colors.muted,
+    fontSize: 11,
+    fontWeight: "800",
+    lineHeight: 15,
+    marginTop: 3,
+  },
+  reportDetails: {
+    color: colors.muted,
+    fontSize: 12,
+    fontWeight: "700",
+    lineHeight: 17,
+    marginTop: 5,
   },
   footer: {
     gap: 10,

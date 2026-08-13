@@ -1,4 +1,4 @@
-import { AuthResponse, Profile, Trail } from "../types";
+import { AuthResponse, Profile, Trail, TrailReport, TrailWeather } from "../types";
 import Constants from "expo-constants";
 import { Platform } from "react-native";
 
@@ -63,11 +63,17 @@ export const loginUser = async (
 export const registerUser = async (
   name: string,
   email: string,
-  password: string
+  password: string,
+  acceptedTermsVersion: string
 ): Promise<AuthResponse> => {
   return request<AuthResponse>("/auth/register", {
     method: "POST",
-    body: { name, email, password },
+    body: {
+      name,
+      email,
+      password,
+      accepted_terms_version: acceptedTermsVersion,
+    },
   });
 };
 
@@ -77,6 +83,31 @@ export const getTrails = async (): Promise<Trail[]> => {
 
 export const getTrailById = async (id: number): Promise<Trail> => {
   return request<Trail>(`/trails/${id}`);
+};
+
+export const getTrailWeather = async (id: number): Promise<TrailWeather> => {
+  return request<TrailWeather>(`/trails/${id}/weather`);
+};
+
+export const getTrailReports = async (id: number): Promise<TrailReport[]> => {
+  return request<TrailReport[]>(`/trails/${id}/reports`);
+};
+
+export const createTrailReport = async (
+  trailId: number,
+  report: {
+    issue_summary: string;
+    severity: string;
+    trail_state: string;
+    cause?: string | null;
+    blocks_path?: boolean;
+    details?: string;
+  }
+): Promise<TrailReport> => {
+  return request<TrailReport>(`/trails/${trailId}/reports`, {
+    method: "POST",
+    body: report,
+  });
 };
 
 export const getProfile = async (token: string): Promise<Profile> => {

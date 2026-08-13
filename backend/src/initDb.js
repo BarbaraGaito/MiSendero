@@ -8,6 +8,8 @@ function initDb() {
       email TEXT NOT NULL UNIQUE,
       password_hash TEXT NOT NULL,
       role TEXT NOT NULL DEFAULT 'user',
+      terms_version TEXT,
+      terms_accepted_at TEXT,
       created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
     );
 
@@ -39,6 +41,20 @@ function initDb() {
       FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
       FOREIGN KEY (trail_id) REFERENCES trails(id) ON DELETE SET NULL
     );
+
+    CREATE TABLE IF NOT EXISTS trail_reports (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      trail_id INTEGER NOT NULL,
+      issue_summary TEXT NOT NULL,
+      severity TEXT NOT NULL,
+      trail_state TEXT NOT NULL,
+      cause TEXT,
+      blocks_path INTEGER NOT NULL DEFAULT 0,
+      details TEXT,
+      reporter_name TEXT NOT NULL DEFAULT 'Senderista',
+      created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (trail_id) REFERENCES trails(id) ON DELETE CASCADE
+    );
   `);
 
   const userColumns = db
@@ -48,6 +64,14 @@ function initDb() {
 
   if (!userColumns.includes("role")) {
     db.exec("ALTER TABLE users ADD COLUMN role TEXT NOT NULL DEFAULT 'user'");
+  }
+
+  if (!userColumns.includes("terms_version")) {
+    db.exec("ALTER TABLE users ADD COLUMN terms_version TEXT");
+  }
+
+  if (!userColumns.includes("terms_accepted_at")) {
+    db.exec("ALTER TABLE users ADD COLUMN terms_accepted_at TEXT");
   }
 
   const adminUser = db
@@ -290,6 +314,96 @@ function initDb() {
         name
       );
     }
+  }
+
+  const existingReports = db
+    .prepare("SELECT COUNT(*) AS count FROM trail_reports")
+    .get().count;
+
+  if (existingReports === 0) {
+    const seedReports = [
+      {
+        trailName: "Refugio Frey desde Villa Catedral",
+        issue_summary: "Barro y rocas sueltas",
+        severity: "Media",
+        trail_state: "Precaucion",
+        cause: "Lluvia",
+        details: "Tramo humedo en sectores de bosque."
+      },
+      {
+        trailName: "Cerro Llao Llao y Villa Tacul",
+        issue_summary: "Sendero transitable",
+        severity: "Leve",
+        trail_state: "Transitable",
+        cause: "Mantenimiento",
+        details: "Buena senalizacion en los cruces principales."
+      },
+      {
+        trailName: "Laguna de los Tres",
+        issue_summary: "Nieve o hielo",
+        severity: "Alta",
+        trail_state: "Paso dificil",
+        cause: "Deshielo",
+        details: "Precaucion en el ascenso final."
+      },
+      {
+        trailName: "Laguna Torre",
+        issue_summary: "Viento fuerte",
+        severity: "Media",
+        trail_state: "Precaucion",
+        cause: "Viento",
+        details: "Rafagas cerca del mirador."
+      },
+      {
+        trailName: "Sendero Macuco",
+        issue_summary: "Barro",
+        severity: "Media",
+        trail_state: "Precaucion",
+        cause: "Lluvia",
+        details: "Piso resbaladizo en bajadas."
+      },
+      {
+        trailName: "Paseo Superior",
+        issue_summary: "Transitable con mucha humedad",
+        severity: "Leve",
+        trail_state: "Transitable",
+        cause: "Lluvia",
+        details: "Pasarelas humedas."
+      }
+    ];
+    const findTrail = db.prepare("SELECT id FROM trails WHERE name = ?");
+    const insertReport = db.prepare(`
+      INSERT INTO trail_reports (
+        trail_id,
+        issue_summary,
+        severity,
+        trail_state,
+        cause,
+        blocks_path,
+        details,
+        reporter_name,
+        created_at
+      )
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, datetime('now', ?))
+    `);
+
+    seedReports.forEach((report, index) => {
+      const trail = findTrail.get(report.trailName);
+
+      if (!trail) return;
+
+      insertReport.run(
+        trail.id,
+        report.issue_summary,
+        report.severity,
+        report.trail_state,
+        report.cause,
+        0,
+        report.details,
+        "Senderista verificado",
+        `-${index + 1} days`
+      );
+    });
   }
 }
 

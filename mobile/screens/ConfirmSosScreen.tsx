@@ -1,37 +1,82 @@
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { router } from "expo-router";
+import React, { useEffect, useState } from "react";
+import { Alert, StyleSheet, Text, View } from "react-native";
+import { getEmergencyContact } from "../../services/emergencyContact";
+import { EmergencyContact } from "../../types";
 import { AppScreen, Card, PrimaryButton, ScreenTitle, colors } from "../components/MiSenderoUI";
 
 export default function ConfirmSosScreen() {
+  const [contact, setContact] = useState<EmergencyContact | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    getEmergencyContact()
+      .then(setContact)
+      .finally(() => setIsLoading(false));
+  }, []);
+
+  const handleSos = () => {
+    if (!contact) {
+      router.push("/contacto-seguridad");
+      return;
+    }
+
+    Alert.alert(
+      "Alerta SOS preparada",
+      `Se usara como contacto de emergencia a ${contact.name} (${contact.phone}).`
+    );
+  };
+
   return (
     <AppScreen withBottomNav={false}>
       <ScreenTitle
         eyebrow="Emergencia"
-        title="¿Enviar una alerta SOS?"
-        subtitle="Usá esta opción solo si necesitás asistencia inmediata."
+        title="Enviar una alerta SOS"
+        subtitle="Usa esta opcion solo si necesitas asistencia inmediata."
       />
 
       <View style={styles.sosCircle}>
         <Text style={styles.sosText}>SOS</Text>
       </View>
 
-      <Card tone="red">
-        <Text style={styles.cardTitle}>Se compartirá esta información</Text>
-        <Bullet text="Tu ubicación actual" />
-        <Bullet text="El sendero en curso" />
-        <Bullet text="Tus datos de contacto" />
-        <Bullet text="Tu contacto de emergencia" />
+      <Card tone={contact ? "red" : "orange"}>
+        <Text style={styles.cardTitle}>
+          {contact ? "Se compartira esta informacion" : "Falta contacto de emergencia"}
+        </Text>
+        {contact ? (
+          <>
+            <Bullet text="Tu ubicacion actual" />
+            <Bullet text="El sendero en curso" />
+            <Bullet text="Tus datos de contacto" />
+            <Bullet text={`Contacto: ${contact.name} - ${contact.phone}`} />
+          </>
+        ) : (
+          <Text style={styles.cardText}>
+            Para usar SOS primero tenes que guardar un contacto de emergencia con conexion.
+            Offline solo se puede consultar un contacto ya guardado.
+          </Text>
+        )}
       </Card>
 
       <Card>
         <Text style={styles.cardTitle}>Antes de confirmar</Text>
         <Text style={styles.cardText}>
-          Si fue un toque accidental, cancelá y volvé al mapa del recorrido.
+          Si fue un toque accidental, cancela y volve al mapa del recorrido.
         </Text>
       </Card>
 
       <View style={styles.actions}>
-        <PrimaryButton label="Enviar alerta SOS" href="/contacto-seguridad" tone="danger" />
+        <PrimaryButton
+          label={
+            isLoading
+              ? "Verificando contacto"
+              : contact
+                ? "Enviar alerta SOS"
+                : "Completar contacto"
+          }
+          onPress={handleSos}
+          tone="danger"
+        />
         <PrimaryButton label="Cancelar y volver" href="/alerta-ruta" tone="secondary" />
       </View>
     </AppScreen>
@@ -74,6 +119,7 @@ const styles = StyleSheet.create({
     color: colors.muted,
     fontSize: 14,
     lineHeight: 20,
+    marginTop: 6,
   },
   bulletRow: {
     alignItems: "center",

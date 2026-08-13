@@ -41,7 +41,7 @@ const requireAuth = (req, res, next) => {
 
 router.get("/profile", (req, res) => {
   const user = db
-    .prepare("SELECT id, name, email, role, created_at FROM users ORDER BY id DESC LIMIT 1")
+    .prepare("SELECT id, name, email, role, terms_version, terms_accepted_at, created_at FROM users ORDER BY id DESC LIMIT 1")
     .get();
 
   if (!user) {
@@ -62,7 +62,7 @@ router.get("/profile", (req, res) => {
 
 router.get("/me", requireAuth, (req, res) => {
   const user = db
-    .prepare("SELECT id, name, email, role, created_at FROM users WHERE id = ?")
+    .prepare("SELECT id, name, email, role, terms_version, terms_accepted_at, created_at FROM users WHERE id = ?")
     .get(req.userId);
 
   if (!user) {
@@ -77,10 +77,16 @@ router.get("/me", requireAuth, (req, res) => {
 
 router.post("/register", async (req, res, next) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, accepted_terms_version } = req.body;
 
     if (!name || !email || !password) {
       return res.status(400).json({ message: "Faltan datos obligatorios" });
+    }
+
+    if (!accepted_terms_version) {
+      return res.status(400).json({
+        message: "Debes aceptar terminos y condiciones para crear la cuenta"
+      });
     }
 
     const normalizedEmail = String(email).trim().toLowerCase();
@@ -95,15 +101,35 @@ router.post("/register", async (req, res, next) => {
     const passwordHash = await bcrypt.hash(password, 10);
     const usersCount = db.prepare("SELECT COUNT(*) AS count FROM users").get().count;
     const role = usersCount === 0 ? "admin" : "user";
+    const termsAcceptedAt = new Date().toISOString();
     const result = db
-      .prepare("INSERT INTO users (name, email, password_hash, role) VALUES (?, ?, ?, ?)")
-      .run(name.trim(), normalizedEmail, passwordHash, role);
+      .prepare(`
+        INSERT INTO users (
+          name,
+          email,
+          password_hash,
+          role,
+          terms_version,
+          terms_accepted_at
+        )
+        VALUES (?, ?, ?, ?, ?, ?)
+      `)
+      .run(
+        name.trim(),
+        normalizedEmail,
+        passwordHash,
+        role,
+        String(accepted_terms_version),
+        termsAcceptedAt
+      );
 
     const user = {
       id: result.lastInsertRowid,
       name: name.trim(),
       email: normalizedEmail,
-      role
+      role,
+      terms_version: String(accepted_terms_version),
+      terms_accepted_at: termsAcceptedAt
     };
     const token = jwt.sign(
       { userId: user.id },
@@ -156,6 +182,8 @@ router.post("/login", async (req, res, next) => {
         name: user.name,
         email: user.email,
         role: user.role,
+        terms_version: user.terms_version,
+        terms_accepted_at: user.terms_accepted_at,
         created_at: user.created_at
       }
     });

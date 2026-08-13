@@ -19,6 +19,15 @@ import {
   saveTestingLocationMode,
   TestingLocationMode,
 } from "../../services/testingMode";
+import {
+  AppPreferences,
+  getAppPreferences,
+  saveAppPreferences,
+} from "../../services/appPreferences";
+import {
+  ExperienceProfile,
+  getExperienceProfile,
+} from "../../services/experienceProfile";
 
 export default function ProfileScreen() {
   const [profile, setProfile] = useState<Profile | null>(null);
@@ -34,6 +43,23 @@ export default function ProfileScreen() {
       enabled: false,
       updatedAt: null,
     });
+  const [appPreferences, setAppPreferences] = useState<AppPreferences>({
+    notificationsEnabled: true,
+    distanceUnit: "km",
+    batterySaverEnabled: true,
+    externalSensorLinked: false,
+    updatedAt: null,
+  });
+  const [experienceProfile, setExperienceProfile] =
+    useState<ExperienceProfile>({
+      completed: false,
+      skipped: false,
+      level: null,
+      answers: {},
+      completedAt: null,
+      skippedAt: null,
+      updatedAt: null,
+    });
 
   useEffect(() => {
     const loadProfile = async () => {
@@ -46,9 +72,16 @@ export default function ProfileScreen() {
         }
 
         const data = await getProfile(session.token);
-        const [privacyPreferences, testingPreferences] = await Promise.all([
+        const [
+          privacyPreferences,
+          testingPreferences,
+          preferences,
+          experience,
+        ] = await Promise.all([
           getPrivacyPreferences(),
           getTestingLocationMode(),
+          getAppPreferences(),
+          getExperienceProfile(),
         ]);
 
         if (data.user) {
@@ -64,6 +97,8 @@ export default function ProfileScreen() {
 
         setProfile(data);
         setPrivacy(privacyPreferences);
+        setAppPreferences(preferences);
+        setExperienceProfile(experience);
         setTestingLocationMode(
           data.user?.role === "admin"
             ? await getTestingLocationMode()
@@ -95,6 +130,13 @@ export default function ProfileScreen() {
 
     await saveTestingLocationMode(enabled);
     setTestingLocationMode(await getTestingLocationMode());
+  };
+
+  const updateAppPreferences = async (
+    nextPreferences: Omit<AppPreferences, "updatedAt">
+  ) => {
+    await saveAppPreferences(nextPreferences);
+    setAppPreferences(await getAppPreferences());
   };
 
   const user = profile?.user;
@@ -153,14 +195,67 @@ export default function ProfileScreen() {
             value="Configurar"
             onPress={() => router.push("/contacto-seguridad")}
           />
-          <SettingRow label="Reloj o sensor externo" value="No vinculado" />
-          <SettingRow label="Modo ahorro de bateria" value="Activo" />
+          <SettingRow
+            label="Reloj o sensor externo"
+            value={appPreferences.externalSensorLinked ? "Vinculado" : "No vinculado"}
+            onPress={() =>
+              updateAppPreferences({
+                notificationsEnabled: appPreferences.notificationsEnabled,
+                distanceUnit: appPreferences.distanceUnit,
+                batterySaverEnabled: appPreferences.batterySaverEnabled,
+                externalSensorLinked: !appPreferences.externalSensorLinked,
+              })
+            }
+          />
+          <SettingRow
+            label="Modo ahorro de bateria"
+            value={appPreferences.batterySaverEnabled ? "Activo" : "Desactivado"}
+            onPress={() =>
+              updateAppPreferences({
+                notificationsEnabled: appPreferences.notificationsEnabled,
+                distanceUnit: appPreferences.distanceUnit,
+                batterySaverEnabled: !appPreferences.batterySaverEnabled,
+                externalSensorLinked: appPreferences.externalSensorLinked,
+              })
+            }
+          />
         </Card>
 
         <Card>
           <Text style={styles.cardTitle}>Preferencias</Text>
-          <SettingRow label="Notificaciones" value="Activadas" />
-          <SettingRow label="Unidades" value="Kilometros" />
+          <SettingRow
+            label="Perfil de experiencia"
+            value={
+              experienceProfile.completed && experienceProfile.level
+                ? experienceProfile.level
+                : "Completar"
+            }
+            onPress={() => router.push("/onboarding-experiencia")}
+          />
+          <SettingRow
+            label="Notificaciones"
+            value={appPreferences.notificationsEnabled ? "Activadas" : "Desactivadas"}
+            onPress={() =>
+              updateAppPreferences({
+                notificationsEnabled: !appPreferences.notificationsEnabled,
+                distanceUnit: appPreferences.distanceUnit,
+                batterySaverEnabled: appPreferences.batterySaverEnabled,
+                externalSensorLinked: appPreferences.externalSensorLinked,
+              })
+            }
+          />
+          <SettingRow
+            label="Unidades"
+            value={appPreferences.distanceUnit === "km" ? "Kilometros" : "Millas"}
+            onPress={() =>
+              updateAppPreferences({
+                notificationsEnabled: appPreferences.notificationsEnabled,
+                distanceUnit: appPreferences.distanceUnit === "km" ? "mi" : "km",
+                batterySaverEnabled: appPreferences.batterySaverEnabled,
+                externalSensorLinked: appPreferences.externalSensorLinked,
+              })
+            }
+          />
         </Card>
 
       <Card>

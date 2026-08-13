@@ -19,6 +19,42 @@ export const initDB = async () => {
       timestamp INTEGER,
       session_id INTEGER
     );
+
+    CREATE TABLE IF NOT EXISTS app_preferences (
+      id INTEGER PRIMARY KEY CHECK (id = 1),
+      notifications_enabled INTEGER NOT NULL DEFAULT 1,
+      distance_unit TEXT NOT NULL DEFAULT 'km',
+      battery_saver_enabled INTEGER NOT NULL DEFAULT 1,
+      external_sensor_linked INTEGER NOT NULL DEFAULT 0,
+      updated_at INTEGER
+    );
+
+    CREATE TABLE IF NOT EXISTS experience_profile (
+      id INTEGER PRIMARY KEY CHECK (id = 1),
+      completed INTEGER NOT NULL DEFAULT 0,
+      skipped INTEGER NOT NULL DEFAULT 0,
+      experience_level TEXT,
+      answers_json TEXT,
+      completed_at INTEGER,
+      skipped_at INTEGER,
+      updated_at INTEGER
+    );
+
+    CREATE TABLE IF NOT EXISTS emergency_contact (
+      id INTEGER PRIMARY KEY CHECK (id = 1),
+      name TEXT NOT NULL,
+      phone TEXT NOT NULL,
+      relationship TEXT NOT NULL,
+      updated_at INTEGER NOT NULL
+    );
+
+    CREATE TABLE IF NOT EXISTS emergency_contacts (
+      user_id INTEGER PRIMARY KEY,
+      name TEXT NOT NULL,
+      phone TEXT NOT NULL,
+      relationship TEXT NOT NULL,
+      updated_at INTEGER NOT NULL
+    );
   `);
 
   const columns = await db.getAllAsync<{ name: string }>(`PRAGMA table_info(sessions)`);

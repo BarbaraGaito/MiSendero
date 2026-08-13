@@ -1,4 +1,5 @@
 export type FatigueLevel = "bajo" | "medio" | "alto";
+export type UserRole = "admin" | "user";
 
 export interface WatchData {
   hr: number;
@@ -44,6 +45,7 @@ export interface Profile {
     id: number;
     name: string;
     email: string;
+    role?: UserRole;
     created_at?: string;
   } | null;
   stats: {
@@ -56,6 +58,7 @@ export interface AuthUser {
   id: number;
   name: string;
   email: string;
+  role?: UserRole;
   created_at?: string;
 }
 

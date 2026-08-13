@@ -1,7 +1,7 @@
 {
   "id": "route_difficulty",
   "version": 1,
-  "trained_at": "2026-08-13T00:00:00.000Z",
+  "trained_at": "2026-08-13T01:32:26.817Z",
   "algorithm": "nearest_centroid_standardized",
   "source": "OpenStreetMap sac_scale + NASA SRTM normalized export",
   "features": [

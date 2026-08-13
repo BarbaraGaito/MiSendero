@@ -4,13 +4,16 @@ This folder contains normalized CSV inputs for the offline AI training pipeline.
 
 The project document defines three dataset families:
 
-- Route difficulty: OpenStreetMap route attributes plus NASA SRTM elevation features.
 - Fatigue detection: PAMAP2 and WESAD-derived wearable/activity windows.
 - Physiological risk: BIDMC-derived physiological records plus synthetic trekking context.
 
 For this app MVP, the training script consumes compact CSV files with the same feature
 families and produces small JSON models under `ai/models/`. Those JSON files are imported by
 the React Native app and run fully offline.
+
+Route difficulty is not bundled in the app because it is fixed route metadata. Its training
+pipeline lives in `training/route-difficulty/` and updates the backend database field
+`trails.difficulty`.
 
 ## Privacy requirements
 
@@ -25,14 +28,6 @@ exported to create new training rows, aggregate or bucket the data first and rem
 before it reaches this folder.
 
 Expected CSV schemas:
-
-- `route_difficulty.csv`
-  - `distance_km`
-  - `elevation_gain_m`
-  - `avg_slope_percent`
-  - `max_slope_percent`
-  - `technical_score`
-  - `label` (`Baja`, `Media`, `Alta`)
 
 - `fatigue_windows.csv`
   - `hr`
@@ -56,5 +51,5 @@ npm run train:ai
 ```
 
 The sample rows included here let the app train and run without downloading large public
-datasets during development. Replace or append rows with processed OSM/SRTM, PAMAP2/WESAD,
-and BIDMC exports when those datasets are available locally.
+datasets during development. Replace or append rows with processed PAMAP2/WESAD and BIDMC
+exports when those datasets are available locally.

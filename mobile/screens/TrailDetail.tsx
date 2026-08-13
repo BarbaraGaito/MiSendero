@@ -14,7 +14,6 @@ import {
 } from "../components/MiSenderoUI";
 import { getTrailById } from "../../services/api";
 import { Trail } from "../../types";
-import { predictRouteDifficulty } from "../../ai/inferenceEngine";
 
 export default function Screen03TrailDetail() {
   const insets = useSafeAreaInsets();
@@ -47,7 +46,6 @@ export default function Screen03TrailDetail() {
 
   const distance = trail?.distance_km ? `${trail.distance_km} km` : "Distancia a confirmar";
   const duration = trail?.duration || "Duracion a confirmar";
-  const aiDifficulty = trail ? predictRouteDifficulty(trail) : null;
 
   return (
     <ScreenShell>
@@ -86,17 +84,17 @@ export default function Screen03TrailDetail() {
               </Text>
             </InfoCard>
 
-            {aiDifficulty ? (
+            {trail.difficulty ? (
               <InfoCard style={styles.aiCard}>
                 <View style={styles.aiHeader}>
                   <Ionicons name="sparkles-outline" size={20} color={colors.green} />
                   <Text style={styles.cardTitle}>Dificultad de la ruta</Text>
                 </View>
                 <Text style={styles.body}>
-                  Dificultad sugerida: {aiDifficulty.label}. Este calculo se realiza
-                  en el dispositivo a partir de la distancia, desnivel, altitud y
-                  caracteristicas del recorrido. Verifica siempre el clima, el estado
-                  del sendero y tu condicion fisica antes de salir.
+                  Dificultad: {trail.difficulty}. Este nivel se calcula y revisa
+                  desde la base de rutas con distancia, desnivel y caracteristicas
+                  del recorrido. Verifica siempre el clima, el estado del sendero
+                  y tu condicion fisica antes de salir.
                 </Text>
               </InfoCard>
             ) : null}
@@ -134,7 +132,7 @@ export default function Screen03TrailDetail() {
 
 const styles = StyleSheet.create({
   scroll: {
-    paddingBottom: 108,
+    paddingBottom: 132,
   },
   statusText: {
     color: colors.muted,

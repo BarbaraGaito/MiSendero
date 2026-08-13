@@ -7,6 +7,7 @@ function initDb() {
       name TEXT NOT NULL,
       email TEXT NOT NULL UNIQUE,
       password_hash TEXT NOT NULL,
+      role TEXT NOT NULL DEFAULT 'user',
       created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
     );
 
@@ -39,6 +40,26 @@ function initDb() {
       FOREIGN KEY (trail_id) REFERENCES trails(id) ON DELETE SET NULL
     );
   `);
+
+  const userColumns = db
+    .prepare("PRAGMA table_info(users)")
+    .all()
+    .map((column) => column.name);
+
+  if (!userColumns.includes("role")) {
+    db.exec("ALTER TABLE users ADD COLUMN role TEXT NOT NULL DEFAULT 'user'");
+  }
+
+  const adminUser = db
+    .prepare("SELECT id FROM users WHERE role = 'admin' LIMIT 1")
+    .get();
+  const firstUser = db
+    .prepare("SELECT id FROM users ORDER BY id ASC LIMIT 1")
+    .get();
+
+  if (!adminUser && firstUser) {
+    db.prepare("UPDATE users SET role = 'admin' WHERE id = ?").run(firstUser.id);
+  }
 
   const trailColumns = db
     .prepare("PRAGMA table_info(trails)")

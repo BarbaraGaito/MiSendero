@@ -1,7 +1,6 @@
 import fatigueModel from "./models/fatigueModel.json";
 import riskModel from "./models/riskModel.json";
-import routeDifficultyModel from "./models/routeDifficultyModel.json";
-import { FatigueLevel, Trail } from "../types";
+import { FatigueLevel } from "../types";
 import { OfflineAiModel, OfflinePrediction } from "./modelTypes";
 
 type FeatureInput = Record<string, number | null | undefined>;
@@ -10,14 +9,6 @@ const fatigueScoreByLevel: Record<FatigueLevel, number> = {
   bajo: 1,
   medio: 2,
   alto: 3,
-};
-
-const technicalScoreByDifficulty = (difficulty?: string | null) => {
-  const normalized = String(difficulty || "").toLowerCase();
-
-  if (normalized.includes("alta")) return 4;
-  if (normalized.includes("media")) return 2;
-  return 1;
 };
 
 const toModel = (model: unknown) => model as OfflineAiModel;
@@ -99,24 +90,7 @@ export const predictPhysioRisk = (input: {
   });
 };
 
-export const predictRouteDifficulty = (trail: Trail): OfflinePrediction => {
-  const distanceKm = trail.distance_km ?? 0;
-  const technicalScore = technicalScoreByDifficulty(trail.difficulty);
-  const elevationGainM = distanceKm * (technicalScore === 4 ? 82 : technicalScore === 2 ? 48 : 24);
-  const avgSlopePercent = distanceKm > 0 ? Math.min(14, elevationGainM / (distanceKm * 100)) : 0;
-  const maxSlopePercent = avgSlopePercent * (technicalScore === 4 ? 3.4 : technicalScore === 2 ? 2.8 : 2.2);
-
-  return predictNearestCentroid(toModel(routeDifficultyModel), {
-    distance_km: distanceKm,
-    elevation_gain_m: elevationGainM,
-    avg_slope_percent: avgSlopePercent,
-    max_slope_percent: maxSlopePercent,
-    technical_score: technicalScore,
-  });
-};
-
 export const offlineAiMetadata = {
   fatigueModel: toModel(fatigueModel),
   riskModel: toModel(riskModel),
-  routeDifficultyModel: toModel(routeDifficultyModel),
 };

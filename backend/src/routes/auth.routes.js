@@ -41,7 +41,7 @@ const requireAuth = (req, res, next) => {
 
 router.get("/profile", (req, res) => {
   const user = db
-    .prepare("SELECT id, name, email, created_at FROM users ORDER BY id DESC LIMIT 1")
+    .prepare("SELECT id, name, email, role, created_at FROM users ORDER BY id DESC LIMIT 1")
     .get();
 
   if (!user) {
@@ -62,7 +62,7 @@ router.get("/profile", (req, res) => {
 
 router.get("/me", requireAuth, (req, res) => {
   const user = db
-    .prepare("SELECT id, name, email, created_at FROM users WHERE id = ?")
+    .prepare("SELECT id, name, email, role, created_at FROM users WHERE id = ?")
     .get(req.userId);
 
   if (!user) {
@@ -93,14 +93,17 @@ router.post("/register", async (req, res, next) => {
     }
 
     const passwordHash = await bcrypt.hash(password, 10);
+    const usersCount = db.prepare("SELECT COUNT(*) AS count FROM users").get().count;
+    const role = usersCount === 0 ? "admin" : "user";
     const result = db
-      .prepare("INSERT INTO users (name, email, password_hash) VALUES (?, ?, ?)")
-      .run(name.trim(), normalizedEmail, passwordHash);
+      .prepare("INSERT INTO users (name, email, password_hash, role) VALUES (?, ?, ?, ?)")
+      .run(name.trim(), normalizedEmail, passwordHash, role);
 
     const user = {
       id: result.lastInsertRowid,
       name: name.trim(),
-      email: normalizedEmail
+      email: normalizedEmail,
+      role
     };
     const token = jwt.sign(
       { userId: user.id },
@@ -152,6 +155,7 @@ router.post("/login", async (req, res, next) => {
         id: user.id,
         name: user.name,
         email: user.email,
+        role: user.role,
         created_at: user.created_at
       }
     });

@@ -1,14 +1,31 @@
+import { router, useLocalSearchParams } from "expo-router";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { AppScreen, Card, PrimaryButton, ScreenTitle, colors } from "../components/MiSenderoUI";
+import {
+  AppScreen,
+  Card,
+  PrimaryButton,
+  ScreenTitle,
+  colors,
+} from "../components/MiSenderoUI";
+import { formatDistance } from "../../services/geoUtils";
 
 export default function AlertRouteScreen() {
+  const { distance, id } = useLocalSearchParams<{
+    distance?: string;
+    id?: string;
+  }>();
+  const distanceMeters = Number(distance);
+  const distanceText = Number.isFinite(distanceMeters)
+    ? formatDistance(distanceMeters)
+    : "mas de 120 m";
+
   return (
     <AppScreen withBottomNav={false}>
       <ScreenTitle
         eyebrow="Alerta de ruta"
         title="Te alejaste de la ruta"
-        subtitle="Estás a 180 metros del sendero marcado. Revisá tu posición antes de continuar."
+        subtitle={`Estas a ${distanceText} del sendero marcado. Revisa tu posicion antes de continuar.`}
       />
 
       <Card tone="orange">
@@ -19,16 +36,29 @@ export default function AlertRouteScreen() {
           <View style={styles.targetDot} />
         </View>
         <Text style={styles.cardTitle}>Ruta sugerida</Text>
-        <Text style={styles.cardText}>Volvé hacia el tramo principal para retomar el circuito seguro.</Text>
+        <Text style={styles.cardText}>
+          Vuelve hacia el tramo principal para retomar el circuito seguro.
+        </Text>
       </Card>
 
       <Card>
-        <Text style={styles.cardTitle}>¿Qué querés hacer?</Text>
-        <Text style={styles.cardText}>Podés volver al mapa o marcar que estás bien para seguir registrando actividad.</Text>
+        <Text style={styles.cardTitle}>Que queres hacer?</Text>
+        <Text style={styles.cardText}>
+          Puedes volver al mapa o marcar que estas bien para seguir registrando
+          actividad.
+        </Text>
       </Card>
 
       <View style={styles.actions}>
-        <PrimaryButton label="Volver a la ruta" href="/route-map" />
+        <PrimaryButton
+          label="Volver a la ruta"
+          onPress={() =>
+            router.push({
+              pathname: "/route-map",
+              params: { active: "1", id: id || "1" },
+            })
+          }
+        />
         <PrimaryButton label="Estoy bien" href="/recorrido-finalizado" tone="secondary" />
         <PrimaryButton label="Reportar problema" href="/reportar-terreno" tone="danger" />
       </View>

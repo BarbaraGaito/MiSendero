@@ -2,6 +2,7 @@ import { Ionicons } from "@expo/vector-icons";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
   Image,
+  DimensionValue,
   LayoutChangeEvent,
   PanResponder,
   Pressable,
@@ -10,9 +11,14 @@ import {
   View,
 } from "react-native";
 import { Trail } from "../../types";
+import {
+  Coordinate,
+  getRouteStart,
+  parseRouteCoordinates,
+} from "../../services/geoUtils";
+import { useDeviceLocation } from "../hooks/useDeviceLocation";
 import { colors } from "./MiSenderoUI";
 
-type Coordinate = [number, number];
 type MapLayer = "standard" | "terrain" | "satellite";
 
 type TrailMapProps = {
@@ -21,6 +27,7 @@ type TrailMapProps = {
   immersive?: boolean;
   initialPerspective?: boolean;
   showDetailsCard?: boolean;
+  showUserLocation?: boolean;
 };
 
 const TILE_SIZE = 256;
@@ -31,26 +38,6 @@ const MAX_ZOOM_BY_LAYER: Record<MapLayer, number> = {
   standard: 18,
   terrain: 17,
   satellite: 19,
-};
-
-const parseCoordinates = (value: string | null | undefined): Coordinate[] => {
-  if (!value) return [];
-
-  try {
-    const parsed = JSON.parse(value);
-
-    if (!Array.isArray(parsed)) return [];
-
-    return parsed.filter(
-      (point): point is Coordinate =>
-        Array.isArray(point) &&
-        point.length >= 2 &&
-        Number.isFinite(point[0]) &&
-        Number.isFinite(point[1])
-    );
-  } catch (error) {
-    return [];
-  }
 };
 
 const project = ([latitude, longitude]: Coordinate, zoom: number) => {
@@ -79,6 +66,35 @@ const unproject = ({ x, y }: { x: number; y: number }, zoom: number): Coordinate
 const wrapTileX = (x: number, zoom: number) => {
   const max = 2 ** zoom;
   return ((x % max) + max) % max;
+};
+
+const getDifficultyFactor = (difficulty: string | null | undefined) => {
+  const normalized = (difficulty || "").toLowerCase();
+
+  if (normalized.includes("dificil") || normalized.includes("alta")) return 1;
+  if (normalized.includes("media") || normalized.includes("moderada")) return 0.68;
+  return 0.42;
+};
+
+const getRouteDistanceKm = (points: Coordinate[]) => {
+  if (points.length < 2) return 0;
+
+  const toRad = (value: number) => (value * Math.PI) / 180;
+  const earthRadiusKm = 6371;
+
+  return points.slice(0, -1).reduce((total, point, index) => {
+    const nextPoint = points[index + 1];
+    const dLat = toRad(nextPoint[0] - point[0]);
+    const dLng = toRad(nextPoint[1] - point[1]);
+    const lat1 = toRad(point[0]);
+    const lat2 = toRad(nextPoint[0]);
+    const a =
+      Math.sin(dLat / 2) ** 2 +
+      Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLng / 2) ** 2;
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+    return total + earthRadiusKm * c;
+  }, 0);
 };
 
 const getTileUrl = (layer: MapLayer, zoom: number, x: number, y: number) => {
@@ -147,6 +163,7 @@ export function TrailMap({
   immersive = false,
   initialPerspective = false,
   showDetailsCard = true,
+  showUserLocation = true,
 }: TrailMapProps) {
   const [layout, setLayout] = useState({ width: 0, height: 0 });
   const [layer, setLayer] = useState<MapLayer>("terrain");
@@ -162,13 +179,19 @@ export function TrailMap({
     typeof centerLat === "number" && typeof centerLng === "number";
   const trailCenter: Coordinate = hasRealCenter ? [centerLat, centerLng] : DEFAULT_CENTER;
   const route = useMemo(
-    () => parseCoordinates(trail?.route_coordinates),
+    () => parseRouteCoordinates(trail?.route_coordinates),
     [trail?.route_coordinates]
   );
   const routePoints = useMemo(
     () => (route.length > 1 ? route : [trailCenter]),
     [route, trailCenter[0], trailCenter[1]]
   );
+  const simulatedStartLocation = useMemo(
+    () => getRouteStart(route, trailCenter),
+    [route, trailCenter[0], trailCenter[1]]
+  );
+  const { location, permissionDenied, error: locationError, isTestingLocation } =
+    useDeviceLocation(showUserLocation, simulatedStartLocation);
   const maxZoom = MAX_ZOOM_BY_LAYER[layer];
   const zoom = Math.min(activeZoom, maxZoom);
   const getInitialView = () =>
@@ -247,9 +270,20 @@ export function TrailMap({
     setPanOffset({ x: 0, y: 0 });
   };
 
+  const centerOnUser = () => {
+    if (!location) {
+      resetView();
+      return;
+    }
+
+    setActiveCenter(location.coordinate);
+    setActiveZoom((currentZoom) => Math.max(currentZoom, Math.min(16, maxZoom)));
+    setPanOffset({ x: 0, y: 0 });
+  };
+
   const mapState = useMemo(() => {
     if (!layout.width || !layout.height) {
-      return { tiles: [], points: [] };
+      return { tiles: [], points: [], userPoint: null };
     }
 
     const centerPixel = project(activeCenter, zoom);
@@ -286,8 +320,91 @@ export function TrailMap({
       };
     });
 
-    return { tiles, points };
-  }, [activeCenter[0], activeCenter[1], isPerspective, layer, layout.height, layout.width, routePoints, zoom]);
+    const userPoint = location
+      ? {
+          x: project(location.coordinate, zoom).x - topLeft.x,
+          y: project(location.coordinate, zoom).y - topLeft.y,
+        }
+      : null;
+
+    return { tiles, points, userPoint };
+  }, [activeCenter[0], activeCenter[1], isPerspective, layer, layout.height, layout.width, location, routePoints, zoom]);
+
+  const terrainState = useMemo(() => {
+    if (!layout.width || !layout.height) {
+      return {
+        points: [],
+        bands: [],
+        userPoint: null,
+        distanceKm: 0,
+        elevationGain: 0,
+      };
+    }
+
+    const sourcePoints = routePoints.length > 1 ? routePoints : [trailCenter, trailCenter];
+    const projectedPoints = sourcePoints.map((point) => project(point, DEFAULT_ZOOM));
+    const xs = projectedPoints.map((point) => point.x);
+    const ys = projectedPoints.map((point) => point.y);
+    const minX = Math.min(...xs);
+    const maxX = Math.max(...xs);
+    const minY = Math.min(...ys);
+    const maxY = Math.max(...ys);
+    const mapWidth = Math.max(1, maxX - minX);
+    const mapHeight = Math.max(1, maxY - minY);
+    const sceneWidth = layout.width;
+    const sceneHeight = layout.height;
+    const paddingX = sceneWidth * 0.16;
+    const paddingY = sceneHeight * 0.24;
+    const fitScale = Math.min(
+      (sceneWidth - paddingX * 2) / mapWidth,
+      (sceneHeight - paddingY * 2) / mapHeight
+    );
+    const offsetX = (sceneWidth - mapWidth * fitScale) / 2;
+    const offsetY = (sceneHeight - mapHeight * fitScale) / 2;
+    const difficultyFactor = getDifficultyFactor(trail?.difficulty);
+    const distanceKm = trail?.distance_km || getRouteDistanceKm(sourcePoints);
+    const elevationGain = Math.round(
+      Math.max(60, distanceKm * (80 + difficultyFactor * 95))
+    );
+
+    const points = projectedPoints.map((point, index) => {
+      const progress =
+        projectedPoints.length <= 1 ? 0 : index / (projectedPoints.length - 1);
+      const wave = Math.sin(progress * Math.PI * 2.4) * 18;
+      const climb = progress * elevationGain * 0.08 * difficultyFactor;
+
+      return {
+        x: offsetX + (point.x - minX) * fitScale,
+        y: offsetY + (point.y - minY) * fitScale - wave - climb,
+      };
+    });
+    const userPoint = location
+      ? {
+          x: offsetX + (project(location.coordinate, DEFAULT_ZOOM).x - minX) * fitScale,
+          y: offsetY + (project(location.coordinate, DEFAULT_ZOOM).y - minY) * fitScale,
+        }
+      : null;
+
+    const bands = Array.from({ length: 9 }, (_, index) => ({
+      key: `terrain-band-${index}`,
+      top: `${index * 11}%` as DimensionValue,
+      opacity: 0.84 - index * 0.035,
+      color:
+        index < 3
+          ? "#BFE7C4"
+          : index < 6
+            ? "#86C79A"
+            : "#5A9B73",
+    }));
+
+    return {
+      points,
+      bands,
+      userPoint,
+      distanceKm,
+      elevationGain,
+    };
+  }, [layout.height, layout.width, location, routePoints, trail?.difficulty, trail?.distance_km, trailCenter[0], trailCenter[1]]);
 
   const onLayout = (event: LayoutChangeEvent) => {
     const { width, height } = event.nativeEvent.layout;
@@ -296,89 +413,188 @@ export function TrailMap({
 
   return (
     <View
-      style={[styles.map, immersive && styles.immersiveMap]}
+      style={[styles.map, !immersive && styles.embeddedMap, immersive && styles.immersiveMap]}
       onLayout={onLayout}
       {...panResponder.panHandlers}
     >
-      <View
-        style={[
-          styles.mapContent,
-          isPerspective && styles.perspectiveContent,
-          { transform: [{ translateX: panOffset.x }, { translateY: panOffset.y }] },
-          isPerspective && {
-            transform: [
-              { translateX: panOffset.x },
-              { translateY: panOffset.y + 24 },
-              { perspective: 900 },
-              { rotateX: "28deg" },
-              { scale: 1.18 },
-            ],
-          },
-        ]}
-      >
-        {mapState.tiles.map((tile) => (
-          <Image
-            key={tile.key}
-            source={{ uri: tile.url }}
-            style={[styles.tile, { left: tile.left, top: tile.top }]}
-          />
-        ))}
+      {isPerspective ? (
+        <View style={styles.terrain3dScene}>
+          <View style={styles.terrainSky} />
+          <View style={styles.terrainHorizon} />
+          <View style={styles.terrainPlane}>
+            {terrainState.bands.map((band) => (
+              <View
+                key={band.key}
+                style={[
+                  styles.terrainBand,
+                  {
+                    backgroundColor: band.color,
+                    opacity: band.opacity,
+                    top: band.top,
+                  },
+                ]}
+              />
+            ))}
 
-        {mapState.points.slice(0, -1).map((point, index) => {
-          const nextPoint = mapState.points[index + 1];
-          const dx = nextPoint.x - point.x;
-          const dy = nextPoint.y - point.y;
-          const length = Math.sqrt(dx * dx + dy * dy);
-          const angle = `${Math.atan2(dy, dx)}rad`;
+            {terrainState.points.slice(0, -1).map((point, index) => {
+              const nextPoint = terrainState.points[index + 1];
+              const dx = nextPoint.x - point.x;
+              const dy = nextPoint.y - point.y;
+              const length = Math.sqrt(dx * dx + dy * dy);
+              const angle = `${Math.atan2(dy, dx)}rad`;
 
-          return (
+              return (
+                <View
+                  key={`terrain-route-${index}`}
+                  style={[
+                    styles.terrainRouteSegment,
+                    {
+                      left: point.x,
+                      top: point.y,
+                      width: length,
+                      transform: [{ rotate: angle }],
+                    },
+                  ]}
+                />
+              );
+            })}
+
+            {terrainState.points[0] ? (
+              <View
+                style={[
+                  styles.terrainMarker,
+                  styles.startMarker,
+                  {
+                    left: terrainState.points[0].x - 16,
+                    top: terrainState.points[0].y - 16,
+                  },
+                ]}
+              >
+                <Ionicons name="flag-outline" size={15} color={colors.white} />
+              </View>
+            ) : null}
+
+            {terrainState.points.length > 1 ? (
+              <View
+                style={[
+                  styles.terrainMarker,
+                  styles.endMarker,
+                  {
+                    left: terrainState.points[terrainState.points.length - 1].x - 16,
+                    top: terrainState.points[terrainState.points.length - 1].y - 16,
+                  },
+                ]}
+              >
+                <Ionicons name="location" size={15} color={colors.white} />
+              </View>
+            ) : null}
+
+            {terrainState.userPoint ? (
+              <View
+                style={[
+                  styles.terrainUserMarker,
+                  {
+                    left: terrainState.userPoint.x - 11,
+                    top: terrainState.userPoint.y - 11,
+                  },
+                ]}
+              />
+            ) : null}
+          </View>
+
+          <View style={styles.terrainInfo}>
+            <Text style={styles.terrainInfoTitle}>Vista 3D del terreno</Text>
+            <Text style={styles.terrainInfoText}>
+              {terrainState.elevationGain} m desnivel aprox. - {trail?.difficulty || "Dificultad a confirmar"}
+            </Text>
+          </View>
+        </View>
+      ) : (
+        <View
+          style={[
+            styles.mapContent,
+            { transform: [{ translateX: panOffset.x }, { translateY: panOffset.y }] },
+          ]}
+        >
+          {mapState.tiles.map((tile) => (
+            <Image
+              key={tile.key}
+              source={{ uri: tile.url }}
+              style={[styles.tile, { left: tile.left, top: tile.top }]}
+            />
+          ))}
+
+          {mapState.points.slice(0, -1).map((point, index) => {
+            const nextPoint = mapState.points[index + 1];
+            const dx = nextPoint.x - point.x;
+            const dy = nextPoint.y - point.y;
+            const length = Math.sqrt(dx * dx + dy * dy);
+            const angle = `${Math.atan2(dy, dx)}rad`;
+
+            return (
+              <View
+                key={`${point.x}-${point.y}-${index}`}
+                style={[
+                  styles.routeSegment,
+                  {
+                    left: point.x,
+                    top: point.y,
+                    width: length,
+                    transform: [{ rotate: angle }],
+                  },
+                ]}
+              />
+            );
+          })}
+
+          {mapState.points[0] ? (
             <View
-              key={`${point.x}-${point.y}-${index}`}
               style={[
-                styles.routeSegment,
+                styles.marker,
+                styles.startMarker,
                 {
-                  left: point.x,
-                  top: point.y,
-                  width: length,
-                  transform: [{ rotate: angle }],
+                  left: mapState.points[0].x - 18,
+                  top: mapState.points[0].y - 18,
                 },
               ]}
-            />
-          );
-        })}
+            >
+              <Ionicons name="flag-outline" size={17} color={colors.white} />
+            </View>
+          ) : null}
 
-        {mapState.points[0] ? (
-          <View
-            style={[
-              styles.marker,
-              styles.startMarker,
-              {
-                left: mapState.points[0].x - 18,
-                top: mapState.points[0].y - 18,
-              },
-            ]}
-          >
-            <Ionicons name="flag-outline" size={17} color={colors.white} />
-          </View>
-        ) : null}
+          {mapState.points.length > 1 ? (
+            <View
+              style={[
+                styles.marker,
+                styles.endMarker,
+                {
+                  left: mapState.points[mapState.points.length - 1].x - 18,
+                  top: mapState.points[mapState.points.length - 1].y - 18,
+                },
+              ]}
+            >
+              <Ionicons name="location" size={17} color={colors.white} />
+            </View>
+          ) : null}
 
-        {mapState.points.length > 1 ? (
-          <View
-            style={[
-              styles.marker,
-              styles.endMarker,
-              {
-                left: mapState.points[mapState.points.length - 1].x - 18,
-                top: mapState.points[mapState.points.length - 1].y - 18,
-              },
-            ]}
-          >
-            <Ionicons name="location" size={17} color={colors.white} />
-          </View>
-        ) : null}
-      </View>
+          {mapState.userPoint ? (
+            <View
+              style={[
+                styles.userAccuracy,
+                {
+                  left: mapState.userPoint.x - 28,
+                  top: mapState.userPoint.y - 28,
+                },
+              ]}
+            >
+              <View style={styles.userMarker} />
+            </View>
+          ) : null}
+        </View>
+      )}
 
-      <View style={[styles.layerControl, immersive && styles.immersiveLayerControl]}>
+      {!isPerspective ? (
+        <View style={[styles.layerControl, immersive && styles.immersiveLayerControl]}>
         <Pressable
           onPress={() => setLayer("standard")}
           style={[styles.layerButton, layer === "standard" && styles.layerButtonActive]}
@@ -403,7 +619,8 @@ export function TrailMap({
             Satelite
           </Text>
         </Pressable>
-      </View>
+        </View>
+      ) : null}
 
       <Pressable
         onPress={() => setIsPerspective((current) => !current)}
@@ -424,7 +641,7 @@ export function TrailMap({
             isPerspective && styles.perspectiveLabelActive,
           ]}
         >
-          Perspectiva
+          3D
         </Text>
       </Pressable>
 
@@ -445,7 +662,7 @@ export function TrailMap({
           <Ionicons name="remove" size={22} color={colors.ink} />
         </Pressable>
         <View style={styles.zoomDivider} />
-        <Pressable onPress={resetView} style={styles.zoomButton}>
+        <Pressable onPress={centerOnUser} style={styles.zoomButton}>
           <Ionicons name="locate-outline" size={20} color={colors.ink} />
         </Pressable>
       </View>
@@ -464,13 +681,31 @@ export function TrailMap({
         </View>
       ) : null}
 
-      <Text style={styles.attribution}>
-        {layer === "terrain"
-          ? "OpenTopoMap | OpenStreetMap contributors"
-          : layer === "satellite"
-            ? "Esri World Imagery"
-            : "OpenStreetMap contributors"}
-      </Text>
+      {!isPerspective ? (
+        <Text style={styles.attribution}>
+          {layer === "terrain"
+            ? "OpenTopoMap | OpenStreetMap contributors"
+            : layer === "satellite"
+              ? "Esri World Imagery"
+              : "OpenStreetMap contributors"}
+        </Text>
+      ) : null}
+
+      {showUserLocation && (permissionDenied || locationError) ? (
+        <View style={styles.locationWarning}>
+          <Ionicons name="location-outline" size={14} color={colors.danger} />
+          <Text style={styles.locationWarningText}>
+            Activa la ubicacion para ver tu posicion.
+          </Text>
+        </View>
+      ) : null}
+
+      {isTestingLocation ? (
+        <View style={styles.testingBadge}>
+          <Ionicons name="flask-outline" size={14} color={colors.greenDark} />
+          <Text style={styles.testingBadgeText}>Testing</Text>
+        </View>
+      ) : null}
     </View>
   );
 }
@@ -479,27 +714,127 @@ const styles = StyleSheet.create({
   map: {
     backgroundColor: "#DDE9E0",
     borderRadius: 24,
-    flex: 1,
     marginBottom: 16,
-    minHeight: 320,
     overflow: "hidden",
     position: "relative",
   },
+  embeddedMap: {
+    alignSelf: "stretch",
+    height: 430,
+    minHeight: 360,
+  },
   immersiveMap: {
     borderRadius: 0,
+    flex: 1,
     marginBottom: 0,
     minHeight: 0,
   },
   mapContent: {
     flex: 1,
   },
-  perspectiveContent: {
-    height: "100%",
-  },
   tile: {
     height: TILE_SIZE,
     position: "absolute",
     width: TILE_SIZE,
+  },
+  terrain3dScene: {
+    backgroundColor: "#CFE6F1",
+    flex: 1,
+    overflow: "hidden",
+  },
+  terrainSky: {
+    backgroundColor: "#B8D9E8",
+    height: "42%",
+    left: 0,
+    opacity: 0.95,
+    position: "absolute",
+    right: 0,
+    top: 0,
+  },
+  terrainHorizon: {
+    backgroundColor: "#E7F1D7",
+    borderTopColor: "rgba(255,255,255,0.72)",
+    borderTopWidth: 2,
+    height: "18%",
+    left: "-8%",
+    position: "absolute",
+    right: "-8%",
+    top: "31%",
+    transform: [{ rotate: "-4deg" }],
+  },
+  terrainPlane: {
+    backgroundColor: "#8EC593",
+    borderTopColor: "rgba(255,255,255,0.56)",
+    borderTopWidth: 2,
+    bottom: "-7%",
+    height: "74%",
+    left: "-18%",
+    overflow: "hidden",
+    position: "absolute",
+    right: "-18%",
+    transform: [{ perspective: 900 }, { rotateX: "54deg" }],
+  },
+  terrainBand: {
+    borderTopColor: "rgba(255,255,255,0.38)",
+    borderTopWidth: 1,
+    height: "13%",
+    left: "-5%",
+    position: "absolute",
+    right: "-5%",
+    transform: [{ rotate: "-7deg" }],
+  },
+  terrainRouteSegment: {
+    backgroundColor: colors.danger,
+    borderColor: colors.white,
+    borderRadius: 999,
+    borderWidth: 1,
+    height: 8,
+    position: "absolute",
+    transformOrigin: "left center",
+    zIndex: 4,
+  },
+  terrainMarker: {
+    alignItems: "center",
+    borderColor: colors.white,
+    borderRadius: 16,
+    borderWidth: 2,
+    height: 32,
+    justifyContent: "center",
+    position: "absolute",
+    width: 32,
+    zIndex: 5,
+  },
+  terrainUserMarker: {
+    backgroundColor: "#2376D9",
+    borderColor: colors.white,
+    borderRadius: 11,
+    borderWidth: 3,
+    height: 22,
+    position: "absolute",
+    width: 22,
+    zIndex: 6,
+  },
+  terrainInfo: {
+    backgroundColor: "rgba(255,255,255,0.94)",
+    borderRadius: 18,
+    bottom: 14,
+    left: 14,
+    paddingHorizontal: 14,
+    paddingVertical: 12,
+    position: "absolute",
+    right: 14,
+    zIndex: 5,
+  },
+  terrainInfoTitle: {
+    color: colors.ink,
+    fontSize: 15,
+    fontWeight: "900",
+  },
+  terrainInfoText: {
+    color: colors.muted,
+    fontSize: 12,
+    fontWeight: "800",
+    marginTop: 4,
   },
   layerControl: {
     backgroundColor: "rgba(255,255,255,0.94)",
@@ -627,6 +962,29 @@ const styles = StyleSheet.create({
   endMarker: {
     backgroundColor: colors.danger,
   },
+  userAccuracy: {
+    alignItems: "center",
+    backgroundColor: "rgba(35, 118, 217, 0.18)",
+    borderColor: "rgba(35, 118, 217, 0.28)",
+    borderRadius: 28,
+    borderWidth: 1,
+    height: 56,
+    justifyContent: "center",
+    position: "absolute",
+    width: 56,
+    zIndex: 5,
+  },
+  userMarker: {
+    backgroundColor: "#2376D9",
+    borderColor: colors.white,
+    borderRadius: 10,
+    borderWidth: 3,
+    height: 20,
+    shadowColor: "#000",
+    shadowOpacity: 0.18,
+    shadowRadius: 8,
+    width: 20,
+  },
   mapCard: {
     backgroundColor: "rgba(255,255,255,0.95)",
     borderRadius: 18,
@@ -659,5 +1017,45 @@ const styles = StyleSheet.create({
     position: "absolute",
     right: 10,
     zIndex: 5,
+  },
+  locationWarning: {
+    alignItems: "center",
+    backgroundColor: "rgba(255,255,255,0.94)",
+    borderRadius: 14,
+    flexDirection: "row",
+    gap: 6,
+    left: 12,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+    position: "absolute",
+    right: 12,
+    top: 112,
+    zIndex: 7,
+  },
+  locationWarningText: {
+    color: colors.danger,
+    flex: 1,
+    fontSize: 12,
+    fontWeight: "900",
+  },
+  testingBadge: {
+    alignItems: "center",
+    backgroundColor: "rgba(223,243,231,0.96)",
+    borderColor: "rgba(13,122,69,0.24)",
+    borderRadius: 14,
+    borderWidth: 1,
+    flexDirection: "row",
+    gap: 5,
+    left: 12,
+    paddingHorizontal: 10,
+    paddingVertical: 7,
+    position: "absolute",
+    top: 112,
+    zIndex: 7,
+  },
+  testingBadgeText: {
+    color: colors.greenDark,
+    fontSize: 12,
+    fontWeight: "900",
   },
 });

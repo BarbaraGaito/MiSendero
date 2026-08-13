@@ -3,13 +3,22 @@ import { router } from "expo-router";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { AppScreen, Card, PrimaryButton, ScreenTitle, SettingRow, colors } from "../components/MiSenderoUI";
 import { getProfile } from "../../services/api";
-import { clearAuthSession, getAuthSession } from "../../services/authSession";
+import {
+  clearAuthSession,
+  getAuthSession,
+  saveAuthSession,
+} from "../../services/authSession";
 import { Profile } from "../../types";
 import {
   getPrivacyPreferences,
   PrivacyPreferences,
   savePrivacyPreferences,
 } from "../../services/privacyConsent";
+import {
+  getTestingLocationMode,
+  saveTestingLocationMode,
+  TestingLocationMode,
+} from "../../services/testingMode";
 
 export default function ProfileScreen() {
   const [profile, setProfile] = useState<Profile | null>(null);
@@ -20,6 +29,11 @@ export default function ProfileScreen() {
     analyticsTrainingConsent: false,
     updatedAt: null,
   });
+  const [testingLocationMode, setTestingLocationMode] =
+    useState<TestingLocationMode>({
+      enabled: false,
+      updatedAt: null,
+    });
 
   useEffect(() => {
     const loadProfile = async () => {
@@ -32,9 +46,29 @@ export default function ProfileScreen() {
         }
 
         const data = await getProfile(session.token);
-        const privacyPreferences = await getPrivacyPreferences();
+        const [privacyPreferences, testingPreferences] = await Promise.all([
+          getPrivacyPreferences(),
+          getTestingLocationMode(),
+        ]);
+
+        if (data.user) {
+          await saveAuthSession({
+            token: session.token,
+            user: data.user,
+          });
+        }
+
+        if (data.user?.role !== "admin" && testingPreferences.enabled) {
+          await saveTestingLocationMode(false);
+        }
+
         setProfile(data);
         setPrivacy(privacyPreferences);
+        setTestingLocationMode(
+          data.user?.role === "admin"
+            ? await getTestingLocationMode()
+            : { enabled: false, updatedAt: null }
+        );
         setError(null);
       } catch (loadError) {
         setError("No pudimos cargar tu perfil en este momento.");
@@ -56,12 +90,20 @@ export default function ProfileScreen() {
     setPrivacy(await getPrivacyPreferences());
   };
 
+  const updateTestingLocationMode = async (enabled: boolean) => {
+    if (profile?.user?.role !== "admin") return;
+
+    await saveTestingLocationMode(enabled);
+    setTestingLocationMode(await getTestingLocationMode());
+  };
+
   const user = profile?.user;
   const displayName = user?.name || "Invitado";
   const email = user?.email || "Inicia sesion para ver tu cuenta";
   const initial = displayName.trim().charAt(0).toUpperCase() || "U";
   const completedRoutes = profile?.stats.completed_routes ?? 0;
   const totalDistance = profile?.stats.total_distance_km ?? 0;
+  const isAdmin = user?.role === "admin";
 
   return (
     <AppScreen activeTab="perfil">
@@ -121,8 +163,8 @@ export default function ProfileScreen() {
           <SettingRow label="Unidades" value="Kilometros" />
         </Card>
 
-        <Card>
-          <Text style={styles.cardTitle}>Privacidad e IA</Text>
+      <Card>
+        <Text style={styles.cardTitle}>Privacidad e IA</Text>
         <Text style={styles.privacyText}>
           Los datos fisiologicos se guardan localmente. Si aceptas colaborar con
           mejoras del servicio, se usan datos anonimizados y sin ubicacion exacta.
@@ -156,10 +198,28 @@ export default function ProfileScreen() {
             label="Terminos y disclaimers"
             value="Ver"
             onPress={() => router.push("/terminos-condiciones")}
+        />
+      </Card>
+
+      {isAdmin ? (
+        <Card tone="orange">
+          <Text style={styles.cardTitle}>Herramientas de testing</Text>
+          <Text style={styles.privacyText}>
+            Solo administradores. Simula la ubicacion del dispositivo en el
+            inicio de la ruta para probar inicio, mapas y alertas sin estar
+            fisicamente en el lugar.
+          </Text>
+          <SettingRow
+            label="Ubicacion simulada"
+            value={testingLocationMode.enabled ? "Activa" : "Desactivada"}
+            onPress={() =>
+              updateTestingLocationMode(!testingLocationMode.enabled)
+            }
           />
         </Card>
+      ) : null}
 
-        <PrimaryButton
+      <PrimaryButton
           label="Cerrar sesion"
           tone="secondary"
           onPress={logout}

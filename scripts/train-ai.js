@@ -26,20 +26,6 @@ const restrictedHeaderPatterns = [
 
 const modelConfigs = [
   {
-    id: "route_difficulty",
-    version: 1,
-    source: "OpenStreetMap sac_scale + NASA SRTM normalized export",
-    input: "route_difficulty.csv",
-    output: "routeDifficultyModel.json",
-    features: [
-      "distance_km",
-      "elevation_gain_m",
-      "avg_slope_percent",
-      "max_slope_percent",
-      "technical_score",
-    ],
-  },
-  {
     id: "fatigue",
     version: 1,
     source: "PAMAP2 + WESAD normalized wearable windows",

@@ -6,6 +6,7 @@ import {
   saveHeartRateLog,
 } from "../../database/sessionsRepository";
 import { bluetoothSimulator } from "../../services/bluetoothSimulator";
+import { hasSensitiveDataConsent } from "../../services/privacyConsent";
 import { syncSessions } from "../../services/syncService";
 import { getSimulatedTrackingTick } from "../../services/trackingService";
 import { FatigueLevel } from "../../types";
@@ -19,6 +20,7 @@ export const useTracking = () => {
   const [distanceMeters, setDistanceMeters] = useState(0);
   const [speedKmh, setSpeedKmh] = useState(0);
   const [inactiveTooLong, setInactiveTooLong] = useState(false);
+  const [needsSensitiveDataConsent, setNeedsSensitiveDataConsent] = useState(false);
 
   const sessionIdRef = useRef<number | null>(null);
   const lastMovementRef = useRef(Date.now());
@@ -70,6 +72,13 @@ export const useTracking = () => {
   }, [isActive]);
 
   const startSession = async () => {
+    const canUseSensitiveData = await hasSensitiveDataConsent();
+
+    if (!canUseSensitiveData) {
+      setNeedsSensitiveDataConsent(true);
+      return false;
+    }
+
     const startedAt = Date.now();
     sessionIdRef.current = await createSession(startedAt);
     fatigueSamplesRef.current = [];
@@ -80,8 +89,10 @@ export const useTracking = () => {
     setDistanceMeters(0);
     setSpeedKmh(0);
     setInactiveTooLong(false);
+    setNeedsSensitiveDataConsent(false);
     setIsActive(true);
     startWatch();
+    return true;
   };
 
   const stopSession = async () => {
@@ -116,6 +127,7 @@ export const useTracking = () => {
     distanceMeters,
     speedKmh,
     inactiveTooLong,
+    needsSensitiveDataConsent,
     startSession,
     stopSession,
   };

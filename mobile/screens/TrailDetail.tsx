@@ -14,6 +14,7 @@ import {
 } from "../components/MiSenderoUI";
 import { getTrailById } from "../../services/api";
 import { Trail } from "../../types";
+import { predictRouteDifficulty } from "../../ai/inferenceEngine";
 
 export default function Screen03TrailDetail() {
   const insets = useSafeAreaInsets();
@@ -46,6 +47,7 @@ export default function Screen03TrailDetail() {
 
   const distance = trail?.distance_km ? `${trail.distance_km} km` : "Distancia a confirmar";
   const duration = trail?.duration || "Duracion a confirmar";
+  const aiDifficulty = trail ? predictRouteDifficulty(trail) : null;
 
   return (
     <ScreenShell>
@@ -83,6 +85,19 @@ export default function Screen03TrailDetail() {
                 {trail.description || "Pronto vas a encontrar mas informacion sobre este recorrido."}
               </Text>
             </InfoCard>
+
+            {aiDifficulty ? (
+              <InfoCard style={styles.aiCard}>
+                <View style={styles.aiHeader}>
+                  <Ionicons name="sparkles-outline" size={20} color={colors.green} />
+                  <Text style={styles.cardTitle}>IA offline</Text>
+                </View>
+                <Text style={styles.body}>
+                  Dificultad estimada: {aiDifficulty.label} ({Math.round(aiDifficulty.confidence * 100)}%
+                  confianza). El modelo se ejecuta localmente con datos derivados de OSM/SRTM.
+                </Text>
+              </InfoCard>
+            ) : null}
 
             <InfoCard style={styles.card}>
               <Text style={styles.cardTitle}>Antes de salir</Text>
@@ -174,6 +189,15 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "900",
     marginBottom: 10,
+  },
+  aiCard: {
+    backgroundColor: colors.mint,
+    marginTop: 16,
+  },
+  aiHeader: {
+    alignItems: "center",
+    flexDirection: "row",
+    gap: 8,
   },
   body: {
     color: colors.muted,

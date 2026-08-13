@@ -16,6 +16,7 @@ export default function RootLayout() {
         <Stack.Screen name="trail-detail" />
         <Stack.Screen name="route-map" />
         <Stack.Screen name="trail-start" />
+        <Stack.Screen name="terminos-condiciones" />
         <Stack.Screen name="alerta-ruta" />
         <Stack.Screen name="actualizacion-fallida" />
         <Stack.Screen name="buscar-mapas-offline" />

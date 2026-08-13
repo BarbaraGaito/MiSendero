@@ -1,20 +1,12 @@
 import { FatigueLevel } from "../types";
+import { predictFatigueLevel } from "./inferenceEngine";
 
 export const calculateFatigue = (
   hr: number,
   speedKmh: number,
   elapsedMinutes: number
 ): FatigueLevel => {
-
-  if (hr > 150 && speedKmh < 2.5) {
-    return "alto";
-  }
-
-  if (hr > 135 || (hr > 120 && elapsedMinutes > 25)) {
-    return "medio";
-  }
-
-  return "bajo";
+  return predictFatigueLevel({ hr, speedKmh, elapsedMinutes });
 };
 
 export const fatigueToScore = (fatigue: FatigueLevel) => {

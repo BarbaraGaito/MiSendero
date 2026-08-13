@@ -9,7 +9,7 @@ import {
   View,
   ViewStyle,
 } from "react-native";
-import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 
 export const colors = {
@@ -219,7 +219,6 @@ export function PrimaryButton({
 }
 
 export function BottomNav({ active }: { active: "inicio" | "explorar" | "actividad" | "perfil" }) {
-  const insets = useSafeAreaInsets();
   const items: Array<{ id: typeof active; label: string; icon: IconName; href: string }> = [
     { id: "inicio", label: "Inicio", icon: "home-outline", href: "/inicio" },
     { id: "explorar", label: "Explorar", icon: "compass-outline", href: "/explorar-rutas" },
@@ -228,7 +227,7 @@ export function BottomNav({ active }: { active: "inicio" | "explorar" | "activid
   ];
 
   return (
-    <View style={[styles.bottomNav, { bottom: Math.max(12, insets.bottom + 8) }]}>
+    <View style={styles.bottomNav}>
       {items.map((item) => {
         const selected = item.id === active;
         return (
@@ -361,6 +360,7 @@ export const styles = StyleSheet.create({
   content: {
     flex: 1,
     paddingHorizontal: 22,
+    paddingBottom: 12,
     paddingTop: 12,
   },
   topBar: {
@@ -440,9 +440,10 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     gap: 4,
     justifyContent: "space-between",
+    marginBottom: 12,
+    marginTop: 8,
     paddingHorizontal: 14,
     paddingVertical: 13,
-    position: "absolute",
     shadowColor: "#000",
     shadowOpacity: 0.12,
     shadowRadius: 18,

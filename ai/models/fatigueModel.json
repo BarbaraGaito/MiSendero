@@ -1,0 +1,56 @@
+{
+  "id": "fatigue",
+  "version": 1,
+  "trained_at": "2026-08-13T00:00:00.000Z",
+  "algorithm": "nearest_centroid_standardized",
+  "source": "PAMAP2 + WESAD normalized wearable windows",
+  "features": [
+    "hr",
+    "speed_kmh",
+    "elapsed_minutes",
+    "hr_reserve_percent"
+  ],
+  "labels": [
+    "bajo",
+    "medio",
+    "alto"
+  ],
+  "statistics": {
+    "hr": {
+      "mean": 125.071429,
+      "std": 20.136904
+    },
+    "speed_kmh": {
+      "mean": 3.542857,
+      "std": 1.026585
+    },
+    "elapsed_minutes": {
+      "mean": 38.071429,
+      "std": 20.062275
+    },
+    "hr_reserve_percent": {
+      "mean": 56,
+      "std": 17.488772
+    }
+  },
+  "centroids": {
+    "bajo": {
+      "hr": -1.220219,
+      "speed_kmh": 1.224587,
+      "elapsed_minutes": -1.125068,
+      "hr_reserve_percent": -1.22936
+    },
+    "medio": {
+      "hr": -0.142595,
+      "speed_kmh": 0.172556,
+      "elapsed_minutes": -0.133157,
+      "hr_reserve_percent": -0.137231
+    },
+    "alto": {
+      "hr": 1.11877,
+      "speed_kmh": -1.152225,
+      "elapsed_minutes": 1.033211,
+      "hr_reserve_percent": 1.120719
+    }
+  }
+}

@@ -1,0 +1,15 @@
+distance_km,elevation_gain_m,avg_slope_percent,max_slope_percent,technical_score,label
+1.8,60,3.2,9,1,Baja
+2.4,95,4.1,11,1,Baja
+4.7,180,5.3,15,2,Media
+7.0,260,5.8,18,2,Media
+8.0,340,6.4,21,2,Media
+9.0,740,8.2,28,3,Media
+10.0,420,6.0,20,2,Media
+12.0,820,8.9,31,4,Alta
+19.0,720,5.4,24,3,Media
+25.0,1100,6.9,35,4,Alta
+7.0,120,2.8,10,2,Media
+1.75,40,2.2,7,1,Baja
+1.85,35,1.9,6,1,Baja
+12.0,970,9.4,34,4,Alta

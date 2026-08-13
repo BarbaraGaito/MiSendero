@@ -1,15 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { router } from "expo-router";
-import { StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { AppScreen, Card, PrimaryButton, ScreenTitle, SettingRow, colors } from "../components/MiSenderoUI";
 import { getProfile } from "../../services/api";
 import { clearAuthSession, getAuthSession } from "../../services/authSession";
 import { Profile } from "../../types";
+import {
+  getPrivacyPreferences,
+  PrivacyPreferences,
+  savePrivacyPreferences,
+} from "../../services/privacyConsent";
 
 export default function ProfileScreen() {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [privacy, setPrivacy] = useState<PrivacyPreferences>({
+    sensitiveDataConsent: false,
+    analyticsTrainingConsent: false,
+    updatedAt: null,
+  });
 
   useEffect(() => {
     const loadProfile = async () => {
@@ -22,7 +32,9 @@ export default function ProfileScreen() {
         }
 
         const data = await getProfile(session.token);
+        const privacyPreferences = await getPrivacyPreferences();
         setProfile(data);
+        setPrivacy(privacyPreferences);
         setError(null);
       } catch (loadError) {
         setError("No pudimos cargar tu perfil en este momento.");
@@ -39,6 +51,11 @@ export default function ProfileScreen() {
     router.replace("/");
   };
 
+  const updatePrivacy = async (nextPrivacy: Omit<PrivacyPreferences, "updatedAt">) => {
+    await savePrivacyPreferences(nextPrivacy);
+    setPrivacy(await getPrivacyPreferences());
+  };
+
   const user = profile?.user;
   const displayName = user?.name || "Invitado";
   const email = user?.email || "Inicia sesion para ver tu cuenta";
@@ -48,66 +65,106 @@ export default function ProfileScreen() {
 
   return (
     <AppScreen activeTab="perfil">
-      <ScreenTitle
-        eyebrow="Perfil y ajustes"
-        title={displayName}
-        subtitle="Tu cuenta y preferencias de seguridad."
-      />
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <ScreenTitle
+          eyebrow="Perfil y ajustes"
+          title={displayName}
+          subtitle="Tu cuenta y preferencias de seguridad."
+        />
 
-      {isLoading ? <Text style={styles.statusText}>Cargando perfil...</Text> : null}
-      {error ? <Text style={styles.statusText}>{error}</Text> : null}
+        {isLoading ? <Text style={styles.statusText}>Cargando perfil...</Text> : null}
+        {error ? <Text style={styles.statusText}>{error}</Text> : null}
 
-      <Card tone="green">
-        <View style={styles.profileRow}>
-          <View style={styles.avatar}>
-            <Text style={styles.avatarText}>{initial}</Text>
+        <Card tone="green">
+          <View style={styles.profileRow}>
+            <View style={styles.avatar}>
+              <Text style={styles.avatarText}>{initial}</Text>
+            </View>
+            <View style={styles.profileText}>
+              <Text style={styles.profileName}>{displayName}</Text>
+              <Text style={styles.profileEmail}>{email}</Text>
+              <Text style={styles.profileMeta}>
+                {completedRoutes} rutas completadas - {totalDistance} km
+              </Text>
+            </View>
           </View>
-          <View style={styles.profileText}>
-            <Text style={styles.profileName}>{displayName}</Text>
-            <Text style={styles.profileEmail}>{email}</Text>
-            <Text style={styles.profileMeta}>
-              {completedRoutes} rutas completadas - {totalDistance} km
-            </Text>
-          </View>
-        </View>
-      </Card>
+        </Card>
 
-      <Card>
-        <Text style={styles.cardTitle}>Mapas sin conexion</Text>
-        <SettingRow
-          label="Sendero Laguna Esmeralda"
-          value="Actualizado"
-          onPress={() => router.push("/offline-mapas-descargados")}
+        <Card>
+          <Text style={styles.cardTitle}>Mapas sin conexion</Text>
+          <SettingRow
+            label="Sendero Laguna Esmeralda"
+            value="Actualizado"
+            onPress={() => router.push("/offline-mapas-descargados")}
+          />
+          <SettingRow
+            label="Villa La Angostura"
+            value="Descargar"
+            onPress={() => router.push("/offline-buscar")}
+          />
+        </Card>
+
+        <Card>
+          <Text style={styles.cardTitle}>Seguridad y dispositivos</Text>
+          <SettingRow
+            label="Contacto de emergencia"
+            value="Configurar"
+            onPress={() => router.push("/contacto-seguridad")}
+          />
+          <SettingRow label="Reloj o sensor externo" value="No vinculado" />
+          <SettingRow label="Modo ahorro de bateria" value="Activo" />
+        </Card>
+
+        <Card>
+          <Text style={styles.cardTitle}>Preferencias</Text>
+          <SettingRow label="Notificaciones" value="Activadas" />
+          <SettingRow label="Unidades" value="Kilometros" />
+        </Card>
+
+        <Card>
+          <Text style={styles.cardTitle}>Privacidad e IA</Text>
+          <Text style={styles.privacyText}>
+            Los datos fisiologicos se guardan localmente. Para entrenamiento se usan datos
+            anonimizados y sin ubicacion exacta.
+          </Text>
+          <SettingRow
+            label="Usar datos sensibles"
+            value={privacy.sensitiveDataConsent ? "Permitido" : "Requiere aceptar"}
+            onPress={() => {
+              const nextSensitiveConsent = !privacy.sensitiveDataConsent;
+
+              updatePrivacy({
+                sensitiveDataConsent: nextSensitiveConsent,
+                analyticsTrainingConsent: nextSensitiveConsent
+                  ? privacy.analyticsTrainingConsent
+                  : false,
+              });
+            }}
+          />
+          <SettingRow
+            label="Aportar a entrenamiento"
+            value={privacy.analyticsTrainingConsent ? "Anonimizado" : "Desactivado"}
+            onPress={() =>
+              updatePrivacy({
+                sensitiveDataConsent:
+                  privacy.sensitiveDataConsent || !privacy.analyticsTrainingConsent,
+                analyticsTrainingConsent: !privacy.analyticsTrainingConsent,
+              })
+            }
+          />
+          <SettingRow
+            label="Terminos y disclaimers"
+            value="Ver"
+            onPress={() => router.push("/terminos-condiciones")}
+          />
+        </Card>
+
+        <PrimaryButton
+          label="Cerrar sesion"
+          tone="secondary"
+          onPress={logout}
         />
-        <SettingRow
-          label="Villa La Angostura"
-          value="Descargar"
-          onPress={() => router.push("/offline-buscar")}
-        />
-      </Card>
-
-      <Card>
-        <Text style={styles.cardTitle}>Seguridad y dispositivos</Text>
-        <SettingRow
-          label="Contacto de emergencia"
-          value="Configurar"
-          onPress={() => router.push("/contacto-seguridad")}
-        />
-        <SettingRow label="Reloj o sensor externo" value="No vinculado" />
-        <SettingRow label="Modo ahorro de bateria" value="Activo" />
-      </Card>
-
-      <Card>
-        <Text style={styles.cardTitle}>Preferencias</Text>
-        <SettingRow label="Notificaciones" value="Activadas" />
-        <SettingRow label="Unidades" value="Kilometros" />
-      </Card>
-
-      <PrimaryButton
-        label="Cerrar sesion"
-        tone="secondary"
-        onPress={logout}
-      />
+      </ScrollView>
     </AppScreen>
   );
 }
@@ -162,5 +219,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "800",
     marginBottom: 2,
+  },
+  privacyText: {
+    color: colors.muted,
+    fontSize: 13,
+    fontWeight: "600",
+    lineHeight: 19,
+    marginBottom: 6,
   },
 });

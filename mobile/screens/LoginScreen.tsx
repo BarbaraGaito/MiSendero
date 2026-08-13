@@ -1,9 +1,14 @@
 import React, { useState } from "react";
+import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { loginUser, registerUser } from "../../services/api";
 import { saveAuthSession } from "../../services/authSession";
+import {
+  CURRENT_TERMS_VERSION,
+  saveTermsAcceptance,
+} from "../../services/legalConsent";
 import { colors } from "../components/MiSenderoUI";
 
 export default function LoginScreen() {
@@ -11,6 +16,7 @@ export default function LoginScreen() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -22,6 +28,11 @@ export default function LoginScreen() {
       return;
     }
 
+    if (isRegister && !acceptedTerms) {
+      setError("Acepta los terminos y disclaimers de seguridad para continuar.");
+      return;
+    }
+
     setIsSubmitting(true);
     setError(null);
 
@@ -29,6 +40,10 @@ export default function LoginScreen() {
       const auth = isRegister
         ? await registerUser(name, email, password)
         : await loginUser(email, password);
+
+      if (isRegister) {
+        await saveTermsAcceptance(CURRENT_TERMS_VERSION);
+      }
 
       await saveAuthSession(auth);
       router.replace("/inicio");
@@ -97,6 +112,34 @@ export default function LoginScreen() {
 
           {error ? <Text style={styles.error}>{error}</Text> : null}
 
+          {isRegister ? (
+            <View style={styles.termsBox}>
+              <Pressable
+                accessibilityRole="checkbox"
+                accessibilityState={{ checked: acceptedTerms }}
+                onPress={() => setAcceptedTerms((current) => !current)}
+                style={[
+                  styles.checkbox,
+                  acceptedTerms && styles.checkboxChecked,
+                ]}
+              >
+                {acceptedTerms ? (
+                  <Ionicons name="checkmark" size={16} color={colors.white} />
+                ) : null}
+              </Pressable>
+              <Text style={styles.termsText}>
+                Acepto los terminos y condiciones, privacidad y disclaimers de
+                seguridad.{" "}
+                <Text
+                  onPress={() => router.push("/terminos-condiciones")}
+                  style={styles.termsLink}
+                >
+                  Ver terminos
+                </Text>
+              </Text>
+            </View>
+          ) : null}
+
           <Pressable
             disabled={isSubmitting}
             onPress={submit}
@@ -114,6 +157,7 @@ export default function LoginScreen() {
           <Pressable
             onPress={() => {
               setMode(isRegister ? "login" : "register");
+              setAcceptedTerms(false);
               setError(null);
             }}
             style={styles.secondaryButton}
@@ -192,6 +236,35 @@ const styles = StyleSheet.create({
     color: colors.danger,
     fontSize: 13,
     fontWeight: "700",
+  },
+  termsBox: {
+    alignItems: "flex-start",
+    flexDirection: "row",
+    gap: 10,
+  },
+  checkbox: {
+    alignItems: "center",
+    borderColor: colors.green,
+    borderRadius: 7,
+    borderWidth: 2,
+    height: 24,
+    justifyContent: "center",
+    marginTop: 1,
+    width: 24,
+  },
+  checkboxChecked: {
+    backgroundColor: colors.green,
+  },
+  termsText: {
+    color: colors.muted,
+    flex: 1,
+    fontSize: 13,
+    fontWeight: "600",
+    lineHeight: 19,
+  },
+  termsLink: {
+    color: colors.green,
+    fontWeight: "900",
   },
   primaryButton: {
     alignItems: "center",

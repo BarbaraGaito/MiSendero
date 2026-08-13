@@ -22,8 +22,8 @@ export default function UpdateFailed25Screen() {
       </Card>
 
       <Card>
-        <InfoRow icon="map-outline" label="Bariloche y alrededores" value="159 MB" />
-        <InfoRow icon="checkmark-circle-outline" label="Villa La Angostura" value="Vigente" />
+        <InfoRow icon="map-outline" label="Actualizacion offline" value="Interrumpida" />
+        <InfoRow icon="checkmark-circle-outline" label="Mapas guardados" value="Ver base local" />
       </Card>
 
       <View style={styles.bottomActions}>

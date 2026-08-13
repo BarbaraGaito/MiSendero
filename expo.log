@@ -1,8 +1,6 @@
 
-> misendero@1.0.0 start
-> expo start --port 8081
+> misendero@1.0.0 web
+> expo start --web
 
 Starting project at C:\Users\larat\OneDrive\Documentos\Lara\uade\5to año\Proyecto final\MiSendero
 Starting Metro Bundler
-Waiting on http://localhost:8081
-Logs for your project will appear below.

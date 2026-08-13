@@ -117,7 +117,21 @@ export default function RestBreakScreen() {
             })
           }
         />
-        <PrimaryButton label="Finalizar y guardar" href="/recorrido-finalizado" tone="secondary" />
+        <PrimaryButton
+          label="Finalizar y guardar"
+          tone="secondary"
+          onPress={() =>
+            router.push({
+              pathname: "/recorrido-finalizado",
+              params: {
+                id: String(trailId),
+                startedAt: String(startedAtMs),
+                traveledMeters:
+                  realTraveledMeters !== null ? String(Math.round(realTraveledMeters)) : "",
+              },
+            })
+          }
+        />
       </View>
     </AppScreen>
   );

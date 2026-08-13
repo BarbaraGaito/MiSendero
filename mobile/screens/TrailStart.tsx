@@ -167,7 +167,13 @@ export default function Screen05TrailStart() {
     <ScreenShell>
       <TopBar title="Antes de salir" onBack={() => router.back()} />
 
-      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scroll}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={[
+          styles.scroll,
+          { paddingBottom: Math.max(28, insets.bottom + 24) },
+        ]}
+      >
         <View style={styles.statusCircle}>
           <Ionicons name="checkmark" size={48} color={colors.green} />
         </View>
@@ -239,21 +245,21 @@ export default function Screen05TrailStart() {
             </Text>
           </View>
         </InfoCard>
-      </ScrollView>
 
-      <View style={[styles.footer, { paddingBottom: Math.max(20, insets.bottom + 14) }]}>
-        <PrimaryButton
-          label={
-            isContactLoading
-              ? "Verificando contacto"
-              : hasSafetyContact
-                ? "Comenzar ahora"
-                : "Completar contacto"
-          }
-          icon={hasSafetyContact ? "play-outline" : "shield-checkmark-outline"}
-          onPress={handleStart}
-        />
-      </View>
+        <View style={styles.footer}>
+          <PrimaryButton
+            label={
+              isContactLoading
+                ? "Verificando contacto"
+                : hasSafetyContact
+                  ? "Comenzar ahora"
+                  : "Completar contacto"
+            }
+            icon={hasSafetyContact ? "play-outline" : "shield-checkmark-outline"}
+            onPress={handleStart}
+          />
+        </View>
+      </ScrollView>
     </ScreenShell>
   );
 }
@@ -261,7 +267,7 @@ export default function Screen05TrailStart() {
 const styles = StyleSheet.create({
   scroll: {
     alignItems: "center",
-    paddingBottom: 142,
+    flexGrow: 1,
   },
   statusCircle: {
     alignItems: "center",
@@ -365,12 +371,7 @@ const styles = StyleSheet.create({
     marginTop: 3,
   },
   footer: {
-    backgroundColor: colors.softer,
-    bottom: 0,
-    left: 0,
-    padding: 22,
-    paddingBottom: 28,
-    position: "absolute",
-    right: 0,
+    alignSelf: "stretch",
+    marginTop: 18,
   },
 });

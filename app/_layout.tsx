@@ -14,6 +14,7 @@ export default function RootLayout() {
         <Stack.Screen name="index" />
         <Stack.Screen name="explore" />
         <Stack.Screen name="trail-detail" />
+        <Stack.Screen name="sendero-opiniones" />
         <Stack.Screen name="route-map" />
         <Stack.Screen name="trail-start" />
         <Stack.Screen name="terminos-condiciones" />

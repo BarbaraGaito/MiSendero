@@ -1,15 +1,21 @@
+import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import { Card, PrimaryButton, ScreenShell, ScreenTitle, colors } from "../../components/MiSenderoUI";
+import {
+  Card,
+  PrimaryButton,
+  ScreenShell,
+  ScreenTitle,
+  colors,
+} from "../../components/MiSenderoUI";
 
 export default function DownloadMapScreen03() {
   return (
     <ScreenShell>
       <ScreenTitle
         eyebrow="Descargar mapa"
-        title="Guardá el mapa offline"
-        subtitle="Descargá la zona antes de salir para navegar aunque pierdas señal."
+        title="Guarda el mapa offline"
+        subtitle="Descarga la zona antes de salir para navegar aunque pierdas senal."
       />
 
       <Card tone="green">
@@ -22,14 +28,14 @@ export default function DownloadMapScreen03() {
             <Ionicons name="download-outline" size={22} color={colors.white} />
           </View>
         </View>
-        <Text style={styles.cardTitle}>Laguna Esmeralda</Text>
-        <Text style={styles.cardText}>Mapa, desvíos, puntos SOS y relieve. 312 MB.</Text>
+        <Text style={styles.cardTitle}>Mapa de la ruta</Text>
+        <Text style={styles.cardText}>Mapa, desvios, puntos SOS y relieve.</Text>
       </Card>
 
       <Card>
-        <Info label="Cobertura" value="Disponible sin conexión" />
-        <Info label="Batería recomendada" value="60% o más" />
-        <Info label="Última actualización" value="Hoy" />
+        <Info label="Cobertura" value="Disponible sin conexion" />
+        <Info label="Bateria recomendada" value="60% o mas" />
+        <Info label="Ultima actualizacion" value="Segun base disponible" />
       </Card>
 
       <View style={styles.footer}>

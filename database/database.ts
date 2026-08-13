@@ -2,7 +2,31 @@ import * as SQLite from "expo-sqlite";
 
 export const db = SQLite.openDatabaseSync("trekking.db");
 
-export const initDB = async () => {
+let initPromise: Promise<void> | null = null;
+
+const isDuplicateColumnError = (error: unknown) =>
+  error instanceof Error && error.message.toLowerCase().includes("duplicate column");
+
+const addColumnIfMissing = async (
+  tableName: string,
+  columnName: string,
+  columnDefinition: string
+) => {
+  const columns = await db.getAllAsync<{ name: string }>(`PRAGMA table_info(${tableName})`);
+  const columnNames = columns.map((column) => column.name);
+
+  if (columnNames.includes(columnName)) return;
+
+  try {
+    await db.execAsync(`ALTER TABLE ${tableName} ADD COLUMN ${columnName} ${columnDefinition};`);
+  } catch (error) {
+    if (!isDuplicateColumnError(error)) {
+      throw error;
+    }
+  }
+};
+
+const runInitDB = async () => {
   await db.execAsync(`
     CREATE TABLE IF NOT EXISTS sessions (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -10,7 +34,11 @@ export const initDB = async () => {
       ended_at INTEGER,
       duration INTEGER,
       distance REAL,
-      avg_fatigue TEXT
+      avg_fatigue TEXT,
+      trail_id INTEGER,
+      rating INTEGER,
+      review_text TEXT,
+      reviewed_at INTEGER
     );
 
     CREATE TABLE IF NOT EXISTS heart_rate_logs (
@@ -55,20 +83,36 @@ export const initDB = async () => {
       relationship TEXT NOT NULL,
       updated_at INTEGER NOT NULL
     );
+
+    CREATE TABLE IF NOT EXISTS offline_maps (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL,
+      size_mb REAL NOT NULL,
+      status TEXT NOT NULL,
+      downloaded_at INTEGER NOT NULL,
+      updated_at INTEGER NOT NULL,
+      trail_id INTEGER,
+      trail_json TEXT,
+      reports_json TEXT
+    );
   `);
 
-  const columns = await db.getAllAsync<{ name: string }>(`PRAGMA table_info(sessions)`);
-  const columnNames = columns.map((column) => column.name);
+  await addColumnIfMissing("sessions", "started_at", "INTEGER NOT NULL DEFAULT 0");
+  await addColumnIfMissing("sessions", "ended_at", "INTEGER");
+  await addColumnIfMissing("sessions", "avg_fatigue", "TEXT DEFAULT 'bajo'");
+  await addColumnIfMissing("sessions", "trail_id", "INTEGER");
+  await addColumnIfMissing("sessions", "rating", "INTEGER");
+  await addColumnIfMissing("sessions", "review_text", "TEXT");
+  await addColumnIfMissing("sessions", "reviewed_at", "INTEGER");
+};
 
-  if (!columnNames.includes("started_at")) {
-    await db.execAsync(`ALTER TABLE sessions ADD COLUMN started_at INTEGER NOT NULL DEFAULT 0;`);
+export const initDB = async () => {
+  if (!initPromise) {
+    initPromise = runInitDB().catch((error) => {
+      initPromise = null;
+      throw error;
+    });
   }
 
-  if (!columnNames.includes("ended_at")) {
-    await db.execAsync(`ALTER TABLE sessions ADD COLUMN ended_at INTEGER;`);
-  }
-
-  if (!columnNames.includes("avg_fatigue")) {
-    await db.execAsync(`ALTER TABLE sessions ADD COLUMN avg_fatigue TEXT DEFAULT 'bajo';`);
-  }
+  return initPromise;
 };

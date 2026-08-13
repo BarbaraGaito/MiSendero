@@ -297,7 +297,6 @@ export function TrailCard({
         <View style={styles.statRow}>
           <StatPill icon="walk-outline" label={distance} />
           <StatPill icon="time-outline" label={duration} />
-          <StatPill icon="star-outline" label="4.8" />
         </View>
       </View>
     </Pressable>
@@ -359,6 +358,7 @@ export const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
+    minHeight: 0,
     paddingHorizontal: 22,
     paddingBottom: 12,
     paddingTop: 12,
@@ -390,6 +390,7 @@ export const styles = StyleSheet.create({
   },
   topText: {
     flex: 1,
+    minWidth: 0,
   },
   title: {
     color: colors.ink,

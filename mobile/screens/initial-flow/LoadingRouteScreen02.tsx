@@ -16,7 +16,7 @@ export default function LoadingRouteScreen02() {
         <View style={styles.ring}>
           <Ionicons name="trail-sign-outline" size={42} color={colors.primary} />
         </View>
-        <Text style={styles.loadingTitle}>Sendero Laguna Esmeralda</Text>
+        <Text style={styles.loadingTitle}>Ruta seleccionada</Text>
         <Text style={styles.loadingText}>Sincronizando detalles de la ruta...</Text>
         <View style={styles.progressTrack}>
           <View style={styles.progressFill} />

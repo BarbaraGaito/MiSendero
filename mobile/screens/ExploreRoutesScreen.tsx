@@ -61,7 +61,7 @@ export default function ExploreRoutesScreen() {
       return trails.filter((trail) => {
         const distanceKm = trail.distance_km;
         const searchableText = normalizeText(
-          `${trail.name} ${trail.location} ${trail.difficulty} ${trail.description || ""}`
+          `${trail.name} ${trail.location}`
         );
         const matchesQuery =
           normalizedQuery.length === 0 || searchableText.includes(normalizedQuery);
@@ -179,7 +179,7 @@ export default function ExploreRoutesScreen() {
       <ScreenTitle
         eyebrow="Explorar rutas"
         title="Encontra tu proxima ruta"
-        subtitle="Filtra por dificultad, distancia y disponibilidad."
+        subtitle="Busca por nombre o zona y filtra por dificultad o distancia."
       />
 
       <View>
@@ -187,7 +187,7 @@ export default function ExploreRoutesScreen() {
           <Ionicons name="search-outline" size={18} color={colors.muted} />
           <TextInput
             onChangeText={setSearchQuery}
-            placeholder="Buscar por nombre, zona o dificultad"
+            placeholder="Buscar por zona o nombre"
             placeholderTextColor={colors.muted}
             style={styles.searchInput}
             value={searchQuery}

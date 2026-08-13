@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { router } from "expo-router";
+import React, { useCallback, useEffect, useState } from "react";
+import { router, useFocusEffect } from "expo-router";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { AppScreen, Card, PrimaryButton, ScreenTitle, SettingRow, colors } from "../components/MiSenderoUI";
 import { getProfile } from "../../services/api";
@@ -8,7 +8,7 @@ import {
   getAuthSession,
   saveAuthSession,
 } from "../../services/authSession";
-import { Profile } from "../../types";
+import { Profile, WearableRuntimeStatus } from "../../types";
 import {
   getPrivacyPreferences,
   PrivacyPreferences,
@@ -28,6 +28,7 @@ import {
   ExperienceProfile,
   getExperienceProfile,
 } from "../../services/experienceProfile";
+import { getWearableRuntimeStatus } from "../../services/wearableMetrics";
 
 export default function ProfileScreen() {
   const [profile, setProfile] = useState<Profile | null>(null);
@@ -60,6 +61,12 @@ export default function ProfileScreen() {
       skippedAt: null,
       updatedAt: null,
     });
+  const [wearableRuntime, setWearableRuntime] =
+    useState<WearableRuntimeStatus | null>(null);
+
+  const refreshWearableRuntime = useCallback(async () => {
+    setWearableRuntime(await getWearableRuntimeStatus());
+  }, []);
 
   useEffect(() => {
     const loadProfile = async () => {
@@ -77,11 +84,13 @@ export default function ProfileScreen() {
           testingPreferences,
           preferences,
           experience,
+          wearable,
         ] = await Promise.all([
           getPrivacyPreferences(),
           getTestingLocationMode(),
           getAppPreferences(),
           getExperienceProfile(),
+          getWearableRuntimeStatus(),
         ]);
 
         if (data.user) {
@@ -99,6 +108,7 @@ export default function ProfileScreen() {
         setPrivacy(privacyPreferences);
         setAppPreferences(preferences);
         setExperienceProfile(experience);
+        setWearableRuntime(wearable);
         setTestingLocationMode(
           data.user?.role === "admin"
             ? await getTestingLocationMode()
@@ -114,6 +124,12 @@ export default function ProfileScreen() {
 
     loadProfile();
   }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      refreshWearableRuntime();
+    }, [refreshWearableRuntime])
+  );
 
   const logout = async () => {
     await clearAuthSession();
@@ -197,15 +213,8 @@ export default function ProfileScreen() {
           />
           <SettingRow
             label="Reloj o sensor externo"
-            value={appPreferences.externalSensorLinked ? "Vinculado" : "No vinculado"}
-            onPress={() =>
-              updateAppPreferences({
-                notificationsEnabled: appPreferences.notificationsEnabled,
-                distanceUnit: appPreferences.distanceUnit,
-                batterySaverEnabled: appPreferences.batterySaverEnabled,
-                externalSensorLinked: !appPreferences.externalSensorLinked,
-              })
-            }
+            value={getWearableLabel(wearableRuntime)}
+            onPress={() => router.push("/reloj-salud")}
           />
           <SettingRow
             label="Modo ahorro de bateria"
@@ -322,6 +331,14 @@ export default function ProfileScreen() {
       </ScrollView>
     </AppScreen>
   );
+}
+
+function getWearableLabel(runtime: WearableRuntimeStatus | null) {
+  if (!runtime) return "Revisar";
+  if (runtime.status === "requires_consent") return "Requiere permiso";
+  if (runtime.status === "not_linked") return "No vinculado";
+  if (runtime.status === "waiting_for_native_data") return "Preparado";
+  return "Vinculado";
 }
 
 const styles = StyleSheet.create({

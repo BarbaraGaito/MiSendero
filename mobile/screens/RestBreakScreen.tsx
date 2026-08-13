@@ -2,7 +2,8 @@ import { router, useLocalSearchParams } from "expo-router";
 import React, { useEffect, useMemo, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { getTrailById } from "../../services/api";
-import { Trail } from "../../types";
+import { getWearableRuntimeStatus } from "../../services/wearableMetrics";
+import { Trail, WearableRuntimeStatus } from "../../types";
 import { AppScreen, Card, PrimaryButton, ScreenTitle, colors } from "../components/MiSenderoUI";
 
 export default function RestBreakScreen() {
@@ -20,6 +21,9 @@ export default function RestBreakScreen() {
   const parsedTraveledMeters = Number(traveledMeters);
   const [trail, setTrail] = useState<Trail | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [wearableRuntime, setWearableRuntime] =
+    useState<WearableRuntimeStatus | null>(null);
+  const activeMinutes = Math.max(0, Math.floor((pauseStartedAt - startedAtMs) / 60000));
 
   useEffect(() => {
     getTrailById(trailId)
@@ -31,6 +35,12 @@ export default function RestBreakScreen() {
         setError("No pudimos cargar los datos del sendero.");
       });
   }, [trailId]);
+
+  useEffect(() => {
+    getWearableRuntimeStatus(activeMinutes)
+      .then(setWearableRuntime)
+      .catch(() => setWearableRuntime(null));
+  }, [activeMinutes]);
 
   const realTotalMeters =
     Number.isFinite(parsedTotalMeters) && parsedTotalMeters > 0
@@ -50,7 +60,6 @@ export default function RestBreakScreen() {
     realTraveledMeters !== null && realTotalMeters > 0
       ? Math.min(100, Math.round((realTraveledMeters / realTotalMeters) * 100))
       : 0;
-  const activeMinutes = Math.max(0, Math.floor((pauseStartedAt - startedAtMs) / 60000));
   const averageSpeedKmh =
     realTraveledMeters !== null && activeMinutes > 0
       ? (realTraveledMeters / 1000) / (activeMinutes / 60)
@@ -92,6 +101,39 @@ export default function RestBreakScreen() {
           value={averageSpeedKmh !== null ? `${averageSpeedKmh.toFixed(1)} km/h` : "Calculando"}
         />
         <InfoRow label="Pausa iniciada" value={formatTime(pauseStartedAt)} />
+      </Card>
+
+      <Card tone={wearableRuntime?.prediction?.level === "high" ? "red" : "white"}>
+        <Text style={styles.cardTitle}>Metricas del reloj</Text>
+        {wearableRuntime?.latestSample ? (
+          <>
+            <InfoRow
+              label="Frecuencia cardiaca"
+              value={`${wearableRuntime.latestSample.heartRateBpm ?? "--"} bpm`}
+            />
+            <InfoRow
+              label="Velocidad detectada"
+              value={
+                wearableRuntime.latestSample.speedKmh !== null
+                  ? `${wearableRuntime.latestSample.speedKmh} km/h`
+                  : "No disponible"
+              }
+            />
+            <InfoRow
+              label="Lectura"
+              value={formatTime(wearableRuntime.latestSample.recordedAt)}
+            />
+            {wearableRuntime.prediction ? (
+              <Text style={styles.cardText}>
+                {wearableRuntime.prediction.message}
+              </Text>
+            ) : null}
+          </>
+        ) : (
+          <Text style={styles.cardText}>
+            No hay metricas recientes del reloj para este usuario.
+          </Text>
+        )}
       </Card>
 
       <Card tone="orange">

@@ -27,6 +27,7 @@ export default function RootLayout() {
         <Stack.Screen name="descargar-mapa" />
         <Stack.Screen name="descanso" />
         <Stack.Screen name="recorrido-finalizado" />
+        <Stack.Screen name="reloj-salud" />
         <Stack.Screen name="explorar-rutas" />
         <Stack.Screen name="explorar-skeletons" />
         <Stack.Screen name="filtros-mapas" />

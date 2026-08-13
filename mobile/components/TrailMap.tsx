@@ -13,7 +13,7 @@ import { Trail } from "../../types";
 import { colors } from "./MiSenderoUI";
 
 type Coordinate = [number, number];
-type MapLayer = "standard" | "terrain";
+type MapLayer = "standard" | "terrain" | "satellite";
 
 type TrailMapProps = {
   trail: Trail | null;
@@ -30,6 +30,7 @@ const MIN_ZOOM = 10;
 const MAX_ZOOM_BY_LAYER: Record<MapLayer, number> = {
   standard: 18,
   terrain: 17,
+  satellite: 19,
 };
 
 const parseCoordinates = (value: string | null | undefined): Coordinate[] => {
@@ -85,6 +86,10 @@ const getTileUrl = (layer: MapLayer, zoom: number, x: number, y: number) => {
 
   if (layer === "terrain") {
     return `https://tile.opentopomap.org/${zoom}/${tileX}/${y}.png`;
+  }
+
+  if (layer === "satellite") {
+    return `https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/${zoom}/${y}/${tileX}`;
   }
 
   return `https://tile.openstreetmap.org/${zoom}/${tileX}/${y}.png`;
@@ -256,10 +261,11 @@ export function TrailMap({
     const maxTileX = Math.floor((topLeft.x + layout.width) / TILE_SIZE);
     const minTileY = Math.floor(topLeft.y / TILE_SIZE);
     const maxTileY = Math.floor((topLeft.y + layout.height) / TILE_SIZE);
+    const tileBuffer = isPerspective ? 2 : 1;
     const tiles = [];
 
-    for (let x = minTileX; x <= maxTileX; x += 1) {
-      for (let y = minTileY; y <= maxTileY; y += 1) {
+    for (let x = minTileX - tileBuffer; x <= maxTileX + tileBuffer; x += 1) {
+      for (let y = minTileY - tileBuffer; y <= maxTileY + tileBuffer; y += 1) {
         if (y < 0 || y >= 2 ** zoom) continue;
 
         tiles.push({
@@ -281,7 +287,7 @@ export function TrailMap({
     });
 
     return { tiles, points };
-  }, [activeCenter[0], activeCenter[1], layer, layout.height, layout.width, routePoints, zoom]);
+  }, [activeCenter[0], activeCenter[1], isPerspective, layer, layout.height, layout.width, routePoints, zoom]);
 
   const onLayout = (event: LayoutChangeEvent) => {
     const { width, height } = event.nativeEvent.layout;
@@ -302,10 +308,10 @@ export function TrailMap({
           isPerspective && {
             transform: [
               { translateX: panOffset.x },
-              { translateY: panOffset.y + 54 },
+              { translateY: panOffset.y + 24 },
               { perspective: 900 },
-              { rotateX: "52deg" },
-              { scale: 1.42 },
+              { rotateX: "28deg" },
+              { scale: 1.18 },
             ],
           },
         ]}
@@ -389,6 +395,14 @@ export function TrailMap({
             Terreno
           </Text>
         </Pressable>
+        <Pressable
+          onPress={() => setLayer("satellite")}
+          style={[styles.layerButton, layer === "satellite" && styles.layerButtonActive]}
+        >
+          <Text style={[styles.layerLabel, layer === "satellite" && styles.layerLabelActive]}>
+            Satelite
+          </Text>
+        </Pressable>
       </View>
 
       <Pressable
@@ -453,7 +467,9 @@ export function TrailMap({
       <Text style={styles.attribution}>
         {layer === "terrain"
           ? "OpenTopoMap | OpenStreetMap contributors"
-          : "OpenStreetMap contributors"}
+          : layer === "satellite"
+            ? "Esri World Imagery"
+            : "OpenStreetMap contributors"}
       </Text>
     </View>
   );

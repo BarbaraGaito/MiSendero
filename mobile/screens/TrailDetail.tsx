@@ -90,11 +90,13 @@ export default function Screen03TrailDetail() {
               <InfoCard style={styles.aiCard}>
                 <View style={styles.aiHeader}>
                   <Ionicons name="sparkles-outline" size={20} color={colors.green} />
-                  <Text style={styles.cardTitle}>IA offline</Text>
+                  <Text style={styles.cardTitle}>Dificultad de la ruta</Text>
                 </View>
                 <Text style={styles.body}>
-                  Dificultad estimada: {aiDifficulty.label} ({Math.round(aiDifficulty.confidence * 100)}%
-                  confianza). El modelo se ejecuta localmente con datos derivados de OSM/SRTM.
+                  Dificultad sugerida: {aiDifficulty.label}. Este calculo se realiza
+                  en el dispositivo a partir de la distancia, desnivel, altitud y
+                  caracteristicas del recorrido. Verifica siempre el clima, el estado
+                  del sendero y tu condicion fisica antes de salir.
                 </Text>
               </InfoCard>
             ) : null}

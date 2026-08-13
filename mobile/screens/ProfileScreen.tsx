@@ -123,10 +123,10 @@ export default function ProfileScreen() {
 
         <Card>
           <Text style={styles.cardTitle}>Privacidad e IA</Text>
-          <Text style={styles.privacyText}>
-            Los datos fisiologicos se guardan localmente. Para entrenamiento se usan datos
-            anonimizados y sin ubicacion exacta.
-          </Text>
+        <Text style={styles.privacyText}>
+          Los datos fisiologicos se guardan localmente. Si aceptas colaborar con
+          mejoras del servicio, se usan datos anonimizados y sin ubicacion exacta.
+        </Text>
           <SettingRow
             label="Usar datos sensibles"
             value={privacy.sensitiveDataConsent ? "Permitido" : "Requiere aceptar"}
@@ -141,9 +141,9 @@ export default function ProfileScreen() {
               });
             }}
           />
-          <SettingRow
-            label="Aportar a entrenamiento"
-            value={privacy.analyticsTrainingConsent ? "Anonimizado" : "Desactivado"}
+        <SettingRow
+          label="Mejorar recomendaciones"
+          value={privacy.analyticsTrainingConsent ? "Anonimizado" : "Desactivado"}
             onPress={() =>
               updatePrivacy({
                 sensitiveDataConsent:

@@ -1,12 +1,14 @@
 import { Ionicons } from "@expo/vector-icons";
 import { router, useFocusEffect } from "expo-router";
 import React, { useCallback, useState } from "react";
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Platform, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import {
   createDevelopmentMetricSample,
   getRecentWearableMetricSamples,
   getWearableProviderName,
   getWearableRuntimeStatus,
+  linkNativeWearable,
+  linkNativeWearableProvider,
   saveWearableConnection,
   syncNativeWearableSample,
   unlinkWearableConnection,
@@ -39,13 +41,13 @@ const providerOptions: Array<{
   {
     provider: "android_health_connect",
     title: "Android",
-    body: "Lee datos sincronizados desde Health Connect cuando el usuario da permisos.",
+    body: "Lee metricas sincronizadas desde Health Connect cuando das permisos.",
     icon: "logo-android",
   },
   {
     provider: "wear_os_health_services",
     title: "Wear OS",
-    body: "Obtiene frecuencia cardiaca en vivo desde Health Services en el reloj.",
+    body: "Usa los datos que tu reloj Wear OS publica en Health Connect.",
     icon: "fitness-outline",
   },
   {
@@ -85,6 +87,30 @@ export default function WearableSettingsScreen() {
       return;
     }
 
+    if (provider === "apple_healthkit") {
+      const linked = await linkNativeWearable();
+      setMessage(
+        linked
+          ? "Salud de Apple autorizada. Sincroniza para guardar la primera lectura disponible."
+          : "No se pudo abrir Salud de Apple. Usa una development build de iOS en un iPhone compatible."
+      );
+      await load();
+      return;
+    }
+
+    if (provider === "android_health_connect" || provider === "wear_os_health_services") {
+      const linked = await linkNativeWearableProvider(provider);
+      setMessage(
+        linked
+          ? `${getWearableProviderName(provider)} autorizado. Sincroniza para guardar la primera lectura disponible.`
+          : Platform.OS === "android"
+            ? "No se pudo abrir Health Connect. Usa una development build de Android con Health Connect disponible."
+            : "Wear OS y Health Connect se vinculan desde una build Android compatible."
+      );
+      await load();
+      return;
+    }
+
     await saveWearableConnection(provider, true, true);
     setMessage(`${getWearableProviderName(provider)} preparado.`);
     await load();
@@ -117,7 +143,12 @@ export default function WearableSettingsScreen() {
     setMessage(
       synced
         ? "Metricas sincronizadas desde el dispositivo."
-        : "El puente nativo todavia no esta disponible en esta build."
+        : runtime?.connection.provider === "apple_healthkit"
+          ? "Salud esta vinculada, pero todavia no hay una lectura autorizada disponible."
+          : runtime?.connection.provider === "android_health_connect" ||
+              runtime?.connection.provider === "wear_os_health_services"
+            ? "Health Connect esta vinculado, pero todavia no hay lecturas disponibles del reloj."
+            : "El puente nativo todavia no esta disponible en esta build."
     );
     await load();
   };
@@ -147,7 +178,7 @@ export default function WearableSettingsScreen() {
           <Text style={styles.cardTitle}>Proveedor</Text>
           <Text style={styles.cardText}>
             Elegi la fuente de metricas. Los permisos reales se solicitan en iOS
-            con HealthKit y en Android con Health Connect o Wear OS Health Services.
+            con HealthKit y en Android con Health Connect para celulares y Wear OS.
           </Text>
 
           <View style={styles.providerList}>
@@ -283,7 +314,7 @@ function getStatusMessage(runtime: WearableRuntimeStatus | null) {
     return "Vincula Apple Watch, Android o Wear OS para usar metricas en ruta.";
   }
   if (runtime.status === "waiting_for_native_data") {
-    return "La conexion esta preparada. En produccion el modulo nativo escribe aqui las mediciones.";
+    return "La conexion esta autorizada. Sincroniza una lectura disponible desde el reloj o la app de salud.";
   }
   return "Metricas disponibles localmente para predicciones sin conexion.";
 }

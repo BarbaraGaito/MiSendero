@@ -28,6 +28,11 @@ const providerNames: Record<WearableProvider, string> = {
   development_simulator: "Simulador de desarrollo",
 };
 
+const androidNativeProviders: WearableProvider[] = [
+  "android_health_connect",
+  "wear_os_health_services",
+];
+
 const initWearableTables = async () => {
   await db.execAsync(`
     CREATE TABLE IF NOT EXISTS wearable_connections (
@@ -306,7 +311,13 @@ export const createDevelopmentMetricSample = async () => {
   });
 };
 
-export const syncNativeWearableSample = async () => {
+export const linkNativeWearable = async () => {
+  return linkNativeWearableProvider();
+};
+
+export const linkNativeWearableProvider = async (
+  preferredProvider?: WearableProvider
+) => {
   const bridge = getNativeWearableBridge();
   const isAvailable = await bridge.isAvailable();
 
@@ -315,11 +326,43 @@ export const syncNativeWearableSample = async () => {
   const permissionsGranted = await bridge.requestPermissions();
   if (!permissionsGranted) return false;
 
+  const provider =
+    preferredProvider && androidNativeProviders.includes(preferredProvider)
+      ? preferredProvider
+      : bridge.provider;
+  await saveWearableConnection(provider, true, true);
+  return true;
+};
+
+export const syncNativeWearableSample = async () => {
+  const bridge = getNativeWearableBridge();
+  const isAvailable = await bridge.isAvailable();
+
+  if (!isAvailable) return false;
+
+  const connection = await getWearableConnection();
+  if (!connection.linked) return false;
+
+  const provider =
+    androidNativeProviders.includes(connection.provider) &&
+    bridge.provider === "android_health_connect"
+      ? connection.provider
+      : bridge.provider;
+  const permissionsGranted =
+    connection.provider === provider && connection.permissionsGranted
+      ? true
+      : await bridge.requestPermissions();
+  if (!permissionsGranted) return false;
+
   const sample = await bridge.readLatestSample();
+
+  await saveWearableConnection(provider, true, true);
   if (!sample) return false;
 
-  await saveWearableConnection(bridge.provider, true, true);
-  await saveWearableMetricSample(sample);
+  await saveWearableMetricSample({
+    ...sample,
+    provider,
+  });
   return true;
 };
 

@@ -102,14 +102,71 @@ export const createTrailReport = async (
     cause?: string | null;
     blocks_path?: boolean;
     details?: string;
-  }
+  },
+  token: string
 ): Promise<TrailReport> => {
   return request<TrailReport>(`/trails/${trailId}/reports`, {
     method: "POST",
     body: report,
+    token,
   });
 };
 
 export const getProfile = async (token: string): Promise<Profile> => {
   return request<Profile>("/auth/me", { token });
+};
+
+export interface ActivityRecord {
+  id: number;
+  user_id: number;
+  trail_id: number | null;
+  started_at: string;
+  ended_at: string | null;
+  distance_km: number | null;
+  duration_minutes: number | null;
+  created_at: string;
+}
+
+export const createActivity = async (
+  activity: {
+    trail_id?: number | null;
+    started_at: string;
+    ended_at?: string | null;
+    distance_km?: number | null;
+    duration_minutes?: number | null;
+  },
+  token: string
+): Promise<ActivityRecord> => {
+  return request<ActivityRecord>("/activities", {
+    method: "POST",
+    body: activity,
+    token,
+  });
+};
+
+export interface EmergencyAlertRecord {
+  id: number;
+  user_id: number;
+  trail_id: number | null;
+  latitude: number;
+  longitude: number;
+  status: string;
+  device_battery_percent: number | null;
+  created_at: string;
+}
+
+export const createEmergencyAlert = async (
+  alert: {
+    trail_id?: number | null;
+    latitude: number;
+    longitude: number;
+    device_battery_percent?: number | null;
+  },
+  token: string
+): Promise<EmergencyAlertRecord> => {
+  return request<EmergencyAlertRecord>("/emergency-alerts", {
+    method: "POST",
+    body: alert,
+    token,
+  });
 };

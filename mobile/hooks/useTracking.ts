@@ -1,14 +1,19 @@
 import { useEffect, useRef, useState } from "react";
+import { Platform } from "react-native";
 import { calculateFatigue, fatigueToScore, scoreToFatigue } from "../../ai/fatigueEngine";
 import {
   createSession,
   finishSession,
   saveHeartRateLog,
 } from "../../database/sessionsRepository";
+import { getAuthSession } from "../../services/authSession";
 import { bluetoothSimulator } from "../../services/bluetoothSimulator";
+import { DeviceLocation, watchDeviceLocation } from "../../services/deviceLocation";
+import { getDistanceMeters } from "../../services/geoUtils";
 import { hasSensitiveDataConsent } from "../../services/privacyConsent";
 import { syncSessions } from "../../services/syncService";
 import { getSimulatedTrackingTick } from "../../services/trackingService";
+import { getTestingLocationMode } from "../../services/testingMode";
 import {
   getLatestWearableMetricSample,
   getWearableConnection,
@@ -16,6 +21,10 @@ import {
 } from "../../services/wearableMetrics";
 import { FatigueLevel } from "../../types";
 import { startWatch, stopWatch } from "../../watch/WatchService";
+
+// GPS jitter produces small non-zero deltas even standing still; movements below
+// this threshold are treated as noise rather than real displacement.
+const GPS_NOISE_FLOOR_METERS = 2;
 
 export const useTracking = () => {
   const [hr, setHr] = useState(0);
@@ -34,6 +43,8 @@ export const useTracking = () => {
   const speedKmhRef = useRef(0);
   const lastNativeSampleRecordedAtRef = useRef(0);
   const useSimulatorWatchRef = useRef(true);
+  const useSimulatedMovementRef = useRef(true);
+  const lastGpsLocationRef = useRef<DeviceLocation | null>(null);
 
   useEffect(() => {
     elapsedSecondsRef.current = elapsedSeconds;
@@ -69,14 +80,19 @@ export const useTracking = () => {
     const interval = setInterval(() => {
       setElapsedSeconds((previous) => {
         const next = previous + 1;
-        const tick = getSimulatedTrackingTick(next);
 
-        setSpeedKmh(tick.speedKmh);
-        setDistanceMeters((distance) => distance + tick.metersDelta);
+        if (useSimulatedMovementRef.current) {
+          const tick = getSimulatedTrackingTick(next);
 
-        if (tick.speedKmh > 0.8) {
-          lastMovementRef.current = Date.now();
-          setInactiveTooLong(false);
+          setSpeedKmh(tick.speedKmh);
+          setDistanceMeters((distance) => distance + tick.metersDelta);
+
+          if (tick.speedKmh > 0.8) {
+            lastMovementRef.current = Date.now();
+            setInactiveTooLong(false);
+          } else if (Date.now() - lastMovementRef.current > 30_000) {
+            setInactiveTooLong(true);
+          }
         } else if (Date.now() - lastMovementRef.current > 30_000) {
           setInactiveTooLong(true);
         }
@@ -86,6 +102,46 @@ export const useTracking = () => {
     }, 1000);
 
     return () => clearInterval(interval);
+  }, [isActive]);
+
+  // Real GPS is the source of truth for distance/speed (RF-06) except on web
+  // (no reliable background GPS) or while an admin has simulated location active
+  // for testing - both of which fall back to the sine-wave tick above.
+  useEffect(() => {
+    if (!isActive || useSimulatedMovementRef.current) return;
+
+    let cancelled = false;
+    let subscription: { remove: () => void } | null = null;
+
+    const start = async () => {
+      subscription = await watchDeviceLocation((location) => {
+        if (cancelled) return;
+
+        const previous = lastGpsLocationRef.current;
+        lastGpsLocationRef.current = location;
+
+        if (!previous) return;
+
+        const deltaMeters = getDistanceMeters(previous.coordinate, location.coordinate);
+        const deltaSeconds = Math.max(0.001, (location.timestamp - previous.timestamp) / 1000);
+
+        if (deltaMeters < GPS_NOISE_FLOOR_METERS) return;
+
+        const instantSpeedKmh = Number(((deltaMeters / deltaSeconds) * 3.6).toFixed(2));
+
+        setDistanceMeters((distance) => distance + deltaMeters);
+        setSpeedKmh(instantSpeedKmh);
+        lastMovementRef.current = Date.now();
+        setInactiveTooLong(false);
+      });
+    };
+
+    start();
+
+    return () => {
+      cancelled = true;
+      subscription?.remove();
+    };
   }, [isActive]);
 
   useEffect(() => {
@@ -154,6 +210,15 @@ export const useTracking = () => {
     setInactiveTooLong(false);
     setNeedsSensitiveDataConsent(false);
     lastNativeSampleRecordedAtRef.current = 0;
+    lastGpsLocationRef.current = null;
+
+    const [testingLocationMode, session] = await Promise.all([
+      getTestingLocationMode().catch(() => ({ enabled: false, updatedAt: null })),
+      getAuthSession().catch(() => null),
+    ]);
+    const canUseTestingLocation = session?.user.role === "admin";
+    useSimulatedMovementRef.current =
+      Platform.OS === "web" || (testingLocationMode.enabled && canUseTestingLocation);
 
     const wearableConnection = await getWearableConnection().catch(() => null);
     useSimulatorWatchRef.current =

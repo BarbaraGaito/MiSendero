@@ -6,7 +6,6 @@ import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import { getTrailById, getTrailReports, getTrailWeather } from "../../services/api";
 import { getOfflineMapByTrailId } from "../../services/offlineMaps";
-import { Trail, TrailReport, TrailWeather } from "../../types";
 import { getWearableRuntimeStatus } from "../../services/wearableMetrics";
 import { Trail, TrailReport, TrailWeather, WearableRuntimeStatus } from "../../types";
 import { TrailMap } from "../components/TrailMap";
@@ -205,7 +204,7 @@ export default function Screen04RouteMap() {
   const activeTop = Math.max(22, insets.top + 14);
   const activeBannerTop = activeTop + 68;
   const mapControlsTop = activeBannerTop + (isOffRoute ? 116 : 8);
-  const hasBlockingReport = reports.some((report) => report.blocks_path === 1);
+  const hasBlockingReport = reports.some((report) => report.blocks_path);
   const severeReports = reports.filter((report) =>
     ["Alta", "Critica"].includes(report.severity)
   ).length;
@@ -385,7 +384,12 @@ export default function Screen04RouteMap() {
               <Text style={styles.activeActionText}>Ruta</Text>
             </Pressable>
             <Pressable
-              onPress={() => router.push("/confirmar-sos")}
+              onPress={() =>
+                router.push({
+                  pathname: "/confirmar-sos",
+                  params: { id: String(trailId) },
+                })
+              }
               style={[styles.activeAction, styles.activeDangerAction]}
             >
               <Ionicons name="alert-circle-outline" size={20} color={colors.white} />

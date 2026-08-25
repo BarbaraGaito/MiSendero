@@ -14,7 +14,14 @@ import {
   TextInput,
   View,
 } from "react-native";
-import { AppScreen, Card, ScreenTitle, colors, trailImages } from "../components/MiSenderoUI";
+import {
+  AppScreen,
+  Card,
+  ScreenTitle,
+  StatusNotice,
+  colors,
+  trailImages,
+} from "../components/MiSenderoUI";
 import { getTrails } from "../../services/api";
 import { Trail } from "../../types";
 
@@ -118,19 +125,22 @@ export default function ExploreRoutesScreen() {
     !error &&
     visibleRouteItems.some((item) => !paintedImages[item.image]);
 
-  useEffect(() => {
-    getTrails()
-      .then((data) => {
-        setTrails(data);
-        setError(null);
-      })
-      .catch(() => {
-        setError("No pudimos cargar los senderos en este momento.");
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+  const loadRoutes = useCallback(async () => {
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      setTrails(await getTrails());
+    } catch (loadError) {
+      setError("No pudimos cargar los senderos en este momento.");
+    } finally {
+      setIsLoading(false);
+    }
   }, []);
+
+  useEffect(() => {
+    loadRoutes();
+  }, [loadRoutes]);
 
   useEffect(() => {
     setVisibleCount(ROUTES_PAGE_SIZE);
@@ -186,14 +196,25 @@ export default function ExploreRoutesScreen() {
         <View style={styles.searchBox}>
           <Ionicons name="search-outline" size={18} color={colors.muted} />
           <TextInput
+            accessibilityLabel="Buscar rutas por zona o nombre"
             onChangeText={setSearchQuery}
             placeholder="Buscar por zona o nombre"
             placeholderTextColor={colors.muted}
+            returnKeyType="search"
             style={styles.searchInput}
             value={searchQuery}
           />
           {searchQuery.trim().length > 0 ? (
-            <Pressable onPress={() => setSearchQuery("")} style={styles.clearSearchButton}>
+            <Pressable
+              accessibilityLabel="Limpiar busqueda"
+              accessibilityRole="button"
+              hitSlop={8}
+              onPress={() => setSearchQuery("")}
+              style={({ pressed }) => [
+                styles.clearSearchButton,
+                pressed && styles.pressed,
+              ]}
+            >
               <Ionicons name="close" size={16} color={colors.greenDark} />
             </Pressable>
           ) : null}
@@ -206,8 +227,11 @@ export default function ExploreRoutesScreen() {
 
             return (
               <Pressable
+                accessibilityRole="button"
+                accessibilityState={{ selected: isActive }}
                 key={filter}
                 onPress={() => setActiveFilter(filter)}
+                style={({ pressed }) => pressed && styles.pressed}
               >
                 <Text style={isActive ? styles.filterActive : styles.filter}>
                   {filter}
@@ -224,8 +248,11 @@ export default function ExploreRoutesScreen() {
 
             return (
               <Pressable
+                accessibilityRole="button"
+                accessibilityState={{ selected: isActive }}
                 key={filter.id}
                 onPress={() => setActiveDistanceFilter(filter.id)}
+                style={({ pressed }) => pressed && styles.pressed}
               >
                 <Text style={isActive ? styles.filterActive : styles.filter}>
                   {filter.label}
@@ -247,10 +274,34 @@ export default function ExploreRoutesScreen() {
           <Text style={styles.resultsCount}>{filteredTrails.length} rutas</Text>
         </View>
 
-        {isLoading ? <Text style={styles.statusText}>Cargando senderos...</Text> : null}
-        {error ? <Text style={styles.statusText}>{error}</Text> : null}
+        {isLoading ? (
+          <StatusNotice
+            isLoading
+            message="Estamos trayendo senderos y preparando las imagenes."
+            title="Cargando senderos"
+          />
+        ) : null}
+        {error ? (
+          <StatusNotice
+            actionLabel="Reintentar"
+            message={error}
+            onAction={loadRoutes}
+            title="No se pudo cargar"
+            tone="error"
+          />
+        ) : null}
         {!isLoading && !error && filteredTrails.length === 0 ? (
-          <Text style={styles.statusText}>No hay senderos disponibles por ahora.</Text>
+          <StatusNotice
+            actionLabel={hasActiveFilters ? "Limpiar filtros" : undefined}
+            message={
+              hasActiveFilters
+                ? "Probá con menos filtros o una busqueda mas amplia."
+                : "Cuando haya senderos disponibles, apareceran en esta lista."
+            }
+            onAction={hasActiveFilters ? clearFilters : undefined}
+            title={hasActiveFilters ? "Sin resultados" : "Sin senderos disponibles"}
+            tone="warning"
+          />
         ) : null}
       </View>
     </View>
@@ -312,7 +363,13 @@ function RouteCard({
 
   return (
     <Pressable
-      style={[styles.routeCard, !imageReady && styles.routeCardHidden]}
+      accessibilityLabel={`Ver detalle de ${trail.name}`}
+      accessibilityRole="button"
+      style={({ pressed }) => [
+        styles.routeCard,
+        !imageReady && styles.routeCardHidden,
+        pressed && styles.pressed,
+      ]}
       onPress={() =>
         router.push({
           pathname: "/trail-detail",
@@ -470,7 +527,9 @@ const styles = StyleSheet.create({
   },
   filterActive: {
     backgroundColor: colors.primary,
+    borderColor: colors.primary,
     borderRadius: 999,
+    borderWidth: 1,
     color: colors.surface,
     fontSize: 13,
     fontWeight: "800",
@@ -530,6 +589,9 @@ const styles = StyleSheet.create({
     height: 0,
     marginBottom: 0,
     opacity: 0,
+  },
+  pressed: {
+    opacity: 0.72,
   },
   routesLoader: {
     alignItems: "center",

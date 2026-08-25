@@ -15,14 +15,14 @@ export default function ConnectionLost24Screen() {
       <ProgressHero percent="68%" status="En pausa" tone="orange" />
 
       <Card>
-        <InfoRow icon="map-outline" label="Bariloche y alrededores" value="159 MB" />
+        <InfoRow icon="map-outline" label="Descarga offline" value="En pausa" />
         <Text style={styles.cardText}>
           Esperando conexion para continuar la descarga automaticamente.
         </Text>
       </Card>
 
       <Card tone="green">
-        <InfoRow icon="checkmark-circle-outline" label="Villa La Angostura" value="Lista" />
+        <InfoRow icon="checkmark-circle-outline" label="Mapas guardados" value="Ver base local" />
       </Card>
 
       <View style={styles.bottomActions}>

@@ -119,11 +119,11 @@ export function ProgressHero({
       <View style={styles.statsRow}>
         <View>
           <Text style={styles.meta}>Descargado</Text>
-          <Text style={styles.statValue}>159 MB</Text>
+          <Text style={styles.statValue}>En curso</Text>
         </View>
         <View style={styles.statRight}>
           <Text style={styles.meta}>Total</Text>
-          <Text style={styles.statValue}>234 MB</Text>
+          <Text style={styles.statValue}>A calcular</Text>
         </View>
       </View>
       <View style={styles.activityRow}>

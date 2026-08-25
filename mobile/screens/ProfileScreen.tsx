@@ -28,6 +28,45 @@ import {
   ExperienceProfile,
   getExperienceProfile,
 } from "../../services/experienceProfile";
+import { getEmergencyContact } from "../../services/emergencyContact";
+import {
+  getOfflineMapsSummary,
+  OfflineMapsSummary,
+} from "../../services/offlineMaps";
+import {
+  getSessionsSummary,
+  SessionsSummary,
+} from "../../database/sessionsRepository";
+import { EmergencyContact } from "../../types";
+
+const emptySessionsSummary: SessionsSummary = {
+  totalDistance: 0,
+  completedCount: 0,
+  currentMonthCount: 0,
+};
+
+const emptyOfflineMapsSummary: OfflineMapsSummary = {
+  count: 0,
+  totalSizeMb: 0,
+};
+
+const formatDistance = (meters: number) =>
+  `${(meters / 1000).toLocaleString("es-AR", {
+    maximumFractionDigits: 1,
+    minimumFractionDigits: 0,
+  })} km`;
+
+const formatStorage = (sizeMb: number) => {
+  if (sizeMb >= 1024) {
+    return `${(sizeMb / 1024).toLocaleString("es-AR", {
+      maximumFractionDigits: 1,
+    })} GB`;
+  }
+
+  return `${sizeMb.toLocaleString("es-AR", {
+    maximumFractionDigits: 0,
+  })} MB`;
+};
 import { getWearableRuntimeStatus } from "../../services/wearableMetrics";
 
 export default function ProfileScreen() {
@@ -61,6 +100,12 @@ export default function ProfileScreen() {
       skippedAt: null,
       updatedAt: null,
     });
+  const [emergencyContact, setEmergencyContact] =
+    useState<EmergencyContact | null>(null);
+  const [sessionsSummary, setSessionsSummary] =
+    useState<SessionsSummary>(emptySessionsSummary);
+  const [offlineMapsSummary, setOfflineMapsSummary] =
+    useState<OfflineMapsSummary>(emptyOfflineMapsSummary);
   const [wearableRuntime, setWearableRuntime] =
     useState<WearableRuntimeStatus | null>(null);
 
@@ -84,12 +129,18 @@ export default function ProfileScreen() {
           testingPreferences,
           preferences,
           experience,
+          contact,
+          localSessionsSummary,
+          mapsSummary,
           wearable,
         ] = await Promise.all([
           getPrivacyPreferences(),
           getTestingLocationMode(),
           getAppPreferences(),
           getExperienceProfile(),
+          getEmergencyContact(),
+          getSessionsSummary(),
+          getOfflineMapsSummary(),
           getWearableRuntimeStatus(),
         ]);
 
@@ -108,6 +159,9 @@ export default function ProfileScreen() {
         setPrivacy(privacyPreferences);
         setAppPreferences(preferences);
         setExperienceProfile(experience);
+        setEmergencyContact(contact);
+        setSessionsSummary(localSessionsSummary);
+        setOfflineMapsSummary(mapsSummary);
         setWearableRuntime(wearable);
         setTestingLocationMode(
           data.user?.role === "admin"
@@ -159,8 +213,6 @@ export default function ProfileScreen() {
   const displayName = user?.name || "Invitado";
   const email = user?.email || "Inicia sesion para ver tu cuenta";
   const initial = displayName.trim().charAt(0).toUpperCase() || "U";
-  const completedRoutes = profile?.stats.completed_routes ?? 0;
-  const totalDistance = profile?.stats.total_distance_km ?? 0;
   const isAdmin = user?.role === "admin";
 
   return (
@@ -184,7 +236,8 @@ export default function ProfileScreen() {
               <Text style={styles.profileName}>{displayName}</Text>
               <Text style={styles.profileEmail}>{email}</Text>
               <Text style={styles.profileMeta}>
-                {completedRoutes} rutas completadas - {totalDistance} km
+                {sessionsSummary.completedCount} rutas completadas -{" "}
+                {formatDistance(sessionsSummary.totalDistance)}
               </Text>
             </View>
           </View>
@@ -193,14 +246,13 @@ export default function ProfileScreen() {
         <Card>
           <Text style={styles.cardTitle}>Mapas sin conexion</Text>
           <SettingRow
-            label="Sendero Laguna Esmeralda"
-            value="Actualizado"
+            label="Mapas descargados"
+            value={
+              offlineMapsSummary.count > 0
+                ? `${offlineMapsSummary.count} - ${formatStorage(offlineMapsSummary.totalSizeMb)}`
+                : "Sin descargas"
+            }
             onPress={() => router.push("/offline-mapas-descargados")}
-          />
-          <SettingRow
-            label="Villa La Angostura"
-            value="Descargar"
-            onPress={() => router.push("/offline-buscar")}
           />
         </Card>
 
@@ -208,7 +260,7 @@ export default function ProfileScreen() {
           <Text style={styles.cardTitle}>Seguridad y dispositivos</Text>
           <SettingRow
             label="Contacto de emergencia"
-            value="Configurar"
+            value={emergencyContact ? emergencyContact.name : "No configurado"}
             onPress={() => router.push("/contacto-seguridad")}
           />
           <SettingRow
@@ -239,7 +291,12 @@ export default function ProfileScreen() {
                 ? experienceProfile.level
                 : "Completar"
             }
-            onPress={() => router.push("/onboarding-experiencia")}
+            onPress={() =>
+              router.push({
+                pathname: "/onboarding-experiencia",
+                params: { mode: "edit" },
+              })
+            }
           />
           <SettingRow
             label="Notificaciones"

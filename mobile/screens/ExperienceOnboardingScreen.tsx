@@ -1,7 +1,8 @@
 import { Ionicons } from "@expo/vector-icons";
-import { router } from "expo-router";
-import React, { useState } from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { router, useLocalSearchParams } from "expo-router";
+import React, { useEffect, useState } from "react";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import {
   PrimaryButton,
   ScreenShell,
@@ -10,6 +11,7 @@ import {
 } from "../components/MiSenderoUI";
 import {
   calculateExperienceLevel,
+  getExperienceProfile,
   saveExperienceProfile,
   skipExperienceProfile,
 } from "../../services/experienceProfile";
@@ -75,12 +77,32 @@ const questions: Question[] = [
 ];
 
 export default function ExperienceOnboardingScreen() {
+  const insets = useSafeAreaInsets();
+  const { mode } = useLocalSearchParams<{ mode?: string }>();
+  const [isCheckingProfile, setIsCheckingProfile] = useState(mode !== "edit");
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const question = questions[step];
   const selectedAnswer = answers[question.id];
   const projectedLevel = calculateExperienceLevel(answers);
   const isLastStep = step === questions.length - 1;
+
+  useEffect(() => {
+    if (mode === "edit") return;
+
+    const redirectCompletedProfile = async () => {
+      const profile = await getExperienceProfile();
+
+      if (profile.completed) {
+        router.replace("/inicio");
+        return;
+      }
+
+      setIsCheckingProfile(false);
+    };
+
+    redirectCompletedProfile();
+  }, [mode]);
 
   const selectAnswer = (value: string) => {
     setAnswers((current) => ({
@@ -106,6 +128,10 @@ export default function ExperienceOnboardingScreen() {
     router.replace("/inicio");
   };
 
+  if (isCheckingProfile) {
+    return null;
+  }
+
   return (
     <ScreenShell>
       <TopBar
@@ -114,7 +140,14 @@ export default function ExperienceOnboardingScreen() {
         onBack={step > 0 ? () => setStep((current) => current - 1) : undefined}
       />
 
-      <View style={styles.container}>
+      <ScrollView
+        contentContainerStyle={[
+          styles.scrollContent,
+          { paddingBottom: Math.max(28, insets.bottom + 24) },
+        ]}
+        keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator={false}
+      >
         <View style={styles.progressTrack}>
           <View
             style={[
@@ -154,25 +187,25 @@ export default function ExperienceOnboardingScreen() {
           <Text style={styles.levelLabel}>Categoria estimada</Text>
           <Text style={styles.levelValue}>{projectedLevel}</Text>
         </View>
-      </View>
 
-      <View style={styles.footer}>
-        <PrimaryButton
-          label={isLastStep ? "Guardar perfil" : "Continuar"}
-          icon={isLastStep ? "checkmark-outline" : "arrow-forward-outline"}
-          onPress={continueFlow}
-        />
-        <Pressable onPress={skipFlow} style={styles.skipButton}>
-          <Text style={styles.skipText}>Omitir y hacerlo mas tarde</Text>
-        </Pressable>
-      </View>
+        <View style={styles.footer}>
+          <PrimaryButton
+            label={isLastStep ? "Guardar perfil" : "Continuar"}
+            icon={isLastStep ? "checkmark-outline" : "arrow-forward-outline"}
+            onPress={continueFlow}
+          />
+          <Pressable onPress={skipFlow} style={styles.skipButton}>
+            <Text style={styles.skipText}>Omitir y hacerlo mas tarde</Text>
+          </Pressable>
+        </View>
+      </ScrollView>
     </ScreenShell>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+  scrollContent: {
+    flexGrow: 1,
   },
   progressTrack: {
     backgroundColor: colors.line,

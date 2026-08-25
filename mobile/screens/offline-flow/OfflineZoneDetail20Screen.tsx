@@ -9,7 +9,7 @@ export default function OfflineZoneDetail20Screen() {
     <AppScreen withBottomNav={false}>
       <ScreenTitle
         eyebrow="Zona offline"
-        title="Nahuel Huapi"
+        title="Zona seleccionada"
         subtitle="Paquete preparado para salir sin depender de la señal."
       />
 
@@ -24,8 +24,8 @@ export default function OfflineZoneDetail20Screen() {
       </View>
 
       <Card>
-        <InfoRow icon="map-outline" label="Rutas incluidas" value="12 senderos" />
-        <InfoRow icon="download-outline" label="Tamaño" value="312 MB" />
+        <InfoRow icon="map-outline" label="Rutas incluidas" value="Segun base" />
+        <InfoRow icon="download-outline" label="Tamano" value="A calcular" />
         <InfoRow icon="shield-checkmark-outline" label="Seguridad" value="Puntos SOS" />
       </Card>
 

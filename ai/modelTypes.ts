@@ -17,3 +17,19 @@ export interface OfflinePrediction {
   confidence: number;
   distances: Record<string, number>;
 }
+
+export interface RandomForestTree {
+  feature: number[];
+  threshold: number[];
+  left: number[];
+  right: number[];
+  value: number[][];
+}
+
+export interface RandomForestModel {
+  type: "random_forest_json";
+  version: number;
+  feature_order: string[];
+  classes: string[];
+  trees: RandomForestTree[];
+}

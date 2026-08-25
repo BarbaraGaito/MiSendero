@@ -7,6 +7,8 @@ import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context"
 import { getTrailById, getTrailReports, getTrailWeather } from "../../services/api";
 import { getOfflineMapByTrailId } from "../../services/offlineMaps";
 import { Trail, TrailReport, TrailWeather } from "../../types";
+import { getWearableRuntimeStatus } from "../../services/wearableMetrics";
+import { Trail, TrailReport, TrailWeather, WearableRuntimeStatus } from "../../types";
 import { TrailMap } from "../components/TrailMap";
 import { useDeviceLocation } from "../hooks/useDeviceLocation";
 import {
@@ -45,6 +47,8 @@ export default function Screen04RouteMap() {
   const [isContextLoading, setIsContextLoading] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [wearableRuntime, setWearableRuntime] =
+    useState<WearableRuntimeStatus | null>(null);
 
   useEffect(() => {
     let isMounted = true;
@@ -127,6 +131,35 @@ export default function Screen04RouteMap() {
       isMounted = false;
     };
   }, [trailId]);
+
+  useEffect(() => {
+    if (!isActiveRoute) {
+      setWearableRuntime(null);
+      return;
+    }
+
+    let isMounted = true;
+
+    const refreshWearableMetrics = async () => {
+      const elapsedMinutes = Math.max(
+        0,
+        Math.floor((Date.now() - startedAtMs) / 60000)
+      );
+      const status = await getWearableRuntimeStatus(elapsedMinutes).catch(
+        () => null
+      );
+
+      if (isMounted) setWearableRuntime(status);
+    };
+
+    refreshWearableMetrics();
+    const interval = setInterval(refreshWearableMetrics, 12_000);
+
+    return () => {
+      isMounted = false;
+      clearInterval(interval);
+    };
+  }, [isActiveRoute, startedAtMs]);
 
   const routePoints = useMemo(
     () => parseRouteCoordinates(trail?.route_coordinates),
@@ -250,6 +283,35 @@ export default function Screen04RouteMap() {
             <Text style={styles.testingBannerText}>
               Modo testing: ubicacion simulada en el inicio
             </Text>
+          </View>
+        ) : null}
+
+        {wearableRuntime?.prediction && wearableRuntime.latestSample ? (
+          <View
+            style={[
+              styles.wearableBanner,
+              wearableRuntime.prediction.level === "high" && styles.wearableBannerHigh,
+              wearableRuntime.prediction.level === "caution" && styles.wearableBannerCaution,
+              { bottom: Math.max(92, insets.bottom + 86) },
+            ]}
+          >
+            <Ionicons
+              name="pulse-outline"
+              size={18}
+              color={
+                wearableRuntime.prediction.level === "high"
+                  ? colors.danger
+                  : colors.green
+              }
+            />
+            <View style={styles.wearableText}>
+              <Text style={styles.wearableTitle}>
+                {wearableRuntime.latestSample.heartRateBpm} bpm - {wearableRuntime.prediction.title}
+              </Text>
+              <Text numberOfLines={2} style={styles.wearableBody}>
+                {wearableRuntime.prediction.message}
+              </Text>
+            </View>
           </View>
         ) : null}
 
@@ -655,6 +717,45 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 12,
     fontWeight: "900",
+  },
+  wearableBanner: {
+    alignItems: "center",
+    backgroundColor: "rgba(255,255,255,0.96)",
+    borderColor: colors.border,
+    borderRadius: 16,
+    borderWidth: 1,
+    flexDirection: "row",
+    gap: 9,
+    left: 14,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    position: "absolute",
+    right: 14,
+    zIndex: 19,
+  },
+  wearableBannerCaution: {
+    backgroundColor: "rgba(255,244,216,0.97)",
+    borderColor: "rgba(217,119,6,0.24)",
+  },
+  wearableBannerHigh: {
+    backgroundColor: "rgba(255,244,242,0.97)",
+    borderColor: "rgba(216,76,63,0.24)",
+  },
+  wearableText: {
+    flex: 1,
+    minWidth: 0,
+  },
+  wearableTitle: {
+    color: colors.ink,
+    fontSize: 13,
+    fontWeight: "900",
+  },
+  wearableBody: {
+    color: colors.muted,
+    fontSize: 11,
+    fontWeight: "700",
+    lineHeight: 15,
+    marginTop: 2,
   },
   activeFooter: {
     backgroundColor: "rgba(246,250,247,0.96)",

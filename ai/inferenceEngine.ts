@@ -1,7 +1,7 @@
 import fatigueModel from "./models/fatigueModel.json";
 import riskModel from "./models/riskModel.json";
 import { FatigueLevel } from "../types";
-import { OfflineAiModel, OfflinePrediction } from "./modelTypes";
+import { OfflinePrediction, RandomForestModel } from "./modelTypes";
 
 type FeatureInput = Record<string, number | null | undefined>;
 
@@ -11,36 +11,51 @@ const fatigueScoreByLevel: Record<FatigueLevel, number> = {
   alto: 3,
 };
 
-const toModel = (model: unknown) => model as OfflineAiModel;
+const toForestModel = (model: unknown) => model as RandomForestModel;
 
-const predictNearestCentroid = (
-  model: OfflineAiModel,
-  input: FeatureInput
+// sklearn's exported tree.children_left uses -1 to mark a leaf node; there is
+// no separate "is_leaf" flag, so that convention is the traversal stop
+// condition here too.
+const predictRandomForest = (
+  model: RandomForestModel,
+  input: Record<string, number>
 ): OfflinePrediction => {
-  const distances = model.labels.reduce<Record<string, number>>((result, label) => {
-    const centroid = model.centroids[label];
-    const squaredDistance = model.features.reduce((sum, feature) => {
-      const stat = model.statistics[feature];
-      const rawValue = input[feature] ?? stat.mean;
-      const normalizedValue = (rawValue - stat.mean) / stat.std;
-      return sum + (normalizedValue - centroid[feature]) ** 2;
-    }, 0);
+  const featureValues = model.feature_order.map((feature) => input[feature] ?? 0);
+  const classCount = model.classes.length;
+  const summedProbabilities = new Array(classCount).fill(0);
 
-    result[label] = Math.sqrt(squaredDistance);
-    return result;
-  }, {});
+  for (const tree of model.trees) {
+    let nodeIndex = 0;
 
-  const sorted = Object.entries(distances).sort((a, b) => a[1] - b[1]);
-  const [label, distance] = sorted[0];
-  const secondDistance = sorted[1]?.[1] ?? distance + 1;
-  const confidence = Math.max(
-    0.52,
-    Math.min(0.98, secondDistance / (distance + secondDistance || 1))
+    while (tree.left[nodeIndex] !== -1) {
+      const featureIndex = tree.feature[nodeIndex];
+      const goLeft = featureValues[featureIndex] <= tree.threshold[nodeIndex];
+      nodeIndex = goLeft ? tree.left[nodeIndex] : tree.right[nodeIndex];
+    }
+
+    const leafProbabilities = tree.value[nodeIndex];
+    for (let classIndex = 0; classIndex < classCount; classIndex++) {
+      summedProbabilities[classIndex] += leafProbabilities[classIndex] ?? 0;
+    }
+  }
+
+  const averageProbabilities = summedProbabilities.map(
+    (sum) => sum / model.trees.length
   );
+  const distances: Record<string, number> = {};
+  let bestIndex = 0;
+
+  for (let classIndex = 0; classIndex < classCount; classIndex++) {
+    distances[model.classes[classIndex]] = Number(averageProbabilities[classIndex].toFixed(4));
+
+    if (averageProbabilities[classIndex] > averageProbabilities[bestIndex]) {
+      bestIndex = classIndex;
+    }
+  }
 
   return {
-    label,
-    confidence: Number(confidence.toFixed(2)),
+    label: model.classes[bestIndex],
+    confidence: Number(averageProbabilities[bestIndex].toFixed(2)),
     distances,
   };
 };
@@ -52,7 +67,7 @@ export const predictFatigue = (input: {
 }): OfflinePrediction => {
   const hrReservePercent = Math.max(0, Math.min(100, ((input.hr - 60) / 120) * 100));
 
-  return predictNearestCentroid(toModel(fatigueModel), {
+  return predictRandomForest(toForestModel(fatigueModel), {
     hr: input.hr,
     speed_kmh: input.speedKmh,
     elapsed_minutes: input.elapsedMinutes,
@@ -81,7 +96,7 @@ export const predictPhysioRisk = (input: {
   elevationGainM?: number | null;
   fatigue: FatigueLevel;
 }): OfflinePrediction => {
-  return predictNearestCentroid(toModel(riskModel), {
+  return predictRandomForest(toForestModel(riskModel), {
     hr: input.hr,
     speed_kmh: input.speedKmh,
     elapsed_minutes: input.elapsedMinutes,
@@ -91,6 +106,6 @@ export const predictPhysioRisk = (input: {
 };
 
 export const offlineAiMetadata = {
-  fatigueModel: toModel(fatigueModel),
-  riskModel: toModel(riskModel),
+  fatigueModel: toForestModel(fatigueModel),
+  riskModel: toForestModel(riskModel),
 };

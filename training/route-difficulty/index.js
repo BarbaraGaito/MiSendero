@@ -1,25 +1,17 @@
 const fs = require("fs");
 const path = require("path");
-const db = require("../../backend/src/db");
 
 const projectDir = __dirname;
 const datasetsDir = path.join(projectDir, "datasets");
 const outputDir = path.join(projectDir, "output");
-const dryRun = process.argv.includes("--dry-run");
-
-const modelConfig = {
-  id: "route_difficulty",
-  version: 1,
-  source: "OpenStreetMap sac_scale + NASA SRTM normalized export",
-  input: "route_difficulty_training.csv",
-  features: [
-    "distance_km",
-    "elevation_gain_m",
-    "avg_slope_percent",
-    "max_slope_percent",
-    "technical_score",
-  ],
-};
+const modelPath = path.join(
+  projectDir,
+  "..",
+  "python",
+  "route_difficulty",
+  "output",
+  "model.forest.json"
+);
 
 const restrictedHeaderPatterns = [
   /^email$/i,
@@ -36,14 +28,6 @@ const restrictedHeaderPatterns = [
   /^address$/i,
   /^direccion$/i,
 ];
-
-function normalize(value) {
-  return String(value || "")
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .trim()
-    .toLowerCase();
-}
 
 function parseCsv(filePath) {
   const lines = fs
@@ -74,140 +58,75 @@ function parseCsv(filePath) {
   });
 }
 
-function mean(values) {
-  return values.reduce((sum, value) => sum + value, 0) / values.length;
-}
+// Mirrors the leaf-detection convention used by sklearn's exported
+// tree.children_left/right arrays: -1 means "no child", i.e. this node is a
+// leaf. Same algorithm as ai/inferenceEngine.ts's predictRandomForest, kept
+// here in plain CommonJS since this script has no TS toolchain of its own.
+function predictRandomForest(model, row) {
+  const featureValues = model.feature_order.map((feature) => Number(row[feature]) || 0);
+  const classCount = model.classes.length;
+  const summedProbabilities = new Array(classCount).fill(0);
 
-function standardDeviation(values, avg) {
-  const variance =
-    values.reduce((sum, value) => sum + (value - avg) ** 2, 0) / values.length;
-  return Math.sqrt(variance) || 1;
-}
+  for (const tree of model.trees) {
+    let nodeIndex = 0;
 
-function trainNearestCentroid(config) {
-  const rows = parseCsv(path.join(datasetsDir, config.input));
-  const statistics = {};
+    while (tree.left[nodeIndex] !== -1) {
+      const featureIndex = tree.feature[nodeIndex];
+      const goLeft = featureValues[featureIndex] <= tree.threshold[nodeIndex];
+      nodeIndex = goLeft ? tree.left[nodeIndex] : tree.right[nodeIndex];
+    }
 
-  for (const feature of config.features) {
-    const values = rows.map((row) => Number(row[feature]));
-    const avg = mean(values);
-    statistics[feature] = {
-      mean: Number(avg.toFixed(6)),
-      std: Number(standardDeviation(values, avg).toFixed(6)),
-    };
+    const leafProbabilities = tree.value[nodeIndex];
+    for (let classIndex = 0; classIndex < classCount; classIndex++) {
+      summedProbabilities[classIndex] += leafProbabilities[classIndex] || 0;
+    }
   }
 
-  const byLabel = rows.reduce((groups, row) => {
-    const label = String(row.label);
-    groups[label] = groups[label] || [];
-    groups[label].push(row);
-    return groups;
-  }, {});
-
-  const centroids = Object.entries(byLabel).reduce((result, [label, labelRows]) => {
-    result[label] = config.features.reduce((centroid, feature) => {
-      const values = labelRows.map((row) => {
-        const stat = statistics[feature];
-        return (Number(row[feature]) - stat.mean) / stat.std;
-      });
-      centroid[feature] = Number(mean(values).toFixed(6));
-      return centroid;
-    }, {});
-    return result;
-  }, {});
+  let bestIndex = 0;
+  for (let classIndex = 1; classIndex < classCount; classIndex++) {
+    if (summedProbabilities[classIndex] > summedProbabilities[bestIndex]) {
+      bestIndex = classIndex;
+    }
+  }
 
   return {
-    id: config.id,
-    version: config.version,
-    trained_at: process.env.AI_TRAINED_AT || new Date().toISOString(),
-    algorithm: "nearest_centroid_standardized",
-    source: config.source,
-    features: config.features,
-    labels: Object.keys(centroids),
-    statistics,
-    centroids,
+    label: model.classes[bestIndex],
+    confidence: Number((summedProbabilities[bestIndex] / model.trees.length).toFixed(2)),
   };
 }
 
-function predictNearestCentroid(model, input) {
-  const distances = model.labels.reduce((result, label) => {
-    const centroid = model.centroids[label];
-    const squaredDistance = model.features.reduce((sum, feature) => {
-      const stat = model.statistics[feature];
-      const rawValue = input[feature] ?? stat.mean;
-      const normalizedValue = (rawValue - stat.mean) / stat.std;
-      return sum + (normalizedValue - centroid[feature]) ** 2;
-    }, 0);
-
-    result[label] = Math.sqrt(squaredDistance);
-    return result;
-  }, {});
-
-  const [label] = Object.entries(distances).sort((a, b) => a[1] - b[1])[0];
-  return { label, distances };
-}
-
-function updateTrailDifficulties() {
-  const model = trainNearestCentroid(modelConfig);
-  const featureRows = parseCsv(path.join(datasetsDir, "trail_features.csv"));
-  const trails = db.prepare("SELECT id, name, difficulty FROM trails").all();
-  const trailsByName = new Map(trails.map((trail) => [normalize(trail.name), trail]));
-  const updates = [];
-  const missing = [];
-
-  for (const row of featureRows) {
-    const trail = trailsByName.get(normalize(row.route_name));
-
-    if (!trail) {
-      missing.push(row.route_name);
-      continue;
-    }
-
-    const prediction = predictNearestCentroid(model, row);
-    updates.push({
-      id: trail.id,
-      name: trail.name,
-      previousDifficulty: trail.difficulty,
-      nextDifficulty: prediction.label,
-      distances: prediction.distances,
-    });
+function evaluateTrailDifficulties() {
+  if (!fs.existsSync(modelPath)) {
+    throw new Error(
+      `Missing trained model at ${modelPath}. Run "py training/python/route_difficulty/train.py" (or "npm run train:ai" from the repo root) first.`
+    );
   }
+
+  const model = JSON.parse(fs.readFileSync(modelPath, "utf8"));
+  const featureRows = parseCsv(path.join(datasetsDir, "trail_features.csv"));
+
+  const predictions = featureRows.map((row) => {
+    const prediction = predictRandomForest(model, row);
+    return {
+      route_name: row.route_name,
+      difficulty: prediction.label,
+      confidence: prediction.confidence,
+    };
+  });
 
   fs.mkdirSync(outputDir, { recursive: true });
   fs.writeFileSync(
-    path.join(outputDir, "routeDifficultyModel.json"),
-    `${JSON.stringify(model, null, 2)}\n`
+    path.join(outputDir, "predictions.json"),
+    `${JSON.stringify(predictions, null, 2)}\n`
   );
 
-  if (!dryRun) {
-    const updateStatement = db.prepare("UPDATE trails SET difficulty = ? WHERE id = ?");
-    const transaction = db.transaction((rows) => {
-      for (const row of rows) {
-        updateStatement.run(row.nextDifficulty, row.id);
-      }
-    });
-
-    transaction(updates);
-  }
-
-  console.table(
-    updates.map((update) => ({
-      id: update.id,
-      route: update.name,
-      previous: update.previousDifficulty,
-      next: update.nextDifficulty,
-    }))
-  );
-
-  if (missing.length > 0) {
-    console.warn(`No backend trail match for: ${missing.join(", ")}`);
-  }
-
+  console.table(predictions);
   console.log(
-    dryRun
-      ? `dry-run complete: ${updates.length} route difficulties evaluated`
-      : `database updated: ${updates.length} route difficulties saved`
+    `predictions written for ${predictions.length} routes -> ${path.relative(projectDir, path.join(outputDir, "predictions.json"))}`
+  );
+  console.log(
+    "This script does not write to any database. Applying these predictions to the backend's trails.difficulty field is a separate, manual/future step."
   );
 }
 
-updateTrailDifficulties();
+evaluateTrailDifficulties();

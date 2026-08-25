@@ -5,6 +5,8 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import { getTrailById, getTrailReports, getTrailWeather } from "../../services/api";
+import { getOfflineMapByTrailId } from "../../services/offlineMaps";
+import { Trail, TrailReport, TrailWeather } from "../../types";
 import { getWearableRuntimeStatus } from "../../services/wearableMetrics";
 import { Trail, TrailReport, TrailWeather, WearableRuntimeStatus } from "../../types";
 import { TrailMap } from "../components/TrailMap";
@@ -51,21 +53,37 @@ export default function Screen04RouteMap() {
   useEffect(() => {
     let isMounted = true;
 
-    setIsLoading(true);
-    setIsContextLoading(true);
+    const loadRouteContext = async () => {
+      setIsLoading(true);
+      setIsContextLoading(true);
 
-    Promise.all([
-      getTrailById(trailId),
-      getTrailReports(trailId).catch(() => []),
-      Network.getNetworkStateAsync().catch(() => null),
-    ])
-      .then(async ([trailData, reportsData, networkState]) => {
+      try {
+        const networkState = await Network.getNetworkStateAsync().catch(() => null);
         if (!isMounted) return;
 
         const hasWifi =
           networkState?.type === Network.NetworkStateType.WIFI &&
           networkState.isConnected !== false &&
           networkState.isInternetReachable !== false;
+        const hasInternet =
+          networkState?.isConnected !== false &&
+          networkState?.isInternetReachable !== false;
+        let trailData: Trail | null = null;
+        let reportsData: TrailReport[] = [];
+
+        if (hasInternet) {
+          trailData = await getTrailById(trailId);
+          reportsData = await getTrailReports(trailId).catch(() => []);
+        } else {
+          const offlineMap = await getOfflineMapByTrailId(trailId);
+
+          if (!offlineMap?.trail) {
+            throw new Error("offline-map-not-found");
+          }
+
+          trailData = offlineMap.trail;
+          reportsData = offlineMap.reports;
+        }
 
         setTrail(trailData);
         setReports(reportsData);
@@ -82,21 +100,32 @@ export default function Screen04RouteMap() {
         if (isMounted) {
           setWeather(weatherData);
         }
-      })
-      .catch(() => {
+      } catch (loadError) {
         if (!isMounted) return;
 
-        setError("No pudimos cargar el mapa de este sendero.");
-        setWeather(null);
-        setReports([]);
-        setIsWifiConnected(false);
-      })
-      .finally(() => {
+        const offlineMap = await getOfflineMapByTrailId(trailId).catch(() => null);
+
+        if (offlineMap?.trail) {
+          setTrail(offlineMap.trail);
+          setReports(offlineMap.reports);
+          setIsWifiConnected(false);
+          setWeather(null);
+          setError(null);
+        } else {
+          setError("No pudimos cargar el mapa de este sendero.");
+          setWeather(null);
+          setReports([]);
+          setIsWifiConnected(false);
+        }
+      } finally {
         if (!isMounted) return;
 
         setIsLoading(false);
         setIsContextLoading(false);
-      });
+      }
+    };
+
+    loadRouteContext();
 
     return () => {
       isMounted = false;
@@ -237,6 +266,7 @@ export default function Screen04RouteMap() {
                   params: {
                     id: String(trailId),
                     distance: String(Math.round(routeDeviationMeters)),
+                    startedAt: String(startedAtMs),
                   },
                 })
               }
@@ -289,53 +319,79 @@ export default function Screen04RouteMap() {
           <Pressable
             onPress={() =>
               router.push({
-                pathname: "/descanso",
+                pathname: "/recorrido-finalizado",
                 params: {
                   id: String(trailId),
                   startedAt: String(startedAtMs),
                   traveledMeters:
                     traveledMeters !== null ? String(Math.round(traveledMeters)) : "",
-                  totalMeters:
-                    totalRouteMeters > 0 ? String(Math.round(totalRouteMeters)) : "",
                 },
               })
             }
-            style={styles.activeAction}
+            style={styles.finishRouteButton}
           >
-            <Ionicons name="pause-circle-outline" size={20} color={colors.greenDark} />
-            <Text style={styles.activeActionText}>Descanso</Text>
+            <View style={styles.finishRouteIcon}>
+              <Ionicons name="flag-outline" size={22} color={colors.white} />
+            </View>
+            <View style={styles.finishRouteTextBox}>
+              <Text style={styles.finishRouteLabel}>Terminar ruta</Text>
+              <Text style={styles.finishRouteHint}>Guardar actividad y dejar opinion</Text>
+            </View>
+            <Ionicons name="chevron-forward" size={20} color={colors.white} />
           </Pressable>
-          <Pressable
-            onPress={() =>
-              router.push({
-                pathname: "/reportar-terreno",
-                params: { id: String(trailId) },
-              })
-            }
-            style={styles.activeAction}
-          >
-            <Ionicons name="warning-outline" size={20} color={colors.greenDark} />
-            <Text style={styles.activeActionText}>Terreno</Text>
-          </Pressable>
-          <Pressable
-            onPress={() =>
-              router.push({
-                pathname: "/alerta-ruta",
-                params: { id: String(trailId) },
-              })
-            }
-            style={styles.activeAction}
-          >
-            <Ionicons name="trail-sign-outline" size={20} color={colors.greenDark} />
-            <Text style={styles.activeActionText}>Alerta</Text>
-          </Pressable>
-          <Pressable
-            onPress={() => router.push("/confirmar-sos")}
-            style={[styles.activeAction, styles.activeDangerAction]}
-          >
-            <Ionicons name="alert-circle-outline" size={20} color={colors.white} />
-            <Text style={styles.activeDangerText}>SOS</Text>
-          </Pressable>
+
+          <View style={styles.quickActionsRow}>
+            <Pressable
+              onPress={() =>
+                router.push({
+                  pathname: "/descanso",
+                  params: {
+                    id: String(trailId),
+                    startedAt: String(startedAtMs),
+                    traveledMeters:
+                      traveledMeters !== null ? String(Math.round(traveledMeters)) : "",
+                    totalMeters:
+                      totalRouteMeters > 0 ? String(Math.round(totalRouteMeters)) : "",
+                  },
+                })
+              }
+              style={styles.activeAction}
+            >
+              <Ionicons name="pause-outline" size={20} color={colors.greenDark} />
+              <Text style={styles.activeActionText}>Pausa</Text>
+            </Pressable>
+            <Pressable
+              onPress={() =>
+                router.push({
+                  pathname: "/reportar-terreno",
+                  params: { id: String(trailId) },
+                })
+              }
+              style={styles.activeAction}
+            >
+              <Ionicons name="megaphone-outline" size={20} color={colors.greenDark} />
+              <Text style={styles.activeActionText}>Reporte</Text>
+            </Pressable>
+            <Pressable
+              onPress={() =>
+                router.push({
+                  pathname: "/alerta-ruta",
+                  params: { id: String(trailId), startedAt: String(startedAtMs) },
+                })
+              }
+              style={styles.activeAction}
+            >
+              <Ionicons name="trail-sign-outline" size={20} color={colors.greenDark} />
+              <Text style={styles.activeActionText}>Ruta</Text>
+            </Pressable>
+            <Pressable
+              onPress={() => router.push("/confirmar-sos")}
+              style={[styles.activeAction, styles.activeDangerAction]}
+            >
+              <Ionicons name="alert-circle-outline" size={20} color={colors.white} />
+              <Text style={styles.activeDangerText}>SOS</Text>
+            </Pressable>
+          </View>
         </View>
       </SafeAreaView>
     );
@@ -392,7 +448,7 @@ export default function Screen04RouteMap() {
                     weather?.risk_level === "medio" && styles.riskBadgeTextMedium,
                   ]}
                 >
-                  {weather ? weather.risk_level : "cargando"}
+                  {weather ? `Riesgo ${weather.risk_level}` : "Consultando"}
                 </Text>
               </View>
             </View>
@@ -495,6 +551,17 @@ export default function Screen04RouteMap() {
             onPress={() =>
               router.push({
                 pathname: "/trail-start",
+                params: { id: String(trailId) },
+              })
+            }
+          />
+          <PrimaryButton
+            label="Descargar mapa"
+            icon="download-outline"
+            tone="secondary"
+            onPress={() =>
+              router.push({
+                pathname: "/offline-descarga",
                 params: { id: String(trailId) },
               })
             }
@@ -695,35 +762,71 @@ const styles = StyleSheet.create({
     borderTopColor: colors.line,
     borderTopWidth: 1,
     bottom: 0,
-    flexDirection: "row",
-    gap: 8,
     left: 0,
     padding: 14,
     position: "absolute",
     right: 0,
     zIndex: 20,
   },
+  finishRouteButton: {
+    alignItems: "center",
+    backgroundColor: colors.primary,
+    borderRadius: 20,
+    flexDirection: "row",
+    gap: 12,
+    minHeight: 62,
+    paddingHorizontal: 14,
+    paddingVertical: 12,
+  },
+  finishRouteIcon: {
+    alignItems: "center",
+    backgroundColor: "rgba(255,255,255,0.18)",
+    borderRadius: 16,
+    height: 40,
+    justifyContent: "center",
+    width: 40,
+  },
+  finishRouteTextBox: {
+    flex: 1,
+    minWidth: 0,
+  },
+  finishRouteLabel: {
+    color: colors.white,
+    fontSize: 17,
+    fontWeight: "900",
+  },
+  finishRouteHint: {
+    color: "rgba(255,255,255,0.82)",
+    fontSize: 12,
+    fontWeight: "700",
+    marginTop: 2,
+  },
+  quickActionsRow: {
+    flexDirection: "row",
+    gap: 8,
+    marginTop: 10,
+  },
   activeAction: {
     alignItems: "center",
     backgroundColor: colors.primarySoft,
-    borderRadius: 18,
+    borderRadius: 16,
     flex: 1,
-    flexDirection: "row",
-    gap: 5,
+    gap: 4,
     justifyContent: "center",
-    minHeight: 48,
+    minHeight: 54,
+    paddingHorizontal: 4,
   },
   activeDangerAction: {
     backgroundColor: colors.danger,
   },
   activeActionText: {
     color: colors.greenDark,
-    fontSize: 12,
+    fontSize: 11,
     fontWeight: "900",
   },
   activeDangerText: {
     color: colors.white,
-    fontSize: 12,
+    fontSize: 11,
     fontWeight: "900",
   },
   statusText: {

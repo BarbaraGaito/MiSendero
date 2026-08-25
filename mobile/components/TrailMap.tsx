@@ -17,6 +17,10 @@ import {
   getRouteStart,
   parseRouteCoordinates,
 } from "../../services/geoUtils";
+import {
+  getTileRemoteUrl,
+  resolveCachedTileUri,
+} from "../../services/mapTileCache";
 import { useDeviceLocation } from "../hooks/useDeviceLocation";
 import { colors } from "./MiSenderoUI";
 
@@ -27,6 +31,10 @@ type MapTile = {
   url: string;
   left: number;
   top: number;
+  layer: MapLayer;
+  zoom: number;
+  x: number;
+  y: number;
 };
 
 type MapTouch = {
@@ -137,20 +145,6 @@ const getRouteDistanceKm = (points: Coordinate[]) => {
   }, 0);
 };
 
-const getTileUrl = (layer: MapLayer, zoom: number, x: number, y: number) => {
-  const tileX = wrapTileX(x, zoom);
-
-  if (layer === "terrain") {
-    return `https://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/${zoom}/${y}/${tileX}`;
-  }
-
-  if (layer === "satellite") {
-    return `https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/${zoom}/${y}/${tileX}`;
-  }
-
-  return `https://tile.openstreetmap.org/${zoom}/${tileX}/${y}.png`;
-};
-
 const getFittedView = (
   points: Coordinate[],
   layout: { width: number; height: number },
@@ -216,6 +210,7 @@ export function TrailMap({
   const [terrainScale, setTerrainScale] = useState(1);
   const [pinchPreviewScale, setPinchPreviewScale] = useState(1);
   const [cachedTiles, setCachedTiles] = useState<MapTile[]>([]);
+  const [tileUriOverrides, setTileUriOverrides] = useState<Record<string, string>>({});
   const [isTileLoading, setIsTileLoading] = useState(false);
   const centerRef = useRef(activeCenter);
   const zoomRef = useRef(activeZoom);
@@ -458,9 +453,13 @@ export function TrailMap({
 
         tiles.push({
           key: `${layer}-${zoom}-${x}-${y}`,
-          url: getTileUrl(layer, zoom, x, y),
+          url: getTileRemoteUrl(layer, zoom, x, y),
           left: x * TILE_SIZE - topLeft.x,
           top: y * TILE_SIZE - topLeft.y,
+          layer,
+          zoom,
+          x,
+          y,
         });
       }
     }
@@ -513,6 +512,39 @@ export function TrailMap({
         }
       });
   }, [isPerspective, tileSignature]);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const loadLocalTileUris = async () => {
+      const entries = await Promise.all(
+        mapState.tiles.map(async (tile) => {
+          const localUri = await resolveCachedTileUri(
+            tile.layer,
+            tile.zoom,
+            tile.x,
+            tile.y
+          );
+
+          return localUri ? [tile.key, localUri] : null;
+        })
+      );
+
+      if (!isMounted) return;
+
+      setTileUriOverrides(
+        Object.fromEntries(
+          entries.filter((entry): entry is [string, string] => Boolean(entry))
+        )
+      );
+    };
+
+    loadLocalTileUris();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [tileSignature]);
 
   const terrainState = useMemo(() => {
     if (!layout.width || !layout.height) {
@@ -816,7 +848,7 @@ export function TrailMap({
             <Image
               key={tile.key}
               fadeDuration={0}
-              source={{ uri: tile.url }}
+              source={{ uri: tileUriOverrides[tile.key] || tile.url }}
               style={[styles.tile, { left: tile.left, top: tile.top }]}
             />
           ))}

@@ -17,7 +17,7 @@ export default function OfflineDownloadComplete22Screen() {
       />
 
       <Card tone="green">
-        <Text style={styles.cardTitle}>Nahuel Huapi listo</Text>
+        <Text style={styles.cardTitle}>Zona lista</Text>
         <Text style={styles.cardText}>
           Guardamos rutas, relieve, alertas y puntos de referencia.
         </Text>
@@ -25,7 +25,7 @@ export default function OfflineDownloadComplete22Screen() {
 
       <Card>
         <InfoRow icon="cloud-done-outline" label="Estado" value="Disponible offline" />
-        <InfoRow icon="server-outline" label="Espacio usado" value="312 MB" />
+        <InfoRow icon="server-outline" label="Espacio usado" value="Segun base local" />
       </Card>
 
       <View style={styles.bottomActions}>

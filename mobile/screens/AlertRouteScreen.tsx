@@ -21,10 +21,11 @@ import { TrailMap } from "../components/TrailMap";
 import { useDeviceLocation } from "../hooks/useDeviceLocation";
 
 export default function AlertRouteScreen() {
-  const { distance, id, reason } = useLocalSearchParams<{
+  const { distance, id, reason, startedAt } = useLocalSearchParams<{
     distance?: string;
     id?: string;
     reason?: string;
+    startedAt?: string;
   }>();
   const trailId = Number(id) || 1;
   const isStartWarning = reason === "start";
@@ -143,7 +144,19 @@ export default function AlertRouteScreen() {
               tone="secondary"
             />
           ) : (
-            <PrimaryButton label="Estoy bien" href="/recorrido-finalizado" tone="secondary" />
+            <PrimaryButton
+              label="Terminar recorrido"
+              tone="secondary"
+              onPress={() =>
+                router.push({
+                  pathname: "/recorrido-finalizado",
+                  params: {
+                    id: String(trailId),
+                    startedAt: startedAt || "",
+                  },
+                })
+              }
+            />
           )}
           <PrimaryButton label="Reportar problema" href="/reportar-terreno" tone="danger" />
         </View>

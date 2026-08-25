@@ -1,28 +1,86 @@
-import React from "react";
+import { useFocusEffect } from "expo-router";
+import React, { useCallback, useEffect, useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
-import { AppScreen, Card, PrimaryButton, ScreenTitle, colors } from "../components/MiSenderoUI";
+import {
+  AppScreen,
+  Card,
+  PrimaryButton,
+  ScreenTitle,
+  colors,
+} from "../components/MiSenderoUI";
+import { getOfflineMaps, OfflineMap } from "../../services/offlineMaps";
+
+const formatDate = (timestamp: number) =>
+  new Date(timestamp).toLocaleDateString("es-AR", {
+    day: "2-digit",
+    month: "short",
+  });
+
+const formatStorage = (sizeMb: number) =>
+  `${sizeMb.toLocaleString("es-AR", { maximumFractionDigits: 0 })} MB`;
 
 export default function OfflineMapsScreen() {
+  const [maps, setMaps] = useState<OfflineMap[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const loadMaps = useCallback(async () => {
+    try {
+      setMaps(await getOfflineMaps());
+      setError(null);
+    } catch (loadError) {
+      setError("No pudimos cargar los mapas offline.");
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    loadMaps();
+  }, [loadMaps]);
+
+  useFocusEffect(
+    useCallback(() => {
+      loadMaps();
+    }, [loadMaps])
+  );
+
+  const totalSize = maps.reduce((total, map) => total + map.sizeMb, 0);
+
   return (
     <AppScreen activeTab="perfil">
       <ScreenTitle
-        eyebrow="Sin conexión"
+        eyebrow="Sin conexion"
         title="Mapas descargados"
-        subtitle="Administrá el espacio y actualizá las zonas antes de salir."
+        subtitle="Zonas guardadas localmente en este dispositivo."
       />
 
       <Card tone="green">
         <Text style={styles.storageTitle}>Espacio usado</Text>
-        <Text style={styles.storageValue}>482 MB de 2 GB</Text>
-        <View style={styles.progressTrack}>
-          <View style={styles.progressFill} />
-        </View>
+        <Text style={styles.storageValue}>{formatStorage(totalSize)}</Text>
       </Card>
 
       <ScrollView showsVerticalScrollIndicator={false}>
-        <MapItem title="Bariloche y alrededores" meta="Actualizado hoy" action="Listo" />
-        <MapItem title="Villa La Angostura" meta="Actualizado hace 12 días" action="Actualizar" />
-        <MapItem title="Ushuaia" meta="Descargado parcialmente" action="Completar" />
+        {error ? <Text style={styles.statusText}>{error}</Text> : null}
+        {isLoading ? <Text style={styles.statusText}>Cargando mapas...</Text> : null}
+
+        {!isLoading && maps.length === 0 ? (
+          <Card>
+            <Text style={styles.emptyTitle}>No hay mapas descargados</Text>
+            <Text style={styles.emptyText}>
+              Cuando guardes una zona offline, va a aparecer aca con su estado y
+              espacio usado real.
+            </Text>
+          </Card>
+        ) : (
+          maps.map((map) => (
+            <MapItem
+              key={map.id}
+              title={map.name}
+              meta={`${map.status} - ${formatStorage(map.sizeMb)} - ${formatDate(map.updatedAt)}`}
+            />
+          ))
+        )}
       </ScrollView>
 
       <PrimaryButton label="Descargar otro mapa" href="/offline-buscar" />
@@ -30,15 +88,14 @@ export default function OfflineMapsScreen() {
   );
 }
 
-function MapItem({ title, meta, action }: { title: string; meta: string; action: string }) {
+function MapItem({ title, meta }: { title: string; meta: string }) {
   return (
     <Card>
       <View style={styles.mapRow}>
-        <View>
+        <View style={styles.mapText}>
           <Text style={styles.mapTitle}>{title}</Text>
           <Text style={styles.mapMeta}>{meta}</Text>
         </View>
-        <Text style={styles.mapAction}>{action}</Text>
       </View>
     </Card>
   );
@@ -54,24 +111,33 @@ const styles = StyleSheet.create({
     color: colors.primary,
     fontSize: 15,
     fontWeight: "800",
-  },
-  progressTrack: {
-    backgroundColor: colors.surface,
-    borderRadius: 999,
-    height: 10,
     marginTop: 4,
-    overflow: "hidden",
   },
-  progressFill: {
-    backgroundColor: colors.primary,
-    borderRadius: 999,
-    height: "100%",
-    width: "24%",
+  statusText: {
+    color: colors.muted,
+    fontSize: 14,
+    fontWeight: "700",
+    marginBottom: 12,
+  },
+  emptyTitle: {
+    color: colors.ink,
+    fontSize: 17,
+    fontWeight: "800",
+  },
+  emptyText: {
+    color: colors.muted,
+    fontSize: 14,
+    fontWeight: "600",
+    lineHeight: 20,
+    marginTop: 6,
   },
   mapRow: {
     alignItems: "center",
     flexDirection: "row",
     justifyContent: "space-between",
+  },
+  mapText: {
+    flex: 1,
   },
   mapTitle: {
     color: colors.ink,
@@ -83,10 +149,6 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: "600",
     marginTop: 4,
-  },
-  mapAction: {
-    color: colors.primary,
-    fontSize: 12,
-    fontWeight: "900",
+    textTransform: "capitalize",
   },
 });

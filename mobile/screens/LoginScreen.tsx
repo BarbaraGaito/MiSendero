@@ -9,6 +9,7 @@ import {
   CURRENT_TERMS_VERSION,
   saveTermsAcceptance,
 } from "../../services/legalConsent";
+import { getExperienceProfile } from "../../services/experienceProfile";
 import { colors } from "../components/MiSenderoUI";
 
 export default function LoginScreen() {
@@ -46,7 +47,16 @@ export default function LoginScreen() {
       }
 
       await saveAuthSession(auth);
-      router.replace(isRegister ? "/onboarding-experiencia" : "/inicio");
+
+      if (isRegister) {
+        const experienceProfile = await getExperienceProfile();
+        router.replace(
+          experienceProfile.completed ? "/inicio" : "/onboarding-experiencia"
+        );
+        return;
+      }
+
+      router.replace("/inicio");
     } catch (submitError) {
       setError(
         submitError instanceof Error

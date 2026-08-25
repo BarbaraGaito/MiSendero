@@ -1,8 +1,83 @@
-import React from "react";
+import { router, useFocusEffect } from "expo-router";
+import React, { useCallback, useEffect, useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
-import { AppScreen, Card, Metric, PrimaryButton, ScreenTitle, colors } from "../components/MiSenderoUI";
+import {
+  AppScreen,
+  Card,
+  Metric,
+  PrimaryButton,
+  ScreenTitle,
+  colors,
+} from "../components/MiSenderoUI";
+import {
+  getRecentSessions,
+  getSessionsSummary,
+  SessionsSummary,
+} from "../../database/sessionsRepository";
+import { initDB } from "../../database/database";
+import { SessionRow } from "../../types";
+
+const emptySummary: SessionsSummary = {
+  totalDistance: 0,
+  completedCount: 0,
+  currentMonthCount: 0,
+};
+
+const formatDistance = (meters: number) =>
+  `${(meters / 1000).toLocaleString("es-AR", {
+    maximumFractionDigits: 1,
+    minimumFractionDigits: 0,
+  })} km`;
+
+const formatDuration = (seconds: number) => {
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+
+  if (hours > 0) return `${hours} h ${minutes.toString().padStart(2, "0")} min`;
+  return `${minutes} min`;
+};
+
+const formatDate = (timestamp: number) =>
+  new Date(timestamp).toLocaleDateString("es-AR", {
+    day: "2-digit",
+    month: "short",
+  });
 
 export default function ActivitiesScreen() {
+  const [summary, setSummary] = useState<SessionsSummary>(emptySummary);
+  const [sessions, setSessions] = useState<SessionRow[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const loadActivities = useCallback(async () => {
+    try {
+      await initDB();
+
+      const [nextSummary, recentSessions] = await Promise.all([
+        getSessionsSummary(),
+        getRecentSessions(8),
+      ]);
+
+      setSummary(nextSummary);
+      setSessions(recentSessions);
+      setError(null);
+    } catch (loadError) {
+      setError("No pudimos cargar tus actividades.");
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    loadActivities();
+  }, [loadActivities]);
+
+  useFocusEffect(
+    useCallback(() => {
+      loadActivities();
+    }, [loadActivities])
+  );
+
   return (
     <AppScreen activeTab="actividad">
       <ScreenTitle
@@ -12,53 +87,72 @@ export default function ActivitiesScreen() {
       />
 
       <View style={styles.metricsRow}>
-        <Metric label="Total" value="27,8 km" />
-        <Metric label="Rutas" value="3" />
-        <Metric label="Este mes" value="2" />
+        <Metric label="Total" value={formatDistance(summary.totalDistance)} />
+        <Metric label="Rutas" value={String(summary.completedCount)} />
+        <Metric label="Este mes" value={String(summary.currentMonthCount)} />
       </View>
 
       <ScrollView showsVerticalScrollIndicator={false}>
-        <ActivityCard
-          title="Laguna Esmeralda"
-          meta="Finalizada • 9,4 km"
-          status="Guardada"
-        />
-        <ActivityCard
-          title="Cerro Campanario"
-          meta="Pausada • 3,2 km"
-          status="Pendiente"
-        />
-        <ActivityCard
-          title="Sendero Arrayanes"
-          meta="Finalizada • 6,8 km"
-          status="Guardada"
-        />
+        {error ? <Text style={styles.statusText}>{error}</Text> : null}
+        {isLoading ? <Text style={styles.statusText}>Cargando actividades...</Text> : null}
+
+        {!isLoading && sessions.length === 0 ? (
+          <Card>
+            <Text style={styles.emptyTitle}>Todavia no hay recorridos</Text>
+            <Text style={styles.emptyText}>
+              Cuando inicies y guardes una salida, va a aparecer aca con distancia,
+              tiempo y estado real.
+            </Text>
+          </Card>
+        ) : (
+          sessions.map((session) => (
+            <ActivityCard key={session.id} session={session} />
+          ))
+        )}
+
         <PrimaryButton label="Ver historial local" href="/history" tone="secondary" />
       </ScrollView>
     </AppScreen>
   );
 }
 
-function ActivityCard({
-  title,
-  meta,
-  status,
-}: {
-  title: string;
-  meta: string;
-  status: string;
-}) {
-  const pending = status === "Pendiente";
+function ActivityCard({ session }: { session: SessionRow }) {
+  const pending = session.ended_at === null;
+  const distance = formatDistance(session.distance ?? 0);
+  const duration = pending ? "En curso" : formatDuration(session.duration ?? 0);
+  const status = pending ? "Pendiente" : "Guardada";
 
   return (
     <Card tone={pending ? "orange" : "white"}>
       <View style={styles.activityTop}>
-        <View>
-          <Text style={styles.activityTitle}>{title}</Text>
-          <Text style={styles.activityMeta}>{meta}</Text>
+        <View style={styles.activityText}>
+          <Text style={styles.activityTitle}>
+            Recorrido del {formatDate(session.started_at)}
+          </Text>
+          <Text style={styles.activityMeta}>
+            {duration} - {distance} - Fatiga {session.avg_fatigue}
+          </Text>
         </View>
         <Text style={[styles.status, pending && styles.statusPending]}>{status}</Text>
       </View>
+      {pending && session.trail_id ? (
+        <View style={styles.resumeAction}>
+          <PrimaryButton
+            label="Continuar ruta"
+            icon="play-outline"
+            onPress={() =>
+              router.push({
+                pathname: "/route-map",
+                params: {
+                  active: "1",
+                  id: String(session.trail_id),
+                  startedAt: String(session.started_at),
+                },
+              })
+            }
+          />
+        </View>
+      ) : null}
     </Card>
   );
 }
@@ -69,10 +163,32 @@ const styles = StyleSheet.create({
     gap: 8,
     marginBottom: 14,
   },
+  statusText: {
+    color: colors.muted,
+    fontSize: 14,
+    fontWeight: "700",
+    marginBottom: 12,
+  },
+  emptyTitle: {
+    color: colors.ink,
+    fontSize: 17,
+    fontWeight: "800",
+  },
+  emptyText: {
+    color: colors.muted,
+    fontSize: 14,
+    fontWeight: "600",
+    lineHeight: 20,
+    marginTop: 6,
+  },
   activityTop: {
     alignItems: "center",
     flexDirection: "row",
+    gap: 12,
     justifyContent: "space-between",
+  },
+  activityText: {
+    flex: 1,
   },
   activityTitle: {
     color: colors.ink,
@@ -84,6 +200,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: "600",
     marginTop: 4,
+    textTransform: "capitalize",
   },
   status: {
     backgroundColor: colors.primarySoft,
@@ -98,5 +215,8 @@ const styles = StyleSheet.create({
   statusPending: {
     backgroundColor: colors.orangeSoft,
     color: colors.orange,
+  },
+  resumeAction: {
+    marginTop: 12,
   },
 });

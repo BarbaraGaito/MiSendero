@@ -17,7 +17,9 @@ export default function ReportSavedScreen() {
 
       <Card tone="green">
         <Text style={styles.cardTitle}>Detalle enviado</Text>
-        <Text style={styles.cardText}>Barro en el tramo medio del Sendero Laguna Esmeralda.</Text>
+        <Text style={styles.cardText}>
+          El reporte quedo guardado para la ruta seleccionada.
+        </Text>
       </Card>
 
       <Card>

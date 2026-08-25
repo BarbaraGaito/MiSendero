@@ -126,7 +126,6 @@ export default function HomeScreen() {
               >
                 <View style={styles.mapShade} />
                 <View style={styles.tags}>
-                  <Tag label="Disponible" tone="green" />
                   <Tag label={difficulty} tone="orange" />
                 </View>
                 <Text style={styles.mapTitle}>{recommendedTrail.name}</Text>

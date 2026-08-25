@@ -73,6 +73,10 @@ export interface SessionRow {
   duration: number;
   distance: number;
   avg_fatigue: FatigueLevel;
+  trail_id: number | null;
+  rating: number | null;
+  review_text: string | null;
+  reviewed_at: number | null;
 }
 
 export interface Trail {

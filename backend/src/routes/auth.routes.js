@@ -1,163 +1,96 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const db = require("../db");
+const { query } = require("../db");
+const { requireAuth } = require("../middleware/requireAuth");
+const { validateBody } = require("../middleware/validate");
+const { registerSchema, loginSchema } = require("../schemas/auth.schemas");
 
 const router = express.Router();
 
-const getUserStats = (userId) => {
-  const stats = db
-    .prepare(`
+const signToken = (user) =>
+  jwt.sign({ userId: user.id, role: user.role }, process.env.JWT_SECRET, {
+    expiresIn: "7d",
+  });
+
+const getUserStats = async (userId) => {
+  const { rows } = await query(
+    `
       SELECT
-        COUNT(*) AS completed_routes,
+        COUNT(*)::int AS completed_routes,
         COALESCE(SUM(distance_km), 0) AS total_distance_km
       FROM activities
-      WHERE user_id = ?
-    `)
-    .get(userId);
+      WHERE user_id = $1
+    `,
+    [userId]
+  );
 
   return {
-    completed_routes: stats.completed_routes,
-    total_distance_km: Number(stats.total_distance_km.toFixed(1))
+    completed_routes: rows[0].completed_routes,
+    total_distance_km: Number(Number(rows[0].total_distance_km).toFixed(1)),
   };
 };
 
-const requireAuth = (req, res, next) => {
-  const authHeader = req.headers.authorization || "";
-  const token = authHeader.startsWith("Bearer ") ? authHeader.slice(7) : null;
-
-  if (!token) {
-    return res.status(401).json({ message: "Sesion requerida" });
-  }
-
+router.get("/me", requireAuth, async (req, res, next) => {
   try {
-    const payload = jwt.verify(token, process.env.JWT_SECRET || "development-secret");
-    req.userId = payload.userId;
-    next();
-  } catch (error) {
-    return res.status(401).json({ message: "Sesion invalida" });
-  }
-};
-
-router.get("/profile", (req, res) => {
-  const user = db
-    .prepare("SELECT id, name, email, role, terms_version, terms_accepted_at, created_at FROM users ORDER BY id DESC LIMIT 1")
-    .get();
-
-  if (!user) {
-    return res.json({
-      user: null,
-      stats: {
-        completed_routes: 0,
-        total_distance_km: 0
-      }
-    });
-  }
-
-  res.json({
-    user,
-    stats: getUserStats(user.id)
-  });
-});
-
-router.get("/me", requireAuth, (req, res) => {
-  const user = db
-    .prepare("SELECT id, name, email, role, terms_version, terms_accepted_at, created_at FROM users WHERE id = ?")
-    .get(req.userId);
-
-  if (!user) {
-    return res.status(404).json({ message: "Usuario no encontrado" });
-  }
-
-  res.json({
-    user,
-    stats: getUserStats(user.id)
-  });
-});
-
-router.post("/register", async (req, res, next) => {
-  try {
-    const { name, email, password, accepted_terms_version } = req.body;
-
-    if (!name || !email || !password) {
-      return res.status(400).json({ message: "Faltan datos obligatorios" });
-    }
-
-    if (!accepted_terms_version) {
-      return res.status(400).json({
-        message: "Debes aceptar terminos y condiciones para crear la cuenta"
-      });
-    }
-
-    const normalizedEmail = String(email).trim().toLowerCase();
-    const existingUser = db
-      .prepare("SELECT id FROM users WHERE email = ?")
-      .get(normalizedEmail);
-
-    if (existingUser) {
-      return res.status(409).json({ message: "El email ya esta registrado" });
-    }
-
-    const passwordHash = await bcrypt.hash(password, 10);
-    const usersCount = db.prepare("SELECT COUNT(*) AS count FROM users").get().count;
-    const role = usersCount === 0 ? "admin" : "user";
-    const termsAcceptedAt = new Date().toISOString();
-    const result = db
-      .prepare(`
-        INSERT INTO users (
-          name,
-          email,
-          password_hash,
-          role,
-          terms_version,
-          terms_accepted_at
-        )
-        VALUES (?, ?, ?, ?, ?, ?)
-      `)
-      .run(
-        name.trim(),
-        normalizedEmail,
-        passwordHash,
-        role,
-        String(accepted_terms_version),
-        termsAcceptedAt
-      );
-
-    const user = {
-      id: result.lastInsertRowid,
-      name: name.trim(),
-      email: normalizedEmail,
-      role,
-      terms_version: String(accepted_terms_version),
-      terms_accepted_at: termsAcceptedAt
-    };
-    const token = jwt.sign(
-      { userId: user.id },
-      process.env.JWT_SECRET || "development-secret",
-      { expiresIn: "7d" }
+    const { rows } = await query(
+      `SELECT id, name, email, role, terms_version, terms_accepted_at, created_at
+       FROM users WHERE id = $1`,
+      [req.userId]
     );
+    const user = rows[0];
 
-    res.status(201).json({
-      token,
-      user
-    });
+    if (!user) {
+      return res.status(404).json({ message: "Usuario no encontrado" });
+    }
+
+    res.json({ user, stats: await getUserStats(user.id) });
   } catch (error) {
     next(error);
   }
 });
 
-router.post("/login", async (req, res, next) => {
+router.post("/register", validateBody(registerSchema), async (req, res, next) => {
   try {
-    const { email, password } = req.body;
+    const { name, email, password, accepted_terms_version } = req.body;
+    const normalizedEmail = email.toLowerCase();
 
-    if (!email || !password) {
-      return res.status(400).json({ message: "Faltan datos obligatorios" });
+    const { rows: existingRows } = await query("SELECT id FROM users WHERE email = $1", [
+      normalizedEmail,
+    ]);
+
+    if (existingRows[0]) {
+      return res.status(409).json({ message: "El email ya esta registrado" });
     }
 
-    const normalizedEmail = String(email).trim().toLowerCase();
-    const user = db
-      .prepare("SELECT * FROM users WHERE email = ?")
-      .get(normalizedEmail);
+    const passwordHash = await bcrypt.hash(password, 10);
+    const { rows: countRows } = await query("SELECT COUNT(*)::int AS count FROM users");
+    const role = countRows[0].count === 0 ? "admin" : "user";
+    const termsAcceptedAt = new Date().toISOString();
+
+    const { rows: insertedRows } = await query(
+      `
+        INSERT INTO users (name, email, password_hash, role, terms_version, terms_accepted_at)
+        VALUES ($1, $2, $3, $4, $5, $6)
+        RETURNING id, name, email, role, terms_version, terms_accepted_at
+      `,
+      [name, normalizedEmail, passwordHash, role, String(accepted_terms_version), termsAcceptedAt]
+    );
+    const user = insertedRows[0];
+
+    res.status(201).json({ token: signToken(user), user });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post("/login", validateBody(loginSchema), async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+    const normalizedEmail = email.toLowerCase();
+
+    const { rows } = await query("SELECT * FROM users WHERE email = $1", [normalizedEmail]);
+    const user = rows[0];
 
     if (!user) {
       return res.status(401).json({ message: "Credenciales invalidas" });
@@ -169,14 +102,8 @@ router.post("/login", async (req, res, next) => {
       return res.status(401).json({ message: "Credenciales invalidas" });
     }
 
-    const token = jwt.sign(
-      { userId: user.id },
-      process.env.JWT_SECRET || "development-secret",
-      { expiresIn: "7d" }
-    );
-
     res.json({
-      token,
+      token: signToken(user),
       user: {
         id: user.id,
         name: user.name,
@@ -184,8 +111,8 @@ router.post("/login", async (req, res, next) => {
         role: user.role,
         terms_version: user.terms_version,
         terms_accepted_at: user.terms_accepted_at,
-        created_at: user.created_at
-      }
+        created_at: user.created_at,
+      },
     });
   } catch (error) {
     next(error);

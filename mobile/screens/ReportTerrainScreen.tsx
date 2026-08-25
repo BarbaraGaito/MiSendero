@@ -3,6 +3,8 @@ import { router, useLocalSearchParams } from "expo-router";
 import React, { useMemo, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 import { createTrailReport } from "../../services/api";
+import { getAuthSession } from "../../services/authSession";
+import { enqueue, isOnline } from "../../services/syncQueue";
 import {
   AppScreen,
   Card,
@@ -72,16 +74,32 @@ export default function ReportTerrainScreen() {
     setIsSubmitting(true);
     setSubmitError(null);
 
+    const report = {
+      issue_summary: selectedIssues.join(", "),
+      severity,
+      trail_state: trailState,
+      cause,
+      blocks_path: blocksPath,
+      details,
+    };
+
     try {
-      await createTrailReport(trailId, {
-        issue_summary: selectedIssues.join(", "),
-        severity,
-        trail_state: trailState,
-        cause,
-        blocks_path: blocksPath,
-        details,
-      });
-      router.push("/reporte-guardado");
+      const session = await getAuthSession();
+      const online = await isOnline();
+
+      if (session && online) {
+        try {
+          await createTrailReport(trailId, report, session.token);
+          router.push("/reporte-guardado");
+          return;
+        } catch (submitError) {
+          // Falla de red/servidor a pesar de reportar "online": se encola igual,
+          // en lugar de perder el reporte que la persona ya completo (RF-10).
+        }
+      }
+
+      await enqueue("trail_report", { trailId, ...report });
+      router.push({ pathname: "/reporte-guardado", params: { pending: "1" } });
     } catch (error) {
       setSubmitError(
         error instanceof Error ? error.message : "No pudimos guardar el reporte."

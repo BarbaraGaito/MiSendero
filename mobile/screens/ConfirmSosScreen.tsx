@@ -1,13 +1,17 @@
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { Alert, StyleSheet, Text, View } from "react-native";
 import { getEmergencyContact } from "../../services/emergencyContact";
+import { sendEmergencyAlert } from "../../services/emergencyAlerts";
 import { EmergencyContact } from "../../types";
 import { AppScreen, Card, PrimaryButton, ScreenTitle, colors } from "../components/MiSenderoUI";
 
 export default function ConfirmSosScreen() {
+  const { id } = useLocalSearchParams<{ id?: string }>();
+  const trailId = Number(id) || null;
   const [contact, setContact] = useState<EmergencyContact | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isSending, setIsSending] = useState(false);
 
   useEffect(() => {
     getEmergencyContact()
@@ -15,16 +19,39 @@ export default function ConfirmSosScreen() {
       .finally(() => setIsLoading(false));
   }, []);
 
-  const handleSos = () => {
+  const handleSos = async () => {
     if (!contact) {
       router.push("/contacto-seguridad");
       return;
     }
 
-    Alert.alert(
-      "Alerta SOS preparada",
-      `Se usara como contacto de emergencia a ${contact.name} (${contact.phone}).`
-    );
+    if (isSending) return;
+    setIsSending(true);
+
+    try {
+      const outcome = await sendEmergencyAlert(trailId);
+
+      if (outcome === "sent") {
+        Alert.alert(
+          "Alerta SOS enviada",
+          `Se notifico a ${contact.name} (${contact.phone}) con tu ubicacion actual.`
+        );
+      } else if (outcome === "queued") {
+        Alert.alert(
+          "Alerta SOS guardada",
+          "No hay senal ahora. La alerta se enviara en cuanto la app detecte conexion."
+        );
+      } else if (outcome === "no_location") {
+        Alert.alert(
+          "No pudimos obtener tu ubicacion",
+          "Activa el GPS y volve a intentar. Mientras tanto, comunicate por otro medio si es posible."
+        );
+      } else {
+        Alert.alert("Sesion requerida", "Inicia sesion para poder enviar una alerta SOS.");
+      }
+    } finally {
+      setIsSending(false);
+    }
   };
 
   return (
@@ -70,9 +97,11 @@ export default function ConfirmSosScreen() {
           label={
             isLoading
               ? "Verificando contacto"
-              : contact
-                ? "Enviar alerta SOS"
-                : "Completar contacto"
+              : isSending
+                ? "Enviando alerta..."
+                : contact
+                  ? "Enviar alerta SOS"
+                  : "Completar contacto"
           }
           onPress={handleSos}
           tone="danger"

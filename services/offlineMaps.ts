@@ -213,6 +213,21 @@ export const saveOfflineTrailMap = async (
   return getOfflineMapByTrailId(trail.id);
 };
 
+export const refreshOfflineTrailReports = async (
+  trailId: number,
+  reports: TrailReport[]
+) => {
+  await initOfflineMapsTable();
+
+  await db.runAsync(
+    `UPDATE offline_maps
+     SET reports_json = ?,
+         updated_at = ?
+     WHERE trail_id = ?`,
+    [JSON.stringify(reports), Date.now(), trailId]
+  );
+};
+
 const estimateTrailMapSizeMb = (trail: Trail, reports: TrailReport[]) => {
   const bytes = JSON.stringify({ trail, reports }).length;
   const metadataMb = bytes / 1024 / 1024;

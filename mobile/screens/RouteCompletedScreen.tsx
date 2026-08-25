@@ -17,6 +17,7 @@ import {
   getOrCreatePausedSession,
   saveSessionReview,
 } from "../../database/sessionsRepository";
+import { enqueue } from "../../services/syncQueue";
 import { SessionRow } from "../../types";
 
 const MIN_COMPLETED_DISTANCE_METERS = 10;
@@ -79,6 +80,13 @@ export default function RouteCompletedScreen() {
             distance: safeDistance,
           });
           setIsPausedWithoutProgress(false);
+          await enqueue("activity", {
+            trail_id: trailId,
+            started_at: new Date(startedAtMs).toISOString(),
+            ended_at: new Date(endedAt).toISOString(),
+            distance_km: Number((safeDistance / 1000).toFixed(2)),
+            duration_minutes: Math.round(duration / 60),
+          });
         }
       } else {
         completedSession = await getLatestCompletedSession();

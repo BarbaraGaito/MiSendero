@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { router, useLocalSearchParams } from "expo-router";
 import { ImageBackground, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -7,6 +7,7 @@ import {
   InfoCard,
   PrimaryButton,
   ScreenShell,
+  StatusNotice,
   StatPill,
   TopBar,
   colors,
@@ -36,8 +37,10 @@ export default function Screen03TrailDetail() {
   const [ratingSummary, setRatingSummary] = useState<TrailRatingSummary | null>(null);
   const [weather, setWeather] = useState<TrailWeather | null>(null);
 
-  useEffect(() => {
+  const loadTrail = useCallback(async () => {
     const trailId = Number(id);
+    setIsLoading(true);
+    setError(null);
 
     if (!trailId) {
       setError("No se encontro el sendero seleccionado.");
@@ -45,26 +48,28 @@ export default function Screen03TrailDetail() {
       return;
     }
 
-    initDB()
-      .then(() => getTrailById(trailId))
-      .then(async (data) => {
-        setTrail(data);
-        const [offlineMap, summary] = await Promise.all([
-          getOfflineMapByTrailId(data.id),
-          getTrailRatingSummary(data.id),
-        ]);
-        setIsDownloaded(Boolean(offlineMap));
-        setRatingSummary(summary);
-        setWeather(await getTrailWeather(data.id).catch(() => null));
-        setError(null);
-      })
-      .catch(() => {
-        setError("No pudimos cargar este sendero en este momento.");
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+    try {
+      await initDB();
+      const data = await getTrailById(trailId);
+      setTrail(data);
+
+      const [offlineMap, summary] = await Promise.all([
+        getOfflineMapByTrailId(data.id),
+        getTrailRatingSummary(data.id),
+      ]);
+      setIsDownloaded(Boolean(offlineMap));
+      setRatingSummary(summary);
+      setWeather(await getTrailWeather(data.id).catch(() => null));
+    } catch (loadError) {
+      setError("No pudimos cargar este sendero en este momento.");
+    } finally {
+      setIsLoading(false);
+    }
   }, [id]);
+
+  useEffect(() => {
+    loadTrail();
+  }, [loadTrail]);
 
   const downloadMap = async () => {
     if (!trail || isDownloading) return;
@@ -102,8 +107,22 @@ export default function Screen03TrailDetail() {
           { paddingBottom: Math.max(28, insets.bottom + 24) },
         ]}
       >
-        {isLoading ? <Text style={styles.statusText}>Cargando sendero...</Text> : null}
-        {error ? <Text style={styles.statusText}>{error}</Text> : null}
+        {isLoading ? (
+          <StatusNotice
+            isLoading
+            message="Consultando informacion, clima y disponibilidad offline."
+            title="Cargando sendero"
+          />
+        ) : null}
+        {error ? (
+          <StatusNotice
+            actionLabel="Reintentar"
+            message={error}
+            onAction={loadTrail}
+            title="No se pudo cargar"
+            tone="error"
+          />
+        ) : null}
 
         {trail ? (
           <>
@@ -213,7 +232,10 @@ export default function Screen03TrailDetail() {
               />
               <PrimaryButton
                 label={isDownloaded ? "Mapa descargado" : "Descargar mapa"}
-                icon="download-outline"
+                icon={isDownloaded ? "checkmark-circle-outline" : "download-outline"}
+                disabled={isDownloaded}
+                isLoading={isDownloading}
+                loadingLabel="Descargando mapa"
                 tone="secondary"
                 onPress={downloadMap}
               />

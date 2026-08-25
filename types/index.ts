@@ -116,7 +116,7 @@ export interface TrailReport {
   severity: string;
   trail_state: string;
   cause: string | null;
-  blocks_path: number;
+  blocks_path: boolean;
   details: string | null;
   reporter_name: string;
   created_at: string;

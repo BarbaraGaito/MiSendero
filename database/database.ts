@@ -108,7 +108,6 @@ const runInitDB = async () => {
 
     CREATE INDEX IF NOT EXISTS idx_wearable_samples_user_recorded
     ON wearable_metric_samples (user_id, recorded_at DESC);
-  `);
 
     CREATE TABLE IF NOT EXISTS offline_maps (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -121,6 +120,21 @@ const runInitDB = async () => {
       trail_json TEXT,
       reports_json TEXT
     );
+
+    CREATE TABLE IF NOT EXISTS pending_operations (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      entity_type TEXT NOT NULL,
+      payload_json TEXT NOT NULL,
+      status TEXT NOT NULL DEFAULT 'pending',
+      retry_count INTEGER NOT NULL DEFAULT 0,
+      last_error TEXT,
+      server_id INTEGER,
+      created_at INTEGER NOT NULL,
+      updated_at INTEGER NOT NULL
+    );
+
+    CREATE INDEX IF NOT EXISTS idx_pending_operations_status
+    ON pending_operations (status, created_at);
   `);
 
   await addColumnIfMissing("sessions", "started_at", "INTEGER NOT NULL DEFAULT 0");

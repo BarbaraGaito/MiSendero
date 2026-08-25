@@ -1,5 +1,9 @@
 node_modules
 backend/.backend-dev*.log
+backend/data/*.sqlite
+backend/data/*.sqlite3
+__pycache__/
+*.pyc
 
 # Logs
 logs

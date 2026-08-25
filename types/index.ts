@@ -6,6 +6,57 @@ export interface WatchData {
   timestamp: number;
 }
 
+export type WearableProvider =
+  | "apple_healthkit"
+  | "android_health_connect"
+  | "wear_os_health_services"
+  | "development_simulator";
+
+export type WearableConnectionStatus =
+  | "not_linked"
+  | "linked"
+  | "requires_consent"
+  | "waiting_for_native_data";
+
+export type HealthPredictionLevel = "normal" | "caution" | "high";
+
+export interface WearableConnection {
+  user_id?: number;
+  provider: WearableProvider;
+  linked: boolean;
+  permissionsGranted: boolean;
+  updatedAt: number | null;
+  lastSyncAt: number | null;
+}
+
+export interface WearableMetricSample {
+  id?: number;
+  user_id?: number;
+  provider: WearableProvider;
+  heartRateBpm: number | null;
+  steps: number | null;
+  activeEnergyKcal: number | null;
+  speedKmh: number | null;
+  oxygenSaturation: number | null;
+  recordedAt: number;
+  createdAt?: number;
+}
+
+export interface WearableHealthPrediction {
+  level: HealthPredictionLevel;
+  title: string;
+  message: string;
+  fatigue: FatigueLevel;
+}
+
+export interface WearableRuntimeStatus {
+  connection: WearableConnection;
+  status: WearableConnectionStatus;
+  latestSample: WearableMetricSample | null;
+  prediction: WearableHealthPrediction | null;
+  displayName: string;
+}
+
 export interface Session {
   id?: number;
   startedAt: number;

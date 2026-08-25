@@ -9,6 +9,11 @@ import { bluetoothSimulator } from "../../services/bluetoothSimulator";
 import { hasSensitiveDataConsent } from "../../services/privacyConsent";
 import { syncSessions } from "../../services/syncService";
 import { getSimulatedTrackingTick } from "../../services/trackingService";
+import {
+  getLatestWearableMetricSample,
+  getWearableConnection,
+  syncNativeWearableSample,
+} from "../../services/wearableMetrics";
 import { FatigueLevel } from "../../types";
 import { startWatch, stopWatch } from "../../watch/WatchService";
 
@@ -25,6 +30,18 @@ export const useTracking = () => {
   const sessionIdRef = useRef<number | null>(null);
   const lastMovementRef = useRef(Date.now());
   const fatigueSamplesRef = useRef<number[]>([]);
+  const elapsedSecondsRef = useRef(0);
+  const speedKmhRef = useRef(0);
+  const lastNativeSampleRecordedAtRef = useRef(0);
+  const useSimulatorWatchRef = useRef(true);
+
+  useEffect(() => {
+    elapsedSecondsRef.current = elapsedSeconds;
+  }, [elapsedSeconds]);
+
+  useEffect(() => {
+    speedKmhRef.current = speedKmh;
+  }, [speedKmh]);
 
   useEffect(() => {
     const unsubscribe = bluetoothSimulator.subscribe(async (data) => {
@@ -71,6 +88,52 @@ export const useTracking = () => {
     return () => clearInterval(interval);
   }, [isActive]);
 
+  useEffect(() => {
+    if (!isActive || useSimulatorWatchRef.current) return;
+
+    let cancelled = false;
+
+    const syncNativeHeartRate = async () => {
+      const synced = await syncNativeWearableSample().catch(() => false);
+      if (!synced || cancelled) return;
+
+      const sample = await getLatestWearableMetricSample().catch(() => null);
+      if (
+        !sample?.heartRateBpm ||
+        sample.recordedAt <= lastNativeSampleRecordedAtRef.current
+      ) {
+        return;
+      }
+
+      lastNativeSampleRecordedAtRef.current = sample.recordedAt;
+      setHr(sample.heartRateBpm);
+
+      if (!sessionIdRef.current) return;
+
+      const currentFatigue = calculateFatigue(
+        sample.heartRateBpm,
+        sample.speedKmh ?? speedKmhRef.current,
+        elapsedSecondsRef.current / 60
+      );
+
+      fatigueSamplesRef.current.push(fatigueToScore(currentFatigue));
+      setFatigue(currentFatigue);
+      await saveHeartRateLog(
+        sample.heartRateBpm,
+        sample.recordedAt,
+        sessionIdRef.current
+      );
+    };
+
+    syncNativeHeartRate();
+    const interval = setInterval(syncNativeHeartRate, 12_000);
+
+    return () => {
+      cancelled = true;
+      clearInterval(interval);
+    };
+  }, [isActive]);
+
   const startSession = async () => {
     const canUseSensitiveData = await hasSensitiveDataConsent();
 
@@ -90,15 +153,27 @@ export const useTracking = () => {
     setSpeedKmh(0);
     setInactiveTooLong(false);
     setNeedsSensitiveDataConsent(false);
+    lastNativeSampleRecordedAtRef.current = 0;
+
+    const wearableConnection = await getWearableConnection().catch(() => null);
+    useSimulatorWatchRef.current =
+      !wearableConnection?.linked ||
+      wearableConnection.provider === "development_simulator";
+
     setIsActive(true);
-    startWatch();
+
+    if (useSimulatorWatchRef.current) {
+      startWatch();
+    }
     return true;
   };
 
   const stopSession = async () => {
     if (!sessionIdRef.current) return;
 
-    stopWatch();
+    if (useSimulatorWatchRef.current) {
+      stopWatch();
+    }
     setIsActive(false);
 
     const scores = fatigueSamplesRef.current;

@@ -3,7 +3,6 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
   ActivityIndicator,
   Image,
-  DimensionValue,
   LayoutChangeEvent,
   PanResponder,
   Pressable,
@@ -23,6 +22,10 @@ import {
 } from "../../services/mapTileCache";
 import { useDeviceLocation } from "../hooks/useDeviceLocation";
 import { colors } from "./MiSenderoUI";
+import {
+  Terrain3DScene,
+  getTerrainElevationGainMeters,
+} from "./Terrain3DScene";
 
 type MapLayer = "standard" | "terrain" | "satellite";
 
@@ -56,7 +59,6 @@ const TILE_SIZE = 256;
 const DEFAULT_ZOOM = 13;
 const DEFAULT_CENTER: Coordinate = [-41.1734, -71.4752];
 const MIN_ZOOM = 10;
-const MAX_TERRAIN_POINTS = 42;
 const MAX_ZOOM_BY_LAYER: Record<MapLayer, number> = {
   standard: 18,
   terrain: 17,
@@ -74,18 +76,6 @@ const getTouchDistance = (touches: readonly MapTouch[]) => {
   const dy = firstTouch.pageY - secondTouch.pageY;
 
   return Math.sqrt(dx * dx + dy * dy);
-};
-
-const getSampledRoutePoints = (points: Coordinate[], maxPoints: number) => {
-  if (points.length <= maxPoints) return points;
-
-  const lastIndex = points.length - 1;
-
-  return Array.from({ length: maxPoints }, (_, index) => {
-    const sourceIndex = Math.round((index / (maxPoints - 1)) * lastIndex);
-
-    return points[sourceIndex];
-  });
 };
 
 const project = ([latitude, longitude]: Coordinate, zoom: number) => {
@@ -114,35 +104,6 @@ const unproject = ({ x, y }: { x: number; y: number }, zoom: number): Coordinate
 const wrapTileX = (x: number, zoom: number) => {
   const max = 2 ** zoom;
   return ((x % max) + max) % max;
-};
-
-const getDifficultyFactor = (difficulty: string | null | undefined) => {
-  const normalized = (difficulty || "").toLowerCase();
-
-  if (normalized.includes("dificil") || normalized.includes("alta")) return 1;
-  if (normalized.includes("media") || normalized.includes("moderada")) return 0.68;
-  return 0.42;
-};
-
-const getRouteDistanceKm = (points: Coordinate[]) => {
-  if (points.length < 2) return 0;
-
-  const toRad = (value: number) => (value * Math.PI) / 180;
-  const earthRadiusKm = 6371;
-
-  return points.slice(0, -1).reduce((total, point, index) => {
-    const nextPoint = points[index + 1];
-    const dLat = toRad(nextPoint[0] - point[0]);
-    const dLng = toRad(nextPoint[1] - point[1]);
-    const lat1 = toRad(point[0]);
-    const lat2 = toRad(nextPoint[0]);
-    const a =
-      Math.sin(dLat / 2) ** 2 +
-      Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLng / 2) ** 2;
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
-    return total + earthRadiusKm * c;
-  }, 0);
 };
 
 const getFittedView = (
@@ -546,87 +507,15 @@ export function TrailMap({
     };
   }, [tileSignature]);
 
-  const terrainState = useMemo(() => {
-    if (!layout.width || !layout.height) {
-      return {
-        points: [],
-        bands: [],
-        userPoint: null,
-        distanceKm: 0,
-        elevationGain: 0,
-      };
-    }
-
-    const rawSourcePoints = routePoints.length > 1 ? routePoints : [trailCenter, trailCenter];
-    const sourcePoints = getSampledRoutePoints(rawSourcePoints, MAX_TERRAIN_POINTS);
-    const projectedPoints = sourcePoints.map((point) => project(point, DEFAULT_ZOOM));
-    const xs = projectedPoints.map((point) => point.x);
-    const ys = projectedPoints.map((point) => point.y);
-    const minX = Math.min(...xs);
-    const maxX = Math.max(...xs);
-    const minY = Math.min(...ys);
-    const maxY = Math.max(...ys);
-    const mapWidth = Math.max(1, maxX - minX);
-    const mapHeight = Math.max(1, maxY - minY);
-    const sceneWidth = layout.width;
-    const sceneHeight = layout.height;
-    const paddingX = sceneWidth * 0.16;
-    const paddingY = sceneHeight * 0.24;
-    const fitScale = Math.min(
-      (sceneWidth - paddingX * 2) / mapWidth,
-      (sceneHeight - paddingY * 2) / mapHeight
-    );
-    const offsetX = (sceneWidth - mapWidth * fitScale) / 2;
-    const offsetY = (sceneHeight - mapHeight * fitScale) / 2;
-    const difficultyFactor = getDifficultyFactor(trail?.difficulty);
-    const distanceKm = trail?.distance_km || getRouteDistanceKm(rawSourcePoints);
-    const elevationGain = Math.round(
-      Math.max(60, distanceKm * (80 + difficultyFactor * 95))
-    );
-
-    const points = projectedPoints.map((point, index) => {
-      const progress =
-        projectedPoints.length <= 1 ? 0 : index / (projectedPoints.length - 1);
-      const wave = Math.sin(progress * Math.PI * 2.4) * 18;
-      const localPeak = Math.sin(progress * Math.PI) * 58 * difficultyFactor;
-      const secondaryPeak = Math.max(0, Math.sin((progress - 0.18) * Math.PI * 2)) * 28;
-      const climb = progress * elevationGain * 0.045 * difficultyFactor;
-      const z = Math.max(18, 34 + localPeak + secondaryPeak + climb);
-
-      return {
-        x: offsetX + (point.x - minX) * fitScale,
-        y: offsetY + (point.y - minY) * fitScale - wave - z,
-        baseY: offsetY + (point.y - minY) * fitScale + 18,
-        z,
-      };
-    });
-    const userPoint = location
-      ? {
-          x: offsetX + (project(location.coordinate, DEFAULT_ZOOM).x - minX) * fitScale,
-          y: offsetY + (project(location.coordinate, DEFAULT_ZOOM).y - minY) * fitScale,
-        }
-      : null;
-
-    const bands = Array.from({ length: 9 }, (_, index) => ({
-      key: `terrain-band-${index}`,
-      top: `${index * 11}%` as DimensionValue,
-      opacity: 0.7 - index * 0.025,
-      color:
-        index < 3
-          ? "#D5E8BE"
-          : index < 6
-            ? "#A9D39B"
-            : "#6FAC77",
-    }));
-
-    return {
-      points,
-      bands,
-      userPoint,
-      distanceKm,
-      elevationGain,
-    };
-  }, [layout.height, layout.width, location, routePoints, trail?.difficulty, trail?.distance_km, trailCenter[0], trailCenter[1]]);
+  const terrainElevationGain = useMemo(
+    () =>
+      getTerrainElevationGainMeters(
+        routePoints,
+        trail?.difficulty,
+        trail?.distance_km
+      ),
+    [routePoints, trail?.difficulty, trail?.distance_km]
+  );
 
   const onLayout = (event: LayoutChangeEvent) => {
     const { width, height } = event.nativeEvent.layout;
@@ -647,172 +536,22 @@ export function TrailMap({
     >
       {isPerspective ? (
         <View style={styles.terrain3dScene}>
-          <View style={styles.terrainSky} />
-          <View style={styles.mountainFar} />
-          <View style={styles.mountainNear} />
-          <View style={styles.terrainHorizon} />
-          <View style={styles.terrainPlane}>
-            <View
-              style={[
-                styles.terrainMovableContent,
-                {
-                  transform: [
-                    { translateX: terrainOffset.x + panOffset.x },
-                    { translateY: terrainOffset.y + panOffset.y },
-                    { scale: terrainScale },
-                  ],
-                },
-              ]}
-            >
-              {terrainState.bands.map((band) => (
-                <View
-                  key={band.key}
-                  style={[
-                    styles.terrainBand,
-                    {
-                      backgroundColor: band.color,
-                      opacity: band.opacity,
-                      top: band.top,
-                    },
-                  ]}
-                />
-              ))}
-
-              <View style={styles.terrainRidgeBack} />
-              <View style={styles.terrainRidgeFront} />
-
-              {terrainState.points.map((point, index) => (
-                <View
-                  key={`terrain-pillar-${index}`}
-                  style={[
-                    styles.terrainPillar,
-                    {
-                      height: Math.max(18, point.baseY - point.y),
-                      left: point.x - 5,
-                      top: point.y + 8,
-                    },
-                  ]}
-                />
-              ))}
-
-              {terrainState.points.slice(0, -1).map((point, index) => {
-                const nextPoint = terrainState.points[index + 1];
-                const dx = nextPoint.x - point.x;
-                const dy = nextPoint.y - point.y;
-                const length = Math.sqrt(dx * dx + dy * dy);
-                const angle = `${Math.atan2(dy, dx)}rad`;
-
-                return (
-                  <View
-                    key={`terrain-route-shadow-${index}`}
-                    style={[
-                      styles.terrainRouteShadow,
-                      {
-                        left: point.x + 5,
-                        top: Math.max(point.baseY, nextPoint.baseY) + 4,
-                        width: length,
-                        transform: [{ rotate: angle }],
-                      },
-                    ]}
-                  />
-                );
-              })}
-
-              {terrainState.points.slice(0, -1).map((point, index) => {
-                const nextPoint = terrainState.points[index + 1];
-                const dx = nextPoint.x - point.x;
-                const dy = nextPoint.y - point.y;
-                const length = Math.sqrt(dx * dx + dy * dy);
-                const angle = `${Math.atan2(dy, dx)}rad`;
-
-                return (
-                  <View
-                    key={`terrain-route-wall-${index}`}
-                    style={[
-                      styles.terrainRouteWall,
-                      {
-                        height: Math.max(18, (point.z + nextPoint.z) / 2),
-                        left: point.x,
-                        top: point.y + 5,
-                        width: length,
-                        transform: [{ rotate: angle }],
-                      },
-                    ]}
-                  />
-                );
-              })}
-
-              {terrainState.points.slice(0, -1).map((point, index) => {
-                const nextPoint = terrainState.points[index + 1];
-                const dx = nextPoint.x - point.x;
-                const dy = nextPoint.y - point.y;
-                const length = Math.sqrt(dx * dx + dy * dy);
-                const angle = `${Math.atan2(dy, dx)}rad`;
-
-                return (
-                  <View
-                    key={`terrain-route-${index}`}
-                    style={[
-                      styles.terrainRouteSegment,
-                      {
-                        left: point.x,
-                        top: point.y,
-                        width: length,
-                        transform: [{ rotate: angle }],
-                      },
-                    ]}
-                  />
-                );
-              })}
-
-              {terrainState.points[0] ? (
-                <View
-                  style={[
-                    styles.terrainMarker,
-                    styles.startMarker,
-                    {
-                      left: terrainState.points[0].x - 16,
-                      top: terrainState.points[0].y - 16,
-                    },
-                  ]}
-                >
-                  <Ionicons name="flag-outline" size={15} color={colors.white} />
-                </View>
-              ) : null}
-
-              {terrainState.points.length > 1 ? (
-                <View
-                  style={[
-                    styles.terrainMarker,
-                    styles.endMarker,
-                    {
-                      left: terrainState.points[terrainState.points.length - 1].x - 16,
-                      top: terrainState.points[terrainState.points.length - 1].y - 16,
-                    },
-                  ]}
-                >
-                  <Ionicons name="location" size={15} color={colors.white} />
-                </View>
-              ) : null}
-
-              {terrainState.userPoint ? (
-                <View
-                  style={[
-                    styles.terrainUserMarker,
-                    {
-                      left: terrainState.userPoint.x - 11,
-                      top: terrainState.userPoint.y - 11,
-                    },
-                  ]}
-                />
-              ) : null}
-            </View>
-          </View>
-
+          <Terrain3DScene
+            routePoints={routePoints}
+            fallbackCenter={trailCenter}
+            difficulty={trail?.difficulty}
+            distanceKm={trail?.distance_km}
+            userCoordinate={location?.coordinate ?? null}
+            viewOffset={{
+              x: terrainOffset.x + panOffset.x,
+              y: terrainOffset.y + panOffset.y,
+            }}
+            viewScale={terrainScale}
+          />
           <View style={styles.terrainInfo}>
             <Text style={styles.terrainInfoTitle}>Vista 3D del terreno</Text>
             <Text style={styles.terrainInfoText}>
-              {terrainState.elevationGain} m desnivel aprox. - {trail?.difficulty || "Dificultad a confirmar"}
+              {terrainElevationGain} m desnivel aprox. - {trail?.difficulty || "Dificultad a confirmar"}
             </Text>
           </View>
         </View>
@@ -1127,156 +866,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#CFE6F1",
     flex: 1,
     overflow: "hidden",
-  },
-  terrainSky: {
-    backgroundColor: "#B8D9E8",
-    height: "45%",
-    left: 0,
-    opacity: 0.95,
-    position: "absolute",
-    right: 0,
-    top: 0,
-  },
-  mountainFar: {
-    backgroundColor: "#D6E6C7",
-    height: "28%",
-    left: "-18%",
-    position: "absolute",
-    right: "-18%",
-    top: "25%",
-    transform: [{ rotate: "-5deg" }, { skewX: "-18deg" }],
-  },
-  mountainNear: {
-    backgroundColor: "#BED8A5",
-    height: "22%",
-    left: "-16%",
-    opacity: 0.92,
-    position: "absolute",
-    right: "-20%",
-    top: "35%",
-    transform: [{ rotate: "7deg" }, { skewX: "24deg" }],
-  },
-  terrainHorizon: {
-    backgroundColor: "#EEF5DF",
-    borderTopColor: "rgba(255,255,255,0.72)",
-    borderTopWidth: 2,
-    height: "14%",
-    left: "-8%",
-    position: "absolute",
-    right: "-8%",
-    top: "43%",
-    transform: [{ rotate: "-2deg" }],
-  },
-  terrainPlane: {
-    backgroundColor: "#78B97B",
-    borderTopColor: "rgba(255,255,255,0.56)",
-    borderTopWidth: 2,
-    bottom: "-10%",
-    height: "68%",
-    left: "-20%",
-    overflow: "hidden",
-    position: "absolute",
-    right: "-20%",
-    shadowColor: "#174D31",
-    shadowOpacity: 0.25,
-    shadowRadius: 18,
-    transform: [{ perspective: 850 }, { rotateX: "42deg" }],
-  },
-  terrainMovableContent: {
-    bottom: 0,
-    left: 0,
-    position: "absolute",
-    right: 0,
-    top: 0,
-  },
-  terrainBand: {
-    borderTopColor: "rgba(255,255,255,0.26)",
-    borderTopWidth: 1,
-    height: "13%",
-    left: "-5%",
-    position: "absolute",
-    right: "-5%",
-    transform: [{ rotate: "-7deg" }],
-  },
-  terrainRidgeBack: {
-    backgroundColor: "rgba(42,112,70,0.16)",
-    borderRadius: 999,
-    height: "22%",
-    left: "-8%",
-    position: "absolute",
-    right: "20%",
-    top: "28%",
-    transform: [{ rotate: "-8deg" }],
-  },
-  terrainRidgeFront: {
-    backgroundColor: "rgba(14,78,48,0.18)",
-    borderRadius: 999,
-    bottom: "8%",
-    height: "24%",
-    left: "12%",
-    position: "absolute",
-    right: "-10%",
-    transform: [{ rotate: "-10deg" }],
-  },
-  terrainPillar: {
-    backgroundColor: "rgba(36,96,62,0.22)",
-    borderRadius: 999,
-    position: "absolute",
-    width: 10,
-    zIndex: 2,
-  },
-  terrainRouteShadow: {
-    backgroundColor: "rgba(23,70,43,0.24)",
-    borderRadius: 999,
-    height: 13,
-    position: "absolute",
-    transformOrigin: "left center",
-    zIndex: 1,
-  },
-  terrainRouteWall: {
-    backgroundColor: "rgba(168,59,50,0.34)",
-    borderBottomColor: "rgba(255,255,255,0.22)",
-    borderBottomWidth: 1,
-    position: "absolute",
-    transformOrigin: "left top",
-    zIndex: 3,
-  },
-  terrainRouteSegment: {
-    backgroundColor: colors.danger,
-    borderColor: colors.white,
-    borderRadius: 999,
-    borderWidth: 1,
-    height: 8,
-    position: "absolute",
-    transformOrigin: "left center",
-    zIndex: 4,
-  },
-  terrainMarker: {
-    alignItems: "center",
-    borderColor: colors.white,
-    borderRadius: 16,
-    borderWidth: 2,
-    height: 32,
-    justifyContent: "center",
-    position: "absolute",
-    shadowColor: "#000",
-    shadowOpacity: 0.22,
-    shadowRadius: 8,
-    width: 32,
-    zIndex: 7,
-  },
-  terrainUserMarker: {
-    backgroundColor: "#2376D9",
-    borderColor: colors.white,
-    borderRadius: 11,
-    borderWidth: 3,
-    height: 22,
-    position: "absolute",
-    shadowColor: "#000",
-    shadowOpacity: 0.22,
-    shadowRadius: 7,
-    width: 22,
-    zIndex: 8,
   },
   terrainInfo: {
     backgroundColor: "rgba(255,255,255,0.94)",

@@ -109,6 +109,9 @@ const runInitDB = async () => {
     CREATE INDEX IF NOT EXISTS idx_wearable_samples_user_recorded
     ON wearable_metric_samples (user_id, recorded_at DESC);
 
+    CREATE INDEX IF NOT EXISTS idx_wearable_samples_user_provider_recorded
+    ON wearable_metric_samples (user_id, provider, recorded_at DESC);
+
     CREATE TABLE IF NOT EXISTS offline_maps (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT NOT NULL,

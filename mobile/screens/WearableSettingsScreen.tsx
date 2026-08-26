@@ -10,7 +10,7 @@ import {
   linkNativeWearable,
   linkNativeWearableProvider,
   saveWearableConnection,
-  syncNativeWearableSample,
+  syncNativeWearableSampleWithStatus,
   unlinkWearableConnection,
 } from "../../services/wearableMetrics";
 import {
@@ -138,18 +138,9 @@ export default function WearableSettingsScreen() {
   };
 
   const syncNativeSample = async () => {
-    const synced = await syncNativeWearableSample();
+    const status = await syncNativeWearableSampleWithStatus();
 
-    setMessage(
-      synced
-        ? "Metricas sincronizadas desde el dispositivo."
-        : runtime?.connection.provider === "apple_healthkit"
-          ? "Salud esta vinculada, pero todavia no hay una lectura autorizada disponible."
-          : runtime?.connection.provider === "android_health_connect" ||
-              runtime?.connection.provider === "wear_os_health_services"
-            ? "Health Connect esta vinculado, pero todavia no hay lecturas disponibles del reloj."
-            : "El puente nativo todavia no esta disponible en esta build."
-    );
+    setMessage(getSyncStatusMessage(status, runtime));
     await load();
   };
 
@@ -317,6 +308,28 @@ function getStatusMessage(runtime: WearableRuntimeStatus | null) {
     return "La conexion esta autorizada. Sincroniza una lectura disponible desde el reloj o la app de salud.";
   }
   return "Metricas disponibles localmente para predicciones sin conexion.";
+}
+
+function getSyncStatusMessage(
+  status: Awaited<ReturnType<typeof syncNativeWearableSampleWithStatus>>,
+  runtime: WearableRuntimeStatus | null
+) {
+  if (status === "saved") return "Metricas sincronizadas desde el dispositivo.";
+  if (status === "duplicate") return "No hay lecturas nuevas para guardar.";
+  if (status === "permission_denied") {
+    return "Falta permiso de frecuencia cardiaca. Revisa los permisos de Salud o Health Connect.";
+  }
+  if (status === "not_linked") return "Primero vincula un reloj o app de salud.";
+  if (status === "unavailable") {
+    return runtime?.connection.provider === "apple_healthkit"
+      ? "No se pudo abrir Salud de Apple. Usa una development build de iOS en un iPhone compatible."
+      : "El puente nativo todavia no esta disponible en esta build.";
+  }
+
+  return runtime?.connection.provider === "android_health_connect" ||
+    runtime?.connection.provider === "wear_os_health_services"
+    ? "Health Connect esta vinculado, pero todavia no hay lecturas nuevas del reloj."
+    : "Salud esta vinculada, pero todavia no hay una lectura autorizada disponible.";
 }
 
 function formatDate(timestamp: number) {

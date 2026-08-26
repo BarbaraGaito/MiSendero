@@ -8,7 +8,10 @@ import {
   WearableRuntimeStatus,
 } from "../types";
 import { getAuthSession } from "./authSession";
-import { getNativeWearableBridge } from "./nativeWearableBridge";
+import {
+  NativeWearableReadOptions,
+  getNativeWearableBridge,
+} from "./nativeWearableBridge";
 import { getPrivacyPreferences } from "./privacyConsent";
 
 const db = SQLite.openDatabaseSync("trekking.db");
@@ -24,7 +27,7 @@ const defaultConnection: WearableConnection = {
 const providerNames: Record<WearableProvider, string> = {
   apple_healthkit: "Apple Watch / Salud",
   android_health_connect: "Android / Health Connect",
-  wear_os_health_services: "Wear OS / Health Services",
+  wear_os_health_services: "Wear OS / Health Connect",
   development_simulator: "Simulador de desarrollo",
 };
 
@@ -32,6 +35,14 @@ const androidNativeProviders: WearableProvider[] = [
   "android_health_connect",
   "wear_os_health_services",
 ];
+
+export type NativeWearableSyncStatus =
+  | "saved"
+  | "duplicate"
+  | "no_data"
+  | "unavailable"
+  | "not_linked"
+  | "permission_denied";
 
 const initWearableTables = async () => {
   await db.execAsync(`
@@ -59,6 +70,9 @@ const initWearableTables = async () => {
 
     CREATE INDEX IF NOT EXISTS idx_wearable_samples_user_recorded
     ON wearable_metric_samples (user_id, recorded_at DESC);
+
+    CREATE INDEX IF NOT EXISTS idx_wearable_samples_user_provider_recorded
+    ON wearable_metric_samples (user_id, provider, recorded_at DESC);
   `);
 };
 
@@ -196,6 +210,24 @@ export const saveWearableMetricSample = async (
   }
 
   const createdAt = Date.now();
+  const existing = await db.getFirstAsync<{ id: number }>(
+    `SELECT id
+     FROM wearable_metric_samples
+     WHERE user_id = ? AND provider = ? AND recorded_at = ?
+     LIMIT 1`,
+    [userId, sample.provider, sample.recordedAt]
+  );
+
+  if (existing) {
+    await db.runAsync(
+      `UPDATE wearable_connections
+       SET last_sync_at = MAX(COALESCE(last_sync_at, 0), ?),
+           updated_at = ?
+       WHERE user_id = ?`,
+      [sample.recordedAt, createdAt, userId]
+    );
+    return false;
+  }
 
   await db.runAsync(
     `INSERT INTO wearable_metric_samples (
@@ -230,6 +262,8 @@ export const saveWearableMetricSample = async (
      WHERE user_id = ?`,
     [sample.recordedAt, createdAt, userId]
   );
+
+  return true;
 };
 
 export const getLatestWearableMetricSample = async () => {
@@ -334,14 +368,16 @@ export const linkNativeWearableProvider = async (
   return true;
 };
 
-export const syncNativeWearableSample = async () => {
+export const syncNativeWearableSampleWithStatus = async (
+  options?: NativeWearableReadOptions
+): Promise<NativeWearableSyncStatus> => {
   const bridge = getNativeWearableBridge();
   const isAvailable = await bridge.isAvailable();
 
-  if (!isAvailable) return false;
+  if (!isAvailable) return "unavailable";
 
   const connection = await getWearableConnection();
-  if (!connection.linked) return false;
+  if (!connection.linked) return "not_linked";
 
   const provider =
     androidNativeProviders.includes(connection.provider) &&
@@ -352,18 +388,24 @@ export const syncNativeWearableSample = async () => {
     connection.provider === provider && connection.permissionsGranted
       ? true
       : await bridge.requestPermissions();
-  if (!permissionsGranted) return false;
+  if (!permissionsGranted) return "permission_denied";
 
-  const sample = await bridge.readLatestSample();
+  const sample = await bridge.readLatestSample(options);
 
   await saveWearableConnection(provider, true, true);
-  if (!sample) return false;
+  if (!sample) return "no_data";
 
-  await saveWearableMetricSample({
+  const saved = await saveWearableMetricSample({
     ...sample,
     provider,
   });
-  return true;
+  return saved ? "saved" : "duplicate";
+};
+
+export const syncNativeWearableSample = async (
+  options?: NativeWearableReadOptions
+) => {
+  return (await syncNativeWearableSampleWithStatus(options)) === "saved";
 };
 
 export const predictWearableHealth = (

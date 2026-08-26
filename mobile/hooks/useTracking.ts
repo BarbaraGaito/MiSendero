@@ -17,7 +17,7 @@ import { getTestingLocationMode } from "../../services/testingMode";
 import {
   getLatestWearableMetricSample,
   getWearableConnection,
-  syncNativeWearableSample,
+  syncNativeWearableSampleWithStatus,
 } from "../../services/wearableMetrics";
 import { FatigueLevel } from "../../types";
 import { startWatch, stopWatch } from "../../watch/WatchService";
@@ -25,6 +25,8 @@ import { startWatch, stopWatch } from "../../watch/WatchService";
 // GPS jitter produces small non-zero deltas even standing still; movements below
 // this threshold are treated as noise rather than real displacement.
 const GPS_NOISE_FLOOR_METERS = 2;
+const NATIVE_HARD_FAILURES_BEFORE_SIMULATOR = 2;
+const NATIVE_NO_DATA_FAILURES_BEFORE_SIMULATOR = 5;
 
 export const useTracking = () => {
   const [hr, setHr] = useState(0);
@@ -42,6 +44,8 @@ export const useTracking = () => {
   const elapsedSecondsRef = useRef(0);
   const speedKmhRef = useRef(0);
   const lastNativeSampleRecordedAtRef = useRef(0);
+  const nativeSyncMissesRef = useRef(0);
+  const sessionStartedAtRef = useRef(0);
   const useSimulatorWatchRef = useRef(true);
   const useSimulatedMovementRef = useRef(true);
   const lastGpsLocationRef = useRef<DeviceLocation | null>(null);
@@ -62,8 +66,8 @@ export const useTracking = () => {
 
       const currentFatigue = calculateFatigue(
         data.hr,
-        speedKmh,
-        elapsedSeconds / 60
+        speedKmhRef.current,
+        elapsedSecondsRef.current / 60
       );
 
       fatigueSamplesRef.current.push(fatigueToScore(currentFatigue));
@@ -72,7 +76,7 @@ export const useTracking = () => {
     });
 
     return unsubscribe;
-  }, [elapsedSeconds, speedKmh]);
+  }, []);
 
   useEffect(() => {
     if (!isActive) return;
@@ -148,10 +152,41 @@ export const useTracking = () => {
     if (!isActive || useSimulatorWatchRef.current) return;
 
     let cancelled = false;
+    let interval: ReturnType<typeof setInterval> | null = null;
+
+    const startSimulatorFallback = () => {
+      if (cancelled || useSimulatorWatchRef.current) return;
+
+      useSimulatorWatchRef.current = true;
+      startWatch();
+      if (interval) clearInterval(interval);
+    };
 
     const syncNativeHeartRate = async () => {
-      const synced = await syncNativeWearableSample().catch(() => false);
-      if (!synced || cancelled) return;
+      const status = await syncNativeWearableSampleWithStatus({
+        startAt: sessionStartedAtRef.current,
+        requireHeartRate: true,
+      }).catch(() => "unavailable" as const);
+      if (cancelled) return;
+
+      if (status !== "saved" && status !== "duplicate") {
+        nativeSyncMissesRef.current += 1;
+
+        const shouldFallbackImmediately =
+          status === "unavailable" ||
+          status === "permission_denied" ||
+          status === "not_linked";
+        const failureLimit = shouldFallbackImmediately
+          ? NATIVE_HARD_FAILURES_BEFORE_SIMULATOR
+          : NATIVE_NO_DATA_FAILURES_BEFORE_SIMULATOR;
+
+        if (nativeSyncMissesRef.current >= failureLimit) {
+          startSimulatorFallback();
+        }
+        return;
+      }
+
+      nativeSyncMissesRef.current = 0;
 
       const sample = await getLatestWearableMetricSample().catch(() => null);
       if (
@@ -182,11 +217,11 @@ export const useTracking = () => {
     };
 
     syncNativeHeartRate();
-    const interval = setInterval(syncNativeHeartRate, 12_000);
+    interval = setInterval(syncNativeHeartRate, 12_000);
 
     return () => {
       cancelled = true;
-      clearInterval(interval);
+      if (interval) clearInterval(interval);
     };
   }, [isActive]);
 
@@ -199,6 +234,7 @@ export const useTracking = () => {
     }
 
     const startedAt = Date.now();
+    sessionStartedAtRef.current = startedAt;
     sessionIdRef.current = await createSession(startedAt);
     fatigueSamplesRef.current = [];
     lastMovementRef.current = startedAt;
@@ -210,6 +246,7 @@ export const useTracking = () => {
     setInactiveTooLong(false);
     setNeedsSensitiveDataConsent(false);
     lastNativeSampleRecordedAtRef.current = 0;
+    nativeSyncMissesRef.current = 0;
     lastGpsLocationRef.current = null;
 
     const [testingLocationMode, session] = await Promise.all([

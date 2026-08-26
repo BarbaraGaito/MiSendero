@@ -5,6 +5,12 @@ type HealthKitModule = typeof import("@kingstinct/react-native-healthkit");
 type HealthConnectModule = typeof import("react-native-health-connect");
 type HealthConnectRecordType = Parameters<HealthConnectModule["readRecords"]>[0];
 
+export interface NativeWearableReadOptions {
+  startAt?: number;
+  endAt?: number;
+  requireHeartRate?: boolean;
+}
+
 const healthKitReadTypes = [
   "HKQuantityTypeIdentifierHeartRate",
   "HKQuantityTypeIdentifierStepCount",
@@ -239,15 +245,12 @@ const androidHealthConnectBridge: NativeWearableBridge = {
         ...healthConnectReadPermissions,
       ]);
 
-      return (
-        hasHealthConnectPermission(granted, "HeartRate") ||
-        hasHealthConnectPermission(granted, "Steps")
-      );
+      return hasHealthConnectPermission(granted, "HeartRate");
     } catch {
       return false;
     }
   },
-  async readLatestSample() {
+  async readLatestSample(options) {
     const healthConnect = getHealthConnect();
     if (!healthConnect) return null;
 
@@ -258,8 +261,10 @@ const androidHealthConnectBridge: NativeWearableBridge = {
       return null;
     }
 
-    const endTime = new Date();
-    const startTime = new Date(endTime.getTime() - 6 * 60 * 60 * 1000);
+    const endTime = new Date(options?.endAt ?? Date.now());
+    const startTime = new Date(
+      options?.startAt ?? endTime.getTime() - 6 * 60 * 60 * 1000
+    );
     const [heartRate, steps, activeEnergy, speed, oxygenSaturation] =
       await Promise.all([
         readHealthConnectRecordsSafely(
@@ -328,6 +333,10 @@ const androidHealthConnectBridge: NativeWearableBridge = {
       0
     );
 
+    if (options?.requireHeartRate && !latestHeartRate) {
+      return null;
+    }
+
     if (
       !latestHeartRate &&
       totalSteps === 0 &&
@@ -361,7 +370,7 @@ export interface NativeWearableBridge {
   provider: WearableProvider;
   isAvailable(): Promise<boolean>;
   requestPermissions(): Promise<boolean>;
-  readLatestSample(): Promise<
+  readLatestSample(options?: NativeWearableReadOptions): Promise<
     Omit<WearableMetricSample, "id" | "user_id" | "createdAt"> | null
   >;
 }

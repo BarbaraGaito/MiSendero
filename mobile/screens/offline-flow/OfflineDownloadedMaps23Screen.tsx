@@ -7,7 +7,12 @@ import {
   PrimaryButton,
   ScreenTitle,
 } from "../../components/MiSenderoUI";
-import { getOfflineMaps, OfflineMap } from "../../../services/offlineMaps";
+import {
+  deleteOfflineMap,
+  getOfflineMaps,
+  getVerifiedOfflineMapByTrailId,
+  OfflineMap,
+} from "../../../services/offlineMaps";
 import { DownloadedMapCard, styles } from "./OfflineFlowShared";
 
 const formatDate = (timestamp: number) =>
@@ -22,6 +27,7 @@ const formatStorage = (sizeMb: number) =>
 export default function OfflineDownloadedMaps23Screen() {
   const [maps, setMaps] = useState<OfflineMap[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [deletingMapId, setDeletingMapId] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const loadMaps = useCallback(async () => {
@@ -46,6 +52,20 @@ export default function OfflineDownloadedMaps23Screen() {
   );
 
   const totalSize = maps.reduce((total, map) => total + map.sizeMb, 0);
+
+  const removeMap = async (mapId: number) => {
+    if (deletingMapId) return;
+
+    setDeletingMapId(mapId);
+    try {
+      await deleteOfflineMap(mapId);
+      await loadMaps();
+    } catch (deleteError) {
+      setError("No pudimos eliminar ese mapa offline.");
+    } finally {
+      setDeletingMapId(null);
+    }
+  };
 
   return (
     <AppScreen activeTab="perfil">
@@ -72,22 +92,39 @@ export default function OfflineDownloadedMaps23Screen() {
             </Text>
           </Card>
         ) : (
-          maps.map((map) => (
-            <DownloadedMapCard
-              key={map.id}
-              title={map.name}
-              meta={`${map.status} - ${formatStorage(map.sizeMb)} - ${formatDate(map.updatedAt)}`}
-              action="Abrir"
-              onPress={() => {
-                if (!map.trail) return;
+          maps.map((map) => {
+            const isReady = isOfflineMapReady(map);
 
-                router.push({
-                  pathname: "/route-map",
-                  params: { id: String(map.trail.id) },
-                });
-              }}
-            />
-          ))
+            return (
+              <DownloadedMapCard
+                key={map.id}
+                title={map.name}
+                meta={`${formatMapStatus(map)} - ${formatStorage(map.sizeMb)} - ${formatDate(map.updatedAt)}`}
+                action={isReady ? "Abrir" : "Reintentar"}
+                secondaryAction={deletingMapId === map.id ? "Eliminando" : "Eliminar"}
+                tone={isReady ? undefined : "danger"}
+                onPress={async () => {
+                  if (!map.trail) return;
+
+                  const verifiedMap = await getVerifiedOfflineMapByTrailId(map.trail.id);
+
+                  if (!verifiedMap) {
+                    router.push({
+                      pathname: "/offline-descarga",
+                      params: { id: String(map.trail.id) },
+                    });
+                    return;
+                  }
+
+                  router.push({
+                    pathname: "/route-map",
+                    params: { id: String(map.trail.id) },
+                  });
+                }}
+                onSecondaryPress={() => removeMap(map.id)}
+              />
+            );
+          })
         )}
       </ScrollView>
 
@@ -97,4 +134,17 @@ export default function OfflineDownloadedMaps23Screen() {
       </View>
     </AppScreen>
   );
+}
+
+function isOfflineMapReady(map: OfflineMap) {
+  return map.status === "disponible" && map.totalTiles > 0 && map.downloadedTiles >= map.totalTiles;
+}
+
+function formatMapStatus(map: OfflineMap) {
+  const tileStatus =
+    map.totalTiles > 0
+      ? `${map.downloadedTiles}/${map.totalTiles} tiles`
+      : "tiles sin verificar";
+
+  return `${map.status} - ${tileStatus}`;
 }

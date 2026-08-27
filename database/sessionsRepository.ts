@@ -1,6 +1,9 @@
 import { db } from "./database";
 import { FatigueLevel, SessionRow } from "../types";
 
+type SessionCompletionStatus = SessionRow["completion_status"];
+type EndedSessionCompletionStatus = Exclude<SessionCompletionStatus, "paused">;
+
 export interface SessionsSummary {
   totalDistance: number;
   completedCount: number;
@@ -20,11 +23,16 @@ export interface TrailReview {
   startedAt: number;
 }
 
+export interface CompletedSessionResult {
+  session: SessionRow;
+  didFinalizeNow: boolean;
+}
+
 export const createSession = async (startedAt: number, trailId?: number | null) => {
   const result = await db.runAsync(
-    `INSERT INTO sessions (started_at, duration, distance, avg_fatigue, trail_id)
-     VALUES (?, 0, 0, ?, ?)`,
-    [startedAt, "bajo", trailId ?? null]
+    `INSERT INTO sessions (started_at, duration, distance, avg_fatigue, trail_id, completion_status)
+     VALUES (?, 0, 0, ?, ?, ?)`,
+    [startedAt, "bajo", trailId ?? null, "paused"]
   );
 
   return result.lastInsertRowId;
@@ -56,9 +64,10 @@ export const finishSession = async (
          duration = ?,
          distance = ?,
          avg_fatigue = ?,
+         completion_status = ?,
          trail_id = COALESCE(?, trail_id)
      WHERE id = ?`,
-    [endedAt, duration, distance, avgFatigue, trailId ?? null, sessionId]
+    [endedAt, duration, distance, avgFatigue, "completed", trailId ?? null, sessionId]
   );
 };
 
@@ -68,13 +77,23 @@ export const getOrCreateCompletedSession = async ({
   endedAt,
   duration,
   distance,
+  completionStatus = "completed",
+  routeProgressMeters = null,
+  routeTotalMeters = null,
+  endedLatitude = null,
+  endedLongitude = null,
 }: {
   trailId: number;
   startedAt: number;
   endedAt: number;
   duration: number;
   distance: number;
-}): Promise<SessionRow> => {
+  completionStatus?: EndedSessionCompletionStatus;
+  routeProgressMeters?: number | null;
+  routeTotalMeters?: number | null;
+  endedLatitude?: number | null;
+  endedLongitude?: number | null;
+}): Promise<CompletedSessionResult> => {
   const existing = await db.getFirstAsync<SessionRow>(
     `SELECT * FROM sessions
      WHERE trail_id = ? AND started_at = ?
@@ -82,7 +101,53 @@ export const getOrCreateCompletedSession = async ({
     [trailId, startedAt]
   );
 
-  if (existing) return existing;
+  if (existing) {
+    const alreadyFinalized =
+      existing.ended_at !== null && existing.completion_status !== "paused";
+
+    if (alreadyFinalized) {
+      return { session: existing, didFinalizeNow: false };
+    }
+
+    await db.runAsync(
+      `UPDATE sessions
+       SET ended_at = ?,
+           duration = ?,
+           distance = ?,
+           avg_fatigue = COALESCE(avg_fatigue, ?),
+           trail_id = ?,
+           completion_status = ?,
+           route_progress_meters = ?,
+           route_total_meters = ?,
+           ended_latitude = ?,
+           ended_longitude = ?
+       WHERE id = ?`,
+      [
+        endedAt,
+        duration,
+        distance,
+        "bajo",
+        trailId,
+        completionStatus,
+        routeProgressMeters,
+        routeTotalMeters,
+        endedLatitude,
+        endedLongitude,
+        existing.id,
+      ]
+    );
+
+    const updated = await db.getFirstAsync<SessionRow>(
+      `SELECT * FROM sessions WHERE id = ?`,
+      [existing.id]
+    );
+
+    if (!updated) {
+      throw new Error("completed-session-not-found");
+    }
+
+    return { session: updated, didFinalizeNow: true };
+  }
 
   const result = await db.runAsync(
     `INSERT INTO sessions (
@@ -91,10 +156,27 @@ export const getOrCreateCompletedSession = async ({
        duration,
        distance,
        avg_fatigue,
-       trail_id
+       trail_id,
+       completion_status,
+       route_progress_meters,
+       route_total_meters,
+       ended_latitude,
+       ended_longitude
      )
-     VALUES (?, ?, ?, ?, ?, ?)`,
-    [startedAt, endedAt, duration, distance, "bajo", trailId]
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    [
+      startedAt,
+      endedAt,
+      duration,
+      distance,
+      "bajo",
+      trailId,
+      completionStatus,
+      routeProgressMeters,
+      routeTotalMeters,
+      endedLatitude,
+      endedLongitude,
+    ]
   );
 
   const row = await db.getFirstAsync<SessionRow>(
@@ -106,7 +188,7 @@ export const getOrCreateCompletedSession = async ({
     throw new Error("completed-session-not-found");
   }
 
-  return row;
+  return { session: row, didFinalizeNow: true };
 };
 
 export const getOrCreatePausedSession = async ({
@@ -133,9 +215,10 @@ export const getOrCreatePausedSession = async ({
        SET ended_at = NULL,
            duration = ?,
            distance = ?,
+           completion_status = ?,
            trail_id = ?
        WHERE id = ?`,
-      [duration, distance, trailId, existing.id]
+      [duration, distance, "paused", trailId, existing.id]
     );
 
     return {
@@ -143,6 +226,7 @@ export const getOrCreatePausedSession = async ({
       ended_at: null,
       duration,
       distance,
+      completion_status: "paused",
       trail_id: trailId,
     };
   }
@@ -154,10 +238,11 @@ export const getOrCreatePausedSession = async ({
        duration,
        distance,
        avg_fatigue,
-       trail_id
+       trail_id,
+       completion_status
      )
-     VALUES (?, NULL, ?, ?, ?, ?)`,
-    [startedAt, duration, distance, "bajo", trailId]
+     VALUES (?, NULL, ?, ?, ?, ?, ?)`,
+    [startedAt, duration, distance, "bajo", trailId, "paused"]
   );
 
   const row = await db.getFirstAsync<SessionRow>(
@@ -293,7 +378,7 @@ export const getSessionsSummary = async (): Promise<SessionsSummary> => {
   }>(
     `SELECT
        COALESCE(SUM(CASE WHEN ended_at IS NOT NULL THEN distance ELSE 0 END), 0) AS total_distance,
-       SUM(CASE WHEN ended_at IS NOT NULL THEN 1 ELSE 0 END) AS completed_count,
+       SUM(CASE WHEN ended_at IS NOT NULL AND completion_status = 'completed' THEN 1 ELSE 0 END) AS completed_count,
        SUM(CASE WHEN ended_at IS NOT NULL AND started_at >= ? THEN 1 ELSE 0 END) AS current_month_count
      FROM sessions`,
     [monthStart.getTime()]

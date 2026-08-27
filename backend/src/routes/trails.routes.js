@@ -1,5 +1,9 @@
 const express = require("express");
-const db = require("../db");
+const { query } = require("../db");
+const { requireAuth, requireAdmin } = require("../middleware/requireAuth");
+const { validateBody } = require("../middleware/validate");
+const { createTrailSchema, createReportSchema } = require("../schemas/trails.schemas");
+const { REPORT_STALE_AFTER_DAYS } = require("../cleanupStaleReports");
 
 const router = express.Router();
 
@@ -22,7 +26,7 @@ const weatherLabels = {
   80: "Chaparrones leves",
   81: "Chaparrones",
   82: "Chaparrones intensos",
-  95: "Tormenta"
+  95: "Tormenta",
 };
 
 const getRiskLevel = (windKmh, rainProbability, condition) => {
@@ -80,7 +84,7 @@ const getFallbackWeather = (trail) => {
     rain_probability: rainProbability,
     risk_level: riskLevel,
     recommendation: getWeatherRecommendation(riskLevel),
-    source: "Estimacion local sin conexion al servicio meteorologico"
+    source: "Estimacion local sin conexion al servicio meteorologico",
   };
 };
 
@@ -103,196 +107,207 @@ const mapWeatherResponse = (trail, weatherData) => {
     rain_probability: rainProbability,
     risk_level: riskLevel,
     recommendation: getWeatherRecommendation(riskLevel),
-    source: "Open-Meteo"
+    source: "Open-Meteo",
   };
 };
 
-router.get("/", (req, res) => {
-  const trails = db
-    .prepare("SELECT * FROM trails ORDER BY created_at DESC")
-    .all();
-
-  res.json(trails);
+// route_coordinates is JSONB in Postgres (pg decodes it to a JS array automatically),
+// but the mobile client's parseRouteCoordinates() still expects the JSON-as-text
+// contract from ADR-04, so it gets re-serialized here at the API boundary.
+const serializeTrail = (trail) => ({
+  ...trail,
+  route_coordinates:
+    trail.route_coordinates != null ? JSON.stringify(trail.route_coordinates) : null,
 });
 
-router.get("/:id/weather", async (req, res) => {
-  const trail = db
-    .prepare("SELECT * FROM trails WHERE id = ?")
-    .get(req.params.id);
+const getTrailOr404 = async (id, res) => {
+  const { rows } = await query("SELECT * FROM trails WHERE id = $1", [id]);
+  const trail = rows[0];
 
   if (!trail) {
-    return res.status(404).json({ message: "Sendero no encontrado" });
+    res.status(404).json({ message: "Sendero no encontrado" });
+    return null;
   }
 
-  if (trail.center_lat === null || trail.center_lng === null) {
-    return res.json(getFallbackWeather(trail));
-  }
+  return trail;
+};
 
+router.get("/", async (req, res, next) => {
   try {
+    const { rows } = await query("SELECT * FROM trails ORDER BY created_at DESC");
+    res.json(rows.map(serializeTrail));
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get("/:id/weather", async (req, res, next) => {
+  try {
+    const trail = await getTrailOr404(req.params.id, res);
+    if (!trail) return;
+
+    if (trail.center_lat === null || trail.center_lng === null) {
+      return res.json(getFallbackWeather(trail));
+    }
+
     const params = new URLSearchParams({
       latitude: String(trail.center_lat),
       longitude: String(trail.center_lng),
       current: "temperature_2m,weather_code,wind_speed_10m",
       daily: "temperature_2m_max,temperature_2m_min,precipitation_probability_max",
       forecast_days: "1",
-      timezone: "auto"
+      timezone: "auto",
     });
-    const response = await fetch(`https://api.open-meteo.com/v1/forecast?${params.toString()}`);
 
-    if (!response.ok) {
-      return res.json(getFallbackWeather(trail));
+    try {
+      const response = await fetch(`https://api.open-meteo.com/v1/forecast?${params.toString()}`);
+
+      if (!response.ok) {
+        return res.json(getFallbackWeather(trail));
+      }
+
+      const weatherData = await response.json();
+      res.json(mapWeatherResponse(trail, weatherData));
+    } catch (fetchError) {
+      res.json(getFallbackWeather(trail));
     }
-
-    const weatherData = await response.json();
-    res.json(mapWeatherResponse(trail, weatherData));
   } catch (error) {
-    res.json(getFallbackWeather(trail));
+    next(error);
   }
 });
 
-router.get("/:id/reports", (req, res) => {
-  const reports = db
-    .prepare(
+router.get("/:id/reports", async (req, res, next) => {
+  try {
+    const { rows } = await query(
       `
-        SELECT *
-        FROM trail_reports
-        WHERE trail_id = ?
-        ORDER BY datetime(created_at) DESC
+        SELECT * FROM trail_reports
+        WHERE trail_id = $1
+          AND created_at > now() - ($2 || ' days')::interval
+        ORDER BY created_at DESC
         LIMIT 6
-      `
-    )
-    .all(req.params.id);
-
-  res.json(reports);
+      `,
+      [req.params.id, REPORT_STALE_AFTER_DAYS]
+    );
+    res.json(rows);
+  } catch (error) {
+    next(error);
+  }
 });
 
-router.post("/:id/reports", (req, res) => {
-  const trail = db
-    .prepare("SELECT id FROM trails WHERE id = ?")
-    .get(req.params.id);
+router.post(
+  "/:id/reports",
+  requireAuth,
+  validateBody(createReportSchema),
+  async (req, res, next) => {
+    try {
+      const trail = await getTrailOr404(req.params.id, res);
+      if (!trail) return;
 
-  if (!trail) {
-    return res.status(404).json({ message: "Sendero no encontrado" });
-  }
+      const {
+        issue_summary,
+        severity,
+        trail_state,
+        cause,
+        blocks_path,
+        details,
+        latitude,
+        longitude,
+        accuracy_meters,
+        route_progress_meters,
+      } = req.body;
 
-  const {
-    issue_summary,
-    severity,
-    trail_state,
-    cause,
-    blocks_path,
-    details
-  } = req.body;
+      const { rows: userRows } = await query("SELECT name FROM users WHERE id = $1", [
+        req.userId,
+      ]);
+      const reporterName = userRows[0]?.name || "Usuario MiSendero";
 
-  if (!issue_summary || !severity || !trail_state) {
-    return res.status(400).json({ message: "Faltan datos obligatorios del reporte" });
-  }
-
-  const result = db
-    .prepare(
-      `
-        INSERT INTO trail_reports (
-          trail_id,
+      const { rows } = await query(
+        `
+          INSERT INTO trail_reports (
+            trail_id, reporter_user_id, issue_summary, severity, trail_state,
+            cause, blocks_path, details, latitude, longitude, accuracy_meters,
+            route_progress_meters, reporter_name
+          )
+          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
+          RETURNING *
+        `,
+        [
+          trail.id,
+          req.userId,
           issue_summary,
           severity,
           trail_state,
-          cause,
-          blocks_path,
-          details,
-          reporter_name
-        )
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+          cause ?? null,
+          Boolean(blocks_path),
+          details ?? null,
+          latitude ?? null,
+          longitude ?? null,
+          accuracy_meters ?? null,
+          route_progress_meters ?? null,
+          reporterName,
+        ]
+      );
+
+      res.status(201).json(rows[0]);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.get("/:id", async (req, res, next) => {
+  try {
+    const trail = await getTrailOr404(req.params.id, res);
+    if (trail) res.json(serializeTrail(trail));
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post("/", requireAuth, requireAdmin, validateBody(createTrailSchema), async (req, res, next) => {
+  try {
+    const {
+      name,
+      location,
+      difficulty,
+      duration,
+      distance_km,
+      description,
+      image_url,
+      center_lat,
+      center_lng,
+      map_zoom,
+      route_coordinates,
+    } = req.body;
+
+    const { rows } = await query(
       `
-    )
-    .run(
-      trail.id,
-      String(issue_summary).trim(),
-      String(severity).trim(),
-      String(trail_state).trim(),
-      cause ? String(cause).trim() : null,
-      blocks_path ? 1 : 0,
-      details ? String(details).trim() : null,
-      "Usuario MiSendero"
-    );
-
-  const report = db
-    .prepare("SELECT * FROM trail_reports WHERE id = ?")
-    .get(result.lastInsertRowid);
-
-  res.status(201).json(report);
-});
-
-router.get("/:id", (req, res) => {
-  const trail = db
-    .prepare("SELECT * FROM trails WHERE id = ?")
-    .get(req.params.id);
-
-  if (!trail) {
-    return res.status(404).json({ message: "Sendero no encontrado" });
-  }
-
-  res.json(trail);
-});
-
-router.post("/", (req, res) => {
-  const {
-    name,
-    location,
-    difficulty,
-    duration,
-    distance_km,
-    description,
-    image_url,
-    center_lat,
-    center_lng,
-    map_zoom,
-    route_coordinates
-  } = req.body;
-
-  if (!name || !location || !difficulty) {
-    return res.status(400).json({ message: "Faltan datos obligatorios" });
-  }
-
-  const result = db
-    .prepare(`
-      INSERT INTO trails (
+        INSERT INTO trails (
+          name, location, difficulty, duration, distance_km, description,
+          image_url, center_lat, center_lng, map_zoom, route_coordinates
+        )
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
+        RETURNING *
+      `,
+      [
         name,
         location,
         difficulty,
-        duration,
-        distance_km,
-        description,
-        image_url,
-        center_lat,
-        center_lng,
-        map_zoom,
-        route_coordinates
-      )
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `)
-    .run(
-      name.trim(),
-      location.trim(),
-      difficulty.trim(),
-      duration ?? null,
-      distance_km ?? null,
-      description ?? null,
-      image_url ?? null,
-      center_lat ?? null,
-      center_lng ?? null,
-      map_zoom ?? null,
-      route_coordinates
-        ? typeof route_coordinates === "string"
-          ? route_coordinates
-          : JSON.stringify(route_coordinates)
-        : null
+        duration ?? null,
+        distance_km ?? null,
+        description ?? null,
+        image_url ?? null,
+        center_lat ?? null,
+        center_lng ?? null,
+        map_zoom ?? null,
+        route_coordinates ? JSON.stringify(route_coordinates) : null,
+      ]
     );
 
-  const trail = db
-    .prepare("SELECT * FROM trails WHERE id = ?")
-    .get(result.lastInsertRowid);
-
-  res.status(201).json(trail);
+    res.status(201).json(serializeTrail(rows[0]));
+  } catch (error) {
+    next(error);
+  }
 });
 
 module.exports = router;

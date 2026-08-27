@@ -1,0 +1,43 @@
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: misendero
+      POSTGRES_PASSWORD: misendero
+      POSTGRES_DB: misendero
+    ports:
+      - "5432:5432"
+    volumes:
+      - misendero_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U misendero -d misendero"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build:
+      context: ./backend
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PORT: 3001
+      DATABASE_URL: postgres://misendero:misendero@db:5432/misendero
+      JWT_SECRET: ${JWT_SECRET:-dev_only_change_me_please_48_chars_minimum_secret}
+      CORS_ORIGIN: ${CORS_ORIGIN:-http://localhost:8081,http://localhost:19006,http://localhost:3001}
+      REPORT_STALE_AFTER_DAYS: ${REPORT_STALE_AFTER_DAYS:-30}
+      LOG_LEVEL: ${LOG_LEVEL:-info}
+    ports:
+      - "3001:3001"
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "node -e \"fetch('http://localhost:3001/api/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))\""]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+
+volumes:
+  misendero_postgres_data:

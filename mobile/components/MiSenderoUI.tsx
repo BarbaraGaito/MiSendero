@@ -2,6 +2,7 @@ import React from "react";
 import { router } from "expo-router";
 
 import {
+  ActivityIndicator,
   ImageBackground,
   Pressable,
   StyleSheet,
@@ -153,7 +154,16 @@ export function TopBar({
   return (
     <View style={styles.topBar}>
       {onBack ? (
-        <Pressable onPress={onBack} style={styles.iconButton}>
+        <Pressable
+          accessibilityLabel="Volver"
+          accessibilityRole="button"
+          hitSlop={10}
+          onPress={onBack}
+          style={({ pressed }) => [
+            styles.iconButton,
+            pressed && styles.pressed,
+          ]}
+        >
           <Ionicons name="chevron-back" size={22} color={colors.ink} />
         </Pressable>
       ) : (
@@ -165,7 +175,15 @@ export function TopBar({
         <Text style={styles.title}>{title}</Text>
         {subtitle ? <Text style={styles.subtitle}>{subtitle}</Text> : null}
       </View>
-      <Pressable style={styles.iconButton}>
+      <Pressable
+        accessibilityLabel="Notificaciones"
+        accessibilityRole="button"
+        hitSlop={10}
+        style={({ pressed }) => [
+          styles.iconButton,
+          pressed && styles.pressed,
+        ]}
+      >
         <Ionicons name="notifications-outline" size={21} color={colors.ink} />
       </Pressable>
     </View>
@@ -178,31 +196,53 @@ export function PrimaryButton({
   onPress,
   href,
   tone = "green",
+  disabled = false,
+  isLoading = false,
+  loadingLabel,
+  accessibilityLabel,
 }: {
   label: string;
   icon?: IconName;
   onPress?: () => void;
   href?: string;
   tone?: "green" | "danger" | "light" | "secondary";
+  disabled?: boolean;
+  isLoading?: boolean;
+  loadingLabel?: string;
+  accessibilityLabel?: string;
 }) {
+  const isDisabled = disabled || isLoading;
+  const labelText = isLoading && loadingLabel ? loadingLabel : label;
+  const foreground =
+    tone === "light" || tone === "secondary" ? colors.green : colors.white;
+
   return (
     <Pressable
-      style={[
-        styles.primaryButton,
-        tone === "danger" && styles.dangerButton,
-        tone === "light" && styles.lightButton,
-        tone === "secondary" && styles.secondaryButton,
-      ]}
+      accessibilityLabel={accessibilityLabel || labelText}
+      accessibilityRole="button"
+      accessibilityState={{ busy: isLoading, disabled: isDisabled }}
+      disabled={isDisabled}
+      hitSlop={6}
+      style={({ pressed }) => [
+          styles.primaryButton,
+          tone === "danger" && styles.dangerButton,
+          tone === "light" && styles.lightButton,
+          tone === "secondary" && styles.secondaryButton,
+          pressed && !isDisabled && styles.pressed,
+          isDisabled && styles.disabled,
+        ]}
       onPress={() => {
         if (onPress) onPress();
         else if (href) router.push(href as any);
       }}
     >
-      {icon ? (
+      {isLoading ? (
+        <ActivityIndicator color={foreground} size="small" />
+      ) : icon ? (
         <Ionicons
           name={icon}
           size={19}
-          color={tone === "light" || tone === "secondary" ? colors.green : colors.white}
+          color={foreground}
         />
       ) : null}
       <Text
@@ -212,7 +252,7 @@ export function PrimaryButton({
           tone === "secondary" && styles.secondaryButtonLabel,
         ]}
       >
-        {label}
+        {labelText}
       </Text>
     </Pressable>
   );
@@ -232,10 +272,18 @@ export function BottomNav({ active }: { active: "inicio" | "explorar" | "activid
         const selected = item.id === active;
         return (
          <Pressable
-    key={item.id}
-    style={styles.navItem}
-    onPress={() => router.push(item.href as any)}
->
+            accessibilityLabel={item.label}
+            accessibilityRole="tab"
+            accessibilityState={{ selected }}
+            hitSlop={8}
+            key={item.id}
+            onPress={() => router.push(item.href as any)}
+            style={({ pressed }) => [
+              styles.navItem,
+              selected && styles.navItemActive,
+              pressed && styles.pressed,
+            ]}
+          >
 
             <Ionicons
               name={item.icon}
@@ -334,20 +382,96 @@ export function SettingRow({
   return (
     <Pressable
       onPress={onPress}
-      style={styles.settingRow}
+      accessibilityLabel={`${label}: ${value}`}
+      accessibilityRole={onPress ? "button" : "text"}
       disabled={!onPress}
+      hitSlop={4}
+      style={({ pressed }) => [
+        styles.settingRow,
+        pressed && onPress && styles.pressed,
+      ]}
     >
       <Text style={styles.settingLabel}>{label}</Text>
 
       <View style={styles.settingRight}>
         <Text style={styles.settingValue}>{value}</Text>
-        <Ionicons
-          name="chevron-forward"
-          size={18}
-          color={colors.muted}
-        />
+        {onPress ? (
+          <Ionicons
+            name="chevron-forward"
+            size={18}
+            color={colors.muted}
+          />
+        ) : null}
       </View>
     </Pressable>
+  );
+}
+
+export function StatusNotice({
+  tone = "info",
+  title,
+  message,
+  actionLabel,
+  onAction,
+  isLoading = false,
+}: {
+  tone?: "info" | "success" | "warning" | "error";
+  title?: string;
+  message: string;
+  actionLabel?: string;
+  onAction?: () => void;
+  isLoading?: boolean;
+}) {
+  const iconColor =
+    tone === "error"
+      ? colors.danger
+      : tone === "warning"
+        ? colors.orange
+        : colors.green;
+  const iconName: IconName =
+    tone === "error"
+      ? "alert-circle-outline"
+      : tone === "success"
+        ? "checkmark-circle-outline"
+        : tone === "warning"
+          ? "warning-outline"
+          : "information-circle-outline";
+
+  return (
+    <View
+      accessibilityLiveRegion="polite"
+      style={[
+        styles.statusNotice,
+        tone === "error" && styles.statusNoticeError,
+        tone === "warning" && styles.statusNoticeWarning,
+        tone === "success" && styles.statusNoticeSuccess,
+      ]}
+    >
+      <View style={styles.statusIcon}>
+        {isLoading ? (
+          <ActivityIndicator color={iconColor} size="small" />
+        ) : (
+          <Ionicons name={iconName} size={21} color={iconColor} />
+        )}
+      </View>
+      <View style={styles.statusBody}>
+        {title ? <Text style={styles.statusTitle}>{title}</Text> : null}
+        <Text style={styles.statusMessage}>{message}</Text>
+        {actionLabel && onAction ? (
+          <Pressable
+            accessibilityRole="button"
+            hitSlop={6}
+            onPress={onAction}
+            style={({ pressed }) => [
+              styles.statusAction,
+              pressed && styles.pressed,
+            ]}
+          >
+            <Text style={styles.statusActionText}>{actionLabel}</Text>
+          </Pressable>
+        ) : null}
+      </View>
+    </View>
   );
 }
 
@@ -379,6 +503,12 @@ export const styles = StyleSheet.create({
     shadowOpacity: 0.06,
     shadowRadius: 10,
     width: 42,
+  },
+  pressed: {
+    opacity: 0.72,
+  },
+  disabled: {
+    opacity: 0.58,
   },
   mark: {
     alignItems: "center",
@@ -452,8 +582,15 @@ export const styles = StyleSheet.create({
   },
   navItem: {
     alignItems: "center",
+    borderRadius: 22,
     flex: 1,
     minWidth: 0,
+    minHeight: 54,
+    justifyContent: "center",
+    paddingVertical: 5,
+  },
+  navItemActive: {
+    backgroundColor: colors.primarySoft,
   },
   navLabel: {
     color: colors.muted,
@@ -618,6 +755,69 @@ settingValue: {
   color: colors.green,
   fontSize: 14,
   fontWeight: "700",
+},
+statusNotice: {
+  alignItems: "flex-start",
+  backgroundColor: colors.white,
+  borderColor: colors.border,
+  borderRadius: 18,
+  borderWidth: 1,
+  flexDirection: "row",
+  gap: 10,
+  marginBottom: 14,
+  padding: 14,
+},
+
+statusNoticeError: {
+  backgroundColor: "#FFF4F2",
+  borderColor: "#F2B8B2",
+},
+
+statusNoticeWarning: {
+  backgroundColor: colors.orangeSoft,
+  borderColor: "#F7D48A",
+},
+
+statusNoticeSuccess: {
+  backgroundColor: colors.mint,
+  borderColor: colors.border,
+},
+
+statusIcon: {
+  alignItems: "center",
+  height: 26,
+  justifyContent: "center",
+  width: 26,
+},
+
+statusBody: {
+  flex: 1,
+  minWidth: 0,
+},
+
+statusTitle: {
+  color: colors.ink,
+  fontSize: 14,
+  fontWeight: "900",
+  marginBottom: 3,
+},
+
+statusMessage: {
+  color: colors.muted,
+  fontSize: 13,
+  fontWeight: "700",
+  lineHeight: 19,
+},
+
+statusAction: {
+  alignSelf: "flex-start",
+  marginTop: 10,
+},
+
+statusActionText: {
+  color: colors.greenDark,
+  fontSize: 13,
+  fontWeight: "900",
 },
 cardWhite: {
   backgroundColor: colors.white,

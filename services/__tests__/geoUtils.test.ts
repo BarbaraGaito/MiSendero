@@ -1,5 +1,6 @@
 import {
   formatDistance,
+  getClosestPointOnRoute,
   getDistanceMeters,
   getDistanceToRouteMeters,
   getRouteLengthMeters,
@@ -64,6 +65,31 @@ describe("geoUtils", () => {
     const progressAtEnd = getRouteProgressMeters(route[2], route) ?? 0;
 
     expect(progressAtEnd).toBeGreaterThan(progressAtStart);
+  });
+
+  test("getClosestPointOnRoute snaps a nearby map selection onto the trail", () => {
+    const route: [number, number][] = [
+      [-41.0, -71.0],
+      [-41.01, -71.0],
+    ];
+
+    const closest = getClosestPointOnRoute([-41.005, -71.0002], route);
+
+    expect(closest).not.toBeNull();
+    expect(closest?.distanceMeters).toBeLessThan(30);
+    expect(closest?.coordinate[1]).toBeCloseTo(-71.0, 3);
+    expect(closest?.progressMeters).toBeGreaterThan(0);
+  });
+
+  test("getClosestPointOnRoute exposes distance so callers can reject off-trail selections", () => {
+    const route: [number, number][] = [
+      [-41.0, -71.0],
+      [-41.01, -71.0],
+    ];
+
+    const closest = getClosestPointOnRoute([-41.005, -71.01], route);
+
+    expect(closest?.distanceMeters).toBeGreaterThan(800);
   });
 
   test("formatDistance switches between meters and kilometers", () => {

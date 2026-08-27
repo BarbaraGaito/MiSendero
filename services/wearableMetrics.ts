@@ -1,4 +1,4 @@
-import * as SQLite from "expo-sqlite";
+﻿import * as SQLite from "expo-sqlite";
 import { predictFatigueLevel, predictPhysioRisk } from "../ai/inferenceEngine";
 import {
   HealthPredictionLevel,
@@ -82,22 +82,6 @@ const getCurrentUserId = async () => {
   return session?.user.id ?? null;
 };
 
-<<<<<<< HEAD
-const parseProvider = (value: string): WearableProvider => {
-  if (
-    value === "apple_healthkit" ||
-    value === "android_health_connect" ||
-    value === "wear_os_health_services" ||
-    value === "development_simulator"
-  ) {
-    return value;
-  }
-
-  return "development_simulator";
-};
-
-=======
->>>>>>> 9c37b5b78195f678040f02b776d8b3b6eecb0110
 const toConnection = (row: {
   provider: string;
   linked: number;
@@ -136,8 +120,6 @@ const toMetricSample = (row: {
   createdAt: row.created_at,
 });
 
-<<<<<<< HEAD
-=======
 const parseProvider = (value: string): WearableProvider => {
   if (
     value === "apple_healthkit" ||
@@ -151,7 +133,6 @@ const parseProvider = (value: string): WearableProvider => {
   return "development_simulator";
 };
 
->>>>>>> 9c37b5b78195f678040f02b776d8b3b6eecb0110
 export const getWearableProviderName = (provider: WearableProvider) =>
   providerNames[provider];
 
@@ -408,67 +389,7 @@ const simulationScenarioRanges: Record<WearableSimulationScenario, SimulationRan
   },
 };
 
-<<<<<<< HEAD
-let simulationSeed = Date.now() % 2_147_483_647;
-
-const nextSimulationRatio = () => {
-  simulationSeed = (simulationSeed * 48_271) % 2_147_483_647;
-  return simulationSeed / 2_147_483_647;
-};
-
-const randomInRange = (min: number, max: number) =>
-  min + nextSimulationRatio() * (max - min);
-
-const getPredictionLevel = (
-  sample: WearableMetricSample,
-  fatigue: ReturnType<typeof predictFatigueLevel>,
-  riskLabel: string
-): HealthPredictionLevel => {
-  if (
-    (sample.oxygenSaturation !== null && sample.oxygenSaturation < 90) ||
-    sample.heartRateBpm! >= 180 ||
-    riskLabel === "alto" ||
-    sample.heartRateBpm! >= 165 ||
-    fatigue === "alto"
-  ) {
-    return "high";
-  }
-
-  if (riskLabel === "medio" || sample.heartRateBpm! >= 145 || fatigue === "medio") {
-    return "caution";
-  }
-
-  return "normal";
-};
-
-const getHighPredictionMessage = (
-  sample: WearableMetricSample,
-  criticalOxygen: boolean,
-  criticalHeartRate: boolean
-) => {
-  if (criticalOxygen) {
-    return {
-      title: "Saturacion de oxigeno critica",
-      message: `Tu oxigeno en sangre (${sample.oxygenSaturation}%) esta por debajo del umbral seguro. Deten la actividad, respira con calma y busca ayuda si no mejora.`,
-    };
-  }
-
-  if (criticalHeartRate) {
-    return {
-      title: "Frecuencia cardiaca critica",
-      message: `Tu frecuencia cardiaca (${sample.heartRateBpm} bpm) es muy elevada. Deten la actividad de inmediato y evalua pedir ayuda.`,
-    };
-  }
-
-  return {
-    title: "Revisar intensidad",
-    message:
-      "Tu esfuerzo actual aparece elevado. Pausa, hidratate y evalua como te sentis antes de continuar.",
-  };
-};
-=======
 const randomInRange = (min: number, max: number) => min + Math.random() * (max - min);
->>>>>>> 9c37b5b78195f678040f02b776d8b3b6eecb0110
 
 export const createDevelopmentMetricSample = async (
   scenario: WearableSimulationScenario = "normal"
@@ -578,21 +499,6 @@ export const predictWearableHealth = (
     sample.oxygenSaturation !== null && sample.oxygenSaturation < 90;
   const criticalHeartRate = sample.heartRateBpm >= 180;
 
-<<<<<<< HEAD
-  const level = getPredictionLevel(sample, fatigue, risk.label);
-
-  if (level === "high") {
-    const predictionMessage = getHighPredictionMessage(
-      sample,
-      criticalOxygen,
-      criticalHeartRate
-    );
-
-    return {
-      level,
-      title: predictionMessage.title,
-      message: predictionMessage.message,
-=======
   let level: HealthPredictionLevel = "normal";
   if (
     criticalOxygen ||
@@ -619,7 +525,6 @@ export const predictWearableHealth = (
         : criticalHeartRate
           ? `Tu frecuencia cardiaca (${sample.heartRateBpm} bpm) es muy elevada. Deten la actividad de inmediato y evalua pedir ayuda.`
           : "Tu esfuerzo actual aparece elevado. Pausa, hidratate y evalua como te sentis antes de continuar.",
->>>>>>> 9c37b5b78195f678040f02b776d8b3b6eecb0110
       fatigue,
     };
   }

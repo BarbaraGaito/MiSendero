@@ -1,4 +1,4 @@
-import { router, useLocalSearchParams } from "expo-router";
+﻿import { router, useLocalSearchParams } from "expo-router";
 import React, { useEffect, useMemo, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { getTrailById } from "../../services/api";
@@ -64,36 +64,14 @@ export default function RestBreakScreen() {
       });
   }, [trailId]);
 
-<<<<<<< HEAD
-  const { realTotalMeters, realTraveledMeters, remainingMeters, progressPercent } =
-    getProgressState(trail, totalMeters, traveledMeters);
-  const activeMinutes = Math.max(0, Math.floor((pauseStartedAt - startedAtMs) / 60000));
-=======
   useEffect(() => {
     getWearableRuntimeStatus(activeMinutes)
       .then(setWearableRuntime)
       .catch(() => setWearableRuntime(null));
   }, [activeMinutes]);
 
-  const realTotalMeters =
-    Number.isFinite(parsedTotalMeters) && parsedTotalMeters > 0
-      ? parsedTotalMeters
-      : trail?.distance_km
-        ? trail.distance_km * 1000
-        : 0;
-  const realTraveledMeters =
-    Number.isFinite(parsedTraveledMeters) && parsedTraveledMeters >= 0
-      ? Math.min(parsedTraveledMeters, realTotalMeters || parsedTraveledMeters)
-      : null;
-  const remainingMeters =
-    realTraveledMeters !== null && realTotalMeters > 0
-      ? Math.max(0, realTotalMeters - realTraveledMeters)
-      : null;
-  const progressPercent =
-    realTraveledMeters !== null && realTotalMeters > 0
-      ? Math.min(100, Math.round((realTraveledMeters / realTotalMeters) * 100))
-      : 0;
->>>>>>> 9c37b5b78195f678040f02b776d8b3b6eecb0110
+  const { realTotalMeters, realTraveledMeters, remainingMeters, progressPercent } =
+    getProgressState(trail, totalMeters, traveledMeters);
   const averageSpeedKmh =
     realTraveledMeters !== null && activeMinutes > 0
       ? (realTraveledMeters / 1000) / (activeMinutes / 60)

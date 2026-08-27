@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
@@ -50,18 +50,12 @@ export default function LoginScreen() {
     (!isRegister || (name.trim().length > 0 && acceptedTerms));
 
   const submit = async () => {
-<<<<<<< HEAD
-    const formError = getFormError(isRegister, name, email, password, acceptedTerms);
-    if (formError) {
-      setError(formError);
-=======
     if (!canSubmit) {
       setError(
         isRegister
           ? "Completa los campos y acepta los terminos para continuar."
           : "Completa email y contrasena para continuar."
       );
->>>>>>> 9c37b5b78195f678040f02b776d8b3b6eecb0110
       return;
     }
 

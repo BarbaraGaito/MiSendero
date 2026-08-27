@@ -29,13 +29,17 @@
           "NSHealthUpdateUsageDescription": false,
           "background": true
         }
-      ]
+      ],
+      "expo-secure-store",
+      "expo-font"
     ],
     "ios": {
       "bundleIdentifier": "com.misendero.app",
       "supportsTablet": false,
       "infoPlist": {
-        "UIBackgroundModes": ["fetch"]
+        "UIBackgroundModes": [
+          "fetch"
+        ]
       }
     },
     "android": {

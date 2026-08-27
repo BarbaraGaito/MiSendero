@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="./assets/misendero_logo.svg" alt="MiSendero" width="420" />
+</p>
+
 # MiSendero
 
 Aplicacion movil (Expo/React Native) de asistencia y seguridad para trekking, con backend

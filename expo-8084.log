@@ -2,9 +2,20 @@ Starting project at C:\Users\larat\OneDrive\Documentos\Lara\uade\5to año\Proyec
 Starting Metro Bundler
 Waiting on http://localhost:8084
 Logs for your project will appear below.
-Web node_modules\expo-router\entry.js ▓▓░░░░░░░░░░░░░░ 13.9% ( 28/136)
-Web node_modules\expo-router\entry.js ▓▓▓▓░░░░░░░░░░░░ 26.5% (179/348)
-Web node_modules\expo-router\entry.js ▓▓▓▓▓▓▓░░░░░░░░░ 47.8% (367/531)
-Web node_modules\expo-router\entry.js ▓▓▓▓▓▓▓▓▓▓▓▓▓▓░░ 93.0% (899/932)
-Web Bundled 12653ms node_modules\expo-router\entry.js (947 modules)
+Web node_modules\expo-router\entry.js ▓▓▓▓▓▓░░░░░░░░░░ 40.9% (261/408)
+| (node:21160) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+Web node_modules\expo-router\entry.js ▓▓▓▓▓▓▓▓▓▓▓▓▓░░░ 87.4% (836/894)
+| (node:15432) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+| (node:19212) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+| (node:3132) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+| (node:19892) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+| (node:2736) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+Web node_modules\expo-router\entry.js ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░ 99.4% (960/963)
+Web Bundled 9517ms node_modules\expo-router\entry.js (965 modules)
 › Detected a change in metro.config.js. Restart the server to see the new results.

@@ -12,6 +12,27 @@ import {
 import { getExperienceProfile } from "../../services/experienceProfile";
 import { colors } from "../components/MiSenderoUI";
 
+const getFormError = (
+  isRegister: boolean,
+  name: string,
+  email: string,
+  password: string,
+  acceptedTerms: boolean
+) => {
+  if (!email.trim() || !password.trim() || (isRegister && !name.trim())) {
+    return "Completa los campos para continuar.";
+  }
+
+  if (isRegister && !acceptedTerms) {
+    return "Acepta los terminos y disclaimers de seguridad para continuar.";
+  }
+
+  return null;
+};
+
+const getSubmitErrorMessage = (submitError: unknown) =>
+  submitError instanceof Error ? submitError.message : "No pudimos iniciar sesion.";
+
 export default function LoginScreen() {
   const [mode, setMode] = useState<"login" | "register">("login");
   const [name, setName] = useState("");
@@ -24,13 +45,9 @@ export default function LoginScreen() {
   const isRegister = mode === "register";
 
   const submit = async () => {
-    if (!email.trim() || !password.trim() || (isRegister && !name.trim())) {
-      setError("Completa los campos para continuar.");
-      return;
-    }
-
-    if (isRegister && !acceptedTerms) {
-      setError("Acepta los terminos y disclaimers de seguridad para continuar.");
+    const formError = getFormError(isRegister, name, email, password, acceptedTerms);
+    if (formError) {
+      setError(formError);
       return;
     }
 
@@ -58,11 +75,7 @@ export default function LoginScreen() {
 
       router.replace("/inicio");
     } catch (submitError) {
-      setError(
-        submitError instanceof Error
-          ? submitError.message
-          : "No pudimos iniciar sesion."
-      );
+      setError(getSubmitErrorMessage(submitError));
     } finally {
       setIsSubmitting(false);
     }

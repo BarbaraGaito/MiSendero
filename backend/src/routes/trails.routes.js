@@ -57,13 +57,19 @@ const getWeatherRecommendation = (riskLevel) => {
   return "Condiciones favorables para iniciar, manteniendo equipo basico, agua y seguimiento de la ruta.";
 };
 
+const getBaseTemperature = (isNorth, isPatagonia, isSummer) => {
+  if (isNorth) return isSummer ? 29 : 22;
+  if (isPatagonia) return isSummer ? 14 : 6;
+  return isSummer ? 24 : 15;
+};
+
 const getFallbackWeather = (trail) => {
   const latitude = Number(trail.center_lat || 0);
   const month = new Date().getMonth();
   const isSummer = month >= 9 || month <= 2;
   const isPatagonia = latitude < -40;
   const isNorth = latitude > -30;
-  const baseTemperature = isNorth ? (isSummer ? 29 : 22) : isPatagonia ? (isSummer ? 14 : 6) : isSummer ? 24 : 15;
+  const baseTemperature = getBaseTemperature(isNorth, isPatagonia, isSummer);
   const windKmh = isPatagonia ? 28 : 14;
   const rainProbability = isNorth ? 42 : isPatagonia ? 35 : 24;
   const condition = rainProbability >= 40 ? "Parcialmente nublado" : "Mayormente despejado";

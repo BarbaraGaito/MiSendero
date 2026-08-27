@@ -41,6 +41,43 @@ const normalizeText = (value: string) =>
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "");
 
+const matchesDistanceFilter = (
+  distanceKm: Trail["distance_km"],
+  filter: DistanceFilter
+) => {
+  if (filter === "Todas") return true;
+  if (filter === "Sin dato") return distanceKm === null;
+  if (typeof distanceKm !== "number") return false;
+  if (filter === "Corta") return distanceKm <= 5;
+  if (filter === "Media") return distanceKm > 5 && distanceKm <= 10;
+  return distanceKm > 10;
+};
+
+const filterTrails = (
+  trails: Trail[],
+  searchQuery: string,
+  activeFilter: string,
+  activeDistanceFilter: DistanceFilter
+) => {
+  const normalizedQuery = normalizeText(searchQuery.trim());
+  const normalizedDifficulty = normalizeText(activeFilter);
+
+  return trails.filter((trail) => {
+    const searchableText = normalizeText(`${trail.name} ${trail.location}`);
+    const matchesQuery =
+      normalizedQuery.length === 0 || searchableText.includes(normalizedQuery);
+    const matchesDifficulty =
+      activeFilter === "Todas" ||
+      normalizeText(trail.difficulty).includes(normalizedDifficulty);
+
+    return (
+      matchesQuery &&
+      matchesDifficulty &&
+      matchesDistanceFilter(trail.distance_km, activeDistanceFilter)
+    );
+  });
+};
+
 export default function ExploreRoutesScreen() {
   const [trails, setTrails] = useState<Trail[]>([]);
   const [activeFilter, setActiveFilter] = useState("Todas");
@@ -55,36 +92,7 @@ export default function ExploreRoutesScreen() {
   const hasActiveFilters =
     activeFilter !== "Todas" || activeDistanceFilter !== "Todas" || searchQuery.trim().length > 0;
   const filteredTrails = useMemo(
-    () => {
-      const normalizedQuery = normalizeText(searchQuery.trim());
-
-      return trails.filter((trail) => {
-        const distanceKm = trail.distance_km;
-        const searchableText = normalizeText(
-          `${trail.name} ${trail.location}`
-        );
-        const matchesQuery =
-          normalizedQuery.length === 0 || searchableText.includes(normalizedQuery);
-        const matchesDifficulty =
-          activeFilter === "Todas" ||
-          normalizeText(trail.difficulty).includes(normalizeText(activeFilter));
-        const matchesDistance =
-          activeDistanceFilter === "Todas" ||
-          (activeDistanceFilter === "Corta" &&
-            typeof distanceKm === "number" &&
-            distanceKm <= 5) ||
-          (activeDistanceFilter === "Media" &&
-            typeof distanceKm === "number" &&
-            distanceKm > 5 &&
-            distanceKm <= 10) ||
-          (activeDistanceFilter === "Larga" &&
-            typeof distanceKm === "number" &&
-            distanceKm > 10) ||
-          (activeDistanceFilter === "Sin dato" && distanceKm === null);
-
-        return matchesQuery && matchesDifficulty && matchesDistance;
-      });
-    },
+    () => filterTrails(trails, searchQuery, activeFilter, activeDistanceFilter),
     [activeDistanceFilter, activeFilter, searchQuery, trails]
   );
   const visibleTrails = useMemo(

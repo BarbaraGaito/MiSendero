@@ -1,0 +1,23 @@
+Starting project at C:\Users\larat\OneDrive\Documentos\Lara\uade\5to año\Proyecto final\MiSendero
+Starting Metro Bundler
+Waiting on http://localhost:8085
+Logs for your project will appear below.
+Web node_modules\expo-router\entry.js ▓▓▓▓▓▓▓▓▓▓▓▓░░░░ 78.0% (667/755)
+Web Bundled 2638ms node_modules\expo-router\entry.js (965 modules)
+ LOG  [web] Logs will appear in the browser console
+Web node_modules\expo-sqlite\web\worker.ts ░░░░░░░░░░░░░░░░  0.0% (0/1)
+| (node:13908) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+| (node:9068) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+| (node:20656) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+| (node:21944) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+| (node:24384) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+| (node:7240) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+Web node_modules\expo-sqlite\web\worker.ts ▓▓▓▓▓▓▓▓▓▓▓▓░░░░ 76.6% (14/16)
+| (Use `node --trace-warnings ...` to show where the warning was created)
+Web Bundled 6105ms node_modules\expo-sqlite\web\worker.ts (16 modules)
+› Detected a change in metro.config.js. Restart the server to see the new results.

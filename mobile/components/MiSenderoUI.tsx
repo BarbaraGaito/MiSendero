@@ -47,6 +47,24 @@ export const trailImages = {
 };
 
 type IconName = React.ComponentProps<typeof Ionicons>["name"];
+type ButtonTone = "green" | "danger" | "light" | "secondary";
+type BottomTab = "inicio" | "explorar" | "actividad" | "perfil";
+
+const getButtonStyle = (tone: ButtonTone) => [
+  styles.primaryButton,
+  tone === "danger" && styles.dangerButton,
+  tone === "light" && styles.lightButton,
+  tone === "secondary" && styles.secondaryButton,
+];
+
+const getButtonLabelStyle = (tone: ButtonTone) => [
+  styles.primaryLabel,
+  tone === "light" && styles.lightButtonLabel,
+  tone === "secondary" && styles.secondaryButtonLabel,
+];
+
+const getButtonIconColor = (tone: ButtonTone) =>
+  tone === "light" || tone === "secondary" ? colors.green : colors.white;
 
 export function ScreenShell({
   children,
@@ -71,7 +89,7 @@ export function AppScreen({
   withBottomNav = true,
 }: {
   children: React.ReactNode;
-  activeTab?: "inicio" | "explorar" | "actividad" | "perfil";
+  activeTab?: BottomTab;
   withBottomNav?: boolean;
 }) {
   return (
@@ -183,16 +201,11 @@ export function PrimaryButton({
   icon?: IconName;
   onPress?: () => void;
   href?: string;
-  tone?: "green" | "danger" | "light" | "secondary";
+  tone?: ButtonTone;
 }) {
   return (
     <Pressable
-      style={[
-        styles.primaryButton,
-        tone === "danger" && styles.dangerButton,
-        tone === "light" && styles.lightButton,
-        tone === "secondary" && styles.secondaryButton,
-      ]}
+      style={getButtonStyle(tone)}
       onPress={() => {
         if (onPress) onPress();
         else if (href) router.push(href as any);
@@ -202,24 +215,20 @@ export function PrimaryButton({
         <Ionicons
           name={icon}
           size={19}
-          color={tone === "light" || tone === "secondary" ? colors.green : colors.white}
+          color={getButtonIconColor(tone)}
         />
       ) : null}
-      <Text
-        style={[
-          styles.primaryLabel,
-          tone === "light" && styles.lightButtonLabel,
-          tone === "secondary" && styles.secondaryButtonLabel,
-        ]}
-      >
+      <Text style={getButtonLabelStyle(tone)}>
         {label}
       </Text>
     </Pressable>
   );
 }
 
-export function BottomNav({ active }: { active: "inicio" | "explorar" | "actividad" | "perfil" }) {
-  const items: Array<{ id: typeof active; label: string; icon: IconName; href: string }> = [
+type BottomNavItem = { id: BottomTab; label: string; icon: IconName; href: string };
+
+export function BottomNav({ active }: { active: BottomTab }) {
+  const items: BottomNavItem[] = [
     { id: "inicio", label: "Inicio", icon: "home-outline", href: "/inicio" },
     { id: "explorar", label: "Explorar", icon: "compass-outline", href: "/explorar-rutas" },
     { id: "actividad", label: "Actividad", icon: "pulse-outline", href: "/mis-actividades" },
@@ -228,27 +237,38 @@ export function BottomNav({ active }: { active: "inicio" | "explorar" | "activid
 
   return (
     <View style={styles.bottomNav}>
-      {items.map((item) => {
-        const selected = item.id === active;
-        return (
-         <Pressable
-    key={item.id}
-    style={styles.navItem}
-    onPress={() => router.push(item.href as any)}
->
-
-            <Ionicons
-              name={item.icon}
-              size={25}
-              color={selected ? colors.green : colors.muted}
-            />
-            <Text style={[styles.navLabel, selected && styles.navLabelActive]}>
-              {item.label}
-            </Text>
-          </Pressable>
-        );
-      })}
+      {items.map((item) => (
+        <BottomNavButton
+          key={item.id}
+          item={item}
+          selected={item.id === active}
+        />
+      ))}
     </View>
+  );
+}
+
+function BottomNavButton({
+  item,
+  selected,
+}: {
+  item: BottomNavItem;
+  selected: boolean;
+}) {
+  return (
+    <Pressable
+      style={styles.navItem}
+      onPress={() => router.push(item.href as any)}
+    >
+      <Ionicons
+        name={item.icon}
+        size={25}
+        color={selected ? colors.green : colors.muted}
+      />
+      <Text style={[styles.navLabel, selected && styles.navLabelActive]}>
+        {item.label}
+      </Text>
+    </Pressable>
   );
 }
 

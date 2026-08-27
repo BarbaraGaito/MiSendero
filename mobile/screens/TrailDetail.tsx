@@ -24,6 +24,23 @@ import {
 import { initDB } from "../../database/database";
 import { Trail, TrailWeather } from "../../types";
 
+const loadTrailDetail = async (trailId: number) => {
+  await initDB();
+  const trail = await getTrailById(trailId);
+  const [offlineMap, summary, weather] = await Promise.all([
+    getOfflineMapByTrailId(trail.id),
+    getTrailRatingSummary(trail.id),
+    getTrailWeather(trail.id).catch(() => null),
+  ]);
+
+  return {
+    trail,
+    isDownloaded: Boolean(offlineMap),
+    ratingSummary: summary,
+    weather,
+  };
+};
+
 export default function Screen03TrailDetail() {
   const insets = useSafeAreaInsets();
   const { id } = useLocalSearchParams<{ id?: string }>();
@@ -45,17 +62,12 @@ export default function Screen03TrailDetail() {
       return;
     }
 
-    initDB()
-      .then(() => getTrailById(trailId))
-      .then(async (data) => {
-        setTrail(data);
-        const [offlineMap, summary] = await Promise.all([
-          getOfflineMapByTrailId(data.id),
-          getTrailRatingSummary(data.id),
-        ]);
-        setIsDownloaded(Boolean(offlineMap));
-        setRatingSummary(summary);
-        setWeather(await getTrailWeather(data.id).catch(() => null));
+    loadTrailDetail(trailId)
+      .then((data) => {
+        setTrail(data.trail);
+        setIsDownloaded(data.isDownloaded);
+        setRatingSummary(data.ratingSummary);
+        setWeather(data.weather);
         setError(null);
       })
       .catch(() => {
@@ -234,20 +246,9 @@ function getDifficultyInsight(trail: Trail, weather: TrailWeather | null) {
   const weatherText = weather
     ? ` Para hoy figura ${weather.condition.toLowerCase()}, ${weather.temperature_c} C, viento de ${weather.wind_kmh} km/h y riesgo ${weather.risk_level}.`
     : "";
+  const context = { distanceText, durationText, weatherText };
 
-  if (difficulty === "alta") {
-    return `Ruta exigente: son ${distanceText} y una duracion estimada de ${durationText}, por lo que conviene encararla con buen margen de luz, ritmo conservador y experiencia previa en trekking.${weatherText}`;
-  }
-
-  if (difficulty === "media") {
-    return `Ruta de esfuerzo moderado: combina ${distanceText} con una duracion estimada de ${durationText}. Es una buena opcion si ya caminaste senderos similares y podes sostener un paso constante.${weatherText}`;
-  }
-
-  if (difficulty === "baja") {
-    return `Ruta accesible: por sus ${distanceText} y duracion estimada de ${durationText}, esta pensada para una salida tranquila, aunque igual requiere revisar el estado del camino antes de salir.${weatherText}`;
-  }
-
-  return `Esta ruta tiene dificultad ${trail.difficulty}, ${distanceText} y una duracion estimada de ${durationText}. Revisa el mapa, el clima y el estado del sendero antes de iniciarla.${weatherText}`;
+  return getDifficultyInsightText(difficulty, trail.difficulty, context);
 }
 
 function getBeforeYouGoTips(trail: Trail, weather: TrailWeather | null) {
@@ -259,15 +260,7 @@ function getBeforeYouGoTips(trail: Trail, weather: TrailWeather | null) {
     : "Si no tenes clima actualizado, revisalo antes de salir y descarga el mapa offline.";
 
   if (difficulty === "alta") {
-    return [
-      isLongRoute
-        ? "Sali temprano, avisa tu itinerario y evita iniciar si no tenes margen para volver con luz."
-        : "Planifica el regreso antes de empezar y evita exigirte si notas fatiga temprana.",
-      "Lleva agua extra, abrigo, comida, bateria suficiente y mapa descargado.",
-      hasWeatherRisk
-        ? "Con riesgo meteorologico medio o alto, considera postergar o elegir una ruta mas corta."
-        : weatherTip,
-    ];
+    return getHighDifficultyTips(isLongRoute, hasWeatherRisk, weatherTip);
   }
 
   if (difficulty === "media") {
@@ -290,6 +283,47 @@ function getBeforeYouGoTips(trail: Trail, weather: TrailWeather | null) {
     "Revisa distancia, duracion y punto de inicio antes de salir.",
     "Lleva agua, abrigo y bateria suficiente para usar el mapa durante todo el recorrido.",
     weatherTip,
+  ];
+}
+
+function getDifficultyInsightText(
+  difficulty: string,
+  rawDifficulty: string,
+  context: { distanceText: string; durationText: string; weatherText: string }
+) {
+  const { distanceText, durationText, weatherText } = context;
+
+  if (difficulty === "alta") {
+    return `Ruta exigente: son ${distanceText} y una duracion estimada de ${durationText}, por lo que conviene encararla con buen margen de luz, ritmo conservador y experiencia previa en trekking.${weatherText}`;
+  }
+
+  if (difficulty === "media") {
+    return `Ruta de esfuerzo moderado: combina ${distanceText} con una duracion estimada de ${durationText}. Es una buena opcion si ya caminaste senderos similares y podes sostener un paso constante.${weatherText}`;
+  }
+
+  if (difficulty === "baja") {
+    return `Ruta accesible: por sus ${distanceText} y duracion estimada de ${durationText}, esta pensada para una salida tranquila, aunque igual requiere revisar el estado del camino antes de salir.${weatherText}`;
+  }
+
+  return `Esta ruta tiene dificultad ${rawDifficulty}, ${distanceText} y una duracion estimada de ${durationText}. Revisa el mapa, el clima y el estado del sendero antes de iniciarla.${weatherText}`;
+}
+
+function getHighDifficultyTips(
+  isLongRoute: boolean,
+  hasWeatherRisk: boolean,
+  weatherTip: string
+) {
+  const timingTip = isLongRoute
+    ? "Sali temprano, avisa tu itinerario y evita iniciar si no tenes margen para volver con luz."
+    : "Planifica el regreso antes de empezar y evita exigirte si notas fatiga temprana.";
+  const weatherRiskTip = hasWeatherRisk
+    ? "Con riesgo meteorologico medio o alto, considera postergar o elegir una ruta mas corta."
+    : weatherTip;
+
+  return [
+    timingTip,
+    "Lleva agua extra, abrigo, comida, bateria suficiente y mapa descargado.",
+    weatherRiskTip,
   ];
 }
 

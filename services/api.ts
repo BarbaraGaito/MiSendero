@@ -1,12 +1,16 @@
 import { AuthResponse, Profile, Trail, TrailReport, TrailWeather } from "../types";
 import Constants from "expo-constants";
-import { Platform } from "react-native";
 
 const API_PORT = "3001";
 
 const getApiUrl = () => {
   const expoHost = Constants.expoConfig?.hostUri?.split(":")[0];
-  const host = expoHost || (Platform.OS === "android" ? "10.0.2.2" : "localhost");
+  const configuredHost =
+    process.env.EXPO_PUBLIC_API_HOST ||
+    (typeof Constants.expoConfig?.extra?.apiHost === "string"
+      ? Constants.expoConfig.extra.apiHost
+      : null);
+  const host = configuredHost || expoHost || "localhost";
 
   return `http://${host}:${API_PORT}/api`;
 };

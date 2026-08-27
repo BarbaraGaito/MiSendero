@@ -50,6 +50,59 @@ const emptyOfflineMapsSummary: OfflineMapsSummary = {
   totalSizeMb: 0,
 };
 
+const adminTestingModeFallback: TestingLocationMode = {
+  enabled: false,
+  updatedAt: null,
+};
+
+const loadProfileData = async () => {
+  const session = await getAuthSession();
+
+  if (!session) return null;
+
+  const data = await getProfile(session.token);
+  const [
+    privacyPreferences,
+    testingPreferences,
+    preferences,
+    experience,
+    contact,
+    localSessionsSummary,
+    mapsSummary,
+  ] = await Promise.all([
+    getPrivacyPreferences(),
+    getTestingLocationMode(),
+    getAppPreferences(),
+    getExperienceProfile(),
+    getEmergencyContact(),
+    getSessionsSummary(),
+    getOfflineMapsSummary(),
+  ]);
+
+  if (data.user) {
+    await saveAuthSession({
+      token: session.token,
+      user: data.user,
+    });
+  }
+
+  const isAdmin = data.user?.role === "admin";
+  if (!isAdmin && testingPreferences.enabled) {
+    await saveTestingLocationMode(false);
+  }
+
+  return {
+    profile: data,
+    privacy: privacyPreferences,
+    appPreferences: preferences,
+    experienceProfile: experience,
+    emergencyContact: contact,
+    sessionsSummary: localSessionsSummary,
+    offlineMapsSummary: mapsSummary,
+    testingLocationMode: isAdmin ? await getTestingLocationMode() : adminTestingModeFallback,
+  };
+};
+
 const formatDistance = (meters: number) =>
   `${(meters / 1000).toLocaleString("es-AR", {
     maximumFractionDigits: 1,
@@ -109,55 +162,21 @@ export default function ProfileScreen() {
   useEffect(() => {
     const loadProfile = async () => {
       try {
-        const session = await getAuthSession();
+        const data = await loadProfileData();
 
-        if (!session) {
+        if (!data) {
           router.replace("/");
           return;
         }
 
-        const data = await getProfile(session.token);
-        const [
-          privacyPreferences,
-          testingPreferences,
-          preferences,
-          experience,
-          contact,
-          localSessionsSummary,
-          mapsSummary,
-        ] = await Promise.all([
-          getPrivacyPreferences(),
-          getTestingLocationMode(),
-          getAppPreferences(),
-          getExperienceProfile(),
-          getEmergencyContact(),
-          getSessionsSummary(),
-          getOfflineMapsSummary(),
-        ]);
-
-        if (data.user) {
-          await saveAuthSession({
-            token: session.token,
-            user: data.user,
-          });
-        }
-
-        if (data.user?.role !== "admin" && testingPreferences.enabled) {
-          await saveTestingLocationMode(false);
-        }
-
-        setProfile(data);
-        setPrivacy(privacyPreferences);
-        setAppPreferences(preferences);
-        setExperienceProfile(experience);
-        setEmergencyContact(contact);
-        setSessionsSummary(localSessionsSummary);
-        setOfflineMapsSummary(mapsSummary);
-        setTestingLocationMode(
-          data.user?.role === "admin"
-            ? await getTestingLocationMode()
-            : { enabled: false, updatedAt: null }
-        );
+        setProfile(data.profile);
+        setPrivacy(data.privacy);
+        setAppPreferences(data.appPreferences);
+        setExperienceProfile(data.experienceProfile);
+        setEmergencyContact(data.emergencyContact);
+        setSessionsSummary(data.sessionsSummary);
+        setOfflineMapsSummary(data.offlineMapsSummary);
+        setTestingLocationMode(data.testingLocationMode);
         setError(null);
       } catch (loadError) {
         setError("No pudimos cargar tu perfil en este momento.");

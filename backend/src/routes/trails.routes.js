@@ -203,7 +203,18 @@ router.post(
       const trail = await getTrailOr404(req.params.id, res);
       if (!trail) return;
 
-      const { issue_summary, severity, trail_state, cause, blocks_path, details } = req.body;
+      const {
+        issue_summary,
+        severity,
+        trail_state,
+        cause,
+        blocks_path,
+        details,
+        latitude,
+        longitude,
+        accuracy_meters,
+        route_progress_meters,
+      } = req.body;
 
       const { rows: userRows } = await query("SELECT name FROM users WHERE id = $1", [
         req.userId,
@@ -214,9 +225,10 @@ router.post(
         `
           INSERT INTO trail_reports (
             trail_id, reporter_user_id, issue_summary, severity, trail_state,
-            cause, blocks_path, details, reporter_name
+            cause, blocks_path, details, latitude, longitude, accuracy_meters,
+            route_progress_meters, reporter_name
           )
-          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
           RETURNING *
         `,
         [
@@ -228,6 +240,10 @@ router.post(
           cause ?? null,
           Boolean(blocks_path),
           details ?? null,
+          latitude ?? null,
+          longitude ?? null,
+          accuracy_meters ?? null,
+          route_progress_meters ?? null,
           reporterName,
         ]
       );

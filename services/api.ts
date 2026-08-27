@@ -102,6 +102,10 @@ export const createTrailReport = async (
     cause?: string | null;
     blocks_path?: boolean;
     details?: string;
+    latitude?: number | null;
+    longitude?: number | null;
+    accuracy_meters?: number | null;
+    route_progress_meters?: number | null;
   },
   token: string
 ): Promise<TrailReport> => {
@@ -119,21 +123,33 @@ export const getProfile = async (token: string): Promise<Profile> => {
 export interface ActivityRecord {
   id: number;
   user_id: number;
+  client_session_id: string | null;
   trail_id: number | null;
   started_at: string;
   ended_at: string | null;
   distance_km: number | null;
   duration_minutes: number | null;
+  completion_status: "completed" | "ended_early" | "paused";
+  route_progress_meters: number | null;
+  route_total_meters: number | null;
+  ended_latitude: number | null;
+  ended_longitude: number | null;
   created_at: string;
 }
 
 export const createActivity = async (
   activity: {
+    client_session_id?: string | null;
     trail_id?: number | null;
     started_at: string;
     ended_at?: string | null;
     distance_km?: number | null;
     duration_minutes?: number | null;
+    completion_status?: "completed" | "ended_early" | "paused";
+    route_progress_meters?: number | null;
+    route_total_meters?: number | null;
+    ended_latitude?: number | null;
+    ended_longitude?: number | null;
   },
   token: string
 ): Promise<ActivityRecord> => {
@@ -152,6 +168,10 @@ export interface EmergencyAlertRecord {
   longitude: number;
   status: string;
   device_battery_percent: number | null;
+  contact_name: string | null;
+  contact_phone: string | null;
+  message_body: string | null;
+  last_known_at: string | null;
   created_at: string;
 }
 
@@ -161,6 +181,10 @@ export const createEmergencyAlert = async (
     latitude: number;
     longitude: number;
     device_battery_percent?: number | null;
+    contact_name?: string | null;
+    contact_phone?: string | null;
+    message_body?: string | null;
+    last_known_at?: string | null;
   },
   token: string
 ): Promise<EmergencyAlertRecord> => {

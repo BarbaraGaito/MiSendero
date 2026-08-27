@@ -31,10 +31,20 @@ describe("emergency alerts", () => {
     const created = await request(app)
       .post("/api/emergency-alerts")
       .set("Authorization", `Bearer ${token}`)
-      .send({ latitude: -41.17, longitude: -71.47, device_battery_percent: 42 });
+      .send({
+        latitude: -41.17,
+        longitude: -71.47,
+        device_battery_percent: 42,
+        contact_name: "Contacto Uno",
+        contact_phone: "+5491100000000",
+        message_body: "SOS MiSendero. Necesito asistencia.",
+        last_known_at: "2026-08-27T12:00:00.000Z",
+      });
 
     expect(created.status).toBe(201);
     expect(created.body.status).toBe("sent");
+    expect(created.body.contact_name).toBe("Contacto Uno");
+    expect(created.body.message_body).toContain("SOS MiSendero");
 
     const list = await request(app)
       .get("/api/emergency-alerts")
@@ -43,6 +53,7 @@ describe("emergency alerts", () => {
     expect(list.status).toBe(200);
     expect(list.body).toHaveLength(1);
     expect(list.body[0].device_battery_percent).toBe(42);
+    expect(list.body[0].contact_phone).toBe("+5491100000000");
   });
 
   test("rejects an out-of-range latitude", async () => {

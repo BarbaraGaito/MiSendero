@@ -1,4 +1,4 @@
-import { router, useLocalSearchParams } from "expo-router";
+﻿import { router, useLocalSearchParams } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import {
@@ -34,63 +34,6 @@ const formatDuration = (seconds: number) => {
 
   if (hours > 0) return `${hours}h ${minutes.toString().padStart(2, "0")}m`;
   return `${minutes}m`;
-};
-
-const getRouteCompletionSession = async ({
-  id,
-  startedAt,
-  traveledMeters,
-}: {
-  id?: string;
-  startedAt?: string;
-  traveledMeters?: string;
-}) => {
-  const trailId = Number(id);
-  const startedAtMs = Number(startedAt);
-  const distanceMeters = Number(traveledMeters);
-  const endedAt = Date.now();
-
-  if (!trailId || !startedAtMs) {
-    const latestSession = await getLatestCompletedSession();
-    if (latestSession && trailId) {
-      await attachTrailToSession(latestSession.id, trailId);
-      return {
-        session: {
-          ...latestSession,
-          trail_id: latestSession.trail_id ?? trailId,
-        },
-        isPausedWithoutProgress: false,
-      };
-    }
-
-    return { session: latestSession, isPausedWithoutProgress: false };
-  }
-
-  const safeDistance = Number.isFinite(distanceMeters) ? distanceMeters : 0;
-  const duration = Math.max(0, Math.floor((endedAt - startedAtMs) / 1000));
-
-  if (safeDistance < MIN_COMPLETED_DISTANCE_METERS) {
-    return {
-      session: await getOrCreatePausedSession({
-        trailId,
-        startedAt: startedAtMs,
-        duration,
-        distance: safeDistance,
-      }),
-      isPausedWithoutProgress: true,
-    };
-  }
-
-  return {
-    session: await getOrCreateCompletedSession({
-      trailId,
-      startedAt: startedAtMs,
-      endedAt,
-      duration,
-      distance: safeDistance,
-    }),
-    isPausedWithoutProgress: false,
-  };
 };
 
 const getCompletionCopy = (isPausedWithoutProgress: boolean) => ({
@@ -147,10 +90,6 @@ export default function RouteCompletedScreen() {
   useEffect(() => {
     const loadSession = async () => {
       await initDB();
-<<<<<<< HEAD
-      const completion = await getRouteCompletionSession({ id, startedAt, traveledMeters });
-      const completedSession = completion.session;
-=======
       const trailId = Number(id);
       const startedAtMs = Number(startedAt);
       const distanceMeters = parseOptionalNumber(traveledMeters);
@@ -232,9 +171,7 @@ export default function RouteCompletedScreen() {
           };
         }
       }
->>>>>>> 9c37b5b78195f678040f02b776d8b3b6eecb0110
 
-      setIsPausedWithoutProgress(completion.isPausedWithoutProgress);
       setSession(completedSession);
       setRating(completedSession?.rating ?? 0);
       setReviewText(completedSession?.review_text ?? "");
@@ -249,17 +186,14 @@ export default function RouteCompletedScreen() {
   const isEndedEarly = completionStatus === "ended_early";
   const canReview = Boolean(session && trailId && !isPausedWithoutProgress);
   const hasReview = Boolean(session?.rating);
-<<<<<<< HEAD
   const completionCopy = getCompletionCopy(isPausedWithoutProgress);
   const reviewCopy = getReviewCopy(hasReview);
-=======
   const progressPercent =
     session?.route_progress_meters !== null &&
     session?.route_progress_meters !== undefined &&
     session?.route_total_meters
       ? Math.min(100, Math.round((session.route_progress_meters / session.route_total_meters) * 100))
       : null;
->>>>>>> 9c37b5b78195f678040f02b776d8b3b6eecb0110
 
   const saveReview = async () => {
     if (!session || !trailId || rating < 1 || isSavingReview) return;
@@ -290,11 +224,6 @@ export default function RouteCompletedScreen() {
         <Text style={styles.successCheck}>{completionCopy.icon}</Text>
       </View>
       <ScreenTitle
-<<<<<<< HEAD
-        eyebrow={completionCopy.eyebrow}
-        title={completionCopy.title}
-        subtitle={completionCopy.subtitle}
-=======
         eyebrow={isPausedWithoutProgress ? "Ruta pausada" : "Recorrido finalizado"}
         title={
           isPausedWithoutProgress
@@ -310,7 +239,6 @@ export default function RouteCompletedScreen() {
               ? "Guardamos tu actividad y el punto del sendero donde terminaste."
             : "Guardamos tu actividad con los datos registrados por la app."
         }
->>>>>>> 9c37b5b78195f678040f02b776d8b3b6eecb0110
       />
 
       {isLoading ? <Text style={styles.statusText}>Cargando resumen...</Text> : null}
@@ -327,10 +255,6 @@ export default function RouteCompletedScreen() {
           </View>
 
           <Card tone="green">
-<<<<<<< HEAD
-            <Text style={styles.cardTitle}>{completionCopy.performanceTitle}</Text>
-            <Text style={styles.cardText}>{completionCopy.performanceText}</Text>
-=======
             <Text style={styles.cardTitle}>
               {isPausedWithoutProgress
                 ? "Actividad pendiente"
@@ -350,7 +274,6 @@ export default function RouteCompletedScreen() {
                 {trackingPointCount} puntos GPS guardados para validar distancia y recorrido.
               </Text>
             ) : null}
->>>>>>> 9c37b5b78195f678040f02b776d8b3b6eecb0110
           </Card>
 
           {canReview ? (
@@ -372,7 +295,7 @@ export default function RouteCompletedScreen() {
                         value <= rating ? styles.starTextActive : null,
                       ]}
                     >
-                      ★
+                      â˜…
                     </Text>
                   </Pressable>
                 ))}

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+﻿import React, { useCallback, useEffect, useState } from "react";
 import { router, useLocalSearchParams } from "expo-router";
 import { ImageBackground, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -28,23 +28,6 @@ import { Trail, TrailWeather } from "../../types";
 import { parseRouteCoordinates } from "../../services/geoUtils";
 import { getTerrainElevationGainMeters } from "../components/Terrain3DScene";
 
-const loadTrailDetail = async (trailId: number) => {
-  await initDB();
-  const trail = await getTrailById(trailId);
-  const [offlineMap, summary, weather] = await Promise.all([
-    getOfflineMapByTrailId(trail.id),
-    getTrailRatingSummary(trail.id),
-    getTrailWeather(trail.id).catch(() => null),
-  ]);
-
-  return {
-    trail,
-    isDownloaded: Boolean(offlineMap),
-    ratingSummary: summary,
-    weather,
-  };
-};
-
 export default function Screen03TrailDetail() {
   const insets = useSafeAreaInsets();
   const { id } = useLocalSearchParams<{ id?: string }>();
@@ -69,22 +52,6 @@ export default function Screen03TrailDetail() {
       return;
     }
 
-<<<<<<< HEAD
-    loadTrailDetail(trailId)
-      .then((data) => {
-        setTrail(data.trail);
-        setIsDownloaded(data.isDownloaded);
-        setRatingSummary(data.ratingSummary);
-        setWeather(data.weather);
-        setError(null);
-      })
-      .catch(() => {
-        setError("No pudimos cargar este sendero en este momento.");
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-=======
     try {
       await initDB();
       const data = await getTrailById(trailId);
@@ -104,7 +71,6 @@ export default function Screen03TrailDetail() {
     } finally {
       setIsLoading(false);
     }
->>>>>>> 9c37b5b78195f678040f02b776d8b3b6eecb0110
   }, [id]);
 
   useEffect(() => {

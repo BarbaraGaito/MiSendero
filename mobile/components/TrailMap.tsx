@@ -1,8 +1,9 @@
-import { Ionicons } from "@expo/vector-icons";
+﻿import { Ionicons } from "@expo/vector-icons";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
   ActivityIndicator,
   Image,
+  DimensionValue,
   LayoutChangeEvent,
   PanResponder,
   Pressable,
@@ -54,11 +55,6 @@ type ScreenPoint = {
   y: number;
 };
 
-<<<<<<< HEAD
-type TerrainPoint = ScreenPoint & {
-  baseY: number;
-  z: number;
-=======
 type TerrainPath = {
   key: string;
   path: string;
@@ -78,7 +74,11 @@ type TerrainLabel = ScreenPoint & {
   text: string;
   angle?: string;
   variant: "route" | "peak" | "elevation";
->>>>>>> 9c37b5b78195f678040f02b776d8b3b6eecb0110
+};
+
+type TerrainPoint = ScreenPoint & {
+  baseY: number;
+  z: number;
 };
 
 type TrailMapProps = {
@@ -104,6 +104,7 @@ const TILE_SIZE = 256;
 const DEFAULT_ZOOM = 13;
 const DEFAULT_CENTER: Coordinate = [-41.1734, -71.4752];
 const MIN_ZOOM = 10;
+const MAX_TERRAIN_POINTS = 48;
 const MAX_ZOOM_BY_LAYER: Record<MapLayer, number> = {
   standard: 18,
   terrain: 17,
@@ -112,6 +113,43 @@ const MAX_ZOOM_BY_LAYER: Record<MapLayer, number> = {
 
 const clamp = (value: number, min: number, max: number) =>
   Math.max(min, Math.min(max, value));
+
+const getDifficultyFactor = (difficulty: string | null | undefined) => {
+  const normalized = difficulty?.toLowerCase() ?? "";
+
+  if (normalized.includes("alta") || normalized.includes("dificil")) return 1.35;
+  if (normalized.includes("media") || normalized.includes("moderada")) return 1;
+  return 0.72;
+};
+
+const getRouteDistanceKm = (points: Coordinate[]) => {
+  if (points.length < 2) return 0;
+
+  let totalMeters = 0;
+
+  for (let index = 1; index < points.length; index += 1) {
+    const [previousLat, previousLng] = points[index - 1];
+    const [nextLat, nextLng] = points[index];
+    const deltaLat = (nextLat - previousLat) * 111_000;
+    const deltaLng =
+      (nextLng - previousLng) *
+      111_000 *
+      Math.cos(((previousLat + nextLat) / 2) * (Math.PI / 180));
+
+    totalMeters += Math.hypot(deltaLat, deltaLng);
+  }
+
+  return totalMeters / 1000;
+};
+
+const getSampledRoutePoints = (points: Coordinate[], maxPoints: number) => {
+  if (points.length <= maxPoints) return points;
+
+  return Array.from({ length: maxPoints }, (_, index) => {
+    const sourceIndex = Math.round((index / (maxPoints - 1)) * (points.length - 1));
+    return points[sourceIndex];
+  });
+};
 
 const getTouchDistance = (touches: readonly MapTouch[]) => {
   if (touches.length < 2) return null;
@@ -911,18 +949,6 @@ export function TrailMap({
   };
 
   const mapState = useMemo(() => {
-<<<<<<< HEAD
-    return getMapState({
-      activeCenter,
-      isPerspective,
-      layer,
-      layout,
-      locationCoordinate: location?.coordinate ?? null,
-      routePoints,
-      zoom,
-    });
-  }, [activeCenter[0], activeCenter[1], isPerspective, layer, layout.height, layout.width, location, routePoints, zoom]);
-=======
     if (!layout.width || !layout.height) {
       return { tiles: [], points: [], selectedPoint: null, userPoint: null };
     }
@@ -1022,7 +1048,6 @@ export function TrailMap({
       routeProgressMeters: closest.progressMeters,
     });
   };
->>>>>>> 9c37b5b78195f678040f02b776d8b3b6eecb0110
 
   const tileSignature = useMemo(
     () => mapState.tiles.map((tile) => tile.key).join("|"),
@@ -1087,17 +1112,6 @@ export function TrailMap({
     };
   }, [tileSignature]);
 
-<<<<<<< HEAD
-  const terrainState = useMemo(() => {
-    return getTerrainState({
-      layout,
-      locationCoordinate: location?.coordinate ?? null,
-      routePoints,
-      trail,
-      trailCenter,
-    });
-  }, [layout.height, layout.width, location, routePoints, trail?.difficulty, trail?.distance_km, trailCenter[0], trailCenter[1]]);
-=======
   const terrainElevationGain = useMemo(
     () =>
       getTerrainElevationGainMeters(
@@ -1167,7 +1181,6 @@ export function TrailMap({
       routePath,
     };
   }, [layer, layout, mapState.points, terrainElevationGain, trail?.name]);
->>>>>>> 9c37b5b78195f678040f02b776d8b3b6eecb0110
 
   const onLayout = (event: LayoutChangeEvent) => {
     const { width, height } = event.nativeEvent.layout;
@@ -1222,137 +1235,6 @@ export function TrailMap({
     >
       {isPerspective ? (
         <View style={styles.terrain3dScene}>
-<<<<<<< HEAD
-          <View style={styles.terrainSky} />
-          <View style={styles.mountainFar} />
-          <View style={styles.mountainNear} />
-          <View style={styles.terrainHorizon} />
-          <View style={styles.terrainPlane}>
-            <View
-              style={[
-                styles.terrainMovableContent,
-                {
-                  transform: [
-                    { translateX: terrainOffset.x + panOffset.x },
-                    { translateY: terrainOffset.y + panOffset.y },
-                    { scale: terrainScale },
-                  ],
-                },
-              ]}
-            >
-              {terrainState.bands.map((band) => (
-                <View
-                  key={band.key}
-                  style={[
-                    styles.terrainBand,
-                    {
-                      backgroundColor: band.color,
-                      opacity: band.opacity,
-                      top: band.top,
-                    },
-                  ]}
-                />
-              ))}
-
-              <View style={styles.terrainRidgeBack} />
-              <View style={styles.terrainRidgeFront} />
-
-              {terrainState.points.map((point, index) => (
-                <View
-                  key={`terrain-pillar-${index}`}
-                  style={[
-                    styles.terrainPillar,
-                    {
-                      height: Math.max(18, point.baseY - point.y),
-                      left: point.x - 5,
-                      top: point.y + 8,
-                    },
-                  ]}
-                />
-              ))}
-
-              <RouteSegments
-                points={terrainState.points}
-                segmentStyle={styles.terrainRouteShadow}
-                keyPrefix="terrain-route-shadow"
-                getSegmentLeft={(point) => point.x + 5}
-                getSegmentTop={(point, nextPoint) =>
-                  Math.max(
-                    (point as TerrainPoint).baseY,
-                    (nextPoint as TerrainPoint).baseY
-                  ) + 4
-                }
-              />
-
-              {terrainState.points.slice(0, -1).map((point, index) => (
-                <RouteSegments
-                  key={`terrain-route-wall-${index}`}
-                  points={[point, terrainState.points[index + 1]]}
-                  segmentStyle={[
-                    styles.terrainRouteWall,
-                    {
-                      height: Math.max(
-                        18,
-                        (point.z + terrainState.points[index + 1].z) / 2
-                      ),
-                    },
-                  ]}
-                  keyPrefix="terrain-route-wall"
-                  getSegmentTop={(currentPoint) => currentPoint.y + 5}
-                />
-              ))}
-
-              <RouteSegments
-                points={terrainState.points}
-                segmentStyle={styles.terrainRouteSegment}
-                keyPrefix="terrain-route"
-              />
-
-              {terrainState.points[0] ? (
-                <View
-                  style={[
-                    styles.terrainMarker,
-                    styles.startMarker,
-                    {
-                      left: terrainState.points[0].x - 16,
-                      top: terrainState.points[0].y - 16,
-                    },
-                  ]}
-                >
-                  <Ionicons name="flag-outline" size={15} color={colors.white} />
-                </View>
-              ) : null}
-
-              {terrainState.points.length > 1 ? (
-                <View
-                  style={[
-                    styles.terrainMarker,
-                    styles.endMarker,
-                    {
-                      left: terrainState.points[terrainState.points.length - 1].x - 16,
-                      top: terrainState.points[terrainState.points.length - 1].y - 16,
-                    },
-                  ]}
-                >
-                  <Ionicons name="location" size={15} color={colors.white} />
-                </View>
-              ) : null}
-
-              {terrainState.userPoint ? (
-                <View
-                  style={[
-                    styles.terrainUserMarker,
-                    {
-                      left: terrainState.userPoint.x - 11,
-                      top: terrainState.userPoint.y - 11,
-                    },
-                  ]}
-                />
-              ) : null}
-            </View>
-          </View>
-
-=======
           <Terrain3DScene
             routePoints={routePoints}
             fallbackCenter={trailCenter}
@@ -1365,7 +1247,6 @@ export function TrailMap({
             }}
             viewScale={terrainScale}
           />
->>>>>>> 9c37b5b78195f678040f02b776d8b3b6eecb0110
           <View style={styles.terrainInfo}>
             <Text style={styles.terrainInfoTitle}>Vista 3D del terreno</Text>
             <Text style={styles.terrainInfoText}>
@@ -1422,13 +1303,6 @@ export function TrailMap({
             />
           ))}
 
-<<<<<<< HEAD
-          <RouteSegments
-            points={mapState.points}
-            segmentStyle={styles.routeSegment}
-            keyPrefix="route"
-          />
-=======
           {mapDecorations.routePath ? (
             <Svg
               pointerEvents="none"
@@ -1556,7 +1430,6 @@ export function TrailMap({
               <Ionicons name="chevron-forward" size={14} color={colors.white} />
             </View>
           ))}
->>>>>>> 9c37b5b78195f678040f02b776d8b3b6eecb0110
 
           {mapState.points[0] ? (
             <View
@@ -1635,14 +1508,6 @@ export function TrailMap({
       ) : null}
 
       {!isPerspective ? (
-<<<<<<< HEAD
-        <LayerControl
-          layer={layer}
-          immersive={immersive}
-          controlsTopOffset={controlsTopOffset}
-          setLayer={setLayer}
-        />
-=======
         <View
           style={[
             styles.layerControl,
@@ -1677,7 +1542,6 @@ export function TrailMap({
           </Pressable>
         ) : null}
         </View>
->>>>>>> 9c37b5b78195f678040f02b776d8b3b6eecb0110
       ) : null}
 
       <Pressable

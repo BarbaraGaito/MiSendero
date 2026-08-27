@@ -223,15 +223,11 @@ export function PrimaryButton({
   icon?: IconName;
   onPress?: () => void;
   href?: string;
-<<<<<<< HEAD
-  tone?: ButtonTone;
-=======
   tone?: "green" | "danger" | "light" | "secondary";
   disabled?: boolean;
   isLoading?: boolean;
   loadingLabel?: string;
   accessibilityLabel?: string;
->>>>>>> 9c37b5b78195f678040f02b776d8b3b6eecb0110
 }) {
   const isDisabled = disabled || isLoading;
   const labelText = isLoading && loadingLabel ? loadingLabel : label;
@@ -240,9 +236,6 @@ export function PrimaryButton({
 
   return (
     <Pressable
-<<<<<<< HEAD
-      style={getButtonStyle(tone)}
-=======
       accessibilityLabel={accessibilityLabel || labelText}
       accessibilityRole="button"
       accessibilityState={{ busy: isLoading, disabled: isDisabled }}
@@ -256,7 +249,6 @@ export function PrimaryButton({
           pressed && !isDisabled && styles.pressed,
           isDisabled && styles.disabled,
         ]}
->>>>>>> 9c37b5b78195f678040f02b776d8b3b6eecb0110
       onPress={() => {
         if (onPress) onPress();
         else if (href) router.push(href as any);
@@ -268,13 +260,6 @@ export function PrimaryButton({
         <Ionicons
           name={icon}
           size={19}
-<<<<<<< HEAD
-          color={getButtonIconColor(tone)}
-        />
-      ) : null}
-      <Text style={getButtonLabelStyle(tone)}>
-        {label}
-=======
           color={foreground}
         />
       ) : null}
@@ -286,7 +271,6 @@ export function PrimaryButton({
         ]}
       >
         {labelText}
->>>>>>> 9c37b5b78195f678040f02b776d8b3b6eecb0110
       </Text>
     </Pressable>
   );
@@ -304,15 +288,6 @@ export function BottomNav({ active }: { active: BottomTab }) {
 
   return (
     <View style={styles.bottomNav}>
-<<<<<<< HEAD
-      {items.map((item) => (
-        <BottomNavButton
-          key={item.id}
-          item={item}
-          selected={item.id === active}
-        />
-      ))}
-=======
       {items.map((item) => {
         const selected = item.id === active;
         return (
@@ -341,7 +316,6 @@ export function BottomNav({ active }: { active: BottomTab }) {
           </Pressable>
         );
       })}
->>>>>>> 9c37b5b78195f678040f02b776d8b3b6eecb0110
     </View>
   );
 }

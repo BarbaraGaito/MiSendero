@@ -1,4 +1,4 @@
-import { Ionicons } from "@expo/vector-icons";
+﻿import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import {
@@ -106,10 +106,6 @@ export default function ExploreRoutesScreen() {
     [favoriteTrailIds]
   );
   const filteredTrails = useMemo(
-<<<<<<< HEAD
-    () => filterTrails(trails, searchQuery, activeFilter, activeDistanceFilter),
-    [activeDistanceFilter, activeFilter, searchQuery, trails]
-=======
     () => {
       const normalizedQuery = normalizeText(searchQuery.trim());
 
@@ -142,7 +138,6 @@ export default function ExploreRoutesScreen() {
       });
     },
     [activeDistanceFilter, activeFilter, favoriteIdSet, searchQuery, trails]
->>>>>>> 9c37b5b78195f678040f02b776d8b3b6eecb0110
   );
   const visibleTrails = useMemo(
     () => filteredTrails.slice(0, visibleCount),
@@ -362,7 +357,7 @@ export default function ExploreRoutesScreen() {
             actionLabel={hasActiveFilters ? "Limpiar filtros" : undefined}
             message={
               hasActiveFilters
-                ? "Probá con menos filtros o una busqueda mas amplia."
+                ? "ProbÃ¡ con menos filtros o una busqueda mas amplia."
                 : "Cuando haya senderos disponibles, apareceran en esta lista."
             }
             onAction={hasActiveFilters ? clearFilters : undefined}

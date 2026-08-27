@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+﻿import React, { useCallback, useEffect, useState } from "react";
 import { router, useFocusEffect } from "expo-router";
 import { Alert, ScrollView, StyleSheet, Text, View } from "react-native";
 import {
@@ -64,59 +64,6 @@ const emptyOfflineMapsSummary: OfflineMapsSummary = {
   totalSizeMb: 0,
 };
 
-<<<<<<< HEAD
-const adminTestingModeFallback: TestingLocationMode = {
-  enabled: false,
-  updatedAt: null,
-};
-
-const loadProfileData = async () => {
-  const session = await getAuthSession();
-
-  if (!session) return null;
-
-  const data = await getProfile(session.token);
-  const [
-    privacyPreferences,
-    testingPreferences,
-    preferences,
-    experience,
-    contact,
-    localSessionsSummary,
-    mapsSummary,
-  ] = await Promise.all([
-    getPrivacyPreferences(),
-    getTestingLocationMode(),
-    getAppPreferences(),
-    getExperienceProfile(),
-    getEmergencyContact(),
-    getSessionsSummary(),
-    getOfflineMapsSummary(),
-  ]);
-
-  if (data.user) {
-    await saveAuthSession({
-      token: session.token,
-      user: data.user,
-    });
-  }
-
-  const isAdmin = data.user?.role === "admin";
-  if (!isAdmin && testingPreferences.enabled) {
-    await saveTestingLocationMode(false);
-  }
-
-  return {
-    profile: data,
-    privacy: privacyPreferences,
-    appPreferences: preferences,
-    experienceProfile: experience,
-    emergencyContact: contact,
-    sessionsSummary: localSessionsSummary,
-    offlineMapsSummary: mapsSummary,
-    testingLocationMode: isAdmin ? await getTestingLocationMode() : adminTestingModeFallback,
-  };
-=======
 const emptySyncSummary: SyncSummary = {
   pending: 0,
   syncing: 0,
@@ -124,7 +71,6 @@ const emptySyncSummary: SyncSummary = {
   failed: 0,
   abandoned: 0,
   exhausted: 0,
->>>>>>> 9c37b5b78195f678040f02b776d8b3b6eecb0110
 };
 
 const formatDistance = (meters: number) =>
@@ -188,38 +134,8 @@ export default function ProfileScreen() {
   const [syncSummary, setSyncSummary] = useState<SyncSummary>(emptySyncSummary);
   const [isSyncing, setIsSyncing] = useState(false);
 
-<<<<<<< HEAD
-  useEffect(() => {
-    const loadProfile = async () => {
-      try {
-        const data = await loadProfileData();
-
-        if (!data) {
-          router.replace("/");
-          return;
-        }
-
-        setProfile(data.profile);
-        setPrivacy(data.privacy);
-        setAppPreferences(data.appPreferences);
-        setExperienceProfile(data.experienceProfile);
-        setEmergencyContact(data.emergencyContact);
-        setSessionsSummary(data.sessionsSummary);
-        setOfflineMapsSummary(data.offlineMapsSummary);
-        setTestingLocationMode(data.testingLocationMode);
-        setError(null);
-      } catch (loadError) {
-        setError("No pudimos cargar tu perfil en este momento.");
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    loadProfile();
-=======
   const refreshWearableRuntime = useCallback(async () => {
     setWearableRuntime(await getWearableRuntimeStatus());
->>>>>>> 9c37b5b78195f678040f02b776d8b3b6eecb0110
   }, []);
 
   const refreshSyncSummary = useCallback(async () => {
@@ -431,7 +347,7 @@ export default function ProfileScreen() {
         <Card>
           <Text style={styles.cardTitle}>Sincronizacion</Text>
           <Text style={styles.privacyText}>
-            Reportes, actividades y alertas creados sin señal quedan en cola
+            Reportes, actividades y alertas creados sin seÃ±al quedan en cola
             local hasta recuperar conectividad.
           </Text>
           <SettingRow
@@ -465,7 +381,7 @@ export default function ProfileScreen() {
             <>
               <Text style={styles.warningText}>
                 {syncSummary.exhausted} no se pudieron enviar tras varios intentos. Podes
-                seguir esperando señal o descartarlos.
+                seguir esperando seÃ±al o descartarlos.
               </Text>
               <SettingRow
                 label="Descartar pendientes con error"

@@ -31,96 +31,58 @@ import {
   colors,
 } from "../components/MiSenderoUI";
 
-<<<<<<< HEAD
-type RouteContext = {
-  trail: Trail | null;
-  reports: TrailReport[];
-  weather: TrailWeather | null;
-  isWifiConnected: boolean;
-  error: string | null;
+const GPS_NOISE_FLOOR_METERS = 2;
+
+const getNetworkStatus = async () => {
+  const networkState = await Network.getNetworkStateAsync();
+  const hasWifi =
+    networkState.type === Network.NetworkStateType.WIFI &&
+    networkState.isConnected !== false &&
+    networkState.isInternetReachable !== false;
+  const hasInternet =
+    networkState.isConnected !== false &&
+    networkState.isInternetReachable !== false;
+
+  return { hasWifi, hasInternet };
 };
 
-const getNetworkFlags = async () => {
-  const networkState = await Network.getNetworkStateAsync().catch(() => null);
+const loadRouteContext = async (trailId: number) => {
+  const { hasWifi, hasInternet } = await getNetworkStatus();
 
-  return {
-    hasWifi:
-      networkState?.type === Network.NetworkStateType.WIFI &&
-      networkState.isConnected !== false &&
-      networkState.isInternetReachable !== false,
-    hasInternet:
-      networkState?.isConnected !== false &&
-      networkState?.isInternetReachable !== false,
-  };
-};
+  if (hasInternet) {
+    const [trail, reports] = await Promise.all([
+      getTrailById(trailId),
+      getTrailReports(trailId).catch(() => []),
+    ]);
 
-const getRouteContextFromApi = async (
-  trailId: number,
-  hasWifi: boolean
-): Promise<RouteContext> => {
-  const [trail, reports] = await Promise.all([
-    getTrailById(trailId),
-    getTrailReports(trailId).catch(() => []),
-  ]);
-  const weather = hasWifi ? await getTrailWeather(trailId).catch(() => null) : null;
+    return { trail, reports, hasWifi, hasInternet };
+  }
 
-  return { trail, reports, weather, isWifiConnected: hasWifi, error: null };
-};
+  const offlineMap = await getVerifiedOfflineMapByTrailId(trailId);
 
-const getRouteContextFromOfflineMap = async (
-  trailId: number
-): Promise<RouteContext | null> => {
-  const offlineMap = await getOfflineMapByTrailId(trailId).catch(() => null);
-
-  if (!offlineMap?.trail) return null;
+  if (!offlineMap?.trail) {
+    throw new Error("offline-map-not-found");
+  }
 
   return {
     trail: offlineMap.trail,
     reports: offlineMap.reports,
-    weather: null,
-    isWifiConnected: false,
-    error: null,
+    hasWifi: false,
+    hasInternet: false,
   };
 };
 
-const loadRouteContext = async (trailId: number): Promise<RouteContext> => {
-  const { hasWifi, hasInternet } = await getNetworkFlags();
-
-  if (hasInternet) {
-    return getRouteContextFromApi(trailId, hasWifi);
-  }
-
-  const offlineContext = await getRouteContextFromOfflineMap(trailId);
-  if (offlineContext) return offlineContext;
-
-  return {
-    trail: null,
-    reports: [],
-    weather: null,
-    isWifiConnected: false,
-    error: "No pudimos cargar el mapa de este sendero.",
-  };
-};
-
-const getSimulatedRouteStart = (trail: Trail | null, routePoints: Coordinate[]) => {
-  if (!trail) return null;
-  if (
-    routePoints.length === 0 &&
-    (trail.center_lat === null || trail.center_lng === null)
-  ) {
-    return null;
-  }
-
-  const fallbackCenter: Coordinate = [
-    trail.center_lat ?? 0,
-    trail.center_lng ?? 0,
-  ];
+const getSimulatedRouteStart = (
+  trail: Trail | null,
+  routePoints: Coordinate[]
+): Coordinate => {
+  const fallbackCenter: Coordinate =
+    typeof trail?.center_lat === "number" && typeof trail.center_lng === "number"
+      ? [trail.center_lat, trail.center_lng]
+      : [-41.1734, -71.4752];
 
   return getRouteStart(routePoints, fallbackCenter);
 };
-=======
-const GPS_NOISE_FLOOR_METERS = 2;
->>>>>>> 9c37b5b78195f678040f02b776d8b3b6eecb0110
 
 export default function Screen04RouteMap() {
   const insets = useSafeAreaInsets();
@@ -160,51 +122,13 @@ export default function Screen04RouteMap() {
         const context = await loadRouteContext(trailId);
         if (!isMounted) return;
 
-<<<<<<< HEAD
         setTrail(context.trail);
         setReports(context.reports);
-        setIsWifiConnected(context.isWifiConnected);
-        setWeather(context.weather);
-        setError(context.error);
-      } catch (loadError) {
-        if (!isMounted) return;
-
-        setError("No pudimos cargar el mapa de este sendero.");
-        setWeather(null);
-        setReports([]);
-        setIsWifiConnected(false);
-=======
-        const hasWifi =
-          networkState?.type === Network.NetworkStateType.WIFI &&
-          networkState.isConnected !== false &&
-          networkState.isInternetReachable !== false;
-        const hasInternet =
-          networkState?.isConnected !== false &&
-          networkState?.isInternetReachable !== false;
-        let trailData: Trail | null = null;
-        let reportsData: TrailReport[] = [];
-
-        if (hasInternet) {
-          trailData = await getTrailById(trailId);
-          reportsData = await getTrailReports(trailId).catch(() => []);
-        } else {
-          const offlineMap = await getVerifiedOfflineMapByTrailId(trailId);
-
-          if (!offlineMap?.trail) {
-            throw new Error("offline-map-not-found");
-          }
-
-          trailData = offlineMap.trail;
-          reportsData = offlineMap.reports;
-        }
-
-        setTrail(trailData);
-        setReports(reportsData);
-        setIsWifiConnected(hasWifi);
-        setHasInternetConnection(hasInternet);
+        setIsWifiConnected(context.hasWifi);
+        setHasInternetConnection(context.hasInternet);
         setError(null);
 
-        if (!hasWifi) {
+        if (!context.hasWifi) {
           setWeather(null);
           return;
         }
@@ -233,7 +157,6 @@ export default function Screen04RouteMap() {
           setIsWifiConnected(false);
           setHasInternetConnection(false);
         }
->>>>>>> 9c37b5b78195f678040f02b776d8b3b6eecb0110
       } finally {
         if (!isMounted) return;
 
@@ -597,23 +520,12 @@ export default function Screen04RouteMap() {
               <Text style={styles.activeActionText}>Ruta</Text>
             </Pressable>
             <Pressable
-<<<<<<< HEAD
-              onPress={() => router.push("/reloj")}
-              style={styles.activeAction}
-            >
-              <Ionicons name="watch-outline" size={20} color={colors.greenDark} />
-              <Text style={styles.activeActionText}>Reloj</Text>
-            </Pressable>
-            <Pressable
-              onPress={() => router.push("/confirmar-sos")}
-=======
               onPress={() =>
                 router.push({
                   pathname: "/confirmar-sos",
                   params: { id: String(trailId), startedAt: String(startedAtMs) },
                 })
               }
->>>>>>> 9c37b5b78195f678040f02b776d8b3b6eecb0110
               style={[styles.activeAction, styles.activeDangerAction]}
             >
               <Ionicons name="alert-circle-outline" size={20} color={colors.white} />

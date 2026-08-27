@@ -1,4 +1,4 @@
-import * as FileSystem from "expo-file-system/legacy";
+﻿import * as FileSystem from "expo-file-system/legacy";
 import { Trail } from "../types";
 import { Coordinate, parseRouteCoordinates } from "./geoUtils";
 
@@ -151,62 +151,7 @@ export const resolveCachedTileUri = async (
   return isUsableTileInfo(info) ? localUri : null;
 };
 
-<<<<<<< HEAD
-type TileDownloadItem = {
-  layer: CachedMapLayer;
-  zoom: number;
-  x: number;
-  y: number;
-  url: string;
-  localUri: string;
-};
-
-const getTileBounds = (points: Coordinate[], zoom: number) => {
-  const projectedPoints = points.map((point) => project(point, zoom));
-  const xs = projectedPoints.map((point) => point.x);
-  const ys = projectedPoints.map((point) => point.y);
-
-  return {
-    minTileX: Math.floor(Math.min(...xs) / TILE_SIZE),
-    maxTileX: Math.floor(Math.max(...xs) / TILE_SIZE),
-    minTileY: Math.floor(Math.min(...ys) / TILE_SIZE),
-    maxTileY: Math.floor(Math.max(...ys) / TILE_SIZE),
-  };
-};
-
-const addTilesForLayerZoom = (
-  tiles: Map<string, TileDownloadItem>,
-  layer: CachedMapLayer,
-  zoom: number,
-  points: Coordinate[]
-) => {
-  const { minTileX, maxTileX, minTileY, maxTileY } = getTileBounds(points, zoom);
-  const buffer = 1;
-
-  for (let x = minTileX - buffer; x <= maxTileX + buffer; x += 1) {
-    for (let y = minTileY - buffer; y <= maxTileY + buffer; y += 1) {
-      if (tiles.size >= MAX_DOWNLOAD_TILES) return;
-      if (y < 0 || y >= 2 ** zoom) continue;
-
-      const tileX = wrapTileX(x, zoom);
-      const key = `${layer}-${zoom}-${tileX}-${y}`;
-
-      tiles.set(key, {
-        layer,
-        zoom,
-        x: tileX,
-        y,
-        url: getTileRemoteUrl(layer, zoom, tileX, y),
-        localUri: getTileLocalUri(layer, zoom, tileX, y),
-      });
-    }
-  }
-};
-
-const getTilesForTrail = (trail: Trail): TileDownloadItem[] => {
-=======
 export const getOfflineTilePlanForTrail = (trail: Trail): TileDescriptor[] => {
->>>>>>> 9c37b5b78195f678040f02b776d8b3b6eecb0110
   const route = parseRouteCoordinates(trail.route_coordinates);
   const fallbackCenter: Coordinate = [
     trail.center_lat ?? DEFAULT_CENTER[0],
@@ -217,18 +162,11 @@ export const getOfflineTilePlanForTrail = (trail: Trail): TileDescriptor[] => {
   const zooms = Array.from(
     new Set([baseZoom - 1, baseZoom, baseZoom + 1].map((zoom) => clamp(zoom, MIN_ZOOM, 15)))
   );
-<<<<<<< HEAD
-  const tiles = new Map<string, TileDownloadItem>();
-=======
   const layers: CachedMapLayer[] = ["standard", "terrain"];
   const tiles = new Map<string, TileDescriptor>();
->>>>>>> 9c37b5b78195f678040f02b776d8b3b6eecb0110
 
   for (const layer of ["standard", "terrain"] as CachedMapLayer[]) {
     for (const zoom of zooms) {
-<<<<<<< HEAD
-      addTilesForLayerZoom(tiles, layer, zoom, points);
-=======
       if (tiles.size >= MAX_DOWNLOAD_TILES) break;
 
       const projectedPoints = points.map((point) => project(point, zoom));
@@ -257,27 +195,12 @@ export const getOfflineTilePlanForTrail = (trail: Trail): TileDescriptor[] => {
           });
         }
       }
->>>>>>> 9c37b5b78195f678040f02b776d8b3b6eecb0110
     }
   }
 
   return Array.from(tiles.values());
 };
 
-<<<<<<< HEAD
-const downloadTile = async (tile: TileDownloadItem) => {
-  const directory = tile.localUri.slice(0, tile.localUri.lastIndexOf("/") + 1);
-  await ensureDirectory(directory);
-
-  const existing = await FileSystem.getInfoAsync(tile.localUri);
-
-  if (!existing.exists) {
-    await FileSystem.downloadAsync(tile.url, tile.localUri);
-  }
-
-  const info = await FileSystem.getInfoAsync(tile.localUri);
-  return info.exists && "size" in info ? info.size ?? 0 : 0;
-=======
 export const getOfflineTileCoverageForTrail = async (
   trail: Trail
 ): Promise<OfflineTileCoverage> => {
@@ -304,17 +227,10 @@ export const getOfflineTileCoverageForTrail = async (
     sizeMb: Math.max(0, Math.ceil((totalBytes / 1024 / 1024) * 10) / 10),
     isComplete: tileList.length > 0 && availableTiles === tileList.length,
   };
->>>>>>> 9c37b5b78195f678040f02b776d8b3b6eecb0110
 };
 
 export const downloadOfflineTilesForTrail = async (
   trail: Trail,
-<<<<<<< HEAD
-  onProgress?: (downloaded: number, total: number) => void
-): Promise<TileCacheResult> => {
-  if (!FileSystem.documentDirectory) {
-    return { downloadedTiles: 0, totalTiles: 0, sizeMb: 0 };
-=======
   onProgress?: (downloaded: number, total: number) => void,
   options: OfflineTileDownloadOptions = {}
 ): Promise<TileCacheResult> => {
@@ -323,14 +239,10 @@ export const downloadOfflineTilesForTrail = async (
       "storage-unavailable",
       "No hay almacenamiento local disponible para guardar tiles offline."
     );
->>>>>>> 9c37b5b78195f678040f02b776d8b3b6eecb0110
   }
 
   await ensureDirectory(TILE_CACHE_DIR);
 
-<<<<<<< HEAD
-  const tileList = getTilesForTrail(trail);
-=======
   const tileList = getOfflineTilePlanForTrail(trail);
 
   if (tileList.length === 0) {
@@ -340,16 +252,10 @@ export const downloadOfflineTilesForTrail = async (
     );
   }
 
->>>>>>> 9c37b5b78195f678040f02b776d8b3b6eecb0110
   let downloadedTiles = 0;
   let totalBytes = 0;
 
   for (const tile of tileList) {
-<<<<<<< HEAD
-    totalBytes += await downloadTile(tile);
-    downloadedTiles += 1;
-    onProgress?.(downloadedTiles, tileList.length);
-=======
     if (options.shouldCancel?.()) {
       throw new MapTileDownloadError(
         "download-cancelled",
@@ -430,7 +336,6 @@ export const downloadOfflineTilesForTrail = async (
         }
       );
     }
->>>>>>> 9c37b5b78195f678040f02b776d8b3b6eecb0110
   }
 
   return {

@@ -20,6 +20,12 @@ export type WearableConnectionStatus =
 
 export type HealthPredictionLevel = "normal" | "caution" | "high";
 
+export type WearableSimulationScenario =
+  | "normal"
+  | "esfuerzo_moderado"
+  | "fatiga_alta"
+  | "riesgo_fisiologico";
+
 export interface WearableConnection {
   user_id?: number;
   provider: WearableProvider;

@@ -6,6 +6,7 @@ import {
   WearableMetricSample,
   WearableProvider,
   WearableRuntimeStatus,
+  WearableSimulationScenario,
 } from "../types";
 import { getAuthSession } from "./authSession";
 import {
@@ -324,21 +325,89 @@ export const getRecentWearableMetricSamples = async (limit = 20) => {
   return rows.map(toMetricSample);
 };
 
-export const createDevelopmentMetricSample = async () => {
+type SimulationRange = {
+  hrMin: number;
+  hrMax: number;
+  speedMin: number;
+  speedMax: number;
+  spo2Min: number;
+  spo2Max: number;
+  stepsMin: number;
+  stepsMax: number;
+  kcalMin: number;
+  kcalMax: number;
+};
+
+const simulationScenarioRanges: Record<WearableSimulationScenario, SimulationRange> = {
+  normal: {
+    hrMin: 78,
+    hrMax: 98,
+    speedMin: 4,
+    speedMax: 5.5,
+    spo2Min: 97,
+    spo2Max: 99,
+    stepsMin: 1800,
+    stepsMax: 3200,
+    kcalMin: 140,
+    kcalMax: 260,
+  },
+  esfuerzo_moderado: {
+    hrMin: 138,
+    hrMax: 152,
+    speedMin: 2.5,
+    speedMax: 3.5,
+    spo2Min: 94,
+    spo2Max: 96,
+    stepsMin: 2600,
+    stepsMax: 4000,
+    kcalMin: 260,
+    kcalMax: 400,
+  },
+  fatiga_alta: {
+    hrMin: 160,
+    hrMax: 176,
+    speedMin: 1.5,
+    speedMax: 2.3,
+    spo2Min: 90,
+    spo2Max: 93,
+    stepsMin: 3200,
+    stepsMax: 4800,
+    kcalMin: 380,
+    kcalMax: 520,
+  },
+  riesgo_fisiologico: {
+    hrMin: 178,
+    hrMax: 197,
+    speedMin: 0.8,
+    speedMax: 1.6,
+    spo2Min: 82,
+    spo2Max: 89,
+    stepsMin: 3600,
+    stepsMax: 5200,
+    kcalMin: 420,
+    kcalMax: 600,
+  },
+};
+
+const randomInRange = (min: number, max: number) => min + Math.random() * (max - min);
+
+export const createDevelopmentMetricSample = async (
+  scenario: WearableSimulationScenario = "normal"
+) => {
   const connection = await getWearableConnection();
   const provider = connection.provider || "development_simulator";
   const now = Date.now();
-  const heartRateBase =
-    provider === "development_simulator" ? 94 : 88 + Math.round(Math.random() * 28);
-  const heartRateBpm = heartRateBase + Math.round(Math.sin(now / 25_000) * 18);
-  const speedKmh = Number((2.8 + Math.random() * 2.6).toFixed(1));
-  const oxygenSaturation = Number((96 + Math.random() * 3).toFixed(1));
+  const range = simulationScenarioRanges[scenario] ?? simulationScenarioRanges.normal;
+
+  const heartRateBpm = Math.round(randomInRange(range.hrMin, range.hrMax));
+  const speedKmh = Number(randomInRange(range.speedMin, range.speedMax).toFixed(1));
+  const oxygenSaturation = Number(randomInRange(range.spo2Min, range.spo2Max).toFixed(1));
 
   await saveWearableMetricSample({
     provider,
     heartRateBpm,
-    steps: 800 + Math.round(Math.random() * 4200),
-    activeEnergyKcal: Number((120 + Math.random() * 360).toFixed(1)),
+    steps: Math.round(randomInRange(range.stepsMin, range.stepsMax)),
+    activeEnergyKcal: Number(randomInRange(range.kcalMin, range.kcalMax).toFixed(1)),
     speedKmh,
     oxygenSaturation,
     recordedAt: now,
@@ -426,8 +495,18 @@ export const predictWearableHealth = (
     fatigue,
   });
 
+  const criticalOxygen =
+    sample.oxygenSaturation !== null && sample.oxygenSaturation < 90;
+  const criticalHeartRate = sample.heartRateBpm >= 180;
+
   let level: HealthPredictionLevel = "normal";
-  if (risk.label === "alto" || sample.heartRateBpm >= 165 || fatigue === "alto") {
+  if (
+    criticalOxygen ||
+    criticalHeartRate ||
+    risk.label === "alto" ||
+    sample.heartRateBpm >= 165 ||
+    fatigue === "alto"
+  ) {
     level = "high";
   } else if (risk.label === "medio" || sample.heartRateBpm >= 145 || fatigue === "medio") {
     level = "caution";
@@ -436,9 +515,16 @@ export const predictWearableHealth = (
   if (level === "high") {
     return {
       level,
-      title: "Revisar intensidad",
-      message:
-        "Tu esfuerzo actual aparece elevado. Pausa, hidratate y evalua como te sentis antes de continuar.",
+      title: criticalOxygen
+        ? "Saturacion de oxigeno critica"
+        : criticalHeartRate
+          ? "Frecuencia cardiaca critica"
+          : "Revisar intensidad",
+      message: criticalOxygen
+        ? `Tu oxigeno en sangre (${sample.oxygenSaturation}%) esta por debajo del umbral seguro. Deten la actividad, respira con calma y busca ayuda si no mejora.`
+        : criticalHeartRate
+          ? `Tu frecuencia cardiaca (${sample.heartRateBpm} bpm) es muy elevada. Deten la actividad de inmediato y evalua pedir ayuda.`
+          : "Tu esfuerzo actual aparece elevado. Pausa, hidratate y evalua como te sentis antes de continuar.",
       fatigue,
     };
   }

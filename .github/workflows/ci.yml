@@ -22,17 +22,10 @@ jobs:
       SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
     steps:
       - name: Checkout Repository
-<<<<<<< HEAD
-        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
-
-      - name: Setup NodeJS
-        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
-=======
         uses: actions/checkout@v5
 
       - name: Setup NodeJS
         uses: actions/setup-node@v5
->>>>>>> 9c37b5b78195f678040f02b776d8b3b6eecb0110
         with:
           node-version: 22
           cache: npm
@@ -41,17 +34,10 @@ jobs:
             backend/package-lock.json
 
       - name: Install App Dependencies
-<<<<<<< HEAD
-        run: npm ci --ignore-scripts
-
-      - name: Run App Type Check
-        run: ./node_modules/.bin/tsc --noEmit
-=======
         run: npm ci
 
       - name: Run App Type Check
         run: npx tsc --noEmit
->>>>>>> 9c37b5b78195f678040f02b776d8b3b6eecb0110
 
       - name: Run App Tests
         run: npm test -- --runInBand
@@ -60,11 +46,7 @@ jobs:
         run: npm test -- --coverage --runInBand
 
       - name: Install API Dependencies
-<<<<<<< HEAD
-        run: npm ci --ignore-scripts
-=======
         run: npm ci
->>>>>>> 9c37b5b78195f678040f02b776d8b3b6eecb0110
         working-directory: backend
 
       - name: Run API Tests
@@ -77,11 +59,7 @@ jobs:
 
       - name: Quality Scan
         if: env.SONAR_TOKEN != ''
-<<<<<<< HEAD
-        uses: SonarSource/sonarqube-scan-action@fd88b7d7ccbaefd23d8f36f73b59db7a3d246602 # v6.0.0
-=======
         uses: SonarSource/sonarqube-scan-action@v6
->>>>>>> 9c37b5b78195f678040f02b776d8b3b6eecb0110
         with:
           args: >
             -Dsonar.projectKey=misendero

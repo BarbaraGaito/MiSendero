@@ -1,8 +1,12 @@
 import React from "react";
+import { useLocalSearchParams } from "expo-router";
 import { StyleSheet, Text, View } from "react-native";
 import { AppScreen, Card, PrimaryButton, ScreenTitle, colors } from "../components/MiSenderoUI";
 
 export default function ReportSavedScreen() {
+  const { pending } = useLocalSearchParams<{ pending?: string }>();
+  const isPending = pending === "1";
+
   return (
     <AppScreen withBottomNav={false}>
       <View style={styles.iconCircle}>
@@ -16,9 +20,13 @@ export default function ReportSavedScreen() {
       />
 
       <Card tone="green">
-        <Text style={styles.cardTitle}>Detalle enviado</Text>
+        <Text style={styles.cardTitle}>
+          {isPending ? "Guardado, pendiente de envio" : "Detalle enviado"}
+        </Text>
         <Text style={styles.cardText}>
-          El reporte quedo guardado para la ruta seleccionada.
+          {isPending
+            ? "No hay senal ahora. El reporte se enviara automaticamente cuando la app detecte conexion."
+            : "El reporte quedo guardado para la ruta seleccionada."}
         </Text>
       </Card>
 

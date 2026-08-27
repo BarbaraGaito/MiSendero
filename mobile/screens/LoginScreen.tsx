@@ -38,16 +38,30 @@ export default function LoginScreen() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordVisible, setPasswordVisible] = useState(false);
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const isRegister = mode === "register";
+  const canSubmit =
+    email.trim().length > 0 &&
+    password.trim().length > 0 &&
+    (!isRegister || (name.trim().length > 0 && acceptedTerms));
 
   const submit = async () => {
+<<<<<<< HEAD
     const formError = getFormError(isRegister, name, email, password, acceptedTerms);
     if (formError) {
       setError(formError);
+=======
+    if (!canSubmit) {
+      setError(
+        isRegister
+          ? "Completa los campos y acepta los terminos para continuar."
+          : "Completa email y contrasena para continuar."
+      );
+>>>>>>> 9c37b5b78195f678040f02b776d8b3b6eecb0110
       return;
     }
 
@@ -99,6 +113,8 @@ export default function LoginScreen() {
             <View style={styles.field}>
               <Text style={styles.label}>Nombre</Text>
               <TextInput
+                accessibilityLabel="Nombre"
+                autoComplete="name"
                 value={name}
                 onChangeText={setName}
                 placeholder="Tu nombre"
@@ -111,6 +127,8 @@ export default function LoginScreen() {
           <View style={styles.field}>
             <Text style={styles.label}>Email</Text>
             <TextInput
+              accessibilityLabel="Email"
+              autoComplete="email"
               value={email}
               onChangeText={setEmail}
               autoCapitalize="none"
@@ -123,17 +141,40 @@ export default function LoginScreen() {
 
           <View style={styles.field}>
             <Text style={styles.label}>Contrasena</Text>
-            <TextInput
-              value={password}
-              onChangeText={setPassword}
-              secureTextEntry
-              placeholder="Ingresa tu contrasena"
-              placeholderTextColor={colors.muted}
-              style={styles.input}
-            />
+            <View style={styles.passwordBox}>
+              <TextInput
+                accessibilityLabel="Contrasena"
+                autoComplete={isRegister ? "new-password" : "password"}
+                value={password}
+                onChangeText={setPassword}
+                secureTextEntry={!passwordVisible}
+                placeholder="Ingresa tu contrasena"
+                placeholderTextColor={colors.muted}
+                style={[styles.input, styles.passwordInput]}
+              />
+              <Pressable
+                accessibilityLabel={
+                  passwordVisible ? "Ocultar contrasena" : "Mostrar contrasena"
+                }
+                accessibilityRole="button"
+                hitSlop={8}
+                onPress={() => setPasswordVisible((current) => !current)}
+                style={styles.passwordToggle}
+              >
+                <Ionicons
+                  name={passwordVisible ? "eye-off-outline" : "eye-outline"}
+                  size={20}
+                  color={colors.green}
+                />
+              </Pressable>
+            </View>
           </View>
 
-          {error ? <Text style={styles.error}>{error}</Text> : null}
+          {error ? (
+            <Text accessibilityLiveRegion="polite" style={styles.error}>
+              {error}
+            </Text>
+          ) : null}
 
           {isRegister ? (
             <View style={styles.termsBox}>
@@ -164,9 +205,17 @@ export default function LoginScreen() {
           ) : null}
 
           <Pressable
-            disabled={isSubmitting}
+            accessibilityRole="button"
+            accessibilityState={{
+              busy: isSubmitting,
+              disabled: isSubmitting || !canSubmit,
+            }}
+            disabled={isSubmitting || !canSubmit}
             onPress={submit}
-            style={[styles.primaryButton, isSubmitting && styles.disabledButton]}
+            style={[
+              styles.primaryButton,
+              (isSubmitting || !canSubmit) && styles.disabledButton,
+            ]}
           >
             <Text style={styles.primaryButtonText}>
               {isSubmitting
@@ -182,6 +231,7 @@ export default function LoginScreen() {
               setMode(isRegister ? "login" : "register");
               setAcceptedTerms(false);
               setError(null);
+              setPasswordVisible(false);
             }}
             style={styles.secondaryButton}
           >
@@ -254,6 +304,21 @@ const styles = StyleSheet.create({
     fontSize: 15,
     minHeight: 50,
     paddingHorizontal: 14,
+  },
+  passwordBox: {
+    position: "relative",
+  },
+  passwordInput: {
+    paddingRight: 48,
+  },
+  passwordToggle: {
+    alignItems: "center",
+    bottom: 0,
+    justifyContent: "center",
+    position: "absolute",
+    right: 4,
+    top: 0,
+    width: 44,
   },
   error: {
     color: colors.danger,

@@ -37,32 +37,52 @@ export function DownloadedMapCard({
   title,
   meta,
   action,
+  secondaryAction,
   tone,
   onPress,
+  onSecondaryPress,
 }: {
   title: string;
   meta: string;
   action: string;
+  secondaryAction?: string;
   tone?: "danger";
   onPress?: () => void;
+  onSecondaryPress?: () => void;
 }) {
   return (
-    <Pressable onPress={onPress} disabled={!onPress}>
-      <Card>
-        <View style={styles.mapRow}>
-          <View style={styles.mapInfo}>
-            <View style={styles.inlineTitle}>
-              <Ionicons name="map-outline" size={18} color={colors.primary} />
-              <Text style={styles.cardTitle}>{title}</Text>
-            </View>
-            <Text style={styles.meta}>{meta}</Text>
+    <Card>
+      <View style={styles.mapRow}>
+        <View style={styles.mapInfo}>
+          <View style={styles.inlineTitle}>
+            <Ionicons name="map-outline" size={18} color={colors.primary} />
+            <Text style={styles.cardTitle}>{title}</Text>
           </View>
-          <Text style={[styles.pillAction, tone === "danger" && styles.pillDanger]}>
-            {action}
-          </Text>
+          <Text style={styles.meta}>{meta}</Text>
         </View>
-      </Card>
-    </Pressable>
+        <View style={styles.mapActions}>
+          <Pressable
+            accessibilityRole="button"
+            disabled={!onPress}
+            onPress={onPress}
+            style={({ pressed }) => pressed && { opacity: 0.72 }}
+          >
+            <Text style={[styles.pillAction, tone === "danger" && styles.pillDanger]}>
+              {action}
+            </Text>
+          </Pressable>
+          {secondaryAction && onSecondaryPress ? (
+            <Pressable
+              accessibilityRole="button"
+              onPress={onSecondaryPress}
+              style={({ pressed }) => pressed && { opacity: 0.72 }}
+            >
+              <Text style={styles.pillSecondary}>{secondaryAction}</Text>
+            </Pressable>
+          ) : null}
+        </View>
+      </View>
+    </Card>
   );
 }
 
@@ -329,6 +349,11 @@ export const styles = StyleSheet.create({
   },
   mapInfo: {
     flex: 1,
+    minWidth: 0,
+  },
+  mapActions: {
+    alignItems: "flex-end",
+    gap: 8,
   },
   pillAction: {
     backgroundColor: colors.primarySoft,
@@ -343,6 +368,16 @@ export const styles = StyleSheet.create({
   pillDanger: {
     backgroundColor: colors.redSoft,
     color: colors.red,
+  },
+  pillSecondary: {
+    backgroundColor: colors.surface,
+    borderRadius: 999,
+    color: colors.red,
+    fontSize: 12,
+    fontWeight: "900",
+    overflow: "hidden",
+    paddingHorizontal: 10,
+    paddingVertical: 7,
   },
   progressHero: {
     alignItems: "center",

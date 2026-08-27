@@ -2,7 +2,8 @@ import { router, useLocalSearchParams } from "expo-router";
 import React, { useEffect, useMemo, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { getTrailById } from "../../services/api";
-import { Trail } from "../../types";
+import { getWearableRuntimeStatus } from "../../services/wearableMetrics";
+import { Trail, WearableRuntimeStatus } from "../../types";
 import { AppScreen, Card, PrimaryButton, ScreenTitle, colors } from "../components/MiSenderoUI";
 
 const getFallbackRouteTotalMeters = (trail: Trail | null) =>
@@ -48,6 +49,9 @@ export default function RestBreakScreen() {
   const pauseStartedAt = useMemo(() => Date.now(), []);
   const [trail, setTrail] = useState<Trail | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [wearableRuntime, setWearableRuntime] =
+    useState<WearableRuntimeStatus | null>(null);
+  const activeMinutes = Math.max(0, Math.floor((pauseStartedAt - startedAtMs) / 60000));
 
   useEffect(() => {
     getTrailById(trailId)
@@ -60,9 +64,36 @@ export default function RestBreakScreen() {
       });
   }, [trailId]);
 
+<<<<<<< HEAD
   const { realTotalMeters, realTraveledMeters, remainingMeters, progressPercent } =
     getProgressState(trail, totalMeters, traveledMeters);
   const activeMinutes = Math.max(0, Math.floor((pauseStartedAt - startedAtMs) / 60000));
+=======
+  useEffect(() => {
+    getWearableRuntimeStatus(activeMinutes)
+      .then(setWearableRuntime)
+      .catch(() => setWearableRuntime(null));
+  }, [activeMinutes]);
+
+  const realTotalMeters =
+    Number.isFinite(parsedTotalMeters) && parsedTotalMeters > 0
+      ? parsedTotalMeters
+      : trail?.distance_km
+        ? trail.distance_km * 1000
+        : 0;
+  const realTraveledMeters =
+    Number.isFinite(parsedTraveledMeters) && parsedTraveledMeters >= 0
+      ? Math.min(parsedTraveledMeters, realTotalMeters || parsedTraveledMeters)
+      : null;
+  const remainingMeters =
+    realTraveledMeters !== null && realTotalMeters > 0
+      ? Math.max(0, realTotalMeters - realTraveledMeters)
+      : null;
+  const progressPercent =
+    realTraveledMeters !== null && realTotalMeters > 0
+      ? Math.min(100, Math.round((realTraveledMeters / realTotalMeters) * 100))
+      : 0;
+>>>>>>> 9c37b5b78195f678040f02b776d8b3b6eecb0110
   const averageSpeedKmh =
     realTraveledMeters !== null && activeMinutes > 0
       ? (realTraveledMeters / 1000) / (activeMinutes / 60)
@@ -106,6 +137,39 @@ export default function RestBreakScreen() {
         <InfoRow label="Pausa iniciada" value={formatTime(pauseStartedAt)} />
       </Card>
 
+      <Card tone={wearableRuntime?.prediction?.level === "high" ? "red" : "white"}>
+        <Text style={styles.cardTitle}>Metricas del reloj</Text>
+        {wearableRuntime?.latestSample ? (
+          <>
+            <InfoRow
+              label="Frecuencia cardiaca"
+              value={`${wearableRuntime.latestSample.heartRateBpm ?? "--"} bpm`}
+            />
+            <InfoRow
+              label="Velocidad detectada"
+              value={
+                wearableRuntime.latestSample.speedKmh !== null
+                  ? `${wearableRuntime.latestSample.speedKmh} km/h`
+                  : "No disponible"
+              }
+            />
+            <InfoRow
+              label="Lectura"
+              value={formatTime(wearableRuntime.latestSample.recordedAt)}
+            />
+            {wearableRuntime.prediction ? (
+              <Text style={styles.cardText}>
+                {wearableRuntime.prediction.message}
+              </Text>
+            ) : null}
+          </>
+        ) : (
+          <Text style={styles.cardText}>
+            No hay metricas recientes del reloj para este usuario.
+          </Text>
+        )}
+      </Card>
+
       <Card tone="orange">
         <Text style={styles.cardTitle}>Sugerencia</Text>
         <Text style={styles.cardText}>
@@ -140,6 +204,10 @@ export default function RestBreakScreen() {
                 startedAt: String(startedAtMs),
                 traveledMeters:
                   realTraveledMeters !== null ? String(Math.round(realTraveledMeters)) : "",
+                routeProgressMeters:
+                  realTraveledMeters !== null ? String(Math.round(realTraveledMeters)) : "",
+                totalMeters:
+                  realTotalMeters > 0 ? String(Math.round(realTotalMeters)) : "",
               },
             })
           }

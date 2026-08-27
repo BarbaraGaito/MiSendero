@@ -110,7 +110,14 @@ export default function ActivitiesScreen() {
           ))
         )}
 
-        <PrimaryButton label="Ver historial local" href="/history" tone="secondary" />
+        <View style={styles.historyAction}>
+          <PrimaryButton
+            label="Ver historial local"
+            icon="time-outline"
+            href="/history"
+            tone="secondary"
+          />
+        </View>
       </ScrollView>
     </AppScreen>
   );
@@ -118,22 +125,38 @@ export default function ActivitiesScreen() {
 
 function ActivityCard({ session }: { session: SessionRow }) {
   const pending = session.ended_at === null;
+  const endedEarly = !pending && session.completion_status === "ended_early";
   const distance = formatDistance(session.distance ?? 0);
   const duration = pending ? "En curso" : formatDuration(session.duration ?? 0);
-  const status = pending ? "Pendiente" : "Guardada";
+  const status = pending ? "Pendiente" : endedEarly ? "Interrumpida" : "Completada";
+  const progress =
+    endedEarly && session.route_progress_meters !== null && session.route_total_meters
+      ? ` - ${Math.min(
+          100,
+          Math.round((session.route_progress_meters / session.route_total_meters) * 100)
+        )}% del sendero`
+      : "";
 
   return (
-    <Card tone={pending ? "orange" : "white"}>
+    <Card tone={pending ? "orange" : endedEarly ? "green" : "white"}>
       <View style={styles.activityTop}>
         <View style={styles.activityText}>
           <Text style={styles.activityTitle}>
             Recorrido del {formatDate(session.started_at)}
           </Text>
           <Text style={styles.activityMeta}>
-            {duration} - {distance} - Fatiga {session.avg_fatigue}
+            {duration} - {distance}{progress} - Fatiga {session.avg_fatigue}
           </Text>
         </View>
-        <Text style={[styles.status, pending && styles.statusPending]}>{status}</Text>
+        <Text
+          style={[
+            styles.status,
+            pending && styles.statusPending,
+            endedEarly && styles.statusEndedEarly,
+          ]}
+        >
+          {status}
+        </Text>
       </View>
       {pending && session.trail_id ? (
         <View style={styles.resumeAction}>
@@ -216,7 +239,15 @@ const styles = StyleSheet.create({
     backgroundColor: colors.orangeSoft,
     color: colors.orange,
   },
+  statusEndedEarly: {
+    backgroundColor: colors.primarySoft,
+    color: colors.greenDark,
+  },
   resumeAction: {
     marginTop: 12,
+  },
+  historyAction: {
+    marginTop: 8,
+    paddingBottom: 18,
   },
 });

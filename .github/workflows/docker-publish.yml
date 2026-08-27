@@ -16,15 +16,25 @@ jobs:
   backend-image:
     runs-on: ubuntu-latest
     steps:
+<<<<<<< HEAD
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
 
       - uses: docker/login-action@184bdaa0721073962dff0199f1fb9940f07167d1 # v3.5.0
+=======
+      - uses: actions/checkout@v4
+
+      - uses: docker/login-action@v3
+>>>>>>> 9c37b5b78195f678040f02b776d8b3b6eecb0110
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+<<<<<<< HEAD
       - uses: docker/metadata-action@c1e51972afc2121e065aed6d45c65596fe445f3f # v5.8.0
+=======
+      - uses: docker/metadata-action@v5
+>>>>>>> 9c37b5b78195f678040f02b776d8b3b6eecb0110
         id: meta
         with:
           images: ghcr.io/barbaragaito/misendero-backend
@@ -34,7 +44,11 @@ jobs:
             type=ref,event=tag
             type=sha,prefix=sha-
 
+<<<<<<< HEAD
       - uses: docker/build-push-action@263435318d21b8e681c14492fe198d362a7d2c83 # v6.18.0
+=======
+      - uses: docker/build-push-action@v6
+>>>>>>> 9c37b5b78195f678040f02b776d8b3b6eecb0110
         with:
           context: ./backend
           push: true

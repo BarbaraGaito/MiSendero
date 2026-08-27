@@ -2,9 +2,10 @@ services:
   db:
     image: postgres:16-alpine
     restart: unless-stopped
+    env_file:
+      - .env
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-misendero}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in your environment or .env file}
       POSTGRES_DB: ${POSTGRES_DB:-misendero}
     ports:
       - "5432:5432"
@@ -20,11 +21,11 @@ services:
     build:
       context: ./backend
     restart: unless-stopped
+    env_file:
+      - .env
     environment:
       NODE_ENV: production
       PORT: 3001
-      DATABASE_URL: ${DATABASE_URL:?Set DATABASE_URL in your environment or .env file}
-      JWT_SECRET: ${JWT_SECRET:?Set JWT_SECRET in your environment or .env file}
       CORS_ORIGIN: ${CORS_ORIGIN:-http://localhost:8081,http://localhost:19006,http://localhost:3001}
       REPORT_STALE_AFTER_DAYS: ${REPORT_STALE_AFTER_DAYS:-30}
       LOG_LEVEL: ${LOG_LEVEL:-info}

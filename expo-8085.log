@@ -21,3 +21,4 @@ Web node_modules\expo-sqlite\web\worker.ts ▓▓▓▓▓▓▓▓▓▓▓▓�
 | (Use `node --trace-warnings ...` to show where the warning was created)
 Web Bundled 6105ms node_modules\expo-sqlite\web\worker.ts (16 modules)
 › Detected a change in metro.config.js. Restart the server to see the new results.
+› Detected a change in metro.config.js. Restart the server to see the new results.

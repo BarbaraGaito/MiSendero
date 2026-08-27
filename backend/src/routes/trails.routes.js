@@ -67,15 +67,25 @@ const getBaseTemperature = (isNorth, isPatagonia, isSummer) => {
   return isSummer ? 24 : 15;
 };
 
+const getTrailClimateRegion = (latitude) => ({
+  isNorth: latitude > -30,
+  isPatagonia: latitude < -40,
+});
+
+const getFallbackRainProbability = ({ isNorth, isPatagonia }) => {
+  if (isNorth) return 42;
+  if (isPatagonia) return 35;
+  return 24;
+};
+
 const getFallbackWeather = (trail) => {
   const latitude = Number(trail.center_lat || 0);
   const month = new Date().getMonth();
   const isSummer = month >= 9 || month <= 2;
-  const isPatagonia = latitude < -40;
-  const isNorth = latitude > -30;
+  const { isNorth, isPatagonia } = getTrailClimateRegion(latitude);
   const baseTemperature = getBaseTemperature(isNorth, isPatagonia, isSummer);
   const windKmh = isPatagonia ? 28 : 14;
-  const rainProbability = isNorth ? 42 : isPatagonia ? 35 : 24;
+  const rainProbability = getFallbackRainProbability({ isNorth, isPatagonia });
   const condition = rainProbability >= 40 ? "Parcialmente nublado" : "Mayormente despejado";
   const riskLevel = getRiskLevel(windKmh, rainProbability, condition);
 

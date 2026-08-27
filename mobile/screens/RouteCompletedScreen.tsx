@@ -59,6 +59,146 @@ const getReviewCopy = (hasReview: boolean) => ({
     : "Deja una calificacion real para que aparezca en el detalle del sendero.",
 });
 
+type RouteCompletionParams = {
+  id?: string;
+  startedAt?: string;
+  traveledMeters?: string;
+  routeProgressMeters?: string;
+  totalMeters?: string;
+  endedLatitude?: string;
+  endedLongitude?: string;
+};
+
+const getExistingCompletionSession = async (trailId: number) => {
+  let completedSession = await getLatestCompletedSession();
+
+  if (completedSession && trailId) {
+    await attachTrailToSession(completedSession.id, trailId);
+    completedSession = {
+      ...completedSession,
+      trail_id: completedSession.trail_id ?? trailId,
+    };
+  }
+
+  return completedSession;
+};
+
+const enqueueCompletedActivity = async ({
+  completedSession,
+  trailId,
+  startedAtMs,
+  endedAt,
+  duration,
+  distance,
+  routeProgressMeters,
+  routeTotalMeters,
+}: {
+  completedSession: SessionRow;
+  trailId: number;
+  startedAtMs: number;
+  endedAt: number;
+  duration: number;
+  distance: number;
+  routeProgressMeters: number;
+  routeTotalMeters: number | null;
+}) => {
+  const clientSessionId = `local-session-${completedSession.id}`;
+  const syncEndedAt = completedSession.ended_at ?? endedAt;
+  const syncDuration = completedSession.duration ?? duration;
+  const syncDistance = completedSession.distance ?? distance;
+  const syncRouteProgress =
+    completedSession.route_progress_meters ?? routeProgressMeters;
+  const syncRouteTotal = completedSession.route_total_meters ?? routeTotalMeters;
+
+  await enqueueUnique("activity", {
+    client_session_id: clientSessionId,
+    trail_id: trailId,
+    started_at: new Date(startedAtMs).toISOString(),
+    ended_at: new Date(syncEndedAt).toISOString(),
+    distance_km: Number((syncDistance / 1000).toFixed(2)),
+    duration_minutes: Math.round(syncDuration / 60),
+    completion_status: completedSession.completion_status,
+    route_progress_meters: Math.round(syncRouteProgress),
+    route_total_meters: syncRouteTotal ? Math.round(syncRouteTotal) : null,
+    ended_latitude: completedSession.ended_latitude,
+    ended_longitude: completedSession.ended_longitude,
+  }, `activity:${clientSessionId}`);
+};
+
+const createCompletionSession = async (params: RouteCompletionParams) => {
+  const trailId = Number(params.id);
+  const startedAtMs = Number(params.startedAt);
+
+  if (!trailId || !startedAtMs) {
+    return {
+      session: await getExistingCompletionSession(trailId),
+      trackingPointCount: 0,
+    };
+  }
+
+  const endedAt = Date.now();
+  const trackingSummary = await getRouteTrackingSummary(trailId, startedAtMs);
+  const routeTotal = parseOptionalNumber(params.totalMeters);
+  const distance = Math.max(
+    parseOptionalNumber(params.traveledMeters) ?? 0,
+    trackingSummary.distanceMeters
+  );
+  const routeProgressMeters = getRouteProgressValue(
+    parseOptionalNumber(params.routeProgressMeters),
+    routeTotal,
+    distance
+  );
+  const duration = Math.max(0, Math.floor((endedAt - startedAtMs) / 1000));
+  const completedResult = await getOrCreateCompletedSession({
+    trailId,
+    startedAt: startedAtMs,
+    endedAt,
+    duration,
+    distance,
+    completionStatus: getCompletionStatus(routeProgressMeters, routeTotal),
+    routeProgressMeters,
+    routeTotalMeters: routeTotal,
+    endedLatitude:
+      parseOptionalNumber(params.endedLatitude) ??
+      trackingSummary.lastPoint?.latitude ??
+      null,
+    endedLongitude:
+      parseOptionalNumber(params.endedLongitude) ??
+      trackingSummary.lastPoint?.longitude ??
+      null,
+  });
+
+  await enqueueCompletedActivity({
+    completedSession: completedResult.session,
+    trailId,
+    startedAtMs,
+    endedAt,
+    duration,
+    distance,
+    routeProgressMeters,
+    routeTotalMeters: routeTotal,
+  });
+
+  return {
+    session: completedResult.session,
+    trackingPointCount: trackingSummary.points,
+  };
+};
+
+const getRouteProgressValue = (
+  routeProgress: number | null,
+  routeTotal: number | null,
+  distance: number
+) => routeProgress ?? (routeTotal && routeTotal > 0 ? Math.min(distance, routeTotal) : distance);
+
+const getCompletionStatus = (
+  routeProgressMeters: number,
+  routeTotalMeters: number | null
+): Exclude<SessionRow["completion_status"], "paused"> =>
+  routeTotalMeters && routeTotalMeters > 0 && routeProgressMeters >= routeTotalMeters * ROUTE_COMPLETION_THRESHOLD
+    ? "completed"
+    : "ended_early";
+
 export default function RouteCompletedScreen() {
   const {
     id,
@@ -90,88 +230,19 @@ export default function RouteCompletedScreen() {
   useEffect(() => {
     const loadSession = async () => {
       await initDB();
-      const trailId = Number(id);
-      const startedAtMs = Number(startedAt);
-      const distanceMeters = parseOptionalNumber(traveledMeters);
-      const routeProgress = parseOptionalNumber(routeProgressMeters);
-      const routeTotal = parseOptionalNumber(totalMeters);
-      const endedLat = parseOptionalNumber(endedLatitude);
-      const endedLng = parseOptionalNumber(endedLongitude);
-      const endedAt = Date.now();
-      let completedSession: SessionRow | null = null;
+      const completion = await createCompletionSession({
+        id,
+        startedAt,
+        traveledMeters,
+        routeProgressMeters,
+        totalMeters,
+        endedLatitude,
+        endedLongitude,
+      });
+      const completedSession = completion.session;
 
-      if (trailId && startedAtMs) {
-        const trackingSummary = await getRouteTrackingSummary(trailId, startedAtMs);
-        setTrackingPointCount(trackingSummary.points);
-
-        const safeDistance = Math.max(
-          distanceMeters ?? 0,
-          trackingSummary.distanceMeters
-        );
-        const safeRouteProgress =
-          routeProgress ??
-          (routeTotal && routeTotal > 0
-            ? Math.min(safeDistance, routeTotal)
-            : safeDistance);
-        const safeRouteTotal = routeTotal ?? null;
-        const safeEndedLatitude = endedLat ?? trackingSummary.lastPoint?.latitude ?? null;
-        const safeEndedLongitude = endedLng ?? trackingSummary.lastPoint?.longitude ?? null;
-        const nextCompletionStatus =
-          safeRouteTotal && safeRouteTotal > 0 && safeRouteProgress >= safeRouteTotal * ROUTE_COMPLETION_THRESHOLD
-            ? "completed"
-            : "ended_early";
-        const duration = Math.max(0, Math.floor((endedAt - startedAtMs) / 1000));
-
-        const completedResult = await getOrCreateCompletedSession({
-          trailId,
-          startedAt: startedAtMs,
-          endedAt,
-          duration,
-          distance: safeDistance,
-          completionStatus: nextCompletionStatus,
-          routeProgressMeters: safeRouteProgress,
-          routeTotalMeters: safeRouteTotal,
-          endedLatitude: safeEndedLatitude,
-          endedLongitude: safeEndedLongitude,
-        });
-        completedSession = completedResult.session;
-        setCompletionStatus(completedSession.completion_status);
-
-        const clientSessionId = `local-session-${completedSession.id}`;
-        const syncEndedAt = completedSession.ended_at ?? endedAt;
-        const syncDuration = completedSession.duration ?? duration;
-        const syncDistance = completedSession.distance ?? safeDistance;
-        const syncRouteProgress =
-          completedSession.route_progress_meters ?? safeRouteProgress;
-        const syncRouteTotal = completedSession.route_total_meters ?? safeRouteTotal;
-
-        await enqueueUnique("activity", {
-          client_session_id: clientSessionId,
-          trail_id: trailId,
-          started_at: new Date(startedAtMs).toISOString(),
-          ended_at: new Date(syncEndedAt).toISOString(),
-          distance_km: Number((syncDistance / 1000).toFixed(2)),
-          duration_minutes: Math.round(syncDuration / 60),
-          completion_status: completedSession.completion_status,
-          route_progress_meters: Math.round(syncRouteProgress),
-          route_total_meters: syncRouteTotal ? Math.round(syncRouteTotal) : null,
-          ended_latitude: completedSession.ended_latitude,
-          ended_longitude: completedSession.ended_longitude,
-        }, `activity:${clientSessionId}`);
-      } else {
-        setTrackingPointCount(0);
-        completedSession = await getLatestCompletedSession();
-        setCompletionStatus(completedSession?.completion_status ?? "ended_early");
-
-        if (completedSession && trailId) {
-          await attachTrailToSession(completedSession.id, trailId);
-          completedSession = {
-            ...completedSession,
-            trail_id: completedSession.trail_id ?? trailId,
-          };
-        }
-      }
-
+      setTrackingPointCount(completion.trackingPointCount);
+      setCompletionStatus(completedSession?.completion_status ?? "ended_early");
       setSession(completedSession);
       setRating(completedSession?.rating ?? 0);
       setReviewText(completedSession?.review_text ?? "");

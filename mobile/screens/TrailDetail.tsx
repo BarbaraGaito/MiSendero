@@ -28,6 +28,25 @@ import { Trail, TrailWeather } from "../../types";
 import { parseRouteCoordinates } from "../../services/geoUtils";
 import { getTerrainElevationGainMeters } from "../components/Terrain3DScene";
 
+const loadTrailDetailData = async (trailId: number) => {
+  await initDB();
+  const trail = await getTrailById(trailId);
+  const [offlineMap, ratingSummary, isFavorite, weather] = await Promise.all([
+    getVerifiedOfflineMapByTrailId(trail.id),
+    getTrailRatingSummary(trail.id),
+    isTrailFavorite(trail.id),
+    getTrailWeather(trail.id).catch(() => null),
+  ]);
+
+  return {
+    trail,
+    isDownloaded: Boolean(offlineMap),
+    ratingSummary,
+    isFavorite,
+    weather,
+  };
+};
+
 export default function Screen03TrailDetail() {
   const insets = useSafeAreaInsets();
   const { id } = useLocalSearchParams<{ id?: string }>();
@@ -53,19 +72,12 @@ export default function Screen03TrailDetail() {
     }
 
     try {
-      await initDB();
-      const data = await getTrailById(trailId);
-      setTrail(data);
-
-      const [offlineMap, summary, favorite] = await Promise.all([
-        getVerifiedOfflineMapByTrailId(data.id),
-        getTrailRatingSummary(data.id),
-        isTrailFavorite(data.id),
-      ]);
-      setIsDownloaded(Boolean(offlineMap));
-      setRatingSummary(summary);
-      setIsFavorite(favorite);
-      setWeather(await getTrailWeather(data.id).catch(() => null));
+      const data = await loadTrailDetailData(trailId);
+      setTrail(data.trail);
+      setIsDownloaded(data.isDownloaded);
+      setRatingSummary(data.ratingSummary);
+      setIsFavorite(data.isFavorite);
+      setWeather(data.weather);
     } catch (loadError) {
       setError("No pudimos cargar este sendero en este momento.");
     } finally {

@@ -45,6 +45,7 @@ import {
   getSessionsSummary,
   SessionsSummary,
 } from "../../database/sessionsRepository";
+import { getWearableRuntimeStatus } from "../../services/wearableMetrics";
 import {
   discardExhaustedOperations,
   getSyncSummary,
@@ -90,7 +91,49 @@ const formatStorage = (sizeMb: number) => {
     maximumFractionDigits: 0,
   })} MB`;
 };
-import { getWearableRuntimeStatus } from "../../services/wearableMetrics";
+
+const loadProfileData = async () => {
+  const session = await getAuthSession();
+
+  if (!session) return null;
+
+  const profile = await getProfile(session.token);
+  const [
+    privacy,
+    testingMode,
+    appPreferences,
+    experienceProfile,
+    emergencyContact,
+    sessionsSummary,
+    offlineMapsSummary,
+    wearableRuntime,
+    syncSummary,
+  ] = await Promise.all([
+    getPrivacyPreferences(),
+    getTestingLocationMode(),
+    getAppPreferences(),
+    getExperienceProfile(),
+    getEmergencyContact(),
+    getSessionsSummary(),
+    getOfflineMapsSummary(),
+    getWearableRuntimeStatus(),
+    getSyncSummary(),
+  ]);
+
+  return {
+    session,
+    profile,
+    privacy,
+    testingMode,
+    appPreferences,
+    experienceProfile,
+    emergencyContact,
+    sessionsSummary,
+    offlineMapsSummary,
+    wearableRuntime,
+    syncSummary,
+  };
+};
 
 export default function ProfileScreen() {
   const [profile, setProfile] = useState<Profile | null>(null);
@@ -177,63 +220,40 @@ export default function ProfileScreen() {
     setError(null);
 
     try {
-      const session = await getAuthSession();
+      const data = await loadProfileData();
 
-      if (!session) {
+      if (!data) {
         router.replace("/");
         return;
       }
-
-      const data = await getProfile(session.token);
-      const [
-        privacyPreferences,
-        testingPreferences,
-        preferences,
-        experience,
-        contact,
-        localSessionsSummary,
-        mapsSummary,
-        wearable,
-        initialSyncSummary,
-      ] = await Promise.all([
-        getPrivacyPreferences(),
-        getTestingLocationMode(),
-        getAppPreferences(),
-        getExperienceProfile(),
-        getEmergencyContact(),
-        getSessionsSummary(),
-        getOfflineMapsSummary(),
-        getWearableRuntimeStatus(),
-        getSyncSummary(),
-      ]);
 
       runSync()
         .catch(() => null)
         .finally(refreshSyncSummary);
 
-      if (data.user) {
+      if (data.profile.user) {
         await saveAuthSession({
-          token: session.token,
-          user: data.user,
+          token: data.session.token,
+          user: data.profile.user,
         });
       }
 
-      if (data.user?.role !== "admin" && testingPreferences.enabled) {
+      if (data.profile.user?.role !== "admin" && data.testingMode.enabled) {
         await saveTestingLocationMode(false);
       }
 
-      setProfile(data);
-      setPrivacy(privacyPreferences);
-      setAppPreferences(preferences);
-      setExperienceProfile(experience);
-      setEmergencyContact(contact);
-      setSessionsSummary(localSessionsSummary);
-      setOfflineMapsSummary(mapsSummary);
-      setWearableRuntime(wearable);
-      setSyncSummary(initialSyncSummary);
+      setProfile(data.profile);
+      setPrivacy(data.privacy);
+      setAppPreferences(data.appPreferences);
+      setExperienceProfile(data.experienceProfile);
+      setEmergencyContact(data.emergencyContact);
+      setSessionsSummary(data.sessionsSummary);
+      setOfflineMapsSummary(data.offlineMapsSummary);
+      setWearableRuntime(data.wearableRuntime);
+      setSyncSummary(data.syncSummary);
       setTestingLocationMode(
-        data.user?.role === "admin"
-          ? await getTestingLocationMode()
+        data.profile.user?.role === "admin"
+          ? data.testingMode
           : { enabled: false, updatedAt: null }
       );
     } catch (loadError) {

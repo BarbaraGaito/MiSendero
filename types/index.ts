@@ -80,6 +80,11 @@ export interface SessionRow {
   distance: number;
   avg_fatigue: FatigueLevel;
   trail_id: number | null;
+  completion_status: "completed" | "ended_early" | "paused";
+  route_progress_meters: number | null;
+  route_total_meters: number | null;
+  ended_latitude: number | null;
+  ended_longitude: number | null;
   rating: number | null;
   review_text: string | null;
   reviewed_at: number | null;
@@ -124,8 +129,25 @@ export interface TrailReport {
   cause: string | null;
   blocks_path: boolean;
   details: string | null;
+  latitude: number | null;
+  longitude: number | null;
+  accuracy_meters: number | null;
+  route_progress_meters: number | null;
   reporter_name: string;
   created_at: string;
+}
+
+export interface RouteTrackingPoint {
+  id?: number;
+  trailId: number;
+  startedAt: number;
+  latitude: number;
+  longitude: number;
+  accuracyMeters: number | null;
+  speedKmh: number | null;
+  distanceDeltaMeters: number;
+  recordedAt: number;
+  simulated: boolean;
 }
 
 export interface EmergencyContact {

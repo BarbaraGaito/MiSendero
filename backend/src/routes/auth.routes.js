@@ -17,7 +17,7 @@ const getUserStats = async (userId) => {
   const { rows } = await query(
     `
       SELECT
-        COUNT(*)::int AS completed_routes,
+        COALESCE(SUM(CASE WHEN completion_status = 'completed' THEN 1 ELSE 0 END), 0)::int AS completed_routes,
         COALESCE(SUM(distance_km), 0) AS total_distance_km
       FROM activities
       WHERE user_id = $1

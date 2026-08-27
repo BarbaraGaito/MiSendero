@@ -114,10 +114,20 @@ describe("trails", () => {
     const created = await request(app)
       .post(`/api/trails/${trail.id}/reports`)
       .set("Authorization", `Bearer ${userToken}`)
-      .send({ issue_summary: "Barro", severity: "Media", trail_state: "Precaucion" });
+      .send({
+        issue_summary: "Barro",
+        severity: "Media",
+        trail_state: "Precaucion",
+        latitude: -41.17123,
+        longitude: -71.47567,
+        accuracy_meters: 9,
+        route_progress_meters: 1240,
+      });
 
     expect(created.status).toBe(201);
     expect(created.body.reporter_name).toBe("Usuaria Dos");
+    expect(created.body.latitude).toBeCloseTo(-41.17123);
+    expect(created.body.route_progress_meters).toBe(1240);
 
     const reports = await request(app).get(`/api/trails/${trail.id}/reports`);
     expect(reports.status).toBe(200);

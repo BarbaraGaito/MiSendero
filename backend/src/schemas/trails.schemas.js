@@ -23,6 +23,10 @@ const createReportSchema = z.object({
   cause: z.string().trim().max(100).nullish(),
   blocks_path: z.boolean().nullish(),
   details: z.string().max(1000).nullish(),
+  latitude: z.number().min(-90).max(90).nullish(),
+  longitude: z.number().min(-180).max(180).nullish(),
+  accuracy_meters: z.number().nonnegative().nullish(),
+  route_progress_meters: z.number().nonnegative().nullish(),
 });
 
 module.exports = { createTrailSchema, createReportSchema };

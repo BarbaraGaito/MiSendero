@@ -20,15 +20,47 @@ router.get("/", requireAuth, async (req, res, next) => {
 
 router.post("/", requireAuth, validateBody(createEmergencyAlertSchema), async (req, res, next) => {
   try {
-    const { trail_id, latitude, longitude, status, device_battery_percent } = req.body;
+    const {
+      trail_id,
+      latitude,
+      longitude,
+      status,
+      device_battery_percent,
+      contact_name,
+      contact_phone,
+      message_body,
+      last_known_at,
+    } = req.body;
 
     const { rows } = await query(
       `
-        INSERT INTO emergency_alerts (user_id, trail_id, latitude, longitude, status, device_battery_percent)
-        VALUES ($1, $2, $3, $4, $5, $6)
+        INSERT INTO emergency_alerts (
+          user_id,
+          trail_id,
+          latitude,
+          longitude,
+          status,
+          device_battery_percent,
+          contact_name,
+          contact_phone,
+          message_body,
+          last_known_at
+        )
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
         RETURNING *
       `,
-      [req.userId, trail_id ?? null, latitude, longitude, status ?? "sent", device_battery_percent ?? null]
+      [
+        req.userId,
+        trail_id ?? null,
+        latitude,
+        longitude,
+        status ?? "sent",
+        device_battery_percent ?? null,
+        contact_name ?? null,
+        contact_phone ?? null,
+        message_body ?? null,
+        last_known_at ?? null,
+      ]
     );
 
     res.status(201).json(rows[0]);

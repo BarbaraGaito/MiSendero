@@ -1,18 +1,21 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Ionicons } from "@expo/vector-icons";
 import { colors } from "../../components/MiSenderoUI";
+import { MiSenderoLogo } from "../../components/MiSenderoLogo";
+
+const splashColors = {
+  background: colors.primaryDark,
+  brand: "#D8F0BD",
+  neutral: "#DFDFDF",
+};
 
 export default function SplashScreen01() {
   return (
     <SafeAreaView edges={["top", "bottom"]} style={styles.safeArea}>
       <View style={styles.content}>
         <View style={styles.center}>
-          <View style={styles.logo}>
-            <Ionicons name="leaf-outline" size={54} color={colors.white} />
-          </View>
-          <Text style={styles.brand}>MiSendero</Text>
+          <MiSenderoLogo markSize={104} wordmarkSize={48} />
           <Text style={styles.subtitle}>
             Rutas, mapas offline y seguridad para salir a caminar con mas confianza.
           </Text>
@@ -31,7 +34,7 @@ export default function SplashScreen01() {
 
 const styles = StyleSheet.create({
   safeArea: {
-    backgroundColor: colors.primaryDark,
+    backgroundColor: splashColors.background,
     flex: 1,
   },
   content: {
@@ -47,27 +50,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     transform: [{ translateY: 18 }],
   },
-  logo: {
-    alignItems: "center",
-    backgroundColor: colors.primary,
-    borderColor: "rgba(255,255,255,0.22)",
-    borderRadius: 40,
-    borderWidth: 1,
-    height: 96,
-    justifyContent: "center",
-    width: 96,
-  },
-  brand: {
-    color: colors.white,
-    fontSize: 38,
-    fontWeight: "900",
-    marginTop: 22,
-  },
   subtitle: {
-    color: "#DCEBE0",
+    color: splashColors.neutral,
     fontSize: 16,
     lineHeight: 23,
-    marginTop: 12,
+    marginTop: 18,
     maxWidth: 310,
     textAlign: "center",
   },
@@ -76,20 +63,21 @@ const styles = StyleSheet.create({
     paddingBottom: 18,
   },
   loaderTrack: {
-    backgroundColor: "rgba(255,255,255,0.24)",
+    backgroundColor: "rgba(223,223,223,0.28)",
     borderRadius: 999,
     height: 8,
     overflow: "hidden",
     width: 180,
   },
   loaderFill: {
-    backgroundColor: colors.white,
+    backgroundColor: splashColors.brand,
     borderRadius: 999,
     height: "100%",
     width: "72%",
   },
   loadingText: {
-    color: "#DCEBE0",
+    color: splashColors.neutral,
+    fontFamily: "BricolageGrotesque_700Bold",
     fontSize: 13,
     fontWeight: "700",
     marginTop: 12,

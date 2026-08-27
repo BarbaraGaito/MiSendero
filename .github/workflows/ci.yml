@@ -1,0 +1,69 @@
+name: Fast NodeJS CI
+
+on:
+  push:
+    branches:
+      - "feature/**"
+      - "fix/**"
+      - "hotfix/**"
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    env:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v5
+
+      - name: Setup NodeJS
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            backend/package-lock.json
+
+      - name: Install App Dependencies
+        run: npm ci
+
+      - name: Run App Type Check
+        run: npx tsc --noEmit
+
+      - name: Run App Tests
+        run: npm test -- --runInBand
+
+      - name: Run App Coverage
+        run: npm test -- --coverage --runInBand
+
+      - name: Install API Dependencies
+        run: npm ci
+        working-directory: backend
+
+      - name: Run API Tests
+        run: npm test -- --runInBand
+        working-directory: backend
+
+      - name: Run API Coverage
+        run: npm test -- --coverage --runInBand
+        working-directory: backend
+
+      - name: Quality Scan
+        if: env.SONAR_TOKEN != ''
+        uses: SonarSource/sonarqube-scan-action@v6
+        with:
+          args: >
+            -Dsonar.projectKey=misendero
+            -Dsonar.sources=app,mobile,services,database,ai,backend/src
+            -Dsonar.tests=__mocks__,services/__tests__,ai/__tests__,backend/tests
+            -Dsonar.exclusions=**/node_modules/**,**/coverage/**,training/**
+            -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info,backend/coverage/lcov.info

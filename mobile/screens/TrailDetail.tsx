@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { router, useLocalSearchParams } from "expo-router";
 import { ImageBackground, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -7,6 +7,7 @@ import {
   InfoCard,
   PrimaryButton,
   ScreenShell,
+  StatusNotice,
   StatPill,
   TopBar,
   colors,
@@ -14,15 +15,18 @@ import {
 } from "../components/MiSenderoUI";
 import { getTrailById, getTrailReports, getTrailWeather } from "../../services/api";
 import {
-  getOfflineMapByTrailId,
+  getVerifiedOfflineMapByTrailId,
   saveOfflineTrailMap,
 } from "../../services/offlineMaps";
+import { isTrailFavorite, setTrailFavorite } from "../../services/favoriteTrails";
 import {
   getTrailRatingSummary,
   TrailRatingSummary,
 } from "../../database/sessionsRepository";
 import { initDB } from "../../database/database";
 import { Trail, TrailWeather } from "../../types";
+import { parseRouteCoordinates } from "../../services/geoUtils";
+import { getTerrainElevationGainMeters } from "../components/Terrain3DScene";
 
 export default function Screen03TrailDetail() {
   const insets = useSafeAreaInsets();
@@ -35,9 +39,12 @@ export default function Screen03TrailDetail() {
   const [downloadMessage, setDownloadMessage] = useState<string | null>(null);
   const [ratingSummary, setRatingSummary] = useState<TrailRatingSummary | null>(null);
   const [weather, setWeather] = useState<TrailWeather | null>(null);
+  const [isFavorite, setIsFavorite] = useState(false);
 
-  useEffect(() => {
+  const loadTrail = useCallback(async () => {
     const trailId = Number(id);
+    setIsLoading(true);
+    setError(null);
 
     if (!trailId) {
       setError("No se encontro el sendero seleccionado.");
@@ -45,26 +52,30 @@ export default function Screen03TrailDetail() {
       return;
     }
 
-    initDB()
-      .then(() => getTrailById(trailId))
-      .then(async (data) => {
-        setTrail(data);
-        const [offlineMap, summary] = await Promise.all([
-          getOfflineMapByTrailId(data.id),
-          getTrailRatingSummary(data.id),
-        ]);
-        setIsDownloaded(Boolean(offlineMap));
-        setRatingSummary(summary);
-        setWeather(await getTrailWeather(data.id).catch(() => null));
-        setError(null);
-      })
-      .catch(() => {
-        setError("No pudimos cargar este sendero en este momento.");
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+    try {
+      await initDB();
+      const data = await getTrailById(trailId);
+      setTrail(data);
+
+      const [offlineMap, summary, favorite] = await Promise.all([
+        getVerifiedOfflineMapByTrailId(data.id),
+        getTrailRatingSummary(data.id),
+        isTrailFavorite(data.id),
+      ]);
+      setIsDownloaded(Boolean(offlineMap));
+      setRatingSummary(summary);
+      setIsFavorite(favorite);
+      setWeather(await getTrailWeather(data.id).catch(() => null));
+    } catch (loadError) {
+      setError("No pudimos cargar este sendero en este momento.");
+    } finally {
+      setIsLoading(false);
+    }
   }, [id]);
+
+  useEffect(() => {
+    loadTrail();
+  }, [loadTrail]);
 
   const downloadMap = async () => {
     if (!trail || isDownloading) return;
@@ -80,7 +91,8 @@ export default function Screen03TrailDetail() {
       setIsDownloaded(true);
       setDownloadMessage("Mapa descargado. Ya podes abrirlo sin conexion.");
     } catch (downloadError) {
-      setDownloadMessage("No pudimos descargar el mapa. Revisa tu conexion.");
+      setIsDownloaded(false);
+      setDownloadMessage(getDownloadErrorMessage(downloadError));
     } finally {
       setIsDownloading(false);
     }
@@ -90,6 +102,13 @@ export default function Screen03TrailDetail() {
   const duration = trail?.duration || "Duracion a confirmar";
   const difficultyInsight = trail ? getDifficultyInsight(trail, weather) : "";
   const beforeYouGoTips = trail ? getBeforeYouGoTips(trail, weather) : [];
+  const elevationGain = trail ? getTrailElevationGain(trail) : null;
+
+  const toggleFavorite = async () => {
+    if (!trail) return;
+
+    setIsFavorite(await setTrailFavorite(trail.id, !isFavorite));
+  };
 
   return (
     <ScreenShell>
@@ -102,8 +121,22 @@ export default function Screen03TrailDetail() {
           { paddingBottom: Math.max(28, insets.bottom + 24) },
         ]}
       >
-        {isLoading ? <Text style={styles.statusText}>Cargando sendero...</Text> : null}
-        {error ? <Text style={styles.statusText}>{error}</Text> : null}
+        {isLoading ? (
+          <StatusNotice
+            isLoading
+            message="Consultando informacion, clima y disponibilidad offline."
+            title="Cargando sendero"
+          />
+        ) : null}
+        {error ? (
+          <StatusNotice
+            actionLabel="Reintentar"
+            message={error}
+            onAction={loadTrail}
+            title="No se pudo cargar"
+            tone="error"
+          />
+        ) : null}
 
         {trail ? (
           <>
@@ -140,7 +173,30 @@ export default function Screen03TrailDetail() {
               <StatPill icon="walk-outline" label={distance} />
               <StatPill icon="time-outline" label={duration} />
               <StatPill icon="leaf-outline" label={trail.difficulty} />
+              {elevationGain !== null ? (
+                <StatPill icon="trending-up-outline" label={`${elevationGain} m desnivel`} />
+              ) : null}
             </View>
+
+            <Pressable
+              accessibilityLabel={isFavorite ? "Quitar de favoritas" : "Guardar como favorita"}
+              accessibilityRole="button"
+              onPress={toggleFavorite}
+              style={({ pressed }) => [
+                styles.favoriteButton,
+                isFavorite && styles.favoriteButtonActive,
+                pressed && styles.pressed,
+              ]}
+            >
+              <Ionicons
+                name={isFavorite ? "star" : "star-outline"}
+                size={18}
+                color={isFavorite ? colors.warning : colors.greenDark}
+              />
+              <Text style={styles.favoriteText}>
+                {isFavorite ? "Ruta favorita" : "Guardar como favorita"}
+              </Text>
+            </Pressable>
 
             <InfoCard style={styles.card}>
               <Text style={styles.cardTitle}>Descripcion</Text>
@@ -213,7 +269,10 @@ export default function Screen03TrailDetail() {
               />
               <PrimaryButton
                 label={isDownloaded ? "Mapa descargado" : "Descargar mapa"}
-                icon="download-outline"
+                icon={isDownloaded ? "checkmark-circle-outline" : "download-outline"}
+                disabled={isDownloaded}
+                isLoading={isDownloading}
+                loadingLabel="Descargando mapa"
                 tone="secondary"
                 onPress={downloadMap}
               />
@@ -298,6 +357,26 @@ function normalizeDifficulty(difficulty: string) {
     .toLowerCase()
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "");
+}
+
+function getTrailElevationGain(trail: Trail) {
+  const routePoints = parseRouteCoordinates(trail.route_coordinates);
+
+  if (routePoints.length < 2 && !trail.distance_km) return null;
+
+  return getTerrainElevationGainMeters(
+    routePoints,
+    trail.difficulty,
+    trail.distance_km
+  );
+}
+
+function getDownloadErrorMessage(error: unknown) {
+  if (error instanceof Error && error.message.startsWith("offline-map-incomplete")) {
+    return "La descarga no quedo completa. Reintenta con conexion estable antes de salir.";
+  }
+
+  return "No pudimos descargar el mapa completo. Revisa tu conexion e intenta de nuevo.";
 }
 
 const styles = StyleSheet.create({
@@ -421,5 +500,30 @@ const styles = StyleSheet.create({
   footer: {
     gap: 10,
     marginTop: 18,
+  },
+  pressed: {
+    opacity: 0.72,
+  },
+  favoriteButton: {
+    alignItems: "center",
+    alignSelf: "flex-start",
+    backgroundColor: colors.primarySoft,
+    borderColor: colors.border,
+    borderRadius: 999,
+    borderWidth: 1,
+    flexDirection: "row",
+    gap: 7,
+    marginTop: 16,
+    paddingHorizontal: 13,
+    paddingVertical: 9,
+  },
+  favoriteButtonActive: {
+    backgroundColor: colors.orangeSoft,
+    borderColor: colors.warning,
+  },
+  favoriteText: {
+    color: colors.greenDark,
+    fontSize: 13,
+    fontWeight: "900",
   },
 });

@@ -36,6 +36,11 @@ const runInitDB = async () => {
       distance REAL,
       avg_fatigue TEXT,
       trail_id INTEGER,
+      completion_status TEXT NOT NULL DEFAULT 'completed',
+      route_progress_meters REAL,
+      route_total_meters REAL,
+      ended_latitude REAL,
+      ended_longitude REAL,
       rating INTEGER,
       review_text TEXT,
       reviewed_at INTEGER
@@ -47,6 +52,23 @@ const runInitDB = async () => {
       timestamp INTEGER,
       session_id INTEGER
     );
+
+    CREATE TABLE IF NOT EXISTS route_tracking_points (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      trail_id INTEGER NOT NULL,
+      started_at INTEGER NOT NULL,
+      latitude REAL NOT NULL,
+      longitude REAL NOT NULL,
+      accuracy_meters REAL,
+      speed_kmh REAL,
+      distance_delta_meters REAL NOT NULL DEFAULT 0,
+      recorded_at INTEGER NOT NULL,
+      simulated INTEGER NOT NULL DEFAULT 0,
+      created_at INTEGER NOT NULL
+    );
+
+    CREATE INDEX IF NOT EXISTS idx_route_tracking_points_route
+    ON route_tracking_points (trail_id, started_at, recorded_at);
 
     CREATE TABLE IF NOT EXISTS app_preferences (
       id INTEGER PRIMARY KEY CHECK (id = 1),
@@ -84,6 +106,34 @@ const runInitDB = async () => {
       updated_at INTEGER NOT NULL
     );
 
+    CREATE TABLE IF NOT EXISTS wearable_connections (
+      user_id INTEGER PRIMARY KEY,
+      provider TEXT NOT NULL,
+      linked INTEGER NOT NULL DEFAULT 0,
+      permissions_granted INTEGER NOT NULL DEFAULT 0,
+      updated_at INTEGER NOT NULL,
+      last_sync_at INTEGER
+    );
+
+    CREATE TABLE IF NOT EXISTS wearable_metric_samples (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      user_id INTEGER NOT NULL,
+      provider TEXT NOT NULL,
+      heart_rate_bpm INTEGER,
+      steps INTEGER,
+      active_energy_kcal REAL,
+      speed_kmh REAL,
+      oxygen_saturation REAL,
+      recorded_at INTEGER NOT NULL,
+      created_at INTEGER NOT NULL
+    );
+
+    CREATE INDEX IF NOT EXISTS idx_wearable_samples_user_recorded
+    ON wearable_metric_samples (user_id, recorded_at DESC);
+
+    CREATE INDEX IF NOT EXISTS idx_wearable_samples_user_provider_recorded
+    ON wearable_metric_samples (user_id, provider, recorded_at DESC);
+
     CREATE TABLE IF NOT EXISTS offline_maps (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT NOT NULL,
@@ -93,17 +143,58 @@ const runInitDB = async () => {
       updated_at INTEGER NOT NULL,
       trail_id INTEGER,
       trail_json TEXT,
-      reports_json TEXT
+      reports_json TEXT,
+      downloaded_tiles INTEGER NOT NULL DEFAULT 0,
+      total_tiles INTEGER NOT NULL DEFAULT 0,
+      verified_at INTEGER,
+      last_error TEXT
     );
+
+    CREATE TABLE IF NOT EXISTS favorite_trails (
+      trail_id INTEGER PRIMARY KEY,
+      created_at INTEGER NOT NULL
+    );
+
+    CREATE TABLE IF NOT EXISTS pending_operations (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      entity_type TEXT NOT NULL,
+      payload_json TEXT NOT NULL,
+      dedupe_key TEXT,
+      status TEXT NOT NULL DEFAULT 'pending',
+      retry_count INTEGER NOT NULL DEFAULT 0,
+      last_error TEXT,
+      server_id INTEGER,
+      created_at INTEGER NOT NULL,
+      updated_at INTEGER NOT NULL
+    );
+
+    CREATE INDEX IF NOT EXISTS idx_pending_operations_status
+    ON pending_operations (status, created_at);
+
   `);
 
   await addColumnIfMissing("sessions", "started_at", "INTEGER NOT NULL DEFAULT 0");
   await addColumnIfMissing("sessions", "ended_at", "INTEGER");
   await addColumnIfMissing("sessions", "avg_fatigue", "TEXT DEFAULT 'bajo'");
   await addColumnIfMissing("sessions", "trail_id", "INTEGER");
+  await addColumnIfMissing("sessions", "completion_status", "TEXT NOT NULL DEFAULT 'completed'");
+  await addColumnIfMissing("sessions", "route_progress_meters", "REAL");
+  await addColumnIfMissing("sessions", "route_total_meters", "REAL");
+  await addColumnIfMissing("sessions", "ended_latitude", "REAL");
+  await addColumnIfMissing("sessions", "ended_longitude", "REAL");
   await addColumnIfMissing("sessions", "rating", "INTEGER");
   await addColumnIfMissing("sessions", "review_text", "TEXT");
   await addColumnIfMissing("sessions", "reviewed_at", "INTEGER");
+  await addColumnIfMissing("offline_maps", "downloaded_tiles", "INTEGER NOT NULL DEFAULT 0");
+  await addColumnIfMissing("offline_maps", "total_tiles", "INTEGER NOT NULL DEFAULT 0");
+  await addColumnIfMissing("offline_maps", "verified_at", "INTEGER");
+  await addColumnIfMissing("offline_maps", "last_error", "TEXT");
+  await addColumnIfMissing("pending_operations", "dedupe_key", "TEXT");
+  await db.execAsync(`
+    CREATE UNIQUE INDEX IF NOT EXISTS idx_pending_operations_dedupe_key
+    ON pending_operations (dedupe_key)
+    WHERE dedupe_key IS NOT NULL;
+  `);
 };
 
 export const initDB = async () => {

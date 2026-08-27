@@ -1,30 +1,111 @@
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { Alert, StyleSheet, Text, View } from "react-native";
 import { getEmergencyContact } from "../../services/emergencyContact";
+import {
+  buildEmergencyMessage,
+  sendEmergencyAlert,
+} from "../../services/emergencyAlerts";
+import { getLastRouteTrackingPoint } from "../../services/routeTracking";
+import { getCurrentDeviceLocation } from "../../services/deviceLocation";
 import { EmergencyContact } from "../../types";
 import { AppScreen, Card, PrimaryButton, ScreenTitle, colors } from "../components/MiSenderoUI";
 
 export default function ConfirmSosScreen() {
+  const { id, startedAt } = useLocalSearchParams<{ id?: string; startedAt?: string }>();
+  const trailId = Number(id) || null;
+  const startedAtMs = Number(startedAt) || null;
   const [contact, setContact] = useState<EmergencyContact | null>(null);
+  const [messagePreview, setMessagePreview] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isSending, setIsSending] = useState(false);
 
   useEffect(() => {
-    getEmergencyContact()
-      .then(setContact)
-      .finally(() => setIsLoading(false));
-  }, []);
+    let isMounted = true;
 
-  const handleSos = () => {
+    const loadContext = async () => {
+      const [savedContact, currentLocation] = await Promise.all([
+        getEmergencyContact(),
+        getCurrentDeviceLocation().catch(() => null),
+      ]);
+      const lastTrackedPoint =
+        currentLocation || !trailId || !startedAtMs
+          ? null
+          : await getLastRouteTrackingPoint(trailId, startedAtMs).catch(() => null);
+      const location = currentLocation
+        ? {
+            latitude: currentLocation.coordinate[0],
+            longitude: currentLocation.coordinate[1],
+            timestamp: currentLocation.timestamp,
+          }
+        : lastTrackedPoint
+          ? {
+              latitude: lastTrackedPoint.latitude,
+              longitude: lastTrackedPoint.longitude,
+              timestamp: lastTrackedPoint.recordedAt,
+            }
+          : null;
+      if (!isMounted) return;
+
+      setContact(savedContact);
+      setMessagePreview(
+        location
+          ? buildEmergencyMessage({
+              contact: savedContact,
+              latitude: location.latitude,
+              longitude: location.longitude,
+              trailId,
+              timestamp: location.timestamp,
+            })
+          : null
+      );
+      setIsLoading(false);
+    };
+
+    loadContext();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [startedAtMs, trailId]);
+
+  const handleSos = async () => {
     if (!contact) {
       router.push("/contacto-seguridad");
       return;
     }
 
-    Alert.alert(
-      "Alerta SOS preparada",
-      `Se usara como contacto de emergencia a ${contact.name} (${contact.phone}).`
-    );
+    if (isSending) return;
+    setIsSending(true);
+
+    try {
+      const outcome = await sendEmergencyAlert({
+        trailId,
+        contact,
+        startedAt: startedAtMs,
+      });
+
+      if (outcome === "sent") {
+        Alert.alert(
+          "Alerta SOS enviada",
+          `Se notifico a ${contact.name} (${contact.phone}) con tu ubicacion actual.`
+        );
+      } else if (outcome === "queued") {
+        Alert.alert(
+          "Alerta SOS guardada",
+          "No hay senal ahora. La alerta se enviara en cuanto la app detecte conexion."
+        );
+      } else if (outcome === "no_location") {
+        Alert.alert(
+          "No pudimos obtener tu ubicacion",
+          "Activa el GPS y volve a intentar. Mientras tanto, comunicate por otro medio si es posible."
+        );
+      } else {
+        Alert.alert("Sesion requerida", "Inicia sesion para poder enviar una alerta SOS.");
+      }
+    } finally {
+      setIsSending(false);
+    }
   };
 
   return (
@@ -49,6 +130,7 @@ export default function ConfirmSosScreen() {
             <Bullet text="El sendero en curso" />
             <Bullet text="Tus datos de contacto" />
             <Bullet text={`Contacto: ${contact.name} - ${contact.phone}`} />
+            <Bullet text="Ultima ubicacion conocida si el GPS actual falla" />
           </>
         ) : (
           <Text style={styles.cardText}>
@@ -56,6 +138,14 @@ export default function ConfirmSosScreen() {
             Offline solo se puede consultar un contacto ya guardado.
           </Text>
         )}
+      </Card>
+
+      <Card>
+        <Text style={styles.cardTitle}>Mensaje preparado</Text>
+        <Text style={styles.cardText}>
+          {messagePreview ||
+            "Todavia no hay ubicacion disponible para preparar el mensaje. Intenta nuevamente con GPS activo."}
+        </Text>
       </Card>
 
       <Card>
@@ -70,9 +160,11 @@ export default function ConfirmSosScreen() {
           label={
             isLoading
               ? "Verificando contacto"
-              : contact
-                ? "Enviar alerta SOS"
-                : "Completar contacto"
+              : isSending
+                ? "Enviando alerta..."
+                : contact
+                  ? "Enviar alerta SOS"
+                  : "Completar contacto"
           }
           onPress={handleSos}
           tone="danger"

@@ -33,6 +33,26 @@ const getFormError = (
 const getSubmitErrorMessage = (submitError: unknown) =>
   submitError instanceof Error ? submitError.message : "No pudimos iniciar sesion.";
 
+const getSubmitButtonLabel = (isSubmitting: boolean, isRegister: boolean) => {
+  if (isSubmitting) return "Un momento...";
+  return isRegister ? "Crear cuenta" : "Iniciar sesion";
+};
+
+const getModeSwitchLabel = (isRegister: boolean) =>
+  isRegister ? "Ya tengo cuenta" : "Crear una cuenta nueva";
+
+const redirectAfterAuth = async (isRegister: boolean) => {
+  if (!isRegister) {
+    router.replace("/inicio");
+    return;
+  }
+
+  const experienceProfile = await getExperienceProfile();
+  router.replace(
+    experienceProfile.completed ? "/inicio" : "/onboarding-experiencia"
+  );
+};
+
 export default function LoginScreen() {
   const [mode, setMode] = useState<"login" | "register">("login");
   const [name, setName] = useState("");
@@ -72,16 +92,7 @@ export default function LoginScreen() {
       }
 
       await saveAuthSession(auth);
-
-      if (isRegister) {
-        const experienceProfile = await getExperienceProfile();
-        router.replace(
-          experienceProfile.completed ? "/inicio" : "/onboarding-experiencia"
-        );
-        return;
-      }
-
-      router.replace("/inicio");
+      await redirectAfterAuth(isRegister);
     } catch (submitError) {
       setError(getSubmitErrorMessage(submitError));
     } finally {
@@ -212,11 +223,7 @@ export default function LoginScreen() {
             ]}
           >
             <Text style={styles.primaryButtonText}>
-              {isSubmitting
-                ? "Un momento..."
-                : isRegister
-                  ? "Crear cuenta"
-                  : "Iniciar sesion"}
+              {getSubmitButtonLabel(isSubmitting, isRegister)}
             </Text>
           </Pressable>
 
@@ -230,9 +237,7 @@ export default function LoginScreen() {
             style={styles.secondaryButton}
           >
             <Text style={styles.secondaryButtonText}>
-              {isRegister
-                ? "Ya tengo cuenta"
-                : "Crear una cuenta nueva"}
+              {getModeSwitchLabel(isRegister)}
             </Text>
           </Pressable>
         </View>

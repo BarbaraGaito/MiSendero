@@ -289,44 +289,14 @@ const buildTerrainPaths = (
   const width = Math.max(160, maxX - minX);
   const height = Math.max(160, maxY - minY);
   const contourCount = layer === "standard" ? 8 : 12;
-  const contours: TerrainPath[] = [];
-  const ridgeShadows: TerrainPath[] = [];
-
-  for (let index = 0; index < contourCount; index += 1) {
-    const contourPoints: ScreenPoint[] = [];
-    const baseY = minY + ((index + 1) / (contourCount + 1)) * height;
-
-    for (let step = 0; step <= 13; step += 1) {
-      const progress = step / 13;
-      contourPoints.push({
-        x: minX + progress * width,
-        y:
-          baseY +
-          Math.sin(progress * Math.PI * 2.2 + index * 0.72) * 18 +
-          Math.cos(progress * Math.PI * 4.1 + index * 0.31) * 7,
-      });
-    }
-
-    contours.push({
-      key: `contour-${index}`,
-      path: pointsToSvgPath(contourPoints),
-      color: layer === "satellite" ? "#F4F0DE" : "#FFFFFF",
-      opacity: layer === "standard" ? 0.18 : 0.34,
-      width: index % 3 === 0 ? 1.45 : 0.9,
-    });
-
-    if (index % 3 === 0) {
-      ridgeShadows.push({
-        key: `ridge-${index}`,
-        path: pointsToSvgPath(
-          contourPoints.map((point) => ({ x: point.x + 2, y: point.y + 4 }))
-        ),
-        color: "#1F2B1F",
-        opacity: layer === "satellite" ? 0.18 : 0.1,
-        width: 2.2,
-      });
-    }
-  }
+  const { contours, ridgeShadows } = buildContourTerrainPaths({
+    contourCount,
+    height,
+    layer,
+    minX,
+    minY,
+    width,
+  });
 
   const creekPoints = createOffsetRoutePoints(points, 48, 12);
   const secondaryTrailPoints = createOffsetRoutePoints(points, -58, 16);
@@ -424,6 +394,7 @@ const getMapState = ({
   layout,
   locationCoordinate,
   routePoints,
+  selectedCoordinate,
   zoom,
 }: {
   activeCenter: Coordinate;
@@ -432,10 +403,16 @@ const getMapState = ({
   layout: { width: number; height: number };
   locationCoordinate: Coordinate | null;
   routePoints: Coordinate[];
+  selectedCoordinate: Coordinate | null;
   zoom: number;
 }) => {
   if (!layout.width || !layout.height || isPerspective) {
-    return { tiles: [] as MapTile[], points: [] as ScreenPoint[], userPoint: null as ScreenPoint | null };
+    return {
+      tiles: [] as MapTile[],
+      points: [] as ScreenPoint[],
+      selectedPoint: null as ScreenPoint | null,
+      userPoint: null as ScreenPoint | null,
+    };
   }
 
   const centerPixel = project(activeCenter, zoom);
@@ -469,8 +446,14 @@ const getMapState = ({
         y: project(locationCoordinate, zoom).y - topLeft.y,
       }
     : null;
+  const selectedPoint = selectedCoordinate
+    ? {
+        x: project(selectedCoordinate, zoom).x - topLeft.x,
+        y: project(selectedCoordinate, zoom).y - topLeft.y,
+      }
+    : null;
 
-  return { tiles, points, userPoint };
+  return { tiles, points, selectedPoint, userPoint };
 };
 
 const getVisibleTiles = (
@@ -694,6 +677,170 @@ const getMapAttribution = (layer: MapLayer) => {
   if (layer === "terrain") return "Esri World Topo Map";
   if (layer === "satellite") return "Esri World Imagery";
   return "OpenStreetMap contributors";
+};
+
+const getMapDecorations = ({
+  layer,
+  layout,
+  points,
+  terrainElevationGain,
+  trailName,
+}: {
+  layer: MapLayer;
+  layout: { width: number; height: number };
+  points: ScreenPoint[];
+  terrainElevationGain: number;
+  trailName: string | null | undefined;
+}) => {
+  const routePath = pointsToSvgPath(points);
+  const routeLabel = getPointAtRouteFraction(points, 0.5);
+  const peakLabel = getPointAtRouteFraction(points, 0.22);
+  const elevationLabel = getPointAtRouteFraction(points, 0.78);
+
+  return {
+    ...buildTerrainPaths(points, layer, layout),
+    arrows: getRouteArrows(points),
+    labels: getTerrainLabels(routeLabel, peakLabel, elevationLabel, trailName, terrainElevationGain),
+    routePath,
+  };
+};
+
+const buildContourTerrainPaths = ({
+  contourCount,
+  height,
+  layer,
+  minX,
+  minY,
+  width,
+}: {
+  contourCount: number;
+  height: number;
+  layer: MapLayer;
+  minX: number;
+  minY: number;
+  width: number;
+}) => {
+  const contours: TerrainPath[] = [];
+  const ridgeShadows: TerrainPath[] = [];
+
+  for (let index = 0; index < contourCount; index += 1) {
+    const contourPoints = getContourPoints(index, contourCount, minX, minY, width, height);
+
+    contours.push(getContourPath(index, layer, contourPoints));
+
+    if (index % 3 === 0) {
+      ridgeShadows.push(getRidgeShadowPath(index, layer, contourPoints));
+    }
+  }
+
+  return { contours, ridgeShadows };
+};
+
+const getContourPoints = (
+  index: number,
+  contourCount: number,
+  minX: number,
+  minY: number,
+  width: number,
+  height: number
+) => {
+  const baseY = minY + ((index + 1) / (contourCount + 1)) * height;
+
+  return Array.from({ length: 14 }, (_, step) => {
+    const progress = step / 13;
+
+    return {
+      x: minX + progress * width,
+      y:
+        baseY +
+        Math.sin(progress * Math.PI * 2.2 + index * 0.72) * 18 +
+        Math.cos(progress * Math.PI * 4.1 + index * 0.31) * 7,
+    };
+  });
+};
+
+const getContourPath = (
+  index: number,
+  layer: MapLayer,
+  contourPoints: ScreenPoint[]
+): TerrainPath => ({
+  key: `contour-${index}`,
+  path: pointsToSvgPath(contourPoints),
+  color: layer === "satellite" ? "#F4F0DE" : "#FFFFFF",
+  opacity: layer === "standard" ? 0.18 : 0.34,
+  width: index % 3 === 0 ? 1.45 : 0.9,
+});
+
+const getRidgeShadowPath = (
+  index: number,
+  layer: MapLayer,
+  contourPoints: ScreenPoint[]
+): TerrainPath => ({
+  key: `ridge-${index}`,
+  path: pointsToSvgPath(
+    contourPoints.map((point) => ({ x: point.x + 2, y: point.y + 4 }))
+  ),
+  color: "#1F2B1F",
+  opacity: layer === "satellite" ? 0.18 : 0.1,
+  width: 2.2,
+});
+
+const getRouteArrows = (points: ScreenPoint[]) =>
+  [0.24, 0.5, 0.76]
+    .map((fraction, index) => {
+      const point = getPointAtRouteFraction(points, fraction);
+      return point
+        ? {
+            key: `direction-${index}`,
+            x: point.x,
+            y: point.y,
+            angle: point.angle,
+          }
+        : null;
+    })
+    .filter((point): point is RouteArrow => Boolean(point));
+
+const getTerrainLabels = (
+  routeLabel: (ScreenPoint & { angle: string }) | null,
+  peakLabel: (ScreenPoint & { angle: string }) | null,
+  elevationLabel: (ScreenPoint & { angle: string }) | null,
+  trailName: string | null | undefined,
+  terrainElevationGain: number
+) => {
+  const labels: TerrainLabel[] = [];
+
+  if (routeLabel) {
+    labels.push({
+      key: "route-label",
+      text: shortenTrailName(trailName),
+      x: routeLabel.x - 72,
+      y: routeLabel.y - 28,
+      angle: routeLabel.angle,
+      variant: "route",
+    });
+  }
+
+  if (peakLabel) {
+    labels.push({
+      key: "peak-label",
+      text: "Cota alta",
+      x: peakLabel.x + 14,
+      y: peakLabel.y - 48,
+      variant: "peak",
+    });
+  }
+
+  if (elevationLabel) {
+    labels.push({
+      key: "elevation-label",
+      text: `${terrainElevationGain} m`,
+      x: elevationLabel.x + 12,
+      y: elevationLabel.y + 18,
+      variant: "elevation",
+    });
+  }
+
+  return labels;
 };
 
 export function TrailMap({
@@ -948,68 +1095,20 @@ export function TrailMap({
     setPinchPreviewScale(1);
   };
 
-  const mapState = useMemo(() => {
-    if (!layout.width || !layout.height) {
-      return { tiles: [], points: [], selectedPoint: null, userPoint: null };
-    }
-
-    if (isPerspective) {
-      return { tiles: [], points: [], selectedPoint: null, userPoint: null };
-    }
-
-    const centerPixel = project(activeCenter, zoom);
-    const topLeft = {
-      x: centerPixel.x - layout.width / 2,
-      y: centerPixel.y - layout.height / 2,
-    };
-    const minTileX = Math.floor(topLeft.x / TILE_SIZE);
-    const maxTileX = Math.floor((topLeft.x + layout.width) / TILE_SIZE);
-    const minTileY = Math.floor(topLeft.y / TILE_SIZE);
-    const maxTileY = Math.floor((topLeft.y + layout.height) / TILE_SIZE);
-    const tileBuffer = layer === "terrain" ? 0 : 1;
-    const tiles: MapTile[] = [];
-
-    for (let x = minTileX - tileBuffer; x <= maxTileX + tileBuffer; x += 1) {
-      for (let y = minTileY - tileBuffer; y <= maxTileY + tileBuffer; y += 1) {
-        if (y < 0 || y >= 2 ** zoom) continue;
-
-        tiles.push({
-          key: `${layer}-${zoom}-${x}-${y}`,
-          url: getTileRemoteUrl(layer, zoom, x, y),
-          left: x * TILE_SIZE - topLeft.x,
-          top: y * TILE_SIZE - topLeft.y,
-          layer,
-          zoom,
-          x,
-          y,
-        });
-      }
-    }
-
-    const points = routePoints.map((point) => {
-      const pixel = project(point, zoom);
-
-      return {
-        x: pixel.x - topLeft.x,
-        y: pixel.y - topLeft.y,
-      };
-    });
-
-    const userPoint = location
-      ? {
-          x: project(location.coordinate, zoom).x - topLeft.x,
-          y: project(location.coordinate, zoom).y - topLeft.y,
-        }
-      : null;
-    const selectedPoint = selectedCoordinate
-      ? {
-          x: project(selectedCoordinate, zoom).x - topLeft.x,
-          y: project(selectedCoordinate, zoom).y - topLeft.y,
-        }
-      : null;
-
-    return { tiles, points, selectedPoint, userPoint };
-  }, [activeCenter[0], activeCenter[1], isPerspective, layer, layout.height, layout.width, location, routePoints, selectedCoordinate, zoom]);
+  const mapState = useMemo(
+    () =>
+      getMapState({
+        activeCenter,
+        isPerspective,
+        layer,
+        layout,
+        locationCoordinate: location?.coordinate ?? null,
+        routePoints,
+        selectedCoordinate,
+        zoom,
+      }),
+    [activeCenter, isPerspective, layer, layout, location, routePoints, selectedCoordinate, zoom]
+  );
 
   const handleMapPress = (x: number, y: number) => {
     if (!onSelectCoordinate || isPerspectiveRef.current) return;
@@ -1121,66 +1220,17 @@ export function TrailMap({
       ),
     [routePoints, trail?.difficulty, trail?.distance_km]
   );
-  const mapDecorations = useMemo(() => {
-    const points = mapState.points;
-    const routePath = pointsToSvgPath(points);
-    const terrainPaths = buildTerrainPaths(points, layer, layout);
-    const arrows = [0.24, 0.5, 0.76]
-      .map((fraction, index) => {
-        const point = getPointAtRouteFraction(points, fraction);
-        return point
-          ? {
-              key: `direction-${index}`,
-              x: point.x,
-              y: point.y,
-              angle: point.angle,
-            }
-          : null;
-      })
-      .filter((point): point is RouteArrow => Boolean(point));
-    const labels: TerrainLabel[] = [];
-    const routeLabel = getPointAtRouteFraction(points, 0.5);
-    const peakLabel = getPointAtRouteFraction(points, 0.22);
-    const elevationLabel = getPointAtRouteFraction(points, 0.78);
-
-    if (routeLabel) {
-      labels.push({
-        key: "route-label",
-        text: shortenTrailName(trail?.name),
-        x: routeLabel.x - 72,
-        y: routeLabel.y - 28,
-        angle: routeLabel.angle,
-        variant: "route",
-      });
-    }
-
-    if (peakLabel) {
-      labels.push({
-        key: "peak-label",
-        text: "Cota alta",
-        x: peakLabel.x + 14,
-        y: peakLabel.y - 48,
-        variant: "peak",
-      });
-    }
-
-    if (elevationLabel) {
-      labels.push({
-        key: "elevation-label",
-        text: `${terrainElevationGain} m`,
-        x: elevationLabel.x + 12,
-        y: elevationLabel.y + 18,
-        variant: "elevation",
-      });
-    }
-
-    return {
-      ...terrainPaths,
-      arrows,
-      labels,
-      routePath,
-    };
-  }, [layer, layout, mapState.points, terrainElevationGain, trail?.name]);
+  const mapDecorations = useMemo(
+    () =>
+      getMapDecorations({
+        layer,
+        layout,
+        points: mapState.points,
+        terrainElevationGain,
+        trailName: trail?.name,
+      }),
+    [layer, layout, mapState.points, terrainElevationGain, trail?.name]
+  );
 
   const onLayout = (event: LayoutChangeEvent) => {
     const { width, height } = event.nativeEvent.layout;

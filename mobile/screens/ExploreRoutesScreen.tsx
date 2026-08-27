@@ -64,12 +64,14 @@ const matchesDistanceFilter = (
 
 const filterTrails = (
   trails: Trail[],
+  favoriteTrailIds: number[],
   searchQuery: string,
   activeFilter: string,
   activeDistanceFilter: DistanceFilter
 ) => {
   const normalizedQuery = normalizeText(searchQuery.trim());
   const normalizedDifficulty = normalizeText(activeFilter);
+  const favoriteIdSet = new Set(favoriteTrailIds);
 
   return trails.filter((trail) => {
     const searchableText = normalizeText(`${trail.name} ${trail.location}`);
@@ -77,6 +79,7 @@ const filterTrails = (
       normalizedQuery.length === 0 || searchableText.includes(normalizedQuery);
     const matchesDifficulty =
       activeFilter === "Todas" ||
+      (activeFilter === "Favoritas" && favoriteIdSet.has(trail.id)) ||
       normalizeText(trail.difficulty).includes(normalizedDifficulty);
 
     return (
@@ -106,38 +109,15 @@ export default function ExploreRoutesScreen() {
     [favoriteTrailIds]
   );
   const filteredTrails = useMemo(
-    () => {
-      const normalizedQuery = normalizeText(searchQuery.trim());
-
-      return trails.filter((trail) => {
-        const distanceKm = trail.distance_km;
-        const searchableText = normalizeText(
-          `${trail.name} ${trail.location}`
-        );
-        const matchesQuery =
-          normalizedQuery.length === 0 || searchableText.includes(normalizedQuery);
-        const matchesDifficulty =
-          activeFilter === "Todas" ||
-          (activeFilter === "Favoritas" && favoriteIdSet.has(trail.id)) ||
-          normalizeText(trail.difficulty).includes(normalizeText(activeFilter));
-        const matchesDistance =
-          activeDistanceFilter === "Todas" ||
-          (activeDistanceFilter === "Corta" &&
-            typeof distanceKm === "number" &&
-            distanceKm <= 5) ||
-          (activeDistanceFilter === "Media" &&
-            typeof distanceKm === "number" &&
-            distanceKm > 5 &&
-            distanceKm <= 10) ||
-          (activeDistanceFilter === "Larga" &&
-            typeof distanceKm === "number" &&
-            distanceKm > 10) ||
-          (activeDistanceFilter === "Sin dato" && distanceKm === null);
-
-        return matchesQuery && matchesDifficulty && matchesDistance;
-      });
-    },
-    [activeDistanceFilter, activeFilter, favoriteIdSet, searchQuery, trails]
+    () =>
+      filterTrails(
+        trails,
+        favoriteTrailIds,
+        searchQuery,
+        activeFilter,
+        activeDistanceFilter
+      ),
+    [activeDistanceFilter, activeFilter, favoriteTrailIds, searchQuery, trails]
   );
   const visibleTrails = useMemo(
     () => filteredTrails.slice(0, visibleCount),

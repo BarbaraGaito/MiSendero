@@ -466,20 +466,8 @@ export function StatusNotice({
   onAction?: () => void;
   isLoading?: boolean;
 }) {
-  const iconColor =
-    tone === "error"
-      ? colors.danger
-      : tone === "warning"
-        ? colors.orange
-        : colors.green;
-  const iconName: IconName =
-    tone === "error"
-      ? "alert-circle-outline"
-      : tone === "success"
-        ? "checkmark-circle-outline"
-        : tone === "warning"
-          ? "warning-outline"
-          : "information-circle-outline";
+  const iconColor = statusNoticeIconColors[tone];
+  const iconName = statusNoticeIconNames[tone];
 
   return (
     <View
@@ -518,6 +506,20 @@ export function StatusNotice({
     </View>
   );
 }
+
+const statusNoticeIconColors = {
+  error: colors.danger,
+  info: colors.green,
+  success: colors.green,
+  warning: colors.orange,
+};
+
+const statusNoticeIconNames: Record<"info" | "success" | "warning" | "error", IconName> = {
+  error: "alert-circle-outline",
+  info: "information-circle-outline",
+  success: "checkmark-circle-outline",
+  warning: "warning-outline",
+};
 
 export const styles = StyleSheet.create({
   shell: {

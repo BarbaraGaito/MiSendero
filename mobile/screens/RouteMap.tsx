@@ -72,6 +72,37 @@ const loadRouteContext = async (trailId: number) => {
   };
 };
 
+const loadFallbackRouteContext = async (trailId: number) => {
+  const offlineMap = await getVerifiedOfflineMapByTrailId(trailId).catch(() => null);
+
+  return offlineMap?.trail
+    ? {
+        trail: offlineMap.trail,
+        reports: offlineMap.reports,
+        hasWifi: false,
+        hasInternet: false,
+        error: null,
+      }
+    : {
+        trail: null,
+        reports: [],
+        hasWifi: false,
+        hasInternet: false,
+        error: "No pudimos cargar el mapa de este sendero.",
+      };
+};
+
+const getActiveRouteLayoutOffsets = (topInset: number, isOffRoute: boolean) => {
+  const activeTop = Math.max(22, topInset + 14);
+  const activeBannerTop = activeTop + 68;
+
+  return {
+    activeTop,
+    activeBannerTop,
+    mapControlsTop: activeBannerTop + (isOffRoute ? 116 : 8),
+  };
+};
+
 const getSimulatedRouteStart = (
   trail: Trail | null,
   routePoints: Coordinate[]
@@ -141,22 +172,13 @@ export default function Screen04RouteMap() {
       } catch (loadError) {
         if (!isMounted) return;
 
-        const offlineMap = await getVerifiedOfflineMapByTrailId(trailId).catch(() => null);
-
-        if (offlineMap?.trail) {
-          setTrail(offlineMap.trail);
-          setReports(offlineMap.reports);
-          setIsWifiConnected(false);
-          setHasInternetConnection(false);
-          setWeather(null);
-          setError(null);
-        } else {
-          setError("No pudimos cargar el mapa de este sendero.");
-          setWeather(null);
-          setReports([]);
-          setIsWifiConnected(false);
-          setHasInternetConnection(false);
-        }
+        const fallbackContext = await loadFallbackRouteContext(trailId);
+        setTrail(fallbackContext.trail);
+        setReports(fallbackContext.reports);
+        setIsWifiConnected(fallbackContext.hasWifi);
+        setHasInternetConnection(fallbackContext.hasInternet);
+        setWeather(null);
+        setError(fallbackContext.error);
       } finally {
         if (!isMounted) return;
 
@@ -330,9 +352,8 @@ export default function Screen04RouteMap() {
     !isTestingLocation &&
     routeDeviationMeters !== null &&
     routeDeviationMeters > ROUTE_DEVIATION_WARNING_METERS;
-  const activeTop = Math.max(22, insets.top + 14);
-  const activeBannerTop = activeTop + 68;
-  const mapControlsTop = activeBannerTop + (isOffRoute ? 116 : 8);
+  const { activeTop, activeBannerTop, mapControlsTop } =
+    getActiveRouteLayoutOffsets(insets.top, isOffRoute);
   const hasBlockingReport = reports.some((report) => report.blocks_path);
   const severeReports = reports.filter((report) =>
     ["Alta", "Critica"].includes(report.severity)

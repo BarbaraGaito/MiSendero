@@ -17,6 +17,7 @@ import * as api from "../api";
 import {
   discardExhaustedOperations,
   enqueue,
+  enqueueUnique,
   getPendingOperations,
   getSyncSummary,
   MAX_RETRY_ATTEMPTS,
@@ -55,6 +56,25 @@ describe("syncQueue", () => {
     expect(pending.some((operation) => operation.id === id && operation.status === "pending")).toBe(
       true
     );
+  });
+
+  test("enqueueUnique reuses the existing operation for the same key", async () => {
+    const firstId = await enqueueUnique(
+      "activity",
+      { client_session_id: "local-session-test", trail_id: 1 },
+      "activity:local-session-test"
+    );
+    const secondId = await enqueueUnique(
+      "activity",
+      { client_session_id: "local-session-test", trail_id: 1 },
+      "activity:local-session-test"
+    );
+    const pending = await getPendingOperations();
+
+    expect(secondId).toBe(firstId);
+    expect(
+      pending.filter((operation) => operation.dedupeKey === "activity:local-session-test")
+    ).toHaveLength(1);
   });
 
   test("runSync does nothing while offline", async () => {

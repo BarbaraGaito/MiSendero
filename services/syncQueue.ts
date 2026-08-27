@@ -15,6 +15,7 @@ export interface PendingOperation {
   id: number;
   entityType: PendingEntityType;
   payload: Record<string, unknown>;
+  dedupeKey: string | null;
   status: PendingStatus;
   retryCount: number;
   lastError: string | null;
@@ -38,6 +39,7 @@ interface PendingOperationRow {
   id: number;
   entity_type: PendingEntityType;
   payload_json: string;
+  dedupe_key: string | null;
   status: PendingStatus;
   retry_count: number;
   last_error: string | null;
@@ -50,6 +52,7 @@ const toPendingOperation = (row: PendingOperationRow): PendingOperation => ({
   id: row.id,
   entityType: row.entity_type,
   payload: JSON.parse(row.payload_json),
+  dedupeKey: row.dedupe_key,
   status: row.status,
   retryCount: row.retry_count,
   lastError: row.last_error,
@@ -70,6 +73,44 @@ export const enqueue = async (
   );
 
   return result.lastInsertRowId;
+};
+
+export const enqueueUnique = async (
+  entityType: PendingEntityType,
+  payload: Record<string, unknown>,
+  dedupeKey: string
+): Promise<number> => {
+  const existing = await db.getFirstAsync<{ id: number }>(
+    `SELECT id FROM pending_operations
+     WHERE dedupe_key = ?
+     LIMIT 1`,
+    [dedupeKey]
+  );
+
+  if (existing) return existing.id;
+
+  const now = Date.now();
+
+  try {
+    const result = await db.runAsync(
+      `INSERT INTO pending_operations (entity_type, payload_json, dedupe_key, status, created_at, updated_at)
+       VALUES (?, ?, ?, 'pending', ?, ?)`,
+      [entityType, JSON.stringify(payload), dedupeKey, now, now]
+    );
+
+    return result.lastInsertRowId;
+  } catch (error) {
+    const racedExisting = await db.getFirstAsync<{ id: number }>(
+      `SELECT id FROM pending_operations
+       WHERE dedupe_key = ?
+       LIMIT 1`,
+      [dedupeKey]
+    );
+
+    if (racedExisting) return racedExisting.id;
+
+    throw error;
+  }
 };
 
 export const getPendingOperations = async (): Promise<PendingOperation[]> => {
@@ -171,6 +212,10 @@ const dispatchOperation = async (
         cause?: string | null;
         blocks_path?: boolean;
         details?: string;
+        latitude?: number | null;
+        longitude?: number | null;
+        accuracy_meters?: number | null;
+        route_progress_meters?: number | null;
       };
       const created = await createTrailReport(trailId, report, token);
       return created.id;

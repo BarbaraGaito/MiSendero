@@ -9,7 +9,7 @@
     "db:migrate": "node src/migrate.js",
     "db:seed": "node src/seed.js",
     "apply:route-difficulty": "node src/applyRouteDifficulty.js",
-    "test": "node --experimental-vm-modules node_modules/.bin/jest"
+    "test": "jest"
   },
   "keywords": [],
   "author": "",

@@ -3,7 +3,7 @@ export interface TrackingTick {
   speedKmh: number;
 }
 
-// GPS simulado y offline-first: evita depender de permisos durante el MVP.
+// Movimiento sintetico para demos controladas desde "Simular situaciones de ruta".
 export const getSimulatedTrackingTick = (elapsedSeconds: number): TrackingTick => {
   const baseSpeed = elapsedSeconds < 90 ? 4.6 : elapsedSeconds < 180 ? 3.8 : 2.1;
   const variation = Math.sin(elapsedSeconds / 18) * 0.35;

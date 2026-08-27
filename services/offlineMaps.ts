@@ -1,6 +1,11 @@
 import * as SQLite from "expo-sqlite";
 import { Trail, TrailReport } from "../types";
-import { downloadOfflineTilesForTrail } from "./mapTileCache";
+import {
+  deleteOfflineTilesForTrail,
+  downloadOfflineTilesForTrail,
+  getOfflineTileCoverageForTrail,
+  OfflineTileDownloadOptions,
+} from "./mapTileCache";
 
 const db = SQLite.openDatabaseSync("trekking.db");
 
@@ -11,6 +16,10 @@ export interface OfflineMap {
   status: string;
   downloadedAt: number;
   updatedAt: number;
+  downloadedTiles: number;
+  totalTiles: number;
+  verifiedAt: number | null;
+  lastError: string | null;
   trail: Trail | null;
   reports: TrailReport[];
 }
@@ -31,7 +40,11 @@ const initOfflineMapsTable = async () => {
       updated_at INTEGER NOT NULL,
       trail_id INTEGER,
       trail_json TEXT,
-      reports_json TEXT
+      reports_json TEXT,
+      downloaded_tiles INTEGER NOT NULL DEFAULT 0,
+      total_tiles INTEGER NOT NULL DEFAULT 0,
+      verified_at INTEGER,
+      last_error TEXT
     );
   `);
 
@@ -51,6 +64,22 @@ const initOfflineMapsTable = async () => {
   if (!columnNames.includes("reports_json")) {
     await db.execAsync(`ALTER TABLE offline_maps ADD COLUMN reports_json TEXT;`);
   }
+
+  if (!columnNames.includes("downloaded_tiles")) {
+    await db.execAsync(`ALTER TABLE offline_maps ADD COLUMN downloaded_tiles INTEGER NOT NULL DEFAULT 0;`);
+  }
+
+  if (!columnNames.includes("total_tiles")) {
+    await db.execAsync(`ALTER TABLE offline_maps ADD COLUMN total_tiles INTEGER NOT NULL DEFAULT 0;`);
+  }
+
+  if (!columnNames.includes("verified_at")) {
+    await db.execAsync(`ALTER TABLE offline_maps ADD COLUMN verified_at INTEGER;`);
+  }
+
+  if (!columnNames.includes("last_error")) {
+    await db.execAsync(`ALTER TABLE offline_maps ADD COLUMN last_error TEXT;`);
+  }
 };
 
 const parseJson = <T>(value: string | null, fallback: T): T => {
@@ -63,34 +92,61 @@ const parseJson = <T>(value: string | null, fallback: T): T => {
   }
 };
 
+const offlineMapColumns = `
+  id,
+  name,
+  size_mb,
+  status,
+  downloaded_at,
+  updated_at,
+  downloaded_tiles,
+  total_tiles,
+  verified_at,
+  last_error,
+  trail_json,
+  reports_json
+`;
+
+type OfflineMapRow = {
+  id: number;
+  name: string;
+  size_mb: number;
+  status: string;
+  downloaded_at: number;
+  updated_at: number;
+  downloaded_tiles: number | null;
+  total_tiles: number | null;
+  verified_at: number | null;
+  last_error: string | null;
+  trail_json: string | null;
+  reports_json: string | null;
+};
+
+const toOfflineMap = (row: OfflineMapRow): OfflineMap => ({
+  id: row.id,
+  name: row.name,
+  sizeMb: row.size_mb,
+  status: row.status,
+  downloadedAt: row.downloaded_at,
+  updatedAt: row.updated_at,
+  downloadedTiles: row.downloaded_tiles ?? 0,
+  totalTiles: row.total_tiles ?? 0,
+  verifiedAt: row.verified_at,
+  lastError: row.last_error,
+  trail: parseJson<Trail | null>(row.trail_json, null),
+  reports: parseJson<TrailReport[]>(row.reports_json, []),
+});
+
 export const getOfflineMaps = async (): Promise<OfflineMap[]> => {
   await initOfflineMapsTable();
 
-  const rows = await db.getAllAsync<{
-    id: number;
-    name: string;
-    size_mb: number;
-    status: string;
-    downloaded_at: number;
-    updated_at: number;
-    trail_json: string | null;
-    reports_json: string | null;
-  }>(
-    `SELECT id, name, size_mb, status, downloaded_at, updated_at, trail_json, reports_json
+  const rows = await db.getAllAsync<OfflineMapRow>(
+    `SELECT ${offlineMapColumns}
      FROM offline_maps
      ORDER BY updated_at DESC`
   );
 
-  return rows.map((row) => ({
-    id: row.id,
-    name: row.name,
-    sizeMb: row.size_mb,
-    status: row.status,
-    downloadedAt: row.downloaded_at,
-    updatedAt: row.updated_at,
-    trail: parseJson<Trail | null>(row.trail_json, null),
-    reports: parseJson<TrailReport[]>(row.reports_json, []),
-  }));
+  return rows.map(toOfflineMap);
 };
 
 export const getOfflineMapByTrailId = async (
@@ -98,17 +154,8 @@ export const getOfflineMapByTrailId = async (
 ): Promise<OfflineMap | null> => {
   await initOfflineMapsTable();
 
-  const row = await db.getFirstAsync<{
-    id: number;
-    name: string;
-    size_mb: number;
-    status: string;
-    downloaded_at: number;
-    updated_at: number;
-    trail_json: string | null;
-    reports_json: string | null;
-  }>(
-    `SELECT id, name, size_mb, status, downloaded_at, updated_at, trail_json, reports_json
+  const row = await db.getFirstAsync<OfflineMapRow>(
+    `SELECT ${offlineMapColumns}
      FROM offline_maps
      WHERE trail_id = ?
      ORDER BY updated_at DESC
@@ -118,15 +165,39 @@ export const getOfflineMapByTrailId = async (
 
   if (!row) return null;
 
+  return toOfflineMap(row);
+};
+
+export const getVerifiedOfflineMapByTrailId = async (
+  trailId: number
+): Promise<OfflineMap | null> => {
+  const offlineMap = await getOfflineMapByTrailId(trailId);
+
+  if (!offlineMap?.trail || offlineMap.status !== "disponible") {
+    return null;
+  }
+
+  const coverage = await getOfflineTileCoverageForTrail(offlineMap.trail);
+
+  if (!coverage.isComplete) {
+    return null;
+  }
+
+  const verifiedAt = Date.now();
+
+  await updateOfflineMapTileVerification(
+    offlineMap.id,
+    coverage.availableTiles,
+    coverage.totalTiles,
+    verifiedAt
+  );
+
   return {
-    id: row.id,
-    name: row.name,
-    sizeMb: row.size_mb,
-    status: row.status,
-    downloadedAt: row.downloaded_at,
-    updatedAt: row.updated_at,
-    trail: parseJson<Trail | null>(row.trail_json, null),
-    reports: parseJson<TrailReport[]>(row.reports_json, []),
+    ...offlineMap,
+    downloadedTiles: coverage.availableTiles,
+    totalTiles: coverage.totalTiles,
+    verifiedAt,
+    lastError: null,
   };
 };
 
@@ -138,7 +209,8 @@ export const getOfflineMapsSummary = async (): Promise<OfflineMapsSummary> => {
     total_size_mb: number | null;
   }>(
     `SELECT COUNT(*) AS count, COALESCE(SUM(size_mb), 0) AS total_size_mb
-     FROM offline_maps`
+     FROM offline_maps
+     WHERE status = 'disponible'`
   );
 
   return {
@@ -150,12 +222,21 @@ export const getOfflineMapsSummary = async (): Promise<OfflineMapsSummary> => {
 export const saveOfflineTrailMap = async (
   trail: Trail,
   reports: TrailReport[] = [],
-  onTileProgress?: (downloaded: number, total: number) => void
+  onTileProgress?: (downloaded: number, total: number) => void,
+  options: OfflineTileDownloadOptions = {}
 ) => {
   await initOfflineMapsTable();
 
   const now = Date.now();
-  const tileCache = await downloadOfflineTilesForTrail(trail, onTileProgress);
+  const tileCache = await downloadOfflineTilesForTrail(trail, onTileProgress, options);
+  const coverage = await getOfflineTileCoverageForTrail(trail);
+
+  if (!coverage.isComplete) {
+    throw new Error(
+      `offline-map-incomplete:${coverage.availableTiles}/${coverage.totalTiles}`
+    );
+  }
+
   const sizeMb = estimateTrailMapSizeMb(trail, reports) + tileCache.sizeMb;
   const existing = await db.getFirstAsync<{ id: number }>(
     `SELECT id FROM offline_maps WHERE trail_id = ? LIMIT 1`,
@@ -169,6 +250,10 @@ export const saveOfflineTrailMap = async (
            size_mb = ?,
            status = ?,
            updated_at = ?,
+           downloaded_tiles = ?,
+           total_tiles = ?,
+           verified_at = ?,
+           last_error = ?,
            trail_json = ?,
            reports_json = ?
        WHERE id = ?`,
@@ -177,6 +262,10 @@ export const saveOfflineTrailMap = async (
         sizeMb,
         "disponible",
         now,
+        coverage.availableTiles,
+        coverage.totalTiles,
+        now,
+        null,
         JSON.stringify(trail),
         JSON.stringify(reports),
         existing.id,
@@ -195,9 +284,13 @@ export const saveOfflineTrailMap = async (
        updated_at,
        trail_id,
        trail_json,
-       reports_json
+       reports_json,
+       downloaded_tiles,
+       total_tiles,
+       verified_at,
+       last_error
      )
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     [
       trail.name,
       sizeMb,
@@ -207,6 +300,10 @@ export const saveOfflineTrailMap = async (
       trail.id,
       JSON.stringify(trail),
       JSON.stringify(reports),
+      coverage.availableTiles,
+      coverage.totalTiles,
+      now,
+      null,
     ]
   );
 
@@ -225,6 +322,49 @@ export const refreshOfflineTrailReports = async (
          updated_at = ?
      WHERE trail_id = ?`,
     [JSON.stringify(reports), Date.now(), trailId]
+  );
+};
+
+export const deleteOfflineMap = async (mapId: number): Promise<boolean> => {
+  await initOfflineMapsTable();
+
+  const row = await db.getFirstAsync<OfflineMapRow>(
+    `SELECT ${offlineMapColumns}
+     FROM offline_maps
+     WHERE id = ?
+     LIMIT 1`,
+    [mapId]
+  );
+
+  if (!row) return false;
+
+  const offlineMap = toOfflineMap(row);
+
+  if (offlineMap.trail) {
+    await deleteOfflineTilesForTrail(offlineMap.trail).catch(() => undefined);
+  }
+
+  await db.runAsync(`DELETE FROM offline_maps WHERE id = ?`, [mapId]);
+
+  return true;
+};
+
+const updateOfflineMapTileVerification = async (
+  mapId: number,
+  downloadedTiles: number,
+  totalTiles: number,
+  verifiedAt: number
+) => {
+  await initOfflineMapsTable();
+
+  await db.runAsync(
+    `UPDATE offline_maps
+     SET downloaded_tiles = ?,
+         total_tiles = ?,
+         verified_at = ?,
+         last_error = NULL
+     WHERE id = ?`,
+    [downloadedTiles, totalTiles, verifiedAt, mapId]
   );
 };
 

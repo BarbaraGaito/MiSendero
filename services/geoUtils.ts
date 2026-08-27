@@ -82,6 +82,91 @@ const getDistanceToSegmentMeters = (
   return Math.sqrt(distanceX * distanceX + distanceY * distanceY);
 };
 
+const getClosestPointOnSegment = (
+  point: Coordinate,
+  segmentStart: Coordinate,
+  segmentEnd: Coordinate
+) => {
+  const p = toLocalMeters(point, segmentStart);
+  const a = toLocalMeters(segmentStart, segmentStart);
+  const b = toLocalMeters(segmentEnd, segmentStart);
+  const dx = b.x - a.x;
+  const dy = b.y - a.y;
+  const segmentLengthSquared = dx * dx + dy * dy;
+
+  if (segmentLengthSquared === 0) {
+    return {
+      coordinate: segmentStart,
+      distanceMeters: getDistanceMeters(point, segmentStart),
+      progressRatio: 0,
+    };
+  }
+
+  const progressRatio = Math.max(
+    0,
+    Math.min(1, ((p.x - a.x) * dx + (p.y - a.y) * dy) / segmentLengthSquared)
+  );
+  const closestLocal = {
+    x: a.x + progressRatio * dx,
+    y: a.y + progressRatio * dy,
+  };
+  const metersPerLatitudeDegree = (Math.PI * EARTH_RADIUS_METERS) / 180;
+  const metersPerLongitudeDegree =
+    metersPerLatitudeDegree * Math.cos((segmentStart[0] * Math.PI) / 180);
+  const coordinate: Coordinate = [
+    segmentStart[0] + closestLocal.y / metersPerLatitudeDegree,
+    segmentStart[1] + closestLocal.x / metersPerLongitudeDegree,
+  ];
+
+  return {
+    coordinate,
+    distanceMeters: getDistanceMeters(point, coordinate),
+    progressRatio,
+  };
+};
+
+export const getClosestPointOnRoute = (
+  point: Coordinate,
+  route: Coordinate[]
+) => {
+  if (route.length === 0) return null;
+  if (route.length === 1) {
+    return {
+      coordinate: route[0],
+      distanceMeters: getDistanceMeters(point, route[0]),
+      progressMeters: 0,
+    };
+  }
+
+  let closest:
+    | {
+        coordinate: Coordinate;
+        distanceMeters: number;
+        progressMeters: number;
+      }
+    | null = null;
+  let traveledBeforeSegment = 0;
+
+  route.slice(0, -1).forEach((segmentStart, index) => {
+    const segmentEnd = route[index + 1];
+    const segmentLength = getDistanceMeters(segmentStart, segmentEnd);
+    const candidate = getClosestPointOnSegment(point, segmentStart, segmentEnd);
+    const progressMeters = traveledBeforeSegment + segmentLength * candidate.progressRatio;
+
+    if (!closest || candidate.distanceMeters < closest.distanceMeters) {
+      closest = {
+        coordinate: candidate.coordinate,
+        distanceMeters: candidate.distanceMeters,
+        progressMeters,
+      };
+    }
+
+    traveledBeforeSegment += segmentLength;
+  });
+
+  return closest;
+};
+
 export const getDistanceToRouteMeters = (
   point: Coordinate,
   route: Coordinate[]

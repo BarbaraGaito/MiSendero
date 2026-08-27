@@ -27,6 +27,11 @@ const sections = [
       "Las mediciones de frecuencia cardiaca, actividad fisica, ubicacion, altitud y movimiento pueden ser imprecisas, demorarse o fallar por bateria, conectividad, permisos, cobertura GPS, uso incorrecto del dispositivo o limitaciones del sensor. La app puede generar falsos positivos o falsos negativos.",
   },
   {
+    title: "Smartwatches y datos de salud",
+    body:
+      "La conexion con Apple Watch, Android, Wear OS, HealthKit o Health Connect depende de permisos del sistema operativo, disponibilidad del dispositivo y sincronizacion del fabricante. MiSendero solo usa esas metricas si el usuario lo autoriza y las almacena localmente por usuario para predicciones orientativas sin conexion.",
+  },
+  {
     title: "IA y recomendaciones",
     body:
       "Las funciones de IA funcionan como estimaciones de apoyo basadas en datos disponibles y modelos entrenados. Sus resultados son orientativos, pueden equivocarse y no sustituyen criterio personal, planificacion, supervision profesional ni protocolos de seguridad.",

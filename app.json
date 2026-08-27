@@ -1,8 +1,58 @@
 {
-  "plugins": [
-    "expo-router",
-    "expo-sqlite",
-    "expo-asset",
-    "expo-location"
-  ]
+  "expo": {
+    "name": "MiSendero",
+    "slug": "misendero",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "scheme": "misendero",
+    "plugins": [
+      "expo-router",
+      "expo-sqlite",
+      "expo-asset",
+      "expo-location",
+      "react-native-health-connect",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "compileSdkVersion": 36,
+            "targetSdkVersion": 36,
+            "minSdkVersion": 26
+          }
+        }
+      ],
+      [
+        "@kingstinct/react-native-healthkit",
+        {
+          "NSHealthShareUsageDescription": "MiSendero necesita leer, con tu autorizacion, frecuencia cardiaca, actividad y oxigeno de Salud para mostrar metricas de tu recorrido y predicciones locales orientativas.",
+          "NSHealthUpdateUsageDescription": false,
+          "background": true
+        }
+      ],
+      "expo-secure-store",
+      "expo-font"
+    ],
+    "ios": {
+      "bundleIdentifier": "com.misendero.app",
+      "supportsTablet": false,
+      "infoPlist": {
+        "UIBackgroundModes": [
+          "fetch"
+        ]
+      }
+    },
+    "android": {
+      "package": "com.misendero.app",
+      "permissions": [
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.health.READ_HEART_RATE",
+        "android.permission.health.READ_STEPS",
+        "android.permission.health.READ_ACTIVE_CALORIES_BURNED",
+        "android.permission.health.READ_SPEED",
+        "android.permission.health.READ_OXYGEN_SATURATION"
+      ]
+    }
+  }
 }

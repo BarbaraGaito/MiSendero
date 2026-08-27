@@ -1,22 +1,28 @@
 import { StatusBar } from "expo-status-bar";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   ImageBackground,
   Pressable,
+  ScrollView,
   StyleSheet,
   Text,
   View,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
 import { getProfile, getTrails } from "../../services/api";
 import { getAuthSession } from "../../services/authSession";
 import { Profile, Trail } from "../../types";
-import { BottomNav, trailImages } from "../components/MiSenderoUI";
+import {
+  AppScreen,
+  PrimaryButton,
+  StatusNotice,
+  trailImages,
+} from "../components/MiSenderoUI";
 import {
   ExperienceProfile,
   getExperienceProfile,
   getRecommendedTrailForProfile,
+  getTrailRecommendationReasons,
 } from "../../services/experienceProfile";
 
 type TagProps = {
@@ -35,34 +41,40 @@ export default function HomeScreen() {
   const [experienceProfile, setExperienceProfile] =
     useState<ExperienceProfile | null>(null);
   const [recommendedTrail, setRecommendedTrail] = useState<Trail | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const loadHome = async () => {
-      try {
-        const session = await getAuthSession();
+  const loadHome = useCallback(async () => {
+    setIsLoading(true);
+    setError(null);
 
-        if (!session) {
-          router.replace("/");
-          return;
-        }
+    try {
+      const session = await getAuthSession();
 
-        const [profileData, trails, experience] = await Promise.all([
-          getProfile(session.token),
-          getTrails(),
-          getExperienceProfile(),
-        ]);
-
-        setProfile(profileData);
-        setExperienceProfile(experience);
-        setRecommendedTrail(getRecommendedTrailForProfile(trails, experience));
-      } catch (loadError) {
-        setError("No pudimos actualizar tu inicio.");
+      if (!session) {
+        router.replace("/");
+        return;
       }
-    };
 
-    loadHome();
+      const [profileData, trails, experience] = await Promise.all([
+        getProfile(session.token),
+        getTrails(),
+        getExperienceProfile(),
+      ]);
+
+      setProfile(profileData);
+      setExperienceProfile(experience);
+      setRecommendedTrail(getRecommendedTrailForProfile(trails, experience));
+    } catch (loadError) {
+      setError("No pudimos actualizar tu inicio.");
+    } finally {
+      setIsLoading(false);
+    }
   }, []);
+
+  useEffect(() => {
+    loadHome();
+  }, [loadHome]);
 
   const userName = profile?.user?.name || "viajera";
   const distance = recommendedTrail?.distance_km
@@ -71,12 +83,18 @@ export default function HomeScreen() {
   const duration = recommendedTrail?.duration || "Duracion a confirmar";
   const difficulty = recommendedTrail?.difficulty || "A confirmar";
   const canRecommend = experienceProfile?.completed;
+  const recommendationReasons =
+    experienceProfile && recommendedTrail
+      ? getTrailRecommendationReasons(recommendedTrail, experienceProfile)
+      : [];
 
   return (
-    <SafeAreaView edges={["top", "bottom"]} style={styles.safeArea}>
+    <AppScreen activeTab="inicio">
       <StatusBar style="dark" />
-      <View style={styles.screen}>
-        <View style={styles.content}>
+      <ScrollView
+        contentContainerStyle={styles.content}
+        showsVerticalScrollIndicator={false}
+      >
           <View style={styles.hero}>
             <Text style={styles.title}>Buen dia, {userName}</Text>
             <Text style={styles.subtitle}>
@@ -94,9 +112,25 @@ export default function HomeScreen() {
             </Text>
           </View>
 
-          {error ? <Text style={styles.statusText}>{error}</Text> : null}
+          {isLoading ? (
+            <StatusNotice
+              isLoading
+              message="Buscando tu perfil, rutas y recomendaciones."
+              title="Actualizando inicio"
+            />
+          ) : null}
 
-          {!canRecommend ? (
+          {error ? (
+            <StatusNotice
+              actionLabel="Reintentar"
+              message={error}
+              onAction={loadHome}
+              title="No se pudo actualizar"
+              tone="error"
+            />
+          ) : null}
+
+          {!isLoading && !error && !canRecommend ? (
             <View style={styles.emptyCard}>
               <Text style={styles.routeName}>Completa tu perfil de experiencia</Text>
               <Text style={styles.routeLocation}>
@@ -109,9 +143,16 @@ export default function HomeScreen() {
                 <Text style={styles.inlineButtonText}>Completar ahora</Text>
               </Pressable>
             </View>
-          ) : recommendedTrail ? (
+          ) : null}
+
+          {!isLoading && !error && canRecommend && recommendedTrail ? (
             <Pressable
-              style={styles.routeCard}
+              accessibilityLabel={`Ver detalle de ${recommendedTrail.name}`}
+              accessibilityRole="button"
+              style={({ pressed }) => [
+                styles.routeCard,
+                pressed && styles.pressed,
+              ]}
               onPress={() =>
                 router.push({
                   pathname: "/trail-detail",
@@ -140,33 +181,42 @@ export default function HomeScreen() {
                   <RouteMetric icon="T" label={duration} />
                   <RouteMetric icon="A" label={difficulty} accent />
                 </View>
+
+                {recommendationReasons.length > 0 ? (
+                  <View style={styles.reasonsBox}>
+                    <Text style={styles.reasonsTitle}>Por que esta ruta</Text>
+                    {recommendationReasons.map((reason) => (
+                      <Text key={reason} style={styles.reasonText}>
+                        {reason}
+                      </Text>
+                    ))}
+                  </View>
+                ) : null}
               </View>
             </Pressable>
-          ) : (
+          ) : null}
+
+          {!isLoading && !error && canRecommend && !recommendedTrail ? (
             <View style={styles.emptyCard}>
               <Text style={styles.routeName}>No hay rutas disponibles por ahora</Text>
               <Text style={styles.routeLocation}>Cuando agregues senderos, apareceran aca.</Text>
             </View>
-          )}
+          ) : null}
 
-          {canRecommend && recommendedTrail ? (
-            <Pressable
-              style={styles.primaryButton}
+          {!isLoading && !error && canRecommend && recommendedTrail ? (
+            <PrimaryButton
+              icon="trail-sign-outline"
+              label="Ver detalle de la ruta"
               onPress={() =>
                 router.push({
                   pathname: "/trail-detail",
                   params: { id: String(recommendedTrail.id) },
                 })
               }
-            >
-              <Text style={styles.primaryButtonText}>Ver detalle de la ruta</Text>
-            </Pressable>
+            />
           ) : null}
-        </View>
-
-        <BottomNav active="inicio" />
-      </View>
-    </SafeAreaView>
+      </ScrollView>
+    </AppScreen>
   );
 }
 
@@ -200,20 +250,10 @@ const colors = {
 };
 
 const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-    backgroundColor: colors.page,
-  },
-  screen: {
-    flex: 1,
-    backgroundColor: colors.page,
-  },
   content: {
-    flex: 1,
     gap: 20,
     paddingBottom: 16,
-    paddingHorizontal: 24,
-    paddingTop: 18,
+    paddingTop: 6,
   },
   hero: {
     gap: 12,
@@ -263,6 +303,9 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 12 },
     shadowOpacity: 0.05,
     shadowRadius: 24,
+  },
+  pressed: {
+    opacity: 0.72,
   },
   emptyCard: {
     backgroundColor: colors.surface,
@@ -402,18 +445,23 @@ const styles = StyleSheet.create({
   metricLabelAccent: {
     color: colors.orange,
   },
-  primaryButton: {
-    alignItems: "center",
-    backgroundColor: colors.primary,
-    borderRadius: 24,
-    height: 52,
-    justifyContent: "center",
-    width: "100%",
+  reasonsBox: {
+    backgroundColor: colors.page,
+    borderColor: colors.border,
+    borderRadius: 14,
+    borderWidth: 1,
+    gap: 5,
+    padding: 12,
   },
-  primaryButtonText: {
-    color: colors.surface,
+  reasonsTitle: {
+    color: colors.ink,
     fontSize: 13,
-    fontWeight: "600",
-    lineHeight: 18,
+    fontWeight: "900",
+  },
+  reasonText: {
+    color: colors.muted,
+    fontSize: 12,
+    fontWeight: "700",
+    lineHeight: 17,
   },
 });

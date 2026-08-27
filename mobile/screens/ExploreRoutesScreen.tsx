@@ -14,9 +14,18 @@ import {
   TextInput,
   View,
 } from "react-native";
-import { AppScreen, Card, ScreenTitle, colors, trailImages } from "../components/MiSenderoUI";
+import {
+  AppScreen,
+  Card,
+  ScreenTitle,
+  StatusNotice,
+  colors,
+  trailImages,
+} from "../components/MiSenderoUI";
 import { getTrails } from "../../services/api";
 import { Trail } from "../../types";
+import { initDB } from "../../database/database";
+import { getFavoriteTrailIds } from "../../services/favoriteTrails";
 
 const ROUTES_PAGE_SIZE = 6;
 const DIFFICULTY_FILTERS = ["Todas", "Baja", "Media", "Alta"];
@@ -80,6 +89,7 @@ const filterTrails = (
 
 export default function ExploreRoutesScreen() {
   const [trails, setTrails] = useState<Trail[]>([]);
+  const [favoriteTrailIds, setFavoriteTrailIds] = useState<number[]>([]);
   const [activeFilter, setActiveFilter] = useState("Todas");
   const [activeDistanceFilter, setActiveDistanceFilter] = useState<DistanceFilter>("Todas");
   const [searchQuery, setSearchQuery] = useState("");
@@ -91,9 +101,48 @@ export default function ExploreRoutesScreen() {
 
   const hasActiveFilters =
     activeFilter !== "Todas" || activeDistanceFilter !== "Todas" || searchQuery.trim().length > 0;
+  const favoriteIdSet = useMemo(
+    () => new Set(favoriteTrailIds),
+    [favoriteTrailIds]
+  );
   const filteredTrails = useMemo(
+<<<<<<< HEAD
     () => filterTrails(trails, searchQuery, activeFilter, activeDistanceFilter),
     [activeDistanceFilter, activeFilter, searchQuery, trails]
+=======
+    () => {
+      const normalizedQuery = normalizeText(searchQuery.trim());
+
+      return trails.filter((trail) => {
+        const distanceKm = trail.distance_km;
+        const searchableText = normalizeText(
+          `${trail.name} ${trail.location}`
+        );
+        const matchesQuery =
+          normalizedQuery.length === 0 || searchableText.includes(normalizedQuery);
+        const matchesDifficulty =
+          activeFilter === "Todas" ||
+          (activeFilter === "Favoritas" && favoriteIdSet.has(trail.id)) ||
+          normalizeText(trail.difficulty).includes(normalizeText(activeFilter));
+        const matchesDistance =
+          activeDistanceFilter === "Todas" ||
+          (activeDistanceFilter === "Corta" &&
+            typeof distanceKm === "number" &&
+            distanceKm <= 5) ||
+          (activeDistanceFilter === "Media" &&
+            typeof distanceKm === "number" &&
+            distanceKm > 5 &&
+            distanceKm <= 10) ||
+          (activeDistanceFilter === "Larga" &&
+            typeof distanceKm === "number" &&
+            distanceKm > 10) ||
+          (activeDistanceFilter === "Sin dato" && distanceKm === null);
+
+        return matchesQuery && matchesDifficulty && matchesDistance;
+      });
+    },
+    [activeDistanceFilter, activeFilter, favoriteIdSet, searchQuery, trails]
+>>>>>>> 9c37b5b78195f678040f02b776d8b3b6eecb0110
   );
   const visibleTrails = useMemo(
     () => filteredTrails.slice(0, visibleCount),
@@ -126,19 +175,28 @@ export default function ExploreRoutesScreen() {
     !error &&
     visibleRouteItems.some((item) => !paintedImages[item.image]);
 
-  useEffect(() => {
-    getTrails()
-      .then((data) => {
-        setTrails(data);
-        setError(null);
-      })
-      .catch(() => {
-        setError("No pudimos cargar los senderos en este momento.");
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+  const loadRoutes = useCallback(async () => {
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      await initDB();
+      const [trailList, favoriteIds] = await Promise.all([
+        getTrails(),
+        getFavoriteTrailIds(),
+      ]);
+      setTrails(trailList);
+      setFavoriteTrailIds(favoriteIds);
+    } catch (loadError) {
+      setError("No pudimos cargar los senderos en este momento.");
+    } finally {
+      setIsLoading(false);
+    }
   }, []);
+
+  useEffect(() => {
+    loadRoutes();
+  }, [loadRoutes]);
 
   useEffect(() => {
     setVisibleCount(ROUTES_PAGE_SIZE);
@@ -175,11 +233,12 @@ export default function ExploreRoutesScreen() {
       <RouteCard
         image={item.image}
         imageReady={Boolean(paintedImages[item.image])}
+        isFavorite={favoriteIdSet.has(item.trail.id)}
         onImageReady={markImagePainted}
         trail={item.trail}
       />
     ),
-    [markImagePainted, paintedImages]
+    [favoriteIdSet, markImagePainted, paintedImages]
   );
 
   const header = (
@@ -194,14 +253,25 @@ export default function ExploreRoutesScreen() {
         <View style={styles.searchBox}>
           <Ionicons name="search-outline" size={18} color={colors.muted} />
           <TextInput
+            accessibilityLabel="Buscar rutas por zona o nombre"
             onChangeText={setSearchQuery}
             placeholder="Buscar por zona o nombre"
             placeholderTextColor={colors.muted}
+            returnKeyType="search"
             style={styles.searchInput}
             value={searchQuery}
           />
           {searchQuery.trim().length > 0 ? (
-            <Pressable onPress={() => setSearchQuery("")} style={styles.clearSearchButton}>
+            <Pressable
+              accessibilityLabel="Limpiar busqueda"
+              accessibilityRole="button"
+              hitSlop={8}
+              onPress={() => setSearchQuery("")}
+              style={({ pressed }) => [
+                styles.clearSearchButton,
+                pressed && styles.pressed,
+              ]}
+            >
               <Ionicons name="close" size={16} color={colors.greenDark} />
             </Pressable>
           ) : null}
@@ -214,8 +284,11 @@ export default function ExploreRoutesScreen() {
 
             return (
               <Pressable
+                accessibilityRole="button"
+                accessibilityState={{ selected: isActive }}
                 key={filter}
                 onPress={() => setActiveFilter(filter)}
+                style={({ pressed }) => pressed && styles.pressed}
               >
                 <Text style={isActive ? styles.filterActive : styles.filter}>
                   {filter}
@@ -223,6 +296,16 @@ export default function ExploreRoutesScreen() {
               </Pressable>
             );
           })}
+          <Pressable
+            accessibilityRole="button"
+            accessibilityState={{ selected: activeFilter === "Favoritas" }}
+            onPress={() => setActiveFilter("Favoritas")}
+            style={({ pressed }) => pressed && styles.pressed}
+          >
+            <Text style={activeFilter === "Favoritas" ? styles.filterActive : styles.filter}>
+              Favoritas
+            </Text>
+          </Pressable>
         </View>
 
         <Text style={styles.filterLabel}>Distancia</Text>
@@ -232,8 +315,11 @@ export default function ExploreRoutesScreen() {
 
             return (
               <Pressable
+                accessibilityRole="button"
+                accessibilityState={{ selected: isActive }}
                 key={filter.id}
                 onPress={() => setActiveDistanceFilter(filter.id)}
+                style={({ pressed }) => pressed && styles.pressed}
               >
                 <Text style={isActive ? styles.filterActive : styles.filter}>
                   {filter.label}
@@ -255,10 +341,34 @@ export default function ExploreRoutesScreen() {
           <Text style={styles.resultsCount}>{filteredTrails.length} rutas</Text>
         </View>
 
-        {isLoading ? <Text style={styles.statusText}>Cargando senderos...</Text> : null}
-        {error ? <Text style={styles.statusText}>{error}</Text> : null}
+        {isLoading ? (
+          <StatusNotice
+            isLoading
+            message="Estamos trayendo senderos y preparando las imagenes."
+            title="Cargando senderos"
+          />
+        ) : null}
+        {error ? (
+          <StatusNotice
+            actionLabel="Reintentar"
+            message={error}
+            onAction={loadRoutes}
+            title="No se pudo cargar"
+            tone="error"
+          />
+        ) : null}
         {!isLoading && !error && filteredTrails.length === 0 ? (
-          <Text style={styles.statusText}>No hay senderos disponibles por ahora.</Text>
+          <StatusNotice
+            actionLabel={hasActiveFilters ? "Limpiar filtros" : undefined}
+            message={
+              hasActiveFilters
+                ? "Probá con menos filtros o una busqueda mas amplia."
+                : "Cuando haya senderos disponibles, apareceran en esta lista."
+            }
+            onAction={hasActiveFilters ? clearFilters : undefined}
+            title={hasActiveFilters ? "Sin resultados" : "Sin senderos disponibles"}
+            tone="warning"
+          />
         ) : null}
       </View>
     </View>
@@ -309,18 +419,26 @@ function RouteCard({
   trail,
   image,
   imageReady,
+  isFavorite,
   onImageReady,
 }: {
   trail: Trail;
   image: string;
   imageReady: boolean;
+  isFavorite: boolean;
   onImageReady: (imageUrl: string) => void;
 }) {
   const distance = trail.distance_km ? `${trail.distance_km} km` : "Distancia a confirmar";
 
   return (
     <Pressable
-      style={[styles.routeCard, !imageReady && styles.routeCardHidden]}
+      accessibilityLabel={`Ver detalle de ${trail.name}`}
+      accessibilityRole="button"
+      style={({ pressed }) => [
+        styles.routeCard,
+        !imageReady && styles.routeCardHidden,
+        pressed && styles.pressed,
+      ]}
       onPress={() =>
         router.push({
           pathname: "/trail-detail",
@@ -340,6 +458,11 @@ function RouteCard({
         <View style={styles.badge}>
           <Text style={styles.badgeText}>{trail.difficulty}</Text>
         </View>
+        {isFavorite ? (
+          <View style={styles.favoriteBadge}>
+            <Ionicons name="star" size={15} color={colors.warning} />
+          </View>
+        ) : null}
       </ImageBackground>
       <View style={styles.routeBody}>
         <Text style={styles.routeTitle}>{trail.name}</Text>
@@ -478,7 +601,9 @@ const styles = StyleSheet.create({
   },
   filterActive: {
     backgroundColor: colors.primary,
+    borderColor: colors.primary,
     borderRadius: 999,
+    borderWidth: 1,
     color: colors.surface,
     fontSize: 13,
     fontWeight: "800",
@@ -538,6 +663,9 @@ const styles = StyleSheet.create({
     height: 0,
     marginBottom: 0,
     opacity: 0,
+  },
+  pressed: {
+    opacity: 0.72,
   },
   routesLoader: {
     alignItems: "center",
@@ -618,6 +746,16 @@ const styles = StyleSheet.create({
     color: colors.primary,
     fontSize: 12,
     fontWeight: "800",
+  },
+  favoriteBadge: {
+    alignItems: "center",
+    alignSelf: "flex-end",
+    backgroundColor: colors.white,
+    borderRadius: 999,
+    height: 32,
+    justifyContent: "center",
+    marginTop: -30,
+    width: 32,
   },
   routeBody: {
     gap: 3,

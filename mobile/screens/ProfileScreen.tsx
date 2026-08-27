@@ -1,14 +1,22 @@
-import React, { useEffect, useState } from "react";
-import { router } from "expo-router";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
-import { AppScreen, Card, PrimaryButton, ScreenTitle, SettingRow, colors } from "../components/MiSenderoUI";
+import React, { useCallback, useEffect, useState } from "react";
+import { router, useFocusEffect } from "expo-router";
+import { Alert, ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  AppScreen,
+  Card,
+  PrimaryButton,
+  ScreenTitle,
+  SettingRow,
+  StatusNotice,
+  colors,
+} from "../components/MiSenderoUI";
 import { getProfile } from "../../services/api";
 import {
   clearAuthSession,
   getAuthSession,
   saveAuthSession,
 } from "../../services/authSession";
-import { Profile } from "../../types";
+import { Profile, WearableRuntimeStatus } from "../../types";
 import {
   getPrivacyPreferences,
   PrivacyPreferences,
@@ -37,6 +45,12 @@ import {
   getSessionsSummary,
   SessionsSummary,
 } from "../../database/sessionsRepository";
+import {
+  discardExhaustedOperations,
+  getSyncSummary,
+  runSync,
+  SyncSummary,
+} from "../../services/syncQueue";
 import { EmergencyContact } from "../../types";
 
 const emptySessionsSummary: SessionsSummary = {
@@ -50,6 +64,7 @@ const emptyOfflineMapsSummary: OfflineMapsSummary = {
   totalSizeMb: 0,
 };
 
+<<<<<<< HEAD
 const adminTestingModeFallback: TestingLocationMode = {
   enabled: false,
   updatedAt: null,
@@ -101,6 +116,15 @@ const loadProfileData = async () => {
     offlineMapsSummary: mapsSummary,
     testingLocationMode: isAdmin ? await getTestingLocationMode() : adminTestingModeFallback,
   };
+=======
+const emptySyncSummary: SyncSummary = {
+  pending: 0,
+  syncing: 0,
+  synced: 0,
+  failed: 0,
+  abandoned: 0,
+  exhausted: 0,
+>>>>>>> 9c37b5b78195f678040f02b776d8b3b6eecb0110
 };
 
 const formatDistance = (meters: number) =>
@@ -120,6 +144,7 @@ const formatStorage = (sizeMb: number) => {
     maximumFractionDigits: 0,
   })} MB`;
 };
+import { getWearableRuntimeStatus } from "../../services/wearableMetrics";
 
 export default function ProfileScreen() {
   const [profile, setProfile] = useState<Profile | null>(null);
@@ -158,7 +183,12 @@ export default function ProfileScreen() {
     useState<SessionsSummary>(emptySessionsSummary);
   const [offlineMapsSummary, setOfflineMapsSummary] =
     useState<OfflineMapsSummary>(emptyOfflineMapsSummary);
+  const [wearableRuntime, setWearableRuntime] =
+    useState<WearableRuntimeStatus | null>(null);
+  const [syncSummary, setSyncSummary] = useState<SyncSummary>(emptySyncSummary);
+  const [isSyncing, setIsSyncing] = useState(false);
 
+<<<<<<< HEAD
   useEffect(() => {
     const loadProfile = async () => {
       try {
@@ -186,16 +216,154 @@ export default function ProfileScreen() {
     };
 
     loadProfile();
+=======
+  const refreshWearableRuntime = useCallback(async () => {
+    setWearableRuntime(await getWearableRuntimeStatus());
+>>>>>>> 9c37b5b78195f678040f02b776d8b3b6eecb0110
   }, []);
 
+  const refreshSyncSummary = useCallback(async () => {
+    setSyncSummary(await getSyncSummary());
+  }, []);
+
+  const triggerSync = useCallback(async () => {
+    if (isSyncing) return;
+
+    setIsSyncing(true);
+    try {
+      await runSync();
+    } finally {
+      await refreshSyncSummary();
+      setIsSyncing(false);
+    }
+  }, [isSyncing, refreshSyncSummary]);
+
+  const discardExhausted = useCallback(() => {
+    Alert.alert(
+      "Descartar pendientes con error",
+      "Estos reportes, actividades o alertas no se pudieron enviar despues de varios intentos. Si los descartas, no se van a volver a intentar.",
+      [
+        { text: "Cancelar", style: "cancel" },
+        {
+          text: "Descartar",
+          style: "destructive",
+          onPress: async () => {
+            await discardExhaustedOperations();
+            await refreshSyncSummary();
+          },
+        },
+      ]
+    );
+  }, [refreshSyncSummary]);
+
+  const loadProfile = useCallback(async () => {
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const session = await getAuthSession();
+
+      if (!session) {
+        router.replace("/");
+        return;
+      }
+
+      const data = await getProfile(session.token);
+      const [
+        privacyPreferences,
+        testingPreferences,
+        preferences,
+        experience,
+        contact,
+        localSessionsSummary,
+        mapsSummary,
+        wearable,
+        initialSyncSummary,
+      ] = await Promise.all([
+        getPrivacyPreferences(),
+        getTestingLocationMode(),
+        getAppPreferences(),
+        getExperienceProfile(),
+        getEmergencyContact(),
+        getSessionsSummary(),
+        getOfflineMapsSummary(),
+        getWearableRuntimeStatus(),
+        getSyncSummary(),
+      ]);
+
+      runSync()
+        .catch(() => null)
+        .finally(refreshSyncSummary);
+
+      if (data.user) {
+        await saveAuthSession({
+          token: session.token,
+          user: data.user,
+        });
+      }
+
+      if (data.user?.role !== "admin" && testingPreferences.enabled) {
+        await saveTestingLocationMode(false);
+      }
+
+      setProfile(data);
+      setPrivacy(privacyPreferences);
+      setAppPreferences(preferences);
+      setExperienceProfile(experience);
+      setEmergencyContact(contact);
+      setSessionsSummary(localSessionsSummary);
+      setOfflineMapsSummary(mapsSummary);
+      setWearableRuntime(wearable);
+      setSyncSummary(initialSyncSummary);
+      setTestingLocationMode(
+        data.user?.role === "admin"
+          ? await getTestingLocationMode()
+          : { enabled: false, updatedAt: null }
+      );
+    } catch (loadError) {
+      setError("No pudimos cargar tu perfil en este momento.");
+    } finally {
+      setIsLoading(false);
+    }
+  }, [refreshSyncSummary]);
+
+  useEffect(() => {
+    loadProfile();
+  }, [loadProfile]);
+
+  useFocusEffect(
+    useCallback(() => {
+      refreshWearableRuntime();
+      refreshSyncSummary();
+    }, [refreshWearableRuntime, refreshSyncSummary])
+  );
+
   const logout = async () => {
-    await clearAuthSession();
-    router.replace("/");
+    Alert.alert(
+      "Cerrar sesion",
+      "Vas a salir de MiSendero en este dispositivo.",
+      [
+        { text: "Cancelar", style: "cancel" },
+        {
+          text: "Cerrar sesion",
+          style: "destructive",
+          onPress: async () => {
+            await clearAuthSession();
+            router.replace("/");
+          },
+        },
+      ]
+    );
   };
 
   const updatePrivacy = async (nextPrivacy: Omit<PrivacyPreferences, "updatedAt">) => {
     await savePrivacyPreferences(nextPrivacy);
-    setPrivacy(await getPrivacyPreferences());
+    const [privacyPreferences, wearable] = await Promise.all([
+      getPrivacyPreferences(),
+      getWearableRuntimeStatus(),
+    ]);
+    setPrivacy(privacyPreferences);
+    setWearableRuntime(wearable);
   };
 
   const updateTestingLocationMode = async (enabled: boolean) => {
@@ -227,8 +395,22 @@ export default function ProfileScreen() {
           subtitle="Tu cuenta y preferencias de seguridad."
         />
 
-        {isLoading ? <Text style={styles.statusText}>Cargando perfil...</Text> : null}
-        {error ? <Text style={styles.statusText}>{error}</Text> : null}
+        {isLoading ? (
+          <StatusNotice
+            isLoading
+            message="Cargando cuenta, mapas, seguridad y sincronizacion."
+            title="Cargando perfil"
+          />
+        ) : null}
+        {error ? (
+          <StatusNotice
+            actionLabel="Reintentar"
+            message={error}
+            onAction={loadProfile}
+            title="No se pudo cargar"
+            tone="error"
+          />
+        ) : null}
 
         <Card tone="green">
           <View style={styles.profileRow}>
@@ -244,6 +426,55 @@ export default function ProfileScreen() {
               </Text>
             </View>
           </View>
+        </Card>
+
+        <Card>
+          <Text style={styles.cardTitle}>Sincronizacion</Text>
+          <Text style={styles.privacyText}>
+            Reportes, actividades y alertas creados sin señal quedan en cola
+            local hasta recuperar conectividad.
+          </Text>
+          <SettingRow
+            label="Pendientes de enviar"
+            value={
+              syncSummary.pending + syncSummary.syncing > 0
+                ? `${syncSummary.pending + syncSummary.syncing}`
+                : "Al dia"
+            }
+            onPress={triggerSync}
+          />
+          <View style={styles.syncGrid}>
+            <SyncMetric label="Pendientes" value={syncSummary.pending + syncSummary.syncing} />
+            <SyncMetric label="Enviados" value={syncSummary.synced} />
+            <SyncMetric label="Con error" value={syncSummary.failed} />
+            <SyncMetric label="Descartados" value={syncSummary.abandoned} />
+          </View>
+          {syncSummary.failed > 0 ? (
+            <Text style={styles.warningText}>
+              Hay actividades con error. Podes reintentar la sincronizacion.
+            </Text>
+          ) : null}
+          {syncSummary.failed > 0 ? (
+            <SettingRow
+              label="Con error, reintentar"
+              value={`${syncSummary.failed}`}
+              onPress={triggerSync}
+            />
+          ) : null}
+          {syncSummary.exhausted > 0 ? (
+            <>
+              <Text style={styles.warningText}>
+                {syncSummary.exhausted} no se pudieron enviar tras varios intentos. Podes
+                seguir esperando señal o descartarlos.
+              </Text>
+              <SettingRow
+                label="Descartar pendientes con error"
+                value={`${syncSummary.exhausted}`}
+                onPress={discardExhausted}
+              />
+            </>
+          ) : null}
+          {isSyncing ? <Text style={styles.privacyText}>Sincronizando...</Text> : null}
         </Card>
 
         <Card>
@@ -268,15 +499,8 @@ export default function ProfileScreen() {
           />
           <SettingRow
             label="Reloj o sensor externo"
-            value={appPreferences.externalSensorLinked ? "Vinculado" : "No vinculado"}
-            onPress={() =>
-              updateAppPreferences({
-                notificationsEnabled: appPreferences.notificationsEnabled,
-                distanceUnit: appPreferences.distanceUnit,
-                batterySaverEnabled: appPreferences.batterySaverEnabled,
-                externalSensorLinked: !appPreferences.externalSensorLinked,
-              })
-            }
+            value={getWearableLabel(wearableRuntime)}
+            onPress={() => router.push("/reloj-salud")}
           />
           <SettingRow
             label="Modo ahorro de bateria"
@@ -374,14 +598,14 @@ export default function ProfileScreen() {
 
       {isAdmin ? (
         <Card tone="orange">
-          <Text style={styles.cardTitle}>Herramientas de testing</Text>
+          <Text style={styles.cardTitle}>Simular situaciones de ruta</Text>
           <Text style={styles.privacyText}>
-            Solo administradores. Simula la ubicacion del dispositivo en el
-            inicio de la ruta para probar inicio, mapas y alertas sin estar
+            Solo administradores. Al activar este modo, la app usa ubicacion y
+            movimiento simulados para probar inicio, mapas y alertas sin estar
             fisicamente en el lugar.
           </Text>
           <SettingRow
-            label="Ubicacion simulada"
+            label="Simular ubicacion en ruta"
             value={testingLocationMode.enabled ? "Activa" : "Desactivada"}
             onPress={() =>
               updateTestingLocationMode(!testingLocationMode.enabled)
@@ -392,12 +616,30 @@ export default function ProfileScreen() {
 
       <PrimaryButton
           label="Cerrar sesion"
+          icon="log-out-outline"
           tone="secondary"
           onPress={logout}
         />
       </ScrollView>
     </AppScreen>
   );
+}
+
+function SyncMetric({ label, value }: { label: string; value: number }) {
+  return (
+    <View style={styles.syncMetric}>
+      <Text style={styles.syncMetricValue}>{value}</Text>
+      <Text style={styles.syncMetricLabel}>{label}</Text>
+    </View>
+  );
+}
+
+function getWearableLabel(runtime: WearableRuntimeStatus | null) {
+  if (!runtime) return "Revisar";
+  if (runtime.status === "requires_consent") return "Requiere permiso";
+  if (runtime.status === "not_linked") return "No vinculado";
+  if (runtime.status === "waiting_for_native_data") return "Preparado";
+  return "Vinculado";
 }
 
 const styles = StyleSheet.create({
@@ -457,5 +699,39 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     lineHeight: 19,
     marginBottom: 6,
+  },
+  warningText: {
+    color: colors.orange,
+    fontSize: 13,
+    fontWeight: "800",
+    lineHeight: 18,
+    marginTop: 8,
+  },
+  syncGrid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 8,
+    marginTop: 10,
+  },
+  syncMetric: {
+    backgroundColor: colors.page,
+    borderColor: colors.border,
+    borderRadius: 12,
+    borderWidth: 1,
+    flexBasis: "47%",
+    flexGrow: 1,
+    minWidth: 118,
+    padding: 10,
+  },
+  syncMetricValue: {
+    color: colors.ink,
+    fontSize: 18,
+    fontWeight: "900",
+  },
+  syncMetricLabel: {
+    color: colors.muted,
+    fontSize: 11,
+    fontWeight: "800",
+    marginTop: 2,
   },
 });

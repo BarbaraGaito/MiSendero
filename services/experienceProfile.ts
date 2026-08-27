@@ -168,6 +168,37 @@ export const getRecommendedTrailForProfile = (
   );
 };
 
+export const getTrailRecommendationReasons = (
+  trail: Trail | null,
+  profile: ExperienceProfile
+) => {
+  if (!trail || !profile.completed || !profile.level) return [];
+
+  const reasons = [
+    `Nivel ${profile.level}: dificultad ${trail.difficulty.toLowerCase()}.`,
+  ];
+
+  if (typeof trail.distance_km === "number") {
+    reasons.push(
+      trail.distance_km <= 5
+        ? "Distancia corta para una salida controlada."
+        : trail.distance_km <= 10
+          ? "Distancia moderada acorde a una caminata planificada."
+          : "Ruta larga sugerida solo con margen de luz y preparacion."
+    );
+  }
+
+  if (trail.duration) {
+    reasons.push(`Duracion estimada: ${trail.duration}.`);
+  }
+
+  if (profile.answers.preferencia_offline || profile.answers.offline) {
+    reasons.push("Compatible con planificacion offline previa.");
+  }
+
+  return reasons.slice(0, 3);
+};
+
 const toExperienceLevel = (value: string | null): ExperienceLevel | null => {
   if (value === "principiante" || value === "intermedio" || value === "avanzado") {
     return value;

@@ -8,7 +8,7 @@ import {
   ScreenTitle,
   colors,
 } from "../components/MiSenderoUI";
-import { getOfflineMaps, OfflineMap } from "../../services/offlineMaps";
+import { deleteOfflineMap, getOfflineMaps, OfflineMap } from "../../services/offlineMaps";
 
 const formatDate = (timestamp: number) =>
   new Date(timestamp).toLocaleDateString("es-AR", {
@@ -22,6 +22,7 @@ const formatStorage = (sizeMb: number) =>
 export default function OfflineMapsScreen() {
   const [maps, setMaps] = useState<OfflineMap[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [deletingMapId, setDeletingMapId] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const loadMaps = useCallback(async () => {
@@ -46,6 +47,20 @@ export default function OfflineMapsScreen() {
   );
 
   const totalSize = maps.reduce((total, map) => total + map.sizeMb, 0);
+
+  const removeMap = async (mapId: number) => {
+    if (deletingMapId) return;
+
+    setDeletingMapId(mapId);
+    try {
+      await deleteOfflineMap(mapId);
+      await loadMaps();
+    } catch (deleteError) {
+      setError("No pudimos eliminar ese mapa offline.");
+    } finally {
+      setDeletingMapId(null);
+    }
+  };
 
   return (
     <AppScreen activeTab="perfil">
@@ -77,7 +92,9 @@ export default function OfflineMapsScreen() {
             <MapItem
               key={map.id}
               title={map.name}
-              meta={`${map.status} - ${formatStorage(map.sizeMb)} - ${formatDate(map.updatedAt)}`}
+              meta={`${formatMapStatus(map)} - ${formatStorage(map.sizeMb)} - ${formatDate(map.updatedAt)}`}
+              action={deletingMapId === map.id ? "Eliminando" : "Eliminar"}
+              onDelete={() => removeMap(map.id)}
             />
           ))
         )}
@@ -88,7 +105,26 @@ export default function OfflineMapsScreen() {
   );
 }
 
-function MapItem({ title, meta }: { title: string; meta: string }) {
+function formatMapStatus(map: OfflineMap) {
+  const tileStatus =
+    map.totalTiles > 0
+      ? `${map.downloadedTiles}/${map.totalTiles} tiles`
+      : "tiles sin verificar";
+
+  return `${map.status} - ${tileStatus}`;
+}
+
+function MapItem({
+  title,
+  meta,
+  action,
+  onDelete,
+}: {
+  title: string;
+  meta: string;
+  action: string;
+  onDelete: () => void;
+}) {
   return (
     <Card>
       <View style={styles.mapRow}>
@@ -96,6 +132,12 @@ function MapItem({ title, meta }: { title: string; meta: string }) {
           <Text style={styles.mapTitle}>{title}</Text>
           <Text style={styles.mapMeta}>{meta}</Text>
         </View>
+        <PrimaryButton
+          label={action}
+          icon="trash-outline"
+          onPress={onDelete}
+          tone="secondary"
+        />
       </View>
     </Card>
   );
@@ -138,6 +180,7 @@ const styles = StyleSheet.create({
   },
   mapText: {
     flex: 1,
+    minWidth: 0,
   },
   mapTitle: {
     color: colors.ink,

@@ -37,7 +37,7 @@ jobs:
         run: npm ci --ignore-scripts
 
       - name: Run App Type Check
-        run: npm exec --package=typescript@5.9.2 -- tsc --noEmit
+        run: npm run typecheck
 
       - name: Run App Tests
         run: npm test -- --runInBand

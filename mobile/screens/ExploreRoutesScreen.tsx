@@ -216,158 +216,6 @@ export default function ExploreRoutesScreen() {
     [favoriteIdSet, markImagePainted, paintedImages]
   );
 
-  const header = (
-    <View>
-      <ScreenTitle
-        eyebrow="Explorar rutas"
-        title="Encontra tu proxima ruta"
-        subtitle="Busca por nombre o zona y filtra por dificultad o distancia."
-      />
-
-      <View>
-        <View style={styles.searchBox}>
-          <Ionicons name="search-outline" size={18} color={colors.muted} />
-          <TextInput
-            accessibilityLabel="Buscar rutas por zona o nombre"
-            onChangeText={setSearchQuery}
-            placeholder="Buscar por zona o nombre"
-            placeholderTextColor={colors.muted}
-            returnKeyType="search"
-            style={styles.searchInput}
-            value={searchQuery}
-          />
-          {searchQuery.trim().length > 0 ? (
-            <Pressable
-              accessibilityLabel="Limpiar busqueda"
-              accessibilityRole="button"
-              hitSlop={8}
-              onPress={() => setSearchQuery("")}
-              style={({ pressed }) => [
-                styles.clearSearchButton,
-                pressed && styles.pressed,
-              ]}
-            >
-              <Ionicons name="close" size={16} color={colors.greenDark} />
-            </Pressable>
-          ) : null}
-        </View>
-
-        <Text style={styles.filterLabel}>Dificultad</Text>
-        <View style={styles.filterRow}>
-          {DIFFICULTY_FILTERS.map((filter) => {
-            const isActive = activeFilter === filter;
-
-            return (
-              <Pressable
-                accessibilityRole="button"
-                accessibilityState={{ selected: isActive }}
-                key={filter}
-                onPress={() => setActiveFilter(filter)}
-                style={({ pressed }) => pressed && styles.pressed}
-              >
-                <Text style={isActive ? styles.filterActive : styles.filter}>
-                  {filter}
-                </Text>
-              </Pressable>
-            );
-          })}
-          <Pressable
-            accessibilityRole="button"
-            accessibilityState={{ selected: activeFilter === "Favoritas" }}
-            onPress={() => setActiveFilter("Favoritas")}
-            style={({ pressed }) => pressed && styles.pressed}
-          >
-            <Text style={activeFilter === "Favoritas" ? styles.filterActive : styles.filter}>
-              Favoritas
-            </Text>
-          </Pressable>
-        </View>
-
-        <Text style={styles.filterLabel}>Distancia</Text>
-        <View style={styles.filterRow}>
-          {DISTANCE_FILTERS.map((filter) => {
-            const isActive = activeDistanceFilter === filter.id;
-
-            return (
-              <Pressable
-                accessibilityRole="button"
-                accessibilityState={{ selected: isActive }}
-                key={filter.id}
-                onPress={() => setActiveDistanceFilter(filter.id)}
-                style={({ pressed }) => pressed && styles.pressed}
-              >
-                <Text style={isActive ? styles.filterActive : styles.filter}>
-                  {filter.label}
-                </Text>
-              </Pressable>
-            );
-          })}
-        </View>
-
-        {hasActiveFilters ? (
-          <Pressable onPress={clearFilters} style={styles.clearFiltersButton}>
-            <Ionicons name="refresh-outline" size={16} color={colors.greenDark} />
-            <Text style={styles.clearFiltersText}>Limpiar filtros</Text>
-          </Pressable>
-        ) : null}
-
-        <View style={styles.resultsHeader}>
-          <Text style={styles.sectionTitle}>Senderos disponibles</Text>
-          <Text style={styles.resultsCount}>{filteredTrails.length} rutas</Text>
-        </View>
-
-        {isLoading ? (
-          <StatusNotice
-            isLoading
-            message="Estamos trayendo senderos y preparando las imagenes."
-            title="Cargando senderos"
-          />
-        ) : null}
-        {error ? (
-          <StatusNotice
-            actionLabel="Reintentar"
-            message={error}
-            onAction={loadRoutes}
-            title="No se pudo cargar"
-            tone="error"
-          />
-        ) : null}
-        {!isLoading && !error && filteredTrails.length === 0 ? (
-          <StatusNotice
-            actionLabel={hasActiveFilters ? "Limpiar filtros" : undefined}
-            message={
-              hasActiveFilters
-                ? "ProbÃ¡ con menos filtros o una busqueda mas amplia."
-                : "Cuando haya senderos disponibles, apareceran en esta lista."
-            }
-            onAction={hasActiveFilters ? clearFilters : undefined}
-            title={hasActiveFilters ? "Sin resultados" : "Sin senderos disponibles"}
-            tone="warning"
-          />
-        ) : null}
-      </View>
-    </View>
-  );
-
-  const footer = (
-    <>
-      <ImagePreloadQueue
-        imageUrls={pendingImageUrls}
-        onImageLoaded={markImageLoaded}
-      />
-      {isSearchingRoutes ? <RoutesLoader /> : null}
-      {visibleRouteItems.length < filteredTrails.length ? (
-        <Text style={styles.statusText}>Cargando mas rutas...</Text>
-      ) : null}
-      {!isLoading && !error ? (
-        <Card tone="green">
-          <Text style={styles.cardTitle}>Tip de seguridad</Text>
-          <Text style={styles.cardText}>Descarga el mapa antes de salir si la zona tiene poca senal.</Text>
-        </Card>
-      ) : null}
-    </>
-  );
-
   return (
     <AppScreen activeTab="explorar">
       <FlatList
@@ -375,8 +223,33 @@ export default function ExploreRoutesScreen() {
         data={loadedRouteItems}
         initialNumToRender={ROUTES_PAGE_SIZE}
         keyExtractor={(item) => String(item.trail.id)}
-        ListFooterComponent={footer}
-        ListHeaderComponent={header}
+        ListFooterComponent={
+          <ExploreRoutesFooter
+            error={error}
+            filteredCount={filteredTrails.length}
+            imageUrls={pendingImageUrls}
+            isLoading={isLoading}
+            isSearchingRoutes={isSearchingRoutes}
+            onImageLoaded={markImageLoaded}
+            visibleCount={visibleRouteItems.length}
+          />
+        }
+        ListHeaderComponent={
+          <ExploreRoutesHeader
+            activeDistanceFilter={activeDistanceFilter}
+            activeFilter={activeFilter}
+            error={error}
+            filteredCount={filteredTrails.length}
+            hasActiveFilters={hasActiveFilters}
+            isLoading={isLoading}
+            onClearFilters={clearFilters}
+            onRetry={loadRoutes}
+            searchQuery={searchQuery}
+            setActiveDistanceFilter={setActiveDistanceFilter}
+            setActiveFilter={setActiveFilter}
+            setSearchQuery={setSearchQuery}
+          />
+        }
         maxToRenderPerBatch={4}
         onEndReached={loadMoreRoutes}
         onEndReachedThreshold={0.45}
@@ -387,6 +260,269 @@ export default function ExploreRoutesScreen() {
         windowSize={5}
       />
     </AppScreen>
+  );
+}
+
+function ExploreRoutesHeader({
+  activeDistanceFilter,
+  activeFilter,
+  error,
+  filteredCount,
+  hasActiveFilters,
+  isLoading,
+  onClearFilters,
+  onRetry,
+  searchQuery,
+  setActiveDistanceFilter,
+  setActiveFilter,
+  setSearchQuery,
+}: {
+  activeDistanceFilter: DistanceFilter;
+  activeFilter: string;
+  error: string | null;
+  filteredCount: number;
+  hasActiveFilters: boolean;
+  isLoading: boolean;
+  onClearFilters: () => void;
+  onRetry: () => void;
+  searchQuery: string;
+  setActiveDistanceFilter: (filter: DistanceFilter) => void;
+  setActiveFilter: (filter: string) => void;
+  setSearchQuery: (query: string) => void;
+}) {
+  return (
+    <View>
+      <ScreenTitle
+        eyebrow="Explorar rutas"
+        title="Encontra tu proxima ruta"
+        subtitle="Busca por nombre o zona y filtra por dificultad o distancia."
+      />
+      <RouteSearchBox searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+      <RouteFilters
+        activeDistanceFilter={activeDistanceFilter}
+        activeFilter={activeFilter}
+        hasActiveFilters={hasActiveFilters}
+        onClearFilters={onClearFilters}
+        setActiveDistanceFilter={setActiveDistanceFilter}
+        setActiveFilter={setActiveFilter}
+      />
+      <RoutesResultStatus
+        error={error}
+        filteredCount={filteredCount}
+        hasActiveFilters={hasActiveFilters}
+        isLoading={isLoading}
+        onClearFilters={onClearFilters}
+        onRetry={onRetry}
+      />
+    </View>
+  );
+}
+
+function RouteSearchBox({
+  searchQuery,
+  setSearchQuery,
+}: {
+  searchQuery: string;
+  setSearchQuery: (query: string) => void;
+}) {
+  return (
+    <View style={styles.searchBox}>
+      <Ionicons name="search-outline" size={18} color={colors.muted} />
+      <TextInput
+        accessibilityLabel="Buscar rutas por zona o nombre"
+        onChangeText={setSearchQuery}
+        placeholder="Buscar por zona o nombre"
+        placeholderTextColor={colors.muted}
+        returnKeyType="search"
+        style={styles.searchInput}
+        value={searchQuery}
+      />
+      {searchQuery.trim().length > 0 ? (
+        <Pressable
+          accessibilityLabel="Limpiar busqueda"
+          accessibilityRole="button"
+          hitSlop={8}
+          onPress={() => setSearchQuery("")}
+          style={({ pressed }) => [
+            styles.clearSearchButton,
+            pressed && styles.pressed,
+          ]}
+        >
+          <Ionicons name="close" size={16} color={colors.greenDark} />
+        </Pressable>
+      ) : null}
+    </View>
+  );
+}
+
+function RouteFilters({
+  activeDistanceFilter,
+  activeFilter,
+  hasActiveFilters,
+  onClearFilters,
+  setActiveDistanceFilter,
+  setActiveFilter,
+}: {
+  activeDistanceFilter: DistanceFilter;
+  activeFilter: string;
+  hasActiveFilters: boolean;
+  onClearFilters: () => void;
+  setActiveDistanceFilter: (filter: DistanceFilter) => void;
+  setActiveFilter: (filter: string) => void;
+}) {
+  return (
+    <>
+      <Text style={styles.filterLabel}>Dificultad</Text>
+      <View style={styles.filterRow}>
+        {[...DIFFICULTY_FILTERS, "Favoritas"].map((filter) => (
+          <FilterButton
+            isActive={activeFilter === filter}
+            key={filter}
+            label={filter}
+            onPress={() => setActiveFilter(filter)}
+          />
+        ))}
+      </View>
+      <Text style={styles.filterLabel}>Distancia</Text>
+      <View style={styles.filterRow}>
+        {DISTANCE_FILTERS.map((filter) => (
+          <FilterButton
+            isActive={activeDistanceFilter === filter.id}
+            key={filter.id}
+            label={filter.label}
+            onPress={() => setActiveDistanceFilter(filter.id)}
+          />
+        ))}
+      </View>
+      {hasActiveFilters ? (
+        <Pressable onPress={onClearFilters} style={styles.clearFiltersButton}>
+          <Ionicons name="refresh-outline" size={16} color={colors.greenDark} />
+          <Text style={styles.clearFiltersText}>Limpiar filtros</Text>
+        </Pressable>
+      ) : null}
+    </>
+  );
+}
+
+function FilterButton({
+  isActive,
+  label,
+  onPress,
+}: {
+  isActive: boolean;
+  label: string;
+  onPress: () => void;
+}) {
+  return (
+    <Pressable
+      accessibilityRole="button"
+      accessibilityState={{ selected: isActive }}
+      onPress={onPress}
+      style={({ pressed }) => pressed && styles.pressed}
+    >
+      <Text style={isActive ? styles.filterActive : styles.filter}>{label}</Text>
+    </Pressable>
+  );
+}
+
+function RoutesResultStatus({
+  error,
+  filteredCount,
+  hasActiveFilters,
+  isLoading,
+  onClearFilters,
+  onRetry,
+}: {
+  error: string | null;
+  filteredCount: number;
+  hasActiveFilters: boolean;
+  isLoading: boolean;
+  onClearFilters: () => void;
+  onRetry: () => void;
+}) {
+  const emptyState = getRoutesEmptyState(hasActiveFilters);
+
+  return (
+    <>
+      <View style={styles.resultsHeader}>
+        <Text style={styles.sectionTitle}>Senderos disponibles</Text>
+        <Text style={styles.resultsCount}>{filteredCount} rutas</Text>
+      </View>
+      {isLoading ? (
+        <StatusNotice
+          isLoading
+          message="Estamos trayendo senderos y preparando las imagenes."
+          title="Cargando senderos"
+        />
+      ) : null}
+      {error ? (
+        <StatusNotice
+          actionLabel="Reintentar"
+          message={error}
+          onAction={onRetry}
+          title="No se pudo cargar"
+          tone="error"
+        />
+      ) : null}
+      {!isLoading && !error && filteredCount === 0 ? (
+        <StatusNotice
+          actionLabel={emptyState.actionLabel}
+          message={emptyState.message}
+          onAction={emptyState.hasAction ? onClearFilters : undefined}
+          title={emptyState.title}
+          tone="warning"
+        />
+      ) : null}
+    </>
+  );
+}
+
+const getRoutesEmptyState = (hasActiveFilters: boolean) => ({
+  actionLabel: hasActiveFilters ? "Limpiar filtros" : undefined,
+  hasAction: hasActiveFilters,
+  message: hasActiveFilters
+    ? "Proba con menos filtros o una busqueda mas amplia."
+    : "Cuando haya senderos disponibles, apareceran en esta lista.",
+  title: hasActiveFilters ? "Sin resultados" : "Sin senderos disponibles",
+});
+
+function ExploreRoutesFooter({
+  error,
+  filteredCount,
+  imageUrls,
+  isLoading,
+  isSearchingRoutes,
+  onImageLoaded,
+  visibleCount,
+}: {
+  error: string | null;
+  filteredCount: number;
+  imageUrls: string[];
+  isLoading: boolean;
+  isSearchingRoutes: boolean;
+  onImageLoaded: (imageUrl: string) => void;
+  visibleCount: number;
+}) {
+  return (
+    <>
+      <ImagePreloadQueue imageUrls={imageUrls} onImageLoaded={onImageLoaded} />
+      {isSearchingRoutes ? <RoutesLoader /> : null}
+      {visibleCount < filteredCount ? (
+        <Text style={styles.statusText}>Cargando mas rutas...</Text>
+      ) : null}
+      {!isLoading && !error ? <SafetyTipCard /> : null}
+    </>
+  );
+}
+
+function SafetyTipCard() {
+  return (
+    <Card tone="green">
+      <Text style={styles.cardTitle}>Tip de seguridad</Text>
+      <Text style={styles.cardText}>
+        Descarga el mapa antes de salir si la zona tiene poca senal.
+      </Text>
+    </Card>
   );
 }
 

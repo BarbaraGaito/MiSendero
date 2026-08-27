@@ -158,7 +158,16 @@ export default function AlertRouteScreen() {
               }
             />
           )}
-          <PrimaryButton label="Reportar problema" href="/reportar-terreno" tone="danger" />
+          <PrimaryButton
+            label="Reportar problema"
+            tone="danger"
+            onPress={() =>
+              router.push({
+                pathname: "/reportar-terreno",
+                params: { id: String(trailId) },
+              })
+            }
+          />
         </View>
       </ScrollView>
     </AppScreen>

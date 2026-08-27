@@ -274,7 +274,12 @@ export default function ProfileScreen() {
 
   const updatePrivacy = async (nextPrivacy: Omit<PrivacyPreferences, "updatedAt">) => {
     await savePrivacyPreferences(nextPrivacy);
-    setPrivacy(await getPrivacyPreferences());
+    const [privacyPreferences, wearable] = await Promise.all([
+      getPrivacyPreferences(),
+      getWearableRuntimeStatus(),
+    ]);
+    setPrivacy(privacyPreferences);
+    setWearableRuntime(wearable);
   };
 
   const updateTestingLocationMode = async (enabled: boolean) => {
@@ -341,6 +346,10 @@ export default function ProfileScreen() {
 
         <Card>
           <Text style={styles.cardTitle}>Sincronizacion</Text>
+          <Text style={styles.privacyText}>
+            Reportes, actividades y alertas creados sin señal quedan en cola
+            local hasta recuperar conectividad.
+          </Text>
           <SettingRow
             label="Pendientes de enviar"
             value={
@@ -350,6 +359,12 @@ export default function ProfileScreen() {
             }
             onPress={triggerSync}
           />
+          <View style={styles.syncGrid}>
+            <SyncMetric label="Pendientes" value={syncSummary.pending + syncSummary.syncing} />
+            <SyncMetric label="Enviados" value={syncSummary.synced} />
+            <SyncMetric label="Con error" value={syncSummary.failed} />
+            <SyncMetric label="Descartados" value={syncSummary.abandoned} />
+          </View>
           {syncSummary.failed > 0 ? (
             <Text style={styles.warningText}>
               Hay actividades con error. Podes reintentar la sincronizacion.
@@ -499,14 +514,14 @@ export default function ProfileScreen() {
 
       {isAdmin ? (
         <Card tone="orange">
-          <Text style={styles.cardTitle}>Herramientas de testing</Text>
+          <Text style={styles.cardTitle}>Simular situaciones de ruta</Text>
           <Text style={styles.privacyText}>
-            Solo administradores. Simula la ubicacion del dispositivo en el
-            inicio de la ruta para probar inicio, mapas y alertas sin estar
+            Solo administradores. Al activar este modo, la app usa ubicacion y
+            movimiento simulados para probar inicio, mapas y alertas sin estar
             fisicamente en el lugar.
           </Text>
           <SettingRow
-            label="Ubicacion simulada"
+            label="Simular ubicacion en ruta"
             value={testingLocationMode.enabled ? "Activa" : "Desactivada"}
             onPress={() =>
               updateTestingLocationMode(!testingLocationMode.enabled)
@@ -523,6 +538,15 @@ export default function ProfileScreen() {
         />
       </ScrollView>
     </AppScreen>
+  );
+}
+
+function SyncMetric({ label, value }: { label: string; value: number }) {
+  return (
+    <View style={styles.syncMetric}>
+      <Text style={styles.syncMetricValue}>{value}</Text>
+      <Text style={styles.syncMetricLabel}>{label}</Text>
+    </View>
   );
 }
 
@@ -598,5 +622,32 @@ const styles = StyleSheet.create({
     fontWeight: "800",
     lineHeight: 18,
     marginTop: 8,
+  },
+  syncGrid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 8,
+    marginTop: 10,
+  },
+  syncMetric: {
+    backgroundColor: colors.page,
+    borderColor: colors.border,
+    borderRadius: 12,
+    borderWidth: 1,
+    flexBasis: "47%",
+    flexGrow: 1,
+    minWidth: 118,
+    padding: 10,
+  },
+  syncMetricValue: {
+    color: colors.ink,
+    fontSize: 18,
+    fontWeight: "900",
+  },
+  syncMetricLabel: {
+    color: colors.muted,
+    fontSize: 11,
+    fontWeight: "800",
+    marginTop: 2,
   },
 });

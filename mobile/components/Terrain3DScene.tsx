@@ -40,7 +40,7 @@ type TerrainModel = {
   seed: number;
 };
 
-const GRID_SIZE = 68;
+const GRID_SIZE = 76;
 const EARTH_RADIUS_METERS = 6371000;
 
 const clamp = (value: number, min: number, max: number) =>
@@ -250,29 +250,49 @@ const interpolateColor = (
 const getTerrainColor = (
   height: number,
   difficultyFactor: number,
-  steepness: number
+  steepness: number,
+  x: number,
+  z: number,
+  seed: number
 ) => {
-  const valley = new THREE.Color("#4FA56F");
-  const grass = new THREE.Color("#85C778");
-  const scree = new THREE.Color("#B1C77A");
-  const rock = new THREE.Color("#9C8E67");
-  const snow = new THREE.Color("#EAF3DD");
+  const valley = new THREE.Color("#326F48");
+  const forest = new THREE.Color("#4F8F51");
+  const grass = new THREE.Color("#86B867");
+  const scree = new THREE.Color("#B8B277");
+  const rock = new THREE.Color("#8F8165");
+  const cliff = new THREE.Color("#5F594E");
+  const snow = new THREE.Color("#EAF2DF");
   const normalized = clamp(height / (1.45 + difficultyFactor), 0, 1);
+  const terrainNoise = fbm2D(x * 1.65, z * 1.65, seed + 37.1, 4);
+  const fineNoise = fbm2D(x * 5.2, z * 5.2, seed + 113.4, 3);
   let base: THREE.Color;
 
-  if (normalized < 0.36) {
-    base = interpolateColor(valley, grass, normalized / 0.36);
-  } else if (normalized < 0.68) {
-    base = interpolateColor(grass, scree, (normalized - 0.36) / 0.32);
-  } else if (normalized < 0.9) {
-    base = interpolateColor(scree, rock, (normalized - 0.68) / 0.22);
+  if (normalized < 0.24) {
+    base = interpolateColor(valley, forest, normalized / 0.24);
+  } else if (normalized < 0.5) {
+    base = interpolateColor(forest, grass, (normalized - 0.24) / 0.26);
+  } else if (normalized < 0.72) {
+    base = interpolateColor(grass, scree, (normalized - 0.5) / 0.22);
+  } else if (normalized < 0.91) {
+    base = interpolateColor(scree, rock, (normalized - 0.72) / 0.19);
   } else {
-    base = interpolateColor(rock, snow, (normalized - 0.9) / 0.1);
+    base = interpolateColor(rock, snow, (normalized - 0.91) / 0.09);
   }
 
-  const rockExposure = clamp((steepness - 0.22) * 1.9, 0, 0.82);
+  const rockExposure = clamp((steepness - 0.2) * 2.4 + terrainNoise * 0.12, 0, 0.88);
+  const snowPatch = clamp((normalized - 0.82) * 4.6 + terrainNoise * 0.32, 0, 0.72);
+  const sunSide = Math.sin((x + seed) * 0.75) * 0.5 + Math.cos((z - seed) * 0.92) * 0.5;
+  const textureAmount = clamp(Math.abs(fineNoise) * 0.14, 0, 0.16);
 
-  return interpolateColor(base, rock, rockExposure);
+  base = interpolateColor(base, rockExposure > 0.58 ? cliff : rock, rockExposure);
+  base = interpolateColor(base, snow, snowPatch);
+  base = interpolateColor(base, new THREE.Color("#D5D0B4"), textureAmount);
+
+  if (sunSide > 0) {
+    return interpolateColor(base, new THREE.Color("#FFF1C4"), sunSide * 0.08);
+  }
+
+  return interpolateColor(base, new THREE.Color("#273126"), Math.abs(sunSide) * 0.18);
 };
 
 const disposeObject = (object: THREE.Object3D) => {
@@ -314,7 +334,16 @@ const buildTerrainMesh = (model: TerrainModel) => {
         model.seed
       );
       const steepness = getSlopeAt(x, z, model.difficultyFactor, model.seed);
-      color.copy(getTerrainColor(height, model.difficultyFactor, steepness));
+      color.copy(
+        getTerrainColor(
+          height,
+          model.difficultyFactor,
+          steepness,
+          x,
+          z,
+          model.seed
+        )
+      );
 
       positions.push(x, height, z);
       colors.push(color.r, color.g, color.b);
@@ -365,6 +394,8 @@ const makeTube = (
   );
   const material = new THREE.MeshStandardMaterial({
     color,
+    emissive: color,
+    emissiveIntensity: radius < 0.06 ? 0.04 : 0.01,
     opacity,
     transparent: opacity < 1,
     roughness: 0.62,
@@ -406,12 +437,12 @@ const makeVerticalPin = (position: THREE.Vector3, color: string) => {
 };
 
 const addContourLines = (group: THREE.Group, model: TerrainModel) => {
-  for (let index = 0; index < 12; index += 1) {
-    const z = -4 + index * 0.72;
+  for (let index = 0; index < 16; index += 1) {
+    const z = -4.1 + index * 0.55;
     const points: THREE.Vector3[] = [];
 
-    for (let step = 0; step <= 72; step += 1) {
-      const x = -4.1 + (step / 72) * 8.2;
+    for (let step = 0; step <= 96; step += 1) {
+      const x = -4.15 + (step / 96) * 8.3;
       const height = getHeightAt(x, z, model.difficultyFactor, model.seed);
       points.push(new THREE.Vector3(x, height + 0.012, z));
     }
@@ -421,11 +452,113 @@ const addContourLines = (group: THREE.Group, model: TerrainModel) => {
         new THREE.BufferGeometry().setFromPoints(points),
         new THREE.LineBasicMaterial({
           color: "#FFFFFF",
-          opacity: 0.23,
+          opacity: index % 4 === 0 ? 0.34 : 0.2,
           transparent: true,
         })
       )
     );
+  }
+
+  for (let index = 0; index < 9; index += 1) {
+    const x = -3.8 + index * 0.95;
+    const points: THREE.Vector3[] = [];
+
+    for (let step = 0; step <= 72; step += 1) {
+      const z = -4 + (step / 72) * 8;
+      const height = getHeightAt(x, z, model.difficultyFactor, model.seed);
+      points.push(new THREE.Vector3(x, height + 0.014, z));
+    }
+
+    group.add(
+      new THREE.Line(
+        new THREE.BufferGeometry().setFromPoints(points),
+        new THREE.LineBasicMaterial({
+          color: "#F4E9CA",
+          opacity: 0.12,
+          transparent: true,
+        })
+      )
+    );
+  }
+};
+
+const getOffsetRoute = (
+  route: THREE.Vector3[],
+  model: TerrainModel,
+  offset: number,
+  lift: number,
+  wave = 0
+) =>
+  route.map((point, index) => {
+    const previous = route[Math.max(0, index - 1)];
+    const next = route[Math.min(route.length - 1, index + 1)];
+    const dx = next.x - previous.x;
+    const dz = next.z - previous.z;
+    const length = Math.max(0.01, Math.hypot(dx, dz));
+    const shift = offset + Math.sin(index * 0.88 + model.seed) * wave;
+    const x = point.x + (-dz / length) * shift;
+    const z = point.z + (dx / length) * shift;
+    const height = getHeightAt(x, z, model.difficultyFactor, model.seed);
+
+    return new THREE.Vector3(x, height + lift, z);
+  });
+
+const addReferenceTerrainLines = (group: THREE.Group, model: TerrainModel) => {
+  if (model.route.length < 2) return;
+
+  const creek = new THREE.Line(
+    new THREE.BufferGeometry().setFromPoints(getOffsetRoute(model.route, model, 0.48, 0.02, 0.08)),
+    new THREE.LineBasicMaterial({
+      color: "#55BDE0",
+      opacity: 0.62,
+      transparent: true,
+    })
+  );
+  group.add(creek);
+
+  const sideTrailGeometry = new THREE.BufferGeometry().setFromPoints(
+    getOffsetRoute(model.route, model, -0.62, 0.035, 0.1)
+  );
+  const sideTrail = new THREE.Line(
+    sideTrailGeometry,
+    new THREE.LineDashedMaterial({
+      color: "#E6B183",
+      dashSize: 0.18,
+      gapSize: 0.13,
+      opacity: 0.54,
+      transparent: true,
+    })
+  );
+  sideTrail.computeLineDistances();
+  group.add(sideTrail);
+
+  for (let index = 0; index < 6; index += 1) {
+    const ridgeX = -3.6 + index * 1.45;
+    const ridgePoints: THREE.Vector3[] = [];
+
+    for (let step = 0; step <= 54; step += 1) {
+      const z = -3.8 + (step / 54) * 7.6;
+      const x = ridgeX + Math.sin(step * 0.18 + model.seed + index) * 0.12;
+      const height = getHeightAt(x, z, model.difficultyFactor, model.seed);
+      const slope = getSlopeAt(x, z, model.difficultyFactor, model.seed);
+
+      if (slope > 0.2) {
+        ridgePoints.push(new THREE.Vector3(x, height + 0.018, z));
+      }
+    }
+
+    if (ridgePoints.length > 3) {
+      group.add(
+        new THREE.Line(
+          new THREE.BufferGeometry().setFromPoints(ridgePoints),
+          new THREE.LineBasicMaterial({
+            color: "#2C2A24",
+            opacity: 0.16,
+            transparent: true,
+          })
+        )
+      );
+    }
   }
 };
 
@@ -613,6 +746,7 @@ export function Terrain3DScene({
     clearGroup(handles.routeGroup);
     handles.terrainGroup.add(buildTerrainMesh(model));
     addContourLines(handles.terrainGroup, model);
+    addReferenceTerrainLines(handles.terrainGroup, model);
     addVegetation(handles.terrainGroup, model);
 
     const liftedRoute = model.route.map((point) => {
@@ -622,8 +756,9 @@ export function Terrain3DScene({
     });
 
     if (liftedRoute.length > 1) {
-      handles.routeGroup.add(makeTube(liftedRoute, 0.085, "#FFFFFF", 0.98));
-      handles.routeGroup.add(makeTube(liftedRoute, 0.048, "#EF3B3B"));
+      handles.routeGroup.add(makeTube(liftedRoute, 0.115, "#3A211A", 0.34));
+      handles.routeGroup.add(makeTube(liftedRoute, 0.082, "#FFF6EA", 0.96));
+      handles.routeGroup.add(makeTube(liftedRoute, 0.049, "#E85B35"));
     }
 
     if (liftedRoute[0]) {

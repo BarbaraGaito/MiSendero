@@ -2,22 +2,72 @@ import { router, useLocalSearchParams } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { Alert, StyleSheet, Text, View } from "react-native";
 import { getEmergencyContact } from "../../services/emergencyContact";
-import { sendEmergencyAlert } from "../../services/emergencyAlerts";
+import {
+  buildEmergencyMessage,
+  sendEmergencyAlert,
+} from "../../services/emergencyAlerts";
+import { getLastRouteTrackingPoint } from "../../services/routeTracking";
+import { getCurrentDeviceLocation } from "../../services/deviceLocation";
 import { EmergencyContact } from "../../types";
 import { AppScreen, Card, PrimaryButton, ScreenTitle, colors } from "../components/MiSenderoUI";
 
 export default function ConfirmSosScreen() {
-  const { id } = useLocalSearchParams<{ id?: string }>();
+  const { id, startedAt } = useLocalSearchParams<{ id?: string; startedAt?: string }>();
   const trailId = Number(id) || null;
+  const startedAtMs = Number(startedAt) || null;
   const [contact, setContact] = useState<EmergencyContact | null>(null);
+  const [messagePreview, setMessagePreview] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isSending, setIsSending] = useState(false);
 
   useEffect(() => {
-    getEmergencyContact()
-      .then(setContact)
-      .finally(() => setIsLoading(false));
-  }, []);
+    let isMounted = true;
+
+    const loadContext = async () => {
+      const [savedContact, currentLocation] = await Promise.all([
+        getEmergencyContact(),
+        getCurrentDeviceLocation().catch(() => null),
+      ]);
+      const lastTrackedPoint =
+        currentLocation || !trailId || !startedAtMs
+          ? null
+          : await getLastRouteTrackingPoint(trailId, startedAtMs).catch(() => null);
+      const location = currentLocation
+        ? {
+            latitude: currentLocation.coordinate[0],
+            longitude: currentLocation.coordinate[1],
+            timestamp: currentLocation.timestamp,
+          }
+        : lastTrackedPoint
+          ? {
+              latitude: lastTrackedPoint.latitude,
+              longitude: lastTrackedPoint.longitude,
+              timestamp: lastTrackedPoint.recordedAt,
+            }
+          : null;
+      if (!isMounted) return;
+
+      setContact(savedContact);
+      setMessagePreview(
+        location
+          ? buildEmergencyMessage({
+              contact: savedContact,
+              latitude: location.latitude,
+              longitude: location.longitude,
+              trailId,
+              timestamp: location.timestamp,
+            })
+          : null
+      );
+      setIsLoading(false);
+    };
+
+    loadContext();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [startedAtMs, trailId]);
 
   const handleSos = async () => {
     if (!contact) {
@@ -29,7 +79,11 @@ export default function ConfirmSosScreen() {
     setIsSending(true);
 
     try {
-      const outcome = await sendEmergencyAlert(trailId);
+      const outcome = await sendEmergencyAlert({
+        trailId,
+        contact,
+        startedAt: startedAtMs,
+      });
 
       if (outcome === "sent") {
         Alert.alert(
@@ -76,6 +130,7 @@ export default function ConfirmSosScreen() {
             <Bullet text="El sendero en curso" />
             <Bullet text="Tus datos de contacto" />
             <Bullet text={`Contacto: ${contact.name} - ${contact.phone}`} />
+            <Bullet text="Ultima ubicacion conocida si el GPS actual falla" />
           </>
         ) : (
           <Text style={styles.cardText}>
@@ -83,6 +138,14 @@ export default function ConfirmSosScreen() {
             Offline solo se puede consultar un contacto ya guardado.
           </Text>
         )}
+      </Card>
+
+      <Card>
+        <Text style={styles.cardTitle}>Mensaje preparado</Text>
+        <Text style={styles.cardText}>
+          {messagePreview ||
+            "Todavia no hay ubicacion disponible para preparar el mensaje. Intenta nuevamente con GPS activo."}
+        </Text>
       </Card>
 
       <Card>

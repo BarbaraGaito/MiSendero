@@ -22,6 +22,7 @@ import {
   ExperienceProfile,
   getExperienceProfile,
   getRecommendedTrailForProfile,
+  getTrailRecommendationReasons,
 } from "../../services/experienceProfile";
 
 type TagProps = {
@@ -82,6 +83,10 @@ export default function HomeScreen() {
   const duration = recommendedTrail?.duration || "Duracion a confirmar";
   const difficulty = recommendedTrail?.difficulty || "A confirmar";
   const canRecommend = experienceProfile?.completed;
+  const recommendationReasons =
+    experienceProfile && recommendedTrail
+      ? getTrailRecommendationReasons(recommendedTrail, experienceProfile)
+      : [];
 
   return (
     <AppScreen activeTab="inicio">
@@ -176,6 +181,17 @@ export default function HomeScreen() {
                   <RouteMetric icon="T" label={duration} />
                   <RouteMetric icon="A" label={difficulty} accent />
                 </View>
+
+                {recommendationReasons.length > 0 ? (
+                  <View style={styles.reasonsBox}>
+                    <Text style={styles.reasonsTitle}>Por que esta ruta</Text>
+                    {recommendationReasons.map((reason) => (
+                      <Text key={reason} style={styles.reasonText}>
+                        {reason}
+                      </Text>
+                    ))}
+                  </View>
+                ) : null}
               </View>
             </Pressable>
           ) : null}
@@ -428,5 +444,24 @@ const styles = StyleSheet.create({
   },
   metricLabelAccent: {
     color: colors.orange,
+  },
+  reasonsBox: {
+    backgroundColor: colors.page,
+    borderColor: colors.border,
+    borderRadius: 14,
+    borderWidth: 1,
+    gap: 5,
+    padding: 12,
+  },
+  reasonsTitle: {
+    color: colors.ink,
+    fontSize: 13,
+    fontWeight: "900",
+  },
+  reasonText: {
+    color: colors.muted,
+    fontSize: 12,
+    fontWeight: "700",
+    lineHeight: 17,
   },
 });

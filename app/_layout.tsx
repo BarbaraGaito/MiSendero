@@ -1,12 +1,26 @@
 import React, { useEffect } from "react";
 import { Stack } from "expo-router";
+import { useFonts } from "expo-font";
+import {
+  BricolageGrotesque_700Bold,
+  BricolageGrotesque_800ExtraBold,
+} from "@expo-google-fonts/bricolage-grotesque";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { initDB } from "../database/database";
 
 export default function RootLayout() {
+  const [fontsLoaded, fontError] = useFonts({
+    BricolageGrotesque_700Bold,
+    BricolageGrotesque_800ExtraBold,
+  });
+
   useEffect(() => {
     initDB();
   }, []);
+
+  if (!fontsLoaded && !fontError) {
+    return null;
+  }
 
   return (
     <SafeAreaProvider>

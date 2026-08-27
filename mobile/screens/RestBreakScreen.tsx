@@ -170,6 +170,10 @@ export default function RestBreakScreen() {
                 startedAt: String(startedAtMs),
                 traveledMeters:
                   realTraveledMeters !== null ? String(Math.round(realTraveledMeters)) : "",
+                routeProgressMeters:
+                  realTraveledMeters !== null ? String(Math.round(realTraveledMeters)) : "",
+                totalMeters:
+                  realTotalMeters > 0 ? String(Math.round(realTotalMeters)) : "",
               },
             })
           }

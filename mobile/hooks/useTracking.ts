@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { Platform } from "react-native";
 import { calculateFatigue, fatigueToScore, scoreToFatigue } from "../../ai/fatigueEngine";
 import {
   createSession,
@@ -47,7 +46,7 @@ export const useTracking = () => {
   const nativeSyncMissesRef = useRef(0);
   const sessionStartedAtRef = useRef(0);
   const useSimulatorWatchRef = useRef(true);
-  const useSimulatedMovementRef = useRef(true);
+  const useSimulatedMovementRef = useRef(false);
   const lastGpsLocationRef = useRef<DeviceLocation | null>(null);
 
   useEffect(() => {
@@ -108,9 +107,8 @@ export const useTracking = () => {
     return () => clearInterval(interval);
   }, [isActive]);
 
-  // Real GPS is the source of truth for distance/speed (RF-06) except on web
-  // (no reliable background GPS) or while an admin has simulated location active
-  // for testing - both of which fall back to the sine-wave tick above.
+  // Real GPS is the source of truth for distance/speed (RF-06). The synthetic
+  // movement tick is only used when an admin explicitly enables testing mode.
   useEffect(() => {
     if (!isActive || useSimulatedMovementRef.current) return;
 
@@ -255,7 +253,7 @@ export const useTracking = () => {
     ]);
     const canUseTestingLocation = session?.user.role === "admin";
     useSimulatedMovementRef.current =
-      Platform.OS === "web" || (testingLocationMode.enabled && canUseTestingLocation);
+      testingLocationMode.enabled && canUseTestingLocation;
 
     const wearableConnection = await getWearableConnection().catch(() => null);
     useSimulatorWatchRef.current =

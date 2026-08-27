@@ -1,18 +1,20 @@
 import { Ionicons } from "@expo/vector-icons";
 import * as Network from "expo-network";
 import { router, useLocalSearchParams } from "expo-router";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import { getTrailById, getTrailReports, getTrailWeather } from "../../services/api";
-import { getOfflineMapByTrailId } from "../../services/offlineMaps";
+import { getVerifiedOfflineMapByTrailId } from "../../services/offlineMaps";
 import { getWearableRuntimeStatus } from "../../services/wearableMetrics";
 import { Trail, TrailReport, TrailWeather, WearableRuntimeStatus } from "../../types";
 import { TrailMap } from "../components/TrailMap";
 import { useDeviceLocation } from "../hooks/useDeviceLocation";
+import { DeviceLocation } from "../../services/deviceLocation";
 import {
   Coordinate,
   formatDistance,
+  getDistanceMeters,
   getDistanceToRouteMeters,
   getRouteLengthMeters,
   getRouteProgressMeters,
@@ -20,6 +22,7 @@ import {
   parseRouteCoordinates,
   ROUTE_DEVIATION_WARNING_METERS,
 } from "../../services/geoUtils";
+import { saveRouteTrackingPoint } from "../../services/routeTracking";
 import {
   InfoCard,
   PrimaryButton,
@@ -27,6 +30,8 @@ import {
   TopBar,
   colors,
 } from "../components/MiSenderoUI";
+
+const GPS_NOISE_FLOOR_METERS = 2;
 
 export default function Screen04RouteMap() {
   const insets = useSafeAreaInsets();
@@ -43,11 +48,16 @@ export default function Screen04RouteMap() {
   const [weather, setWeather] = useState<TrailWeather | null>(null);
   const [reports, setReports] = useState<TrailReport[]>([]);
   const [isWifiConnected, setIsWifiConnected] = useState(false);
+  const [hasInternetConnection, setHasInternetConnection] = useState(false);
   const [isContextLoading, setIsContextLoading] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [wearableRuntime, setWearableRuntime] =
     useState<WearableRuntimeStatus | null>(null);
+  const [trackedDistanceMeters, setTrackedDistanceMeters] = useState(0);
+  const [lastGpsRecordedAt, setLastGpsRecordedAt] = useState<number | null>(null);
+  const lastTrackedLocationRef = useRef<DeviceLocation | null>(null);
+  const trackedDistanceMetersRef = useRef(0);
 
   useEffect(() => {
     let isMounted = true;
@@ -74,7 +84,7 @@ export default function Screen04RouteMap() {
           trailData = await getTrailById(trailId);
           reportsData = await getTrailReports(trailId).catch(() => []);
         } else {
-          const offlineMap = await getOfflineMapByTrailId(trailId);
+          const offlineMap = await getVerifiedOfflineMapByTrailId(trailId);
 
           if (!offlineMap?.trail) {
             throw new Error("offline-map-not-found");
@@ -87,6 +97,7 @@ export default function Screen04RouteMap() {
         setTrail(trailData);
         setReports(reportsData);
         setIsWifiConnected(hasWifi);
+        setHasInternetConnection(hasInternet);
         setError(null);
 
         if (!hasWifi) {
@@ -102,12 +113,13 @@ export default function Screen04RouteMap() {
       } catch (loadError) {
         if (!isMounted) return;
 
-        const offlineMap = await getOfflineMapByTrailId(trailId).catch(() => null);
+        const offlineMap = await getVerifiedOfflineMapByTrailId(trailId).catch(() => null);
 
         if (offlineMap?.trail) {
           setTrail(offlineMap.trail);
           setReports(offlineMap.reports);
           setIsWifiConnected(false);
+          setHasInternetConnection(false);
           setWeather(null);
           setError(null);
         } else {
@@ -115,6 +127,7 @@ export default function Screen04RouteMap() {
           setWeather(null);
           setReports([]);
           setIsWifiConnected(false);
+          setHasInternetConnection(false);
         }
       } finally {
         if (!isMounted) return;
@@ -185,6 +198,104 @@ export default function Screen04RouteMap() {
     permissionDenied: locationPermissionDenied,
     isTestingLocation,
   } = useDeviceLocation(isActiveRoute, simulatedStartLocation);
+
+  useEffect(() => {
+    trackedDistanceMetersRef.current = trackedDistanceMeters;
+  }, [trackedDistanceMeters]);
+
+  useEffect(() => {
+    if (!isActiveRoute) return;
+
+    setTrackedDistanceMeters(0);
+    trackedDistanceMetersRef.current = 0;
+    setLastGpsRecordedAt(null);
+    lastTrackedLocationRef.current = null;
+  }, [isActiveRoute, startedAtMs, trailId]);
+
+  useEffect(() => {
+    if (!isActiveRoute || !location) return;
+
+    const previous = lastTrackedLocationRef.current;
+    let deltaMeters = 0;
+
+    if (previous && !isTestingLocation) {
+      deltaMeters = getDistanceMeters(previous.coordinate, location.coordinate);
+
+      if (deltaMeters < GPS_NOISE_FLOOR_METERS) {
+        lastTrackedLocationRef.current = location;
+        return;
+      }
+    }
+
+    const elapsedMs =
+      previous && location.timestamp > previous.timestamp
+        ? location.timestamp - previous.timestamp
+        : 0;
+    const speedFromGps =
+      !isTestingLocation && elapsedMs > 0
+        ? Number(((deltaMeters / (elapsedMs / 1000)) * 3.6).toFixed(2))
+        : null;
+
+    lastTrackedLocationRef.current = location;
+    if (deltaMeters > 0) {
+      trackedDistanceMetersRef.current += deltaMeters;
+      setTrackedDistanceMeters(trackedDistanceMetersRef.current);
+    }
+    setLastGpsRecordedAt(location.timestamp);
+
+    saveRouteTrackingPoint({
+      trailId,
+      startedAt: startedAtMs,
+      latitude: location.coordinate[0],
+      longitude: location.coordinate[1],
+      accuracyMeters: location.accuracy,
+      speedKmh: speedFromGps,
+      distanceDeltaMeters: deltaMeters,
+      recordedAt: location.timestamp,
+      simulated: isTestingLocation,
+    }).catch(() => null);
+  }, [isActiveRoute, isTestingLocation, location, startedAtMs, trailId]);
+
+  useEffect(() => {
+    if (!isActiveRoute || !isTestingLocation || routePoints.length === 0) return;
+
+    let pointIndex = 0;
+    let previousPoint = routePoints[0];
+
+    const interval = setInterval(() => {
+      pointIndex = Math.min(pointIndex + 1, routePoints.length - 1);
+      const nextPoint = routePoints[pointIndex];
+      const deltaMeters =
+        pointIndex === 0 ? 0 : getDistanceMeters(previousPoint, nextPoint);
+      previousPoint = nextPoint;
+
+      if (deltaMeters > 0) {
+        trackedDistanceMetersRef.current += deltaMeters;
+        setTrackedDistanceMeters(trackedDistanceMetersRef.current);
+      }
+
+      const timestamp = Date.now();
+      setLastGpsRecordedAt(timestamp);
+
+      saveRouteTrackingPoint({
+        trailId,
+        startedAt: startedAtMs,
+        latitude: nextPoint[0],
+        longitude: nextPoint[1],
+        accuracyMeters: 0,
+        speedKmh: deltaMeters > 0 ? Number(((deltaMeters / 3) * 3.6).toFixed(2)) : 0,
+        distanceDeltaMeters: deltaMeters,
+        recordedAt: timestamp,
+        simulated: true,
+      }).catch(() => null);
+
+      if (pointIndex >= routePoints.length - 1) {
+        clearInterval(interval);
+      }
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [isActiveRoute, isTestingLocation, routePoints, startedAtMs, trailId]);
   const routeDeviationMeters = useMemo(() => {
     if (!isActiveRoute || !location || routePoints.length === 0) return null;
     return getDistanceToRouteMeters(location.coordinate, routePoints);
@@ -197,6 +308,8 @@ export default function Screen04RouteMap() {
     if (!isActiveRoute || !location || routePoints.length === 0) return null;
     return getRouteProgressMeters(location.coordinate, routePoints);
   }, [isActiveRoute, location, routePoints]);
+  const completedDistanceMeters =
+    trackedDistanceMeters > 0 ? trackedDistanceMeters : traveledMeters;
   const isOffRoute =
     !isTestingLocation &&
     routeDeviationMeters !== null &&
@@ -219,6 +332,7 @@ export default function Screen04RouteMap() {
           initialPerspective
           showDetailsCard={false}
           controlsTopOffset={mapControlsTop}
+          allowSatellite={hasInternetConnection}
         />
 
         <View style={[styles.activeHeader, { top: activeTop }]}>
@@ -280,7 +394,7 @@ export default function Screen04RouteMap() {
           <View style={[styles.testingBanner, { top: activeBannerTop + 74 }]}>
             <Ionicons name="flask-outline" size={17} color={colors.greenDark} />
             <Text style={styles.testingBannerText}>
-              Modo testing: ubicacion simulada en el inicio
+              Modo testing: ubicacion y avance simulados
             </Text>
           </View>
         ) : null}
@@ -323,7 +437,13 @@ export default function Screen04RouteMap() {
                   id: String(trailId),
                   startedAt: String(startedAtMs),
                   traveledMeters:
+                    completedDistanceMeters !== null ? String(Math.round(completedDistanceMeters)) : "",
+                  routeProgressMeters:
                     traveledMeters !== null ? String(Math.round(traveledMeters)) : "",
+                  totalMeters:
+                    totalRouteMeters > 0 ? String(Math.round(totalRouteMeters)) : "",
+                  endedLatitude: location ? String(location.coordinate[0]) : "",
+                  endedLongitude: location ? String(location.coordinate[1]) : "",
                 },
               })
             }
@@ -387,7 +507,7 @@ export default function Screen04RouteMap() {
               onPress={() =>
                 router.push({
                   pathname: "/confirmar-sos",
-                  params: { id: String(trailId) },
+                  params: { id: String(trailId), startedAt: String(startedAtMs) },
                 })
               }
               style={[styles.activeAction, styles.activeDangerAction]}
@@ -395,6 +515,14 @@ export default function Screen04RouteMap() {
               <Ionicons name="alert-circle-outline" size={20} color={colors.white} />
               <Text style={styles.activeDangerText}>SOS</Text>
             </Pressable>
+          </View>
+          <View style={styles.activeTelemetryRow}>
+            <Text style={styles.activeTelemetryText}>
+              GPS: {formatDistance(trackedDistanceMeters)}
+            </Text>
+            <Text style={styles.activeTelemetryText}>
+              {lastGpsRecordedAt ? "Ultimo punto guardado" : "Esperando punto GPS"}
+            </Text>
           </View>
         </View>
       </SafeAreaView>
@@ -415,7 +543,7 @@ export default function Screen04RouteMap() {
         {isLoading ? <Text style={styles.statusText}>Cargando mapa...</Text> : null}
         {error ? <Text style={styles.statusText}>{error}</Text> : null}
 
-        <TrailMap trail={trail} />
+        <TrailMap trail={trail} allowSatellite={hasInternetConnection} />
 
         <InfoCard style={styles.progressCard}>
           <View style={styles.progressText}>
@@ -528,6 +656,11 @@ export default function Screen04RouteMap() {
                     <Text style={styles.reportTitle}>{report.issue_summary}</Text>
                     <Text style={styles.reportMeta}>
                       {report.trail_state} - Riesgo {report.severity}
+                      {report.route_progress_meters !== null
+                        ? ` - km ${(report.route_progress_meters / 1000).toLocaleString("es-AR", {
+                            maximumFractionDigits: 1,
+                          })}`
+                        : ""}
                     </Text>
                     <Text style={styles.reportDate}>
                       {formatReportDateTime(report.created_at)}
@@ -832,6 +965,18 @@ const styles = StyleSheet.create({
     color: colors.white,
     fontSize: 11,
     fontWeight: "900",
+  },
+  activeTelemetryRow: {
+    flexDirection: "row",
+    gap: 8,
+    justifyContent: "space-between",
+    marginTop: 9,
+  },
+  activeTelemetryText: {
+    color: colors.muted,
+    flexShrink: 1,
+    fontSize: 11,
+    fontWeight: "800",
   },
   statusText: {
     color: colors.muted,

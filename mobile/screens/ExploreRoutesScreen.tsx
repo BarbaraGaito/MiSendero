@@ -24,6 +24,8 @@ import {
 } from "../components/MiSenderoUI";
 import { getTrails } from "../../services/api";
 import { Trail } from "../../types";
+import { initDB } from "../../database/database";
+import { getFavoriteTrailIds } from "../../services/favoriteTrails";
 
 const ROUTES_PAGE_SIZE = 6;
 const DIFFICULTY_FILTERS = ["Todas", "Baja", "Media", "Alta"];
@@ -50,6 +52,7 @@ const normalizeText = (value: string) =>
 
 export default function ExploreRoutesScreen() {
   const [trails, setTrails] = useState<Trail[]>([]);
+  const [favoriteTrailIds, setFavoriteTrailIds] = useState<number[]>([]);
   const [activeFilter, setActiveFilter] = useState("Todas");
   const [activeDistanceFilter, setActiveDistanceFilter] = useState<DistanceFilter>("Todas");
   const [searchQuery, setSearchQuery] = useState("");
@@ -61,6 +64,10 @@ export default function ExploreRoutesScreen() {
 
   const hasActiveFilters =
     activeFilter !== "Todas" || activeDistanceFilter !== "Todas" || searchQuery.trim().length > 0;
+  const favoriteIdSet = useMemo(
+    () => new Set(favoriteTrailIds),
+    [favoriteTrailIds]
+  );
   const filteredTrails = useMemo(
     () => {
       const normalizedQuery = normalizeText(searchQuery.trim());
@@ -74,6 +81,7 @@ export default function ExploreRoutesScreen() {
           normalizedQuery.length === 0 || searchableText.includes(normalizedQuery);
         const matchesDifficulty =
           activeFilter === "Todas" ||
+          (activeFilter === "Favoritas" && favoriteIdSet.has(trail.id)) ||
           normalizeText(trail.difficulty).includes(normalizeText(activeFilter));
         const matchesDistance =
           activeDistanceFilter === "Todas" ||
@@ -92,7 +100,7 @@ export default function ExploreRoutesScreen() {
         return matchesQuery && matchesDifficulty && matchesDistance;
       });
     },
-    [activeDistanceFilter, activeFilter, searchQuery, trails]
+    [activeDistanceFilter, activeFilter, favoriteIdSet, searchQuery, trails]
   );
   const visibleTrails = useMemo(
     () => filteredTrails.slice(0, visibleCount),
@@ -130,7 +138,13 @@ export default function ExploreRoutesScreen() {
     setError(null);
 
     try {
-      setTrails(await getTrails());
+      await initDB();
+      const [trailList, favoriteIds] = await Promise.all([
+        getTrails(),
+        getFavoriteTrailIds(),
+      ]);
+      setTrails(trailList);
+      setFavoriteTrailIds(favoriteIds);
     } catch (loadError) {
       setError("No pudimos cargar los senderos en este momento.");
     } finally {
@@ -177,11 +191,12 @@ export default function ExploreRoutesScreen() {
       <RouteCard
         image={item.image}
         imageReady={Boolean(paintedImages[item.image])}
+        isFavorite={favoriteIdSet.has(item.trail.id)}
         onImageReady={markImagePainted}
         trail={item.trail}
       />
     ),
-    [markImagePainted, paintedImages]
+    [favoriteIdSet, markImagePainted, paintedImages]
   );
 
   const header = (
@@ -239,6 +254,16 @@ export default function ExploreRoutesScreen() {
               </Pressable>
             );
           })}
+          <Pressable
+            accessibilityRole="button"
+            accessibilityState={{ selected: activeFilter === "Favoritas" }}
+            onPress={() => setActiveFilter("Favoritas")}
+            style={({ pressed }) => pressed && styles.pressed}
+          >
+            <Text style={activeFilter === "Favoritas" ? styles.filterActive : styles.filter}>
+              Favoritas
+            </Text>
+          </Pressable>
         </View>
 
         <Text style={styles.filterLabel}>Distancia</Text>
@@ -352,11 +377,13 @@ function RouteCard({
   trail,
   image,
   imageReady,
+  isFavorite,
   onImageReady,
 }: {
   trail: Trail;
   image: string;
   imageReady: boolean;
+  isFavorite: boolean;
   onImageReady: (imageUrl: string) => void;
 }) {
   const distance = trail.distance_km ? `${trail.distance_km} km` : "Distancia a confirmar";
@@ -389,6 +416,11 @@ function RouteCard({
         <View style={styles.badge}>
           <Text style={styles.badgeText}>{trail.difficulty}</Text>
         </View>
+        {isFavorite ? (
+          <View style={styles.favoriteBadge}>
+            <Ionicons name="star" size={15} color={colors.warning} />
+          </View>
+        ) : null}
       </ImageBackground>
       <View style={styles.routeBody}>
         <Text style={styles.routeTitle}>{trail.name}</Text>
@@ -672,6 +704,16 @@ const styles = StyleSheet.create({
     color: colors.primary,
     fontSize: 12,
     fontWeight: "800",
+  },
+  favoriteBadge: {
+    alignItems: "center",
+    alignSelf: "flex-end",
+    backgroundColor: colors.white,
+    borderRadius: 999,
+    height: 32,
+    justifyContent: "center",
+    marginTop: -30,
+    width: 32,
   },
   routeBody: {
     gap: 3,

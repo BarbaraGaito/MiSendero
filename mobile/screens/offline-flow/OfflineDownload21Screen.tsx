@@ -20,9 +20,11 @@ export default function OfflineDownload21Screen() {
   const [trail, setTrail] = useState<Trail | null>(null);
   const [status, setStatus] = useState<DownloadStatus>("loading");
   const [message, setMessage] = useState("Preparando descarga...");
+  const [progress, setProgress] = useState({ downloaded: 0, total: 0 });
 
   useEffect(() => {
     let isMounted = true;
+    let isCancelled = false;
 
     const downloadTrail = async () => {
       if (!trailId) {
@@ -34,15 +36,25 @@ export default function OfflineDownload21Screen() {
       try {
         setStatus("loading");
         setMessage("Descargando datos de la ruta...");
+        setProgress({ downloaded: 0, total: 0 });
 
         const trailData = await getTrailById(trailId);
+        if (isMounted) {
+          setTrail(trailData);
+        }
         const reports = await getTrailReports(trailId).catch(() => []);
 
-        await saveOfflineTrailMap(trailData, reports, (downloaded, total) => {
-          if (isMounted) {
-            setMessage(`Descargando tiles ${downloaded}/${total}...`);
-          }
-        });
+        await saveOfflineTrailMap(
+          trailData,
+          reports,
+          (downloaded, total) => {
+            if (isMounted) {
+              setProgress({ downloaded, total });
+              setMessage(`Descargando tiles ${downloaded}/${total}...`);
+            }
+          },
+          { shouldCancel: () => isCancelled }
+        );
 
         if (!isMounted) return;
 
@@ -53,7 +65,7 @@ export default function OfflineDownload21Screen() {
         if (!isMounted) return;
 
         setStatus("error");
-        setMessage("No pudimos descargar esta ruta. Revisa tu conexion e intenta de nuevo.");
+        setMessage(getDownloadErrorMessage(downloadError));
       }
     };
 
@@ -61,11 +73,20 @@ export default function OfflineDownload21Screen() {
 
     return () => {
       isMounted = false;
+      isCancelled = true;
     };
   }, [trailId]);
 
   const isSaved = status === "saved";
   const isError = status === "error";
+  const percent =
+    isSaved || (progress.total > 0 && progress.downloaded >= progress.total)
+      ? "100%"
+      : isError
+        ? "0%"
+        : progress.total > 0
+          ? `${Math.max(1, Math.round((progress.downloaded / progress.total) * 100))}%`
+          : "...";
 
   return (
     <AppScreen withBottomNav={false}>
@@ -76,7 +97,7 @@ export default function OfflineDownload21Screen() {
       />
 
       <ProgressHero
-        percent={isSaved ? "100%" : isError ? "0%" : "..." }
+        percent={percent}
         status={isSaved ? "Listo" : isError ? "Error" : "En curso"}
         tone={isError ? "red" : "green"}
       />
@@ -116,7 +137,7 @@ export default function OfflineDownload21Screen() {
               }
             />
           </>
-        ) : (
+        ) : isError ? (
           <>
             <PrimaryButton
               label="Reintentar"
@@ -129,8 +150,31 @@ export default function OfflineDownload21Screen() {
             />
             <PrimaryButton label="Volver" href="/offline-buscar" tone="secondary" />
           </>
+        ) : (
+          <>
+            <PrimaryButton
+              label="Descargando mapa"
+              icon="download-outline"
+              isLoading
+              loadingLabel="Descargando mapa"
+            />
+            <PrimaryButton
+              label="Volver"
+              href="/offline-buscar"
+              tone="secondary"
+              disabled
+            />
+          </>
         )}
       </View>
     </AppScreen>
   );
+}
+
+function getDownloadErrorMessage(error: unknown) {
+  if (error instanceof Error && error.message.startsWith("offline-map-incomplete")) {
+    return "La descarga quedo incompleta. Reintenta con una conexion estable antes de salir.";
+  }
+
+  return "No pudimos descargar el mapa completo. Revisa tu conexion e intenta de nuevo.";
 }

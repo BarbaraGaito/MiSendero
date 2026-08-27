@@ -6,6 +6,27 @@ proyecto). Autenticacion con JWT, contrasenas con bcrypt, validacion de entrada 
 
 ## Desarrollo local
 
+Con Docker, desde la raiz del repositorio:
+
+```bash
+cp .env.example .env
+docker compose up --build
+```
+
+Esto levanta PostgreSQL y el backend. El servidor aplica migraciones y seed al iniciar, y
+queda disponible en `http://localhost:3001/api/health`.
+
+Para usar una imagen ya publicada del backend en lugar de construir desde codigo local:
+
+```bash
+cp .env.example .env
+# editar MISENDERO_BACKEND_IMAGE en .env, por ejemplo:
+# ghcr.io/barbaragaito/misendero-backend:latest
+docker compose -f docker-compose.images.yml up
+```
+
+Para desarrollo manual:
+
 ```bash
 docker compose up -d db      # desde la raiz del repo, levanta Postgres en localhost:5432
 cp .env.example .env         # completar JWT_SECRET (ver comentario en el archivo)

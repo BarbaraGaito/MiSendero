@@ -82,3 +82,11 @@ The sample rows included here let the app train and run without downloading larg
 datasets during development. Replace or append rows with processed PAMAP2/WESAD and BIDMC
 exports when those datasets are available locally — `augment_dataset` will use them as the real
 seed points for synthetic augmentation instead of (or alongside) the current samples.
+
+## Interpreting current metrics
+
+The `accuracy: 1.0` values in the generated `metrics.json` files should be read as a smoke-test
+result over small, separable, synthetic/augmented samples. They prove that the export, loading
+and local inference pipeline is wired correctly; they are not evidence of real-world predictive
+performance. For a field pilot, replace the seed CSVs with representative processed records and
+report held-out metrics separately from these development fixtures.

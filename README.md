@@ -4,7 +4,33 @@ Aplicacion movil (Expo/React Native) de asistencia y seguridad para trekking, co
 Node.js/Express + PostgreSQL, modulo de IA entrenado en Python/Scikit-learn, mapas y navegacion
 offline, y sincronizacion diferida de reportes, actividad y alertas de emergencia.
 
-## Arranque rapido
+## Arranque rapido con Docker
+
+Para levantar PostgreSQL y el backend desde el codigo local:
+
+```bash
+cp .env.example .env
+docker compose up --build
+```
+
+El backend queda disponible en `http://localhost:3001/api/health`. Al iniciar, aplica las
+migraciones y siembra datos base de forma idempotente.
+
+Tambien se incluye un compose para usar una imagen de backend ya publicada:
+
+```bash
+cp .env.example .env
+# editar MISENDERO_BACKEND_IMAGE en .env, por ejemplo:
+# ghcr.io/barbaragaito/misendero-backend:latest
+docker compose -f docker-compose.images.yml up
+```
+
+Ese segundo archivo queda preparado para CI/CD o despliegues donde la imagen ya este subida
+a un registry. El workflow `.github/workflows/docker-publish.yml` publica la imagen del
+backend en GitHub Container Registry (`ghcr.io`) al pushear a `main`, crear un tag `v*` o
+ejecutarlo manualmente.
+
+## Arranque rapido manual
 
 1. **Base de datos** (requiere Docker):
    ```bash
@@ -28,7 +54,7 @@ offline, y sincronizacion diferida de reportes, actividad y alertas de emergenci
 ## Tests
 
 ```bash
-npm test              # frontend: geoUtils, cola de sincronizacion offline, motor de IA
+npm test              # frontend: geoUtils, mapas offline, favoritos, tracking, cola offline e IA
 cd backend && npm test # backend: auth, trails, activities, emergency-alerts, limpieza de
                        # reportes obsoletos, aplicacion de dificultad de ruta (via pg-mem, sin Docker)
 ```
@@ -36,6 +62,40 @@ cd backend && npm test # backend: auth, trails, activities, emergency-alerts, li
 CI (`.github/workflows/ci.yml`) corre `npx tsc --noEmit` + `npm test` (frontend) y `npm test`
 (backend) en cada push y pull request. Requiere Node 22+ (el mock de `expo-sqlite` usado en los
 tests del frontend se apoya en `node:sqlite`).
+
+## Trazabilidad contra el planteo del PFI
+
+| Requisito | Implementacion principal | Evidencia de validacion |
+| --- | --- | --- |
+| RF-01/RF-02 exploracion y favoritos | `mobile/screens/ExploreRoutesScreen.tsx`, `mobile/screens/TrailDetail.tsx`, `services/favoriteTrails.ts` | Busqueda/filtros por dificultad y distancia, rutas favoritas persistidas en SQLite |
+| RF-02 informacion previa | `mobile/screens/TrailDetail.tsx`, `mobile/components/TrailMap.tsx`, `mobile/components/Terrain3DScene.tsx`, `backend/src/routes/trails.routes.js` | Distancia, duracion, dificultad, clima, reportes, disponibilidad offline, desnivel aproximado y vista 2D/3D del terreno |
+| RF-03/RNF-01 mapas offline | `services/offlineMaps.ts`, `services/mapTileCache.ts`, `mobile/components/TrailMap.tsx`, pantallas `offline-*` | Descarga real de tiles, copia local de ruta/reportes, verificacion, reintento, eliminacion de mapas almacenados y capas visuales locales compatibles offline |
+| RF-05/RF-06/RF-18 tracking real | `mobile/screens/RouteMap.tsx`, `services/routeTracking.ts`, `database/sessionsRepository.ts` | Puntos GPS persistidos, distancia acumulada y test `routeTracking.test.ts` |
+| RF-07 alertas de desvio | `mobile/screens/RouteMap.tsx`, `mobile/screens/AlertRouteScreen.tsx`, `services/geoUtils.ts` | Tests de distancia/progreso de ruta en `geoUtils.test.ts` |
+| RF-08/RF-09 reportes colaborativos | `mobile/screens/ReportTerrainScreen.tsx`, `backend/src/routes/trails.routes.js` | Reportes con latitud, longitud, precision y progreso de ruta en tests backend |
+| RF-10/RF-11 sincronizacion diferida | `services/syncQueue.ts`, tarjeta de sincronizacion en `ProfileScreen.tsx` | Estados pending/synced/failed/abandoned y reintentos testeados |
+| RF-12/RF-13 emergencia | `services/emergencyAlerts.ts`, `ConfirmSosScreen.tsx`, `backend/src/routes/emergencyAlerts.routes.js` | Mensaje SOS preparado, contacto, ultima ubicacion conocida y cola offline |
+| RF-17/RF-19/RF-20 IA y wearables | `ai/inferenceEngine.ts`, `services/wearableMetrics.ts`, `services/experienceProfile.ts` | Tests de inferencia local y explicacion visible de recomendaciones |
+| RNF-02 privacidad | `services/privacyConsent.ts`, `ProfileScreen.tsx` | Consentimiento explicito y borrado local de datos fisiologicos al revocar permiso |
+
+## Mapas, terreno y modo offline
+
+La app combina tiles reales con capas locales para que el recorrido se entienda aun sin
+conexion. `services/mapTileCache.ts` resuelve las URLs remotas por capa (`Mapa`, `Terreno`,
+`Satelite`), guarda los tiles descargados y permite que `TrailMap` use primero el archivo
+local cuando existe. La descarga offline se blinda desde `services/offlineMaps.ts` con
+verificacion de cobertura, estados de progreso, cancelacion, reintentos y eliminacion de
+mapas almacenados.
+
+Sobre esos tiles, `mobile/components/TrailMap.tsx` agrega informacion visual generada en
+la app: ruta principal con halo y flechas de avance, curvas de nivel, trazas secundarias,
+arroyo/valle de referencia y etiquetas de terreno. Estas capas no reemplazan los tiles ni
+requieren red, por lo que siguen visibles sobre mapas descargados.
+
+La vista 3D de `mobile/components/Terrain3DScene.tsx` genera un modelo de terreno a partir
+de la ruta y el centro del sendero. El relieve usa variacion por altura, pendiente y ruido
+procedural para diferenciar valle, bosque, roca, claros/nieve, crestas, curvas de nivel,
+senderos laterales y la ruta destacada en naranja.
 
 ## Modulo de IA (Python + Scikit-learn)
 

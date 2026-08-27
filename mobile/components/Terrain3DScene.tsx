@@ -40,7 +40,7 @@ type TerrainModel = {
   seed: number;
 };
 
-const GRID_SIZE = 58;
+const GRID_SIZE = 68;
 const EARTH_RADIUS_METERS = 6371000;
 
 const clamp = (value: number, min: number, max: number) =>
@@ -163,6 +163,44 @@ const buildTerrainModel = (
   };
 };
 
+const hash01 = (x: number, y: number, seed: number) => {
+  const s = Math.sin(x * 127.1 + y * 311.7 + seed * 74.7) * 43758.5453123;
+  return s - Math.floor(s);
+};
+
+const smoothstep = (t: number) => t * t * (3 - 2 * t);
+
+const valueNoise2D = (x: number, y: number, seed: number) => {
+  const x0 = Math.floor(x);
+  const y0 = Math.floor(y);
+  const sx = smoothstep(x - x0);
+  const sy = smoothstep(y - y0);
+  const n00 = hash01(x0, y0, seed);
+  const n10 = hash01(x0 + 1, y0, seed);
+  const n01 = hash01(x0, y0 + 1, seed);
+  const n11 = hash01(x0 + 1, y0 + 1, seed);
+  const nx0 = n00 + (n10 - n00) * sx;
+  const nx1 = n01 + (n11 - n01) * sx;
+
+  return (nx0 + (nx1 - nx0) * sy) * 2 - 1;
+};
+
+const fbm2D = (x: number, y: number, seed: number, octaves: number) => {
+  let amplitude = 1;
+  let frequency = 1;
+  let sum = 0;
+  let max = 0;
+
+  for (let octave = 0; octave < octaves; octave += 1) {
+    sum += valueNoise2D(x * frequency, y * frequency, seed + octave * 17.13) * amplitude;
+    max += amplitude;
+    amplitude *= 0.52;
+    frequency *= 2.03;
+  }
+
+  return sum / max;
+};
+
 const getHeightAt = (
   x: number,
   z: number,
@@ -178,14 +216,29 @@ const getHeightAt = (
     Math.exp(-((x - 1.65) ** 2 + (z + 1.15) ** 2) / 3.3) *
     (0.9 + difficultyFactor * 0.8);
   const basin = Math.exp(-((x + 0.2) ** 2 + (z + 0.2) ** 2) / 8.2) * 0.34;
-  const microRelief =
-    Math.sin((x + z) * 4.1 + seed) * Math.cos(z * 3.6 - seed) * 0.08;
+  const detailNoise = fbm2D(x * 0.85, z * 0.85, seed, 5) * 0.19;
+  const fineNoise = fbm2D(x * 3.6, z * 3.6, seed + 91.3, 3) * 0.055;
 
   return (
     0.08 +
-    (longRidge + crossRidge + peakA + peakB - basin + microRelief) *
+    (longRidge + crossRidge + peakA + peakB - basin + detailNoise + fineNoise) *
       (0.45 + difficultyFactor * 0.34)
   );
+};
+
+const getSlopeAt = (
+  x: number,
+  z: number,
+  difficultyFactor: number,
+  seed: number
+) => {
+  const eps = 0.06;
+  const left = getHeightAt(x - eps, z, difficultyFactor, seed);
+  const right = getHeightAt(x + eps, z, difficultyFactor, seed);
+  const down = getHeightAt(x, z - eps, difficultyFactor, seed);
+  const up = getHeightAt(x, z + eps, difficultyFactor, seed);
+
+  return clamp((Math.abs(right - left) + Math.abs(up - down)) / (eps * 4), 0, 1);
 };
 
 const interpolateColor = (
@@ -194,23 +247,32 @@ const interpolateColor = (
   amount: number
 ) => low.clone().lerp(high, clamp(amount, 0, 1));
 
-const getTerrainColor = (height: number, difficultyFactor: number) => {
+const getTerrainColor = (
+  height: number,
+  difficultyFactor: number,
+  steepness: number
+) => {
   const valley = new THREE.Color("#4FA56F");
   const grass = new THREE.Color("#85C778");
-  const slope = new THREE.Color("#B1C77A");
+  const scree = new THREE.Color("#B1C77A");
   const rock = new THREE.Color("#9C8E67");
   const snow = new THREE.Color("#EAF3DD");
   const normalized = clamp(height / (1.45 + difficultyFactor), 0, 1);
+  let base: THREE.Color;
 
-  if (normalized < 0.36) return interpolateColor(valley, grass, normalized / 0.36);
-  if (normalized < 0.68) {
-    return interpolateColor(grass, slope, (normalized - 0.36) / 0.32);
-  }
-  if (normalized < 0.9) {
-    return interpolateColor(slope, rock, (normalized - 0.68) / 0.22);
+  if (normalized < 0.36) {
+    base = interpolateColor(valley, grass, normalized / 0.36);
+  } else if (normalized < 0.68) {
+    base = interpolateColor(grass, scree, (normalized - 0.36) / 0.32);
+  } else if (normalized < 0.9) {
+    base = interpolateColor(scree, rock, (normalized - 0.68) / 0.22);
+  } else {
+    base = interpolateColor(rock, snow, (normalized - 0.9) / 0.1);
   }
 
-  return interpolateColor(rock, snow, (normalized - 0.9) / 0.1);
+  const rockExposure = clamp((steepness - 0.22) * 1.9, 0, 0.82);
+
+  return interpolateColor(base, rock, rockExposure);
 };
 
 const disposeObject = (object: THREE.Object3D) => {
@@ -251,7 +313,8 @@ const buildTerrainMesh = (model: TerrainModel) => {
         model.difficultyFactor,
         model.seed
       );
-      color.copy(getTerrainColor(height, model.difficultyFactor));
+      const steepness = getSlopeAt(x, z, model.difficultyFactor, model.seed);
+      color.copy(getTerrainColor(height, model.difficultyFactor, steepness));
 
       positions.push(x, height, z);
       colors.push(color.r, color.g, color.b);
@@ -366,6 +429,78 @@ const addContourLines = (group: THREE.Group, model: TerrainModel) => {
   }
 };
 
+const TREE_COUNT = 110;
+const TRUNK_HEIGHT = 0.09;
+const FOLIAGE_HEIGHT = 0.17;
+
+const addVegetation = (group: THREE.Group, model: TerrainModel) => {
+  const trunkGeometry = new THREE.CylinderGeometry(0.014, 0.02, TRUNK_HEIGHT, 5);
+  const trunkMaterial = new THREE.MeshStandardMaterial({
+    color: "#6B4A31",
+    roughness: 0.92,
+  });
+  const foliageGeometry = new THREE.ConeGeometry(0.06, FOLIAGE_HEIGHT, 6);
+  const foliageMaterial = new THREE.MeshStandardMaterial({
+    color: "#3D7A45",
+    roughness: 0.85,
+  });
+  const trunks = new THREE.InstancedMesh(trunkGeometry, trunkMaterial, TREE_COUNT);
+  const foliage = new THREE.InstancedMesh(foliageGeometry, foliageMaterial, TREE_COUNT);
+  trunks.castShadow = true;
+  trunks.receiveShadow = true;
+  foliage.castShadow = true;
+  foliage.receiveShadow = true;
+
+  const dummy = new THREE.Object3D();
+  let placed = 0;
+  let attempt = 0;
+
+  while (placed < TREE_COUNT && attempt < TREE_COUNT * 8) {
+    attempt += 1;
+    const rx = hash01(attempt * 3.11, model.seed, model.seed + 1) * 8.2 - 4.1;
+    const rz = hash01(model.seed, attempt * 5.73, model.seed + 2) * 8.2 - 4.1;
+    const height = getHeightAt(rx, rz, model.difficultyFactor, model.seed);
+    const steepness = getSlopeAt(rx, rz, model.difficultyFactor, model.seed);
+    const normalizedHeight = clamp(
+      height / (1.45 + model.difficultyFactor),
+      0,
+      1
+    );
+
+    if (steepness > 0.32 || normalizedHeight < 0.06 || normalizedHeight > 0.6) {
+      continue;
+    }
+
+    const tooCloseToRoute = model.route.some(
+      (point) => Math.hypot(point.x - rx, point.z - rz) < 0.22
+    );
+    if (tooCloseToRoute) continue;
+
+    const scale = 0.65 + hash01(rx * 91.7, rz * 57.1, model.seed + 3) * 0.85;
+    const rotationY = hash01(rx * 13.1, rz * 27.3, model.seed + 4) * Math.PI * 2;
+
+    dummy.rotation.set(0, rotationY, 0);
+    dummy.scale.setScalar(scale);
+    dummy.position.set(rx, height + (TRUNK_HEIGHT / 2) * scale, rz);
+    dummy.updateMatrix();
+    trunks.setMatrixAt(placed, dummy.matrix);
+
+    dummy.position.y = height + (TRUNK_HEIGHT + FOLIAGE_HEIGHT / 2) * scale;
+    dummy.updateMatrix();
+    foliage.setMatrixAt(placed, dummy.matrix);
+
+    placed += 1;
+  }
+
+  trunks.count = placed;
+  foliage.count = placed;
+  trunks.instanceMatrix.needsUpdate = true;
+  foliage.instanceMatrix.needsUpdate = true;
+
+  group.add(trunks);
+  group.add(foliage);
+};
+
 const toScenePoint = (coordinate: Coordinate, model: TerrainModel) => {
   const local = toLocalMeters(coordinate, model.origin);
   const x = (local.x - model.bounds.centerX) / model.bounds.metersPerUnit;
@@ -376,6 +511,41 @@ const toScenePoint = (coordinate: Coordinate, model: TerrainModel) => {
     getHeightAt(x, z, model.difficultyFactor, model.seed),
     z
   );
+};
+
+const buildSkyDome = () => {
+  const geometry = new THREE.SphereGeometry(60, 24, 16);
+  const material = new THREE.ShaderMaterial({
+    uniforms: {
+      topColor: { value: new THREE.Color("#3F92D2") },
+      bottomColor: { value: new THREE.Color("#DCEFF7") },
+      offset: { value: 4 },
+      exponent: { value: 0.68 },
+    },
+    vertexShader: `
+      varying vec3 vWorldPosition;
+      void main() {
+        vec4 worldPosition = modelMatrix * vec4(position, 1.0);
+        vWorldPosition = worldPosition.xyz;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+      }
+    `,
+    fragmentShader: `
+      uniform vec3 topColor;
+      uniform vec3 bottomColor;
+      uniform float offset;
+      uniform float exponent;
+      varying vec3 vWorldPosition;
+      void main() {
+        float h = normalize(vWorldPosition + vec3(0.0, offset, 0.0)).y;
+        gl_FragColor = vec4(mix(bottomColor, topColor, max(pow(max(h, 0.0), exponent), 0.0)), 1.0);
+      }
+    `,
+    side: THREE.BackSide,
+    fog: false,
+  });
+
+  return new THREE.Mesh(geometry, material);
 };
 
 export function Terrain3DScene({
@@ -443,6 +613,7 @@ export function Terrain3DScene({
     clearGroup(handles.routeGroup);
     handles.terrainGroup.add(buildTerrainMesh(model));
     addContourLines(handles.terrainGroup, model);
+    addVegetation(handles.terrainGroup, model);
 
     const liftedRoute = model.route.map((point) => {
       const next = point.clone();
@@ -515,11 +686,14 @@ export function Terrain3DScene({
         height,
         pixelRatio: 1,
         antialias: true,
-        clearColor: "#BFE3EF",
+        clearColor: "#DCEFF7",
       });
+      renderer.shadowMap.enabled = true;
+      renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
       const scene = new THREE.Scene();
-      scene.background = new THREE.Color("#BFE3EF");
-      scene.fog = new THREE.Fog("#BFE3EF", 8, 16);
+      scene.fog = new THREE.Fog("#CFE9F2", 9, 17);
+      scene.add(buildSkyDome());
 
       const camera = new THREE.PerspectiveCamera(48, width / height, 0.1, 80);
       updateCamera(camera);
@@ -529,12 +703,24 @@ export function Terrain3DScene({
       scene.add(terrainGroup);
       scene.add(routeGroup);
 
-      const hemiLight = new THREE.HemisphereLight("#DDF6FF", "#335C36", 2.2);
-      const sunLight = new THREE.DirectionalLight("#FFFFFF", 2.9);
+      const hemiLight = new THREE.HemisphereLight("#DDF6FF", "#335C36", 1.5);
+      const sunLight = new THREE.DirectionalLight("#FFF3D9", 2.7);
+      const fillLight = new THREE.DirectionalLight("#A9CBE8", 0.6);
       sunLight.position.set(-4, 7, 5);
       sunLight.castShadow = true;
+      sunLight.shadow.mapSize.set(1024, 1024);
+      sunLight.shadow.camera.left = -6;
+      sunLight.shadow.camera.right = 6;
+      sunLight.shadow.camera.top = 6;
+      sunLight.shadow.camera.bottom = -6;
+      sunLight.shadow.camera.near = 1;
+      sunLight.shadow.camera.far = 18;
+      sunLight.shadow.bias = -0.0025;
+      sunLight.shadow.radius = 2;
+      fillLight.position.set(5, 4, -4);
       scene.add(hemiLight);
       scene.add(sunLight);
+      scene.add(fillLight);
 
       handlesRef.current = {
         animationFrame: 0,

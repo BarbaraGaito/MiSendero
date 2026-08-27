@@ -17,6 +17,7 @@ import {
   WearableMetricSample,
   WearableProvider,
   WearableRuntimeStatus,
+  WearableSimulationScenario,
 } from "../../types";
 import {
   Card,
@@ -58,11 +59,44 @@ const providerOptions: Array<{
   },
 ];
 
+const scenarioOptions: Array<{
+  id: WearableSimulationScenario;
+  title: string;
+  body: string;
+  icon: keyof typeof Ionicons.glyphMap;
+}> = [
+  {
+    id: "normal",
+    title: "Ritmo normal",
+    body: "FC y oxigeno estables, esfuerzo bajo.",
+    icon: "walk-outline",
+  },
+  {
+    id: "esfuerzo_moderado",
+    title: "Esfuerzo moderado",
+    body: "FC elevada por pendiente o ritmo sostenido.",
+    icon: "trending-up-outline",
+  },
+  {
+    id: "fatiga_alta",
+    title: "Fatiga alta",
+    body: "FC muy elevada y ritmo cayendo por cansancio.",
+    icon: "battery-dead-outline",
+  },
+  {
+    id: "riesgo_fisiologico",
+    title: "Riesgo fisiologico",
+    body: "FC critica y oxigeno bajo: dispara alerta inmediata.",
+    icon: "alert-circle-outline",
+  },
+];
+
 export default function WearableSettingsScreen() {
   const [runtime, setRuntime] = useState<WearableRuntimeStatus | null>(null);
   const [samples, setSamples] = useState<WearableMetricSample[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [message, setMessage] = useState<string | null>(null);
+  const [scenario, setScenario] = useState<WearableSimulationScenario>("normal");
 
   const load = useCallback(async () => {
     setIsLoading(true);
@@ -132,8 +166,10 @@ export default function WearableSettingsScreen() {
       await saveWearableConnection("development_simulator", true, true);
     }
 
-    await createDevelopmentMetricSample();
-    setMessage("Muestra local guardada para probar predicciones offline.");
+    await createDevelopmentMetricSample(scenario);
+    setMessage(
+      `Muestra local guardada: ${scenarioOptions.find((option) => option.id === scenario)?.title.toLowerCase()}.`
+    );
     await load();
   };
 
@@ -256,6 +292,43 @@ export default function WearableSettingsScreen() {
           )}
         </Card>
 
+        <Card>
+          <Text style={styles.cardTitle}>Simular situacion</Text>
+          <Text style={styles.cardText}>
+            Elegi que escenario fisiologico simular. La app va a generar una
+            muestra local con esos valores y va a mostrar la prediccion de
+            fatiga y riesgo correspondiente, igual que si viniera de un reloj
+            real.
+          </Text>
+
+          <View style={styles.providerList}>
+            {scenarioOptions.map((option) => {
+              const selected = scenario === option.id;
+              return (
+                <Pressable
+                  key={option.id}
+                  style={[styles.providerItem, selected && styles.providerItemSelected]}
+                  onPress={() => setScenario(option.id)}
+                >
+                  <Ionicons
+                    name={option.icon}
+                    size={22}
+                    color={selected ? colors.white : colors.green}
+                  />
+                  <View style={styles.providerText}>
+                    <Text style={[styles.providerTitle, selected && styles.providerTitleSelected]}>
+                      {option.title}
+                    </Text>
+                    <Text style={[styles.providerBody, selected && styles.providerBodySelected]}>
+                      {option.body}
+                    </Text>
+                  </View>
+                </Pressable>
+              );
+            })}
+          </View>
+        </Card>
+
         <View style={styles.actions}>
           <PrimaryButton
             label="Sincronizar dispositivo"
@@ -264,7 +337,7 @@ export default function WearableSettingsScreen() {
             onPress={syncNativeSample}
           />
           <PrimaryButton
-            label="Generar muestra de prueba"
+            label="Generar muestra simulada"
             icon="flask-outline"
             onPress={simulateSample}
           />

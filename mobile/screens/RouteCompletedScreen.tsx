@@ -258,7 +258,6 @@ export default function RouteCompletedScreen() {
   const canReview = Boolean(session && trailId && !isPausedWithoutProgress);
   const hasReview = Boolean(session?.rating);
   const completionCopy = getCompletionCopy(isPausedWithoutProgress);
-  const reviewCopy = getReviewCopy(hasReview);
   const progressPercent =
     session?.route_progress_meters !== null &&
     session?.route_progress_meters !== undefined &&
@@ -314,114 +313,23 @@ export default function RouteCompletedScreen() {
 
       {isLoading ? <Text style={styles.statusText}>Cargando resumen...</Text> : null}
 
-      {session ? (
-        <>
-          <View style={styles.metricsRow}>
-            <Metric label="Distancia" value={formatDistance(session.distance ?? 0)} />
-            <Metric label="Tiempo" value={formatDuration(session.duration ?? 0)} />
-            <Metric
-              label="Progreso"
-              value={progressPercent !== null ? `${progressPercent}%` : "Guardado"}
-            />
-          </View>
-
-          <Card tone="green">
-            <Text style={styles.cardTitle}>
-              {isPausedWithoutProgress
-                ? "Actividad pendiente"
-                : isEndedEarly
-                  ? "Punto alcanzado"
-                  : "Tu rendimiento"}
-            </Text>
-            <Text style={styles.cardText}>
-              {isPausedWithoutProgress
-                ? "La ruta quedo guardada en pausa. Podes continuarla desde Actividad o volver al mapa ahora."
-                : isEndedEarly
-                  ? getEndedEarlyText(session)
-                : "La actividad quedo guardada localmente y ya esta disponible en tus actividades recientes."}
-            </Text>
-            {trackingPointCount > 0 ? (
-              <Text style={styles.cardMeta}>
-                {trackingPointCount} puntos GPS guardados para validar distancia y recorrido.
-              </Text>
-            ) : null}
-          </Card>
-
-          {canReview ? (
-            <Card>
-              <Text style={styles.cardTitle}>{reviewCopy.title}</Text>
-              <Text style={styles.cardText}>{reviewCopy.text}</Text>
-
-              <View style={styles.starsRow}>
-                {[1, 2, 3, 4, 5].map((value) => (
-                  <Pressable
-                    key={value}
-                    disabled={hasReview}
-                    onPress={() => setRating(value)}
-                    style={styles.starButton}
-                  >
-                    <Text
-                      style={[
-                        styles.starText,
-                        value <= rating ? styles.starTextActive : null,
-                      ]}
-                    >
-                      â˜…
-                    </Text>
-                  </Pressable>
-                ))}
-              </View>
-
-              {!hasReview ? (
-                <>
-                  <TextInput
-                    multiline
-                    value={reviewText}
-                    onChangeText={setReviewText}
-                    placeholder="Comentario opcional"
-                    placeholderTextColor={colors.muted}
-                    style={styles.reviewInput}
-                  />
-                  <PrimaryButton
-                    label={isSavingReview ? "Guardando..." : "Guardar opinion"}
-                    onPress={saveReview}
-                    tone={rating > 0 ? "green" : "secondary"}
-                  />
-                </>
-              ) : null}
-
-              {reviewStatus ? (
-                <Text style={styles.reviewStatus}>{reviewStatus}</Text>
-              ) : null}
-            </Card>
-          ) : null}
-        </>
-      ) : (
-        <Card>
-          <Text style={styles.cardTitle}>No hay actividad finalizada</Text>
-          <Text style={styles.cardText}>
-            Todavia no encontramos una sesion guardada para mostrar en este
-            resumen.
-          </Text>
-        </Card>
-      )}
-
-      {isPausedWithoutProgress && trailId && session ? (
-        <PrimaryButton
-          label="Continuar ruta"
-          icon="play-outline"
-          onPress={() =>
-            router.push({
-              pathname: "/route-map",
-              params: {
-                active: "1",
-                id: String(trailId),
-                startedAt: String(session.started_at),
-              },
-            })
-          }
-        />
-      ) : null}
+      <CompletionSessionContent
+        canReview={canReview}
+        hasReview={hasReview}
+        isEndedEarly={isEndedEarly}
+        isPausedWithoutProgress={isPausedWithoutProgress}
+        isSavingReview={isSavingReview}
+        progressPercent={progressPercent}
+        rating={rating}
+        reviewStatus={reviewStatus}
+        reviewText={reviewText}
+        saveReview={saveReview}
+        session={session}
+        setRating={setRating}
+        setReviewText={setReviewText}
+        trackingPointCount={trackingPointCount}
+        trailId={trailId}
+      />
 
       <PrimaryButton
         label={completionCopy.finalActionLabel}
@@ -429,6 +337,226 @@ export default function RouteCompletedScreen() {
         onPress={() => router.push(completionCopy.finalActionRoute as any)}
       />
     </AppScreen>
+  );
+}
+
+function CompletionSessionContent({
+  canReview,
+  hasReview,
+  isEndedEarly,
+  isPausedWithoutProgress,
+  isSavingReview,
+  progressPercent,
+  rating,
+  reviewStatus,
+  reviewText,
+  saveReview,
+  session,
+  setRating,
+  setReviewText,
+  trackingPointCount,
+  trailId,
+}: {
+  canReview: boolean;
+  hasReview: boolean;
+  isEndedEarly: boolean;
+  isPausedWithoutProgress: boolean;
+  isSavingReview: boolean;
+  progressPercent: number | null;
+  rating: number;
+  reviewStatus: string | null;
+  reviewText: string;
+  saveReview: () => void;
+  session: SessionRow | null;
+  setRating: (rating: number) => void;
+  setReviewText: (text: string) => void;
+  trackingPointCount: number;
+  trailId: number | null;
+}) {
+  if (!session) return <EmptyCompletionCard />;
+
+  return (
+    <>
+      <CompletionMetrics session={session} progressPercent={progressPercent} />
+      <CompletionPerformanceCard
+        isEndedEarly={isEndedEarly}
+        isPausedWithoutProgress={isPausedWithoutProgress}
+        session={session}
+        trackingPointCount={trackingPointCount}
+      />
+      {canReview ? (
+        <ReviewCard
+          hasReview={hasReview}
+          isSavingReview={isSavingReview}
+          rating={rating}
+          reviewStatus={reviewStatus}
+          reviewText={reviewText}
+          saveReview={saveReview}
+          setRating={setRating}
+          setReviewText={setReviewText}
+        />
+      ) : null}
+      <ContinueRouteButton
+        isPausedWithoutProgress={isPausedWithoutProgress}
+        session={session}
+        trailId={trailId}
+      />
+    </>
+  );
+}
+
+function CompletionMetrics({
+  progressPercent,
+  session,
+}: {
+  progressPercent: number | null;
+  session: SessionRow;
+}) {
+  return (
+    <View style={styles.metricsRow}>
+      <Metric label="Distancia" value={formatDistance(session.distance ?? 0)} />
+      <Metric label="Tiempo" value={formatDuration(session.duration ?? 0)} />
+      <Metric
+        label="Progreso"
+        value={progressPercent !== null ? `${progressPercent}%` : "Guardado"}
+      />
+    </View>
+  );
+}
+
+function CompletionPerformanceCard({
+  isEndedEarly,
+  isPausedWithoutProgress,
+  session,
+  trackingPointCount,
+}: {
+  isEndedEarly: boolean;
+  isPausedWithoutProgress: boolean;
+  session: SessionRow;
+  trackingPointCount: number;
+}) {
+  return (
+    <Card tone="green">
+      <Text style={styles.cardTitle}>
+        {getPerformanceTitle(isPausedWithoutProgress, isEndedEarly)}
+      </Text>
+      <Text style={styles.cardText}>
+        {getPerformanceText(isPausedWithoutProgress, isEndedEarly, session)}
+      </Text>
+      {trackingPointCount > 0 ? (
+        <Text style={styles.cardMeta}>
+          {trackingPointCount} puntos GPS guardados para validar distancia y recorrido.
+        </Text>
+      ) : null}
+    </Card>
+  );
+}
+
+function ReviewCard({
+  hasReview,
+  isSavingReview,
+  rating,
+  reviewStatus,
+  reviewText,
+  saveReview,
+  setRating,
+  setReviewText,
+}: {
+  hasReview: boolean;
+  isSavingReview: boolean;
+  rating: number;
+  reviewStatus: string | null;
+  reviewText: string;
+  saveReview: () => void;
+  setRating: (rating: number) => void;
+  setReviewText: (text: string) => void;
+}) {
+  const reviewCopy = getReviewCopy(hasReview);
+
+  return (
+    <Card>
+      <Text style={styles.cardTitle}>{reviewCopy.title}</Text>
+      <Text style={styles.cardText}>{reviewCopy.text}</Text>
+      <View style={styles.starsRow}>
+        {[1, 2, 3, 4, 5].map((value) => (
+          <Pressable
+            key={value}
+            disabled={hasReview}
+            onPress={() => setRating(value)}
+            style={styles.starButton}
+          >
+            <Text
+              style={[
+                styles.starText,
+                value <= rating ? styles.starTextActive : null,
+              ]}
+            >
+              â˜…
+            </Text>
+          </Pressable>
+        ))}
+      </View>
+      {!hasReview ? (
+        <>
+          <TextInput
+            multiline
+            value={reviewText}
+            onChangeText={setReviewText}
+            placeholder="Comentario opcional"
+            placeholderTextColor={colors.muted}
+            style={styles.reviewInput}
+          />
+          <PrimaryButton
+            label={isSavingReview ? "Guardando..." : "Guardar opinion"}
+            onPress={saveReview}
+            tone={rating > 0 ? "green" : "secondary"}
+          />
+        </>
+      ) : null}
+      {reviewStatus ? (
+        <Text style={styles.reviewStatus}>{reviewStatus}</Text>
+      ) : null}
+    </Card>
+  );
+}
+
+function ContinueRouteButton({
+  isPausedWithoutProgress,
+  session,
+  trailId,
+}: {
+  isPausedWithoutProgress: boolean;
+  session: SessionRow;
+  trailId: number | null;
+}) {
+  if (!isPausedWithoutProgress || !trailId) return null;
+
+  return (
+    <PrimaryButton
+      label="Continuar ruta"
+      icon="play-outline"
+      onPress={() =>
+        router.push({
+          pathname: "/route-map",
+          params: {
+            active: "1",
+            id: String(trailId),
+            startedAt: String(session.started_at),
+          },
+        })
+      }
+    />
+  );
+}
+
+function EmptyCompletionCard() {
+  return (
+    <Card>
+      <Text style={styles.cardTitle}>No hay actividad finalizada</Text>
+      <Text style={styles.cardText}>
+        Todavia no encontramos una sesion guardada para mostrar en este resumen.
+      </Text>
+    </Card>
   );
 }
 
@@ -448,6 +576,28 @@ function getEndedEarlyText(session: SessionRow) {
   }
 
   return "La salida queda finalizada, no pausada, aunque no tengamos el punto exacto del sendero.";
+}
+
+function getPerformanceTitle(
+  isPausedWithoutProgress: boolean,
+  isEndedEarly: boolean
+) {
+  if (isPausedWithoutProgress) return "Actividad pendiente";
+  return isEndedEarly ? "Punto alcanzado" : "Tu rendimiento";
+}
+
+function getPerformanceText(
+  isPausedWithoutProgress: boolean,
+  isEndedEarly: boolean,
+  session: SessionRow
+) {
+  if (isPausedWithoutProgress) {
+    return "La ruta quedo guardada en pausa. Podes continuarla desde Actividad o volver al mapa ahora.";
+  }
+
+  if (isEndedEarly) return getEndedEarlyText(session);
+
+  return "La actividad quedo guardada localmente y ya esta disponible en tus actividades recientes.";
 }
 
 const styles = StyleSheet.create({

@@ -141,3 +141,6 @@ dist
 
 .idea
 reports/
+
+# Temporary Expo web exports used for visual verification
+.expo-export-*-check/

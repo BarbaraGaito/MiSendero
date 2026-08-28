@@ -14,7 +14,7 @@ import {
   ViewStyle,
 } from "react-native";
 import Svg, { Path } from "react-native-svg";
-import { Trail } from "../../types";
+import { Trail, TrailWeather } from "../../types";
 import {
   Coordinate,
   getClosestPointOnRoute,
@@ -83,6 +83,7 @@ type TerrainPoint = ScreenPoint & {
 
 type TrailMapProps = {
   trail: Trail | null;
+  weather?: TrailWeather | null;
   fitRoute?: boolean;
   immersive?: boolean;
   initialPerspective?: boolean;
@@ -98,6 +99,8 @@ type TrailMapProps = {
     routeProgressMeters: number;
   }) => void;
   onSelectionRejected?: (distanceToRouteMeters: number | null) => void;
+  onInteractionChange?: (isInteracting: boolean) => void;
+  navigationMode?: boolean;
 };
 
 const TILE_SIZE = 256;
@@ -110,6 +113,7 @@ const MAX_ZOOM_BY_LAYER: Record<MapLayer, number> = {
   terrain: 17,
   satellite: 19,
 };
+const mapGestureSurfaceStyle = { touchAction: "none" } as unknown as ViewStyle;
 
 const clamp = (value: number, min: number, max: number) =>
   Math.max(min, Math.min(max, value));
@@ -674,9 +678,9 @@ function LayerControl({
 }
 
 const getMapAttribution = (layer: MapLayer) => {
-  if (layer === "terrain") return "Esri World Topo Map";
-  if (layer === "satellite") return "Esri World Imagery";
-  return "OpenStreetMap contributors";
+  if (layer === "terrain") return "Esri World Topo Map · Ruta © OpenStreetMap";
+  if (layer === "satellite") return "Esri World Imagery · Ruta © OpenStreetMap";
+  return "© OpenStreetMap contributors (ODbL)";
 };
 
 const getMapDecorations = ({
@@ -845,6 +849,7 @@ const getTerrainLabels = (
 
 export function TrailMap({
   trail,
+  weather = null,
   fitRoute = false,
   immersive = false,
   initialPerspective = false,
@@ -856,6 +861,8 @@ export function TrailMap({
   selectionToleranceMeters = 80,
   onSelectCoordinate,
   onSelectionRejected,
+  onInteractionChange,
+  navigationMode = false,
 }: TrailMapProps) {
   const [layout, setLayout] = useState({ width: 0, height: 0 });
   const [layer, setLayer] = useState<MapLayer>("terrain");
@@ -885,6 +892,7 @@ export function TrailMap({
   const tileLoadRef = useRef(0);
   const touchStartRef = useRef<{ x: number; y: number } | null>(null);
   const touchMovedRef = useRef(false);
+  const onInteractionChangeRef = useRef(onInteractionChange);
   const centerLat = trail?.center_lat;
   const centerLng = trail?.center_lng;
   const hasRealCenter =
@@ -919,6 +927,10 @@ export function TrailMap({
           center: trailCenter,
           zoom: Math.min(trail?.map_zoom || DEFAULT_ZOOM, maxZoom),
         };
+
+  useEffect(() => {
+    onInteractionChangeRef.current = onInteractionChange;
+  }, [onInteractionChange]);
 
   useEffect(() => {
     const nextView = getInitialView();
@@ -957,12 +969,17 @@ export function TrailMap({
   const panResponder = useMemo(
     () =>
       PanResponder.create({
-        onStartShouldSetPanResponder: (event) => event.nativeEvent.touches.length >= 2,
+        onStartShouldSetPanResponder: (event) => event.nativeEvent.touches.length > 0,
         onMoveShouldSetPanResponder: (event, gesture) =>
+          event.nativeEvent.touches.length > 0 ||
           event.nativeEvent.touches.length >= 2 ||
           Math.abs(gesture.dx) > 5 ||
           Math.abs(gesture.dy) > 5,
+        onMoveShouldSetPanResponderCapture: () => true,
+        onPanResponderTerminationRequest: () => false,
+        onShouldBlockNativeResponder: () => true,
         onPanResponderGrant: (event) => {
+          onInteractionChangeRef.current?.(true);
           const distance = getTouchDistance(event.nativeEvent.touches);
 
           if (!distance) return;
@@ -1002,6 +1019,7 @@ export function TrailMap({
           setPanOffset({ x: gesture.dx, y: gesture.dy });
         },
         onPanResponderRelease: (_, gesture) => {
+          onInteractionChangeRef.current?.(false);
           if (isPinchingRef.current) {
             if (!isPerspectiveRef.current) {
               const zoomDelta = Math.round(Math.log(lastPinchRatioRef.current) / Math.log(1.38));
@@ -1047,6 +1065,7 @@ export function TrailMap({
           setPanOffset({ x: 0, y: 0 });
         },
         onPanResponderTerminate: () => {
+          onInteractionChangeRef.current?.(false);
           isPinchingRef.current = false;
           pinchStartDistanceRef.current = null;
           lastPinchRatioRef.current = 1;
@@ -1245,9 +1264,15 @@ export function TrailMap({
 
   return (
     <View
-      style={[styles.map, !immersive && styles.embeddedMap, immersive && styles.immersiveMap]}
+      style={[
+        styles.map,
+        !immersive && styles.embeddedMap,
+        immersive && styles.immersiveMap,
+        mapGestureSurfaceStyle,
+      ]}
       onLayout={onLayout}
       onTouchStart={(event) => {
+        onInteractionChangeRef.current?.(true);
         if (!onSelectCoordinate || event.nativeEvent.touches.length !== 1) return;
 
         touchMovedRef.current = false;
@@ -1267,6 +1292,9 @@ export function TrailMap({
         }
       }}
       onTouchEnd={(event) => {
+        if (event.nativeEvent.touches.length === 0) {
+          onInteractionChangeRef.current?.(false);
+        }
         if (
           !onSelectCoordinate ||
           event.nativeEvent.touches.length > 0 ||
@@ -1296,12 +1324,28 @@ export function TrailMap({
               y: terrainOffset.y + panOffset.y,
             }}
             viewScale={terrainScale}
+            trailLabel={`${trail?.name || ""} ${trail?.location || ""} ${trail?.description || ""}`}
+            weather={weather ? {
+              condition: weather.condition,
+              rainProbability: weather.rain_probability,
+              temperatureC: weather.temperature_c,
+            } : null}
+            navigationMode={navigationMode}
+            satelliteTextureEnabled={allowSatellite}
           />
           <View style={styles.terrainInfo}>
             <Text style={styles.terrainInfoTitle}>Vista 3D del terreno</Text>
             <Text style={styles.terrainInfoText}>
               {terrainElevationGain} m desnivel aprox. - {trail?.difficulty || "Dificultad a confirmar"}
             </Text>
+            <Text style={styles.terrainGestureText}>
+              Arrastra para girar 360° · Pellizca para acercar
+            </Text>
+            {allowSatellite ? (
+              <Text style={styles.terrainSourceText}>
+                Superficie: Esri World Imagery · Ruta: © OpenStreetMap (ODbL)
+              </Text>
+            ) : null}
           </View>
           <View pointerEvents="none" style={styles.terrain3dOverlay}>
             <View style={styles.terrain3dPill}>
@@ -1309,10 +1353,6 @@ export function TrailMap({
               <Text style={styles.terrain3dPillText}>
                 {shortenTrailName(trail?.name)}
               </Text>
-            </View>
-            <View style={styles.terrain3dPill}>
-              <Ionicons name="analytics-outline" size={13} color={colors.greenDark} />
-              <Text style={styles.terrain3dPillText}>Curvas de nivel</Text>
             </View>
           </View>
         </View>
@@ -1781,6 +1821,18 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: "800",
     marginTop: 4,
+  },
+  terrainGestureText: {
+    color: colors.greenDark,
+    fontSize: 10,
+    fontWeight: "800",
+    marginTop: 4,
+  },
+  terrainSourceText: {
+    color: colors.muted,
+    fontSize: 10,
+    fontWeight: "700",
+    marginTop: 3,
   },
   terrain3dOverlay: {
     alignItems: "flex-start",

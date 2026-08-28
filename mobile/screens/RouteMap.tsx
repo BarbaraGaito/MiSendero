@@ -133,6 +133,7 @@ export default function Screen04RouteMap() {
   const [hasInternetConnection, setHasInternetConnection] = useState(false);
   const [isContextLoading, setIsContextLoading] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
+  const [isMapInteracting, setIsMapInteracting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [wearableRuntime, setWearableRuntime] =
     useState<WearableRuntimeStatus | null>(null);
@@ -364,9 +365,11 @@ export default function Screen04RouteMap() {
       <SafeAreaView edges={["top", "bottom"]} style={styles.activeShell}>
         <TrailMap
           trail={trail}
+          weather={weather}
           fitRoute
           immersive
           initialPerspective
+          navigationMode
           showDetailsCard={false}
           controlsTopOffset={mapControlsTop}
           allowSatellite={hasInternetConnection}
@@ -571,6 +574,7 @@ export default function Screen04RouteMap() {
       <TopBar title="Mapa del recorrido" onBack={() => router.back()} />
 
       <ScrollView
+        scrollEnabled={!isMapInteracting}
         contentContainerStyle={[
           styles.scrollContent,
           { paddingBottom: Math.max(24, insets.bottom + 18) },
@@ -580,7 +584,12 @@ export default function Screen04RouteMap() {
         {isLoading ? <Text style={styles.statusText}>Cargando mapa...</Text> : null}
         {error ? <Text style={styles.statusText}>{error}</Text> : null}
 
-        <TrailMap trail={trail} allowSatellite={hasInternetConnection} />
+        <TrailMap
+          trail={trail}
+          weather={weather}
+          allowSatellite={hasInternetConnection}
+          onInteractionChange={setIsMapInteracting}
+        />
 
         <InfoCard style={styles.progressCard}>
           <View style={styles.progressText}>

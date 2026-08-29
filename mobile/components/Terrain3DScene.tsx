@@ -4,6 +4,10 @@ import React, { useCallback, useEffect, useMemo, useRef } from "react";
 import { StyleSheet } from "react-native";
 import * as THREE from "three";
 import { Coordinate } from "../../services/geoUtils";
+import {
+  clampTerrainScale,
+  getTerrainPerspectiveFov,
+} from "../../services/mapGestures";
 
 type Terrain3DSceneProps = {
   routePoints: Coordinate[];
@@ -26,6 +30,7 @@ type Terrain3DSceneProps = {
 type NavigationView = {
   anchor: THREE.Vector3;
   direction: THREE.Vector3;
+  sightDirection: THREE.Vector3;
 };
 
 type SceneHandles = {
@@ -727,7 +732,8 @@ const makeTerrainTrailRibbon = (
 
 const makeEndpointMarker = (
   position: THREE.Vector3,
-  kind: "start" | "finish"
+  kind: "start" | "finish",
+  scale = 1
 ) => {
   const group = new THREE.Group();
   const white = new THREE.MeshStandardMaterial({ color: "#FFFFFF", roughness: 0.55 });
@@ -776,6 +782,7 @@ const makeEndpointMarker = (
   }
 
   group.position.copy(position);
+  group.scale.setScalar(scale);
   group.children.forEach((child) => { child.castShadow = true; });
   return group;
 };
@@ -794,45 +801,6 @@ const makeUserMarker = (position: THREE.Vector3) => {
   marker.position.y += 0.25;
   marker.castShadow = true;
   return marker;
-};
-
-const makeHikerMarker = (position: THREE.Vector3, heading: number) => {
-  const group = new THREE.Group();
-  const skin = new THREE.MeshStandardMaterial({ color: "#D69A72", roughness: 0.8 });
-  const jacket = new THREE.MeshStandardMaterial({ color: "#E75D34", roughness: 0.85 });
-  const pants = new THREE.MeshStandardMaterial({ color: "#263B45", roughness: 0.9 });
-  const backpack = new THREE.MeshStandardMaterial({ color: "#165C43", roughness: 0.9 });
-  const head = new THREE.Mesh(new THREE.SphereGeometry(0.055, 14, 10), skin);
-  head.position.y = 0.4;
-  const torso = new THREE.Mesh(new THREE.CylinderGeometry(0.055, 0.07, 0.19, 10), jacket);
-  torso.position.y = 0.27;
-  const pack = new THREE.Mesh(new THREE.BoxGeometry(0.09, 0.14, 0.055), backpack);
-  pack.position.set(0, 0.28, -0.065);
-  const makeLimb = (
-    material: THREE.Material,
-    x: number,
-    y: number,
-    rotationZ: number,
-    length: number
-  ) => {
-    const limb = new THREE.Mesh(
-      new THREE.CylinderGeometry(0.018, 0.022, length, 7),
-      material
-    );
-    limb.position.set(x, y, 0);
-    limb.rotation.z = rotationZ;
-    return limb;
-  };
-  const leftArm = makeLimb(jacket, -0.075, 0.27, -0.42, 0.16);
-  const rightArm = makeLimb(jacket, 0.075, 0.27, 0.42, 0.16);
-  const leftLeg = makeLimb(pants, -0.035, 0.105, 0.13, 0.19);
-  const rightLeg = makeLimb(pants, 0.035, 0.105, -0.13, 0.19);
-  group.add(head, torso, pack, leftArm, rightArm, leftLeg, rightLeg);
-  group.position.copy(position);
-  group.rotation.y = heading;
-  group.scale.setScalar(1.18);
-  group.children.forEach((child) => { child.castShadow = true; });
-  return group;
 };
 
 const makeVerticalPin = (position: THREE.Vector3, color: string) => {
@@ -865,35 +833,40 @@ const updateTrackedPosition = (
   const model = handles.model;
   const terrainRoute = handles.terrainRoute;
   if (navigationMode) {
-    const hikerPoint = userCoordinate
-      ? toScenePoint(userCoordinate, model)
-      : terrainRoute[0].clone();
-    const nearestIndex = terrainRoute.reduce((closestIndex, point, index) => {
-      const closest = terrainRoute[closestIndex];
-      return point.distanceToSquared(hikerPoint) < closest.distanceToSquared(hikerPoint)
-        ? index
-        : closestIndex;
-    }, 0);
-    const previous = terrainRoute[Math.max(0, nearestIndex - 1)];
-    const next = terrainRoute[Math.min(terrainRoute.length - 1, nearestIndex + 1)];
-    const localDirection = next.clone().sub(previous);
+    const startPoint = terrainRoute[0].clone();
+    const nextPoint =
+      terrainRoute.find((point, index) => {
+        if (index === 0) return false;
+        const deltaX = point.x - startPoint.x;
+        const deltaZ = point.z - startPoint.z;
+        return deltaX * deltaX + deltaZ * deltaZ > 0.0064;
+      }) || terrainRoute[1];
+    const sightPoint =
+      terrainRoute.find((point, index) => {
+        if (index === 0) return false;
+        const deltaX = point.x - startPoint.x;
+        const deltaZ = point.z - startPoint.z;
+        return deltaX * deltaX + deltaZ * deltaZ > 0.64;
+      }) || terrainRoute[terrainRoute.length - 1];
+    const localDirection = nextPoint.clone().sub(startPoint);
     localDirection.y = 0;
-    localDirection.normalize();
-    const heading = Math.atan2(localDirection.x, localDirection.z);
-    hikerPoint.y = getHeightAt(
-      hikerPoint.x,
-      hikerPoint.z,
-      model.difficultyFactor,
-      model.seed
-    ) + 0.02;
-    const hiker = makeHikerMarker(hikerPoint, heading);
-    handles.routeGroup.add(hiker);
-    handles.trackedObject = hiker;
+    if (localDirection.lengthSq() < 0.000001) {
+      localDirection.set(0, 0, -1);
+    } else {
+      localDirection.normalize();
+    }
 
     const yAxis = new THREE.Vector3(0, 1, 0);
+    const sightDirection = sightPoint.clone().sub(startPoint);
+    if (sightDirection.lengthSq() < 0.000001) {
+      sightDirection.copy(localDirection);
+    } else {
+      sightDirection.normalize();
+    }
     handles.navigationView = {
-      anchor: hikerPoint.clone().applyAxisAngle(yAxis, handles.alignmentRotation),
+      anchor: startPoint.applyAxisAngle(yAxis, handles.alignmentRotation),
       direction: localDirection.clone().applyAxisAngle(yAxis, handles.alignmentRotation),
+      sightDirection: sightDirection.applyAxisAngle(yAxis, handles.alignmentRotation),
     };
     return;
   }
@@ -1474,20 +1447,39 @@ export function Terrain3DScene({
     });
 
     if (terrainRoute.length > 1) {
+      const trailOuterHalfWidth = current.navigationMode ? 0.042 : 0.135;
+      const trailInnerHalfWidth = current.navigationMode ? 0.023 : 0.092;
       handles.routeGroup.add(
-        makeTerrainTrailRibbon(terrainRoute, model, 0.135, "#F0643B", 0.052, true)
+        makeTerrainTrailRibbon(
+          terrainRoute,
+          model,
+          trailOuterHalfWidth,
+          "#F0643B",
+          0.052,
+          true
+        )
       );
       handles.routeGroup.add(
-        makeTerrainTrailRibbon(terrainRoute, model, 0.092, "#D4A56F", 0.061, false)
+        makeTerrainTrailRibbon(
+          terrainRoute,
+          model,
+          trailInnerHalfWidth,
+          "#D4A56F",
+          0.061,
+          false
+        )
       );
     }
 
-    if (markerRoute[0] && !current.navigationMode) {
-      handles.routeGroup.add(makeEndpointMarker(markerRoute[0], "start"));
+    const endpointScale = current.navigationMode ? 0.74 : 1;
+    if (markerRoute[0]) {
+      handles.routeGroup.add(makeEndpointMarker(markerRoute[0], "start", endpointScale));
     }
 
     if (markerRoute.length > 1) {
-      handles.routeGroup.add(makeEndpointMarker(markerRoute[markerRoute.length - 1], "finish"));
+      handles.routeGroup.add(
+        makeEndpointMarker(markerRoute[markerRoute.length - 1], "finish", endpointScale)
+      );
     }
 
     updateTrackedPosition(
@@ -1524,28 +1516,31 @@ export function Terrain3DScene({
 
   const updateCamera = useCallback((camera: THREE.PerspectiveCamera, navigationView?: NavigationView | null) => {
     const current = propsRef.current;
-    const scale = clamp(current.viewScale, 0.72, 1.95);
+    const scale = clampTerrainScale(current.viewScale);
     const orbitAngle = current.viewOffset.x / 100;
     const tilt = clamp(current.viewOffset.y / 120, -1.65, 1.65);
 
     if (current.navigationMode && navigationView) {
       const anchor = navigationView.anchor.clone();
-      const cameraDistance = 1.75 / scale;
-      const cameraHeight = clamp(
-        1.25 / Math.sqrt(scale) - tilt * 0.34,
-        0.58,
-        2.05
-      );
-      const orbitDirection = navigationView.direction
+      const viewDirection = navigationView.direction
         .clone()
-        .multiplyScalar(-1)
         .applyAxisAngle(new THREE.Vector3(0, 1, 0), orbitAngle);
+      const sightDirection = navigationView.sightDirection
+        .clone()
+        .applyAxisAngle(new THREE.Vector3(0, 1, 0), orbitAngle);
+      const eyeHeight = clamp(0.46 - tilt * 0.035, 0.4, 0.52);
+      const cameraPosition = anchor
+        .clone()
+        .addScaledVector(viewDirection, -0.045)
+        .add(new THREE.Vector3(0, eyeHeight, 0));
+      const lookTarget = cameraPosition
+        .clone()
+        .addScaledVector(sightDirection, 3.2)
+        .add(new THREE.Vector3(0, -0.1 - tilt * 0.28, 0));
+      camera.fov = getTerrainPerspectiveFov(scale);
       camera.zoom = 1;
-      camera.position
-        .copy(anchor)
-        .addScaledVector(orbitDirection, cameraDistance)
-        .add(new THREE.Vector3(0, cameraHeight, 0));
-      camera.lookAt(anchor.clone().add(new THREE.Vector3(0, 0.24, 0)));
+      camera.position.copy(cameraPosition);
+      camera.lookAt(lookTarget);
       camera.updateProjectionMatrix();
       return;
     }
@@ -1554,6 +1549,7 @@ export function Terrain3DScene({
     const radius = 8 + Math.max(0, tilt) * 0.28;
     const height = clamp(3.78 - tilt * 1.12, 1.65, 5.7);
 
+    camera.fov = 43;
     camera.zoom = scale;
     camera.position.set(
       Math.sin(orbitAngle) * radius,

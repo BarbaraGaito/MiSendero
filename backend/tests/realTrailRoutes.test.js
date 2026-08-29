@@ -28,4 +28,15 @@ describe("real seeded trail geometries", () => {
     expect(finish[0]).toBeCloseTo(-25.848657, 5);
     expect(finish[1]).toBeCloseTo(-65.69947, 5);
   });
+
+  test("uses the mapped pedestrian trail for Garganta del Diablo de Tilcara", () => {
+    const route = realTrailRoutes.tilcara;
+
+    expect(route.length).toBeGreaterThanOrEqual(170);
+    expect(route[0]).toEqual([-23.5860203, -65.3919984]);
+    expect(route).toContainEqual([-23.5889663, -65.3877379]);
+    expect(route).toContainEqual([-23.593301, -65.378378]);
+    expect(route.at(-1)).toEqual([-23.5950294, -65.3701813]);
+    expect(route).not.toContainEqual([-23.588258, -65.384183]);
+  });
 });

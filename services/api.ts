@@ -48,7 +48,16 @@ async function request<T>(path: string, options: RequestOptions = {}): Promise<T
 
   if (!response.ok) {
     const errorBody = await response.json().catch(() => null);
-    throw new Error(errorBody?.message || "No se pudo completar la solicitud");
+    const issueMessage =
+      Array.isArray(errorBody?.issues) && errorBody.issues.length > 0
+        ? errorBody.issues
+            .map((issue: { path?: string; message?: string }) =>
+              [issue.path, issue.message].filter(Boolean).join(": ")
+            )
+            .join(". ")
+        : null;
+
+    throw new Error(issueMessage || errorBody?.message || "No se pudo completar la solicitud");
   }
 
   return response.json();

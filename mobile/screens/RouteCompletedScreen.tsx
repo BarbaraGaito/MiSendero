@@ -1,6 +1,17 @@
 ﻿import { router, useLocalSearchParams } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import {
+  KeyboardAvoidingView,
+  Platform,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import {
   AppScreen,
   Card,
@@ -200,6 +211,7 @@ const getCompletionStatus = (
     : "ended_early";
 
 export default function RouteCompletedScreen() {
+  const insets = useSafeAreaInsets();
   const {
     id,
     startedAt,
@@ -290,6 +302,18 @@ export default function RouteCompletedScreen() {
 
   return (
     <AppScreen activeTab="actividad">
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : undefined}
+        style={styles.keyboardAvoiding}
+      >
+        <ScrollView
+          contentContainerStyle={[
+            styles.scrollContent,
+            { paddingBottom: Math.max(32, insets.bottom + 92) },
+          ]}
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false}
+        >
       <View style={styles.successIcon}>
         <Text style={styles.successCheck}>{completionCopy.icon}</Text>
       </View>
@@ -336,6 +360,8 @@ export default function RouteCompletedScreen() {
         tone={completionCopy.finalActionTone}
         onPress={() => router.push(completionCopy.finalActionRoute as any)}
       />
+        </ScrollView>
+      </KeyboardAvoidingView>
     </AppScreen>
   );
 }
@@ -485,14 +511,11 @@ function ReviewCard({
             onPress={() => setRating(value)}
             style={styles.starButton}
           >
-            <Text
-              style={[
-                styles.starText,
-                value <= rating ? styles.starTextActive : null,
-              ]}
-            >
-              â˜…
-            </Text>
+            <Ionicons
+              name={value <= rating ? "star" : "star-outline"}
+              size={32}
+              color={value <= rating ? colors.warning : colors.border}
+            />
           </Pressable>
         ))}
       </View>
@@ -601,6 +624,12 @@ function getPerformanceText(
 }
 
 const styles = StyleSheet.create({
+  keyboardAvoiding: {
+    flex: 1,
+  },
+  scrollContent: {
+    flexGrow: 1,
+  },
   successIcon: {
     alignItems: "center",
     alignSelf: "center",
@@ -674,13 +703,5 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     gap: 2,
     marginVertical: 12,
-  },
-  starText: {
-    color: colors.border,
-    fontSize: 31,
-    lineHeight: 35,
-  },
-  starTextActive: {
-    color: colors.warning,
   },
 });

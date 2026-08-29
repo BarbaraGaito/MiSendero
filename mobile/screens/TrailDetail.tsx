@@ -354,9 +354,13 @@ function OfflineMapCard({
           />
         </View>
         <View style={styles.offlineText}>
-          <Text style={styles.cardTitle}>Mapa sin conexion</Text>
+          <Text style={styles.cardTitle}>
+            {isDownloaded ? "Mapa sin conexion descargado" : "Mapa sin conexion"}
+          </Text>
           <Text style={styles.body}>
-            Guarda esta ruta y sus reportes para verla aunque no tengas internet.
+            {isDownloaded
+              ? "Esta ruta y sus reportes ya estan disponibles aunque no tengas internet."
+              : "Guarda esta ruta y sus reportes para verla aunque no tengas internet."}
           </Text>
         </View>
       </View>
@@ -390,15 +394,16 @@ function TrailDetailActions({
           })
         }
       />
-      <PrimaryButton
-        label={isDownloaded ? "Mapa descargado" : "Descargar mapa"}
-        icon={isDownloaded ? "checkmark-circle-outline" : "download-outline"}
-        disabled={isDownloaded}
-        isLoading={isDownloading}
-        loadingLabel="Descargando mapa"
-        tone="secondary"
-        onPress={downloadMap}
-      />
+      {!isDownloaded ? (
+        <PrimaryButton
+          label="Descargar mapa"
+          icon="download-outline"
+          isLoading={isDownloading}
+          loadingLabel="Descargando mapa"
+          tone="secondary"
+          onPress={downloadMap}
+        />
+      ) : null}
     </View>
   );
 }

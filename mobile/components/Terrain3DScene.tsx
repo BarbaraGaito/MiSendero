@@ -573,58 +573,103 @@ const buildTerrainSkirt = (model: TerrainModel) => {
   return skirt;
 };
 
-const makeTube = (
-  points: THREE.Vector3[],
-  radius: number,
-  color: string,
-  opacity = 1
-) => {
-  const curve = new THREE.CatmullRomCurve3(points);
-  const geometry = new THREE.TubeGeometry(
-    curve,
-    Math.max(24, points.length * 10),
-    radius,
-    8,
-    false
-  );
-  const material = new THREE.MeshStandardMaterial({
-    color,
-    emissive: color,
-    emissiveIntensity: radius < 0.06 ? 0.04 : 0.01,
-    opacity,
-    transparent: opacity < 1,
-    roughness: 0.62,
-  });
-  const mesh = new THREE.Mesh(geometry, material);
-  mesh.castShadow = true;
-
-  return mesh;
-};
-
 const sampleRouteOnTerrain = (model: TerrainModel) => {
   if (model.route.length < 2) return model.route;
 
-  const curve = new THREE.CatmullRomCurve3(model.route, false, "centripetal");
-  const sampleCount = Math.max(96, model.route.length * 18);
+  const sampledRoute: THREE.Vector3[] = [];
+  const maxSegmentLength = 0.055;
 
-  return Array.from({ length: sampleCount + 1 }, (_, index) => {
-    const point = curve.getPoint(index / sampleCount);
-    point.y = getHeightAt(point.x, point.z, model.difficultyFactor, model.seed);
-    return point;
+  for (let index = 1; index < model.route.length; index += 1) {
+    const start = model.route[index - 1];
+    const end = model.route[index];
+    const segmentLength = Math.hypot(end.x - start.x, end.z - start.z);
+    const steps = Math.max(1, Math.ceil(segmentLength / maxSegmentLength));
+
+    for (let step = 0; step < steps; step += 1) {
+      const progress = step / steps;
+      const x = start.x + (end.x - start.x) * progress;
+      const z = start.z + (end.z - start.z) * progress;
+      sampledRoute.push(
+        new THREE.Vector3(
+          x,
+          getHeightAt(x, z, model.difficultyFactor, model.seed),
+          z
+        )
+      );
+    }
+  }
+
+  const lastPoint = model.route[model.route.length - 1];
+  sampledRoute.push(
+    new THREE.Vector3(
+      lastPoint.x,
+      getHeightAt(lastPoint.x, lastPoint.z, model.difficultyFactor, model.seed),
+      lastPoint.z
+    )
+  );
+
+  return sampledRoute;
+};
+
+const getSmoothedCrossSlopes = (
+  centerLine: THREE.Vector3[],
+  model: TerrainModel
+) => {
+  const sampleDistance = 0.045;
+  const rawSlopes = centerLine.map((point, index) => {
+    const previous = centerLine[Math.max(0, index - 1)];
+    const next = centerLine[Math.min(centerLine.length - 1, index + 1)];
+    const dx = next.x - previous.x;
+    const dz = next.z - previous.z;
+    const length = Math.max(0.001, Math.hypot(dx, dz));
+    const normalX = -dz / length;
+    const normalZ = dx / length;
+    const leftHeight = getHeightAt(
+      point.x - normalX * sampleDistance,
+      point.z - normalZ * sampleDistance,
+      model.difficultyFactor,
+      model.seed
+    );
+    const rightHeight = getHeightAt(
+      point.x + normalX * sampleDistance,
+      point.z + normalZ * sampleDistance,
+      model.difficultyFactor,
+      model.seed
+    );
+
+    return clamp(
+      (rightHeight - leftHeight) / (sampleDistance * 2),
+      -1.25,
+      1.25
+    );
+  });
+
+  return rawSlopes.map((_, index) => {
+    const start = Math.max(0, index - 2);
+    const end = Math.min(rawSlopes.length - 1, index + 2);
+    let total = 0;
+
+    for (let sampleIndex = start; sampleIndex <= end; sampleIndex += 1) {
+      total += rawSlopes[sampleIndex];
+    }
+
+    return total / (end - start + 1);
   });
 };
 
-const makeConformingTrail = (
+const makeTerrainTrailRibbon = (
   centerLine: THREE.Vector3[],
   model: TerrainModel,
-  width: number,
+  halfWidth: number,
   color: string,
-  lift: number
+  lift: number,
+  highlighted: boolean
 ) => {
   const positions: number[] = [];
-  const colors: number[] = [];
+  const vertexColors: number[] = [];
   const indices: number[] = [];
   const baseColor = new THREE.Color(color);
+  const crossSlopes = getSmoothedCrossSlopes(centerLine, model);
 
   centerLine.forEach((point, index) => {
     const previous = centerLine[Math.max(0, index - 1)];
@@ -634,17 +679,19 @@ const makeConformingTrail = (
     const length = Math.max(0.001, Math.hypot(dx, dz));
     const normalX = -dz / length;
     const normalZ = dx / length;
-    const irregularity = (hash01(index * 0.71, model.seed, 81) - 0.5) * width * 0.18;
+    const shade = highlighted
+      ? 1
+      : 0.88 + hash01(index * 0.67, model.seed, 81) * 0.2;
+    const shadedColor = baseColor.clone().multiplyScalar(shade);
 
     [-1, 1].forEach((side) => {
-      const sideWidth = width + irregularity * side;
-      const x = point.x + normalX * sideWidth * side;
-      const z = point.z + normalZ * sideWidth * side;
-      const y = getHeightAt(x, z, model.difficultyFactor, model.seed) + lift;
-      const shade = 0.86 + hash01(index, side, model.seed + 62) * 0.18;
-      const vertexColor = baseColor.clone().multiplyScalar(shade);
-      positions.push(x, y, z);
-      colors.push(vertexColor.r, vertexColor.g, vertexColor.b);
+      const offset = halfWidth * side;
+      positions.push(
+        point.x + normalX * offset,
+        point.y + crossSlopes[index] * offset + lift,
+        point.z + normalZ * offset
+      );
+      vertexColors.push(shadedColor.r, shadedColor.g, shadedColor.b);
     });
 
     if (index < centerLine.length - 1) {
@@ -656,122 +703,26 @@ const makeConformingTrail = (
   const geometry = new THREE.BufferGeometry();
   geometry.setIndex(indices);
   geometry.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
-  geometry.setAttribute("color", new THREE.Float32BufferAttribute(colors, 3));
+  geometry.setAttribute("color", new THREE.Float32BufferAttribute(vertexColors, 3));
   geometry.computeVertexNormals();
-  const mesh = new THREE.Mesh(
-    geometry,
-    new THREE.MeshStandardMaterial({
-      vertexColors: true,
-      roughness: 1,
-      metalness: 0,
-      polygonOffset: true,
-      polygonOffsetFactor: -2,
-    })
-  );
-  mesh.castShadow = true;
-  mesh.receiveShadow = true;
+
+  const material = highlighted
+    ? new THREE.MeshBasicMaterial({
+        side: THREE.DoubleSide,
+        vertexColors: true,
+      })
+    : new THREE.MeshStandardMaterial({
+        metalness: 0,
+        roughness: 1,
+        side: THREE.DoubleSide,
+        vertexColors: true,
+      });
+  const mesh = new THREE.Mesh(geometry, material);
+  mesh.castShadow = false;
+  mesh.receiveShadow = !highlighted;
+  mesh.renderOrder = highlighted ? 3 : 4;
+
   return mesh;
-};
-
-const addTrailEdgeStones = (
-  group: THREE.Group,
-  centerLine: THREE.Vector3[],
-  model: TerrainModel
-) => {
-  const count = Math.min(90, Math.floor(centerLine.length * 0.7));
-  const geometry = new THREE.DodecahedronGeometry(0.025, 0);
-  const material = new THREE.MeshStandardMaterial({ color: "#776754", roughness: 1 });
-  const stones = new THREE.InstancedMesh(geometry, material, count);
-  const dummy = new THREE.Object3D();
-
-  for (let index = 0; index < count; index += 1) {
-    const routeIndex = Math.min(
-      centerLine.length - 2,
-      Math.floor(((index + 0.5) / count) * (centerLine.length - 1))
-    );
-    const point = centerLine[routeIndex];
-    const next = centerLine[routeIndex + 1];
-    const length = Math.max(0.001, Math.hypot(next.x - point.x, next.z - point.z));
-    const side = index % 2 === 0 ? -1 : 1;
-    const x = point.x + (-(next.z - point.z) / length) * 0.165 * side;
-    const z = point.z + ((next.x - point.x) / length) * 0.165 * side;
-    const scale = 0.55 + hash01(index, model.seed, 94) * 1.25;
-    dummy.position.set(x, getHeightAt(x, z, model.difficultyFactor, model.seed) + 0.018, z);
-    dummy.rotation.set(0, hash01(index, 3, model.seed) * Math.PI, 0);
-    dummy.scale.set(scale * 1.25, scale * 0.7, scale);
-    dummy.updateMatrix();
-    stones.setMatrixAt(index, dummy.matrix);
-  }
-  stones.instanceMatrix.needsUpdate = true;
-  stones.castShadow = true;
-  group.add(stones);
-};
-
-const addTrailDirectionArrows = (
-  group: THREE.Group,
-  centerLine: THREE.Vector3[],
-  model: TerrainModel
-) => {
-  if (centerLine.length < 12) return;
-
-  const positions: number[] = [];
-  const indices: number[] = [];
-  const arrowCount = clamp(Math.floor(centerLine.length / 13), 6, 12);
-
-  for (let arrowIndex = 0; arrowIndex < arrowCount; arrowIndex += 1) {
-    const fraction = 0.08 + (arrowIndex / Math.max(1, arrowCount - 1)) * 0.84;
-    const routeIndex = clamp(
-      Math.floor(fraction * (centerLine.length - 1)),
-      1,
-      centerLine.length - 2
-    );
-    const center = centerLine[routeIndex];
-    const previous = centerLine[routeIndex - 1];
-    const next = centerLine[routeIndex + 1];
-    const directionX = next.x - previous.x;
-    const directionZ = next.z - previous.z;
-    const length = Math.max(0.001, Math.hypot(directionX, directionZ));
-    const dx = directionX / length;
-    const dz = directionZ / length;
-    const nx = -dz;
-    const nz = dx;
-    const arrowLength = 0.19;
-    const arrowWidth = 0.085;
-    const vertices = [
-      [center.x + dx * arrowLength, center.z + dz * arrowLength],
-      [center.x - dx * arrowLength * 0.58 + nx * arrowWidth, center.z - dz * arrowLength * 0.58 + nz * arrowWidth],
-      [center.x - dx * arrowLength * 0.18, center.z - dz * arrowLength * 0.18],
-      [center.x - dx * arrowLength * 0.58 - nx * arrowWidth, center.z - dz * arrowLength * 0.58 - nz * arrowWidth],
-    ];
-    const offset = positions.length / 3;
-    vertices.forEach(([x, z]) => {
-      positions.push(
-        x,
-        getHeightAt(x, z, model.difficultyFactor, model.seed) + 0.052,
-        z
-      );
-    });
-    indices.push(offset, offset + 1, offset + 2, offset, offset + 2, offset + 3);
-  }
-
-  const geometry = new THREE.BufferGeometry();
-  geometry.setIndex(indices);
-  geometry.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
-  geometry.computeVertexNormals();
-  const arrows = new THREE.Mesh(
-    geometry,
-    new THREE.MeshStandardMaterial({
-      color: "#FFF3D3",
-      emissive: "#F0643B",
-      emissiveIntensity: 0.2,
-      roughness: 0.72,
-      side: THREE.DoubleSide,
-      polygonOffset: true,
-      polygonOffsetFactor: -4,
-    })
-  );
-  arrows.castShadow = true;
-  group.add(arrows);
 };
 
 const makeEndpointMarker = (
@@ -821,10 +772,7 @@ const makeEndpointMarker = (
     post.position.y = 0.25;
     const head = new THREE.Mesh(new THREE.SphereGeometry(0.14, 20, 14), green);
     head.position.y = 0.55;
-    const arrow = new THREE.Mesh(new THREE.ConeGeometry(0.075, 0.13, 3), white);
-    arrow.position.set(0, 0.55, 0.125);
-    arrow.rotation.z = -Math.PI / 2;
-    group.add(post, head, arrow);
+    group.add(post, head);
   }
 
   group.position.copy(position);
@@ -1519,27 +1467,27 @@ export function Terrain3DScene({
     const terrainRoute = sampleRouteOnTerrain(model);
     handles.model = model;
     handles.terrainRoute = terrainRoute;
-    const liftedRoute = terrainRoute.map((point) => {
+    const markerRoute = terrainRoute.map((point) => {
       const next = point.clone();
       next.y += 0.025;
       return next;
     });
 
-    if (liftedRoute.length > 1) {
-      handles.routeGroup.add(makeConformingTrail(terrainRoute, model, 0.152, "#392C24", 0.012));
-      handles.routeGroup.add(makeConformingTrail(terrainRoute, model, 0.126, "#F0643B", 0.021));
-      handles.routeGroup.add(makeConformingTrail(terrainRoute, model, 0.096, "#B98555", 0.029));
-      handles.routeGroup.add(makeConformingTrail(terrainRoute, model, 0.02, "#F7DEAF", 0.037));
-      addTrailEdgeStones(handles.routeGroup, terrainRoute, model);
-      addTrailDirectionArrows(handles.routeGroup, terrainRoute, model);
+    if (terrainRoute.length > 1) {
+      handles.routeGroup.add(
+        makeTerrainTrailRibbon(terrainRoute, model, 0.135, "#F0643B", 0.052, true)
+      );
+      handles.routeGroup.add(
+        makeTerrainTrailRibbon(terrainRoute, model, 0.092, "#D4A56F", 0.061, false)
+      );
     }
 
-    if (liftedRoute[0] && !current.navigationMode) {
-      handles.routeGroup.add(makeEndpointMarker(liftedRoute[0], "start"));
+    if (markerRoute[0] && !current.navigationMode) {
+      handles.routeGroup.add(makeEndpointMarker(markerRoute[0], "start"));
     }
 
-    if (liftedRoute.length > 1) {
-      handles.routeGroup.add(makeEndpointMarker(liftedRoute[liftedRoute.length - 1], "finish"));
+    if (markerRoute.length > 1) {
+      handles.routeGroup.add(makeEndpointMarker(markerRoute[markerRoute.length - 1], "finish"));
     }
 
     updateTrackedPosition(

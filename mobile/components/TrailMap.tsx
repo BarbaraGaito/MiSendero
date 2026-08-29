@@ -25,6 +25,7 @@ import {
   getTileRemoteUrl,
   resolveCachedTileUri,
 } from "../../services/mapTileCache";
+import { getPinchZoomDelta } from "../../services/mapGestures";
 import { useDeviceLocation } from "../hooks/useDeviceLocation";
 import { colors } from "./MiSenderoUI";
 import {
@@ -62,11 +63,6 @@ type TerrainPath = {
   opacity: number;
   width: number;
   dash?: string;
-};
-
-type RouteArrow = ScreenPoint & {
-  key: string;
-  angle: string;
 };
 
 type TerrainLabel = ScreenPoint & {
@@ -703,7 +699,6 @@ const getMapDecorations = ({
 
   return {
     ...buildTerrainPaths(points, layer, layout),
-    arrows: getRouteArrows(points),
     labels: getTerrainLabels(routeLabel, peakLabel, elevationLabel, trailName, terrainElevationGain),
     routePath,
   };
@@ -788,21 +783,6 @@ const getRidgeShadowPath = (
   opacity: layer === "satellite" ? 0.18 : 0.1,
   width: 2.2,
 });
-
-const getRouteArrows = (points: ScreenPoint[]) =>
-  [0.24, 0.5, 0.76]
-    .map((fraction, index) => {
-      const point = getPointAtRouteFraction(points, fraction);
-      return point
-        ? {
-            key: `direction-${index}`,
-            x: point.x,
-            y: point.y,
-            angle: point.angle,
-          }
-        : null;
-    })
-    .filter((point): point is RouteArrow => Boolean(point));
 
 const getTerrainLabels = (
   routeLabel: (ScreenPoint & { angle: string }) | null,
@@ -995,6 +975,17 @@ export function TrailMap({
         onPanResponderMove: (event, gesture) => {
           const distance = getTouchDistance(event.nativeEvent.touches);
 
+          if (distance && !pinchStartDistanceRef.current) {
+            isPinchingRef.current = true;
+            pinchStartDistanceRef.current = distance;
+            pinchStartZoomRef.current = zoomRef.current;
+            pinchStartTerrainScaleRef.current = terrainScaleRef.current;
+            lastPinchRatioRef.current = 1;
+            setPanOffset({ x: 0, y: 0 });
+            setPinchPreviewScale(1);
+            return;
+          }
+
           if (distance && pinchStartDistanceRef.current) {
             const ratio = distance / pinchStartDistanceRef.current;
             isPinchingRef.current = true;
@@ -1022,7 +1013,8 @@ export function TrailMap({
           onInteractionChangeRef.current?.(false);
           if (isPinchingRef.current) {
             if (!isPerspectiveRef.current) {
-              const zoomDelta = Math.round(Math.log(lastPinchRatioRef.current) / Math.log(1.38));
+              const ratio = lastPinchRatioRef.current;
+              const zoomDelta = getPinchZoomDelta(ratio);
               const nextZoom = clamp(
                 pinchStartZoomRef.current + zoomDelta,
                 MIN_ZOOM,
@@ -1335,9 +1327,21 @@ export function TrailMap({
           />
           <View style={styles.terrainInfo}>
             <Text style={styles.terrainInfoTitle}>Vista 3D del terreno</Text>
-            <Text style={styles.terrainInfoText}>
-              {terrainElevationGain} m desnivel aprox. - {trail?.difficulty || "Dificultad a confirmar"}
-            </Text>
+            {showDetailsCard ? (
+              <>
+                <Text numberOfLines={1} style={styles.terrainTrailName}>
+                  {trail?.name || "Mapa del recorrido"}
+                </Text>
+                <Text style={styles.terrainInfoText}>
+                  {trail?.distance_km ? `${trail.distance_km} km` : "Distancia a confirmar"} -{" "}
+                  {trail?.difficulty || "Dificultad a confirmar"} - {terrainElevationGain} m desnivel aprox.
+                </Text>
+              </>
+            ) : (
+              <Text style={styles.terrainInfoText}>
+                {terrainElevationGain} m desnivel aprox. - {trail?.difficulty || "Dificultad a confirmar"}
+              </Text>
+            )}
             <Text style={styles.terrainGestureText}>
               Arrastra para girar 360° · Pellizca para acercar
             </Text>
@@ -1451,28 +1455,18 @@ export function TrailMap({
               <Path
                 d={mapDecorations.routePath}
                 fill="none"
-                stroke="#2D201B"
+                stroke="#F0643B"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                strokeOpacity={0.34}
-                strokeWidth={13}
+                strokeWidth={12}
               />
               <Path
                 d={mapDecorations.routePath}
                 fill="none"
-                stroke="#FFFFFF"
+                stroke="#D4A56F"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                strokeOpacity={0.92}
-                strokeWidth={8}
-              />
-              <Path
-                d={mapDecorations.routePath}
-                fill="none"
-                stroke="#E85B35"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={5.4}
+                strokeWidth={7}
               />
             </Svg>
           ) : null}
@@ -1501,23 +1495,6 @@ export function TrailMap({
               >
                 {label.text}
               </Text>
-            </View>
-          ))}
-
-          {mapDecorations.arrows.map((arrow) => (
-            <View
-              key={arrow.key}
-              pointerEvents="none"
-              style={[
-                styles.routeDirectionMarker,
-                {
-                  left: arrow.x - 10,
-                  top: arrow.y - 10,
-                  transform: [{ rotate: arrow.angle }],
-                },
-              ]}
-            >
-              <Ionicons name="chevron-forward" size={14} color={colors.white} />
             </View>
           ))}
 
@@ -1686,7 +1663,7 @@ export function TrailMap({
         </Pressable>
       </View>
 
-      {showDetailsCard ? (
+      {showDetailsCard && !isPerspective ? (
         <View style={styles.mapCard}>
           <Text style={styles.mapLabel}>{trail?.name || "Mapa del recorrido"}</Text>
           <Text style={styles.mapMeta}>
@@ -1816,6 +1793,12 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: "900",
   },
+  terrainTrailName: {
+    color: colors.ink,
+    fontSize: 16,
+    fontWeight: "900",
+    marginTop: 6,
+  },
   terrainInfoText: {
     color: colors.muted,
     fontSize: 12,
@@ -1855,12 +1838,12 @@ const styles = StyleSheet.create({
     paddingVertical: 7,
   },
   terrain3dRouteSwatch: {
-    backgroundColor: "#E85B35",
-    borderColor: colors.white,
+    backgroundColor: "#D4A56F",
+    borderColor: "#F0643B",
     borderRadius: 5,
-    borderWidth: 1,
-    height: 10,
-    width: 22,
+    borderWidth: 3,
+    height: 12,
+    width: 24,
   },
   terrain3dPillText: {
     color: colors.greenDark,
@@ -1983,21 +1966,6 @@ const styles = StyleSheet.create({
   terrainMapLabelTextDark: {
     color: colors.greenDark,
     textShadowRadius: 0,
-  },
-  routeDirectionMarker: {
-    alignItems: "center",
-    backgroundColor: "#E85B35",
-    borderColor: colors.white,
-    borderRadius: 10,
-    borderWidth: 1,
-    height: 20,
-    justifyContent: "center",
-    position: "absolute",
-    shadowColor: "#000",
-    shadowOpacity: 0.22,
-    shadowRadius: 5,
-    width: 20,
-    zIndex: 4,
   },
   marker: {
     alignItems: "center",

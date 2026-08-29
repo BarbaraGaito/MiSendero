@@ -39,13 +39,15 @@ const seedTrailData = [
     name: "Garganta del Diablo de Tilcara",
     location: "Tilcara, Jujuy",
     difficulty: "Media",
-    duration: "3 a 4 h",
-    distance_km: 8.7,
+    duration: "1 h 30 min a 2 h",
+    distance_km: 3.14,
     description:
       "Recorrido desde Tilcara hacia la quebrada y cascada de la Garganta del Diablo, con vistas de la Quebrada de Humahuaca.",
     image_url: commonsImage("Quebrada de Humahuaca 01.jpg"),
-    center_lat: -23.585385,
-    center_lng: -65.383736,
+    // Traza peatonal directa registrada en OSM, desde el inicio del camino
+    // hasta la cascada. No se calcula una ruta entre origen y destino.
+    center_lat: -23.590954,
+    center_lng: -65.38109,
     map_zoom: 14,
     route_coordinates: realTrailRoutes.tilcara,
   },

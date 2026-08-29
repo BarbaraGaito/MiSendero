@@ -2,6 +2,7 @@ node_modules
 backend/.backend-dev*.log
 backend/data/*.sqlite
 backend/data/*.sqlite3
+*.sql
 __pycache__/
 *.pyc
 

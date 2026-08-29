@@ -1,4 +1,5 @@
 const request = require("supertest");
+const jwt = require("jsonwebtoken");
 const runMigrations = require("../src/migrate");
 const seedDatabase = require("../src/seed");
 const app = require("../src/server");
@@ -24,7 +25,11 @@ beforeAll(async () => {
     password: "correcta123",
     accepted_terms_version: "2026-08-13",
   });
-  userToken = user.body.token;
+  userToken = jwt.sign(
+    { userId: user.body.user.id, role: "user" },
+    process.env.JWT_SECRET,
+    { expiresIn: "7d" }
+  );
 });
 
 describe("trails", () => {

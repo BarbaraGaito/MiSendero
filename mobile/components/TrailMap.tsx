@@ -25,7 +25,12 @@ import {
   getTileRemoteUrl,
   resolveCachedTileUri,
 } from "../../services/mapTileCache";
-import { getPinchZoomDelta } from "../../services/mapGestures";
+import {
+  MAX_TERRAIN_SCALE,
+  MIN_TERRAIN_SCALE,
+  clampTerrainScale,
+  getPinchZoomDelta,
+} from "../../services/mapGestures";
 import { useDeviceLocation } from "../hooks/useDeviceLocation";
 import { colors } from "./MiSenderoUI";
 import {
@@ -995,7 +1000,7 @@ export function TrailMap({
             if (isPerspectiveRef.current) {
               setTerrainScale(
                 Number(
-                  clamp(pinchStartTerrainScaleRef.current * ratio, 0.7, 1.9).toFixed(2)
+                  clampTerrainScale(pinchStartTerrainScaleRef.current * ratio).toFixed(2)
                 )
               );
               return;
@@ -1071,7 +1076,7 @@ export function TrailMap({
   const changeZoom = (delta: number) => {
     if (isPerspective) {
       setTerrainScale((currentScale) =>
-        Math.max(0.7, Math.min(1.9, Number((currentScale + delta * 0.16).toFixed(2))))
+        Number(clampTerrainScale(currentScale + delta * 0.16).toFixed(2))
       );
       return;
     }
@@ -1247,8 +1252,12 @@ export function TrailMap({
     const { width, height } = event.nativeEvent.layout;
     setLayout({ width, height });
   };
-  const isZoomInDisabled = isPerspective ? terrainScale >= 1.9 : zoom >= maxZoom;
-  const isZoomOutDisabled = isPerspective ? terrainScale <= 0.7 : zoom <= MIN_ZOOM;
+  const isZoomInDisabled = isPerspective
+    ? terrainScale >= MAX_TERRAIN_SCALE
+    : zoom >= maxZoom;
+  const isZoomOutDisabled = isPerspective
+    ? terrainScale <= MIN_TERRAIN_SCALE
+    : zoom <= MIN_ZOOM;
   const isInitialTileLoad = cachedTiles.length === 0;
   const loaderTop = isInitialTileLoad
     ? Math.max(128, layout.height / 2 - 24)

@@ -431,7 +431,7 @@ export default function Screen04RouteMap() {
           weather={weather}
           fitRoute
           immersive
-          initialPerspective
+          initialPerspective={false}
           navigationMode
           showDetailsCard={false}
           controlsTopOffset={mapControlsTop}

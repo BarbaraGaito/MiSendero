@@ -2,11 +2,16 @@ import { Ionicons } from "@expo/vector-icons";
 import * as Network from "expo-network";
 import { router, useLocalSearchParams } from "expo-router";
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Modal, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import { getTrailById, getTrailReports, getTrailWeather } from "../../services/api";
+import { initDB } from "../../database/database";
+import { getOrCreatePausedSession } from "../../database/sessionsRepository";
 import { getVerifiedOfflineMapByTrailId } from "../../services/offlineMaps";
-import { getWearableRuntimeStatus } from "../../services/wearableMetrics";
+import {
+  getWearableRuntimeStatus,
+  syncNativeWearableSampleWithStatus,
+} from "../../services/wearableMetrics";
 import { Trail, TrailReport, TrailWeather, WearableRuntimeStatus } from "../../types";
 import { TrailMap } from "../components/TrailMap";
 import { useDeviceLocation } from "../hooks/useDeviceLocation";
@@ -50,12 +55,13 @@ const loadRouteContext = async (trailId: number) => {
   const { hasWifi, hasInternet } = await getNetworkStatus();
 
   if (hasInternet) {
-    const [trail, reports] = await Promise.all([
+    const [trail, reports, offlineMap] = await Promise.all([
       getTrailById(trailId),
       getTrailReports(trailId).catch(() => []),
+      getVerifiedOfflineMapByTrailId(trailId).catch(() => null),
     ]);
 
-    return { trail, reports, hasWifi, hasInternet };
+    return { trail, reports, hasWifi, hasInternet, isDownloaded: Boolean(offlineMap) };
   }
 
   const offlineMap = await getVerifiedOfflineMapByTrailId(trailId);
@@ -69,6 +75,7 @@ const loadRouteContext = async (trailId: number) => {
     reports: offlineMap.reports,
     hasWifi: false,
     hasInternet: false,
+    isDownloaded: true,
   };
 };
 
@@ -81,6 +88,7 @@ const loadFallbackRouteContext = async (trailId: number) => {
         reports: offlineMap.reports,
         hasWifi: false,
         hasInternet: false,
+        isDownloaded: true,
         error: null,
       }
     : {
@@ -88,6 +96,7 @@ const loadFallbackRouteContext = async (trailId: number) => {
         reports: [],
         hasWifi: false,
         hasInternet: false,
+        isDownloaded: false,
         error: "No pudimos cargar el mapa de este sendero.",
       };
 };
@@ -134,13 +143,17 @@ export default function Screen04RouteMap() {
   const [isContextLoading, setIsContextLoading] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [isMapInteracting, setIsMapInteracting] = useState(false);
+  const [isDownloaded, setIsDownloaded] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [wearableRuntime, setWearableRuntime] =
     useState<WearableRuntimeStatus | null>(null);
+  const [showWearablePanel, setShowWearablePanel] = useState(false);
+  const [showCriticalWearableAlert, setShowCriticalWearableAlert] = useState(false);
   const [trackedDistanceMeters, setTrackedDistanceMeters] = useState(0);
   const [lastGpsRecordedAt, setLastGpsRecordedAt] = useState<number | null>(null);
   const lastTrackedLocationRef = useRef<DeviceLocation | null>(null);
   const trackedDistanceMetersRef = useRef(0);
+  const lastPausedSessionSaveRef = useRef(0);
 
   useEffect(() => {
     let isMounted = true;
@@ -158,6 +171,7 @@ export default function Screen04RouteMap() {
         setReports(context.reports);
         setIsWifiConnected(context.hasWifi);
         setHasInternetConnection(context.hasInternet);
+        setIsDownloaded(context.isDownloaded);
         setError(null);
 
         if (!context.hasWifi) {
@@ -178,6 +192,7 @@ export default function Screen04RouteMap() {
         setReports(fallbackContext.reports);
         setIsWifiConnected(fallbackContext.hasWifi);
         setHasInternetConnection(fallbackContext.hasInternet);
+        setIsDownloaded(fallbackContext.isDownloaded);
         setWeather(null);
         setError(fallbackContext.error);
       } finally {
@@ -198,6 +213,7 @@ export default function Screen04RouteMap() {
   useEffect(() => {
     if (!isActiveRoute) {
       setWearableRuntime(null);
+      setShowCriticalWearableAlert(false);
       return;
     }
 
@@ -208,21 +224,41 @@ export default function Screen04RouteMap() {
         0,
         Math.floor((Date.now() - startedAtMs) / 60000)
       );
-      const status = await getWearableRuntimeStatus(elapsedMinutes).catch(
+      const currentStatus = await getWearableRuntimeStatus(elapsedMinutes).catch(
         () => null
       );
 
-      if (isMounted) setWearableRuntime(status);
+      if (
+        currentStatus?.connection.linked &&
+        currentStatus.connection.provider !== "development_simulator"
+      ) {
+        await syncNativeWearableSampleWithStatus({
+          startAt: startedAtMs,
+          requireHeartRate: true,
+        }).catch(() => null);
+      }
+
+      const nextStatus = await getWearableRuntimeStatus(elapsedMinutes).catch(
+        () => currentStatus
+      );
+
+      if (isMounted) setWearableRuntime(nextStatus);
     };
 
     refreshWearableMetrics();
-    const interval = setInterval(refreshWearableMetrics, 12_000);
+    const interval = setInterval(refreshWearableMetrics, 5_000);
 
     return () => {
       isMounted = false;
       clearInterval(interval);
     };
   }, [isActiveRoute, startedAtMs]);
+
+  useEffect(() => {
+    if (wearableRuntime?.prediction?.level === "high") {
+      setShowCriticalWearableAlert(true);
+    }
+  }, [wearableRuntime?.prediction?.level]);
 
   const routePoints = useMemo(
     () => parseRouteCoordinates(trail?.route_coordinates),
@@ -249,7 +285,30 @@ export default function Screen04RouteMap() {
     trackedDistanceMetersRef.current = 0;
     setLastGpsRecordedAt(null);
     lastTrackedLocationRef.current = null;
+    lastPausedSessionSaveRef.current = 0;
   }, [isActiveRoute, startedAtMs, trailId]);
+
+  useEffect(() => {
+    if (!isActiveRoute || !trailId || !startedAtMs) return;
+
+    const now = Date.now();
+    const shouldSaveImmediately = lastPausedSessionSaveRef.current === 0;
+    const shouldRefresh = now - lastPausedSessionSaveRef.current > 15_000;
+
+    if (!shouldSaveImmediately && !shouldRefresh) return;
+
+    lastPausedSessionSaveRef.current = now;
+    initDB()
+      .then(() =>
+        getOrCreatePausedSession({
+          trailId,
+          startedAt: startedAtMs,
+          duration: Math.max(0, Math.floor((now - startedAtMs) / 1000)),
+          distance: trackedDistanceMetersRef.current,
+        })
+      )
+      .catch(() => null);
+  }, [isActiveRoute, startedAtMs, trailId, trackedDistanceMeters]);
 
   useEffect(() => {
     if (!isActiveRoute || !location) return;
@@ -439,7 +498,7 @@ export default function Screen04RouteMap() {
           </View>
         ) : null}
 
-        {wearableRuntime?.prediction && wearableRuntime.latestSample ? (
+        {wearableRuntime?.prediction && wearableRuntime.latestSample && !showWearablePanel ? (
           <View
             style={[
               styles.wearableBanner,
@@ -466,6 +525,32 @@ export default function Screen04RouteMap() {
               </Text>
             </View>
           </View>
+        ) : null}
+
+        <CriticalWearableModal
+          isVisible={
+            showCriticalWearableAlert &&
+            wearableRuntime?.prediction?.level === "high"
+          }
+          message={wearableRuntime?.prediction?.message}
+          onSendSos={() =>
+            {
+              setShowCriticalWearableAlert(false);
+              router.push({
+              pathname: "/confirmar-sos",
+              params: { id: String(trailId), startedAt: String(startedAtMs) },
+              });
+            }
+          }
+          title={wearableRuntime?.prediction?.title}
+        />
+
+        {showWearablePanel ? (
+          <WearableRealtimePanel
+            bottom={Math.max(190, insets.bottom + 184)}
+            runtime={wearableRuntime}
+            onClose={() => setShowWearablePanel(false)}
+          />
         ) : null}
 
         <View style={[styles.activeFooter, { paddingBottom: Math.max(16, insets.bottom + 10) }]}>
@@ -497,6 +582,45 @@ export default function Screen04RouteMap() {
               <Text style={styles.finishRouteHint}>Guardar actividad y dejar opinion</Text>
             </View>
             <Ionicons name="chevron-forward" size={20} color={colors.white} />
+          </Pressable>
+
+          <Pressable
+            onPress={() => router.push("/reloj-salud")}
+            style={[
+              styles.wearableActionButton,
+              getWearableActionToneStyle(wearableRuntime),
+            ]}
+          >
+            <View style={styles.wearableActionIcon}>
+              <Ionicons
+                name="watch-outline"
+                size={21}
+                color={getWearableActionIconColor(wearableRuntime)}
+              />
+            </View>
+            <View style={styles.wearableActionTextBox}>
+              <Text
+                style={[
+                  styles.wearableActionLabel,
+                  wearableRuntime?.prediction?.level === "high" && styles.wearableActionLabelDanger,
+                ]}
+              >
+                Reloj
+              </Text>
+              <Text
+                style={[
+                  styles.wearableActionHint,
+                  wearableRuntime?.prediction?.level === "high" && styles.wearableActionHintDanger,
+                ]}
+              >
+                {getWearableActionHint(wearableRuntime)}
+              </Text>
+            </View>
+            <Ionicons
+              name="chevron-forward"
+              size={18}
+              color={getWearableActionIconColor(wearableRuntime)}
+            />
           </Pressable>
 
           <View style={styles.quickActionsRow}>
@@ -739,20 +863,191 @@ export default function Screen04RouteMap() {
             }
           />
           <PrimaryButton
-            label="Descargar mapa"
-            icon="download-outline"
+            label="Reloj y salud"
+            icon="watch-outline"
             tone="secondary"
-            onPress={() =>
-              router.push({
-                pathname: "/offline-descarga",
-                params: { id: String(trailId) },
-              })
-            }
+            onPress={() => router.push("/reloj-salud")}
           />
+          {!isDownloaded ? (
+            <PrimaryButton
+              label="Descargar mapa"
+              icon="download-outline"
+              tone="secondary"
+              onPress={() =>
+                router.push({
+                  pathname: "/offline-descarga",
+                  params: { id: String(trailId) },
+                })
+              }
+            />
+          ) : null}
         </View>
       </ScrollView>
     </ScreenShell>
   );
+}
+
+function WearableRealtimePanel({
+  bottom,
+  onClose,
+  runtime,
+}: {
+  bottom: number;
+  onClose: () => void;
+  runtime: WearableRuntimeStatus | null;
+}) {
+  const latest = runtime?.latestSample ?? null;
+  const prediction = runtime?.prediction ?? null;
+
+  return (
+    <View style={[styles.wearablePanel, { bottom }]}>
+      <View style={styles.wearablePanelHeader}>
+        <View style={styles.wearablePanelTitleBox}>
+          <Ionicons name="pulse-outline" size={18} color={colors.green} />
+          <Text style={styles.wearablePanelTitle}>Metricas del reloj</Text>
+        </View>
+        <Pressable
+          accessibilityLabel="Cerrar metricas del reloj"
+          accessibilityRole="button"
+          onPress={onClose}
+          style={styles.wearableCloseButton}
+        >
+          <Ionicons name="close" size={18} color={colors.ink} />
+        </Pressable>
+      </View>
+
+      <Text style={styles.wearablePanelStatus}>
+        {getWearableRealtimeStatus(runtime)}
+      </Text>
+
+      {latest ? (
+        <View style={styles.wearableMetricGrid}>
+          <WearableMetric label="FC" value={`${latest.heartRateBpm ?? "--"} bpm`} />
+          <WearableMetric
+            label="Velocidad"
+            value={latest.speedKmh !== null ? `${latest.speedKmh} km/h` : "--"}
+          />
+          <WearableMetric
+            label="Oxigeno"
+            value={
+              latest.oxygenSaturation !== null ? `${latest.oxygenSaturation}%` : "--"
+            }
+          />
+          <WearableMetric label="Pasos" value={latest.steps ? String(latest.steps) : "--"} />
+        </View>
+      ) : null}
+
+      <View
+        style={[
+          styles.wearableWarningBox,
+          prediction?.level === "high" && styles.wearableWarningHigh,
+          prediction?.level === "caution" && styles.wearableWarningCaution,
+        ]}
+      >
+        <Ionicons
+          name={prediction?.level === "high" ? "alert-circle-outline" : "information-circle-outline"}
+          size={18}
+          color={prediction?.level === "high" ? colors.danger : colors.green}
+        />
+        <View style={styles.wearableWarningText}>
+          <Text style={styles.wearableWarningTitle}>
+            {prediction?.title ?? "Sin advertencias activas"}
+          </Text>
+          <Text style={styles.wearableWarningBody}>
+            {prediction?.message ??
+              "Cuando haya metricas autorizadas, la app va a mostrar alertas de esfuerzo durante la ruta."}
+          </Text>
+        </View>
+      </View>
+    </View>
+  );
+}
+
+function CriticalWearableModal({
+  isVisible,
+  message,
+  onSendSos,
+  title,
+}: {
+  isVisible: boolean;
+  message?: string;
+  onSendSos: () => void;
+  title?: string;
+}) {
+  return (
+    <Modal animationType="fade" transparent visible={isVisible}>
+      <View style={styles.criticalModalOverlay}>
+        <View style={styles.criticalModalCard}>
+          <View style={styles.criticalModalIcon}>
+            <Ionicons name="alert-circle-outline" size={34} color={colors.danger} />
+          </View>
+          <Text style={styles.criticalModalTitle}>
+            {title ?? "Situacion critica"}
+          </Text>
+          <Text style={styles.criticalModalBody}>
+            {message ??
+              "Las metricas del reloj muestran una senal critica. Detenete en un lugar seguro y evalua pedir ayuda."}
+          </Text>
+          <View style={styles.criticalModalActions}>
+            <Pressable onPress={onSendSos} style={styles.criticalModalPrimary}>
+              <Ionicons name="alert-circle-outline" size={18} color={colors.white} />
+              <Text style={styles.criticalModalPrimaryText}>
+                Enviar mensaje de ayuda
+              </Text>
+            </Pressable>
+          </View>
+        </View>
+      </View>
+    </Modal>
+  );
+}
+
+function WearableMetric({ label, value }: { label: string; value: string }) {
+  return (
+    <View style={styles.wearableMetricItem}>
+      <Text style={styles.wearableMetricLabel}>{label}</Text>
+      <Text style={styles.wearableMetricValue}>{value}</Text>
+    </View>
+  );
+}
+
+function getWearableRealtimeStatus(runtime: WearableRuntimeStatus | null) {
+  if (!runtime) return "Consultando conexion configurada...";
+  if (runtime.status === "requires_consent") {
+    return "Activa Usar datos sensibles en Privacidad e IA.";
+  }
+  if (runtime.status === "not_linked") {
+    return "No hay reloj o sensor vinculado para esta cuenta.";
+  }
+  if (runtime.status === "waiting_for_native_data") {
+    return "Conexion habilitada. Esperando una lectura reciente.";
+  }
+
+  return `${runtime.displayName} conectado. Actualizando durante la ruta.`;
+}
+
+function getWearableActionHint(runtime: WearableRuntimeStatus | null) {
+  if (!runtime) return "Consultando conexion";
+  if (runtime.status === "linked" && runtime.latestSample?.heartRateBpm) {
+    return `${runtime.latestSample.heartRateBpm} bpm - ${runtime.displayName}`;
+  }
+  if (runtime.status === "requires_consent") return "Requiere permiso";
+  if (runtime.status === "not_linked") return "No vinculado";
+  if (runtime.status === "waiting_for_native_data") return "Esperando metricas";
+  return runtime.displayName;
+}
+
+function getWearableActionToneStyle(runtime: WearableRuntimeStatus | null) {
+  if (runtime?.prediction?.level === "high") return styles.wearableActionButtonDanger;
+  if (runtime?.prediction?.level === "caution") return styles.wearableActionButtonCaution;
+  if (runtime?.prediction?.level === "normal") return styles.wearableActionButtonNormal;
+  return null;
+}
+
+function getWearableActionIconColor(runtime: WearableRuntimeStatus | null) {
+  if (runtime?.prediction?.level === "high") return colors.danger;
+  if (runtime?.prediction?.level === "caution") return "#D97706";
+  return colors.greenDark;
 }
 
 function formatReportDateTime(value: string) {
@@ -940,6 +1235,117 @@ const styles = StyleSheet.create({
     lineHeight: 15,
     marginTop: 2,
   },
+  wearablePanel: {
+    backgroundColor: "rgba(255,255,255,0.98)",
+    borderColor: colors.border,
+    borderRadius: 18,
+    borderWidth: 1,
+    left: 14,
+    padding: 12,
+    position: "absolute",
+    right: 14,
+    shadowColor: "#000",
+    shadowOpacity: 0.12,
+    shadowRadius: 16,
+    zIndex: 22,
+  },
+  wearablePanelHeader: {
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  wearablePanelTitleBox: {
+    alignItems: "center",
+    flex: 1,
+    flexDirection: "row",
+    gap: 7,
+    minWidth: 0,
+  },
+  wearablePanelTitle: {
+    color: colors.ink,
+    flex: 1,
+    fontSize: 15,
+    fontWeight: "900",
+  },
+  wearableCloseButton: {
+    alignItems: "center",
+    backgroundColor: colors.page,
+    borderRadius: 14,
+    height: 32,
+    justifyContent: "center",
+    width: 32,
+  },
+  wearablePanelStatus: {
+    color: colors.muted,
+    fontSize: 12,
+    fontWeight: "800",
+    lineHeight: 17,
+    marginTop: 7,
+  },
+  wearableMetricGrid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 8,
+    marginTop: 10,
+  },
+  wearableMetricItem: {
+    backgroundColor: colors.page,
+    borderColor: colors.line,
+    borderRadius: 12,
+    borderWidth: 1,
+    flexBasis: "47%",
+    flexGrow: 1,
+    minHeight: 54,
+    minWidth: 118,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+  },
+  wearableMetricLabel: {
+    color: colors.muted,
+    fontSize: 11,
+    fontWeight: "800",
+  },
+  wearableMetricValue: {
+    color: colors.ink,
+    fontSize: 15,
+    fontWeight: "900",
+    marginTop: 3,
+  },
+  wearableWarningBox: {
+    alignItems: "flex-start",
+    backgroundColor: colors.primarySoft,
+    borderColor: colors.border,
+    borderRadius: 14,
+    borderWidth: 1,
+    flexDirection: "row",
+    gap: 8,
+    marginTop: 10,
+    padding: 10,
+  },
+  wearableWarningCaution: {
+    backgroundColor: "rgba(255,244,216,0.97)",
+    borderColor: "rgba(217,119,6,0.24)",
+  },
+  wearableWarningHigh: {
+    backgroundColor: "rgba(255,244,242,0.97)",
+    borderColor: "rgba(216,76,63,0.24)",
+  },
+  wearableWarningText: {
+    flex: 1,
+    minWidth: 0,
+  },
+  wearableWarningTitle: {
+    color: colors.ink,
+    fontSize: 13,
+    fontWeight: "900",
+  },
+  wearableWarningBody: {
+    color: colors.muted,
+    fontSize: 11,
+    fontWeight: "700",
+    lineHeight: 16,
+    marginTop: 3,
+  },
   activeFooter: {
     backgroundColor: "rgba(246,250,247,0.96)",
     borderTopColor: colors.line,
@@ -984,6 +1390,121 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     marginTop: 2,
   },
+  wearableActionButton: {
+    alignItems: "center",
+    backgroundColor: colors.primarySoft,
+    borderColor: colors.border,
+    borderRadius: 18,
+    borderWidth: 1,
+    flexDirection: "row",
+    gap: 10,
+    marginTop: 10,
+    minHeight: 56,
+    paddingHorizontal: 12,
+    paddingVertical: 9,
+  },
+  wearableActionButtonActive: {
+    backgroundColor: colors.mint,
+    borderColor: colors.green,
+  },
+  wearableActionButtonNormal: {
+    backgroundColor: colors.mint,
+    borderColor: colors.green,
+  },
+  wearableActionButtonCaution: {
+    backgroundColor: "rgba(255,244,216,0.98)",
+    borderColor: "rgba(217,119,6,0.44)",
+  },
+  wearableActionButtonDanger: {
+    backgroundColor: "rgba(255,244,242,0.98)",
+    borderColor: "rgba(216,76,63,0.54)",
+  },
+  wearableActionIcon: {
+    alignItems: "center",
+    backgroundColor: colors.white,
+    borderRadius: 15,
+    height: 36,
+    justifyContent: "center",
+    width: 36,
+  },
+  wearableActionTextBox: {
+    flex: 1,
+    minWidth: 0,
+  },
+  wearableActionLabel: {
+    color: colors.ink,
+    fontSize: 14,
+    fontWeight: "900",
+  },
+  wearableActionHint: {
+    color: colors.greenDark,
+    fontSize: 11,
+    fontWeight: "800",
+    marginTop: 2,
+  },
+  wearableActionLabelDanger: {
+    color: colors.danger,
+  },
+  wearableActionHintDanger: {
+    color: colors.danger,
+  },
+  criticalModalOverlay: {
+    alignItems: "center",
+    backgroundColor: "rgba(16,24,20,0.52)",
+    flex: 1,
+    justifyContent: "center",
+    padding: 20,
+  },
+  criticalModalCard: {
+    alignItems: "center",
+    backgroundColor: colors.white,
+    borderRadius: 22,
+    maxWidth: 420,
+    padding: 18,
+    width: "100%",
+  },
+  criticalModalIcon: {
+    alignItems: "center",
+    backgroundColor: "rgba(255,244,242,1)",
+    borderRadius: 999,
+    height: 62,
+    justifyContent: "center",
+    width: 62,
+  },
+  criticalModalTitle: {
+    color: colors.danger,
+    fontSize: 20,
+    fontWeight: "900",
+    marginTop: 12,
+    textAlign: "center",
+  },
+  criticalModalBody: {
+    color: colors.ink,
+    fontSize: 14,
+    fontWeight: "700",
+    lineHeight: 20,
+    marginTop: 8,
+    textAlign: "center",
+  },
+  criticalModalActions: {
+    alignSelf: "stretch",
+    gap: 9,
+    marginTop: 16,
+  },
+  criticalModalPrimary: {
+    alignItems: "center",
+    backgroundColor: colors.danger,
+    borderRadius: 17,
+    flexDirection: "row",
+    gap: 7,
+    justifyContent: "center",
+    minHeight: 50,
+  },
+  criticalModalPrimaryText: {
+    color: colors.white,
+    fontSize: 15,
+    fontWeight: "900",
+  },
   quickActionsRow: {
     flexDirection: "row",
     gap: 8,
@@ -998,6 +1519,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     minHeight: 54,
     paddingHorizontal: 4,
+  },
+  activeActionSelected: {
+    backgroundColor: colors.mint,
+    borderColor: colors.green,
+    borderWidth: 1,
   },
   activeDangerAction: {
     backgroundColor: colors.danger,

@@ -41,8 +41,8 @@ if (process.env.NODE_ENV !== "test") {
 app.use(express.json());
 
 const authLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  limit: 10,
+  windowMs: Number(process.env.AUTH_RATE_LIMIT_WINDOW_MS || 15 * 60 * 1000),
+  limit: Number(process.env.AUTH_RATE_LIMIT_MAX || 10),
   standardHeaders: true,
   legacyHeaders: false,
   message: { message: "Demasiados intentos. Intenta nuevamente en unos minutos." },

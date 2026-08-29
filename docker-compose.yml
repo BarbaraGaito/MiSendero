@@ -26,9 +26,12 @@ services:
     environment:
       NODE_ENV: production
       PORT: 3001
+      DATABASE_URL: postgres://${POSTGRES_USER:-misendero}:${POSTGRES_PASSWORD:-misendero}@db:5432/${POSTGRES_DB:-misendero}
       CORS_ORIGIN: ${CORS_ORIGIN:-http://localhost:8081,http://localhost:19006,http://localhost:3001}
       REPORT_STALE_AFTER_DAYS: ${REPORT_STALE_AFTER_DAYS:-30}
       LOG_LEVEL: ${LOG_LEVEL:-info}
+      AUTH_RATE_LIMIT_MAX: ${AUTH_RATE_LIMIT_MAX:-100}
+      AUTH_RATE_LIMIT_WINDOW_MS: ${AUTH_RATE_LIMIT_WINDOW_MS:-900000}
     ports:
       - "3001:3001"
     depends_on:

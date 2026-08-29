@@ -550,15 +550,18 @@ const getWearablePredictionLevel = ({
 }): HealthPredictionLevel => {
   if (
     criticalOxygen ||
-    criticalHeartRate ||
-    riskLabel === "alto" ||
-    heartRateBpm >= 165 ||
-    fatigue === "alto"
+    criticalHeartRate
   ) {
     return "high";
   }
 
-  if (riskLabel === "medio" || heartRateBpm >= 145 || fatigue === "medio") {
+  if (
+    riskLabel === "alto" ||
+    riskLabel === "medio" ||
+    heartRateBpm >= 145 ||
+    fatigue === "alto" ||
+    fatigue === "medio"
+  ) {
     return "caution";
   }
 
@@ -577,9 +580,11 @@ const getWearablePredictionCopy = (
   if (level === "high") return getHighWearablePredictionCopy(sample);
   if (level === "caution") {
     return {
-      title: "Mantener atencion",
+      title: sample.heartRateBpm >= 160 ? "Fatiga alta" : "Mantener atencion",
       message:
-        "Las metricas indican esfuerzo moderado. Baja el ritmo si notas cansancio, mareos o falta de aire.",
+        sample.heartRateBpm >= 160
+          ? "Las metricas muestran esfuerzo alto. Hace una pausa, hidratate y continua solo si te sentis bien."
+          : "Las metricas indican esfuerzo moderado. Baja el ritmo si notas cansancio, mareos o falta de aire.",
     };
   }
 

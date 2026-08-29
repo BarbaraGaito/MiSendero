@@ -1,5 +1,6 @@
 import { db } from "./database";
 import { FatigueLevel, SessionRow } from "../types";
+import { getAuthSession } from "../services/authSession";
 
 type SessionCompletionStatus = SessionRow["completion_status"];
 type EndedSessionCompletionStatus = Exclude<SessionCompletionStatus, "paused">;
@@ -28,11 +29,17 @@ export interface CompletedSessionResult {
   didFinalizeNow: boolean;
 }
 
+const getCurrentUserId = async () => {
+  const session = await getAuthSession().catch(() => null);
+  return session?.user.id ?? null;
+};
+
 export const createSession = async (startedAt: number, trailId?: number | null) => {
+  const userId = await getCurrentUserId();
   const result = await db.runAsync(
-    `INSERT INTO sessions (started_at, duration, distance, avg_fatigue, trail_id, completion_status)
-     VALUES (?, 0, 0, ?, ?, ?)`,
-    [startedAt, "bajo", trailId ?? null, "paused"]
+    `INSERT INTO sessions (user_id, started_at, duration, distance, avg_fatigue, trail_id, completion_status)
+     VALUES (?, ?, 0, 0, ?, ?, ?)`,
+    [userId, startedAt, "bajo", trailId ?? null, "paused"]
   );
 
   return result.lastInsertRowId;
@@ -58,6 +65,7 @@ export const finishSession = async (
   avgFatigue: FatigueLevel,
   trailId?: number | null
 ) => {
+  const userId = await getCurrentUserId();
   await db.runAsync(
     `UPDATE sessions
      SET ended_at = ?,
@@ -66,8 +74,8 @@ export const finishSession = async (
          avg_fatigue = ?,
          completion_status = ?,
          trail_id = COALESCE(?, trail_id)
-     WHERE id = ?`,
-    [endedAt, duration, distance, avgFatigue, "completed", trailId ?? null, sessionId]
+     WHERE id = ? AND user_id IS ?`,
+    [endedAt, duration, distance, avgFatigue, "completed", trailId ?? null, sessionId, userId]
   );
 };
 
@@ -94,11 +102,12 @@ export const getOrCreateCompletedSession = async ({
   endedLatitude?: number | null;
   endedLongitude?: number | null;
 }): Promise<CompletedSessionResult> => {
+  const userId = await getCurrentUserId();
   const existing = await db.getFirstAsync<SessionRow>(
     `SELECT * FROM sessions
-     WHERE trail_id = ? AND started_at = ?
+     WHERE user_id IS ? AND trail_id = ? AND started_at = ?
      LIMIT 1`,
-    [trailId, startedAt]
+    [userId, trailId, startedAt]
   );
 
   if (existing) {
@@ -121,7 +130,7 @@ export const getOrCreateCompletedSession = async ({
            route_total_meters = ?,
            ended_latitude = ?,
            ended_longitude = ?
-       WHERE id = ?`,
+       WHERE id = ? AND user_id IS ?`,
       [
         endedAt,
         duration,
@@ -134,12 +143,13 @@ export const getOrCreateCompletedSession = async ({
         endedLatitude,
         endedLongitude,
         existing.id,
+        userId,
       ]
     );
 
     const updated = await db.getFirstAsync<SessionRow>(
-      `SELECT * FROM sessions WHERE id = ?`,
-      [existing.id]
+      `SELECT * FROM sessions WHERE id = ? AND user_id IS ?`,
+      [existing.id, userId]
     );
 
     if (!updated) {
@@ -151,6 +161,7 @@ export const getOrCreateCompletedSession = async ({
 
   const result = await db.runAsync(
     `INSERT INTO sessions (
+       user_id,
        started_at,
        ended_at,
        duration,
@@ -163,8 +174,9 @@ export const getOrCreateCompletedSession = async ({
        ended_latitude,
        ended_longitude
      )
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     [
+      userId,
       startedAt,
       endedAt,
       duration,
@@ -180,8 +192,8 @@ export const getOrCreateCompletedSession = async ({
   );
 
   const row = await db.getFirstAsync<SessionRow>(
-    `SELECT * FROM sessions WHERE id = ?`,
-    [result.lastInsertRowId]
+    `SELECT * FROM sessions WHERE id = ? AND user_id IS ?`,
+    [result.lastInsertRowId, userId]
   );
 
   if (!row) {
@@ -202,11 +214,12 @@ export const getOrCreatePausedSession = async ({
   duration: number;
   distance: number;
 }): Promise<SessionRow> => {
+  const userId = await getCurrentUserId();
   const existing = await db.getFirstAsync<SessionRow>(
     `SELECT * FROM sessions
-     WHERE trail_id = ? AND started_at = ?
+     WHERE user_id IS ? AND trail_id = ? AND started_at = ?
      LIMIT 1`,
-    [trailId, startedAt]
+    [userId, trailId, startedAt]
   );
 
   if (existing) {
@@ -217,8 +230,8 @@ export const getOrCreatePausedSession = async ({
            distance = ?,
            completion_status = ?,
            trail_id = ?
-       WHERE id = ?`,
-      [duration, distance, "paused", trailId, existing.id]
+       WHERE id = ? AND user_id IS ?`,
+      [duration, distance, "paused", trailId, existing.id, userId]
     );
 
     return {
@@ -233,6 +246,7 @@ export const getOrCreatePausedSession = async ({
 
   const result = await db.runAsync(
     `INSERT INTO sessions (
+       user_id,
        started_at,
        ended_at,
        duration,
@@ -241,13 +255,13 @@ export const getOrCreatePausedSession = async ({
        trail_id,
        completion_status
      )
-     VALUES (?, NULL, ?, ?, ?, ?, ?)`,
-    [startedAt, duration, distance, "bajo", trailId, "paused"]
+     VALUES (?, ?, NULL, ?, ?, ?, ?, ?)`,
+    [userId, startedAt, duration, distance, "bajo", trailId, "paused"]
   );
 
   const row = await db.getFirstAsync<SessionRow>(
-    `SELECT * FROM sessions WHERE id = ?`,
-    [result.lastInsertRowId]
+    `SELECT * FROM sessions WHERE id = ? AND user_id IS ?`,
+    [result.lastInsertRowId, userId]
   );
 
   if (!row) {
@@ -261,11 +275,12 @@ export const attachTrailToSession = async (
   sessionId: number,
   trailId: number
 ) => {
+  const userId = await getCurrentUserId();
   await db.runAsync(
     `UPDATE sessions
      SET trail_id = COALESCE(trail_id, ?)
-     WHERE id = ?`,
-    [trailId, sessionId]
+     WHERE id = ? AND user_id IS ?`,
+    [trailId, sessionId, userId]
   );
 };
 
@@ -275,20 +290,22 @@ export const saveSessionReview = async (
   rating: number,
   reviewText: string
 ) => {
+  const userId = await getCurrentUserId();
   await db.runAsync(
     `UPDATE sessions
      SET trail_id = ?,
          rating = ?,
          review_text = ?,
          reviewed_at = ?
-     WHERE id = ?`,
-    [trailId, rating, reviewText.trim() || null, Date.now(), sessionId]
+     WHERE id = ? AND user_id IS ?`,
+    [trailId, rating, reviewText.trim() || null, Date.now(), sessionId, userId]
   );
 };
 
 export const getTrailRatingSummary = async (
   trailId: number
 ): Promise<TrailRatingSummary | null> => {
+  const userId = await getCurrentUserId();
   const row = await db.getFirstAsync<{
     average_rating: number | null;
     review_count: number;
@@ -296,8 +313,8 @@ export const getTrailRatingSummary = async (
     `SELECT AVG(rating) AS average_rating,
             COUNT(rating) AS review_count
      FROM sessions
-     WHERE trail_id = ? AND rating IS NOT NULL`,
-    [trailId]
+     WHERE user_id IS ? AND trail_id = ? AND rating IS NOT NULL`,
+    [userId, trailId]
   );
 
   if (!row || row.review_count === 0 || row.average_rating === null) return null;
@@ -309,6 +326,7 @@ export const getTrailRatingSummary = async (
 };
 
 export const getTrailReviews = async (trailId: number): Promise<TrailReview[]> => {
+  const userId = await getCurrentUserId();
   const rows = await db.getAllAsync<{
     id: number;
     rating: number;
@@ -322,9 +340,9 @@ export const getTrailReviews = async (trailId: number): Promise<TrailReview[]> =
             reviewed_at,
             started_at
      FROM sessions
-     WHERE trail_id = ? AND rating IS NOT NULL
+     WHERE user_id IS ? AND trail_id = ? AND rating IS NOT NULL
      ORDER BY reviewed_at DESC, ended_at DESC`,
-    [trailId]
+    [userId, trailId]
   );
 
   return rows.map((row) => ({
@@ -337,19 +355,23 @@ export const getTrailReviews = async (trailId: number): Promise<TrailReview[]> =
 };
 
 export const getSessions = async (): Promise<SessionRow[]> => {
+  const userId = await getCurrentUserId();
   return await db.getAllAsync<SessionRow>(
     `SELECT * FROM sessions
-     WHERE ended_at IS NOT NULL
-     ORDER BY started_at DESC`
+     WHERE user_id IS ? AND ended_at IS NOT NULL
+     ORDER BY started_at DESC`,
+    [userId]
   );
 };
 
 export const getLatestCompletedSession = async (): Promise<SessionRow | null> => {
+  const userId = await getCurrentUserId();
   const row = await db.getFirstAsync<SessionRow>(
     `SELECT * FROM sessions
-     WHERE ended_at IS NOT NULL
+     WHERE user_id IS ? AND ended_at IS NOT NULL
      ORDER BY ended_at DESC
-     LIMIT 1`
+     LIMIT 1`,
+    [userId]
   );
 
   return row ?? null;
@@ -358,15 +380,18 @@ export const getLatestCompletedSession = async (): Promise<SessionRow | null> =>
 export const getRecentSessions = async (
   limit = 10
 ): Promise<SessionRow[]> => {
+  const userId = await getCurrentUserId();
   return await db.getAllAsync<SessionRow>(
     `SELECT * FROM sessions
+     WHERE user_id IS ?
      ORDER BY started_at DESC
      LIMIT ?`,
-    [limit]
+    [userId, limit]
   );
 };
 
 export const getSessionsSummary = async (): Promise<SessionsSummary> => {
+  const userId = await getCurrentUserId();
   const monthStart = new Date();
   monthStart.setDate(1);
   monthStart.setHours(0, 0, 0, 0);
@@ -380,8 +405,9 @@ export const getSessionsSummary = async (): Promise<SessionsSummary> => {
        COALESCE(SUM(CASE WHEN ended_at IS NOT NULL THEN distance ELSE 0 END), 0) AS total_distance,
        SUM(CASE WHEN ended_at IS NOT NULL AND completion_status = 'completed' THEN 1 ELSE 0 END) AS completed_count,
        SUM(CASE WHEN ended_at IS NOT NULL AND started_at >= ? THEN 1 ELSE 0 END) AS current_month_count
-     FROM sessions`,
-    [monthStart.getTime()]
+     FROM sessions
+     WHERE user_id IS ?`,
+    [monthStart.getTime(), userId]
   );
 
   return {

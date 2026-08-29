@@ -74,6 +74,7 @@ export interface Session {
 
 export interface SessionRow {
   id: number;
+  user_id: number | null;
   started_at: number;
   ended_at: number | null;
   duration: number;

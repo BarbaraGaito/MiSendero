@@ -30,6 +30,7 @@ const runInitDB = async () => {
   await db.execAsync(`
     CREATE TABLE IF NOT EXISTS sessions (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
+      user_id INTEGER,
       started_at INTEGER NOT NULL,
       ended_at INTEGER,
       duration INTEGER,
@@ -136,6 +137,7 @@ const runInitDB = async () => {
 
     CREATE TABLE IF NOT EXISTS offline_maps (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
+      user_id INTEGER,
       name TEXT NOT NULL,
       size_mb REAL NOT NULL,
       status TEXT NOT NULL,
@@ -174,6 +176,7 @@ const runInitDB = async () => {
   `);
 
   await addColumnIfMissing("sessions", "started_at", "INTEGER NOT NULL DEFAULT 0");
+  await addColumnIfMissing("sessions", "user_id", "INTEGER");
   await addColumnIfMissing("sessions", "ended_at", "INTEGER");
   await addColumnIfMissing("sessions", "avg_fatigue", "TEXT DEFAULT 'bajo'");
   await addColumnIfMissing("sessions", "trail_id", "INTEGER");
@@ -186,6 +189,7 @@ const runInitDB = async () => {
   await addColumnIfMissing("sessions", "review_text", "TEXT");
   await addColumnIfMissing("sessions", "reviewed_at", "INTEGER");
   await addColumnIfMissing("offline_maps", "downloaded_tiles", "INTEGER NOT NULL DEFAULT 0");
+  await addColumnIfMissing("offline_maps", "user_id", "INTEGER");
   await addColumnIfMissing("offline_maps", "total_tiles", "INTEGER NOT NULL DEFAULT 0");
   await addColumnIfMissing("offline_maps", "verified_at", "INTEGER");
   await addColumnIfMissing("offline_maps", "last_error", "TEXT");

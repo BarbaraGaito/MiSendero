@@ -23,6 +23,10 @@ const getFormError = (
     return "Completa los campos para continuar.";
   }
 
+  if (isRegister && password.length < 8) {
+    return "La contrasena debe tener al menos 8 caracteres.";
+  }
+
   if (isRegister && !acceptedTerms) {
     return "Acepta los terminos y disclaimers de seguridad para continuar.";
   }
@@ -64,17 +68,16 @@ export default function LoginScreen() {
   const [error, setError] = useState<string | null>(null);
 
   const isRegister = mode === "register";
-  const canSubmit =
-    email.trim().length > 0 &&
-    password.trim().length > 0 &&
-    (!isRegister || (name.trim().length > 0 && acceptedTerms));
+  const formError = getFormError(isRegister, name, email, password, acceptedTerms);
+  const canSubmit = !formError;
 
   const submit = async () => {
     if (!canSubmit) {
       setError(
-        isRegister
-          ? "Completa los campos y acepta los terminos para continuar."
-          : "Completa email y contrasena para continuar."
+        getFormError(isRegister, name, email, password, acceptedTerms) ||
+          (isRegister
+            ? "Completa los campos y acepta los terminos para continuar."
+            : "Completa email y contrasena para continuar.")
       );
       return;
     }

@@ -1711,13 +1711,6 @@ export function TrailMap({
         </View>
       ) : null}
 
-      {isTestingLocation ? (
-        <View style={styles.testingBadge}>
-          <Ionicons name="flask-outline" size={14} color={colors.greenDark} />
-          <Text style={styles.testingBadgeText}>Testing</Text>
-        </View>
-      ) : null}
-
       {onSelectCoordinate && !isPerspective ? (
         <View pointerEvents="none" style={styles.selectionHint}>
           <Ionicons name="pin-outline" size={14} color={colors.greenDark} />

@@ -101,14 +101,18 @@ const loadFallbackRouteContext = async (trailId: number) => {
       };
 };
 
-const getActiveRouteLayoutOffsets = (topInset: number, isOffRoute: boolean) => {
+const getActiveRouteLayoutOffsets = (
+  topInset: number,
+  isOffRoute: boolean,
+  isTestingLocation: boolean
+) => {
   const activeTop = Math.max(22, topInset + 14);
   const activeBannerTop = activeTop + 68;
 
   return {
     activeTop,
     activeBannerTop,
-    mapControlsTop: activeBannerTop + (isOffRoute ? 116 : 8),
+    mapControlsTop: activeBannerTop + (isOffRoute ? 116 : isTestingLocation ? 58 : 8),
   };
 };
 
@@ -413,7 +417,7 @@ export default function Screen04RouteMap() {
     routeDeviationMeters !== null &&
     routeDeviationMeters > ROUTE_DEVIATION_WARNING_METERS;
   const { activeTop, activeBannerTop, mapControlsTop } =
-    getActiveRouteLayoutOffsets(insets.top, isOffRoute);
+    getActiveRouteLayoutOffsets(insets.top, isOffRoute, isTestingLocation);
   const hasBlockingReport = reports.some((report) => report.blocks_path);
   const severeReports = reports.filter((report) =>
     ["Alta", "Critica"].includes(report.severity)
@@ -490,7 +494,7 @@ export default function Screen04RouteMap() {
         ) : null}
 
         {isTestingLocation ? (
-          <View style={[styles.testingBanner, { top: activeBannerTop + 74 }]}>
+          <View style={[styles.testingBanner, { top: activeBannerTop }]}>
             <Ionicons name="flask-outline" size={17} color={colors.greenDark} />
             <Text style={styles.testingBannerText}>
               Modo testing: ubicacion y avance simulados

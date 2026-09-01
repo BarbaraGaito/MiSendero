@@ -601,7 +601,10 @@ export default function Screen04RouteMap() {
         ) : null}
 
         {wearableRuntime?.prediction && wearableRuntime.latestSample && !showWearablePanel ? (
-          <View
+          <Pressable
+            accessibilityLabel="Ver metricas del reloj"
+            accessibilityRole="button"
+            onPress={() => setShowWearablePanel(true)}
             style={[
               styles.wearableBanner,
               wearableRuntime.prediction.level === "high" && styles.wearableBannerHigh,
@@ -626,7 +629,7 @@ export default function Screen04RouteMap() {
                 {wearableRuntime.prediction.message}
               </Text>
             </View>
-          </View>
+          </Pressable>
         ) : null}
 
         <CriticalWearableModal

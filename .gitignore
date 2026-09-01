@@ -141,3 +141,6 @@ dist
 
 .idea
 reports/
+
+# Public dataset downloads can be hundreds of MB or several GB.
+training/data/raw/

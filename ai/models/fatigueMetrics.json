@@ -1,0 +1,149 @@
+{
+  "schema_version": 2,
+  "dataset": {
+    "name": "Fatiga wearable",
+    "declared_source": "PAMAP2 (UCI) + WESAD",
+    "source_note": "Documento PFI seccion 2.1.6.2: PAMAP2 aporta IMU y frecuencia cardiaca en actividades fisicas; WESAD complementa senales de IMU/frecuencia cardiaca para estados fisiologicos. El CSV local es el insumo procesado del prototipo y debe reemplazarse por exports procesados de esas fuentes para una validacion completa.",
+    "rows_total": 1095,
+    "rows_train": 766,
+    "rows_train_after_augmentation": 817,
+    "rows_test": 329,
+    "rows_by_label": {
+      "alto": 41,
+      "bajo": 877,
+      "medio": 177
+    },
+    "features": [
+      "hr",
+      "speed_kmh",
+      "elapsed_minutes",
+      "hr_reserve_percent"
+    ]
+  },
+  "augmentation": {
+    "used": true,
+    "synthetic_rows": 51,
+    "synthetic_to_real_train_ratio": 0.06657963446475196,
+    "requires_approval": true
+  },
+  "metrics": {
+    "train": {
+      "accuracy": 0.9987760097919217,
+      "precision_macro": 0.9973333333333333,
+      "recall_macro": 0.9994562262098966,
+      "f1_macro": 0.9983892030707865,
+      "precision_weighted": 0.9987858017135863,
+      "recall_weighted": 0.9987760097919217,
+      "f1_weighted": 0.9987779680157445,
+      "support": 817
+    },
+    "train_real": {
+      "accuracy": 0.9986945169712794,
+      "precision_macro": 0.9973333333333333,
+      "recall_macro": 0.9994562262098966,
+      "f1_macro": 0.9983892030707865,
+      "precision_weighted": 0.9987049608355092,
+      "recall_weighted": 0.9986945169712794,
+      "f1_weighted": 0.9986966055729285,
+      "support": 766
+    },
+    "test": {
+      "accuracy": 0.9969604863221885,
+      "precision_macro": 0.9938271604938271,
+      "recall_macro": 0.9987373737373737,
+      "f1_macro": 0.9962522241335484,
+      "precision_weighted": 0.9970167736125184,
+      "recall_weighted": 0.9969604863221885,
+      "f1_weighted": 0.9969718058680633,
+      "support": 329
+    },
+    "cross_validation": {
+      "folds": 5,
+      "accuracy_mean": 0.9981735159817351,
+      "accuracy_std": 0.0022369769340485914,
+      "precision_macro_mean": 0.9962962962962963,
+      "precision_macro_std": 0.004536092116265111,
+      "recall_macro_mean": 0.9992402597402597,
+      "recall_macro_std": 0.0009304942805194442,
+      "f1_macro_mean": 0.9977411102369065,
+      "f1_macro_std": 0.0027665641876686337
+    }
+  },
+  "guardrails": {
+    "status": "ok",
+    "overfitting_risk": false,
+    "underfitting_risk": false,
+    "high_variance_risk": false,
+    "insufficient_real_data": false,
+    "high_synthetic_ratio": false,
+    "train_test_f1_gap": 0.0021369789372380765,
+    "warnings": [
+      "Data augmentation aplicada solo sobre train: el conjunto de test se mantiene 100% real para auditar performance."
+    ]
+  },
+  "accuracy": 0.9969604863221885,
+  "labels": [
+    "alto",
+    "bajo",
+    "medio"
+  ],
+  "confusion_matrix": [
+    [
+      12,
+      0,
+      0
+    ],
+    [
+      0,
+      263,
+      1
+    ],
+    [
+      0,
+      0,
+      53
+    ]
+  ],
+  "classification_report": {
+    "alto": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 12.0
+    },
+    "bajo": {
+      "precision": 1.0,
+      "recall": 0.9962121212121212,
+      "f1-score": 0.9981024667931688,
+      "support": 264.0
+    },
+    "medio": {
+      "precision": 0.9814814814814815,
+      "recall": 1.0,
+      "f1-score": 0.9906542056074766,
+      "support": 53.0
+    },
+    "accuracy": 0.9969604863221885,
+    "macro avg": {
+      "precision": 0.9938271604938271,
+      "recall": 0.9987373737373737,
+      "f1-score": 0.9962522241335484,
+      "support": 329.0
+    },
+    "weighted avg": {
+      "precision": 0.9970167736125184,
+      "recall": 0.9969604863221885,
+      "f1-score": 0.9969718058680633,
+      "support": 329.0
+    }
+  },
+  "trained_at": "2026-09-01T16:52:19.848451+00:00",
+  "hyperparameters": {
+    "n_estimators": 150,
+    "max_depth": 4,
+    "min_samples_leaf": 1,
+    "selection_method": "cross_validated",
+    "cv_folds": 5,
+    "cv_f1_macro_mean": 0.9968849332485696
+  }
+}

@@ -15,20 +15,26 @@ const trainingScripts = [
     id: "fatigue",
     script: path.join(pythonDir, "fatigue", "train.py"),
     forestOutput: path.join(pythonDir, "fatigue", "output", "model.forest.json"),
+    metricsOutput: path.join(pythonDir, "fatigue", "output", "metrics.json"),
     modelTarget: path.join(modelsDir, "fatigueModel.json"),
+    metricsTarget: path.join(modelsDir, "fatigueMetrics.json"),
   },
   {
     id: "physio_risk",
     script: path.join(pythonDir, "physio_risk", "train.py"),
     forestOutput: path.join(pythonDir, "physio_risk", "output", "model.forest.json"),
+    metricsOutput: path.join(pythonDir, "physio_risk", "output", "metrics.json"),
     modelTarget: path.join(modelsDir, "riskModel.json"),
+    metricsTarget: path.join(modelsDir, "riskMetrics.json"),
   },
   {
     id: "route_difficulty",
     script: path.join(pythonDir, "route_difficulty", "train.py"),
     forestOutput: path.join(pythonDir, "route_difficulty", "output", "model.forest.json"),
+    metricsOutput: path.join(pythonDir, "route_difficulty", "output", "metrics.json"),
     // Consumed by training/route-difficulty/index.js, not bundled in the app.
     modelTarget: null,
+    metricsTarget: path.join(modelsDir, "routeDifficultyMetrics.json"),
   },
 ];
 
@@ -41,4 +47,7 @@ for (const config of trainingScripts) {
     fs.copyFileSync(config.forestOutput, config.modelTarget);
     console.log(`copied ${config.id} -> ${path.relative(root, config.modelTarget)}`);
   }
+
+  fs.copyFileSync(config.metricsOutput, config.metricsTarget);
+  console.log(`copied ${config.id} metrics -> ${path.relative(root, config.metricsTarget)}`);
 }

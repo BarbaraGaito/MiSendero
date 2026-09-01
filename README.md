@@ -104,7 +104,10 @@ senderos laterales y la ruta destacada en naranja.
 ## Modulo de IA (Python + Scikit-learn)
 
 Los tres modelos (dificultad de ruta, fatiga, riesgo fisiologico) se entrenan con
-RandomForest en `training/python/`. Para regenerar los artefactos que consume la app:
+RandomForest en `training/python/` usando los datasets declarados en el documento del PFI:
+OpenStreetMap + NASA SRTM para dificultad, PAMAP2 + WESAD para fatiga, y BIDMC/PhysioNet
+complementado con datos sinteticos documentados para riesgo fisiologico. Para regenerar los
+artefactos que consume la app:
 
 ```bash
 pip install -r training/python/requirements.txt
@@ -112,8 +115,7 @@ npm run train:ai
 ```
 
 Ver `ai/datasets/README.md` y `training/route-difficulty/README.md` para el detalle del
-pipeline y la limitacion documentada de datos sinteticos (los datasets de ejemplo son
-pequenos; ver seccion 2.1.6.3 del documento del proyecto).
+pipeline, las fuentes declaradas y la limitacion documentada de datos sinteticos.
 
 ## Desviaciones conscientes respecto del documento del proyecto
 

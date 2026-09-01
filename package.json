@@ -10,6 +10,8 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
+    "prepare:ai-datasets": "py training/python/build_datasets.py --write",
+    "validate:privacy": "py training/python/validate_datasets.py",
     "train:ai": "node scripts/train-ai.js",
     "train:route-difficulty": "npm --prefix training/route-difficulty run predict",
     "test": "jest"

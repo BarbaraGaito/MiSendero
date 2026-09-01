@@ -1,4 +1,5 @@
 const { query } = require("./db");
+const realTrailRoutes = require("./data/realTrailRoutes");
 
 const commonsImage = (fileName) =>
   `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(fileName)}?width=1400`;
@@ -13,156 +14,115 @@ const seedTrailData = [
     description:
       "Trekking clasico de aproximacion al Aconcagua desde Horcones hasta el campamento Confluencia, con vistas de alta montana.",
     image_url: commonsImage("Aconcagua confluencia.jpg"),
-    center_lat: -32.8117,
-    center_lng: -69.9496,
-    map_zoom: 12,
-    route_coordinates: [
-      [-32.8245, -69.9403],
-      [-32.8201, -69.9489],
-      [-32.8158, -69.9587],
-      [-32.8096, -69.9676],
-      [-32.8005, -69.9736],
-    ],
+    // https://informacionoficial.mendoza.gob.ar/energiayambiente/aconcagua/
+    center_lat: -32.791647,
+    center_lng: -69.954137,
+    map_zoom: 13,
+    route_coordinates: realTrailRoutes.confluencia,
   },
   {
-    name: "Base del Volcan Lanin",
+    name: "Volcan Lanin - Base a Refugio BIM",
     location: "Parque Nacional Lanin, Neuquen",
     difficulty: "Alta",
     duration: "6 a 8 h",
-    distance_km: 12,
+    distance_km: 13,
     description:
-      "Sendero de alta montana hacia la base del volcan Lanin, en ambiente andino con bosques de araucarias y vistas al cono volcanico.",
+      "Ruta normal desde la base del volcan Lanin hasta el refugio BIM, con fuerte desnivel, ambiente andino y vistas al cono volcanico.",
     image_url: commonsImage("Argentina - Neuquén - Volcán Lanín.jpg"),
-    center_lat: -39.6372,
-    center_lng: -71.5015,
-    map_zoom: 12,
-    route_coordinates: [
-      [-39.5878, -71.4637],
-      [-39.6044, -71.4754],
-      [-39.6197, -71.4888],
-      [-39.6346, -71.5021],
-      [-39.6492, -71.5146],
-    ],
+    // Coordenadas de Base y Refugio BIM publicadas por Parques Nacionales.
+    center_lat: -39.603285,
+    center_lng: -71.455579,
+    map_zoom: 13,
+    route_coordinates: realTrailRoutes.lanin,
   },
   {
     name: "Garganta del Diablo de Tilcara",
     location: "Tilcara, Jujuy",
     difficulty: "Media",
-    duration: "3 a 4 h",
-    distance_km: 7.5,
+    duration: "1 h 30 min a 2 h",
+    distance_km: 3.14,
     description:
       "Recorrido desde Tilcara hacia la quebrada y cascada de la Garganta del Diablo, con vistas de la Quebrada de Humahuaca.",
     image_url: commonsImage("Quebrada de Humahuaca 01.jpg"),
-    center_lat: -23.5759,
-    center_lng: -65.3768,
-    map_zoom: 13,
-    route_coordinates: [
-      [-23.5779, -65.3933],
-      [-23.5769, -65.3874],
-      [-23.5756, -65.3811],
-      [-23.5736, -65.3747],
-      [-23.5714, -65.3684],
-    ],
+    // Traza peatonal directa registrada en OSM, desde el inicio del camino
+    // hasta la cascada. No se calcula una ruta entre origen y destino.
+    center_lat: -23.590954,
+    center_lng: -65.38109,
+    map_zoom: 14,
+    route_coordinates: realTrailRoutes.tilcara,
   },
   {
     name: "Garganta del Diablo - Quebrada de las Conchas",
     location: "Cafayate, Salta",
     difficulty: "Baja",
-    duration: "1 a 2 h",
-    distance_km: 3,
+    duration: "30 a 45 min",
+    distance_km: 0.65,
     description:
       "Caminata corta entre paredones rojizos y formaciones naturales de la Quebrada de las Conchas, en los Valles Calchaquies.",
     image_url: commonsImage("Quebrada de las Conchas- Salta-.jpg"),
-    center_lat: -25.9201,
-    center_lng: -65.7208,
-    map_zoom: 13,
-    route_coordinates: [
-      [-25.9138, -65.7138],
-      [-25.9162, -65.7164],
-      [-25.9187, -65.7192],
-      [-25.9213, -65.7224],
-      [-25.924, -65.7252],
-    ],
+    center_lat: -25.848843,
+    center_lng: -65.701041,
+    map_zoom: 17,
+    route_coordinates: realTrailRoutes.saltaGarganta,
   },
   {
-    name: "Alerce Milenario",
+    name: "Lahuan Solitario - Puerto Chucao",
     location: "Parque Nacional Los Alerces, Chubut",
     difficulty: "Baja",
-    duration: "2 a 3 h",
-    distance_km: 4,
+    duration: "1 h 30 min",
+    distance_km: 3,
     description:
-      "Sendero interpretativo entre bosque andino patagonico hacia sectores de alerces antiguos del Parque Nacional Los Alerces.",
+      "Sendero desde la pasarela del rio Arrayanes hasta Puerto Chucao, bordeando el rio Menendez y pasando junto a un lahuan de unos 300 anos.",
     image_url: commonsImage("Alerce milenario.jpg"),
-    center_lat: -42.8274,
-    center_lng: -71.8667,
-    map_zoom: 13,
-    route_coordinates: [
-      [-42.8224, -71.8602],
-      [-42.8247, -71.8634],
-      [-42.8276, -71.8669],
-      [-42.8304, -71.8708],
-      [-42.8321, -71.8752],
-    ],
+    // https://www.argentina.gob.ar/node/276965
+    center_lat: -42.728261,
+    center_lng: -71.749203,
+    map_zoom: 15,
+    route_coordinates: realTrailRoutes.lahuanSolitario,
   },
   {
-    name: "Sendero El Palmar",
+    name: "Sendero El Mollar - El Palmar",
     location: "Parque Nacional El Palmar, Entre Rios",
     difficulty: "Baja",
-    duration: "2 h",
-    distance_km: 5,
+    duration: "30 a 45 min",
+    distance_km: 1.4,
     description:
-      "Circuito entre palmares de yatay, pastizales y miradores del rio Uruguay dentro del Parque Nacional El Palmar.",
+      "Circuito oficial junto al camping que atraviesa palmares y muestra el manejo de especies vegetales exoticas del Parque Nacional El Palmar.",
     image_url: commonsImage("Parque nacional El Palmar Entre Ríos.JPG"),
-    center_lat: -31.8668,
-    center_lng: -58.2566,
-    map_zoom: 13,
-    route_coordinates: [
-      [-31.8548, -58.2449],
-      [-31.8606, -58.2504],
-      [-31.8668, -58.2566],
-      [-31.8722, -58.2631],
-      [-31.8781, -58.2693],
-    ],
+    // https://www.argentina.gob.ar/parquesnacionales/centro/parque-nacional-el-palmar/actividades
+    center_lat: -31.862273,
+    center_lng: -58.211157,
+    map_zoom: 17,
+    route_coordinates: realTrailRoutes.elMollar,
   },
   {
     name: "Ascenso Cerro Tres Picos",
     location: "Sierra de la Ventana, Buenos Aires",
     difficulty: "Alta",
     duration: "8 a 10 h",
-    distance_km: 20,
+    distance_km: 18.3,
     description:
       "Ascenso al punto mas alto de la provincia de Buenos Aires, con pendientes sostenidas y amplias vistas serranas.",
     image_url: commonsImage("Cerro Tres Picos.jpg"),
-    center_lat: -38.1556,
-    center_lng: -61.9501,
-    map_zoom: 12,
-    route_coordinates: [
-      [-38.0957, -61.9284],
-      [-38.1155, -61.9362],
-      [-38.1348, -61.9445],
-      [-38.1512, -61.9521],
-      [-38.1561, -61.95],
-    ],
+    center_lat: -38.145914,
+    center_lng: -61.990366,
+    map_zoom: 13,
+    route_coordinates: realTrailRoutes.tresPicos,
   },
   {
-    name: "Circuito Valle de la Luna",
+    name: "Caminata al Cerro Morado",
     location: "Parque Provincial Ischigualasto, San Juan",
-    difficulty: "Baja",
-    duration: "2 a 3 h",
-    distance_km: 4,
+    difficulty: "Alta",
+    duration: "3 h",
+    distance_km: 5.73,
     description:
-      "Recorrido por geoformas y paisajes deserticos del Valle de la Luna, dentro del Parque Provincial Ischigualasto.",
+      "Trekking oficial hasta la cumbre del Cerro Morado, el punto mas alto de Ischigualasto, con vistas panoramicas del Valle de la Luna.",
     image_url: commonsImage("Ischigualasto, prov. de San Juan, Argentina.jpg"),
-    center_lat: -30.1209,
-    center_lng: -67.9118,
-    map_zoom: 12,
-    route_coordinates: [
-      [-30.1095, -67.9028],
-      [-30.1142, -67.9075],
-      [-30.1196, -67.9124],
-      [-30.1252, -67.9183],
-      [-30.1304, -67.9246],
-    ],
+    // https://www.ischigualasto.gob.ar/?page_id=1823
+    center_lat: -30.163187,
+    center_lng: -67.825007,
+    map_zoom: 14,
+    route_coordinates: realTrailRoutes.cerroMorado,
   },
   {
     name: "Campo de Piedra Pomez",
@@ -173,36 +133,25 @@ const seedTrailData = [
     description:
       "Caminata corta entre formaciones de piedra pomez, paisaje de puna y suelos volcanicos en Antofagasta de la Sierra.",
     image_url: commonsImage("Campo de Piedra Pomez.jpg"),
-    center_lat: -26.6597,
-    center_lng: -67.5142,
-    map_zoom: 13,
-    route_coordinates: [
-      [-26.6548, -67.5074],
-      [-26.6571, -67.5101],
-      [-26.6595, -67.5139],
-      [-26.6617, -67.5173],
-      [-26.6642, -67.5205],
-    ],
+    center_lat: -26.58907,
+    center_lng: -67.486533,
+    map_zoom: 16,
+    route_coordinates: realTrailRoutes.piedraPomez,
   },
   {
     name: "Laguna del Tesoro - Aconquija",
     location: "Parque Nacional Aconquija, Tucuman",
     difficulty: "Alta",
-    duration: "8 a 10 h",
-    distance_km: 24,
+    duration: "10 a 12 h",
+    distance_km: 20.6,
     description:
       "Sendero exigente desde el portal Cochuna hacia Laguna del Tesoro, atravesando yungas y ambiente de montana del Aconquija.",
     image_url: commonsImage("VistadeTafidelValle.jpg"),
-    center_lat: -27.1938,
-    center_lng: -65.9576,
-    map_zoom: 12,
-    route_coordinates: [
-      [-27.2362, -65.9298],
-      [-27.2246, -65.9396],
-      [-27.2117, -65.9514],
-      [-27.1983, -65.9633],
-      [-27.1852, -65.9762],
-    ],
+    // https://www.tucumanturismo.gob.ar/articulos/articulo/960/senderos-parque-nacional-aconquija
+    center_lat: -27.300308,
+    center_lng: -65.940232,
+    map_zoom: 13,
+    route_coordinates: realTrailRoutes.lagunaTesoro,
   },
 ];
 
@@ -217,7 +166,7 @@ const seedReports = [
     daysAgo: 1,
   },
   {
-    trailName: "Base del Volcan Lanin",
+    trailName: "Volcan Lanin - Base a Refugio BIM",
     issue_summary: "Sendero transitable",
     severity: "Leve",
     trail_state: "Transitable",
@@ -244,7 +193,7 @@ const seedReports = [
     daysAgo: 4,
   },
   {
-    trailName: "Sendero El Palmar",
+    trailName: "Sendero El Mollar - El Palmar",
     issue_summary: "Barro",
     severity: "Media",
     trail_state: "Precaucion",
@@ -253,7 +202,7 @@ const seedReports = [
     daysAgo: 5,
   },
   {
-    trailName: "Circuito Valle de la Luna",
+    trailName: "Caminata al Cerro Morado",
     issue_summary: "Transitable con mucha humedad",
     severity: "Leve",
     trail_state: "Transitable",
@@ -262,6 +211,27 @@ const seedReports = [
     daysAgo: 6,
   },
 ];
+
+const legacyTrailNames = [
+  ["Base del Volcan Lanin", "Volcan Lanin - Base a Refugio BIM"],
+  ["Alerce Milenario", "Lahuan Solitario - Puerto Chucao"],
+  ["Sendero El Palmar", "Sendero El Mollar - El Palmar"],
+  ["Circuito Valle de la Luna", "Caminata al Cerro Morado"],
+];
+
+const migrateLegacyTrailNames = async () => {
+  for (const [oldName, currentName] of legacyTrailNames) {
+    await query(
+      `
+        UPDATE trails
+        SET name = $2
+        WHERE name = $1
+          AND NOT EXISTS (SELECT 1 FROM trails WHERE name = $2)
+      `,
+      [oldName, currentName]
+    );
+  }
+};
 
 const seedTrails = async () => {
   for (const trail of seedTrailData) {
@@ -338,6 +308,7 @@ const seedTrailReports = async () => {
 };
 
 const seedDatabase = async () => {
+  await migrateLegacyTrailNames();
   await seedTrails();
   await seedTrailReports();
 };

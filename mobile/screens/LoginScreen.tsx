@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
@@ -12,6 +12,51 @@ import {
 import { getExperienceProfile } from "../../services/experienceProfile";
 import { colors } from "../components/MiSenderoUI";
 
+const getFormError = (
+  isRegister: boolean,
+  name: string,
+  email: string,
+  password: string,
+  acceptedTerms: boolean
+) => {
+  if (!email.trim() || !password.trim() || (isRegister && !name.trim())) {
+    return "Completa los campos para continuar.";
+  }
+
+  if (isRegister && password.length < 8) {
+    return "La contrasena debe tener al menos 8 caracteres.";
+  }
+
+  if (isRegister && !acceptedTerms) {
+    return "Acepta los terminos y disclaimers de seguridad para continuar.";
+  }
+
+  return null;
+};
+
+const getSubmitErrorMessage = (submitError: unknown) =>
+  submitError instanceof Error ? submitError.message : "No pudimos iniciar sesion.";
+
+const getSubmitButtonLabel = (isSubmitting: boolean, isRegister: boolean) => {
+  if (isSubmitting) return "Un momento...";
+  return isRegister ? "Crear cuenta" : "Iniciar sesion";
+};
+
+const getModeSwitchLabel = (isRegister: boolean) =>
+  isRegister ? "Ya tengo cuenta" : "Crear una cuenta nueva";
+
+const redirectAfterAuth = async (isRegister: boolean) => {
+  if (!isRegister) {
+    router.replace("/inicio");
+    return;
+  }
+
+  const experienceProfile = await getExperienceProfile();
+  router.replace(
+    experienceProfile.completed ? "/inicio" : "/onboarding-experiencia"
+  );
+};
+
 export default function LoginScreen() {
   const [mode, setMode] = useState<"login" | "register">("login");
   const [name, setName] = useState("");
@@ -23,17 +68,16 @@ export default function LoginScreen() {
   const [error, setError] = useState<string | null>(null);
 
   const isRegister = mode === "register";
-  const canSubmit =
-    email.trim().length > 0 &&
-    password.trim().length > 0 &&
-    (!isRegister || (name.trim().length > 0 && acceptedTerms));
+  const formError = getFormError(isRegister, name, email, password, acceptedTerms);
+  const canSubmit = !formError;
 
   const submit = async () => {
     if (!canSubmit) {
       setError(
-        isRegister
-          ? "Completa los campos y acepta los terminos para continuar."
-          : "Completa email y contrasena para continuar."
+        getFormError(isRegister, name, email, password, acceptedTerms) ||
+          (isRegister
+            ? "Completa los campos y acepta los terminos para continuar."
+            : "Completa email y contrasena para continuar.")
       );
       return;
     }
@@ -51,22 +95,9 @@ export default function LoginScreen() {
       }
 
       await saveAuthSession(auth);
-
-      if (isRegister) {
-        const experienceProfile = await getExperienceProfile();
-        router.replace(
-          experienceProfile.completed ? "/inicio" : "/onboarding-experiencia"
-        );
-        return;
-      }
-
-      router.replace("/inicio");
+      await redirectAfterAuth(isRegister);
     } catch (submitError) {
-      setError(
-        submitError instanceof Error
-          ? submitError.message
-          : "No pudimos iniciar sesion."
-      );
+      setError(getSubmitErrorMessage(submitError));
     } finally {
       setIsSubmitting(false);
     }
@@ -195,11 +226,7 @@ export default function LoginScreen() {
             ]}
           >
             <Text style={styles.primaryButtonText}>
-              {isSubmitting
-                ? "Un momento..."
-                : isRegister
-                  ? "Crear cuenta"
-                  : "Iniciar sesion"}
+              {getSubmitButtonLabel(isSubmitting, isRegister)}
             </Text>
           </Pressable>
 
@@ -213,9 +240,7 @@ export default function LoginScreen() {
             style={styles.secondaryButton}
           >
             <Text style={styles.secondaryButtonText}>
-              {isRegister
-                ? "Ya tengo cuenta"
-                : "Crear una cuenta nueva"}
+              {getModeSwitchLabel(isRegister)}
             </Text>
           </Pressable>
         </View>

@@ -1,4 +1,5 @@
 const request = require("supertest");
+const jwt = require("jsonwebtoken");
 const runMigrations = require("../src/migrate");
 const seedDatabase = require("../src/seed");
 const app = require("../src/server");
@@ -24,7 +25,11 @@ beforeAll(async () => {
     password: "correcta123",
     accepted_terms_version: "2026-08-13",
   });
-  userToken = user.body.token;
+  userToken = jwt.sign(
+    { userId: user.body.user.id, role: "user" },
+    process.env.JWT_SECRET,
+    { expiresIn: "7d" }
+  );
 });
 
 describe("trails", () => {
@@ -34,6 +39,34 @@ describe("trails", () => {
     expect(response.status).toBe(200);
     expect(response.body.length).toBeGreaterThan(0);
     expect(response.body[0]).toHaveProperty("route_coordinates");
+  });
+
+  test("serves detailed real-world traces for every catalog trail", async () => {
+    const response = await request(app).get("/api/trails");
+    const legacyNames = [
+      "Base del Volcan Lanin",
+      "Alerce Milenario",
+      "Sendero El Palmar",
+      "Circuito Valle de la Luna",
+    ];
+
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveLength(10);
+    expect(response.body.map((trail) => trail.name)).toEqual(
+      expect.not.arrayContaining(legacyNames)
+    );
+
+    for (const trail of response.body) {
+      const coordinates = JSON.parse(trail.route_coordinates);
+      expect(coordinates.length).toBeGreaterThanOrEqual(6);
+
+      const latitudes = coordinates.map(([latitude]) => latitude);
+      const longitudes = coordinates.map(([, longitude]) => longitude);
+      expect(Number(trail.center_lat)).toBeGreaterThanOrEqual(Math.min(...latitudes));
+      expect(Number(trail.center_lat)).toBeLessThanOrEqual(Math.max(...latitudes));
+      expect(Number(trail.center_lng)).toBeGreaterThanOrEqual(Math.min(...longitudes));
+      expect(Number(trail.center_lng)).toBeLessThanOrEqual(Math.max(...longitudes));
+    }
   });
 
   test("returns a single trail by id", async () => {

@@ -48,6 +48,24 @@ export const trailImages = {
 };
 
 type IconName = React.ComponentProps<typeof Ionicons>["name"];
+type ButtonTone = "green" | "danger" | "light" | "secondary";
+type BottomTab = "inicio" | "explorar" | "actividad" | "perfil";
+
+const getButtonStyle = (tone: ButtonTone) => [
+  styles.primaryButton,
+  tone === "danger" && styles.dangerButton,
+  tone === "light" && styles.lightButton,
+  tone === "secondary" && styles.secondaryButton,
+];
+
+const getButtonLabelStyle = (tone: ButtonTone) => [
+  styles.primaryLabel,
+  tone === "light" && styles.lightButtonLabel,
+  tone === "secondary" && styles.secondaryButtonLabel,
+];
+
+const getButtonIconColor = (tone: ButtonTone) =>
+  tone === "light" || tone === "secondary" ? colors.green : colors.white;
 
 export function ScreenShell({
   children,
@@ -72,7 +90,7 @@ export function AppScreen({
   withBottomNav = true,
 }: {
   children: React.ReactNode;
-  activeTab?: "inicio" | "explorar" | "actividad" | "perfil";
+  activeTab?: BottomTab;
   withBottomNav?: boolean;
 }) {
   return (
@@ -258,8 +276,10 @@ export function PrimaryButton({
   );
 }
 
-export function BottomNav({ active }: { active: "inicio" | "explorar" | "actividad" | "perfil" }) {
-  const items: Array<{ id: typeof active; label: string; icon: IconName; href: string }> = [
+type BottomNavItem = { id: BottomTab; label: string; icon: IconName; href: string };
+
+export function BottomNav({ active }: { active: BottomTab }) {
+  const items: BottomNavItem[] = [
     { id: "inicio", label: "Inicio", icon: "home-outline", href: "/inicio" },
     { id: "explorar", label: "Explorar", icon: "compass-outline", href: "/explorar-rutas" },
     { id: "actividad", label: "Actividad", icon: "pulse-outline", href: "/mis-actividades" },
@@ -297,6 +317,30 @@ export function BottomNav({ active }: { active: "inicio" | "explorar" | "activid
         );
       })}
     </View>
+  );
+}
+
+function BottomNavButton({
+  item,
+  selected,
+}: {
+  item: BottomNavItem;
+  selected: boolean;
+}) {
+  return (
+    <Pressable
+      style={styles.navItem}
+      onPress={() => router.push(item.href as any)}
+    >
+      <Ionicons
+        name={item.icon}
+        size={25}
+        color={selected ? colors.green : colors.muted}
+      />
+      <Text style={[styles.navLabel, selected && styles.navLabelActive]}>
+        {item.label}
+      </Text>
+    </Pressable>
   );
 }
 
@@ -422,20 +466,8 @@ export function StatusNotice({
   onAction?: () => void;
   isLoading?: boolean;
 }) {
-  const iconColor =
-    tone === "error"
-      ? colors.danger
-      : tone === "warning"
-        ? colors.orange
-        : colors.green;
-  const iconName: IconName =
-    tone === "error"
-      ? "alert-circle-outline"
-      : tone === "success"
-        ? "checkmark-circle-outline"
-        : tone === "warning"
-          ? "warning-outline"
-          : "information-circle-outline";
+  const iconColor = statusNoticeIconColors[tone];
+  const iconName = statusNoticeIconNames[tone];
 
   return (
     <View
@@ -474,6 +506,20 @@ export function StatusNotice({
     </View>
   );
 }
+
+const statusNoticeIconColors = {
+  error: colors.danger,
+  info: colors.green,
+  success: colors.green,
+  warning: colors.orange,
+};
+
+const statusNoticeIconNames: Record<"info" | "success" | "warning" | "error", IconName> = {
+  error: "alert-circle-outline",
+  info: "information-circle-outline",
+  success: "checkmark-circle-outline",
+  warning: "warning-outline",
+};
 
 export const styles = StyleSheet.create({
   shell: {

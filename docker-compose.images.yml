@@ -2,16 +2,17 @@ services:
   db:
     image: postgres:16-alpine
     restart: unless-stopped
+    env_file:
+      - .env
     environment:
-      POSTGRES_USER: misendero
-      POSTGRES_PASSWORD: misendero
-      POSTGRES_DB: misendero
+      POSTGRES_USER: ${POSTGRES_USER:-misendero}
+      POSTGRES_DB: ${POSTGRES_DB:-misendero}
     ports:
       - "5432:5432"
     volumes:
       - misendero_postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U misendero -d misendero"]
+      test: ["CMD-SHELL", "pg_isready -U \"$${POSTGRES_USER}\" -d \"$${POSTGRES_DB}\""]
       interval: 5s
       timeout: 5s
       retries: 10
@@ -19,11 +20,11 @@ services:
   backend:
     image: ${MISENDERO_BACKEND_IMAGE:-ghcr.io/barbaragaito/misendero-backend:latest}
     restart: unless-stopped
+    env_file:
+      - .env
     environment:
       NODE_ENV: production
       PORT: 3001
-      DATABASE_URL: postgres://misendero:misendero@db:5432/misendero
-      JWT_SECRET: ${JWT_SECRET:-dev_only_change_me_please_48_chars_minimum_secret}
       CORS_ORIGIN: ${CORS_ORIGIN:-http://localhost:8081,http://localhost:19006,http://localhost:3001}
       REPORT_STALE_AFTER_DAYS: ${REPORT_STALE_AFTER_DAYS:-30}
       LOG_LEVEL: ${LOG_LEVEL:-info}

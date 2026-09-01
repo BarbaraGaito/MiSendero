@@ -1,6 +1,17 @@
-import { router, useLocalSearchParams } from "expo-router";
+﻿import { router, useLocalSearchParams } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import {
+  KeyboardAvoidingView,
+  Platform,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import {
   AppScreen,
   Card,
@@ -36,7 +47,171 @@ const formatDuration = (seconds: number) => {
   return `${minutes}m`;
 };
 
+const getCompletionCopy = (isPausedWithoutProgress: boolean) => ({
+  icon: isPausedWithoutProgress ? "||" : "OK",
+  eyebrow: isPausedWithoutProgress ? "Ruta pausada" : "Recorrido finalizado",
+  title: isPausedWithoutProgress ? "Ruta en pausa" : "Recorrido completado",
+  subtitle: isPausedWithoutProgress
+    ? "No registramos distancia recorrida, asi que no la marcamos como terminada."
+    : "Guardamos tu actividad con los datos registrados por la app.",
+  performanceTitle: isPausedWithoutProgress ? "Actividad pendiente" : "Tu rendimiento",
+  performanceText: isPausedWithoutProgress
+    ? "La ruta quedo guardada en pausa. Podes continuarla desde Actividad o volver al mapa ahora."
+    : "La actividad quedo guardada localmente y ya esta disponible en tus actividades recientes.",
+  finalActionLabel: isPausedWithoutProgress ? "Ver actividades" : "Explorar otra ruta",
+  finalActionTone: isPausedWithoutProgress ? "secondary" as const : "green" as const,
+  finalActionRoute: isPausedWithoutProgress ? "/mis-actividades" : "/explorar-rutas",
+});
+
+const getReviewCopy = (hasReview: boolean) => ({
+  title: hasReview ? "Opinion guardada" : "Como estuvo el sendero?",
+  text: hasReview
+    ? "Esta calificacion ya se usa en el promedio real del sendero."
+    : "Deja una calificacion real para que aparezca en el detalle del sendero.",
+});
+
+type RouteCompletionParams = {
+  id?: string;
+  startedAt?: string;
+  traveledMeters?: string;
+  routeProgressMeters?: string;
+  totalMeters?: string;
+  endedLatitude?: string;
+  endedLongitude?: string;
+};
+
+const getExistingCompletionSession = async (trailId: number) => {
+  let completedSession = await getLatestCompletedSession();
+
+  if (completedSession && trailId) {
+    await attachTrailToSession(completedSession.id, trailId);
+    completedSession = {
+      ...completedSession,
+      trail_id: completedSession.trail_id ?? trailId,
+    };
+  }
+
+  return completedSession;
+};
+
+const enqueueCompletedActivity = async ({
+  completedSession,
+  trailId,
+  startedAtMs,
+  endedAt,
+  duration,
+  distance,
+  routeProgressMeters,
+  routeTotalMeters,
+}: {
+  completedSession: SessionRow;
+  trailId: number;
+  startedAtMs: number;
+  endedAt: number;
+  duration: number;
+  distance: number;
+  routeProgressMeters: number;
+  routeTotalMeters: number | null;
+}) => {
+  const clientSessionId = `local-session-${completedSession.id}`;
+  const syncEndedAt = completedSession.ended_at ?? endedAt;
+  const syncDuration = completedSession.duration ?? duration;
+  const syncDistance = completedSession.distance ?? distance;
+  const syncRouteProgress =
+    completedSession.route_progress_meters ?? routeProgressMeters;
+  const syncRouteTotal = completedSession.route_total_meters ?? routeTotalMeters;
+
+  await enqueueUnique("activity", {
+    client_session_id: clientSessionId,
+    trail_id: trailId,
+    started_at: new Date(startedAtMs).toISOString(),
+    ended_at: new Date(syncEndedAt).toISOString(),
+    distance_km: Number((syncDistance / 1000).toFixed(2)),
+    duration_minutes: Math.round(syncDuration / 60),
+    completion_status: completedSession.completion_status,
+    route_progress_meters: Math.round(syncRouteProgress),
+    route_total_meters: syncRouteTotal ? Math.round(syncRouteTotal) : null,
+    ended_latitude: completedSession.ended_latitude,
+    ended_longitude: completedSession.ended_longitude,
+  }, `activity:${clientSessionId}`);
+};
+
+const createCompletionSession = async (params: RouteCompletionParams) => {
+  const trailId = Number(params.id);
+  const startedAtMs = Number(params.startedAt);
+
+  if (!trailId || !startedAtMs) {
+    return {
+      session: await getExistingCompletionSession(trailId),
+      trackingPointCount: 0,
+    };
+  }
+
+  const endedAt = Date.now();
+  const trackingSummary = await getRouteTrackingSummary(trailId, startedAtMs);
+  const routeTotal = parseOptionalNumber(params.totalMeters);
+  const distance = Math.max(
+    parseOptionalNumber(params.traveledMeters) ?? 0,
+    trackingSummary.distanceMeters
+  );
+  const routeProgressMeters = getRouteProgressValue(
+    parseOptionalNumber(params.routeProgressMeters),
+    routeTotal,
+    distance
+  );
+  const duration = Math.max(0, Math.floor((endedAt - startedAtMs) / 1000));
+  const completedResult = await getOrCreateCompletedSession({
+    trailId,
+    startedAt: startedAtMs,
+    endedAt,
+    duration,
+    distance,
+    completionStatus: getCompletionStatus(routeProgressMeters, routeTotal),
+    routeProgressMeters,
+    routeTotalMeters: routeTotal,
+    endedLatitude:
+      parseOptionalNumber(params.endedLatitude) ??
+      trackingSummary.lastPoint?.latitude ??
+      null,
+    endedLongitude:
+      parseOptionalNumber(params.endedLongitude) ??
+      trackingSummary.lastPoint?.longitude ??
+      null,
+  });
+
+  await enqueueCompletedActivity({
+    completedSession: completedResult.session,
+    trailId,
+    startedAtMs,
+    endedAt,
+    duration,
+    distance,
+    routeProgressMeters,
+    routeTotalMeters: routeTotal,
+  });
+
+  return {
+    session: completedResult.session,
+    trackingPointCount: trackingSummary.points,
+  };
+};
+
+const getRouteProgressValue = (
+  routeProgress: number | null,
+  routeTotal: number | null,
+  distance: number
+) => routeProgress ?? (routeTotal && routeTotal > 0 ? Math.min(distance, routeTotal) : distance);
+
+const getCompletionStatus = (
+  routeProgressMeters: number,
+  routeTotalMeters: number | null
+): Exclude<SessionRow["completion_status"], "paused"> =>
+  routeTotalMeters && routeTotalMeters > 0 && routeProgressMeters >= routeTotalMeters * ROUTE_COMPLETION_THRESHOLD
+    ? "completed"
+    : "ended_early";
+
 export default function RouteCompletedScreen() {
+  const insets = useSafeAreaInsets();
   const {
     id,
     startedAt,
@@ -67,88 +242,19 @@ export default function RouteCompletedScreen() {
   useEffect(() => {
     const loadSession = async () => {
       await initDB();
-      const trailId = Number(id);
-      const startedAtMs = Number(startedAt);
-      const distanceMeters = parseOptionalNumber(traveledMeters);
-      const routeProgress = parseOptionalNumber(routeProgressMeters);
-      const routeTotal = parseOptionalNumber(totalMeters);
-      const endedLat = parseOptionalNumber(endedLatitude);
-      const endedLng = parseOptionalNumber(endedLongitude);
-      const endedAt = Date.now();
-      let completedSession: SessionRow | null = null;
+      const completion = await createCompletionSession({
+        id,
+        startedAt,
+        traveledMeters,
+        routeProgressMeters,
+        totalMeters,
+        endedLatitude,
+        endedLongitude,
+      });
+      const completedSession = completion.session;
 
-      if (trailId && startedAtMs) {
-        const trackingSummary = await getRouteTrackingSummary(trailId, startedAtMs);
-        setTrackingPointCount(trackingSummary.points);
-
-        const safeDistance = Math.max(
-          distanceMeters ?? 0,
-          trackingSummary.distanceMeters
-        );
-        const safeRouteProgress =
-          routeProgress ??
-          (routeTotal && routeTotal > 0
-            ? Math.min(safeDistance, routeTotal)
-            : safeDistance);
-        const safeRouteTotal = routeTotal ?? null;
-        const safeEndedLatitude = endedLat ?? trackingSummary.lastPoint?.latitude ?? null;
-        const safeEndedLongitude = endedLng ?? trackingSummary.lastPoint?.longitude ?? null;
-        const nextCompletionStatus =
-          safeRouteTotal && safeRouteTotal > 0 && safeRouteProgress >= safeRouteTotal * ROUTE_COMPLETION_THRESHOLD
-            ? "completed"
-            : "ended_early";
-        const duration = Math.max(0, Math.floor((endedAt - startedAtMs) / 1000));
-
-        const completedResult = await getOrCreateCompletedSession({
-          trailId,
-          startedAt: startedAtMs,
-          endedAt,
-          duration,
-          distance: safeDistance,
-          completionStatus: nextCompletionStatus,
-          routeProgressMeters: safeRouteProgress,
-          routeTotalMeters: safeRouteTotal,
-          endedLatitude: safeEndedLatitude,
-          endedLongitude: safeEndedLongitude,
-        });
-        completedSession = completedResult.session;
-        setCompletionStatus(completedSession.completion_status);
-
-        const clientSessionId = `local-session-${completedSession.id}`;
-        const syncEndedAt = completedSession.ended_at ?? endedAt;
-        const syncDuration = completedSession.duration ?? duration;
-        const syncDistance = completedSession.distance ?? safeDistance;
-        const syncRouteProgress =
-          completedSession.route_progress_meters ?? safeRouteProgress;
-        const syncRouteTotal = completedSession.route_total_meters ?? safeRouteTotal;
-
-        await enqueueUnique("activity", {
-          client_session_id: clientSessionId,
-          trail_id: trailId,
-          started_at: new Date(startedAtMs).toISOString(),
-          ended_at: new Date(syncEndedAt).toISOString(),
-          distance_km: Number((syncDistance / 1000).toFixed(2)),
-          duration_minutes: Math.round(syncDuration / 60),
-          completion_status: completedSession.completion_status,
-          route_progress_meters: Math.round(syncRouteProgress),
-          route_total_meters: syncRouteTotal ? Math.round(syncRouteTotal) : null,
-          ended_latitude: completedSession.ended_latitude,
-          ended_longitude: completedSession.ended_longitude,
-        }, `activity:${clientSessionId}`);
-      } else {
-        setTrackingPointCount(0);
-        completedSession = await getLatestCompletedSession();
-        setCompletionStatus(completedSession?.completion_status ?? "ended_early");
-
-        if (completedSession && trailId) {
-          await attachTrailToSession(completedSession.id, trailId);
-          completedSession = {
-            ...completedSession,
-            trail_id: completedSession.trail_id ?? trailId,
-          };
-        }
-      }
-
+      setTrackingPointCount(completion.trackingPointCount);
+      setCompletionStatus(completedSession?.completion_status ?? "ended_early");
       setSession(completedSession);
       setRating(completedSession?.rating ?? 0);
       setReviewText(completedSession?.review_text ?? "");
@@ -163,6 +269,7 @@ export default function RouteCompletedScreen() {
   const isEndedEarly = completionStatus === "ended_early";
   const canReview = Boolean(session && trailId && !isPausedWithoutProgress);
   const hasReview = Boolean(session?.rating);
+  const completionCopy = getCompletionCopy(isPausedWithoutProgress);
   const progressPercent =
     session?.route_progress_meters !== null &&
     session?.route_progress_meters !== undefined &&
@@ -195,8 +302,20 @@ export default function RouteCompletedScreen() {
 
   return (
     <AppScreen activeTab="actividad">
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : undefined}
+        style={styles.keyboardAvoiding}
+      >
+        <ScrollView
+          contentContainerStyle={[
+            styles.scrollContent,
+            { paddingBottom: Math.max(32, insets.bottom + 92) },
+          ]}
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false}
+        >
       <View style={styles.successIcon}>
-        <Text style={styles.successCheck}>{isPausedWithoutProgress ? "||" : "OK"}</Text>
+        <Text style={styles.successCheck}>{completionCopy.icon}</Text>
       </View>
       <ScreenTitle
         eyebrow={isPausedWithoutProgress ? "Ruta pausada" : "Recorrido finalizado"}
@@ -218,127 +337,249 @@ export default function RouteCompletedScreen() {
 
       {isLoading ? <Text style={styles.statusText}>Cargando resumen...</Text> : null}
 
-      {session ? (
-        <>
-          <View style={styles.metricsRow}>
-            <Metric label="Distancia" value={formatDistance(session.distance ?? 0)} />
-            <Metric label="Tiempo" value={formatDuration(session.duration ?? 0)} />
-            <Metric
-              label="Progreso"
-              value={progressPercent !== null ? `${progressPercent}%` : "Guardado"}
-            />
-          </View>
-
-          <Card tone="green">
-            <Text style={styles.cardTitle}>
-              {isPausedWithoutProgress
-                ? "Actividad pendiente"
-                : isEndedEarly
-                  ? "Punto alcanzado"
-                  : "Tu rendimiento"}
-            </Text>
-            <Text style={styles.cardText}>
-              {isPausedWithoutProgress
-                ? "La ruta quedo guardada en pausa. Podes continuarla desde Actividad o volver al mapa ahora."
-                : isEndedEarly
-                  ? getEndedEarlyText(session)
-                : "La actividad quedo guardada localmente y ya esta disponible en tus actividades recientes."}
-            </Text>
-            {trackingPointCount > 0 ? (
-              <Text style={styles.cardMeta}>
-                {trackingPointCount} puntos GPS guardados para validar distancia y recorrido.
-              </Text>
-            ) : null}
-          </Card>
-
-          {canReview ? (
-            <Card>
-              <Text style={styles.cardTitle}>
-                {hasReview ? "Opinion guardada" : "Como estuvo el sendero?"}
-              </Text>
-              <Text style={styles.cardText}>
-                {hasReview
-                  ? "Esta calificacion ya se usa en el promedio real del sendero."
-                  : "Deja una calificacion real para que aparezca en el detalle del sendero."}
-              </Text>
-
-              <View style={styles.starsRow}>
-                {[1, 2, 3, 4, 5].map((value) => (
-                  <Pressable
-                    key={value}
-                    disabled={hasReview}
-                    onPress={() => setRating(value)}
-                    style={styles.starButton}
-                  >
-                    <Text
-                      style={[
-                        styles.starText,
-                        value <= rating ? styles.starTextActive : null,
-                      ]}
-                    >
-                      ★
-                    </Text>
-                  </Pressable>
-                ))}
-              </View>
-
-              {!hasReview ? (
-                <>
-                  <TextInput
-                    multiline
-                    value={reviewText}
-                    onChangeText={setReviewText}
-                    placeholder="Comentario opcional"
-                    placeholderTextColor={colors.muted}
-                    style={styles.reviewInput}
-                  />
-                  <PrimaryButton
-                    label={isSavingReview ? "Guardando..." : "Guardar opinion"}
-                    onPress={saveReview}
-                    tone={rating > 0 ? "green" : "secondary"}
-                  />
-                </>
-              ) : null}
-
-              {reviewStatus ? (
-                <Text style={styles.reviewStatus}>{reviewStatus}</Text>
-              ) : null}
-            </Card>
-          ) : null}
-        </>
-      ) : (
-        <Card>
-          <Text style={styles.cardTitle}>No hay actividad finalizada</Text>
-          <Text style={styles.cardText}>
-            Todavia no encontramos una sesion guardada para mostrar en este
-            resumen.
-          </Text>
-        </Card>
-      )}
-
-      {isPausedWithoutProgress && trailId && session ? (
-        <PrimaryButton
-          label="Continuar ruta"
-          icon="play-outline"
-          onPress={() =>
-            router.push({
-              pathname: "/route-map",
-              params: {
-                active: "1",
-                id: String(trailId),
-                startedAt: String(session.started_at),
-              },
-            })
-          }
-        />
-      ) : null}
+      <CompletionSessionContent
+        canReview={canReview}
+        hasReview={hasReview}
+        isEndedEarly={isEndedEarly}
+        isPausedWithoutProgress={isPausedWithoutProgress}
+        isSavingReview={isSavingReview}
+        progressPercent={progressPercent}
+        rating={rating}
+        reviewStatus={reviewStatus}
+        reviewText={reviewText}
+        saveReview={saveReview}
+        session={session}
+        setRating={setRating}
+        setReviewText={setReviewText}
+        trackingPointCount={trackingPointCount}
+        trailId={trailId}
+      />
 
       <PrimaryButton
-        label={isPausedWithoutProgress ? "Ver actividades" : "Explorar otra ruta"}
-        tone={isPausedWithoutProgress ? "secondary" : "green"}
-        onPress={() => router.push(isPausedWithoutProgress ? "/mis-actividades" : "/explorar-rutas")}
+        label={completionCopy.finalActionLabel}
+        tone={completionCopy.finalActionTone}
+        onPress={() => router.push(completionCopy.finalActionRoute as any)}
       />
+        </ScrollView>
+      </KeyboardAvoidingView>
     </AppScreen>
+  );
+}
+
+function CompletionSessionContent({
+  canReview,
+  hasReview,
+  isEndedEarly,
+  isPausedWithoutProgress,
+  isSavingReview,
+  progressPercent,
+  rating,
+  reviewStatus,
+  reviewText,
+  saveReview,
+  session,
+  setRating,
+  setReviewText,
+  trackingPointCount,
+  trailId,
+}: {
+  canReview: boolean;
+  hasReview: boolean;
+  isEndedEarly: boolean;
+  isPausedWithoutProgress: boolean;
+  isSavingReview: boolean;
+  progressPercent: number | null;
+  rating: number;
+  reviewStatus: string | null;
+  reviewText: string;
+  saveReview: () => void;
+  session: SessionRow | null;
+  setRating: (rating: number) => void;
+  setReviewText: (text: string) => void;
+  trackingPointCount: number;
+  trailId: number | null;
+}) {
+  if (!session) return <EmptyCompletionCard />;
+
+  return (
+    <>
+      <CompletionMetrics session={session} progressPercent={progressPercent} />
+      <CompletionPerformanceCard
+        isEndedEarly={isEndedEarly}
+        isPausedWithoutProgress={isPausedWithoutProgress}
+        session={session}
+        trackingPointCount={trackingPointCount}
+      />
+      {canReview ? (
+        <ReviewCard
+          hasReview={hasReview}
+          isSavingReview={isSavingReview}
+          rating={rating}
+          reviewStatus={reviewStatus}
+          reviewText={reviewText}
+          saveReview={saveReview}
+          setRating={setRating}
+          setReviewText={setReviewText}
+        />
+      ) : null}
+      <ContinueRouteButton
+        isPausedWithoutProgress={isPausedWithoutProgress}
+        session={session}
+        trailId={trailId}
+      />
+    </>
+  );
+}
+
+function CompletionMetrics({
+  progressPercent,
+  session,
+}: {
+  progressPercent: number | null;
+  session: SessionRow;
+}) {
+  return (
+    <View style={styles.metricsRow}>
+      <Metric label="Distancia" value={formatDistance(session.distance ?? 0)} />
+      <Metric label="Tiempo" value={formatDuration(session.duration ?? 0)} />
+      <Metric
+        label="Progreso"
+        value={progressPercent !== null ? `${progressPercent}%` : "Guardado"}
+      />
+    </View>
+  );
+}
+
+function CompletionPerformanceCard({
+  isEndedEarly,
+  isPausedWithoutProgress,
+  session,
+  trackingPointCount,
+}: {
+  isEndedEarly: boolean;
+  isPausedWithoutProgress: boolean;
+  session: SessionRow;
+  trackingPointCount: number;
+}) {
+  return (
+    <Card tone="green">
+      <Text style={styles.cardTitle}>
+        {getPerformanceTitle(isPausedWithoutProgress, isEndedEarly)}
+      </Text>
+      <Text style={styles.cardText}>
+        {getPerformanceText(isPausedWithoutProgress, isEndedEarly, session)}
+      </Text>
+      {trackingPointCount > 0 ? (
+        <Text style={styles.cardMeta}>
+          {trackingPointCount} puntos GPS guardados para validar distancia y recorrido.
+        </Text>
+      ) : null}
+    </Card>
+  );
+}
+
+function ReviewCard({
+  hasReview,
+  isSavingReview,
+  rating,
+  reviewStatus,
+  reviewText,
+  saveReview,
+  setRating,
+  setReviewText,
+}: {
+  hasReview: boolean;
+  isSavingReview: boolean;
+  rating: number;
+  reviewStatus: string | null;
+  reviewText: string;
+  saveReview: () => void;
+  setRating: (rating: number) => void;
+  setReviewText: (text: string) => void;
+}) {
+  const reviewCopy = getReviewCopy(hasReview);
+
+  return (
+    <Card>
+      <Text style={styles.cardTitle}>{reviewCopy.title}</Text>
+      <Text style={styles.cardText}>{reviewCopy.text}</Text>
+      <View style={styles.starsRow}>
+        {[1, 2, 3, 4, 5].map((value) => (
+          <Pressable
+            key={value}
+            disabled={hasReview}
+            onPress={() => setRating(value)}
+            style={styles.starButton}
+          >
+            <Ionicons
+              name={value <= rating ? "star" : "star-outline"}
+              size={32}
+              color={value <= rating ? colors.warning : colors.border}
+            />
+          </Pressable>
+        ))}
+      </View>
+      {!hasReview ? (
+        <>
+          <TextInput
+            multiline
+            value={reviewText}
+            onChangeText={setReviewText}
+            placeholder="Comentario opcional"
+            placeholderTextColor={colors.muted}
+            style={styles.reviewInput}
+          />
+          <PrimaryButton
+            label={isSavingReview ? "Guardando..." : "Guardar opinion"}
+            onPress={saveReview}
+            tone={rating > 0 ? "green" : "secondary"}
+          />
+        </>
+      ) : null}
+      {reviewStatus ? (
+        <Text style={styles.reviewStatus}>{reviewStatus}</Text>
+      ) : null}
+    </Card>
+  );
+}
+
+function ContinueRouteButton({
+  isPausedWithoutProgress,
+  session,
+  trailId,
+}: {
+  isPausedWithoutProgress: boolean;
+  session: SessionRow;
+  trailId: number | null;
+}) {
+  if (!isPausedWithoutProgress || !trailId) return null;
+
+  return (
+    <PrimaryButton
+      label="Continuar ruta"
+      icon="play-outline"
+      onPress={() =>
+        router.push({
+          pathname: "/route-map",
+          params: {
+            active: "1",
+            id: String(trailId),
+            startedAt: String(session.started_at),
+          },
+        })
+      }
+    />
+  );
+}
+
+function EmptyCompletionCard() {
+  return (
+    <Card>
+      <Text style={styles.cardTitle}>No hay actividad finalizada</Text>
+      <Text style={styles.cardText}>
+        Todavia no encontramos una sesion guardada para mostrar en este resumen.
+      </Text>
+    </Card>
   );
 }
 
@@ -360,7 +601,35 @@ function getEndedEarlyText(session: SessionRow) {
   return "La salida queda finalizada, no pausada, aunque no tengamos el punto exacto del sendero.";
 }
 
+function getPerformanceTitle(
+  isPausedWithoutProgress: boolean,
+  isEndedEarly: boolean
+) {
+  if (isPausedWithoutProgress) return "Actividad pendiente";
+  return isEndedEarly ? "Punto alcanzado" : "Tu rendimiento";
+}
+
+function getPerformanceText(
+  isPausedWithoutProgress: boolean,
+  isEndedEarly: boolean,
+  session: SessionRow
+) {
+  if (isPausedWithoutProgress) {
+    return "La ruta quedo guardada en pausa. Podes continuarla desde Actividad o volver al mapa ahora.";
+  }
+
+  if (isEndedEarly) return getEndedEarlyText(session);
+
+  return "La actividad quedo guardada localmente y ya esta disponible en tus actividades recientes.";
+}
+
 const styles = StyleSheet.create({
+  keyboardAvoiding: {
+    flex: 1,
+  },
+  scrollContent: {
+    flexGrow: 1,
+  },
   successIcon: {
     alignItems: "center",
     alignSelf: "center",
@@ -434,13 +703,5 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     gap: 2,
     marginVertical: 12,
-  },
-  starText: {
-    color: colors.border,
-    fontSize: 31,
-    lineHeight: 35,
-  },
-  starTextActive: {
-    color: colors.warning,
   },
 });

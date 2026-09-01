@@ -1,5 +1,8 @@
 const request = require("supertest");
+const fs = require("fs");
+const path = require("path");
 const runMigrations = require("../src/migrate");
+const { query } = require("../src/db");
 const app = require("../src/server");
 
 beforeAll(async () => {
@@ -7,7 +10,7 @@ beforeAll(async () => {
 });
 
 describe("auth", () => {
-  test("registers the first user as admin and returns a token", async () => {
+  test("registers a user as admin and returns a token", async () => {
     const response = await request(app).post("/api/auth/register").send({
       name: "Ana Pereyra",
       email: "ana@misendero.app",
@@ -21,7 +24,7 @@ describe("auth", () => {
     expect(response.body.user.password_hash).toBeUndefined();
   });
 
-  test("registers a second user as a regular user", async () => {
+  test("registers every additional user as admin", async () => {
     const response = await request(app).post("/api/auth/register").send({
       name: "Luis Ferreyra",
       email: "luis@misendero.app",
@@ -30,7 +33,24 @@ describe("auth", () => {
     });
 
     expect(response.status).toBe(201);
-    expect(response.body.user.role).toBe("user");
+    expect(response.body.user.role).toBe("admin");
+  });
+
+  test("promotes existing regular users when migrations run", async () => {
+    await query("UPDATE users SET role = 'user' WHERE email = $1", [
+      "luis@misendero.app",
+    ]);
+
+    const promotionMigration = fs.readFileSync(
+      path.join(__dirname, "..", "migrations", "002_promote_all_users_to_admin.sql"),
+      "utf8"
+    );
+    await query(promotionMigration);
+
+    const { rows } = await query("SELECT role FROM users WHERE email = $1", [
+      "luis@misendero.app",
+    ]);
+    expect(rows[0].role).toBe("admin");
   });
 
   test("rejects registration without accepting terms", async () => {

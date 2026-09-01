@@ -30,6 +30,112 @@ const checklist = [
   "Aviso de salida enviado",
 ];
 
+const getSimulatedStartLocation = (trail: Trail | null) => {
+  if (!trail) return null;
+  if (
+    !trail.route_coordinates &&
+    (trail.center_lat === null || trail.center_lng === null)
+  ) {
+    return null;
+  }
+
+  const fallbackCenter: Coordinate = [
+    trail.center_lat ?? 0,
+    trail.center_lng ?? 0,
+  ];
+  const route = parseRouteCoordinates(trail.route_coordinates);
+
+  return getRouteStart(route, fallbackCenter);
+};
+
+const showMissingContactAlert = (trailId: number) => {
+  Alert.alert(
+    "Contacto de emergencia requerido",
+    "Antes de iniciar una ruta tenes que guardar un contacto de emergencia. Ese dato habilita el uso de SOS durante el recorrido.",
+    [
+      { text: "Cancelar", style: "cancel" },
+      {
+        text: "Completar contacto",
+        onPress: () =>
+          router.push({
+            pathname: "/contacto-seguridad",
+            params: { id: String(trailId), returnTo: "trail-start" },
+          }),
+      },
+    ]
+  );
+};
+
+const showFarFromStartAlert = (
+  trailId: number,
+  routeStartDistance: number,
+  beginRoute: () => void
+) => {
+  Alert.alert(
+    "Estas lejos del inicio",
+    `Estas a ${formatDistance(routeStartDistance)} del punto inicial. Te recomendamos acercarte al inicio real antes de comenzar.`,
+    [
+      { text: "Cancelar", style: "cancel" },
+      {
+        text: "Ver mapa",
+        onPress: () =>
+          router.push({
+            pathname: "/alerta-ruta",
+            params: {
+              id: String(trailId),
+              distance: String(Math.round(routeStartDistance)),
+              reason: "start",
+            },
+          }),
+      },
+      { text: "Comenzar igual", style: "destructive", onPress: beginRoute },
+    ]
+  );
+};
+
+const getContactStatusText = (
+  isContactLoading: boolean,
+  hasSafetyContact: boolean
+) => {
+  if (isContactLoading) return "Verificando contacto guardado...";
+  if (hasSafetyContact) {
+    return "Contacto cargado. SOS queda habilitado durante el recorrido.";
+  }
+  return "Completa un contacto de emergencia para poder iniciar y usar SOS.";
+};
+
+const getLocationStatusText = ({
+  permissionDenied,
+  isTestingLocation,
+  isLocationLoading,
+  error,
+  routeStartDistance,
+  isFarFromStart,
+}: {
+  permissionDenied: boolean;
+  isTestingLocation: boolean;
+  isLocationLoading: boolean;
+  error: string | null;
+  routeStartDistance: number | null;
+  isFarFromStart: boolean;
+}) => {
+  if (permissionDenied) {
+    return "Activa la ubicacion para validar si estas cerca del inicio.";
+  }
+  if (isTestingLocation) {
+    return "Modo testing activo: se simula que estas en el inicio de la ruta.";
+  }
+  if (isLocationLoading) return "Buscando tu ubicacion actual...";
+  if (error) return error;
+  if (routeStartDistance === null) {
+    return "Estamos validando tu distancia al punto inicial.";
+  }
+  if (isFarFromStart) {
+    return `Estas a ${formatDistance(routeStartDistance)} del inicio de la ruta.`;
+  }
+  return `Estas cerca del inicio: ${formatDistance(routeStartDistance)} aprox.`;
+};
+
 export default function Screen05TrailStart() {
   const insets = useSafeAreaInsets();
   const { id } = useLocalSearchParams<{ id?: string }>();
@@ -69,23 +175,10 @@ export default function Screen05TrailStart() {
     }, [])
   );
 
-  const simulatedStartLocation = useMemo(() => {
-    if (!trail) return null;
-    if (
-      !trail.route_coordinates &&
-      (trail.center_lat === null || trail.center_lng === null)
-    ) {
-      return null;
-    }
-
-    const fallbackCenter: Coordinate = [
-      trail.center_lat ?? 0,
-      trail.center_lng ?? 0,
-    ];
-    const route = parseRouteCoordinates(trail.route_coordinates);
-
-    return getRouteStart(route, fallbackCenter);
-  }, [trail]);
+  const simulatedStartLocation = useMemo(
+    () => getSimulatedStartLocation(trail),
+    [trail]
+  );
   const {
     location,
     isLoading: isLocationLoading,
@@ -102,6 +195,18 @@ export default function Screen05TrailStart() {
   const isFarFromStart =
     routeStartDistance !== null &&
     routeStartDistance > ROUTE_START_WARNING_METERS;
+  const contactStatusText = getContactStatusText(
+    isContactLoading,
+    hasSafetyContact
+  );
+  const locationStatusText = getLocationStatusText({
+    permissionDenied,
+    isTestingLocation,
+    isLocationLoading,
+    error,
+    routeStartDistance,
+    isFarFromStart,
+  });
 
   const beginRoute = () => {
     router.push({
@@ -118,45 +223,12 @@ export default function Screen05TrailStart() {
     if (isContactLoading) return;
 
     if (!hasSafetyContact) {
-      Alert.alert(
-        "Contacto de emergencia requerido",
-        "Antes de iniciar una ruta tenes que guardar un contacto de emergencia. Ese dato habilita el uso de SOS durante el recorrido.",
-        [
-          { text: "Cancelar", style: "cancel" },
-          {
-            text: "Completar contacto",
-            onPress: () =>
-              router.push({
-                pathname: "/contacto-seguridad",
-                params: { id: String(trailId), returnTo: "trail-start" },
-              }),
-          },
-        ]
-      );
+      showMissingContactAlert(trailId);
       return;
     }
 
     if (isFarFromStart && routeStartDistance !== null) {
-      Alert.alert(
-        "Estas lejos del inicio",
-        `Estas a ${formatDistance(routeStartDistance)} del punto inicial. Te recomendamos acercarte al inicio real antes de comenzar.`,
-        [
-          { text: "Cancelar", style: "cancel" },
-          {
-            text: "Ver mapa",
-            onPress: () =>
-              router.push({
-                pathname: "/alerta-ruta",
-                params: {
-                  id: String(trailId),
-                  distance: String(Math.round(routeStartDistance)),
-                  reason: "start",
-                },
-              }),
-          },
-          { text: "Comenzar igual", style: "destructive", onPress: beginRoute },
-        ]
-      );
+      showFarFromStartAlert(trailId, routeStartDistance, beginRoute);
       return;
     }
 
@@ -211,11 +283,7 @@ export default function Screen05TrailStart() {
           <View style={styles.warningText}>
             <Text style={styles.warningTitle}>Contacto de emergencia</Text>
             <Text style={styles.warningBody}>
-              {isContactLoading
-                ? "Verificando contacto guardado..."
-                : hasSafetyContact
-                  ? "Contacto cargado. SOS queda habilitado durante el recorrido."
-                  : "Completa un contacto de emergencia para poder iniciar y usar SOS."}
+              {contactStatusText}
             </Text>
           </View>
         </InfoCard>
@@ -229,19 +297,7 @@ export default function Screen05TrailStart() {
           <View style={styles.warningText}>
             <Text style={styles.warningTitle}>Ubicacion de inicio</Text>
             <Text style={styles.warningBody}>
-              {permissionDenied
-                ? "Activa la ubicacion para validar si estas cerca del inicio."
-                : isTestingLocation
-                  ? "Modo testing activo: se simula que estas en el inicio de la ruta."
-                : isLocationLoading
-                  ? "Buscando tu ubicacion actual..."
-                  : error
-                    ? error
-                    : routeStartDistance === null
-                      ? "Estamos validando tu distancia al punto inicial."
-                      : isFarFromStart
-                        ? `Estas a ${formatDistance(routeStartDistance)} del inicio de la ruta.`
-                        : `Estas cerca del inicio: ${formatDistance(routeStartDistance)} aprox.`}
+              {locationStatusText}
             </Text>
           </View>
         </InfoCard>

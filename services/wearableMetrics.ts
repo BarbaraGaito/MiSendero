@@ -5,6 +5,7 @@ import {
   predictPhysioRisk,
 } from "../ai/inferenceEngine";
 import {
+  FatigueLevel,
   HealthPredictionLevel,
   WearableConnection,
   WearableMetricSample,
@@ -411,7 +412,23 @@ const simulationScenarioRanges: Record<WearableSimulationScenario, ScenarioSimul
   },
 };
 
-const randomInRange = (min: number, max: number) => min + Math.random() * (max - min);
+const getSimulationRandomFraction = () => {
+  const cryptoObject = globalThis.crypto;
+
+  if (cryptoObject?.getRandomValues) {
+    const values = new Uint32Array(1);
+    cryptoObject.getRandomValues(values);
+    return values[0] / 0xffffffff;
+  }
+
+  return Date.now().toString().split("").reduce((seed, digit) => {
+    const nextSeed = (seed * 31 + Number(digit)) % 1000;
+    return nextSeed;
+  }, 0) / 1000;
+};
+
+const randomInRange = (min: number, max: number) =>
+  min + getSimulationRandomFraction() * (max - min);
 
 const getScenarioPoint = (
   range: ScenarioSimulationShape,
@@ -618,72 +635,127 @@ export const predictWearableHealth = (
     fatiguePrediction.confidence * 100
   )}% fatiga`;
 
-  let level: HealthPredictionLevel = "normal";
-  if (
-    criticalOxygen ||
-    criticalHeartRate ||
-    riskLabel === "alto" ||
-    sample.heartRateBpm >= 165 ||
-    fatigue === "alto"
-  ) {
-    level = "high";
-  } else if (riskLabel === "medio" || sample.heartRateBpm >= 145 || fatigue === "medio") {
-    level = "caution";
-  }
+  const level = getWearablePredictionLevel({
+    criticalHeartRate,
+    criticalOxygen,
+    fatigue,
+    heartRateBpm: sample.heartRateBpm,
+    riskLabel,
+  });
 
-  if (level === "high") {
-    return {
-      level,
-      title: criticalOxygen
-        ? "Saturacion de oxigeno critica"
-        : criticalHeartRate
-          ? "Frecuencia cardiaca critica"
-          : "Revisar intensidad",
-      message: criticalOxygen
-        ? `Tu oxigeno en sangre (${sample.oxygenSaturation}%) esta por debajo del umbral seguro. Deten la actividad, respira con calma y busca ayuda si no mejora.`
-        : criticalHeartRate
-          ? `Tu frecuencia cardiaca (${sample.heartRateBpm} bpm) es muy elevada. Deten la actividad de inmediato y evalua pedir ayuda.`
-          : "Tu esfuerzo actual aparece elevado. Pausa, hidratate y evalua como te sentis antes de continuar.",
-      fatigue,
-      fatigueConfidence: fatiguePrediction.confidence,
-      riskLabel,
-      riskConfidence: risk.confidence,
-      analysisSummary: `IA local: riesgo ${riskLabel}, fatiga ${fatigue}. Confianza ${confidenceText}.`,
-      factors,
-      recommendedAction: criticalOxygen || criticalHeartRate
+  const recommendedAction =
+    level === "high"
+      ? criticalOxygen || criticalHeartRate
         ? "Detenerse, descansar y evaluar SOS si los sintomas continuan."
-        : "Pausar, hidratarse y retomar solo si las metricas bajan.",
-    };
-  }
-
-  if (level === "caution") {
-    return {
-      level,
-      title: "Mantener atencion",
-      message:
-        "Las metricas indican esfuerzo moderado. Baja el ritmo si notas cansancio, mareos o falta de aire.",
-      fatigue,
-      fatigueConfidence: fatiguePrediction.confidence,
-      riskLabel,
-      riskConfidence: risk.confidence,
-      analysisSummary: `IA local: riesgo ${riskLabel}, fatiga ${fatigue}. Confianza ${confidenceText}.`,
-      factors,
-      recommendedAction: "Bajar el ritmo y volver a revisar las metricas en unos minutos.",
-    };
-  }
+        : "Pausar, hidratarse y retomar solo si las metricas bajan."
+      : level === "caution"
+        ? "Bajar el ritmo y volver a revisar las metricas en unos minutos."
+        : "Mantener el ritmo y seguir monitoreando durante el recorrido.";
 
   return {
     level,
-    title: "Metricas estables",
-    message:
-      "No se observan senales de esfuerzo elevado con las metricas disponibles.",
+    ...getWearablePredictionCopy(level, {
+      criticalHeartRate,
+      criticalOxygen,
+      heartRateBpm: sample.heartRateBpm,
+      oxygenSaturation: sample.oxygenSaturation,
+    }),
     fatigue,
     fatigueConfidence: fatiguePrediction.confidence,
     riskLabel,
     riskConfidence: risk.confidence,
     analysisSummary: `IA local: riesgo ${riskLabel}, fatiga ${fatigue}. Confianza ${confidenceText}.`,
     factors,
-    recommendedAction: "Mantener el ritmo y seguir monitoreando durante el recorrido.",
+    recommendedAction,
+  };
+};
+
+const getWearablePredictionLevel = ({
+  criticalHeartRate,
+  criticalOxygen,
+  fatigue,
+  heartRateBpm,
+  riskLabel,
+}: {
+  criticalHeartRate: boolean;
+  criticalOxygen: boolean;
+  fatigue: FatigueLevel;
+  heartRateBpm: number;
+  riskLabel: string;
+}): HealthPredictionLevel => {
+  if (criticalOxygen || criticalHeartRate) {
+    return "high";
+  }
+
+  if (
+    riskLabel === "alto" ||
+    riskLabel === "medio" ||
+    heartRateBpm >= 145 ||
+    fatigue === "alto" ||
+    fatigue === "medio"
+  ) {
+    return "caution";
+  }
+
+  return "normal";
+};
+
+const getWearablePredictionCopy = (
+  level: HealthPredictionLevel,
+  sample: {
+    criticalHeartRate: boolean;
+    criticalOxygen: boolean;
+    heartRateBpm: number;
+    oxygenSaturation: number | null;
+  }
+) => {
+  if (level === "high") return getHighWearablePredictionCopy(sample);
+  if (level === "caution") {
+    return {
+      title: sample.heartRateBpm >= 160 ? "Fatiga alta" : "Mantener atencion",
+      message:
+        sample.heartRateBpm >= 160
+          ? "Las metricas muestran esfuerzo alto. Hace una pausa, hidratate y continua solo si te sentis bien."
+          : "Las metricas indican esfuerzo moderado. Baja el ritmo si notas cansancio, mareos o falta de aire.",
+    };
+  }
+
+  return {
+    title: "Metricas estables",
+    message:
+      "No se observan senales de esfuerzo elevado con las metricas disponibles.",
+  };
+};
+
+const getHighWearablePredictionCopy = ({
+  criticalHeartRate,
+  criticalOxygen,
+  heartRateBpm,
+  oxygenSaturation,
+}: {
+  criticalHeartRate: boolean;
+  criticalOxygen: boolean;
+  heartRateBpm: number;
+  oxygenSaturation: number | null;
+}) => {
+  if (criticalOxygen) {
+    return {
+      title: "Saturacion de oxigeno critica",
+      message: `Tu oxigeno en sangre (${oxygenSaturation}%) esta por debajo del umbral seguro. Deten la actividad, respira con calma y busca ayuda si no mejora.`,
+    };
+  }
+
+  if (criticalHeartRate) {
+    return {
+      title: "Frecuencia cardiaca critica",
+      message: `Tu frecuencia cardiaca (${heartRateBpm} bpm) es muy elevada. Deten la actividad de inmediato y evalua pedir ayuda.`,
+    };
+  }
+
+  return {
+    title: "Revisar intensidad",
+    message:
+      "Tu esfuerzo actual aparece elevado. Pausa, hidratate y evalua como te sentis antes de continuar.",
   };
 };
 

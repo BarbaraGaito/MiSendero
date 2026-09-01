@@ -42,6 +42,13 @@ type TerrainModel = {
 
 const GRID_SIZE = 76;
 const EARTH_RADIUS_METERS = 6371000;
+const ROUTE_LIFT = 0.12;
+const ROUTE_SHADOW_RADIUS = 0.115;
+const ROUTE_SURFACE_RADIUS = 0.082;
+const ROUTE_CORE_RADIUS = 0.049;
+const ROUTE_CORE_COLOR = "#E85B35";
+const ROUTE_SURFACE_COLOR = "#FFF6EA";
+const ROUTE_SHADOW_COLOR = "#3A211A";
 
 const clamp = (value: number, min: number, max: number) =>
   Math.max(min, Math.min(max, value));
@@ -384,7 +391,7 @@ const makeTube = (
   color: string,
   opacity = 1
 ) => {
-  const curve = new THREE.CatmullRomCurve3(points);
+  const curve = new THREE.CatmullRomCurve3(points, false, "centripetal", 0.35);
   const geometry = new THREE.TubeGeometry(
     curve,
     Math.max(24, points.length * 10),
@@ -404,6 +411,179 @@ const makeTube = (
   mesh.castShadow = true;
 
   return mesh;
+};
+
+const makeRouteEndpointCap = (
+  position: THREE.Vector3,
+  radius: number,
+  color: string,
+  opacity = 1
+) => {
+  const geometry = new THREE.SphereGeometry(radius, 20, 12);
+  const material = new THREE.MeshStandardMaterial({
+    color,
+    emissive: color,
+    emissiveIntensity: radius < 0.06 ? 0.04 : 0.01,
+    opacity,
+    transparent: opacity < 1,
+    roughness: 0.62,
+  });
+  const cap = new THREE.Mesh(geometry, material);
+  cap.position.copy(position);
+  cap.castShadow = true;
+
+  return cap;
+};
+
+const makeRouteAnchor = (position: THREE.Vector3, markerColor: string) => {
+  const group = new THREE.Group();
+  const shadowMaterial = new THREE.MeshStandardMaterial({
+    color: ROUTE_SHADOW_COLOR,
+    opacity: 0.22,
+    transparent: true,
+    roughness: 0.72,
+  });
+  const surfaceMaterial = new THREE.MeshStandardMaterial({
+    color: ROUTE_SURFACE_COLOR,
+    roughness: 0.58,
+  });
+  const routeMaterial = new THREE.MeshStandardMaterial({
+    color: ROUTE_CORE_COLOR,
+    emissive: ROUTE_CORE_COLOR,
+    emissiveIntensity: 0.04,
+    roughness: 0.58,
+  });
+  const markerMaterial = new THREE.MeshStandardMaterial({
+    color: markerColor,
+    emissive: markerColor,
+    emissiveIntensity: 0.08,
+    roughness: 0.56,
+  });
+  const layers = [
+    { radius: 0.27, height: 0.035, material: shadowMaterial, y: -0.012 },
+    { radius: 0.215, height: 0.034, material: surfaceMaterial, y: 0.006 },
+    { radius: 0.155, height: 0.038, material: routeMaterial, y: 0.026 },
+    { radius: 0.07, height: 0.042, material: markerMaterial, y: 0.052 },
+  ];
+
+  group.position.copy(position);
+
+  layers.forEach((layer) => {
+    const disc = new THREE.Mesh(
+      new THREE.CylinderGeometry(layer.radius, layer.radius, layer.height, 32),
+      layer.material
+    );
+    disc.position.y = layer.y;
+    disc.castShadow = true;
+    disc.receiveShadow = true;
+    group.add(disc);
+  });
+
+  return group;
+};
+
+const makeStartPin = (position: THREE.Vector3) => {
+  const group = new THREE.Group();
+  const green = "#008955";
+  const darkGreen = "#075B3D";
+  const poleMaterial = new THREE.MeshStandardMaterial({
+    color: darkGreen,
+    roughness: 0.68,
+  });
+  const headMaterial = new THREE.MeshStandardMaterial({
+    color: green,
+    emissive: green,
+    emissiveIntensity: 0.12,
+    roughness: 0.5,
+  });
+  const pole = new THREE.Mesh(
+    new THREE.CylinderGeometry(0.022, 0.03, 0.45, 14),
+    poleMaterial
+  );
+  const head = new THREE.Mesh(new THREE.SphereGeometry(0.13, 24, 16), headMaterial);
+  const point = new THREE.Mesh(new THREE.ConeGeometry(0.095, 0.2, 24), headMaterial);
+
+  group.position.copy(position);
+  group.position.y += 0.07;
+  pole.position.y = 0.23;
+  head.position.y = 0.53;
+  point.position.y = 0.42;
+  point.rotation.x = Math.PI;
+  pole.castShadow = true;
+  head.castShadow = true;
+  point.castShadow = true;
+  group.add(pole);
+  group.add(head);
+  group.add(point);
+
+  return group;
+};
+
+const makeCheckeredFinishFlag = (position: THREE.Vector3) => {
+  const group = new THREE.Group();
+  const poleMaterial = new THREE.MeshStandardMaterial({
+    color: "#2C2A24",
+    metalness: 0.08,
+    roughness: 0.48,
+  });
+  const whiteMaterial = new THREE.MeshStandardMaterial({
+    color: "#FFFFFF",
+    roughness: 0.5,
+    side: THREE.DoubleSide,
+  });
+  const blackMaterial = new THREE.MeshStandardMaterial({
+    color: "#111111",
+    roughness: 0.5,
+    side: THREE.DoubleSide,
+  });
+  const borderMaterial = new THREE.MeshStandardMaterial({
+    color: "#F6F1E7",
+    roughness: 0.54,
+    side: THREE.DoubleSide,
+  });
+  const pole = new THREE.Mesh(
+    new THREE.CylinderGeometry(0.025, 0.032, 0.82, 14),
+    poleMaterial
+  );
+  const finial = new THREE.Mesh(new THREE.SphereGeometry(0.045, 16, 10), poleMaterial);
+  const flagBack = new THREE.Mesh(new THREE.PlaneGeometry(0.51, 0.285), borderMaterial);
+  const flagGroup = new THREE.Group();
+  const columns = 4;
+  const rows = 3;
+  const cellWidth = 0.12;
+  const cellHeight = 0.075;
+  const left = 0.075;
+  const top = 0.66;
+
+  group.position.copy(position);
+  group.position.y += 0.055;
+  pole.position.y = 0.41;
+  finial.position.y = 0.84;
+  flagBack.position.set(left + (columns * cellWidth) / 2, top - (rows * cellHeight) / 2, -0.004);
+  pole.castShadow = true;
+  finial.castShadow = true;
+  flagBack.castShadow = true;
+  group.add(pole);
+  group.add(finial);
+  group.add(flagBack);
+
+  for (let row = 0; row < rows; row += 1) {
+    for (let column = 0; column < columns; column += 1) {
+      const material = (row + column) % 2 === 0 ? whiteMaterial : blackMaterial;
+      const square = new THREE.Mesh(new THREE.PlaneGeometry(cellWidth, cellHeight), material);
+      square.position.set(
+        left + cellWidth * (column + 0.5),
+        top - cellHeight * (row + 0.5),
+        Math.sin((column / columns) * Math.PI) * 0.012
+      );
+      square.castShadow = true;
+      flagGroup.add(square);
+    }
+  }
+
+  group.add(flagGroup);
+
+  return group;
 };
 
 const makeMarker = (position: THREE.Vector3, color: string) => {
@@ -751,22 +931,35 @@ export function Terrain3DScene({
 
     const liftedRoute = model.route.map((point) => {
       const next = point.clone();
-      next.y += 0.12;
+      next.y += ROUTE_LIFT;
       return next;
     });
 
     if (liftedRoute.length > 1) {
-      handles.routeGroup.add(makeTube(liftedRoute, 0.115, "#3A211A", 0.34));
-      handles.routeGroup.add(makeTube(liftedRoute, 0.082, "#FFF6EA", 0.96));
-      handles.routeGroup.add(makeTube(liftedRoute, 0.049, "#E85B35"));
+      handles.routeGroup.add(makeTube(liftedRoute, ROUTE_SHADOW_RADIUS, ROUTE_SHADOW_COLOR, 0.34));
+      handles.routeGroup.add(makeTube(liftedRoute, ROUTE_SURFACE_RADIUS, ROUTE_SURFACE_COLOR, 0.96));
+      handles.routeGroup.add(makeTube(liftedRoute, ROUTE_CORE_RADIUS, ROUTE_CORE_COLOR));
+
+      [liftedRoute[0], liftedRoute[liftedRoute.length - 1]].forEach((point) => {
+        handles.routeGroup.add(
+          makeRouteEndpointCap(point, ROUTE_SHADOW_RADIUS, ROUTE_SHADOW_COLOR, 0.34)
+        );
+        handles.routeGroup.add(
+          makeRouteEndpointCap(point, ROUTE_SURFACE_RADIUS, ROUTE_SURFACE_COLOR, 0.96)
+        );
+        handles.routeGroup.add(makeRouteEndpointCap(point, ROUTE_CORE_RADIUS, ROUTE_CORE_COLOR));
+      });
     }
 
     if (liftedRoute[0]) {
-      handles.routeGroup.add(makeMarker(liftedRoute[0], "#008955"));
+      handles.routeGroup.add(makeRouteAnchor(liftedRoute[0], "#008955"));
+      handles.routeGroup.add(makeStartPin(liftedRoute[0]));
     }
 
     if (liftedRoute.length > 1) {
-      handles.routeGroup.add(makeMarker(liftedRoute[liftedRoute.length - 1], "#EF3B3B"));
+      const finishPoint = liftedRoute[liftedRoute.length - 1];
+      handles.routeGroup.add(makeRouteAnchor(finishPoint, ROUTE_CORE_COLOR));
+      handles.routeGroup.add(makeCheckeredFinishFlag(finishPoint));
     }
 
     if (current.userCoordinate) {

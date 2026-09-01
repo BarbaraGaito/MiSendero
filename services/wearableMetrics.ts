@@ -1,5 +1,9 @@
 import * as SQLite from "expo-sqlite";
-import { predictFatigueLevel, predictPhysioRisk } from "../ai/inferenceEngine";
+import {
+  predictFatigue,
+  predictFatigueLevel,
+  predictPhysioRisk,
+} from "../ai/inferenceEngine";
 import {
   HealthPredictionLevel,
   WearableConnection,
@@ -338,7 +342,13 @@ type SimulationRange = {
   kcalMax: number;
 };
 
-const simulationScenarioRanges: Record<WearableSimulationScenario, SimulationRange> = {
+type ScenarioSimulationShape = SimulationRange & {
+  hrDrift: number;
+  speedDrift: number;
+  spo2Drift: number;
+};
+
+const simulationScenarioRanges: Record<WearableSimulationScenario, ScenarioSimulationShape> = {
   normal: {
     hrMin: 78,
     hrMax: 98,
@@ -350,6 +360,9 @@ const simulationScenarioRanges: Record<WearableSimulationScenario, SimulationRan
     stepsMax: 3200,
     kcalMin: 140,
     kcalMax: 260,
+    hrDrift: 2,
+    speedDrift: 0.2,
+    spo2Drift: 0.2,
   },
   esfuerzo_moderado: {
     hrMin: 138,
@@ -362,6 +375,9 @@ const simulationScenarioRanges: Record<WearableSimulationScenario, SimulationRan
     stepsMax: 4000,
     kcalMin: 260,
     kcalMax: 400,
+    hrDrift: 8,
+    speedDrift: -0.4,
+    spo2Drift: -0.8,
   },
   fatiga_alta: {
     hrMin: 160,
@@ -374,6 +390,9 @@ const simulationScenarioRanges: Record<WearableSimulationScenario, SimulationRan
     stepsMax: 4800,
     kcalMin: 380,
     kcalMax: 520,
+    hrDrift: 12,
+    speedDrift: -0.8,
+    spo2Drift: -1.8,
   },
   riesgo_fisiologico: {
     hrMin: 178,
@@ -386,10 +405,42 @@ const simulationScenarioRanges: Record<WearableSimulationScenario, SimulationRan
     stepsMax: 5200,
     kcalMin: 420,
     kcalMax: 600,
+    hrDrift: 14,
+    speedDrift: -0.6,
+    spo2Drift: -3,
   },
 };
 
 const randomInRange = (min: number, max: number) => min + Math.random() * (max - min);
+
+const getScenarioPoint = (
+  range: ScenarioSimulationShape,
+  progress: number,
+  wobbleSeed: number
+) => {
+  const wobble = Math.sin(wobbleSeed * 1.73) * 0.5 + Math.cos(wobbleSeed * 0.91) * 0.5;
+  const heartRateBpm = Math.round(
+    randomInRange(range.hrMin, range.hrMax) + range.hrDrift * progress + wobble * 3
+  );
+  const speedKmh = Number(
+    Math.max(
+      0.3,
+      randomInRange(range.speedMin, range.speedMax) + range.speedDrift * progress + wobble * 0.16
+    ).toFixed(1)
+  );
+  const oxygenSaturation = Number(
+    clampMetric(
+      randomInRange(range.spo2Min, range.spo2Max) + range.spo2Drift * progress - Math.abs(wobble) * 0.35,
+      78,
+      100
+    ).toFixed(1)
+  );
+
+  return { heartRateBpm, speedKmh, oxygenSaturation };
+};
+
+const clampMetric = (value: number, min: number, max: number) =>
+  Math.max(min, Math.min(max, value));
 
 export const createDevelopmentMetricSample = async (
   scenario: WearableSimulationScenario = "normal"
@@ -412,6 +463,39 @@ export const createDevelopmentMetricSample = async (
     oxygenSaturation,
     recordedAt: now,
   });
+};
+
+export const createDevelopmentMetricSequence = async (
+  scenario: WearableSimulationScenario = "normal",
+  sampleCount = 8
+) => {
+  const connection = await getWearableConnection();
+  const provider = connection.provider || "development_simulator";
+  const now = Date.now();
+  const range = simulationScenarioRanges[scenario] ?? simulationScenarioRanges.normal;
+  const resolvedSampleCount = Math.max(3, Math.min(12, Math.round(sampleCount)));
+  const spacingMs = 2 * 60 * 1000;
+
+  for (let index = 0; index < resolvedSampleCount; index += 1) {
+    const progress = resolvedSampleCount <= 1 ? 1 : index / (resolvedSampleCount - 1);
+    const point = getScenarioPoint(range, progress, now / 1000 + index);
+    const steps = Math.round(
+      randomInRange(range.stepsMin, range.stepsMax) * (0.78 + progress * 0.34)
+    );
+    const activeEnergyKcal = Number(
+      (randomInRange(range.kcalMin, range.kcalMax) * (0.82 + progress * 0.32)).toFixed(1)
+    );
+
+    await saveWearableMetricSample({
+      provider,
+      heartRateBpm: point.heartRateBpm,
+      steps,
+      activeEnergyKcal,
+      speedKmh: point.speedKmh,
+      oxygenSaturation: point.oxygenSaturation,
+      recordedAt: now - (resolvedSampleCount - index - 1) * spacingMs,
+    });
+  }
 };
 
 export const linkNativeWearable = async () => {
@@ -483,6 +567,11 @@ export const predictWearableHealth = (
 ) => {
   if (!sample?.heartRateBpm) return null;
 
+  const fatiguePrediction = predictFatigue({
+    hr: sample.heartRateBpm,
+    speedKmh: sample.speedKmh ?? 0,
+    elapsedMinutes,
+  });
   const fatigue = predictFatigueLevel({
     hr: sample.heartRateBpm,
     speedKmh: sample.speedKmh ?? 0,
@@ -490,25 +579,55 @@ export const predictWearableHealth = (
   });
   const risk = predictPhysioRisk({
     hr: sample.heartRateBpm,
+    spo2: sample.oxygenSaturation,
     speedKmh: sample.speedKmh ?? 0,
     elapsedMinutes,
     fatigue,
   });
+  const riskLabel: "bajo" | "medio" | "alto" =
+    risk.label === "alto" || risk.label === "medio" || risk.label === "bajo"
+      ? risk.label
+      : "bajo";
 
   const criticalOxygen =
     sample.oxygenSaturation !== null && sample.oxygenSaturation < 90;
   const criticalHeartRate = sample.heartRateBpm >= 180;
+  const factors = [
+    sample.heartRateBpm >= 180
+      ? "Frecuencia cardiaca critica"
+      : sample.heartRateBpm >= 165
+        ? "Frecuencia cardiaca muy elevada"
+        : sample.heartRateBpm >= 145
+          ? "Frecuencia cardiaca elevada"
+          : "Frecuencia cardiaca estable",
+    sample.oxygenSaturation !== null && sample.oxygenSaturation < 90
+      ? "Oxigeno bajo"
+      : sample.oxygenSaturation !== null && sample.oxygenSaturation < 94
+        ? "Oxigeno en descenso"
+        : "Oxigeno estable",
+    fatigue === "alto"
+      ? "Fatiga estimada alta"
+      : fatigue === "medio"
+        ? "Fatiga estimada media"
+        : "Fatiga estimada baja",
+    sample.speedKmh !== null && sample.speedKmh < 2
+      ? "Ritmo reducido"
+      : "Ritmo sostenido",
+  ];
+  const confidenceText = `${Math.round(risk.confidence * 100)}% riesgo / ${Math.round(
+    fatiguePrediction.confidence * 100
+  )}% fatiga`;
 
   let level: HealthPredictionLevel = "normal";
   if (
     criticalOxygen ||
     criticalHeartRate ||
-    risk.label === "alto" ||
+    riskLabel === "alto" ||
     sample.heartRateBpm >= 165 ||
     fatigue === "alto"
   ) {
     level = "high";
-  } else if (risk.label === "medio" || sample.heartRateBpm >= 145 || fatigue === "medio") {
+  } else if (riskLabel === "medio" || sample.heartRateBpm >= 145 || fatigue === "medio") {
     level = "caution";
   }
 
@@ -526,6 +645,14 @@ export const predictWearableHealth = (
           ? `Tu frecuencia cardiaca (${sample.heartRateBpm} bpm) es muy elevada. Deten la actividad de inmediato y evalua pedir ayuda.`
           : "Tu esfuerzo actual aparece elevado. Pausa, hidratate y evalua como te sentis antes de continuar.",
       fatigue,
+      fatigueConfidence: fatiguePrediction.confidence,
+      riskLabel,
+      riskConfidence: risk.confidence,
+      analysisSummary: `IA local: riesgo ${riskLabel}, fatiga ${fatigue}. Confianza ${confidenceText}.`,
+      factors,
+      recommendedAction: criticalOxygen || criticalHeartRate
+        ? "Detenerse, descansar y evaluar SOS si los sintomas continuan."
+        : "Pausar, hidratarse y retomar solo si las metricas bajan.",
     };
   }
 
@@ -536,6 +663,12 @@ export const predictWearableHealth = (
       message:
         "Las metricas indican esfuerzo moderado. Baja el ritmo si notas cansancio, mareos o falta de aire.",
       fatigue,
+      fatigueConfidence: fatiguePrediction.confidence,
+      riskLabel,
+      riskConfidence: risk.confidence,
+      analysisSummary: `IA local: riesgo ${riskLabel}, fatiga ${fatigue}. Confianza ${confidenceText}.`,
+      factors,
+      recommendedAction: "Bajar el ritmo y volver a revisar las metricas en unos minutos.",
     };
   }
 
@@ -545,6 +678,12 @@ export const predictWearableHealth = (
     message:
       "No se observan senales de esfuerzo elevado con las metricas disponibles.",
     fatigue,
+    fatigueConfidence: fatiguePrediction.confidence,
+    riskLabel,
+    riskConfidence: risk.confidence,
+    analysisSummary: `IA local: riesgo ${riskLabel}, fatiga ${fatigue}. Confianza ${confidenceText}.`,
+    factors,
+    recommendedAction: "Mantener el ritmo y seguir monitoreando durante el recorrido.",
   };
 };
 

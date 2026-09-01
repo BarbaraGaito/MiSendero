@@ -7,7 +7,7 @@
   {
     "route_name": "Cerro Llao Llao y Villa Tacul",
     "difficulty": "Media",
-    "confidence": 0.98
+    "confidence": 1
   },
   {
     "route_name": "Laguna de los Tres",
@@ -27,12 +27,12 @@
   {
     "route_name": "Senda Costera",
     "difficulty": "Media",
-    "confidence": 0.98
+    "confidence": 0.59
   },
   {
     "route_name": "Hito XXIV",
     "difficulty": "Media",
-    "confidence": 1
+    "confidence": 0.58
   },
   {
     "route_name": "Cerro Guanaco",
@@ -42,7 +42,7 @@
   {
     "route_name": "Pampa Alta",
     "difficulty": "Media",
-    "confidence": 0.96
+    "confidence": 1
   },
   {
     "route_name": "Sendero Macuco",
@@ -57,7 +57,7 @@
   {
     "route_name": "Canon de Talampaya",
     "difficulty": "Baja",
-    "confidence": 1
+    "confidence": 0.99
   },
   {
     "route_name": "Paseo Inferior",

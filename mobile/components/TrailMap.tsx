@@ -80,6 +80,7 @@ type TrailMapProps = {
   initialPerspective?: boolean;
   showDetailsCard?: boolean;
   showUserLocation?: boolean;
+  showMapNotices?: boolean;
   controlsTopOffset?: number;
   allowSatellite?: boolean;
   selectedCoordinate?: Coordinate | null;
@@ -378,6 +379,7 @@ export function TrailMap({
   initialPerspective = false,
   showDetailsCard = true,
   showUserLocation = true,
+  showMapNotices = true,
   controlsTopOffset = 12,
   allowSatellite = true,
   selectedCoordinate = null,
@@ -857,6 +859,17 @@ export function TrailMap({
     };
   }, [layer, layout, mapState.points, terrainElevationGain, trail?.name]);
 
+  const showLocationNotice =
+    showMapNotices && showUserLocation && (permissionDenied || locationError);
+  const showTestingNotice = showMapNotices && isTestingLocation;
+  const floatingNoticeTop = controlsTopOffset + 144;
+  const locationNoticeOffset = showLocationNotice ? 54 : 0;
+  const testingNoticeOffset = showTestingNotice ? 44 : 0;
+  const testingNoticeTop = floatingNoticeTop + locationNoticeOffset;
+  const selectionHintTop =
+    floatingNoticeTop + locationNoticeOffset + testingNoticeOffset;
+  const terrainOverlayTop = controlsTopOffset + 96;
+
   const onLayout = (event: LayoutChangeEvent) => {
     const { width, height } = event.nativeEvent.layout;
     setLayout({ width, height });
@@ -866,7 +879,7 @@ export function TrailMap({
   const isInitialTileLoad = cachedTiles.length === 0;
   const loaderTop = isInitialTileLoad
     ? Math.max(128, layout.height / 2 - 24)
-    : controlsTopOffset + 112;
+    : floatingNoticeTop;
 
   return (
     <View
@@ -928,7 +941,10 @@ export function TrailMap({
               {terrainElevationGain} m desnivel aprox. - {trail?.difficulty || "Dificultad a confirmar"}
             </Text>
           </View>
-          <View pointerEvents="none" style={styles.terrain3dOverlay}>
+          <View
+            pointerEvents="none"
+            style={[styles.terrain3dOverlay, { top: terrainOverlayTop }]}
+          >
             <View style={styles.terrain3dPill}>
               <View style={styles.terrain3dRouteSwatch} />
               <Text style={styles.terrain3dPillText}>
@@ -1271,7 +1287,7 @@ export function TrailMap({
         </Pressable>
       </View>
 
-      {showDetailsCard ? (
+      {showDetailsCard && !isPerspective ? (
         <View style={styles.mapCard}>
           <Text style={styles.mapLabel}>{trail?.name || "Mapa del recorrido"}</Text>
           <Text style={styles.mapMeta}>
@@ -1291,8 +1307,8 @@ export function TrailMap({
         </Text>
       ) : null}
 
-      {showUserLocation && (permissionDenied || locationError) ? (
-        <View style={styles.locationWarning}>
+      {showLocationNotice ? (
+        <View style={[styles.locationWarning, { top: floatingNoticeTop }]}>
           <Ionicons name="location-outline" size={14} color={colors.danger} />
           <Text style={styles.locationWarningText}>
             Activa la ubicacion para ver tu posicion.
@@ -1300,15 +1316,18 @@ export function TrailMap({
         </View>
       ) : null}
 
-      {isTestingLocation ? (
-        <View style={styles.testingBadge}>
+      {showTestingNotice ? (
+        <View style={[styles.testingBadge, { top: testingNoticeTop }]}>
           <Ionicons name="flask-outline" size={14} color={colors.greenDark} />
           <Text style={styles.testingBadgeText}>Testing</Text>
         </View>
       ) : null}
 
       {onSelectCoordinate && !isPerspective ? (
-        <View pointerEvents="none" style={styles.selectionHint}>
+        <View
+          pointerEvents="none"
+          style={[styles.selectionHint, { top: selectionHintTop }]}
+        >
           <Ionicons name="pin-outline" size={14} color={colors.greenDark} />
           <Text style={styles.selectionHintText}>Toca sobre el sendero</Text>
         </View>
@@ -1416,7 +1435,6 @@ const styles = StyleSheet.create({
     gap: 8,
     left: 14,
     position: "absolute",
-    top: 14,
     zIndex: 5,
   },
   terrain3dPill: {
@@ -1672,7 +1690,6 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     position: "absolute",
     right: 12,
-    top: 112,
     zIndex: 7,
   },
   locationWarningText: {
@@ -1693,7 +1710,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 7,
     position: "absolute",
-    top: 112,
     zIndex: 7,
   },
   testingBadgeText: {
@@ -1711,7 +1727,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 7,
     position: "absolute",
-    top: 154,
     zIndex: 7,
   },
   selectionHintText: {

@@ -16,7 +16,7 @@ import {
   getAuthSession,
   saveAuthSession,
 } from "../../services/authSession";
-import { Profile, WearableRuntimeStatus } from "../../types";
+import { EmergencyContact, Profile, WearableRuntimeStatus } from "../../types";
 import {
   getPrivacyPreferences,
   PrivacyPreferences,
@@ -51,7 +51,11 @@ import {
   runSync,
   SyncSummary,
 } from "../../services/syncQueue";
-import { EmergencyContact } from "../../types";
+import { getWearableRuntimeStatus } from "../../services/wearableMetrics";
+import {
+  adminAiModelMetrics,
+  AiTrainingMetrics,
+} from "../../ai/modelMetrics";
 
 const emptySessionsSummary: SessionsSummary = {
   totalDistance: 0,
@@ -90,7 +94,15 @@ const formatStorage = (sizeMb: number) => {
     maximumFractionDigits: 0,
   })} MB`;
 };
-import { getWearableRuntimeStatus } from "../../services/wearableMetrics";
+
+const formatPercent = (value: number) => `${Math.round(value * 100)}%`;
+
+const formatDate = (value: string) =>
+  new Date(value).toLocaleDateString("es-AR", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "2-digit",
+  });
 
 export default function ProfileScreen() {
   const [profile, setProfile] = useState<Profile | null>(null);
@@ -513,6 +525,21 @@ export default function ProfileScreen() {
       </Card>
 
       {isAdmin ? (
+        <Card tone="secondary">
+          <Text style={styles.cardTitle}>Metricas IA</Text>
+          <Text style={styles.privacyText}>
+            Entrenamientos con augmentation aprobado solo en train. El test se
+            mantiene 100% real; los guardrails comparan train, test y
+            validacion cruzada para detectar overfitting, underfitting y falta
+            de datos.
+          </Text>
+          {adminAiModelMetrics.map((metrics) => (
+            <AiModelMetricBlock key={metrics.dataset.name} metrics={metrics} />
+          ))}
+        </Card>
+      ) : null}
+
+      {isAdmin ? (
         <Card tone="orange">
           <Text style={styles.cardTitle}>Simular situaciones de ruta</Text>
           <Text style={styles.privacyText}>
@@ -526,6 +553,11 @@ export default function ProfileScreen() {
             onPress={() =>
               updateTestingLocationMode(!testingLocationMode.enabled)
             }
+          />
+          <SettingRow
+            label="Laboratorio wearable"
+            value={getWearableLabel(wearableRuntime)}
+            onPress={() => router.push("/reloj-salud")}
           />
         </Card>
       ) : null}
@@ -548,6 +580,74 @@ function SyncMetric({ label, value }: { label: string; value: number }) {
       <Text style={styles.syncMetricLabel}>{label}</Text>
     </View>
   );
+}
+
+function AiModelMetricBlock({ metrics }: { metrics: AiTrainingMetrics }) {
+  const test = metrics.metrics.test;
+  const cv = metrics.metrics.cross_validation;
+
+  return (
+    <View style={styles.aiModelBlock}>
+      <View style={styles.aiModelHeader}>
+        <View style={styles.aiModelTitleGroup}>
+          <Text style={styles.aiModelTitle}>{metrics.dataset.name}</Text>
+          <Text style={styles.aiModelMeta}>
+            {metrics.dataset.declared_source}
+          </Text>
+          <Text style={styles.aiModelMeta}>
+            {metrics.dataset.rows_total} reales - {metrics.augmentation.synthetic_rows} sinteticas - {formatDate(metrics.trained_at)}
+          </Text>
+        </View>
+        <Text
+          style={[
+            styles.aiStatus,
+            metrics.guardrails.status === "ok" && styles.aiStatusOk,
+            metrics.guardrails.status === "review_recommended" && styles.aiStatusWarning,
+          ]}
+        >
+          {getAiStatusLabel(metrics.guardrails.status)}
+        </Text>
+      </View>
+
+      <View style={styles.aiMetricGrid}>
+        <AiMetric label="Accuracy" value={formatPercent(test.accuracy)} />
+        <AiMetric label="Precision" value={formatPercent(test.precision_macro)} />
+        <AiMetric label="Recall" value={formatPercent(test.recall_macro)} />
+        <AiMetric label="F1 macro" value={formatPercent(test.f1_macro)} />
+        <AiMetric
+          label="CV F1"
+          value={cv ? `${formatPercent(cv.f1_macro_mean)} +/- ${formatPercent(cv.f1_macro_std)}` : "N/D"}
+        />
+        <AiMetric
+          label="Gap F1"
+          value={formatPercent(metrics.guardrails.train_test_f1_gap)}
+        />
+        <AiMetric
+          label="Test real"
+          value={`${metrics.dataset.rows_test} filas`}
+        />
+      </View>
+
+      <Text style={styles.aiWarningText}>
+        {metrics.guardrails.warnings[0] || "Sin alertas de performance."}
+      </Text>
+    </View>
+  );
+}
+
+function AiMetric({ label, value }: { label: string; value: string }) {
+  return (
+    <View style={styles.aiMetric}>
+      <Text style={styles.aiMetricValue}>{value}</Text>
+      <Text style={styles.aiMetricLabel}>{label}</Text>
+    </View>
+  );
+}
+
+function getAiStatusLabel(status: AiTrainingMetrics["guardrails"]["status"]) {
+  if (status === "ok") return "OK";
+  if (status === "review_recommended") return "Revisar";
+  return "Mas datos";
 }
 
 function getWearableLabel(runtime: WearableRuntimeStatus | null) {
@@ -649,5 +749,84 @@ const styles = StyleSheet.create({
     fontSize: 11,
     fontWeight: "800",
     marginTop: 2,
+  },
+  aiModelBlock: {
+    borderTopColor: colors.line,
+    borderTopWidth: 1,
+    marginTop: 12,
+    paddingTop: 12,
+  },
+  aiModelHeader: {
+    alignItems: "flex-start",
+    flexDirection: "row",
+    gap: 10,
+    justifyContent: "space-between",
+  },
+  aiModelTitleGroup: {
+    flex: 1,
+    minWidth: 0,
+  },
+  aiModelTitle: {
+    color: colors.ink,
+    fontSize: 15,
+    fontWeight: "900",
+  },
+  aiModelMeta: {
+    color: colors.muted,
+    fontSize: 12,
+    fontWeight: "700",
+    marginTop: 2,
+  },
+  aiStatus: {
+    backgroundColor: colors.orangeSoft,
+    borderRadius: 12,
+    color: colors.orange,
+    fontSize: 11,
+    fontWeight: "900",
+    overflow: "hidden",
+    paddingHorizontal: 9,
+    paddingVertical: 5,
+  },
+  aiStatusOk: {
+    backgroundColor: colors.mint,
+    color: colors.greenDark,
+  },
+  aiStatusWarning: {
+    backgroundColor: colors.orangeSoft,
+    color: colors.orange,
+  },
+  aiMetricGrid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 8,
+    marginTop: 10,
+  },
+  aiMetric: {
+    backgroundColor: colors.white,
+    borderColor: colors.border,
+    borderRadius: 12,
+    borderWidth: 1,
+    flexBasis: "30%",
+    flexGrow: 1,
+    minWidth: 94,
+    padding: 9,
+  },
+  aiMetricValue: {
+    color: colors.ink,
+    fontSize: 14,
+    fontWeight: "900",
+  },
+  aiMetricLabel: {
+    color: colors.muted,
+    fontSize: 10,
+    fontWeight: "800",
+    marginTop: 2,
+  },
+  aiWarningText: {
+    color: colors.muted,
+    fontSize: 12,
+    fontWeight: "700",
+    lineHeight: 17,
+    marginTop: 9,
   },
 });

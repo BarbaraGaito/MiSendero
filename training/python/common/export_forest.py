@@ -8,6 +8,7 @@ route-difficulty Node script) can traverse without any ML library.
 
 from __future__ import annotations
 
+from datetime import datetime, timezone
 from typing import Any
 
 import numpy as np
@@ -35,15 +36,21 @@ def _export_tree(tree_clf: DecisionTreeClassifier) -> dict[str, Any]:
 
 
 def export_random_forest(
-    clf, feature_order: list[str], classes: list[str]
+    clf, feature_order: list[str], classes: list[str], metadata: dict[str, Any] | None = None
 ) -> dict[str, Any]:
-    return {
+    payload = {
         "type": "random_forest_json",
         "version": 1,
+        "trained_at": datetime.now(timezone.utc).isoformat(),
         "feature_order": list(feature_order),
         "classes": list(classes),
         "trees": [_export_tree(estimator) for estimator in clf.estimators_],
     }
+
+    if metadata:
+        payload.update(metadata)
+
+    return payload
 
 
 def export_metrics(y_true, y_pred, labels: list[str]) -> dict[str, Any]:

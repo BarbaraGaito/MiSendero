@@ -29,7 +29,15 @@ export interface RandomForestTree {
 export interface RandomForestModel {
   type: "random_forest_json";
   version: number;
+  trained_at?: string;
   feature_order: string[];
   classes: string[];
   trees: RandomForestTree[];
+  training_summary?: {
+    dataset_rows: number;
+    synthetic_rows?: number;
+    test_accuracy: number;
+    test_f1_macro: number;
+    guardrail_status: string;
+  };
 }

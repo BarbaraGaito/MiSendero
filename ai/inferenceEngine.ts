@@ -89,8 +89,15 @@ export const predictFatigueLevel = (input: {
   return "bajo";
 };
 
+// A missing/unmeasured reading defaults to a normal, healthy saturation
+// instead of 0 - unlike elevation or speed, 0 is not a neutral "no data"
+// value for SpO2, it reads as a critical desaturation and would push the
+// model toward "alto" for anyone without a pulse oximeter connected.
+const DEFAULT_SPO2_PERCENT = 97;
+
 export const predictPhysioRisk = (input: {
   hr: number;
+  spo2?: number | null;
   speedKmh: number;
   elapsedMinutes: number;
   elevationGainM?: number | null;
@@ -98,6 +105,7 @@ export const predictPhysioRisk = (input: {
 }): OfflinePrediction => {
   return predictRandomForest(toForestModel(riskModel), {
     hr: input.hr,
+    spo2: input.spo2 ?? DEFAULT_SPO2_PERCENT,
     speed_kmh: input.speedKmh,
     elapsed_minutes: input.elapsedMinutes,
     elevation_gain_m: input.elevationGainM ?? 0,

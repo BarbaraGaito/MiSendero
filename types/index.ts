@@ -53,6 +53,12 @@ export interface WearableHealthPrediction {
   title: string;
   message: string;
   fatigue: FatigueLevel;
+  fatigueConfidence: number;
+  riskLabel: "bajo" | "medio" | "alto";
+  riskConfidence: number;
+  analysisSummary: string;
+  factors: string[];
+  recommendedAction: string;
 }
 
 export interface WearableRuntimeStatus {

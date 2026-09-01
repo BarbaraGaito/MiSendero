@@ -4,7 +4,7 @@ This is a separate training project for fixed route difficulty metadata.
 
 The React Native app does not bundle this model and does not calculate route difficulty offline.
 Training happens in Python (`training/python/route_difficulty/train.py`, a
-`sklearn.ensemble.RandomForestClassifier`); this project's `index.js` only *applies* that trained
+`sklearn.ensemble.RandomForestClassifier`); this project's `index.js` only applies that trained
 model to `datasets/trail_features.csv` and writes the results to `output/predictions.json`.
 
 `index.js` does not read or write any database. The backend is being migrated to PostgreSQL, so
@@ -14,14 +14,16 @@ outside this script's scope.
 ## Inputs
 
 - `datasets/route_difficulty_training.csv`: reference rows used to train the classifier (read
-  directly by `training/python/route_difficulty/train.py`, augmented with synthetic rows — see
-  `training/python/common/augment.py` and `ai/datasets/README.md` for the synthetic-data
-  rationale — and fit with a RandomForest).
+  directly by `training/python/route_difficulty/train.py` and fit with a RandomForest). The
+  current flow applies approved synthetic data augmentation only to the training fold after the
+  real train/test split; held-out test metrics are always calculated on real rows.
 - `datasets/trail_features.csv`: route-level features evaluated against the trained model by
   `index.js`.
 
-Both files must avoid personal data and exact user location. Route names are public route
-metadata and are used only to match existing backend records.
+The PFI document declares this dataset as OpenStreetMap `sac_scale` labels combined with NASA
+SRTM elevation-derived features. Both local CSV files are processed prototype inputs aligned to
+that declaration and must avoid personal data and exact user location. Route names are public
+route metadata and are used only to match existing backend records.
 
 Expected features:
 
@@ -47,9 +49,10 @@ Labels:
    ```
 
    This writes `training/python/route_difficulty/output/model.forest.json` (the model
-   `index.js` reads), `metrics.json` (accuracy, confusion matrix, per-class report), and
-   `model.joblib` (the raw fitted estimator, for auditability). `npm run train:ai` from the
-   repository root runs this together with the fatigue and physio-risk models.
+   `index.js` reads), `metrics.json` (train/test accuracy, precision, recall, F1,
+   cross-validation, augmentation metadata, guardrail warnings, confusion matrix, per-class
+   report), and `model.joblib` (the raw fitted estimator, for auditability). `npm run train:ai`
+   from the repository root runs this together with the fatigue and physio-risk models.
 
 2. Evaluate every trail in `datasets/trail_features.csv` against the trained model:
 
@@ -67,6 +70,6 @@ Labels:
    and never touches any database.
 
 Applying `output/predictions.json` to the backend's `trails.difficulty` field is intentionally out
-of scope for this script — the backend's storage is being migrated in parallel, and a human (or a
+of scope for this script - the backend's storage is being migrated in parallel, and a human (or a
 separate, future script written against whatever the backend's finished schema looks like) should
 review and apply the predictions.

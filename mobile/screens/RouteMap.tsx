@@ -1,13 +1,23 @@
 import { Ionicons } from "@expo/vector-icons";
 import * as Network from "expo-network";
 import { router, useLocalSearchParams } from "expo-router";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import { getTrailById, getTrailReports, getTrailWeather } from "../../services/api";
 import { getVerifiedOfflineMapByTrailId } from "../../services/offlineMaps";
-import { getWearableRuntimeStatus } from "../../services/wearableMetrics";
-import { Trail, TrailReport, TrailWeather, WearableRuntimeStatus } from "../../types";
+import {
+  createDevelopmentMetricSequence,
+  getWearableRuntimeStatus,
+  saveWearableConnection,
+} from "../../services/wearableMetrics";
+import {
+  Trail,
+  TrailReport,
+  TrailWeather,
+  WearableRuntimeStatus,
+  WearableSimulationScenario,
+} from "../../types";
 import { TrailMap } from "../components/TrailMap";
 import { useDeviceLocation } from "../hooks/useDeviceLocation";
 import { DeviceLocation } from "../../services/deviceLocation";
@@ -32,6 +42,16 @@ import {
 } from "../components/MiSenderoUI";
 
 const GPS_NOISE_FLOOR_METERS = 2;
+const routeSimulationOptions: Array<{
+  id: WearableSimulationScenario;
+  title: string;
+  icon: keyof typeof Ionicons.glyphMap;
+}> = [
+  { id: "normal", title: "Normal", icon: "walk-outline" },
+  { id: "esfuerzo_moderado", title: "Esfuerzo", icon: "trending-up-outline" },
+  { id: "fatiga_alta", title: "Fatiga", icon: "battery-dead-outline" },
+  { id: "riesgo_fisiologico", title: "Riesgo", icon: "alert-circle-outline" },
+];
 
 export default function Screen04RouteMap() {
   const insets = useSafeAreaInsets();
@@ -54,6 +74,10 @@ export default function Screen04RouteMap() {
   const [error, setError] = useState<string | null>(null);
   const [wearableRuntime, setWearableRuntime] =
     useState<WearableRuntimeStatus | null>(null);
+  const [testingWearableScenario, setTestingWearableScenario] =
+    useState<WearableSimulationScenario>("esfuerzo_moderado");
+  const [testingWearableMessage, setTestingWearableMessage] = useState<string | null>(null);
+  const [isSimulatingWearable, setIsSimulatingWearable] = useState(false);
   const [trackedDistanceMeters, setTrackedDistanceMeters] = useState(0);
   const [lastGpsRecordedAt, setLastGpsRecordedAt] = useState<number | null>(null);
   const lastTrackedLocationRef = useRef<DeviceLocation | null>(null);
@@ -144,6 +168,18 @@ export default function Screen04RouteMap() {
     };
   }, [trailId]);
 
+  const refreshWearableMetrics = useCallback(async () => {
+    const elapsedMinutes = Math.max(
+      0,
+      Math.floor((Date.now() - startedAtMs) / 60000)
+    );
+    const status = await getWearableRuntimeStatus(elapsedMinutes).catch(
+      () => null
+    );
+
+    return status;
+  }, [startedAtMs]);
+
   useEffect(() => {
     if (!isActiveRoute) {
       setWearableRuntime(null);
@@ -152,26 +188,20 @@ export default function Screen04RouteMap() {
 
     let isMounted = true;
 
-    const refreshWearableMetrics = async () => {
-      const elapsedMinutes = Math.max(
-        0,
-        Math.floor((Date.now() - startedAtMs) / 60000)
-      );
-      const status = await getWearableRuntimeStatus(elapsedMinutes).catch(
-        () => null
-      );
-
-      if (isMounted) setWearableRuntime(status);
+    const refreshIfMounted = async () => {
+      const status = await refreshWearableMetrics();
+      if (!isMounted) return;
+      setWearableRuntime(status);
     };
 
-    refreshWearableMetrics();
-    const interval = setInterval(refreshWearableMetrics, 12_000);
+    refreshIfMounted();
+    const interval = setInterval(refreshIfMounted, 12_000);
 
     return () => {
       isMounted = false;
       clearInterval(interval);
     };
-  }, [isActiveRoute, startedAtMs]);
+  }, [isActiveRoute, refreshWearableMetrics]);
 
   const routePoints = useMemo(
     () => parseRouteCoordinates(trail?.route_coordinates),
@@ -314,9 +344,41 @@ export default function Screen04RouteMap() {
     !isTestingLocation &&
     routeDeviationMeters !== null &&
     routeDeviationMeters > ROUTE_DEVIATION_WARNING_METERS;
+  const simulateWearableScenario = async (scenario: WearableSimulationScenario) => {
+    if (isSimulatingWearable) return;
+
+    if (wearableRuntime?.status === "requires_consent") {
+      setTestingWearableMessage("Activa datos sensibles en Perfil para ver el analisis IA.");
+      return;
+    }
+
+    setTestingWearableScenario(scenario);
+    setIsSimulatingWearable(true);
+    try {
+      if (!wearableRuntime?.connection.linked) {
+        await saveWearableConnection("development_simulator", true, true);
+      }
+      await createDevelopmentMetricSequence(scenario, 8);
+      const status = await refreshWearableMetrics();
+      setWearableRuntime(status);
+      setTestingWearableMessage(
+        `Simulacion ${routeSimulationOptions.find((option) => option.id === scenario)?.title.toLowerCase()} aplicada.`
+      );
+    } catch {
+      setTestingWearableMessage("No pudimos generar la simulacion wearable.");
+    } finally {
+      setIsSimulatingWearable(false);
+    }
+  };
   const activeTop = Math.max(22, insets.top + 14);
   const activeBannerTop = activeTop + 68;
-  const mapControlsTop = activeBannerTop + (isOffRoute ? 116 : 8);
+  const hasStatusBanner =
+    isLoading || Boolean(error) || (!isLoading && !error && locationPermissionDenied);
+  const primaryBannerHeight = isOffRoute ? 76 : hasStatusBanner ? 64 : 0;
+  const testingBannerTop = activeBannerTop + primaryBannerHeight + 10;
+  const testingBannerHeight = isTestingLocation ? 158 : 0;
+  const mapControlsTop =
+    activeBannerTop + primaryBannerHeight + testingBannerHeight + 18;
   const hasBlockingReport = reports.some((report) => report.blocks_path);
   const severeReports = reports.filter((report) =>
     ["Alta", "Critica"].includes(report.severity)
@@ -331,6 +393,7 @@ export default function Screen04RouteMap() {
           immersive
           initialPerspective
           showDetailsCard={false}
+          showMapNotices={false}
           controlsTopOffset={mapControlsTop}
           allowSatellite={hasInternetConnection}
         />
@@ -391,44 +454,114 @@ export default function Screen04RouteMap() {
         ) : null}
 
         {isTestingLocation ? (
-          <View style={[styles.testingBanner, { top: activeBannerTop + 74 }]}>
-            <Ionicons name="flask-outline" size={17} color={colors.greenDark} />
-            <Text style={styles.testingBannerText}>
-              Modo testing: ubicacion y avance simulados
+          <View style={[styles.testingBanner, { top: testingBannerTop }]}>
+            <View style={styles.testingBannerHeader}>
+              <Ionicons name="flask-outline" size={17} color={colors.greenDark} />
+              <View style={styles.testingBannerTextBox}>
+                <Text style={styles.testingBannerText}>
+                  Testing activo
+                </Text>
+                <Text style={styles.testingBannerHint}>
+                  Simula ubicacion y situaciones del wearable.
+                </Text>
+              </View>
+              <Pressable
+                accessibilityRole="button"
+                onPress={() => router.push("/reloj-salud")}
+                style={styles.testingSettingsButton}
+              >
+                <Ionicons name="settings-outline" size={16} color={colors.greenDark} />
+              </Pressable>
+            </View>
+            <View style={styles.testingScenarioRow}>
+              {routeSimulationOptions.map((option) => {
+                const selected = testingWearableScenario === option.id;
+                return (
+                  <Pressable
+                    accessibilityRole="button"
+                    disabled={isSimulatingWearable}
+                    key={option.id}
+                    onPress={() => simulateWearableScenario(option.id)}
+                    style={[
+                      styles.testingScenarioButton,
+                      selected && styles.testingScenarioButtonSelected,
+                      isSimulatingWearable && styles.testingScenarioButtonDisabled,
+                    ]}
+                  >
+                    <Ionicons
+                      name={option.icon}
+                      size={15}
+                      color={selected ? colors.white : colors.greenDark}
+                    />
+                    <Text
+                      style={[
+                        styles.testingScenarioText,
+                        selected && styles.testingScenarioTextSelected,
+                      ]}
+                    >
+                      {option.title}
+                    </Text>
+                  </Pressable>
+                );
+              })}
+            </View>
+            <Text style={styles.testingBannerStatus}>
+              {isSimulatingWearable
+                ? "Generando ventana de metricas..."
+                : testingWearableMessage || "Toca un escenario para probar el analisis IA."}
             </Text>
           </View>
         ) : null}
 
-        {wearableRuntime?.prediction && wearableRuntime.latestSample ? (
-          <View
-            style={[
-              styles.wearableBanner,
-              wearableRuntime.prediction.level === "high" && styles.wearableBannerHigh,
-              wearableRuntime.prediction.level === "caution" && styles.wearableBannerCaution,
-              { bottom: Math.max(92, insets.bottom + 86) },
-            ]}
-          >
-            <Ionicons
-              name="pulse-outline"
-              size={18}
-              color={
-                wearableRuntime.prediction.level === "high"
-                  ? colors.danger
-                  : colors.green
-              }
-            />
-            <View style={styles.wearableText}>
-              <Text style={styles.wearableTitle}>
-                {wearableRuntime.latestSample.heartRateBpm} bpm - {wearableRuntime.prediction.title}
-              </Text>
-              <Text numberOfLines={2} style={styles.wearableBody}>
-                {wearableRuntime.prediction.message}
-              </Text>
-            </View>
-          </View>
-        ) : null}
-
         <View style={[styles.activeFooter, { paddingBottom: Math.max(16, insets.bottom + 10) }]}>
+          {wearableRuntime?.prediction && wearableRuntime.latestSample ? (
+            <View
+              style={[
+                styles.wearableAnalysisPanel,
+                wearableRuntime.prediction.level === "high" && styles.wearableBannerHigh,
+                wearableRuntime.prediction.level === "caution" && styles.wearableBannerCaution,
+              ]}
+            >
+              <View style={styles.wearableAnalysisHeader}>
+                <View style={styles.wearableAnalysisIcon}>
+                  <Ionicons
+                    name="sparkles-outline"
+                    size={18}
+                    color={
+                      wearableRuntime.prediction.level === "high"
+                        ? colors.danger
+                        : colors.green
+                    }
+                  />
+                </View>
+                <View style={styles.wearableText}>
+                  <Text style={styles.wearableEyebrow}>Analisis IA en vivo</Text>
+                  <Text style={styles.wearableTitle}>
+                    {wearableRuntime.latestSample.heartRateBpm} bpm - {wearableRuntime.prediction.title}
+                  </Text>
+                </View>
+              </View>
+              <View style={styles.wearableMetricRow}>
+                <WearableChip label="Riesgo" value={wearableRuntime.prediction.riskLabel} />
+                <WearableChip label="Fatiga" value={wearableRuntime.prediction.fatigue} />
+                <WearableChip
+                  label="Conf."
+                  value={`${Math.round(wearableRuntime.prediction.riskConfidence * 100)}%`}
+                />
+              </View>
+              <Text numberOfLines={2} style={styles.wearableBody}>
+                {wearableRuntime.prediction.recommendedAction}
+              </Text>
+              <View style={styles.wearableFactorRow}>
+                {wearableRuntime.prediction.factors.slice(0, 3).map((factor) => (
+                  <Text key={factor} numberOfLines={1} style={styles.wearableFactor}>
+                    {factor}
+                  </Text>
+                ))}
+              </View>
+            </View>
+          ) : null}
+
           <Pressable
             onPress={() =>
               router.push({
@@ -744,6 +877,15 @@ function WeatherMetric({
   );
 }
 
+function WearableChip({ label, value }: { label: string; value: string }) {
+  return (
+    <View style={styles.wearableChip}>
+      <Text style={styles.wearableChipLabel}>{label}</Text>
+      <Text style={styles.wearableChipValue}>{value}</Text>
+    </View>
+  );
+}
+
 const styles = StyleSheet.create({
   activeShell: {
     backgroundColor: colors.softer,
@@ -835,13 +977,10 @@ const styles = StyleSheet.create({
     fontWeight: "900",
   },
   testingBanner: {
-    alignItems: "center",
     backgroundColor: "rgba(223,243,231,0.97)",
     borderColor: "rgba(13,122,69,0.24)",
     borderRadius: 16,
     borderWidth: 1,
-    flexDirection: "row",
-    gap: 8,
     left: 14,
     paddingHorizontal: 12,
     paddingVertical: 9,
@@ -849,26 +988,97 @@ const styles = StyleSheet.create({
     right: 14,
     zIndex: 21,
   },
+  testingBannerHeader: {
+    alignItems: "center",
+    flexDirection: "row",
+    gap: 8,
+  },
+  testingBannerTextBox: {
+    flex: 1,
+    minWidth: 0,
+  },
   testingBannerText: {
     color: colors.greenDark,
-    flex: 1,
     fontSize: 12,
     fontWeight: "900",
   },
-  wearableBanner: {
+  testingBannerHint: {
+    color: colors.muted,
+    fontSize: 11,
+    fontWeight: "700",
+    marginTop: 1,
+  },
+  testingSettingsButton: {
     alignItems: "center",
+    backgroundColor: "rgba(255,255,255,0.76)",
+    borderRadius: 12,
+    height: 32,
+    justifyContent: "center",
+    width: 32,
+  },
+  testingScenarioRow: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 7,
+    marginTop: 9,
+  },
+  testingScenarioButton: {
+    alignItems: "center",
+    backgroundColor: "rgba(255,255,255,0.78)",
+    borderColor: colors.border,
+    borderRadius: 12,
+    borderWidth: 1,
+    flexBasis: "22%",
+    flexDirection: "row",
+    flexGrow: 1,
+    gap: 4,
+    justifyContent: "center",
+    minHeight: 34,
+    minWidth: 72,
+    paddingHorizontal: 6,
+  },
+  testingScenarioButtonSelected: {
+    backgroundColor: colors.green,
+    borderColor: colors.green,
+  },
+  testingScenarioButtonDisabled: {
+    opacity: 0.68,
+  },
+  testingScenarioText: {
+    color: colors.greenDark,
+    fontSize: 11,
+    fontWeight: "900",
+  },
+  testingScenarioTextSelected: {
+    color: colors.white,
+  },
+  testingBannerStatus: {
+    color: colors.greenDark,
+    fontSize: 11,
+    fontWeight: "800",
+    marginTop: 8,
+  },
+  wearableAnalysisPanel: {
     backgroundColor: "rgba(255,255,255,0.96)",
     borderColor: colors.border,
     borderRadius: 16,
     borderWidth: 1,
-    flexDirection: "row",
-    gap: 9,
-    left: 14,
+    marginBottom: 10,
     paddingHorizontal: 12,
     paddingVertical: 10,
-    position: "absolute",
-    right: 14,
-    zIndex: 19,
+  },
+  wearableAnalysisHeader: {
+    alignItems: "center",
+    flexDirection: "row",
+    gap: 9,
+  },
+  wearableAnalysisIcon: {
+    alignItems: "center",
+    backgroundColor: "rgba(223,243,231,0.9)",
+    borderRadius: 14,
+    height: 36,
+    justifyContent: "center",
+    width: 36,
   },
   wearableBannerCaution: {
     backgroundColor: "rgba(255,244,216,0.97)",
@@ -887,12 +1097,63 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: "900",
   },
+  wearableEyebrow: {
+    color: colors.green,
+    fontSize: 10,
+    fontWeight: "900",
+    marginBottom: 1,
+    textTransform: "uppercase",
+  },
   wearableBody: {
     color: colors.muted,
     fontSize: 11,
     fontWeight: "700",
     lineHeight: 15,
+    marginTop: 8,
+  },
+  wearableMetricRow: {
+    flexDirection: "row",
+    gap: 7,
+    marginTop: 9,
+  },
+  wearableChip: {
+    backgroundColor: colors.page,
+    borderColor: colors.border,
+    borderRadius: 12,
+    borderWidth: 1,
+    flex: 1,
+    minWidth: 0,
+    paddingHorizontal: 8,
+    paddingVertical: 7,
+  },
+  wearableChipLabel: {
+    color: colors.muted,
+    fontSize: 9,
+    fontWeight: "900",
+    textTransform: "uppercase",
+  },
+  wearableChipValue: {
+    color: colors.ink,
+    fontSize: 12,
+    fontWeight: "900",
     marginTop: 2,
+  },
+  wearableFactorRow: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 6,
+    marginTop: 8,
+  },
+  wearableFactor: {
+    backgroundColor: "rgba(223,243,231,0.82)",
+    borderRadius: 999,
+    color: colors.greenDark,
+    flexShrink: 1,
+    fontSize: 10,
+    fontWeight: "900",
+    maxWidth: "48%",
+    paddingHorizontal: 8,
+    paddingVertical: 4,
   },
   activeFooter: {
     backgroundColor: "rgba(246,250,247,0.96)",

@@ -1,9 +1,14 @@
-import { Platform } from "react-native";
+﻿import { Platform } from "react-native";
 import { WearableMetricSample, WearableProvider } from "../types";
 
 type HealthKitModule = typeof import("@kingstinct/react-native-healthkit");
 type HealthConnectModule = typeof import("react-native-health-connect");
 type HealthConnectRecordType = Parameters<HealthConnectModule["readRecords"]>[0];
+
+type HealthKitQuantitySample = {
+  quantity?: number;
+  endDate?: Date;
+};
 
 export interface NativeWearableReadOptions {
   startAt?: number;
@@ -157,35 +162,35 @@ const appleHealthKitBridge: NativeWearableBridge = {
 
     const [heartRate, steps, activeEnergy, walkingSpeed, oxygenSaturation] =
       await Promise.all([
-        readQuantitySafely(() =>
+        readQuantitySafely<HealthKitQuantitySample>(() =>
           healthKit.getMostRecentQuantitySample(
             "HKQuantityTypeIdentifierHeartRate",
             "count/min"
-          )
+          ) as Promise<HealthKitQuantitySample>
         ),
-        readQuantitySafely(() =>
+        readQuantitySafely<HealthKitQuantitySample>(() =>
           healthKit.getMostRecentQuantitySample(
             "HKQuantityTypeIdentifierStepCount",
             "count"
-          )
+          ) as Promise<HealthKitQuantitySample>
         ),
-        readQuantitySafely(() =>
+        readQuantitySafely<HealthKitQuantitySample>(() =>
           healthKit.getMostRecentQuantitySample(
             "HKQuantityTypeIdentifierActiveEnergyBurned",
             "kcal"
-          )
+          ) as Promise<HealthKitQuantitySample>
         ),
-        readQuantitySafely(() =>
+        readQuantitySafely<HealthKitQuantitySample>(() =>
           healthKit.getMostRecentQuantitySample(
             "HKQuantityTypeIdentifierWalkingSpeed",
             "m/s"
-          )
+          ) as Promise<HealthKitQuantitySample>
         ),
-        readQuantitySafely(() =>
+        readQuantitySafely<HealthKitQuantitySample>(() =>
           healthKit.getMostRecentQuantitySample(
             "HKQuantityTypeIdentifierOxygenSaturation",
             "%"
-          )
+          ) as Promise<HealthKitQuantitySample>
         ),
       ]);
 
@@ -204,7 +209,7 @@ const appleHealthKitBridge: NativeWearableBridge = {
     return {
       provider: "apple_healthkit" as const,
       heartRateBpm: heartRate?.quantity ?? null,
-      steps: steps ? Math.round(steps.quantity) : null,
+      steps: steps?.quantity !== undefined ? Math.round(steps.quantity) : null,
       activeEnergyKcal: activeEnergy?.quantity ?? null,
       speedKmh:
         walkingSpeed?.quantity !== undefined

@@ -19,18 +19,32 @@ import {
   trailImages,
 } from "../components/MiSenderoUI";
 import { getTrails } from "../../services/api";
+import { getOfflineMaps } from "../../services/offlineMaps";
 import { Trail } from "../../types";
 
 export default function OfflineMapsSearchScreen() {
   const [query, setQuery] = useState("");
   const [trails, setTrails] = useState<Trail[]>([]);
+  const [downloadedTrailIds, setDownloadedTrailIds] = useState<Set<number>>(
+    () => new Set()
+  );
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const loadTrails = async () => {
       try {
-        setTrails(await getTrails());
+        const [loadedTrails, offlineMaps] = await Promise.all([
+          getTrails(),
+          getOfflineMaps(),
+        ]);
+        const downloadedIds = offlineMaps
+          .filter(isOfflineMapAvailable)
+          .map((map) => map.trailId ?? map.trail?.id)
+          .filter((trailId): trailId is number => typeof trailId === "number");
+
+        setTrails(loadedTrails);
+        setDownloadedTrailIds(new Set(downloadedIds));
         setError(null);
       } catch (loadError) {
         setError("No pudimos cargar las zonas disponibles.");
@@ -92,7 +106,11 @@ export default function OfflineMapsSearchScreen() {
           </Card>
         ) : (
           visibleTrails.map((trail) => (
-            <TrailDownloadCard key={trail.id} trail={trail} />
+            <TrailDownloadCard
+              isDownloaded={downloadedTrailIds.has(trail.id)}
+              key={trail.id}
+              trail={trail}
+            />
           ))
         )}
       </ScrollView>
@@ -115,7 +133,13 @@ export default function OfflineMapsSearchScreen() {
   );
 }
 
-function TrailDownloadCard({ trail }: { trail: Trail }) {
+function TrailDownloadCard({
+  isDownloaded,
+  trail,
+}: {
+  isDownloaded: boolean;
+  trail: Trail;
+}) {
   const distance = trail.distance_km ? `${trail.distance_km} km` : "Distancia sin cargar";
   const duration = trail.duration || "Duracion sin cargar";
 
@@ -137,19 +161,31 @@ function TrailDownloadCard({ trail }: { trail: Trail }) {
         </Text>
       </View>
 
-      <PrimaryButton
-        label="Descargar"
-        icon="download-outline"
-        onPress={() =>
-          router.push({
-            pathname: "/offline-descarga",
-            params: { id: String(trail.id) },
-          })
-        }
-      />
+      {isDownloaded ? (
+        <View style={styles.downloadedBadge}>
+          <Ionicons name="checkmark-circle-outline" size={18} color={colors.green} />
+          <Text style={styles.downloadedText}>Mapa descargado</Text>
+        </View>
+      ) : (
+        <PrimaryButton
+          label="Descargar"
+          icon="download-outline"
+          onPress={() =>
+            router.push({
+              pathname: "/offline-descarga",
+              params: { id: String(trail.id) },
+            })
+          }
+        />
+      )}
     </Card>
   );
 }
+
+const isOfflineMapAvailable = (map: Awaited<ReturnType<typeof getOfflineMaps>>[number]) =>
+  map.status === "disponible" &&
+  map.totalTiles > 0 &&
+  map.downloadedTiles >= map.totalTiles;
 
 const styles = StyleSheet.create({
   searchRow: {
@@ -233,6 +269,21 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: "700",
     marginTop: 6,
+  },
+  downloadedBadge: {
+    alignItems: "center",
+    backgroundColor: colors.primarySoft,
+    borderRadius: 18,
+    flexDirection: "row",
+    gap: 7,
+    justifyContent: "center",
+    minHeight: 52,
+    paddingHorizontal: 14,
+  },
+  downloadedText: {
+    color: colors.greenDark,
+    fontSize: 15,
+    fontWeight: "900",
   },
   bottomButtons: {
     flex: 1,

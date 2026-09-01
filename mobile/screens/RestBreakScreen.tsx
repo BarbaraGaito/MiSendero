@@ -1,10 +1,40 @@
-import { router, useLocalSearchParams } from "expo-router";
+﻿import { router, useLocalSearchParams } from "expo-router";
 import React, { useEffect, useMemo, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { getTrailById } from "../../services/api";
 import { getWearableRuntimeStatus } from "../../services/wearableMetrics";
 import { Trail, WearableRuntimeStatus } from "../../types";
 import { AppScreen, Card, PrimaryButton, ScreenTitle, colors } from "../components/MiSenderoUI";
+
+const getFallbackRouteTotalMeters = (trail: Trail | null) =>
+  trail?.distance_km ? trail.distance_km * 1000 : 0;
+
+const getProgressState = (
+  trail: Trail | null,
+  totalMeters?: string,
+  traveledMeters?: string
+) => {
+  const parsedTotalMeters = Number(totalMeters);
+  const parsedTraveledMeters = Number(traveledMeters);
+  const realTotalMeters =
+    Number.isFinite(parsedTotalMeters) && parsedTotalMeters > 0
+      ? parsedTotalMeters
+      : getFallbackRouteTotalMeters(trail);
+  const realTraveledMeters =
+    Number.isFinite(parsedTraveledMeters) && parsedTraveledMeters >= 0
+      ? Math.min(parsedTraveledMeters, realTotalMeters || parsedTraveledMeters)
+      : null;
+  const remainingMeters =
+    realTraveledMeters !== null && realTotalMeters > 0
+      ? Math.max(0, realTotalMeters - realTraveledMeters)
+      : null;
+  const progressPercent =
+    realTraveledMeters !== null && realTotalMeters > 0
+      ? Math.min(100, Math.round((realTraveledMeters / realTotalMeters) * 100))
+      : 0;
+
+  return { realTotalMeters, realTraveledMeters, remainingMeters, progressPercent };
+};
 
 export default function RestBreakScreen() {
   const { id, startedAt, totalMeters, traveledMeters } = useLocalSearchParams<{
@@ -17,8 +47,6 @@ export default function RestBreakScreen() {
   const fallbackStartedAt = useMemo(() => Date.now(), []);
   const startedAtMs = Number(startedAt) || fallbackStartedAt;
   const pauseStartedAt = useMemo(() => Date.now(), []);
-  const parsedTotalMeters = Number(totalMeters);
-  const parsedTraveledMeters = Number(traveledMeters);
   const [trail, setTrail] = useState<Trail | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [wearableRuntime, setWearableRuntime] =
@@ -42,24 +70,8 @@ export default function RestBreakScreen() {
       .catch(() => setWearableRuntime(null));
   }, [activeMinutes]);
 
-  const realTotalMeters =
-    Number.isFinite(parsedTotalMeters) && parsedTotalMeters > 0
-      ? parsedTotalMeters
-      : trail?.distance_km
-        ? trail.distance_km * 1000
-        : 0;
-  const realTraveledMeters =
-    Number.isFinite(parsedTraveledMeters) && parsedTraveledMeters >= 0
-      ? Math.min(parsedTraveledMeters, realTotalMeters || parsedTraveledMeters)
-      : null;
-  const remainingMeters =
-    realTraveledMeters !== null && realTotalMeters > 0
-      ? Math.max(0, realTotalMeters - realTraveledMeters)
-      : null;
-  const progressPercent =
-    realTraveledMeters !== null && realTotalMeters > 0
-      ? Math.min(100, Math.round((realTraveledMeters / realTotalMeters) * 100))
-      : 0;
+  const { realTotalMeters, realTraveledMeters, remainingMeters, progressPercent } =
+    getProgressState(trail, totalMeters, traveledMeters);
   const averageSpeedKmh =
     realTraveledMeters !== null && activeMinutes > 0
       ? (realTraveledMeters / 1000) / (activeMinutes / 60)

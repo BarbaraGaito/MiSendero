@@ -1,6 +1,12 @@
 import { bluetoothSimulator } from "../services/bluetoothSimulator";
 
 let interval: any;
+let simulationSeed = Date.now() % 2_147_483_647;
+
+const nextSimulationRatio = () => {
+  simulationSeed = (simulationSeed * 48_271) % 2_147_483_647;
+  return simulationSeed / 2_147_483_647;
+};
 
 export const startWatch = () => {
   stopWatch();
@@ -16,7 +22,7 @@ export const stopWatch = () => {
 };
 
 const emitHeartRate = () => {
-  const fakeHR = Math.floor(Math.random() * 75) + 88;
+  const fakeHR = Math.floor(nextSimulationRatio() * 75) + 88;
 
   bluetoothSimulator.send({
     hr: fakeHR,

@@ -92,7 +92,7 @@ verificacion de cobertura, estados de progreso, cancelacion, reintentos y elimin
 mapas almacenados.
 
 Sobre esos tiles, `mobile/components/TrailMap.tsx` agrega informacion visual generada en
-la app: ruta principal con halo y flechas de avance, curvas de nivel, trazas secundarias,
+la app: ruta principal continua con halo de alto contraste, curvas de nivel, trazas secundarias,
 arroyo/valle de referencia y etiquetas de terreno. Estas capas no reemplazan los tiles ni
 requieren red, por lo que siguen visibles sobre mapas descargados.
 

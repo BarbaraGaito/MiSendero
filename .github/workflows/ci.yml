@@ -22,10 +22,10 @@ jobs:
       SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
 
       - name: Setup NodeJS
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444
         with:
           node-version: 22
           cache: npm
@@ -34,10 +34,10 @@ jobs:
             backend/package-lock.json
 
       - name: Install App Dependencies
-        run: npm ci
+        run: npm ci --ignore-scripts
 
       - name: Run App Type Check
-        run: npx tsc --noEmit
+        run: npm run typecheck
 
       - name: Run App Tests
         run: npm test -- --runInBand
@@ -46,7 +46,7 @@ jobs:
         run: npm test -- --coverage --runInBand
 
       - name: Install API Dependencies
-        run: npm ci
+        run: npm ci --ignore-scripts
         working-directory: backend
 
       - name: Run API Tests
@@ -59,7 +59,7 @@ jobs:
 
       - name: Quality Scan
         if: env.SONAR_TOKEN != ''
-        uses: SonarSource/sonarqube-scan-action@v6
+        uses: SonarSource/sonarqube-scan-action@fd88b7d7ccbaefd23d8f36f73b59db7a3d246602
         with:
           args: >
             -Dsonar.projectKey=misendero

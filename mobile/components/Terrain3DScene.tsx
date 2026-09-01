@@ -1,9 +1,13 @@
 import { GLView, ExpoWebGLRenderingContext } from "expo-gl";
-import { Renderer } from "expo-three";
+import { Renderer, TextureLoader } from "expo-three";
 import React, { useCallback, useEffect, useMemo, useRef } from "react";
 import { StyleSheet } from "react-native";
 import * as THREE from "three";
 import { Coordinate } from "../../services/geoUtils";
+import {
+  clampTerrainScale,
+  getTerrainPerspectiveFov,
+} from "../../services/mapGestures";
 
 type Terrain3DSceneProps = {
   routePoints: Coordinate[];
@@ -13,6 +17,20 @@ type Terrain3DSceneProps = {
   userCoordinate?: Coordinate | null;
   viewOffset: { x: number; y: number };
   viewScale: number;
+  trailLabel?: string | null;
+  weather?: {
+    condition: string;
+    rainProbability: number;
+    temperatureC: number;
+  } | null;
+  navigationMode?: boolean;
+  satelliteTextureEnabled?: boolean;
+};
+
+type NavigationView = {
+  anchor: THREE.Vector3;
+  direction: THREE.Vector3;
+  sightDirection: THREE.Vector3;
 };
 
 type SceneHandles = {
@@ -23,7 +41,18 @@ type SceneHandles = {
   routeGroup: THREE.Group;
   scene: THREE.Scene;
   terrainGroup: THREE.Group;
+  alignmentRotation: number;
+  weatherGroup: THREE.Group;
+  sunLight: THREE.DirectionalLight;
+  hemiLight: THREE.HemisphereLight;
+  navigationView: NavigationView | null;
+  model: TerrainModel | null;
+  terrainRoute: THREE.Vector3[];
+  trackedObject: THREE.Object3D | null;
+  rebuildId: number;
 };
+
+type TerrainBiome = "forest" | "steppe" | "alpine";
 
 type TerrainModel = {
   bounds: {
@@ -38,9 +67,12 @@ type TerrainModel = {
   origin: Coordinate;
   route: THREE.Vector3[];
   seed: number;
+  biome: TerrainBiome;
 };
 
-const GRID_SIZE = 76;
+const GRID_SIZE = 104;
+const TERRAIN_HALF_SIZE = 7.2;
+const RELIEF_EXAGGERATION = 1.32;
 const EARTH_RADIUS_METERS = 6371000;
 const ROUTE_LIFT = 0.12;
 const ROUTE_SHADOW_RADIUS = 0.115;
@@ -126,7 +158,8 @@ const toLocalMeters = (point: Coordinate, origin: Coordinate) => {
 const buildTerrainModel = (
   routePoints: Coordinate[],
   fallbackCenter: Coordinate,
-  difficulty?: string | null
+  difficulty?: string | null,
+  trailLabel?: string | null
 ): TerrainModel => {
   const sourcePoints =
     routePoints.length > 1
@@ -151,6 +184,35 @@ const buildTerrainModel = (
   const minX = centerX - sizeMeters / 2;
   const minZ = centerZ - sizeMeters / 2;
   const difficultyFactor = getDifficultyFactor(difficulty);
+  const normalizedLabel = (trailLabel || "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase();
+  const isForest =
+    normalizedLabel.includes("bosque") ||
+    normalizedLabel.includes("selva") ||
+    normalizedLabel.includes("yunga") ||
+    normalizedLabel.includes("arrayan") ||
+    normalizedLabel.includes("coihue");
+  const isSteppe =
+    !isForest && (
+      normalizedLabel.includes("estepa") ||
+      normalizedLabel.includes("desierto") ||
+      normalizedLabel.includes("puna") ||
+      normalizedLabel.includes("pomez") ||
+      normalizedLabel.includes("quebrada") ||
+      normalizedLabel.includes("catamarca") ||
+      normalizedLabel.includes("jujuy") ||
+      normalizedLabel.includes("salta")
+    );
+  const isAlpine =
+    normalizedLabel.includes("cerro") ||
+    normalizedLabel.includes("cumbre") ||
+    normalizedLabel.includes("mont") ||
+    normalizedLabel.includes("glaciar") ||
+    normalizedLabel.includes("laguna") ||
+    difficultyFactor > 0.82;
+  const biome: TerrainBiome = isSteppe ? "steppe" : isAlpine && !isForest ? "alpine" : "forest";
   const seed =
     Math.sin(origin[0] * 13.37 + origin[1] * 7.91 + difficultyFactor * 5.3) *
     9.7;
@@ -167,6 +229,7 @@ const buildTerrainModel = (
     origin,
     route,
     seed,
+    biome,
   };
 };
 
@@ -226,11 +289,11 @@ const getHeightAt = (
   const detailNoise = fbm2D(x * 0.85, z * 0.85, seed, 5) * 0.19;
   const fineNoise = fbm2D(x * 3.6, z * 3.6, seed + 91.3, 3) * 0.055;
 
-  return (
-    0.08 +
+  const relief =
     (longRidge + crossRidge + peakA + peakB - basin + detailNoise + fineNoise) *
-      (0.45 + difficultyFactor * 0.34)
-  );
+    (0.45 + difficultyFactor * 0.34);
+
+  return 0.08 + relief * (RELIEF_EXAGGERATION + difficultyFactor * 0.12);
 };
 
 const getSlopeAt = (
@@ -260,16 +323,50 @@ const getTerrainColor = (
   steepness: number,
   x: number,
   z: number,
-  seed: number
+  seed: number,
+  biome: TerrainBiome
 ) => {
-  const valley = new THREE.Color("#326F48");
-  const forest = new THREE.Color("#4F8F51");
-  const grass = new THREE.Color("#86B867");
-  const scree = new THREE.Color("#B8B277");
-  const rock = new THREE.Color("#8F8165");
-  const cliff = new THREE.Color("#5F594E");
-  const snow = new THREE.Color("#EAF2DF");
-  const normalized = clamp(height / (1.45 + difficultyFactor), 0, 1);
+  const palette = biome === "steppe"
+    ? {
+        valley: "#8B7651",
+        forest: "#A18B5D",
+        grass: "#B2A16F",
+        scree: "#C1AD83",
+        rock: "#9B8874",
+        cliff: "#665A4E",
+        snow: "#D8D0C2",
+      }
+    : biome === "alpine"
+      ? {
+          valley: "#355F42",
+          forest: "#4C7448",
+          grass: "#718B50",
+          scree: "#958C6C",
+          rock: "#77736B",
+          cliff: "#4A4B48",
+          snow: "#E7ECE8",
+        }
+      : {
+          valley: "#244E38",
+          forest: "#356B43",
+          grass: "#62884D",
+          scree: "#8C8A62",
+          rock: "#746E5E",
+          cliff: "#454942",
+          snow: "#E5EBE3",
+        };
+  const valley = new THREE.Color(palette.valley);
+  const forest = new THREE.Color(palette.forest);
+  const grass = new THREE.Color(palette.grass);
+  const scree = new THREE.Color(palette.scree);
+  const rock = new THREE.Color(palette.rock);
+  const cliff = new THREE.Color(palette.cliff);
+  const snow = new THREE.Color(palette.snow);
+  const normalized = clamp(
+    height / ((1.45 + difficultyFactor) * RELIEF_EXAGGERATION),
+    0,
+    1
+  );
   const terrainNoise = fbm2D(x * 1.65, z * 1.65, seed + 37.1, 4);
   const fineNoise = fbm2D(x * 5.2, z * 5.2, seed + 113.4, 3);
   let base: THREE.Color;
@@ -309,8 +406,12 @@ const disposeObject = (object: THREE.Object3D) => {
 
     mesh.geometry?.dispose();
     if (Array.isArray(material)) {
-      material.forEach((entry) => entry.dispose());
+      material.forEach((entry) => {
+        (entry as THREE.MeshStandardMaterial).map?.dispose();
+        entry.dispose();
+      });
     } else {
+      (material as THREE.MeshStandardMaterial | undefined)?.map?.dispose();
       material?.dispose();
     }
   });
@@ -327,13 +428,14 @@ const clearGroup = (group: THREE.Group) => {
 const buildTerrainMesh = (model: TerrainModel) => {
   const positions: number[] = [];
   const colors: number[] = [];
+  const uvs: number[] = [];
   const indices: number[] = [];
   const color = new THREE.Color();
 
   for (let row = 0; row <= GRID_SIZE; row += 1) {
     for (let column = 0; column <= GRID_SIZE; column += 1) {
-      const x = -4.2 + (column / GRID_SIZE) * 8.4;
-      const z = -4.2 + (row / GRID_SIZE) * 8.4;
+      const x = -TERRAIN_HALF_SIZE + (column / GRID_SIZE) * TERRAIN_HALF_SIZE * 2;
+      const z = -TERRAIN_HALF_SIZE + (row / GRID_SIZE) * TERRAIN_HALF_SIZE * 2;
       const height = getHeightAt(
         x,
         z,
@@ -348,12 +450,14 @@ const buildTerrainMesh = (model: TerrainModel) => {
           steepness,
           x,
           z,
-          model.seed
+          model.seed,
+          model.biome
         )
       );
 
       positions.push(x, height, z);
       colors.push(color.r, color.g, color.b);
+      uvs.push(column / GRID_SIZE, 1 - row / GRID_SIZE);
     }
   }
 
@@ -372,6 +476,7 @@ const buildTerrainMesh = (model: TerrainModel) => {
   geometry.setIndex(indices);
   geometry.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
   geometry.setAttribute("color", new THREE.Float32BufferAttribute(colors, 3));
+  geometry.setAttribute("uv", new THREE.Float32BufferAttribute(uvs, 2));
   geometry.computeVertexNormals();
 
   const material = new THREE.MeshStandardMaterial({
@@ -409,6 +514,253 @@ const makeTube = (
   });
   const mesh = new THREE.Mesh(geometry, material);
   mesh.castShadow = true;
+
+  return mesh;
+};
+
+const getSatelliteTextureUrl = (model: TerrainModel) => {
+  const metersPerLatitudeDegree = (Math.PI * EARTH_RADIUS_METERS) / 180;
+  const metersPerLongitudeDegree =
+    metersPerLatitudeDegree * Math.cos((model.origin[0] * Math.PI) / 180);
+  const toCoordinate = (x: number, z: number): Coordinate => {
+    const localX = model.bounds.centerX + x * model.bounds.metersPerUnit;
+    const localZ = model.bounds.centerZ + z * model.bounds.metersPerUnit;
+    return [
+      model.origin[0] - localZ / metersPerLatitudeDegree,
+      model.origin[1] + localX / metersPerLongitudeDegree,
+    ];
+  };
+  const northWest = toCoordinate(-TERRAIN_HALF_SIZE, -TERRAIN_HALF_SIZE);
+  const southEast = toCoordinate(TERRAIN_HALF_SIZE, TERRAIN_HALF_SIZE);
+  const params = new URLSearchParams({
+    bbox: `${northWest[1]},${southEast[0]},${southEast[1]},${northWest[0]}`,
+    bboxSR: "4326",
+    imageSR: "4326",
+    size: "1024,1024",
+    format: "jpg",
+    transparent: "false",
+    f: "image",
+  });
+
+  return `https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/export?${params.toString()}`;
+};
+
+const applySatelliteTexture = (
+  terrain: THREE.Mesh,
+  model: TerrainModel,
+  onLoad: (texture: THREE.Texture) => void,
+  onError: () => void
+) => {
+  const loader = new TextureLoader();
+  loader.setCrossOrigin("anonymous");
+  loader.load(
+    getSatelliteTextureUrl(model),
+    (texture) => {
+      texture.colorSpace = THREE.SRGBColorSpace;
+      texture.anisotropy = 4;
+      texture.needsUpdate = true;
+      const material = terrain.material as THREE.MeshStandardMaterial;
+      material.map = texture;
+      material.vertexColors = false;
+      material.color.set("#FFFFFF");
+      material.roughness = 0.94;
+      material.needsUpdate = true;
+      onLoad(texture);
+    },
+    undefined,
+    onError
+  );
+};
+
+const buildTerrainSkirt = (model: TerrainModel) => {
+  const positions: number[] = [];
+  const colors: number[] = [];
+  const indices: number[] = [];
+  const topColor = new THREE.Color(model.biome === "steppe" ? "#77644D" : "#465641");
+  const bottomColor = new THREE.Color("#2A2924");
+  const segments = 64;
+  const bottomY = -1.15;
+  const edges = [
+    (t: number) => [-TERRAIN_HALF_SIZE + t * TERRAIN_HALF_SIZE * 2, -TERRAIN_HALF_SIZE],
+    (t: number) => [TERRAIN_HALF_SIZE, -TERRAIN_HALF_SIZE + t * TERRAIN_HALF_SIZE * 2],
+    (t: number) => [TERRAIN_HALF_SIZE - t * TERRAIN_HALF_SIZE * 2, TERRAIN_HALF_SIZE],
+    (t: number) => [-TERRAIN_HALF_SIZE, TERRAIN_HALF_SIZE - t * TERRAIN_HALF_SIZE * 2],
+  ];
+
+  edges.forEach((getPoint) => {
+    const vertexOffset = positions.length / 3;
+    for (let index = 0; index <= segments; index += 1) {
+      const [x, z] = getPoint(index / segments);
+      const topY = getHeightAt(x, z, model.difficultyFactor, model.seed);
+      positions.push(x, topY, z, x, bottomY, z);
+      colors.push(topColor.r, topColor.g, topColor.b, bottomColor.r, bottomColor.g, bottomColor.b);
+      if (index < segments) {
+        const offset = vertexOffset + index * 2;
+        indices.push(offset, offset + 2, offset + 1, offset + 1, offset + 2, offset + 3);
+      }
+    }
+  });
+  const geometry = new THREE.BufferGeometry();
+  geometry.setIndex(indices);
+  geometry.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
+  geometry.setAttribute("color", new THREE.Float32BufferAttribute(colors, 3));
+  geometry.computeVertexNormals();
+  const skirt = new THREE.Mesh(
+    geometry,
+    new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 1, side: THREE.DoubleSide })
+  );
+  skirt.receiveShadow = true;
+  return skirt;
+};
+
+const sampleRouteOnTerrain = (model: TerrainModel) => {
+  if (model.route.length < 2) return model.route;
+
+  const sampledRoute: THREE.Vector3[] = [];
+  const maxSegmentLength = 0.055;
+
+  for (let index = 1; index < model.route.length; index += 1) {
+    const start = model.route[index - 1];
+    const end = model.route[index];
+    const segmentLength = Math.hypot(end.x - start.x, end.z - start.z);
+    const steps = Math.max(1, Math.ceil(segmentLength / maxSegmentLength));
+
+    for (let step = 0; step < steps; step += 1) {
+      const progress = step / steps;
+      const x = start.x + (end.x - start.x) * progress;
+      const z = start.z + (end.z - start.z) * progress;
+      sampledRoute.push(
+        new THREE.Vector3(
+          x,
+          getHeightAt(x, z, model.difficultyFactor, model.seed),
+          z
+        )
+      );
+    }
+  }
+
+  const lastPoint = model.route[model.route.length - 1];
+  sampledRoute.push(
+    new THREE.Vector3(
+      lastPoint.x,
+      getHeightAt(lastPoint.x, lastPoint.z, model.difficultyFactor, model.seed),
+      lastPoint.z
+    )
+  );
+
+  return sampledRoute;
+};
+
+const getSmoothedCrossSlopes = (
+  centerLine: THREE.Vector3[],
+  model: TerrainModel
+) => {
+  const sampleDistance = 0.045;
+  const rawSlopes = centerLine.map((point, index) => {
+    const previous = centerLine[Math.max(0, index - 1)];
+    const next = centerLine[Math.min(centerLine.length - 1, index + 1)];
+    const dx = next.x - previous.x;
+    const dz = next.z - previous.z;
+    const length = Math.max(0.001, Math.hypot(dx, dz));
+    const normalX = -dz / length;
+    const normalZ = dx / length;
+    const leftHeight = getHeightAt(
+      point.x - normalX * sampleDistance,
+      point.z - normalZ * sampleDistance,
+      model.difficultyFactor,
+      model.seed
+    );
+    const rightHeight = getHeightAt(
+      point.x + normalX * sampleDistance,
+      point.z + normalZ * sampleDistance,
+      model.difficultyFactor,
+      model.seed
+    );
+
+    return clamp(
+      (rightHeight - leftHeight) / (sampleDistance * 2),
+      -1.25,
+      1.25
+    );
+  });
+
+  return rawSlopes.map((_, index) => {
+    const start = Math.max(0, index - 2);
+    const end = Math.min(rawSlopes.length - 1, index + 2);
+    let total = 0;
+
+    for (let sampleIndex = start; sampleIndex <= end; sampleIndex += 1) {
+      total += rawSlopes[sampleIndex];
+    }
+
+    return total / (end - start + 1);
+  });
+};
+
+const makeTerrainTrailRibbon = (
+  centerLine: THREE.Vector3[],
+  model: TerrainModel,
+  halfWidth: number,
+  color: string,
+  lift: number,
+  highlighted: boolean
+) => {
+  const positions: number[] = [];
+  const vertexColors: number[] = [];
+  const indices: number[] = [];
+  const baseColor = new THREE.Color(color);
+  const crossSlopes = getSmoothedCrossSlopes(centerLine, model);
+
+  centerLine.forEach((point, index) => {
+    const previous = centerLine[Math.max(0, index - 1)];
+    const next = centerLine[Math.min(centerLine.length - 1, index + 1)];
+    const dx = next.x - previous.x;
+    const dz = next.z - previous.z;
+    const length = Math.max(0.001, Math.hypot(dx, dz));
+    const normalX = -dz / length;
+    const normalZ = dx / length;
+    const shade = highlighted
+      ? 1
+      : 0.88 + hash01(index * 0.67, model.seed, 81) * 0.2;
+    const shadedColor = baseColor.clone().multiplyScalar(shade);
+
+    [-1, 1].forEach((side) => {
+      const offset = halfWidth * side;
+      positions.push(
+        point.x + normalX * offset,
+        point.y + crossSlopes[index] * offset + lift,
+        point.z + normalZ * offset
+      );
+      vertexColors.push(shadedColor.r, shadedColor.g, shadedColor.b);
+    });
+
+    if (index < centerLine.length - 1) {
+      const offset = index * 2;
+      indices.push(offset, offset + 2, offset + 1, offset + 1, offset + 2, offset + 3);
+    }
+  });
+
+  const geometry = new THREE.BufferGeometry();
+  geometry.setIndex(indices);
+  geometry.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
+  geometry.setAttribute("color", new THREE.Float32BufferAttribute(vertexColors, 3));
+  geometry.computeVertexNormals();
+
+  const material = highlighted
+    ? new THREE.MeshBasicMaterial({
+        side: THREE.DoubleSide,
+        vertexColors: true,
+      })
+    : new THREE.MeshStandardMaterial({
+        metalness: 0,
+        roughness: 1,
+        side: THREE.DoubleSide,
+        vertexColors: true,
+      });
+  const mesh = new THREE.Mesh(geometry, material);
+  mesh.castShadow = false;
+  mesh.receiveShadow = !highlighted;
+  mesh.renderOrder = highlighted ? 3 : 4;
 
   return mesh;
 };
@@ -602,6 +954,79 @@ const makeMarker = (position: THREE.Vector3, color: string) => {
   return marker;
 };
 
+const makeEndpointMarker = (
+  position: THREE.Vector3,
+  kind: "start" | "finish",
+  scale = 1
+) => {
+  const group = new THREE.Group();
+  const white = new THREE.MeshStandardMaterial({ color: "#FFFFFF", roughness: 0.55 });
+
+  if (kind === "finish") {
+    const red = new THREE.MeshStandardMaterial({ color: "#D83D35", roughness: 0.55 });
+    const poleMaterial = new THREE.MeshStandardMaterial({
+      color: "#343A3D",
+      metalness: 0.45,
+      roughness: 0.42,
+    });
+    const pole = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.018, 0.025, 0.76, 12),
+      poleMaterial
+    );
+    pole.position.y = 0.38;
+    const finial = new THREE.Mesh(new THREE.SphereGeometry(0.035, 12, 8), red);
+    finial.position.y = 0.78;
+    group.add(pole, finial);
+
+    const squareSize = 0.075;
+    for (let row = 0; row < 2; row += 1) {
+      for (let column = 0; column < 3; column += 1) {
+        const square = new THREE.Mesh(
+          new THREE.BoxGeometry(squareSize, squareSize, 0.018),
+          (row + column) % 2 === 0 ? red : white
+        );
+        square.position.set(
+          -squareSize * (column + 0.55),
+          0.705 - squareSize * (row + 0.5),
+          0
+        );
+        group.add(square);
+      }
+    }
+  } else {
+    const green = new THREE.MeshStandardMaterial({ color: "#087F4F", roughness: 0.55 });
+    const post = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.025, 0.032, 0.48, 10),
+      green
+    );
+    post.position.y = 0.25;
+    const head = new THREE.Mesh(new THREE.SphereGeometry(0.14, 20, 14), green);
+    head.position.y = 0.55;
+    group.add(post, head);
+  }
+
+  group.position.copy(position);
+  group.scale.setScalar(scale);
+  group.children.forEach((child) => { child.castShadow = true; });
+  return group;
+};
+
+const makeUserMarker = (position: THREE.Vector3) => {
+  const marker = new THREE.Mesh(
+    new THREE.SphereGeometry(0.13, 20, 14),
+    new THREE.MeshStandardMaterial({
+      color: "#2376D9",
+      emissive: "#2376D9",
+      emissiveIntensity: 0.1,
+      roughness: 0.5,
+    })
+  );
+  marker.position.copy(position);
+  marker.position.y += 0.25;
+  marker.castShadow = true;
+  return marker;
+};
+
 const makeVerticalPin = (position: THREE.Vector3, color: string) => {
   const geometry = new THREE.CylinderGeometry(0.035, 0.055, 0.48, 12);
   const material = new THREE.MeshStandardMaterial({
@@ -614,6 +1039,69 @@ const makeVerticalPin = (position: THREE.Vector3, color: string) => {
   pin.castShadow = true;
 
   return pin;
+};
+
+const updateTrackedPosition = (
+  handles: SceneHandles,
+  userCoordinate: Coordinate | null | undefined,
+  navigationMode: boolean
+) => {
+  if (!handles.model || handles.terrainRoute.length < 2) return;
+
+  if (handles.trackedObject) {
+    handles.routeGroup.remove(handles.trackedObject);
+    disposeObject(handles.trackedObject);
+    handles.trackedObject = null;
+  }
+
+  const model = handles.model;
+  const terrainRoute = handles.terrainRoute;
+  if (navigationMode) {
+    const startPoint = terrainRoute[0].clone();
+    const nextPoint =
+      terrainRoute.find((point, index) => {
+        if (index === 0) return false;
+        const deltaX = point.x - startPoint.x;
+        const deltaZ = point.z - startPoint.z;
+        return deltaX * deltaX + deltaZ * deltaZ > 0.0064;
+      }) || terrainRoute[1];
+    const sightPoint =
+      terrainRoute.find((point, index) => {
+        if (index === 0) return false;
+        const deltaX = point.x - startPoint.x;
+        const deltaZ = point.z - startPoint.z;
+        return deltaX * deltaX + deltaZ * deltaZ > 0.64;
+      }) || terrainRoute[terrainRoute.length - 1];
+    const localDirection = nextPoint.clone().sub(startPoint);
+    localDirection.y = 0;
+    if (localDirection.lengthSq() < 0.000001) {
+      localDirection.set(0, 0, -1);
+    } else {
+      localDirection.normalize();
+    }
+
+    const yAxis = new THREE.Vector3(0, 1, 0);
+    const sightDirection = sightPoint.clone().sub(startPoint);
+    if (sightDirection.lengthSq() < 0.000001) {
+      sightDirection.copy(localDirection);
+    } else {
+      sightDirection.normalize();
+    }
+    handles.navigationView = {
+      anchor: startPoint.applyAxisAngle(yAxis, handles.alignmentRotation),
+      direction: localDirection.clone().applyAxisAngle(yAxis, handles.alignmentRotation),
+      sightDirection: sightDirection.applyAxisAngle(yAxis, handles.alignmentRotation),
+    };
+    return;
+  }
+
+  handles.navigationView = null;
+  if (!userCoordinate) return;
+  const userPoint = toScenePoint(userCoordinate, model);
+  const markerGroup = new THREE.Group();
+  markerGroup.add(makeUserMarker(userPoint), makeVerticalPin(userPoint, "#2376D9"));
+  handles.routeGroup.add(markerGroup);
+  handles.trackedObject = markerGroup;
 };
 
 const addContourLines = (group: THREE.Group, model: TerrainModel) => {
@@ -742,45 +1230,60 @@ const addReferenceTerrainLines = (group: THREE.Group, model: TerrainModel) => {
   }
 };
 
-const TREE_COUNT = 110;
-const TRUNK_HEIGHT = 0.09;
-const FOLIAGE_HEIGHT = 0.17;
+const TREE_COUNT = 230;
+const TRUNK_HEIGHT = 0.14;
+const FOLIAGE_HEIGHT = 0.24;
 
 const addVegetation = (group: THREE.Group, model: TerrainModel) => {
-  const trunkGeometry = new THREE.CylinderGeometry(0.014, 0.02, TRUNK_HEIGHT, 5);
+  const targetCount = model.biome === "steppe" ? 58 : model.biome === "alpine" ? 145 : TREE_COUNT;
+  const trunkGeometry = new THREE.CylinderGeometry(0.012, 0.024, TRUNK_HEIGHT, 7);
   const trunkMaterial = new THREE.MeshStandardMaterial({
     color: "#6B4A31",
     roughness: 0.92,
   });
-  const foliageGeometry = new THREE.ConeGeometry(0.06, FOLIAGE_HEIGHT, 6);
+  const foliageGeometry = model.biome === "forest"
+    ? new THREE.IcosahedronGeometry(0.095, 1)
+    : model.biome === "steppe"
+      ? new THREE.IcosahedronGeometry(0.075, 1)
+      : new THREE.ConeGeometry(0.1, FOLIAGE_HEIGHT, 9);
+  const foliageTopGeometry = model.biome === "forest"
+    ? new THREE.IcosahedronGeometry(0.075, 1)
+    : model.biome === "steppe"
+      ? new THREE.IcosahedronGeometry(0.055, 1)
+      : new THREE.ConeGeometry(0.075, FOLIAGE_HEIGHT * 0.82, 9);
   const foliageMaterial = new THREE.MeshStandardMaterial({
-    color: "#3D7A45",
+    color: model.biome === "steppe" ? "#8D8B45" : model.biome === "alpine" ? "#416D3F" : "#2F7142",
     roughness: 0.85,
   });
   const trunks = new THREE.InstancedMesh(trunkGeometry, trunkMaterial, TREE_COUNT);
   const foliage = new THREE.InstancedMesh(foliageGeometry, foliageMaterial, TREE_COUNT);
+  const foliageTop = new THREE.InstancedMesh(foliageTopGeometry, foliageMaterial, TREE_COUNT);
   trunks.castShadow = true;
   trunks.receiveShadow = true;
   foliage.castShadow = true;
   foliage.receiveShadow = true;
+  foliageTop.castShadow = true;
+  foliageTop.receiveShadow = true;
 
   const dummy = new THREE.Object3D();
   let placed = 0;
   let attempt = 0;
 
-  while (placed < TREE_COUNT && attempt < TREE_COUNT * 8) {
+  while (placed < targetCount && attempt < targetCount * 12) {
     attempt += 1;
-    const rx = hash01(attempt * 3.11, model.seed, model.seed + 1) * 8.2 - 4.1;
-    const rz = hash01(model.seed, attempt * 5.73, model.seed + 2) * 8.2 - 4.1;
+    const rx = hash01(attempt * 3.11, model.seed, model.seed + 1) * TERRAIN_HALF_SIZE * 1.9 - TERRAIN_HALF_SIZE * 0.95;
+    const rz = hash01(model.seed, attempt * 5.73, model.seed + 2) * TERRAIN_HALF_SIZE * 1.9 - TERRAIN_HALF_SIZE * 0.95;
     const height = getHeightAt(rx, rz, model.difficultyFactor, model.seed);
     const steepness = getSlopeAt(rx, rz, model.difficultyFactor, model.seed);
     const normalizedHeight = clamp(
-      height / (1.45 + model.difficultyFactor),
+      height / ((1.45 + model.difficultyFactor) * RELIEF_EXAGGERATION),
       0,
       1
     );
 
-    if (steepness > 0.32 || normalizedHeight < 0.06 || normalizedHeight > 0.6) {
+    const treeLine = model.biome === "alpine" ? 0.48 : 0.64;
+    if (steepness > 0.32 || normalizedHeight < 0.06 || normalizedHeight > treeLine ||
+      (model.biome === "steppe" && hash01(rx, rz, model.seed + 40) > 0.24)) {
       continue;
     }
 
@@ -802,16 +1305,67 @@ const addVegetation = (group: THREE.Group, model: TerrainModel) => {
     dummy.updateMatrix();
     foliage.setMatrixAt(placed, dummy.matrix);
 
+    dummy.position.y = height + (TRUNK_HEIGHT + FOLIAGE_HEIGHT * 0.95) * scale;
+    dummy.scale.setScalar(scale * 0.82);
+    dummy.updateMatrix();
+    foliageTop.setMatrixAt(placed, dummy.matrix);
+
     placed += 1;
   }
 
   trunks.count = placed;
   foliage.count = placed;
+  foliageTop.count = placed;
   trunks.instanceMatrix.needsUpdate = true;
   foliage.instanceMatrix.needsUpdate = true;
+  foliageTop.instanceMatrix.needsUpdate = true;
 
   group.add(trunks);
   group.add(foliage);
+  group.add(foliageTop);
+};
+
+const addGroundDetails = (group: THREE.Group, model: TerrainModel) => {
+  const rockCount = model.biome === "forest" ? 115 : 210;
+  const grassCount = model.biome === "steppe" ? 260 : 330;
+  const rockGeometry = new THREE.DodecahedronGeometry(0.045, 0);
+  const rockMaterial = new THREE.MeshStandardMaterial({
+    color: model.biome === "steppe" ? "#8A765E" : "#77766E",
+    roughness: 1,
+  });
+  const grassGeometry = new THREE.ConeGeometry(0.018, 0.09, 3);
+  const grassMaterial = new THREE.MeshStandardMaterial({
+    color: model.biome === "steppe" ? "#A39A4C" : "#5F913F",
+    roughness: 0.95,
+  });
+  const rocks = new THREE.InstancedMesh(rockGeometry, rockMaterial, rockCount);
+  const grass = new THREE.InstancedMesh(grassGeometry, grassMaterial, grassCount);
+  const dummy = new THREE.Object3D();
+
+  const populate = (mesh: THREE.InstancedMesh, count: number, isRock: boolean) => {
+    let placed = 0;
+    for (let attempt = 0; placed < count && attempt < count * 5; attempt += 1) {
+      const x = hash01(attempt * 8.17, model.seed + 19, model.seed) * TERRAIN_HALF_SIZE * 1.9 - TERRAIN_HALF_SIZE * 0.95;
+      const z = hash01(model.seed + 23, attempt * 4.91, model.seed) * TERRAIN_HALF_SIZE * 1.9 - TERRAIN_HALF_SIZE * 0.95;
+      const slope = getSlopeAt(x, z, model.difficultyFactor, model.seed);
+      if ((!isRock && slope > 0.27) || model.route.some((p) => Math.hypot(p.x - x, p.z - z) < 0.16)) continue;
+      const y = getHeightAt(x, z, model.difficultyFactor, model.seed);
+      const scale = (isRock ? 0.65 : 0.55) + hash01(x * 17, z * 29, model.seed) * (isRock ? 1.5 : 0.8);
+      dummy.position.set(x, y + (isRock ? 0.025 : 0.04) * scale, z);
+      dummy.rotation.set(hash01(x, z, 2) * 0.5, hash01(x, z, 3) * Math.PI, hash01(x, z, 4) * 0.35);
+      dummy.scale.set(scale * (isRock ? 1.25 : 1), scale, scale * (isRock ? 0.9 : 1));
+      dummy.updateMatrix();
+      mesh.setMatrixAt(placed, dummy.matrix);
+      placed += 1;
+    }
+    mesh.count = placed;
+    mesh.instanceMatrix.needsUpdate = true;
+  };
+  populate(rocks, rockCount, true);
+  populate(grass, grassCount, false);
+  rocks.castShadow = true;
+  rocks.receiveShadow = true;
+  group.add(rocks, grass);
 };
 
 const toScenePoint = (coordinate: Coordinate, model: TerrainModel) => {
@@ -826,12 +1380,35 @@ const toScenePoint = (coordinate: Coordinate, model: TerrainModel) => {
   );
 };
 
-const buildSkyDome = () => {
+const normalizeWeatherText = (value: string) =>
+  value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
+const getWeatherKind = (condition = "", rainProbability = 0) => {
+  const normalized = normalizeWeatherText(condition);
+  if (normalized.includes("nieve") || normalized.includes("nevada")) return "snow";
+  if (normalized.includes("torment")) return "storm";
+  if (normalized.includes("lluv") || normalized.includes("chaparr") || rainProbability >= 55) return "rain";
+  if (normalized.includes("nubl") || normalized.includes("cubierto")) return "cloudy";
+  if (normalized.includes("parcial") || normalized.includes("nubes")) return "partly-cloudy";
+  return "clear";
+};
+
+const buildSkyDome = (weather: Terrain3DSceneProps["weather"]) => {
+  const kind = getWeatherKind(weather?.condition, weather?.rainProbability);
+  const colorsByKind = {
+    clear: ["#418BC1", "#D9EFF5"],
+    "partly-cloudy": ["#648FAC", "#D8E5E9"],
+    cloudy: ["#667681", "#C4CDD0"],
+    rain: ["#405565", "#9BAAB1"],
+    storm: ["#273743", "#73838B"],
+    snow: ["#839BAA", "#E8F0F1"],
+  } as const;
+  const [topColor, bottomColor] = colorsByKind[kind];
   const geometry = new THREE.SphereGeometry(60, 24, 16);
   const material = new THREE.ShaderMaterial({
     uniforms: {
-      topColor: { value: new THREE.Color("#3F92D2") },
-      bottomColor: { value: new THREE.Color("#DCEFF7") },
+      topColor: { value: new THREE.Color(topColor) },
+      bottomColor: { value: new THREE.Color(bottomColor) },
       offset: { value: 4 },
       exponent: { value: 0.68 },
     },
@@ -861,6 +1438,87 @@ const buildSkyDome = () => {
   return new THREE.Mesh(geometry, material);
 };
 
+const addWeatherGraphics = (
+  group: THREE.Group,
+  weather: Terrain3DSceneProps["weather"]
+) => {
+  const kind = getWeatherKind(weather?.condition, weather?.rainProbability);
+  const cloudKinds = ["partly-cloudy", "cloudy", "rain", "storm", "snow"];
+
+  if (kind === "clear" || kind === "partly-cloudy") {
+    const sun = new THREE.Mesh(
+      new THREE.SphereGeometry(0.58, 24, 18),
+      new THREE.MeshBasicMaterial({ color: "#FFD466", fog: false })
+    );
+    sun.position.set(-4.8, 5.9, -5.8);
+    group.add(sun);
+  }
+
+  if (cloudKinds.includes(kind)) {
+    const cloudCount = kind === "partly-cloudy" ? 3 : kind === "cloudy" ? 6 : 8;
+    const cloudMaterial = new THREE.MeshStandardMaterial({
+      color: kind === "storm" ? "#65727A" : kind === "rain" ? "#86969D" : "#E8EEF0",
+      roughness: 1,
+      transparent: true,
+      opacity: kind === "partly-cloudy" ? 0.84 : 0.94,
+      fog: false,
+    });
+    for (let index = 0; index < cloudCount; index += 1) {
+      const cloud = new THREE.Group();
+      const x = -5.8 + (index % 4) * 3.8 + hash01(index, 1, 52) * 0.6;
+      const y = 4.6 + Math.floor(index / 4) * 1.15 + hash01(index, 2, 53) * 0.4;
+      const z = -5.5 + (index % 2) * 1.1;
+      [
+        [-0.52, 0, 0, 0.72],
+        [0, 0.17, 0, 0.92],
+        [0.58, 0, 0, 0.68],
+        [0.18, -0.1, 0.08, 0.78],
+      ].forEach(([cx, cy, cz, scale]) => {
+        const puff = new THREE.Mesh(new THREE.SphereGeometry(0.55, 12, 8), cloudMaterial);
+        puff.position.set(cx, cy, cz);
+        puff.scale.set(scale * 1.5, scale * 0.72, scale);
+        cloud.add(puff);
+      });
+      cloud.position.set(x, y, z);
+      cloud.name = "weather-cloud";
+      cloud.userData.speed = 0.015 + hash01(index, 14, 61) * 0.018;
+      cloud.userData.originX = x;
+      group.add(cloud);
+    }
+  }
+
+  if (["rain", "storm", "snow"].includes(kind)) {
+    const precipitationCount = kind === "storm" ? 150 : 95;
+    const isSnow = kind === "snow";
+    const geometry = isSnow
+      ? new THREE.SphereGeometry(0.018, 5, 4)
+      : new THREE.CylinderGeometry(0.006, 0.006, 0.24, 4);
+    const material = new THREE.MeshBasicMaterial({
+      color: isSnow ? "#FFFFFF" : "#9DD4E9",
+      transparent: true,
+      opacity: 0.76,
+      fog: false,
+    });
+    const precipitation = new THREE.InstancedMesh(geometry, material, precipitationCount);
+    const dummy = new THREE.Object3D();
+    for (let index = 0; index < precipitationCount; index += 1) {
+      dummy.position.set(
+        hash01(index, 5, 71) * 12 - 6,
+        hash01(index, 7, 72) * 5 + 1.2,
+        hash01(index, 9, 73) * 8 - 4
+      );
+      dummy.rotation.z = isSnow ? 0 : -0.18;
+      const scale = 0.65 + hash01(index, 11, 74) * 0.75;
+      dummy.scale.setScalar(scale);
+      dummy.updateMatrix();
+      precipitation.setMatrixAt(index, dummy.matrix);
+    }
+    precipitation.instanceMatrix.needsUpdate = true;
+    precipitation.name = "weather-precipitation";
+    group.add(precipitation);
+  }
+};
+
 export function Terrain3DScene({
   routePoints,
   fallbackCenter,
@@ -869,6 +1527,10 @@ export function Terrain3DScene({
   userCoordinate,
   viewOffset,
   viewScale,
+  trailLabel,
+  weather,
+  navigationMode = false,
+  satelliteTextureEnabled = true,
 }: Terrain3DSceneProps) {
   const handlesRef = useRef<SceneHandles | null>(null);
   const propsRef = useRef({
@@ -879,6 +1541,10 @@ export function Terrain3DScene({
     userCoordinate,
     viewOffset,
     viewScale,
+    trailLabel,
+    weather,
+    navigationMode,
+    satelliteTextureEnabled,
   });
   const geometrySignature = useMemo(
     () =>
@@ -887,9 +1553,21 @@ export function Terrain3DScene({
         fallbackCenter,
         difficulty,
         distanceKm,
-        userCoordinate,
+        trailLabel,
+        weather,
+        navigationMode,
+        satelliteTextureEnabled,
       }),
-    [routePoints, fallbackCenter, difficulty, distanceKm, userCoordinate]
+    [
+      routePoints,
+      fallbackCenter,
+      difficulty,
+      distanceKm,
+      trailLabel,
+      weather,
+      navigationMode,
+      satelliteTextureEnabled,
+    ]
   );
 
   useEffect(() => {
@@ -901,6 +1579,10 @@ export function Terrain3DScene({
       userCoordinate,
       viewOffset,
       viewScale,
+      trailLabel,
+      weather,
+      navigationMode,
+      satelliteTextureEnabled,
     };
   }, [
     routePoints,
@@ -910,6 +1592,10 @@ export function Terrain3DScene({
     userCoordinate,
     viewOffset,
     viewScale,
+    trailLabel,
+    weather,
+    navigationMode,
+    satelliteTextureEnabled,
   ]);
 
   const rebuildScene = useCallback(() => {
@@ -917,61 +1603,125 @@ export function Terrain3DScene({
     if (!handles) return;
 
     const current = propsRef.current;
+    const rebuildId = handles.rebuildId + 1;
+    handles.rebuildId = rebuildId;
     const model = buildTerrainModel(
       current.routePoints,
       current.fallbackCenter,
-      current.difficulty
+      current.difficulty,
+      current.trailLabel
     );
     clearGroup(handles.terrainGroup);
     clearGroup(handles.routeGroup);
-    handles.terrainGroup.add(buildTerrainMesh(model));
-    addContourLines(handles.terrainGroup, model);
-    addReferenceTerrainLines(handles.terrainGroup, model);
-    addVegetation(handles.terrainGroup, model);
+    clearGroup(handles.weatherGroup);
+    handles.trackedObject = null;
+    const weatherKind = getWeatherKind(current.weather?.condition, current.weather?.rainProbability);
+    const isDarkWeather = weatherKind === "storm" || weatherKind === "rain";
+    const fogColor = weatherKind === "storm"
+      ? "#66747B"
+      : weatherKind === "rain"
+        ? "#899CA5"
+        : weatherKind === "snow"
+          ? "#DDE7E9"
+          : "#CFE4E8";
+    handles.scene.fog = new THREE.FogExp2(fogColor, isDarkWeather ? 0.06 : 0.035);
+    handles.renderer.setClearColor(fogColor);
+    handles.sunLight.intensity = weatherKind === "clear" ? 3.35 : isDarkWeather ? 1.25 : 2.25;
+    handles.hemiLight.intensity = isDarkWeather ? 0.72 : 1.05;
+    handles.weatherGroup.add(buildSkyDome(current.weather));
+    addWeatherGraphics(handles.weatherGroup, current.weather);
+    const terrain = buildTerrainMesh(model);
+    handles.terrainGroup.add(terrain);
+    if (current.satelliteTextureEnabled) {
+      applySatelliteTexture(terrain, model, (texture) => {
+        if (handlesRef.current !== handles || handles.rebuildId !== rebuildId) {
+          texture.dispose();
+        }
+      }, () => {
+        if (handlesRef.current === handles && handles.rebuildId === rebuildId) {
+          addVegetation(handles.terrainGroup, model);
+          addGroundDetails(handles.terrainGroup, model);
+        }
+      });
+    }
+    handles.terrainGroup.add(buildTerrainSkirt(model));
+    if (!current.satelliteTextureEnabled) {
+      addVegetation(handles.terrainGroup, model);
+      addGroundDetails(handles.terrainGroup, model);
+    }
+    handles.alignmentRotation = 0;
+    handles.navigationView = null;
+    handles.terrainGroup.rotation.y = 0;
+    handles.routeGroup.rotation.y = 0;
 
-    const liftedRoute = model.route.map((point) => {
+    if (model.route.length > 1) {
+      const direction = model.route[model.route.length - 1].clone().sub(model.route[0]);
+      handles.alignmentRotation = Math.atan2(direction.z, direction.x);
+      handles.terrainGroup.rotation.y = handles.alignmentRotation;
+      handles.routeGroup.rotation.y = handles.alignmentRotation;
+    }
+
+    const terrainRoute = sampleRouteOnTerrain(model);
+    handles.model = model;
+    handles.terrainRoute = terrainRoute;
+    const markerRoute = terrainRoute.map((point) => {
       const next = point.clone();
-      next.y += ROUTE_LIFT;
+      next.y += 0.025;
       return next;
     });
 
-    if (liftedRoute.length > 1) {
-      handles.routeGroup.add(makeTube(liftedRoute, ROUTE_SHADOW_RADIUS, ROUTE_SHADOW_COLOR, 0.34));
-      handles.routeGroup.add(makeTube(liftedRoute, ROUTE_SURFACE_RADIUS, ROUTE_SURFACE_COLOR, 0.96));
-      handles.routeGroup.add(makeTube(liftedRoute, ROUTE_CORE_RADIUS, ROUTE_CORE_COLOR));
-
-      [liftedRoute[0], liftedRoute[liftedRoute.length - 1]].forEach((point) => {
-        handles.routeGroup.add(
-          makeRouteEndpointCap(point, ROUTE_SHADOW_RADIUS, ROUTE_SHADOW_COLOR, 0.34)
-        );
-        handles.routeGroup.add(
-          makeRouteEndpointCap(point, ROUTE_SURFACE_RADIUS, ROUTE_SURFACE_COLOR, 0.96)
-        );
-        handles.routeGroup.add(makeRouteEndpointCap(point, ROUTE_CORE_RADIUS, ROUTE_CORE_COLOR));
-      });
+    if (terrainRoute.length > 1) {
+      const trailOuterHalfWidth = current.navigationMode ? 0.042 : 0.135;
+      const trailInnerHalfWidth = current.navigationMode ? 0.023 : 0.092;
+      handles.routeGroup.add(
+        makeTerrainTrailRibbon(
+          terrainRoute,
+          model,
+          trailOuterHalfWidth,
+          "#F0643B",
+          0.052,
+          true
+        )
+      );
+      handles.routeGroup.add(
+        makeTerrainTrailRibbon(
+          terrainRoute,
+          model,
+          trailInnerHalfWidth,
+          "#D4A56F",
+          0.061,
+          false
+        )
+      );
     }
 
-    if (liftedRoute[0]) {
-      handles.routeGroup.add(makeRouteAnchor(liftedRoute[0], "#008955"));
-      handles.routeGroup.add(makeStartPin(liftedRoute[0]));
+    const endpointScale = current.navigationMode ? 0.74 : 1;
+    if (markerRoute[0]) {
+      handles.routeGroup.add(makeEndpointMarker(markerRoute[0], "start", endpointScale));
     }
 
-    if (liftedRoute.length > 1) {
-      const finishPoint = liftedRoute[liftedRoute.length - 1];
-      handles.routeGroup.add(makeRouteAnchor(finishPoint, ROUTE_CORE_COLOR));
-      handles.routeGroup.add(makeCheckeredFinishFlag(finishPoint));
+    if (markerRoute.length > 1) {
+      handles.routeGroup.add(
+        makeEndpointMarker(markerRoute[markerRoute.length - 1], "finish", endpointScale)
+      );
     }
 
-    if (current.userCoordinate) {
-      const userPoint = toScenePoint(current.userCoordinate, model);
-      handles.routeGroup.add(makeMarker(userPoint, "#2376D9"));
-      handles.routeGroup.add(makeVerticalPin(userPoint, "#2376D9"));
-    }
+    updateTrackedPosition(
+      handles,
+      current.userCoordinate,
+      current.navigationMode
+    );
   }, []);
 
   useEffect(() => {
     rebuildScene();
   }, [geometrySignature, rebuildScene]);
+
+  useEffect(() => {
+    const handles = handlesRef.current;
+    if (!handles) return;
+    updateTrackedPosition(handles, userCoordinate, navigationMode);
+  }, [userCoordinate, navigationMode]);
 
   useEffect(
     () => () => {
@@ -981,24 +1731,54 @@ export function Terrain3DScene({
       cancelAnimationFrame(handles.animationFrame);
       clearGroup(handles.terrainGroup);
       clearGroup(handles.routeGroup);
+      clearGroup(handles.weatherGroup);
       handles.renderer.dispose();
       handlesRef.current = null;
     },
     []
   );
 
-  const updateCamera = useCallback((camera: THREE.PerspectiveCamera) => {
+  const updateCamera = useCallback((camera: THREE.PerspectiveCamera, navigationView?: NavigationView | null) => {
     const current = propsRef.current;
-    const scale = clamp(current.viewScale, 0.72, 1.95);
-    const offsetX = clamp(current.viewOffset.x / 110, -3.2, 3.2);
-    const offsetY = clamp(current.viewOffset.y / 120, -2.8, 2.8);
-    const target = new THREE.Vector3(-offsetX * 0.62, 0.42, offsetY * 0.55);
+    const scale = clampTerrainScale(current.viewScale);
+    const orbitAngle = current.viewOffset.x / 100;
+    const tilt = clamp(current.viewOffset.y / 120, -1.65, 1.65);
 
+    if (current.navigationMode && navigationView) {
+      const anchor = navigationView.anchor.clone();
+      const viewDirection = navigationView.direction
+        .clone()
+        .applyAxisAngle(new THREE.Vector3(0, 1, 0), orbitAngle);
+      const sightDirection = navigationView.sightDirection
+        .clone()
+        .applyAxisAngle(new THREE.Vector3(0, 1, 0), orbitAngle);
+      const eyeHeight = clamp(0.46 - tilt * 0.035, 0.4, 0.52);
+      const cameraPosition = anchor
+        .clone()
+        .addScaledVector(viewDirection, -0.045)
+        .add(new THREE.Vector3(0, eyeHeight, 0));
+      const lookTarget = cameraPosition
+        .clone()
+        .addScaledVector(sightDirection, 3.2)
+        .add(new THREE.Vector3(0, -0.1 - tilt * 0.28, 0));
+      camera.fov = getTerrainPerspectiveFov(scale);
+      camera.zoom = 1;
+      camera.position.copy(cameraPosition);
+      camera.lookAt(lookTarget);
+      camera.updateProjectionMatrix();
+      return;
+    }
+
+    const target = new THREE.Vector3(0, 0.58, 0);
+    const radius = 8 + Math.max(0, tilt) * 0.28;
+    const height = clamp(3.78 - tilt * 1.12, 1.65, 5.7);
+
+    camera.fov = 43;
     camera.zoom = scale;
     camera.position.set(
-      -offsetX * 0.95,
-      5.25 - scale * 0.62,
-      6.95 + offsetY * 0.78
+      Math.sin(orbitAngle) * radius,
+      height,
+      Math.cos(orbitAngle) * radius
     );
     camera.lookAt(target);
     camera.updateProjectionMatrix();
@@ -1018,23 +1798,27 @@ export function Terrain3DScene({
       });
       renderer.shadowMap.enabled = true;
       renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+      renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      renderer.toneMappingExposure = 1.08;
+      renderer.outputColorSpace = THREE.SRGBColorSpace;
 
       const scene = new THREE.Scene();
-      scene.fog = new THREE.Fog("#CFE9F2", 9, 17);
-      scene.add(buildSkyDome());
+      scene.fog = new THREE.FogExp2("#CFE9F2", 0.035);
 
-      const camera = new THREE.PerspectiveCamera(48, width / height, 0.1, 80);
-      updateCamera(camera);
+      const camera = new THREE.PerspectiveCamera(43, width / height, 0.1, 80);
+      updateCamera(camera, null);
 
       const terrainGroup = new THREE.Group();
       const routeGroup = new THREE.Group();
+      const weatherGroup = new THREE.Group();
+      scene.add(weatherGroup);
       scene.add(terrainGroup);
       scene.add(routeGroup);
 
       const hemiLight = new THREE.HemisphereLight("#DDF6FF", "#335C36", 1.5);
       const sunLight = new THREE.DirectionalLight("#FFF3D9", 2.7);
       const fillLight = new THREE.DirectionalLight("#A9CBE8", 0.6);
-      sunLight.position.set(-4, 7, 5);
+      sunLight.position.set(-6, 6.5, 4.5);
       sunLight.castShadow = true;
       sunLight.shadow.mapSize.set(1024, 1024);
       sunLight.shadow.camera.left = -6;
@@ -1051,6 +1835,7 @@ export function Terrain3DScene({
       scene.add(fillLight);
 
       handlesRef.current = {
+        alignmentRotation: 0,
         animationFrame: 0,
         camera,
         gl,
@@ -1058,6 +1843,14 @@ export function Terrain3DScene({
         routeGroup,
         scene,
         terrainGroup,
+        weatherGroup,
+        sunLight,
+        hemiLight,
+        navigationView: null,
+        model: null,
+        terrainRoute: [],
+        trackedObject: null,
+        rebuildId: 0,
       };
       rebuildScene();
 
@@ -1065,10 +1858,17 @@ export function Terrain3DScene({
         const handles = handlesRef.current;
         if (!handles) return;
 
-        updateCamera(handles.camera);
-        const drift = Math.sin(Date.now() / 4200) * 0.012;
-        handles.terrainGroup.rotation.y = drift;
-        handles.routeGroup.rotation.y = drift;
+        updateCamera(handles.camera, handles.navigationView);
+        const elapsed = Date.now() / 1000;
+        handles.weatherGroup.children.forEach((child) => {
+          if (child.name === "weather-cloud") {
+            const originX = Number(child.userData.originX) || 0;
+            const speed = Number(child.userData.speed) || 0.02;
+            child.position.x = originX + Math.sin(elapsed * speed * 8 + originX) * 0.34;
+          } else if (child.name === "weather-precipitation") {
+            child.position.y = -((elapsed * 0.72) % 0.8);
+          }
+        });
         handles.renderer.render(handles.scene, handles.camera);
         handles.gl.endFrameEXP?.();
         handles.animationFrame = requestAnimationFrame(render);

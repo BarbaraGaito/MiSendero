@@ -64,8 +64,7 @@ router.post("/register", validateBody(registerSchema), async (req, res, next) =>
     }
 
     const passwordHash = await bcrypt.hash(password, 10);
-    const { rows: countRows } = await query("SELECT COUNT(*)::int AS count FROM users");
-    const role = countRows[0].count === 0 ? "admin" : "user";
+    const role = "admin";
     const termsAcceptedAt = new Date().toISOString();
 
     const { rows: insertedRows } = await query(

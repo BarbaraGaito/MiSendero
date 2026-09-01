@@ -1,4 +1,4 @@
-import * as FileSystem from "expo-file-system/legacy";
+﻿import * as FileSystem from "expo-file-system/legacy";
 import { Trail } from "../types";
 import { Coordinate, parseRouteCoordinates } from "./geoUtils";
 
@@ -162,43 +162,68 @@ export const getOfflineTilePlanForTrail = (trail: Trail): TileDescriptor[] => {
   const zooms = Array.from(
     new Set([baseZoom - 1, baseZoom, baseZoom + 1].map((zoom) => clamp(zoom, MIN_ZOOM, 15)))
   );
-  const layers: CachedMapLayer[] = ["standard", "terrain"];
   const tiles = new Map<string, TileDescriptor>();
 
-  for (const layer of layers) {
+  for (const layer of ["standard", "terrain"] as CachedMapLayer[]) {
     for (const zoom of zooms) {
       if (tiles.size >= MAX_DOWNLOAD_TILES) break;
 
-      const projectedPoints = points.map((point) => project(point, zoom));
-      const minTileX = Math.floor(Math.min(...projectedPoints.map((point) => point.x)) / TILE_SIZE);
-      const maxTileX = Math.floor(Math.max(...projectedPoints.map((point) => point.x)) / TILE_SIZE);
-      const minTileY = Math.floor(Math.min(...projectedPoints.map((point) => point.y)) / TILE_SIZE);
-      const maxTileY = Math.floor(Math.max(...projectedPoints.map((point) => point.y)) / TILE_SIZE);
-      const buffer = 1;
-
-      for (let x = minTileX - buffer; x <= maxTileX + buffer; x += 1) {
-        for (let y = minTileY - buffer; y <= maxTileY + buffer; y += 1) {
-          if (y < 0 || y >= 2 ** zoom) continue;
-
-          const tileX = wrapTileX(x, zoom);
-          const key = `${layer}-${zoom}-${tileX}-${y}`;
-
-          if (tiles.size >= MAX_DOWNLOAD_TILES) break;
-
-          tiles.set(key, {
-            layer,
-            zoom,
-            x: tileX,
-            y,
-            url: getTileRemoteUrl(layer, zoom, tileX, y),
-            localUri: getTileLocalUri(layer, zoom, tileX, y),
-          });
-        }
-      }
+      addTilesForLayerAndZoom(tiles, layer, zoom, points);
     }
   }
 
   return Array.from(tiles.values());
+};
+
+const addTilesForLayerAndZoom = (
+  tiles: Map<string, TileDescriptor>,
+  layer: CachedMapLayer,
+  zoom: number,
+  points: Coordinate[]
+) => {
+  const bounds = getTileBounds(points, zoom, 1);
+
+  for (let x = bounds.minX; x <= bounds.maxX; x += 1) {
+    addTilesForColumn(tiles, layer, zoom, x, bounds);
+  }
+};
+
+const addTilesForColumn = (
+  tiles: Map<string, TileDescriptor>,
+  layer: CachedMapLayer,
+  zoom: number,
+  x: number,
+  bounds: ReturnType<typeof getTileBounds>
+) => {
+  for (let y = bounds.minY; y <= bounds.maxY; y += 1) {
+    if (tiles.size >= MAX_DOWNLOAD_TILES) return;
+    if (y < 0 || y >= 2 ** zoom) continue;
+
+    const tileX = wrapTileX(x, zoom);
+    const key = `${layer}-${zoom}-${tileX}-${y}`;
+
+    tiles.set(key, {
+      layer,
+      zoom,
+      x: tileX,
+      y,
+      url: getTileRemoteUrl(layer, zoom, tileX, y),
+      localUri: getTileLocalUri(layer, zoom, tileX, y),
+    });
+  }
+};
+
+const getTileBounds = (points: Coordinate[], zoom: number, buffer: number) => {
+  const projectedPoints = points.map((point) => project(point, zoom));
+  const xValues = projectedPoints.map((point) => point.x);
+  const yValues = projectedPoints.map((point) => point.y);
+
+  return {
+    minX: Math.floor(Math.min(...xValues) / TILE_SIZE) - buffer,
+    maxX: Math.floor(Math.max(...xValues) / TILE_SIZE) + buffer,
+    minY: Math.floor(Math.min(...yValues) / TILE_SIZE) - buffer,
+    maxY: Math.floor(Math.max(...yValues) / TILE_SIZE) + buffer,
+  };
 };
 
 export const getOfflineTileCoverageForTrail = async (
@@ -256,86 +281,15 @@ export const downloadOfflineTilesForTrail = async (
   let totalBytes = 0;
 
   for (const tile of tileList) {
-    if (options.shouldCancel?.()) {
-      throw new MapTileDownloadError(
-        "download-cancelled",
-        "La descarga de tiles fue cancelada antes de completar el mapa.",
-        { downloadedTiles, totalTiles: tileList.length }
-      );
-    }
+    const downloadedTile = await downloadTileIfNeeded(tile, {
+      downloadedTiles,
+      totalTiles: tileList.length,
+      shouldCancel: options.shouldCancel,
+    });
 
-    const directory = tile.localUri.slice(0, tile.localUri.lastIndexOf("/") + 1);
-    await ensureDirectory(directory);
-
-    const existing = await FileSystem.getInfoAsync(tile.localUri);
-
-    if (isUsableTileInfo(existing)) {
-      totalBytes += getTileSize(existing);
-      downloadedTiles += 1;
-      onProgress?.(downloadedTiles, tileList.length);
-      continue;
-    }
-
-    if (existing.exists) {
-      await removeFileIfPresent(tile.localUri);
-    }
-
-    const tempUri = `${tile.localUri}.download`;
-
-    try {
-      await removeFileIfPresent(tempUri);
-      const result = await FileSystem.downloadAsync(tile.url, tempUri);
-
-      if (options.shouldCancel?.()) {
-        await removeFileIfPresent(tempUri).catch(() => undefined);
-        throw new MapTileDownloadError(
-          "download-cancelled",
-          "La descarga de tiles fue cancelada antes de completar el mapa.",
-          { downloadedTiles, totalTiles: tileList.length }
-        );
-      }
-
-      if (result.status < 200 || result.status >= 300) {
-        throw new Error(`HTTP ${result.status}`);
-      }
-
-      const tempInfo = await FileSystem.getInfoAsync(tempUri);
-
-      if (!isUsableTileInfo(tempInfo)) {
-        throw new Error("invalid-tile-file");
-      }
-
-      await FileSystem.moveAsync({ from: tempUri, to: tile.localUri });
-
-      totalBytes += getTileSize(tempInfo);
-      downloadedTiles += 1;
-      onProgress?.(downloadedTiles, tileList.length);
-    } catch (error) {
-      await removeFileIfPresent(tempUri).catch(() => undefined);
-
-      if (
-        error instanceof MapTileDownloadError &&
-        error.code === "download-cancelled"
-      ) {
-        throw error;
-      }
-
-      throw new MapTileDownloadError(
-        "tile-download-failed",
-        "La descarga de tiles se interrumpio antes de completar el mapa.",
-        {
-          downloadedTiles,
-          totalTiles: tileList.length,
-          tile: {
-            layer: tile.layer,
-            zoom: tile.zoom,
-            x: tile.x,
-            y: tile.y,
-            url: tile.url,
-          },
-        }
-      );
-    }
+    totalBytes += downloadedTile.sizeBytes;
+    downloadedTiles += 1;
+    onProgress?.(downloadedTiles, tileList.length);
   }
 
   return {
@@ -343,6 +297,104 @@ export const downloadOfflineTilesForTrail = async (
     totalTiles: tileList.length,
     sizeMb: Math.max(1, Math.ceil((totalBytes / 1024 / 1024) * 10) / 10),
   };
+};
+
+const throwDownloadCancelled = (downloadedTiles: number, totalTiles: number) => {
+  throw new MapTileDownloadError(
+    "download-cancelled",
+    "La descarga de tiles fue cancelada antes de completar el mapa.",
+    { downloadedTiles, totalTiles }
+  );
+};
+
+const downloadTileIfNeeded = async (
+  tile: TileDescriptor,
+  context: {
+    downloadedTiles: number;
+    totalTiles: number;
+    shouldCancel?: () => boolean;
+  }
+) => {
+  if (context.shouldCancel?.()) {
+    throwDownloadCancelled(context.downloadedTiles, context.totalTiles);
+  }
+
+  await ensureDirectory(tile.localUri.slice(0, tile.localUri.lastIndexOf("/") + 1));
+
+  const existing = await FileSystem.getInfoAsync(tile.localUri);
+  if (isUsableTileInfo(existing)) {
+    return { sizeBytes: getTileSize(existing) };
+  }
+
+  if (existing.exists) {
+    await removeFileIfPresent(tile.localUri);
+  }
+
+  return downloadTileToLocalFile(tile, context);
+};
+
+const downloadTileToLocalFile = async (
+  tile: TileDescriptor,
+  context: {
+    downloadedTiles: number;
+    totalTiles: number;
+    shouldCancel?: () => boolean;
+  }
+) => {
+  const tempUri = `${tile.localUri}.download`;
+
+  try {
+    await removeFileIfPresent(tempUri);
+    const result = await FileSystem.downloadAsync(tile.url, tempUri);
+
+    if (context.shouldCancel?.()) {
+      await removeFileIfPresent(tempUri).catch(() => undefined);
+      throwDownloadCancelled(context.downloadedTiles, context.totalTiles);
+    }
+
+    if (result.status < 200 || result.status >= 300) {
+      throw new Error(`HTTP ${result.status}`);
+    }
+
+    const tempInfo = await FileSystem.getInfoAsync(tempUri);
+    if (!isUsableTileInfo(tempInfo)) {
+      throw new Error("invalid-tile-file");
+    }
+
+    await FileSystem.moveAsync({ from: tempUri, to: tile.localUri });
+    return { sizeBytes: getTileSize(tempInfo) };
+  } catch (error) {
+    await removeFileIfPresent(tempUri).catch(() => undefined);
+    throwTileDownloadError(error, tile, context);
+  }
+
+  throw new Error("unreachable-tile-download-state");
+};
+
+const throwTileDownloadError = (
+  error: unknown,
+  tile: TileDescriptor,
+  context: { downloadedTiles: number; totalTiles: number }
+) => {
+  if (error instanceof MapTileDownloadError && error.code === "download-cancelled") {
+    throw error;
+  }
+
+  throw new MapTileDownloadError(
+    "tile-download-failed",
+    "La descarga de tiles se interrumpio antes de completar el mapa.",
+    {
+      downloadedTiles: context.downloadedTiles,
+      totalTiles: context.totalTiles,
+      tile: {
+        layer: tile.layer,
+        zoom: tile.zoom,
+        x: tile.x,
+        y: tile.y,
+        url: tile.url,
+      },
+    }
+  );
 };
 
 export const deleteOfflineTilesForTrail = async (trail: Trail): Promise<number> => {

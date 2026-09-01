@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+﻿import React, { useCallback, useEffect, useState } from "react";
 import { router, useLocalSearchParams } from "expo-router";
 import { ImageBackground, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -28,6 +28,25 @@ import { Trail, TrailWeather } from "../../types";
 import { parseRouteCoordinates } from "../../services/geoUtils";
 import { getTerrainElevationGainMeters } from "../components/Terrain3DScene";
 
+const loadTrailDetailData = async (trailId: number) => {
+  await initDB();
+  const trail = await getTrailById(trailId);
+  const [offlineMap, ratingSummary, isFavorite, weather] = await Promise.all([
+    getVerifiedOfflineMapByTrailId(trail.id),
+    getTrailRatingSummary(trail.id),
+    isTrailFavorite(trail.id),
+    getTrailWeather(trail.id).catch(() => null),
+  ]);
+
+  return {
+    trail,
+    isDownloaded: Boolean(offlineMap),
+    ratingSummary,
+    isFavorite,
+    weather,
+  };
+};
+
 export default function Screen03TrailDetail() {
   const insets = useSafeAreaInsets();
   const { id } = useLocalSearchParams<{ id?: string }>();
@@ -53,19 +72,12 @@ export default function Screen03TrailDetail() {
     }
 
     try {
-      await initDB();
-      const data = await getTrailById(trailId);
-      setTrail(data);
-
-      const [offlineMap, summary, favorite] = await Promise.all([
-        getVerifiedOfflineMapByTrailId(data.id),
-        getTrailRatingSummary(data.id),
-        isTrailFavorite(data.id),
-      ]);
-      setIsDownloaded(Boolean(offlineMap));
-      setRatingSummary(summary);
-      setIsFavorite(favorite);
-      setWeather(await getTrailWeather(data.id).catch(() => null));
+      const data = await loadTrailDetailData(trailId);
+      setTrail(data.trail);
+      setIsDownloaded(data.isDownloaded);
+      setRatingSummary(data.ratingSummary);
+      setIsFavorite(data.isFavorite);
+      setWeather(data.weather);
     } catch (loadError) {
       setError("No pudimos cargar este sendero en este momento.");
     } finally {
@@ -97,12 +109,6 @@ export default function Screen03TrailDetail() {
       setIsDownloading(false);
     }
   };
-
-  const distance = trail?.distance_km ? `${trail.distance_km} km` : "Distancia a confirmar";
-  const duration = trail?.duration || "Duracion a confirmar";
-  const difficultyInsight = trail ? getDifficultyInsight(trail, weather) : "";
-  const beforeYouGoTips = trail ? getBeforeYouGoTips(trail, weather) : [];
-  const elevationGain = trail ? getTrailElevationGain(trail) : null;
 
   const toggleFavorite = async () => {
     if (!trail) return;
@@ -139,150 +145,271 @@ export default function Screen03TrailDetail() {
         ) : null}
 
         {trail ? (
-          <>
-            <ImageBackground
-              source={{ uri: trail.image_url || trailImages.mountain }}
-              style={styles.cover}
-              imageStyle={styles.coverImage}
-            >
-              {ratingSummary ? (
-                <Pressable
-                  onPress={() =>
-                    router.push({
-                      pathname: "/sendero-opiniones",
-                      params: { id: String(trail.id) },
-                    })
-                  }
-                  style={styles.coverBadge}
-                >
-                  <Ionicons name="star" size={15} color={colors.warning} />
-                  <Text style={styles.coverBadgeText}>
-                    {ratingSummary.averageRating.toFixed(1)}
-                  </Text>
-                  <Text style={styles.coverBadgeMeta}>
-                    ({ratingSummary.reviewCount})
-                  </Text>
-                </Pressable>
-              ) : null}
-            </ImageBackground>
-
-            <Text style={styles.title}>{trail.name}</Text>
-            <Text style={styles.location}>{trail.location}</Text>
-
-            <View style={styles.stats}>
-              <StatPill icon="walk-outline" label={distance} />
-              <StatPill icon="time-outline" label={duration} />
-              <StatPill icon="leaf-outline" label={trail.difficulty} />
-              {elevationGain !== null ? (
-                <StatPill icon="trending-up-outline" label={`${elevationGain} m desnivel`} />
-              ) : null}
-            </View>
-
-            <Pressable
-              accessibilityLabel={isFavorite ? "Quitar de favoritas" : "Guardar como favorita"}
-              accessibilityRole="button"
-              onPress={toggleFavorite}
-              style={({ pressed }) => [
-                styles.favoriteButton,
-                isFavorite && styles.favoriteButtonActive,
-                pressed && styles.pressed,
-              ]}
-            >
-              <Ionicons
-                name={isFavorite ? "star" : "star-outline"}
-                size={18}
-                color={isFavorite ? colors.warning : colors.greenDark}
-              />
-              <Text style={styles.favoriteText}>
-                {isFavorite ? "Ruta favorita" : "Guardar como favorita"}
-              </Text>
-            </Pressable>
-
-            <InfoCard style={styles.card}>
-              <Text style={styles.cardTitle}>Descripcion</Text>
-              <Text style={styles.body}>
-                {trail.description || "Pronto vas a encontrar mas informacion sobre este recorrido."}
-              </Text>
-            </InfoCard>
-
-            {trail.difficulty ? (
-              <InfoCard style={styles.aiCard}>
-                <View style={styles.aiHeader}>
-                  <Ionicons name="sparkles-outline" size={20} color={colors.green} />
-                  <Text style={styles.cardTitle}>Dificultad de la ruta</Text>
-                </View>
-                <Text style={styles.body}>
-                  {difficultyInsight}
-                </Text>
-              </InfoCard>
-            ) : null}
-
-            <InfoCard style={styles.card}>
-              <Text style={styles.cardTitle}>Antes de salir</Text>
-              <View style={styles.checkRow}>
-                <Ionicons name="checkmark-circle" size={20} color={colors.green} />
-                <Text style={styles.checkText}>{beforeYouGoTips[0]}</Text>
-              </View>
-              <View style={styles.checkRow}>
-                <Ionicons name="checkmark-circle" size={20} color={colors.green} />
-                <Text style={styles.checkText}>{beforeYouGoTips[1]}</Text>
-              </View>
-              {beforeYouGoTips[2] ? (
-                <View style={styles.checkRow}>
-                  <Ionicons name="checkmark-circle" size={20} color={colors.green} />
-                  <Text style={styles.checkText}>{beforeYouGoTips[2]}</Text>
-                </View>
-              ) : null}
-            </InfoCard>
-
-            <InfoCard style={styles.offlineCard}>
-              <View style={styles.offlineHeader}>
-                <View style={styles.offlineIcon}>
-                  <Ionicons
-                    name={isDownloaded ? "checkmark-circle-outline" : "download-outline"}
-                    size={24}
-                    color={colors.green}
-                  />
-                </View>
-                <View style={styles.offlineText}>
-                  <Text style={styles.cardTitle}>Mapa sin conexion</Text>
-                  <Text style={styles.body}>
-                    Guarda esta ruta y sus reportes para verla aunque no tengas internet.
-                  </Text>
-                </View>
-              </View>
-              {downloadMessage ? (
-                <Text style={styles.downloadStatus}>{downloadMessage}</Text>
-              ) : null}
-            </InfoCard>
-
-            <View style={styles.footer}>
-              <PrimaryButton
-                label="Ver ruta"
-                icon="map-outline"
-                onPress={() =>
-                  router.push({
-                    pathname: "/route-map",
-                    params: { id: String(trail?.id || id || 1) },
-                  })
-                }
-              />
-              <PrimaryButton
-                label={isDownloaded ? "Mapa descargado" : "Descargar mapa"}
-                icon={isDownloaded ? "checkmark-circle-outline" : "download-outline"}
-                disabled={isDownloaded}
-                isLoading={isDownloading}
-                loadingLabel="Descargando mapa"
-                tone="secondary"
-                onPress={downloadMap}
-              />
-            </View>
-          </>
+          <TrailDetailContent
+            downloadMap={downloadMap}
+            downloadMessage={downloadMessage}
+            isDownloaded={isDownloaded}
+            isDownloading={isDownloading}
+            isFavorite={isFavorite}
+            ratingSummary={ratingSummary}
+            toggleFavorite={toggleFavorite}
+            trail={trail}
+            weather={weather}
+          />
         ) : null}
       </ScrollView>
     </ScreenShell>
   );
 }
+
+function TrailDetailContent({
+  downloadMap,
+  downloadMessage,
+  isDownloaded,
+  isDownloading,
+  isFavorite,
+  ratingSummary,
+  toggleFavorite,
+  trail,
+  weather,
+}: {
+  downloadMap: () => void;
+  downloadMessage: string | null;
+  isDownloaded: boolean;
+  isDownloading: boolean;
+  isFavorite: boolean;
+  ratingSummary: TrailRatingSummary | null;
+  toggleFavorite: () => void;
+  trail: Trail;
+  weather: TrailWeather | null;
+}) {
+  const beforeYouGoTips = getBeforeYouGoTips(trail, weather);
+
+  return (
+    <>
+      <TrailCover ratingSummary={ratingSummary} trail={trail} />
+      <Text style={styles.title}>{trail.name}</Text>
+      <Text style={styles.location}>{trail.location}</Text>
+      <TrailStats trail={trail} />
+      <FavoriteButton
+        isFavorite={isFavorite}
+        onPress={toggleFavorite}
+      />
+      <DescriptionCard trail={trail} />
+      <DifficultyCard trail={trail} weather={weather} />
+      <BeforeYouGoCard tips={beforeYouGoTips} />
+      <OfflineMapCard
+        downloadMessage={downloadMessage}
+        isDownloaded={isDownloaded}
+      />
+      <TrailDetailActions
+        downloadMap={downloadMap}
+        isDownloaded={isDownloaded}
+        isDownloading={isDownloading}
+        trail={trail}
+      />
+    </>
+  );
+}
+
+function TrailCover({
+  ratingSummary,
+  trail,
+}: {
+  ratingSummary: TrailRatingSummary | null;
+  trail: Trail;
+}) {
+  return (
+    <ImageBackground
+      source={{ uri: trail.image_url || trailImages.mountain }}
+      style={styles.cover}
+      imageStyle={styles.coverImage}
+    >
+      {ratingSummary ? (
+        <Pressable
+          onPress={() =>
+            router.push({
+              pathname: "/sendero-opiniones",
+              params: { id: String(trail.id) },
+            })
+          }
+          style={styles.coverBadge}
+        >
+          <Ionicons name="star" size={15} color={colors.warning} />
+          <Text style={styles.coverBadgeText}>
+            {ratingSummary.averageRating.toFixed(1)}
+          </Text>
+          <Text style={styles.coverBadgeMeta}>({ratingSummary.reviewCount})</Text>
+        </Pressable>
+      ) : null}
+    </ImageBackground>
+  );
+}
+
+function TrailStats({ trail }: { trail: Trail }) {
+  const elevationGain = getTrailElevationGain(trail);
+
+  return (
+    <View style={styles.stats}>
+      <StatPill icon="walk-outline" label={getTrailDistanceLabel(trail)} />
+      <StatPill icon="time-outline" label={trail.duration || "Duracion a confirmar"} />
+      <StatPill icon="leaf-outline" label={trail.difficulty} />
+      {elevationGain !== null ? (
+        <StatPill icon="trending-up-outline" label={`${elevationGain} m desnivel`} />
+      ) : null}
+    </View>
+  );
+}
+
+function FavoriteButton({
+  isFavorite,
+  onPress,
+}: {
+  isFavorite: boolean;
+  onPress: () => void;
+}) {
+  return (
+    <Pressable
+      accessibilityLabel={isFavorite ? "Quitar de favoritas" : "Guardar como favorita"}
+      accessibilityRole="button"
+      onPress={onPress}
+      style={({ pressed }) => [
+        styles.favoriteButton,
+        isFavorite && styles.favoriteButtonActive,
+        pressed && styles.pressed,
+      ]}
+    >
+      <Ionicons
+        name={isFavorite ? "star" : "star-outline"}
+        size={18}
+        color={isFavorite ? colors.warning : colors.greenDark}
+      />
+      <Text style={styles.favoriteText}>
+        {isFavorite ? "Ruta favorita" : "Guardar como favorita"}
+      </Text>
+    </Pressable>
+  );
+}
+
+function DescriptionCard({ trail }: { trail: Trail }) {
+  return (
+    <InfoCard style={styles.card}>
+      <Text style={styles.cardTitle}>Descripcion</Text>
+      <Text style={styles.body}>
+        {trail.description || "Pronto vas a encontrar mas informacion sobre este recorrido."}
+      </Text>
+    </InfoCard>
+  );
+}
+
+function DifficultyCard({
+  trail,
+  weather,
+}: {
+  trail: Trail;
+  weather: TrailWeather | null;
+}) {
+  if (!trail.difficulty) return null;
+
+  return (
+    <InfoCard style={styles.aiCard}>
+      <View style={styles.aiHeader}>
+        <Ionicons name="sparkles-outline" size={20} color={colors.green} />
+        <Text style={styles.cardTitle}>Dificultad de la ruta</Text>
+      </View>
+      <Text style={styles.body}>{getDifficultyInsight(trail, weather)}</Text>
+    </InfoCard>
+  );
+}
+
+function BeforeYouGoCard({ tips }: { tips: string[] }) {
+  return (
+    <InfoCard style={styles.card}>
+      <Text style={styles.cardTitle}>Antes de salir</Text>
+      {tips.map((tip) => (
+        <View key={tip} style={styles.checkRow}>
+          <Ionicons name="checkmark-circle" size={20} color={colors.green} />
+          <Text style={styles.checkText}>{tip}</Text>
+        </View>
+      ))}
+    </InfoCard>
+  );
+}
+
+function OfflineMapCard({
+  downloadMessage,
+  isDownloaded,
+}: {
+  downloadMessage: string | null;
+  isDownloaded: boolean;
+}) {
+  return (
+    <InfoCard style={styles.offlineCard}>
+      <View style={styles.offlineHeader}>
+        <View style={styles.offlineIcon}>
+          <Ionicons
+            name={isDownloaded ? "checkmark-circle-outline" : "download-outline"}
+            size={24}
+            color={colors.green}
+          />
+        </View>
+        <View style={styles.offlineText}>
+          <Text style={styles.cardTitle}>
+            {isDownloaded ? "Mapa sin conexion descargado" : "Mapa sin conexion"}
+          </Text>
+          <Text style={styles.body}>
+            {isDownloaded
+              ? "Esta ruta y sus reportes ya estan disponibles aunque no tengas internet."
+              : "Guarda esta ruta y sus reportes para verla aunque no tengas internet."}
+          </Text>
+        </View>
+      </View>
+      {downloadMessage ? (
+        <Text style={styles.downloadStatus}>{downloadMessage}</Text>
+      ) : null}
+    </InfoCard>
+  );
+}
+
+function TrailDetailActions({
+  downloadMap,
+  isDownloaded,
+  isDownloading,
+  trail,
+}: {
+  downloadMap: () => void;
+  isDownloaded: boolean;
+  isDownloading: boolean;
+  trail: Trail;
+}) {
+  return (
+    <View style={styles.footer}>
+      <PrimaryButton
+        label="Ver ruta"
+        icon="map-outline"
+        onPress={() =>
+          router.push({
+            pathname: "/route-map",
+            params: { id: String(trail.id) },
+          })
+        }
+      />
+      {!isDownloaded ? (
+        <PrimaryButton
+          label="Descargar mapa"
+          icon="download-outline"
+          isLoading={isDownloading}
+          loadingLabel="Descargando mapa"
+          tone="secondary"
+          onPress={downloadMap}
+        />
+      ) : null}
+    </View>
+  );
+}
+
+const getTrailDistanceLabel = (trail: Trail) =>
+  trail.distance_km ? `${trail.distance_km} km` : "Distancia a confirmar";
 
 function getDifficultyInsight(trail: Trail, weather: TrailWeather | null) {
   const difficulty = normalizeDifficulty(trail.difficulty);
@@ -293,20 +420,9 @@ function getDifficultyInsight(trail: Trail, weather: TrailWeather | null) {
   const weatherText = weather
     ? ` Para hoy figura ${weather.condition.toLowerCase()}, ${weather.temperature_c} C, viento de ${weather.wind_kmh} km/h y riesgo ${weather.risk_level}.`
     : "";
+  const context = { distanceText, durationText, weatherText };
 
-  if (difficulty === "alta") {
-    return `Ruta exigente: son ${distanceText} y una duracion estimada de ${durationText}, por lo que conviene encararla con buen margen de luz, ritmo conservador y experiencia previa en trekking.${weatherText}`;
-  }
-
-  if (difficulty === "media") {
-    return `Ruta de esfuerzo moderado: combina ${distanceText} con una duracion estimada de ${durationText}. Es una buena opcion si ya caminaste senderos similares y podes sostener un paso constante.${weatherText}`;
-  }
-
-  if (difficulty === "baja") {
-    return `Ruta accesible: por sus ${distanceText} y duracion estimada de ${durationText}, esta pensada para una salida tranquila, aunque igual requiere revisar el estado del camino antes de salir.${weatherText}`;
-  }
-
-  return `Esta ruta tiene dificultad ${trail.difficulty}, ${distanceText} y una duracion estimada de ${durationText}. Revisa el mapa, el clima y el estado del sendero antes de iniciarla.${weatherText}`;
+  return getDifficultyInsightText(difficulty, trail.difficulty, context);
 }
 
 function getBeforeYouGoTips(trail: Trail, weather: TrailWeather | null) {
@@ -318,15 +434,7 @@ function getBeforeYouGoTips(trail: Trail, weather: TrailWeather | null) {
     : "Si no tenes clima actualizado, revisalo antes de salir y descarga el mapa offline.";
 
   if (difficulty === "alta") {
-    return [
-      isLongRoute
-        ? "Sali temprano, avisa tu itinerario y evita iniciar si no tenes margen para volver con luz."
-        : "Planifica el regreso antes de empezar y evita exigirte si notas fatiga temprana.",
-      "Lleva agua extra, abrigo, comida, bateria suficiente y mapa descargado.",
-      hasWeatherRisk
-        ? "Con riesgo meteorologico medio o alto, considera postergar o elegir una ruta mas corta."
-        : weatherTip,
-    ];
+    return getHighDifficultyTips(isLongRoute, hasWeatherRisk, weatherTip);
   }
 
   if (difficulty === "media") {
@@ -349,6 +457,47 @@ function getBeforeYouGoTips(trail: Trail, weather: TrailWeather | null) {
     "Revisa distancia, duracion y punto de inicio antes de salir.",
     "Lleva agua, abrigo y bateria suficiente para usar el mapa durante todo el recorrido.",
     weatherTip,
+  ];
+}
+
+function getDifficultyInsightText(
+  difficulty: string,
+  rawDifficulty: string,
+  context: { distanceText: string; durationText: string; weatherText: string }
+) {
+  const { distanceText, durationText, weatherText } = context;
+
+  if (difficulty === "alta") {
+    return `Ruta exigente: son ${distanceText} y una duracion estimada de ${durationText}, por lo que conviene encararla con buen margen de luz, ritmo conservador y experiencia previa en trekking.${weatherText}`;
+  }
+
+  if (difficulty === "media") {
+    return `Ruta de esfuerzo moderado: combina ${distanceText} con una duracion estimada de ${durationText}. Es una buena opcion si ya caminaste senderos similares y podes sostener un paso constante.${weatherText}`;
+  }
+
+  if (difficulty === "baja") {
+    return `Ruta accesible: por sus ${distanceText} y duracion estimada de ${durationText}, esta pensada para una salida tranquila, aunque igual requiere revisar el estado del camino antes de salir.${weatherText}`;
+  }
+
+  return `Esta ruta tiene dificultad ${rawDifficulty}, ${distanceText} y una duracion estimada de ${durationText}. Revisa el mapa, el clima y el estado del sendero antes de iniciarla.${weatherText}`;
+}
+
+function getHighDifficultyTips(
+  isLongRoute: boolean,
+  hasWeatherRisk: boolean,
+  weatherTip: string
+) {
+  const timingTip = isLongRoute
+    ? "Sali temprano, avisa tu itinerario y evita iniciar si no tenes margen para volver con luz."
+    : "Planifica el regreso antes de empezar y evita exigirte si notas fatiga temprana.";
+  const weatherRiskTip = hasWeatherRisk
+    ? "Con riesgo meteorologico medio o alto, considera postergar o elegir una ruta mas corta."
+    : weatherTip;
+
+  return [
+    timingTip,
+    "Lleva agua extra, abrigo, comida, bateria suficiente y mapa descargado.",
+    weatherRiskTip,
   ];
 }
 

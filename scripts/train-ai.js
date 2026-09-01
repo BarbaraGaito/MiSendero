@@ -5,6 +5,7 @@ const { execFileSync } = require("child_process");
 const root = path.resolve(__dirname, "..");
 const pythonDir = path.join(root, "training", "python");
 const modelsDir = path.join(root, "ai", "models");
+const pythonExecutable = getPythonExecutable();
 
 // Assumes `py -m pip install -r training/python/requirements.txt` has already
 // been run once (see training/python/requirements.txt and ai/datasets/README.md).
@@ -41,7 +42,7 @@ const trainingScripts = [
 fs.mkdirSync(modelsDir, { recursive: true });
 
 for (const config of trainingScripts) {
-  execFileSync("py", [config.script], { stdio: "inherit" });
+  execFileSync(pythonExecutable, [config.script], { stdio: "inherit" });
 
   if (config.modelTarget) {
     fs.copyFileSync(config.forestOutput, config.modelTarget);
@@ -50,4 +51,25 @@ for (const config of trainingScripts) {
 
   fs.copyFileSync(config.metricsOutput, config.metricsTarget);
   console.log(`copied ${config.id} metrics -> ${path.relative(root, config.metricsTarget)}`);
+}
+
+function getPythonExecutable() {
+  const candidates =
+    process.platform === "win32"
+      ? [
+          "C:\\Windows\\py.exe",
+          "C:\\Windows\\System32\\py.exe",
+          "C:\\Python312\\python.exe",
+          "C:\\Python311\\python.exe",
+        ]
+      : ["/usr/bin/python3", "/bin/python3", "/usr/local/bin/python3"];
+  const executable = candidates.find((candidate) => fs.existsSync(candidate));
+
+  if (!executable) {
+    throw new Error(
+      `Python executable not found in fixed locations: ${candidates.join(", ")}`
+    );
+  }
+
+  return executable;
 }

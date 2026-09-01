@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+﻿import React, { useCallback, useEffect, useState } from "react";
 import { router, useFocusEffect } from "expo-router";
 import { Alert, ScrollView, StyleSheet, Text, View } from "react-native";
 import {
@@ -45,13 +45,13 @@ import {
   getSessionsSummary,
   SessionsSummary,
 } from "../../database/sessionsRepository";
+import { getWearableRuntimeStatus } from "../../services/wearableMetrics";
 import {
   discardExhaustedOperations,
   getSyncSummary,
   runSync,
   SyncSummary,
 } from "../../services/syncQueue";
-import { getWearableRuntimeStatus } from "../../services/wearableMetrics";
 import {
   adminAiModelMetrics,
   AiTrainingMetrics,
@@ -103,6 +103,49 @@ const formatDate = (value: string) =>
     month: "2-digit",
     year: "2-digit",
   });
+
+const loadProfileData = async () => {
+  const session = await getAuthSession();
+
+  if (!session) return null;
+
+  const profile = await getProfile(session.token);
+  const [
+    privacy,
+    testingMode,
+    appPreferences,
+    experienceProfile,
+    emergencyContact,
+    sessionsSummary,
+    offlineMapsSummary,
+    wearableRuntime,
+    syncSummary,
+  ] = await Promise.all([
+    getPrivacyPreferences(),
+    getTestingLocationMode(),
+    getAppPreferences(),
+    getExperienceProfile(),
+    getEmergencyContact(),
+    getSessionsSummary(),
+    getOfflineMapsSummary(),
+    getWearableRuntimeStatus(),
+    getSyncSummary(),
+  ]);
+
+  return {
+    session,
+    profile,
+    privacy,
+    testingMode,
+    appPreferences,
+    experienceProfile,
+    emergencyContact,
+    sessionsSummary,
+    offlineMapsSummary,
+    wearableRuntime,
+    syncSummary,
+  };
+};
 
 export default function ProfileScreen() {
   const [profile, setProfile] = useState<Profile | null>(null);
@@ -189,63 +232,40 @@ export default function ProfileScreen() {
     setError(null);
 
     try {
-      const session = await getAuthSession();
+      const data = await loadProfileData();
 
-      if (!session) {
+      if (!data) {
         router.replace("/");
         return;
       }
-
-      const data = await getProfile(session.token);
-      const [
-        privacyPreferences,
-        testingPreferences,
-        preferences,
-        experience,
-        contact,
-        localSessionsSummary,
-        mapsSummary,
-        wearable,
-        initialSyncSummary,
-      ] = await Promise.all([
-        getPrivacyPreferences(),
-        getTestingLocationMode(),
-        getAppPreferences(),
-        getExperienceProfile(),
-        getEmergencyContact(),
-        getSessionsSummary(),
-        getOfflineMapsSummary(),
-        getWearableRuntimeStatus(),
-        getSyncSummary(),
-      ]);
 
       runSync()
         .catch(() => null)
         .finally(refreshSyncSummary);
 
-      if (data.user) {
+      if (data.profile.user) {
         await saveAuthSession({
-          token: session.token,
-          user: data.user,
+          token: data.session.token,
+          user: data.profile.user,
         });
       }
 
-      if (data.user?.role !== "admin" && testingPreferences.enabled) {
+      if (data.profile.user?.role !== "admin" && data.testingMode.enabled) {
         await saveTestingLocationMode(false);
       }
 
-      setProfile(data);
-      setPrivacy(privacyPreferences);
-      setAppPreferences(preferences);
-      setExperienceProfile(experience);
-      setEmergencyContact(contact);
-      setSessionsSummary(localSessionsSummary);
-      setOfflineMapsSummary(mapsSummary);
-      setWearableRuntime(wearable);
-      setSyncSummary(initialSyncSummary);
+      setProfile(data.profile);
+      setPrivacy(data.privacy);
+      setAppPreferences(data.appPreferences);
+      setExperienceProfile(data.experienceProfile);
+      setEmergencyContact(data.emergencyContact);
+      setSessionsSummary(data.sessionsSummary);
+      setOfflineMapsSummary(data.offlineMapsSummary);
+      setWearableRuntime(data.wearableRuntime);
+      setSyncSummary(data.syncSummary);
       setTestingLocationMode(
-        data.user?.role === "admin"
-          ? await getTestingLocationMode()
+        data.profile.user?.role === "admin"
+          ? data.testingMode
           : { enabled: false, updatedAt: null }
       );
     } catch (loadError) {
@@ -323,246 +343,44 @@ export default function ProfileScreen() {
           subtitle="Tu cuenta y preferencias de seguridad."
         />
 
-        {isLoading ? (
-          <StatusNotice
-            isLoading
-            message="Cargando cuenta, mapas, seguridad y sincronizacion."
-            title="Cargando perfil"
-          />
-        ) : null}
-        {error ? (
-          <StatusNotice
-            actionLabel="Reintentar"
-            message={error}
-            onAction={loadProfile}
-            title="No se pudo cargar"
-            tone="error"
-          />
-        ) : null}
-
-        <Card tone="green">
-          <View style={styles.profileRow}>
-            <View style={styles.avatar}>
-              <Text style={styles.avatarText}>{initial}</Text>
-            </View>
-            <View style={styles.profileText}>
-              <Text style={styles.profileName}>{displayName}</Text>
-              <Text style={styles.profileEmail}>{email}</Text>
-              <Text style={styles.profileMeta}>
-                {sessionsSummary.completedCount} rutas completadas -{" "}
-                {formatDistance(sessionsSummary.totalDistance)}
-              </Text>
-            </View>
-          </View>
-        </Card>
-
-        <Card>
-          <Text style={styles.cardTitle}>Sincronizacion</Text>
-          <Text style={styles.privacyText}>
-            Reportes, actividades y alertas creados sin señal quedan en cola
-            local hasta recuperar conectividad.
-          </Text>
-          <SettingRow
-            label="Pendientes de enviar"
-            value={
-              syncSummary.pending + syncSummary.syncing > 0
-                ? `${syncSummary.pending + syncSummary.syncing}`
-                : "Al dia"
-            }
-            onPress={triggerSync}
-          />
-          <View style={styles.syncGrid}>
-            <SyncMetric label="Pendientes" value={syncSummary.pending + syncSummary.syncing} />
-            <SyncMetric label="Enviados" value={syncSummary.synced} />
-            <SyncMetric label="Con error" value={syncSummary.failed} />
-            <SyncMetric label="Descartados" value={syncSummary.abandoned} />
-          </View>
-          {syncSummary.failed > 0 ? (
-            <Text style={styles.warningText}>
-              Hay actividades con error. Podes reintentar la sincronizacion.
-            </Text>
-          ) : null}
-          {syncSummary.failed > 0 ? (
-            <SettingRow
-              label="Con error, reintentar"
-              value={`${syncSummary.failed}`}
-              onPress={triggerSync}
-            />
-          ) : null}
-          {syncSummary.exhausted > 0 ? (
-            <>
-              <Text style={styles.warningText}>
-                {syncSummary.exhausted} no se pudieron enviar tras varios intentos. Podes
-                seguir esperando señal o descartarlos.
-              </Text>
-              <SettingRow
-                label="Descartar pendientes con error"
-                value={`${syncSummary.exhausted}`}
-                onPress={discardExhausted}
-              />
-            </>
-          ) : null}
-          {isSyncing ? <Text style={styles.privacyText}>Sincronizando...</Text> : null}
-        </Card>
-
-        <Card>
-          <Text style={styles.cardTitle}>Mapas sin conexion</Text>
-          <SettingRow
-            label="Mapas descargados"
-            value={
-              offlineMapsSummary.count > 0
-                ? `${offlineMapsSummary.count} - ${formatStorage(offlineMapsSummary.totalSizeMb)}`
-                : "Sin descargas"
-            }
-            onPress={() => router.push("/offline-mapas-descargados")}
-          />
-        </Card>
-
-        <Card>
-          <Text style={styles.cardTitle}>Seguridad y dispositivos</Text>
-          <SettingRow
-            label="Contacto de emergencia"
-            value={emergencyContact ? emergencyContact.name : "No configurado"}
-            onPress={() => router.push("/contacto-seguridad")}
-          />
-          <SettingRow
-            label="Reloj o sensor externo"
-            value={getWearableLabel(wearableRuntime)}
-            onPress={() => router.push("/reloj-salud")}
-          />
-          <SettingRow
-            label="Modo ahorro de bateria"
-            value={appPreferences.batterySaverEnabled ? "Activo" : "Desactivado"}
-            onPress={() =>
-              updateAppPreferences({
-                notificationsEnabled: appPreferences.notificationsEnabled,
-                distanceUnit: appPreferences.distanceUnit,
-                batterySaverEnabled: !appPreferences.batterySaverEnabled,
-                externalSensorLinked: appPreferences.externalSensorLinked,
-              })
-            }
-          />
-        </Card>
-
-        <Card>
-          <Text style={styles.cardTitle}>Preferencias</Text>
-          <SettingRow
-            label="Perfil de experiencia"
-            value={
-              experienceProfile.completed && experienceProfile.level
-                ? experienceProfile.level
-                : "Completar"
-            }
-            onPress={() =>
-              router.push({
-                pathname: "/onboarding-experiencia",
-                params: { mode: "edit" },
-              })
-            }
-          />
-          <SettingRow
-            label="Notificaciones"
-            value={appPreferences.notificationsEnabled ? "Activadas" : "Desactivadas"}
-            onPress={() =>
-              updateAppPreferences({
-                notificationsEnabled: !appPreferences.notificationsEnabled,
-                distanceUnit: appPreferences.distanceUnit,
-                batterySaverEnabled: appPreferences.batterySaverEnabled,
-                externalSensorLinked: appPreferences.externalSensorLinked,
-              })
-            }
-          />
-          <SettingRow
-            label="Unidades"
-            value={appPreferences.distanceUnit === "km" ? "Kilometros" : "Millas"}
-            onPress={() =>
-              updateAppPreferences({
-                notificationsEnabled: appPreferences.notificationsEnabled,
-                distanceUnit: appPreferences.distanceUnit === "km" ? "mi" : "km",
-                batterySaverEnabled: appPreferences.batterySaverEnabled,
-                externalSensorLinked: appPreferences.externalSensorLinked,
-              })
-            }
-          />
-        </Card>
-
-      <Card>
-        <Text style={styles.cardTitle}>Privacidad e IA</Text>
-        <Text style={styles.privacyText}>
-          Los datos fisiologicos se guardan localmente. Si aceptas colaborar con
-          mejoras del servicio, se usan datos anonimizados y sin ubicacion exacta.
-        </Text>
-          <SettingRow
-            label="Usar datos sensibles"
-            value={privacy.sensitiveDataConsent ? "Permitido" : "Requiere aceptar"}
-            onPress={() => {
-              const nextSensitiveConsent = !privacy.sensitiveDataConsent;
-
-              updatePrivacy({
-                sensitiveDataConsent: nextSensitiveConsent,
-                analyticsTrainingConsent: nextSensitiveConsent
-                  ? privacy.analyticsTrainingConsent
-                  : false,
-              });
-            }}
-          />
-        <SettingRow
-          label="Mejorar recomendaciones"
-          value={privacy.analyticsTrainingConsent ? "Anonimizado" : "Desactivado"}
-            onPress={() =>
-              updatePrivacy({
-                sensitiveDataConsent:
-                  privacy.sensitiveDataConsent || !privacy.analyticsTrainingConsent,
-                analyticsTrainingConsent: !privacy.analyticsTrainingConsent,
-              })
-            }
-          />
-          <SettingRow
-            label="Terminos y disclaimers"
-            value="Ver"
-            onPress={() => router.push("/terminos-condiciones")}
+        <ProfileNotices
+          error={error}
+          isLoading={isLoading}
+          onRetry={loadProfile}
         />
-      </Card>
-
-      {isAdmin ? (
-        <Card tone="secondary">
-          <Text style={styles.cardTitle}>Metricas IA</Text>
-          <Text style={styles.privacyText}>
-            Entrenamientos con augmentation aprobado solo en train. El test se
-            mantiene 100% real; los guardrails comparan train, test y
-            validacion cruzada para detectar overfitting, underfitting y falta
-            de datos.
-          </Text>
-          {adminAiModelMetrics.map((metrics) => (
-            <AiModelMetricBlock key={metrics.dataset.name} metrics={metrics} />
-          ))}
-        </Card>
-      ) : null}
-
-      {isAdmin ? (
-        <Card tone="orange">
-          <Text style={styles.cardTitle}>Simular situaciones de ruta</Text>
-          <Text style={styles.privacyText}>
-            Solo administradores. Al activar este modo, la app usa ubicacion y
-            movimiento simulados para probar inicio, mapas y alertas sin estar
-            fisicamente en el lugar.
-          </Text>
-          <SettingRow
-            label="Simular ubicacion en ruta"
-            value={testingLocationMode.enabled ? "Activa" : "Desactivada"}
-            onPress={() =>
-              updateTestingLocationMode(!testingLocationMode.enabled)
-            }
-          />
-          <SettingRow
-            label="Laboratorio wearable"
-            value={getWearableLabel(wearableRuntime)}
-            onPress={() => router.push("/reloj-salud")}
-          />
-        </Card>
-      ) : null}
-
-      <PrimaryButton
+        <ProfileHeaderCard
+          displayName={displayName}
+          email={email}
+          initial={initial}
+          sessionsSummary={sessionsSummary}
+        />
+        <SyncCard
+          discardExhausted={discardExhausted}
+          isSyncing={isSyncing}
+          syncSummary={syncSummary}
+          triggerSync={triggerSync}
+        />
+        <OfflineMapsCard offlineMapsSummary={offlineMapsSummary} />
+        <DevicesCard
+          appPreferences={appPreferences}
+          emergencyContact={emergencyContact}
+          updateAppPreferences={updateAppPreferences}
+          wearableRuntime={wearableRuntime}
+        />
+        <PreferencesCard
+          appPreferences={appPreferences}
+          experienceProfile={experienceProfile}
+          updateAppPreferences={updateAppPreferences}
+        />
+        <PrivacyCard privacy={privacy} updatePrivacy={updatePrivacy} />
+        <AdminAiMetricsCard isAdmin={isAdmin} />
+        <AdminTestingCard
+          isAdmin={isAdmin}
+          testingLocationMode={testingLocationMode}
+          updateTestingLocationMode={updateTestingLocationMode}
+          wearableRuntime={wearableRuntime}
+        />
+        <PrimaryButton
           label="Cerrar sesion"
           icon="log-out-outline"
           tone="secondary"
@@ -570,6 +388,346 @@ export default function ProfileScreen() {
         />
       </ScrollView>
     </AppScreen>
+  );
+}
+
+function ProfileNotices({
+  error,
+  isLoading,
+  onRetry,
+}: {
+  error: string | null;
+  isLoading: boolean;
+  onRetry: () => void;
+}) {
+  return (
+    <>
+      {isLoading ? (
+        <StatusNotice
+          isLoading
+          message="Cargando cuenta, mapas, seguridad y sincronizacion."
+          title="Cargando perfil"
+        />
+      ) : null}
+      {error ? (
+        <StatusNotice
+          actionLabel="Reintentar"
+          message={error}
+          onAction={onRetry}
+          title="No se pudo cargar"
+          tone="error"
+        />
+      ) : null}
+    </>
+  );
+}
+
+function ProfileHeaderCard({
+  displayName,
+  email,
+  initial,
+  sessionsSummary,
+}: {
+  displayName: string;
+  email: string;
+  initial: string;
+  sessionsSummary: SessionsSummary;
+}) {
+  return (
+    <Card tone="green">
+      <View style={styles.profileRow}>
+        <View style={styles.avatar}>
+          <Text style={styles.avatarText}>{initial}</Text>
+        </View>
+        <View style={styles.profileText}>
+          <Text style={styles.profileName}>{displayName}</Text>
+          <Text style={styles.profileEmail}>{email}</Text>
+          <Text style={styles.profileMeta}>
+            {sessionsSummary.completedCount} rutas completadas -{" "}
+            {formatDistance(sessionsSummary.totalDistance)}
+          </Text>
+        </View>
+      </View>
+    </Card>
+  );
+}
+
+function SyncCard({
+  discardExhausted,
+  isSyncing,
+  syncSummary,
+  triggerSync,
+}: {
+  discardExhausted: () => void;
+  isSyncing: boolean;
+  syncSummary: SyncSummary;
+  triggerSync: () => void;
+}) {
+  const pendingCount = syncSummary.pending + syncSummary.syncing;
+
+  return (
+    <Card>
+      <Text style={styles.cardTitle}>Sincronizacion</Text>
+      <Text style={styles.privacyText}>
+        Reportes, actividades y alertas creados sin senal quedan en cola local
+        hasta recuperar conectividad.
+      </Text>
+      <SettingRow
+        label="Pendientes de enviar"
+        value={pendingCount > 0 ? `${pendingCount}` : "Al dia"}
+        onPress={triggerSync}
+      />
+      <View style={styles.syncGrid}>
+        <SyncMetric label="Pendientes" value={pendingCount} />
+        <SyncMetric label="Enviados" value={syncSummary.synced} />
+        <SyncMetric label="Con error" value={syncSummary.failed} />
+        <SyncMetric label="Descartados" value={syncSummary.abandoned} />
+      </View>
+      <SyncWarnings
+        discardExhausted={discardExhausted}
+        syncSummary={syncSummary}
+        triggerSync={triggerSync}
+      />
+      {isSyncing ? <Text style={styles.privacyText}>Sincronizando...</Text> : null}
+    </Card>
+  );
+}
+
+function SyncWarnings({
+  discardExhausted,
+  syncSummary,
+  triggerSync,
+}: {
+  discardExhausted: () => void;
+  syncSummary: SyncSummary;
+  triggerSync: () => void;
+}) {
+  return (
+    <>
+      {syncSummary.failed > 0 ? (
+        <>
+          <Text style={styles.warningText}>
+            Hay actividades con error. Podes reintentar la sincronizacion.
+          </Text>
+          <SettingRow
+            label="Con error, reintentar"
+            value={`${syncSummary.failed}`}
+            onPress={triggerSync}
+          />
+        </>
+      ) : null}
+      {syncSummary.exhausted > 0 ? (
+        <>
+          <Text style={styles.warningText}>
+            {syncSummary.exhausted} no se pudieron enviar tras varios intentos.
+            Podes seguir esperando senal o descartarlos.
+          </Text>
+          <SettingRow
+            label="Descartar pendientes con error"
+            value={`${syncSummary.exhausted}`}
+            onPress={discardExhausted}
+          />
+        </>
+      ) : null}
+    </>
+  );
+}
+
+function OfflineMapsCard({
+  offlineMapsSummary,
+}: {
+  offlineMapsSummary: OfflineMapsSummary;
+}) {
+  const value =
+    offlineMapsSummary.count > 0
+      ? `${offlineMapsSummary.count} - ${formatStorage(offlineMapsSummary.totalSizeMb)}`
+      : "Sin descargas";
+
+  return (
+    <Card>
+      <Text style={styles.cardTitle}>Mapas sin conexion</Text>
+      <SettingRow
+        label="Mapas descargados"
+        value={value}
+        onPress={() => router.push("/offline-mapas-descargados")}
+      />
+    </Card>
+  );
+}
+
+function DevicesCard({
+  appPreferences,
+  emergencyContact,
+  updateAppPreferences,
+  wearableRuntime,
+}: {
+  appPreferences: AppPreferences;
+  emergencyContact: EmergencyContact | null;
+  updateAppPreferences: (preferences: Omit<AppPreferences, "updatedAt">) => void;
+  wearableRuntime: WearableRuntimeStatus | null;
+}) {
+  return (
+    <Card>
+      <Text style={styles.cardTitle}>Seguridad y dispositivos</Text>
+      <SettingRow
+        label="Contacto de emergencia"
+        value={emergencyContact ? emergencyContact.name : "No configurado"}
+        onPress={() => router.push("/contacto-seguridad")}
+      />
+      <SettingRow
+        label="Reloj o sensor externo"
+        value={getWearableLabel(wearableRuntime)}
+        onPress={() => router.push("/reloj-salud")}
+      />
+      <SettingRow
+        label="Modo ahorro de bateria"
+        value={appPreferences.batterySaverEnabled ? "Activo" : "Desactivado"}
+        onPress={() =>
+          updateAppPreferences({
+            notificationsEnabled: appPreferences.notificationsEnabled,
+            distanceUnit: appPreferences.distanceUnit,
+            batterySaverEnabled: !appPreferences.batterySaverEnabled,
+            externalSensorLinked: appPreferences.externalSensorLinked,
+          })
+        }
+      />
+    </Card>
+  );
+}
+
+function PreferencesCard({
+  appPreferences,
+  experienceProfile,
+  updateAppPreferences,
+}: {
+  appPreferences: AppPreferences;
+  experienceProfile: ExperienceProfile;
+  updateAppPreferences: (preferences: Omit<AppPreferences, "updatedAt">) => void;
+}) {
+  return (
+    <Card>
+      <Text style={styles.cardTitle}>Preferencias</Text>
+      <SettingRow
+        label="Perfil de experiencia"
+        value={getExperienceProfileLabel(experienceProfile)}
+        onPress={() =>
+          router.push({
+            pathname: "/onboarding-experiencia",
+            params: { mode: "edit" },
+          })
+        }
+      />
+      <SettingRow
+        label="Notificaciones"
+        value={appPreferences.notificationsEnabled ? "Activadas" : "Desactivadas"}
+        onPress={() =>
+          updateAppPreferences({
+            notificationsEnabled: !appPreferences.notificationsEnabled,
+            distanceUnit: appPreferences.distanceUnit,
+            batterySaverEnabled: appPreferences.batterySaverEnabled,
+            externalSensorLinked: appPreferences.externalSensorLinked,
+          })
+        }
+      />
+      <SettingRow
+        label="Unidades"
+        value={appPreferences.distanceUnit === "km" ? "Kilometros" : "Millas"}
+        onPress={() =>
+          updateAppPreferences({
+            notificationsEnabled: appPreferences.notificationsEnabled,
+            distanceUnit: appPreferences.distanceUnit === "km" ? "mi" : "km",
+            batterySaverEnabled: appPreferences.batterySaverEnabled,
+            externalSensorLinked: appPreferences.externalSensorLinked,
+          })
+        }
+      />
+    </Card>
+  );
+}
+
+function PrivacyCard({
+  privacy,
+  updatePrivacy,
+}: {
+  privacy: PrivacyPreferences;
+  updatePrivacy: (privacy: Omit<PrivacyPreferences, "updatedAt">) => void;
+}) {
+  return (
+    <Card>
+      <Text style={styles.cardTitle}>Privacidad e IA</Text>
+      <Text style={styles.privacyText}>
+        Los datos fisiologicos se guardan localmente. Si aceptas colaborar con
+        mejoras del servicio, se usan datos anonimizados y sin ubicacion exacta.
+      </Text>
+      <SettingRow
+        label="Usar datos sensibles"
+        value={privacy.sensitiveDataConsent ? "Permitido" : "Requiere aceptar"}
+        onPress={() => updatePrivacy(getNextSensitivePrivacy(privacy))}
+      />
+      <SettingRow
+        label="Mejorar recomendaciones"
+        value={privacy.analyticsTrainingConsent ? "Anonimizado" : "Desactivado"}
+        onPress={() => updatePrivacy(getNextAnalyticsPrivacy(privacy))}
+      />
+      <SettingRow
+        label="Terminos y disclaimers"
+        value="Ver"
+        onPress={() => router.push("/terminos-condiciones")}
+      />
+    </Card>
+  );
+}
+
+function AdminAiMetricsCard({ isAdmin }: { isAdmin: boolean }) {
+  if (!isAdmin) return null;
+
+  return (
+    <Card tone="secondary">
+      <Text style={styles.cardTitle}>Metricas IA</Text>
+      <Text style={styles.privacyText}>
+        Entrenamientos con augmentation aprobado solo en train. El test se
+        mantiene 100% real; los guardrails comparan train, test y validacion
+        cruzada para detectar overfitting, underfitting y falta de datos.
+      </Text>
+      {adminAiModelMetrics.map((metrics) => (
+        <AiModelMetricBlock key={metrics.dataset.name} metrics={metrics} />
+      ))}
+    </Card>
+  );
+}
+
+function AdminTestingCard({
+  isAdmin,
+  testingLocationMode,
+  updateTestingLocationMode,
+  wearableRuntime,
+}: {
+  isAdmin: boolean;
+  testingLocationMode: TestingLocationMode;
+  updateTestingLocationMode: (enabled: boolean) => void;
+  wearableRuntime: WearableRuntimeStatus | null;
+}) {
+  if (!isAdmin) return null;
+
+  return (
+    <Card tone="orange">
+      <Text style={styles.cardTitle}>Simular situaciones de ruta</Text>
+      <Text style={styles.privacyText}>
+        Solo administradores. Al activar este modo, la app usa ubicacion y
+        movimiento simulados para probar inicio, mapas y alertas sin estar
+        fisicamente en el lugar.
+      </Text>
+      <SettingRow
+        label="Simular ubicacion en ruta"
+        value={testingLocationMode.enabled ? "Activa" : "Desactivada"}
+        onPress={() => updateTestingLocationMode(!testingLocationMode.enabled)}
+      />
+      <SettingRow
+        label="Laboratorio wearable"
+        value={getWearableLabel(wearableRuntime)}
+        onPress={() => router.push("/reloj-salud")}
+      />
+    </Card>
   );
 }
 
@@ -656,6 +814,29 @@ function getWearableLabel(runtime: WearableRuntimeStatus | null) {
   if (runtime.status === "not_linked") return "No vinculado";
   if (runtime.status === "waiting_for_native_data") return "Preparado";
   return "Vinculado";
+}
+
+function getExperienceProfileLabel(profile: ExperienceProfile) {
+  return profile.completed && profile.level ? profile.level : "Completar";
+}
+
+function getNextSensitivePrivacy(privacy: PrivacyPreferences) {
+  const sensitiveDataConsent = !privacy.sensitiveDataConsent;
+
+  return {
+    sensitiveDataConsent,
+    analyticsTrainingConsent: sensitiveDataConsent
+      ? privacy.analyticsTrainingConsent
+      : false,
+  };
+}
+
+function getNextAnalyticsPrivacy(privacy: PrivacyPreferences) {
+  return {
+    sensitiveDataConsent:
+      privacy.sensitiveDataConsent || !privacy.analyticsTrainingConsent,
+    analyticsTrainingConsent: !privacy.analyticsTrainingConsent,
+  };
 }
 
 const styles = StyleSheet.create({

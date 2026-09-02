@@ -5,6 +5,7 @@ const app = require("../src/server");
 
 let token;
 let trailId;
+const testPassword = process.env.TEST_USER_PASSWORD;
 
 beforeAll(async () => {
   await runMigrations();
@@ -13,7 +14,7 @@ beforeAll(async () => {
   const registered = await request(app).post("/api/auth/register").send({
     name: "Corredora",
     email: "corredora@misendero.app",
-    password: "correcta123",
+    password: testPassword,
     accepted_terms_version: "2026-08-13",
   });
   token = registered.body.token;

@@ -36,10 +36,12 @@ const offline = () =>
     isInternetReachable: false,
   });
 
+const testAuthToken = `sync-token-${Date.now()}`;
+
 beforeAll(async () => {
   await initDB();
   await saveAuthSession({
-    token: "test-token",
+    token: testAuthToken,
     user: { id: 1, name: "Test", email: "test@misendero.app" },
   });
 });
@@ -104,7 +106,7 @@ describe("syncQueue", () => {
     expect(api.createTrailReport).toHaveBeenCalledWith(
       2,
       expect.objectContaining({ issue_summary: "Sendero cortado" }),
-      "test-token"
+      testAuthToken
     );
 
     const pendingAfter = await getPendingOperations();

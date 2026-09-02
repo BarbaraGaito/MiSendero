@@ -15,7 +15,7 @@ export default function RootLayout() {
   });
 
   useEffect(() => {
-    initDB();
+    void initDB();
   }, []);
 
   if (!fontsLoaded && !fontError) {

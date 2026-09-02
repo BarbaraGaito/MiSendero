@@ -10,11 +10,13 @@ beforeAll(async () => {
 });
 
 describe("auth", () => {
+  const testPassword = process.env.TEST_USER_PASSWORD;
+
   test("registers a user as admin and returns a token", async () => {
     const response = await request(app).post("/api/auth/register").send({
       name: "Ana Pereyra",
       email: "ana@misendero.app",
-      password: "correcta123",
+      password: testPassword,
       accepted_terms_version: "2026-08-13",
     });
 
@@ -28,7 +30,7 @@ describe("auth", () => {
     const response = await request(app).post("/api/auth/register").send({
       name: "Luis Ferreyra",
       email: "luis@misendero.app",
-      password: "correcta123",
+      password: testPassword,
       accepted_terms_version: "2026-08-13",
     });
 
@@ -57,7 +59,7 @@ describe("auth", () => {
     const response = await request(app).post("/api/auth/register").send({
       name: "Sin Terminos",
       email: "sinterminos@misendero.app",
-      password: "correcta123",
+      password: testPassword,
     });
 
     expect(response.status).toBe(400);
@@ -67,7 +69,7 @@ describe("auth", () => {
     const response = await request(app).post("/api/auth/register").send({
       name: "Ana Otra",
       email: "ana@misendero.app",
-      password: "correcta123",
+      password: testPassword,
       accepted_terms_version: "2026-08-13",
     });
 
@@ -77,7 +79,7 @@ describe("auth", () => {
   test("logs in with valid credentials", async () => {
     const response = await request(app).post("/api/auth/login").send({
       email: "ana@misendero.app",
-      password: "correcta123",
+      password: testPassword,
     });
 
     expect(response.status).toBe(200);
@@ -87,7 +89,7 @@ describe("auth", () => {
   test("rejects invalid credentials", async () => {
     const response = await request(app).post("/api/auth/login").send({
       email: "ana@misendero.app",
-      password: "incorrecta",
+      password: `${testPassword}-invalid`,
     });
 
     expect(response.status).toBe(401);
@@ -99,7 +101,7 @@ describe("auth", () => {
 
     const login = await request(app).post("/api/auth/login").send({
       email: "ana@misendero.app",
-      password: "correcta123",
+      password: testPassword,
     });
     const withToken = await request(app)
       .get("/api/auth/me")

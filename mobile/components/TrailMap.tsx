@@ -1,13 +1,11 @@
 ﻿import { Ionicons } from "@expo/vector-icons";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   ActivityIndicator,
   Image,
-  DimensionValue,
   LayoutChangeEvent,
   PanResponder,
   Pressable,
-  StyleProp,
   StyleSheet,
   Text,
   View,
@@ -77,11 +75,6 @@ type TerrainLabel = ScreenPoint & {
   variant: "route" | "peak" | "elevation";
 };
 
-type TerrainPoint = ScreenPoint & {
-  baseY: number;
-  z: number;
-};
-
 type TrailMapProps = {
   trail: Trail | null;
   weather?: TrailWeather | null;
@@ -109,7 +102,6 @@ const TILE_SIZE = 256;
 const DEFAULT_ZOOM = 13;
 const DEFAULT_CENTER: Coordinate = [-41.1734, -71.4752];
 const MIN_ZOOM = 10;
-const MAX_TERRAIN_POINTS = 48;
 const MAX_ZOOM_BY_LAYER: Record<MapLayer, number> = {
   standard: 18,
   terrain: 17,
@@ -119,43 +111,6 @@ const mapGestureSurfaceStyle = { touchAction: "none" } as unknown as ViewStyle;
 
 const clamp = (value: number, min: number, max: number) =>
   Math.max(min, Math.min(max, value));
-
-const getDifficultyFactor = (difficulty: string | null | undefined) => {
-  const normalized = difficulty?.toLowerCase() ?? "";
-
-  if (normalized.includes("alta") || normalized.includes("dificil")) return 1.35;
-  if (normalized.includes("media") || normalized.includes("moderada")) return 1;
-  return 0.72;
-};
-
-const getRouteDistanceKm = (points: Coordinate[]) => {
-  if (points.length < 2) return 0;
-
-  let totalMeters = 0;
-
-  for (let index = 1; index < points.length; index += 1) {
-    const [previousLat, previousLng] = points[index - 1];
-    const [nextLat, nextLng] = points[index];
-    const deltaLat = (nextLat - previousLat) * 111_000;
-    const deltaLng =
-      (nextLng - previousLng) *
-      111_000 *
-      Math.cos(((previousLat + nextLat) / 2) * (Math.PI / 180));
-
-    totalMeters += Math.hypot(deltaLat, deltaLng);
-  }
-
-  return totalMeters / 1000;
-};
-
-const getSampledRoutePoints = (points: Coordinate[], maxPoints: number) => {
-  if (points.length <= maxPoints) return points;
-
-  return Array.from({ length: maxPoints }, (_, index) => {
-    const sourceIndex = Math.round((index / (maxPoints - 1)) * (points.length - 1));
-    return points[sourceIndex];
-  });
-};
 
 const getTouchDistance = (touches: readonly MapTouch[]) => {
   if (touches.length < 2) return null;
@@ -188,11 +143,6 @@ const unproject = ({ x, y }: { x: number; y: number }, zoom: number): Coordinate
   const latitude = (180 / Math.PI) * Math.atan(0.5 * (Math.exp(n) - Math.exp(-n)));
 
   return [Math.max(-85, Math.min(85, latitude)), longitude];
-};
-
-const wrapTileX = (x: number, zoom: number) => {
-  const max = 2 ** zoom;
-  return ((x % max) + max) % max;
 };
 
 const formatPathValue = (value: number) => Number(value.toFixed(1));
@@ -496,189 +446,6 @@ const getVisibleTiles = (
   return tiles;
 };
 
-const getTerrainBands = () =>
-  Array.from({ length: 9 }, (_, index) => ({
-    key: `terrain-band-${index}`,
-    top: `${index * 11}%` as DimensionValue,
-    opacity: 0.7 - index * 0.025,
-    color: index < 3 ? "#D5E8BE" : index < 6 ? "#A9D39B" : "#6FAC77",
-  }));
-
-const getTerrainState = ({
-  layout,
-  locationCoordinate,
-  routePoints,
-  trail,
-  trailCenter,
-}: {
-  layout: { width: number; height: number };
-  locationCoordinate: Coordinate | null;
-  routePoints: Coordinate[];
-  trail: Trail | null;
-  trailCenter: Coordinate;
-}) => {
-  if (!layout.width || !layout.height) {
-    return {
-      points: [] as TerrainPoint[],
-      bands: [] as ReturnType<typeof getTerrainBands>,
-      userPoint: null as ScreenPoint | null,
-      distanceKm: 0,
-      elevationGain: 0,
-    };
-  }
-
-  const rawSourcePoints = routePoints.length > 1 ? routePoints : [trailCenter, trailCenter];
-  const sourcePoints = getSampledRoutePoints(rawSourcePoints, MAX_TERRAIN_POINTS);
-  const projectedPoints = sourcePoints.map((point) => project(point, DEFAULT_ZOOM));
-  const xs = projectedPoints.map((point) => point.x);
-  const ys = projectedPoints.map((point) => point.y);
-  const minX = Math.min(...xs);
-  const maxX = Math.max(...xs);
-  const minY = Math.min(...ys);
-  const maxY = Math.max(...ys);
-  const mapWidth = Math.max(1, maxX - minX);
-  const mapHeight = Math.max(1, maxY - minY);
-  const sceneWidth = layout.width;
-  const sceneHeight = layout.height;
-  const paddingX = sceneWidth * 0.16;
-  const paddingY = sceneHeight * 0.24;
-  const fitScale = Math.min(
-    (sceneWidth - paddingX * 2) / mapWidth,
-    (sceneHeight - paddingY * 2) / mapHeight
-  );
-  const offsetX = (sceneWidth - mapWidth * fitScale) / 2;
-  const offsetY = (sceneHeight - mapHeight * fitScale) / 2;
-  const difficultyFactor = getDifficultyFactor(trail?.difficulty);
-  const distanceKm = trail?.distance_km || getRouteDistanceKm(rawSourcePoints);
-  const elevationGain = Math.round(
-    Math.max(60, distanceKm * (80 + difficultyFactor * 95))
-  );
-  const points = getTerrainPoints(
-    projectedPoints,
-    { minX, minY, offsetX, offsetY, fitScale },
-    difficultyFactor,
-    elevationGain
-  );
-  const userPoint = locationCoordinate
-    ? {
-        x: offsetX + (project(locationCoordinate, DEFAULT_ZOOM).x - minX) * fitScale,
-        y: offsetY + (project(locationCoordinate, DEFAULT_ZOOM).y - minY) * fitScale,
-      }
-    : null;
-
-  return {
-    points,
-    bands: getTerrainBands(),
-    userPoint,
-    distanceKm,
-    elevationGain,
-  };
-};
-
-const getTerrainPoints = (
-  projectedPoints: ScreenPoint[],
-  view: { minX: number; minY: number; offsetX: number; offsetY: number; fitScale: number },
-  difficultyFactor: number,
-  elevationGain: number
-) =>
-  projectedPoints.map((point, index) => {
-    const progress =
-      projectedPoints.length <= 1 ? 0 : index / (projectedPoints.length - 1);
-    const wave = Math.sin(progress * Math.PI * 2.4) * 18;
-    const localPeak = Math.sin(progress * Math.PI) * 58 * difficultyFactor;
-    const secondaryPeak = Math.max(0, Math.sin((progress - 0.18) * Math.PI * 2)) * 28;
-    const climb = progress * elevationGain * 0.045 * difficultyFactor;
-    const z = Math.max(18, 34 + localPeak + secondaryPeak + climb);
-
-    return {
-      x: view.offsetX + (point.x - view.minX) * view.fitScale,
-      y: view.offsetY + (point.y - view.minY) * view.fitScale - wave - z,
-      baseY: view.offsetY + (point.y - view.minY) * view.fitScale + 18,
-      z,
-    };
-  });
-
-function RouteSegments({
-  points,
-  segmentStyle,
-  getSegmentLeft,
-  getSegmentTop,
-  keyPrefix,
-}: {
-  points: ScreenPoint[];
-  segmentStyle: StyleProp<ViewStyle>;
-  getSegmentLeft?: (point: ScreenPoint, nextPoint: ScreenPoint) => number;
-  getSegmentTop?: (point: ScreenPoint, nextPoint: ScreenPoint) => number;
-  keyPrefix: string;
-}) {
-  return (
-    <>
-      {points.slice(0, -1).map((point, index) => {
-        const nextPoint = points[index + 1];
-        const dx = nextPoint.x - point.x;
-        const dy = nextPoint.y - point.y;
-        const length = Math.sqrt(dx * dx + dy * dy);
-        const angle = `${Math.atan2(dy, dx)}rad`;
-
-        return (
-          <View
-            key={`${keyPrefix}-${index}`}
-            style={[
-              segmentStyle,
-              {
-                left: getSegmentLeft ? getSegmentLeft(point, nextPoint) : point.x,
-                top: getSegmentTop ? getSegmentTop(point, nextPoint) : point.y,
-                width: length,
-                transform: [{ rotate: angle }],
-              },
-            ]}
-          />
-        );
-      })}
-    </>
-  );
-}
-
-function LayerControl({
-  layer,
-  immersive,
-  controlsTopOffset,
-  setLayer,
-}: {
-  layer: MapLayer;
-  immersive: boolean;
-  controlsTopOffset: number;
-  setLayer: (layer: MapLayer) => void;
-}) {
-  const layers: Array<{ id: MapLayer; label: string }> = [
-    { id: "standard", label: "Mapa" },
-    { id: "terrain", label: "Terreno" },
-    { id: "satellite", label: "Satelite" },
-  ];
-
-  return (
-    <View
-      style={[
-        styles.layerControl,
-        { top: controlsTopOffset },
-        immersive && styles.immersiveLayerControl,
-      ]}
-    >
-      {layers.map((item) => (
-        <Pressable
-          key={item.id}
-          onPress={() => setLayer(item.id)}
-          style={[styles.layerButton, layer === item.id && styles.layerButtonActive]}
-        >
-          <Text style={[styles.layerLabel, layer === item.id && styles.layerLabelActive]}>
-            {item.label}
-          </Text>
-        </Pressable>
-      ))}
-    </View>
-  );
-}
-
 const getMapAttribution = (layer: MapLayer) => {
   if (layer === "terrain") return "Esri World Topo Map · Ruta © OpenStreetMap";
   if (layer === "satellite") return "Esri World Imagery · Ruta © OpenStreetMap";
@@ -959,7 +726,6 @@ export function TrailMap({
         onStartShouldSetPanResponder: (event) => event.nativeEvent.touches.length > 0,
         onMoveShouldSetPanResponder: (event, gesture) =>
           event.nativeEvent.touches.length > 0 ||
-          event.nativeEvent.touches.length >= 2 ||
           Math.abs(gesture.dx) > 5 ||
           Math.abs(gesture.dy) > 5,
         onMoveShouldSetPanResponderCapture: () => true,

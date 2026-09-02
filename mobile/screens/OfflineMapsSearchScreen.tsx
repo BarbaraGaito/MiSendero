@@ -1,6 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Image,
   Pressable,
@@ -46,7 +46,7 @@ export default function OfflineMapsSearchScreen() {
         setTrails(loadedTrails);
         setDownloadedTrailIds(new Set(downloadedIds));
         setError(null);
-      } catch (loadError) {
+      } catch {
         setError("No pudimos cargar las zonas disponibles.");
       } finally {
         setIsLoading(false);

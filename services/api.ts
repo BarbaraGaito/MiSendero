@@ -42,7 +42,7 @@ async function request<T>(path: string, options: RequestOptions = {}): Promise<T
       headers,
       body: options.body ? JSON.stringify(options.body) : undefined,
     });
-  } catch (error) {
+  } catch {
     throw new Error(`No se pudo conectar con el backend en ${API_URL}.`);
   }
 

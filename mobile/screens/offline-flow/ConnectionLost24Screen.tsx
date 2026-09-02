@@ -1,4 +1,3 @@
-import React from "react";
 import { Text, View } from "react-native";
 import { AppScreen, Card, PrimaryButton, ScreenTitle } from "../../components/MiSenderoUI";
 import { InfoRow, ProgressHero, styles } from "./OfflineFlowShared";

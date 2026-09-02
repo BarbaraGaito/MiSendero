@@ -1,5 +1,5 @@
 // app/alerta-ruta.tsx
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import AlertRouteScreen from "../mobile/screens/AlertRouteScreen";
 import { initDB } from "../database/database";
 

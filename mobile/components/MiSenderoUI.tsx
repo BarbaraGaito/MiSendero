@@ -1,5 +1,6 @@
-import React from "react";
+import type { ComponentProps, ReactNode } from "react";
 import { router } from "expo-router";
+import type { Href } from "expo-router";
 
 import {
   ActivityIndicator,
@@ -47,33 +48,16 @@ export const trailImages = {
     "https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?q=80&w=1200&auto=format&fit=crop",
 };
 
-type IconName = React.ComponentProps<typeof Ionicons>["name"];
-type ButtonTone = "green" | "danger" | "light" | "secondary";
+type IconName = ComponentProps<typeof Ionicons>["name"];
 type BottomTab = "inicio" | "explorar" | "actividad" | "perfil";
-
-const getButtonStyle = (tone: ButtonTone) => [
-  styles.primaryButton,
-  tone === "danger" && styles.dangerButton,
-  tone === "light" && styles.lightButton,
-  tone === "secondary" && styles.secondaryButton,
-];
-
-const getButtonLabelStyle = (tone: ButtonTone) => [
-  styles.primaryLabel,
-  tone === "light" && styles.lightButtonLabel,
-  tone === "secondary" && styles.secondaryButtonLabel,
-];
-
-const getButtonIconColor = (tone: ButtonTone) =>
-  tone === "light" || tone === "secondary" ? colors.green : colors.white;
 
 export function ScreenShell({
   children,
   footer,
   style,
 }: {
-  children: React.ReactNode;
-  footer?: React.ReactNode;
+  children: ReactNode;
+  footer?: ReactNode;
   style?: ViewStyle;
 }) {
   return (
@@ -89,7 +73,7 @@ export function AppScreen({
   activeTab,
   withBottomNav = true,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
   activeTab?: BottomTab;
   withBottomNav?: boolean;
 }) {
@@ -111,7 +95,7 @@ export function Card({
   tone = "default",
   style,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
   tone?: "default" | "green" | "orange" | "white" | "secondary" | "red";
   style?: ViewStyle;
 }) {
@@ -222,7 +206,7 @@ export function PrimaryButton({
   label: string;
   icon?: IconName;
   onPress?: () => void;
-  href?: string;
+  href?: Href;
   tone?: "green" | "danger" | "light" | "secondary";
   disabled?: boolean;
   isLoading?: boolean;
@@ -251,7 +235,7 @@ export function PrimaryButton({
         ]}
       onPress={() => {
         if (onPress) onPress();
-        else if (href) router.push(href as any);
+        else if (href) router.push(href);
       }}
     >
       {isLoading ? (
@@ -276,7 +260,7 @@ export function PrimaryButton({
   );
 }
 
-type BottomNavItem = { id: BottomTab; label: string; icon: IconName; href: string };
+type BottomNavItem = { id: BottomTab; label: string; icon: IconName; href: Href };
 
 export function BottomNav({ active }: { active: BottomTab }) {
   const items: BottomNavItem[] = [
@@ -297,7 +281,7 @@ export function BottomNav({ active }: { active: BottomTab }) {
             accessibilityState={{ selected }}
             hitSlop={8}
             key={item.id}
-            onPress={() => router.push(item.href as any)}
+            onPress={() => router.push(item.href)}
             style={({ pressed }) => [
               styles.navItem,
               selected && styles.navItemActive,
@@ -317,30 +301,6 @@ export function BottomNav({ active }: { active: BottomTab }) {
         );
       })}
     </View>
-  );
-}
-
-function BottomNavButton({
-  item,
-  selected,
-}: {
-  item: BottomNavItem;
-  selected: boolean;
-}) {
-  return (
-    <Pressable
-      style={styles.navItem}
-      onPress={() => router.push(item.href as any)}
-    >
-      <Ionicons
-        name={item.icon}
-        size={25}
-        color={selected ? colors.green : colors.muted}
-      />
-      <Text style={[styles.navLabel, selected && styles.navLabelActive]}>
-        {item.label}
-      </Text>
-    </Pressable>
   );
 }
 
@@ -395,7 +355,7 @@ export function TrailCard({
   );
 }
 
-export function InfoCard({ children, style }: { children: React.ReactNode; style?: ViewStyle }) {
+export function InfoCard({ children, style }: { children: ReactNode; style?: ViewStyle }) {
   return <View style={[styles.infoCard, style]}>{children}</View>;
 }
 

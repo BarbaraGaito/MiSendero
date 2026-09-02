@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import TrailStart from "../mobile/screens/TrailStart";
 import { initDB } from "../database/database";
 

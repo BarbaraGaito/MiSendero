@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import Explore from "../mobile/screens/Explore";
 import { initDB } from "../database/database";
 

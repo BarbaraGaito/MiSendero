@@ -1,5 +1,5 @@
 // app/reporte-guardado.tsx
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import ReportSavedScreen from "../mobile/screens/ReportSavedScreen";
 import { initDB } from "../database/database";
 

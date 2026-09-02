@@ -63,7 +63,7 @@ export const useDeviceLocation = (
             if (isMounted) setLocation(nextLocation);
           });
         }
-      } catch (locationError) {
+      } catch {
         if (!isMounted) return;
         setError("No pudimos obtener tu ubicacion actual.");
       } finally {

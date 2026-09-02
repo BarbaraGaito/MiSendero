@@ -1,4 +1,4 @@
-﻿import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { router, useLocalSearchParams } from "expo-router";
 import { ImageBackground, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -78,7 +78,7 @@ export default function Screen03TrailDetail() {
       setRatingSummary(data.ratingSummary);
       setIsFavorite(data.isFavorite);
       setWeather(data.weather);
-    } catch (loadError) {
+    } catch {
       setError("No pudimos cargar este sendero en este momento.");
     } finally {
       setIsLoading(false);

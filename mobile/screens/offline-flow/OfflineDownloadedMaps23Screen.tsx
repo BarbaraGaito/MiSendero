@@ -1,5 +1,5 @@
 import { router, useFocusEffect } from "expo-router";
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ScrollView, Text, View } from "react-native";
 import {
   AppScreen,
@@ -34,7 +34,7 @@ export default function OfflineDownloadedMaps23Screen() {
     try {
       setMaps(await getOfflineMaps());
       setError(null);
-    } catch (loadError) {
+    } catch {
       setError("No pudimos cargar los mapas descargados.");
     } finally {
       setIsLoading(false);
@@ -60,7 +60,7 @@ export default function OfflineDownloadedMaps23Screen() {
     try {
       await deleteOfflineMap(mapId);
       await loadMaps();
-    } catch (deleteError) {
+    } catch {
       setError("No pudimos eliminar ese mapa offline.");
     } finally {
       setDeletingMapId(null);

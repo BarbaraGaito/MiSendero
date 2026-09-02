@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { router } from "expo-router";
 import LoginScreen from "../mobile/screens/LoginScreen";
 import SplashScreen01 from "../mobile/screens/initial-flow/SplashScreen01";

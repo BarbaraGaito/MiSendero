@@ -6,6 +6,7 @@ const app = require("../src/server");
 
 let adminToken;
 let userToken;
+const testPassword = process.env.TEST_USER_PASSWORD;
 
 beforeAll(async () => {
   await runMigrations();
@@ -14,7 +15,7 @@ beforeAll(async () => {
   const admin = await request(app).post("/api/auth/register").send({
     name: "Admin Uno",
     email: "admin@misendero.app",
-    password: "correcta123",
+    password: testPassword,
     accepted_terms_version: "2026-08-13",
   });
   adminToken = admin.body.token;
@@ -22,7 +23,7 @@ beforeAll(async () => {
   const user = await request(app).post("/api/auth/register").send({
     name: "Usuaria Dos",
     email: "usuaria@misendero.app",
-    password: "correcta123",
+    password: testPassword,
     accepted_terms_version: "2026-08-13",
   });
   userToken = jwt.sign(

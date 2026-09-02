@@ -7,18 +7,30 @@ let initPromise: Promise<void> | null = null;
 const isDuplicateColumnError = (error: unknown) =>
   error instanceof Error && error.message.toLowerCase().includes("duplicate column");
 
-const addColumnIfMissing = async (
-  tableName: string,
-  columnName: string,
-  columnDefinition: string
-) => {
-  const columns = await db.getAllAsync<{ name: string }>(`PRAGMA table_info(${tableName})`);
+const tableInfoQueries = {
+  offline_maps: "PRAGMA table_info(offline_maps)",
+  pending_operations: "PRAGMA table_info(pending_operations)",
+  sessions: "PRAGMA table_info(sessions)",
+} as const;
+
+type KnownTableName = keyof typeof tableInfoQueries;
+
+const addColumnIfMissing = async ({
+  columnName,
+  statement,
+  tableName,
+}: {
+  columnName: string;
+  statement: string;
+  tableName: KnownTableName;
+}) => {
+  const columns = await db.getAllAsync<{ name: string }>(tableInfoQueries[tableName]);
   const columnNames = columns.map((column) => column.name);
 
   if (columnNames.includes(columnName)) return;
 
   try {
-    await db.execAsync(`ALTER TABLE ${tableName} ADD COLUMN ${columnName} ${columnDefinition};`);
+    await db.execAsync(statement);
   } catch (error) {
     if (!isDuplicateColumnError(error)) {
       throw error;
@@ -175,25 +187,43 @@ const runInitDB = async () => {
 
   `);
 
-  await addColumnIfMissing("sessions", "started_at", "INTEGER NOT NULL DEFAULT 0");
-  await addColumnIfMissing("sessions", "user_id", "INTEGER");
-  await addColumnIfMissing("sessions", "ended_at", "INTEGER");
-  await addColumnIfMissing("sessions", "avg_fatigue", "TEXT DEFAULT 'bajo'");
-  await addColumnIfMissing("sessions", "trail_id", "INTEGER");
-  await addColumnIfMissing("sessions", "completion_status", "TEXT NOT NULL DEFAULT 'completed'");
-  await addColumnIfMissing("sessions", "route_progress_meters", "REAL");
-  await addColumnIfMissing("sessions", "route_total_meters", "REAL");
-  await addColumnIfMissing("sessions", "ended_latitude", "REAL");
-  await addColumnIfMissing("sessions", "ended_longitude", "REAL");
-  await addColumnIfMissing("sessions", "rating", "INTEGER");
-  await addColumnIfMissing("sessions", "review_text", "TEXT");
-  await addColumnIfMissing("sessions", "reviewed_at", "INTEGER");
-  await addColumnIfMissing("offline_maps", "downloaded_tiles", "INTEGER NOT NULL DEFAULT 0");
-  await addColumnIfMissing("offline_maps", "user_id", "INTEGER");
-  await addColumnIfMissing("offline_maps", "total_tiles", "INTEGER NOT NULL DEFAULT 0");
-  await addColumnIfMissing("offline_maps", "verified_at", "INTEGER");
-  await addColumnIfMissing("offline_maps", "last_error", "TEXT");
-  await addColumnIfMissing("pending_operations", "dedupe_key", "TEXT");
+  const columnMigrations: Array<readonly [KnownTableName, string, string]> = [
+    ["sessions", "started_at", "ALTER TABLE sessions ADD COLUMN started_at INTEGER NOT NULL DEFAULT 0;"],
+    ["sessions", "user_id", "ALTER TABLE sessions ADD COLUMN user_id INTEGER;"],
+    ["sessions", "ended_at", "ALTER TABLE sessions ADD COLUMN ended_at INTEGER;"],
+    ["sessions", "avg_fatigue", "ALTER TABLE sessions ADD COLUMN avg_fatigue TEXT DEFAULT 'bajo';"],
+    ["sessions", "trail_id", "ALTER TABLE sessions ADD COLUMN trail_id INTEGER;"],
+    [
+      "sessions",
+      "completion_status",
+      "ALTER TABLE sessions ADD COLUMN completion_status TEXT NOT NULL DEFAULT 'completed';",
+    ],
+    ["sessions", "route_progress_meters", "ALTER TABLE sessions ADD COLUMN route_progress_meters REAL;"],
+    ["sessions", "route_total_meters", "ALTER TABLE sessions ADD COLUMN route_total_meters REAL;"],
+    ["sessions", "ended_latitude", "ALTER TABLE sessions ADD COLUMN ended_latitude REAL;"],
+    ["sessions", "ended_longitude", "ALTER TABLE sessions ADD COLUMN ended_longitude REAL;"],
+    ["sessions", "rating", "ALTER TABLE sessions ADD COLUMN rating INTEGER;"],
+    ["sessions", "review_text", "ALTER TABLE sessions ADD COLUMN review_text TEXT;"],
+    ["sessions", "reviewed_at", "ALTER TABLE sessions ADD COLUMN reviewed_at INTEGER;"],
+    [
+      "offline_maps",
+      "downloaded_tiles",
+      "ALTER TABLE offline_maps ADD COLUMN downloaded_tiles INTEGER NOT NULL DEFAULT 0;",
+    ],
+    ["offline_maps", "user_id", "ALTER TABLE offline_maps ADD COLUMN user_id INTEGER;"],
+    [
+      "offline_maps",
+      "total_tiles",
+      "ALTER TABLE offline_maps ADD COLUMN total_tiles INTEGER NOT NULL DEFAULT 0;",
+    ],
+    ["offline_maps", "verified_at", "ALTER TABLE offline_maps ADD COLUMN verified_at INTEGER;"],
+    ["offline_maps", "last_error", "ALTER TABLE offline_maps ADD COLUMN last_error TEXT;"],
+    ["pending_operations", "dedupe_key", "ALTER TABLE pending_operations ADD COLUMN dedupe_key TEXT;"],
+  ];
+
+  for (const [tableName, columnName, statement] of columnMigrations) {
+    await addColumnIfMissing({ columnName, statement, tableName });
+  }
   await db.execAsync(`
     CREATE UNIQUE INDEX IF NOT EXISTS idx_pending_operations_dedupe_key
     ON pending_operations (dedupe_key)

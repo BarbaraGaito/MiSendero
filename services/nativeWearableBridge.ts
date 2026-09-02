@@ -10,6 +10,25 @@ type HealthKitQuantitySample = {
   endDate?: Date;
 };
 
+type HealthConnectSample = {
+  beatsPerMinute?: number;
+  speed?: {
+    inKilometersPerHour?: number;
+  };
+  time?: string;
+};
+
+type HealthConnectRecord = {
+  count?: number;
+  endTime?: string;
+  energy?: {
+    inKilocalories?: number;
+  };
+  percentage?: number;
+  samples?: HealthConnectSample[];
+  time?: string;
+};
+
 export interface NativeWearableReadOptions {
   startAt?: number;
   endAt?: number;
@@ -113,7 +132,7 @@ const readHealthConnectRecordsSafely = async (
       pageSize: 50,
     });
 
-    return records as any[];
+    return records as HealthConnectRecord[];
   } catch {
     return [];
   }
@@ -306,7 +325,7 @@ const androidHealthConnectBridge: NativeWearableBridge = {
 
     const latestHeartRate = heartRate
       .flatMap((record) => record.samples ?? [])
-      .reduce<any | null>((latest, sample) => {
+      .reduce<HealthConnectSample | null>((latest, sample) => {
         if (!latest) return sample;
         return toTimestampFromIso(sample.time) > toTimestampFromIso(latest.time)
           ? sample
@@ -314,7 +333,7 @@ const androidHealthConnectBridge: NativeWearableBridge = {
       }, null);
     const latestSpeed = speed
       .flatMap((record) => record.samples ?? [])
-      .reduce<any | null>((latest, sample) => {
+      .reduce<HealthConnectSample | null>((latest, sample) => {
         if (!latest) return sample;
         return toTimestampFromIso(sample.time) > toTimestampFromIso(latest.time)
           ? sample

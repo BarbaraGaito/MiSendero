@@ -103,7 +103,7 @@ export const sendEmergencyAlert = async (
     try {
       await createEmergencyAlert(payload, session.token);
       return "sent";
-    } catch (error) {
+    } catch {
       // Se degrada a la cola offline en vez de perder el pedido de ayuda (RF-12).
     }
   }

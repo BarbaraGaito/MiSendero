@@ -3,8 +3,6 @@ import riskModel from "./models/riskModel.json";
 import { FatigueLevel } from "../types";
 import { OfflinePrediction, RandomForestModel } from "./modelTypes";
 
-type FeatureInput = Record<string, number | null | undefined>;
-
 const fatigueScoreByLevel: Record<FatigueLevel, number> = {
   bajo: 1,
   medio: 2,

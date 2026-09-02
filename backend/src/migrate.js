@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const { query } = require("./db");
+const logger = require("./logger");
 
 const migrationsDir = path.join(__dirname, "..", "migrations");
 
@@ -21,11 +22,11 @@ module.exports = runMigrations;
 if (require.main === module) {
   runMigrations()
     .then(() => {
-      console.log("Migraciones aplicadas correctamente");
+      logger.info("Migraciones aplicadas correctamente");
       process.exit(0);
     })
     .catch((error) => {
-      console.error("Error al aplicar migraciones", error);
+      logger.error(error, "Error al aplicar migraciones");
       process.exit(1);
     });
 }

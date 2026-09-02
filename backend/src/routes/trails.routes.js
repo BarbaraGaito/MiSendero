@@ -148,7 +148,7 @@ const getTrailOr404 = async (id, res) => {
   return trail;
 };
 
-router.get("/", async (req, res, next) => {
+router.get("/", async (_req, res, next) => {
   try {
     const { rows } = await query("SELECT * FROM trails ORDER BY created_at DESC");
     res.json(rows.map(serializeTrail));
@@ -184,7 +184,7 @@ router.get("/:id/weather", async (req, res, next) => {
 
       const weatherData = await response.json();
       res.json(mapWeatherResponse(trail, weatherData));
-    } catch (fetchError) {
+    } catch {
       res.json(getFallbackWeather(trail));
     }
   } catch (error) {

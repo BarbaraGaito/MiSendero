@@ -1,9 +1,9 @@
-import React from "react";
+import type { ComponentProps } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Card, colors } from "../../components/MiSenderoUI";
 
-export type IconName = React.ComponentProps<typeof Ionicons>["name"];
+export type IconName = ComponentProps<typeof Ionicons>["name"];
 
 export function OfflineZoneCard({
   title,

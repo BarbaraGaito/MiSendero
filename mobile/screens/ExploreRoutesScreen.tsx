@@ -1,6 +1,6 @@
-﻿import { Ionicons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   Animated,
   Easing,
@@ -162,7 +162,7 @@ export default function ExploreRoutesScreen() {
       ]);
       setTrails(trailList);
       setFavoriteTrailIds(favoriteIds);
-    } catch (loadError) {
+    } catch {
       setError("No pudimos cargar los senderos en este momento.");
     } finally {
       setIsLoading(false);
@@ -587,7 +587,7 @@ function RouteCard({
 }
 
 function RoutesLoader() {
-  const progress = React.useRef(new Animated.Value(0)).current;
+  const progress = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     const animation = Animated.loop(

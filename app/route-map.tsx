@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import RouteMap from "../mobile/screens/RouteMap";
 import { initDB } from "../database/database";
 

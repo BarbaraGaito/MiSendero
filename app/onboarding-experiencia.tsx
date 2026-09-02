@@ -1,5 +1,5 @@
 // app/onboarding-experiencia.tsx
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import ExperienceOnboardingScreen from "../mobile/screens/ExperienceOnboardingScreen";
 import { initDB } from "../database/database";
 

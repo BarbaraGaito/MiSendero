@@ -1,6 +1,6 @@
 import { bluetoothSimulator } from "../services/bluetoothSimulator";
 
-let interval: any;
+let interval: ReturnType<typeof setInterval> | undefined;
 let simulationSeed = Date.now() % 2_147_483_647;
 
 const nextSimulationRatio = () => {
@@ -18,7 +18,10 @@ export const startWatch = () => {
 };
 
 export const stopWatch = () => {
-  clearInterval(interval);
+  if (interval) {
+    clearInterval(interval);
+    interval = undefined;
+  }
 };
 
 const emitHeartRate = () => {

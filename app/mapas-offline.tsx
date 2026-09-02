@@ -1,5 +1,5 @@
 // app/mapas-offline.tsx
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import OfflineMapsScreen from "../mobile/screens/OfflineMapsScreen";
 import { initDB } from "../database/database";
 

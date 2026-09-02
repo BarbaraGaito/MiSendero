@@ -1,5 +1,5 @@
 // app/confirmar-sos.tsx
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import ConfirmSosScreen from "../mobile/screens/ConfirmSosScreen";
 import { initDB } from "../database/database";
 

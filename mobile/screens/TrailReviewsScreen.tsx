@@ -1,6 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { initDB } from "../../database/database";
 import {
@@ -46,7 +46,7 @@ export default function TrailReviewsScreen() {
         setSummary(ratingSummary);
         setReviews(trailReviews);
         setError(null);
-      } catch (loadError) {
+      } catch {
         if (!isMounted) return;
         setError("No pudimos cargar las opiniones de este sendero.");
       } finally {

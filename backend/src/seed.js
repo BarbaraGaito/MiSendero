@@ -1,5 +1,6 @@
 const { query } = require("./db");
 const realTrailRoutes = require("./data/realTrailRoutes");
+const logger = require("./logger");
 
 const commonsImage = (fileName) =>
   `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(fileName)}?width=1400`;
@@ -318,11 +319,11 @@ module.exports = seedDatabase;
 if (require.main === module) {
   seedDatabase()
     .then(() => {
-      console.log("Datos de ejemplo cargados correctamente");
+      logger.info("Datos de ejemplo cargados correctamente");
       process.exit(0);
     })
     .catch((error) => {
-      console.error("Error al cargar los datos de ejemplo", error);
+      logger.error(error, "Error al cargar los datos de ejemplo");
       process.exit(1);
     });
 }

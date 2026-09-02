@@ -13,7 +13,7 @@ const requireAuth = (req, res, next) => {
     req.userId = payload.userId;
     req.userRole = payload.role;
     next();
-  } catch (error) {
+  } catch {
     return res.status(401).json({ message: "Sesion invalida" });
   }
 };

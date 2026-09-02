@@ -1,4 +1,4 @@
-import React from "react";
+import type { ComponentProps } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Card, PrimaryButton, ScreenShell, ScreenTitle, colors } from "../../components/MiSenderoUI";
@@ -42,7 +42,7 @@ function StatusRow({
   label,
   value,
 }: {
-  icon: React.ComponentProps<typeof Ionicons>["name"];
+  icon: ComponentProps<typeof Ionicons>["name"];
   label: string;
   value: string;
 }) {

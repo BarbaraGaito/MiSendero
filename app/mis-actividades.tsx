@@ -1,5 +1,5 @@
 // app/mis-actividades.tsx
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import ActivitiesScreen from "../mobile/screens/ActivitiesScreen";
 import { initDB } from "../database/database";
 

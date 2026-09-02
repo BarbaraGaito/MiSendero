@@ -1,5 +1,6 @@
-﻿import { router, useLocalSearchParams } from "expo-router";
-import React, { useEffect, useState } from "react";
+import { router, useLocalSearchParams } from "expo-router";
+import type { Href } from "expo-router";
+import { useEffect, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import {
   KeyboardAvoidingView,
@@ -60,7 +61,7 @@ const getCompletionCopy = (isPausedWithoutProgress: boolean) => ({
     : "La actividad quedo guardada localmente y ya esta disponible en tus actividades recientes.",
   finalActionLabel: isPausedWithoutProgress ? "Ver actividades" : "Explorar otra ruta",
   finalActionTone: isPausedWithoutProgress ? "secondary" as const : "green" as const,
-  finalActionRoute: isPausedWithoutProgress ? "/mis-actividades" : "/explorar-rutas",
+  finalActionRoute: (isPausedWithoutProgress ? "/mis-actividades" : "/explorar-rutas") as Href,
 });
 
 const getReviewCopy = (hasReview: boolean) => ({
@@ -293,7 +294,7 @@ export default function RouteCompletedScreen() {
         reviewed_at: Date.now(),
       });
       setReviewStatus("Gracias. Tu opinion quedo guardada en este sendero.");
-    } catch (error) {
+    } catch {
       setReviewStatus("No pudimos guardar tu opinion. Intentalo de nuevo.");
     } finally {
       setIsSavingReview(false);
@@ -358,7 +359,7 @@ export default function RouteCompletedScreen() {
       <PrimaryButton
         label={completionCopy.finalActionLabel}
         tone={completionCopy.finalActionTone}
-        onPress={() => router.push(completionCopy.finalActionRoute as any)}
+        onPress={() => router.push(completionCopy.finalActionRoute)}
       />
         </ScrollView>
       </KeyboardAvoidingView>

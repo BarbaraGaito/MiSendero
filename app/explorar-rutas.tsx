@@ -1,5 +1,5 @@
 // app/explorar-rutas.tsx
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import ExploreRoutesScreen from "../mobile/screens/ExploreRoutesScreen";
 import { initDB } from "../database/database";
 

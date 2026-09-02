@@ -1,4 +1,4 @@
-﻿import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { router, useFocusEffect } from "expo-router";
 import { Alert, ScrollView, StyleSheet, Text, View } from "react-native";
 import {
@@ -268,7 +268,7 @@ export default function ProfileScreen() {
           ? data.testingMode
           : { enabled: false, updatedAt: null }
       );
-    } catch (loadError) {
+    } catch {
       setError("No pudimos cargar tu perfil en este momento.");
     } finally {
       setIsLoading(false);

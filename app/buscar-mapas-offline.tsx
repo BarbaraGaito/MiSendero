@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import OfflineMapsSearchScreen from "../mobile/screens/OfflineMapsSearchScreen";
 import { initDB } from "../database/database";
 

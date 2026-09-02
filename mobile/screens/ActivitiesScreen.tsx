@@ -1,5 +1,5 @@
 import { router, useFocusEffect } from "expo-router";
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import {
   AppScreen,
@@ -61,7 +61,7 @@ export default function ActivitiesScreen() {
       setSummary(nextSummary);
       setSessions(recentSessions);
       setError(null);
-    } catch (loadError) {
+    } catch {
       setError("No pudimos cargar tus actividades.");
     } finally {
       setIsLoading(false);

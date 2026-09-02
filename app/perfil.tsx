@@ -1,5 +1,5 @@
 // app/perfil.tsx
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import ProfileScreen from "../mobile/screens/ProfileScreen";
 import { initDB } from "../database/database";
 

@@ -1,5 +1,5 @@
 // app/contacto-seguridad.tsx
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import SafetyContactScreen from "../mobile/screens/SafetyContactScreen";
 import { initDB } from "../database/database";
 

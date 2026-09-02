@@ -1,6 +1,6 @@
 import * as Network from "expo-network";
 import { router, useLocalSearchParams } from "expo-router";
-import React, { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   KeyboardAvoidingView,
   Platform,
@@ -99,7 +99,7 @@ export default function SafetyContactScreen() {
     try {
       await saveEmergencyContact({ name, phone, relationship });
       goBackAfterSave();
-    } catch (error) {
+    } catch {
       setMessage("No pudimos guardar el contacto de emergencia.");
     } finally {
       setIsSaving(false);

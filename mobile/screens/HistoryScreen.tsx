@@ -1,5 +1,5 @@
 import { router, useFocusEffect } from "expo-router";
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { initDB } from "../../database/database";
 import { getSessions } from "../../database/sessionsRepository";
@@ -47,7 +47,7 @@ export default function HistoryScreen() {
       await initDB();
       setSessions(await getSessions());
       setError(null);
-    } catch (loadError) {
+    } catch {
       setError("No pudimos cargar el historial local.");
     } finally {
       setIsLoading(false);

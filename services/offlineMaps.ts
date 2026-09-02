@@ -95,7 +95,7 @@ const parseJson = <T>(value: string | null, fallback: T): T => {
 
   try {
     return JSON.parse(value) as T;
-  } catch (error) {
+  } catch {
     return fallback;
   }
 };

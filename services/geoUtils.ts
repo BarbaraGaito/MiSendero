@@ -22,7 +22,7 @@ export const parseRouteCoordinates = (
         Number.isFinite(point[0]) &&
         Number.isFinite(point[1])
     );
-  } catch (error) {
+  } catch {
     return [];
   }
 };

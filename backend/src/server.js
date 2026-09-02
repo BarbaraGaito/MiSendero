@@ -48,7 +48,7 @@ const authLimiter = rateLimit({
   message: { message: "Demasiados intentos. Intenta nuevamente en unos minutos." },
 });
 
-app.get("/api/health", (req, res) => {
+app.get("/api/health", (_req, res) => {
   res.json({ ok: true, service: "misendero-backend" });
 });
 
@@ -59,11 +59,11 @@ app.use("/api/trails", trailsRoutes);
 app.use("/api/activities", activitiesRoutes);
 app.use("/api/emergency-alerts", emergencyAlertsRoutes);
 
-app.use((req, res) => {
+app.use((_req, res) => {
   res.status(404).json({ message: "Ruta no encontrada" });
 });
 
-app.use((error, req, res, next) => {
+app.use((error, _req, res, _next) => {
   logger.error(error);
   res.status(500).json({ message: "Error interno del servidor" });
 });

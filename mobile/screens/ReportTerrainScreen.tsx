@@ -1,6 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
-import React, { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 import { createTrailReport, getTrailById } from "../../services/api";
 import { getAuthSession } from "../../services/authSession";
@@ -179,7 +179,7 @@ export default function ReportTerrainScreen() {
           await createTrailReport(trailId, report, session.token);
           router.push("/reporte-guardado");
           return;
-        } catch (submitError) {
+        } catch {
           // Falla de red/servidor a pesar de reportar "online": se encola igual,
           // en lugar de perder el reporte que la persona ya completo (RF-10).
         }

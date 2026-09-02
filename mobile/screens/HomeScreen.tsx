@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   ImageBackground,
   Pressable,
@@ -65,7 +65,7 @@ export default function HomeScreen() {
       setProfile(profileData);
       setExperienceProfile(experience);
       setRecommendedTrail(getRecommendedTrailForProfile(trails, experience));
-    } catch (loadError) {
+    } catch {
       setError("No pudimos actualizar tu inicio.");
     } finally {
       setIsLoading(false);

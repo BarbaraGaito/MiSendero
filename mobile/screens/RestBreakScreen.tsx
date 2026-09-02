@@ -1,5 +1,5 @@
-﻿import { router, useLocalSearchParams } from "expo-router";
-import React, { useEffect, useMemo, useState } from "react";
+import { router, useLocalSearchParams } from "expo-router";
+import { useEffect, useMemo, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { getTrailById } from "../../services/api";
 import { getWearableRuntimeStatus } from "../../services/wearableMetrics";

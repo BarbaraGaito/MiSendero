@@ -1,5 +1,1 @@
-import OfflineDownload21Screen from "../mobile/screens/offline-flow/OfflineDownload21Screen";
-
-export default function OfflineDescarga() {
-  return <OfflineDownload21Screen />;
-}
+export { default } from "../mobile/screens/offline-flow/OfflineDownload21Screen";

@@ -1,5 +1,1 @@
-import HistoryScreen from "../mobile/screens/HistoryScreen";
-
-export default function History() {
-  return <HistoryScreen />;
-}
+export { default } from "../mobile/screens/HistoryScreen";

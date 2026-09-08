@@ -1,5 +1,1 @@
-import MapFiltersScreen from "../mobile/screens/MapFiltersScreen";
-
-export default function App() {
-  return <MapFiltersScreen />;
-}
+export { default } from "../mobile/screens/MapFiltersScreen";

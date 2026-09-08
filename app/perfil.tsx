@@ -1,6 +1,1 @@
-// app/perfil.tsx
-import ProfileScreen from "../mobile/screens/ProfileScreen";
-
-export default function App() {
-  return <ProfileScreen />;
-}
+export { default } from "../mobile/screens/ProfileScreen";

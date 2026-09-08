@@ -1,5 +1,1 @@
-import Explore from "../mobile/screens/Explore";
-
-export default function App() {
-  return <Explore />;
-}
+export { default } from "../mobile/screens/Explore";

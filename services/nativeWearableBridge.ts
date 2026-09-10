@@ -175,11 +175,11 @@ const appleHealthKitBridge: NativeWearableBridge = {
       return false;
     }
   },
-  async readLatestSample() {
+  async readLatestSample(options) {
     const healthKit = getHealthKit();
     if (!healthKit) return null;
 
-    const [heartRate, steps, activeEnergy, walkingSpeed, oxygenSaturation] =
+    let [heartRate, steps, activeEnergy, walkingSpeed, oxygenSaturation] =
       await Promise.all([
         readQuantitySafely<HealthKitQuantitySample>(() =>
           healthKit.getMostRecentQuantitySample(
@@ -213,11 +213,28 @@ const appleHealthKitBridge: NativeWearableBridge = {
         ),
       ]);
 
+    const inWindow = (sample: HealthKitQuantitySample | undefined) => {
+      const timestamp = toTimestamp(sample?.endDate);
+      return timestamp > 0 && timestamp >= (options?.startAt ?? Date.now() - 300000) && timestamp <= (options?.endAt ?? Date.now() + 30000);
+    };
+    heartRate = inWindow(heartRate) ? heartRate : undefined;
+    steps = inWindow(steps) ? steps : undefined;
+    activeEnergy = inWindow(activeEnergy) ? activeEnergy : undefined;
+    walkingSpeed = inWindow(walkingSpeed) ? walkingSpeed : undefined;
+    oxygenSaturation = inWindow(oxygenSaturation) ? oxygenSaturation : undefined;
+    if (options?.requireHeartRate && !heartRate) return null;
+    // Do not combine a new pulse with older oxygen or speed measurements.
+    const pulseTime = toTimestamp(heartRate?.endDate);
+    if (pulseTime) {
+      if (Math.abs(toTimestamp(walkingSpeed?.endDate) - pulseTime) > 60000) walkingSpeed = undefined;
+      if (Math.abs(toTimestamp(oxygenSaturation?.endDate) - pulseTime) > 60000) oxygenSaturation = undefined;
+    }
+
     if (!heartRate && !steps && !activeEnergy && !walkingSpeed && !oxygenSaturation) {
       return null;
     }
 
-    const recordedAt = Math.max(
+    const recordedAt = pulseTime || Math.max(
       toTimestamp(heartRate?.endDate),
       toTimestamp(steps?.endDate),
       toTimestamp(activeEnergy?.endDate),
@@ -331,7 +348,7 @@ const androidHealthConnectBridge: NativeWearableBridge = {
           ? sample
           : latest;
       }, null);
-    const latestSpeed = speed
+    let latestSpeed = speed
       .flatMap((record) => record.samples ?? [])
       .reduce<HealthConnectSample | null>((latest, sample) => {
         if (!latest) return sample;
@@ -339,7 +356,12 @@ const androidHealthConnectBridge: NativeWearableBridge = {
           ? sample
           : latest;
       }, null);
-    const latestOxygen = getLatestByTimestamp(oxygenSaturation);
+    let latestOxygen = getLatestByTimestamp(oxygenSaturation);
+    const pulseTime = toTimestampFromIso(latestHeartRate?.time);
+    if (pulseTime) {
+      if (Math.abs(toTimestampFromIso(latestSpeed?.time) - pulseTime) > 60000) latestSpeed = null;
+      if (Math.abs(getHealthConnectRecordTimestamp(latestOxygen ?? {}) - pulseTime) > 60000) latestOxygen = null;
+    }
     const latestRecordedAt = Math.max(
       toTimestampFromIso(latestHeartRate?.time),
       toTimestampFromIso(latestSpeed?.time),
@@ -385,7 +407,7 @@ const androidHealthConnectBridge: NativeWearableBridge = {
         latestOxygen?.percentage !== undefined
           ? Number(latestOxygen.percentage.toFixed(1))
           : null,
-      recordedAt: latestRecordedAt || Date.now(),
+      recordedAt: pulseTime || latestRecordedAt,
     };
   },
 };

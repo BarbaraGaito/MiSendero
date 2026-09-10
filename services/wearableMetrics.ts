@@ -2,12 +2,12 @@ import * as SQLite from "expo-sqlite";
 import { wearableStorageSql } from "../database/wearableSchema";
 import {
   predictFatigue,
-  predictFatigueLevel,
   predictPhysioRisk,
 } from "../ai/inferenceEngine";
 import {
   FatigueLevel,
   HealthPredictionLevel,
+  WearableHealthPrediction,
   WearableConnection,
   WearableMetricSample,
   WearableProvider,
@@ -551,63 +551,65 @@ export const syncNativeWearableSample = async (
   return (await syncNativeWearableSampleWithStatus(options)) === "saved";
 };
 
+export const MAX_HEALTH_SAMPLE_AGE_MS = 5 * 60 * 1000;
+
+export const isFreshHealthSample = (sample: WearableMetricSample | null, now = Date.now()) =>
+  !!sample && Number.isFinite(sample.recordedAt) && sample.recordedAt <= now + 30000 && now - sample.recordedAt <= MAX_HEALTH_SAMPLE_AGE_MS;
+
 export const predictWearableHealth = (
   sample: WearableMetricSample | null,
-  elapsedMinutes = 0
-) => {
-  if (!sample?.heartRateBpm) return null;
+  elapsedMinutes = 0,
+  elevationGainM?: number | null
+): WearableHealthPrediction | null => {
+  if (!sample?.heartRateBpm || !isFreshHealthSample(sample) || !Number.isFinite(sample.heartRateBpm) || sample.heartRateBpm < 30 || sample.heartRateBpm > 240) return null;
 
   const fatiguePrediction = predictFatigue({
     hr: sample.heartRateBpm,
-    speedKmh: sample.speedKmh ?? 0,
+    speedKmh: sample.speedKmh ?? Number.NaN,
     elapsedMinutes,
   });
-  const fatigue = predictFatigueLevel({
-    hr: sample.heartRateBpm,
-    speedKmh: sample.speedKmh ?? 0,
-    elapsedMinutes,
-  });
+  const fatigue = fatiguePrediction.label === "alto" || fatiguePrediction.label === "medio" || fatiguePrediction.label === "bajo"
+    ? fatiguePrediction.label : "sin_datos";
   const risk = predictPhysioRisk({
     hr: sample.heartRateBpm,
     spo2: sample.oxygenSaturation,
-    speedKmh: sample.speedKmh ?? 0,
+    speedKmh: sample.speedKmh ?? Number.NaN,
     elapsedMinutes,
-    fatigue,
+    elevationGainM,
+    fatigue: fatigue as FatigueLevel,
   });
-  const riskLabel: "bajo" | "medio" | "alto" =
+  const riskLabel =
     risk.label === "alto" || risk.label === "medio" || risk.label === "bajo"
       ? risk.label
-      : "bajo";
+      : "sin_datos";
 
   const criticalOxygen =
-    sample.oxygenSaturation !== null && sample.oxygenSaturation < 90;
+    sample.oxygenSaturation !== null && sample.oxygenSaturation >= 50 && sample.oxygenSaturation < 90;
   const criticalHeartRate = sample.heartRateBpm >= 180;
   const factors = [
     sample.heartRateBpm >= 180
-      ? "Frecuencia cardiaca critica"
+      ? "Pulso elevado: revisar lectura"
       : sample.heartRateBpm >= 165
         ? "Frecuencia cardiaca muy elevada"
         : sample.heartRateBpm >= 145
           ? "Frecuencia cardiaca elevada"
-          : "Frecuencia cardiaca estable",
-    sample.oxygenSaturation !== null && sample.oxygenSaturation < 90
+          : `Pulso medido: ${sample.heartRateBpm} bpm`,
+    sample.oxygenSaturation === null || !Number.isFinite(sample.oxygenSaturation) || sample.oxygenSaturation < 50 || sample.oxygenSaturation > 100
+      ? "SpO₂ sin lectura válida"
+      : sample.oxygenSaturation < 90
       ? "Oxigeno bajo"
       : sample.oxygenSaturation !== null && sample.oxygenSaturation < 94
-        ? "Oxigeno en descenso"
-        : "Oxigeno estable",
-    fatigue === "alto"
+        ? "SpO₂ por debajo del umbral de aviso experimental"
+        : `SpO₂ medida: ${sample.oxygenSaturation}%`,
+    fatigue === "sin_datos" ? "Fatiga sin datos suficientes" : fatigue === "alto"
       ? "Fatiga estimada alta"
       : fatigue === "medio"
         ? "Fatiga estimada media"
         : "Fatiga estimada baja",
-    sample.speedKmh !== null && sample.speedKmh < 2
+    sample.speedKmh === null ? "Velocidad no medida" : sample.speedKmh < 2
       ? "Ritmo reducido"
-      : "Ritmo sostenido",
+      : `Velocidad medida: ${sample.speedKmh} km/h`,
   ];
-  const confidenceText = `${Math.round(risk.confidence * 100)}% riesgo / ${Math.round(
-    fatiguePrediction.confidence * 100
-  )}% fatiga`;
-
   const level = getWearablePredictionLevel({
     criticalHeartRate,
     criticalOxygen,
@@ -623,7 +625,7 @@ export const predictWearableHealth = (
         : "Pausar, hidratarse y retomar solo si las metricas bajan."
       : level === "caution"
         ? "Bajar el ritmo y volver a revisar las metricas en unos minutos."
-        : "Mantener el ritmo y seguir monitoreando durante el recorrido.";
+        : "Revisá cómo te sentís y los datos disponibles. La IA no autoriza a continuar.";
 
   return {
     level,
@@ -633,11 +635,12 @@ export const predictWearableHealth = (
       heartRateBpm: sample.heartRateBpm,
       oxygenSaturation: sample.oxygenSaturation,
     }),
+    ...(riskLabel === "sin_datos" && level === "normal" ? { title: "Análisis limitado", message: "Faltan variables para evaluar riesgo. Una lectura disponible no confirma que estés fuera de peligro." } : {}),
     fatigue,
     fatigueConfidence: fatiguePrediction.confidence,
     riskLabel,
     riskConfidence: risk.confidence,
-    analysisSummary: `IA local: riesgo ${riskLabel}, fatiga ${fatigue}. Confianza ${confidenceText}.`,
+    analysisSummary: `Modelo experimental local. Fatiga: ${fatigue === "sin_datos" ? "sin datos" : fatigue}. Riesgo: ${riskLabel === "sin_datos" ? "no estimable; faltan variables medidas" : riskLabel}. No evalúa si es seguro continuar.`,
     factors,
     recommendedAction,
   };
@@ -652,7 +655,7 @@ const getWearablePredictionLevel = ({
 }: {
   criticalHeartRate: boolean;
   criticalOxygen: boolean;
-  fatigue: FatigueLevel;
+  fatigue: FatigueLevel | "sin_datos";
   heartRateBpm: number;
   riskLabel: string;
 }): HealthPredictionLevel => {
@@ -694,9 +697,9 @@ const getWearablePredictionCopy = (
   }
 
   return {
-    title: "Metricas estables",
+    title: "Estimación con datos disponibles",
     message:
-      "No se observan senales de esfuerzo elevado con las metricas disponibles.",
+      "Estimación orientativa con las variables disponibles. No es una evaluación clínica.",
   };
 };
 
@@ -713,14 +716,14 @@ const getHighWearablePredictionCopy = ({
 }) => {
   if (criticalOxygen) {
     return {
-      title: "Saturacion de oxigeno critica",
-      message: `Tu oxigeno en sangre (${oxygenSaturation}%) esta por debajo del umbral seguro. Deten la actividad, respira con calma y busca ayuda si no mejora.`,
+      title: "SpO₂ baja: revisar lectura",
+      message: `Tu oxigeno en sangre (${oxygenSaturation}%) esta por debajo del umbral de aviso experimental. Deten la actividad, respira con calma y busca ayuda si no mejora.`,
     };
   }
 
   if (criticalHeartRate) {
     return {
-      title: "Frecuencia cardiaca critica",
+      title: "Pulso elevado: revisar lectura",
       message: `Tu frecuencia cardiaca (${heartRateBpm} bpm) es muy elevada. Deten la actividad de inmediato y evalua pedir ayuda.`,
     };
   }
@@ -752,10 +755,10 @@ export const getWearableRuntimeStatus = async (
       ? "requires_consent"
       : connection.linked && connection.permissionsGranted
         ? latestSample
-          ? "linked"
+          ? isFreshHealthSample(latestSample) ? "linked" : "stale_data"
           : "waiting_for_native_data"
         : "not_linked",
-    latestSample,
+    latestSample: privacy.sensitiveDataConsent ? latestSample : null,
     prediction,
     displayName: getWearableProviderName(connection.provider),
   };

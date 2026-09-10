@@ -145,7 +145,7 @@ function ActivityCard({ session }: { session: SessionRow }) {
             Recorrido del {formatDate(session.started_at)}
           </Text>
           <Text style={styles.activityMeta}>
-            {duration} - {distance}{progress} - Fatiga {session.avg_fatigue}
+            {duration} - {distance}{progress} - Fatiga {session.avg_fatigue ?? "sin estimación"}
           </Text>
         </View>
         <Text

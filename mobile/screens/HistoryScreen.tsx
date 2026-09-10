@@ -151,7 +151,7 @@ function HistoryCard({ session }: { session: SessionRow }) {
       </View>
       <View style={styles.detailRow}>
         <Text style={styles.detailLabel}>Fatiga</Text>
-        <Text style={styles.detailValue}>{session.avg_fatigue}</Text>
+        <Text style={styles.detailValue}>{session.avg_fatigue ?? "Sin estimación"}</Text>
       </View>
     </Card>
   );

@@ -16,7 +16,8 @@ export type WearableConnectionStatus =
   | "not_linked"
   | "linked"
   | "requires_consent"
-  | "waiting_for_native_data";
+  | "waiting_for_native_data"
+  | "stale_data";
 
 export type HealthPredictionLevel = "normal" | "caution" | "high";
 
@@ -52,9 +53,9 @@ export interface WearableHealthPrediction {
   level: HealthPredictionLevel;
   title: string;
   message: string;
-  fatigue: FatigueLevel;
+  fatigue: FatigueLevel | "sin_datos";
   fatigueConfidence: number;
-  riskLabel: "bajo" | "medio" | "alto";
+  riskLabel: "bajo" | "medio" | "alto" | "sin_datos";
   riskConfidence: number;
   analysisSummary: string;
   factors: string[];
@@ -85,7 +86,7 @@ export interface SessionRow {
   ended_at: number | null;
   duration: number;
   distance: number;
-  avg_fatigue: FatigueLevel;
+  avg_fatigue: FatigueLevel | null;
   trail_id: number | null;
   completion_status: "completed" | "ended_early" | "paused";
   route_progress_meters: number | null;

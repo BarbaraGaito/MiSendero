@@ -1,3 +1,4 @@
+import { saveAuthSession } from "../authSession";
 import { initDB } from "../../database/database";
 import {
   getFavoriteTrailIds,
@@ -7,6 +8,7 @@ import {
 
 beforeAll(async () => {
   await initDB();
+  await saveAuthSession({ token: "favorite-test", user: { id: 1, name: "Test", email: "test@example.test" } });
 });
 
 describe("favoriteTrails", () => {

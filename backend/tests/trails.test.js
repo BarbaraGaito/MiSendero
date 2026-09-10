@@ -18,7 +18,7 @@ beforeAll(async () => {
     password: testPassword,
     accepted_terms_version: "2026-08-13",
   });
-  adminToken = admin.body.token;
+  adminToken = jwt.sign({ userId: admin.body.user.id, role: "admin" }, process.env.JWT_SECRET);
 
   const user = await request(app).post("/api/auth/register").send({
     name: "Usuaria Dos",

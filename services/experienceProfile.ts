@@ -1,3 +1,4 @@
+import { getAuthSession } from "./authSession";
 import * as SQLite from "expo-sqlite";
 import { Trail } from "../types";
 
@@ -27,8 +28,8 @@ const defaultProfile: ExperienceProfile = {
 
 const initExperienceProfileTable = async () => {
   await db.execAsync(`
-    CREATE TABLE IF NOT EXISTS experience_profile (
-      id INTEGER PRIMARY KEY CHECK (id = 1),
+    CREATE TABLE IF NOT EXISTS user_experience_profile (
+      id INTEGER PRIMARY KEY,
       completed INTEGER NOT NULL DEFAULT 0,
       skipped INTEGER NOT NULL DEFAULT 0,
       experience_level TEXT,
@@ -60,8 +61,8 @@ export const getExperienceProfile = async (): Promise<ExperienceProfile> => {
        completed_at,
        skipped_at,
        updated_at
-     FROM experience_profile
-     WHERE id = 1`
+     FROM user_experience_profile
+     WHERE id = ?`, [(await getAuthSession())?.user.id ?? null]
   );
 
   if (!row) return defaultProfile;
@@ -86,7 +87,7 @@ export const saveExperienceProfile = async (
   const now = Date.now();
 
   await db.runAsync(
-    `INSERT OR REPLACE INTO experience_profile (
+    `INSERT OR REPLACE INTO user_experience_profile (
        id,
        completed,
        skipped,
@@ -96,8 +97,8 @@ export const saveExperienceProfile = async (
        skipped_at,
        updated_at
      )
-     VALUES (1, 1, 0, ?, ?, ?, NULL, ?)`,
-    [level, JSON.stringify(answers), now, now]
+     VALUES (?, 1, 0, ?, ?, ?, NULL, ?)`,
+    [(await getAuthSession())?.user.id ?? -1, level, JSON.stringify(answers), now, now]
   );
 
   return getExperienceProfile();
@@ -109,7 +110,7 @@ export const skipExperienceProfile = async () => {
   const now = Date.now();
 
   await db.runAsync(
-    `INSERT OR REPLACE INTO experience_profile (
+    `INSERT OR REPLACE INTO user_experience_profile (
        id,
        completed,
        skipped,
@@ -119,8 +120,8 @@ export const skipExperienceProfile = async () => {
        skipped_at,
        updated_at
      )
-     VALUES (1, 0, 1, NULL, NULL, NULL, ?, ?)`,
-    [now, now]
+     VALUES (?, 0, 1, NULL, NULL, NULL, ?, ?)`,
+    [(await getAuthSession())?.user.id ?? -1, now, now]
   );
 };
 

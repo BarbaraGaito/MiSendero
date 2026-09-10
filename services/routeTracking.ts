@@ -1,3 +1,4 @@
+import { getAuthSession } from "./authSession";
 import { db, initDB } from "../database/database";
 import { RouteTrackingPoint } from "../types";
 
@@ -40,9 +41,13 @@ export const saveRouteTrackingPoint = async (
   point: RouteTrackingPoint
 ): Promise<void> => {
   await initDB();
+  const userId = (await getAuthSession())?.user.id ?? null;
+
+  if (!userId) return;
 
   await db.runAsync(
     `INSERT INTO route_tracking_points (
+       user_id,
        trail_id,
        started_at,
        latitude,
@@ -54,8 +59,9 @@ export const saveRouteTrackingPoint = async (
        simulated,
        created_at
      )
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     [
+      userId,
       point.trailId,
       point.startedAt,
       point.latitude,
@@ -75,6 +81,7 @@ export const getRouteTrackingSummary = async (
   startedAt: number
 ): Promise<RouteTrackingSummary> => {
   await initDB();
+  const userId = (await getAuthSession())?.user.id ?? null;
 
   const [summary, lastPointRow] = await Promise.all([
     db.getFirstAsync<{
@@ -87,16 +94,16 @@ export const getRouteTrackingSummary = async (
          COALESCE(SUM(distance_delta_meters), 0) AS distance_meters,
          MAX(recorded_at) AS last_recorded_at
        FROM route_tracking_points
-       WHERE trail_id = ? AND started_at = ?`,
-      [trailId, startedAt]
+       WHERE user_id = ? AND trail_id = ? AND started_at = ?`,
+      [userId, trailId, startedAt]
     ),
     db.getFirstAsync<RouteTrackingPointRow>(
       `SELECT *
        FROM route_tracking_points
-       WHERE trail_id = ? AND started_at = ?
+       WHERE user_id = ? AND trail_id = ? AND started_at = ?
        ORDER BY recorded_at DESC
        LIMIT 1`,
-      [trailId, startedAt]
+      [userId, trailId, startedAt]
     ),
   ]);
 
@@ -114,14 +121,15 @@ export const getLastRouteTrackingPoint = async (
   startedAt: number
 ) => {
   await initDB();
+  const userId = (await getAuthSession())?.user.id ?? null;
 
   const row = await db.getFirstAsync<RouteTrackingPointRow>(
     `SELECT *
      FROM route_tracking_points
-     WHERE trail_id = ? AND started_at = ?
+     WHERE user_id = ? AND trail_id = ? AND started_at = ?
      ORDER BY recorded_at DESC
      LIMIT 1`,
-    [trailId, startedAt]
+    [userId, trailId, startedAt]
   );
 
   return row ? toRouteTrackingPoint(row) : null;

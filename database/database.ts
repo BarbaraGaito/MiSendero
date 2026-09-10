@@ -15,6 +15,7 @@ const tableInfoQueries = {
   offline_maps: "PRAGMA table_info(offline_maps)",
   pending_operations: "PRAGMA table_info(pending_operations)",
   sessions: "PRAGMA table_info(sessions)",
+  route_tracking_points: "PRAGMA table_info(route_tracking_points)",
 } as const;
 
 type KnownTableName = keyof typeof tableInfoQueries;
@@ -161,6 +162,7 @@ const runInitDB = async () => {
   `);
 
   const columnMigrations: Array<readonly [KnownTableName, string, string]> = [
+    ["route_tracking_points", "user_id", "ALTER TABLE route_tracking_points ADD COLUMN user_id INTEGER;"],
     ["sessions", "started_at", "ALTER TABLE sessions ADD COLUMN started_at INTEGER NOT NULL DEFAULT 0;"],
     ["sessions", "user_id", "ALTER TABLE sessions ADD COLUMN user_id INTEGER;"],
     ["sessions", "ended_at", "ALTER TABLE sessions ADD COLUMN ended_at INTEGER;"],
@@ -192,6 +194,8 @@ const runInitDB = async () => {
     ["offline_maps", "verified_at", "ALTER TABLE offline_maps ADD COLUMN verified_at INTEGER;"],
     ["offline_maps", "last_error", "ALTER TABLE offline_maps ADD COLUMN last_error TEXT;"],
     ["pending_operations", "dedupe_key", "ALTER TABLE pending_operations ADD COLUMN dedupe_key TEXT;"],
+    ["pending_operations", "user_id", "ALTER TABLE pending_operations ADD COLUMN user_id INTEGER;"],
+    ["pending_operations", "next_attempt_at", "ALTER TABLE pending_operations ADD COLUMN next_attempt_at INTEGER NOT NULL DEFAULT 0;"],
   ];
 
   for (const [tableName, columnName, statement] of columnMigrations) {

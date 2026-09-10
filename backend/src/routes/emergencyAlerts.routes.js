@@ -24,7 +24,7 @@ router.post("/", requireAuth, validateBody(createEmergencyAlertSchema), async (r
       trail_id,
       latitude,
       longitude,
-      status,
+      client_event_id,
       device_battery_percent,
       contact_name,
       contact_phone,
@@ -44,9 +44,12 @@ router.post("/", requireAuth, validateBody(createEmergencyAlertSchema), async (r
           contact_name,
           contact_phone,
           message_body,
-          last_known_at
+          last_known_at,
+          client_event_id
         )
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
+        ON CONFLICT (user_id, client_event_id) DO UPDATE
+        SET client_event_id = EXCLUDED.client_event_id
         RETURNING *
       `,
       [
@@ -54,12 +57,13 @@ router.post("/", requireAuth, validateBody(createEmergencyAlertSchema), async (r
         trail_id ?? null,
         latitude,
         longitude,
-        status ?? "sent",
+        "registered",
         device_battery_percent ?? null,
         contact_name ?? null,
         contact_phone ?? null,
         message_body ?? null,
         last_known_at ?? null,
+        client_event_id ?? null,
       ]
     );
 

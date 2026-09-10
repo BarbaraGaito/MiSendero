@@ -13,6 +13,8 @@ const authRoutes = require("./routes/auth.routes");
 const trailsRoutes = require("./routes/trails.routes");
 const activitiesRoutes = require("./routes/activities.routes");
 const emergencyAlertsRoutes = require("./routes/emergencyAlerts.routes");
+const tripPlansRoutes = require("./routes/tripPlans.routes");
+const { processTripNotifications } = require("./tripNotifications");
 
 if (!process.env.JWT_SECRET) {
   logger.error(
@@ -58,6 +60,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/trails", trailsRoutes);
 app.use("/api/activities", activitiesRoutes);
 app.use("/api/emergency-alerts", emergencyAlertsRoutes);
+app.use("/api/trip-plans", tripPlansRoutes);
 
 app.use((_req, res) => {
   res.status(404).json({ message: "Ruta no encontrada" });
@@ -88,6 +91,9 @@ const start = async () => {
   await runMigrations();
   await seedDatabase();
   scheduleStaleReportsCleanup();
+  const notifyTrips = () => processTripNotifications().catch((error) => logger.error(error, "No se pudieron procesar avisos de regreso"));
+  void notifyTrips();
+  setInterval(notifyTrips, 30000);
 
   app.listen(port, () => {
     logger.info(`MiSendero backend running on http://localhost:${port}`);

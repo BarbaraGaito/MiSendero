@@ -20,6 +20,16 @@ beforeAll(async () => {
 });
 
 describe("emergency alerts", () => {
+  test("accepts an SOS without GPS, ignores claimed delivery and deduplicates retries", async () => {
+    const event = require("crypto").randomUUID();
+    const payload = { client_event_id: event, latitude: null, longitude: null, status: "sent" };
+    const first = await request(app).post("/api/emergency-alerts").set("Authorization", `Bearer ${token}`).send(payload);
+    const retry = await request(app).post("/api/emergency-alerts").set("Authorization", `Bearer ${token}`).send(payload);
+    expect(first.status).toBe(201);
+    expect(first.body.status).toBe("registered");
+    expect(first.body.latitude).toBeNull();
+    expect(retry.body.id).toBe(first.body.id);
+  });
   test("rejects creation without authentication", async () => {
     const response = await request(app)
       .post("/api/emergency-alerts")
@@ -43,7 +53,7 @@ describe("emergency alerts", () => {
       });
 
     expect(created.status).toBe(201);
-    expect(created.body.status).toBe("sent");
+    expect(created.body.status).toBe("registered");
     expect(created.body.contact_name).toBe("Contacto Uno");
     expect(created.body.message_body).toContain("SOS MiSendero");
 
@@ -52,9 +62,9 @@ describe("emergency alerts", () => {
       .set("Authorization", `Bearer ${token}`);
 
     expect(list.status).toBe(200);
-    expect(list.body).toHaveLength(1);
-    expect(list.body[0].device_battery_percent).toBe(42);
-    expect(list.body[0].contact_phone).toBe("+5491100000000");
+    const saved = list.body.find((alert) => alert.id === created.body.id);
+    expect(saved.device_battery_percent).toBe(42);
+    expect(saved.contact_phone).toBe("+5491100000000");
   });
 
   test("rejects an out-of-range latitude", async () => {

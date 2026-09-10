@@ -685,9 +685,10 @@ function AdminAiMetricsCard({ isAdmin }: { isAdmin: boolean }) {
     <Card tone="secondary">
       <Text style={styles.cardTitle}>Metricas IA</Text>
       <Text style={styles.privacyText}>
-        Entrenamientos con augmentation aprobado solo en train. El test se
-        mantiene 100% real; los guardrails comparan train, test y validacion
-        cruzada para detectar overfitting, underfitting y falta de datos.
+        Prototipos experimentales con etiquetas derivadas de reglas y variables
+        simuladas. Estas métricas describen el conjunto de evaluación; no
+        demuestran capacidad para detectar emergencias reales. Falta validar
+        con personas y salidas independientes y calibrar las probabilidades.
       </Text>
       {adminAiModelMetrics.map((metrics) => (
         <AiModelMetricBlock key={metrics.dataset.name} metrics={metrics} />
@@ -753,7 +754,7 @@ function AiModelMetricBlock({ metrics }: { metrics: AiTrainingMetrics }) {
             {metrics.dataset.declared_source}
           </Text>
           <Text style={styles.aiModelMeta}>
-            {metrics.dataset.rows_total} reales - {metrics.augmentation.synthetic_rows} sinteticas - {formatDate(metrics.trained_at)}
+            {metrics.dataset.rows_total} filas base - {metrics.augmentation.synthetic_rows} sinteticas - {formatDate(metrics.trained_at)}
           </Text>
         </View>
         <Text
@@ -781,13 +782,13 @@ function AiModelMetricBlock({ metrics }: { metrics: AiTrainingMetrics }) {
           value={formatPercent(metrics.guardrails.train_test_f1_gap)}
         />
         <AiMetric
-          label="Test real"
+          label="Test interno"
           value={`${metrics.dataset.rows_test} filas`}
         />
       </View>
 
       <Text style={styles.aiWarningText}>
-        {metrics.guardrails.warnings[0] || "Sin alertas de performance."}
+        {metrics.guardrails.warnings[0] || "Evaluación interna; falta validación independiente."}
       </Text>
     </View>
   );
@@ -803,7 +804,7 @@ function AiMetric({ label, value }: { label: string; value: string }) {
 }
 
 function getAiStatusLabel(status: AiTrainingMetrics["guardrails"]["status"]) {
-  if (status === "ok") return "OK";
+  if (status === "ok") return "Chequeo interno";
   if (status === "review_recommended") return "Revisar";
   return "Mas datos";
 }

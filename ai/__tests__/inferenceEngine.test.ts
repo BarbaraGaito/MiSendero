@@ -3,11 +3,19 @@ import { predictFatigue, predictFatigueLevel, predictPhysioRisk, offlineAiMetada
 const validLabels = ["bajo", "medio", "alto"];
 
 describe("inferenceEngine (RandomForest, trained via training/python)", () => {
+  test("abstains for missing oxygen, missing elevation and non-finite measurements", () => {
+    const input = { hr: 110, speedKmh: 3, elapsedMinutes: 20, fatigue: "bajo" as const };
+    expect(predictPhysioRisk(input).label).toBe("sin_datos");
+    expect(predictPhysioRisk({ ...input, spo2: 98 }).label).toBe("sin_datos");
+    expect(predictFatigue({ hr: Number.NaN, speedKmh: 3, elapsedMinutes: 20 }).label).toBe("sin_datos");
+    expect(predictFatigue({ hr: 110, speedKmh: -1, elapsedMinutes: 20 }).label).toBe("sin_datos");
+    expect(() => predictFatigueLevel({ hr: 0, speedKmh: 3, elapsedMinutes: 20 })).toThrow();
+  });
   test("loaded models are well-formed random_forest_json artifacts", () => {
     for (const model of [offlineAiMetadata.fatigueModel, offlineAiMetadata.riskModel]) {
       expect(model.type).toBe("random_forest_json");
       expect(model.trees.length).toBeGreaterThan(0);
-      expect(model.classes.sort()).toEqual([...validLabels].sort());
+      expect([...model.classes].sort()).toEqual([...validLabels].sort());
       expect(model.feature_order.length).toBeGreaterThan(0);
     }
   });
@@ -40,6 +48,7 @@ describe("inferenceEngine (RandomForest, trained via training/python)", () => {
   test("predictPhysioRisk incorporates elevation gain and fatigue level", () => {
     const lowRisk = predictPhysioRisk({
       hr: 95,
+      spo2: 98,
       speedKmh: 4.5,
       elapsedMinutes: 10,
       elevationGainM: 50,
@@ -47,6 +56,7 @@ describe("inferenceEngine (RandomForest, trained via training/python)", () => {
     });
     const highRisk = predictPhysioRisk({
       hr: 170,
+      spo2: 90,
       speedKmh: 1.5,
       elapsedMinutes: 150,
       elevationGainM: 900,

@@ -13,6 +13,19 @@ const sample = (overrides: Partial<WearableMetricSample>): WearableMetricSample 
 });
 
 describe("predictWearableHealth", () => {
+  test("does not present missing oxygen or speed as stable measured values", () => {
+    const result = predictWearableHealth(sample({ oxygenSaturation: null, speedKmh: null }));
+    expect(result?.riskLabel).toBe("sin_datos");
+    expect(result?.fatigue).toBe("sin_datos");
+    expect(result?.factors).toContain("SpO₂ sin lectura válida");
+    expect(result?.title).toBe("Análisis limitado");
+    expect(result?.analysisSummary).not.toContain("Confianza");
+  });
+  test("does not infer from stale, future, or invalid pulse readings", () => {
+    expect(predictWearableHealth(sample({ recordedAt: Date.now() - 301000 }))).toBeNull();
+    expect(predictWearableHealth(sample({ recordedAt: Date.now() + 60000 }))).toBeNull();
+    expect(predictWearableHealth(sample({ heartRateBpm: Number.NaN }))).toBeNull();
+  });
   test("mantiene esfuerzo moderado y fatiga alta como advertencia sin emergencia", () => {
     expect(
       predictWearableHealth(sample({ heartRateBpm: 145, speedKmh: 3.2, oxygenSaturation: 95 }))?.level

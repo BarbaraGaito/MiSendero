@@ -11,6 +11,10 @@ const fatigueScoreByLevel: Record<FatigueLevel, number> = {
 
 const toForestModel = (model: unknown) => model as RandomForestModel;
 
+const unavailable = (reason: string): OfflinePrediction => ({ label: "sin_datos", confidence: 0, distances: {}, reason });
+const inRange = (value: number | null | undefined, min: number, max: number) =>
+  typeof value === "number" && Number.isFinite(value) && value >= min && value <= max;
+
 // sklearn's exported tree.children_left uses -1 to mark a leaf node; there is
 // no separate "is_leaf" flag, so that convention is the traversal stop
 // condition here too.
@@ -18,7 +22,10 @@ const predictRandomForest = (
   model: RandomForestModel,
   input: Record<string, number>
 ): OfflinePrediction => {
-  const featureValues = model.feature_order.map((feature) => input[feature] ?? 0);
+  if (model.feature_order.some((feature) => !Number.isFinite(input[feature]))) {
+    return unavailable("Faltan variables requeridas por el modelo.");
+  }
+  const featureValues = model.feature_order.map((feature) => input[feature]);
   const classCount = model.classes.length;
   const summedProbabilities = new Array(classCount).fill(0);
 
@@ -63,6 +70,9 @@ export const predictFatigue = (input: {
   speedKmh: number;
   elapsedMinutes: number;
 }): OfflinePrediction => {
+  if (!inRange(input.hr, 30, 240) || !inRange(input.speedKmh, 0, 25) || !inRange(input.elapsedMinutes, 0, 1440)) {
+    return unavailable("Faltan pulso, velocidad o duración válidos para estimar fatiga.");
+  }
   const hrReservePercent = Math.max(0, Math.min(100, ((input.hr - 60) / 120) * 100));
 
   return predictRandomForest(toForestModel(fatigueModel), {
@@ -84,14 +94,8 @@ export const predictFatigueLevel = (input: {
     return label;
   }
 
-  return "bajo";
+  throw new Error("No hay datos válidos para estimar fatiga.");
 };
-
-// A missing/unmeasured reading defaults to a normal, healthy saturation
-// instead of 0 - unlike elevation or speed, 0 is not a neutral "no data"
-// value for SpO2, it reads as a critical desaturation and would push the
-// model toward "alto" for anyone without a pulse oximeter connected.
-const DEFAULT_SPO2_PERCENT = 97;
 
 export const predictPhysioRisk = (input: {
   hr: number;
@@ -101,12 +105,17 @@ export const predictPhysioRisk = (input: {
   elevationGainM?: number | null;
   fatigue: FatigueLevel;
 }): OfflinePrediction => {
+  if (!inRange(input.hr, 30, 240) || !inRange(input.spo2, 50, 100) ||
+      !inRange(input.speedKmh, 0, 25) || !inRange(input.elapsedMinutes, 0, 1440) ||
+      !inRange(input.elevationGainM, 0, 6000) || !fatigueScoreByLevel[input.fatigue]) {
+    return unavailable("El modelo de riesgo necesita pulso, SpO₂, velocidad, tiempo, desnivel medido y fatiga válidos.");
+  }
   return predictRandomForest(toForestModel(riskModel), {
     hr: input.hr,
-    spo2: input.spo2 ?? DEFAULT_SPO2_PERCENT,
+    spo2: input.spo2!,
     speed_kmh: input.speedKmh,
     elapsed_minutes: input.elapsedMinutes,
-    elevation_gain_m: input.elevationGainM ?? 0,
+    elevation_gain_m: input.elevationGainM!,
     fatigue_score: fatigueScoreByLevel[input.fatigue],
   });
 };

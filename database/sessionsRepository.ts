@@ -135,7 +135,7 @@ export const getOrCreateCompletedSession = async ({
         endedAt,
         duration,
         distance,
-        "bajo",
+        null,
         trailId,
         completionStatus,
         routeProgressMeters,
@@ -181,7 +181,7 @@ export const getOrCreateCompletedSession = async ({
       endedAt,
       duration,
       distance,
-      "bajo",
+      null,
       trailId,
       completionStatus,
       routeProgressMeters,
@@ -222,6 +222,8 @@ export const getOrCreatePausedSession = async ({
     [userId, trailId, startedAt]
   );
 
+  if (existing?.ended_at != null) return existing;
+
   if (existing) {
     await db.runAsync(
       `UPDATE sessions
@@ -230,7 +232,7 @@ export const getOrCreatePausedSession = async ({
            distance = ?,
            completion_status = ?,
            trail_id = ?
-       WHERE id = ? AND user_id IS ?`,
+       WHERE id = ? AND user_id IS ? AND ended_at IS NULL`,
       [duration, distance, "paused", trailId, existing.id, userId]
     );
 
@@ -256,7 +258,7 @@ export const getOrCreatePausedSession = async ({
        completion_status
      )
      VALUES (?, ?, NULL, ?, ?, ?, ?, ?)`,
-    [userId, startedAt, duration, distance, "bajo", trailId, "paused"]
+    [userId, startedAt, duration, distance, null, trailId, "paused"]
   );
 
   const row = await db.getFirstAsync<SessionRow>(

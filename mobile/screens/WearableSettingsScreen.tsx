@@ -317,10 +317,10 @@ export default function WearableSettingsScreen() {
               </View>
             </View>
             <View style={styles.metricGrid}>
-              <MetricBox label="Riesgo" value={runtime.prediction.riskLabel} />
-              <MetricBox label="Conf. riesgo" value={`${Math.round(runtime.prediction.riskConfidence * 100)}%`} />
-              <MetricBox label="Fatiga" value={runtime.prediction.fatigue} />
-              <MetricBox label="Conf. fatiga" value={`${Math.round(runtime.prediction.fatigueConfidence * 100)}%`} />
+              <MetricBox label="Riesgo" value={runtime.prediction.riskLabel === "sin_datos" ? "Sin datos" : runtime.prediction.riskLabel} />
+              <MetricBox label="Modelo" value="Experimental" />
+              <MetricBox label="Fatiga" value={runtime.prediction.fatigue === "sin_datos" ? "Sin datos" : runtime.prediction.fatigue} />
+              <MetricBox label="Uso" value="Orientativo" />
             </View>
             <Text style={styles.aiAction}>{runtime.prediction.recommendedAction}</Text>
             <View style={styles.factorList}>

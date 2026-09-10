@@ -13,6 +13,7 @@ export interface OfflineAiModel {
 }
 
 export interface OfflinePrediction {
+  reason?: string;
   label: string;
   confidence: number;
   distances: Record<string, number>;

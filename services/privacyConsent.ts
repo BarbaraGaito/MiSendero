@@ -1,3 +1,4 @@
+import { getAuthSession } from "./authSession";
 import * as SQLite from "expo-sqlite";
 import {
   heartRateLogsTableSql,
@@ -14,8 +15,8 @@ export interface PrivacyPreferences {
 
 const initPrivacyTable = async () => {
   await db.execAsync(`
-    CREATE TABLE IF NOT EXISTS privacy_preferences (
-      id INTEGER PRIMARY KEY CHECK (id = 1),
+    CREATE TABLE IF NOT EXISTS user_privacy_preferences (
+      id INTEGER PRIMARY KEY,
       sensitive_data_consent INTEGER NOT NULL DEFAULT 0,
       analytics_training_consent INTEGER NOT NULL DEFAULT 0,
       updated_at INTEGER
@@ -30,7 +31,7 @@ export const getPrivacyPreferences = async (): Promise<PrivacyPreferences> => {
     sensitive_data_consent: number;
     analytics_training_consent: number;
     updated_at: number | null;
-  }>("SELECT sensitive_data_consent, analytics_training_consent, updated_at FROM privacy_preferences WHERE id = 1");
+  }>("SELECT sensitive_data_consent, analytics_training_consent, updated_at FROM user_privacy_preferences WHERE id = ?", [(await getAuthSession())?.user.id ?? null]);
 
   return {
     sensitiveDataConsent: row?.sensitive_data_consent === 1,
@@ -45,14 +46,15 @@ export const savePrivacyPreferences = async (
   await initPrivacyTable();
 
   await db.runAsync(
-    `INSERT OR REPLACE INTO privacy_preferences (
+    `INSERT OR REPLACE INTO user_privacy_preferences (
        id,
        sensitive_data_consent,
        analytics_training_consent,
        updated_at
      )
-     VALUES (1, ?, ?, ?)`,
+     VALUES (?, ?, ?, ?)`,
     [
+      (await getAuthSession())?.user.id ?? -1,
       preferences.sensitiveDataConsent ? 1 : 0,
       preferences.analyticsTrainingConsent ? 1 : 0,
       Date.now(),
@@ -70,12 +72,10 @@ export const hasSensitiveDataConsent = async () => {
 };
 
 export const clearSensitiveLocalData = async () => {
-  await db.execAsync(`
-    ${heartRateLogsTableSql}
-    ${wearableTablesSql}
-
-    DELETE FROM wearable_metric_samples;
-    DELETE FROM wearable_connections;
-    DELETE FROM heart_rate_logs;
-  `);
+  const userId = (await getAuthSession())?.user.id;
+  if (!userId) return;
+  await db.execAsync(`${heartRateLogsTableSql} ${wearableTablesSql}`);
+  await db.runAsync("DELETE FROM wearable_metric_samples WHERE user_id = ?", [userId]);
+  await db.runAsync("DELETE FROM wearable_connections WHERE user_id = ?", [userId]);
+  await db.runAsync("DELETE FROM heart_rate_logs WHERE session_id IN (SELECT id FROM sessions WHERE user_id = ?)", [userId]);
 };

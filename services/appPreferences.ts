@@ -1,3 +1,4 @@
+import { getAuthSession } from "./authSession";
 import * as SQLite from "expo-sqlite";
 
 const db = SQLite.openDatabaseSync("trekking.db");
@@ -22,8 +23,8 @@ const defaultPreferences: AppPreferences = {
 
 const initPreferencesTable = async () => {
   await db.execAsync(`
-    CREATE TABLE IF NOT EXISTS app_preferences (
-      id INTEGER PRIMARY KEY CHECK (id = 1),
+    CREATE TABLE IF NOT EXISTS user_app_preferences (
+      id INTEGER PRIMARY KEY,
       notifications_enabled INTEGER NOT NULL DEFAULT 1,
       distance_unit TEXT NOT NULL DEFAULT 'km',
       battery_saver_enabled INTEGER NOT NULL DEFAULT 1,
@@ -49,8 +50,8 @@ export const getAppPreferences = async (): Promise<AppPreferences> => {
        battery_saver_enabled,
        external_sensor_linked,
        updated_at
-     FROM app_preferences
-     WHERE id = 1`
+     FROM user_app_preferences
+     WHERE id = ?`, [(await getAuthSession())?.user.id ?? null]
   );
 
   if (!row) return defaultPreferences;
@@ -70,7 +71,7 @@ export const saveAppPreferences = async (
   await initPreferencesTable();
 
   await db.runAsync(
-    `INSERT OR REPLACE INTO app_preferences (
+    `INSERT OR REPLACE INTO user_app_preferences (
        id,
        notifications_enabled,
        distance_unit,
@@ -78,8 +79,9 @@ export const saveAppPreferences = async (
        external_sensor_linked,
        updated_at
      )
-     VALUES (1, ?, ?, ?, ?, ?)`,
+     VALUES (?, ?, ?, ?, ?, ?)`,
     [
+      (await getAuthSession())?.user.id ?? -1,
       preferences.notificationsEnabled ? 1 : 0,
       preferences.distanceUnit,
       preferences.batterySaverEnabled ? 1 : 0,

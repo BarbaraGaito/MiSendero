@@ -1,3 +1,4 @@
+import { saveAuthSession } from "../authSession";
 import { initDB } from "../../database/database";
 import {
   getRouteTrackingSummary,
@@ -7,6 +8,7 @@ import {
 describe("routeTracking", () => {
   beforeAll(async () => {
     await initDB();
+    await saveAuthSession({ token: "tracking-test", user: { id: 1, name: "Test", email: "test@example.test" } });
   });
 
   test("stores GPS points and summarizes real distance", async () => {

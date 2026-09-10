@@ -64,7 +64,7 @@ router.post("/register", validateBody(registerSchema), async (req, res, next) =>
     }
 
     const passwordHash = await bcrypt.hash(password, 10);
-    const role = "admin";
+    const role = "user";
     const termsAcceptedAt = new Date().toISOString();
 
     const { rows: insertedRows } = await query(

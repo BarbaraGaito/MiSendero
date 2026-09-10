@@ -12,7 +12,7 @@ beforeAll(async () => {
 describe("auth", () => {
   const testPassword = process.env.TEST_USER_PASSWORD;
 
-  test("registers a user as admin and returns a token", async () => {
+  test("registers a regular user and returns a token", async () => {
     const response = await request(app).post("/api/auth/register").send({
       name: "Ana Pereyra",
       email: "ana@misendero.app",
@@ -22,7 +22,7 @@ describe("auth", () => {
 
     expect(response.status).toBe(201);
     expect(response.body.token).toBeTruthy();
-    expect(response.body.user.role).toBe("admin");
+    expect(response.body.user.role).toBe("user");
     expect(response.body.user.password_hash).toBeUndefined();
   });
 
@@ -35,10 +35,10 @@ describe("auth", () => {
     });
 
     expect(response.status).toBe(201);
-    expect(response.body.user.role).toBe("admin");
+    expect(response.body.user.role).toBe("user");
   });
 
-  test("promotes existing regular users when migrations run", async () => {
+  test("does not promote regular users when migrations run", async () => {
     await query("UPDATE users SET role = 'user' WHERE email = $1", [
       "luis@misendero.app",
     ]);
@@ -52,7 +52,7 @@ describe("auth", () => {
     const { rows } = await query("SELECT role FROM users WHERE email = $1", [
       "luis@misendero.app",
     ]);
-    expect(rows[0].role).toBe("admin");
+    expect(rows[0].role).toBe("user");
   });
 
   test("rejects registration without accepting terms", async () => {

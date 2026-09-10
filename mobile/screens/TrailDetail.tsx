@@ -13,7 +13,7 @@ import {
   colors,
   trailImages,
 } from "../components/MiSenderoUI";
-import { getTrailById, getTrailReports, getTrailWeather } from "../../services/api";
+import { getTrailById, getTrailReports, getTrailWeather } from "../../services/trailRepository";
 import {
   getVerifiedOfflineMapByTrailId,
   saveOfflineTrailMap,
@@ -25,8 +25,6 @@ import {
 } from "../../database/sessionsRepository";
 import { initDB } from "../../database/database";
 import { Trail, TrailWeather } from "../../types";
-import { parseRouteCoordinates } from "../../services/geoUtils";
-import { getTerrainElevationGainMeters } from "../components/Terrain3DScene";
 
 const loadTrailDetailData = async (trailId: number) => {
   await initDB();
@@ -247,16 +245,13 @@ function TrailCover({
 }
 
 function TrailStats({ trail }: { trail: Trail }) {
-  const elevationGain = getTrailElevationGain(trail);
 
   return (
     <View style={styles.stats}>
       <StatPill icon="walk-outline" label={getTrailDistanceLabel(trail)} />
       <StatPill icon="time-outline" label={trail.duration || "Duracion a confirmar"} />
       <StatPill icon="leaf-outline" label={trail.difficulty} />
-      {elevationGain !== null ? (
-        <StatPill icon="trending-up-outline" label={`${elevationGain} m desnivel`} />
-      ) : null}
+      <StatPill icon="trending-up-outline" label="Desnivel: sin medición" />
     </View>
   );
 }
@@ -508,19 +503,8 @@ function normalizeDifficulty(difficulty: string) {
     .replace(/[\u0300-\u036f]/g, "");
 }
 
-function getTrailElevationGain(trail: Trail) {
-  const routePoints = parseRouteCoordinates(trail.route_coordinates);
-
-  if (routePoints.length < 2 && !trail.distance_km) return null;
-
-  return getTerrainElevationGainMeters(
-    routePoints,
-    trail.difficulty,
-    trail.distance_km
-  );
-}
-
 function getDownloadErrorMessage(error: unknown) {
+  if (error instanceof Error && "code" in error && error.code === "provider-not-configured") return error.message;
   if (error instanceof Error && error.message.startsWith("offline-map-incomplete")) {
     return "La descarga no quedo completa. Reintenta con conexion estable antes de salir.";
   }

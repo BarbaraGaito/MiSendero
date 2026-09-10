@@ -22,7 +22,7 @@ import {
   colors,
   trailImages,
 } from "../components/MiSenderoUI";
-import { getTrails } from "../../services/api";
+import { getTrails } from "../../services/trailRepository";
 import { Trail } from "../../types";
 import { initDB } from "../../database/database";
 import { getFavoriteTrailIds } from "../../services/favoriteTrails";
@@ -131,10 +131,6 @@ export default function ExploreRoutesScreen() {
       })),
     [visibleTrails]
   );
-  const loadedRouteItems = useMemo(
-    () => visibleRouteItems.filter((item) => loadedImages[item.image]),
-    [loadedImages, visibleRouteItems]
-  );
   const pendingImageUrls = useMemo(
     () => [
       ...new Set(
@@ -145,10 +141,7 @@ export default function ExploreRoutesScreen() {
     ],
     [loadedImages, visibleRouteItems]
   );
-  const isSearchingRoutes =
-    !isLoading &&
-    !error &&
-    visibleRouteItems.some((item) => !paintedImages[item.image]);
+  const isSearchingRoutes = isLoading;
 
   const loadRoutes = useCallback(async () => {
     setIsLoading(true);
@@ -220,7 +213,7 @@ export default function ExploreRoutesScreen() {
     <AppScreen activeTab="explorar">
       <FlatList
         contentContainerStyle={styles.listContent}
-        data={loadedRouteItems}
+        data={visibleRouteItems}
         initialNumToRender={ROUTES_PAGE_SIZE}
         keyExtractor={(item) => String(item.trail.id)}
         ListFooterComponent={
@@ -539,6 +532,7 @@ function RouteCard({
   isFavorite: boolean;
   onImageReady: (imageUrl: string) => void;
 }) {
+  const [imageFailed, setImageFailed] = useState(false);
   const distance = trail.distance_km ? `${trail.distance_km} km` : "Distancia a confirmar";
 
   return (
@@ -547,7 +541,6 @@ function RouteCard({
       accessibilityRole="button"
       style={({ pressed }) => [
         styles.routeCard,
-        !imageReady && styles.routeCardHidden,
         pressed && styles.pressed,
       ]}
       onPress={() =>
@@ -560,12 +553,14 @@ function RouteCard({
       <ImageBackground
         fadeDuration={0}
         imageStyle={styles.image}
+        onError={() => { setImageFailed(true); onImageReady(image); }}
         onLoad={() => {
           requestAnimationFrame(() => onImageReady(image));
         }}
         source={{ uri: image }}
         style={styles.imageBox}
       >
+        {imageFailed && <Text style={{ color: colors.muted }}>Foto no disponible</Text>}
         <View style={styles.badge}>
           <Text style={styles.badgeText}>{trail.difficulty}</Text>
         </View>

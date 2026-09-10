@@ -7,6 +7,8 @@ import {
 } from "@expo-google-fonts/bricolage-grotesque";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { initDB } from "../database/database";
+import { SyncCoordinator } from "../services/SyncCoordinator";
+import { RouteTrackingCoordinator } from "../services/RouteTrackingCoordinator";
 
 export default function RootLayout() {
   const [fontsLoaded, fontError] = useFonts({
@@ -24,6 +26,8 @@ export default function RootLayout() {
 
   return (
     <SafeAreaProvider>
+      <SyncCoordinator />
+      <RouteTrackingCoordinator />
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="index" />
         <Stack.Screen name="explore" />

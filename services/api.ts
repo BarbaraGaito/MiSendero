@@ -4,6 +4,8 @@ import Constants from "expo-constants";
 const API_PORT = "3001";
 
 const getApiUrl = () => {
+  const configuredUrl = process.env.EXPO_PUBLIC_API_URL;
+  if (configuredUrl) return configuredUrl.replace(/\/$/, "");
   const expoHost = Constants.expoConfig?.hostUri?.split(":")[0];
   const configuredHost =
     process.env.EXPO_PUBLIC_API_HOST ||
@@ -16,6 +18,24 @@ const getApiUrl = () => {
 };
 
 const API_URL = getApiUrl();
+
+export interface TripPlanRecord {
+  id: number;
+  user_id: number;
+  client_plan_id: string;
+  trail_id: number;
+  expected_return_at: string;
+  grace_minutes: number;
+  contact_name: string;
+  contact_phone: string;
+  status: "active" | "overdue" | "checked_in" | "cancelled";
+  notification_status?: "pending" | "processing" | "accepted" | "cancelled" | null;
+}
+export const getTripPlans = (token: string) => request<TripPlanRecord[]>("/trip-plans", { token });
+export const createTripPlan = (plan: Pick<TripPlanRecord, "client_plan_id" | "trail_id" | "expected_return_at" | "grace_minutes" | "contact_name" | "contact_phone">, token: string) =>
+  request<TripPlanRecord>("/trip-plans", { method: "POST", body: plan, token });
+export const closeTripPlan = (id: number, status: "checked_in" | "cancelled", token: string) =>
+  request<TripPlanRecord>(`/trip-plans/${id}/close`, { method: "POST", body: { status }, token });
 
 type RequestOptions = {
   method?: "GET" | "POST";
@@ -35,15 +55,20 @@ async function request<T>(path: string, options: RequestOptions = {}): Promise<T
   }
 
   let response: Response;
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 10000);
 
   try {
     response = await fetch(`${API_URL}${path}`, {
       method: options.method || "GET",
       headers,
       body: options.body ? JSON.stringify(options.body) : undefined,
+      signal: controller.signal,
     });
   } catch {
-    throw new Error(`No se pudo conectar con el backend en ${API_URL}.`);
+    throw new Error("No pudimos conectar. Revisá la conexión e intentá nuevamente.");
+  } finally {
+    clearTimeout(timeout);
   }
 
   if (!response.ok) {
@@ -177,8 +202,9 @@ export interface EmergencyAlertRecord {
   id: number;
   user_id: number;
   trail_id: number | null;
-  latitude: number;
-  longitude: number;
+  latitude: number | null;
+  longitude: number | null;
+  client_event_id: string | null;
   status: string;
   device_battery_percent: number | null;
   contact_name: string | null;
@@ -190,9 +216,10 @@ export interface EmergencyAlertRecord {
 
 export const createEmergencyAlert = async (
   alert: {
+    client_event_id: string;
     trail_id?: number | null;
-    latitude: number;
-    longitude: number;
+    latitude: number | null;
+    longitude: number | null;
     device_battery_percent?: number | null;
     contact_name?: string | null;
     contact_phone?: string | null;

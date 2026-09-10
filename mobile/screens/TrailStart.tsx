@@ -1,9 +1,12 @@
+import * as Battery from "expo-battery";
+import { getVerifiedOfflineMapByTrailId } from "../../services/offlineMaps";
+import { ensureRouteSession, getActiveRouteSession } from "../../services/routeSession";
 import { Ionicons } from "@expo/vector-icons";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { Alert, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Alert, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { getTrailById } from "../../services/api";
+import { getTrailById } from "../../services/trailRepository";
 import { hasEmergencyContact } from "../../services/emergencyContact";
 import {
   Coordinate,
@@ -22,13 +25,6 @@ import {
   colors,
 } from "../components/MiSenderoUI";
 import { useDeviceLocation } from "../hooks/useDeviceLocation";
-
-const checklist = [
-  "Agua suficiente",
-  "Mapa descargado",
-  "Bateria mayor al 60%",
-  "Aviso de salida enviado",
-];
 
 const getSimulatedStartLocation = (trail: Trail | null) => {
   if (!trail) return null;
@@ -51,7 +47,7 @@ const getSimulatedStartLocation = (trail: Trail | null) => {
 const showMissingContactAlert = (trailId: number) => {
   Alert.alert(
     "Contacto de emergencia requerido",
-    "Antes de iniciar una ruta tenes que guardar un contacto de emergencia. Ese dato habilita el uso de SOS durante el recorrido.",
+    "Antes de iniciar una ruta tenes que guardar un contacto de emergencia. Así tendrás a quién llamar o enviar un SMS durante el recorrido. Guardarlo no envía ningún aviso.",
     [
       { text: "Cancelar", style: "cancel" },
       {
@@ -99,7 +95,7 @@ const getContactStatusText = (
 ) => {
   if (isContactLoading) return "Verificando contacto guardado...";
   if (hasSafetyContact) {
-    return "Contacto cargado. SOS queda habilitado durante el recorrido.";
+    return "Contacto guardado. Podés usarlo para preparar un SMS o una llamada.";
   }
   return "Completa un contacto de emergencia para poder iniciar y usar SOS.";
 };
@@ -144,6 +140,16 @@ export default function Screen05TrailStart() {
   const [error, setError] = useState<string | null>(null);
   const [hasSafetyContact, setHasSafetyContact] = useState(false);
   const [isContactLoading, setIsContactLoading] = useState(true);
+  const [waterReady, setWaterReady] = useState(false);
+  const [planAgreed, setPlanAgreed] = useState(false);
+  const [mapReady, setMapReady] = useState(false);
+  const [battery, setBattery] = useState<number | null>(null);
+  const checklist = [
+    { text: "Tengo agua y equipo suficiente", ready: waterReady, toggle: () => setWaterReady(!waterReady) },
+    { text: mapReady ? "Mapa offline verificado" : "Mapa offline pendiente de descarga completa", ready: mapReady },
+    { text: battery === null ? "Batería: no disponible" : `Batería: ${battery}%`, ready: battery !== null && battery >= 60 },
+    { text: "Acordé ruta y hora de regreso con mi contacto", ready: planAgreed, toggle: () => setPlanAgreed(!planAgreed) },
+  ];
 
   useEffect(() => {
     getTrailById(trailId)
@@ -160,6 +166,12 @@ export default function Screen05TrailStart() {
     useCallback(() => {
       let isActive = true;
 
+      void Promise.all([
+        getVerifiedOfflineMapByTrailId(trailId).catch(() => null),
+        Battery.getBatteryLevelAsync().catch(() => -1),
+      ]).then(([map, level]) => {
+        if (isActive) { setMapReady(!!map); setBattery(level >= 0 ? Math.round(level * 100) : null); }
+      });
       setIsContactLoading(true);
       hasEmergencyContact()
         .then((exists) => {
@@ -172,7 +184,7 @@ export default function Screen05TrailStart() {
       return () => {
         isActive = false;
       };
-    }, [])
+    }, [trailId])
   );
 
   const simulatedStartLocation = useMemo(
@@ -208,15 +220,19 @@ export default function Screen05TrailStart() {
     isFarFromStart,
   });
 
-  const beginRoute = () => {
-    router.push({
-      pathname: "/route-map",
-      params: {
-        active: "1",
-        id: String(trailId),
-        startedAt: String(Date.now()),
-      },
-    });
+  const beginRoute = async () => {
+    try {
+      const existing = await getActiveRouteSession();
+      if (existing) {
+        router.push({ pathname: existing.state === "paused" ? "/descanso" : "/route-map", params: {
+          id: String(existing.trail_id), active: "1", startedAt: String(existing.started_at),
+        } });
+        return;
+      }
+      const start = Date.now();
+      await ensureRouteSession(trailId, start, isTestingLocation);
+      router.push({ pathname: "/route-map", params: { active: "1", id: String(trailId), startedAt: String(start) } });
+    } catch (error) { Alert.alert("No se pudo iniciar", error instanceof Error ? error.message : "Intentá nuevamente."); }
   };
 
   const handleStart = () => {
@@ -247,9 +263,9 @@ export default function Screen05TrailStart() {
         ]}
       >
         <View style={styles.statusCircle}>
-          <Ionicons name="checkmark" size={48} color={colors.green} />
+          <Ionicons name="clipboard-outline" size={48} color={colors.green} />
         </View>
-        <Text style={styles.title}>Todo listo para comenzar</Text>
+        <Text style={styles.title}>Revisá antes de comenzar</Text>
         <Text style={styles.subtitle}>
           Confirma los ultimos puntos de seguridad y empieza el recorrido.
         </Text>
@@ -257,11 +273,14 @@ export default function Screen05TrailStart() {
         <InfoCard style={styles.card}>
           <Text style={styles.cardTitle}>Checklist rapido</Text>
           {checklist.map((item) => (
-            <View key={item} style={styles.row}>
-              <Ionicons name="checkmark-circle" size={22} color={colors.green} />
-              <Text style={styles.rowText}>{item}</Text>
-            </View>
+            <Pressable key={item.text} style={styles.row} onPress={item.toggle} disabled={!item.toggle}
+              accessibilityRole={item.toggle ? "checkbox" : "text"} accessibilityState={{ checked: item.ready }}>
+              <Ionicons name={item.ready ? "checkmark-circle" : "ellipse-outline"} size={22} color={item.ready ? colors.green : colors.muted} />
+              <Text style={styles.rowText}>{item.text}</Text>
+            </Pressable>
           ))}
+          <Text style={styles.warningBody}>Las casillas de equipo y acuerdo las confirmás vos. Guardar un contacto o abrir Mensajes no confirma que haya recibido tu aviso.</Text>
+          {!mapReady && <PrimaryButton label="Revisar descarga offline" tone="secondary" onPress={() => router.push({ pathname: "/trail-detail", params: { id: String(trailId) } })} />}
         </InfoCard>
 
         <InfoCard style={styles.warning}>
@@ -269,10 +288,12 @@ export default function Screen05TrailStart() {
           <View style={styles.warningText}>
             <Text style={styles.warningTitle}>Recordatorio</Text>
             <Text style={styles.warningBody}>
-              Si cambia el clima o baja la luz, vuelve al punto de inicio.
+              El seguimiento GPS de esta versión funciona con la app abierta en primer plano. Bloquear el teléfono o cerrarla puede interrumpir el registro; no completa esos tramos por estimación.
             </Text>
           </View>
         </InfoCard>
+
+        <PrimaryButton label="Acordar y registrar mi regreso" tone="secondary" onPress={() => router.push({ pathname: "/plan-salida", params: { id: String(trailId) } })} />
 
         <InfoCard style={hasSafetyContact ? styles.contactReady : styles.contactRequired}>
           <Ionicons

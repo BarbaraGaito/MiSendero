@@ -1,13 +1,13 @@
+import { useIsFocused } from "@react-navigation/native";
+import { ensureRouteSession, getRouteSession, activeRouteSeconds, pauseRouteSession, resumeRouteSession } from "../../services/routeSession";
 import { Ionicons } from "@expo/vector-icons";
 import * as Network from "expo-network";
 import { router, useLocalSearchParams } from "expo-router";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Modal, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
-import { getTrailById, getTrailReports, getTrailWeather } from "../../services/api";
-import { initDB } from "../../database/database";
-import { getOrCreatePausedSession } from "../../database/sessionsRepository";
-import { getVerifiedOfflineMapByTrailId } from "../../services/offlineMaps";
+import { getTrailById, getTrailReports, getTrailWeather } from "../../services/trailRepository";
+import { getOfflineMapByTrailId, getVerifiedOfflineMapByTrailId } from "../../services/offlineMaps";
 import {
   createDevelopmentMetricSequence,
   getWearableRuntimeStatus,
@@ -27,7 +27,6 @@ import { DeviceLocation } from "../../services/deviceLocation";
 import {
   Coordinate,
   formatDistance,
-  getDistanceMeters,
   getDistanceToRouteMeters,
   getRouteLengthMeters,
   getRouteProgressMeters,
@@ -35,7 +34,7 @@ import {
   parseRouteCoordinates,
   ROUTE_DEVIATION_WARNING_METERS,
 } from "../../services/geoUtils";
-import { saveRouteTrackingPoint } from "../../services/routeTracking";
+import { getRouteTrackingSummary } from "../../services/routeTracking";
 import {
   InfoCard,
   PrimaryButton,
@@ -44,7 +43,6 @@ import {
   colors,
 } from "../components/MiSenderoUI";
 
-const GPS_NOISE_FLOOR_METERS = 2;
 const routeSimulationOptions: Array<{
   id: WearableSimulationScenario;
   title: string;
@@ -82,7 +80,7 @@ const loadRouteContext = async (trailId: number) => {
     return { trail, reports, hasWifi, hasInternet, isDownloaded: Boolean(offlineMap) };
   }
 
-  const offlineMap = await getVerifiedOfflineMapByTrailId(trailId);
+  const offlineMap = await getOfflineMapByTrailId(trailId);
 
   if (!offlineMap?.trail) {
     throw new Error("offline-map-not-found");
@@ -93,12 +91,12 @@ const loadRouteContext = async (trailId: number) => {
     reports: offlineMap.reports,
     hasWifi: false,
     hasInternet: false,
-    isDownloaded: true,
+    isDownloaded: offlineMap.status === "disponible",
   };
 };
 
 const loadFallbackRouteContext = async (trailId: number) => {
-  const offlineMap = await getVerifiedOfflineMapByTrailId(trailId).catch(() => null);
+  const offlineMap = await getOfflineMapByTrailId(trailId).catch(() => null);
 
   return offlineMap?.trail
     ? {
@@ -106,7 +104,7 @@ const loadFallbackRouteContext = async (trailId: number) => {
         reports: offlineMap.reports,
         hasWifi: false,
         hasInternet: false,
-        isDownloaded: true,
+        isDownloaded: offlineMap.status === "disponible",
         error: null,
       }
     : {
@@ -133,6 +131,9 @@ const getSimulatedRouteStart = (
 
 export default function Screen04RouteMap() {
   const insets = useSafeAreaInsets();
+  const isFocused = useIsFocused();
+  const [activeSeconds, setActiveSeconds] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
   const { active, id, startedAt } = useLocalSearchParams<{
     active?: string;
     id?: string;
@@ -162,9 +163,8 @@ export default function Screen04RouteMap() {
   const [showCriticalWearableAlert, setShowCriticalWearableAlert] = useState(false);
   const [trackedDistanceMeters, setTrackedDistanceMeters] = useState(0);
   const [lastGpsRecordedAt, setLastGpsRecordedAt] = useState<number | null>(null);
-  const lastTrackedLocationRef = useRef<DeviceLocation | null>(null);
+  const [simulatedLiveLocation, setSimulatedLiveLocation] = useState<DeviceLocation | null>(null);
   const trackedDistanceMetersRef = useRef(0);
-  const lastPausedSessionSaveRef = useRef(0);
 
   useEffect(() => {
     let isMounted = true;
@@ -222,10 +222,8 @@ export default function Screen04RouteMap() {
   }, [trailId]);
 
   const refreshWearableMetrics = useCallback(async () => {
-    const elapsedMinutes = Math.max(
-      0,
-      Math.floor((Date.now() - startedAtMs) / 60000)
-    );
+    const state = await getRouteSession(trailId, startedAtMs);
+    const elapsedMinutes = state ? Math.floor(activeRouteSeconds(state) / 60) : 0;
     const currentStatus = await getWearableRuntimeStatus(elapsedMinutes).catch(
       () => null
     );
@@ -245,7 +243,7 @@ export default function Screen04RouteMap() {
     );
 
     return nextStatus;
-  }, [startedAtMs]);
+  }, [startedAtMs, trailId]);
 
   useEffect(() => {
     if (!isActiveRoute) {
@@ -286,131 +284,35 @@ export default function Screen04RouteMap() {
     [routePoints, trail]
   );
   const {
-    location,
+    location: deviceLocation,
+    isLoading: locationLoading,
     permissionDenied: locationPermissionDenied,
     isTestingLocation,
   } = useDeviceLocation(isActiveRoute, simulatedStartLocation);
+  const location = isTestingLocation ? simulatedLiveLocation ?? deviceLocation : deviceLocation;
 
   useEffect(() => {
     trackedDistanceMetersRef.current = trackedDistanceMeters;
   }, [trackedDistanceMeters]);
 
   useEffect(() => {
-    if (!isActiveRoute) return;
+    if (!isActiveRoute || !isFocused || locationLoading) return;
+    let mounted = true;
+    const refresh = async () => {
+      const [summary, state] = await Promise.all([getRouteTrackingSummary(trailId, startedAtMs), getRouteSession(trailId, startedAtMs)]);
+      if (!mounted) return;
+      setTrackedDistanceMeters(summary.distanceMeters);
+      trackedDistanceMetersRef.current = summary.distanceMeters;
+      setLastGpsRecordedAt(summary.lastRecordedAt);
+      if (summary.lastPoint?.simulated) setSimulatedLiveLocation({ coordinate: [summary.lastPoint.latitude, summary.lastPoint.longitude], accuracy: 0, timestamp: summary.lastPoint.recordedAt });
+      if (state) { setActiveSeconds(activeRouteSeconds(state)); setIsPaused(state.state === "paused"); }
+      if (state?.state === "completed") router.replace("/mis-actividades");
+    };
+    void ensureRouteSession(trailId, startedAtMs, isTestingLocation).then(refresh).catch((error) => setError(error.message));
+    const timer = setInterval(() => { void refresh().catch(() => undefined); }, 1000);
+    return () => { mounted = false; clearInterval(timer); };
+  }, [isActiveRoute, isFocused, startedAtMs, trailId, isTestingLocation, locationLoading]);
 
-    setTrackedDistanceMeters(0);
-    trackedDistanceMetersRef.current = 0;
-    setLastGpsRecordedAt(null);
-    lastTrackedLocationRef.current = null;
-    lastPausedSessionSaveRef.current = 0;
-  }, [isActiveRoute, startedAtMs, trailId]);
-
-  useEffect(() => {
-    if (!isActiveRoute || !trailId || !startedAtMs) return;
-
-    const now = Date.now();
-    const shouldSaveImmediately = lastPausedSessionSaveRef.current === 0;
-    const shouldRefresh = now - lastPausedSessionSaveRef.current > 15_000;
-
-    if (!shouldSaveImmediately && !shouldRefresh) return;
-
-    lastPausedSessionSaveRef.current = now;
-    initDB()
-      .then(() =>
-        getOrCreatePausedSession({
-          trailId,
-          startedAt: startedAtMs,
-          duration: Math.max(0, Math.floor((now - startedAtMs) / 1000)),
-          distance: trackedDistanceMetersRef.current,
-        })
-      )
-      .catch(() => null);
-  }, [isActiveRoute, startedAtMs, trailId, trackedDistanceMeters]);
-
-  useEffect(() => {
-    if (!isActiveRoute || !location) return;
-
-    const previous = lastTrackedLocationRef.current;
-    let deltaMeters = 0;
-
-    if (previous && !isTestingLocation) {
-      deltaMeters = getDistanceMeters(previous.coordinate, location.coordinate);
-
-      if (deltaMeters < GPS_NOISE_FLOOR_METERS) {
-        lastTrackedLocationRef.current = location;
-        return;
-      }
-    }
-
-    const elapsedMs =
-      previous && location.timestamp > previous.timestamp
-        ? location.timestamp - previous.timestamp
-        : 0;
-    const speedFromGps =
-      !isTestingLocation && elapsedMs > 0
-        ? Number(((deltaMeters / (elapsedMs / 1000)) * 3.6).toFixed(2))
-        : null;
-
-    lastTrackedLocationRef.current = location;
-    if (deltaMeters > 0) {
-      trackedDistanceMetersRef.current += deltaMeters;
-      setTrackedDistanceMeters(trackedDistanceMetersRef.current);
-    }
-    setLastGpsRecordedAt(location.timestamp);
-
-    saveRouteTrackingPoint({
-      trailId,
-      startedAt: startedAtMs,
-      latitude: location.coordinate[0],
-      longitude: location.coordinate[1],
-      accuracyMeters: location.accuracy,
-      speedKmh: speedFromGps,
-      distanceDeltaMeters: deltaMeters,
-      recordedAt: location.timestamp,
-      simulated: isTestingLocation,
-    }).catch(() => null);
-  }, [isActiveRoute, isTestingLocation, location, startedAtMs, trailId]);
-
-  useEffect(() => {
-    if (!isActiveRoute || !isTestingLocation || routePoints.length === 0) return;
-
-    let pointIndex = 0;
-    let previousPoint = routePoints[0];
-
-    const interval = setInterval(() => {
-      pointIndex = Math.min(pointIndex + 1, routePoints.length - 1);
-      const nextPoint = routePoints[pointIndex];
-      const deltaMeters =
-        pointIndex === 0 ? 0 : getDistanceMeters(previousPoint, nextPoint);
-      previousPoint = nextPoint;
-
-      if (deltaMeters > 0) {
-        trackedDistanceMetersRef.current += deltaMeters;
-        setTrackedDistanceMeters(trackedDistanceMetersRef.current);
-      }
-
-      const timestamp = Date.now();
-      setLastGpsRecordedAt(timestamp);
-
-      saveRouteTrackingPoint({
-        trailId,
-        startedAt: startedAtMs,
-        latitude: nextPoint[0],
-        longitude: nextPoint[1],
-        accuracyMeters: 0,
-        speedKmh: deltaMeters > 0 ? Number(((deltaMeters / 3) * 3.6).toFixed(2)) : 0,
-        distanceDeltaMeters: deltaMeters,
-        recordedAt: timestamp,
-        simulated: true,
-      }).catch(() => null);
-
-      if (pointIndex >= routePoints.length - 1) {
-        clearInterval(interval);
-      }
-    }, 3000);
-
-    return () => clearInterval(interval);
-  }, [isActiveRoute, isTestingLocation, routePoints, startedAtMs, trailId]);
   const routeDeviationMeters = useMemo(() => {
     if (!isActiveRoute || !location || routePoints.length === 0) return null;
     return getDistanceToRouteMeters(location.coordinate, routePoints);
@@ -423,8 +325,7 @@ export default function Screen04RouteMap() {
     if (!isActiveRoute || !location || routePoints.length === 0) return null;
     return getRouteProgressMeters(location.coordinate, routePoints);
   }, [isActiveRoute, location, routePoints]);
-  const completedDistanceMeters =
-    trackedDistanceMeters > 0 ? trackedDistanceMeters : traveledMeters;
+  const completedDistanceMeters = trackedDistanceMeters;
   const isOffRoute =
     !isTestingLocation &&
     routeDeviationMeters !== null &&
@@ -490,7 +391,7 @@ export default function Screen04RouteMap() {
             <Ionicons name="chevron-back" size={22} color={colors.ink} />
           </Pressable>
           <View style={styles.activeTitleBox}>
-            <Text style={styles.activeEyebrow}>Ruta en curso</Text>
+            <Text style={styles.activeEyebrow}>{isPaused ? "Ruta en pausa" : `En curso · ${Math.floor(activeSeconds / 60)} min activos`}</Text>
             <Text numberOfLines={1} style={styles.activeTitle}>
               {trail?.name || "Mapa del recorrido"}
             </Text>
@@ -680,18 +581,18 @@ export default function Screen04RouteMap() {
                   />
                 </View>
                 <View style={styles.wearableText}>
-                  <Text style={styles.wearableEyebrow}>Analisis IA en vivo</Text>
+                  <Text style={styles.wearableEyebrow}>Estimación IA local</Text>
                   <Text style={styles.wearableTitle}>
                     {wearableRuntime.latestSample.heartRateBpm} bpm - {wearableRuntime.prediction.title}
                   </Text>
                 </View>
               </View>
               <View style={styles.wearableMetricRow}>
-                <WearableChip label="Riesgo" value={wearableRuntime.prediction.riskLabel} />
-                <WearableChip label="Fatiga" value={wearableRuntime.prediction.fatigue} />
+                <WearableChip label="Riesgo" value={wearableRuntime.prediction.riskLabel === "sin_datos" ? "Sin datos" : wearableRuntime.prediction.riskLabel} />
+                <WearableChip label="Fatiga" value={wearableRuntime.prediction.fatigue === "sin_datos" ? "Sin datos" : wearableRuntime.prediction.fatigue} />
                 <WearableChip
-                  label="Conf."
-                  value={`${Math.round(wearableRuntime.prediction.riskConfidence * 100)}%`}
+                  label="Modelo"
+                  value="Experimental"
                 />
               </View>
               <Text numberOfLines={2} style={styles.wearableBody}>
@@ -717,7 +618,7 @@ export default function Screen04RouteMap() {
                   traveledMeters:
                     completedDistanceMeters !== null ? String(Math.round(completedDistanceMeters)) : "",
                   routeProgressMeters:
-                    traveledMeters !== null ? String(Math.round(traveledMeters)) : "",
+                    String(Math.round(trackedDistanceMeters)),
                   totalMeters:
                     totalRouteMeters > 0 ? String(Math.round(totalRouteMeters)) : "",
                   endedLatitude: location ? String(location.coordinate[0]) : "",
@@ -778,29 +679,31 @@ export default function Screen04RouteMap() {
 
           <View style={styles.quickActionsRow}>
             <Pressable
-              onPress={() =>
+              onPress={() => {
+                if (isPaused) { void resumeRouteSession(trailId, startedAtMs); return; }
+                void pauseRouteSession(trailId, startedAtMs).then(() =>
                 router.push({
                   pathname: "/descanso",
                   params: {
                     id: String(trailId),
                     startedAt: String(startedAtMs),
-                    traveledMeters:
-                      traveledMeters !== null ? String(Math.round(traveledMeters)) : "",
+                    traveledMeters: String(Math.round(trackedDistanceMeters)),
+                    routeProgressMeters: traveledMeters !== null ? String(Math.round(traveledMeters)) : "",
                     totalMeters:
                       totalRouteMeters > 0 ? String(Math.round(totalRouteMeters)) : "",
                   },
-                })
-              }
+                })).catch(() => setError("No pudimos guardar la pausa."));
+              }}
               style={styles.activeAction}
             >
               <Ionicons name="pause-outline" size={20} color={colors.greenDark} />
-              <Text style={styles.activeActionText}>Pausa</Text>
+              <Text style={styles.activeActionText}>{isPaused ? "Reanudar" : "Pausa"}</Text>
             </Pressable>
             <Pressable
               onPress={() =>
                 router.push({
                   pathname: "/reportar-terreno",
-                  params: { id: String(trailId) },
+                  params: { id: String(trailId), startedAt: String(startedAtMs) },
                 })
               }
               style={styles.activeAction}
@@ -1172,6 +1075,7 @@ function getWearableRealtimeStatus(runtime: WearableRuntimeStatus | null) {
   if (runtime.status === "not_linked") {
     return "No hay reloj o sensor vinculado para esta cuenta.";
   }
+  if (runtime.status === "stale_data") return "Lectura anterior: no se usa para estimar tu estado actual.";
   if (runtime.status === "waiting_for_native_data") {
     return "Conexion habilitada. Esperando una lectura reciente.";
   }
@@ -1186,6 +1090,7 @@ function getWearableActionHint(runtime: WearableRuntimeStatus | null) {
   }
   if (runtime.status === "requires_consent") return "Requiere permiso";
   if (runtime.status === "not_linked") return "No vinculado";
+  if (runtime.status === "stale_data") return "Datos desactualizados";
   if (runtime.status === "waiting_for_native_data") return "Esperando metricas";
   return runtime.displayName;
 }

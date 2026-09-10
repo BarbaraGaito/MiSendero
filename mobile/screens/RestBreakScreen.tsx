@@ -1,7 +1,9 @@
+import { activeRouteSeconds, getRouteSession, pauseRouteSession, resumeRouteSession } from "../../services/routeSession";
+import { getRouteTrackingSummary } from "../../services/routeTracking";
 import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useMemo, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { getTrailById } from "../../services/api";
+import { getTrailById } from "../../services/trailRepository";
 import { getWearableRuntimeStatus } from "../../services/wearableMetrics";
 import { Trail, WearableRuntimeStatus } from "../../types";
 import { AppScreen, Card, PrimaryButton, ScreenTitle, colors } from "../components/MiSenderoUI";
@@ -37,11 +39,12 @@ const getProgressState = (
 };
 
 export default function RestBreakScreen() {
-  const { id, startedAt, totalMeters, traveledMeters } = useLocalSearchParams<{
+  const { id, startedAt, totalMeters, traveledMeters, routeProgressMeters } = useLocalSearchParams<{
     id?: string;
     startedAt?: string;
     totalMeters?: string;
     traveledMeters?: string;
+    routeProgressMeters?: string;
   }>();
   const trailId = Number(id) || 1;
   const fallbackStartedAt = useMemo(() => Date.now(), []);
@@ -51,7 +54,15 @@ export default function RestBreakScreen() {
   const [error, setError] = useState<string | null>(null);
   const [wearableRuntime, setWearableRuntime] =
     useState<WearableRuntimeStatus | null>(null);
-  const activeMinutes = Math.max(0, Math.floor((pauseStartedAt - startedAtMs) / 60000));
+  const [activeMinutes, setActiveMinutes] = useState(0);
+  const [savedDistance, setSavedDistance] = useState<string | undefined>(traveledMeters);
+  useEffect(() => {
+    void pauseRouteSession(trailId, startedAtMs).then(async () => {
+      const [state, summary] = await Promise.all([getRouteSession(trailId, startedAtMs), getRouteTrackingSummary(trailId, startedAtMs)]);
+      if (state) setActiveMinutes(Math.floor(activeRouteSeconds(state) / 60));
+      setSavedDistance(String(summary.distanceMeters));
+    }).catch(() => setError("No pudimos guardar la pausa. Volvé a intentarlo."));
+  }, [trailId, startedAtMs]);
 
   useEffect(() => {
     getTrailById(trailId)
@@ -71,10 +82,10 @@ export default function RestBreakScreen() {
   }, [activeMinutes]);
 
   const { realTotalMeters, realTraveledMeters, remainingMeters, progressPercent } =
-    getProgressState(trail, totalMeters, traveledMeters);
+    getProgressState(trail, totalMeters, routeProgressMeters);
   const averageSpeedKmh =
-    realTraveledMeters !== null && activeMinutes > 0
-      ? (realTraveledMeters / 1000) / (activeMinutes / 60)
+    savedDistance !== undefined && activeMinutes > 0
+      ? (Number(savedDistance) / 1000) / (activeMinutes / 60)
       : null;
 
   return (
@@ -102,7 +113,7 @@ export default function RestBreakScreen() {
         <InfoRow label="Tiempo activo" value={formatDuration(activeMinutes)} />
         <InfoRow
           label="Distancia recorrida"
-          value={realTraveledMeters !== null ? formatMeters(realTraveledMeters) : "Sin GPS"}
+          value={savedDistance !== undefined ? formatMeters(Number(savedDistance)) : "Sin GPS"}
         />
         <InfoRow
           label="Distancia restante"
@@ -160,15 +171,15 @@ export default function RestBreakScreen() {
       <View style={styles.actions}>
         <PrimaryButton
           label="Reanudar recorrido"
-          onPress={() =>
-            router.push({
+          onPress={() => void resumeRouteSession(trailId, startedAtMs).then(() =>
+            router.dismissTo({
               pathname: "/route-map",
               params: {
                 active: "1",
                 id: String(trailId),
                 startedAt: String(startedAtMs),
               },
-            })
+            })).catch(() => setError("No se pudo reanudar. Intentá nuevamente."))
           }
         />
         <PrimaryButton
@@ -180,8 +191,7 @@ export default function RestBreakScreen() {
               params: {
                 id: String(trailId),
                 startedAt: String(startedAtMs),
-                traveledMeters:
-                  realTraveledMeters !== null ? String(Math.round(realTraveledMeters)) : "",
+                traveledMeters: savedDistance ?? "",
                 routeProgressMeters:
                   realTraveledMeters !== null ? String(Math.round(realTraveledMeters)) : "",
                 totalMeters:

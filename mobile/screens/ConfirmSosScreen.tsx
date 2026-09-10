@@ -1,237 +1,129 @@
 import { router, useLocalSearchParams } from "expo-router";
-import { useEffect, useState } from "react";
-import { Alert, StyleSheet, Text, View } from "react-native";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { Alert, Linking, StyleSheet, Text, View } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
+import * as Crypto from "expo-crypto";
+import * as SMS from "expo-sms";
 import { getEmergencyContact } from "../../services/emergencyContact";
-import {
-  buildEmergencyMessage,
-  sendEmergencyAlert,
-} from "../../services/emergencyAlerts";
-import { getLastRouteTrackingPoint } from "../../services/routeTracking";
-import { getCurrentDeviceLocation } from "../../services/deviceLocation";
+import { buildEmergencyMessage, getEmergencyLocation, sendEmergencyAlert } from "../../services/emergencyAlerts";
+import { getEmergencyOperation, PendingOperation, runSync } from "../../services/syncQueue";
 import { EmergencyContact } from "../../types";
 import { AppScreen, Card, PrimaryButton, ScreenTitle, colors } from "../components/MiSenderoUI";
 
 export default function ConfirmSosScreen() {
-  const { id, startedAt } = useLocalSearchParams<{ id?: string; startedAt?: string }>();
+  const { id, startedAt, operationId: savedOperationId } = useLocalSearchParams<{ id?: string; startedAt?: string; operationId?: string }>();
   const trailId = Number(id) || null;
   const startedAtMs = Number(startedAt) || null;
+  const eventId = useRef(Crypto.randomUUID());
+  const saving = useRef(false);
   const [contact, setContact] = useState<EmergencyContact | null>(null);
-  const [messagePreview, setMessagePreview] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isSending, setIsSending] = useState(false);
+  const [message, setMessage] = useState(buildEmergencyMessage({ latitude: null, longitude: null, trailId, timestamp: Date.now() }));
+  const [operationId, setOperationId] = useState<number | null>(Number(savedOperationId) || null);
+  const [operation, setOperation] = useState<PendingOperation | null>(null);
+  const [busy, setBusy] = useState(false);
+  const [smsStatus, setSmsStatus] = useState("");
+
+  useFocusEffect(useCallback(() => {
+    let active = true;
+    void getEmergencyContact().then((value) => { if (active) setContact(value); }).catch(() => undefined);
+    return () => { active = false; };
+  }, []));
 
   useEffect(() => {
-    let isMounted = true;
+    if (operationId) return;
+    let active = true;
+    void getEmergencyLocation(trailId, startedAtMs).then((location) => {
+      if (active) setMessage(buildEmergencyMessage({ ...location, trailId }));
+    });
+    return () => { active = false; };
+  }, [trailId, startedAtMs, operationId]);
 
-    const loadContext = async () => {
-      const [savedContact, currentLocation] = await Promise.all([
-        getEmergencyContact(),
-        getCurrentDeviceLocation().catch(() => null),
-      ]);
-      const lastTrackedPoint =
-        currentLocation || !trailId || !startedAtMs
-          ? null
-          : await getLastRouteTrackingPoint(trailId, startedAtMs).catch(() => null);
-      const location = currentLocation
-        ? {
-            latitude: currentLocation.coordinate[0],
-            longitude: currentLocation.coordinate[1],
-            timestamp: currentLocation.timestamp,
-          }
-        : lastTrackedPoint
-          ? {
-              latitude: lastTrackedPoint.latitude,
-              longitude: lastTrackedPoint.longitude,
-              timestamp: lastTrackedPoint.recordedAt,
-            }
-          : null;
-      if (!isMounted) return;
-
-      setContact(savedContact);
-      setMessagePreview(
-        location
-          ? buildEmergencyMessage({
-              contact: savedContact,
-              latitude: location.latitude,
-              longitude: location.longitude,
-              trailId,
-              timestamp: location.timestamp,
-            })
-          : null
-      );
-      setIsLoading(false);
+  useEffect(() => {
+    if (!operationId) return;
+    let active = true;
+    const refresh = async () => {
+      const value = await getEmergencyOperation(operationId);
+      if (!active) return;
+      setOperation(value);
+      if (typeof value?.payload.message_body === "string") setMessage(value.payload.message_body);
     };
-
-    loadContext();
-
-    return () => {
-      isMounted = false;
-    };
-  }, [startedAtMs, trailId]);
+    void refresh().catch(() => undefined);
+    const timer = setInterval(() => { void refresh().catch(() => undefined); }, 2000);
+    return () => { active = false; clearInterval(timer); };
+  }, [operationId]);
 
   const handleSos = async () => {
-    if (!contact) {
-      router.push("/contacto-seguridad");
-      return;
-    }
-
-    if (isSending) return;
-    setIsSending(true);
-
+    if (saving.current) return;
+    if (operationId) { void runSync().catch(() => undefined); return; }
+    saving.current = true;
+    setBusy(true);
     try {
-      const outcome = await sendEmergencyAlert({
-        trailId,
-        contact,
-        startedAt: startedAtMs,
-      });
-
-      if (outcome === "sent") {
-        Alert.alert(
-          "Alerta SOS enviada",
-          `Se notifico a ${contact.name} (${contact.phone}) con tu ubicacion actual.`
-        );
-      } else if (outcome === "queued") {
-        Alert.alert(
-          "Alerta SOS guardada",
-          "No hay senal ahora. La alerta se enviara en cuanto la app detecte conexion."
-        );
-      } else if (outcome === "no_location") {
-        Alert.alert(
-          "No pudimos obtener tu ubicacion",
-          "Activa el GPS y volve a intentar. Mientras tanto, comunicate por otro medio si es posible."
-        );
-      } else {
-        Alert.alert("Sesion requerida", "Inicia sesion para poder enviar una alerta SOS.");
-      }
-    } finally {
-      setIsSending(false);
-    }
+      const result = await sendEmergencyAlert({ trailId, contact, startedAt: startedAtMs, eventId: eventId.current });
+      setMessage(result.message);
+      setOperationId(result.operationId);
+      router.setParams({ operationId: String(result.operationId) });
+    } catch {
+      Alert.alert("No pudimos guardar el pedido", "Podés usar el SMS preparado o llamar al contacto. Volvé a intentar guardar el SOS.");
+    } finally { saving.current = false; setBusy(false); }
   };
 
+  const handleSms = async () => {
+    if (!contact) { router.push("/contacto-seguridad"); return; }
+    try {
+      if (!(await SMS.isAvailableAsync())) {
+        Alert.alert("SMS no disponible en este dispositivo", "Usá el mensaje preparado desde un teléfono con servicio celular.");
+        return;
+      }
+      const result = await SMS.sendSMSAsync([contact.phone], message);
+      setSmsStatus(result.result === "cancelled" ? "SMS cancelado." : "Se abrió Mensajes. Verificá allí el estado del SMS; MiSendero no puede confirmar su entrega.");
+    } catch { setSmsStatus("No pudimos abrir Mensajes. Intentá llamar al contacto."); }
+  };
+
+  const registered = operation?.status === "synced";
   return (
     <AppScreen withBottomNav={false}>
-      <ScreenTitle
-        eyebrow="Emergencia"
-        title="Enviar una alerta SOS"
-        subtitle="Usa esta opcion solo si necesitas asistencia inmediata."
-      />
-
-      <View style={styles.sosCircle}>
-        <Text style={styles.sosText}>SOS</Text>
-      </View>
-
-      <Card tone={contact ? "red" : "orange"}>
-        <Text style={styles.cardTitle}>
-          {contact ? "Se compartira esta informacion" : "Falta contacto de emergencia"}
-        </Text>
-        {contact ? (
-          <>
-            <Bullet text="Tu ubicacion actual" />
-            <Bullet text="El sendero en curso" />
-            <Bullet text="Tus datos de contacto" />
-            <Bullet text={`Contacto: ${contact.name} - ${contact.phone}`} />
-            <Bullet text="Ultima ubicacion conocida si el GPS actual falla" />
-          </>
-        ) : (
-          <Text style={styles.cardText}>
-            Para usar SOS primero tenes que guardar un contacto de emergencia con conexion.
-            Offline solo se puede consultar un contacto ya guardado.
-          </Text>
-        )}
+      <ScreenTitle eyebrow="Emergencia" title="Pedir ayuda" subtitle="El registro en MiSendero y el aviso a tu contacto son acciones distintas." />
+      <Card tone="red">
+        <Text style={styles.title}>{registered ? "SOS registrado en el servidor" : operationId ? "SOS guardado en este teléfono" : "Guardá tu pedido de ayuda"}</Text>
+        <Text style={styles.body}>{registered
+          ? "El servidor recibió el registro. Esto no confirma que tu contacto haya sido avisado. Usá SMS o llamada."
+          : operationId
+            ? operation?.userId === null ? "Sin sesión: conservamos el pedido localmente. Usá SMS o llamada; no se subirá con otra cuenta."
+              : "Pendiente de registro en el servidor. La app reintentará con internet mientras esté abierta. El contacto todavía no fue avisado."
+            : "Se guardará aunque falte GPS o internet. La última ubicación incluirá su hora; puede no ser tu posición actual."}</Text>
       </Card>
-
       <Card>
-        <Text style={styles.cardTitle}>Mensaje preparado</Text>
-        <Text style={styles.cardText}>
-          {messagePreview ||
-            "Todavia no hay ubicacion disponible para preparar el mensaje. Intenta nuevamente con GPS activo."}
-        </Text>
+        <Text style={styles.title}>{contact ? `${contact.name} · ${contact.phone}` : "Sin contacto configurado"}</Text>
+        <Text style={styles.body}>Podés guardar o cambiar el contacto en este dispositivo sin internet.</Text>
+        <PrimaryButton label="Editar contacto" href="/contacto-seguridad" tone="secondary" />
       </Card>
-
       <Card>
-        <Text style={styles.cardTitle}>Antes de confirmar</Text>
-        <Text style={styles.cardText}>
-          Si fue un toque accidental, cancela y volve al mapa del recorrido.
-        </Text>
+        <Text style={styles.title}>Mensaje para compartir</Text>
+        <Text selectable style={styles.body}>{message}</Text>
       </Card>
-
       <View style={styles.actions}>
-        <PrimaryButton
-          label={
-            isLoading
-              ? "Verificando contacto"
-              : isSending
-                ? "Enviando alerta..."
-                : contact
-                  ? "Enviar alerta SOS"
-                  : "Completar contacto"
-          }
-          onPress={handleSos}
-          tone="danger"
-        />
-        <PrimaryButton label="Cancelar y volver" href="/alerta-ruta" tone="secondary" />
+        <PrimaryButton label={busy ? "Guardando pedido…" : operationId ? "Reintentar registro" : "Guardar pedido SOS"} onPress={handleSos} tone="danger" />
+        <PrimaryButton label="Preparar SMS al contacto" onPress={handleSms} />
+        {contact && <PrimaryButton label="Llamar al contacto" tone="secondary" onPress={() => {
+          void Linking.openURL(`tel:${contact.phone.replace(/[^+\d]/g, "")}`).catch(() => Alert.alert("No se pudo abrir Teléfono"));
+        }} />}
+        {!!smsStatus && <Text accessibilityLiveRegion="polite" style={styles.body}>{smsStatus}</Text>}
       </View>
+      <Card tone="orange">
+        <Text style={styles.title}>Qué ocurre sin señal</Text>
+        <Text style={styles.body}>Sin internet pero con servicio celular, el SMS o la llamada pueden funcionar. Sin cobertura celular ni Wi-Fi, el teléfono no puede avisar por estos medios. Si tu contacto está sin señal, puede recibir el aviso más tarde: necesitás una respuesta suya para confirmar que lo vio.</Text>
+        <Text style={styles.body}>Antes de salir, acordá ruta, hora de regreso y qué hacer si no confirmás la llegada. No dependas de un envío desde una zona sin cobertura.</Text>
+      </Card>
+      <PrimaryButton label="Volver al recorrido" tone="secondary" onPress={() => {
+        if (router.canGoBack()) router.back();
+        else router.replace({ pathname: "/route-map", params: { id: id ?? "1", ...(startedAt ? { active: "1", startedAt } : {}) } });
+      }} />
     </AppScreen>
   );
 }
 
-function Bullet({ text }: { text: string }) {
-  return (
-    <View style={styles.bulletRow}>
-      <View style={styles.bulletDot} />
-      <Text style={styles.bulletText}>{text}</Text>
-    </View>
-  );
-}
-
 const styles = StyleSheet.create({
-  sosCircle: {
-    alignItems: "center",
-    alignSelf: "center",
-    backgroundColor: colors.redSoft,
-    borderColor: "#F5C9C4",
-    borderRadius: 999,
-    borderWidth: 1,
-    height: 112,
-    justifyContent: "center",
-    marginBottom: 22,
-    width: 112,
-  },
-  sosText: {
-    color: colors.red,
-    fontSize: 24,
-    fontWeight: "900",
-  },
-  cardTitle: {
-    color: colors.ink,
-    fontSize: 17,
-    fontWeight: "800",
-  },
-  cardText: {
-    color: colors.muted,
-    fontSize: 14,
-    lineHeight: 20,
-    marginTop: 6,
-  },
-  bulletRow: {
-    alignItems: "center",
-    flexDirection: "row",
-    gap: 10,
-  },
-  bulletDot: {
-    backgroundColor: colors.red,
-    borderRadius: 999,
-    height: 7,
-    width: 7,
-  },
-  bulletText: {
-    color: colors.ink,
-    flex: 1,
-    fontSize: 14,
-    fontWeight: "600",
-  },
-  actions: {
-    gap: 10,
-    marginTop: "auto",
-  },
+  title: { color: colors.ink, fontSize: 17, fontWeight: "800" },
+  body: { color: colors.muted, fontSize: 14, lineHeight: 21, marginTop: 8 },
+  actions: { gap: 10, marginVertical: 12 },
 });

@@ -2,7 +2,8 @@ import { Ionicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useMemo, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
-import { createTrailReport, getTrailById } from "../../services/api";
+import { createTrailReport } from "../../services/api";
+import { getTrailById } from "../../services/trailRepository";
 import { getAuthSession } from "../../services/authSession";
 import {
   Coordinate,
@@ -63,7 +64,7 @@ type SelectedReportLocation = {
 };
 
 export default function ReportTerrainScreen() {
-  const { id } = useLocalSearchParams<{ id?: string }>();
+  const { id, startedAt } = useLocalSearchParams<{ id?: string; startedAt?: string }>();
   const trailId = Number(id) || 1;
   const [selectedIssues, setSelectedIssues] = useState<string[]>(["Barro"]);
   const [severity, setSeverity] = useState("Media");
@@ -177,7 +178,7 @@ export default function ReportTerrainScreen() {
       if (session && online) {
         try {
           await createTrailReport(trailId, report, session.token);
-          router.push("/reporte-guardado");
+          router.replace({ pathname: "/reporte-guardado", params: { id: String(trailId), startedAt: startedAt ?? "" } });
           return;
         } catch {
           // Falla de red/servidor a pesar de reportar "online": se encola igual,
@@ -186,7 +187,7 @@ export default function ReportTerrainScreen() {
       }
 
       await enqueue("trail_report", { trailId, ...report });
-      router.push({ pathname: "/reporte-guardado", params: { pending: "1" } });
+      router.replace({ pathname: "/reporte-guardado", params: { pending: "1", id: String(trailId), startedAt: startedAt ?? "" } });
     } catch (error) {
       setSubmitError(
         error instanceof Error ? error.message : "No pudimos guardar el reporte."

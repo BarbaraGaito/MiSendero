@@ -1,10 +1,10 @@
 import * as Network from "expo-network";
-import { db } from "../database/database";
+import { db, initDB } from "../database/database";
 import { getAuthSession } from "./authSession";
-import { createActivity, createEmergencyAlert, createTrailReport, getTrailReports } from "./api";
+import { createActivity, createEmergencyAlert, createTrailReport, getTrailReports, closeTripPlan } from "./api";
 import { refreshOfflineTrailReports, getOfflineMaps } from "./offlineMaps";
 
-export type PendingEntityType = "trail_report" | "activity" | "emergency_alert";
+export type PendingEntityType = "trail_report" | "activity" | "emergency_alert" | "trip_check_in";
 export type PendingStatus = "pending" | "syncing" | "synced" | "failed" | "abandoned";
 
 // After this many failed attempts, an operation stops being retried automatically
@@ -13,6 +13,7 @@ export const MAX_RETRY_ATTEMPTS = 5;
 
 export interface PendingOperation {
   id: number;
+  userId: number | null;
   entityType: PendingEntityType;
   payload: Record<string, unknown>;
   dedupeKey: string | null;
@@ -37,6 +38,7 @@ export interface SyncSummary {
 
 interface PendingOperationRow {
   id: number;
+  user_id: number | null;
   entity_type: PendingEntityType;
   payload_json: string;
   dedupe_key: string | null;
@@ -50,6 +52,7 @@ interface PendingOperationRow {
 
 const toPendingOperation = (row: PendingOperationRow): PendingOperation => ({
   id: row.id,
+  userId: row.user_id,
   entityType: row.entity_type,
   payload: JSON.parse(row.payload_json),
   dedupeKey: row.dedupe_key,
@@ -65,11 +68,14 @@ export const enqueue = async (
   entityType: PendingEntityType,
   payload: Record<string, unknown>
 ): Promise<number> => {
+  await initDB();
+  const owner = (await getAuthSession())?.user.id ?? null;
+  if (!owner && entityType !== "emergency_alert") throw new Error("Iniciá sesión para guardar esta operación.");
   const now = Date.now();
   const result = await db.runAsync(
-    `INSERT INTO pending_operations (entity_type, payload_json, status, created_at, updated_at)
-     VALUES (?, ?, 'pending', ?, ?)`,
-    [entityType, JSON.stringify(payload), now, now]
+    `INSERT INTO pending_operations (entity_type, payload_json, user_id, status, created_at, updated_at)
+     VALUES (?, ?, ?, 'pending', ?, ?)`,
+    [entityType, JSON.stringify(payload), owner, now, now]
   );
 
   return result.lastInsertRowId;
@@ -80,6 +86,10 @@ export const enqueueUnique = async (
   payload: Record<string, unknown>,
   dedupeKey: string
 ): Promise<number> => {
+  await initDB();
+  const owner = (await getAuthSession())?.user.id ?? null;
+  if (!owner && entityType !== "emergency_alert") throw new Error("Iniciá sesión para guardar esta operación.");
+  dedupeKey = `${owner ?? "guest"}:${dedupeKey}`;
   const existing = await db.getFirstAsync<{ id: number }>(
     `SELECT id FROM pending_operations
      WHERE dedupe_key = ?
@@ -93,9 +103,9 @@ export const enqueueUnique = async (
 
   try {
     const result = await db.runAsync(
-      `INSERT INTO pending_operations (entity_type, payload_json, dedupe_key, status, created_at, updated_at)
-       VALUES (?, ?, ?, 'pending', ?, ?)`,
-      [entityType, JSON.stringify(payload), dedupeKey, now, now]
+      `INSERT INTO pending_operations (entity_type, payload_json, dedupe_key, user_id, status, created_at, updated_at)
+       VALUES (?, ?, ?, ?, 'pending', ?, ?)`,
+      [entityType, JSON.stringify(payload), dedupeKey, owner, now, now]
     );
 
     return result.lastInsertRowId;
@@ -114,29 +124,34 @@ export const enqueueUnique = async (
 };
 
 export const getPendingOperations = async (): Promise<PendingOperation[]> => {
+  await initDB();
+  const owner = (await getAuthSession())?.user.id ?? null;
   const rows = await db.getAllAsync<PendingOperationRow>(
     `SELECT * FROM pending_operations
-     WHERE status IN ('pending', 'failed')
-     ORDER BY created_at ASC`
+     WHERE user_id = ? AND status IN ('pending', 'failed')
+     ORDER BY created_at ASC`, [owner]
   );
 
   return rows.map(toPendingOperation);
 };
 
-const getRetryableOperations = async (): Promise<PendingOperation[]> => {
+const getRetryableOperations = async (owner: number): Promise<PendingOperation[]> => {
   const rows = await db.getAllAsync<PendingOperationRow>(
     `SELECT * FROM pending_operations
-     WHERE status = 'pending' OR (status = 'failed' AND retry_count < ?)
-     ORDER BY created_at ASC`,
-    [MAX_RETRY_ATTEMPTS]
+     WHERE user_id = ? AND next_attempt_at <= ? AND
+       (status = 'pending' OR (status = 'failed' AND (retry_count < ? OR entity_type IN ('emergency_alert', 'trip_check_in'))))
+     ORDER BY CASE WHEN entity_type = 'emergency_alert' THEN 0 ELSE 1 END, created_at ASC`,
+    [owner, Date.now(), MAX_RETRY_ATTEMPTS]
   );
 
   return rows.map(toPendingOperation);
 };
 
 export const getSyncSummary = async (): Promise<SyncSummary> => {
+  await initDB();
+  const owner = (await getAuthSession())?.user.id ?? null;
   const rows = await db.getAllAsync<{ status: PendingStatus; count: number }>(
-    `SELECT status, COUNT(*) AS count FROM pending_operations GROUP BY status`
+    `SELECT status, COUNT(*) AS count FROM pending_operations WHERE user_id = ? GROUP BY status`, [owner]
   );
   const summary: SyncSummary = {
     pending: 0,
@@ -153,8 +168,8 @@ export const getSyncSummary = async (): Promise<SyncSummary> => {
 
   const exhausted = await db.getFirstAsync<{ count: number }>(
     `SELECT COUNT(*) AS count FROM pending_operations
-     WHERE status = 'failed' AND retry_count >= ?`,
-    [MAX_RETRY_ATTEMPTS]
+     WHERE user_id = ? AND entity_type NOT IN ('emergency_alert', 'trip_check_in') AND status = 'failed' AND retry_count >= ?`,
+    [owner, MAX_RETRY_ATTEMPTS]
   );
   summary.exhausted = exhausted?.count ?? 0;
 
@@ -162,11 +177,13 @@ export const getSyncSummary = async (): Promise<SyncSummary> => {
 };
 
 export const discardExhaustedOperations = async (): Promise<number> => {
+  await initDB();
+  const owner = (await getAuthSession())?.user.id ?? null;
   const result = await db.runAsync(
     `UPDATE pending_operations
      SET status = 'abandoned', updated_at = ?
-     WHERE status = 'failed' AND retry_count >= ?`,
-    [Date.now(), MAX_RETRY_ATTEMPTS]
+     WHERE user_id = ? AND entity_type NOT IN ('emergency_alert', 'trip_check_in') AND status = 'failed' AND retry_count >= ?`,
+    [Date.now(), owner, MAX_RETRY_ATTEMPTS]
   );
 
   return result.changes;
@@ -193,9 +210,9 @@ const markSynced = (id: number, serverId: number | null) =>
 const markFailed = (id: number, retryCount: number, error: string) =>
   db.runAsync(
     `UPDATE pending_operations
-     SET status = 'failed', retry_count = ?, last_error = ?, updated_at = ?
+     SET status = 'failed', retry_count = ?, last_error = ?, updated_at = ?, next_attempt_at = ?
      WHERE id = ?`,
-    [retryCount, error, Date.now(), id]
+    [retryCount, error, Date.now(), Date.now() + Math.min(300000, 5000 * 2 ** Math.min(retryCount - 1, 6)), id]
   );
 
 const dispatchOperation = async (
@@ -203,6 +220,11 @@ const dispatchOperation = async (
   token: string
 ): Promise<number | null> => {
   switch (operation.entityType) {
+    case "trip_check_in": {
+      const payload = operation.payload as { planId: number; status: "checked_in" | "cancelled" };
+      const result = await closeTripPlan(payload.planId, payload.status, token);
+      return result.id;
+    }
     case "trail_report": {
       const { trailId, ...report } = operation.payload as {
         trailId: number;
@@ -252,7 +274,8 @@ const refreshDownloadedTrailReports = async () => {
   }
 };
 
-export const runSync = async (): Promise<{ processed: number; failed: number }> => {
+const syncOnce = async (): Promise<{ processed: number; failed: number }> => {
+  await initDB();
   if (!(await isOnline())) {
     return { processed: 0, failed: 0 };
   }
@@ -262,11 +285,19 @@ export const runSync = async (): Promise<{ processed: number; failed: number }> 
     return { processed: 0, failed: 0 };
   }
 
-  const retryableOperations = await getRetryableOperations();
+  // A killed process can leave an operation leased. Recover after one minute;
+  // SOS has a stable client_event_id so retrying cannot create a second alert.
+  await db.runAsync(
+    `UPDATE pending_operations SET status = 'failed' WHERE user_id = ? AND status = 'syncing' AND updated_at < ?`,
+    [session.user.id, Date.now() - 60000]
+  );
+  const retryableOperations = await getRetryableOperations(session.user.id);
   let processed = 0;
   let failed = 0;
 
   for (const operation of retryableOperations) {
+    const current = await getAuthSession();
+    if (current?.user.id !== session.user.id || current.token !== session.token) break;
     await markSyncing(operation.id);
 
     try {
@@ -285,4 +316,20 @@ export const runSync = async (): Promise<{ processed: number; failed: number }> 
   }
 
   return { processed, failed };
+};
+
+let syncInFlight: Promise<{ processed: number; failed: number }> | null = null;
+export const runSync = () => {
+  if (!syncInFlight) syncInFlight = syncOnce().finally(() => { syncInFlight = null; });
+  return syncInFlight;
+};
+
+export const getEmergencyOperation = async (id: number) => {
+  await initDB();
+  const owner = (await getAuthSession())?.user.id ?? null;
+  const row = await db.getFirstAsync<PendingOperationRow>(
+    `SELECT * FROM pending_operations WHERE id = ? AND entity_type = 'emergency_alert' AND user_id IS ?`,
+    [id, owner]
+  );
+  return row ? toPendingOperation(row) : null;
 };

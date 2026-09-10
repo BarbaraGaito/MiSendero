@@ -1,3 +1,4 @@
+import { useIsFocused } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import {
   DeviceLocation,
@@ -12,6 +13,7 @@ export const useDeviceLocation = (
   watch = true,
   simulatedCoordinate?: Coordinate | null
 ) => {
+  const isFocused = useIsFocused();
   const [location, setLocation] = useState<DeviceLocation | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [permissionDenied, setPermissionDenied] = useState(false);
@@ -19,6 +21,7 @@ export const useDeviceLocation = (
   const [isTestingLocation, setIsTestingLocation] = useState(false);
 
   useEffect(() => {
+    if (!isFocused) return;
     let isMounted = true;
     let subscription: { remove: () => void } | null = null;
 
@@ -62,6 +65,7 @@ export const useDeviceLocation = (
           subscription = await watchDeviceLocation((nextLocation) => {
             if (isMounted) setLocation(nextLocation);
           });
+          if (!isMounted) subscription?.remove();
         }
       } catch {
         if (!isMounted) return;
@@ -77,7 +81,7 @@ export const useDeviceLocation = (
       isMounted = false;
       subscription?.remove();
     };
-  }, [simulatedCoordinate?.[0], simulatedCoordinate?.[1], watch]);
+  }, [simulatedCoordinate?.[0], simulatedCoordinate?.[1], watch, isFocused]);
 
   return {
     location,

@@ -76,6 +76,7 @@ export default function SafetyContactScreen() {
   }, []);
 
   const goBackAfterSave = () => {
+    if (router.canGoBack()) { router.back(); return; }
     if (openedFromTrailStart) {
       router.push({
         pathname: "/trail-start",
@@ -107,6 +108,7 @@ export default function SafetyContactScreen() {
   };
 
   const goBack = () => {
+    if (router.canGoBack()) { router.back(); return; }
     if (openedFromTrailStart) {
       router.push({
         pathname: "/trail-start",

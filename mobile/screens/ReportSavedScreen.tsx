@@ -1,9 +1,9 @@
-import { useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { StyleSheet, Text, View } from "react-native";
 import { AppScreen, Card, PrimaryButton, ScreenTitle, colors } from "../components/MiSenderoUI";
 
 export default function ReportSavedScreen() {
-  const { pending } = useLocalSearchParams<{ pending?: string }>();
+  const { pending, id, startedAt } = useLocalSearchParams<{ pending?: string; id?: string; startedAt?: string }>();
   const isPending = pending === "1";
 
   return (
@@ -24,7 +24,7 @@ export default function ReportSavedScreen() {
         </Text>
         <Text style={styles.cardText}>
           {isPending
-            ? "No hay senal ahora. El reporte se enviara automaticamente cuando la app detecte conexion."
+            ? "No se pudo enviar ahora. El reporte se enviara automaticamente cuando la app detecte conexion."
             : "El reporte quedo guardado para la ruta seleccionada."}
         </Text>
       </Card>
@@ -37,7 +37,7 @@ export default function ReportSavedScreen() {
       </Card>
 
       <View style={styles.actions}>
-        <PrimaryButton label="Volver al mapa" href="/route-map" />
+        <PrimaryButton label="Volver al mapa" onPress={() => router.dismissTo({ pathname: "/route-map", params: { id: id ?? "1", ...(startedAt ? { active: "1", startedAt } : {}) } })} />
         <PrimaryButton label="Ver mis actividades" href="/mis-actividades" tone="secondary" />
       </View>
     </AppScreen>

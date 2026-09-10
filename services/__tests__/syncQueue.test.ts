@@ -1,4 +1,4 @@
-import { initDB } from "../../database/database";
+import { db, initDB } from "../../database/database";
 import { saveAuthSession } from "../authSession";
 
 jest.mock("expo-network", () => ({
@@ -75,7 +75,7 @@ describe("syncQueue", () => {
 
     expect(secondId).toBe(firstId);
     expect(
-      pending.filter((operation) => operation.dedupeKey === "activity:local-session-test")
+      pending.filter((operation) => operation.dedupeKey === "1:activity:local-session-test")
     ).toHaveLength(1);
   });
 
@@ -146,6 +146,7 @@ describe("syncQueue", () => {
     });
 
     for (let attempt = 0; attempt < MAX_RETRY_ATTEMPTS; attempt += 1) {
+      await db.runAsync("UPDATE pending_operations SET next_attempt_at = 0 WHERE id = ?", [id]);
       await runSync();
     }
 

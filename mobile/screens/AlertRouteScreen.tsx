@@ -1,11 +1,12 @@
 import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useMemo, useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
-import { getTrailById } from "../../services/api";
+import { getTrailById } from "../../services/trailRepository";
 import {
   Coordinate,
   formatDistance,
   getDistanceMeters,
+  getDistanceToRouteMeters,
   getRouteStart,
   parseRouteCoordinates,
 } from "../../services/geoUtils";
@@ -67,7 +68,7 @@ export default function AlertRouteScreen() {
   }, [location, routeStart]);
   const paramDistanceMeters = Number(distance);
   const distanceMeters =
-    startDistanceMeters ??
+    (isStartWarning ? startDistanceMeters : location && route.length > 1 ? getDistanceToRouteMeters(location.coordinate, route) : null) ??
     (Number.isFinite(paramDistanceMeters) ? paramDistanceMeters : null);
   const distanceText =
     distanceMeters !== null ? formatDistance(distanceMeters) : "distancia no disponible";
@@ -119,7 +120,7 @@ export default function AlertRouteScreen() {
           <PrimaryButton
             label={isStartWarning ? "Volver al inicio" : "Volver a la ruta"}
             onPress={() =>
-              router.push(
+              router.dismissTo(
                 isStartWarning
                   ? {
                       pathname: "/route-map",
@@ -127,7 +128,7 @@ export default function AlertRouteScreen() {
                     }
                   : {
                       pathname: "/route-map",
-                      params: { active: "1", id: String(trailId) },
+                      params: { active: "1", id: String(trailId), startedAt: startedAt || String(Date.now()) },
                     }
               )
             }
@@ -138,7 +139,7 @@ export default function AlertRouteScreen() {
               onPress={() =>
                 router.push({
                   pathname: "/route-map",
-                  params: { active: "1", id: String(trailId) },
+                  params: { active: "1", id: String(trailId), startedAt: startedAt || String(Date.now()) },
                 })
               }
               tone="secondary"
@@ -164,7 +165,7 @@ export default function AlertRouteScreen() {
             onPress={() =>
               router.push({
                 pathname: "/reportar-terreno",
-                params: { id: String(trailId) },
+                params: { id: String(trailId), startedAt: startedAt ?? "" },
               })
             }
           />

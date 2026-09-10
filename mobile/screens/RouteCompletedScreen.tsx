@@ -1,3 +1,4 @@
+import { finishRouteSession, activeRouteSeconds } from "../../services/routeSession";
 import { router, useLocalSearchParams } from "expo-router";
 import type { Href } from "expo-router";
 import { useEffect, useState } from "react";
@@ -148,7 +149,8 @@ const createCompletionSession = async (params: RouteCompletionParams) => {
     };
   }
 
-  const endedAt = Date.now();
+  const runtime = await finishRouteSession(trailId, startedAtMs);
+  const endedAt = runtime?.ended_at ?? Date.now();
   const trackingSummary = await getRouteTrackingSummary(trailId, startedAtMs);
   const routeTotal = parseOptionalNumber(params.totalMeters);
   const distance = Math.max(
@@ -160,7 +162,7 @@ const createCompletionSession = async (params: RouteCompletionParams) => {
     routeTotal,
     distance
   );
-  const duration = Math.max(0, Math.floor((endedAt - startedAtMs) / 1000));
+  const duration = runtime ? activeRouteSeconds(runtime) : Math.max(0, Math.floor((endedAt - startedAtMs) / 1000));
   const completedResult = await getOrCreateCompletedSession({
     trailId,
     startedAt: startedAtMs,
@@ -337,6 +339,12 @@ export default function RouteCompletedScreen() {
       />
 
       {isLoading ? <Text style={styles.statusText}>Cargando resumen...</Text> : null}
+
+      {!!trailId && <Card tone="orange">
+        <Text style={styles.cardTitle}>Confirmá el regreso</Text>
+        <Text style={styles.cardText}>Finalizar el registro no avisa a tu contacto ni cierra un plan de salida. Confirmá tu regreso cuando estés a salvo.</Text>
+        <PrimaryButton label="Revisar y cerrar mi plan de regreso" tone="secondary" onPress={() => router.push({ pathname: "/plan-salida", params: { id: String(trailId) } })} />
+      </Card>}
 
       <CompletionSessionContent
         canReview={canReview}

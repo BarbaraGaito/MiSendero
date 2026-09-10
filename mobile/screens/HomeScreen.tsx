@@ -1,4 +1,6 @@
+import * as Network from "expo-network";
 import { StatusBar } from "expo-status-bar";
+import { ResumeRouteCard } from "../components/ResumeRouteCard";
 import { useCallback, useEffect, useState } from "react";
 import {
   ImageBackground,
@@ -9,7 +11,8 @@ import {
   View,
 } from "react-native";
 import { router } from "expo-router";
-import { getProfile, getTrails } from "../../services/api";
+import { getProfile } from "../../services/api";
+import { getTrails } from "../../services/trailRepository";
 import { getAuthSession } from "../../services/authSession";
 import { Profile, Trail } from "../../types";
 import {
@@ -56,8 +59,10 @@ export default function HomeScreen() {
         return;
       }
 
+      const network = await Network.getNetworkStateAsync().catch(() => null);
+      const offline = network?.isConnected === false || network?.isInternetReachable === false;
       const [profileData, trails, experience] = await Promise.all([
-        getProfile(session.token),
+        offline ? Promise.resolve({ user: session.user } as Profile) : getProfile(session.token).catch(() => ({ user: session.user } as Profile)),
         getTrails(),
         getExperienceProfile(),
       ]);
@@ -91,6 +96,7 @@ export default function HomeScreen() {
   return (
     <AppScreen activeTab="inicio">
       <StatusBar style="dark" />
+      <ResumeRouteCard />
       <ScrollView
         contentContainerStyle={styles.content}
         showsVerticalScrollIndicator={false}

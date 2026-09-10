@@ -9,7 +9,7 @@ import {
   TrailRatingSummary,
   TrailReview,
 } from "../../database/sessionsRepository";
-import { getTrailById } from "../../services/api";
+import { getTrailById } from "../../services/trailRepository";
 import { Trail } from "../../types";
 import { InfoCard, ScreenShell, TopBar, colors } from "../components/MiSenderoUI";
 

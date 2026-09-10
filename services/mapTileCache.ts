@@ -67,6 +67,9 @@ export const getTileRemoteUrl = (
   y: number
 ) => {
   const tileX = wrapTileX(x, zoom);
+  const configured = layer === "standard" ? process.env.EXPO_PUBLIC_OFFLINE_STANDARD_TILE_URL
+    : layer === "terrain" ? process.env.EXPO_PUBLIC_OFFLINE_TERRAIN_TILE_URL : null;
+  if (configured) return configured.replace("{z}", String(zoom)).replace("{x}", String(tileX)).replace("{y}", String(y));
 
   if (layer === "terrain") {
     return `https://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/${zoom}/${y}/${tileX}`;
@@ -121,6 +124,7 @@ const removeFileIfPresent = async (uri: string) => {
 export class MapTileDownloadError extends Error {
   constructor(
     public readonly code:
+      | "provider-not-configured"
       | "storage-unavailable"
       | "empty-tile-plan"
       | "download-cancelled"
@@ -153,23 +157,27 @@ export const resolveCachedTileUri = async (
 
 export const getOfflineTilePlanForTrail = (trail: Trail): TileDescriptor[] => {
   const route = parseRouteCoordinates(trail.route_coordinates);
+  if (!route.length && (trail.center_lat == null || trail.center_lng == null)) return [];
   const fallbackCenter: Coordinate = [
     trail.center_lat ?? DEFAULT_CENTER[0],
     trail.center_lng ?? DEFAULT_CENTER[1],
   ];
   const points = route.length > 0 ? route : [fallbackCenter];
   const baseZoom = clamp(trail.map_zoom ?? DEFAULT_ZOOM, MIN_ZOOM, 15);
-  const zooms = Array.from(
-    new Set([baseZoom - 1, baseZoom, baseZoom + 1].map((zoom) => clamp(zoom, MIN_ZOOM, 15)))
-  );
+  // Never truncate a layer or a route halfway. Reduce resolution until the
+  // complete bounds (including a one-tile margin) fit for BOTH layers.
+  let zooms: number[] = [];
+  for (let top = Math.min(15, baseZoom + 1); top >= MIN_ZOOM; top--) {
+    const candidate = Array.from(new Set([Math.max(MIN_ZOOM, top - 2), Math.max(MIN_ZOOM, top - 1), top]));
+    const count = candidate.reduce((sum, zoom) => {
+      const bounds = getTileBounds(points, zoom, 1);
+      return sum + (bounds.maxX - bounds.minX + 1) * (bounds.maxY - bounds.minY + 1) * 2;
+    }, 0);
+    if (count <= MAX_DOWNLOAD_TILES) { zooms = candidate; break; }
+  }
   const tiles = new Map<string, TileDescriptor>();
-
   for (const layer of ["standard", "terrain"] as CachedMapLayer[]) {
-    for (const zoom of zooms) {
-      if (tiles.size >= MAX_DOWNLOAD_TILES) break;
-
-      addTilesForLayerAndZoom(tiles, layer, zoom, points);
-    }
+    for (const zoom of zooms) addTilesForLayerAndZoom(tiles, layer, zoom, points);
   }
 
   return Array.from(tiles.values());
@@ -196,7 +204,6 @@ const addTilesForColumn = (
   bounds: ReturnType<typeof getTileBounds>
 ) => {
   for (let y = bounds.minY; y <= bounds.maxY; y += 1) {
-    if (tiles.size >= MAX_DOWNLOAD_TILES) return;
     if (y < 0 || y >= 2 ** zoom) continue;
 
     const tileX = wrapTileX(x, zoom);
@@ -264,6 +271,11 @@ export const downloadOfflineTilesForTrail = async (
       "storage-unavailable",
       "No hay almacenamiento local disponible para guardar tiles offline."
     );
+  }
+
+  const providers = [process.env.EXPO_PUBLIC_OFFLINE_STANDARD_TILE_URL, process.env.EXPO_PUBLIC_OFFLINE_TERRAIN_TILE_URL];
+  if (providers.some((url) => !url || !url.startsWith("https://") || !["{z}", "{x}", "{y}"].every((part) => url.includes(part)) || /(^|\.)tile\.openstreetmap\.org$/i.test(new URL(url).hostname))) {
+    throw new MapTileDownloadError("provider-not-configured", "La descarga del mapa base requiere configurar un proveedor que permita uso offline. El trazado y los reportes quedan guardados en este teléfono.");
   }
 
   await ensureDirectory(TILE_CACHE_DIR);

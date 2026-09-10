@@ -10,7 +10,7 @@ import {
   colors,
   trailImages,
 } from "../components/MiSenderoUI";
-import { getTrails } from "../../services/api";
+import { getTrails } from "../../services/trailRepository";
 import { Trail } from "../../types";
 
 export default function Screen02Explore() {

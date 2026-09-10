@@ -1,6 +1,7 @@
 import * as SQLite from "expo-sqlite";
 import { Trail, TrailReport } from "../types";
 import { getAuthSession } from "./authSession";
+import { initDB } from "../database/database";
 import {
   deleteOfflineTilesForTrail,
   downloadOfflineTilesForTrail,
@@ -33,6 +34,7 @@ export interface OfflineMapsSummary {
 }
 
 const initOfflineMapsTable = async () => {
+  await initDB();
   await db.execAsync(`
     CREATE TABLE IF NOT EXISTS offline_maps (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -254,6 +256,12 @@ export const saveOfflineTrailMap = async (
   const userId = await getCurrentUserId();
 
   const now = Date.now();
+  const geometry = await getOfflineMapByTrailId(trail.id);
+  if (!geometry) {
+    await db.runAsync(`INSERT INTO offline_maps (user_id, name, size_mb, status, downloaded_at, updated_at, trail_id, trail_json, reports_json)
+      VALUES (?, ?, ?, 'incompleto', ?, ?, ?, ?, ?)`,
+      [userId, trail.name, estimateTrailMapSizeMb(trail, reports), now, now, trail.id, JSON.stringify(trail), JSON.stringify(reports)]);
+  }
   const tileCache = await downloadOfflineTilesForTrail(trail, onTileProgress, options);
   const coverage = await getOfflineTileCoverageForTrail(trail);
 

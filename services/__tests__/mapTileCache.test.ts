@@ -29,6 +29,8 @@ const loadMapTileCache = async ({
   tileSize?: number;
 } = {}) => {
   jest.resetModules();
+  process.env.EXPO_PUBLIC_OFFLINE_STANDARD_TILE_URL = "https://tiles.example.test/standard/{z}/{x}/{y}.png";
+  process.env.EXPO_PUBLIC_OFFLINE_TERRAIN_TILE_URL = "https://tiles.example.test/terrain/{z}/{x}/{y}.png";
 
   const files = new Map<string, FileRecord>();
   const getInfoAsync = jest.fn(async (uri: string) => {
@@ -93,6 +95,27 @@ const loadMapTileCache = async ({
 };
 
 describe("mapTileCache", () => {
+  test("covers both layers and the final route point without truncating the 220-tile budget", async () => {
+    const cache = await loadMapTileCache();
+    const longTrail = { ...trail, map_zoom: 15, route_coordinates: JSON.stringify([[-41.17, -71.47], [-41.34, -71.7]]) };
+    const plan = cache.getOfflineTilePlanForTrail(longTrail);
+    expect(plan.length).toBeGreaterThan(0);
+    expect(plan.length).toBeLessThanOrEqual(220);
+    for (const zoom of new Set(plan.map((tile) => tile.zoom))) {
+      const x = Math.floor((-71.7 + 180) / 360 * 2 ** zoom);
+      const rad = -41.34 * Math.PI / 180;
+      const y = Math.floor((1 - Math.log(Math.tan(rad) + 1 / Math.cos(rad)) / Math.PI) / 2 * 2 ** zoom);
+      for (const layer of ["standard", "terrain"]) {
+        expect(plan.some((tile) => tile.layer === layer && tile.zoom === zoom && tile.x === x && tile.y === y)).toBe(true);
+      }
+    }
+  });
+  test("does not bulk download the public OSM tile service", async () => {
+    const cache = await loadMapTileCache();
+    process.env.EXPO_PUBLIC_OFFLINE_STANDARD_TILE_URL = "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
+    await expect(cache.downloadOfflineTilesForTrail(trail)).rejects.toMatchObject({ code: "provider-not-configured" });
+    expect(cache.downloadAsync).not.toHaveBeenCalled();
+  });
   test("descarga todos los tiles a archivos locales verificables", async () => {
     const cache = await loadMapTileCache();
     const progress: Array<[number, number]> = [];

@@ -18,7 +18,7 @@ import {
   colors,
   trailImages,
 } from "../components/MiSenderoUI";
-import { getTrails } from "../../services/api";
+import { getTrails } from "../../services/trailRepository";
 import { getOfflineMaps } from "../../services/offlineMaps";
 import { Trail } from "../../types";
 

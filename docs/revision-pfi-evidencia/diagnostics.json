@@ -1,0 +1,374 @@
+{
+  "note": "Static source diagnostics; no network, device sensors or database used. Tile plans use explicit zoom=13/14/15, not persisted database values.",
+  "tilePlans": [
+    {
+      "name": "confluencia",
+      "zoom": 13,
+      "total": 128,
+      "byLayer": {
+        "standard": 64,
+        "terrain": 64
+      },
+      "capped": false
+    },
+    {
+      "name": "lanin",
+      "zoom": 13,
+      "total": 104,
+      "byLayer": {
+        "standard": 52,
+        "terrain": 52
+      },
+      "capped": false
+    },
+    {
+      "name": "tilcara",
+      "zoom": 13,
+      "total": 72,
+      "byLayer": {
+        "standard": 36,
+        "terrain": 36
+      },
+      "capped": false
+    },
+    {
+      "name": "saltaGarganta",
+      "zoom": 13,
+      "total": 54,
+      "byLayer": {
+        "standard": 27,
+        "terrain": 27
+      },
+      "capped": false
+    },
+    {
+      "name": "lahuanSolitario",
+      "zoom": 13,
+      "total": 60,
+      "byLayer": {
+        "standard": 30,
+        "terrain": 30
+      },
+      "capped": false
+    },
+    {
+      "name": "elMollar",
+      "zoom": 13,
+      "total": 54,
+      "byLayer": {
+        "standard": 27,
+        "terrain": 27
+      },
+      "capped": false
+    },
+    {
+      "name": "tresPicos",
+      "zoom": 13,
+      "total": 142,
+      "byLayer": {
+        "standard": 71,
+        "terrain": 71
+      },
+      "capped": false
+    },
+    {
+      "name": "cerroMorado",
+      "zoom": 13,
+      "total": 68,
+      "byLayer": {
+        "standard": 34,
+        "terrain": 34
+      },
+      "capped": false
+    },
+    {
+      "name": "piedraPomez",
+      "zoom": 13,
+      "total": 72,
+      "byLayer": {
+        "standard": 36,
+        "terrain": 36
+      },
+      "capped": false
+    },
+    {
+      "name": "lagunaTesoro",
+      "zoom": 13,
+      "total": 132,
+      "byLayer": {
+        "standard": 66,
+        "terrain": 66
+      },
+      "capped": false
+    },
+    {
+      "name": "confluencia",
+      "zoom": 14,
+      "total": 206,
+      "byLayer": {
+        "standard": 103,
+        "terrain": 103
+      },
+      "capped": false
+    },
+    {
+      "name": "lanin",
+      "zoom": 14,
+      "total": 176,
+      "byLayer": {
+        "standard": 88,
+        "terrain": 88
+      },
+      "capped": false
+    },
+    {
+      "name": "tilcara",
+      "zoom": 14,
+      "total": 88,
+      "byLayer": {
+        "standard": 44,
+        "terrain": 44
+      },
+      "capped": false
+    },
+    {
+      "name": "saltaGarganta",
+      "zoom": 14,
+      "total": 54,
+      "byLayer": {
+        "standard": 27,
+        "terrain": 27
+      },
+      "capped": false
+    },
+    {
+      "name": "lahuanSolitario",
+      "zoom": 14,
+      "total": 72,
+      "byLayer": {
+        "standard": 36,
+        "terrain": 36
+      },
+      "capped": false
+    },
+    {
+      "name": "elMollar",
+      "zoom": 14,
+      "total": 54,
+      "byLayer": {
+        "standard": 27,
+        "terrain": 27
+      },
+      "capped": false
+    },
+    {
+      "name": "tresPicos",
+      "zoom": 14,
+      "total": 220,
+      "byLayer": {
+        "standard": 121,
+        "terrain": 99
+      },
+      "capped": true
+    },
+    {
+      "name": "cerroMorado",
+      "zoom": 14,
+      "total": 98,
+      "byLayer": {
+        "standard": 49,
+        "terrain": 49
+      },
+      "capped": false
+    },
+    {
+      "name": "piedraPomez",
+      "zoom": 14,
+      "total": 80,
+      "byLayer": {
+        "standard": 40,
+        "terrain": 40
+      },
+      "capped": false
+    },
+    {
+      "name": "lagunaTesoro",
+      "zoom": 14,
+      "total": 212,
+      "byLayer": {
+        "standard": 106,
+        "terrain": 106
+      },
+      "capped": false
+    },
+    {
+      "name": "confluencia",
+      "zoom": 15,
+      "total": 166,
+      "byLayer": {
+        "standard": 83,
+        "terrain": 83
+      },
+      "capped": false
+    },
+    {
+      "name": "lanin",
+      "zoom": 15,
+      "total": 144,
+      "byLayer": {
+        "standard": 72,
+        "terrain": 72
+      },
+      "capped": false
+    },
+    {
+      "name": "tilcara",
+      "zoom": 15,
+      "total": 64,
+      "byLayer": {
+        "standard": 32,
+        "terrain": 32
+      },
+      "capped": false
+    },
+    {
+      "name": "saltaGarganta",
+      "zoom": 15,
+      "total": 36,
+      "byLayer": {
+        "standard": 18,
+        "terrain": 18
+      },
+      "capped": false
+    },
+    {
+      "name": "lahuanSolitario",
+      "zoom": 15,
+      "total": 54,
+      "byLayer": {
+        "standard": 27,
+        "terrain": 27
+      },
+      "capped": false
+    },
+    {
+      "name": "elMollar",
+      "zoom": 15,
+      "total": 36,
+      "byLayer": {
+        "standard": 18,
+        "terrain": 18
+      },
+      "capped": false
+    },
+    {
+      "name": "tresPicos",
+      "zoom": 15,
+      "total": 202,
+      "byLayer": {
+        "standard": 101,
+        "terrain": 101
+      },
+      "capped": false
+    },
+    {
+      "name": "cerroMorado",
+      "zoom": 15,
+      "total": 80,
+      "byLayer": {
+        "standard": 40,
+        "terrain": 40
+      },
+      "capped": false
+    },
+    {
+      "name": "piedraPomez",
+      "zoom": 15,
+      "total": 56,
+      "byLayer": {
+        "standard": 28,
+        "terrain": 28
+      },
+      "capped": false
+    },
+    {
+      "name": "lagunaTesoro",
+      "zoom": 15,
+      "total": 172,
+      "byLayer": {
+        "standard": 86,
+        "terrain": 86
+      },
+      "capped": false
+    }
+  ],
+  "missingSpo2Example": {
+    "label": "bajo",
+    "confidence": 0.93,
+    "distances": {
+      "alto": 0,
+      "bajo": 0.9317,
+      "medio": 0.0683
+    }
+  },
+  "models": [
+    {
+      "name": "fatigue",
+      "rows": 1095,
+      "testRows": 329,
+      "accuracy": 0.9969604863221885,
+      "macroF1": 0.9962522241335484,
+      "byLabel": {
+        "alto": 41,
+        "bajo": 877,
+        "medio": 177
+      },
+      "testByLabel": {
+        "alto": 12,
+        "bajo": 264,
+        "medio": 53
+      },
+      "guardrail": "ok"
+    },
+    {
+      "name": "risk",
+      "rows": 477,
+      "testRows": 144,
+      "accuracy": 1,
+      "macroF1": 1,
+      "byLabel": {
+        "alto": 18,
+        "bajo": 130,
+        "medio": 329
+      },
+      "testByLabel": {
+        "alto": 6,
+        "bajo": 39,
+        "medio": 99
+      },
+      "guardrail": "ok"
+    },
+    {
+      "name": "routeDifficulty",
+      "rows": 218,
+      "testRows": 66,
+      "accuracy": 1,
+      "macroF1": 1,
+      "byLabel": {
+        "Alta": 146,
+        "Baja": 51,
+        "Media": 21
+      },
+      "testByLabel": {
+        "Alta": 44,
+        "Baja": 16,
+        "Media": 6
+      },
+      "guardrail": "ok"
+    }
+  ],
+  "tokenContrast": {
+    "whiteOnDanger": 4.18,
+    "mutedOnPage": 4.25
+  }
+}

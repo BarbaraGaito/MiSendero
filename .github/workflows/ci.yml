@@ -3,6 +3,7 @@ name: Fast NodeJS CI
 on:
   push:
     branches:
+      - main
       - "feature/**"
       - "fix/**"
       - "hotfix/**"
@@ -62,8 +63,10 @@ jobs:
         uses: SonarSource/sonarqube-scan-action@fd88b7d7ccbaefd23d8f36f73b59db7a3d246602
         with:
           args: >
-            -Dsonar.projectKey=misendero
+            -Dsonar.projectKey=BarbaraGaito_MiSendero
+            -Dsonar.organization=misendero
             -Dsonar.sources=app,mobile,services,database,ai,backend/src
             -Dsonar.tests=__mocks__,services/__tests__,ai/__tests__,backend/tests
             -Dsonar.exclusions=**/node_modules/**,**/coverage/**,training/**
             -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info,backend/coverage/lcov.info
+            -Dsonar.qualitygate.wait=true

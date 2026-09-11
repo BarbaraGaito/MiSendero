@@ -1,8 +1,7 @@
-import * as SQLite from "expo-sqlite";
+import { db } from "../database/connection";
 import * as SecureStore from "expo-secure-store";
 import { AuthSession } from "../types";
 
-const db = SQLite.openDatabaseSync("trekking.db");
 const AUTH_TOKEN_KEY = "misendero.auth.token";
 const SECURE_TOKEN_SENTINEL = "__secure_store__";
 

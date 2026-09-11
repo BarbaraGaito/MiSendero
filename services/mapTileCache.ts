@@ -147,7 +147,7 @@ export const resolveCachedTileUri = async (
   x: number,
   y: number
 ) => {
-  if (layer === "satellite") return null;
+  if (layer === "satellite" || !FileSystem.documentDirectory) return null;
 
   const localUri = getTileLocalUri(layer, zoom, x, y);
   const info = await FileSystem.getInfoAsync(localUri);

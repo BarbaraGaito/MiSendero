@@ -1,6 +1,5 @@
-import * as SQLite from "expo-sqlite";
+import { db } from "../database/connection";
 
-const db = SQLite.openDatabaseSync("trekking.db");
 
 export interface TestingLocationMode {
   enabled: boolean;

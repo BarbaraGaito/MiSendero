@@ -1,10 +1,10 @@
-import * as SQLite from "expo-sqlite";
+import { db } from "./connection";
 import {
   heartRateLogsTableSql,
   wearableStorageSql,
 } from "./wearableSchema";
 
-export const db = SQLite.openDatabaseSync("trekking.db");
+export { db };
 
 let initPromise: Promise<void> | null = null;
 

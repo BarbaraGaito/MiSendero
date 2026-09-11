@@ -26,4 +26,4 @@ const openDatabaseSync = (name) => {
   return wrap(databasesByName.get(name));
 };
 
-module.exports = { openDatabaseSync };
+module.exports = { openDatabaseSync, openDatabaseAsync: async (name) => openDatabaseSync(name) };

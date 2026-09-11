@@ -1,6 +1,5 @@
-import * as SQLite from "expo-sqlite";
+import { db } from "../database/connection";
 
-const db = SQLite.openDatabaseSync("trekking.db");
 
 export const CURRENT_TERMS_VERSION = "2026-08-13";
 

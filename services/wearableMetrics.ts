@@ -1,4 +1,4 @@
-import * as SQLite from "expo-sqlite";
+import { db } from "../database/connection";
 import { wearableStorageSql } from "../database/wearableSchema";
 import {
   predictFatigue,
@@ -21,7 +21,6 @@ import {
 } from "./nativeWearableBridge";
 import { getPrivacyPreferences } from "./privacyConsent";
 
-const db = SQLite.openDatabaseSync("trekking.db");
 
 const defaultConnection: WearableConnection = {
   provider: "development_simulator",

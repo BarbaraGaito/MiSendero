@@ -1,11 +1,10 @@
 import { getAuthSession } from "./authSession";
-import * as SQLite from "expo-sqlite";
+import { db } from "../database/connection";
 import {
   heartRateLogsTableSql,
   wearableTablesSql,
 } from "../database/wearableSchema";
 
-const db = SQLite.openDatabaseSync("trekking.db");
 
 export interface PrivacyPreferences {
   sensitiveDataConsent: boolean;

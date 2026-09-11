@@ -1,4 +1,4 @@
-import * as SQLite from "expo-sqlite";
+import { db } from "../database/connection";
 import { Trail, TrailReport } from "../types";
 import { getAuthSession } from "./authSession";
 import { initDB } from "../database/database";
@@ -9,7 +9,6 @@ import {
   OfflineTileDownloadOptions,
 } from "./mapTileCache";
 
-const db = SQLite.openDatabaseSync("trekking.db");
 
 export interface OfflineMap {
   id: number;

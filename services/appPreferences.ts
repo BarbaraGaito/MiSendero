@@ -1,7 +1,6 @@
 import { getAuthSession } from "./authSession";
-import * as SQLite from "expo-sqlite";
+import { db } from "../database/connection";
 
-const db = SQLite.openDatabaseSync("trekking.db");
 
 export type DistanceUnit = "km" | "mi";
 

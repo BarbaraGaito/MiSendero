@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const JWT_ALGORITHM = "HS256";
 
 const requireAuth = (req, res, next) => {
   const authHeader = req.headers.authorization || "";
@@ -9,7 +10,9 @@ const requireAuth = (req, res, next) => {
   }
 
   try {
-    const payload = jwt.verify(token, process.env.JWT_SECRET);
+    const payload = jwt.verify(token, process.env.JWT_SECRET, {
+      algorithms: [JWT_ALGORITHM],
+    });
     req.userId = payload.userId;
     req.userRole = payload.role;
     next();

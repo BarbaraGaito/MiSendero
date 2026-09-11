@@ -7,9 +7,11 @@ const { validateBody } = require("../middleware/validate");
 const { registerSchema, loginSchema } = require("../schemas/auth.schemas");
 
 const router = express.Router();
+const JWT_ALGORITHM = "HS256";
 
 const signToken = (user) =>
   jwt.sign({ userId: user.id, role: user.role }, process.env.JWT_SECRET, {
+    algorithm: JWT_ALGORITHM,
     expiresIn: "7d",
   });
 

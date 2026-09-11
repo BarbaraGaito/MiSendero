@@ -1,4 +1,5 @@
 const request = require("supertest");
+const jwt = require("jsonwebtoken");
 const fs = require("fs");
 const path = require("path");
 const runMigrations = require("../src/migrate");
@@ -110,5 +111,19 @@ describe("auth", () => {
     expect(withToken.status).toBe(200);
     expect(withToken.body.user.email).toBe("ana@misendero.app");
     expect(withToken.body.stats).toEqual({ completed_routes: 0, total_distance_km: 0 });
+  });
+
+  test("rejects tokens signed with an algorithm outside the allowlist", async () => {
+    const token = jwt.sign(
+      { userId: 1, role: "user" },
+      process.env.JWT_SECRET,
+      { algorithm: "HS384" }
+    );
+
+    const response = await request(app)
+      .get("/api/auth/me")
+      .set("Authorization", `Bearer ${token}`);
+
+    expect(response.status).toBe(401);
   });
 });

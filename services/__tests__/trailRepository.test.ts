@@ -42,9 +42,30 @@ test("an elevation refresh failure retains the downloaded route", async () => {
 });
 
 test("a downloaded elevation profile needs no network", async () => {
-  const trail = { id: 8, elevation: { source: "Copernicus" } };
+  const trail = { id: 8, elevation: { source: "Copernicus" }, national_park: null };
   (local.getOfflineMapByTrailId as jest.Mock).mockResolvedValue({ trail });
   expect(await getTrailById(8)).toEqual(trail);
   expect(api.getTrailById).not.toHaveBeenCalled();
   expect(Network.getNetworkStateAsync).not.toHaveBeenCalled();
+});
+
+test("upgrades legacy downloaded metadata even when elevation already exists", async () => {
+  const trail = { id: 8, elevation: { source: "Copernicus" } };
+  const upgraded = { ...trail, national_park: { slug: "nahuel-huapi" } };
+  (local.getOfflineMapByTrailId as jest.Mock).mockResolvedValue({ trail });
+  (Network.getNetworkStateAsync as jest.Mock).mockResolvedValue({ isConnected: true });
+  (api.getTrailById as jest.Mock).mockResolvedValue(upgraded);
+  (local.refreshOfflineTrailElevation as jest.Mock).mockResolvedValue(upgraded);
+  expect(await getTrailById(8)).toEqual(upgraded);
+});
+
+test("a national-park download with a formerly null profile receives the new institutional data", async () => {
+  const trail = { id: 71, location: "Parque Nacional Iguazu, Misiones", elevation: { source: "Copernicus" }, national_park: null };
+  const upgraded = { ...trail, national_park: { slug: "iguazu" }, national_park_slug: "iguazu" };
+  (local.getOfflineMapByTrailId as jest.Mock).mockResolvedValue({ trail });
+  (Network.getNetworkStateAsync as jest.Mock).mockResolvedValue({ isConnected: true });
+  (api.getTrailById as jest.Mock).mockResolvedValue(upgraded);
+  (local.refreshOfflineTrailElevation as jest.Mock).mockResolvedValue(upgraded);
+  expect(await getTrailById(71)).toEqual(upgraded);
+  expect(local.refreshOfflineTrailElevation).toHaveBeenCalledWith(upgraded);
 });

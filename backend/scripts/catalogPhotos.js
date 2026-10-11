@@ -4,10 +4,14 @@ const definitions = require("../src/data/additionalTrailDefinitions");
 
 const main = async () => {
   const output = {};
+  const outputPath = path.resolve(__dirname, "../src/data/additionalTrailPhotos.json");
+  const keys = process.argv.find((arg) => arg.startsWith("--keys="))?.slice(7).split(",");
   let batch;
   const discover = process.argv.includes("--discover");
+  if (keys && !discover) Object.assign(output, JSON.parse(await fs.readFile(outputPath, "utf8")));
   if (!discover && process.argv.some((arg) => arg.startsWith("--key="))) throw new Error("--key is only supported for discovery");
   for (const trail of definitions) {
+    if (keys && !keys.includes(trail.key)) continue;
     const onlyKey = process.argv.find((arg) => arg.startsWith("--key="))?.slice(6);
     if (onlyKey && onlyKey !== trail.key) continue;
     const url = new URL("https://commons.wikimedia.org/w/api.php");
@@ -44,7 +48,7 @@ const main = async () => {
     console.log(`${trail.key}: ${output[trail.key].file}`);
   }
   if (!discover) {
-    await fs.writeFile(path.resolve(__dirname, "../src/data/additionalTrailPhotos.json"), JSON.stringify(output, null, 2) + "\n");
+    await fs.writeFile(outputPath, JSON.stringify(output, null, 2) + "\n");
   }
 };
 

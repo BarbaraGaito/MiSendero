@@ -106,5 +106,95 @@
     "license": "CC BY-SA 3.0",
     "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
     "retrieved_at": "2026-10-11T17:30:54.815Z"
+  },
+  "uritorco": {
+    "file": "CerroUritorco.jpg",
+    "author": "Santiago.coffey",
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/96/CerroUritorco.jpg/1280px-CerroUritorco.jpg",
+    "page_url": "https://commons.wikimedia.org/wiki/File:CerroUritorco.jpg",
+    "license": "CC BY 3.0",
+    "license_url": "https://creativecommons.org/licenses/by/3.0",
+    "retrieved_at": "2026-10-11T20:19:32.092Z"
+  },
+  "ventana": {
+    "file": "Sierra de la Ventana2.JPG",
+    "author": "Mauret",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/b/ba/Sierra_de_la_Ventana2.JPG",
+    "page_url": "https://commons.wikimedia.org/wiki/File:Sierra_de_la_Ventana2.JPG",
+    "license": "CC BY-SA 4.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+    "retrieved_at": "2026-10-11T20:19:32.094Z"
+  },
+  "bosqueTallado": {
+    "file": "Bosque tallado.jpg",
+    "author": "Claudio Elias",
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2f/Bosque_tallado.jpg/1280px-Bosque_tallado.jpg",
+    "page_url": "https://commons.wikimedia.org/wiki/File:Bosque_tallado.jpg",
+    "license": "CC BY-SA 4.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+    "retrieved_at": "2026-10-11T20:19:32.094Z"
+  },
+  "sanBernardo": {
+    "file": "Vista de la ciudad de Salta desde el cerro San Bernardo.jpg",
+    "author": "M.K.O.",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/2/2d/Vista_de_la_ciudad_de_Salta_desde_el_cerro_San_Bernardo.jpg",
+    "page_url": "https://commons.wikimedia.org/wiki/File:Vista_de_la_ciudad_de_Salta_desde_el_cerro_San_Bernardo.jpg",
+    "license": "CC BY 2.0",
+    "license_url": "https://creativecommons.org/licenses/by/2.0",
+    "retrieved_at": "2026-10-11T20:22:06.945Z"
+  },
+  "porito": {
+    "file": "Purmamarca 097.JPG",
+    "author": "Claudio Elias",
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/69/Purmamarca_097.JPG/1280px-Purmamarca_097.JPG",
+    "page_url": "https://commons.wikimedia.org/wiki/File:Purmamarca_097.JPG",
+    "license": "CC BY-SA 3.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+    "retrieved_at": "2026-10-11T20:19:32.094Z"
+  },
+  "puertaCielo": {
+    "file": "Parque San Javier-Acceso por Horco Molle.jpg",
+    "author": "Yucucu",
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bf/Parque_San_Javier-Acceso_por_Horco_Molle.jpg/1280px-Parque_San_Javier-Acceso_por_Horco_Molle.jpg",
+    "page_url": "https://commons.wikimedia.org/wiki/File:Parque_San_Javier-Acceso_por_Horco_Molle.jpg",
+    "license": "CC BY-SA 4.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+    "retrieved_at": "2026-10-11T20:19:32.094Z"
+  },
+  "bateaMirador": {
+    "file": "Crater del volcan Batea Mahuida - Villa Pehuenia - Neuquen - Argentina.JPG",
+    "author": "Rocagus",
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0d/Crater_del_volcan_Batea_Mahuida_-_Villa_Pehuenia_-_Neuquen_-_Argentina.JPG/1280px-Crater_del_volcan_Batea_Mahuida_-_Villa_Pehuenia_-_Neuquen_-_Argentina.JPG",
+    "page_url": "https://commons.wikimedia.org/wiki/File:Crater_del_volcan_Batea_Mahuida_-_Villa_Pehuenia_-_Neuquen_-_Argentina.JPG",
+    "license": "CC BY-SA 4.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+    "retrieved_at": "2026-10-11T20:19:32.095Z"
+  },
+  "tabaquillo": {
+    "file": "Salto del Tabaquillo, San Luis.JPG",
+    "author": "Belenrendon",
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/52/Salto_del_Tabaquillo%2C_San_Luis.JPG/1280px-Salto_del_Tabaquillo%2C_San_Luis.JPG",
+    "page_url": "https://commons.wikimedia.org/wiki/File:Salto_del_Tabaquillo,_San_Luis.JPG",
+    "license": "CC BY-SA 4.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+    "retrieved_at": "2026-10-11T20:19:32.096Z"
+  },
+  "esquelCruz": {
+    "file": "PanoramicadeEsquel.jpg",
+    "author": "Maurinelse",
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a8/PanoramicadeEsquel.jpg/1280px-PanoramicadeEsquel.jpg",
+    "page_url": "https://commons.wikimedia.org/wiki/File:PanoramicadeEsquel.jpg",
+    "license": "CC BY 3.0",
+    "license_url": "https://creativecommons.org/licenses/by/3.0",
+    "retrieved_at": "2026-10-11T20:19:32.096Z"
+  },
+  "encantadoMirador": {
+    "file": "Vista2 de frente del Salto Encantado.JPG",
+    "author": "Sbasabil",
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/25/Vista2_de_frente_del_Salto_Encantado.JPG/1280px-Vista2_de_frente_del_Salto_Encantado.JPG",
+    "page_url": "https://commons.wikimedia.org/wiki/File:Vista2_de_frente_del_Salto_Encantado.JPG",
+    "license": "CC BY-SA 3.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+    "retrieved_at": "2026-10-11T20:19:32.096Z"
   }
 }

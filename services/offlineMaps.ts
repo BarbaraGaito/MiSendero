@@ -361,11 +361,15 @@ export const saveOfflineTrailMap = async (
 
 export const refreshOfflineTrailElevation = async (trail: Trail) => {
   const local = await getOfflineMapByTrailId(trail.id);
-  if (!local?.trail || !trail.elevation) return;
+  if (!local?.trail || (!trail.elevation && trail.national_park === undefined)) return;
   // Preserve the downloaded geometry: a changed trace requires a map update.
   if (JSON.stringify(JSON.parse(local.trail.route_coordinates || "null")) !==
       JSON.stringify(JSON.parse(trail.route_coordinates || "null"))) return;
-  const updated = { ...local.trail, elevation: trail.elevation };
+  const updated = {
+    ...local.trail,
+    ...(trail.elevation ? { elevation: trail.elevation } : {}),
+    ...(trail.national_park !== undefined ? { national_park: trail.national_park, national_park_slug: trail.national_park_slug } : {}),
+  };
   const userId = await getCurrentUserId();
   await db.runAsync(
     `UPDATE offline_maps SET trail_json = ?, updated_at = ?

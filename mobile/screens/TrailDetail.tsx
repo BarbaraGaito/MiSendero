@@ -25,6 +25,7 @@ import {
 } from "../../database/sessionsRepository";
 import { initDB } from "../../database/database";
 import { Trail, TrailWeather } from "../../types";
+import { NationalParkEntry } from "../components/NationalParkUI";
 import { formatKilometers } from "../../services/geoUtils";
 
 const loadTrailDetailData = async (trailId: number) => {
@@ -199,6 +200,7 @@ function TrailDetailContent({
       <DifficultyCard trail={trail} weather={weather} />
       <BeforeYouGoCard tips={trail.provenance ? [trail.provenance.precautions, ...beforeYouGoTips] : beforeYouGoTips} />
       <AltimetrySection trail={trail} />
+      {trail.national_park && <NationalParkEntry park={trail.national_park} trailId={trail.id} trailName={trail.name} />}
       <TrailSources trail={trail} />
       <OfflineMapCard
         downloadMessage={downloadMessage}
@@ -244,6 +246,18 @@ function TrailCover({
           <Text style={styles.coverBadgeMeta}>({ratingSummary.reviewCount})</Text>
         </Pressable>
       ) : null}
+      {trail.provenance?.photo && (
+        <Pressable accessibilityLabel="Creditos de la foto" accessibilityRole="button"
+          onPress={() => {
+            const photo = trail.provenance!.photo;
+            Alert.alert("Creditos de la foto", `${photo.author} - ${photo.license}${photo.context ? `\n${photo.context}` : ""}`, [
+              { text: "Cerrar", style: "cancel" },
+              { text: "Ver fuente", onPress: () => { void Linking.openURL(photo.page_url).catch(() => Alert.alert("No se pudo abrir la foto")); } },
+            ]);
+          }} style={styles.photoCreditsButton}>
+          <Ionicons name="information-circle-outline" size={23} color={colors.ink} />
+        </Pressable>
+      )}
     </ImageBackground>
   );
 }
@@ -326,34 +340,18 @@ function DescriptionCard({ trail }: { trail: Trail }) {
 }
 
 function TrailSources({ trail }: { trail: Trail }) {
-  const data = trail.provenance;
-  if (!data) return null;
+  const source = trail.provenance?.sources.find((item) => item.title === "Ficha del recorrido");
+  if (!source) return null;
   const openSource = (url: string) => {
     Linking.openURL(url).catch(() => Alert.alert("No se pudo abrir la fuente", "Revisa tu conexion e intenta nuevamente."));
   };
   return (
     <View style={styles.sourcesSection}>
       <Text style={styles.cardTitle}>Fuentes del recorrido</Text>
-      <Text style={styles.body}>
-        Distancia calculada sobre el trazado cartografico
-        {data.official_distance_km != null ? `. Referencia oficial: ${formatKilometers(data.official_distance_km)}` : ""}.
-        {" "}Consultar habilitacion actual antes de salir.
-      </Text>
-      {data.sources.map((source) => (
-        <Pressable key={source.url} accessibilityRole="link" onPress={() => openSource(source.url)} style={styles.sourceLink}>
-          <Ionicons name="open-outline" size={16} color={colors.greenDark} />
-          <Text style={styles.sourceText}>{source.title}</Text>
-        </Pressable>
-      ))}
-      <Pressable accessibilityRole="link" onPress={() => openSource(data.mapping.source_url)} style={styles.sourceLink}>
-        <Ionicons name="map-outline" size={16} color={colors.greenDark} />
-        <Text style={styles.sourceText}>{data.mapping.source} ({data.mapping.license})</Text>
+      <Pressable accessibilityRole="link" onPress={() => openSource(source.url)} style={styles.sourceLink}>
+        <Ionicons name="open-outline" size={16} color={colors.greenDark} />
+        <Text style={styles.sourceText}>Ficha del recorrido</Text>
       </Pressable>
-      <Pressable accessibilityRole="link" onPress={() => openSource(data.photo.page_url)} style={styles.sourceLink}>
-        <Ionicons name="camera-outline" size={16} color={colors.greenDark} />
-        <Text style={styles.sourceText}>Foto: {data.photo.author} ({data.photo.license})</Text>
-      </Pressable>
-      {data.photo.context ? <Text style={styles.body}>{data.photo.context}.</Text> : null}
     </View>
   );
 }
@@ -577,6 +575,11 @@ function getDownloadErrorMessage(error: unknown) {
 }
 
 const styles = StyleSheet.create({
+  photoCreditsButton: {
+    position: "absolute", bottom: 10, right: 10, width: 44, height: 44,
+    alignItems: "center", justifyContent: "center", borderRadius: 8,
+    backgroundColor: "rgba(255,255,255,0.95)",
+  },
   routeMetadata: {
     color: colors.muted,
     fontSize: 14,

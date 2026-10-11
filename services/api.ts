@@ -1,4 +1,4 @@
-import { AuthResponse, Profile, Trail, TrailReport, TrailWeather } from "../types";
+import { AuthResponse, NationalPark, Profile, Trail, TrailReport, TrailWeather } from "../types";
 import Constants from "expo-constants";
 
 const API_PORT = "3001";
@@ -122,6 +122,9 @@ export const getTrails = async (): Promise<Trail[]> => {
 export const getTrailById = async (id: number): Promise<Trail> => {
   return request<Trail>(`/trails/${id}`);
 };
+
+export const getNationalParks = () => request<NationalPark[]>("/national-parks");
+export const getNationalPark = (slug: string) => request<NationalPark>(`/national-parks/${encodeURIComponent(slug)}`);
 
 export const getTrailWeather = async (id: number): Promise<TrailWeather> => {
   return request<TrailWeather>(`/trails/${id}/weather`);

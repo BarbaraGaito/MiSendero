@@ -346,7 +346,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 24,
   },
   mapShade: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     backgroundColor: "rgba(0, 0, 0, 0.1)",
   },
   tags: {

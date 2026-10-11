@@ -1,5 +1,5 @@
 import * as api from "./api";
-import { getOfflineMapByTrailId, getOfflineMaps } from "./offlineMaps";
+import { getOfflineMapByTrailId, getOfflineMaps, refreshOfflineTrailElevation } from "./offlineMaps";
 import { Trail, TrailReport } from "../types";
 import * as Network from "expo-network";
 
@@ -7,7 +7,20 @@ import * as Network from "expo-network";
 // belongs to the map availability indicator, not the route/reporting workflow.
 export const getTrailById = async (id: number): Promise<Trail> => {
   const local = await getOfflineMapByTrailId(id);
-  if (local?.trail) return local.trail;
+  if (local?.trail) {
+    if (!local.trail.elevation) {
+      const network = await Network.getNetworkStateAsync().catch(() => null);
+      if (network?.isConnected && network.isInternetReachable !== false) {
+        try {
+          const current = await api.getTrailById(id);
+          return (await refreshOfflineTrailElevation(current)) || local.trail;
+        } catch {
+          return local.trail;
+        }
+      }
+    }
+    return local.trail;
+  }
   return api.getTrailById(id);
 };
 

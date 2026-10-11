@@ -11,6 +11,7 @@ import {
   trailImages,
 } from "../components/MiSenderoUI";
 import { getTrails } from "../../services/trailRepository";
+import { formatKilometers } from "../../services/geoUtils";
 import { Trail } from "../../types";
 
 export default function Screen02Explore() {
@@ -65,7 +66,7 @@ export default function Screen02Explore() {
             location={trail.location}
             image={trail.image_url || (index % 2 === 0 ? trailImages.mountain : trailImages.lake)}
             difficulty={trail.difficulty}
-            distance={trail.distance_km ? `${trail.distance_km} km` : "Distancia a confirmar"}
+            distance={trail.distance_km ? formatKilometers(trail.distance_km) : "Distancia a confirmar"}
             duration={trail.duration || "Duracion a confirmar"}
             onPress={() =>
               router.push({

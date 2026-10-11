@@ -19,6 +19,7 @@ import {
   trailImages,
 } from "../components/MiSenderoUI";
 import { getTrails } from "../../services/trailRepository";
+import { formatKilometers } from "../../services/geoUtils";
 import { getOfflineMaps } from "../../services/offlineMaps";
 import { Trail } from "../../types";
 
@@ -140,7 +141,7 @@ function TrailDownloadCard({
   isDownloaded: boolean;
   trail: Trail;
 }) {
-  const distance = trail.distance_km ? `${trail.distance_km} km` : "Distancia sin cargar";
+  const distance = trail.distance_km ? formatKilometers(trail.distance_km) : "Distancia sin cargar";
   const duration = trail.duration || "Duracion sin cargar";
 
   return (

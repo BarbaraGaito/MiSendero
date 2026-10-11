@@ -23,6 +23,7 @@ import {
   trailImages,
 } from "../components/MiSenderoUI";
 import { getTrails } from "../../services/trailRepository";
+import { formatKilometers } from "../../services/geoUtils";
 import { Trail } from "../../types";
 import { initDB } from "../../database/database";
 import { getFavoriteTrailIds } from "../../services/favoriteTrails";
@@ -533,7 +534,7 @@ function RouteCard({
   onImageReady: (imageUrl: string) => void;
 }) {
   const [imageFailed, setImageFailed] = useState(false);
-  const distance = trail.distance_km ? `${trail.distance_km} km` : "Distancia a confirmar";
+  const distance = trail.distance_km ? formatKilometers(trail.distance_km) : "Distancia a confirmar";
 
   return (
     <Pressable

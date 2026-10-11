@@ -13,6 +13,7 @@ import {
 import { router } from "expo-router";
 import { getProfile } from "../../services/api";
 import { getTrails } from "../../services/trailRepository";
+import { formatKilometers } from "../../services/geoUtils";
 import { getAuthSession } from "../../services/authSession";
 import { Profile, Trail } from "../../types";
 import {
@@ -83,7 +84,7 @@ export default function HomeScreen() {
 
   const userName = profile?.user?.name || "viajera";
   const distance = recommendedTrail?.distance_km
-    ? `${recommendedTrail.distance_km} km`
+    ? formatKilometers(recommendedTrail.distance_km)
     : "Distancia a confirmar";
   const duration = recommendedTrail?.duration || "Duracion a confirmar";
   const difficulty = recommendedTrail?.difficulty || "A confirmar";

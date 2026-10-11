@@ -3,6 +3,7 @@ import { Linking, Pressable, StyleSheet, Text, View } from "react-native";
 import Svg, { Circle, Line, Polygon, Polyline } from "react-native-svg";
 import { Ionicons } from "@expo/vector-icons";
 import { TrailElevation } from "../../types";
+import { formatKilometers } from "../../services/geoUtils";
 import { colors } from "./MiSenderoUI";
 
 export default function ElevationProfile({ elevation, onRetry }: {
@@ -52,7 +53,7 @@ export default function ElevationProfile({ elevation, onRetry }: {
         accessible
         accessibilityRole="adjustable"
         accessibilityValue={{ min: 0, max: points.length - 1, now: Math.min(selected ?? 0, points.length - 1),
-          text: `${(active.distance_m / 1000).toFixed(2)} kilometros, ${Math.round(active.elevation_m)} metros` }}
+          text: `${formatKilometers(active.distance_m / 1000)}, ${Math.round(active.elevation_m)} metros` }}
         accessibilityActions={[{ name: "increment", label: "Siguiente punto" }, { name: "decrement", label: "Punto anterior" }]}
         onAccessibilityAction={(event) => setSelected(Math.max(0, Math.min(points.length - 1,
           (selected ?? 0) + (event.nativeEvent.actionName === "increment" ? 1 : -1)
@@ -67,10 +68,10 @@ export default function ElevationProfile({ elevation, onRetry }: {
       </View>
       <View style={styles.axis}>
         <Text style={styles.meta}>{Math.round(elevation.min_m)} m</Text>
-        <Text style={styles.meta}>{(elevation.distance_m / 1000).toFixed(2)} km de trazado</Text>
+        <Text style={styles.meta}>{formatKilometers(elevation.distance_m / 1000)} de trazado</Text>
       </View>
       <Text accessibilityLiveRegion="polite" style={styles.readout}>
-        {(active.distance_m / 1000).toFixed(2)} km - {Math.round(active.elevation_m)} m
+        {formatKilometers(active.distance_m / 1000)} - {Math.round(active.elevation_m)} m
       </Text>
       <Text style={styles.meta}>Resolucion del terreno: {elevation.resolution_m} m. Desnivel aproximado sobre el trazado del mapa.</Text>
       <Pressable accessibilityRole="link" onPress={() => Linking.openURL(elevation.source_url)} style={styles.source}>

@@ -120,6 +120,19 @@ export interface TrailElevation {
   }[];
 }
 
+export interface TrailProvenance {
+  checked_at: string;
+  route_type: "out_and_back" | "point_to_point";
+  access: string;
+  precautions: string;
+  duration_basis: string;
+  official_distance_km: number | null;
+  distance_basis: "mapped_geometry";
+  sources: { title: string; url: string }[];
+  mapping: { source: string; source_url: string; license: string; retrieved_at: string };
+  photo: { author: string; page_url: string; license: string; license_url: string; context: string | null };
+}
+
 export interface Trail {
   id: number;
   name: string;
@@ -134,6 +147,7 @@ export interface Trail {
   map_zoom: number | null;
   route_coordinates: string | null;
   elevation?: TrailElevation | null;
+  provenance?: TrailProvenance | null;
   created_at: string;
 }
 

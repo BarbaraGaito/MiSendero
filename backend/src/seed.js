@@ -1,5 +1,6 @@
 const { query } = require("./db");
 const realTrailRoutes = require("./data/realTrailRoutes");
+const additionalTrails = require("./data/additionalTrails");
 const logger = require("./logger");
 
 const commonsImage = (fileName) =>
@@ -235,14 +236,14 @@ const migrateLegacyTrailNames = async () => {
 };
 
 const seedTrails = async () => {
-  for (const trail of seedTrailData) {
+  for (const trail of [...seedTrailData, ...additionalTrails]) {
     await query(
       `
         INSERT INTO trails (
           name, location, difficulty, duration, distance_km, description,
-          image_url, center_lat, center_lng, map_zoom, route_coordinates
+          image_url, center_lat, center_lng, map_zoom, route_coordinates, provenance
         )
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
         ON CONFLICT (name) DO UPDATE SET
           location = EXCLUDED.location,
           difficulty = EXCLUDED.difficulty,
@@ -253,7 +254,8 @@ const seedTrails = async () => {
           center_lat = EXCLUDED.center_lat,
           center_lng = EXCLUDED.center_lng,
           map_zoom = EXCLUDED.map_zoom,
-          route_coordinates = EXCLUDED.route_coordinates
+          route_coordinates = EXCLUDED.route_coordinates,
+          provenance = COALESCE(EXCLUDED.provenance, trails.provenance)
       `,
       [
         trail.name,
@@ -267,6 +269,7 @@ const seedTrails = async () => {
         trail.center_lng,
         trail.map_zoom,
         JSON.stringify(trail.route_coordinates),
+        trail.provenance ? JSON.stringify(trail.provenance) : null,
       ]
     );
   }

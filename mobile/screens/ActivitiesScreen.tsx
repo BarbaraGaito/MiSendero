@@ -16,6 +16,7 @@ import {
 } from "../../database/sessionsRepository";
 import { initDB } from "../../database/database";
 import { SessionRow } from "../../types";
+import { formatKilometers } from "../../services/geoUtils";
 
 const emptySummary: SessionsSummary = {
   totalDistance: 0,
@@ -23,11 +24,7 @@ const emptySummary: SessionsSummary = {
   currentMonthCount: 0,
 };
 
-const formatDistance = (meters: number) =>
-  `${(meters / 1000).toLocaleString("es-AR", {
-    maximumFractionDigits: 1,
-    minimumFractionDigits: 0,
-  })} km`;
+const formatDistance = (meters: number) => formatKilometers(meters / 1000);
 
 const formatDuration = (seconds: number) => {
   const hours = Math.floor(seconds / 3600);

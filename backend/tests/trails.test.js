@@ -56,7 +56,7 @@ describe("trails", () => {
     ];
 
     expect(response.status).toBe(200);
-    expect(response.body).toHaveLength(10);
+    expect(response.body).toHaveLength(22);
     expect(response.body.map((trail) => trail.name)).toEqual(
       expect.not.arrayContaining(legacyNames)
     );
@@ -82,6 +82,23 @@ describe("trails", () => {
 
     expect(response.status).toBe(200);
     expect(response.body.name).toBe(first.name);
+  });
+
+  test("reseeding preserves IDs and adds no simulated reports to new trails", async () => {
+    const definitions = require("../src/data/additionalTrailDefinitions");
+    const before = await request(app).get("/api/trails");
+    await seedDatabase();
+    const after = await request(app).get("/api/trails");
+    expect(after.body.map((trail) => [trail.name, trail.id]).sort()).toEqual(
+      before.body.map((trail) => [trail.name, trail.id]).sort()
+    );
+    for (const definition of definitions) {
+      const trail = after.body.find((item) => item.name === definition.name);
+      expect(trail.provenance.route_type).toBe(definition.route_type);
+      expect(trail.provenance.sources[0].url).toBe(definition.source_url);
+      const reports = await request(app).get(`/api/trails/${trail.id}/reports`);
+      expect(reports.body).toEqual([]);
+    }
   });
 
   test("404s for a missing trail", async () => {

@@ -102,6 +102,18 @@ test("a new geometry cannot overwrite the downloaded trace and its elevation", a
   expect((await getOfflineMapByTrailId(7))?.trail).toEqual(elevated);
 });
 
+test("institutional data is saved even when a refresh returns no elevation, preserving the existing DEM", async () => {
+  await saveOfflineTrailMap({ ...elevated, national_park: null });
+  const profile = require("../../backend/src/data/nationalParks").find((park: { slug: string }) => park.slug === "iguazu");
+  const refreshed = { ...trail, national_park: profile, national_park_slug: "iguazu" };
+  await refreshOfflineTrailElevation(refreshed);
+  const saved = (await getOfflineMapByTrailId(7))?.trail;
+  expect(saved?.national_park).toEqual(profile);
+  expect(saved?.national_park_slug).toBe("iguazu");
+  expect(saved?.elevation).toEqual(elevated.elevation);
+  expect(saved?.route_coordinates).toBe(elevated.route_coordinates);
+});
+
 test("offline elevation is isolated by user", async () => {
   await saveOfflineTrailMap(elevated);
   (auth.getAuthSession as jest.Mock).mockResolvedValue({ user: { id: 99 } });

@@ -1,6 +1,7 @@
 const { query } = require("./db");
 const realTrailRoutes = require("./data/realTrailRoutes");
 const additionalTrails = require("./data/additionalTrails");
+const nationalParks = require("./data/nationalParks");
 const logger = require("./logger");
 
 const commonsImage = (fileName) =>
@@ -272,6 +273,14 @@ const seedTrails = async () => {
         trail.provenance ? JSON.stringify(trail.provenance) : null,
       ]
     );
+  }
+  for (const park of nationalParks) {
+    const { trails: names, ...profile } = park;
+    await query(`INSERT INTO national_parks (slug, profile) VALUES ($1, $2)
+      ON CONFLICT (slug) DO UPDATE SET profile = EXCLUDED.profile`, [park.slug, JSON.stringify(profile)]);
+    for (const name of names) {
+      await query("UPDATE trails SET national_park_slug = $1 WHERE name = $2", [park.slug, name]);
+    }
   }
 };
 

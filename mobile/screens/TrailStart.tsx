@@ -18,6 +18,7 @@ import {
   ROUTE_START_WARNING_METERS,
 } from "../../services/geoUtils";
 import { Trail } from "../../types";
+import { NationalParkEntry } from "../components/NationalParkUI";
 import {
   InfoCard,
   PrimaryButton,
@@ -287,6 +288,7 @@ export default function Screen05TrailStart() {
           Confirma los ultimos puntos de seguridad y empieza el recorrido.
         </Text>
 
+        {trail?.national_park && <NationalParkEntry park={trail.national_park} trailId={trail.id} trailName={trail.name} beforeStart />}
         <InfoCard style={styles.card}>
           <Text style={styles.cardTitle}>Checklist rapido</Text>
           {checklist.map((item) => (

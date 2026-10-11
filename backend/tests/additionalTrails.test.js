@@ -5,10 +5,24 @@ const { assemble } = require("../scripts/catalogGeometry");
 const { sampleRoute } = require("../src/trailElevation");
 
 describe("verified additional catalog", () => {
-  test("adds twelve distinct trails across seven additional provinces", () => {
-    expect(trails).toHaveLength(12);
-    expect(new Set(trails.map((trail) => trail.name)).size).toBe(12);
-    expect(new Set(trails.map((trail) => trail.location.split(", ").at(-1))).size).toBe(7);
+  test("adds twenty-two distinct trails across thirteen provinces", () => {
+    expect(trails).toHaveLength(22);
+    expect(new Set(trails.map((trail) => trail.name)).size).toBe(22);
+    expect(new Set(trails.map((trail) => trail.location.split(", ").at(-1))).size).toBe(13);
+  });
+
+  test("includes ten new trails outside national parks in ten distinct provinces", () => {
+    const other = definitions.filter((definition) => definition.national_park === false);
+    expect(other).toHaveLength(10);
+    expect(new Set(other.map((definition) => definition.location.split(", ").at(-1))).size).toBe(10);
+    other.forEach((definition) => expect(definition.location).not.toMatch(/^Parque Nacional /));
+  });
+
+  test("makes planning estimates and one-way references explicit", () => {
+    definitions.filter((definition) => definition.national_park === false).forEach((definition) => {
+      if (definition.duration_basis === "planning_estimate") expect(definition.precautions).toContain("estimacion");
+      if (definition.route_type === "point_to_point") expect(definition.precautions).toContain("no incluyen el regreso");
+    });
   });
 
   test.each(definitions)("$key has complete, attributed real-world data", (definition) => {

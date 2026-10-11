@@ -56,7 +56,7 @@ describe("trails", () => {
     ];
 
     expect(response.status).toBe(200);
-    expect(response.body).toHaveLength(22);
+    expect(response.body).toHaveLength(32);
     expect(response.body.map((trail) => trail.name)).toEqual(
       expect.not.arrayContaining(legacyNames)
     );
@@ -82,6 +82,22 @@ describe("trails", () => {
 
     expect(response.status).toBe(200);
     expect(response.body.name).toBe(first.name);
+  });
+
+  test("serves all ten non-national additions without a national park profile", async () => {
+    const definitions = require("../src/data/additionalTrailDefinitions");
+    const response = await request(app).get("/api/trails");
+    const other = definitions.filter((definition) => definition.national_park === false);
+    expect(other).toHaveLength(10);
+    for (const definition of other) {
+      const trail = response.body.find((item) => item.name === definition.name);
+      expect(trail).toBeDefined();
+      expect(trail.national_park).toBeNull();
+      expect(trail.national_park_slug).toBeFalsy();
+      expect(trail.image_url).toMatch(/^https:\/\//);
+      expect(trail.provenance.access).toBe(definition.access);
+      expect(trail.provenance.precautions).toBe(definition.precautions);
+    }
   });
 
   test("reseeding preserves IDs and adds no simulated reports to new trails", async () => {

@@ -24,12 +24,18 @@ import {
 } from "../components/MiSenderoUI";
 import { getTrails } from "../../services/trailRepository";
 import { formatKilometers } from "../../services/geoUtils";
+import { DistanceFilter, filterTrails, TrailAreaFilter } from "../../services/trailFilters";
 import { Trail } from "../../types";
 import { initDB } from "../../database/database";
 import { getFavoriteTrailIds } from "../../services/favoriteTrails";
 
 const ROUTES_PAGE_SIZE = 6;
 const DIFFICULTY_FILTERS = ["Todas", "Baja", "Media", "Alta"];
+const AREA_FILTERS: { id: TrailAreaFilter; label: string }[] = [
+  { id: "all", label: "Todos" },
+  { id: "national_parks", label: "Parques nacionales" },
+  { id: "other_trails", label: "Otros senderos" },
+];
 const DISTANCE_FILTERS = [
   { id: "Todas", label: "Todas" },
   { id: "Corta", label: "0-5 km" },
@@ -43,59 +49,12 @@ type RouteListItem = {
   image: string;
 };
 
-type DistanceFilter = (typeof DISTANCE_FILTERS)[number]["id"];
-
-const normalizeText = (value: string) =>
-  value
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "");
-
-const matchesDistanceFilter = (
-  distanceKm: Trail["distance_km"],
-  filter: DistanceFilter
-) => {
-  if (filter === "Todas") return true;
-  if (filter === "Sin dato") return distanceKm === null;
-  if (typeof distanceKm !== "number") return false;
-  if (filter === "Corta") return distanceKm <= 5;
-  if (filter === "Media") return distanceKm > 5 && distanceKm <= 10;
-  return distanceKm > 10;
-};
-
-const filterTrails = (
-  trails: Trail[],
-  favoriteTrailIds: number[],
-  searchQuery: string,
-  activeFilter: string,
-  activeDistanceFilter: DistanceFilter
-) => {
-  const normalizedQuery = normalizeText(searchQuery.trim());
-  const normalizedDifficulty = normalizeText(activeFilter);
-  const favoriteIdSet = new Set(favoriteTrailIds);
-
-  return trails.filter((trail) => {
-    const searchableText = normalizeText(`${trail.name} ${trail.location}`);
-    const matchesQuery =
-      normalizedQuery.length === 0 || searchableText.includes(normalizedQuery);
-    const matchesDifficulty =
-      activeFilter === "Todas" ||
-      (activeFilter === "Favoritas" && favoriteIdSet.has(trail.id)) ||
-      normalizeText(trail.difficulty).includes(normalizedDifficulty);
-
-    return (
-      matchesQuery &&
-      matchesDifficulty &&
-      matchesDistanceFilter(trail.distance_km, activeDistanceFilter)
-    );
-  });
-};
-
 export default function ExploreRoutesScreen() {
   const [trails, setTrails] = useState<Trail[]>([]);
   const [favoriteTrailIds, setFavoriteTrailIds] = useState<number[]>([]);
   const [activeFilter, setActiveFilter] = useState("Todas");
   const [activeDistanceFilter, setActiveDistanceFilter] = useState<DistanceFilter>("Todas");
+  const [activeAreaFilter, setActiveAreaFilter] = useState<TrailAreaFilter>("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [visibleCount, setVisibleCount] = useState(ROUTES_PAGE_SIZE);
   const [loadedImages, setLoadedImages] = useState<Record<string, boolean>>({});
@@ -104,7 +63,7 @@ export default function ExploreRoutesScreen() {
   const [error, setError] = useState<string | null>(null);
 
   const hasActiveFilters =
-    activeFilter !== "Todas" || activeDistanceFilter !== "Todas" || searchQuery.trim().length > 0;
+    activeFilter !== "Todas" || activeDistanceFilter !== "Todas" || activeAreaFilter !== "all" || searchQuery.trim().length > 0;
   const favoriteIdSet = useMemo(
     () => new Set(favoriteTrailIds),
     [favoriteTrailIds]
@@ -116,9 +75,10 @@ export default function ExploreRoutesScreen() {
         favoriteTrailIds,
         searchQuery,
         activeFilter,
-        activeDistanceFilter
+        activeDistanceFilter,
+        activeAreaFilter
       ),
-    [activeDistanceFilter, activeFilter, favoriteTrailIds, searchQuery, trails]
+    [activeAreaFilter, activeDistanceFilter, activeFilter, favoriteTrailIds, searchQuery, trails]
   );
   const visibleTrails = useMemo(
     () => filteredTrails.slice(0, visibleCount),
@@ -169,7 +129,7 @@ export default function ExploreRoutesScreen() {
 
   useEffect(() => {
     setVisibleCount(ROUTES_PAGE_SIZE);
-  }, [activeDistanceFilter, activeFilter, searchQuery]);
+  }, [activeAreaFilter, activeDistanceFilter, activeFilter, searchQuery]);
 
   const loadMoreRoutes = useCallback(() => {
     setVisibleCount((currentCount) =>
@@ -194,6 +154,7 @@ export default function ExploreRoutesScreen() {
   const clearFilters = useCallback(() => {
     setActiveFilter("Todas");
     setActiveDistanceFilter("Todas");
+    setActiveAreaFilter("all");
     setSearchQuery("");
   }, []);
 
@@ -230,6 +191,7 @@ export default function ExploreRoutesScreen() {
         }
         ListHeaderComponent={
           <ExploreRoutesHeader
+            activeAreaFilter={activeAreaFilter}
             activeDistanceFilter={activeDistanceFilter}
             activeFilter={activeFilter}
             error={error}
@@ -240,6 +202,7 @@ export default function ExploreRoutesScreen() {
             onRetry={loadRoutes}
             searchQuery={searchQuery}
             setActiveDistanceFilter={setActiveDistanceFilter}
+            setActiveAreaFilter={setActiveAreaFilter}
             setActiveFilter={setActiveFilter}
             setSearchQuery={setSearchQuery}
           />
@@ -258,6 +221,7 @@ export default function ExploreRoutesScreen() {
 }
 
 function ExploreRoutesHeader({
+  activeAreaFilter,
   activeDistanceFilter,
   activeFilter,
   error,
@@ -268,9 +232,11 @@ function ExploreRoutesHeader({
   onRetry,
   searchQuery,
   setActiveDistanceFilter,
+  setActiveAreaFilter,
   setActiveFilter,
   setSearchQuery,
 }: {
+  activeAreaFilter: TrailAreaFilter;
   activeDistanceFilter: DistanceFilter;
   activeFilter: string;
   error: string | null;
@@ -281,6 +247,7 @@ function ExploreRoutesHeader({
   onRetry: () => void;
   searchQuery: string;
   setActiveDistanceFilter: (filter: DistanceFilter) => void;
+  setActiveAreaFilter: (filter: TrailAreaFilter) => void;
   setActiveFilter: (filter: string) => void;
   setSearchQuery: (query: string) => void;
 }) {
@@ -292,12 +259,20 @@ function ExploreRoutesHeader({
         subtitle="Busca por nombre o zona y filtra por dificultad o distancia."
       />
       <RouteSearchBox searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+      <Pressable accessibilityRole="button" onPress={() => router.push("/parques-nacionales")}
+        style={{ flexDirection: "row", alignItems: "center", gap: 8, minHeight: 44, marginBottom: 14 }}>
+        <Ionicons name="shield-checkmark-outline" size={21} color={colors.greenDark} />
+        <Text style={{ flex: 1, fontSize: 15, fontWeight: "700", color: colors.greenDark }}>Parques Nacionales</Text>
+        <Ionicons name="chevron-forward" size={18} color={colors.greenDark} />
+      </Pressable>
       <RouteFilters
+        activeAreaFilter={activeAreaFilter}
         activeDistanceFilter={activeDistanceFilter}
         activeFilter={activeFilter}
         hasActiveFilters={hasActiveFilters}
         onClearFilters={onClearFilters}
         setActiveDistanceFilter={setActiveDistanceFilter}
+        setActiveAreaFilter={setActiveAreaFilter}
         setActiveFilter={setActiveFilter}
       />
       <RoutesResultStatus
@@ -350,22 +325,33 @@ function RouteSearchBox({
 }
 
 function RouteFilters({
+  activeAreaFilter,
   activeDistanceFilter,
   activeFilter,
   hasActiveFilters,
   onClearFilters,
   setActiveDistanceFilter,
+  setActiveAreaFilter,
   setActiveFilter,
 }: {
+  activeAreaFilter: TrailAreaFilter;
   activeDistanceFilter: DistanceFilter;
   activeFilter: string;
   hasActiveFilters: boolean;
   onClearFilters: () => void;
   setActiveDistanceFilter: (filter: DistanceFilter) => void;
+  setActiveAreaFilter: (filter: TrailAreaFilter) => void;
   setActiveFilter: (filter: string) => void;
 }) {
   return (
     <>
+      <Text style={styles.filterLabel}>Tipo de sendero</Text>
+      <View style={styles.filterRow}>
+        {AREA_FILTERS.map((filter) => (
+          <FilterButton key={filter.id} label={filter.label}
+            isActive={activeAreaFilter === filter.id} onPress={() => setActiveAreaFilter(filter.id)} />
+        ))}
+      </View>
       <Text style={styles.filterLabel}>Dificultad</Text>
       <View style={styles.filterRow}>
         {[...DIFFICULTY_FILTERS, "Favoritas"].map((filter) => (

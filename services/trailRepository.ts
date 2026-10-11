@@ -2,13 +2,15 @@ import * as api from "./api";
 import { getOfflineMapByTrailId, getOfflineMaps, refreshOfflineTrailElevation } from "./offlineMaps";
 import { Trail, TrailReport } from "../types";
 import * as Network from "expo-network";
+import { isNationalParkTrail } from "./trailFilters";
 
 // Downloaded geometry is usable even if imagery is incomplete. Tile verification
 // belongs to the map availability indicator, not the route/reporting workflow.
 export const getTrailById = async (id: number): Promise<Trail> => {
   const local = await getOfflineMapByTrailId(id);
   if (local?.trail) {
-    if (!local.trail.elevation) {
+    if (!local.trail.elevation || local.trail.national_park === undefined ||
+        (local.trail.national_park === null && isNationalParkTrail(local.trail))) {
       const network = await Network.getNetworkStateAsync().catch(() => null);
       if (network?.isConnected && network.isInternetReachable !== false) {
         try {

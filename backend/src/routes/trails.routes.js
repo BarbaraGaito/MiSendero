@@ -5,6 +5,7 @@ const { validateBody } = require("../middleware/validate");
 const { createTrailSchema, createReportSchema } = require("../schemas/trails.schemas");
 const { REPORT_STALE_AFTER_DAYS } = require("../cleanupStaleReports");
 const { cachedElevation, ensureTrailElevation } = require("../trailElevation");
+const { liveStatus } = require("./nationalParks.routes");
 
 const router = express.Router();
 
@@ -133,13 +134,15 @@ const mapWeatherResponse = (trail, weatherData) => {
 // contract from ADR-04, so it gets re-serialized here at the API boundary.
 const serializeTrail = (trail) => ({
   ...trail,
+  national_park: trail.national_park ? { ...trail.national_park, live_status: liveStatus } : null,
   elevation: cachedElevation(trail),
   route_coordinates:
     trail.route_coordinates != null ? JSON.stringify(trail.route_coordinates) : null,
 });
 
 const getTrailOr404 = async (id, res) => {
-  const { rows } = await query("SELECT * FROM trails WHERE id = $1", [id]);
+  const { rows } = await query(`SELECT t.*, p.profile AS national_park FROM trails t
+    LEFT JOIN national_parks p ON p.slug = t.national_park_slug WHERE t.id = $1`, [id]);
   const trail = rows[0];
 
   if (!trail) {
@@ -152,7 +155,8 @@ const getTrailOr404 = async (id, res) => {
 
 router.get("/", async (_req, res, next) => {
   try {
-    const { rows } = await query("SELECT * FROM trails ORDER BY created_at DESC");
+    const { rows } = await query(`SELECT t.*, p.profile AS national_park FROM trails t
+      LEFT JOIN national_parks p ON p.slug = t.national_park_slug ORDER BY t.created_at DESC`);
     res.json(rows.map(serializeTrail));
   } catch (error) {
     next(error);

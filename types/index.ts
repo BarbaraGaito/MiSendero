@@ -148,8 +148,45 @@ export interface Trail {
   route_coordinates: string | null;
   elevation?: TrailElevation | null;
   provenance?: TrailProvenance | null;
+  national_park_slug?: string | null;
+  national_park?: NationalParkProfile | null;
   created_at: string;
 }
+
+export interface NationalParkRegistration {
+  requirement: "always" | "seasonal" | "consult";
+  mode?: "online" | "in_person" | "consult";
+  required_months: number[];
+  summary: string;
+  form_url: string | null;
+  source_url: string;
+}
+
+export interface NationalParkProfile {
+  slug: string;
+  name: string;
+  provinces: string[];
+  scope: string;
+  checked_at: string;
+  website_url: string;
+  notices_url: string;
+  registration: NationalParkRegistration;
+  registration_by_trail?: Record<string, NationalParkRegistration>;
+  access: { text: string; source_url: string };
+  rules: { items: string[]; source_url: string };
+  overnight: { text: string; source_url: string; booking_url: string | null };
+  fire: { text: string; source_url: string };
+  contact: { name: string; phone: string | null; email: string; source_url: string };
+  weather_area: string;
+  live_status: {
+    closures: "not_integrated";
+    weather_alerts: "not_integrated";
+    weather_url: string;
+  };
+}
+
+export type ParkTrail = Pick<Trail, "id" | "name" | "location" | "difficulty" | "duration" | "distance_km" | "image_url">;
+export interface NationalPark extends NationalParkProfile { trails: ParkTrail[] }
 
 export interface TrailWeather {
   trail_id: number;

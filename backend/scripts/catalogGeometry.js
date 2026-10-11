@@ -2,6 +2,18 @@ const fs = require("node:fs/promises");
 const path = require("node:path");
 const { sampleRoute } = require("../src/trailElevation");
 
+const otherRegions = {
+  uritorco: [-64.52, -30.90, -64.45, -30.82],
+  ventana: [-62.08, -38.10, -61.97, -38.02],
+  piltri: [-71.51, -42.00, -71.44, -41.93],
+  sanBernardo: [-65.412, -24.802, -65.37, -24.774],
+  colorados: [-65.524, -23.769, -65.481, -23.734],
+  puertaCielo: [-65.40, -26.84, -65.30, -26.77],
+  batea: [-71.205, -38.86, -71.12, -38.80],
+  tabaquillo: [-65.00, -32.39, -64.92, -32.32],
+  esquelCruz: [-71.36, -42.96, -71.28, -42.90],
+  encantado: [-54.85, -27.06, -54.80, -27.02],
+};
 const regions = {
   iguazu: [-54.48, -25.72, -54.42, -25.65],
   fueguino: [-68.64, -54.89, -68.48, -54.79],
@@ -11,6 +23,7 @@ const regions = {
   chalten: [-72.92, -49.38, -72.86, -49.30],
   lihue: [-65.65, -38.04, -65.53, -37.94],
   quijadas: [-67.02, -32.54, -66.91, -32.44],
+  ...otherRegions,
 };
 const cacheDir = path.resolve(__dirname, "../../tmp/catalog-osm");
 const fetchJson = async (url) => {
@@ -68,7 +81,7 @@ const main = async () => {
   if (command === "--discover") {
     await fs.mkdir(cacheDir, { recursive: true });
     for (const [name, bbox] of Object.entries(regions)) {
-      if (region && region !== name) continue;
+      if (region && (region === "other" ? !(name in otherRegions) : region !== name)) continue;
       const data = await fetchJson(`https://api.openstreetmap.org/api/0.6/map.json?bbox=${bbox.join(",")}`);
       await fs.writeFile(path.join(cacheDir, `${name}.json`), JSON.stringify(data));
       console.log(`${name}: ${data.elements.length} mapped elements`);
@@ -89,8 +102,11 @@ const main = async () => {
     }
   } else if (command === "--build") {
     const definitions = require("../src/data/additionalTrailDefinitions");
-    const output = {};
+    const keys = process.argv.find((arg) => arg.startsWith("--keys="))?.slice(7).split(",");
+    const outputPath = path.resolve(__dirname, "../src/data/additionalTrailRoutes.json");
+    const output = keys ? JSON.parse(await fs.readFile(outputPath, "utf8")) : {};
     for (const trail of definitions) {
+      if (keys && !keys.includes(trail.key)) continue;
       const data = await readRegion(trail.region);
       const route = assemble(trail.ways, data.elements);
       if (trail.route_type === "out_and_back") route.points = route.points.concat(route.points.slice(0, -1).reverse());
@@ -99,7 +115,7 @@ const main = async () => {
         source_url: `https://www.openstreetmap.org/way/${route.ways[0].id}` };
       console.log(`${trail.key}: ${route.points.length} points, ${output[trail.key].distance_km} km`);
     }
-    await fs.writeFile(path.resolve(__dirname, "../src/data/additionalTrailRoutes.json"), JSON.stringify(output, null, 2) + "\n");
+    await fs.writeFile(outputPath, JSON.stringify(output, null, 2) + "\n");
   } else throw new Error("Use --discover [region], --inspect region [name filter], or --build");
 };
 

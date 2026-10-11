@@ -3,7 +3,7 @@ import { getRouteTrackingSummary } from "../../services/routeTracking";
 import { formatDistance as formatMeters } from "../../services/geoUtils";
 import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useMemo, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { getTrailById } from "../../services/trailRepository";
 import { getWearableRuntimeStatus } from "../../services/wearableMetrics";
 import { Trail, WearableRuntimeStatus } from "../../types";
@@ -89,8 +89,8 @@ export default function RestBreakScreen() {
       ? (Number(savedDistance) / 1000) / (activeMinutes / 60)
       : null;
 
-  return (
-    <AppScreen activeTab="actividad">
+  const content = (
+    <>
       <ScreenTitle
         eyebrow="Recorrido en pausa"
         title="Tomate un respiro"
@@ -202,6 +202,19 @@ export default function RestBreakScreen() {
           }
         />
       </View>
+    </>
+  );
+
+  return (
+    <AppScreen activeTab="actividad">
+      <ScrollView
+        testID="paused-route-scroll"
+        style={styles.scroll}
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator
+      >
+        {content}
+      </ScrollView>
     </AppScreen>
   );
 }
@@ -231,6 +244,14 @@ function formatTime(timestamp: number) {
 }
 
 const styles = StyleSheet.create({
+  scroll: {
+    flex: 1,
+    minHeight: 0,
+  },
+  scrollContent: {
+    flexGrow: 1,
+    paddingBottom: 24,
+  },
   cardTitle: {
     color: colors.ink,
     fontSize: 17,
@@ -279,6 +300,7 @@ const styles = StyleSheet.create({
   actions: {
     gap: 10,
     marginTop: "auto",
+    paddingTop: 12,
   },
   errorText: {
     color: colors.danger,

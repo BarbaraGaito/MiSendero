@@ -1,11 +1,11 @@
-import { router, useLocalSearchParams } from "expo-router";
+import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Alert, Linking, StyleSheet, Text, View } from "react-native";
-import { useFocusEffect } from "@react-navigation/native";
 import * as Crypto from "expo-crypto";
 import * as SMS from "expo-sms";
 import { getEmergencyContact } from "../../services/emergencyContact";
 import { buildEmergencyMessage, getEmergencyLocation, sendEmergencyAlert } from "../../services/emergencyAlerts";
+import { getTrailForMessage } from "../../services/trailMessages";
 import { getEmergencyOperation, PendingOperation, runSync } from "../../services/syncQueue";
 import { EmergencyContact } from "../../types";
 import { AppScreen, Card, PrimaryButton, ScreenTitle, colors } from "../components/MiSenderoUI";
@@ -22,6 +22,7 @@ export default function ConfirmSosScreen() {
   const [operation, setOperation] = useState<PendingOperation | null>(null);
   const [busy, setBusy] = useState(false);
   const [smsStatus, setSmsStatus] = useState("");
+  const [preparingSms, setPreparingSms] = useState(false);
 
   useFocusEffect(useCallback(() => {
     let active = true;
@@ -32,8 +33,8 @@ export default function ConfirmSosScreen() {
   useEffect(() => {
     if (operationId) return;
     let active = true;
-    void getEmergencyLocation(trailId, startedAtMs).then((location) => {
-      if (active) setMessage(buildEmergencyMessage({ ...location, trailId }));
+    void Promise.all([getEmergencyLocation(trailId, startedAtMs), getTrailForMessage(trailId)]).then(([location, trail]) => {
+      if (active) setMessage(buildEmergencyMessage({ ...location, trail }));
     });
     return () => { active = false; };
   }, [trailId, startedAtMs, operationId]);
@@ -41,11 +42,28 @@ export default function ConfirmSosScreen() {
   useEffect(() => {
     if (!operationId) return;
     let active = true;
+    let savedTrail: Awaited<ReturnType<typeof getTrailForMessage>> | undefined;
     const refresh = async () => {
       const value = await getEmergencyOperation(operationId);
       if (!active) return;
       setOperation(value);
-      if (typeof value?.payload.message_body === "string") setMessage(value.payload.message_body);
+      if (typeof value?.payload.message_body === "string") {
+        if (value.payload.message_body.includes("Sendero ID ")) {
+          if (savedTrail === undefined) savedTrail = await getTrailForMessage(
+            typeof value.payload.trail_id === "number" ? value.payload.trail_id : null
+          );
+          if (!active) return;
+          const recordedAt = typeof value.payload.last_known_at === "string" ? Date.parse(value.payload.last_known_at) : NaN;
+          setMessage(buildEmergencyMessage({
+            trail: savedTrail,
+            latitude: typeof value.payload.latitude === "number" ? value.payload.latitude : null,
+            longitude: typeof value.payload.longitude === "number" ? value.payload.longitude : null,
+            timestamp: Number.isFinite(recordedAt) ? recordedAt : value.createdAt,
+          }));
+        } else {
+          setMessage(value.payload.message_body);
+        }
+      }
     };
     void refresh().catch(() => undefined);
     const timer = setInterval(() => { void refresh().catch(() => undefined); }, 2000);
@@ -68,15 +86,24 @@ export default function ConfirmSosScreen() {
   };
 
   const handleSms = async () => {
+    if (preparingSms) return;
     if (!contact) { router.push("/contacto-seguridad"); return; }
+    setPreparingSms(true);
     try {
       if (!(await SMS.isAvailableAsync())) {
         Alert.alert("SMS no disponible en este dispositivo", "Usá el mensaje preparado desde un teléfono con servicio celular.");
         return;
       }
-      const result = await SMS.sendSMSAsync([contact.phone], message);
+      let preparedMessage = message;
+      if (!operationId) {
+        const [location, trail] = await Promise.all([getEmergencyLocation(trailId, startedAtMs), getTrailForMessage(trailId)]);
+        preparedMessage = buildEmergencyMessage({ ...location, trail });
+        setMessage(preparedMessage);
+      }
+      const result = await SMS.sendSMSAsync([contact.phone], preparedMessage);
       setSmsStatus(result.result === "cancelled" ? "SMS cancelado." : "Se abrió Mensajes. Verificá allí el estado del SMS; MiSendero no puede confirmar su entrega.");
     } catch { setSmsStatus("No pudimos abrir Mensajes. Intentá llamar al contacto."); }
+    finally { setPreparingSms(false); }
   };
 
   const registered = operation?.status === "synced";
@@ -103,7 +130,7 @@ export default function ConfirmSosScreen() {
       </Card>
       <View style={styles.actions}>
         <PrimaryButton label={busy ? "Guardando pedido…" : operationId ? "Reintentar registro" : "Guardar pedido SOS"} onPress={handleSos} tone="danger" />
-        <PrimaryButton label="Preparar SMS al contacto" onPress={handleSms} />
+        <PrimaryButton label="Preparar SMS al contacto" onPress={handleSms} isLoading={preparingSms} loadingLabel="Preparando mensaje" />
         {contact && <PrimaryButton label="Llamar al contacto" tone="secondary" onPress={() => {
           void Linking.openURL(`tel:${contact.phone.replace(/[^+\d]/g, "")}`).catch(() => Alert.alert("No se pudo abrir Teléfono"));
         }} />}

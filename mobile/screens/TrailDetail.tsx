@@ -95,9 +95,10 @@ export default function Screen03TrailDetail() {
 
     try {
       const reports = await getTrailReports(trail.id).catch(() => []);
-      await saveOfflineTrailMap(trail, reports, (downloaded, total) => {
+      const saved = await saveOfflineTrailMap(trail, reports, (downloaded, total) => {
         setDownloadMessage(`Descargando tiles ${downloaded}/${total}...`);
       });
+      if (saved?.trail) setTrail(saved.trail);
       setIsDownloaded(true);
       setDownloadMessage("Mapa descargado. Ya podes abrirlo sin conexion.");
     } catch (downloadError) {
@@ -196,6 +197,7 @@ function TrailDetailContent({
       <DescriptionCard trail={trail} />
       <DifficultyCard trail={trail} weather={weather} />
       <BeforeYouGoCard tips={beforeYouGoTips} />
+      <AltimetrySection trail={trail} />
       <OfflineMapCard
         downloadMessage={downloadMessage}
         isDownloaded={isDownloaded}
@@ -251,7 +253,7 @@ function TrailStats({ trail }: { trail: Trail }) {
       <StatPill icon="walk-outline" label={getTrailDistanceLabel(trail)} />
       <StatPill icon="time-outline" label={trail.duration || "Duracion a confirmar"} />
       <StatPill icon="leaf-outline" label={trail.difficulty} />
-      <StatPill icon="trending-up-outline" label="Desnivel: sin medición" />
+      <StatPill icon="trending-up-outline" label={trail.elevation ? `Desnivel: +${trail.elevation.ascent_m} m` : "Desnivel no disponible"} />
     </View>
   );
 }
@@ -282,6 +284,21 @@ function FavoriteButton({
       <Text style={styles.favoriteText}>
         {isFavorite ? "Ruta favorita" : "Guardar como favorita"}
       </Text>
+    </Pressable>
+  );
+}
+
+function AltimetrySection({ trail }: { trail: Trail }) {
+  return (
+    <Pressable
+      accessibilityRole="button"
+      accessibilityLabel="Abrir altimetria del sendero"
+      onPress={() => router.push({ pathname: "/trail-elevation", params: { id: String(trail.id) } })}
+      style={({ pressed }) => [styles.altimetrySection, pressed && styles.pressed]}
+    >
+      <Ionicons name="analytics-outline" size={22} color={colors.green} />
+      <Text style={styles.altimetryTitle}>Altimetria</Text>
+      <Ionicons name="chevron-forward" size={20} color={colors.muted} />
     </Pressable>
   );
 }
@@ -504,6 +521,9 @@ function normalizeDifficulty(difficulty: string) {
 }
 
 function getDownloadErrorMessage(error: unknown) {
+  if (error instanceof Error && error.message === "offline-elevation-unavailable") {
+    return "No pudimos obtener la altimetria. Reintenta con conexion antes de descargar esta ruta.";
+  }
   if (error instanceof Error && "code" in error && error.code === "provider-not-configured") return error.message;
   if (error instanceof Error && error.message.startsWith("offline-map-incomplete")) {
     return "La descarga no quedo completa. Reintenta con conexion estable antes de salir.";
@@ -513,6 +533,22 @@ function getDownloadErrorMessage(error: unknown) {
 }
 
 const styles = StyleSheet.create({
+  altimetrySection: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+    paddingVertical: 20,
+    marginTop: 18,
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    borderColor: colors.line,
+  },
+  altimetryTitle: {
+    flex: 1,
+    color: colors.ink,
+    fontSize: 18,
+    fontWeight: "900",
+  },
   scroll: {
     flexGrow: 1,
   },

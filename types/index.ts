@@ -98,6 +98,28 @@ export interface SessionRow {
   reviewed_at: number | null;
 }
 
+export interface TrailElevation {
+  version: number;
+  geometry_hash: string;
+  source: string;
+  source_url: string;
+  resolution_m: number;
+  sample_spacing_m: number;
+  noise_threshold_m: number;
+  fetched_at: string;
+  ascent_m: number;
+  descent_m: number;
+  min_m: number;
+  max_m: number;
+  distance_m: number;
+  points: {
+    latitude: number;
+    longitude: number;
+    distance_m: number;
+    elevation_m: number;
+  }[];
+}
+
 export interface Trail {
   id: number;
   name: string;
@@ -111,6 +133,7 @@ export interface Trail {
   center_lng: number | null;
   map_zoom: number | null;
   route_coordinates: string | null;
+  elevation?: TrailElevation | null;
   created_at: string;
 }
 

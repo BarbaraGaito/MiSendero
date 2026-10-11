@@ -9,20 +9,44 @@ import { getAuthSession } from "../../services/authSession";
 import { createTripPlan, TripPlanRecord } from "../../services/api";
 import { getSavedTripPlans, refreshTripPlans, saveTripPlanLocally } from "../../services/tripPlans";
 import { enqueueUnique, runSync } from "../../services/syncQueue";
-import { EmergencyContact } from "../../types";
+import { EmergencyContact, Trail } from "../../types";
+import { buildTripPlanMessage, getTrailForMessage } from "../../services/trailMessages";
+import { getTrailById } from "../../services/trailRepository";
+import { getEstimatedReturnHours } from "../../services/trailDuration";
 
 export default function TripPlanScreen() {
   const { id } = useLocalSearchParams<{ id?: string }>();
   const trailId = Number(id) || 1;
   const [contact, setContact] = useState<EmergencyContact | null>(null);
-  const [hours, setHours] = useState("4");
+  const [hours, setHours] = useState("");
   const [grace, setGrace] = useState("30");
   const [plan, setPlan] = useState<TripPlanRecord | null>(null);
+  const [trail, setTrail] = useState<Trail | null>(null);
+  const [loadingTrail, setLoadingTrail] = useState(true);
   const [notice, setNotice] = useState("");
   const [busy, setBusy] = useState(false);
   const [closePending, setClosePending] = useState(false);
   const requestRef = useRef<Parameters<typeof createTripPlan>[0] | null>(null);
   const busyRef = useRef(false);
+  const hoursEditedRef = useRef(false);
+  useEffect(() => {
+    let active = true;
+    setTrail(null);
+    setHours("");
+    setLoadingTrail(true);
+    hoursEditedRef.current = false;
+    requestRef.current = null;
+    setPlan(null);
+    void getTrailById(trailId).then((value) => {
+      if (!active) return;
+      setTrail(value);
+      const estimate = getEstimatedReturnHours(value.duration);
+      if (!hoursEditedRef.current && !requestRef.current) {
+        setHours(estimate === null ? "" : String(estimate).replace(".", ","));
+      }
+    }).catch(() => undefined).finally(() => { if (active) setLoadingTrail(false); });
+    return () => { active = false; };
+  }, [trailId]);
   useFocusEffect(useCallback(() => {
     let mounted = true;
     void getEmergencyContact().then((value) => { if (mounted) setContact(value); }).catch(() => undefined);
@@ -83,12 +107,19 @@ export default function TripPlanScreen() {
   };
   const share = async () => {
     if (!contact) { router.push("/contacto-seguridad"); return; }
+    const sharedPlan = (isActive ? plan : null) ?? requestRef.current;
     const duration = Number(hours.replace(",", "."));
-    if (!plan && (!Number.isFinite(duration) || duration <= 0 || duration > 72)) { setNotice("Indicá una duración válida antes de compartir."); return; }
-    const deadline = plan?.expected_return_at ?? new Date(Date.now() + duration * 3600000).toISOString();
+    if (!sharedPlan && (!Number.isFinite(duration) || duration <= 0 || duration > 72)) { setNotice("Indicá una duración válida antes de compartir."); return; }
+    const deadline = sharedPlan?.expected_return_at ?? new Date(Date.now() + duration * 3600000).toISOString();
     try {
       if (!(await SMS.isAvailableAsync())) throw new Error("SMS no disponible en este dispositivo.");
-      await SMS.sendSMSAsync([plan?.contact_phone ?? contact.phone], `Salgo a recorrer el sendero ${trailId}. Regreso previsto: ${new Date(deadline).toLocaleString("es-AR")}. Margen: ${plan?.grace_minutes ?? grace} min. Acordemos qué hacer si no confirmo mi regreso; puedo estar sin señal. Respondeme para confirmar que recibiste este plan.`);
+      const selectedTrailId = sharedPlan?.trail_id ?? trailId;
+      const selectedTrail = trail?.id === selectedTrailId ? trail : await getTrailForMessage(selectedTrailId);
+      await SMS.sendSMSAsync([sharedPlan?.contact_phone ?? contact.phone], buildTripPlanMessage({
+        trail: selectedTrail,
+        expectedReturnAt: deadline,
+        graceMinutes: sharedPlan?.grace_minutes ?? grace,
+      }));
       setNotice("Verificá el envío en Mensajes y esperá la respuesta del contacto. MiSendero no confirma la entrega del SMS.");
     } catch (error) { Alert.alert("No se pudo preparar el SMS", error instanceof Error ? error.message : "Intentá otro medio."); }
   };
@@ -104,8 +135,12 @@ export default function TripPlanScreen() {
       {plan.notification_status === "accepted" && <Text style={{ color: colors.muted }}>El canal aceptó el aviso. Esto no confirma que el contacto lo recibió o leyó.</Text>}
     </Card>}
     {!isActive && <Card>
+      {trail?.duration && <Text style={{ color: colors.muted, marginBottom: 8 }}>Duración estimada del recorrido: {trail.duration}.</Text>}
       <Text>Horas hasta el regreso</Text>
-      <TextInput editable={!requestRef.current} accessibilityLabel="Horas hasta el regreso" keyboardType="decimal-pad" value={hours} onChangeText={setHours} style={{ minHeight: 48, borderBottomWidth: 1, borderColor: colors.muted }} />
+      <TextInput editable={!requestRef.current} accessibilityLabel="Horas hasta el regreso" keyboardType="decimal-pad" value={hours}
+        placeholder={loadingTrail ? "Cargando duración..." : "Horas"}
+        onChangeText={(value) => { hoursEditedRef.current = true; setHours(value); }}
+        style={{ minHeight: 48, borderBottomWidth: 1, borderColor: colors.muted }} />
       <Text>Margen de espera en minutos</Text>
       <TextInput editable={!requestRef.current} accessibilityLabel="Margen de espera en minutos" keyboardType="number-pad" value={grace} onChangeText={setGrace} style={{ minHeight: 48, borderBottomWidth: 1, borderColor: colors.muted }} />
       {requestRef.current && <Text style={{ color: colors.muted }}>Reintentaremos el mismo plan, con regreso previsto a las {new Date(requestRef.current.expected_return_at).toLocaleString("es-AR")}, para evitar duplicar el aviso.</Text>}

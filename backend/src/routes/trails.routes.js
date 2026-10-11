@@ -4,6 +4,7 @@ const { requireAuth, requireAdmin } = require("../middleware/requireAuth");
 const { validateBody } = require("../middleware/validate");
 const { createTrailSchema, createReportSchema } = require("../schemas/trails.schemas");
 const { REPORT_STALE_AFTER_DAYS } = require("../cleanupStaleReports");
+const { cachedElevation, ensureTrailElevation } = require("../trailElevation");
 
 const router = express.Router();
 
@@ -132,6 +133,7 @@ const mapWeatherResponse = (trail, weatherData) => {
 // contract from ADR-04, so it gets re-serialized here at the API boundary.
 const serializeTrail = (trail) => ({
   ...trail,
+  elevation: cachedElevation(trail),
   route_coordinates:
     trail.route_coordinates != null ? JSON.stringify(trail.route_coordinates) : null,
 });
@@ -274,7 +276,9 @@ router.post(
 router.get("/:id", async (req, res, next) => {
   try {
     const trail = await getTrailOr404(req.params.id, res);
-    if (trail) res.json(serializeTrail(trail));
+    if (!trail) return;
+    trail.elevation = await ensureTrailElevation(trail).catch(() => null);
+    res.json(serializeTrail(trail));
   } catch (error) {
     next(error);
   }

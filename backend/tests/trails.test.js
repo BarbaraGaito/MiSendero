@@ -6,9 +6,11 @@ const app = require("../src/server");
 
 let adminToken;
 let userToken;
+let elevationFetch;
 const testPassword = process.env.TEST_USER_PASSWORD;
 
 beforeAll(async () => {
+  elevationFetch = jest.spyOn(global, "fetch").mockRejectedValue(new Error("No external network in tests"));
   await runMigrations();
   await seedDatabase();
 
@@ -32,6 +34,8 @@ beforeAll(async () => {
     { expiresIn: "7d" }
   );
 });
+
+afterAll(() => elevationFetch.mockRestore());
 
 describe("trails", () => {
   test("lists seeded trails", async () => {

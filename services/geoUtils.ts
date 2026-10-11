@@ -196,7 +196,8 @@ export const getRouteLengthMeters = (route: Coordinate[]) => {
 
 export const getRouteProgressMeters = (
   point: Coordinate,
-  route: Coordinate[]
+  route: Coordinate[],
+  preferredProgressMeters?: number
 ) => {
   if (route.length === 0) return null;
   if (route.length === 1) return 0;
@@ -229,9 +230,16 @@ export const getRouteProgressMeters = (
     const distanceY = p.y - closest.y;
     const distanceToSegment = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
 
-    if (distanceToSegment < closestDistance) {
+    const candidateProgress = traveledBeforeSegment + segmentLength * t;
+    // A retraced path has two valid projections; recorded GPS distance selects the leg.
+    const hasProgressHint = Number.isFinite(preferredProgressMeters);
+    const tieTolerance = hasProgressHint ? 1 : 0;
+    const isNearer = distanceToSegment < closestDistance - tieTolerance;
+    const isBetterLeg = hasProgressHint && Math.abs(distanceToSegment - closestDistance) <= tieTolerance &&
+      Math.abs(candidateProgress - preferredProgressMeters!) < Math.abs(closestProgress - preferredProgressMeters!);
+    if (isNearer || isBetterLeg) {
       closestDistance = distanceToSegment;
-      closestProgress = traveledBeforeSegment + segmentLength * t;
+      closestProgress = candidateProgress;
     }
 
     traveledBeforeSegment += segmentLength;
@@ -245,9 +253,12 @@ export const getRouteStart = (
   fallbackCenter: Coordinate
 ) => route[0] || fallbackCenter;
 
+export const formatKilometers = (kilometers: number) =>
+  `${kilometers.toLocaleString("es-AR", { maximumFractionDigits: 2, useGrouping: false })} km`;
+
 export const formatDistance = (meters: number) => {
   if (meters >= 1000) {
-    return `${(meters / 1000).toFixed(1)} km`;
+    return formatKilometers(meters / 1000);
   }
 
   return `${Math.round(meters)} m`;

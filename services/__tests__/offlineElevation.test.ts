@@ -73,6 +73,13 @@ test("tile failure still preserves elevation, without marking the map complete",
   expect(await getVerifiedOfflineMapByTrailId(7)).toBeNull();
 });
 
+test("downloaded trails retain their access, precautions, sources and photo attribution offline", async () => {
+  const { provenance } = require("../../backend/src/data/additionalTrails")[0];
+  await saveOfflineTrailMap({ ...elevated, provenance });
+  (api.getTrailById as jest.Mock).mockRejectedValue(new Error("offline"));
+  expect((await getOfflineMapByTrailId(7))?.trail?.provenance).toEqual(provenance);
+});
+
 test("missing elevation prevents an apparently complete offline download", async () => {
   (api.getTrailById as jest.Mock).mockResolvedValue(trail);
   await expect(saveOfflineTrailMap(trail)).rejects.toThrow("offline-elevation-unavailable");

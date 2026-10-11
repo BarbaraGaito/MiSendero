@@ -32,14 +32,11 @@ import {
 import { enqueueUnique } from "../../services/syncQueue";
 import { SessionRow } from "../../types";
 import { getRouteTrackingSummary } from "../../services/routeTracking";
+import { formatKilometers } from "../../services/geoUtils";
 
 const ROUTE_COMPLETION_THRESHOLD = 0.95;
 
-const formatDistance = (meters: number) =>
-  `${(meters / 1000).toLocaleString("es-AR", {
-    maximumFractionDigits: 2,
-    minimumFractionDigits: 0,
-  })} km`;
+const formatDistance = (meters: number) => formatKilometers(meters / 1000);
 
 const formatDuration = (seconds: number) => {
   const hours = Math.floor(seconds / 3600);

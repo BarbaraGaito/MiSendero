@@ -4,6 +4,7 @@ import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { initDB } from "../../database/database";
 import { getSessions } from "../../database/sessionsRepository";
 import { SessionRow } from "../../types";
+import { formatKilometers } from "../../services/geoUtils";
 import {
   AppScreen,
   Card,
@@ -31,11 +32,7 @@ const formatDate = (timestamp: number) =>
     minute: "2-digit",
   });
 
-const formatDistance = (meters: number) =>
-  `${(meters / 1000).toLocaleString("es-AR", {
-    maximumFractionDigits: 2,
-    minimumFractionDigits: 0,
-  })} km`;
+const formatDistance = (meters: number) => formatKilometers(meters / 1000);
 
 export default function HistoryScreen() {
   const [sessions, setSessions] = useState<SessionRow[]>([]);

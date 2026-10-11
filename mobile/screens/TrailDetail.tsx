@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { router, useLocalSearchParams } from "expo-router";
-import { ImageBackground, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Alert, ImageBackground, Linking, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import {
@@ -25,6 +25,7 @@ import {
 } from "../../database/sessionsRepository";
 import { initDB } from "../../database/database";
 import { Trail, TrailWeather } from "../../types";
+import { formatKilometers } from "../../services/geoUtils";
 
 const loadTrailDetailData = async (trailId: number) => {
   await initDB();
@@ -196,8 +197,9 @@ function TrailDetailContent({
       />
       <DescriptionCard trail={trail} />
       <DifficultyCard trail={trail} weather={weather} />
-      <BeforeYouGoCard tips={beforeYouGoTips} />
+      <BeforeYouGoCard tips={trail.provenance ? [trail.provenance.precautions, ...beforeYouGoTips] : beforeYouGoTips} />
       <AltimetrySection trail={trail} />
+      <TrailSources trail={trail} />
       <OfflineMapCard
         downloadMessage={downloadMessage}
         isDownloaded={isDownloaded}
@@ -310,7 +312,49 @@ function DescriptionCard({ trail }: { trail: Trail }) {
       <Text style={styles.body}>
         {trail.description || "Pronto vas a encontrar mas informacion sobre este recorrido."}
       </Text>
+      {trail.provenance ? (
+        <>
+          <Text style={styles.routeMetadata}>Inicio: {trail.provenance.access}</Text>
+          <Text style={styles.routeMetadata}>
+            {trail.provenance.route_type === "out_and_back" ? "Ida y vuelta" : "Solo ida; coordinar el regreso"}
+            {trail.provenance.duration_basis === "planning_estimate" ? ". Tiempo orientativo, no oficial." : "."}
+          </Text>
+        </>
+      ) : null}
     </InfoCard>
+  );
+}
+
+function TrailSources({ trail }: { trail: Trail }) {
+  const data = trail.provenance;
+  if (!data) return null;
+  const openSource = (url: string) => {
+    Linking.openURL(url).catch(() => Alert.alert("No se pudo abrir la fuente", "Revisa tu conexion e intenta nuevamente."));
+  };
+  return (
+    <View style={styles.sourcesSection}>
+      <Text style={styles.cardTitle}>Fuentes del recorrido</Text>
+      <Text style={styles.body}>
+        Distancia calculada sobre el trazado cartografico
+        {data.official_distance_km != null ? `. Referencia oficial: ${formatKilometers(data.official_distance_km)}` : ""}.
+        {" "}Consultar habilitacion actual antes de salir.
+      </Text>
+      {data.sources.map((source) => (
+        <Pressable key={source.url} accessibilityRole="link" onPress={() => openSource(source.url)} style={styles.sourceLink}>
+          <Ionicons name="open-outline" size={16} color={colors.greenDark} />
+          <Text style={styles.sourceText}>{source.title}</Text>
+        </Pressable>
+      ))}
+      <Pressable accessibilityRole="link" onPress={() => openSource(data.mapping.source_url)} style={styles.sourceLink}>
+        <Ionicons name="map-outline" size={16} color={colors.greenDark} />
+        <Text style={styles.sourceText}>{data.mapping.source} ({data.mapping.license})</Text>
+      </Pressable>
+      <Pressable accessibilityRole="link" onPress={() => openSource(data.photo.page_url)} style={styles.sourceLink}>
+        <Ionicons name="camera-outline" size={16} color={colors.greenDark} />
+        <Text style={styles.sourceText}>Foto: {data.photo.author} ({data.photo.license})</Text>
+      </Pressable>
+      {data.photo.context ? <Text style={styles.body}>{data.photo.context}.</Text> : null}
+    </View>
   );
 }
 
@@ -421,12 +465,12 @@ function TrailDetailActions({
 }
 
 const getTrailDistanceLabel = (trail: Trail) =>
-  trail.distance_km ? `${trail.distance_km} km` : "Distancia a confirmar";
+  trail.distance_km ? formatKilometers(trail.distance_km) : "Distancia a confirmar";
 
 function getDifficultyInsight(trail: Trail, weather: TrailWeather | null) {
   const difficulty = normalizeDifficulty(trail.difficulty);
   const distanceText = trail.distance_km
-    ? `${trail.distance_km} km`
+    ? formatKilometers(trail.distance_km)
     : "distancia pendiente de confirmar";
   const durationText = trail.duration || "duracion pendiente de confirmar";
   const weatherText = weather
@@ -533,6 +577,28 @@ function getDownloadErrorMessage(error: unknown) {
 }
 
 const styles = StyleSheet.create({
+  routeMetadata: {
+    color: colors.muted,
+    fontSize: 14,
+    lineHeight: 21,
+    marginTop: 10,
+  },
+  sourcesSection: {
+    marginTop: 20,
+  },
+  sourceLink: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+    minHeight: 44,
+    paddingVertical: 8,
+  },
+  sourceText: {
+    flex: 1,
+    color: colors.greenDark,
+    fontSize: 14,
+    lineHeight: 21,
+  },
   altimetrySection: {
     flexDirection: "row",
     alignItems: "center",

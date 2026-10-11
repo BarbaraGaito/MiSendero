@@ -8,6 +8,7 @@ import { Alert, Pressable, ScrollView, StyleSheet, Text, View } from "react-nati
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { getTrailById } from "../../services/trailRepository";
 import { hasEmergencyContact } from "../../services/emergencyContact";
+import { DepartureMessageRequiredError, getDepartureMessage } from "../../services/departureMessages";
 import {
   Coordinate,
   formatDistance,
@@ -144,11 +145,15 @@ export default function Screen05TrailStart() {
   const [planAgreed, setPlanAgreed] = useState(false);
   const [mapReady, setMapReady] = useState(false);
   const [battery, setBattery] = useState<number | null>(null);
+  const [departureReady, setDepartureReady] = useState(false);
+  const [hasActiveRoute, setHasActiveRoute] = useState(false);
+  const [starting, setStarting] = useState(false);
   const checklist = [
     { text: "Tengo agua y equipo suficiente", ready: waterReady, toggle: () => setWaterReady(!waterReady) },
     { text: mapReady ? "Mapa offline verificado" : "Mapa offline pendiente de descarga completa", ready: mapReady },
     { text: battery === null ? "Batería: no disponible" : `Batería: ${battery}%`, ready: battery !== null && battery >= 60 },
     { text: "Acordé ruta y hora de regreso con mi contacto", ready: planAgreed, toggle: () => setPlanAgreed(!planAgreed) },
+    { text: departureReady ? "Envío del plan de esta salida registrado" : "Falta enviar el plan por SMS (obligatorio)", ready: departureReady },
   ];
 
   useEffect(() => {
@@ -173,10 +178,11 @@ export default function Screen05TrailStart() {
         if (isActive) { setMapReady(!!map); setBattery(level >= 0 ? Math.round(level * 100) : null); }
       });
       setIsContactLoading(true);
-      hasEmergencyContact()
-        .then((exists) => {
-          if (isActive) setHasSafetyContact(exists);
+      Promise.all([hasEmergencyContact(), getDepartureMessage(trailId), getActiveRouteSession()])
+        .then(([exists, message, activeRoute]) => {
+          if (isActive) { setHasSafetyContact(exists); setDepartureReady(!!message); setHasActiveRoute(!!activeRoute); }
         })
+        .catch(() => { if (isActive) { setHasSafetyContact(false); setDepartureReady(false); setHasActiveRoute(false); } })
         .finally(() => {
           if (isActive) setIsContactLoading(false);
         });
@@ -221,6 +227,8 @@ export default function Screen05TrailStart() {
   });
 
   const beginRoute = async () => {
+    if (starting) return;
+    setStarting(true);
     try {
       const existing = await getActiveRouteSession();
       if (existing) {
@@ -232,14 +240,23 @@ export default function Screen05TrailStart() {
       const start = Date.now();
       await ensureRouteSession(trailId, start, isTestingLocation);
       router.push({ pathname: "/route-map", params: { active: "1", id: String(trailId), startedAt: String(start) } });
-    } catch (error) { Alert.alert("No se pudo iniciar", error instanceof Error ? error.message : "Intentá nuevamente."); }
+    } catch (error) {
+      if (error instanceof DepartureMessageRequiredError) { setDepartureReady(false); router.push({ pathname: "/plan-salida", params: { id: String(trailId) } }); }
+      else Alert.alert("No se pudo iniciar", error instanceof Error ? error.message : "Intentá nuevamente.");
+    } finally { setStarting(false); }
   };
 
   const handleStart = () => {
-    if (isContactLoading) return;
+    if (isContactLoading || starting) return;
+    if (hasActiveRoute) { void beginRoute(); return; }
 
     if (!hasSafetyContact) {
       showMissingContactAlert(trailId);
+      return;
+    }
+
+    if (!departureReady) {
+      router.push({ pathname: "/plan-salida", params: { id: String(trailId) } });
       return;
     }
 
@@ -293,7 +310,7 @@ export default function Screen05TrailStart() {
           </View>
         </InfoCard>
 
-        <PrimaryButton label="Acordar y registrar mi regreso" tone="secondary" onPress={() => router.push({ pathname: "/plan-salida", params: { id: String(trailId) } })} />
+        <PrimaryButton label={departureReady ? "Revisar plan de regreso" : "Enviar plan de regreso por SMS"} tone="secondary" onPress={() => router.push({ pathname: "/plan-salida", params: { id: String(trailId) } })} />
 
         <InfoCard style={hasSafetyContact ? styles.contactReady : styles.contactRequired}>
           <Ionicons
@@ -326,13 +343,15 @@ export default function Screen05TrailStart() {
         <View style={styles.footer}>
           <PrimaryButton
             label={
-              isContactLoading
-                ? "Verificando contacto"
+              starting ? "Iniciando..." : isContactLoading
+                ? "Verificando salida"
+                : hasActiveRoute ? "Continuar recorrido"
                 : hasSafetyContact
-                  ? "Comenzar ahora"
+                  ? departureReady ? "Comenzar ahora" : "Enviar plan antes de salir"
                   : "Completar contacto"
             }
-            icon={hasSafetyContact ? "play-outline" : "shield-checkmark-outline"}
+            disabled={isContactLoading || starting}
+            icon={hasActiveRoute || departureReady ? "play-outline" : hasSafetyContact ? "chatbubble-outline" : "shield-checkmark-outline"}
             onPress={handleStart}
           />
         </View>
@@ -389,6 +408,7 @@ const styles = StyleSheet.create({
     paddingVertical: 13,
   },
   rowText: {
+    flex: 1,
     color: colors.ink,
     fontSize: 15,
     fontWeight: "700",

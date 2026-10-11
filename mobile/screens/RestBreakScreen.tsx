@@ -1,5 +1,6 @@
 import { activeRouteSeconds, getRouteSession, pauseRouteSession, resumeRouteSession } from "../../services/routeSession";
 import { getRouteTrackingSummary } from "../../services/routeTracking";
+import { formatDistance as formatMeters } from "../../services/geoUtils";
 import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useMemo, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
@@ -212,11 +213,6 @@ function InfoRow({ label, value }: { label: string; value: string }) {
       <Text style={styles.rowValue}>{value}</Text>
     </View>
   );
-}
-
-function formatMeters(meters: number) {
-  if (meters >= 1000) return `${(meters / 1000).toFixed(1)} km`;
-  return `${Math.round(meters)} m`;
 }
 
 function formatDuration(totalMinutes: number) {

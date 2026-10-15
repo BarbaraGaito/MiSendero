@@ -172,6 +172,9 @@ export default function OfflineDownload21Screen() {
 }
 
 function getDownloadErrorMessage(error: unknown) {
+  if (error instanceof Error && error.message === "offline-elevation-unavailable") {
+    return "No pudimos obtener la altimetria. Reintenta con conexion antes de descargar esta ruta.";
+  }
   if (error instanceof Error && error.message.startsWith("offline-map-incomplete")) {
     return "La descarga quedo incompleta. Reintenta con una conexion estable antes de salir.";
   }

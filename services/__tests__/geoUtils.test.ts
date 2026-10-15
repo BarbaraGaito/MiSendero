@@ -1,5 +1,6 @@
 import {
   formatDistance,
+  formatKilometers,
   getClosestPointOnRoute,
   getDistanceMeters,
   getDistanceToRouteMeters,
@@ -81,6 +82,27 @@ describe("geoUtils", () => {
     expect(closest?.progressMeters).toBeGreaterThan(0);
   });
 
+  test("GPS distance distinguishes outward and return legs at the same coordinate", () => {
+    const route: [number, number][] = [[-41, -71], [-41.01, -71], [-41.02, -71], [-41.01, -71], [-41, -71]];
+    const total = getRouteLengthMeters(route);
+    expect(getRouteProgressMeters(route[0], route, 0)).toBeCloseTo(0, 0);
+    expect(getRouteProgressMeters(route[1], route, total / 4)).toBeCloseTo(total / 4, 0);
+    expect(getRouteProgressMeters(route[2], route, total / 2)).toBeCloseTo(total / 2, 0);
+    expect(getRouteProgressMeters(route[3], route, total * 0.75)).toBeCloseTo(total * 0.75, 0);
+    expect(getRouteProgressMeters(route[4], route, total)).toBeCloseTo(total, 0);
+    expect(getRouteProgressMeters(route[4], route)).toBeCloseTo(0, 0);
+  });
+
+  test("every new out-and-back trail supports completion at its starting coordinate", () => {
+    const catalog = require("../../backend/src/data/additionalTrails");
+    for (const trail of catalog.filter((item: { provenance: { route_type: string } }) => item.provenance.route_type === "out_and_back")) {
+      const route = trail.route_coordinates as [number, number][];
+      const total = getRouteLengthMeters(route);
+      expect(getRouteProgressMeters(route[0], route, 0)).toBeCloseTo(0, 0);
+      expect(getRouteProgressMeters(route.at(-1)!, route, total)).toBeCloseTo(total, 0);
+    }
+  });
+
   test("getClosestPointOnRoute exposes distance so callers can reject off-trail selections", () => {
     const route: [number, number][] = [
       [-41.0, -71.0],
@@ -94,6 +116,14 @@ describe("geoUtils", () => {
 
   test("formatDistance switches between meters and kilometers", () => {
     expect(formatDistance(500)).toBe("500 m");
-    expect(formatDistance(1500)).toBe("1.5 km");
+    expect(formatDistance(1500)).toBe("1,5 km");
+    expect(formatDistance(7637)).toBe("7,64 km");
   });
+
+  test.each([[7.637, "7,64 km"], [7.453, "7,45 km"], [0.738, "0,74 km"],
+    [18.84, "18,84 km"], [2, "2 km"], [0, "0 km"], [1234.567, "1234,57 km"]])(
+    "formats %s km with a decimal comma and at most two decimals", (distance, label) => {
+      expect(formatKilometers(distance as number)).toBe(label);
+    }
+  );
 });

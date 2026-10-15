@@ -1,7 +1,16 @@
+jest.mock("expo-sms", () => ({ isAvailableAsync: jest.fn().mockResolvedValue(true), sendSMSAsync: jest.fn().mockResolvedValue({ result: "sent" }) }));
+
 import { db, initDB } from "../../database/database";
 import { saveAuthSession } from "../authSession";
 import { activeRouteSeconds, ensureRouteSession, finishRouteSession, getActiveRouteSession, getRouteSession, pauseRouteSession, resumeRouteSession } from "../routeSession";
 import { getOrCreatePausedSession, getOrCreateCompletedSession } from "../../database/sessionsRepository";
+import { saveEmergencyContact } from "../emergencyContact";
+import { sendDeparturePlanSms } from "../departureMessages";
+
+const sendPlan = async (trailId: number) => {
+  await saveEmergencyContact({ name: "Contacto", phone: "+5491112345678", relationship: "Familia" });
+  await sendDeparturePlanSms({ trailId, contactPhone: "+5491112345678", expectedReturnAt: new Date(Date.now() + 3600000).toISOString(), messageBody: "Plan de regreso" }, async () => false);
+};
 
 const login = (id: number) => saveAuthSession({ token: `test-${id}`, user: { id, name: "Test", email: `${id}@example.test` } });
 beforeAll(() => initDB());
@@ -10,11 +19,13 @@ beforeEach(async () => {
   await getActiveRouteSession();
   await db.runAsync("DELETE FROM route_runtime");
   await db.runAsync("DELETE FROM sessions");
+  await db.runAsync("DELETE FROM departure_messages");
 });
 afterEach(() => jest.restoreAllMocks());
 
 test("pause/resume preserves identity and excludes multiple pauses from active time", async () => {
   const now = jest.spyOn(Date, "now").mockReturnValue(100000);
+  await sendPlan(2);
   await ensureRouteSession(2, 100000);
   now.mockReturnValue(160000);
   await pauseRouteSession(2, 100000);
@@ -33,6 +44,7 @@ test("pause/resume preserves identity and excludes multiple pauses from active t
 });
 
 test("accounts cannot read or modify another active route", async () => {
+  await sendPlan(3);
   await ensureRouteSession(3, 10000);
   await login(22);
   expect(await getActiveRouteSession()).toBeNull();

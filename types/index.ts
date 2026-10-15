@@ -98,6 +98,41 @@ export interface SessionRow {
   reviewed_at: number | null;
 }
 
+export interface TrailElevation {
+  version: number;
+  geometry_hash: string;
+  source: string;
+  source_url: string;
+  resolution_m: number;
+  sample_spacing_m: number;
+  noise_threshold_m: number;
+  fetched_at: string;
+  ascent_m: number;
+  descent_m: number;
+  min_m: number;
+  max_m: number;
+  distance_m: number;
+  points: {
+    latitude: number;
+    longitude: number;
+    distance_m: number;
+    elevation_m: number;
+  }[];
+}
+
+export interface TrailProvenance {
+  checked_at: string;
+  route_type: "out_and_back" | "point_to_point";
+  access: string;
+  precautions: string;
+  duration_basis: string;
+  official_distance_km: number | null;
+  distance_basis: "mapped_geometry";
+  sources: { title: string; url: string }[];
+  mapping: { source: string; source_url: string; license: string; retrieved_at: string };
+  photo: { author: string; page_url: string; license: string; license_url: string; context: string | null };
+}
+
 export interface Trail {
   id: number;
   name: string;
@@ -111,8 +146,47 @@ export interface Trail {
   center_lng: number | null;
   map_zoom: number | null;
   route_coordinates: string | null;
+  elevation?: TrailElevation | null;
+  provenance?: TrailProvenance | null;
+  national_park_slug?: string | null;
+  national_park?: NationalParkProfile | null;
   created_at: string;
 }
+
+export interface NationalParkRegistration {
+  requirement: "always" | "seasonal" | "consult";
+  mode?: "online" | "in_person" | "consult";
+  required_months: number[];
+  summary: string;
+  form_url: string | null;
+  source_url: string;
+}
+
+export interface NationalParkProfile {
+  slug: string;
+  name: string;
+  provinces: string[];
+  scope: string;
+  checked_at: string;
+  website_url: string;
+  notices_url: string;
+  registration: NationalParkRegistration;
+  registration_by_trail?: Record<string, NationalParkRegistration>;
+  access: { text: string; source_url: string };
+  rules: { items: string[]; source_url: string };
+  overnight: { text: string; source_url: string; booking_url: string | null };
+  fire: { text: string; source_url: string };
+  contact: { name: string; phone: string | null; email: string; source_url: string };
+  weather_area: string;
+  live_status: {
+    closures: "not_integrated";
+    weather_alerts: "not_integrated";
+    weather_url: string;
+  };
+}
+
+export type ParkTrail = Pick<Trail, "id" | "name" | "location" | "difficulty" | "duration" | "distance_km" | "image_url">;
+export interface NationalPark extends NationalParkProfile { trails: ParkTrail[] }
 
 export interface TrailWeather {
   trail_id: number;

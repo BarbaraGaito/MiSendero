@@ -17,6 +17,7 @@ import Svg, { Path } from "react-native-svg";
 import { Trail, TrailWeather } from "../../types";
 import {
   Coordinate,
+  formatKilometers,
   getClosestPointOnRoute,
   getRouteStart,
   parseRouteCoordinates,
@@ -1181,7 +1182,7 @@ export function TrailMap({
         <View style={styles.mapCard}>
           <Text style={styles.mapLabel}>{trail?.name || "Mapa del recorrido"}</Text>
           <Text style={styles.mapMeta}>
-            {trail?.distance_km ? `${trail.distance_km} km` : "Distancia a confirmar"} -{" "}
+            {trail?.distance_km ? formatKilometers(trail.distance_km) : "Distancia a confirmar"} -{" "}
             {trail?.difficulty || "Dificultad a confirmar"}
           </Text>
         </View>

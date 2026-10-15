@@ -2,8 +2,9 @@ import * as Crypto from "expo-crypto";
 import { getCurrentDeviceLocation } from "./deviceLocation";
 import { enqueueUnique, runSync } from "./syncQueue";
 import { getLastRouteTrackingPoint } from "./routeTracking";
-import { EmergencyContact } from "../types";
+import { EmergencyContact, Trail } from "../types";
 import { getAuthSession } from "./authSession";
+import { formatTrailMessageContext, getTrailForMessage } from "./trailMessages";
 
 export interface SendEmergencyAlertOptions {
   trailId?: number | null;
@@ -12,18 +13,19 @@ export interface SendEmergencyAlertOptions {
   eventId?: string;
 }
 
-export const buildEmergencyMessage = ({ latitude, longitude, trailId, timestamp }: {
+export const buildEmergencyMessage = ({ latitude, longitude, trail, timestamp }: {
   contact?: EmergencyContact | null;
   latitude: number | null;
   longitude: number | null;
   trailId?: number | null;
+  trail?: Trail | null;
   timestamp: number;
 }) => {
   const date = new Intl.DateTimeFormat("es-AR", { dateStyle: "short", timeStyle: "short" }).format(timestamp);
   const location = latitude !== null && longitude !== null
     ? `Última ubicación: ${latitude.toFixed(5)}, ${longitude.toFixed(5)}. Registrada: ${date}. https://maps.google.com/?q=${latitude},${longitude}`
     : "Ubicación no disponible. Necesito asistencia aunque no haya GPS.";
-  return `SOS MiSendero. Necesito asistencia. ${trailId ? `Sendero ID ${trailId}. ` : ""}${location}`;
+  return `SOS MiSendero. Necesito asistencia. ${formatTrailMessageContext(trail)} ${location}`;
 };
 
 export const getEmergencyLocation = async (trailId?: number | null, startedAt?: number | null) => {
@@ -48,8 +50,11 @@ export const getEmergencyLocation = async (trailId?: number | null, startedAt?: 
 export const sendEmergencyAlert = async (options: SendEmergencyAlertOptions = {}) => {
   const owner = (await getAuthSession())?.user.id ?? null;
   const eventId = options.eventId ?? Crypto.randomUUID();
-  const location = await getEmergencyLocation(options.trailId, options.startedAt);
-  const message = buildEmergencyMessage({ ...location, trailId: options.trailId });
+  const [location, trail] = await Promise.all([
+    getEmergencyLocation(options.trailId, options.startedAt),
+    getTrailForMessage(options.trailId),
+  ]);
+  const message = buildEmergencyMessage({ ...location, trail });
   if (((await getAuthSession())?.user.id ?? null) !== owner) throw new Error("La cuenta cambió mientras se preparaba el SOS.");
   // Persist before attempting the network. Anonymous requests are never adopted
   // by a later account. Manual SMS/call do not require authentication.

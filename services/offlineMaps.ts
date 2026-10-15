@@ -2,6 +2,7 @@ import { db } from "../database/connection";
 import { Trail, TrailReport } from "../types";
 import { getAuthSession } from "./authSession";
 import { initDB } from "../database/database";
+import { getTrailById as fetchTrailById } from "./api";
 import {
   deleteOfflineTilesForTrail,
   downloadOfflineTilesForTrail,
@@ -197,7 +198,7 @@ export const getVerifiedOfflineMapByTrailId = async (
 ): Promise<OfflineMap | null> => {
   const offlineMap = await getOfflineMapByTrailId(trailId);
 
-  if (!offlineMap?.trail || offlineMap.status !== "disponible") {
+  if (!offlineMap?.trail?.elevation || offlineMap.status !== "disponible") {
     return null;
   }
 
@@ -254,12 +255,24 @@ export const saveOfflineTrailMap = async (
   await initOfflineMapsTable();
   const userId = await getCurrentUserId();
 
+  if (!trail.elevation) {
+    const current = await fetchTrailById(trail.id);
+    if (!current.elevation) throw new Error("offline-elevation-unavailable");
+    trail = current;
+  }
+
   const now = Date.now();
   const geometry = await getOfflineMapByTrailId(trail.id);
   if (!geometry) {
     await db.runAsync(`INSERT INTO offline_maps (user_id, name, size_mb, status, downloaded_at, updated_at, trail_id, trail_json, reports_json)
       VALUES (?, ?, ?, 'incompleto', ?, ?, ?, ?, ?)`,
       [userId, trail.name, estimateTrailMapSizeMb(trail, reports), now, now, trail.id, JSON.stringify(trail), JSON.stringify(reports)]);
+  } else {
+    await db.runAsync(
+      `UPDATE offline_maps SET trail_json = ?, reports_json = ?, status = 'incompleto',
+       verified_at = NULL, updated_at = ? WHERE id = ? AND user_id IS ?`,
+      [JSON.stringify(trail), JSON.stringify(reports), now, geometry.id, userId]
+    );
   }
   const tileCache = await downloadOfflineTilesForTrail(trail, onTileProgress, options);
   const coverage = await getOfflineTileCoverageForTrail(trail);
@@ -344,6 +357,26 @@ export const saveOfflineTrailMap = async (
   );
 
   return getOfflineMapByTrailId(trail.id);
+};
+
+export const refreshOfflineTrailElevation = async (trail: Trail) => {
+  const local = await getOfflineMapByTrailId(trail.id);
+  if (!local?.trail || (!trail.elevation && trail.national_park === undefined)) return;
+  // Preserve the downloaded geometry: a changed trace requires a map update.
+  if (JSON.stringify(JSON.parse(local.trail.route_coordinates || "null")) !==
+      JSON.stringify(JSON.parse(trail.route_coordinates || "null"))) return;
+  const updated = {
+    ...local.trail,
+    ...(trail.elevation ? { elevation: trail.elevation } : {}),
+    ...(trail.national_park !== undefined ? { national_park: trail.national_park, national_park_slug: trail.national_park_slug } : {}),
+  };
+  const userId = await getCurrentUserId();
+  await db.runAsync(
+    `UPDATE offline_maps SET trail_json = ?, updated_at = ?
+     WHERE id = ? AND user_id IS ? AND trail_json = ?`,
+    [JSON.stringify(updated), Date.now(), local.id, userId, JSON.stringify(local.trail)]
+  );
+  return updated;
 };
 
 export const refreshOfflineTrailReports = async (

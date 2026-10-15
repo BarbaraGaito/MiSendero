@@ -1,8 +1,8 @@
-import { useIsFocused } from "@react-navigation/native";
 import { ensureRouteSession, getRouteSession, activeRouteSeconds, pauseRouteSession, resumeRouteSession } from "../../services/routeSession";
+import { DepartureMessageRequiredError } from "../../services/departureMessages";
 import { Ionicons } from "@expo/vector-icons";
 import * as Network from "expo-network";
-import { router, useLocalSearchParams } from "expo-router";
+import { router, useIsFocused, useLocalSearchParams } from "expo-router";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Modal, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
@@ -308,7 +308,10 @@ export default function Screen04RouteMap() {
       if (state) { setActiveSeconds(activeRouteSeconds(state)); setIsPaused(state.state === "paused"); }
       if (state?.state === "completed") router.replace("/mis-actividades");
     };
-    void ensureRouteSession(trailId, startedAtMs, isTestingLocation).then(refresh).catch((error) => setError(error.message));
+    void ensureRouteSession(trailId, startedAtMs, isTestingLocation).then(refresh).catch((error) => {
+      if (error instanceof DepartureMessageRequiredError) router.replace({ pathname: "/trail-start", params: { id: String(trailId) } });
+      else setError(error.message);
+    });
     const timer = setInterval(() => { void refresh().catch(() => undefined); }, 1000);
     return () => { mounted = false; clearInterval(timer); };
   }, [isActiveRoute, isFocused, startedAtMs, trailId, isTestingLocation, locationLoading]);
@@ -323,8 +326,9 @@ export default function Screen04RouteMap() {
   }, [routePoints, trail?.distance_km]);
   const traveledMeters = useMemo(() => {
     if (!isActiveRoute || !location || routePoints.length === 0) return null;
-    return getRouteProgressMeters(location.coordinate, routePoints);
-  }, [isActiveRoute, location, routePoints]);
+    return getRouteProgressMeters(location.coordinate, routePoints,
+      trail?.provenance?.route_type === "out_and_back" ? trackedDistanceMeters : undefined);
+  }, [isActiveRoute, location, routePoints, trackedDistanceMeters, trail?.provenance?.route_type]);
   const completedDistanceMeters = trackedDistanceMeters;
   const isOffRoute =
     !isTestingLocation &&

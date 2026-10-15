@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { router, useLocalSearchParams } from "expo-router";
-import { ImageBackground, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Alert, ImageBackground, Linking, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import {
@@ -25,6 +25,8 @@ import {
 } from "../../database/sessionsRepository";
 import { initDB } from "../../database/database";
 import { Trail, TrailWeather } from "../../types";
+import { NationalParkEntry } from "../components/NationalParkUI";
+import { formatKilometers } from "../../services/geoUtils";
 
 const loadTrailDetailData = async (trailId: number) => {
   await initDB();
@@ -95,9 +97,10 @@ export default function Screen03TrailDetail() {
 
     try {
       const reports = await getTrailReports(trail.id).catch(() => []);
-      await saveOfflineTrailMap(trail, reports, (downloaded, total) => {
+      const saved = await saveOfflineTrailMap(trail, reports, (downloaded, total) => {
         setDownloadMessage(`Descargando tiles ${downloaded}/${total}...`);
       });
+      if (saved?.trail) setTrail(saved.trail);
       setIsDownloaded(true);
       setDownloadMessage("Mapa descargado. Ya podes abrirlo sin conexion.");
     } catch (downloadError) {
@@ -195,7 +198,10 @@ function TrailDetailContent({
       />
       <DescriptionCard trail={trail} />
       <DifficultyCard trail={trail} weather={weather} />
-      <BeforeYouGoCard tips={beforeYouGoTips} />
+      <BeforeYouGoCard tips={trail.provenance ? [trail.provenance.precautions, ...beforeYouGoTips] : beforeYouGoTips} />
+      <AltimetrySection trail={trail} />
+      {trail.national_park && <NationalParkEntry park={trail.national_park} trailId={trail.id} trailName={trail.name} />}
+      <TrailSources trail={trail} />
       <OfflineMapCard
         downloadMessage={downloadMessage}
         isDownloaded={isDownloaded}
@@ -240,6 +246,18 @@ function TrailCover({
           <Text style={styles.coverBadgeMeta}>({ratingSummary.reviewCount})</Text>
         </Pressable>
       ) : null}
+      {trail.provenance?.photo && (
+        <Pressable accessibilityLabel="Creditos de la foto" accessibilityRole="button"
+          onPress={() => {
+            const photo = trail.provenance!.photo;
+            Alert.alert("Creditos de la foto", `${photo.author} - ${photo.license}${photo.context ? `\n${photo.context}` : ""}`, [
+              { text: "Cerrar", style: "cancel" },
+              { text: "Ver fuente", onPress: () => { void Linking.openURL(photo.page_url).catch(() => Alert.alert("No se pudo abrir la foto")); } },
+            ]);
+          }} style={styles.photoCreditsButton}>
+          <Ionicons name="information-circle-outline" size={23} color={colors.ink} />
+        </Pressable>
+      )}
     </ImageBackground>
   );
 }
@@ -251,7 +269,7 @@ function TrailStats({ trail }: { trail: Trail }) {
       <StatPill icon="walk-outline" label={getTrailDistanceLabel(trail)} />
       <StatPill icon="time-outline" label={trail.duration || "Duracion a confirmar"} />
       <StatPill icon="leaf-outline" label={trail.difficulty} />
-      <StatPill icon="trending-up-outline" label="Desnivel: sin medición" />
+      <StatPill icon="trending-up-outline" label={trail.elevation ? `Desnivel: +${trail.elevation.ascent_m} m` : "Desnivel no disponible"} />
     </View>
   );
 }
@@ -286,6 +304,21 @@ function FavoriteButton({
   );
 }
 
+function AltimetrySection({ trail }: { trail: Trail }) {
+  return (
+    <Pressable
+      accessibilityRole="button"
+      accessibilityLabel="Abrir altimetria del sendero"
+      onPress={() => router.push({ pathname: "/trail-elevation", params: { id: String(trail.id) } })}
+      style={({ pressed }) => [styles.altimetrySection, pressed && styles.pressed]}
+    >
+      <Ionicons name="analytics-outline" size={22} color={colors.green} />
+      <Text style={styles.altimetryTitle}>Altimetria</Text>
+      <Ionicons name="chevron-forward" size={20} color={colors.muted} />
+    </Pressable>
+  );
+}
+
 function DescriptionCard({ trail }: { trail: Trail }) {
   return (
     <InfoCard style={styles.card}>
@@ -293,7 +326,33 @@ function DescriptionCard({ trail }: { trail: Trail }) {
       <Text style={styles.body}>
         {trail.description || "Pronto vas a encontrar mas informacion sobre este recorrido."}
       </Text>
+      {trail.provenance ? (
+        <>
+          <Text style={styles.routeMetadata}>Inicio: {trail.provenance.access}</Text>
+          <Text style={styles.routeMetadata}>
+            {trail.provenance.route_type === "out_and_back" ? "Ida y vuelta" : "Solo ida; coordinar el regreso"}
+            {trail.provenance.duration_basis === "planning_estimate" ? ". Tiempo orientativo, no oficial." : "."}
+          </Text>
+        </>
+      ) : null}
     </InfoCard>
+  );
+}
+
+function TrailSources({ trail }: { trail: Trail }) {
+  const source = trail.provenance?.sources.find((item) => item.title === "Ficha del recorrido");
+  if (!source) return null;
+  const openSource = (url: string) => {
+    Linking.openURL(url).catch(() => Alert.alert("No se pudo abrir la fuente", "Revisa tu conexion e intenta nuevamente."));
+  };
+  return (
+    <View style={styles.sourcesSection}>
+      <Text style={styles.cardTitle}>Fuentes del recorrido</Text>
+      <Pressable accessibilityRole="link" onPress={() => openSource(source.url)} style={styles.sourceLink}>
+        <Ionicons name="open-outline" size={16} color={colors.greenDark} />
+        <Text style={styles.sourceText}>Ficha del recorrido</Text>
+      </Pressable>
+    </View>
   );
 }
 
@@ -404,12 +463,12 @@ function TrailDetailActions({
 }
 
 const getTrailDistanceLabel = (trail: Trail) =>
-  trail.distance_km ? `${trail.distance_km} km` : "Distancia a confirmar";
+  trail.distance_km ? formatKilometers(trail.distance_km) : "Distancia a confirmar";
 
 function getDifficultyInsight(trail: Trail, weather: TrailWeather | null) {
   const difficulty = normalizeDifficulty(trail.difficulty);
   const distanceText = trail.distance_km
-    ? `${trail.distance_km} km`
+    ? formatKilometers(trail.distance_km)
     : "distancia pendiente de confirmar";
   const durationText = trail.duration || "duracion pendiente de confirmar";
   const weatherText = weather
@@ -504,6 +563,9 @@ function normalizeDifficulty(difficulty: string) {
 }
 
 function getDownloadErrorMessage(error: unknown) {
+  if (error instanceof Error && error.message === "offline-elevation-unavailable") {
+    return "No pudimos obtener la altimetria. Reintenta con conexion antes de descargar esta ruta.";
+  }
   if (error instanceof Error && "code" in error && error.code === "provider-not-configured") return error.message;
   if (error instanceof Error && error.message.startsWith("offline-map-incomplete")) {
     return "La descarga no quedo completa. Reintenta con conexion estable antes de salir.";
@@ -513,6 +575,49 @@ function getDownloadErrorMessage(error: unknown) {
 }
 
 const styles = StyleSheet.create({
+  photoCreditsButton: {
+    position: "absolute", bottom: 10, right: 10, width: 44, height: 44,
+    alignItems: "center", justifyContent: "center", borderRadius: 8,
+    backgroundColor: "rgba(255,255,255,0.95)",
+  },
+  routeMetadata: {
+    color: colors.muted,
+    fontSize: 14,
+    lineHeight: 21,
+    marginTop: 10,
+  },
+  sourcesSection: {
+    marginTop: 20,
+  },
+  sourceLink: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+    minHeight: 44,
+    paddingVertical: 8,
+  },
+  sourceText: {
+    flex: 1,
+    color: colors.greenDark,
+    fontSize: 14,
+    lineHeight: 21,
+  },
+  altimetrySection: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+    paddingVertical: 20,
+    marginTop: 18,
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    borderColor: colors.line,
+  },
+  altimetryTitle: {
+    flex: 1,
+    color: colors.ink,
+    fontSize: 18,
+    fontWeight: "900",
+  },
   scroll: {
     flexGrow: 1,
   },

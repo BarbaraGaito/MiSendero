@@ -1,6 +1,7 @@
 import fatigueMetricsJson from "./models/fatigueMetrics.json";
 import riskMetricsJson from "./models/riskMetrics.json";
 import routeDifficultyMetricsJson from "./models/routeDifficultyMetrics.json";
+import apnRouteDifficultyMetricsJson from "./models/apnRouteDifficultyMetrics.json";
 
 export type AiModelGuardrailStatus =
   | "ok"
@@ -17,17 +18,33 @@ export interface AiMetricSummary {
 
 export interface AiCrossValidationSummary {
   folds: number;
-  accuracy_mean: number;
-  accuracy_std: number;
-  precision_macro_mean: number;
-  precision_macro_std: number;
-  recall_macro_mean: number;
-  recall_macro_std: number;
+  accuracy_mean?: number;
+  accuracy_std?: number;
+  precision_macro_mean?: number;
+  precision_macro_std?: number;
+  recall_macro_mean?: number;
+  recall_macro_std?: number;
   f1_macro_mean: number;
   f1_macro_std: number;
 }
 
 export interface AiTrainingMetrics {
+  baseline?: {
+    test_accuracy: number;
+    label: string;
+    strategy: string;
+    tied_labels_test_accuracy?: Record<string, number>;
+  };
+  evaluation_protocol?: {
+    independent_group_count: number;
+    test_groups: string[];
+  };
+  evaluation_validity?: {
+    real_public_ground_truth: boolean;
+    status: string;
+    reason: string;
+    deployment_approved?: boolean;
+  };
   schema_version: number;
   trained_at: string;
   dataset: {
@@ -77,4 +94,5 @@ export const adminAiModelMetrics: AiTrainingMetrics[] = [
   fatigueMetricsJson,
   riskMetricsJson,
   routeDifficultyMetricsJson,
+  apnRouteDifficultyMetricsJson,
 ] as AiTrainingMetrics[];

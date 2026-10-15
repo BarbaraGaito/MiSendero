@@ -28,6 +28,11 @@ export interface RandomForestTree {
 }
 
 export interface RandomForestModel {
+  evaluation_validity?: {
+    real_public_ground_truth: boolean;
+    deployment_approved: boolean;
+    reason: string;
+  };
   type: "random_forest_json";
   version: number;
   trained_at?: string;

@@ -25,6 +25,7 @@ TRACKED_CSVS = [
     REPO_ROOT / "ai" / "datasets" / "physio_risk.csv",
     REPO_ROOT / "training" / "route-difficulty" / "datasets" / "route_difficulty_training.csv",
 ]
+TRACKED_CSVS.extend(sorted((REPO_ROOT / "training/data/public").glob("*/dataset.csv")))
 
 
 def main() -> None:

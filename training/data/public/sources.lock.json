@@ -1,0 +1,220 @@
+{
+  "schema_version": 1,
+  "snapshot_date": "2026-10-13",
+  "files": [
+    {
+      "path": "geofatigue/Physiological Data.zip",
+      "sha256": "e054b4d17ef0993de70a5b5840916f45383567e081d00859cb958ed1b0e86ff7",
+      "bytes": 189965447,
+      "url": "https://borealisdata.ca/api/access/datafile/1100789?gbrecs=true"
+    },
+    {
+      "path": "geofatigue/README.md",
+      "sha256": "37873c91ac900ddab22659f9c5933148aeae1f8c8fc1af218749273c361f216d",
+      "bytes": 16223,
+      "url": "https://borealisdata.ca/api/access/datafile/1187037"
+    },
+    {
+      "path": "geofatigue/session_metadata.json",
+      "sha256": "9140e771feb8468a42ea6164055e1cd5bfd083b888abf778bc81adbb4610becc",
+      "bytes": 38427,
+      "url": "https://borealisdata.ca/api/access/datafile/1213443"
+    },
+    {
+      "path": "geofatigue/self_reported_fatigue_level.original.tab",
+      "sha256": "ec8d8eed6999500e698975090dba7943dc3553669c59f8cec90ae8d671166e79",
+      "bytes": 43963,
+      "url": "https://borealisdata.ca/api/access/datafile/1213444?format=original"
+    },
+    {
+      "path": "11505046/ResearchData.xlsx",
+      "sha256": "9e673a2e4d9496a4d7daa6aa8c29b1415381ae16683f3a32ce55769b25f665d6",
+      "bytes": 18522,
+      "url": "https://zenodo.org/api/records/11505046/files/ResearchData.xlsx/content"
+    },
+    {
+      "path": "osm/map_bariloche.xml",
+      "url": "https://api.openstreetmap.org/api/0.6/map?bbox=-71.55,-41.23,-71.4,-41.15",
+      "bytes": 5115517,
+      "sha256": "944006601cc9d16b7bc9cee4c42551791696f49142ea7af6a79432d40306eaf1",
+      "snapshot_date": "2026-10-13"
+    },
+    {
+      "path": "osm/map_bolson.xml",
+      "url": "https://api.openstreetmap.org/api/0.6/map?bbox=-71.65,-42.0,-71.5,-41.85",
+      "bytes": 6589895,
+      "sha256": "b77bef9a94750f08b9f0c9de5144d950f05f5d6182590862a6d2cc9a1548570d",
+      "snapshot_date": "2026-10-13"
+    },
+    {
+      "path": "osm/map_chalten.xml",
+      "url": "https://api.openstreetmap.org/api/0.6/map?bbox=-73.05,-49.38,-72.82,-49.28",
+      "bytes": 10683603,
+      "sha256": "01a6d086ff1fe3556b0a8f47f790cb08b429ab842fba09d87283ef24b3b2a39d",
+      "snapshot_date": "2026-10-13"
+    },
+    {
+      "path": "apn/tierra_del_fuego.html",
+      "url": "https://www.argentina.gob.ar/parquesnacionales/patagonia-austral/senderos-del-parque-nacional-tierra-del-fuego",
+      "bytes": 41606,
+      "sha256": "8fc7ce23785e9dea1eb194c320091ea6cd92b7941c5788276a0f37adad03f781",
+      "snapshot_date": "2026-10-14"
+    },
+    {
+      "path": "apn/los_alerces.html",
+      "url": "https://www.argentina.gob.ar/node/276965",
+      "bytes": 51568,
+      "sha256": "a5f871a406bd0f4a7161b88e87490cad13714e68a01c3c52b7ef7ca0bde5ad49",
+      "snapshot_date": "2026-10-14"
+    },
+    {
+      "path": "apn/calilegua.html",
+      "url": "https://www.argentina.gob.ar/parquesnacionales/region-noroeste/parque-nacional-calilegua/actividades",
+      "bytes": 45543,
+      "sha256": "7b7fa937d4e8c23c35ff7204eac20c8fd16efc1bcebca7a37a0eb89cc75d1223",
+      "snapshot_date": "2026-10-14"
+    },
+    {
+      "path": "apn/condorito.html",
+      "url": "https://www.argentina.gob.ar/parquesnacionales/centro/parque-nacional-quebrada-del-condorito/actividades",
+      "bytes": 54198,
+      "sha256": "38b7691c1e2dcf69a228efd399407a576ac39c64c78e6a963e82b4518fa4b08c",
+      "snapshot_date": "2026-10-14"
+    },
+    {
+      "path": "apn/el_leoncito.html",
+      "url": "https://www.argentina.gob.ar/parquesnacionales/centro/parque-nacional-el-leoncito/actividades",
+      "bytes": 40145,
+      "sha256": "edeb57fffb5fde9a98bd7e8cabe9cae56dc964b9a855d721b4caeeb7b5d36492",
+      "snapshot_date": "2026-10-14"
+    },
+    {
+      "path": "osm/map_ushuaia.xml",
+      "url": "https://api.openstreetmap.org/api/0.6/map?bbox=-68.62,-54.87,-68.45,-54.78",
+      "bytes": 8021616,
+      "sha256": "256e9a93c4c951c3bebd4ba50add2767e5ff4f09d7eef329f7db05ea2b5f5205",
+      "snapshot_date": "2026-10-14"
+    },
+    {
+      "path": "osm/map_condorito.xml",
+      "url": "https://api.openstreetmap.org/api/0.6/map?bbox=-64.83,-31.72,-64.74,-31.6",
+      "bytes": 1522239,
+      "sha256": "f447d1c3a85ad884b8d40b639835297355777ad4d6f119612add4317f6dc57fd",
+      "snapshot_date": "2026-10-14"
+    },
+    {
+      "path": "osm/map_mendoza.xml",
+      "url": "https://api.openstreetmap.org/api/0.6/map?bbox=-69.42,-32.99,-69.25,-32.88",
+      "bytes": 2538474,
+      "sha256": "d9bed1e0e708d031c94791dc091d3d9c1c7be1539dfcb51b0eda4226c45d6fd0",
+      "snapshot_date": "2026-10-14"
+    },
+    {
+      "path": "osm/map_calilegua.xml",
+      "url": "https://api.openstreetmap.org/api/0.6/map?bbox=-64.87,-23.79,-64.76,-23.68",
+      "bytes": 1724011,
+      "sha256": "5e9f5408de97afd7254a61617ee51131c4be20ca7cdb13dc45609f19e79e8822",
+      "snapshot_date": "2026-10-14"
+    },
+    {
+      "path": "ign/tiles/4972-26.zip",
+      "url": "https://dnsg.ign.gob.ar/apps/mapas-geodesia/mde_mapa_geoserver_descarga.php?pid=7&gid=4d1e450acf8d6555b9f6a2e5810e505c",
+      "bytes": 5786757,
+      "sha256": "670ad5cf037c4cdc7f8d2935e764dc7d7e7a414426b1c4abef50a5f1ba1f6559",
+      "snapshot_date": "2026-10-14"
+    },
+    {
+      "path": "ign/tiles/4972-19.zip",
+      "url": "https://dnsg.ign.gob.ar/apps/mapas-geodesia/mde_mapa_geoserver_descarga.php?pid=7&gid=9d2c1b2eaf872abfb0115902e14861ad",
+      "bytes": 7292051,
+      "sha256": "4930f78fd4cd60fb24b5b5e0a26bd04989c90e1ec0ccef8839e51d06b114090c",
+      "snapshot_date": "2026-10-14"
+    },
+    {
+      "path": "ign/tiles/4972-25.zip",
+      "url": "https://dnsg.ign.gob.ar/apps/mapas-geodesia/mde_mapa_geoserver_descarga.php?pid=7&gid=f4c552efcd971e86a70695e555dddd2e",
+      "bytes": 7257516,
+      "sha256": "4a3dd1f2d42a9de573be7b316cfd83f2a4b2e84a267f0c8f1fac37d61c884287",
+      "snapshot_date": "2026-10-14"
+    },
+    {
+      "path": "ign/tiles/5569-16.zip",
+      "url": "https://dnsg.ign.gob.ar/apps/mapas-geodesia/mde_mapa_geoserver_descarga.php?pid=7&gid=331d2dd2a96da67ab473556e9a2cd7e2",
+      "bytes": 7910113,
+      "sha256": "040cbe7be3e490705ba5d040034cb4266a9f06ad4af8019e4cba2f37e51605f7",
+      "snapshot_date": "2026-10-14"
+    },
+    {
+      "path": "ign/tiles/5569-17.zip",
+      "url": "https://dnsg.ign.gob.ar/apps/mapas-geodesia/mde_mapa_geoserver_descarga.php?pid=7&gid=7094418c5db7fd3e277f3d0a35b07658",
+      "bytes": 7741070,
+      "sha256": "09346a05ee5541a4d602ca3681fe762143e87b14491c0b472ae31f65922f6707",
+      "snapshot_date": "2026-10-14"
+    },
+    {
+      "path": "ign/tiles/4172-23.zip",
+      "url": "https://dnsg.ign.gob.ar/apps/mapas-geodesia/mde_mapa_geoserver_descarga.php?pid=7&gid=64c94c5f5abe8e479fad2ac654800ac9",
+      "bytes": 6691663,
+      "sha256": "35b9ccdca6a15c986385a767644c4a562245c52bebd059b032917e071f877091",
+      "snapshot_date": "2026-10-14"
+    },
+    {
+      "path": "ign/tiles/2366-36.zip",
+      "url": "https://dnsg.ign.gob.ar/apps/mapas-geodesia/mde_mapa_geoserver_descarga.php?pid=7&gid=ccf238a914f7781f1521b8d491f32e5e",
+      "bytes": 7395681,
+      "sha256": "50eb42fa8a9e7d7303f8652e2e320f93f4c8ee4d62918672baaab0391bd0b346",
+      "snapshot_date": "2026-10-14"
+    },
+    {
+      "path": "ign/tiles/3369-15.zip",
+      "url": "https://dnsg.ign.gob.ar/apps/mapas-geodesia/mde_mapa_geoserver_descarga.php?pid=7&gid=112e8abbdbae461508a769828b8792da",
+      "bytes": 7585301,
+      "sha256": "baa3a11257b034ce2f7f5e7d178e1222d4013a0bc4ada8f68a78082f4243d3c3",
+      "snapshot_date": "2026-10-14"
+    },
+    {
+      "path": "ign/tiles/4172-22.zip",
+      "url": "https://dnsg.ign.gob.ar/apps/mapas-geodesia/mde_mapa_geoserver_descarga.php?pid=7&gid=fd7cbd56491b07acaaa27f5721f87095",
+      "bytes": 7547760,
+      "sha256": "37a67ffe0b23ac0101e08cd420904f37108ce007503a808dbe3e73e3deadf5d1",
+      "snapshot_date": "2026-10-14"
+    },
+    {
+      "path": "ign/tiles/4172-34.zip",
+      "url": "https://dnsg.ign.gob.ar/apps/mapas-geodesia/mde_mapa_geoserver_descarga.php?pid=7&gid=d70d5e522f5b016459a55dbb6cc2a199",
+      "bytes": 7762616,
+      "sha256": "2b46c4b4395c027885efffcfca533c04bd42493f50b4a7d0cd73bfad075d0e7b",
+      "snapshot_date": "2026-10-14"
+    },
+    {
+      "path": "ign/tiles/4972-20.zip",
+      "url": "https://dnsg.ign.gob.ar/apps/mapas-geodesia/mde_mapa_geoserver_descarga.php?pid=7&gid=bfe01174ad1a0600787d8f30105f2626",
+      "bytes": 7616632,
+      "sha256": "7d433a4600d96f3aecbda671b0815c37c403bbad7c45b8ea8ef0083a5f200c83",
+      "snapshot_date": "2026-10-14"
+    },
+    {
+      "path": "ign/tiles.geojson",
+      "url": "https://wms.ign.gob.ar/geoserver/modelos-digitales-elevaciones/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=modelos-digitales-elevaciones:mde_v2_30m&outputFormat=application%2Fjson",
+      "bytes": 1290285,
+      "sha256": "7b1c86ebf5c9f535ed51ee6c9f337923870a2116e005a482fa6c4466eab3ea11",
+      "snapshot_date": "2026-10-14"
+    },
+    {
+      "path": "apn/terms.html",
+      "url": "https://www.argentina.gob.ar/terminos-y-condiciones",
+      "bytes": 58364,
+      "sha256": "86f76d3326f62a2e2ff71502b97bcde7c57714d226bd03e26302c3fd4e9132c5",
+      "snapshot_date": "2026-10-14"
+    },
+    {
+      "path": "ign/introduccion.html",
+      "url": "https://www.ign.gob.ar/NuestrasActividades/Geodesia/ModeloDigitalElevaciones/Introduccion",
+      "bytes": 83819,
+      "sha256": "c4a8cd15ce84e2681c6258dc44f66ede47b0deacd992f7dca317a1dc7cdabe2e",
+      "snapshot_date": "2026-10-14"
+    }
+  ],
+  "catalog_sha256": "0c4dc5f05f5b325fd58e5b306a4182d3311c759aef131379aef9895f77bd02ac",
+  "latest_audit_date": "2026-10-14"
+}

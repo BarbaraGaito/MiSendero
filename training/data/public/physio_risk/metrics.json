@@ -1,0 +1,324 @@
+{
+  "schema_version": 2,
+  "dataset": {
+    "name": "AMS observado \u2014 estudio nocturno",
+    "declared_source": "Narang / PretermBirth_Hypoxia_NocturnalSpO2_AMS",
+    "source_note": "AMS observado tras exposici\u00f3n nocturna a hipoxia controlada equivalente a 4200 m, en 24 participantes. Eval\u00faa ese estudio; falta validar alertas durante caminatas.",
+    "rows_total": 24,
+    "rows_train": 16,
+    "rows_train_after_augmentation": 16,
+    "rows_test": 8,
+    "rows_by_label": {
+      "AMS+": 11,
+      "AMS-": 13
+    },
+    "features": [
+      "mean_hr",
+      "mean_spo2"
+    ]
+  },
+  "augmentation": {
+    "used": false,
+    "synthetic_rows": 0,
+    "synthetic_to_real_train_ratio": 0.0,
+    "requires_approval": false,
+    "authorization": "User permits augmentation within training folds only"
+  },
+  "metrics": {
+    "train": {
+      "accuracy": 0.9375,
+      "precision_macro": 0.9375,
+      "recall_macro": 0.9444444444444444,
+      "f1_macro": 0.9372549019607843,
+      "precision_weighted": 0.9453125,
+      "recall_weighted": 0.9375,
+      "f1_weighted": 0.9377450980392157,
+      "support": 16
+    },
+    "train_real": {
+      "accuracy": 0.9375,
+      "precision_macro": 0.9375,
+      "recall_macro": 0.9444444444444444,
+      "f1_macro": 0.9372549019607843,
+      "precision_weighted": 0.9453125,
+      "recall_weighted": 0.9375,
+      "f1_weighted": 0.9377450980392157,
+      "support": 16
+    },
+    "test": {
+      "accuracy": 0.625,
+      "precision_macro": 0.6333333333333333,
+      "recall_macro": 0.625,
+      "f1_macro": 0.6190476190476191,
+      "precision_weighted": 0.6333333333333333,
+      "recall_weighted": 0.625,
+      "f1_weighted": 0.6190476190476191,
+      "support": 8
+    },
+    "cross_validation": {
+      "folds": 5,
+      "f1_macro_mean": 0.6666666666666666,
+      "f1_macro_std": 0.21081851067789195
+    }
+  },
+  "guardrails": {
+    "status": "requires_more_real_data",
+    "overfitting_risk": true,
+    "underfitting_risk": false,
+    "high_variance_risk": true,
+    "insufficient_real_data": true,
+    "high_synthetic_ratio": false,
+    "train_test_f1_gap": 0.31820728291316525,
+    "warnings": [
+      "AMS observado tras exposici\u00f3n nocturna a hipoxia controlada equivalente a 4200 m, en 24 participantes. Eval\u00faa ese estudio; falta validar alertas durante caminatas.",
+      "Dataset real chico: sumar muestras reales por clase antes de usar estas metricas como evidencia de performance en campo.",
+      "Posible overfitting: la diferencia de F1 macro entre train y test es 0.32.",
+      "Entrenamiento sin augmentation; todas las filas base provienen de observaciones p\u00fablicas."
+    ]
+  },
+  "accuracy": 0.625,
+  "labels": [
+    "AMS+",
+    "AMS-"
+  ],
+  "confusion_matrix": [
+    [
+      3,
+      1
+    ],
+    [
+      2,
+      2
+    ]
+  ],
+  "classification_report": {
+    "AMS+": {
+      "precision": 0.6,
+      "recall": 0.75,
+      "f1-score": 0.6666666666666666,
+      "support": 4.0
+    },
+    "AMS-": {
+      "precision": 0.6666666666666666,
+      "recall": 0.5,
+      "f1-score": 0.5714285714285714,
+      "support": 4.0
+    },
+    "accuracy": 0.625,
+    "macro avg": {
+      "precision": 0.6333333333333333,
+      "recall": 0.625,
+      "f1-score": 0.6190476190476191,
+      "support": 8.0
+    },
+    "weighted avg": {
+      "precision": 0.6333333333333333,
+      "recall": 0.625,
+      "f1-score": 0.6190476190476191,
+      "support": 8.0
+    }
+  },
+  "trained_at": "2026-10-13T22:55:37.578278+00:00",
+  "evaluation_validity": {
+    "real_public_ground_truth": true,
+    "status": "observed_public_labels_group_holdout",
+    "reason": "AMS observado tras exposici\u00f3n nocturna a hipoxia controlada equivalente a 4200 m, en 24 participantes. Eval\u00faa ese estudio; falta validar alertas durante caminatas.",
+    "deployment_approved": false,
+    "native_labels": true,
+    "test_synthetic_rows": 0
+  },
+  "hyperparameters": {
+    "n_estimators": 150,
+    "max_depth": 4,
+    "min_samples_leaf": 2,
+    "selection_method": "cross_validated",
+    "cv_folds": 5,
+    "cv_f1_macro_mean": 0.6666666666666666
+  },
+  "evaluation_protocol": {
+    "seed": 42,
+    "split": "group_holdout",
+    "independent_group_count": 24,
+    "train_groups": [
+      "31e10d14a9011941d9aa7e43",
+      "35d779b53736538a80418944",
+      "3843008dabcf1c07bb513c26",
+      "5c0924c0c1298757550ee8f2",
+      "6889dad3ee55f1431fb24e0e",
+      "69d5b417febca2752312eb2f",
+      "7b4da5f61974f554bdc60679",
+      "a40156aab41e317e192f5d99",
+      "b419672c7bec58b63c955252",
+      "bcb730dbcda5dee4dcd7fc2a",
+      "c6b4baccf0d148beaa546faf",
+      "d8ae2d4c52041cc673368042",
+      "edcf711eabdcce06cd03dd0f",
+      "f15fa229d257ba950fce4b4c",
+      "f49ee8748ce6f2b4cc5b6a7e",
+      "ffe6e542142862617ac0d0a6"
+    ],
+    "test_groups": [
+      "10d9258b30492ac0a0d7905a",
+      "238ab31464ae3c4db118302d",
+      "763eb210d164f6186d1f7e56",
+      "79d1371d085364ad514ef4d9",
+      "9fe226f60c3bba18acd89e73",
+      "afd8b6e0ec141c52b034d0b3",
+      "c17206f08b09c47ece0bb550",
+      "cd480101ae7373d6895c8e8a"
+    ],
+    "train_row_keys": [
+      "83c35e4af30c645532d90c53",
+      "04754a6355140a28b41dc820",
+      "e8e7b9003de5a9f03b9c18c8",
+      "62e8879f84c2db606ad20f64",
+      "f6cd376ec3d9cca213b49a1e",
+      "3c52775b13973fd4e6dbeab4",
+      "abd50404ca7c787f27ecc138",
+      "f96145d59dcf9feda9f61245",
+      "76516e563875c3904c7eee02",
+      "3051bf7af54be16cc3ef9c2c",
+      "f2e2566e91e08b435c3b2546",
+      "9b0f69a1b5a244bdfd946d0c",
+      "514d2fc39fdd08249ef7b6f7",
+      "679fb3d72b7ccf2159cde7ec",
+      "34ff8bbfd80913dc3ec77dbf",
+      "8045f4a000199bade83bc2c4"
+    ],
+    "test_row_keys": [
+      "bf140bc680ed88ed4c9cc48f",
+      "2d044ab4e94cd63e5785041b",
+      "5077679ce215d306ee6df53b",
+      "378b00af9dc25962ef6e17a6",
+      "bdf70cc1cab359d3ce3fdebd",
+      "cd6919fe7630afec7ed8dd2d",
+      "3115352d3ef8658f7408c94a",
+      "fda7dd3edb7a2131c300bd36"
+    ],
+    "cv_training_only": true,
+    "cv_partitions": [
+      {
+        "train_groups": [
+          "35d779b53736538a80418944",
+          "3843008dabcf1c07bb513c26",
+          "5c0924c0c1298757550ee8f2",
+          "6889dad3ee55f1431fb24e0e",
+          "7b4da5f61974f554bdc60679",
+          "a40156aab41e317e192f5d99",
+          "b419672c7bec58b63c955252",
+          "bcb730dbcda5dee4dcd7fc2a",
+          "d8ae2d4c52041cc673368042",
+          "edcf711eabdcce06cd03dd0f",
+          "f15fa229d257ba950fce4b4c",
+          "f49ee8748ce6f2b4cc5b6a7e"
+        ],
+        "validation_groups": [
+          "31e10d14a9011941d9aa7e43",
+          "69d5b417febca2752312eb2f",
+          "c6b4baccf0d148beaa546faf",
+          "ffe6e542142862617ac0d0a6"
+        ],
+        "synthetic_training_rows": 0
+      },
+      {
+        "train_groups": [
+          "31e10d14a9011941d9aa7e43",
+          "35d779b53736538a80418944",
+          "3843008dabcf1c07bb513c26",
+          "5c0924c0c1298757550ee8f2",
+          "69d5b417febca2752312eb2f",
+          "7b4da5f61974f554bdc60679",
+          "a40156aab41e317e192f5d99",
+          "b419672c7bec58b63c955252",
+          "c6b4baccf0d148beaa546faf",
+          "d8ae2d4c52041cc673368042",
+          "edcf711eabdcce06cd03dd0f",
+          "f15fa229d257ba950fce4b4c",
+          "ffe6e542142862617ac0d0a6"
+        ],
+        "validation_groups": [
+          "6889dad3ee55f1431fb24e0e",
+          "bcb730dbcda5dee4dcd7fc2a",
+          "f49ee8748ce6f2b4cc5b6a7e"
+        ],
+        "synthetic_training_rows": 0
+      },
+      {
+        "train_groups": [
+          "31e10d14a9011941d9aa7e43",
+          "35d779b53736538a80418944",
+          "3843008dabcf1c07bb513c26",
+          "6889dad3ee55f1431fb24e0e",
+          "69d5b417febca2752312eb2f",
+          "7b4da5f61974f554bdc60679",
+          "a40156aab41e317e192f5d99",
+          "bcb730dbcda5dee4dcd7fc2a",
+          "c6b4baccf0d148beaa546faf",
+          "d8ae2d4c52041cc673368042",
+          "edcf711eabdcce06cd03dd0f",
+          "f49ee8748ce6f2b4cc5b6a7e",
+          "ffe6e542142862617ac0d0a6"
+        ],
+        "validation_groups": [
+          "5c0924c0c1298757550ee8f2",
+          "b419672c7bec58b63c955252",
+          "f15fa229d257ba950fce4b4c"
+        ],
+        "synthetic_training_rows": 0
+      },
+      {
+        "train_groups": [
+          "31e10d14a9011941d9aa7e43",
+          "35d779b53736538a80418944",
+          "5c0924c0c1298757550ee8f2",
+          "6889dad3ee55f1431fb24e0e",
+          "69d5b417febca2752312eb2f",
+          "7b4da5f61974f554bdc60679",
+          "b419672c7bec58b63c955252",
+          "bcb730dbcda5dee4dcd7fc2a",
+          "c6b4baccf0d148beaa546faf",
+          "d8ae2d4c52041cc673368042",
+          "f15fa229d257ba950fce4b4c",
+          "f49ee8748ce6f2b4cc5b6a7e",
+          "ffe6e542142862617ac0d0a6"
+        ],
+        "validation_groups": [
+          "3843008dabcf1c07bb513c26",
+          "a40156aab41e317e192f5d99",
+          "edcf711eabdcce06cd03dd0f"
+        ],
+        "synthetic_training_rows": 0
+      },
+      {
+        "train_groups": [
+          "31e10d14a9011941d9aa7e43",
+          "3843008dabcf1c07bb513c26",
+          "5c0924c0c1298757550ee8f2",
+          "6889dad3ee55f1431fb24e0e",
+          "69d5b417febca2752312eb2f",
+          "a40156aab41e317e192f5d99",
+          "b419672c7bec58b63c955252",
+          "bcb730dbcda5dee4dcd7fc2a",
+          "c6b4baccf0d148beaa546faf",
+          "edcf711eabdcce06cd03dd0f",
+          "f15fa229d257ba950fce4b4c",
+          "f49ee8748ce6f2b4cc5b6a7e",
+          "ffe6e542142862617ac0d0a6"
+        ],
+        "validation_groups": [
+          "35d779b53736538a80418944",
+          "7b4da5f61974f554bdc60679",
+          "d8ae2d4c52041cc673368042"
+        ],
+        "synthetic_training_rows": 0
+      }
+    ],
+    "provenance_sha256": "0205f96e2575e8babfa4635973c608c899aad5c51cca6906d1b753cf5c30b9ce"
+  },
+  "test_predictions_sha256": "7eaf3d7ac234954f28df0763bc174431f1011d571d6f110fba1282c53866ce10",
+  "baseline": {
+    "strategy": "most_frequent_training_label",
+    "label": "AMS-",
+    "test_accuracy": 0.5
+  }
+}

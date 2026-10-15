@@ -154,6 +154,7 @@ def evaluate_training_run(
     y_train_real: pd.Series | None = None,
     augmentation_used: bool = False,
     synthetic_rows: int = 0,
+    calculate_cross_validation: bool = True,
 ) -> dict[str, Any]:
     train_pred = clf.predict(x_train)
     test_pred = clf.predict(x_test)
@@ -165,7 +166,11 @@ def evaluate_training_run(
         train_real_pred = clf.predict(x_train_real)
         train_real_metrics = _summary_metrics(y_train_real, train_real_pred, labels)
 
-    cv_metrics = _cross_validation_metrics(clf, full_features, full_labels)
+    cv_metrics = _cross_validation_metrics(
+        clf,
+        x_train_real if x_train_real is not None else x_train,
+        y_train_real if y_train_real is not None else y_train,
+    ) if calculate_cross_validation else None
 
     label_counts = dict(sorted(Counter(full_labels).items()))
     gap_source = train_real_metrics or train_metrics
@@ -210,7 +215,7 @@ def evaluate_training_run(
     if augmentation_used:
         warnings.append(
             "Data augmentation aplicada solo sobre train: el conjunto de test "
-            "se mantiene 100% real para auditar performance."
+            "no recibe augmentation; la procedencia de atributos y etiquetas debe auditarse por separado."
         )
         if high_synthetic_ratio:
             warnings.append(

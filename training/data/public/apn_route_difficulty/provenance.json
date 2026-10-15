@@ -1,0 +1,790 @@
+{
+  "schema_version": 1,
+  "model": "apn_route_difficulty",
+  "source": {
+    "source": "Administraci\u00f3n de Parques Nacionales / fichas oficiales de senderos argentinos",
+    "url": "https://www.argentina.gob.ar/parquesnacionales",
+    "version": "Original HTML snapshots, 2026-10-14",
+    "license": "CC-BY-4.0 (Argentina.gob.ar terms, except otherwise stated)",
+    "scope": "Dificultad publicada por APN para recorridos completos. Distancias y duraciones son estimaciones publicadas, no tiempos medidos de caminantes. Evaluaci\u00f3n con parques completos separados; no certifica seguridad ni generalizaci\u00f3n nacional.",
+    "label_definition": "Individual APN difficulty retained; case/separator normalization only, including the native media-alta compound class. No conversion to sac_scale or labels computed from features.",
+    "transformations": "Parse explicit summary units; retain one-way/round-trip/total/unspecified basis separately without doubling values. Exclude missing/ambiguous values, conflicting source facts and horseback durations. Names and park identifiers are provenance only.",
+    "raw_files": [
+      {
+        "path": "training/data/raw/public_audit/apn/tierra_del_fuego.html",
+        "sha256": "8fc7ce23785e9dea1eb194c320091ea6cd92b7941c5788276a0f37adad03f781",
+        "bytes": 41606
+      },
+      {
+        "path": "training/data/raw/public_audit/apn/los_alerces.html",
+        "sha256": "a5f871a406bd0f4a7161b88e87490cad13714e68a01c3c52b7ef7ca0bde5ad49",
+        "bytes": 51568
+      },
+      {
+        "path": "training/data/raw/public_audit/apn/calilegua.html",
+        "sha256": "7b7fa937d4e8c23c35ff7204eac20c8fd16efc1bcebca7a37a0eb89cc75d1223",
+        "bytes": 45543
+      },
+      {
+        "path": "training/data/raw/public_audit/apn/condorito.html",
+        "sha256": "38b7691c1e2dcf69a228efd399407a576ac39c64c78e6a963e82b4518fa4b08c",
+        "bytes": 54198
+      },
+      {
+        "path": "training/data/raw/public_audit/apn/el_leoncito.html",
+        "sha256": "edeb57fffb5fde9a98bd7e8cabe9cae56dc964b9a855d721b4caeeb7b5d36492",
+        "bytes": 40145
+      }
+    ],
+    "excluded_records": [
+      {
+        "park": "los_alerces",
+        "name": "Las Palanganas",
+        "reason": "Duplicated route with conflicting 4 km and 4900 m distances; no arbitrary correction",
+        "evidence": "Las Palanganas. 2 hs (ida y vuelta) / 4 km (ida) / Dificultad media. Comienza en la seccional Lago Krugger con rumbo sur. Este sendero transita la ribera del r\u00edo Frey durante 4900 metros con una escasa pendiente y recorre ambientes dominados por coihues y ca\u00f1a colihue, junto a algunas especies m\u00e1s t\u00edpicas de la selva valdiviana. En algunas \u00e9pocas del a\u00f1o es posible divisar pud\u00faes y patos de los torrentes."
+      },
+      {
+        "park": "los_alerces",
+        "name": "Las Palanganas",
+        "reason": "Duplicated route with conflicting 4 km and 4900 m distances; no arbitrary correction",
+        "evidence": "Las Palanganas. 2 hs (ida y vuelta) / 4 km / Dificultad media. Comienza en la seccional Lago Krugger con rumbo sur. Este sendero transita la ribera del r\u00edo Frey durante 4900 metros con una escasa pendiente y recorre ambientes dominados por coihues y ca\u00f1a colihue, junto a algunas especies m\u00e1s t\u00edpicas de la selva valdiviana. En algunas \u00e9pocas del a\u00f1o es posible divisar pud\u00faes y patos de los torrentes."
+      },
+      {
+        "park": "condorito",
+        "name": "Sendero principal",
+        "reason": "Summary combines Balcon Norte and a downstream section with a different difficulty; ambiguous route scope",
+        "evidence": "10 km / 5 horas aprox. (ida y vuelta) / Dificultad media El recorrido llega hasta el Balc\u00f3n Norte de la Quebrada y a la bajada al R\u00edo de los Condoritos. Desde el estacionamiento 2 hasta el \u00e1rea del Balc\u00f3n Norte son 5 km de senda de dificultad media, durante unas 2 horas de recorrido de ida. La bajada al r\u00edo implica 2 horas m\u00e1s de dificultad alta y se estiman unas 5 horas entre ida y vuelta. No se requiere la contrataci\u00f3n de un gu\u00eda para esta traves\u00eda."
+      },
+      {
+        "park": "condorito",
+        "name": "Bajada al R\u00edo de los Condoritos (Refugio del 10 \u2013 R\u00edo - Refugio del 10)",
+        "reason": "Published media summary conflicts with alta description in Sendero principal",
+        "evidence": "2000 metros (ida y vuelta) / 120 minutos / Dificultad media El recorrido implica descender unos 200 metros de desnivel por una senda agreste, sombreada de tabaquillos frescos y especies asociadas al bosque de las quebradas. Este descenso toma aproximadamente 40 minutos y es muy agradable hacerlo desde la primavera hasta el oto\u00f1o por su frescura y abundancia vegetal. Tras descansar a orillas del r\u00edo que corre encajonado en el fondo de la quebrada, se regresa ascendiendo por la misma pendiente durante al menos unos 50 minutos m\u00e1s. En invierno suele cerrarse debido a los bancos de hielo sobre la senda, que la vuelven muy peligrosa."
+      },
+      {
+        "park": "condorito",
+        "name": "La Cuesta de Argel",
+        "reason": "Published duration is for horseback travel, not walking",
+        "evidence": "30 km (ida y vuelta) / 12 horas a caballo / Dificultad alta Esta hist\u00f3rica senda tiene sus or\u00edgenes en la \u00e9poca de las estancias jesu\u00edticas, cuando desde Alta Gracia se llevaba el ganado hasta la cima de las sierras durante la \u201cveranada\u201d para el engorde previo a emprender el camino del Alto Per\u00fa Obligatorio. Atraviesa el Parque de Este a Oeste uniendo la localidad de San Clemente con la Pampa de Achala."
+      },
+      {
+        "park": "el_leoncito",
+        "name": "Cascada El Rinc\u00f3n",
+        "reason": "No explicit published duration",
+        "evidence": "500 m (ida) | Dificultad baja Saliendo desde el estacionamiento, permite contemplar la cascada desde una terraza natural."
+      },
+      {
+        "park": "el_leoncito",
+        "name": "Paisajes de agua",
+        "reason": "No explicit published duration",
+        "evidence": "1 km (ida) / Dificultad baja El recorrido invita a una conexi\u00f3n con lo natural mediante el sonido de vertiente del arroyo El Leoncito y el canto de aves que habitan el \u00e1rea. Es un sendero propicio para el avistaje de fauna como cuises, zorros, diversas aves y, con algo de suerte, la posibilidad de observar guanacos e incluso pumas."
+      },
+      {
+        "park": "el_leoncito",
+        "name": "Presenta dos opciones: una de",
+        "reason": "Distance missing or multiple published alternatives",
+        "evidence": "Presenta dos opciones: una de 4 km y otra complementaria de 6 km | Dificultad media En el sendero se pone en valor la geolog\u00eda de este Parque Nacionales. Cuenta adem\u00e1s con vestigios ancestrales como petroglifos."
+      }
+    ],
+    "geographic_holdout": {
+      "unit": "park",
+      "test_units": [
+        "tierra_del_fuego"
+      ],
+      "reason": "Prespecified before fitting the Argentine expansion; assess transfer to a complete southern park."
+    }
+  },
+  "features": [
+    "published_distance_km",
+    "published_duration_minutes",
+    "distance_basis_one_way",
+    "distance_basis_round_trip",
+    "distance_basis_total",
+    "distance_basis_unspecified",
+    "duration_basis_one_way",
+    "duration_basis_round_trip",
+    "duration_basis_total",
+    "duration_basis_unspecified"
+  ],
+  "rows": 52,
+  "synthetic_base_rows": 0,
+  "dataset_sha256": "44b0a944d74d3c1e26803ca9f1ac2e715e2182afa5e1bd5746e7fa5fc150bb66",
+  "lineage": [
+    {
+      "group_key": "83ecfb5d3de7df7421256cbb",
+      "row_key": "9a18c75fcf3c77d53d3f11aa",
+      "lineage": {
+        "park": "tierra_del_fuego",
+        "name": "Castorera",
+        "snapshot": "tierra_del_fuego.html",
+        "published_label": "BAJA",
+        "distance_basis": "unspecified",
+        "duration_basis": "unspecified",
+        "evidence": "Dificultad: BAJA Distancia: 200 mts Duraci\u00f3n: 20 min Desnivel total: 5 mts"
+      }
+    },
+    {
+      "group_key": "83ecfb5d3de7df7421256cbb",
+      "row_key": "79a50281a0e14941f22b3aea",
+      "lineage": {
+        "park": "tierra_del_fuego",
+        "name": "Hito XXIV",
+        "snapshot": "tierra_del_fuego.html",
+        "published_label": "MEDIA",
+        "distance_basis": "one_way",
+        "duration_basis": "round_trip",
+        "evidence": "Dificultad: MEDIA Distancia: 3,5 km (ida) Duraci\u00f3n: 3 hs (ida y vuelta) Desnivel total: 10 mts"
+      }
+    },
+    {
+      "group_key": "83ecfb5d3de7df7421256cbb",
+      "row_key": "23261c7a32aba4ca29a498cd",
+      "lineage": {
+        "park": "tierra_del_fuego",
+        "name": "La Baliza",
+        "snapshot": "tierra_del_fuego.html",
+        "published_label": "BAJA",
+        "distance_basis": "unspecified",
+        "duration_basis": "unspecified",
+        "evidence": "Dificultad: BAJA Distancia: 1200 mts Duraci\u00f3n: 30 min Desnivel total: 6 mts"
+      }
+    },
+    {
+      "group_key": "83ecfb5d3de7df7421256cbb",
+      "row_key": "f77861eeca7cc721040057bb",
+      "lineage": {
+        "park": "tierra_del_fuego",
+        "name": "Mirador Lapataia",
+        "snapshot": "tierra_del_fuego.html",
+        "published_label": "BAJA",
+        "distance_basis": "unspecified",
+        "duration_basis": "unspecified",
+        "evidence": "Dificultad: BAJA Distancia: 980 mts Duraci\u00f3n: 30 min Desnivel total: 25 mts"
+      }
+    },
+    {
+      "group_key": "83ecfb5d3de7df7421256cbb",
+      "row_key": "3f6db09df314fdaae956e237",
+      "lineage": {
+        "park": "tierra_del_fuego",
+        "name": "Paseo de la Isla",
+        "snapshot": "tierra_del_fuego.html",
+        "published_label": "BAJA",
+        "distance_basis": "unspecified",
+        "duration_basis": "unspecified",
+        "evidence": "Dificultad: BAJA Distancia: 1300 mts Duraci\u00f3n: 30 min Desnivel total: 12 mts"
+      }
+    },
+    {
+      "group_key": "83ecfb5d3de7df7421256cbb",
+      "row_key": "6afadf123342d0a6e2c3f144",
+      "lineage": {
+        "park": "tierra_del_fuego",
+        "name": "Senda del Turbal",
+        "snapshot": "tierra_del_fuego.html",
+        "published_label": "BAJA",
+        "distance_basis": "unspecified",
+        "duration_basis": "unspecified",
+        "evidence": "Dificultad: BAJA Distancia: 1350 mts Duraci\u00f3n: 40 min Desnivel total: 12 mts"
+      }
+    },
+    {
+      "group_key": "83ecfb5d3de7df7421256cbb",
+      "row_key": "0a38bcb0c27bdb67cf52cfc1",
+      "lineage": {
+        "park": "tierra_del_fuego",
+        "name": "Cascada R\u00edo Pipo",
+        "snapshot": "tierra_del_fuego.html",
+        "published_label": "BAJA",
+        "distance_basis": "one_way",
+        "duration_basis": "one_way",
+        "evidence": "Dificultad: BAJA Distancia: 900 mts (ida) Duraci\u00f3n: 15 min (ida) Desnivel total: 30 mts"
+      }
+    },
+    {
+      "group_key": "83ecfb5d3de7df7421256cbb",
+      "row_key": "1d213c560281f02bbb20efec",
+      "lineage": {
+        "park": "tierra_del_fuego",
+        "name": "Cerro Guanaco",
+        "snapshot": "tierra_del_fuego.html",
+        "published_label": "ALTA",
+        "distance_basis": "one_way",
+        "duration_basis": "one_way",
+        "evidence": "Dificultad: ALTA Distancia: 6000 mts (ida) Duraci\u00f3n: 4 hs hasta la cumbre Desnivel total: 900 mts Horario m\u00e1ximo de ingreso: 12:30 hs"
+      }
+    },
+    {
+      "group_key": "83ecfb5d3de7df7421256cbb",
+      "row_key": "a2e65a0d3e3eb8e224c18225",
+      "lineage": {
+        "park": "tierra_del_fuego",
+        "name": "Costera",
+        "snapshot": "tierra_del_fuego.html",
+        "published_label": "MEDIA",
+        "distance_basis": "unspecified",
+        "duration_basis": "unspecified",
+        "evidence": "Dificultad: MEDIA Distancia: 8000 mts Duraci\u00f3n: 4 hs Desnivel total: 70 mts"
+      }
+    },
+    {
+      "group_key": "83ecfb5d3de7df7421256cbb",
+      "row_key": "76bc0ca3df411e49275d15fb",
+      "lineage": {
+        "park": "tierra_del_fuego",
+        "name": "Cruce Ruta 3 \u2013 Ensenada",
+        "snapshot": "tierra_del_fuego.html",
+        "published_label": "BAJA",
+        "distance_basis": "unspecified",
+        "duration_basis": "unspecified",
+        "evidence": "Dificultad: BAJA Distancia: 1300 mts Duraci\u00f3n: 40 min Desnivel total: 100 mts"
+      }
+    },
+    {
+      "group_key": "83ecfb5d3de7df7421256cbb",
+      "row_key": "fb2b184c157626ccfa4c5f24",
+      "lineage": {
+        "park": "tierra_del_fuego",
+        "name": "Laguna del Caminante",
+        "snapshot": "tierra_del_fuego.html",
+        "published_label": "ALTA",
+        "distance_basis": "unspecified",
+        "duration_basis": "unspecified",
+        "evidence": "Dificultad: ALTA Distancia: 24,4 km Duraci\u00f3n: 9 hs Desnivel total: 500 mts"
+      }
+    },
+    {
+      "group_key": "83ecfb5d3de7df7421256cbb",
+      "row_key": "fbfe49ed5e78d9f5408c9f55",
+      "lineage": {
+        "park": "tierra_del_fuego",
+        "name": "Laguna Negra",
+        "snapshot": "tierra_del_fuego.html",
+        "published_label": "BAJA",
+        "distance_basis": "unspecified",
+        "duration_basis": "unspecified",
+        "evidence": "Dificultad: BAJA Distancia: 500 mts Duraci\u00f3n: 15 min Desnivel total: 20 mts"
+      }
+    },
+    {
+      "group_key": "83ecfb5d3de7df7421256cbb",
+      "row_key": "736696f2980e887bd28b7f4d",
+      "lineage": {
+        "park": "tierra_del_fuego",
+        "name": "Pampa Alta",
+        "snapshot": "tierra_del_fuego.html",
+        "published_label": "MEDIA",
+        "distance_basis": "unspecified",
+        "duration_basis": "unspecified",
+        "evidence": "Dificultad: MEDIA Distancia: 4,7 km Duraci\u00f3n: 2 hs Desnivel total: 252 mts"
+      }
+    },
+    {
+      "group_key": "0dfc847fe64cc8f187f29d07",
+      "row_key": "79c3b8bd8cb7892eac0905c3",
+      "lineage": {
+        "park": "los_alerces",
+        "name": "Circuito R\u00edo Rivadavia",
+        "snapshot": "los_alerces.html",
+        "published_label": "media",
+        "distance_basis": "unspecified",
+        "duration_basis": "round_trip",
+        "evidence": "Circuito R\u00edo Rivadavia. 2 hs (ida y vuelta) / 6 km / Dificultad media. Inicia en el camping Bah\u00eda Sol\u00eds y bordea el lago Rivadavia hasta el arroyo Colehual. El camino contin\u00faa por el arroyo hasta la RP 71 y desde all\u00ed por una senda hasta el punto de partida."
+      }
+    },
+    {
+      "group_key": "0dfc847fe64cc8f187f29d07",
+      "row_key": "2f04f842bd90a71bfed78c08",
+      "lineage": {
+        "park": "los_alerces",
+        "name": "Lahu\u00e1n Solitario",
+        "snapshot": "los_alerces.html",
+        "published_label": "baja",
+        "distance_basis": "one_way",
+        "duration_basis": "round_trip",
+        "evidence": "Lahu\u00e1n Solitario. 1:30 hs (ida y vuelta) / 1,5 km (ida) / Dificultad baja. Inicia cruzando la pasarela del r\u00edo Arrayanes y luego bordea el r\u00edo Men\u00e9ndez. Antes de llegar al puerto Chucao podr\u00e1s observar un lahu\u00e1n o alerce de aproximadamente 300 a\u00f1os."
+      }
+    },
+    {
+      "group_key": "0dfc847fe64cc8f187f29d07",
+      "row_key": "f44f0326dca74c34fb50d2b3",
+      "lineage": {
+        "park": "los_alerces",
+        "name": "Villa Futalaufquen \u2013 Puerto Limonao",
+        "snapshot": "los_alerces.html",
+        "published_label": "media",
+        "distance_basis": "one_way",
+        "duration_basis": "round_trip",
+        "evidence": "Villa Futalaufquen \u2013 Puerto Limonao. 3 hs (ida y vuelta) / 4 km (ida) / Dificultad media. Se transita por la costa del lago Futalaufquen."
+      }
+    },
+    {
+      "group_key": "0dfc847fe64cc8f187f29d07",
+      "row_key": "8edc8aff0387153b73afd009",
+      "lineage": {
+        "park": "los_alerces",
+        "name": "Pinturas rupestres",
+        "snapshot": "los_alerces.html",
+        "published_label": "baja",
+        "distance_basis": "one_way",
+        "duration_basis": "unspecified",
+        "evidence": "Pinturas rupestres. 40 min / 800 mts (ida) / Dificultad baja. El acceso se ubica a 2,5 km de Villa Futalaufquen. Tras un breve recorrido se llega a un alero con pinturas rupestres con accesibilidad hasta las pinturas, luego se asciende hasta un mirador sobre el Lago Futalafquen."
+      }
+    },
+    {
+      "group_key": "0dfc847fe64cc8f187f29d07",
+      "row_key": "672784e29ffab6dcba75bff2",
+      "lineage": {
+        "park": "los_alerces",
+        "name": "Los Tambores",
+        "snapshot": "los_alerces.html",
+        "published_label": "baja",
+        "distance_basis": "one_way",
+        "duration_basis": "unspecified",
+        "evidence": "Los Tambores. 15 min / 100 mts (ida) / Dificultad baja. Se inicia a 1 km del Centro de informes. Es un sendero que se interna en el bosque cerrado, en medio de cipreses, coihues, aljabas, helechos y musgos, hasta llegar al pie de una peque\u00f1a cascada. A pesar de presentar cierta pendiente, es ideal para ir con ni\u00f1os peque\u00f1os."
+      }
+    },
+    {
+      "group_key": "0dfc847fe64cc8f187f29d07",
+      "row_key": "cc385c8c0feddfbf93cd1bd1",
+      "lineage": {
+        "park": "los_alerces",
+        "name": "Mirador de los Pozones",
+        "snapshot": "los_alerces.html",
+        "published_label": "baja",
+        "distance_basis": "one_way",
+        "duration_basis": "round_trip",
+        "evidence": "Mirador de los Pozones. 30 min (ida y vuelta) / 100 mts (ida) / Dificultad baja. Se realiza una caminata corta que ofrece una vista desde lo alto hacia los pozones por donde antiguamente corr\u00edan las aguas del r\u00edo Futaleuf\u00fa."
+      }
+    },
+    {
+      "group_key": "0dfc847fe64cc8f187f29d07",
+      "row_key": "a0873cea6979912768ed5004",
+      "lineage": {
+        "park": "los_alerces",
+        "name": "Cerro Alto El Petiso",
+        "snapshot": "los_alerces.html",
+        "published_label": "alta",
+        "distance_basis": "unspecified",
+        "duration_basis": "round_trip",
+        "evidence": "Cerro Alto El Petiso. 7 hs (ida y vuelta) / 16 km / Dificultad alta. Comienza en Puerto Mermoud, a orillas del Lago Verde. Se transita por el bosque en una subida de caracoles hasta llegar al arroyo Zanj\u00f3n Hondo. Contin\u00faa por el cauce del arroyo hasta un filo por el cual se asciende al pedrero que conduce a la cumbre. Es una excursi\u00f3n exigente que se realiza con gu\u00edas habilitados. Es obligatorio registrarse antes de subir, dando aviso a la seccional de R\u00edo Arrayanes o Lago Verde."
+      }
+    },
+    {
+      "group_key": "0dfc847fe64cc8f187f29d07",
+      "row_key": "e0d96d33a2670bd2904d67db",
+      "lineage": {
+        "park": "los_alerces",
+        "name": "Laguna Escondida",
+        "snapshot": "los_alerces.html",
+        "published_label": "media",
+        "distance_basis": "one_way",
+        "duration_basis": "round_trip",
+        "evidence": "Laguna Escondida. 3:30 hs (ida y vuelta) / 3 km (ida) / Dificultad media. Parte desde la Seccional de R\u00edo Arrayanes y se asciende entre bosques hasta alcanzar la Laguna Escondida. En el camino se obtienen excelentes panor\u00e1micas de los lagos Verde y Men\u00e9ndez. Es preciso registrarse."
+      }
+    },
+    {
+      "group_key": "0dfc847fe64cc8f187f29d07",
+      "row_key": "b723f41307091e0a789d954c",
+      "lineage": {
+        "park": "los_alerces",
+        "name": "Cerro Cocinero",
+        "snapshot": "los_alerces.html",
+        "published_label": "alta",
+        "distance_basis": "one_way",
+        "duration_basis": "round_trip",
+        "evidence": "Cerro Cocinero. 6 hs (ida y vuelta) / 8 km (ida) / Dificultad alta. Es uno de los cerros m\u00e1s altos de la regi\u00f3n y forma parte del Cord\u00f3n Situaci\u00f3n. En 2019 se reabri\u00f3 la senda que hab\u00eda sido afectada por incendios forestales. Se parte del Arroyo Ra\u00f1into y se recomienda el ascenso con gu\u00eda habilitado. Es necesario registrarse en la Portada Centro o en el Centro de Informes."
+      }
+    },
+    {
+      "group_key": "0dfc847fe64cc8f187f29d07",
+      "row_key": "58e7ad1ec1cdb4292eb42915",
+      "lineage": {
+        "park": "los_alerces",
+        "name": "Lago Krugger",
+        "snapshot": "los_alerces.html",
+        "published_label": "alta",
+        "distance_basis": "one_way",
+        "duration_basis": "one_way",
+        "evidence": "Lago Krugger. 12 hs (ida) / 17 km (ida) / Dificultad alta. Es una senda exigente, para recorrer con gu\u00eda o para trekkers con experiencia. Se parte desde Puerto Limonao y es posible hacer noche a mitad del recorrido, aunque no est\u00e1 permitido hacer fuego. Se arriba al Lago Krugger, donde hay refugio, y es posible coordinar con una embarcaci\u00f3n para regresar. Es necesario registrarse en la Portada Centro o en el Centro de Informes."
+      }
+    },
+    {
+      "group_key": "0dfc847fe64cc8f187f29d07",
+      "row_key": "5d20bb1c02346a5f37d4002a",
+      "lineage": {
+        "park": "los_alerces",
+        "name": "Laguna del Toro",
+        "snapshot": "los_alerces.html",
+        "published_label": "media-alta",
+        "distance_basis": "one_way",
+        "duration_basis": "round_trip",
+        "evidence": "Laguna del Toro. 4 hs (ida y vuelta) / 5 km (ida) / Dificultad media-alta. La senda se ubica a 500 metros del Centro de Informes. Transita en su mayor\u00eda en el bosque andino patag\u00f3nico, poblado de cipreses, coihues y \u00f1ires hasta llegar a la Laguna del Toro, al pie del cerro La Monja. Es obligatorio registrarse en el Centro de Informes de Portada Sur, en el ingreso a este sector del \u00e1rea protegida."
+      }
+    },
+    {
+      "group_key": "0dfc847fe64cc8f187f29d07",
+      "row_key": "9c865756568486c95ecbbce0",
+      "lineage": {
+        "park": "los_alerces",
+        "name": "Cascada Arroyo del Hacha",
+        "snapshot": "los_alerces.html",
+        "published_label": "media",
+        "distance_basis": "one_way",
+        "duration_basis": "round_trip",
+        "evidence": "Cascada Arroyo del Hacha. 1 hora (ida y vuelta) / 1 km (ida) / Dificultad media. Recorre desde la Seccional Rivadavia hasta una cascada con mirador al lago Rivadavia."
+      }
+    },
+    {
+      "group_key": "0dfc847fe64cc8f187f29d07",
+      "row_key": "fd7d164a5bc2c47edb52c193",
+      "lineage": {
+        "park": "los_alerces",
+        "name": "Mirador del Lago Verde",
+        "snapshot": "los_alerces.html",
+        "published_label": "media",
+        "distance_basis": "one_way",
+        "duration_basis": "round_trip",
+        "evidence": "Mirador del Lago Verde. 1 hora (ida y vuelta) / 1,6 km (ida) / Dificultad media. Comienza 1 km al norte de la Seccional Lago Verde. Se asciende con pendiente poco pronunciada hasta un mirador. Desde all\u00ed se observan los lagos Verde, Rivadavia y Men\u00e9ndez."
+      }
+    },
+    {
+      "group_key": "0dfc847fe64cc8f187f29d07",
+      "row_key": "ca2616ec2a74a0a73112611f",
+      "lineage": {
+        "park": "los_alerces",
+        "name": "Lago Las Juntas",
+        "snapshot": "los_alerces.html",
+        "published_label": "media",
+        "distance_basis": "one_way",
+        "duration_basis": "round_trip",
+        "evidence": "Lago Las Juntas. 1:30 hs (ida y vuelta) / 2 km (ida) / Dificultad media. Senderos interpretativos con pendientes pronunciadas. El camino comienza con el cruce del r\u00edo Arrayanes y contin\u00faa bordeando el Lago Verde hasta la ex poblaci\u00f3n Mermoud."
+      }
+    },
+    {
+      "group_key": "0dfc847fe64cc8f187f29d07",
+      "row_key": "0a23da92ca02ab355b09a7de",
+      "lineage": {
+        "park": "los_alerces",
+        "name": "Viejo Lahu\u00e1n",
+        "snapshot": "los_alerces.html",
+        "published_label": "baja",
+        "distance_basis": "one_way",
+        "duration_basis": "round_trip",
+        "evidence": "Viejo Lahu\u00e1n. 1:30 horas (ida y vuelta) / 3 km (ida) / Dificultad baja. Comienza en el campamento Arrayanes, bordeando el r\u00edo del mismo nombre aguas abajo hasta llegar a un alerce quebrado de aproximadamente 800 a\u00f1os de antig\u00fcedad."
+      }
+    },
+    {
+      "group_key": "0dfc847fe64cc8f187f29d07",
+      "row_key": "d4a690808c5bd68635b19658",
+      "lineage": {
+        "park": "los_alerces",
+        "name": "Cascada Irigoyen",
+        "snapshot": "los_alerces.html",
+        "published_label": "media",
+        "distance_basis": "one_way",
+        "duration_basis": "one_way",
+        "evidence": "Cascada Irigoyen. 30 min (ida) / 150 mts (ida) / Dificultad media. Sobre la margen este del lago Futalaufquen, a 6 km de la Intendencia y sobre la RP 71, se ubica la Cascada Irigoyen. Est\u00e1 bien demarcado y posee dos miradores de la cascada: uno inferior y otro superior."
+      }
+    },
+    {
+      "group_key": "0dfc847fe64cc8f187f29d07",
+      "row_key": "7bc255c19f1edfd707bc0cda",
+      "lineage": {
+        "park": "los_alerces",
+        "name": "Quebrada del Le\u00f3n",
+        "snapshot": "los_alerces.html",
+        "published_label": "media",
+        "distance_basis": "one_way",
+        "duration_basis": "round_trip",
+        "evidence": "Quebrada del Le\u00f3n. 2 hs (ida y vuelta) / 2 km (ida) / Dificultad media. Se ubica a 400 metros al norte por RP 71 desde la seccional Bah\u00eda Rosales, pr\u00f3xima al puente del arroyo Quebrada del Le\u00f3n. Se accede al mirador de una cascada sobre el arroyo."
+      }
+    },
+    {
+      "group_key": "0dfc847fe64cc8f187f29d07",
+      "row_key": "b2cee0c0902070b5a5437bb3",
+      "lineage": {
+        "park": "los_alerces",
+        "name": "Cinco Saltos",
+        "snapshot": "los_alerces.html",
+        "published_label": "media",
+        "distance_basis": "one_way",
+        "duration_basis": "round_trip",
+        "evidence": "Cinco Saltos. 2 hs (ida y vuelta) / 1,5 km (ida) / Dificultad media. Comienza a 3,5 km de la Villa Futalaufquen (direcci\u00f3n Puerto Limonao). Se sube por una pendiente pronunciada hasta llegar a un mirador."
+      }
+    },
+    {
+      "group_key": "0dfc847fe64cc8f187f29d07",
+      "row_key": "18e8ffdbeaa6d1794db661a5",
+      "lineage": {
+        "park": "los_alerces",
+        "name": "La Balsa",
+        "snapshot": "los_alerces.html",
+        "published_label": "media",
+        "distance_basis": "one_way",
+        "duration_basis": "one_way",
+        "evidence": "La Balsa. 6 hs (ida) / 12 km (ida) / Dificultad media. Es necesario coordinar el acceso con guardaparques de la Zona Sur. Inicia a orillas del embalse Amutui Quimey con el ascenso hacia un portezuelo, seguido del descenso hasta una pampa. Desde aqu\u00ed la senda contin\u00faa por un camino pasando por la Poblaci\u00f3n Burgos hasta La Balsa, frente a la seccional de guardaparques."
+      }
+    },
+    {
+      "group_key": "0dfc847fe64cc8f187f29d07",
+      "row_key": "90aefdba52c1eecd20da3366",
+      "lineage": {
+        "park": "los_alerces",
+        "name": "Sendero Hist\u00f3rico \u201cEl Choconcito\u201d",
+        "snapshot": "los_alerces.html",
+        "published_label": "baja",
+        "distance_basis": "one_way",
+        "duration_basis": "round_trip",
+        "evidence": "Sendero Hist\u00f3rico \u201cEl Choconcito\u201d. 30 minutos (ida y vuelta) / 200 mts (ida) / Dificultad baja. La senda se ubica a 500 metros del Centro de Informes. Es un sendero interpretativo con carteler\u00eda sobre el uso de este espacio en el proceso de construcci\u00f3n de la represa hidroel\u00e9ctrica Futaleuf\u00fa."
+      }
+    },
+    {
+      "group_key": "0dfc847fe64cc8f187f29d07",
+      "row_key": "251be1f7f1841807f85f9ce4",
+      "lineage": {
+        "park": "los_alerces",
+        "name": "Sendero de los Pescadores",
+        "snapshot": "los_alerces.html",
+        "published_label": "baja",
+        "distance_basis": "one_way",
+        "duration_basis": "round_trip",
+        "evidence": "Sendero de los Pescadores. 40 minutos (ida y vuelta) / 500 mts (ida) / Dificultad baja. Es un sendero que atraviesa un bosque de cipr\u00e9s y llega a una playa del Embalse Amutui Quimey."
+      }
+    },
+    {
+      "group_key": "0dfc847fe64cc8f187f29d07",
+      "row_key": "d2b4cbfa6e5fe1556798329b",
+      "lineage": {
+        "park": "los_alerces",
+        "name": "Cauce Viejo",
+        "snapshot": "los_alerces.html",
+        "published_label": "baja",
+        "distance_basis": "one_way",
+        "duration_basis": "round_trip",
+        "evidence": "Cauce Viejo. 1 hora (ida y vuelta) / 500 mts (ida) / Dificultad baja. Este sendero transita por donde antiguamente corr\u00edan las aguas del r\u00edo Futaleuf\u00fa"
+      }
+    },
+    {
+      "group_key": "59bc20a9e5fc753735a04775",
+      "row_key": "5a49ed1fe62e952d8530e70f",
+      "lineage": {
+        "park": "calilegua",
+        "name": "Sendero de interpretaci\u00f3n simb\u00f3lica guaran\u00ed \u201cNuestra Selva\u201d",
+        "snapshot": "calilegua.html",
+        "published_label": "media",
+        "distance_basis": "total",
+        "duration_basis": "unspecified",
+        "evidence": "Sendero de interpretaci\u00f3n simb\u00f3lica guaran\u00ed \u201cNuestra Selva\u201d 623 m (total) / 1 h / Dificultad media El sendero ofrece una inmersi\u00f3n en la cosmovisi\u00f3n del pueblo guaran\u00ed, destacando la importancia de la selva en la vida y las creencias de esta cultura. Con siete paradas que presentan informaci\u00f3n en espa\u00f1ol y guaran\u00ed, el recorrido atraviesa la Selva Pedemontana, caracterizada por su densa vegetaci\u00f3n compuesta por \u00e1rboles altos, helechos y enredaderas."
+      }
+    },
+    {
+      "group_key": "59bc20a9e5fc753735a04775",
+      "row_key": "17b1160606f493ef8ad35fe3",
+      "lineage": {
+        "park": "calilegua",
+        "name": "Somos Selva",
+        "snapshot": "calilegua.html",
+        "published_label": "baja",
+        "distance_basis": "total",
+        "duration_basis": "unspecified",
+        "evidence": "Somos Selva 229 m (total) / 20 minutos / Dificultad baja / Sendero accesible Situado a 260 metros de la Seccional Aguas Negras, este sector de la Selva Pedemontana permite apreciar lianas, enredaderas, bromelias y \u00e1rboles como el palo blanco y el palo amarillo. El suelo fue cementado para facilitar el recorrido de personas con movilidad reducida ."
+      }
+    },
+    {
+      "group_key": "59bc20a9e5fc753735a04775",
+      "row_key": "e8a72aa1d8cfc5d4c0d4d552",
+      "lineage": {
+        "park": "calilegua",
+        "name": "El Pedemontano",
+        "snapshot": "calilegua.html",
+        "published_label": "baja",
+        "distance_basis": "one_way",
+        "duration_basis": "unspecified",
+        "evidence": "El Pedemontano 1800 m (ida) / 1:30 h / Dificultad baja El sendero comienza frente al Mirador R\u00edo San Lorenzo y se adentra en la Selva Pedemontana. A lo largo del recorrido es posible apreciar la riqueza de este ecosistema, destacada por la presencia de \u00e1rboles de alto valor maderable como el urundel, el cedro coya y los lapachos, entre otros."
+      }
+    },
+    {
+      "group_key": "59bc20a9e5fc753735a04775",
+      "row_key": "b9a62dc9b75aa595f08101b5",
+      "lineage": {
+        "park": "calilegua",
+        "name": "Bosque del Cielo",
+        "snapshot": "calilegua.html",
+        "published_label": "baja",
+        "distance_basis": "one_way",
+        "duration_basis": "unspecified",
+        "evidence": "Bosque del Cielo 592 m (ida) / 25 minutos / Dificultad baja Ubicado a pocos metros del Monolito que conmemora la apertura de la Ruta Provincial N\u00ba 83 y se\u00f1ala el l\u00edmite occidental del Parque Nacional Calilegua, este sendero atraviesa una secci\u00f3n del Bosque Montano reconocida por la abundancia de hongos liquenizados. El recorrido finaliza en una zona de descanso con un mirador que ofrece una majestuosa vista panor\u00e1mica de las serran\u00edas de Calilegua, con su caracter\u00edstico relieve de profundos ca\u00f1adones."
+      }
+    },
+    {
+      "group_key": "59bc20a9e5fc753735a04775",
+      "row_key": "fec9bcec19ea6dfa3d7591c8",
+      "lineage": {
+        "park": "calilegua",
+        "name": "Sendero El Alejo",
+        "snapshot": "calilegua.html",
+        "published_label": "media",
+        "distance_basis": "one_way",
+        "duration_basis": "unspecified",
+        "evidence": "Sendero El Alejo 347 m (ida) / 20 minutos / Dificultad media El sendero, que rinde homenaje al primer guardaparque baqueano del Parque Nacional Calilegua, recorre una transici\u00f3n fascinante entre la Selva Montana y la Selva Pedemontana. A lo largo del trayecto se puede apreciar c\u00f3mo la altitud y el aumento de la humedad transforman la vegetaci\u00f3n, ofreciendo una muestra de la diversidad de estos ecosistemas."
+      }
+    },
+    {
+      "group_key": "59bc20a9e5fc753735a04775",
+      "row_key": "1bb70a14f1e8a5a8360df0f6",
+      "lineage": {
+        "park": "calilegua",
+        "name": "Sendero Seres Fant\u00e1sticos",
+        "snapshot": "calilegua.html",
+        "published_label": "baja",
+        "distance_basis": "one_way",
+        "duration_basis": "unspecified",
+        "evidence": "Sendero Seres Fant\u00e1sticos 304 m (ida) / 30 minutos / Dificultad baja El sendero comienza frente al Centro de Visitantes y se interna en un denso bosque, llenando el recorrido de una atm\u00f3sfera m\u00e1gica y envolvente. Entre la espesura aparecen esculturas de chatarra creadas por artistas del noroeste, que representan a once entidades mitol\u00f3gicas ligadas a la naturaleza, evocando leyendas antiguas que susurran historias ancestrales."
+      }
+    },
+    {
+      "group_key": "59bc20a9e5fc753735a04775",
+      "row_key": "cc22a883c9643752d74035d6",
+      "lineage": {
+        "park": "calilegua",
+        "name": "La Lagunita",
+        "snapshot": "calilegua.html",
+        "published_label": "media",
+        "distance_basis": "total",
+        "duration_basis": "unspecified",
+        "evidence": "La Lagunita 3320 m (total) / 2 h / Dificultad media El sendero comienza en El Pedemontano, ubicado a 2 km de la Seccional Aguas Negras. Se adentra en la Selva Pedemontana hasta alcanzar una peque\u00f1a laguna que representa una muestra del ecosistema acu\u00e1tico de las Yungas. En esta laguna es posible observar aves acu\u00e1ticas t\u00edpicas de la regi\u00f3n, como la garza bruja y el mac\u00e1 gris, y, con algo de suerte, avistar un yacar\u00e9 overo."
+      }
+    },
+    {
+      "group_key": "59bc20a9e5fc753735a04775",
+      "row_key": "9643232310704a96f25429b8",
+      "lineage": {
+        "park": "calilegua",
+        "name": "El Tapir",
+        "snapshot": "calilegua.html",
+        "published_label": "media",
+        "distance_basis": "one_way",
+        "duration_basis": "unspecified",
+        "evidence": "El Tapir 2170 m (ida) / 3 h / Dificultad media El sendero conecta La Lagunita con La Junta y atraviesa la Selva Pedemontana, siguiendo un tramo de la antigua Ruta Provincial 83 donde a\u00fan se pueden observar restos del pircado de contenci\u00f3n original. Es com\u00fan encontrar huellas de mam\u00edferos de las Yungas, como el tapir, la corzuela colorada y el pecar\u00ed de collar. El sendero permanece cerrado al p\u00fablico durante la temporada estival."
+      }
+    },
+    {
+      "group_key": "59bc20a9e5fc753735a04775",
+      "row_key": "00e4130efed0910ac578e891",
+      "lineage": {
+        "park": "calilegua",
+        "name": "Tataup\u00e1",
+        "snapshot": "calilegua.html",
+        "published_label": "alta",
+        "distance_basis": "total",
+        "duration_basis": "unspecified",
+        "evidence": "Tataup\u00e1 1400 m (total) / 5 h / Dificultad alta Comienza a 2,5 km de la Seccional Aguas Negras. Atraviesa la transici\u00f3n entre la selva Pedemontana y la Montana hasta llegar al Arroyo El Negrito. Su trayecto sigue un filo de monta\u00f1a, ofreciendo vistas de la densa vegetaci\u00f3n y la geograf\u00eda caracter\u00edstica de las Yungas, modelada por quebradas y ca\u00f1adones cubiertos por una frondosa selva. El sendero permanece cerrado al p\u00fablico durante la temporada estival."
+      }
+    },
+    {
+      "group_key": "59bc20a9e5fc753735a04775",
+      "row_key": "c1591cf084719c6d78db9800",
+      "lineage": {
+        "park": "calilegua",
+        "name": "La Junta",
+        "snapshot": "calilegua.html",
+        "published_label": "alta",
+        "distance_basis": "total",
+        "duration_basis": "unspecified",
+        "evidence": "La Junta 1700 m (total) / 4 h / Dificultad alta El sendero comienza a 3 km de la Seccional Aguas Negras y recorre la Selva Pedemontana y sectores de bosque de ribera. A lo largo del trayecto se puede observar la relevancia de las zonas cercanas a los cursos de agua para la fauna, que las utiliza frecuentemente como rutas de paso. Al final del recorrido se destaca la importancia de las Yungas en la provisi\u00f3n de agua para toda la regi\u00f3n, en la confluencia de los arroyos Aguas Negras y Toldos. El sendero permanece cerrado al p\u00fablico durante la temporada estival."
+      }
+    },
+    {
+      "group_key": "59bc20a9e5fc753735a04775",
+      "row_key": "20b7c084810cf37847241e5c",
+      "lineage": {
+        "park": "calilegua",
+        "name": "El Negrito",
+        "snapshot": "calilegua.html",
+        "published_label": "alta",
+        "distance_basis": "total",
+        "duration_basis": "unspecified",
+        "evidence": "El Negrito 2880 m (total) / 3 h / Dificultad alta Ubicado cerca de la Seccional Mesada de las Colmenas, este sendero ofrece una muestra representativa de la Selva Montana y culmina en el arroyo El Negrito. A lo largo del recorrido se puede observar el uso hist\u00f3rico de este ambiente antes de la creaci\u00f3n del Parque, evidenciado por el sitio hist\u00f3rico Las Pircas, un antiguo puesto de trashumancia."
+      }
+    },
+    {
+      "group_key": "82b43aa6b50263de1b8dd9ee",
+      "row_key": "a3ddc801aa8e621df416264d",
+      "lineage": {
+        "park": "condorito",
+        "name": "Balc\u00f3n Sur (R\u00edo \u2013 Balc\u00f3n Sur \u2013 R\u00edo)",
+        "snapshot": "condorito.html",
+        "published_label": "alta",
+        "distance_basis": "round_trip",
+        "duration_basis": "unspecified",
+        "evidence": "3620 metros (ida y vuelta) / 120 minutos / Dificultad alta Es el sendero que atraviesa la quebrada y se inicia en la pasarela colgante que cruza el R\u00edo de los Condoritos. Para realizarlo es obligatorio contratar prestadores habilitados por el PNQC."
+      }
+    },
+    {
+      "group_key": "82b43aa6b50263de1b8dd9ee",
+      "row_key": "6b81b38a39055c482296ebdc",
+      "lineage": {
+        "park": "condorito",
+        "name": "Un encuentro con los c\u00f3ndores",
+        "snapshot": "condorito.html",
+        "published_label": "Media",
+        "distance_basis": "round_trip",
+        "duration_basis": "unspecified",
+        "evidence": "1230 metros (ida y vuelta) / 1 hora 20 min / Dificultad Media Senda interpretativa en la que se cuentan las caracter\u00edsticas y particularidades de las aves de la regi\u00f3n, y especialmente del c\u00f3ndor andino, con explicaciones sobre las aves que se ven m\u00e1s frecuentemente en la quebrada. Est\u00e1 basada en la distinci\u00f3n de siluetas, lo que ayuda a identificarlas y conocerlas. Se inicia al final de la senda principal y desciende hasta el mirador del Balc\u00f3n Norte, ubicado estrat\u00e9gicamente en la ladera opuesta al denominado \u201cba\u00f1o de los c\u00f3ndores\u201d, donde estos tienen estad\u00eda permanente."
+      }
+    },
+    {
+      "group_key": "82b43aa6b50263de1b8dd9ee",
+      "row_key": "21ef1ed6023b6b9acad615aa",
+      "lineage": {
+        "park": "condorito",
+        "name": "Secretos bajo nuestros pies",
+        "snapshot": "condorito.html",
+        "published_label": "baja",
+        "distance_basis": "round_trip",
+        "duration_basis": "unspecified",
+        "evidence": "1056 metros (ida y vuelta) / 1 hora / Dificultad baja Senda interpretativa realizada con alumnos y docentes de la Escuela Ing. Pagliari, pr\u00f3xima al \u00e1rea protegida. Est\u00e1 ubicada frente al Estacionamiento 1, en el ingreso al Parque Nacional. La propuesta cuenta con el recurso de las coplas, la funci\u00f3n del suelo y los procesos de erosi\u00f3n y formaci\u00f3n de suelos, as\u00ed como la manera en que se realiza la retenci\u00f3n de agua en la zona."
+      }
+    },
+    {
+      "group_key": "82b43aa6b50263de1b8dd9ee",
+      "row_key": "176aab5cc5d536deb36f1343",
+      "lineage": {
+        "park": "condorito",
+        "name": "Piedra libre al Zorro",
+        "snapshot": "condorito.html",
+        "published_label": "baja",
+        "distance_basis": "round_trip",
+        "duration_basis": "unspecified",
+        "evidence": "660 metros (ida y vuelta) / 45 minutos / Dificultad baja Senda interpretativa que describe c\u00f3mo se habr\u00eda utilizado el recurso de la piel del zorro colorado hace m\u00e1s de un siglo y c\u00f3mo fue cambiando la situaci\u00f3n de esta especie seg\u00fan las modificaciones en las modas y la econom\u00eda local. Utiliza im\u00e1genes del archivo hist\u00f3rico del Parque. Est\u00e1 ubicada entre las postas 6 y 7 de la senda principal y es una oportunidad para conocer aquella pr\u00e1ctica tan com\u00fan en la zona hasta mediados del siglo pasado."
+      }
+    },
+    {
+      "group_key": "82b43aa6b50263de1b8dd9ee",
+      "row_key": "e99fb7fd400907e0855b3532",
+      "lineage": {
+        "park": "condorito",
+        "name": "Ba\u00f1o de las ovejas",
+        "snapshot": "condorito.html",
+        "published_label": "baja",
+        "distance_basis": "round_trip",
+        "duration_basis": "unspecified",
+        "evidence": "530 metros (ida y vuelta) / 30 minutos / Dificultad baja Esta senda interpretativa se ubica en el \u00e1rea Centro-Oeste del Parque, a unos 27 km del acceso Noreste. El corto recorrido permite conocer un recurso cultural significativo para la historia de la zona, como es el antiguo Ba\u00f1o de las Ovejas de la ex Estancia La Trinidad, a partir de sus restos. La tem\u00e1tica est\u00e1 presentada a trav\u00e9s del relato de un paisano local que explica las costumbres y tradiciones que se ten\u00edan con el ganado, ovino en este caso."
+      }
+    },
+    {
+      "group_key": "51e97289d8371ac4d25f50dd",
+      "row_key": "a4e40dee259c67eac83ba1c9",
+      "lineage": {
+        "park": "el_leoncito",
+        "name": "Cerro Leoncito",
+        "snapshot": "el_leoncito.html",
+        "published_label": "media/alta",
+        "distance_basis": "round_trip",
+        "duration_basis": "unspecified",
+        "evidence": "8 km (ida y vuelta) | 3 h | Dificultad media/alta Un desnivel de 300 metros lo convierte en un formidable trekking que ofrece la posibilidad de adentrarse por quebradas de precordillera, para luego afrontar un filo que conduce a la cima del cerro hom\u00f3nimo al Parque."
+      }
+    }
+  ]
+}

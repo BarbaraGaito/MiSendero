@@ -4,6 +4,7 @@ const vm = require('vm');
 const ts = require('../../node_modules/typescript');
 const root = path.resolve(__dirname, '../..');
 const cache = new Map();
+const sandboxProcess = Object.freeze({ env: Object.freeze({}) });
 function loadTs(relative) {
   const filename = path.resolve(root, relative);
   if (cache.has(filename)) return cache.get(filename);
@@ -19,7 +20,11 @@ function loadTs(relative) {
     }
     throw new Error('Unexpected dependency: ' + name);
   };
-  vm.runInNewContext(output, { exports: module.exports, module, require: localRequire, console }, { filename });
+  vm.runInNewContext(
+    output,
+    { exports: module.exports, module, require: localRequire, console, process: sandboxProcess },
+    { filename }
+  );
   cache.set(filename, module.exports);
   return module.exports;
 }
@@ -40,7 +45,7 @@ const models = ['fatigue', 'risk', 'routeDifficulty'].map((name) => {
 });
 const white = '#FFFFFF';
 function luminance(hex) {
-  const v = [1,3,5].map(i => parseInt(hex.slice(i,i+2),16)/255).map(c=>c<=0.04045?c/12.92:((c+0.055)/1.055)**2.4);
+  const v = [1,3,5].map(i => Number.parseInt(hex.slice(i,i+2),16)/255).map(c=>c<=0.04045?c/12.92:((c+0.055)/1.055)**2.4);
   return v[0]*0.2126+v[1]*0.7152+v[2]*0.0722;
 }
 function contrast(a,b) { return +( (Math.max(luminance(a),luminance(b))+0.05)/(Math.min(luminance(a),luminance(b))+0.05)).toFixed(2); }

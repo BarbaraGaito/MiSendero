@@ -74,5 +74,33 @@ Las pruebas cubren muestreo, extremos, ruido, alturas faltantes, lotes,
 persistencia, errores del proveedor, cambio de geometria, consultas simultaneas
 y lectura/actualizacion de rutas descargadas.
 
+## Vista 3D
+
+La vista 3D del mapa usa una grilla real de 17x17 alturas de la misma fuente
+(`services/terrainElevation.ts`), interpolada solo entre muestras reales y con
+escala vertical 1:1. No hay relieve procedural, vegetacion ni nubes aleatorias.
+Si falta la grilla (sin coordenadas, error del proveedor o sin conexion y sin
+grilla guardada), se muestra "Relieve 3D no disponible" en lugar de un
+terreno de ejemplo.
+
+La vista busca la grilla en este orden: cache en memoria de la sesion, grilla
+guardada con el mapa descargado y, solo con conexion, el proveedor. Al descargar
+un mapa se consulta la grilla con la misma funcion, lotes y cache que la vista
+3D (si ya se abrio, no se repite la consulta) y se guarda en la columna
+`offline_maps.terrain_json` de SQLite: las 289 alturas tal como las devolvio el
+proveedor, limites y tamano de celda, fuente, atribucion, resolucion de 90 m,
+fecha de consulta, el SHA-256 de geometria del perfil descargado y una clave del
+trazado. Ocupa unos 2-3 KB por sendero. Sin conexion se lee de SQLite, sin
+consultar al proveedor, y solo si coincide con el perfil y con el trazado que se
+muestra; si la geometria cambia, la grilla se descarta.
+
+Si la consulta de la grilla falla, no se guarda ningun valor ni se rellena con
+alturas aproximadas. La descarga igual se completa, porque el mapa 2D y el
+perfil son las funciones offline principales; la vista 3D queda no disponible
+sin conexion (el resultado de la descarga tiene `terrain: null`). Al volver a
+descargar el mismo trazado se conserva una grilla real ya guardada. Los mapas
+descargados sin grilla la incorporan al abrir la vista 3D con conexion, siempre
+que el trazado descargado coincida con el consultado.
+
 Fuente y atribucion: https://open-meteo.com/en/docs/elevation-api
 Copernicus DEM: https://doi.org/10.5270/ESA-c5d3d65

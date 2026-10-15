@@ -32,9 +32,15 @@ import {
   clampTerrainScale,
   getPinchZoomDelta,
 } from "../../services/mapGestures";
+import { OPEN_METEO_ELEVATION_ATTRIBUTION } from "../../services/terrainElevation";
 import { useDeviceLocation } from "../hooks/useDeviceLocation";
+import {
+  TerrainElevationState,
+  useTerrainElevation,
+} from "../hooks/useTerrainElevation";
 import { colors } from "./MiSenderoUI";
 import { Terrain3DScene } from "./Terrain3DScene";
+import { buildTerrainSceneModel } from "./terrainSceneModel";
 
 type MapLayer = "standard" | "terrain" | "satellite";
 
@@ -369,6 +375,19 @@ const getMapAttribution = (layer: MapLayer) => {
   return "© OpenStreetMap contributors (ODbL)";
 };
 
+const getTerrainUnavailableMessage = (state: TerrainElevationState) => {
+  if (state.status === "loading") {
+    return "Consultando alturas reales del terreno (Copernicus DEM, 90 m).";
+  }
+  if (state.status === "unavailable" && state.reason === "no-route") {
+    return "Se necesitan datos de elevacion reales y este sendero no tiene un trazado cargado.";
+  }
+  if (state.status === "unavailable" && state.reason === "offline") {
+    return "Se necesitan datos de elevacion reales. Sin conexion solo se muestra el relieve guardado con el mapa descargado o ya consultado en esta sesion; conectate para cargarlo.";
+  }
+  return "Se necesitan datos de elevacion reales y el proveedor no los entrego. Proba de nuevo mas tarde.";
+};
+
 const getMapDecorations = ({ points, trailName }: {
   points: ScreenPoint[];
   trailName: string | null | undefined;
@@ -448,6 +467,17 @@ export function TrailMap({
     useDeviceLocation(showUserLocation, simulatedStartLocation);
   const network = useNetworkState();
   const offline = network.isConnected === false || network.isInternetReachable === false;
+  const terrainElevation = useTerrainElevation(trail?.id ?? 0, route, {
+    enabled: isPerspective,
+    offline,
+  });
+  const terrainModel = useMemo(
+    () =>
+      terrainElevation.status === "ready"
+        ? buildTerrainSceneModel(terrainElevation.data.grid, route)
+        : null,
+    [terrainElevation, route]
+  );
   const savedZooms = useMemo(() => trail ? [...new Set(getOfflineTilePlanForTrail(trail).map((tile) => tile.zoom))] : [], [trail]);
   const maxZoom = offline && savedZooms.length ? Math.max(...savedZooms) : MAX_ZOOM_BY_LAYER[layer];
   useEffect(() => { if (offline && layer === "satellite") setLayer("terrain"); }, [offline, layer]);
@@ -865,62 +895,82 @@ export function TrailMap({
     >
       {isPerspective ? (
         <View style={styles.terrain3dScene}>
-          <Terrain3DScene
-            routePoints={routePoints}
-            fallbackCenter={trailCenter}
-            difficulty={trail?.difficulty}
-            distanceKm={trail?.distance_km}
-            userCoordinate={location?.coordinate ?? null}
-            viewOffset={{
-              x: terrainOffset.x + panOffset.x,
-              y: terrainOffset.y + panOffset.y,
-            }}
-            viewScale={terrainScale}
-            trailLabel={`${trail?.name || ""} ${trail?.location || ""} ${trail?.description || ""}`}
-            weather={weather ? {
-              condition: weather.condition,
-              rainProbability: weather.rain_probability,
-              temperatureC: weather.temperature_c,
-            } : null}
-            navigationMode={navigationMode}
-            satelliteTextureEnabled={allowSatellite && !offline}
-          />
-          <View style={styles.terrainInfo}>
-            <View style={styles.terrainInfoHeader}>
-              <View>
-                <Text style={styles.terrainInfoEyebrow}>LECTURA DEL TERRENO</Text>
-                <Text style={styles.terrainInfoTitle}>Perspectiva 3D</Text>
+          {terrainModel ? (
+            <>
+              <Terrain3DScene
+                terrain={terrainModel}
+                userCoordinate={location?.coordinate ?? null}
+                viewOffset={{
+                  x: terrainOffset.x + panOffset.x,
+                  y: terrainOffset.y + panOffset.y,
+                }}
+                viewScale={terrainScale}
+                weather={weather ? {
+                  condition: weather.condition,
+                  rainProbability: weather.rain_probability,
+                  temperatureC: weather.temperature_c,
+                } : null}
+                navigationMode={navigationMode}
+                satelliteTextureEnabled={allowSatellite && !offline}
+              />
+              <View style={styles.terrainInfo}>
+                <View style={styles.terrainInfoHeader}>
+                  <View>
+                    <Text style={styles.terrainInfoEyebrow}>LECTURA DEL TERRENO</Text>
+                    <Text style={styles.terrainInfoTitle}>Perspectiva 3D</Text>
+                  </View>
+                  <View style={styles.terrainScaleBadge}>
+                    <Text style={styles.terrainScaleBadgeText}>ESCALA REAL</Text>
+                  </View>
+                </View>
+                {showDetailsCard ? (
+                  <Text numberOfLines={1} style={styles.terrainTrailName}>
+                    {trail?.name || "Mapa del recorrido"}
+                  </Text>
+                ) : null}
+                <Text style={styles.terrainInfoText}>
+                  {trail?.distance_km ? `${trail.distance_km} km` : "Distancia a confirmar"} · {trail?.difficulty || "Dificultad a confirmar"}
+                </Text>
+                <Text style={styles.terrainGestureText}>
+                  Arrastra para orbitar · Pellizca para acercar
+                </Text>
+                <Text style={styles.terrainSourceText}>
+                  Relieve real de Copernicus DEM (90 m), escala vertical 1:1 sin exagerar.
+                </Text>
+                <Text style={styles.terrainSourceText}>
+                  {OPEN_METEO_ELEVATION_ATTRIBUTION}
+                  {allowSatellite && !offline ? " · Imagen: Esri World Imagery" : ""}
+                </Text>
               </View>
-              <View style={styles.terrainScaleBadge}>
-                <Text style={styles.terrainScaleBadgeText}>ESCALA REAL</Text>
+              <View
+                pointerEvents="none"
+                style={[styles.terrain3dOverlay, { top: terrainOverlayTop }]}
+              >
+                <View style={styles.terrain3dPill}>
+                  <View style={styles.terrain3dRouteSwatch} />
+                  <Text numberOfLines={1} style={styles.terrain3dPillText}>
+                    {shortenTrailName(trail?.name)}
+                  </Text>
+                </View>
               </View>
-            </View>
-            {showDetailsCard ? (
-              <Text numberOfLines={1} style={styles.terrainTrailName}>
-                {trail?.name || "Mapa del recorrido"}
+            </>
+          ) : (
+            <View style={styles.terrainUnavailable}>
+              {terrainElevation.status === "loading" ? (
+                <ActivityIndicator size="small" color={colors.green} />
+              ) : (
+                <Ionicons name="alert-circle-outline" size={24} color={colors.muted} />
+              )}
+              <Text style={styles.terrainUnavailableTitle}>
+                {terrainElevation.status === "loading"
+                  ? "Cargando relieve real"
+                  : "Relieve 3D no disponible"}
               </Text>
-            ) : null}
-            <Text style={styles.terrainInfoText}>
-              {trail?.distance_km ? `${trail.distance_km} km` : "Distancia a confirmar"} · {trail?.difficulty || "Dificultad a confirmar"}
-            </Text>
-            <Text style={styles.terrainGestureText}>
-              Arrastra para orbitar · Pellizca para acercar
-            </Text>
-            <Text style={styles.terrainSourceText}>
-              La elevacion real se carga desde Copernicus DEM (90 m).
-            </Text>
-          </View>
-          <View
-            pointerEvents="none"
-            style={[styles.terrain3dOverlay, { top: terrainOverlayTop }]}
-          >
-            <View style={styles.terrain3dPill}>
-              <View style={styles.terrain3dRouteSwatch} />
-              <Text numberOfLines={1} style={styles.terrain3dPillText}>
-                {shortenTrailName(trail?.name)}
+              <Text style={styles.terrainUnavailableText}>
+                {getTerrainUnavailableMessage(terrainElevation)}
               </Text>
             </View>
-          </View>
+          )}
         </View>
       ) : (
         <View
@@ -1360,6 +1410,26 @@ const styles = StyleSheet.create({
     fontSize: 10,
     fontWeight: "700",
     marginTop: 3,
+  },
+  terrainUnavailable: {
+    alignItems: "center",
+    flex: 1,
+    gap: 8,
+    justifyContent: "center",
+    paddingHorizontal: 32,
+  },
+  terrainUnavailableTitle: {
+    color: colors.ink,
+    fontSize: 16,
+    fontWeight: "900",
+    textAlign: "center",
+  },
+  terrainUnavailableText: {
+    color: colors.muted,
+    fontSize: 12,
+    fontWeight: "700",
+    lineHeight: 17,
+    textAlign: "center",
   },
   terrain3dOverlay: {
     alignItems: "flex-start",

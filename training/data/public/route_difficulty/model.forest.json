@@ -1,7 +1,7 @@
 {
   "type": "random_forest_json",
   "version": 1,
-  "trained_at": "2026-10-15T01:57:31.106781+00:00",
+  "trained_at": "2026-10-15T17:37:12.224137+00:00",
   "feature_order": [
     "distance_km",
     "sinuosity",
@@ -39028,6 +39028,6 @@
     "reason": "sac_scale publicado en tramos argentinos, con geometr\u00eda OSM y relieve IGN de 30 m. Test por regiones completas; faltan regiones, observaciones y validaci\u00f3n de rutas completas y seguridad.",
     "deployment_approved": false,
     "native_labels": true,
-    "test_synthetic_rows": 0
+    "synthetic_rows": 0
   }
 }

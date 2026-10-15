@@ -1,9 +1,6 @@
 import { getAuthSession } from "./authSession";
 import { db } from "../database/connection";
-import {
-  heartRateLogsTableSql,
-  wearableTablesSql,
-} from "../database/wearableSchema";
+import { wearableTablesSql } from "../database/wearableSchema";
 
 
 export interface PrivacyPreferences {
@@ -65,16 +62,10 @@ export const savePrivacyPreferences = async (
   }
 };
 
-export const hasSensitiveDataConsent = async () => {
-  const preferences = await getPrivacyPreferences();
-  return preferences.sensitiveDataConsent;
-};
-
 export const clearSensitiveLocalData = async () => {
   const userId = (await getAuthSession())?.user.id;
   if (!userId) return;
-  await db.execAsync(`${heartRateLogsTableSql} ${wearableTablesSql}`);
+  await db.execAsync(wearableTablesSql);
   await db.runAsync("DELETE FROM wearable_metric_samples WHERE user_id = ?", [userId]);
   await db.runAsync("DELETE FROM wearable_connections WHERE user_id = ?", [userId]);
-  await db.runAsync("DELETE FROM heart_rate_logs WHERE session_id IN (SELECT id FROM sessions WHERE user_id = ?)", [userId]);
 };

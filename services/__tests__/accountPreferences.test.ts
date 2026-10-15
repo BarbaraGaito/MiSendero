@@ -12,8 +12,8 @@ test("consent and profiles do not carry over to another account, and revocation 
   await savePrivacyPreferences({ sensitiveDataConsent: true, analyticsTrainingConsent: true });
   await saveExperienceProfile({ experience: "alta", duration: "larga", trail: "tecnico" });
   await saveAppPreferences({ distanceUnit: "mi", notificationsEnabled: false, batterySaverEnabled: true, externalSensorLinked: false });
-  await saveWearableConnection("development_simulator", true, true);
-  await saveWearableMetricSample({ provider: "development_simulator", heartRateBpm: 100, steps: null, activeEnergyKcal: null, speedKmh: 3, oxygenSaturation: 97, recordedAt: Date.now() });
+  await saveWearableConnection("android_health_connect", true, true);
+  await saveWearableMetricSample({ provider: "android_health_connect", heartRateBpm: 100, steps: null, activeEnergyKcal: null, speedKmh: 3, oxygenSaturation: 97, recordedAt: Date.now() });
   await login(202);
   expect((await getPrivacyPreferences()).sensitiveDataConsent).toBe(false);
   expect((await getExperienceProfile()).completed).toBe(false);

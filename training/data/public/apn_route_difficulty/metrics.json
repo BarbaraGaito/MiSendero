@@ -1,12 +1,11 @@
 {
-  "schema_version": 2,
+  "schema_version": 3,
   "dataset": {
     "name": "Recorridos argentinos \u2014 dificultad APN",
     "declared_source": "Administraci\u00f3n de Parques Nacionales / fichas oficiales de senderos argentinos",
     "source_note": "Dificultad publicada por APN para recorridos completos. Distancias y duraciones son estimaciones publicadas, no tiempos medidos de caminantes. Evaluaci\u00f3n con parques completos separados; no certifica seguridad ni generalizaci\u00f3n nacional.",
     "rows_total": 52,
     "rows_train": 39,
-    "rows_train_after_augmentation": 39,
     "rows_test": 13,
     "rows_by_label": {
       "alta": 9,
@@ -27,25 +26,8 @@
       "duration_basis_unspecified"
     ]
   },
-  "augmentation": {
-    "used": false,
-    "synthetic_rows": 0,
-    "synthetic_to_real_train_ratio": 0.0,
-    "requires_approval": false,
-    "authorization": "User permits augmentation within training folds only"
-  },
   "metrics": {
     "train": {
-      "accuracy": 0.6923076923076923,
-      "precision_macro": 0.6639705882352942,
-      "recall_macro": 0.780952380952381,
-      "f1_macro": 0.6941666666666667,
-      "precision_weighted": 0.7009803921568628,
-      "recall_weighted": 0.6923076923076923,
-      "f1_weighted": 0.6816239316239316,
-      "support": 39
-    },
-    "train_real": {
       "accuracy": 0.6923076923076923,
       "precision_macro": 0.6639705882352942,
       "recall_macro": 0.780952380952381,
@@ -77,14 +59,13 @@
     "underfitting_risk": true,
     "high_variance_risk": false,
     "insufficient_real_data": true,
-    "high_synthetic_ratio": false,
     "train_test_f1_gap": 0.15250000000000008,
     "warnings": [
       "Dificultad publicada por APN para recorridos completos. Distancias y duraciones son estimaciones publicadas, no tiempos medidos de caminantes. Evaluaci\u00f3n con parques completos separados; no certifica seguridad ni generalizaci\u00f3n nacional.",
       "Dataset real chico: sumar muestras reales por clase antes de usar estas metricas como evidencia de performance en campo.",
       "Posible overfitting: la diferencia de F1 macro entre train y test es 0.15.",
       "Posible underfitting: el F1 macro de test esta por debajo del umbral minimo (0.60).",
-      "Entrenamiento sin augmentation; todas las filas base provienen de observaciones p\u00fablicas."
+      "Todas las filas de entrenamiento, validaci\u00f3n y prueba son observaciones p\u00fablicas; no se generan datos sint\u00e9ticos."
     ]
   },
   "accuracy": 0.7692307692307693,
@@ -159,14 +140,14 @@
       "support": 13.0
     }
   },
-  "trained_at": "2026-10-15T01:57:16.885323+00:00",
+  "trained_at": "2026-10-15T17:37:18.253160+00:00",
   "evaluation_validity": {
     "real_public_ground_truth": true,
     "status": "observed_public_labels_group_holdout",
     "reason": "Dificultad publicada por APN para recorridos completos. Distancias y duraciones son estimaciones publicadas, no tiempos medidos de caminantes. Evaluaci\u00f3n con parques completos separados; no certifica seguridad ni generalizaci\u00f3n nacional.",
     "deployment_approved": false,
     "native_labels": true,
-    "test_synthetic_rows": 0
+    "synthetic_rows": 0
   },
   "baseline": {
     "strategy": "most_frequent_training_label",
@@ -278,8 +259,7 @@
         ],
         "validation_groups": [
           "0dfc847fe64cc8f187f29d07"
-        ],
-        "synthetic_training_rows": 0
+        ]
       },
       {
         "train_groups": [
@@ -289,8 +269,7 @@
         ],
         "validation_groups": [
           "59bc20a9e5fc753735a04775"
-        ],
-        "synthetic_training_rows": 0
+        ]
       },
       {
         "train_groups": [
@@ -300,8 +279,7 @@
         ],
         "validation_groups": [
           "82b43aa6b50263de1b8dd9ee"
-        ],
-        "synthetic_training_rows": 0
+        ]
       },
       {
         "train_groups": [
@@ -311,8 +289,7 @@
         ],
         "validation_groups": [
           "51e97289d8371ac4d25f50dd"
-        ],
-        "synthetic_training_rows": 0
+        ]
       }
     ],
     "provenance_sha256": "4541f7885fdd4dc974a45b6c950043cff1ffcd5d2f9097469db303a739640edc"

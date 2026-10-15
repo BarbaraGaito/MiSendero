@@ -1,17 +1,56 @@
 import * as Crypto from "expo-crypto";
+import * as SMS from "expo-sms";
 import { getCurrentDeviceLocation } from "./deviceLocation";
 import { enqueueUnique, runSync } from "./syncQueue";
 import { getLastRouteTrackingPoint } from "./routeTracking";
 import { EmergencyContact, Trail } from "../types";
 import { getAuthSession } from "./authSession";
 import { formatTrailMessageContext, getTrailForMessage } from "./trailMessages";
+import { getRouteSession } from "./routeSession";
+import { isTestingLocationActive } from "./testingMode";
 
-export interface SendEmergencyAlertOptions {
+export interface EmergencyContext {
   trailId?: number | null;
-  contact?: EmergencyContact | null;
   startedAt?: number | null;
+  /** The SOS was raised from simulated data (e.g. a simulated wearable alert). */
+  simulated?: boolean;
+}
+
+export interface SendEmergencyAlertOptions extends EmergencyContext {
+  contact?: EmergencyContact | null;
   eventId?: string;
 }
+
+export type EmergencyTestReason = "testing_location" | "simulated_data";
+
+export class SimulatedEmergencyError extends Error {
+  constructor(readonly reason: EmergencyTestReason) {
+    super("Modo prueba: el SOS no se envía.");
+    this.name = "SimulatedEmergencyError";
+  }
+}
+
+// Simulators exist only for testing: an SOS raised from simulated data, during
+// testing-location mode or inside a simulated route is never sent, queued or stored.
+// A storage read error counts as "not testing" so it can never block a real SOS.
+export const getEmergencyTestReason = async ({ trailId, startedAt, simulated }: EmergencyContext): Promise<EmergencyTestReason | null> => {
+  const [testing, session] = await Promise.all([
+    isTestingLocationActive().catch(() => false),
+    trailId && startedAt ? getRouteSession(trailId, startedAt).catch(() => null) : null,
+  ]);
+  if (testing || session?.simulated) return "testing_location";
+  return simulated ? "simulated_data" : null;
+};
+
+const assertRealEmergency = async (context: EmergencyContext) => {
+  const reason = await getEmergencyTestReason(context);
+  if (reason) throw new SimulatedEmergencyError(reason);
+};
+
+export const sendEmergencySms = async (phone: string, message: string, context: EmergencyContext) => {
+  await assertRealEmergency(context);
+  return SMS.sendSMSAsync([phone], message);
+};
 
 export const buildEmergencyMessage = ({ latitude, longitude, trail, timestamp }: {
   contact?: EmergencyContact | null;
@@ -48,6 +87,7 @@ export const getEmergencyLocation = async (trailId?: number | null, startedAt?: 
 };
 
 export const sendEmergencyAlert = async (options: SendEmergencyAlertOptions = {}) => {
+  await assertRealEmergency(options);
   const owner = (await getAuthSession())?.user.id ?? null;
   const eventId = options.eventId ?? Crypto.randomUUID();
   const [location, trail] = await Promise.all([

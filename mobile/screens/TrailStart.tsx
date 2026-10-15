@@ -149,13 +149,6 @@ export default function Screen05TrailStart() {
   const [departureReady, setDepartureReady] = useState(false);
   const [hasActiveRoute, setHasActiveRoute] = useState(false);
   const [starting, setStarting] = useState(false);
-  const checklist = [
-    { text: "Tengo agua y equipo suficiente", ready: waterReady, toggle: () => setWaterReady(!waterReady) },
-    { text: mapReady ? "Mapa offline verificado" : "Mapa offline pendiente de descarga completa", ready: mapReady },
-    { text: battery === null ? "Batería: no disponible" : `Batería: ${battery}%`, ready: battery !== null && battery >= 60 },
-    { text: "Acordé ruta y hora de regreso con mi contacto", ready: planAgreed, toggle: () => setPlanAgreed(!planAgreed) },
-    { text: departureReady ? "Envío del plan de esta salida registrado" : "Falta enviar el plan por SMS (obligatorio)", ready: departureReady },
-  ];
 
   useEffect(() => {
     getTrailById(trailId)
@@ -226,6 +219,16 @@ export default function Screen05TrailStart() {
     routeStartDistance,
     isFarFromStart,
   });
+  const checklist = [
+    { text: "Tengo agua y equipo suficiente", ready: waterReady, toggle: () => setWaterReady(!waterReady) },
+    { text: mapReady ? "Mapa offline verificado" : "Mapa offline pendiente de descarga completa", ready: mapReady },
+    { text: battery === null ? "Batería: no disponible" : `Batería: ${battery}%`, ready: battery !== null && battery >= 60 },
+    { text: "Acordé ruta y hora de regreso con mi contacto", ready: planAgreed, toggle: () => setPlanAgreed(!planAgreed) },
+    // A test run never requires, sends or consumes a real departure plan.
+    isTestingLocation
+      ? { text: "Modo prueba: no se envía plan de salida", ready: true }
+      : { text: departureReady ? "Envío del plan de esta salida registrado" : "Falta enviar el plan por SMS (obligatorio)", ready: departureReady },
+  ];
 
   const beginRoute = async () => {
     if (starting) return;
@@ -256,7 +259,7 @@ export default function Screen05TrailStart() {
       return;
     }
 
-    if (!departureReady) {
+    if (!departureReady && !isTestingLocation) {
       router.push({ pathname: "/plan-salida", params: { id: String(trailId) } });
       return;
     }
@@ -312,7 +315,19 @@ export default function Screen05TrailStart() {
           </View>
         </InfoCard>
 
-        <PrimaryButton label={departureReady ? "Revisar plan de regreso" : "Enviar plan de regreso por SMS"} tone="secondary" onPress={() => router.push({ pathname: "/plan-salida", params: { id: String(trailId) } })} />
+        {isTestingLocation ? (
+          <InfoCard style={styles.locationCard}>
+            <Ionicons name="flask-outline" size={24} color={colors.green} />
+            <View style={styles.warningText}>
+              <Text style={styles.warningTitle}>Modo prueba: no se envía plan de salida</Text>
+              <Text style={styles.warningBody}>
+                El recorrido es simulado: no se envía SMS, no se registra un plan en el servidor y tu contacto no recibe avisos.
+              </Text>
+            </View>
+          </InfoCard>
+        ) : (
+          <PrimaryButton label={departureReady ? "Revisar plan de regreso" : "Enviar plan de regreso por SMS"} tone="secondary" onPress={() => router.push({ pathname: "/plan-salida", params: { id: String(trailId) } })} />
+        )}
 
         <InfoCard style={hasSafetyContact ? styles.contactReady : styles.contactRequired}>
           <Ionicons
@@ -349,11 +364,11 @@ export default function Screen05TrailStart() {
                 ? "Verificando salida"
                 : hasActiveRoute ? "Continuar recorrido"
                 : hasSafetyContact
-                  ? departureReady ? "Comenzar ahora" : "Enviar plan antes de salir"
+                  ? isTestingLocation ? "Comenzar prueba" : departureReady ? "Comenzar ahora" : "Enviar plan antes de salir"
                   : "Completar contacto"
             }
             disabled={isContactLoading || starting}
-            icon={hasActiveRoute || departureReady ? "play-outline" : hasSafetyContact ? "chatbubble-outline" : "shield-checkmark-outline"}
+            icon={hasActiveRoute || departureReady || (isTestingLocation && hasSafetyContact) ? "play-outline" : hasSafetyContact ? "chatbubble-outline" : "shield-checkmark-outline"}
             onPress={handleStart}
           />
         </View>

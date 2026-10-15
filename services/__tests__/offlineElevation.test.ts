@@ -49,6 +49,8 @@ const elevated: Trail = {
 beforeEach(async () => {
   await db.execAsync("DROP TABLE IF EXISTS offline_maps");
   jest.clearAllMocks();
+  // The 3D DEM grid is covered in offlineTerrainGrid.test.ts; never hit the network here.
+  global.fetch = jest.fn().mockRejectedValue(new Error("offline")) as unknown as typeof fetch;
   (auth.getAuthSession as jest.Mock).mockResolvedValue({ user: { id: 3 } });
   (api.getTrailById as jest.Mock).mockResolvedValue(elevated);
   (tiles.downloadOfflineTilesForTrail as jest.Mock).mockResolvedValue({ sizeMb: 1 });

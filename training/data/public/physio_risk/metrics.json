@@ -1,12 +1,11 @@
 {
-  "schema_version": 2,
+  "schema_version": 3,
   "dataset": {
     "name": "AMS observado \u2014 estudio nocturno",
     "declared_source": "Narang / PretermBirth_Hypoxia_NocturnalSpO2_AMS",
     "source_note": "AMS observado tras exposici\u00f3n nocturna a hipoxia controlada equivalente a 4200 m, en 24 participantes. Eval\u00faa ese estudio; falta validar alertas durante caminatas.",
     "rows_total": 24,
     "rows_train": 16,
-    "rows_train_after_augmentation": 16,
     "rows_test": 8,
     "rows_by_label": {
       "AMS+": 11,
@@ -17,25 +16,8 @@
       "mean_spo2"
     ]
   },
-  "augmentation": {
-    "used": false,
-    "synthetic_rows": 0,
-    "synthetic_to_real_train_ratio": 0.0,
-    "requires_approval": false,
-    "authorization": "User permits augmentation within training folds only"
-  },
   "metrics": {
     "train": {
-      "accuracy": 0.9375,
-      "precision_macro": 0.9375,
-      "recall_macro": 0.9444444444444444,
-      "f1_macro": 0.9372549019607843,
-      "precision_weighted": 0.9453125,
-      "recall_weighted": 0.9375,
-      "f1_weighted": 0.9377450980392157,
-      "support": 16
-    },
-    "train_real": {
       "accuracy": 0.9375,
       "precision_macro": 0.9375,
       "recall_macro": 0.9444444444444444,
@@ -67,13 +49,12 @@
     "underfitting_risk": false,
     "high_variance_risk": true,
     "insufficient_real_data": true,
-    "high_synthetic_ratio": false,
     "train_test_f1_gap": 0.31820728291316525,
     "warnings": [
       "AMS observado tras exposici\u00f3n nocturna a hipoxia controlada equivalente a 4200 m, en 24 participantes. Eval\u00faa ese estudio; falta validar alertas durante caminatas.",
       "Dataset real chico: sumar muestras reales por clase antes de usar estas metricas como evidencia de performance en campo.",
       "Posible overfitting: la diferencia de F1 macro entre train y test es 0.32.",
-      "Entrenamiento sin augmentation; todas las filas base provienen de observaciones p\u00fablicas."
+      "Todas las filas de entrenamiento, validaci\u00f3n y prueba son observaciones p\u00fablicas; no se generan datos sint\u00e9ticos."
     ]
   },
   "accuracy": 0.625,
@@ -118,14 +99,27 @@
       "support": 8.0
     }
   },
-  "trained_at": "2026-10-13T22:55:37.578278+00:00",
+  "trained_at": "2026-10-15T17:37:01.789032+00:00",
   "evaluation_validity": {
     "real_public_ground_truth": true,
     "status": "observed_public_labels_group_holdout",
     "reason": "AMS observado tras exposici\u00f3n nocturna a hipoxia controlada equivalente a 4200 m, en 24 participantes. Eval\u00faa ese estudio; falta validar alertas durante caminatas.",
     "deployment_approved": false,
     "native_labels": true,
-    "test_synthetic_rows": 0
+    "synthetic_rows": 0
+  },
+  "baseline": {
+    "strategy": "most_frequent_training_label",
+    "label": "AMS-",
+    "test_accuracy": 0.5,
+    "training_counts": {
+      "AMS-": 9,
+      "AMS+": 7
+    },
+    "tie_breaker": "First occurrence in original training partition; never select using test results",
+    "tied_labels_test_accuracy": {
+      "AMS-": 0.5
+    }
   },
   "hyperparameters": {
     "n_estimators": 150,
@@ -217,8 +211,7 @@
           "69d5b417febca2752312eb2f",
           "c6b4baccf0d148beaa546faf",
           "ffe6e542142862617ac0d0a6"
-        ],
-        "synthetic_training_rows": 0
+        ]
       },
       {
         "train_groups": [
@@ -240,8 +233,7 @@
           "6889dad3ee55f1431fb24e0e",
           "bcb730dbcda5dee4dcd7fc2a",
           "f49ee8748ce6f2b4cc5b6a7e"
-        ],
-        "synthetic_training_rows": 0
+        ]
       },
       {
         "train_groups": [
@@ -263,8 +255,7 @@
           "5c0924c0c1298757550ee8f2",
           "b419672c7bec58b63c955252",
           "f15fa229d257ba950fce4b4c"
-        ],
-        "synthetic_training_rows": 0
+        ]
       },
       {
         "train_groups": [
@@ -286,8 +277,7 @@
           "3843008dabcf1c07bb513c26",
           "a40156aab41e317e192f5d99",
           "edcf711eabdcce06cd03dd0f"
-        ],
-        "synthetic_training_rows": 0
+        ]
       },
       {
         "train_groups": [
@@ -309,16 +299,10 @@
           "35d779b53736538a80418944",
           "7b4da5f61974f554bdc60679",
           "d8ae2d4c52041cc673368042"
-        ],
-        "synthetic_training_rows": 0
+        ]
       }
     ],
     "provenance_sha256": "0205f96e2575e8babfa4635973c608c899aad5c51cca6906d1b753cf5c30b9ce"
   },
-  "test_predictions_sha256": "7eaf3d7ac234954f28df0763bc174431f1011d571d6f110fba1282c53866ce10",
-  "baseline": {
-    "strategy": "most_frequent_training_label",
-    "label": "AMS-",
-    "test_accuracy": 0.5
-  }
+  "test_predictions_sha256": "7eaf3d7ac234954f28df0763bc174431f1011d571d6f110fba1282c53866ce10"
 }

@@ -8,21 +8,25 @@ import {
   clampTerrainScale,
   getTerrainPerspectiveFov,
 } from "../../services/mapGestures";
+import {
+  TERRAIN_SCENE_HALF_SIZE as TERRAIN_HALF_SIZE,
+  TerrainSceneModel,
+  TerrainScenePoint,
+  TerrainSceneWeather,
+  TerrainWeatherKind,
+  buildTerrainMeshData,
+  coordinateToTerrainScenePoint,
+  drapeRouteOnTerrain,
+  getTerrainSceneHeight,
+  getTerrainWeatherKind,
+} from "./terrainSceneModel";
 
 type Terrain3DSceneProps = {
-  routePoints: Coordinate[];
-  fallbackCenter: Coordinate;
-  difficulty?: string | null;
-  distanceKm?: number | null;
+  terrain: TerrainSceneModel;
   userCoordinate?: Coordinate | null;
   viewOffset: { x: number; y: number };
   viewScale: number;
-  trailLabel?: string | null;
-  weather?: {
-    condition: string;
-    rainProbability: number;
-    temperatureC: number;
-  } | null;
+  weather?: TerrainSceneWeather | null;
   navigationMode?: boolean;
   satelliteTextureEnabled?: boolean;
 };
@@ -46,351 +50,20 @@ type SceneHandles = {
   sunLight: THREE.DirectionalLight;
   hemiLight: THREE.HemisphereLight;
   navigationView: NavigationView | null;
-  model: TerrainModel | null;
+  model: TerrainSceneModel | null;
   terrainRoute: THREE.Vector3[];
   trackedObject: THREE.Object3D | null;
   rebuildId: number;
 };
 
-type TerrainBiome = "forest" | "steppe" | "alpine";
-
-type TerrainModel = {
-  bounds: {
-    centerX: number;
-    centerZ: number;
-    metersPerUnit: number;
-    minX: number;
-    minZ: number;
-    sizeMeters: number;
-  };
-  difficultyFactor: number;
-  origin: Coordinate;
-  route: THREE.Vector3[];
-  seed: number;
-  biome: TerrainBiome;
-};
-
-const GRID_SIZE = 104;
-const TERRAIN_HALF_SIZE = 7.2;
-const RELIEF_EXAGGERATION = 1.32;
-const EARTH_RADIUS_METERS = 6371000;
+const DEFAULT_CAMERA_TARGET_Y = 0.58;
+const CAMERA_GROUND_CLEARANCE = 0.8;
 
 const clamp = (value: number, min: number, max: number) =>
   Math.max(min, Math.min(max, value));
 
-const getDifficultyFactor = (difficulty: string | null | undefined) => {
-  const normalized = (difficulty || "").toLowerCase();
-
-  if (normalized.includes("dificil") || normalized.includes("alta")) return 1;
-  if (normalized.includes("media") || normalized.includes("moderada")) return 0.68;
-  return 0.42;
-};
-
-const getRouteDistanceKm = (points: Coordinate[]) => {
-  if (points.length < 2) return 0;
-
-  const toRad = (value: number) => (value * Math.PI) / 180;
-
-  return points.slice(0, -1).reduce((total, point, index) => {
-    const nextPoint = points[index + 1];
-    const dLat = toRad(nextPoint[0] - point[0]);
-    const dLng = toRad(nextPoint[1] - point[1]);
-    const lat1 = toRad(point[0]);
-    const lat2 = toRad(nextPoint[0]);
-    const a =
-      Math.sin(dLat / 2) ** 2 +
-      Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLng / 2) ** 2;
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
-    return total + (EARTH_RADIUS_METERS / 1000) * c;
-  }, 0);
-};
-
-export const getTerrainElevationGainMeters = (
-  routePoints: Coordinate[],
-  difficulty?: string | null,
-  distanceKm?: number | null
-) => {
-  const resolvedDistanceKm =
-    distanceKm || getRouteDistanceKm(routePoints.length > 1 ? routePoints : []);
-  const difficultyFactor = getDifficultyFactor(difficulty);
-
-  return Math.round(
-    Math.max(60, resolvedDistanceKm * (80 + difficultyFactor * 95))
-  );
-};
-
-const getOrigin = (points: Coordinate[], fallbackCenter: Coordinate): Coordinate => {
-  if (points.length === 0) return fallbackCenter;
-
-  const totals = points.reduce(
-    (acc, point) => ({
-      latitude: acc.latitude + point[0],
-      longitude: acc.longitude + point[1],
-    }),
-    { latitude: 0, longitude: 0 }
-  );
-
-  return [totals.latitude / points.length, totals.longitude / points.length];
-};
-
-const toLocalMeters = (point: Coordinate, origin: Coordinate) => {
-  const latRad = (origin[0] * Math.PI) / 180;
-
-  return {
-    x:
-      ((point[1] - origin[1]) *
-        Math.PI *
-        EARTH_RADIUS_METERS *
-        Math.cos(latRad)) /
-      180,
-    z: -(((point[0] - origin[0]) * Math.PI * EARTH_RADIUS_METERS) / 180),
-  };
-};
-
-const buildTerrainModel = (
-  routePoints: Coordinate[],
-  fallbackCenter: Coordinate,
-  difficulty?: string | null,
-  trailLabel?: string | null
-): TerrainModel => {
-  const sourcePoints =
-    routePoints.length > 1
-      ? routePoints
-      : [
-          [fallbackCenter[0] - 0.004, fallbackCenter[1] - 0.004] as Coordinate,
-          fallbackCenter,
-          [fallbackCenter[0] + 0.004, fallbackCenter[1] + 0.004] as Coordinate,
-        ];
-  const origin = getOrigin(sourcePoints, fallbackCenter);
-  const localPoints = sourcePoints.map((point) => toLocalMeters(point, origin));
-  const minRouteX = Math.min(...localPoints.map((point) => point.x));
-  const maxRouteX = Math.max(...localPoints.map((point) => point.x));
-  const minRouteZ = Math.min(...localPoints.map((point) => point.z));
-  const maxRouteZ = Math.max(...localPoints.map((point) => point.z));
-  const routeWidth = Math.max(1, maxRouteX - minRouteX);
-  const routeDepth = Math.max(1, maxRouteZ - minRouteZ);
-  const sizeMeters = Math.max(routeWidth, routeDepth, 900) * 1.9;
-  const metersPerUnit = sizeMeters / 8.4;
-  const centerX = (minRouteX + maxRouteX) / 2;
-  const centerZ = (minRouteZ + maxRouteZ) / 2;
-  const minX = centerX - sizeMeters / 2;
-  const minZ = centerZ - sizeMeters / 2;
-  const difficultyFactor = getDifficultyFactor(difficulty);
-  const normalizedLabel = (trailLabel || "")
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase();
-  const isForest =
-    normalizedLabel.includes("bosque") ||
-    normalizedLabel.includes("selva") ||
-    normalizedLabel.includes("yunga") ||
-    normalizedLabel.includes("arrayan") ||
-    normalizedLabel.includes("coihue");
-  const isSteppe =
-    !isForest && (
-      normalizedLabel.includes("estepa") ||
-      normalizedLabel.includes("desierto") ||
-      normalizedLabel.includes("puna") ||
-      normalizedLabel.includes("pomez") ||
-      normalizedLabel.includes("quebrada") ||
-      normalizedLabel.includes("catamarca") ||
-      normalizedLabel.includes("jujuy") ||
-      normalizedLabel.includes("salta")
-    );
-  const isAlpine =
-    normalizedLabel.includes("cerro") ||
-    normalizedLabel.includes("cumbre") ||
-    normalizedLabel.includes("mont") ||
-    normalizedLabel.includes("glaciar") ||
-    normalizedLabel.includes("laguna") ||
-    difficultyFactor > 0.82;
-  const biome: TerrainBiome = isSteppe ? "steppe" : isAlpine && !isForest ? "alpine" : "forest";
-  const seed =
-    Math.sin(origin[0] * 13.37 + origin[1] * 7.91 + difficultyFactor * 5.3) *
-    9.7;
-  const route = localPoints.map((point) => {
-    const x = (point.x - centerX) / metersPerUnit;
-    const z = (point.z - centerZ) / metersPerUnit;
-
-    return new THREE.Vector3(x, getHeightAt(x, z, difficultyFactor, seed), z);
-  });
-
-  return {
-    bounds: { centerX, centerZ, metersPerUnit, minX, minZ, sizeMeters },
-    difficultyFactor,
-    origin,
-    route,
-    seed,
-    biome,
-  };
-};
-
-const hash01 = (x: number, y: number, seed: number) => {
-  const s = Math.sin(x * 127.1 + y * 311.7 + seed * 74.7) * 43758.5453123;
-  return s - Math.floor(s);
-};
-
-const smoothstep = (t: number) => t * t * (3 - 2 * t);
-
-const valueNoise2D = (x: number, y: number, seed: number) => {
-  const x0 = Math.floor(x);
-  const y0 = Math.floor(y);
-  const sx = smoothstep(x - x0);
-  const sy = smoothstep(y - y0);
-  const n00 = hash01(x0, y0, seed);
-  const n10 = hash01(x0 + 1, y0, seed);
-  const n01 = hash01(x0, y0 + 1, seed);
-  const n11 = hash01(x0 + 1, y0 + 1, seed);
-  const nx0 = n00 + (n10 - n00) * sx;
-  const nx1 = n01 + (n11 - n01) * sx;
-
-  return (nx0 + (nx1 - nx0) * sy) * 2 - 1;
-};
-
-const fbm2D = (x: number, y: number, seed: number, octaves: number) => {
-  let amplitude = 1;
-  let frequency = 1;
-  let sum = 0;
-  let max = 0;
-
-  for (let octave = 0; octave < octaves; octave += 1) {
-    sum += valueNoise2D(x * frequency, y * frequency, seed + octave * 17.13) * amplitude;
-    max += amplitude;
-    amplitude *= 0.52;
-    frequency *= 2.03;
-  }
-
-  return sum / max;
-};
-
-const getHeightAt = (
-  x: number,
-  z: number,
-  difficultyFactor: number,
-  seed: number
-) => {
-  const longRidge = Math.sin(x * 0.9 + seed) * 0.34;
-  const crossRidge = Math.cos(z * 1.12 - seed * 0.7) * 0.26;
-  const peakA =
-    Math.exp(-((x + 1.9) ** 2 + (z - 0.9) ** 2) / 5.6) *
-    (1.4 + difficultyFactor);
-  const peakB =
-    Math.exp(-((x - 1.65) ** 2 + (z + 1.15) ** 2) / 3.3) *
-    (0.9 + difficultyFactor * 0.8);
-  const basin = Math.exp(-((x + 0.2) ** 2 + (z + 0.2) ** 2) / 8.2) * 0.34;
-  const detailNoise = fbm2D(x * 0.85, z * 0.85, seed, 5) * 0.19;
-  const fineNoise = fbm2D(x * 3.6, z * 3.6, seed + 91.3, 3) * 0.055;
-
-  const relief =
-    (longRidge + crossRidge + peakA + peakB - basin + detailNoise + fineNoise) *
-    (0.45 + difficultyFactor * 0.34);
-
-  return 0.08 + relief * (RELIEF_EXAGGERATION + difficultyFactor * 0.12);
-};
-
-const getSlopeAt = (
-  x: number,
-  z: number,
-  difficultyFactor: number,
-  seed: number
-) => {
-  const eps = 0.06;
-  const left = getHeightAt(x - eps, z, difficultyFactor, seed);
-  const right = getHeightAt(x + eps, z, difficultyFactor, seed);
-  const down = getHeightAt(x, z - eps, difficultyFactor, seed);
-  const up = getHeightAt(x, z + eps, difficultyFactor, seed);
-
-  return clamp((Math.abs(right - left) + Math.abs(up - down)) / (eps * 4), 0, 1);
-};
-
-const interpolateColor = (
-  low: THREE.Color,
-  high: THREE.Color,
-  amount: number
-) => low.clone().lerp(high, clamp(amount, 0, 1));
-
-const getTerrainColor = (
-  height: number,
-  difficultyFactor: number,
-  steepness: number,
-  x: number,
-  z: number,
-  seed: number,
-  biome: TerrainBiome
-) => {
-  const palette = biome === "steppe"
-    ? {
-        valley: "#8B7651",
-        forest: "#A18B5D",
-        grass: "#B2A16F",
-        scree: "#C1AD83",
-        rock: "#9B8874",
-        cliff: "#665A4E",
-        snow: "#D8D0C2",
-      }
-    : biome === "alpine"
-      ? {
-          valley: "#355F42",
-          forest: "#4C7448",
-          grass: "#718B50",
-          scree: "#958C6C",
-          rock: "#77736B",
-          cliff: "#4A4B48",
-          snow: "#E7ECE8",
-        }
-      : {
-          valley: "#244E38",
-          forest: "#356B43",
-          grass: "#62884D",
-          scree: "#8C8A62",
-          rock: "#746E5E",
-          cliff: "#454942",
-          snow: "#E5EBE3",
-        };
-  const valley = new THREE.Color(palette.valley);
-  const forest = new THREE.Color(palette.forest);
-  const grass = new THREE.Color(palette.grass);
-  const scree = new THREE.Color(palette.scree);
-  const rock = new THREE.Color(palette.rock);
-  const cliff = new THREE.Color(palette.cliff);
-  const snow = new THREE.Color(palette.snow);
-  const normalized = clamp(
-    height / ((1.45 + difficultyFactor) * RELIEF_EXAGGERATION),
-    0,
-    1
-  );
-  const terrainNoise = fbm2D(x * 1.65, z * 1.65, seed + 37.1, 4);
-  const fineNoise = fbm2D(x * 5.2, z * 5.2, seed + 113.4, 3);
-  let base: THREE.Color;
-
-  if (normalized < 0.24) {
-    base = interpolateColor(valley, forest, normalized / 0.24);
-  } else if (normalized < 0.5) {
-    base = interpolateColor(forest, grass, (normalized - 0.24) / 0.26);
-  } else if (normalized < 0.72) {
-    base = interpolateColor(grass, scree, (normalized - 0.5) / 0.22);
-  } else if (normalized < 0.91) {
-    base = interpolateColor(scree, rock, (normalized - 0.72) / 0.19);
-  } else {
-    base = interpolateColor(rock, snow, (normalized - 0.91) / 0.09);
-  }
-
-  const rockExposure = clamp((steepness - 0.2) * 2.4 + terrainNoise * 0.12, 0, 0.88);
-  const snowPatch = clamp((normalized - 0.82) * 4.6 + terrainNoise * 0.32, 0, 0.72);
-  const sunSide = Math.sin((x + seed) * 0.75) * 0.5 + Math.cos((z - seed) * 0.92) * 0.5;
-  const textureAmount = clamp(Math.abs(fineNoise) * 0.14, 0, 0.16);
-
-  base = interpolateColor(base, rockExposure > 0.58 ? cliff : rock, rockExposure);
-  base = interpolateColor(base, snow, snowPatch);
-  base = interpolateColor(base, new THREE.Color("#D5D0B4"), textureAmount);
-
-  if (sunSide > 0) {
-    return interpolateColor(base, new THREE.Color("#FFF1C4"), sunSide * 0.08);
-  }
-
-  return interpolateColor(base, new THREE.Color("#273126"), Math.abs(sunSide) * 0.18);
-};
+const toVector3 = (point: TerrainScenePoint) =>
+  new THREE.Vector3(point.x, point.y, point.z);
 
 const disposeObject = (object: THREE.Object3D) => {
   object.traverse((child) => {
@@ -418,58 +91,29 @@ const clearGroup = (group: THREE.Group) => {
   }
 };
 
-const buildTerrainMesh = (model: TerrainModel) => {
-  const positions: number[] = [];
-  const colors: number[] = [];
-  const uvs: number[] = [];
-  const indices: number[] = [];
+const buildTerrainMesh = (model: TerrainSceneModel) => {
+  const mesh = buildTerrainMeshData(model);
+  const low = new THREE.Color("#5F7F5A");
+  const middle = new THREE.Color("#A39676");
+  const high = new THREE.Color("#D6D1C4");
   const color = new THREE.Color();
+  const colors: number[] = [];
 
-  for (let row = 0; row <= GRID_SIZE; row += 1) {
-    for (let column = 0; column <= GRID_SIZE; column += 1) {
-      const x = -TERRAIN_HALF_SIZE + (column / GRID_SIZE) * TERRAIN_HALF_SIZE * 2;
-      const z = -TERRAIN_HALF_SIZE + (row / GRID_SIZE) * TERRAIN_HALF_SIZE * 2;
-      const height = getHeightAt(
-        x,
-        z,
-        model.difficultyFactor,
-        model.seed
-      );
-      const steepness = getSlopeAt(x, z, model.difficultyFactor, model.seed);
-      color.copy(
-        getTerrainColor(
-          height,
-          model.difficultyFactor,
-          steepness,
-          x,
-          z,
-          model.seed,
-          model.biome
-        )
-      );
-
-      positions.push(x, height, z);
-      colors.push(color.r, color.g, color.b);
-      uvs.push(column / GRID_SIZE, 1 - row / GRID_SIZE);
+  // Tinte hipsometrico: depende solo de la altura real dentro de la grilla.
+  mesh.relativeElevations.forEach((amount) => {
+    if (amount < 0.5) {
+      color.copy(low).lerp(middle, amount / 0.5);
+    } else {
+      color.copy(middle).lerp(high, (amount - 0.5) / 0.5);
     }
-  }
-
-  for (let row = 0; row < GRID_SIZE; row += 1) {
-    for (let column = 0; column < GRID_SIZE; column += 1) {
-      const a = row * (GRID_SIZE + 1) + column;
-      const b = a + 1;
-      const c = a + (GRID_SIZE + 1);
-      const d = c + 1;
-
-      indices.push(a, c, b, b, c, d);
-    }
-  }
+    colors.push(color.r, color.g, color.b);
+  });
 
   const geometry = new THREE.BufferGeometry();
-  geometry.setIndex(indices);
-  geometry.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
+  geometry.setIndex(mesh.indices);
+  geometry.setAttribute("position", new THREE.Float32BufferAttribute(mesh.positions, 3));
   geometry.setAttribute("color", new THREE.Float32BufferAttribute(colors, 3));
-  geometry.setAttribute("uv", new THREE.Float32BufferAttribute(uvs, 2));
+  geometry.setAttribute("uv", new THREE.Float32BufferAttribute(mesh.uvs, 2));
   geometry.computeVertexNormals();
 
   const material = new THREE.MeshStandardMaterial({
@@ -483,22 +127,10 @@ const buildTerrainMesh = (model: TerrainModel) => {
   return terrain;
 };
 
-const getSatelliteTextureUrl = (model: TerrainModel) => {
-  const metersPerLatitudeDegree = (Math.PI * EARTH_RADIUS_METERS) / 180;
-  const metersPerLongitudeDegree =
-    metersPerLatitudeDegree * Math.cos((model.origin[0] * Math.PI) / 180);
-  const toCoordinate = (x: number, z: number): Coordinate => {
-    const localX = model.bounds.centerX + x * model.bounds.metersPerUnit;
-    const localZ = model.bounds.centerZ + z * model.bounds.metersPerUnit;
-    return [
-      model.origin[0] - localZ / metersPerLatitudeDegree,
-      model.origin[1] + localX / metersPerLongitudeDegree,
-    ];
-  };
-  const northWest = toCoordinate(-TERRAIN_HALF_SIZE, -TERRAIN_HALF_SIZE);
-  const southEast = toCoordinate(TERRAIN_HALF_SIZE, TERRAIN_HALF_SIZE);
+const getSatelliteTextureUrl = (model: TerrainSceneModel) => {
+  const { north, south, east, west } = model.grid.bounds;
   const params = new URLSearchParams({
-    bbox: `${northWest[1]},${southEast[0]},${southEast[1]},${northWest[0]}`,
+    bbox: `${west},${south},${east},${north}`,
     bboxSR: "4326",
     imageSR: "4326",
     size: "1024,1024",
@@ -512,9 +144,8 @@ const getSatelliteTextureUrl = (model: TerrainModel) => {
 
 const applySatelliteTexture = (
   terrain: THREE.Mesh,
-  model: TerrainModel,
-  onLoad: (texture: THREE.Texture) => void,
-  onError: () => void
+  model: TerrainSceneModel,
+  onLoad: (texture: THREE.Texture) => void
 ) => {
   const loader = new TextureLoader();
   loader.setCrossOrigin("anonymous");
@@ -533,15 +164,16 @@ const applySatelliteTexture = (
       onLoad(texture);
     },
     undefined,
-    onError
+    // Si la imagen falla, el relieve conserva el tinte por altura.
+    () => undefined
   );
 };
 
-const buildTerrainSkirt = (model: TerrainModel) => {
+const buildTerrainSkirt = (model: TerrainSceneModel) => {
   const positions: number[] = [];
   const colors: number[] = [];
   const indices: number[] = [];
-  const topColor = new THREE.Color(model.biome === "steppe" ? "#77644D" : "#465641");
+  const topColor = new THREE.Color("#465641");
   const bottomColor = new THREE.Color("#2A2924");
   const segments = 64;
   const bottomY = -1.15;
@@ -556,7 +188,7 @@ const buildTerrainSkirt = (model: TerrainModel) => {
     const vertexOffset = positions.length / 3;
     for (let index = 0; index <= segments; index += 1) {
       const [x, z] = getPoint(index / segments);
-      const topY = getHeightAt(x, z, model.difficultyFactor, model.seed);
+      const topY = getTerrainSceneHeight(model, x, z);
       positions.push(x, topY, z, x, bottomY, z);
       colors.push(topColor.r, topColor.g, topColor.b, bottomColor.r, bottomColor.g, bottomColor.b);
       if (index < segments) {
@@ -578,47 +210,9 @@ const buildTerrainSkirt = (model: TerrainModel) => {
   return skirt;
 };
 
-const sampleRouteOnTerrain = (model: TerrainModel) => {
-  if (model.route.length < 2) return model.route;
-
-  const sampledRoute: THREE.Vector3[] = [];
-  const maxSegmentLength = 0.055;
-
-  for (let index = 1; index < model.route.length; index += 1) {
-    const start = model.route[index - 1];
-    const end = model.route[index];
-    const segmentLength = Math.hypot(end.x - start.x, end.z - start.z);
-    const steps = Math.max(1, Math.ceil(segmentLength / maxSegmentLength));
-
-    for (let step = 0; step < steps; step += 1) {
-      const progress = step / steps;
-      const x = start.x + (end.x - start.x) * progress;
-      const z = start.z + (end.z - start.z) * progress;
-      sampledRoute.push(
-        new THREE.Vector3(
-          x,
-          getHeightAt(x, z, model.difficultyFactor, model.seed),
-          z
-        )
-      );
-    }
-  }
-
-  const lastPoint = model.route[model.route.length - 1];
-  sampledRoute.push(
-    new THREE.Vector3(
-      lastPoint.x,
-      getHeightAt(lastPoint.x, lastPoint.z, model.difficultyFactor, model.seed),
-      lastPoint.z
-    )
-  );
-
-  return sampledRoute;
-};
-
 const getSmoothedCrossSlopes = (
   centerLine: THREE.Vector3[],
-  model: TerrainModel
+  model: TerrainSceneModel
 ) => {
   const sampleDistance = 0.045;
   const rawSlopes = centerLine.map((point, index) => {
@@ -629,17 +223,15 @@ const getSmoothedCrossSlopes = (
     const length = Math.max(0.001, Math.hypot(dx, dz));
     const normalX = -dz / length;
     const normalZ = dx / length;
-    const leftHeight = getHeightAt(
+    const leftHeight = getTerrainSceneHeight(
+      model,
       point.x - normalX * sampleDistance,
-      point.z - normalZ * sampleDistance,
-      model.difficultyFactor,
-      model.seed
+      point.z - normalZ * sampleDistance
     );
-    const rightHeight = getHeightAt(
+    const rightHeight = getTerrainSceneHeight(
+      model,
       point.x + normalX * sampleDistance,
-      point.z + normalZ * sampleDistance,
-      model.difficultyFactor,
-      model.seed
+      point.z + normalZ * sampleDistance
     );
 
     return clamp(
@@ -664,7 +256,7 @@ const getSmoothedCrossSlopes = (
 
 const makeTerrainTrailRibbon = (
   centerLine: THREE.Vector3[],
-  model: TerrainModel,
+  model: TerrainSceneModel,
   halfWidth: number,
   color: string,
   lift: number,
@@ -684,10 +276,6 @@ const makeTerrainTrailRibbon = (
     const length = Math.max(0.001, Math.hypot(dx, dz));
     const normalX = -dz / length;
     const normalZ = dx / length;
-    const shade = highlighted
-      ? 1
-      : 0.88 + hash01(index * 0.67, model.seed, 81) * 0.2;
-    const shadedColor = baseColor.clone().multiplyScalar(shade);
 
     [-1, 1].forEach((side) => {
       const offset = halfWidth * side;
@@ -696,7 +284,7 @@ const makeTerrainTrailRibbon = (
         point.y + crossSlopes[index] * offset + lift,
         point.z + normalZ * offset
       );
-      vertexColors.push(shadedColor.r, shadedColor.g, shadedColor.b);
+      vertexColors.push(baseColor.r, baseColor.g, baseColor.b);
     });
 
     if (index < centerLine.length - 1) {
@@ -873,178 +461,17 @@ const updateTrackedPosition = (
 
   handles.navigationView = null;
   if (!userCoordinate) return;
-  const userPoint = toScenePoint(userCoordinate, model);
+  // Fuera de la grilla real no hay altura conocida: no se dibuja el marcador.
+  const scenePoint = coordinateToTerrainScenePoint(model, userCoordinate);
+  if (!scenePoint) return;
+  const userPoint = toVector3(scenePoint);
   const markerGroup = new THREE.Group();
   markerGroup.add(makeUserMarker(userPoint), makeVerticalPin(userPoint, "#2376D9"));
   handles.routeGroup.add(markerGroup);
   handles.trackedObject = markerGroup;
 };
 
-const TREE_COUNT = 230;
-const TRUNK_HEIGHT = 0.14;
-const FOLIAGE_HEIGHT = 0.24;
-
-const addVegetation = (group: THREE.Group, model: TerrainModel) => {
-  const targetCount = model.biome === "steppe" ? 58 : model.biome === "alpine" ? 145 : TREE_COUNT;
-  const trunkGeometry = new THREE.CylinderGeometry(0.012, 0.024, TRUNK_HEIGHT, 7);
-  const trunkMaterial = new THREE.MeshStandardMaterial({
-    color: "#6B4A31",
-    roughness: 0.92,
-  });
-  const foliageGeometry = model.biome === "forest"
-    ? new THREE.IcosahedronGeometry(0.095, 1)
-    : model.biome === "steppe"
-      ? new THREE.IcosahedronGeometry(0.075, 1)
-      : new THREE.ConeGeometry(0.1, FOLIAGE_HEIGHT, 9);
-  const foliageTopGeometry = model.biome === "forest"
-    ? new THREE.IcosahedronGeometry(0.075, 1)
-    : model.biome === "steppe"
-      ? new THREE.IcosahedronGeometry(0.055, 1)
-      : new THREE.ConeGeometry(0.075, FOLIAGE_HEIGHT * 0.82, 9);
-  const foliageMaterial = new THREE.MeshStandardMaterial({
-    color: model.biome === "steppe" ? "#8D8B45" : model.biome === "alpine" ? "#416D3F" : "#2F7142",
-    roughness: 0.85,
-  });
-  const trunks = new THREE.InstancedMesh(trunkGeometry, trunkMaterial, TREE_COUNT);
-  const foliage = new THREE.InstancedMesh(foliageGeometry, foliageMaterial, TREE_COUNT);
-  const foliageTop = new THREE.InstancedMesh(foliageTopGeometry, foliageMaterial, TREE_COUNT);
-  trunks.castShadow = true;
-  trunks.receiveShadow = true;
-  foliage.castShadow = true;
-  foliage.receiveShadow = true;
-  foliageTop.castShadow = true;
-  foliageTop.receiveShadow = true;
-
-  const dummy = new THREE.Object3D();
-  let placed = 0;
-  let attempt = 0;
-
-  while (placed < targetCount && attempt < targetCount * 12) {
-    attempt += 1;
-    const rx = hash01(attempt * 3.11, model.seed, model.seed + 1) * TERRAIN_HALF_SIZE * 1.9 - TERRAIN_HALF_SIZE * 0.95;
-    const rz = hash01(model.seed, attempt * 5.73, model.seed + 2) * TERRAIN_HALF_SIZE * 1.9 - TERRAIN_HALF_SIZE * 0.95;
-    const height = getHeightAt(rx, rz, model.difficultyFactor, model.seed);
-    const steepness = getSlopeAt(rx, rz, model.difficultyFactor, model.seed);
-    const normalizedHeight = clamp(
-      height / ((1.45 + model.difficultyFactor) * RELIEF_EXAGGERATION),
-      0,
-      1
-    );
-
-    const treeLine = model.biome === "alpine" ? 0.48 : 0.64;
-    if (steepness > 0.32 || normalizedHeight < 0.06 || normalizedHeight > treeLine ||
-      (model.biome === "steppe" && hash01(rx, rz, model.seed + 40) > 0.24)) {
-      continue;
-    }
-
-    const tooCloseToRoute = model.route.some(
-      (point) => Math.hypot(point.x - rx, point.z - rz) < 0.22
-    );
-    if (tooCloseToRoute) continue;
-
-    const scale = 0.65 + hash01(rx * 91.7, rz * 57.1, model.seed + 3) * 0.85;
-    const rotationY = hash01(rx * 13.1, rz * 27.3, model.seed + 4) * Math.PI * 2;
-
-    dummy.rotation.set(0, rotationY, 0);
-    dummy.scale.setScalar(scale);
-    dummy.position.set(rx, height + (TRUNK_HEIGHT / 2) * scale, rz);
-    dummy.updateMatrix();
-    trunks.setMatrixAt(placed, dummy.matrix);
-
-    dummy.position.y = height + (TRUNK_HEIGHT + FOLIAGE_HEIGHT / 2) * scale;
-    dummy.updateMatrix();
-    foliage.setMatrixAt(placed, dummy.matrix);
-
-    dummy.position.y = height + (TRUNK_HEIGHT + FOLIAGE_HEIGHT * 0.95) * scale;
-    dummy.scale.setScalar(scale * 0.82);
-    dummy.updateMatrix();
-    foliageTop.setMatrixAt(placed, dummy.matrix);
-
-    placed += 1;
-  }
-
-  trunks.count = placed;
-  foliage.count = placed;
-  foliageTop.count = placed;
-  trunks.instanceMatrix.needsUpdate = true;
-  foliage.instanceMatrix.needsUpdate = true;
-  foliageTop.instanceMatrix.needsUpdate = true;
-
-  group.add(trunks);
-  group.add(foliage);
-  group.add(foliageTop);
-};
-
-const addGroundDetails = (group: THREE.Group, model: TerrainModel) => {
-  const rockCount = model.biome === "forest" ? 115 : 210;
-  const grassCount = model.biome === "steppe" ? 260 : 330;
-  const rockGeometry = new THREE.DodecahedronGeometry(0.045, 0);
-  const rockMaterial = new THREE.MeshStandardMaterial({
-    color: model.biome === "steppe" ? "#8A765E" : "#77766E",
-    roughness: 1,
-  });
-  const grassGeometry = new THREE.ConeGeometry(0.018, 0.09, 3);
-  const grassMaterial = new THREE.MeshStandardMaterial({
-    color: model.biome === "steppe" ? "#A39A4C" : "#5F913F",
-    roughness: 0.95,
-  });
-  const rocks = new THREE.InstancedMesh(rockGeometry, rockMaterial, rockCount);
-  const grass = new THREE.InstancedMesh(grassGeometry, grassMaterial, grassCount);
-  const dummy = new THREE.Object3D();
-
-  const populate = (mesh: THREE.InstancedMesh, count: number, isRock: boolean) => {
-    let placed = 0;
-    for (let attempt = 0; placed < count && attempt < count * 5; attempt += 1) {
-      const x = hash01(attempt * 8.17, model.seed + 19, model.seed) * TERRAIN_HALF_SIZE * 1.9 - TERRAIN_HALF_SIZE * 0.95;
-      const z = hash01(model.seed + 23, attempt * 4.91, model.seed) * TERRAIN_HALF_SIZE * 1.9 - TERRAIN_HALF_SIZE * 0.95;
-      const slope = getSlopeAt(x, z, model.difficultyFactor, model.seed);
-      if ((!isRock && slope > 0.27) || model.route.some((p) => Math.hypot(p.x - x, p.z - z) < 0.16)) continue;
-      const y = getHeightAt(x, z, model.difficultyFactor, model.seed);
-      const scale = (isRock ? 0.65 : 0.55) + hash01(x * 17, z * 29, model.seed) * (isRock ? 1.5 : 0.8);
-      dummy.position.set(x, y + (isRock ? 0.025 : 0.04) * scale, z);
-      dummy.rotation.set(hash01(x, z, 2) * 0.5, hash01(x, z, 3) * Math.PI, hash01(x, z, 4) * 0.35);
-      dummy.scale.set(scale * (isRock ? 1.25 : 1), scale, scale * (isRock ? 0.9 : 1));
-      dummy.updateMatrix();
-      mesh.setMatrixAt(placed, dummy.matrix);
-      placed += 1;
-    }
-    mesh.count = placed;
-    mesh.instanceMatrix.needsUpdate = true;
-  };
-  populate(rocks, rockCount, true);
-  populate(grass, grassCount, false);
-  rocks.castShadow = true;
-  rocks.receiveShadow = true;
-  group.add(rocks, grass);
-};
-
-const toScenePoint = (coordinate: Coordinate, model: TerrainModel) => {
-  const local = toLocalMeters(coordinate, model.origin);
-  const x = (local.x - model.bounds.centerX) / model.bounds.metersPerUnit;
-  const z = (local.z - model.bounds.centerZ) / model.bounds.metersPerUnit;
-
-  return new THREE.Vector3(
-    x,
-    getHeightAt(x, z, model.difficultyFactor, model.seed),
-    z
-  );
-};
-
-const normalizeWeatherText = (value: string) =>
-  value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-
-const getWeatherKind = (condition = "", rainProbability = 0) => {
-  const normalized = normalizeWeatherText(condition);
-  if (normalized.includes("nieve") || normalized.includes("nevada")) return "snow";
-  if (normalized.includes("torment")) return "storm";
-  if (normalized.includes("lluv") || normalized.includes("chaparr") || rainProbability >= 55) return "rain";
-  if (normalized.includes("nubl") || normalized.includes("cubierto")) return "cloudy";
-  if (normalized.includes("parcial") || normalized.includes("nubes")) return "partly-cloudy";
-  return "clear";
-};
-
-const buildSkyDome = (weather: Terrain3DSceneProps["weather"]) => {
-  const kind = getWeatherKind(weather?.condition, weather?.rainProbability);
+const buildSkyDome = (kind: TerrainWeatherKind | null) => {
   const colorsByKind = {
     clear: ["#418BC1", "#D9EFF5"],
     "partly-cloudy": ["#648FAC", "#D8E5E9"],
@@ -1053,7 +480,8 @@ const buildSkyDome = (weather: Terrain3DSceneProps["weather"]) => {
     storm: ["#273743", "#73838B"],
     snow: ["#839BAA", "#E8F0F1"],
   } as const;
-  const [topColor, bottomColor] = colorsByKind[kind];
+  // Sin pronostico real se usa un degradado neutro.
+  const [topColor, bottomColor] = kind ? colorsByKind[kind] : ["#8EA4B2", "#E4EBEE"];
   const geometry = new THREE.SphereGeometry(60, 24, 16);
   const material = new THREE.ShaderMaterial({
     uniforms: {
@@ -1088,11 +516,14 @@ const buildSkyDome = (weather: Terrain3DSceneProps["weather"]) => {
   return new THREE.Mesh(geometry, material);
 };
 
+// Efectos solo para un pronostico real. Las posiciones siguen una grilla fija
+// y se elevan sobre el punto mas alto del relieve.
 const addWeatherGraphics = (
   group: THREE.Group,
-  weather: Terrain3DSceneProps["weather"]
+  kind: TerrainWeatherKind | null,
+  baseHeight: number
 ) => {
-  const kind = getWeatherKind(weather?.condition, weather?.rainProbability);
+  if (!kind) return;
   const cloudKinds = ["partly-cloudy", "cloudy", "rain", "storm", "snow"];
 
   if (kind === "clear" || kind === "partly-cloudy") {
@@ -1100,7 +531,7 @@ const addWeatherGraphics = (
       new THREE.SphereGeometry(0.58, 24, 18),
       new THREE.MeshBasicMaterial({ color: "#FFD466", fog: false })
     );
-    sun.position.set(-4.8, 5.9, -5.8);
+    sun.position.set(-4.8, 5.9 + baseHeight, -5.8);
     group.add(sun);
   }
 
@@ -1115,8 +546,8 @@ const addWeatherGraphics = (
     });
     for (let index = 0; index < cloudCount; index += 1) {
       const cloud = new THREE.Group();
-      const x = -5.8 + (index % 4) * 3.8 + hash01(index, 1, 52) * 0.6;
-      const y = 4.6 + Math.floor(index / 4) * 1.15 + hash01(index, 2, 53) * 0.4;
+      const x = -5.8 + (index % 4) * 3.8;
+      const y = 4.6 + Math.floor(index / 4) * 1.15 + baseHeight;
       const z = -5.5 + (index % 2) * 1.1;
       [
         [-0.52, 0, 0, 0.72],
@@ -1131,7 +562,7 @@ const addWeatherGraphics = (
       });
       cloud.position.set(x, y, z);
       cloud.name = "weather-cloud";
-      cloud.userData.speed = 0.015 + hash01(index, 14, 61) * 0.018;
+      cloud.userData.speed = 0.024;
       cloud.userData.originX = x;
       group.add(cloud);
     }
@@ -1152,14 +583,13 @@ const addWeatherGraphics = (
     const precipitation = new THREE.InstancedMesh(geometry, material, precipitationCount);
     const dummy = new THREE.Object3D();
     for (let index = 0; index < precipitationCount; index += 1) {
+      const row = Math.floor(index / 15);
       dummy.position.set(
-        hash01(index, 5, 71) * 12 - 6,
-        hash01(index, 7, 72) * 5 + 1.2,
-        hash01(index, 9, 73) * 8 - 4
+        -6 + (index % 15) * 0.8 + (row % 2) * 0.4,
+        1.2 + ((index * 7) % 25) * 0.2 + baseHeight,
+        -4 + ((row * 3) % 10) * 0.8
       );
       dummy.rotation.z = isSnow ? 0 : -0.18;
-      const scale = 0.65 + hash01(index, 11, 74) * 0.75;
-      dummy.scale.setScalar(scale);
       dummy.updateMatrix();
       precipitation.setMatrixAt(index, dummy.matrix);
     }
@@ -1170,28 +600,20 @@ const addWeatherGraphics = (
 };
 
 export function Terrain3DScene({
-  routePoints,
-  fallbackCenter,
-  difficulty,
-  distanceKm,
+  terrain,
   userCoordinate,
   viewOffset,
   viewScale,
-  trailLabel,
   weather,
   navigationMode = false,
   satelliteTextureEnabled = true,
 }: Terrain3DSceneProps) {
   const handlesRef = useRef<SceneHandles | null>(null);
   const propsRef = useRef({
-    routePoints,
-    fallbackCenter,
-    difficulty,
-    distanceKm,
+    terrain,
     userCoordinate,
     viewOffset,
     viewScale,
-    trailLabel,
     weather,
     navigationMode,
     satelliteTextureEnabled,
@@ -1199,21 +621,11 @@ export function Terrain3DScene({
   const geometrySignature = useMemo(
     () =>
       JSON.stringify({
-        routePoints,
-        fallbackCenter,
-        difficulty,
-        distanceKm,
-        trailLabel,
         weather,
         navigationMode,
         satelliteTextureEnabled,
       }),
     [
-      routePoints,
-      fallbackCenter,
-      difficulty,
-      distanceKm,
-      trailLabel,
       weather,
       navigationMode,
       satelliteTextureEnabled,
@@ -1222,27 +634,19 @@ export function Terrain3DScene({
 
   useEffect(() => {
     propsRef.current = {
-      routePoints,
-      fallbackCenter,
-      difficulty,
-      distanceKm,
+      terrain,
       userCoordinate,
       viewOffset,
       viewScale,
-      trailLabel,
       weather,
       navigationMode,
       satelliteTextureEnabled,
     };
   }, [
-    routePoints,
-    fallbackCenter,
-    difficulty,
-    distanceKm,
+    terrain,
     userCoordinate,
     viewOffset,
     viewScale,
-    trailLabel,
     weather,
     navigationMode,
     satelliteTextureEnabled,
@@ -1255,17 +659,12 @@ export function Terrain3DScene({
     const current = propsRef.current;
     const rebuildId = handles.rebuildId + 1;
     handles.rebuildId = rebuildId;
-    const model = buildTerrainModel(
-      current.routePoints,
-      current.fallbackCenter,
-      current.difficulty,
-      current.trailLabel
-    );
+    const model = current.terrain;
     clearGroup(handles.terrainGroup);
     clearGroup(handles.routeGroup);
     clearGroup(handles.weatherGroup);
     handles.trackedObject = null;
-    const weatherKind = getWeatherKind(current.weather?.condition, current.weather?.rainProbability);
+    const weatherKind = getTerrainWeatherKind(current.weather);
     const isDarkWeather = weatherKind === "storm" || weatherKind === "rain";
     const fogColor = weatherKind === "storm"
       ? "#66747B"
@@ -1278,8 +677,8 @@ export function Terrain3DScene({
     handles.renderer.setClearColor(fogColor);
     handles.sunLight.intensity = weatherKind === "clear" ? 3.35 : isDarkWeather ? 1.25 : 2.25;
     handles.hemiLight.intensity = isDarkWeather ? 0.72 : 1.05;
-    handles.weatherGroup.add(buildSkyDome(current.weather));
-    addWeatherGraphics(handles.weatherGroup, current.weather);
+    handles.weatherGroup.add(buildSkyDome(weatherKind));
+    addWeatherGraphics(handles.weatherGroup, weatherKind, model.maxHeight);
     const terrain = buildTerrainMesh(model);
     handles.terrainGroup.add(terrain);
     if (current.satelliteTextureEnabled) {
@@ -1287,31 +686,23 @@ export function Terrain3DScene({
         if (handlesRef.current !== handles || handles.rebuildId !== rebuildId) {
           texture.dispose();
         }
-      }, () => {
-        if (handlesRef.current === handles && handles.rebuildId === rebuildId) {
-          addVegetation(handles.terrainGroup, model);
-          addGroundDetails(handles.terrainGroup, model);
-        }
       });
     }
     handles.terrainGroup.add(buildTerrainSkirt(model));
-    if (!current.satelliteTextureEnabled) {
-      addVegetation(handles.terrainGroup, model);
-      addGroundDetails(handles.terrainGroup, model);
-    }
     handles.alignmentRotation = 0;
     handles.navigationView = null;
     handles.terrainGroup.rotation.y = 0;
     handles.routeGroup.rotation.y = 0;
 
     if (model.route.length > 1) {
-      const direction = model.route[model.route.length - 1].clone().sub(model.route[0]);
-      handles.alignmentRotation = Math.atan2(direction.z, direction.x);
+      const first = model.route[0];
+      const last = model.route[model.route.length - 1];
+      handles.alignmentRotation = Math.atan2(last.z - first.z, last.x - first.x);
       handles.terrainGroup.rotation.y = handles.alignmentRotation;
       handles.routeGroup.rotation.y = handles.alignmentRotation;
     }
 
-    const terrainRoute = sampleRouteOnTerrain(model);
+    const terrainRoute = drapeRouteOnTerrain(model).map(toVector3);
     handles.model = model;
     handles.terrainRoute = terrainRoute;
     const markerRoute = terrainRoute.map((point) => {
@@ -1365,7 +756,7 @@ export function Terrain3DScene({
 
   useEffect(() => {
     rebuildScene();
-  }, [geometrySignature, rebuildScene]);
+  }, [terrain, geometrySignature, rebuildScene]);
 
   useEffect(() => {
     const handles = handlesRef.current;
@@ -1388,7 +779,11 @@ export function Terrain3DScene({
     []
   );
 
-  const updateCamera = useCallback((camera: THREE.PerspectiveCamera, navigationView?: NavigationView | null) => {
+  const updateCamera = useCallback((
+    camera: THREE.PerspectiveCamera,
+    navigationView?: NavigationView | null,
+    alignmentRotation = 0
+  ) => {
     const current = propsRef.current;
     const scale = clampTerrainScale(current.viewScale);
     const orbitAngle = current.viewOffset.x / 100;
@@ -1419,16 +814,27 @@ export function Terrain3DScene({
       return;
     }
 
-    const target = new THREE.Vector3(0, 0.58, 0);
+    // El relieve real puede ser mas alto que la vista por defecto: se eleva el
+    // objetivo con el relieve y la camara nunca queda debajo del terreno.
+    const model = current.terrain;
+    const targetY = Math.max(DEFAULT_CAMERA_TARGET_Y, model.maxHeight * 0.4);
+    const target = new THREE.Vector3(0, targetY, 0);
     const radius = 8 + Math.max(0, tilt) * 0.28;
-    const height = clamp(3.78 - tilt * 1.12, 1.65, 5.7);
+    const height = clamp(3.78 - tilt * 1.12, 1.65, 5.7) + targetY - DEFAULT_CAMERA_TARGET_Y;
+    const cameraX = Math.sin(orbitAngle) * radius;
+    const cameraZ = Math.cos(orbitAngle) * radius;
+    const groundY = getTerrainSceneHeight(
+      model,
+      cameraX * Math.cos(alignmentRotation) - cameraZ * Math.sin(alignmentRotation),
+      cameraX * Math.sin(alignmentRotation) + cameraZ * Math.cos(alignmentRotation)
+    );
 
     camera.fov = 43;
     camera.zoom = scale;
     camera.position.set(
-      Math.sin(orbitAngle) * radius,
-      height,
-      Math.cos(orbitAngle) * radius
+      cameraX,
+      Math.max(height, groundY + CAMERA_GROUND_CLEARANCE),
+      cameraZ
     );
     camera.lookAt(target);
     camera.updateProjectionMatrix();
@@ -1508,7 +914,7 @@ export function Terrain3DScene({
         const handles = handlesRef.current;
         if (!handles) return;
 
-        updateCamera(handles.camera, handles.navigationView);
+        updateCamera(handles.camera, handles.navigationView, handles.alignmentRotation);
         const elapsed = Date.now() / 1000;
         handles.weatherGroup.children.forEach((child) => {
           if (child.name === "weather-cloud") {

@@ -1,12 +1,3 @@
-export const heartRateLogsTableSql = `
-  CREATE TABLE IF NOT EXISTS heart_rate_logs (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    hr INTEGER,
-    timestamp INTEGER,
-    session_id INTEGER
-  );
-`;
-
 export const wearableTablesSql = `
   CREATE TABLE IF NOT EXISTS wearable_connections (
     user_id INTEGER PRIMARY KEY,

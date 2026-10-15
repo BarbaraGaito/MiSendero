@@ -1,7 +1,7 @@
 {
   "type": "random_forest_json",
   "version": 1,
-  "trained_at": "2026-10-13T22:55:26.878746+00:00",
+  "trained_at": "2026-10-15T17:36:54.517448+00:00",
   "feature_order": [
     "hr",
     "elapsed_minutes"
@@ -255475,6 +255475,6 @@
     "reason": "Respuestas Borg originales durante tareas al aire libre con carga de 20 minutos. Eval\u00faa esa tarea; falta validar caminatas y uso cl\u00ednico.",
     "deployment_approved": false,
     "native_labels": true,
-    "test_synthetic_rows": 0
+    "synthetic_rows": 0
   }
 }

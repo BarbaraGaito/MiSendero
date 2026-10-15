@@ -58,8 +58,8 @@ No se puede atribuir la diferencia con la evaluación OSM anterior al IGN: cambi
 - `npm run train:apn-difficulty` y `npm run train:route-difficulty` reproducen las dos tareas.
 - `npm run fetch:ai-data -- --model apn_route_difficulty --model route_difficulty` descarga originales que deben coincidir con el lock.
 - `npm run validate:ai-data` reconstruye las mediciones/etiquetas desde los originales, verifica los parques/regiones fijados y recalcula métricas y baselines.
-- `npm run test:ai-data` prueba fuentes, unidades, faltantes, etiquetas, grupos y rechazo de augmentation no validada para variables categóricas y DEM.
+- `npm run test:ai-data` prueba fuentes, unidades, faltantes, etiquetas, grupos y que los ajustes usan solo filas observadas.
 
 `training/data/public/sources.lock.json` fija SHA-256 de 31 archivos originales. En `apn_route_difficulty/` y `route_difficulty/` quedan CSV, procedencia por fila, predicciones reservadas, métricas y bosques experimentales. Los originales están en `training/data/raw/public_audit/`, excluidos de Git. APN, el índice IGN y OSM son fuentes dinámicas: conservar los snapshots, porque una nueva respuesta con otro hash se rechaza y requiere auditoría explícita. El lock no se actualiza automáticamente.
 
-No se aplicó augmentation. Para estas dos tareas se rechaza `--augment` mientras no exista una transformación conjunta validada que conserve las categorías de sentido y la coherencia entre geometría y relieve; la autorización del usuario para augmentation de entrenamiento permanece vigente.
+No se aplicó augmentation. Desde el 15/10/2026 el pipeline no admite datos sintéticos en ninguna tarea: se eliminó la opción `--augment`.

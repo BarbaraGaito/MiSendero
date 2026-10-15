@@ -12,7 +12,7 @@ from rasterio.transform import from_origin
 
 import argentina_sources
 from argentina_sources import IgnElevationAtlas, parse_apn_page, terrain_features
-from train_public import augmented, baseline_for, group_split
+from train_public import baseline_for, group_split
 
 
 class ArgentinaSourceTests(unittest.TestCase):
@@ -98,11 +98,6 @@ class ArgentinaSourceTests(unittest.TestCase):
         frame = pd.DataFrame({"group_key": list("abcd"), "lineage": [{"regions": ["a"]}, {"regions": ["b"]}, {"regions": ["c"]}, {"regions": ["a", "d"]}]})
         with self.assertRaisesRegex(ValueError, "crosses"):
             group_split(frame, {"unit": "region", "test_units": ["d"]})
-
-    def test_unvalidated_augmentation_cannot_distort_route_bases_or_dem(self):
-        for feature in ("distance_basis_one_way", "dem_ascent_m"):
-            with self.assertRaisesRegex(ValueError, "validated joint transformation"):
-                augmented(pd.DataFrame({feature: [1, 2]}), pd.Series(["A", "B"]), True)
 
     def test_training_baseline_tie_is_disclosed_without_selecting_on_test(self):
         training = pd.Series(["A", "B", "B", "A"])

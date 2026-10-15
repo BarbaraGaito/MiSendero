@@ -42,9 +42,9 @@ beforeEach(async () => {
 });
 afterEach(() => jest.restoreAllMocks());
 
-test("saving a contact alone never unlocks a route, including simulated routes", async () => {
+test("saving a contact alone never unlocks a route; a simulated route needs verified testing mode", async () => {
   await expect(ensureRouteSession(7, 100000)).rejects.toBeInstanceOf(DepartureMessageRequiredError);
-  await expect(ensureRouteSession(7, 100000, true)).rejects.toBeInstanceOf(DepartureMessageRequiredError);
+  await expect(ensureRouteSession(7, 100000, true)).rejects.toThrow("modo prueba no está activo");
   expect(await getActiveRouteSession()).toBeNull();
 });
 

@@ -1,4 +1,4 @@
-import { finishRouteSession, activeRouteSeconds } from "../../services/routeSession";
+import { finishRouteSession, activeRouteSeconds, getSimulatedRouteTrackingSummary } from "../../services/routeSession";
 import { router, useLocalSearchParams } from "expo-router";
 import type { Href } from "expo-router";
 import { useEffect, useState } from "react";
@@ -143,12 +143,16 @@ const createCompletionSession = async (params: RouteCompletionParams) => {
     return {
       session: await getExistingCompletionSession(trailId),
       trackingPointCount: 0,
+      isSimulated: false,
     };
   }
 
   const runtime = await finishRouteSession(trailId, startedAtMs);
+  const isSimulated = Boolean(runtime?.simulated);
   const endedAt = runtime?.ended_at ?? Date.now();
-  const trackingSummary = await getRouteTrackingSummary(trailId, startedAtMs);
+  const trackingSummary = isSimulated
+    ? getSimulatedRouteTrackingSummary(trailId, startedAtMs)
+    : await getRouteTrackingSummary(trailId, startedAtMs);
   const routeTotal = parseOptionalNumber(params.totalMeters);
   const distance = Math.max(
     parseOptionalNumber(params.traveledMeters) ?? 0,
@@ -160,23 +164,51 @@ const createCompletionSession = async (params: RouteCompletionParams) => {
     distance
   );
   const duration = runtime ? activeRouteSeconds(runtime) : Math.max(0, Math.floor((endedAt - startedAtMs) / 1000));
+  const completionStatus = getCompletionStatus(routeProgressMeters, routeTotal);
+  const endedLatitude =
+    parseOptionalNumber(params.endedLatitude) ??
+    trackingSummary.lastPoint?.latitude ??
+    null;
+  const endedLongitude =
+    parseOptionalNumber(params.endedLongitude) ??
+    trackingSummary.lastPoint?.longitude ??
+    null;
+
+  if (isSimulated) {
+    // Testing mode: show the simulated run, but never store it as an activity or queue it for sync.
+    const simulatedSession: SessionRow = {
+      id: 0,
+      user_id: runtime?.user_id ?? null,
+      started_at: startedAtMs,
+      ended_at: endedAt,
+      duration,
+      distance,
+      avg_fatigue: null,
+      trail_id: trailId,
+      completion_status: completionStatus,
+      route_progress_meters: routeProgressMeters,
+      route_total_meters: routeTotal,
+      ended_latitude: endedLatitude,
+      ended_longitude: endedLongitude,
+      rating: null,
+      review_text: null,
+      reviewed_at: null,
+    };
+
+    return { session: simulatedSession, trackingPointCount: trackingSummary.points, isSimulated };
+  }
+
   const completedResult = await getOrCreateCompletedSession({
     trailId,
     startedAt: startedAtMs,
     endedAt,
     duration,
     distance,
-    completionStatus: getCompletionStatus(routeProgressMeters, routeTotal),
+    completionStatus,
     routeProgressMeters,
     routeTotalMeters: routeTotal,
-    endedLatitude:
-      parseOptionalNumber(params.endedLatitude) ??
-      trackingSummary.lastPoint?.latitude ??
-      null,
-    endedLongitude:
-      parseOptionalNumber(params.endedLongitude) ??
-      trackingSummary.lastPoint?.longitude ??
-      null,
+    endedLatitude,
+    endedLongitude,
   });
 
   await enqueueCompletedActivity({
@@ -193,6 +225,7 @@ const createCompletionSession = async (params: RouteCompletionParams) => {
   return {
     session: completedResult.session,
     trackingPointCount: trackingSummary.points,
+    isSimulated,
   };
 };
 
@@ -238,6 +271,7 @@ export default function RouteCompletedScreen() {
   const [completionStatus, setCompletionStatus] =
     useState<SessionRow["completion_status"]>("ended_early");
   const [trackingPointCount, setTrackingPointCount] = useState(0);
+  const [isSimulated, setIsSimulated] = useState(false);
 
   useEffect(() => {
     const loadSession = async () => {
@@ -254,6 +288,7 @@ export default function RouteCompletedScreen() {
       const completedSession = completion.session;
 
       setTrackingPointCount(completion.trackingPointCount);
+      setIsSimulated(completion.isSimulated);
       setCompletionStatus(completedSession?.completion_status ?? "ended_early");
       setSession(completedSession);
       setRating(completedSession?.rating ?? 0);
@@ -267,7 +302,7 @@ export default function RouteCompletedScreen() {
   const trailId = session?.trail_id ?? (Number(id) || null);
   const isPausedWithoutProgress = completionStatus === "paused";
   const isEndedEarly = completionStatus === "ended_early";
-  const canReview = Boolean(session && trailId && !isPausedWithoutProgress);
+  const canReview = Boolean(session && trailId && !isPausedWithoutProgress && !isSimulated);
   const hasReview = Boolean(session?.rating);
   const completionCopy = getCompletionCopy(isPausedWithoutProgress);
   const progressPercent =
@@ -318,16 +353,20 @@ export default function RouteCompletedScreen() {
         <Text style={styles.successCheck}>{completionCopy.icon}</Text>
       </View>
       <ScreenTitle
-        eyebrow={isPausedWithoutProgress ? "Ruta pausada" : "Recorrido finalizado"}
+        eyebrow={isSimulated ? "Modo testing" : isPausedWithoutProgress ? "Ruta pausada" : "Recorrido finalizado"}
         title={
-          isPausedWithoutProgress
+          isSimulated
+            ? "Recorrido simulado"
+            : isPausedWithoutProgress
             ? "Ruta en pausa"
             : isEndedEarly
               ? "Recorrido guardado"
               : "Sendero completado"
         }
         subtitle={
-          isPausedWithoutProgress
+          isSimulated
+            ? "Usaste ubicacion simulada: este recorrido no se guarda como actividad ni se sincroniza."
+            : isPausedWithoutProgress
             ? "No registramos distancia recorrida, asi que no la marcamos como terminada."
             : isEndedEarly
               ? "Guardamos tu actividad y el punto del sendero donde terminaste."
@@ -349,6 +388,7 @@ export default function RouteCompletedScreen() {
         isEndedEarly={isEndedEarly}
         isPausedWithoutProgress={isPausedWithoutProgress}
         isSavingReview={isSavingReview}
+        isSimulated={isSimulated}
         progressPercent={progressPercent}
         rating={rating}
         reviewStatus={reviewStatus}
@@ -378,6 +418,7 @@ function CompletionSessionContent({
   isEndedEarly,
   isPausedWithoutProgress,
   isSavingReview,
+  isSimulated,
   progressPercent,
   rating,
   reviewStatus,
@@ -394,6 +435,7 @@ function CompletionSessionContent({
   isEndedEarly: boolean;
   isPausedWithoutProgress: boolean;
   isSavingReview: boolean;
+  isSimulated: boolean;
   progressPercent: number | null;
   rating: number;
   reviewStatus: string | null;
@@ -409,10 +451,11 @@ function CompletionSessionContent({
 
   return (
     <>
-      <CompletionMetrics session={session} progressPercent={progressPercent} />
+      <CompletionMetrics session={session} progressPercent={progressPercent} isSimulated={isSimulated} />
       <CompletionPerformanceCard
         isEndedEarly={isEndedEarly}
         isPausedWithoutProgress={isPausedWithoutProgress}
+        isSimulated={isSimulated}
         session={session}
         trackingPointCount={trackingPointCount}
       />
@@ -438,9 +481,11 @@ function CompletionSessionContent({
 }
 
 function CompletionMetrics({
+  isSimulated,
   progressPercent,
   session,
 }: {
+  isSimulated: boolean;
   progressPercent: number | null;
   session: SessionRow;
 }) {
@@ -450,7 +495,7 @@ function CompletionMetrics({
       <Metric label="Tiempo" value={formatDuration(session.duration ?? 0)} />
       <Metric
         label="Progreso"
-        value={progressPercent !== null ? `${progressPercent}%` : "Guardado"}
+        value={progressPercent !== null ? `${progressPercent}%` : isSimulated ? "Sin guardar" : "Guardado"}
       />
     </View>
   );
@@ -459,14 +504,30 @@ function CompletionMetrics({
 function CompletionPerformanceCard({
   isEndedEarly,
   isPausedWithoutProgress,
+  isSimulated,
   session,
   trackingPointCount,
 }: {
   isEndedEarly: boolean;
   isPausedWithoutProgress: boolean;
+  isSimulated: boolean;
   session: SessionRow;
   trackingPointCount: number;
 }) {
+  if (isSimulated) {
+    return (
+      <Card tone="orange">
+        <Text style={styles.cardTitle}>Datos simulados</Text>
+        <Text style={styles.cardText}>
+          Distancia y tiempo calculados con ubicacion simulada para pruebas. No quedan en tu historial ni se envian al servidor.
+        </Text>
+        {trackingPointCount > 0 ? (
+          <Text style={styles.cardMeta}>{trackingPointCount} puntos simulados (no se guardan).</Text>
+        ) : null}
+      </Card>
+    );
+  }
+
   return (
     <Card tone="green">
       <Text style={styles.cardTitle}>

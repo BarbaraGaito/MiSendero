@@ -17,6 +17,7 @@ import {
   createTerrainGridCoordinates,
   fetchElevationsForCoordinates,
   getTerrainElevation,
+  peekTerrainElevation,
   sampleRouteByDistance,
   sampleTerrainGridElevation,
   smoothElevationSeries,
@@ -161,7 +162,7 @@ describe("terrainElevation", () => {
       now: () => new Date("2026-09-29T12:00:00.000Z"),
     };
     const first = await getTerrainElevation(7, route, options);
-    const callsAfterFirstRequest = fetchFn.mock.calls.length;
+    const callsAfterFirstRequest = jest.mocked(fetchFn).mock.calls.length;
     const second = await getTerrainElevation(7, route, options);
 
     expect(first).not.toBeNull();
@@ -225,6 +226,30 @@ describe("terrainElevation", () => {
     await expect(getTerrainElevation("falla", route, { fetchFn })).resolves.toBeNull();
     await expect(getTerrainElevation("falla", route, { fetchFn })).resolves.toBeNull();
     expect(fetchFn).toHaveBeenCalledTimes(2);
+  });
+
+  test("peek solo lee el cache y nunca consulta al proveedor", async () => {
+    const fetchFn = jest.fn(async (input: string) => {
+      const count = new URL(input).searchParams.get("latitude")!.split(",").length;
+      return {
+        ok: true,
+        status: 200,
+        json: async () => ({ elevation: Array.from({ length: count }, () => 900) }),
+      };
+    }) as ElevationFetch;
+    const route: Coordinate[] = [
+      [-41.01, -71.01],
+      [-41, -71],
+    ];
+
+    expect(peekTerrainElevation(9, route)).toBeNull();
+    expect(fetchFn).not.toHaveBeenCalled();
+
+    const loaded = await getTerrainElevation(9, route, { fetchFn });
+    const calls = jest.mocked(fetchFn).mock.calls.length;
+
+    await expect(peekTerrainElevation(9, route)).resolves.toBe(loaded);
+    expect(fetchFn).toHaveBeenCalledTimes(calls);
   });
 
   test("la consulta de bajo nivel rechaza respuestas incompletas", async () => {

@@ -5,34 +5,6 @@ import { Card, colors } from "../../components/MiSenderoUI";
 
 export type IconName = ComponentProps<typeof Ionicons>["name"];
 
-export function OfflineZoneCard({
-  title,
-  meta,
-  body,
-  action,
-  onPress,
-}: {
-  title: string;
-  meta: string;
-  body: string;
-  action: string;
-  onPress: () => void;
-}) {
-  return (
-    <Pressable onPress={onPress}>
-      <Card>
-        <Text style={styles.meta}>{meta}</Text>
-        <View style={styles.inlineTitle}>
-          <Ionicons name="map-outline" size={18} color={colors.primary} />
-          <Text style={styles.cardTitle}>{title}</Text>
-        </View>
-        <Text style={styles.cardText}>{body}</Text>
-        <Text style={styles.actionText}>{action}</Text>
-      </Card>
-    </Pressable>
-  );
-}
-
 export function DownloadedMapCard({
   title,
   meta,
@@ -191,12 +163,6 @@ export const styles = StyleSheet.create({
     color: colors.muted,
     fontSize: 12,
     fontWeight: "700",
-  },
-  actionText: {
-    color: colors.primary,
-    fontSize: 14,
-    fontWeight: "900",
-    marginTop: 8,
   },
   sectionLabel: {
     color: colors.muted,

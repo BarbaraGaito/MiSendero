@@ -6,11 +6,11 @@ import {
   createDevelopmentMetricSample,
   createDevelopmentMetricSequence,
   getRecentWearableMetricSamples,
+  getSimulatedWearableMetricSamples,
   getWearableProviderName,
   getWearableRuntimeStatus,
   linkNativeWearable,
   linkNativeWearableProvider,
-  saveWearableConnection,
   syncNativeWearableSampleWithStatus,
   unlinkWearableConnection,
 } from "../../services/wearableMetrics";
@@ -54,8 +54,8 @@ const providerOptions: Array<{
   },
   {
     provider: "development_simulator",
-    title: "Simulador",
-    body: "Genera muestras locales para probar predicciones sin reloj fisico.",
+    title: "Simulador (pruebas)",
+    body: "Genera lecturas simuladas solo en memoria para probar alertas. No se vincula ni se guarda.",
     icon: "flask-outline",
   },
 ];
@@ -71,28 +71,28 @@ const scenarioOptions: Array<{
     id: "normal",
     title: "Ritmo normal",
     body: "FC y oxigeno estables, esfuerzo bajo.",
-    range: "78-100 bpm - SpO2 97-99%",
+    range: "78-98 bpm - SpO2 97-99%",
     icon: "walk-outline",
   },
   {
     id: "esfuerzo_moderado",
     title: "Esfuerzo moderado",
     body: "FC elevada por pendiente o ritmo sostenido.",
-    range: "138-160 bpm - SpO2 93-96%",
+    range: "138-152 bpm - SpO2 94-96%",
     icon: "trending-up-outline",
   },
   {
     id: "fatiga_alta",
     title: "Fatiga alta",
     body: "FC muy elevada y ritmo cayendo por cansancio.",
-    range: "160-188 bpm - SpO2 88-93%",
+    range: "160-176 bpm - SpO2 90-93%",
     icon: "battery-dead-outline",
   },
   {
     id: "riesgo_fisiologico",
     title: "Riesgo fisiologico",
     body: "FC critica y oxigeno bajo: dispara alerta inmediata.",
-    range: "178-211 bpm - SpO2 79-89%",
+    range: "178-197 bpm - SpO2 82-89%",
     icon: "alert-circle-outline",
   },
 ];
@@ -100,6 +100,7 @@ const scenarioOptions: Array<{
 export default function WearableSettingsScreen() {
   const [runtime, setRuntime] = useState<WearableRuntimeStatus | null>(null);
   const [samples, setSamples] = useState<WearableMetricSample[]>([]);
+  const [simulatedSamples, setSimulatedSamples] = useState<WearableMetricSample[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isSimulating, setIsSimulating] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
@@ -107,12 +108,14 @@ export default function WearableSettingsScreen() {
 
   const load = useCallback(async () => {
     setIsLoading(true);
-    const [status, recentSamples] = await Promise.all([
+    const [status, recentSamples, sessionSamples] = await Promise.all([
       getWearableRuntimeStatus(),
       getRecentWearableMetricSamples(5),
+      getSimulatedWearableMetricSamples(),
     ]);
     setRuntime(status);
     setSamples(recentSamples);
+    setSimulatedSamples(sessionSamples.slice(0, 5));
     setIsLoading(false);
   }, []);
 
@@ -152,9 +155,8 @@ export default function WearableSettingsScreen() {
       return;
     }
 
-    await saveWearableConnection(provider, true, true);
-    setMessage(`${getWearableProviderName(provider)} preparado.`);
-    await load();
+    // The simulator is not a linked device: it only generates in-memory readings.
+    await simulateSingleSample(scenario);
   };
 
   const disconnect = async () => {
@@ -170,14 +172,10 @@ export default function WearableSettingsScreen() {
     }
 
     setIsSimulating(true);
-    if (!runtime?.connection.linked) {
-      await saveWearableConnection("development_simulator", true, true);
-    }
-
     try {
       await createDevelopmentMetricSequence(scenario);
       setMessage(
-        `Ventana simulada guardada: ${scenarioOptions.find((option) => option.id === scenario)?.title.toLowerCase()}.`
+        `Ventana simulada generada (solo en memoria, no se guarda): ${scenarioOptions.find((option) => option.id === scenario)?.title.toLowerCase()}.`
       );
       await load();
     } catch {
@@ -193,15 +191,11 @@ export default function WearableSettingsScreen() {
       return;
     }
 
-    if (!runtime?.connection.linked) {
-      await saveWearableConnection("development_simulator", true, true);
-    }
-
     try {
       await createDevelopmentMetricSample(nextScenario);
       setScenario(nextScenario);
       setMessage(
-        `Muestra rapida guardada: ${scenarioOptions.find((option) => option.id === nextScenario)?.title.toLowerCase()}.`
+        `Muestra simulada generada (solo en memoria, no se guarda): ${scenarioOptions.find((option) => option.id === nextScenario)?.title.toLowerCase()}.`
       );
       await load();
     } catch {
@@ -245,7 +239,9 @@ export default function WearableSettingsScreen() {
             <View style={styles.providerText}>
               <Text style={styles.cardTitle}>Laboratorio de testing</Text>
               <Text style={styles.cardText}>
-                Crea una ventana de 8 lecturas para probar alertas, fatiga y riesgo fisiologico.
+                Crea una ventana de 8 lecturas simuladas para probar alertas, fatiga y riesgo fisiologico.
+                Parten de estos rangos y se intensifican lectura a lectura. Quedan solo en memoria: no se
+                guardan ni se sincronizan.
               </Text>
             </View>
           </View>
@@ -288,7 +284,7 @@ export default function WearableSettingsScreen() {
         <Card>
           <Text style={styles.cardTitle}>Accesos rapidos</Text>
           <Text style={styles.cardText}>
-            Genera una lectura puntual sin configurar una ventana completa.
+            Genera una lectura simulada puntual (no se guarda) sin configurar una ventana completa.
           </Text>
           <View style={styles.quickScenarioRow}>
             {scenarioOptions.map((option) => (
@@ -312,7 +308,9 @@ export default function WearableSettingsScreen() {
                 <Ionicons name="sparkles-outline" size={21} color={colors.green} />
               </View>
               <View style={styles.providerText}>
-                <Text style={styles.cardTitle}>Analisis de IA</Text>
+                <Text style={styles.cardTitle}>
+                  {latest?.simulated ? "Analisis de IA (datos simulados)" : "Analisis de IA"}
+                </Text>
                 <Text style={styles.cardText}>{runtime.prediction.analysisSummary}</Text>
               </View>
             </View>
@@ -346,7 +344,10 @@ export default function WearableSettingsScreen() {
 
           <View style={styles.providerList}>
             {providerOptions.map((option) => {
-              const selected = runtime?.connection.provider === option.provider;
+              const selected =
+                option.provider === "development_simulator"
+                  ? Boolean(latest?.simulated)
+                  : runtime?.connection.provider === option.provider;
               return (
                 <Pressable
                   key={option.provider}
@@ -373,7 +374,9 @@ export default function WearableSettingsScreen() {
         </Card>
 
         <Card>
-          <Text style={styles.cardTitle}>Ultima metrica</Text>
+          <Text style={styles.cardTitle}>
+            {latest?.simulated ? "Ultima metrica (simulada)" : "Ultima metrica"}
+          </Text>
           {latest ? (
             <>
               <View style={styles.metricGrid}>
@@ -389,7 +392,11 @@ export default function WearableSettingsScreen() {
                   }
                 />
               </View>
-              <Text style={styles.sampleDate}>{formatDate(latest.recordedAt)}</Text>
+              <Text style={styles.sampleDate}>
+                {latest.simulated
+                  ? `Simulador (pruebas) - ${formatDate(latest.recordedAt)} - no se guarda`
+                  : formatDate(latest.recordedAt)}
+              </Text>
             </>
           ) : (
             <Text style={styles.cardText}>
@@ -418,6 +425,27 @@ export default function WearableSettingsScreen() {
           )}
         </Card>
 
+        {simulatedSamples.length > 0 ? (
+          <Card tone="orange">
+            <Text style={styles.cardTitle}>Lecturas simuladas de esta sesion</Text>
+            <Text style={styles.cardText}>
+              Solo para pruebas: viven en memoria, no se guardan ni forman parte del historial.
+            </Text>
+            <View style={styles.sampleList}>
+              {simulatedSamples.map((sample) => (
+                <View key={sample.recordedAt} style={styles.sampleRow}>
+                  <Text style={styles.sampleMetric}>
+                    {sample.heartRateBpm ?? "--"} bpm
+                  </Text>
+                  <Text style={styles.sampleMeta}>
+                    {getWearableProviderName(sample.provider)} - {formatTime(sample.recordedAt)}
+                  </Text>
+                </View>
+              ))}
+            </View>
+          </Card>
+        ) : null}
+
         <View style={styles.actions}>
           <PrimaryButton
             label="Sincronizar dispositivo"
@@ -426,7 +454,7 @@ export default function WearableSettingsScreen() {
             onPress={syncNativeSample}
           />
           <PrimaryButton
-            label="Generar muestra rapida"
+            label="Generar muestra simulada"
             icon="flask-outline"
             onPress={() => simulateSingleSample(scenario)}
           />

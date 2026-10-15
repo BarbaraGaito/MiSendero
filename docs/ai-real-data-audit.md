@@ -1,6 +1,6 @@
-# Auditoría de evaluación real — actualizada al 14/10/2026
+# Auditoría de evaluación real — actualizada al 15/10/2026
 
-Requisito confirmado: mediciones de fuentes públicas, etiquetas publicadas u observadas independientemente de los predictores y augmentation únicamente dentro de entrenamiento. La evaluación entregada no usa augmentation: contiene cero filas sintéticas en entrenamiento, validación y test.
+Requisito confirmado: mediciones de fuentes públicas y etiquetas publicadas u observadas independientemente de los predictores. No se permiten datos sintéticos en el repositorio: el pipeline no tiene data augmentation y la evaluación contiene cero filas sintéticas en entrenamiento, validación y test.
 
 ## Fuentes incorporadas
 
@@ -28,15 +28,15 @@ La evaluación OSM previa de 231 filas y ocho registros de test obtuvo 0% de acc
 
 ## Protocolo y evidencia
 
-Fatiga/AMS mantienen una sola partición GroupShuffleSplit por participante con semilla 42. APN reserva Tierra del Fuego completo; OSM reserva Ushuaia y Mendoza, declarados en el catálogo antes del ajuste. Las regiones/parques, caminos conectados, nombres y relaciones no cruzan particiones. Tuning mediante GroupKFold exclusivamente dentro de entrenamiento, con cuatro configuraciones fijadas. El test no participa en selección, fit ni CV. La augmentation admitida se genera dentro del entrenamiento de cada fold; APN/DEM la rechazan hasta contar con una transformación conjunta validada.
+Fatiga/AMS mantienen una sola partición GroupShuffleSplit por participante con semilla 42. APN reserva Tierra del Fuego completo; OSM reserva Ushuaia y Mendoza, declarados en el catálogo antes del ajuste. Las regiones/parques, caminos conectados, nombres y relaciones no cruzan particiones. Tuning mediante GroupKFold exclusivamente dentro de entrenamiento, con cuatro configuraciones fijadas. El test no participa en selección, fit ni CV. Cada ajuste usa únicamente filas observadas.
 
 `training/data/public/sources.lock.json` y `source_catalog.json` fijan archivos/licencias/versiones. Cada familia conserva `dataset.csv`, `provenance.json`, `test_predictions.csv`, `metrics.json` y `model.forest.json`. Las filas del modelo no contienen identificadores personales ni ubicación exacta. La correspondencia a archivos y observaciones públicas queda en el manifiesto de auditoría. Se conservan las filas de test originales y sus predicciones para recalcular los resultados.
 
-`npm run train:ai` ejecuta el nuevo pipeline. `npm run validate:ai-data` verifica hashes, particiones, etiquetas y accuracy/F1. `npm run test:ai-data` prueba filtraciones por grupos, augmentation dentro de CV y rechazo de fuentes modificadas. Ver `ai/datasets/README.md` para instalación, descarga y reproducción. OSM es una fuente dinámica; conservar los snapshots verificados. Una nueva descarga que cambie un hash se rechaza y requiere una nueva auditoría, sin actualizar el lock automáticamente.
+`npm run train:ai` ejecuta el nuevo pipeline. `npm run validate:ai-data` verifica hashes, particiones, etiquetas y accuracy/F1. `npm run test:ai-data` prueba filtraciones por grupos, que la validación cruzada ajusta solo filas observadas y rechazo de fuentes modificadas. Ver `ai/datasets/README.md` para instalación, descarga y reproducción. OSM es una fuente dinámica; conservar los snapshots verificados. Una nueva descarga que cambie un hash se rechaza y requiere una nueva auditoría, sin actualizar el lock automáticamente.
 
-## Qué queda deshabilitado
+## Qué se eliminó
 
-Los antiguos CSV, entrenadores y bosques de bajo/medio/alto se conservan como evidencia histórica, pero sus recetas siguen bloqueadas. El motor móvil se abstiene (`sin_datos`) con esos bosques, y el predictor histórico de rutas no escribe nuevas predicciones. No se aplicaron cambios a bases de datos.
+El 15/10/2026 se eliminaron del repositorio los antiguos CSV, entrenadores y bosques de bajo/medio/alto, el módulo de augmentation, el predictor histórico de rutas (`training/route-difficulty/`) y el script del backend que escribía sus predicciones en `trails.difficulty`. Quedan en el historial de Git. La app no incluye ningún modelo aprobado: el motor móvil se abstiene (`sin_datos`).
 
 Los nuevos bosques son artefactos de investigación con `deployment_approved: false`. El panel muestra sus resultados y el alcance de cada fuente, separados de inferencia desplegable. Sus etiquetas/ventanas no equivalen a las antiguas categorías y ninguna conversión inventada se aplica para activarlos en la app.
 

@@ -102,7 +102,11 @@ export default function Screen03TrailDetail() {
       });
       if (saved?.trail) setTrail(saved.trail);
       setIsDownloaded(true);
-      setDownloadMessage("Mapa descargado. Ya podes abrirlo sin conexion.");
+      setDownloadMessage(
+        saved?.terrain
+          ? "Mapa descargado. Ya podes abrirlo sin conexion."
+          : "Mapa descargado. Ya podes abrirlo sin conexion. El relieve 3D no estara disponible sin conexion."
+      );
     } catch (downloadError) {
       setIsDownloaded(false);
       setDownloadMessage(getDownloadErrorMessage(downloadError));

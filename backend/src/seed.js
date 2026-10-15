@@ -158,61 +158,15 @@ const seedTrailData = [
   },
 ];
 
-const seedReports = [
-  {
-    trailName: "Sendero a Confluencia",
-    issue_summary: "Barro y rocas sueltas",
-    severity: "Media",
-    trail_state: "Precaucion",
-    cause: "Lluvia",
-    details: "Tramo humedo en sectores de bosque.",
-    daysAgo: 1,
-  },
-  {
-    trailName: "Volcan Lanin - Base a Refugio BIM",
-    issue_summary: "Sendero transitable",
-    severity: "Leve",
-    trail_state: "Transitable",
-    cause: "Mantenimiento",
-    details: "Buena senalizacion en los cruces principales.",
-    daysAgo: 2,
-  },
-  {
-    trailName: "Garganta del Diablo de Tilcara",
-    issue_summary: "Nieve o hielo",
-    severity: "Alta",
-    trail_state: "Paso dificil",
-    cause: "Deshielo",
-    details: "Precaucion en el ascenso final.",
-    daysAgo: 3,
-  },
-  {
-    trailName: "Ascenso Cerro Tres Picos",
-    issue_summary: "Viento fuerte",
-    severity: "Media",
-    trail_state: "Precaucion",
-    cause: "Viento",
-    details: "Rafagas cerca del mirador.",
-    daysAgo: 4,
-  },
-  {
-    trailName: "Sendero El Mollar - El Palmar",
-    issue_summary: "Barro",
-    severity: "Media",
-    trail_state: "Precaucion",
-    cause: "Lluvia",
-    details: "Piso resbaladizo en bajadas.",
-    daysAgo: 5,
-  },
-  {
-    trailName: "Caminata al Cerro Morado",
-    issue_summary: "Transitable con mucha humedad",
-    severity: "Leve",
-    trail_state: "Transitable",
-    cause: "Lluvia",
-    details: "Pasarelas humedas.",
-    daysAgo: 6,
-  },
+// Earlier versions seeded these status reports as if hikers had sent them.
+// Reports must only come from real users, so any remaining copy is removed.
+const fabricatedReports = [
+  ["Barro y rocas sueltas", "Tramo humedo en sectores de bosque."],
+  ["Sendero transitable", "Buena senalizacion en los cruces principales."],
+  ["Nieve o hielo", "Precaucion en el ascenso final."],
+  ["Viento fuerte", "Rafagas cerca del mirador."],
+  ["Barro", "Piso resbaladizo en bajadas."],
+  ["Transitable con mucha humedad", "Pasarelas humedas."],
 ];
 
 const legacyTrailNames = [
@@ -284,38 +238,11 @@ const seedTrails = async () => {
   }
 };
 
-const seedTrailReports = async () => {
-  const { rows: existing } = await query("SELECT COUNT(*)::int AS count FROM trail_reports");
-
-  if (existing[0].count > 0) return;
-
-  for (const report of seedReports) {
-    const { rows: trailRows } = await query("SELECT id FROM trails WHERE name = $1", [
-      report.trailName,
-    ]);
-    const trail = trailRows[0];
-
-    if (!trail) continue;
-
+const removeFabricatedReports = async () => {
+  for (const [issueSummary, details] of fabricatedReports) {
     await query(
-      `
-        INSERT INTO trail_reports (
-          trail_id, issue_summary, severity, trail_state, cause,
-          blocks_path, details, reporter_name, created_at
-        )
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, now() - ($9 || ' days')::interval)
-      `,
-      [
-        trail.id,
-        report.issue_summary,
-        report.severity,
-        report.trail_state,
-        report.cause,
-        false,
-        report.details,
-        "Senderista verificado",
-        report.daysAgo,
-      ]
+      "DELETE FROM trail_reports WHERE reporter_name = $1 AND issue_summary = $2 AND details = $3",
+      ["Senderista verificado", issueSummary, details]
     );
   }
 };
@@ -323,7 +250,7 @@ const seedTrailReports = async () => {
 const seedDatabase = async () => {
   await migrateLegacyTrailNames();
   await seedTrails();
-  await seedTrailReports();
+  await removeFabricatedReports();
 };
 
 module.exports = seedDatabase;

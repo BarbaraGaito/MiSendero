@@ -1,9 +1,0 @@
-{
-  "name": "misendero-route-difficulty-training",
-  "version": "1.0.0",
-  "private": true,
-  "description": "Evaluates trail difficulty with the trained route-difficulty RandomForest and writes output/predictions.json.",
-  "scripts": {
-    "predict": "node index.js"
-  }
-}

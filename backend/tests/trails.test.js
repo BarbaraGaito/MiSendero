@@ -6,9 +6,11 @@ const app = require("../src/server");
 
 let adminToken;
 let userToken;
+let elevationFetch;
 const testPassword = process.env.TEST_USER_PASSWORD;
 
 beforeAll(async () => {
+  elevationFetch = jest.spyOn(global, "fetch").mockRejectedValue(new Error("No external network in tests"));
   await runMigrations();
   await seedDatabase();
 
@@ -33,6 +35,8 @@ beforeAll(async () => {
   );
 });
 
+afterAll(() => elevationFetch.mockRestore());
+
 describe("trails", () => {
   test("lists seeded trails", async () => {
     const response = await request(app).get("/api/trails");
@@ -52,7 +56,7 @@ describe("trails", () => {
     ];
 
     expect(response.status).toBe(200);
-    expect(response.body).toHaveLength(10);
+    expect(response.body).toHaveLength(32);
     expect(response.body.map((trail) => trail.name)).toEqual(
       expect.not.arrayContaining(legacyNames)
     );
@@ -78,6 +82,39 @@ describe("trails", () => {
 
     expect(response.status).toBe(200);
     expect(response.body.name).toBe(first.name);
+  });
+
+  test("serves all ten non-national additions without a national park profile", async () => {
+    const definitions = require("../src/data/additionalTrailDefinitions");
+    const response = await request(app).get("/api/trails");
+    const other = definitions.filter((definition) => definition.national_park === false);
+    expect(other).toHaveLength(10);
+    for (const definition of other) {
+      const trail = response.body.find((item) => item.name === definition.name);
+      expect(trail).toBeDefined();
+      expect(trail.national_park).toBeNull();
+      expect(trail.national_park_slug).toBeFalsy();
+      expect(trail.image_url).toMatch(/^https:\/\//);
+      expect(trail.provenance.access).toBe(definition.access);
+      expect(trail.provenance.precautions).toBe(definition.precautions);
+    }
+  });
+
+  test("reseeding preserves IDs and adds no simulated reports to new trails", async () => {
+    const definitions = require("../src/data/additionalTrailDefinitions");
+    const before = await request(app).get("/api/trails");
+    await seedDatabase();
+    const after = await request(app).get("/api/trails");
+    expect(after.body.map((trail) => [trail.name, trail.id]).sort()).toEqual(
+      before.body.map((trail) => [trail.name, trail.id]).sort()
+    );
+    for (const definition of definitions) {
+      const trail = after.body.find((item) => item.name === definition.name);
+      expect(trail.provenance.route_type).toBe(definition.route_type);
+      expect(trail.provenance.sources[0].url).toBe(definition.source_url);
+      const reports = await request(app).get(`/api/trails/${trail.id}/reports`);
+      expect(reports.body).toEqual([]);
+    }
   });
 
   test("404s for a missing trail", async () => {

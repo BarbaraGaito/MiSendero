@@ -11,6 +11,7 @@ import {
   colors,
 } from "../components/MiSenderoUI";
 import { getProfile } from "../../services/api";
+import { formatKilometers } from "../../services/geoUtils";
 import {
   clearAuthSession,
   getAuthSession,
@@ -77,11 +78,7 @@ const emptySyncSummary: SyncSummary = {
   exhausted: 0,
 };
 
-const formatDistance = (meters: number) =>
-  `${(meters / 1000).toLocaleString("es-AR", {
-    maximumFractionDigits: 1,
-    minimumFractionDigits: 0,
-  })} km`;
+const formatDistance = (meters: number) => formatKilometers(meters / 1000);
 
 const formatStorage = (sizeMb: number) => {
   if (sizeMb >= 1024) {

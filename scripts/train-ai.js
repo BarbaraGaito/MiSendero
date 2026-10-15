@@ -1,75 +1,20 @@
 const fs = require("fs");
 const path = require("path");
 const { execFileSync } = require("child_process");
-
 const root = path.resolve(__dirname, "..");
 const pythonDir = path.join(root, "training", "python");
-const modelsDir = path.join(root, "ai", "models");
-const pythonExecutable = getPythonExecutable();
-
-// Assumes `py -m pip install -r training/python/requirements.txt` has already
-// been run once (see training/python/requirements.txt and ai/datasets/README.md).
-// Reinstalling on every `npm run train:ai` invocation would slow down the
-// common case of just retraining after a dataset tweak.
-const trainingScripts = [
-  {
-    id: "fatigue",
-    script: path.join(pythonDir, "fatigue", "train.py"),
-    forestOutput: path.join(pythonDir, "fatigue", "output", "model.forest.json"),
-    metricsOutput: path.join(pythonDir, "fatigue", "output", "metrics.json"),
-    modelTarget: path.join(modelsDir, "fatigueModel.json"),
-    metricsTarget: path.join(modelsDir, "fatigueMetrics.json"),
-  },
-  {
-    id: "physio_risk",
-    script: path.join(pythonDir, "physio_risk", "train.py"),
-    forestOutput: path.join(pythonDir, "physio_risk", "output", "model.forest.json"),
-    metricsOutput: path.join(pythonDir, "physio_risk", "output", "metrics.json"),
-    modelTarget: path.join(modelsDir, "riskModel.json"),
-    metricsTarget: path.join(modelsDir, "riskMetrics.json"),
-  },
-  {
-    id: "route_difficulty",
-    script: path.join(pythonDir, "route_difficulty", "train.py"),
-    forestOutput: path.join(pythonDir, "route_difficulty", "output", "model.forest.json"),
-    metricsOutput: path.join(pythonDir, "route_difficulty", "output", "metrics.json"),
-    // Consumed by training/route-difficulty/index.js, not bundled in the app.
-    modelTarget: null,
-    metricsTarget: path.join(modelsDir, "routeDifficultyMetrics.json"),
-  },
-];
-
-fs.mkdirSync(modelsDir, { recursive: true });
-
-for (const config of trainingScripts) {
-  execFileSync(pythonExecutable, [config.script], { stdio: "inherit" });
-
-  if (config.modelTarget) {
-    fs.copyFileSync(config.forestOutput, config.modelTarget);
-    console.log(`copied ${config.id} -> ${path.relative(root, config.modelTarget)}`);
-  }
-
-  fs.copyFileSync(config.metricsOutput, config.metricsTarget);
-  console.log(`copied ${config.id} metrics -> ${path.relative(root, config.metricsTarget)}`);
-}
-
-function getPythonExecutable() {
-  const candidates =
-    process.platform === "win32"
-      ? [
-          "C:\\Windows\\py.exe",
-          "C:\\Windows\\System32\\py.exe",
-          "C:\\Python312\\python.exe",
-          "C:\\Python311\\python.exe",
-        ]
-      : ["/usr/bin/python3", "/bin/python3", "/usr/local/bin/python3"];
-  const executable = candidates.find((candidate) => fs.existsSync(candidate));
-
-  if (!executable) {
-    throw new Error(
-      `Python executable not found in fixed locations: ${candidates.join(", ")}`
-    );
-  }
-
-  return executable;
-}
+const candidates = process.platform === "win32"
+  ? [path.join(root, ".venv-ai", "Scripts", "python.exe"), "C:\\Windows\\py.exe"]
+  : [path.join(root, ".venv-ai", "bin", "python"), "/usr/bin/python3"];
+const python = candidates.find((candidate) => fs.existsSync(candidate));
+if (!python) throw new Error("Install Python and training/python/requirements.txt in .venv-ai first.");
+const args = process.argv.slice(2);
+let command;
+if (args[0] === "--prepare") command = [path.join(pythonDir, "prepare_public.py")];
+else if (args[0] === "--fetch") command = [path.join(pythonDir, "fetch_public.py"), ...args.slice(1)];
+else if (args[0] === "--test") command = ["-m", "unittest", "discover", "-s", pythonDir, "-p", "test_*.py", "-v"];
+else if (args[0] === "--validate") command = [path.join(pythonDir, "validate_public.py")];
+else command = [path.join(pythonDir, "train_public.py"), ...args];
+// Research forests use native public labels and are never copied over the
+// app's old low/medium/high models. Their metrics declare scope and limitations.
+execFileSync(python, command, { cwd: root, stdio: "inherit" });

@@ -70,7 +70,7 @@
     }
   },
   "guardrails": {
-    "status": "ok",
+    "status": "review_recommended",
     "overfitting_risk": false,
     "underfitting_risk": false,
     "high_variance_risk": false,
@@ -78,7 +78,7 @@
     "high_synthetic_ratio": false,
     "train_test_f1_gap": 0.0021369789372380765,
     "warnings": [
-      "Data augmentation aplicada solo sobre train: el conjunto de test se mantiene 100% real para auditar performance."
+      "Evaluacion historica del prototipo: contiene atributos estimados/simulados o etiquetas generadas por reglas. No acredita rendimiento con datos y etiquetas reales independientes."
     ]
   },
   "accuracy": 0.9969604863221885,
@@ -145,5 +145,10 @@
     "selection_method": "cross_validated",
     "cv_folds": 5,
     "cv_f1_macro_mean": 0.9968849332485696
+  },
+  "evaluation_validity": {
+    "real_public_ground_truth": false,
+    "status": "invalid_legacy_evaluation",
+    "reason": "Evaluacion historica del prototipo: contiene atributos estimados/simulados o etiquetas generadas por reglas. No acredita rendimiento con datos y etiquetas reales independientes."
   }
 }

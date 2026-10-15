@@ -1,75 +1,9 @@
-# Route difficulty training
+# Route difficulty: public-label research evaluation
 
-This is a separate training project for fixed route difficulty metadata.
+The current evaluation is produced by `training/python/train_public.py --model route_difficulty` (or root `npm run train:route-difficulty`). It reads original OSM API snapshots and IGN MDE-Ar 30 m raster tiles. It retains mapper-published `sac_scale` labels and derives geometry/elevation predictors from complete public sources. Untagged ways or missing raster coverage are excluded. There is no slope/exertion-derived label or technical-score feature.
 
-The React Native app does not bundle this model and does not calculate route difficulty offline.
-Training happens in Python (`training/python/route_difficulty/train.py`, a
-`sklearn.ensemble.RandomForestClassifier`); this project's `index.js` only applies that trained
-model to `datasets/trail_features.csv` and writes the results to `output/predictions.json`.
+Complete regions, connected paths, equal names and shared relations stay together in both the held-out split and training-only grouped CV. Ushuaia and Mendoza are reserved in the source catalog; other regions are used for training/CV. Original raw files are pinned by SHA-256. Research artifacts are under `training/data/public/route_difficulty/`; validation recomputes scores from original labels and saved predictions.
 
-`index.js` does not read or write any database. The backend is being migrated to PostgreSQL, so
-applying `predictions.json` to the `trails.difficulty` column is a separate, manual/future step
-outside this script's scope.
+The current forest is not approved for predicting route difficulty in the product. It reaches 47/49 test matches versus 46/49 for the majority-label baseline; macro F1 is 0.276. Its labels describe segment sac_scale values. The separate `npm run train:apn-difficulty` evaluates 52 complete routes against official APN difficulty labels, without converting between tasks. `index.js` rejects the historical unapproved model before writing predictions. No predictions are applied to a database.
 
-## Inputs
-
-- `datasets/route_difficulty_training.csv`: reference rows used to train the classifier (read
-  directly by `training/python/route_difficulty/train.py` and fit with a RandomForest). The
-  current flow applies approved synthetic data augmentation only to the training fold after the
-  real train/test split; held-out test metrics are always calculated on real rows.
-- `datasets/trail_features.csv`: route-level features evaluated against the trained model by
-  `index.js`.
-
-The PFI document declares this dataset as OpenStreetMap `sac_scale` labels combined with NASA
-SRTM elevation-derived features. Both local CSV files are processed prototype inputs aligned to
-that declaration and must avoid personal data and exact user location. Route names are public
-route metadata and are used only to match existing backend records.
-
-Expected features:
-
-- `distance_km`
-- `elevation_gain_m`
-- `avg_slope_percent`
-- `max_slope_percent`
-- `technical_score`
-
-Labels:
-
-- `Baja`
-- `Media`
-- `Alta`
-
-## Usage
-
-1. Train the model (from the repository root, Python dependencies installed once via
-   `py -m pip install -r training/python/requirements.txt`):
-
-   ```bash
-   py training/python/route_difficulty/train.py
-   ```
-
-   This writes `training/python/route_difficulty/output/model.forest.json` (the model
-   `index.js` reads), `metrics.json` (train/test accuracy, precision, recall, F1,
-   cross-validation, augmentation metadata, guardrail warnings, confusion matrix, per-class
-   report), and `model.joblib` (the raw fitted estimator, for auditability). `npm run train:ai`
-   from the repository root runs this together with the fatigue and physio-risk models.
-
-2. Evaluate every trail in `datasets/trail_features.csv` against the trained model:
-
-   ```bash
-   npm run train:route-difficulty
-   ```
-
-   or, from this directory:
-
-   ```bash
-   npm run predict
-   ```
-
-   This writes `output/predictions.json`, an array of `{ route_name, difficulty, confidence }`,
-   and never touches any database.
-
-Applying `output/predictions.json` to the backend's `trails.difficulty` field is intentionally out
-of scope for this script - the backend's storage is being migrated in parallel, and a human (or a
-separate, future script written against whatever the backend's finished schema looks like) should
-review and apply the predictions.
+The former trainer/datasets/output are retained solely as prototype audit evidence and cannot be retrained. See `ai/datasets/README.md` and `docs/datasets-argentina-2026-10-14.md` for source attribution, limitations and reproducible commands.

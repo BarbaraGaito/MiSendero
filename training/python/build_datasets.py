@@ -9,6 +9,10 @@ and are not committed. Optional processed public exports can be placed under
 
 from __future__ import annotations
 
+from common.data_policy import require_public_ground_truth
+if __name__ == "__main__":
+    require_public_ground_truth("legacy_dataset_builder")
+
 import argparse
 import csv
 import json
@@ -145,6 +149,7 @@ def _limit_balanced(df: pd.DataFrame, max_rows_per_label: int) -> pd.DataFrame:
 
 
 def build_fatigue_from_pamap2() -> pd.DataFrame:
+    require_public_ground_truth("fatigue")
     """Create fatigue rows from PAMAP2 `.dat` files when present locally."""
     pamap_root = RAW_DIR / "pamap2"
     dat_files = sorted(pamap_root.glob("**/*.dat"))
@@ -199,6 +204,7 @@ def build_fatigue_from_pamap2() -> pd.DataFrame:
 
 
 def build_fatigue_from_wesad() -> pd.DataFrame:
+    require_public_ground_truth("fatigue")
     """Create fatigue rows from WESAD `SXX.pkl` files when present locally.
 
     WESAD is a stress/affect protocol, not a locomotion dataset: subjects stay
@@ -299,6 +305,7 @@ def _find_column(columns: list[str], patterns: list[str]) -> str | None:
 
 
 def build_risk_from_bidmc() -> pd.DataFrame:
+    require_public_ground_truth("physio_risk")
     """Create risk rows from BIDMC CSV numerics when present locally."""
     bidmc_root = RAW_DIR / "bidmc"
     csv_files = sorted(bidmc_root.glob("**/*Numerics.csv"))
@@ -591,6 +598,7 @@ def _load_or_fetch_region(region_name: str, bbox: tuple[float, float, float, flo
 
 
 def build_route_difficulty_from_osm() -> pd.DataFrame:
+    require_public_ground_truth("route_difficulty")
     """Create route-difficulty rows from real Argentine trail geometry.
 
     See the module-level comment above `ARGENTINA_HIKING_REGIONS` for why this
@@ -680,6 +688,7 @@ def _merge_dataset(target: Path, columns: list[str], additions: list[tuple[str, 
 
 
 def build(write: bool) -> list[BuildResult]:
+    require_public_ground_truth("legacy_dataset_builder")
     PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
 
     fatigue_result, fatigue = _merge_dataset(

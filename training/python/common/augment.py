@@ -35,7 +35,10 @@ _INTERPOLATION_JITTER_FRACTION_OF_STD = 0.06
 _FALLBACK_NOISE_FRACTION_OF_STD = 0.18
 _MIN_CLIP_BY_FEATURE = {
     "hr": 40.0,
+    "mean_hr": 40.0,
     "spo2": 50.0,
+    "mean_spo2": 50.0,
+    "sinuosity": 1.0,
     "speed_kmh": 0.0,
     "elapsed_minutes": 0.0,
     "hr_reserve_percent": 0.0,
@@ -46,10 +49,12 @@ _MIN_CLIP_BY_FEATURE = {
     "max_slope_percent": 0.0,
     "technical_score": 1.0,
 }
+_MAX_CLIP_BY_FEATURE = {"hr": 240.0, "mean_hr": 240.0, "spo2": 100.0, "mean_spo2": 100.0}
 
 
 def _clip(column: str, value: float) -> float:
-    return max(_MIN_CLIP_BY_FEATURE.get(column, 0.0), value)
+    return min(_MAX_CLIP_BY_FEATURE.get(column, float("inf")),
+               max(_MIN_CLIP_BY_FEATURE.get(column, 0.0), value))
 
 
 def augment_dataset(

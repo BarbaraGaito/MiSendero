@@ -103,6 +103,10 @@ function evaluateTrailDifficulties() {
   }
 
   const model = JSON.parse(fs.readFileSync(modelPath, "utf8"));
+  if (model.evaluation_validity?.real_public_ground_truth !== true ||
+      model.evaluation_validity?.deployment_approved !== true) {
+    throw new Error("Route model is not approved for prediction. Use the public sac_scale research evaluation; legacy outputs are invalid.");
+  }
   const featureRows = parseCsv(path.join(datasetsDir, "trail_features.csv"));
 
   const predictions = featureRows.map((row) => {

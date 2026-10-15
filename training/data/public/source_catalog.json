@@ -1,0 +1,395 @@
+{
+  "zenodo": {
+    "11505046": {
+      "metadata": {
+        "license": {
+          "id": "cc-by-4.0"
+        }
+      },
+      "files": [
+        {
+          "key": "ResearchData.xlsx",
+          "checksum": "md5:e3765f7554dff7ff4ab49cf4414404fa",
+          "links": {
+            "self": "https://zenodo.org/api/records/11505046/files/ResearchData.xlsx/content"
+          }
+        }
+      ]
+    }
+  },
+  "geofatigue": {
+    "data": {
+      "latestVersion": {
+        "versionNumber": 3,
+        "versionMinorNumber": 1,
+        "files": [
+          {
+            "description": "Raw and derived biometric data, captured using Empatica EmbracePlus.",
+            "label": "Physiological Data.zip",
+            "restricted": false,
+            "version": 1,
+            "datasetVersionId": 59404,
+            "dataFile": {
+              "id": 1100789,
+              "persistentId": "",
+              "filename": "Physiological Data.zip",
+              "contentType": "application/zip",
+              "friendlyType": "ZIP Archive",
+              "filesize": 189965447,
+              "description": "Raw and derived biometric data, captured using Empatica EmbracePlus.",
+              "storageIdentifier": "s3://dataverse:19cddcede20-dd8cc7fd9161",
+              "rootDataFileId": -1,
+              "md5": "eb81f58130436189ac416210db276c79",
+              "checksum": {
+                "type": "MD5",
+                "value": "eb81f58130436189ac416210db276c79"
+              },
+              "tabularData": false,
+              "creationDate": "2026-03-11",
+              "publicationDate": "2026-04-09",
+              "lastUpdateTime": "2026-10-07T22:07:21Z",
+              "fileAccessRequest": true
+            }
+          },
+          {
+            "label": "self_reported_fatigue_level.tab",
+            "restricted": false,
+            "directoryLabel": "Metadata",
+            "version": 1,
+            "datasetVersionId": 59404,
+            "dataFile": {
+              "id": 1213444,
+              "persistentId": "",
+              "filename": "self_reported_fatigue_level.tab",
+              "contentType": "text/tab-separated-values",
+              "friendlyType": "Tab-Delimited",
+              "filesize": 47133,
+              "storageIdentifier": "s3://dataverse:1a03a18464f-5c77a6ac9a17",
+              "originalFileFormat": "text/csv",
+              "originalFormatLabel": "Comma Separated Values",
+              "originalFileSize": 43963,
+              "originalFileName": "self_reported_fatigue_level.csv",
+              "UNF": "UNF:6:hwGujRoolh9xw61kQ0pchQ==",
+              "rootDataFileId": -1,
+              "md5": "fae1ad866b7ea7c1bcf982de7e8b21c8",
+              "checksum": {
+                "type": "MD5",
+                "value": "fae1ad866b7ea7c1bcf982de7e8b21c8"
+              },
+              "tabularData": true,
+              "creationDate": "2026-08-25",
+              "publicationDate": "2026-08-31",
+              "directoryLabel": "Metadata",
+              "lastUpdateTime": "2026-10-07T22:07:21Z",
+              "fileAccessRequest": true
+            }
+          },
+          {
+            "label": "session_metadata.json",
+            "restricted": false,
+            "directoryLabel": "Metadata",
+            "version": 1,
+            "datasetVersionId": 59404,
+            "dataFile": {
+              "id": 1213443,
+              "persistentId": "",
+              "filename": "session_metadata.json",
+              "contentType": "application/json",
+              "friendlyType": "JSON",
+              "filesize": 38427,
+              "storageIdentifier": "s3://dataverse:1a03a1761be-a081dcefd063",
+              "rootDataFileId": -1,
+              "md5": "6f91339aa2a15d432aae2550113156e8",
+              "checksum": {
+                "type": "MD5",
+                "value": "6f91339aa2a15d432aae2550113156e8"
+              },
+              "tabularData": false,
+              "creationDate": "2026-08-25",
+              "publicationDate": "2026-08-31",
+              "directoryLabel": "Metadata",
+              "lastUpdateTime": "2026-10-07T22:07:21Z",
+              "fileAccessRequest": true
+            }
+          }
+        ]
+      }
+    }
+  },
+  "argentina": {
+    "apn": {
+      "pages": [
+        {
+          "park": "tierra_del_fuego",
+          "path": "apn/tierra_del_fuego.html",
+          "url": "https://www.argentina.gob.ar/parquesnacionales/patagonia-austral/senderos-del-parque-nacional-tierra-del-fuego",
+          "exclude_routes": {}
+        },
+        {
+          "park": "los_alerces",
+          "path": "apn/los_alerces.html",
+          "url": "https://www.argentina.gob.ar/node/276965",
+          "exclude_routes": {
+            "Las Palanganas": "Duplicated route with conflicting 4 km and 4900 m distances; no arbitrary correction"
+          }
+        },
+        {
+          "park": "calilegua",
+          "path": "apn/calilegua.html",
+          "url": "https://www.argentina.gob.ar/parquesnacionales/region-noroeste/parque-nacional-calilegua/actividades",
+          "exclude_routes": {}
+        },
+        {
+          "park": "condorito",
+          "path": "apn/condorito.html",
+          "url": "https://www.argentina.gob.ar/parquesnacionales/centro/parque-nacional-quebrada-del-condorito/actividades",
+          "exclude_routes": {
+            "Sendero principal": "Summary combines Balcon Norte and a downstream section with a different difficulty; ambiguous route scope",
+            "Bajada al Río de los Condoritos (Refugio del 10 – Río - Refugio del 10)": "Published media summary conflicts with alta description in Sendero principal"
+          }
+        },
+        {
+          "park": "el_leoncito",
+          "path": "apn/el_leoncito.html",
+          "url": "https://www.argentina.gob.ar/parquesnacionales/centro/parque-nacional-el-leoncito/actividades",
+          "exclude_routes": {}
+        }
+      ],
+      "terms_url": "https://www.argentina.gob.ar/terminos-y-condiciones",
+      "not_used": [
+        {
+          "park": "nahuel_huapi",
+          "reason": "Walking list has no individual explicit difficulty and complete numeric summaries; cycling labels excluded."
+        }
+      ]
+    },
+    "osm": {
+      "snapshots": [
+        {
+          "region": "bariloche",
+          "path": "osm/map_bariloche.xml",
+          "bbox": [
+            -71.55,
+            -41.23,
+            -71.4,
+            -41.15
+          ],
+          "url": "https://api.openstreetmap.org/api/0.6/map?bbox=-71.55,-41.23,-71.4,-41.15"
+        },
+        {
+          "region": "chalten",
+          "path": "osm/map_chalten.xml",
+          "bbox": [
+            -73.05,
+            -49.38,
+            -72.82,
+            -49.28
+          ],
+          "url": "https://api.openstreetmap.org/api/0.6/map?bbox=-73.05,-49.38,-72.82,-49.28"
+        },
+        {
+          "region": "bolson",
+          "path": "osm/map_bolson.xml",
+          "bbox": [
+            -71.65,
+            -42.0,
+            -71.5,
+            -41.85
+          ],
+          "url": "https://api.openstreetmap.org/api/0.6/map?bbox=-71.65,-42.0,-71.5,-41.85"
+        },
+        {
+          "region": "ushuaia",
+          "path": "osm/map_ushuaia.xml",
+          "bbox": [
+            -68.62,
+            -54.87,
+            -68.45,
+            -54.78
+          ],
+          "url": "https://api.openstreetmap.org/api/0.6/map?bbox=-68.62,-54.87,-68.45,-54.78"
+        },
+        {
+          "region": "condorito",
+          "path": "osm/map_condorito.xml",
+          "bbox": [
+            -64.83,
+            -31.72,
+            -64.74,
+            -31.6
+          ],
+          "url": "https://api.openstreetmap.org/api/0.6/map?bbox=-64.83,-31.72,-64.74,-31.6"
+        },
+        {
+          "region": "mendoza",
+          "path": "osm/map_mendoza.xml",
+          "bbox": [
+            -69.42,
+            -32.99,
+            -69.25,
+            -32.88
+          ],
+          "url": "https://api.openstreetmap.org/api/0.6/map?bbox=-69.42,-32.99,-69.25,-32.88"
+        },
+        {
+          "region": "calilegua",
+          "path": "osm/map_calilegua.xml",
+          "bbox": [
+            -64.87,
+            -23.79,
+            -64.76,
+            -23.68
+          ],
+          "url": "https://api.openstreetmap.org/api/0.6/map?bbox=-64.87,-23.79,-64.76,-23.68"
+        }
+      ]
+    },
+    "ign": {
+      "source": "IGN MDE-Ar v2.1 30 m",
+      "index_path": "ign/tiles.geojson",
+      "index_url": "https://wms.ign.gob.ar/geoserver/modelos-digitales-elevaciones/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=modelos-digitales-elevaciones:mde_v2_30m&outputFormat=application%2Fjson",
+      "tiles": [
+        {
+          "path": "ign/tiles/4972-26.zip",
+          "url": "https://dnsg.ign.gob.ar/apps/mapas-geodesia/mde_mapa_geoserver_descarga.php?pid=7&gid=4d1e450acf8d6555b9f6a2e5810e505c",
+          "index_feature_id": "mde_v2_30m.241",
+          "bounds": [
+            -73.00017603,
+            -49.66688495,
+            -72.49999408,
+            -49.33325065
+          ]
+        },
+        {
+          "path": "ign/tiles/4972-19.zip",
+          "url": "https://dnsg.ign.gob.ar/apps/mapas-geodesia/mde_mapa_geoserver_descarga.php?pid=7&gid=9d2c1b2eaf872abfb0115902e14861ad",
+          "index_feature_id": "mde_v2_30m.465",
+          "bounds": [
+            -73.50008849,
+            -49.33352015,
+            -72.99990654,
+            -48.99988585
+          ]
+        },
+        {
+          "path": "ign/tiles/4972-25.zip",
+          "url": "https://dnsg.ign.gob.ar/apps/mapas-geodesia/mde_mapa_geoserver_descarga.php?pid=7&gid=f4c552efcd971e86a70695e555dddd2e",
+          "index_feature_id": "mde_v2_30m.466",
+          "bounds": [
+            -73.50008849,
+            -49.66688495,
+            -72.99990654,
+            -49.33325065
+          ]
+        },
+        {
+          "path": "ign/tiles/5569-16.zip",
+          "url": "https://dnsg.ign.gob.ar/apps/mapas-geodesia/mde_mapa_geoserver_descarga.php?pid=7&gid=331d2dd2a96da67ab473556e9a2cd7e2",
+          "index_feature_id": "mde_v2_30m.923",
+          "bounds": [
+            -69.00006696,
+            -55.00024536,
+            -68.49988501,
+            -54.66661106
+          ]
+        },
+        {
+          "path": "ign/tiles/5569-17.zip",
+          "url": "https://dnsg.ign.gob.ar/apps/mapas-geodesia/mde_mapa_geoserver_descarga.php?pid=7&gid=7094418c5db7fd3e277f3d0a35b07658",
+          "index_feature_id": "mde_v2_30m.924",
+          "bounds": [
+            -68.5001545,
+            -55.00024536,
+            -67.99997255,
+            -54.66661106
+          ]
+        },
+        {
+          "path": "ign/tiles/4172-23.zip",
+          "url": "https://dnsg.ign.gob.ar/apps/mapas-geodesia/mde_mapa_geoserver_descarga.php?pid=7&gid=64c94c5f5abe8e479fad2ac654800ac9",
+          "index_feature_id": "mde_v2_30m.1183",
+          "bounds": [
+            -71.50016823,
+            -41.33336646,
+            -70.99998628,
+            -41.00000165
+          ]
+        },
+        {
+          "path": "ign/tiles/2366-36.zip",
+          "url": "https://dnsg.ign.gob.ar/apps/mapas-geodesia/mde_mapa_geoserver_descarga.php?pid=7&gid=ccf238a914f7781f1521b8d491f32e5e",
+          "index_feature_id": "mde_v2_30m.1324",
+          "bounds": [
+            -65.00022833,
+            -24.00001372,
+            -64.49977688,
+            -23.66664892
+          ]
+        },
+        {
+          "path": "ign/tiles/3369-15.zip",
+          "url": "https://dnsg.ign.gob.ar/apps/mapas-geodesia/mde_mapa_geoserver_descarga.php?pid=7&gid=112e8abbdbae461508a769828b8792da",
+          "index_feature_id": "mde_v2_30m.1856",
+          "bounds": [
+            -69.50024891,
+            -33.00005489,
+            -68.99979747,
+            -32.66642059
+          ]
+        },
+        {
+          "path": "ign/tiles/4172-22.zip",
+          "url": "https://dnsg.ign.gob.ar/apps/mapas-geodesia/mde_mapa_geoserver_descarga.php?pid=7&gid=fd7cbd56491b07acaaa27f5721f87095",
+          "index_feature_id": "mde_v2_30m.2301",
+          "bounds": [
+            -72.00008068,
+            -41.33336646,
+            -71.49989873,
+            -40.99973216
+          ]
+        },
+        {
+          "path": "ign/tiles/4172-34.zip",
+          "url": "https://dnsg.ign.gob.ar/apps/mapas-geodesia/mde_mapa_geoserver_descarga.php?pid=7&gid=d70d5e522f5b016459a55dbb6cc2a199",
+          "index_feature_id": "mde_v2_30m.2304",
+          "bounds": [
+            -72.00008068,
+            -42.00009606,
+            -71.49989873,
+            -41.66646176
+          ]
+        },
+        {
+          "path": "ign/tiles/4972-20.zip",
+          "url": "https://dnsg.ign.gob.ar/apps/mapas-geodesia/mde_mapa_geoserver_descarga.php?pid=7&gid=bfe01174ad1a0600787d8f30105f2626",
+          "index_feature_id": "mde_v2_30m.2609",
+          "bounds": [
+            -73.00017603,
+            -49.33352015,
+            -72.49999408,
+            -48.99988585
+          ]
+        }
+      ],
+      "sampling": "Original nearest raster cell at uniform chainage <=60m, median3 profile; reject missing coverage. Elevation predictors only, not label ground truth.",
+      "license": "Public free official download; no separate per-tile open license asserted."
+    },
+    "evaluation": {
+      "apn_route_difficulty": {
+        "unit": "park",
+        "test_units": [
+          "tierra_del_fuego"
+        ],
+        "reason": "Prespecified before fitting the Argentine expansion; assess transfer to a complete southern park."
+      },
+      "route_difficulty": {
+        "unit": "region",
+        "test_units": [
+          "ushuaia",
+          "mendoza"
+        ],
+        "reason": "Prespecified before fitting the Argentine expansion; reserve two complete regions. All connected ways, same names and relations remain together."
+      }
+    }
+  }
+}

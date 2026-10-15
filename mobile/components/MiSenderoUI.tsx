@@ -14,29 +14,34 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 
+const fontFamily = {
+  bold: "BricolageGrotesque_700Bold",
+  extraBold: "BricolageGrotesque_800ExtraBold",
+} as const;
+
 export const colors = {
-  ink: "#10201A",
-  muted: "#57665D",
-  soft: "#EEF7F0",
-  softer: "#F6FAF7",
-  line: "#DDE9E0",
-  green: "#0D7A45",
-  greenDark: "#075E36",
-  mint: "#DFF3E7",
-  danger: "#B6372E",
-  warning: "#F1B84B",
+  ink: "#14241C",
+  muted: "#58685F",
+  soft: "#EEF5F0",
+  softer: "#F7FAF7",
+  line: "#D7E3DA",
+  green: "#0B7040",
+  greenDark: "#075532",
+  mint: "#E0F1E6",
+  danger: "#A9362F",
+  warning: "#A86400",
   white: "#FFFFFF",
-  primary: "#0D7A45",
-  surface: "#EEF7F0",
-  primaryDark: "#075E36",
-  primarySoft: "#DFF3E7",
-  orange: "#D97706",
-  orangeSoft: "#FEF3C7",
-  red:  "#B6372E",
-  redSoft: "#f9bcb7",
-  border : "#c8efd2",
-  successSoft: "#b8f3cf",
-  page: "#F6FAF7",
+  primary: "#0B7040",
+  surface: "#FFFFFF",
+  primaryDark: "#075532",
+  primarySoft: "#E0F1E6",
+  orange: "#A85D00",
+  orangeSoft: "#FFF1D3",
+  red: "#A9362F",
+  redSoft: "#FCE8E6",
+  border: "#CDDED1",
+  successSoft: "#DCF1E4",
+  page: "#F7FAF7",
 };
 
 export const trailImages = {
@@ -260,14 +265,44 @@ export function PrimaryButton({
   );
 }
 
-type BottomNavItem = { id: BottomTab; label: string; icon: IconName; href: Href };
+type BottomNavItem = {
+  id: BottomTab;
+  label: string;
+  icon: IconName;
+  activeIcon: IconName;
+  href: Href;
+};
 
 export function BottomNav({ active }: { active: BottomTab }) {
   const items: BottomNavItem[] = [
-    { id: "inicio", label: "Inicio", icon: "home-outline", href: "/inicio" },
-    { id: "explorar", label: "Explorar", icon: "compass-outline", href: "/explorar-rutas" },
-    { id: "actividad", label: "Actividad", icon: "pulse-outline", href: "/mis-actividades" },
-    { id: "perfil", label: "Perfil", icon: "person-outline", href: "/perfil" },
+    {
+      id: "inicio",
+      label: "Inicio",
+      icon: "home-outline",
+      activeIcon: "home",
+      href: "/inicio",
+    },
+    {
+      id: "explorar",
+      label: "Explorar",
+      icon: "compass-outline",
+      activeIcon: "compass",
+      href: "/explorar-rutas",
+    },
+    {
+      id: "actividad",
+      label: "Actividad",
+      icon: "pulse-outline",
+      activeIcon: "pulse",
+      href: "/mis-actividades",
+    },
+    {
+      id: "perfil",
+      label: "Perfil",
+      icon: "person-outline",
+      activeIcon: "person",
+      href: "/perfil",
+    },
   ];
 
   return (
@@ -275,25 +310,26 @@ export function BottomNav({ active }: { active: BottomTab }) {
       {items.map((item) => {
         const selected = item.id === active;
         return (
-         <Pressable
+          <Pressable
             accessibilityLabel={item.label}
             accessibilityRole="tab"
             accessibilityState={{ selected }}
-            hitSlop={8}
+            hitSlop={4}
             key={item.id}
             onPress={() => router.push(item.href)}
             style={({ pressed }) => [
               styles.navItem,
               selected && styles.navItemActive,
-              pressed && styles.pressed,
+              pressed && styles.navItemPressed,
             ]}
           >
-
-            <Ionicons
-              name={item.icon}
-              size={25}
-              color={selected ? colors.green : colors.muted}
-            />
+            <View style={[styles.navIcon, selected && styles.navIconActive]}>
+              <Ionicons
+                name={selected ? item.activeIcon : item.icon}
+                size={selected ? 19 : 21}
+                color={selected ? colors.white : colors.muted}
+              />
+            </View>
             <Text style={[styles.navLabel, selected && styles.navLabelActive]}>
               {item.label}
             </Text>
@@ -337,7 +373,15 @@ export function TrailCard({
   onPress?: () => void;
 }) {
   return (
-    <Pressable onPress={onPress} style={styles.trailCard}>
+    <Pressable
+      accessibilityRole={onPress ? "button" : undefined}
+      disabled={!onPress}
+      onPress={onPress}
+      style={({ pressed }) => [
+        styles.trailCard,
+        pressed && onPress && styles.surfacePressed,
+      ]}
+    >
       <ImageBackground source={{ uri: image }} style={styles.trailImage} imageStyle={styles.trailImageRadius}>
         <View style={styles.trailBadge}>
           <Text style={styles.trailBadgeText}>{difficulty}</Text>
@@ -439,7 +483,14 @@ export function StatusNotice({
         tone === "success" && styles.statusNoticeSuccess,
       ]}
     >
-      <View style={styles.statusIcon}>
+      <View
+        style={[
+          styles.statusIcon,
+          tone === "error" && styles.statusIconError,
+          tone === "warning" && styles.statusIconWarning,
+          tone === "success" && styles.statusIconSuccess,
+        ]}
+      >
         {isLoading ? (
           <ActivityIndicator color={iconColor} size="small" />
         ) : (
@@ -484,45 +535,52 @@ const statusNoticeIconNames: Record<"info" | "success" | "warning" | "error", Ic
 export const styles = StyleSheet.create({
   shell: {
     flex: 1,
-    backgroundColor: colors.softer,
+    backgroundColor: colors.page,
   },
   content: {
     flex: 1,
     minHeight: 0,
-    paddingHorizontal: 22,
-    paddingBottom: 12,
-    paddingTop: 12,
+    paddingHorizontal: 20,
+    paddingBottom: 10,
+    paddingTop: 10,
   },
   topBar: {
     alignItems: "center",
     flexDirection: "row",
     gap: 12,
-    marginBottom: 22,
+    marginBottom: 20,
   },
   iconButton: {
     alignItems: "center",
     backgroundColor: colors.white,
-    borderRadius: 18,
-    height: 42,
+    borderColor: colors.line,
+    borderRadius: 16,
+    borderWidth: 1,
+    elevation: 2,
+    height: 44,
     justifyContent: "center",
-    shadowColor: "#000",
-    shadowOpacity: 0.06,
-    shadowRadius: 10,
-    width: 42,
+    shadowColor: colors.ink,
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.07,
+    shadowRadius: 9,
+    width: 44,
   },
   pressed: {
-    opacity: 0.72,
+    opacity: 0.78,
+    transform: [{ scale: 0.985 }],
   },
   disabled: {
-    opacity: 0.58,
+    opacity: 0.48,
   },
   mark: {
     alignItems: "center",
     backgroundColor: colors.mint,
-    borderRadius: 18,
-    height: 42,
+    borderColor: colors.border,
+    borderRadius: 16,
+    borderWidth: 1,
+    height: 44,
     justifyContent: "center",
-    width: 42,
+    width: 44,
   },
   topText: {
     flex: 1,
@@ -530,37 +588,59 @@ export const styles = StyleSheet.create({
   },
   title: {
     color: colors.ink,
-    fontSize: 21,
+    fontFamily: fontFamily.extraBold,
+    fontSize: 22,
     fontWeight: "800",
+    letterSpacing: -0.25,
+    lineHeight: 27,
   },
   subtitle: {
     color: colors.muted,
     fontSize: 13,
-    marginTop: 2,
+    lineHeight: 18,
+    marginTop: 1,
   },
   primaryButton: {
     alignItems: "center",
     backgroundColor: colors.green,
-    borderRadius: 20,
+    borderColor: colors.green,
+    borderRadius: 17,
+    borderWidth: 1,
+    elevation: 2,
     flexDirection: "row",
     gap: 8,
     justifyContent: "center",
-    minHeight: 54,
+    minHeight: 52,
     paddingHorizontal: 18,
+    shadowColor: colors.greenDark,
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.14,
+    shadowRadius: 8,
   },
   dangerButton: {
     backgroundColor: colors.danger,
+    borderColor: colors.danger,
+    shadowColor: colors.danger,
   },
   lightButton: {
     backgroundColor: colors.mint,
+    borderColor: colors.border,
+    elevation: 0,
+    shadowOpacity: 0,
   },
   secondaryButton: {
-    backgroundColor: colors.primarySoft,
+    backgroundColor: colors.white,
+    borderColor: colors.green,
+    elevation: 0,
+    shadowOpacity: 0,
   },
   primaryLabel: {
     color: colors.white,
-    fontSize: 16,
-    fontWeight: "800",
+    fontFamily: fontFamily.bold,
+    fontSize: 15,
+    fontWeight: "700",
+    letterSpacing: 0.1,
+    lineHeight: 20,
   },
   lightButtonLabel: {
     color: colors.greenDark,
@@ -570,51 +650,79 @@ export const styles = StyleSheet.create({
   },
   bottomNav: {
     alignItems: "center",
-    alignSelf: "center",
+    alignSelf: "stretch",
     backgroundColor: colors.white,
-    borderRadius: 34,
-    elevation: 8,
+    borderColor: colors.line,
+    borderRadius: 24,
+    borderWidth: 1,
+    elevation: 6,
     flexDirection: "row",
     gap: 4,
     justifyContent: "space-between",
-    marginBottom: 12,
-    marginTop: 8,
-    paddingHorizontal: 14,
-    paddingVertical: 13,
-    shadowColor: "#000",
-    shadowOpacity: 0.12,
-    shadowRadius: 18,
-    width: "88%",
+    marginBottom: 4,
+    marginHorizontal: 14,
+    marginTop: 6,
+    paddingHorizontal: 6,
+    paddingVertical: 6,
+    shadowColor: colors.ink,
+    shadowOffset: { width: 0, height: 5 },
+    shadowOpacity: 0.11,
+    shadowRadius: 16,
   },
   navItem: {
     alignItems: "center",
-    borderRadius: 22,
+    borderRadius: 18,
     flex: 1,
-    minWidth: 0,
-    minHeight: 54,
     justifyContent: "center",
-    paddingVertical: 5,
+    minHeight: 52,
+    minWidth: 0,
+    paddingHorizontal: 3,
+    paddingVertical: 4,
   },
   navItemActive: {
     backgroundColor: colors.primarySoft,
   },
+  navItemPressed: {
+    backgroundColor: colors.soft,
+    opacity: 0.82,
+    transform: [{ scale: 0.98 }],
+  },
+  navIcon: {
+    alignItems: "center",
+    borderRadius: 12,
+    height: 28,
+    justifyContent: "center",
+    width: 32,
+  },
+  navIconActive: {
+    backgroundColor: colors.green,
+  },
   navLabel: {
     color: colors.muted,
-    fontSize: 12,
+    fontFamily: fontFamily.bold,
+    fontSize: 11,
     fontWeight: "700",
-    marginTop: 4,
+    lineHeight: 14,
+    marginTop: 2,
   },
   navLabelActive: {
-    color: colors.green,
+    color: colors.greenDark,
   },
   trailCard: {
     backgroundColor: colors.white,
-    borderRadius: 24,
+    borderColor: colors.line,
+    borderRadius: 22,
+    borderWidth: 1,
+    elevation: 3,
     marginBottom: 16,
-    overflow: "hidden",
-    shadowColor: "#000",
+    shadowColor: colors.ink,
+    shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.08,
-    shadowRadius: 14,
+    shadowRadius: 12,
+  },
+  surfacePressed: {
+    opacity: 0.88,
+    transform: [{ scale: 0.99 }],
   },
   trailImage: {
     height: 142,
@@ -622,32 +730,41 @@ export const styles = StyleSheet.create({
     padding: 14,
   },
   trailImageRadius: {
-    borderTopLeftRadius: 24,
-    borderTopRightRadius: 24,
+    borderTopLeftRadius: 21,
+    borderTopRightRadius: 21,
   },
   trailBadge: {
     alignSelf: "flex-start",
-    backgroundColor: "rgba(255,255,255,0.92)",
-    borderRadius: 14,
+    backgroundColor: "rgba(255,255,255,0.94)",
+    borderColor: "rgba(255,255,255,0.72)",
+    borderRadius: 12,
+    borderWidth: 1,
     paddingHorizontal: 11,
     paddingVertical: 6,
   },
   trailBadgeText: {
     color: colors.greenDark,
+    fontFamily: fontFamily.bold,
     fontSize: 12,
-    fontWeight: "800",
+    fontWeight: "700",
   },
   trailBody: {
+    borderBottomLeftRadius: 21,
+    borderBottomRightRadius: 21,
     padding: 16,
   },
   cardTitle: {
     color: colors.ink,
+    fontFamily: fontFamily.extraBold,
     fontSize: 18,
     fontWeight: "800",
+    letterSpacing: -0.15,
+    lineHeight: 23,
   },
   cardMuted: {
     color: colors.muted,
     fontSize: 13,
+    lineHeight: 18,
     marginTop: 4,
   },
   statRow: {
@@ -659,24 +776,30 @@ export const styles = StyleSheet.create({
   statPill: {
     alignItems: "center",
     backgroundColor: colors.soft,
-    borderRadius: 14,
+    borderColor: colors.line,
+    borderRadius: 12,
+    borderWidth: 1,
     flexDirection: "row",
     gap: 5,
     paddingHorizontal: 10,
-    paddingVertical: 7,
+    paddingVertical: 6,
   },
   statLabel: {
     color: colors.greenDark,
     fontSize: 12,
-    fontWeight: "800",
+    fontWeight: "700",
   },
   infoCard: {
     backgroundColor: colors.white,
-    borderRadius: 22,
+    borderColor: colors.line,
+    borderRadius: 20,
+    borderWidth: 1,
+    elevation: 2,
     padding: 18,
-    shadowColor: "#000",
-    shadowOpacity: 0.05,
-    shadowRadius: 12,
+    shadowColor: colors.ink,
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.06,
+    shadowRadius: 10,
   },
   card: {
   backgroundColor: colors.white,

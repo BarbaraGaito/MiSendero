@@ -103,19 +103,24 @@ senderos laterales y la ruta destacada en naranja.
 
 ## Modulo de IA (Python + Scikit-learn)
 
-Los tres modelos (dificultad de ruta, fatiga, riesgo fisiologico) se entrenan con
-RandomForest en `training/python/` usando los datasets declarados en el documento del PFI:
-OpenStreetMap + NASA SRTM para dificultad, PAMAP2 + WESAD para fatiga, y BIDMC/PhysioNet
-complementado con datos sinteticos documentados para riesgo fisiologico. Para regenerar los
-artefactos que consume la app:
+La evaluación vigente usa únicamente fuentes públicas con etiquetas independientes:
+respuestas Borg de GeoFatigue, AMS observado en un estudio de hipoxia controlada y
+`sac_scale` publicado en OpenStreetMap y dificultad oficial de recorridos APN. El relieve
+de 30 m del IGN complementa los predictores de OSM. Las particiones separan participantes,
+parques o regiones; el test queda fuera del entrenamiento, augmentation y validación cruzada.
+Los datasets históricos con contexto inventado o etiquetas por reglas están excluidos.
+Para reproducir los artefactos de investigación con el entorno `.venv-ai` preparado:
 
 ```bash
-pip install -r training/python/requirements.txt
 npm run train:ai
+npm run validate:ai-data
+npm run test:ai-data
 ```
 
-Ver `ai/datasets/README.md` y `training/route-difficulty/README.md` para el detalle del
-pipeline, las fuentes declaradas y la limitacion documentada de datos sinteticos.
+Estos resultados no aprueban uso en campo. Los modelos antiguos de la app quedan
+deshabilitados y los nuevos bosques mantienen sus etiquetas nativas y alcance de
+investigación. Ver `ai/datasets/README.md` para instalación, descarga y augmentation
+opcional solo en entrenamiento, y `docs/ai-real-data-audit.md` para resultados y fuentes.
 
 ## Desviaciones conscientes respecto del documento del proyecto
 

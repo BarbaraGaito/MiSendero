@@ -1,0 +1,321 @@
+{
+  "schema_version": 2,
+  "dataset": {
+    "name": "Recorridos argentinos \u2014 dificultad APN",
+    "declared_source": "Administraci\u00f3n de Parques Nacionales / fichas oficiales de senderos argentinos",
+    "source_note": "Dificultad publicada por APN para recorridos completos. Distancias y duraciones son estimaciones publicadas, no tiempos medidos de caminantes. Evaluaci\u00f3n con parques completos separados; no certifica seguridad ni generalizaci\u00f3n nacional.",
+    "rows_total": 52,
+    "rows_train": 39,
+    "rows_train_after_augmentation": 39,
+    "rows_test": 13,
+    "rows_by_label": {
+      "alta": 9,
+      "baja": 23,
+      "media": 18,
+      "media-alta": 2
+    },
+    "features": [
+      "published_distance_km",
+      "published_duration_minutes",
+      "distance_basis_one_way",
+      "distance_basis_round_trip",
+      "distance_basis_total",
+      "distance_basis_unspecified",
+      "duration_basis_one_way",
+      "duration_basis_round_trip",
+      "duration_basis_total",
+      "duration_basis_unspecified"
+    ]
+  },
+  "augmentation": {
+    "used": false,
+    "synthetic_rows": 0,
+    "synthetic_to_real_train_ratio": 0.0,
+    "requires_approval": false,
+    "authorization": "User permits augmentation within training folds only"
+  },
+  "metrics": {
+    "train": {
+      "accuracy": 0.6923076923076923,
+      "precision_macro": 0.6639705882352942,
+      "recall_macro": 0.780952380952381,
+      "f1_macro": 0.6941666666666667,
+      "precision_weighted": 0.7009803921568628,
+      "recall_weighted": 0.6923076923076923,
+      "f1_weighted": 0.6816239316239316,
+      "support": 39
+    },
+    "train_real": {
+      "accuracy": 0.6923076923076923,
+      "precision_macro": 0.6639705882352942,
+      "recall_macro": 0.780952380952381,
+      "f1_macro": 0.6941666666666667,
+      "precision_weighted": 0.7009803921568628,
+      "recall_weighted": 0.6923076923076923,
+      "f1_weighted": 0.6816239316239316,
+      "support": 39
+    },
+    "test": {
+      "accuracy": 0.7692307692307693,
+      "precision_macro": 0.75,
+      "recall_macro": 0.4583333333333333,
+      "f1_macro": 0.5416666666666666,
+      "precision_weighted": 1.0,
+      "recall_weighted": 0.7692307692307693,
+      "f1_weighted": 0.8333333333333334,
+      "support": 13
+    },
+    "cross_validation": {
+      "folds": 4,
+      "f1_macro_mean": 0.2223418534080299,
+      "f1_macro_std": 0.13913975060744102
+    }
+  },
+  "guardrails": {
+    "status": "requires_more_real_data",
+    "overfitting_risk": true,
+    "underfitting_risk": true,
+    "high_variance_risk": false,
+    "insufficient_real_data": true,
+    "high_synthetic_ratio": false,
+    "train_test_f1_gap": 0.15250000000000008,
+    "warnings": [
+      "Dificultad publicada por APN para recorridos completos. Distancias y duraciones son estimaciones publicadas, no tiempos medidos de caminantes. Evaluaci\u00f3n con parques completos separados; no certifica seguridad ni generalizaci\u00f3n nacional.",
+      "Dataset real chico: sumar muestras reales por clase antes de usar estas metricas como evidencia de performance en campo.",
+      "Posible overfitting: la diferencia de F1 macro entre train y test es 0.15.",
+      "Posible underfitting: el F1 macro de test esta por debajo del umbral minimo (0.60).",
+      "Entrenamiento sin augmentation; todas las filas base provienen de observaciones p\u00fablicas."
+    ]
+  },
+  "accuracy": 0.7692307692307693,
+  "labels": [
+    "alta",
+    "baja",
+    "media",
+    "media-alta"
+  ],
+  "confusion_matrix": [
+    [
+      1,
+      0,
+      0,
+      1
+    ],
+    [
+      0,
+      8,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      1,
+      2
+    ],
+    [
+      0,
+      0,
+      0,
+      0
+    ]
+  ],
+  "classification_report": {
+    "alta": {
+      "precision": 1.0,
+      "recall": 0.5,
+      "f1-score": 0.6666666666666666,
+      "support": 2.0
+    },
+    "baja": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 8.0
+    },
+    "media": {
+      "precision": 1.0,
+      "recall": 0.3333333333333333,
+      "f1-score": 0.5,
+      "support": 3.0
+    },
+    "media-alta": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1-score": 0.0,
+      "support": 0.0
+    },
+    "accuracy": 0.7692307692307693,
+    "macro avg": {
+      "precision": 0.75,
+      "recall": 0.4583333333333333,
+      "f1-score": 0.5416666666666666,
+      "support": 13.0
+    },
+    "weighted avg": {
+      "precision": 1.0,
+      "recall": 0.7692307692307693,
+      "f1-score": 0.8333333333333334,
+      "support": 13.0
+    }
+  },
+  "trained_at": "2026-10-15T01:57:16.885323+00:00",
+  "evaluation_validity": {
+    "real_public_ground_truth": true,
+    "status": "observed_public_labels_group_holdout",
+    "reason": "Dificultad publicada por APN para recorridos completos. Distancias y duraciones son estimaciones publicadas, no tiempos medidos de caminantes. Evaluaci\u00f3n con parques completos separados; no certifica seguridad ni generalizaci\u00f3n nacional.",
+    "deployment_approved": false,
+    "native_labels": true,
+    "test_synthetic_rows": 0
+  },
+  "baseline": {
+    "strategy": "most_frequent_training_label",
+    "label": "media",
+    "test_accuracy": 0.23076923076923078,
+    "training_counts": {
+      "media": 15,
+      "baja": 15,
+      "alta": 7,
+      "media-alta": 2
+    },
+    "tie_breaker": "First occurrence in original training partition; never select using test results",
+    "tied_labels_test_accuracy": {
+      "baja": 0.6153846153846154,
+      "media": 0.23076923076923078
+    }
+  },
+  "hyperparameters": {
+    "n_estimators": 150,
+    "max_depth": 4,
+    "min_samples_leaf": 2,
+    "selection_method": "cross_validated",
+    "cv_folds": 4,
+    "cv_f1_macro_mean": 0.2223418534080299
+  },
+  "evaluation_protocol": {
+    "seed": 42,
+    "split": "geographic_holdout",
+    "independent_group_count": 5,
+    "geographic_holdout": {
+      "unit": "park",
+      "test_units": [
+        "tierra_del_fuego"
+      ],
+      "reason": "Prespecified before fitting the Argentine expansion; assess transfer to a complete southern park."
+    },
+    "train_groups": [
+      "0dfc847fe64cc8f187f29d07",
+      "51e97289d8371ac4d25f50dd",
+      "59bc20a9e5fc753735a04775",
+      "82b43aa6b50263de1b8dd9ee"
+    ],
+    "test_groups": [
+      "83ecfb5d3de7df7421256cbb"
+    ],
+    "train_row_keys": [
+      "79c3b8bd8cb7892eac0905c3",
+      "2f04f842bd90a71bfed78c08",
+      "f44f0326dca74c34fb50d2b3",
+      "8edc8aff0387153b73afd009",
+      "672784e29ffab6dcba75bff2",
+      "cc385c8c0feddfbf93cd1bd1",
+      "a0873cea6979912768ed5004",
+      "e0d96d33a2670bd2904d67db",
+      "b723f41307091e0a789d954c",
+      "58e7ad1ec1cdb4292eb42915",
+      "5d20bb1c02346a5f37d4002a",
+      "9c865756568486c95ecbbce0",
+      "fd7d164a5bc2c47edb52c193",
+      "ca2616ec2a74a0a73112611f",
+      "0a23da92ca02ab355b09a7de",
+      "d4a690808c5bd68635b19658",
+      "7bc255c19f1edfd707bc0cda",
+      "b2cee0c0902070b5a5437bb3",
+      "18e8ffdbeaa6d1794db661a5",
+      "90aefdba52c1eecd20da3366",
+      "251be1f7f1841807f85f9ce4",
+      "d2b4cbfa6e5fe1556798329b",
+      "5a49ed1fe62e952d8530e70f",
+      "17b1160606f493ef8ad35fe3",
+      "e8a72aa1d8cfc5d4c0d4d552",
+      "b9a62dc9b75aa595f08101b5",
+      "fec9bcec19ea6dfa3d7591c8",
+      "1bb70a14f1e8a5a8360df0f6",
+      "cc22a883c9643752d74035d6",
+      "9643232310704a96f25429b8",
+      "00e4130efed0910ac578e891",
+      "c1591cf084719c6d78db9800",
+      "20b7c084810cf37847241e5c",
+      "a3ddc801aa8e621df416264d",
+      "6b81b38a39055c482296ebdc",
+      "21ef1ed6023b6b9acad615aa",
+      "176aab5cc5d536deb36f1343",
+      "e99fb7fd400907e0855b3532",
+      "a4e40dee259c67eac83ba1c9"
+    ],
+    "test_row_keys": [
+      "9a18c75fcf3c77d53d3f11aa",
+      "79a50281a0e14941f22b3aea",
+      "23261c7a32aba4ca29a498cd",
+      "f77861eeca7cc721040057bb",
+      "3f6db09df314fdaae956e237",
+      "6afadf123342d0a6e2c3f144",
+      "0a38bcb0c27bdb67cf52cfc1",
+      "1d213c560281f02bbb20efec",
+      "a2e65a0d3e3eb8e224c18225",
+      "76bc0ca3df411e49275d15fb",
+      "fb2b184c157626ccfa4c5f24",
+      "fbfe49ed5e78d9f5408c9f55",
+      "736696f2980e887bd28b7f4d"
+    ],
+    "cv_training_only": true,
+    "cv_partitions": [
+      {
+        "train_groups": [
+          "51e97289d8371ac4d25f50dd",
+          "59bc20a9e5fc753735a04775",
+          "82b43aa6b50263de1b8dd9ee"
+        ],
+        "validation_groups": [
+          "0dfc847fe64cc8f187f29d07"
+        ],
+        "synthetic_training_rows": 0
+      },
+      {
+        "train_groups": [
+          "0dfc847fe64cc8f187f29d07",
+          "51e97289d8371ac4d25f50dd",
+          "82b43aa6b50263de1b8dd9ee"
+        ],
+        "validation_groups": [
+          "59bc20a9e5fc753735a04775"
+        ],
+        "synthetic_training_rows": 0
+      },
+      {
+        "train_groups": [
+          "0dfc847fe64cc8f187f29d07",
+          "51e97289d8371ac4d25f50dd",
+          "59bc20a9e5fc753735a04775"
+        ],
+        "validation_groups": [
+          "82b43aa6b50263de1b8dd9ee"
+        ],
+        "synthetic_training_rows": 0
+      },
+      {
+        "train_groups": [
+          "0dfc847fe64cc8f187f29d07",
+          "59bc20a9e5fc753735a04775",
+          "82b43aa6b50263de1b8dd9ee"
+        ],
+        "validation_groups": [
+          "51e97289d8371ac4d25f50dd"
+        ],
+        "synthetic_training_rows": 0
+      }
+    ],
+    "provenance_sha256": "4541f7885fdd4dc974a45b6c950043cff1ffcd5d2f9097469db303a739640edc"
+  },
+  "test_predictions_sha256": "c93ba6f6146f65ae6bb29e9ade82c69ed3f8de503b19dacccbde9d3c6465eb1e"
+}

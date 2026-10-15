@@ -685,10 +685,10 @@ function AdminAiMetricsCard({ isAdmin }: { isAdmin: boolean }) {
     <Card tone="secondary">
       <Text style={styles.cardTitle}>Metricas IA</Text>
       <Text style={styles.privacyText}>
-        Prototipos experimentales con etiquetas derivadas de reglas y variables
-        simuladas. Estas métricas describen el conjunto de evaluación; no
-        demuestran capacidad para detectar emergencias reales. Falta validar
-        con personas y salidas independientes y calibrar las probabilidades.
+        Evaluaciones experimentales con datos públicos y etiquetas publicadas
+        u observadas. El test contiene datos reales separados por personas,
+        parques o regiones. Estas métricas describen cada tarea y población;
+        falta validar el uso durante salidas y calibrar las probabilidades.
       </Text>
       {adminAiModelMetrics.map((metrics) => (
         <AiModelMetricBlock key={metrics.dataset.name} metrics={metrics} />
@@ -742,6 +742,18 @@ function SyncMetric({ label, value }: { label: string; value: number }) {
 }
 
 function AiModelMetricBlock({ metrics }: { metrics: AiTrainingMetrics }) {
+  if (metrics.evaluation_validity?.real_public_ground_truth !== true) {
+    return (
+      <View style={styles.aiModelBlock}>
+        <Text style={styles.aiModelTitle}>{metrics.dataset.name}</Text>
+        <Text style={styles.aiStatus}>Evaluación real no disponible</Text>
+        <Text style={styles.aiWarningText}>
+          {metrics.evaluation_validity?.reason ||
+            "Falta verificar la procedencia pública de las mediciones y etiquetas."}
+        </Text>
+      </View>
+    );
+  }
   const test = metrics.metrics.test;
   const cv = metrics.metrics.cross_validation;
 
@@ -754,6 +766,9 @@ function AiModelMetricBlock({ metrics }: { metrics: AiTrainingMetrics }) {
             {metrics.dataset.declared_source}
           </Text>
           <Text style={styles.aiModelMeta}>
+            {metrics.dataset.source_note}
+          </Text>
+          <Text style={styles.aiModelMeta}>
             {metrics.dataset.rows_total} filas base - {metrics.augmentation.synthetic_rows} sinteticas - {formatDate(metrics.trained_at)}
           </Text>
         </View>
@@ -764,7 +779,9 @@ function AiModelMetricBlock({ metrics }: { metrics: AiTrainingMetrics }) {
             metrics.guardrails.status === "review_recommended" && styles.aiStatusWarning,
           ]}
         >
-          {getAiStatusLabel(metrics.guardrails.status)}
+          {metrics.evaluation_validity?.deployment_approved === false
+            ? "Evaluación de investigación"
+            : getAiStatusLabel(metrics.guardrails.status)}
         </Text>
       </View>
 
@@ -773,6 +790,12 @@ function AiModelMetricBlock({ metrics }: { metrics: AiTrainingMetrics }) {
         <AiMetric label="Precision" value={formatPercent(test.precision_macro)} />
         <AiMetric label="Recall" value={formatPercent(test.recall_macro)} />
         <AiMetric label="F1 macro" value={formatPercent(test.f1_macro)} />
+        {metrics.baseline && (
+          <AiMetric
+            label="Accuracy de referencia"
+            value={formatBaselineAccuracy(metrics.baseline)}
+          />
+        )}
         <AiMetric
           label="CV F1"
           value={cv ? `${formatPercent(cv.f1_macro_mean)} +/- ${formatPercent(cv.f1_macro_std)}` : "N/D"}
@@ -782,8 +805,10 @@ function AiModelMetricBlock({ metrics }: { metrics: AiTrainingMetrics }) {
           value={formatPercent(metrics.guardrails.train_test_f1_gap)}
         />
         <AiMetric
-          label="Test interno"
-          value={`${metrics.dataset.rows_test} filas`}
+          label="Test reservado"
+          value={metrics.evaluation_protocol
+            ? `${metrics.dataset.rows_test} filas / ${metrics.evaluation_protocol.test_groups.length} grupos`
+            : `${metrics.dataset.rows_test} filas`}
         />
       </View>
 
@@ -801,6 +826,14 @@ function AiMetric({ label, value }: { label: string; value: string }) {
       <Text style={styles.aiMetricLabel}>{label}</Text>
     </View>
   );
+}
+
+function formatBaselineAccuracy(baseline: NonNullable<AiTrainingMetrics["baseline"]>) {
+  const alternatives = Object.values(baseline.tied_labels_test_accuracy || {});
+  if (alternatives.length > 1) {
+    return `${formatPercent(Math.min(...alternatives))}–${formatPercent(Math.max(...alternatives))} (empate)`;
+  }
+  return formatPercent(baseline.test_accuracy);
 }
 
 function getAiStatusLabel(status: AiTrainingMetrics["guardrails"]["status"]) {

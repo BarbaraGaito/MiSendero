@@ -33,6 +33,7 @@ import {
 } from "../../services/mapGestures";
 import { useDeviceLocation } from "../hooks/useDeviceLocation";
 import { colors } from "./MiSenderoUI";
+import { Terrain3DScene } from "./Terrain3DScene";
 
 type MapLayer = "standard" | "terrain" | "satellite";
 
@@ -398,7 +399,7 @@ export function TrailMap({
 }: TrailMapProps) {
   const [layout, setLayout] = useState({ width: 0, height: 0 });
   const [layer, setLayer] = useState<MapLayer>("terrain");
-  const isPerspective = false;
+  const [isPerspective, setIsPerspective] = useState(initialPerspective);
   const [activeZoom, setActiveZoom] = useState(trail?.map_zoom || DEFAULT_ZOOM);
   const [activeCenter, setActiveCenter] = useState<Coordinate>(DEFAULT_CENTER);
   const [panOffset, setPanOffset] = useState({ x: 0, y: 0 });
@@ -861,7 +862,66 @@ export function TrailMap({
       }}
       {...panResponder.panHandlers}
     >
-      {(
+      {isPerspective ? (
+        <View style={styles.terrain3dScene}>
+          <Terrain3DScene
+            routePoints={routePoints}
+            fallbackCenter={trailCenter}
+            difficulty={trail?.difficulty}
+            distanceKm={trail?.distance_km}
+            userCoordinate={location?.coordinate ?? null}
+            viewOffset={{
+              x: terrainOffset.x + panOffset.x,
+              y: terrainOffset.y + panOffset.y,
+            }}
+            viewScale={terrainScale}
+            trailLabel={`${trail?.name || ""} ${trail?.location || ""} ${trail?.description || ""}`}
+            weather={weather ? {
+              condition: weather.condition,
+              rainProbability: weather.rain_probability,
+              temperatureC: weather.temperature_c,
+            } : null}
+            navigationMode={navigationMode}
+            satelliteTextureEnabled={allowSatellite && !offline}
+          />
+          <View style={styles.terrainInfo}>
+            <View style={styles.terrainInfoHeader}>
+              <View>
+                <Text style={styles.terrainInfoEyebrow}>LECTURA DEL TERRENO</Text>
+                <Text style={styles.terrainInfoTitle}>Perspectiva 3D</Text>
+              </View>
+              <View style={styles.terrainScaleBadge}>
+                <Text style={styles.terrainScaleBadgeText}>ESCALA REAL</Text>
+              </View>
+            </View>
+            {showDetailsCard ? (
+              <Text numberOfLines={1} style={styles.terrainTrailName}>
+                {trail?.name || "Mapa del recorrido"}
+              </Text>
+            ) : null}
+            <Text style={styles.terrainInfoText}>
+              {trail?.distance_km ? `${trail.distance_km} km` : "Distancia a confirmar"} · {trail?.difficulty || "Dificultad a confirmar"}
+            </Text>
+            <Text style={styles.terrainGestureText}>
+              Arrastra para orbitar · Pellizca para acercar
+            </Text>
+            <Text style={styles.terrainSourceText}>
+              La elevacion real se carga desde Copernicus DEM (90 m).
+            </Text>
+          </View>
+          <View
+            pointerEvents="none"
+            style={[styles.terrain3dOverlay, { top: terrainOverlayTop }]}
+          >
+            <View style={styles.terrain3dPill}>
+              <View style={styles.terrain3dRouteSwatch} />
+              <Text numberOfLines={1} style={styles.terrain3dPillText}>
+                {shortenTrailName(trail?.name)}
+              </Text>
+            </View>
+          </View>
+        </View>
+      ) : (
         <View
           style={[
             styles.mapContent,
@@ -1062,6 +1122,33 @@ export function TrailMap({
         </View>
       ) : null}
 
+      <Pressable
+        accessibilityLabel={isPerspective ? "Cambiar a mapa 2D" : "Cambiar a perspectiva 3D"}
+        accessibilityRole="button"
+        accessibilityState={{ selected: isPerspective }}
+        onPress={() => setIsPerspective((current) => !current)}
+        style={[
+          styles.perspectiveButton,
+          { top: isPerspective ? controlsTopOffset : controlsTopOffset + 50 },
+          immersive && styles.immersivePerspectiveButton,
+          isPerspective && styles.perspectiveButtonActive,
+        ]}
+      >
+        <Ionicons
+          name={isPerspective ? "map-outline" : "cube-outline"}
+          size={17}
+          color={isPerspective ? colors.white : colors.greenDark}
+        />
+        <Text
+          style={[
+            styles.perspectiveLabel,
+            isPerspective && styles.perspectiveLabelActive,
+          ]}
+        >
+          {isPerspective ? "2D" : "3D"}
+        </Text>
+      </Pressable>
+
       <View
         style={[
           styles.zoomControl,
@@ -1209,7 +1296,9 @@ const styles = StyleSheet.create({
   },
   terrainInfo: {
     backgroundColor: "rgba(255,255,255,0.94)",
+    borderColor: "rgba(255,255,255,0.78)",
     borderRadius: 18,
+    borderWidth: 1,
     bottom: 14,
     left: 14,
     paddingHorizontal: 14,
@@ -1218,10 +1307,34 @@ const styles = StyleSheet.create({
     right: 14,
     zIndex: 5,
   },
+  terrainInfoHeader: {
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  terrainInfoEyebrow: {
+    color: colors.green,
+    fontSize: 9,
+    fontWeight: "900",
+    letterSpacing: 0.9,
+  },
   terrainInfoTitle: {
     color: colors.ink,
-    fontSize: 15,
+    fontSize: 17,
     fontWeight: "900",
+    marginTop: 1,
+  },
+  terrainScaleBadge: {
+    backgroundColor: colors.primarySoft,
+    borderRadius: 999,
+    paddingHorizontal: 9,
+    paddingVertical: 5,
+  },
+  terrainScaleBadgeText: {
+    color: colors.greenDark,
+    fontSize: 9,
+    fontWeight: "900",
+    letterSpacing: 0.4,
   },
   terrainTrailName: {
     color: colors.ink,

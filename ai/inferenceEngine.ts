@@ -22,6 +22,10 @@ const predictRandomForest = (
   model: RandomForestModel,
   input: Record<string, number>
 ): OfflinePrediction => {
+  if (model.evaluation_validity?.real_public_ground_truth !== true ||
+      model.evaluation_validity.deployment_approved !== true) {
+    return unavailable("El modelo no tiene validación aprobada con mediciones y etiquetas públicas reales para este uso.");
+  }
   if (model.feature_order.some((feature) => !Number.isFinite(input[feature]))) {
     return unavailable("Faltan variables requeridas por el modelo.");
   }
@@ -88,13 +92,14 @@ export const predictFatigueLevel = (input: {
   speedKmh: number;
   elapsedMinutes: number;
 }): FatigueLevel => {
-  const label = predictFatigue(input).label;
+  const prediction = predictFatigue(input);
+  const label = prediction.label;
 
   if (label === "alto" || label === "medio" || label === "bajo") {
     return label;
   }
 
-  throw new Error("No hay datos válidos para estimar fatiga.");
+  throw new Error(prediction.reason || "No hay datos válidos para estimar fatiga.");
 };
 
 export const predictPhysioRisk = (input: {

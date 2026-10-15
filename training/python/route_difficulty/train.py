@@ -10,15 +10,19 @@ Open-Elevation, and a label computed from documented slope/exertion formulas.
 
 from __future__ import annotations
 
-import json
+# Enforce provenance before optional ML dependencies or any file I/O.
 import sys
 from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from common.data_policy import require_public_ground_truth
+if __name__ == "__main__":
+    require_public_ground_truth("route_difficulty")
+
+import json
 
 import joblib
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
-
-sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from common.augment import augment_dataset  # noqa: E402
 from common.evaluation import (  # noqa: E402
@@ -58,6 +62,7 @@ OUTPUT_DIR = Path(__file__).resolve().parent / "output"
 
 
 def main() -> None:
+    require_public_ground_truth("route_difficulty")
     raw = pd.read_csv(DATASET_PATH)
     assert_no_restricted_columns(raw, DATASET_PATH.name)
     dataset = validate_training_frame(raw, FEATURE_COLUMNS, LABEL_COLUMN, DATASET_PATH.name)

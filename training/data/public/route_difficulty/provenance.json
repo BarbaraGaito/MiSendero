@@ -1,0 +1,5052 @@
+{
+  "schema_version": 1,
+  "model": "route_difficulty",
+  "source": {
+    "source": "OpenStreetMap contributors + IGN MDE-Ar v2.1 30 m / original public snapshots",
+    "url": "https://www.openstreetmap.org/copyright",
+    "version": "way versions retained in row lineage",
+    "license": "ODbL-1.0",
+    "scope": "sac_scale publicado en tramos argentinos, con geometr\u00eda OSM y relieve IGN de 30 m. Test por regiones completas; faltan regiones, observaciones y validaci\u00f3n de rutas completas y seguridad.",
+    "label_definition": "Native sac_scale tag, excluding untagged ways; never calculate labels from geometry or include sac_scale/technical_score among features.",
+    "transformations": "Haversine distance and path/chord ratio from complete node geometry. Nearest original IGN cells sampled at uniform chainage <=60 m; median3 elevation profile, ascent/descent and absolute grades are derived predictors, never targets. Missing geometry/elevation rejected, no imputation. Group complete regions and connected networks, equal names and shared relations together.",
+    "raw_files": [
+      {
+        "path": "training/data/raw/public_audit/osm/map_bariloche.xml",
+        "sha256": "944006601cc9d16b7bc9cee4c42551791696f49142ea7af6a79432d40306eaf1",
+        "bytes": 5115517
+      },
+      {
+        "path": "training/data/raw/public_audit/osm/map_bolson.xml",
+        "sha256": "b77bef9a94750f08b9f0c9de5144d950f05f5d6182590862a6d2cc9a1548570d",
+        "bytes": 6589895
+      },
+      {
+        "path": "training/data/raw/public_audit/osm/map_calilegua.xml",
+        "sha256": "5e9f5408de97afd7254a61617ee51131c4be20ca7cdb13dc45609f19e79e8822",
+        "bytes": 1724011
+      },
+      {
+        "path": "training/data/raw/public_audit/osm/map_chalten.xml",
+        "sha256": "01a6d086ff1fe3556b0a8f47f790cb08b429ab842fba09d87283ef24b3b2a39d",
+        "bytes": 10683603
+      },
+      {
+        "path": "training/data/raw/public_audit/osm/map_condorito.xml",
+        "sha256": "f447d1c3a85ad884b8d40b639835297355777ad4d6f119612add4317f6dc57fd",
+        "bytes": 1522239
+      },
+      {
+        "path": "training/data/raw/public_audit/osm/map_mendoza.xml",
+        "sha256": "d9bed1e0e708d031c94791dc091d3d9c1c7be1539dfcb51b0eda4226c45d6fd0",
+        "bytes": 2538474
+      },
+      {
+        "path": "training/data/raw/public_audit/osm/map_ushuaia.xml",
+        "sha256": "256e9a93c4c951c3bebd4ba50add2767e5ff4f09d7eef329f7db05ea2b5f5205",
+        "bytes": 8021616
+      },
+      {
+        "path": "training/data/raw/public_audit/ign/tiles/4972-26.zip",
+        "sha256": "670ad5cf037c4cdc7f8d2935e764dc7d7e7a414426b1c4abef50a5f1ba1f6559",
+        "bytes": 5786757
+      },
+      {
+        "path": "training/data/raw/public_audit/ign/tiles/4972-19.zip",
+        "sha256": "4930f78fd4cd60fb24b5b5e0a26bd04989c90e1ec0ccef8839e51d06b114090c",
+        "bytes": 7292051
+      },
+      {
+        "path": "training/data/raw/public_audit/ign/tiles/4972-25.zip",
+        "sha256": "4a3dd1f2d42a9de573be7b316cfd83f2a4b2e84a267f0c8f1fac37d61c884287",
+        "bytes": 7257516
+      },
+      {
+        "path": "training/data/raw/public_audit/ign/tiles/5569-16.zip",
+        "sha256": "040cbe7be3e490705ba5d040034cb4266a9f06ad4af8019e4cba2f37e51605f7",
+        "bytes": 7910113
+      },
+      {
+        "path": "training/data/raw/public_audit/ign/tiles/5569-17.zip",
+        "sha256": "09346a05ee5541a4d602ca3681fe762143e87b14491c0b472ae31f65922f6707",
+        "bytes": 7741070
+      },
+      {
+        "path": "training/data/raw/public_audit/ign/tiles/4172-23.zip",
+        "sha256": "35b9ccdca6a15c986385a767644c4a562245c52bebd059b032917e071f877091",
+        "bytes": 6691663
+      },
+      {
+        "path": "training/data/raw/public_audit/ign/tiles/2366-36.zip",
+        "sha256": "50eb42fa8a9e7d7303f8652e2e320f93f4c8ee4d62918672baaab0391bd0b346",
+        "bytes": 7395681
+      },
+      {
+        "path": "training/data/raw/public_audit/ign/tiles/3369-15.zip",
+        "sha256": "baa3a11257b034ce2f7f5e7d178e1222d4013a0bc4ada8f68a78082f4243d3c3",
+        "bytes": 7585301
+      },
+      {
+        "path": "training/data/raw/public_audit/ign/tiles/4172-22.zip",
+        "sha256": "37a67ffe0b23ac0101e08cd420904f37108ce007503a808dbe3e73e3deadf5d1",
+        "bytes": 7547760
+      },
+      {
+        "path": "training/data/raw/public_audit/ign/tiles/4172-34.zip",
+        "sha256": "2b46c4b4395c027885efffcfca533c04bd42493f50b4a7d0cd73bfad075d0e7b",
+        "bytes": 7762616
+      },
+      {
+        "path": "training/data/raw/public_audit/ign/tiles/4972-20.zip",
+        "sha256": "7d433a4600d96f3aecbda671b0815c37c403bbad7c45b8ea8ef0083a5f200c83",
+        "bytes": 7616632
+      },
+      {
+        "path": "training/data/raw/public_audit/ign/tiles.geojson",
+        "sha256": "7b1c86ebf5c9f535ed51ee6c9f337923870a2116e005a482fa6c4466eab3ea11",
+        "bytes": 1290285
+      }
+    ],
+    "ign_license": "Public free official download; no separate per-tile open license asserted.",
+    "geographic_holdout": {
+      "unit": "region",
+      "test_units": [
+        "ushuaia",
+        "mendoza"
+      ],
+      "reason": "Prespecified before fitting the Argentine expansion; reserve two complete regions. All connected ways, same names and relations remain together."
+    },
+    "excluded_records": [
+      {
+        "public_way_id": "1306871118",
+        "reason": "IGN coverage missing/nodata; never fabricate or impute elevation"
+      }
+    ]
+  },
+  "features": [
+    "distance_km",
+    "sinuosity",
+    "dem_elevation_min_m",
+    "dem_elevation_max_m",
+    "dem_ascent_m",
+    "dem_descent_m",
+    "dem_mean_abs_grade_pct",
+    "dem_max_abs_grade_pct"
+  ],
+  "rows": 288,
+  "synthetic_base_rows": 0,
+  "dataset_sha256": "95e3437072e3429fe3aeb0c134ce3ae072dac6e83ce98fc9c21abad4e3e03d1f",
+  "lineage": [
+    {
+      "group_key": "cccd46dcdb3800b6256674d7",
+      "row_key": "848352fc03c547c05fad87f8",
+      "lineage": {
+        "public_way_id": "1025960725",
+        "version": "1",
+        "label": "hiking",
+        "regions": [
+          "ushuaia"
+        ],
+        "network_key": "f0252ff615801f4b641e0233",
+        "ign_tiles": [
+          "ign/tiles/5569-17.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "cccd46dcdb3800b6256674d7",
+      "row_key": "d1ffb80eb7c8005337de05c6",
+      "lineage": {
+        "public_way_id": "1025960726",
+        "version": "1",
+        "label": "hiking",
+        "regions": [
+          "ushuaia"
+        ],
+        "network_key": "f0252ff615801f4b641e0233",
+        "ign_tiles": [
+          "ign/tiles/5569-17.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "51bf993bb6ecbf57131bcceb",
+      "row_key": "481d4e1c46becf5954463cb9",
+      "lineage": {
+        "public_way_id": "107707546",
+        "version": "4",
+        "label": "hiking",
+        "regions": [
+          "bariloche"
+        ],
+        "network_key": "d5f964ed38b543848b632cdc",
+        "ign_tiles": [
+          "ign/tiles/4172-23.zip"
+        ],
+        "dem_sampling_points": 25
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "9e62a9a6f724c8e4083406d3",
+      "lineage": {
+        "public_way_id": "107758210",
+        "version": "7",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "fb4bc96fdd77c271a4c16d21",
+        "ign_tiles": [
+          "ign/tiles/4972-26.zip"
+        ],
+        "dem_sampling_points": 30
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "b9ae86013d3094dc20793daf",
+      "lineage": {
+        "public_way_id": "107758211",
+        "version": "4",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "03d7d751056742041855ba35",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 17
+      }
+    },
+    {
+      "group_key": "51bf993bb6ecbf57131bcceb",
+      "row_key": "48dc475c2031068c2e1728ec",
+      "lineage": {
+        "public_way_id": "112662998",
+        "version": "10",
+        "label": "hiking",
+        "regions": [
+          "bariloche"
+        ],
+        "network_key": "d5f964ed38b543848b632cdc",
+        "ign_tiles": [
+          "ign/tiles/4172-23.zip"
+        ],
+        "dem_sampling_points": 47
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "b25cb79d57357855c528620c",
+      "lineage": {
+        "public_way_id": "1151618994",
+        "version": "6",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "beab7c020dea4e37da45e613",
+      "lineage": {
+        "public_way_id": "1158751123",
+        "version": "3",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "fb4bc96fdd77c271a4c16d21",
+        "ign_tiles": [
+          "ign/tiles/4972-26.zip"
+        ],
+        "dem_sampling_points": 46
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "d3b3510dcee70ad3f7e0f753",
+      "lineage": {
+        "public_way_id": "1161382291",
+        "version": "4",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "6fc00a3f00efbf45fc7aab9c",
+      "lineage": {
+        "public_way_id": "1256912574",
+        "version": "2",
+        "label": "mountain_hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 9
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "076dd6d2f5083d303bb68e8a",
+      "lineage": {
+        "public_way_id": "1256912575",
+        "version": "2",
+        "label": "mountain_hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 3
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "809c3eee579ea9e11f055872",
+      "lineage": {
+        "public_way_id": "1256912576",
+        "version": "3",
+        "label": "mountain_hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 4
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "2ce231e02611e7b01f4fc2b9",
+      "lineage": {
+        "public_way_id": "1256912577",
+        "version": "2",
+        "label": "mountain_hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 4
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "2057f8048cd371202f44d313",
+      "lineage": {
+        "public_way_id": "1256915313",
+        "version": "2",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 6
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "6eb28fc49aa170c39a4a4774",
+      "lineage": {
+        "public_way_id": "1256917893",
+        "version": "4",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 3
+      }
+    },
+    {
+      "group_key": "51bf993bb6ecbf57131bcceb",
+      "row_key": "5fa7655bf21f61579e7e044b",
+      "lineage": {
+        "public_way_id": "1258321140",
+        "version": "2",
+        "label": "mountain_hiking",
+        "regions": [
+          "bariloche"
+        ],
+        "network_key": "d5f964ed38b543848b632cdc",
+        "ign_tiles": [
+          "ign/tiles/4172-23.zip"
+        ],
+        "dem_sampling_points": 5
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "6e511212f494904e87b13192",
+      "lineage": {
+        "public_way_id": "1260735986",
+        "version": "3",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "fb4bc96fdd77c271a4c16d21",
+        "ign_tiles": [
+          "ign/tiles/4972-26.zip"
+        ],
+        "dem_sampling_points": 4
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "c338e172a55039898736ef4b",
+      "lineage": {
+        "public_way_id": "1260741036",
+        "version": "6",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 9
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "4f1bbef9000efd9145b7da6e",
+      "lineage": {
+        "public_way_id": "1260741037",
+        "version": "3",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip",
+          "ign/tiles/4972-26.zip"
+        ],
+        "dem_sampling_points": 9
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "65f6410a8f3488e489e8a9e3",
+      "lineage": {
+        "public_way_id": "1260744267",
+        "version": "4",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 14
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "6e39f24197fa55d7edcccfb6",
+      "lineage": {
+        "public_way_id": "1280574191",
+        "version": "6",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 16
+      }
+    },
+    {
+      "group_key": "51bf993bb6ecbf57131bcceb",
+      "row_key": "6424f16d24208d79d0006f78",
+      "lineage": {
+        "public_way_id": "1306871000",
+        "version": "1",
+        "label": "mountain_hiking",
+        "regions": [
+          "bariloche"
+        ],
+        "network_key": "d5f964ed38b543848b632cdc",
+        "ign_tiles": [
+          "ign/tiles/4172-23.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "51bf993bb6ecbf57131bcceb",
+      "row_key": "df20d69d9cbfea01e37195cb",
+      "lineage": {
+        "public_way_id": "1306871109",
+        "version": "1",
+        "label": "mountain_hiking",
+        "regions": [
+          "bariloche"
+        ],
+        "network_key": "d5f964ed38b543848b632cdc",
+        "ign_tiles": [
+          "ign/tiles/4172-22.zip"
+        ],
+        "dem_sampling_points": 7
+      }
+    },
+    {
+      "group_key": "51bf993bb6ecbf57131bcceb",
+      "row_key": "fd845162ba70b758ca7f6444",
+      "lineage": {
+        "public_way_id": "1306871110",
+        "version": "1",
+        "label": "demanding_mountain_hiking",
+        "regions": [
+          "bariloche"
+        ],
+        "network_key": "d5f964ed38b543848b632cdc",
+        "ign_tiles": [
+          "ign/tiles/4172-22.zip"
+        ],
+        "dem_sampling_points": 16
+      }
+    },
+    {
+      "group_key": "51bf993bb6ecbf57131bcceb",
+      "row_key": "0c29d26e59e21a364a9f18a4",
+      "lineage": {
+        "public_way_id": "1306871115",
+        "version": "1",
+        "label": "demanding_mountain_hiking",
+        "regions": [
+          "bariloche"
+        ],
+        "network_key": "d5f964ed38b543848b632cdc",
+        "ign_tiles": [
+          "ign/tiles/4172-22.zip"
+        ],
+        "dem_sampling_points": 6
+      }
+    },
+    {
+      "group_key": "51bf993bb6ecbf57131bcceb",
+      "row_key": "ad20afd4682dea0fd3b7b347",
+      "lineage": {
+        "public_way_id": "1306871116",
+        "version": "1",
+        "label": "demanding_mountain_hiking",
+        "regions": [
+          "bariloche"
+        ],
+        "network_key": "d5f964ed38b543848b632cdc",
+        "ign_tiles": [
+          "ign/tiles/4172-22.zip"
+        ],
+        "dem_sampling_points": 11
+      }
+    },
+    {
+      "group_key": "51bf993bb6ecbf57131bcceb",
+      "row_key": "52ed9a90fa90f92950f2afbe",
+      "lineage": {
+        "public_way_id": "1306871117",
+        "version": "2",
+        "label": "mountain_hiking",
+        "regions": [
+          "bariloche"
+        ],
+        "network_key": "d5f964ed38b543848b632cdc",
+        "ign_tiles": [
+          "ign/tiles/4172-23.zip"
+        ],
+        "dem_sampling_points": 3
+      }
+    },
+    {
+      "group_key": "51bf993bb6ecbf57131bcceb",
+      "row_key": "f708d025c311a9e31ccd8ee5",
+      "lineage": {
+        "public_way_id": "1306871120",
+        "version": "1",
+        "label": "hiking",
+        "regions": [
+          "bariloche"
+        ],
+        "network_key": "d5f964ed38b543848b632cdc",
+        "ign_tiles": [
+          "ign/tiles/4172-23.zip"
+        ],
+        "dem_sampling_points": 10
+      }
+    },
+    {
+      "group_key": "51bf993bb6ecbf57131bcceb",
+      "row_key": "93a862381aa8c62a3873f1d8",
+      "lineage": {
+        "public_way_id": "1306871121",
+        "version": "1",
+        "label": "mountain_hiking",
+        "regions": [
+          "bariloche"
+        ],
+        "network_key": "d5f964ed38b543848b632cdc",
+        "ign_tiles": [
+          "ign/tiles/4172-23.zip"
+        ],
+        "dem_sampling_points": 21
+      }
+    },
+    {
+      "group_key": "51bf993bb6ecbf57131bcceb",
+      "row_key": "3a362d6ac29d54ad232c8225",
+      "lineage": {
+        "public_way_id": "1306871122",
+        "version": "1",
+        "label": "demanding_mountain_hiking",
+        "regions": [
+          "bariloche"
+        ],
+        "network_key": "d5f964ed38b543848b632cdc",
+        "ign_tiles": [
+          "ign/tiles/4172-23.zip"
+        ],
+        "dem_sampling_points": 11
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "2c7138c6005dedd1abb608db",
+      "lineage": {
+        "public_way_id": "1312831925",
+        "version": "2",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "fb4bc96fdd77c271a4c16d21",
+        "ign_tiles": [
+          "ign/tiles/4972-26.zip"
+        ],
+        "dem_sampling_points": 3
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "9e3a43212ab5aea360306bfb",
+      "lineage": {
+        "public_way_id": "1312831930",
+        "version": "3",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "fb4bc96fdd77c271a4c16d21",
+        "ign_tiles": [
+          "ign/tiles/4972-26.zip"
+        ],
+        "dem_sampling_points": 14
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "8bc492c6953ac264a5318f41",
+      "lineage": {
+        "public_way_id": "1312831992",
+        "version": "4",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip",
+          "ign/tiles/4972-26.zip"
+        ],
+        "dem_sampling_points": 11
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "88c05fcad099588a942ae4a4",
+      "lineage": {
+        "public_way_id": "1312831993",
+        "version": "1",
+        "label": "difficult_alpine_hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "76d76aa838b0d87235aeb748",
+        "ign_tiles": [
+          "ign/tiles/4972-19.zip"
+        ],
+        "dem_sampling_points": 78
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "813cf24dc245b5385e8dd871",
+      "lineage": {
+        "public_way_id": "1312831995",
+        "version": "2",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "ff02ba2f529a5a0b027b7e7e",
+        "ign_tiles": [
+          "ign/tiles/4972-19.zip"
+        ],
+        "dem_sampling_points": 5
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "b6e219a69543d1f1306e8781",
+      "lineage": {
+        "public_way_id": "1312832010",
+        "version": "1",
+        "label": "demanding_alpine_hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 30
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "137cea0d590b7b5803d36e07",
+      "lineage": {
+        "public_way_id": "1312832014",
+        "version": "2",
+        "label": "alpine_hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "8f46a873ee3666d3cffb6886",
+        "ign_tiles": [
+          "ign/tiles/4972-19.zip"
+        ],
+        "dem_sampling_points": 7
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "92a67ddc30c81c7c8d63a487",
+      "lineage": {
+        "public_way_id": "1312832015",
+        "version": "2",
+        "label": "difficult_alpine_hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "8f46a873ee3666d3cffb6886",
+        "ign_tiles": [
+          "ign/tiles/4972-19.zip"
+        ],
+        "dem_sampling_points": 11
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "6a4aada0501f3e5c346eeeff",
+      "lineage": {
+        "public_way_id": "1312832023",
+        "version": "2",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "8f46a873ee3666d3cffb6886",
+        "ign_tiles": [
+          "ign/tiles/4972-19.zip",
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 16
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "c1496a7a80848271c3664d82",
+      "lineage": {
+        "public_way_id": "1312832024",
+        "version": "2",
+        "label": "alpine_hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "8f46a873ee3666d3cffb6886",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 4
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "31d8993d131b075d4348f4e9",
+      "lineage": {
+        "public_way_id": "1312832025",
+        "version": "1",
+        "label": "mountain_hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "8f46a873ee3666d3cffb6886",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 7
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "c6548cf2d14a38a3a936476d",
+      "lineage": {
+        "public_way_id": "1312832026",
+        "version": "3",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "8f46a873ee3666d3cffb6886",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 12
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "8f6ec1675f6fd66a5e4f190d",
+      "lineage": {
+        "public_way_id": "1312832030",
+        "version": "3",
+        "label": "alpine_hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "8f46a873ee3666d3cffb6886",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 4
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "a0b7b919049c9db99174553f",
+      "lineage": {
+        "public_way_id": "1312832031",
+        "version": "3",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 21
+      }
+    },
+    {
+      "group_key": "51bf993bb6ecbf57131bcceb",
+      "row_key": "85d88b598c3674395da170e0",
+      "lineage": {
+        "public_way_id": "1350434348",
+        "version": "1",
+        "label": "mountain_hiking",
+        "regions": [
+          "bariloche"
+        ],
+        "network_key": "d5f964ed38b543848b632cdc",
+        "ign_tiles": [
+          "ign/tiles/4172-23.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "51bf993bb6ecbf57131bcceb",
+      "row_key": "be0d49a865f7ec88e480f393",
+      "lineage": {
+        "public_way_id": "1350434350",
+        "version": "1",
+        "label": "mountain_hiking",
+        "regions": [
+          "bariloche"
+        ],
+        "network_key": "d5f964ed38b543848b632cdc",
+        "ign_tiles": [
+          "ign/tiles/4172-23.zip"
+        ],
+        "dem_sampling_points": 3
+      }
+    },
+    {
+      "group_key": "51bf993bb6ecbf57131bcceb",
+      "row_key": "456bdc4ba10b7f698064b4f3",
+      "lineage": {
+        "public_way_id": "1350434351",
+        "version": "1",
+        "label": "hiking",
+        "regions": [
+          "bariloche"
+        ],
+        "network_key": "d5f964ed38b543848b632cdc",
+        "ign_tiles": [
+          "ign/tiles/4172-23.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "6085648ae385e451cbab2eab",
+      "lineage": {
+        "public_way_id": "1358631544",
+        "version": "3",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 3
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "d0a1ad6440b718bdd390f1be",
+      "lineage": {
+        "public_way_id": "1358631545",
+        "version": "3",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 3
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "941d36a14b13ed3eaaa5fedb",
+      "lineage": {
+        "public_way_id": "1358631546",
+        "version": "2",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 3
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "674e8a3b0f2178942631f79e",
+      "lineage": {
+        "public_way_id": "1358631560",
+        "version": "2",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "fb4bc96fdd77c271a4c16d21",
+        "ign_tiles": [
+          "ign/tiles/4972-26.zip"
+        ],
+        "dem_sampling_points": 5
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "c70286d0d26405c481a771f9",
+      "lineage": {
+        "public_way_id": "1358631571",
+        "version": "2",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "fb4bc96fdd77c271a4c16d21",
+        "ign_tiles": [
+          "ign/tiles/4972-26.zip"
+        ],
+        "dem_sampling_points": 7
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "354d5d6d98c376aebefbe2fb",
+      "lineage": {
+        "public_way_id": "1358631574",
+        "version": "2",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "fb4bc96fdd77c271a4c16d21",
+        "ign_tiles": [
+          "ign/tiles/4972-26.zip"
+        ],
+        "dem_sampling_points": 11
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "287df91ee2a5e3fa5b181b1b",
+      "lineage": {
+        "public_way_id": "1362581395",
+        "version": "3",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 6
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "1617c2cb5f605b1a3b458f3b",
+      "lineage": {
+        "public_way_id": "1362581396",
+        "version": "2",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 15
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "6009cb63c41e0ad43dfc9383",
+      "lineage": {
+        "public_way_id": "1366221326",
+        "version": "2",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 5
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "c841ee1027080405ec366a7e",
+      "lineage": {
+        "public_way_id": "1366222702",
+        "version": "3",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 3
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "308fa14793760d4cb25b1e00",
+      "lineage": {
+        "public_way_id": "1366237465",
+        "version": "4",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 6
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "2ee8f4fc8e4fcc418c044d00",
+      "lineage": {
+        "public_way_id": "1366239942",
+        "version": "3",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 4
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "f2cb51ff474e635c88dbc319",
+      "lineage": {
+        "public_way_id": "1366245236",
+        "version": "2",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 3
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "be593dd509a0ffebb2dd8ada",
+      "lineage": {
+        "public_way_id": "1366245237",
+        "version": "2",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "1d38e3e49e89fe02c6e4ad96",
+      "lineage": {
+        "public_way_id": "1366245240",
+        "version": "2",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "0a82e9fb1393b8695d6643f9",
+      "lineage": {
+        "public_way_id": "1366245242",
+        "version": "5",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 10
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "fa9128dc7c01a23f96fdfbe6",
+      "lineage": {
+        "public_way_id": "1366253536",
+        "version": "3",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 3
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "bf2110137049b5a11af3a8ec",
+      "lineage": {
+        "public_way_id": "1366279059",
+        "version": "2",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 9
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "a72c85f4932611925b615129",
+      "lineage": {
+        "public_way_id": "1366281869",
+        "version": "1",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "6ef3969c6fd478fc379f4477",
+      "lineage": {
+        "public_way_id": "1366281870",
+        "version": "2",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "6b94aaddd91a0126a5ab4158",
+      "lineage": {
+        "public_way_id": "1366281872",
+        "version": "1",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 3
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "ba2eafa48f587baa71b50744",
+      "lineage": {
+        "public_way_id": "1366281873",
+        "version": "1",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "45abed0633e12238a03c0119",
+      "lineage": {
+        "public_way_id": "1371905939",
+        "version": "1",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 6
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "064002327e3ce6e281ba234a",
+      "lineage": {
+        "public_way_id": "1371905940",
+        "version": "1",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "2944004e428dce1ca77cd4d8",
+      "lineage": {
+        "public_way_id": "1372585563",
+        "version": "1",
+        "label": "mountain_hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "8f46a873ee3666d3cffb6886",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 4
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "f5a51ccbd472755d1ac22b7e",
+      "lineage": {
+        "public_way_id": "1372585564",
+        "version": "1",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "8f46a873ee3666d3cffb6886",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 5
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "0c09b20400d83fbedb611efe",
+      "lineage": {
+        "public_way_id": "1372675650",
+        "version": "3",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "478933e567b51c4ba946a5ad",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 10
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "5e895b6612581c583c7b5f98",
+      "lineage": {
+        "public_way_id": "1372678611",
+        "version": "3",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "63982faad73af0de2b1370a0",
+      "lineage": {
+        "public_way_id": "1372683131",
+        "version": "2",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 5
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "07292a54faa0d3cdf20ea976",
+      "lineage": {
+        "public_way_id": "1372684767",
+        "version": "2",
+        "label": "mountain_hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "ebe98285218e814ae9112fbe",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 113
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "3c9995a7cf676771c90a9140",
+      "lineage": {
+        "public_way_id": "1372689862",
+        "version": "1",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 5
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "eb399541467b285e8eed221c",
+      "lineage": {
+        "public_way_id": "1372693177",
+        "version": "2",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "5c93a550e7d1b8529e87cf7c",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "b202c92b5b022c2fb283c420",
+      "lineage": {
+        "public_way_id": "1372694679",
+        "version": "1",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "fb4bc96fdd77c271a4c16d21",
+        "ign_tiles": [
+          "ign/tiles/4972-26.zip"
+        ],
+        "dem_sampling_points": 4
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "934e7457e756f37eff308859",
+      "lineage": {
+        "public_way_id": "1372694680",
+        "version": "1",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "fb4bc96fdd77c271a4c16d21",
+        "ign_tiles": [
+          "ign/tiles/4972-26.zip"
+        ],
+        "dem_sampling_points": 4
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "95245b83abe136ba0fc112dd",
+      "lineage": {
+        "public_way_id": "1372694681",
+        "version": "1",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "fb4bc96fdd77c271a4c16d21",
+        "ign_tiles": [
+          "ign/tiles/4972-26.zip"
+        ],
+        "dem_sampling_points": 12
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "364beab5cb954ba850f643d3",
+      "lineage": {
+        "public_way_id": "1372694682",
+        "version": "1",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "fb4bc96fdd77c271a4c16d21",
+        "ign_tiles": [
+          "ign/tiles/4972-26.zip"
+        ],
+        "dem_sampling_points": 4
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "e065b062390f0398c52a5414",
+      "lineage": {
+        "public_way_id": "1372694683",
+        "version": "1",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "fb4bc96fdd77c271a4c16d21",
+        "ign_tiles": [
+          "ign/tiles/4972-26.zip"
+        ],
+        "dem_sampling_points": 6
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "663e5870768d2184944bfb73",
+      "lineage": {
+        "public_way_id": "1372694684",
+        "version": "1",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "fb4bc96fdd77c271a4c16d21",
+        "ign_tiles": [
+          "ign/tiles/4972-26.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "5a151d3b0cefbe09b5109073",
+      "lineage": {
+        "public_way_id": "1372694685",
+        "version": "1",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "7af2dab587db69e922cb833c",
+        "ign_tiles": [
+          "ign/tiles/4972-26.zip"
+        ],
+        "dem_sampling_points": 3
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "472e875e88aed2d36ab29919",
+      "lineage": {
+        "public_way_id": "1372694686",
+        "version": "1",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "bbf9e314b1e4d140a3501f65",
+        "ign_tiles": [
+          "ign/tiles/4972-26.zip"
+        ],
+        "dem_sampling_points": 4
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "f05c34a4704b90594b21426a",
+      "lineage": {
+        "public_way_id": "1372702289",
+        "version": "1",
+        "label": "mountain_hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "99b52127f96e8848e77239dc",
+      "lineage": {
+        "public_way_id": "1372702290",
+        "version": "1",
+        "label": "mountain_hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 5
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "14cfdc03a15c7914b43685e7",
+      "lineage": {
+        "public_way_id": "1372703603",
+        "version": "1",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "f48e0afdaaa6480b887e2ca6",
+      "lineage": {
+        "public_way_id": "1372710195",
+        "version": "1",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 4
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "6e07062b1817501e52bca98b",
+      "lineage": {
+        "public_way_id": "1374256294",
+        "version": "1",
+        "label": "mountain_hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "ebe98285218e814ae9112fbe",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 44
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "63264cc984595cba4e85c8ec",
+      "lineage": {
+        "public_way_id": "1455875325",
+        "version": "1",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 3
+      }
+    },
+    {
+      "group_key": "51bf993bb6ecbf57131bcceb",
+      "row_key": "7484e5567211b3e97bdc090e",
+      "lineage": {
+        "public_way_id": "1464251365",
+        "version": "1",
+        "label": "hiking",
+        "regions": [
+          "bariloche"
+        ],
+        "network_key": "d5f964ed38b543848b632cdc",
+        "ign_tiles": [
+          "ign/tiles/4172-23.zip"
+        ],
+        "dem_sampling_points": 23
+      }
+    },
+    {
+      "group_key": "51bf993bb6ecbf57131bcceb",
+      "row_key": "2ed86b65ef1a8c3185560712",
+      "lineage": {
+        "public_way_id": "1464251366",
+        "version": "1",
+        "label": "hiking",
+        "regions": [
+          "bariloche"
+        ],
+        "network_key": "d5f964ed38b543848b632cdc",
+        "ign_tiles": [
+          "ign/tiles/4172-23.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "cdb8e3ef98677695bc7d5a50",
+      "lineage": {
+        "public_way_id": "150891425",
+        "version": "11",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 8
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "5f9dbd732c956675361bb7c1",
+      "lineage": {
+        "public_way_id": "157595406",
+        "version": "11",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "fb4bc96fdd77c271a4c16d21",
+        "ign_tiles": [
+          "ign/tiles/4972-26.zip"
+        ],
+        "dem_sampling_points": 32
+      }
+    },
+    {
+      "group_key": "51bf993bb6ecbf57131bcceb",
+      "row_key": "f1bef336418c579cedec4b91",
+      "lineage": {
+        "public_way_id": "163621369",
+        "version": "6",
+        "label": "mountain_hiking",
+        "regions": [
+          "bariloche"
+        ],
+        "network_key": "d5f964ed38b543848b632cdc",
+        "ign_tiles": [
+          "ign/tiles/4172-22.zip"
+        ],
+        "dem_sampling_points": 18
+      }
+    },
+    {
+      "group_key": "51bf993bb6ecbf57131bcceb",
+      "row_key": "85285c18847fec8334dcd157",
+      "lineage": {
+        "public_way_id": "163621388",
+        "version": "4",
+        "label": "demanding_mountain_hiking",
+        "regions": [
+          "bariloche"
+        ],
+        "network_key": "d5f964ed38b543848b632cdc",
+        "ign_tiles": [
+          "ign/tiles/4172-22.zip",
+          "ign/tiles/4172-23.zip"
+        ],
+        "dem_sampling_points": 24
+      }
+    },
+    {
+      "group_key": "51bf993bb6ecbf57131bcceb",
+      "row_key": "ea2b6635ff7432d8176149e0",
+      "lineage": {
+        "public_way_id": "163621392",
+        "version": "7",
+        "label": "hiking",
+        "regions": [
+          "bariloche"
+        ],
+        "network_key": "d5f964ed38b543848b632cdc",
+        "ign_tiles": [
+          "ign/tiles/4172-23.zip"
+        ],
+        "dem_sampling_points": 51
+      }
+    },
+    {
+      "group_key": "51bf993bb6ecbf57131bcceb",
+      "row_key": "ed79a7bd8448677eb4695236",
+      "lineage": {
+        "public_way_id": "163622693",
+        "version": "9",
+        "label": "mountain_hiking",
+        "regions": [
+          "bariloche"
+        ],
+        "network_key": "061b2feafc2b54872fce5156",
+        "ign_tiles": [
+          "ign/tiles/4172-22.zip",
+          "ign/tiles/4172-23.zip"
+        ],
+        "dem_sampling_points": 210
+      }
+    },
+    {
+      "group_key": "cccd46dcdb3800b6256674d7",
+      "row_key": "396a6f20722dc383a92c976e",
+      "lineage": {
+        "public_way_id": "171999882",
+        "version": "3",
+        "label": "hiking",
+        "regions": [
+          "ushuaia"
+        ],
+        "network_key": "aebe316719ca4e424bcd8bd0",
+        "ign_tiles": [
+          "ign/tiles/5569-16.zip"
+        ],
+        "dem_sampling_points": 23
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "a6789e7838b3d470d292ab55",
+      "lineage": {
+        "public_way_id": "172038328",
+        "version": "9",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "fb4bc96fdd77c271a4c16d21",
+        "ign_tiles": [
+          "ign/tiles/4972-26.zip"
+        ],
+        "dem_sampling_points": 7
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "a8a1c3c07b83972250a852c4",
+      "lineage": {
+        "public_way_id": "172038334",
+        "version": "6",
+        "label": "demanding_mountain_hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 37
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "8e804c271c24e54c5e52d7d9",
+      "lineage": {
+        "public_way_id": "172038341",
+        "version": "4",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "fb4bc96fdd77c271a4c16d21",
+        "ign_tiles": [
+          "ign/tiles/4972-26.zip"
+        ],
+        "dem_sampling_points": 6
+      }
+    },
+    {
+      "group_key": "615dd8f17b7f77b9642cbb60",
+      "row_key": "a46234fd0d8b33be8fa4e3af",
+      "lineage": {
+        "public_way_id": "198170212",
+        "version": "5",
+        "label": "demanding_mountain_hiking",
+        "regions": [
+          "mendoza"
+        ],
+        "network_key": "dd12585d0d95049e609841d6",
+        "ign_tiles": [
+          "ign/tiles/3369-15.zip"
+        ],
+        "dem_sampling_points": 64
+      }
+    },
+    {
+      "group_key": "cccd46dcdb3800b6256674d7",
+      "row_key": "ec2bf4a727572c0c11017e43",
+      "lineage": {
+        "public_way_id": "198585048",
+        "version": "8",
+        "label": "hiking",
+        "regions": [
+          "ushuaia"
+        ],
+        "network_key": "92528a6ce4003e6e5cfe1ca7",
+        "ign_tiles": [
+          "ign/tiles/5569-16.zip"
+        ],
+        "dem_sampling_points": 12
+      }
+    },
+    {
+      "group_key": "cccd46dcdb3800b6256674d7",
+      "row_key": "0f7b9a1e8425d437033e4111",
+      "lineage": {
+        "public_way_id": "207086583",
+        "version": "7",
+        "label": "hiking",
+        "regions": [
+          "ushuaia"
+        ],
+        "network_key": "4c531e51cedbcbea5834aa5d",
+        "ign_tiles": [
+          "ign/tiles/5569-16.zip"
+        ],
+        "dem_sampling_points": 5
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "468fcb4bf2bbe87ac0662473",
+      "lineage": {
+        "public_way_id": "208590041",
+        "version": "6",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-19.zip",
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 6
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "a9018b291b92e6392324d56c",
+      "lineage": {
+        "public_way_id": "219074208",
+        "version": "6",
+        "label": "difficult_alpine_hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "32097f7d42526e6f6d26702b",
+        "ign_tiles": [
+          "ign/tiles/4972-19.zip",
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 88
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "85be4363a51c88e6fd5cf305",
+      "lineage": {
+        "public_way_id": "219074209",
+        "version": "7",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "51bf993bb6ecbf57131bcceb",
+      "row_key": "f6b62ee48ea17fdcb36e2682",
+      "lineage": {
+        "public_way_id": "219941667",
+        "version": "4",
+        "label": "demanding_mountain_hiking",
+        "regions": [
+          "bariloche"
+        ],
+        "network_key": "d5f964ed38b543848b632cdc",
+        "ign_tiles": [
+          "ign/tiles/4172-22.zip",
+          "ign/tiles/4172-23.zip"
+        ],
+        "dem_sampling_points": 41
+      }
+    },
+    {
+      "group_key": "cccd46dcdb3800b6256674d7",
+      "row_key": "c8a76f083a1ed7504e9148e2",
+      "lineage": {
+        "public_way_id": "252432655",
+        "version": "2",
+        "label": "hiking",
+        "regions": [
+          "ushuaia"
+        ],
+        "network_key": "ae6342462082794d1bb7ba5a",
+        "ign_tiles": [
+          "ign/tiles/5569-17.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "cccd46dcdb3800b6256674d7",
+      "row_key": "feb1b3868e1995119d08342b",
+      "lineage": {
+        "public_way_id": "252432664",
+        "version": "2",
+        "label": "hiking",
+        "regions": [
+          "ushuaia"
+        ],
+        "network_key": "ae6342462082794d1bb7ba5a",
+        "ign_tiles": [
+          "ign/tiles/5569-17.zip"
+        ],
+        "dem_sampling_points": 4
+      }
+    },
+    {
+      "group_key": "51bf993bb6ecbf57131bcceb",
+      "row_key": "276a59290169a80c9b318c92",
+      "lineage": {
+        "public_way_id": "264530789",
+        "version": "5",
+        "label": "hiking",
+        "regions": [
+          "bariloche"
+        ],
+        "network_key": "d5f964ed38b543848b632cdc",
+        "ign_tiles": [
+          "ign/tiles/4172-23.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "51bf993bb6ecbf57131bcceb",
+      "row_key": "aaec7d05184b63f5a05ffd0b",
+      "lineage": {
+        "public_way_id": "264530790",
+        "version": "5",
+        "label": "hiking",
+        "regions": [
+          "bariloche"
+        ],
+        "network_key": "d5f964ed38b543848b632cdc",
+        "ign_tiles": [
+          "ign/tiles/4172-23.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "51bf993bb6ecbf57131bcceb",
+      "row_key": "e0a6de0d625e7b7f193a3da0",
+      "lineage": {
+        "public_way_id": "264530791",
+        "version": "5",
+        "label": "hiking",
+        "regions": [
+          "bariloche"
+        ],
+        "network_key": "d5f964ed38b543848b632cdc",
+        "ign_tiles": [
+          "ign/tiles/4172-23.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "51bf993bb6ecbf57131bcceb",
+      "row_key": "f2d2f9265f2b57de738cc47f",
+      "lineage": {
+        "public_way_id": "264530792",
+        "version": "9",
+        "label": "hiking",
+        "regions": [
+          "bariloche"
+        ],
+        "network_key": "d5f964ed38b543848b632cdc",
+        "ign_tiles": [
+          "ign/tiles/4172-23.zip"
+        ],
+        "dem_sampling_points": 7
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "0b1d1b22ea4e29318756f830",
+      "lineage": {
+        "public_way_id": "266243274",
+        "version": "11",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 4
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "e281f210d260019fd8e2c80f",
+      "lineage": {
+        "public_way_id": "266243290",
+        "version": "9",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 6
+      }
+    },
+    {
+      "group_key": "51bf993bb6ecbf57131bcceb",
+      "row_key": "f5f0aab8824e3b841daad9d9",
+      "lineage": {
+        "public_way_id": "305979878",
+        "version": "9",
+        "label": "hiking",
+        "regions": [
+          "bariloche"
+        ],
+        "network_key": "d5f964ed38b543848b632cdc",
+        "ign_tiles": [
+          "ign/tiles/4172-23.zip"
+        ],
+        "dem_sampling_points": 34
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "d4dd6d6f9b8f936370fc4de7",
+      "lineage": {
+        "public_way_id": "31348123",
+        "version": "8",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 4
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "624dd7b02ad7825a12df95d4",
+      "lineage": {
+        "public_way_id": "31348131",
+        "version": "19",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 109
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "0fb42dd42258f30201924a02",
+      "lineage": {
+        "public_way_id": "313631583",
+        "version": "5",
+        "label": "mountain_hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 8
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "02a8911326d78bac44f9be50",
+      "lineage": {
+        "public_way_id": "313702930",
+        "version": "13",
+        "label": "demanding_mountain_hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-19.zip",
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 35
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "5b96746a3e906a2536e4ddcf",
+      "lineage": {
+        "public_way_id": "313715185",
+        "version": "2",
+        "label": "alpine_hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 24
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "69870743593e845099768a1c",
+      "lineage": {
+        "public_way_id": "313769097",
+        "version": "9",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 3
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "be5a1187fcfc3320499ef7b8",
+      "lineage": {
+        "public_way_id": "313769098",
+        "version": "11",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 10
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "3475e4eaab92edb9c36cb1e3",
+      "lineage": {
+        "public_way_id": "313769099",
+        "version": "5",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "a28e6bfa04541ff199fee8bb",
+      "lineage": {
+        "public_way_id": "313769100",
+        "version": "6",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "9c9015209151df8cbafa95df",
+      "lineage": {
+        "public_way_id": "313769101",
+        "version": "8",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 3
+      }
+    },
+    {
+      "group_key": "51bf993bb6ecbf57131bcceb",
+      "row_key": "222c843b308c96b6dafda8f6",
+      "lineage": {
+        "public_way_id": "328312035",
+        "version": "7",
+        "label": "mountain_hiking",
+        "regions": [
+          "bariloche"
+        ],
+        "network_key": "d5f964ed38b543848b632cdc",
+        "ign_tiles": [
+          "ign/tiles/4172-23.zip"
+        ],
+        "dem_sampling_points": 8
+      }
+    },
+    {
+      "group_key": "ce19e51002a542728764e768",
+      "row_key": "0564ad718a3e2a5f2f941543",
+      "lineage": {
+        "public_way_id": "329762846",
+        "version": "2",
+        "label": "hiking",
+        "regions": [
+          "calilegua"
+        ],
+        "network_key": "e8ab9e94078ec77d1a261d7e",
+        "ign_tiles": [
+          "ign/tiles/2366-36.zip"
+        ],
+        "dem_sampling_points": 33
+      }
+    },
+    {
+      "group_key": "ce19e51002a542728764e768",
+      "row_key": "1265120d3c785ee4c29c9b7b",
+      "lineage": {
+        "public_way_id": "329762847",
+        "version": "2",
+        "label": "hiking",
+        "regions": [
+          "calilegua"
+        ],
+        "network_key": "a5d8642cab1feeace4cd82c0",
+        "ign_tiles": [
+          "ign/tiles/2366-36.zip"
+        ],
+        "dem_sampling_points": 5
+      }
+    },
+    {
+      "group_key": "ce19e51002a542728764e768",
+      "row_key": "3650582e447e29554d8b88ec",
+      "lineage": {
+        "public_way_id": "329762849",
+        "version": "2",
+        "label": "hiking",
+        "regions": [
+          "calilegua"
+        ],
+        "network_key": "985d142448a21b5c58eeb1a1",
+        "ign_tiles": [
+          "ign/tiles/2366-36.zip"
+        ],
+        "dem_sampling_points": 10
+      }
+    },
+    {
+      "group_key": "51bf993bb6ecbf57131bcceb",
+      "row_key": "6537b251dfd022b85009e2f6",
+      "lineage": {
+        "public_way_id": "383199123",
+        "version": "4",
+        "label": "hiking",
+        "regions": [
+          "bariloche"
+        ],
+        "network_key": "d5f964ed38b543848b632cdc",
+        "ign_tiles": [
+          "ign/tiles/4172-23.zip"
+        ],
+        "dem_sampling_points": 67
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "1e5e2b9b0aa966e7aa7cface",
+      "lineage": {
+        "public_way_id": "385963777",
+        "version": "6",
+        "label": "mountain_hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 7
+      }
+    },
+    {
+      "group_key": "51bf993bb6ecbf57131bcceb",
+      "row_key": "fe9f73f94fe6b76fa44753df",
+      "lineage": {
+        "public_way_id": "429972969",
+        "version": "4",
+        "label": "hiking",
+        "regions": [
+          "bariloche"
+        ],
+        "network_key": "d652c56fdce2e00b5a69769a",
+        "ign_tiles": [
+          "ign/tiles/4172-23.zip"
+        ],
+        "dem_sampling_points": 33
+      }
+    },
+    {
+      "group_key": "51bf993bb6ecbf57131bcceb",
+      "row_key": "ab634c1ecd6b34d9d2888848",
+      "lineage": {
+        "public_way_id": "438859725",
+        "version": "5",
+        "label": "hiking",
+        "regions": [
+          "bariloche"
+        ],
+        "network_key": "d5f964ed38b543848b632cdc",
+        "ign_tiles": [
+          "ign/tiles/4172-23.zip"
+        ],
+        "dem_sampling_points": 4
+      }
+    },
+    {
+      "group_key": "51bf993bb6ecbf57131bcceb",
+      "row_key": "064b3b3d7d03c461277ef4e4",
+      "lineage": {
+        "public_way_id": "439214183",
+        "version": "4",
+        "label": "hiking",
+        "regions": [
+          "bariloche"
+        ],
+        "network_key": "d5f964ed38b543848b632cdc",
+        "ign_tiles": [
+          "ign/tiles/4172-22.zip"
+        ],
+        "dem_sampling_points": 52
+      }
+    },
+    {
+      "group_key": "51bf993bb6ecbf57131bcceb",
+      "row_key": "db8694c07bd177f6bd6f5d7e",
+      "lineage": {
+        "public_way_id": "446604215",
+        "version": "5",
+        "label": "hiking",
+        "regions": [
+          "bariloche"
+        ],
+        "network_key": "b06927fb84efa02963b10255",
+        "ign_tiles": [
+          "ign/tiles/4172-23.zip"
+        ],
+        "dem_sampling_points": 26
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "29171c82f08f1dffcd753dd0",
+      "lineage": {
+        "public_way_id": "44817256",
+        "version": "6",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "b025c5b2b620ed7a31450b7d",
+      "lineage": {
+        "public_way_id": "44817407",
+        "version": "21",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "a82b8dec0c1f9f5210ac5d3e",
+      "lineage": {
+        "public_way_id": "44833574",
+        "version": "14",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "fb4bc96fdd77c271a4c16d21",
+        "ign_tiles": [
+          "ign/tiles/4972-26.zip"
+        ],
+        "dem_sampling_points": 7
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "908d74a0efbe35c741538011",
+      "lineage": {
+        "public_way_id": "46837802",
+        "version": "11",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "fb4bc96fdd77c271a4c16d21",
+        "ign_tiles": [
+          "ign/tiles/4972-26.zip"
+        ],
+        "dem_sampling_points": 7
+      }
+    },
+    {
+      "group_key": "ce19e51002a542728764e768",
+      "row_key": "ba56fa4af4ba61b43edc9aa8",
+      "lineage": {
+        "public_way_id": "500937397",
+        "version": "2",
+        "label": "hiking",
+        "regions": [
+          "calilegua"
+        ],
+        "network_key": "e8ab9e94078ec77d1a261d7e",
+        "ign_tiles": [
+          "ign/tiles/2366-36.zip"
+        ],
+        "dem_sampling_points": 11
+      }
+    },
+    {
+      "group_key": "ce19e51002a542728764e768",
+      "row_key": "58ee9507d8cf46518ef984e5",
+      "lineage": {
+        "public_way_id": "500937401",
+        "version": "2",
+        "label": "hiking",
+        "regions": [
+          "calilegua"
+        ],
+        "network_key": "e8ab9e94078ec77d1a261d7e",
+        "ign_tiles": [
+          "ign/tiles/2366-36.zip"
+        ],
+        "dem_sampling_points": 8
+      }
+    },
+    {
+      "group_key": "ce19e51002a542728764e768",
+      "row_key": "5294fe7112c0380db0a06635",
+      "lineage": {
+        "public_way_id": "501824352",
+        "version": "1",
+        "label": "hiking",
+        "regions": [
+          "calilegua"
+        ],
+        "network_key": "e8ab9e94078ec77d1a261d7e",
+        "ign_tiles": [
+          "ign/tiles/2366-36.zip"
+        ],
+        "dem_sampling_points": 14
+      }
+    },
+    {
+      "group_key": "ce19e51002a542728764e768",
+      "row_key": "c878b8b2b920448f8109ddab",
+      "lineage": {
+        "public_way_id": "501824354",
+        "version": "1",
+        "label": "mountain_hiking",
+        "regions": [
+          "calilegua"
+        ],
+        "network_key": "e8ab9e94078ec77d1a261d7e",
+        "ign_tiles": [
+          "ign/tiles/2366-36.zip"
+        ],
+        "dem_sampling_points": 14
+      }
+    },
+    {
+      "group_key": "ce19e51002a542728764e768",
+      "row_key": "a8ef816165517b763fda56b3",
+      "lineage": {
+        "public_way_id": "501824355",
+        "version": "1",
+        "label": "demanding_mountain_hiking",
+        "regions": [
+          "calilegua"
+        ],
+        "network_key": "e8ab9e94078ec77d1a261d7e",
+        "ign_tiles": [
+          "ign/tiles/2366-36.zip"
+        ],
+        "dem_sampling_points": 18
+      }
+    },
+    {
+      "group_key": "ce19e51002a542728764e768",
+      "row_key": "fc35f2d0b4824a49a7f2329f",
+      "lineage": {
+        "public_way_id": "501824357",
+        "version": "1",
+        "label": "mountain_hiking",
+        "regions": [
+          "calilegua"
+        ],
+        "network_key": "e8ab9e94078ec77d1a261d7e",
+        "ign_tiles": [
+          "ign/tiles/2366-36.zip"
+        ],
+        "dem_sampling_points": 41
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "04040c51950eb8f03890f1e7",
+      "lineage": {
+        "public_way_id": "51863806",
+        "version": "16",
+        "label": "mountain_hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 50
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "ecb65d874948f1c2618dba3f",
+      "lineage": {
+        "public_way_id": "51863981",
+        "version": "8",
+        "label": "mountain_hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 7
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "5c0d7a252f8d4e1f868b3662",
+      "lineage": {
+        "public_way_id": "51863982",
+        "version": "6",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 3
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "c21f480c5d9481528bb5acf7",
+      "lineage": {
+        "public_way_id": "540224158",
+        "version": "8",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip",
+          "ign/tiles/4972-26.zip"
+        ],
+        "dem_sampling_points": 26
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "c74d0723a022106fdb4826b0",
+      "lineage": {
+        "public_way_id": "540224164",
+        "version": "11",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-26.zip"
+        ],
+        "dem_sampling_points": 8
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "643e817dbfb91a6accdb7248",
+      "lineage": {
+        "public_way_id": "540224169",
+        "version": "6",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 4
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "6f87ac2d387fcbb38ec8eca9",
+      "lineage": {
+        "public_way_id": "540224171",
+        "version": "3",
+        "label": "mountain_hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 5
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "ae8b533d37d590e3f0833888",
+      "lineage": {
+        "public_way_id": "540224174",
+        "version": "7",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 7
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "d2ed06e88754c23905c95c18",
+      "lineage": {
+        "public_way_id": "541117649",
+        "version": "6",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "fb4bc96fdd77c271a4c16d21",
+        "ign_tiles": [
+          "ign/tiles/4972-26.zip"
+        ],
+        "dem_sampling_points": 4
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "796559b6101d2fc61e042070",
+      "lineage": {
+        "public_way_id": "542291381",
+        "version": "4",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "fb4bc96fdd77c271a4c16d21",
+        "ign_tiles": [
+          "ign/tiles/4972-26.zip"
+        ],
+        "dem_sampling_points": 3
+      }
+    },
+    {
+      "group_key": "cccd46dcdb3800b6256674d7",
+      "row_key": "e7baebd3226c08b0b263d57a",
+      "lineage": {
+        "public_way_id": "543950731",
+        "version": "3",
+        "label": "hiking",
+        "regions": [
+          "ushuaia"
+        ],
+        "network_key": "92528a6ce4003e6e5cfe1ca7",
+        "ign_tiles": [
+          "ign/tiles/5569-16.zip"
+        ],
+        "dem_sampling_points": 12
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "3ef7baee8ec2fd63726df86d",
+      "lineage": {
+        "public_way_id": "545520302",
+        "version": "12",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 6
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "138cf0498a3451e811d99629",
+      "lineage": {
+        "public_way_id": "545520309",
+        "version": "4",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 20
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "081045ccc10c5c0727330c28",
+      "lineage": {
+        "public_way_id": "545520310",
+        "version": "8",
+        "label": "demanding_mountain_hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "8f46a873ee3666d3cffb6886",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 17
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "3df5b1a7c8914e630dfbb20f",
+      "lineage": {
+        "public_way_id": "545536494",
+        "version": "5",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 7
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "ef1fbdc8533e703f4aaa55b7",
+      "lineage": {
+        "public_way_id": "545536495",
+        "version": "6",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 8
+      }
+    },
+    {
+      "group_key": "cccd46dcdb3800b6256674d7",
+      "row_key": "6807e9aa41fd7b076f6351f2",
+      "lineage": {
+        "public_way_id": "547761054",
+        "version": "4",
+        "label": "hiking",
+        "regions": [
+          "ushuaia"
+        ],
+        "network_key": "be78d56d5348b042cb3e15a8",
+        "ign_tiles": [
+          "ign/tiles/5569-16.zip"
+        ],
+        "dem_sampling_points": 21
+      }
+    },
+    {
+      "group_key": "51bf993bb6ecbf57131bcceb",
+      "row_key": "70aa04f4943d3a028c0fd786",
+      "lineage": {
+        "public_way_id": "557084058",
+        "version": "5",
+        "label": "hiking",
+        "regions": [
+          "bariloche"
+        ],
+        "network_key": "d5f964ed38b543848b632cdc",
+        "ign_tiles": [
+          "ign/tiles/4172-23.zip"
+        ],
+        "dem_sampling_points": 4
+      }
+    },
+    {
+      "group_key": "51bf993bb6ecbf57131bcceb",
+      "row_key": "c6978c999bddea8be489f516",
+      "lineage": {
+        "public_way_id": "557084059",
+        "version": "5",
+        "label": "hiking",
+        "regions": [
+          "bariloche"
+        ],
+        "network_key": "d5f964ed38b543848b632cdc",
+        "ign_tiles": [
+          "ign/tiles/4172-23.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "902e36c5b0dcd832665b8719",
+      "lineage": {
+        "public_way_id": "61900603",
+        "version": "4",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "fb4bc96fdd77c271a4c16d21",
+        "ign_tiles": [
+          "ign/tiles/4972-26.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "355f08f3dc83b9bb5d1fa9bd",
+      "lineage": {
+        "public_way_id": "61900620",
+        "version": "9",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip",
+          "ign/tiles/4972-26.zip"
+        ],
+        "dem_sampling_points": 12
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "98d0863545d4ec487d8adeb2",
+      "lineage": {
+        "public_way_id": "61900621",
+        "version": "15",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 31
+      }
+    },
+    {
+      "group_key": "51bf993bb6ecbf57131bcceb",
+      "row_key": "8a4a7c20c3b70b894b8e6471",
+      "lineage": {
+        "public_way_id": "637264398",
+        "version": "2",
+        "label": "mountain_hiking",
+        "regions": [
+          "bariloche"
+        ],
+        "network_key": "d5f964ed38b543848b632cdc",
+        "ign_tiles": [
+          "ign/tiles/4172-23.zip"
+        ],
+        "dem_sampling_points": 37
+      }
+    },
+    {
+      "group_key": "cccd46dcdb3800b6256674d7",
+      "row_key": "9f56027ab290e1e5c0b462c9",
+      "lineage": {
+        "public_way_id": "641063483",
+        "version": "1",
+        "label": "hiking",
+        "regions": [
+          "ushuaia"
+        ],
+        "network_key": "4c531e51cedbcbea5834aa5d",
+        "ign_tiles": [
+          "ign/tiles/5569-16.zip"
+        ],
+        "dem_sampling_points": 4
+      }
+    },
+    {
+      "group_key": "cccd46dcdb3800b6256674d7",
+      "row_key": "c865ff4b9d849e1465d4432e",
+      "lineage": {
+        "public_way_id": "641063484",
+        "version": "1",
+        "label": "hiking",
+        "regions": [
+          "ushuaia"
+        ],
+        "network_key": "aebe316719ca4e424bcd8bd0",
+        "ign_tiles": [
+          "ign/tiles/5569-16.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "cccd46dcdb3800b6256674d7",
+      "row_key": "14612b89bc77aa67c9b7a803",
+      "lineage": {
+        "public_way_id": "641063491",
+        "version": "1",
+        "label": "hiking",
+        "regions": [
+          "ushuaia"
+        ],
+        "network_key": "4c531e51cedbcbea5834aa5d",
+        "ign_tiles": [
+          "ign/tiles/5569-16.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "cccd46dcdb3800b6256674d7",
+      "row_key": "1f169513cfdf313e6cfe1cee",
+      "lineage": {
+        "public_way_id": "641063493",
+        "version": "1",
+        "label": "hiking",
+        "regions": [
+          "ushuaia"
+        ],
+        "network_key": "4c531e51cedbcbea5834aa5d",
+        "ign_tiles": [
+          "ign/tiles/5569-16.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "cccd46dcdb3800b6256674d7",
+      "row_key": "55af324e803f829b27ac1e6d",
+      "lineage": {
+        "public_way_id": "641063494",
+        "version": "1",
+        "label": "hiking",
+        "regions": [
+          "ushuaia"
+        ],
+        "network_key": "4c531e51cedbcbea5834aa5d",
+        "ign_tiles": [
+          "ign/tiles/5569-16.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "cccd46dcdb3800b6256674d7",
+      "row_key": "a4c8afc269c4e7ec27eac424",
+      "lineage": {
+        "public_way_id": "641063496",
+        "version": "1",
+        "label": "hiking",
+        "regions": [
+          "ushuaia"
+        ],
+        "network_key": "4c531e51cedbcbea5834aa5d",
+        "ign_tiles": [
+          "ign/tiles/5569-16.zip"
+        ],
+        "dem_sampling_points": 8
+      }
+    },
+    {
+      "group_key": "cccd46dcdb3800b6256674d7",
+      "row_key": "ec81cc302a5f5d9c00fc6b30",
+      "lineage": {
+        "public_way_id": "641063502",
+        "version": "2",
+        "label": "hiking",
+        "regions": [
+          "ushuaia"
+        ],
+        "network_key": "92528a6ce4003e6e5cfe1ca7",
+        "ign_tiles": [
+          "ign/tiles/5569-16.zip"
+        ],
+        "dem_sampling_points": 3
+      }
+    },
+    {
+      "group_key": "cccd46dcdb3800b6256674d7",
+      "row_key": "7c4d2c8fb5862f1268eebbbe",
+      "lineage": {
+        "public_way_id": "641063505",
+        "version": "1",
+        "label": "hiking",
+        "regions": [
+          "ushuaia"
+        ],
+        "network_key": "3cf7b4919c87415994a20a1f",
+        "ign_tiles": [
+          "ign/tiles/5569-16.zip"
+        ],
+        "dem_sampling_points": 9
+      }
+    },
+    {
+      "group_key": "cccd46dcdb3800b6256674d7",
+      "row_key": "edc7e9f2557ede7fbffca146",
+      "lineage": {
+        "public_way_id": "641063506",
+        "version": "2",
+        "label": "hiking",
+        "regions": [
+          "ushuaia"
+        ],
+        "network_key": "4c531e51cedbcbea5834aa5d",
+        "ign_tiles": [
+          "ign/tiles/5569-16.zip"
+        ],
+        "dem_sampling_points": 7
+      }
+    },
+    {
+      "group_key": "cccd46dcdb3800b6256674d7",
+      "row_key": "b059c760b9c5f936f0bc0f30",
+      "lineage": {
+        "public_way_id": "641063507",
+        "version": "1",
+        "label": "hiking",
+        "regions": [
+          "ushuaia"
+        ],
+        "network_key": "4c531e51cedbcbea5834aa5d",
+        "ign_tiles": [
+          "ign/tiles/5569-16.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "cccd46dcdb3800b6256674d7",
+      "row_key": "bb99340f1c55e96b511b381c",
+      "lineage": {
+        "public_way_id": "641063508",
+        "version": "1",
+        "label": "hiking",
+        "regions": [
+          "ushuaia"
+        ],
+        "network_key": "aebe316719ca4e424bcd8bd0",
+        "ign_tiles": [
+          "ign/tiles/5569-16.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "cccd46dcdb3800b6256674d7",
+      "row_key": "0506850577fd504cc7cc2130",
+      "lineage": {
+        "public_way_id": "641063509",
+        "version": "1",
+        "label": "hiking",
+        "regions": [
+          "ushuaia"
+        ],
+        "network_key": "4c531e51cedbcbea5834aa5d",
+        "ign_tiles": [
+          "ign/tiles/5569-16.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "cccd46dcdb3800b6256674d7",
+      "row_key": "7d1968703f062c119574d123",
+      "lineage": {
+        "public_way_id": "641193880",
+        "version": "2",
+        "label": "hiking",
+        "regions": [
+          "ushuaia"
+        ],
+        "network_key": "4c531e51cedbcbea5834aa5d",
+        "ign_tiles": [
+          "ign/tiles/5569-16.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "cccd46dcdb3800b6256674d7",
+      "row_key": "158764f03192950d0d8f0265",
+      "lineage": {
+        "public_way_id": "641193887",
+        "version": "2",
+        "label": "hiking",
+        "regions": [
+          "ushuaia"
+        ],
+        "network_key": "4c531e51cedbcbea5834aa5d",
+        "ign_tiles": [
+          "ign/tiles/5569-16.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "cccd46dcdb3800b6256674d7",
+      "row_key": "d8bfcf1693a1ab3864d9723b",
+      "lineage": {
+        "public_way_id": "641193889",
+        "version": "2",
+        "label": "hiking",
+        "regions": [
+          "ushuaia"
+        ],
+        "network_key": "4c531e51cedbcbea5834aa5d",
+        "ign_tiles": [
+          "ign/tiles/5569-16.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "cccd46dcdb3800b6256674d7",
+      "row_key": "6ee82c56a80ccd66e3054630",
+      "lineage": {
+        "public_way_id": "641193891",
+        "version": "3",
+        "label": "hiking",
+        "regions": [
+          "ushuaia"
+        ],
+        "network_key": "4c531e51cedbcbea5834aa5d",
+        "ign_tiles": [
+          "ign/tiles/5569-16.zip"
+        ],
+        "dem_sampling_points": 3
+      }
+    },
+    {
+      "group_key": "cccd46dcdb3800b6256674d7",
+      "row_key": "244483fb6e6c013fb0820ec6",
+      "lineage": {
+        "public_way_id": "641193893",
+        "version": "3",
+        "label": "hiking",
+        "regions": [
+          "ushuaia"
+        ],
+        "network_key": "4c531e51cedbcbea5834aa5d",
+        "ign_tiles": [
+          "ign/tiles/5569-16.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "cccd46dcdb3800b6256674d7",
+      "row_key": "02a11f02f0fc6bdca2d181aa",
+      "lineage": {
+        "public_way_id": "641193897",
+        "version": "2",
+        "label": "hiking",
+        "regions": [
+          "ushuaia"
+        ],
+        "network_key": "4c531e51cedbcbea5834aa5d",
+        "ign_tiles": [
+          "ign/tiles/5569-16.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "cccd46dcdb3800b6256674d7",
+      "row_key": "a680ad768aa5355a7a76fcbc",
+      "lineage": {
+        "public_way_id": "641314485",
+        "version": "3",
+        "label": "hiking",
+        "regions": [
+          "ushuaia"
+        ],
+        "network_key": "b84c00d9c017ebc6c92f2d1d",
+        "ign_tiles": [
+          "ign/tiles/5569-16.zip"
+        ],
+        "dem_sampling_points": 69
+      }
+    },
+    {
+      "group_key": "cccd46dcdb3800b6256674d7",
+      "row_key": "b1b23c51e04968066176cb4b",
+      "lineage": {
+        "public_way_id": "641314489",
+        "version": "1",
+        "label": "hiking",
+        "regions": [
+          "ushuaia"
+        ],
+        "network_key": "b84c00d9c017ebc6c92f2d1d",
+        "ign_tiles": [
+          "ign/tiles/5569-17.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "cccd46dcdb3800b6256674d7",
+      "row_key": "ee27cd28c272817f66a5098b",
+      "lineage": {
+        "public_way_id": "641314492",
+        "version": "1",
+        "label": "hiking",
+        "regions": [
+          "ushuaia"
+        ],
+        "network_key": "b84c00d9c017ebc6c92f2d1d",
+        "ign_tiles": [
+          "ign/tiles/5569-17.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "cccd46dcdb3800b6256674d7",
+      "row_key": "0e7bd07aaf749f01b273d333",
+      "lineage": {
+        "public_way_id": "641314496",
+        "version": "1",
+        "label": "hiking",
+        "regions": [
+          "ushuaia"
+        ],
+        "network_key": "b84c00d9c017ebc6c92f2d1d",
+        "ign_tiles": [
+          "ign/tiles/5569-17.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "cccd46dcdb3800b6256674d7",
+      "row_key": "8b64291b1141dd0fa08419c2",
+      "lineage": {
+        "public_way_id": "641314497",
+        "version": "1",
+        "label": "hiking",
+        "regions": [
+          "ushuaia"
+        ],
+        "network_key": "b84c00d9c017ebc6c92f2d1d",
+        "ign_tiles": [
+          "ign/tiles/5569-17.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "cccd46dcdb3800b6256674d7",
+      "row_key": "0dcc4b47f5c33ff85e9b2187",
+      "lineage": {
+        "public_way_id": "641314508",
+        "version": "2",
+        "label": "hiking",
+        "regions": [
+          "ushuaia"
+        ],
+        "network_key": "b84c00d9c017ebc6c92f2d1d",
+        "ign_tiles": [
+          "ign/tiles/5569-17.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "cccd46dcdb3800b6256674d7",
+      "row_key": "32a32049879f25797c6e0bdb",
+      "lineage": {
+        "public_way_id": "641317555",
+        "version": "3",
+        "label": "mountain_hiking",
+        "regions": [
+          "ushuaia"
+        ],
+        "network_key": "f0252ff615801f4b641e0233",
+        "ign_tiles": [
+          "ign/tiles/5569-16.zip",
+          "ign/tiles/5569-17.zip"
+        ],
+        "dem_sampling_points": 67
+      }
+    },
+    {
+      "group_key": "cccd46dcdb3800b6256674d7",
+      "row_key": "a6f86d974fde08d8727b955f",
+      "lineage": {
+        "public_way_id": "641317557",
+        "version": "1",
+        "label": "hiking",
+        "regions": [
+          "ushuaia"
+        ],
+        "network_key": "f0252ff615801f4b641e0233",
+        "ign_tiles": [
+          "ign/tiles/5569-17.zip"
+        ],
+        "dem_sampling_points": 3
+      }
+    },
+    {
+      "group_key": "cccd46dcdb3800b6256674d7",
+      "row_key": "b72bbd6577f2787f384b912b",
+      "lineage": {
+        "public_way_id": "641317559",
+        "version": "1",
+        "label": "hiking",
+        "regions": [
+          "ushuaia"
+        ],
+        "network_key": "f0252ff615801f4b641e0233",
+        "ign_tiles": [
+          "ign/tiles/5569-17.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "cccd46dcdb3800b6256674d7",
+      "row_key": "a68d5acee98937f7f94be082",
+      "lineage": {
+        "public_way_id": "641317560",
+        "version": "2",
+        "label": "hiking",
+        "regions": [
+          "ushuaia"
+        ],
+        "network_key": "f0252ff615801f4b641e0233",
+        "ign_tiles": [
+          "ign/tiles/5569-17.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "cccd46dcdb3800b6256674d7",
+      "row_key": "7cecc08b6b7da35852fceea8",
+      "lineage": {
+        "public_way_id": "641317563",
+        "version": "2",
+        "label": "hiking",
+        "regions": [
+          "ushuaia"
+        ],
+        "network_key": "f0252ff615801f4b641e0233",
+        "ign_tiles": [
+          "ign/tiles/5569-17.zip"
+        ],
+        "dem_sampling_points": 4
+      }
+    },
+    {
+      "group_key": "cccd46dcdb3800b6256674d7",
+      "row_key": "61500b72dc57f9088b4fb2a0",
+      "lineage": {
+        "public_way_id": "641317564",
+        "version": "1",
+        "label": "hiking",
+        "regions": [
+          "ushuaia"
+        ],
+        "network_key": "f0252ff615801f4b641e0233",
+        "ign_tiles": [
+          "ign/tiles/5569-17.zip"
+        ],
+        "dem_sampling_points": 5
+      }
+    },
+    {
+      "group_key": "cccd46dcdb3800b6256674d7",
+      "row_key": "ee9470f02109a5d64bf3ab88",
+      "lineage": {
+        "public_way_id": "641317565",
+        "version": "1",
+        "label": "hiking",
+        "regions": [
+          "ushuaia"
+        ],
+        "network_key": "f0252ff615801f4b641e0233",
+        "ign_tiles": [
+          "ign/tiles/5569-17.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "cccd46dcdb3800b6256674d7",
+      "row_key": "9a7611466a8d733300dea724",
+      "lineage": {
+        "public_way_id": "641388888",
+        "version": "1",
+        "label": "mountain_hiking",
+        "regions": [
+          "ushuaia"
+        ],
+        "network_key": "f0252ff615801f4b641e0233",
+        "ign_tiles": [
+          "ign/tiles/5569-17.zip"
+        ],
+        "dem_sampling_points": 5
+      }
+    },
+    {
+      "group_key": "cccd46dcdb3800b6256674d7",
+      "row_key": "8e0d9f0f5a68a265a2c66dd8",
+      "lineage": {
+        "public_way_id": "641388889",
+        "version": "1",
+        "label": "hiking",
+        "regions": [
+          "ushuaia"
+        ],
+        "network_key": "ae6342462082794d1bb7ba5a",
+        "ign_tiles": [
+          "ign/tiles/5569-17.zip"
+        ],
+        "dem_sampling_points": 5
+      }
+    },
+    {
+      "group_key": "cccd46dcdb3800b6256674d7",
+      "row_key": "03279c05d8cacf9f5422ac54",
+      "lineage": {
+        "public_way_id": "641388891",
+        "version": "1",
+        "label": "hiking",
+        "regions": [
+          "ushuaia"
+        ],
+        "network_key": "ae6342462082794d1bb7ba5a",
+        "ign_tiles": [
+          "ign/tiles/5569-17.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "cccd46dcdb3800b6256674d7",
+      "row_key": "e2ef92c05351c6a8ff9d7328",
+      "lineage": {
+        "public_way_id": "641388892",
+        "version": "1",
+        "label": "hiking",
+        "regions": [
+          "ushuaia"
+        ],
+        "network_key": "ae6342462082794d1bb7ba5a",
+        "ign_tiles": [
+          "ign/tiles/5569-17.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "cccd46dcdb3800b6256674d7",
+      "row_key": "7b9a11148728a9038ac806bc",
+      "lineage": {
+        "public_way_id": "641388894",
+        "version": "1",
+        "label": "hiking",
+        "regions": [
+          "ushuaia"
+        ],
+        "network_key": "ae6342462082794d1bb7ba5a",
+        "ign_tiles": [
+          "ign/tiles/5569-17.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "cccd46dcdb3800b6256674d7",
+      "row_key": "2f4db2df9af28967460206ce",
+      "lineage": {
+        "public_way_id": "641388898",
+        "version": "1",
+        "label": "hiking",
+        "regions": [
+          "ushuaia"
+        ],
+        "network_key": "ae6342462082794d1bb7ba5a",
+        "ign_tiles": [
+          "ign/tiles/5569-17.zip"
+        ],
+        "dem_sampling_points": 4
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "46921ed8b0cee926f8a9a59d",
+      "lineage": {
+        "public_way_id": "648524912",
+        "version": "4",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 3
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "bb4ef39decfaa76175b48ba6",
+      "lineage": {
+        "public_way_id": "649496970",
+        "version": "4",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-26.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "3c16b7c3a0e7bf53c0bfe4f0",
+      "lineage": {
+        "public_way_id": "649496974",
+        "version": "7",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-26.zip"
+        ],
+        "dem_sampling_points": 8
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "54d33b82d74726087e6f5f66",
+      "lineage": {
+        "public_way_id": "649496978",
+        "version": "5",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip",
+          "ign/tiles/4972-26.zip"
+        ],
+        "dem_sampling_points": 14
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "2f4d13179dd3cf423a731047",
+      "lineage": {
+        "public_way_id": "649496983",
+        "version": "8",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip",
+          "ign/tiles/4972-26.zip"
+        ],
+        "dem_sampling_points": 29
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "6045fb681999889fa728d2fc",
+      "lineage": {
+        "public_way_id": "649496985",
+        "version": "6",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-26.zip"
+        ],
+        "dem_sampling_points": 4
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "b52010815e84bb62206fe22c",
+      "lineage": {
+        "public_way_id": "649496986",
+        "version": "2",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-26.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "c1ca825398df5cf32302f597",
+      "lineage": {
+        "public_way_id": "650600025",
+        "version": "7",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "5d0b78900114e61515daccd4",
+      "lineage": {
+        "public_way_id": "650622036",
+        "version": "3",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "8b1c722d9d1235f52e61cb69",
+      "lineage": {
+        "public_way_id": "650622037",
+        "version": "7",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 9
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "fac20d1b28582b7c10cb7807",
+      "lineage": {
+        "public_way_id": "650622038",
+        "version": "3",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "93cdbf6369862dffb90a50f6",
+      "lineage": {
+        "public_way_id": "650622039",
+        "version": "8",
+        "label": "mountain_hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-19.zip",
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 32
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "b744fd2c4a4d69a545219ac0",
+      "lineage": {
+        "public_way_id": "650622040",
+        "version": "3",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "6f9945706831c41075e12061",
+      "lineage": {
+        "public_way_id": "650622041",
+        "version": "3",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "a571e8c4dde9900e9badf274",
+      "lineage": {
+        "public_way_id": "650622044",
+        "version": "6",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 14
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "96219e9938661849945baccf",
+      "lineage": {
+        "public_way_id": "650622046",
+        "version": "5",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 9
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "43c0f43bfcd34f2844be2e8f",
+      "lineage": {
+        "public_way_id": "650622047",
+        "version": "3",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 4
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "debc846db37680b0bc0fc958",
+      "lineage": {
+        "public_way_id": "650639371",
+        "version": "6",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 13
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "bbe42584bca381ce0d9475a2",
+      "lineage": {
+        "public_way_id": "650639375",
+        "version": "3",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "1d655a80f4e5ea469af94e7b",
+      "lineage": {
+        "public_way_id": "650639376",
+        "version": "3",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "887047d619d496976867d970",
+      "lineage": {
+        "public_way_id": "650695858",
+        "version": "4",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 3
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "84901ef88db292e384e73e94",
+      "lineage": {
+        "public_way_id": "650695859",
+        "version": "3",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "bbf141cae8ff393353cacb9d",
+      "lineage": {
+        "public_way_id": "650695861",
+        "version": "5",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 5
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "ecebce800f95ab01108da012",
+      "lineage": {
+        "public_way_id": "650695862",
+        "version": "3",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "e6df1c905a4654a99f9845e1",
+      "lineage": {
+        "public_way_id": "650722058",
+        "version": "5",
+        "label": "mountain_hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 14
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "1fe54f90a0465a01bc3516d3",
+      "lineage": {
+        "public_way_id": "650729916",
+        "version": "2",
+        "label": "mountain_hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 25
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "09eb0af76245f954de66ba1b",
+      "lineage": {
+        "public_way_id": "650838008",
+        "version": "8",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 28
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "4af7b33ad24be86cf244b8cd",
+      "lineage": {
+        "public_way_id": "650838009",
+        "version": "4",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "972569cc79d572359ba913a7",
+      "lineage": {
+        "public_way_id": "650838010",
+        "version": "6",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 13
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "374ec804681731359332daaa",
+      "lineage": {
+        "public_way_id": "650838011",
+        "version": "4",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "3c0302a6120129a22d410308",
+      "lineage": {
+        "public_way_id": "650838013",
+        "version": "3",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "0bf04eea15d0800c29e25d27",
+      "lineage": {
+        "public_way_id": "650838014",
+        "version": "5",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "8af9ba576a7bb9632874220f",
+      "lineage": {
+        "public_way_id": "650838017",
+        "version": "7",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 9
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "20030230d4921ee61cb7ab4b",
+      "lineage": {
+        "public_way_id": "650838020",
+        "version": "5",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "59585f2121d7870cc36059ac",
+      "lineage": {
+        "public_way_id": "650838021",
+        "version": "4",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "e9271ab1a580438eea8e2964",
+      "lineage": {
+        "public_way_id": "650838023",
+        "version": "2",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "6bd1bfba8e37886ffee8ba49",
+      "lineage": {
+        "public_way_id": "650838026",
+        "version": "8",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "8bb96f049eb8562b1b985946",
+      "lineage": {
+        "public_way_id": "650838028",
+        "version": "5",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 19
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "2d88cab593c2f9b5afd28cd7",
+      "lineage": {
+        "public_way_id": "650838029",
+        "version": "4",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 8
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "26e410b70d8e04e2cbc50dc5",
+      "lineage": {
+        "public_way_id": "650838030",
+        "version": "3",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "a47c34f939b9aefcd4365d81",
+      "lineage": {
+        "public_way_id": "650838031",
+        "version": "6",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "5cbe3eae9520bb8eecafe054",
+      "lineage": {
+        "public_way_id": "650838032",
+        "version": "3",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "d61a3b9387299def570f82b4",
+      "lineage": {
+        "public_way_id": "650850340",
+        "version": "3",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "a587eec53ba1743cfe776be3",
+      "lineage": {
+        "public_way_id": "650850341",
+        "version": "4",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "ed25cf29e5f2cdcec60fd2bf",
+      "lineage": {
+        "public_way_id": "650850342",
+        "version": "6",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "612875f2b5e8a8a4c7ffecfb",
+      "lineage": {
+        "public_way_id": "650850343",
+        "version": "7",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 6
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "ca8da62bcee7e1a62cd768f1",
+      "lineage": {
+        "public_way_id": "650850344",
+        "version": "12",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 17
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "e3601e0c3b192348a22c0498",
+      "lineage": {
+        "public_way_id": "650854282",
+        "version": "1",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "fb4bc96fdd77c271a4c16d21",
+        "ign_tiles": [
+          "ign/tiles/4972-26.zip"
+        ],
+        "dem_sampling_points": 4
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "1c552f2205fcd4a1fff92791",
+      "lineage": {
+        "public_way_id": "650854285",
+        "version": "1",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "fb4bc96fdd77c271a4c16d21",
+        "ign_tiles": [
+          "ign/tiles/4972-26.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "f578a52c7a1f90f87caf158c",
+      "lineage": {
+        "public_way_id": "650854288",
+        "version": "2",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "fb4bc96fdd77c271a4c16d21",
+        "ign_tiles": [
+          "ign/tiles/4972-26.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "07d91177ac669d82138bd776",
+      "lineage": {
+        "public_way_id": "650854294",
+        "version": "5",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "fb4bc96fdd77c271a4c16d21",
+        "ign_tiles": [
+          "ign/tiles/4972-26.zip"
+        ],
+        "dem_sampling_points": 55
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "876033cc6f16b7984ee3b5c8",
+      "lineage": {
+        "public_way_id": "650854298",
+        "version": "3",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "fb4bc96fdd77c271a4c16d21",
+        "ign_tiles": [
+          "ign/tiles/4972-26.zip"
+        ],
+        "dem_sampling_points": 9
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "a65bc03d6f4c3c3b2ee278d6",
+      "lineage": {
+        "public_way_id": "651006727",
+        "version": "6",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "fb4bc96fdd77c271a4c16d21",
+        "ign_tiles": [
+          "ign/tiles/4972-26.zip"
+        ],
+        "dem_sampling_points": 5
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "75efec7b4b486158eab36cd3",
+      "lineage": {
+        "public_way_id": "651006728",
+        "version": "4",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "fb4bc96fdd77c271a4c16d21",
+        "ign_tiles": [
+          "ign/tiles/4972-26.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "6aad6047491da3e36a67345b",
+      "lineage": {
+        "public_way_id": "654089062",
+        "version": "2",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "fb4bc96fdd77c271a4c16d21",
+        "ign_tiles": [
+          "ign/tiles/4972-26.zip"
+        ],
+        "dem_sampling_points": 34
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "9ed93a9059072617c769889c",
+      "lineage": {
+        "public_way_id": "654089063",
+        "version": "3",
+        "label": "mountain_hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "fb4bc96fdd77c271a4c16d21",
+        "ign_tiles": [
+          "ign/tiles/4972-26.zip"
+        ],
+        "dem_sampling_points": 28
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "187b98e358ba226fe321b807",
+      "lineage": {
+        "public_way_id": "654089066",
+        "version": "1",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "fb4bc96fdd77c271a4c16d21",
+        "ign_tiles": [
+          "ign/tiles/4972-26.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "4c395b827562a330a29fc098",
+      "lineage": {
+        "public_way_id": "654090069",
+        "version": "3",
+        "label": "demanding_mountain_hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "fb4bc96fdd77c271a4c16d21",
+        "ign_tiles": [
+          "ign/tiles/4972-26.zip"
+        ],
+        "dem_sampling_points": 15
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "6a60d5635a0a47749c958b5a",
+      "lineage": {
+        "public_way_id": "654219392",
+        "version": "3",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "fb4bc96fdd77c271a4c16d21",
+        "ign_tiles": [
+          "ign/tiles/4972-26.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "4eefbf7b1d628d44a4adc20e",
+      "lineage": {
+        "public_way_id": "654219395",
+        "version": "6",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "fb4bc96fdd77c271a4c16d21",
+        "ign_tiles": [
+          "ign/tiles/4972-25.zip",
+          "ign/tiles/4972-26.zip"
+        ],
+        "dem_sampling_points": 110
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "07a0568a49e7d2909700ccb7",
+      "lineage": {
+        "public_way_id": "654219398",
+        "version": "4",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "fb4bc96fdd77c271a4c16d21",
+        "ign_tiles": [
+          "ign/tiles/4972-26.zip"
+        ],
+        "dem_sampling_points": 4
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "2237d231333f42476bda6497",
+      "lineage": {
+        "public_way_id": "654219399",
+        "version": "3",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "fb4bc96fdd77c271a4c16d21",
+        "ign_tiles": [
+          "ign/tiles/4972-26.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "34727838434d85abd887efd9",
+      "lineage": {
+        "public_way_id": "657451185",
+        "version": "5",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "03d7d751056742041855ba35",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 11
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "304019e735cf51b1a12bc123",
+      "lineage": {
+        "public_way_id": "674138515",
+        "version": "6",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "fb4bc96fdd77c271a4c16d21",
+        "ign_tiles": [
+          "ign/tiles/4972-26.zip"
+        ],
+        "dem_sampling_points": 18
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "34f8acee227670ee5b038e8d",
+      "lineage": {
+        "public_way_id": "674139281",
+        "version": "5",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 7
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "5647a94a0cb6d573d1695065",
+      "lineage": {
+        "public_way_id": "674139283",
+        "version": "2",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "16d4dd42cec7d9d4e1241090",
+      "lineage": {
+        "public_way_id": "674139284",
+        "version": "4",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 17
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "d10e6397e0712934d08aac86",
+      "lineage": {
+        "public_way_id": "674142019",
+        "version": "4",
+        "label": "mountain_hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "8f46a873ee3666d3cffb6886",
+        "ign_tiles": [
+          "ign/tiles/4972-19.zip"
+        ],
+        "dem_sampling_points": 18
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "6371b1abf03983589c285ac4",
+      "lineage": {
+        "public_way_id": "674145522",
+        "version": "3",
+        "label": "difficult_alpine_hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "8f46a873ee3666d3cffb6886",
+        "ign_tiles": [
+          "ign/tiles/4972-19.zip"
+        ],
+        "dem_sampling_points": 17
+      }
+    },
+    {
+      "group_key": "4f2843b0ea4912f992df80ab",
+      "row_key": "6b8d0df24e72b590aa633075",
+      "lineage": {
+        "public_way_id": "674943956",
+        "version": "1",
+        "label": "hiking",
+        "regions": [
+          "bolson"
+        ],
+        "network_key": "d412b4d9b6b8e97fe4af0fea",
+        "ign_tiles": [
+          "ign/tiles/4172-34.zip"
+        ],
+        "dem_sampling_points": 11
+      }
+    },
+    {
+      "group_key": "4f2843b0ea4912f992df80ab",
+      "row_key": "c2af160f3e025b0216f05c22",
+      "lineage": {
+        "public_way_id": "674981202",
+        "version": "1",
+        "label": "alpine_hiking",
+        "regions": [
+          "bolson"
+        ],
+        "network_key": "9ea7dbd9fc57fe9872ba7189",
+        "ign_tiles": [
+          "ign/tiles/4172-34.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "4f2843b0ea4912f992df80ab",
+      "row_key": "b3fef804caf1b5c18a56dcd7",
+      "lineage": {
+        "public_way_id": "674981204",
+        "version": "1",
+        "label": "demanding_mountain_hiking",
+        "regions": [
+          "bolson"
+        ],
+        "network_key": "9ea7dbd9fc57fe9872ba7189",
+        "ign_tiles": [
+          "ign/tiles/4172-34.zip"
+        ],
+        "dem_sampling_points": 6
+      }
+    },
+    {
+      "group_key": "4f2843b0ea4912f992df80ab",
+      "row_key": "89d2f1889b5d779e0360bc8d",
+      "lineage": {
+        "public_way_id": "674981207",
+        "version": "2",
+        "label": "mountain_hiking",
+        "regions": [
+          "bolson"
+        ],
+        "network_key": "333480ea459737df42ce657d",
+        "ign_tiles": [
+          "ign/tiles/4172-34.zip"
+        ],
+        "dem_sampling_points": 9
+      }
+    },
+    {
+      "group_key": "cccd46dcdb3800b6256674d7",
+      "row_key": "32ee03f83bbde3f021b0eb9d",
+      "lineage": {
+        "public_way_id": "68895228",
+        "version": "3",
+        "label": "hiking",
+        "regions": [
+          "ushuaia"
+        ],
+        "network_key": "b84c00d9c017ebc6c92f2d1d",
+        "ign_tiles": [
+          "ign/tiles/5569-17.zip"
+        ],
+        "dem_sampling_points": 5
+      }
+    },
+    {
+      "group_key": "cccd46dcdb3800b6256674d7",
+      "row_key": "177c58b3c6fcc34fd92bb3c8",
+      "lineage": {
+        "public_way_id": "696265452",
+        "version": "1",
+        "label": "hiking",
+        "regions": [
+          "ushuaia"
+        ],
+        "network_key": "4c531e51cedbcbea5834aa5d",
+        "ign_tiles": [
+          "ign/tiles/5569-16.zip"
+        ],
+        "dem_sampling_points": 2
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "e153a4be6b5c323c46d15222",
+      "lineage": {
+        "public_way_id": "868871574",
+        "version": "3",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "fb4bc96fdd77c271a4c16d21",
+        "ign_tiles": [
+          "ign/tiles/4972-26.zip"
+        ],
+        "dem_sampling_points": 6
+      }
+    },
+    {
+      "group_key": "01bde7c5a42fbf20c655c158",
+      "row_key": "e836b8e8dd8fbd7f407b25c2",
+      "lineage": {
+        "public_way_id": "909739751",
+        "version": "5",
+        "label": "hiking",
+        "regions": [
+          "chalten"
+        ],
+        "network_key": "4044fc346a692c4f6c821e43",
+        "ign_tiles": [
+          "ign/tiles/4972-20.zip"
+        ],
+        "dem_sampling_points": 10
+      }
+    }
+  ]
+}

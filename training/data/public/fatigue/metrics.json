@@ -1,12 +1,11 @@
 {
-  "schema_version": 2,
+  "schema_version": 3,
   "dataset": {
     "name": "Fatiga observada \u2014 Borg nativo",
     "declared_source": "GeoFatigue / University of Calgary",
     "source_note": "Respuestas Borg originales durante tareas al aire libre con carga de 20 minutos. Eval\u00faa esa tarea; falta validar caminatas y uso cl\u00ednico.",
     "rows_total": 666,
     "rows_train": 487,
-    "rows_train_after_augmentation": 487,
     "rows_test": 179,
     "rows_by_label": {
       "Borg 1": 8,
@@ -24,25 +23,8 @@
       "elapsed_minutes"
     ]
   },
-  "augmentation": {
-    "used": false,
-    "synthetic_rows": 0,
-    "synthetic_to_real_train_ratio": 0.0,
-    "requires_approval": false,
-    "authorization": "User permits augmentation within training folds only"
-  },
   "metrics": {
     "train": {
-      "accuracy": 0.5071868583162218,
-      "precision_macro": 0.4577181327795415,
-      "recall_macro": 0.7061522577588172,
-      "f1_macro": 0.49494217490212855,
-      "precision_weighted": 0.5753346290964892,
-      "recall_weighted": 0.5071868583162218,
-      "f1_weighted": 0.5102335947621216,
-      "support": 487
-    },
-    "train_real": {
       "accuracy": 0.5071868583162218,
       "precision_macro": 0.4577181327795415,
       "recall_macro": 0.7061522577588172,
@@ -74,14 +56,13 @@
     "underfitting_risk": true,
     "high_variance_risk": false,
     "insufficient_real_data": true,
-    "high_synthetic_ratio": false,
     "train_test_f1_gap": 0.30457092973941036,
     "warnings": [
       "Respuestas Borg originales durante tareas al aire libre con carga de 20 minutos. Eval\u00faa esa tarea; falta validar caminatas y uso cl\u00ednico.",
       "Dataset real chico: sumar muestras reales por clase antes de usar estas metricas como evidencia de performance en campo.",
       "Posible overfitting: la diferencia de F1 macro entre train y test es 0.30.",
       "Posible underfitting: el F1 macro de test esta por debajo del umbral minimo (0.60).",
-      "Entrenamiento sin augmentation; todas las filas base provienen de observaciones p\u00fablicas."
+      "Todas las filas de entrenamiento, validaci\u00f3n y prueba son observaciones p\u00fablicas; no se generan datos sint\u00e9ticos."
     ]
   },
   "accuracy": 0.24022346368715083,
@@ -266,14 +247,34 @@
       "support": 179.0
     }
   },
-  "trained_at": "2026-10-13T22:55:26.842904+00:00",
+  "trained_at": "2026-10-15T17:36:54.466410+00:00",
   "evaluation_validity": {
     "real_public_ground_truth": true,
     "status": "observed_public_labels_group_holdout",
     "reason": "Respuestas Borg originales durante tareas al aire libre con carga de 20 minutos. Eval\u00faa esa tarea; falta validar caminatas y uso cl\u00ednico.",
     "deployment_approved": false,
     "native_labels": true,
-    "test_synthetic_rows": 0
+    "synthetic_rows": 0
+  },
+  "baseline": {
+    "strategy": "most_frequent_training_label",
+    "label": "Borg 3",
+    "test_accuracy": 0.25139664804469275,
+    "training_counts": {
+      "Borg 3": 140,
+      "Borg 4": 113,
+      "Borg 5": 91,
+      "Borg 6": 54,
+      "Borg 2": 36,
+      "Borg 7": 31,
+      "Borg 8": 12,
+      "Borg 1": 6,
+      "Borg 9": 4
+    },
+    "tie_breaker": "First occurrence in original training partition; never select using test results",
+    "tied_labels_test_accuracy": {
+      "Borg 3": 0.25139664804469275
+    }
   },
   "hyperparameters": {
     "n_estimators": 150,
@@ -1035,8 +1036,7 @@
         "validation_groups": [
           "0a0ee34c6787105fe79acba7",
           "e35b505ef7eb740ddcc87d98"
-        ],
-        "synthetic_training_rows": 0
+        ]
       },
       {
         "train_groups": [
@@ -1070,8 +1070,7 @@
           "71d0357bce56370270979e77",
           "9a1630301f5ad4d11cf16274",
           "ce35e3b57b1434554447e8d8"
-        ],
-        "synthetic_training_rows": 0
+        ]
       },
       {
         "train_groups": [
@@ -1105,8 +1104,7 @@
           "c70691707725cc282d16f43c",
           "d786838cdaac74e32dbc386c",
           "dca18aa29c6cea11805a03bc"
-        ],
-        "synthetic_training_rows": 0
+        ]
       },
       {
         "train_groups": [
@@ -1140,8 +1138,7 @@
           "769cb9af2cbe7737fee8fe40",
           "c47a9a1ed876a406d41782a0",
           "e614007050fe35c8d4409f8e"
-        ],
-        "synthetic_training_rows": 0
+        ]
       },
       {
         "train_groups": [
@@ -1175,16 +1172,10 @@
           "6fb57c0483be1235bb12fd53",
           "b52c4ae6d0a111dea813157e",
           "db7fc239f4a7453ddeb0247f"
-        ],
-        "synthetic_training_rows": 0
+        ]
       }
     ],
     "provenance_sha256": "bfbaa487f9ea20c125e0b637cee5b94576c644b140c780d8c00a758193234004"
   },
-  "test_predictions_sha256": "2b3cf23f0bd0ec344b9e13f299f3ddf8f475c12ea93166d5bbc33584fa577575",
-  "baseline": {
-    "strategy": "most_frequent_training_label",
-    "label": "Borg 3",
-    "test_accuracy": 0.25139664804469275
-  }
+  "test_predictions_sha256": "2b3cf23f0bd0ec344b9e13f299f3ddf8f475c12ea93166d5bbc33584fa577575"
 }

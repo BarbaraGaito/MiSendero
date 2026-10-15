@@ -107,8 +107,9 @@ La evaluación vigente usa únicamente fuentes públicas con etiquetas independi
 respuestas Borg de GeoFatigue, AMS observado en un estudio de hipoxia controlada y
 `sac_scale` publicado en OpenStreetMap y dificultad oficial de recorridos APN. El relieve
 de 30 m del IGN complementa los predictores de OSM. Las particiones separan participantes,
-parques o regiones; el test queda fuera del entrenamiento, augmentation y validación cruzada.
-Los datasets históricos con contexto inventado o etiquetas por reglas están excluidos.
+parques o regiones; el test queda fuera del entrenamiento y la validación cruzada. No se
+generan datos sintéticos: los datasets, entrenadores y modelos históricos con contexto
+inventado o etiquetas por reglas fueron eliminados del repositorio.
 Para reproducir los artefactos de investigación con el entorno `.venv-ai` preparado:
 
 ```bash
@@ -117,10 +118,10 @@ npm run validate:ai-data
 npm run test:ai-data
 ```
 
-Estos resultados no aprueban uso en campo. Los modelos antiguos de la app quedan
-deshabilitados y los nuevos bosques mantienen sus etiquetas nativas y alcance de
-investigación. Ver `ai/datasets/README.md` para instalación, descarga y augmentation
-opcional solo en entrenamiento, y `docs/ai-real-data-audit.md` para resultados y fuentes.
+Estos resultados no aprueban uso en campo: la app no incluye ningún modelo aprobado y su
+motor de inferencia devuelve `sin_datos`. Los nuevos bosques mantienen sus etiquetas nativas
+y alcance de investigación. Ver `ai/datasets/README.md` para instalación y descarga, y
+`docs/ai-real-data-audit.md` para resultados y fuentes.
 
 ## Desviaciones conscientes respecto del documento del proyecto
 

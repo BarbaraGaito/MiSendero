@@ -65,7 +65,9 @@ forzar esa coincidencia.
 - La altimetria usa Copernicus DEM GLO-90 mediante Open-Meteo. Es un modelo de
   terreno de resolucion aproximada de 90 m, no una medicion GPS de precision.
   El perfil queda almacenado en PostgreSQL y en las descargas offline.
-- Los nuevos senderos no tienen reportes de estado ni valoraciones simuladas.
+- Ningún sendero tiene reportes de estado ni valoraciones simuladas: los reportes solo
+  provienen de usuarios reales y el seed elimina los reportes de ejemplo que cargaban
+  versiones anteriores.
 
 ## Actualizacion reproducible
 

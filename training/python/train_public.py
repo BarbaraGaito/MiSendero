@@ -17,7 +17,6 @@ from sklearn.metrics import f1_score
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import GroupKFold, GroupShuffleSplit
 
-from common.augment import augment_dataset
 from common.evaluation import evaluate_training_run
 from common.export_forest import export_random_forest
 from public_sources import ADAPTERS, OUTPUT, ROOT, build_public_dataset, digest
@@ -49,18 +48,7 @@ def group_split(frame: pd.DataFrame, geographic_holdout: dict | None = None):
     return train, test
 
 
-def augmented(features, labels, enabled):
-    if not enabled:
-        return features, labels, 0
-    if any(name.startswith("distance_basis_") or name.startswith("duration_basis_") or name.startswith("dem_") for name in features.columns):
-        raise ValueError("Augmentation for APN categorical route bases and linked DEM features requires a validated joint transformation; use original observations")
-    rows = features.reset_index(drop=True).copy()
-    rows["label"] = labels.to_numpy()
-    result = augment_dataset(rows, "label", list(features.columns), target_rows_per_label=80)
-    return result[list(features.columns)], result["label"], len(result)-len(rows)
-
-
-def grouped_cv(features, labels, groups, params, use_augmentation):
+def grouped_cv(features, labels, groups, params):
     splits = min(5, groups.nunique())
     if splits < 2:
         raise ValueError("Insufficient training groups for grouped validation")
@@ -68,12 +56,11 @@ def grouped_cv(features, labels, groups, params, use_augmentation):
     for train, validation in GroupKFold(n_splits=splits).split(features, labels, groups):
         if set(groups.iloc[train]) & set(groups.iloc[validation]):
             raise AssertionError("CV group leakage")
-        x_fit, y_fit, synthetic = augmented(features.iloc[train], labels.iloc[train], use_augmentation)
         clf = RandomForestClassifier(**params, random_state=42, class_weight="balanced")
-        clf.fit(x_fit, y_fit.to_numpy(dtype=str))
+        clf.fit(features.iloc[train], labels.iloc[train].to_numpy(dtype=str))
         prediction = clf.predict(features.iloc[validation])
         scores.append(float(f1_score(labels.iloc[validation], prediction, labels=sorted(labels.unique()), average="macro", zero_division=0)))
-        folds.append({"train_groups": sorted(set(groups.iloc[train])), "validation_groups": sorted(set(groups.iloc[validation])), "synthetic_training_rows": synthetic})
+        folds.append({"train_groups": sorted(set(groups.iloc[train])), "validation_groups": sorted(set(groups.iloc[validation]))})
     return {"folds": splits, "f1_macro_mean": float(np.mean(scores)), "f1_macro_std": float(np.std(scores)), "partitions": folds}
 
 
@@ -92,7 +79,7 @@ def baseline_for(y_train, y_test):
     }
 
 
-def train(model: str, use_augmentation: bool = False) -> dict:
+def train(model: str) -> dict:
     frame, provenance = build_public_dataset(model)
     features = provenance["features"]
     geographic_holdout = provenance["source"].get("geographic_holdout")
@@ -102,44 +89,35 @@ def train(model: str, use_augmentation: bool = False) -> dict:
     groups = frame.iloc[train_idx]["group_key"]
     if y_train.nunique() < 2:
         raise ValueError("Fixed training partition has fewer than two observed labels; no test-seed search permitted")
-    # Small train-only grid. Augmentation is re-created inside each CV fold.
+    # Small train-only grid; every fit uses observed public rows only.
     candidates = [{"n_estimators": 150, "max_depth": depth, "min_samples_leaf": leaf}
                   for depth in (4, 8) for leaf in (2, 5)]
-    scored = [(params, grouped_cv(x_train, y_train, groups, params, use_augmentation)) for params in candidates]
+    scored = [(params, grouped_cv(x_train, y_train, groups, params)) for params in candidates]
     params, cv = max(scored, key=lambda entry: entry[1]["f1_macro_mean"])
-    x_fit, y_fit, synthetic = augmented(x_train, y_train, use_augmentation)
     clf = RandomForestClassifier(**params, random_state=42, class_weight="balanced")
-    clf.fit(x_fit, y_fit.to_numpy(dtype=str))
+    clf.fit(x_train, y_train.to_numpy(dtype=str))
     labels = sorted(frame["label"].unique())
-    # The shared legacy evaluator's row-level CV is disabled here; our audited
-    # grouped CV above is the only approved cross-validation result.
+    # The audited grouped CV above is the only cross-validation result.
     metrics = evaluate_training_run(
         clf=clf, dataset_name={"fatigue": "Fatiga observada — Borg nativo", "physio_risk": "AMS observado — estudio nocturno", "route_difficulty": "Tramos argentinos — OSM + IGN", "apn_route_difficulty": "Recorridos argentinos — dificultad APN"}[model],
         declared_source=provenance["source"]["source"], source_note=provenance["source"]["scope"],
         feature_cols=features, labels=labels, full_features=frame[features], full_labels=frame["label"],
-        x_train=x_fit, x_test=x_test, y_train=y_fit, y_test=y_test,
-        x_train_real=x_train, y_train_real=y_train,
-        augmentation_used=use_augmentation and synthetic > 0, synthetic_rows=synthetic,
-        calculate_cross_validation=False,
+        x_train=x_train, x_test=x_test, y_train=y_train, y_test=y_test,
     )
     metrics["metrics"]["cross_validation"] = {k: v for k, v in cv.items() if k != "partitions"}
-    warnings = [w for w in metrics["guardrails"]["warnings"] if "aprobacion" not in w]
-    warnings.insert(0, provenance["source"]["scope"])
+    warnings = [provenance["source"]["scope"], *metrics["guardrails"]["warnings"]]
     unseen = sorted(set(y_test) - set(y_train))
     if unseen:
         warnings.append("Etiquetas observadas solo en test, sin ejemplos de entrenamiento: " + ", ".join(unseen))
-    if not use_augmentation:
-        warnings.append("Entrenamiento sin augmentation; todas las filas base provienen de observaciones públicas.")
+    warnings.append("Todas las filas de entrenamiento, validación y prueba son observaciones públicas; no se generan datos sintéticos.")
     metrics["guardrails"]["status"] = "requires_more_real_data" if metrics["guardrails"]["insufficient_real_data"] or groups.nunique() < 10 else "review_recommended"
     metrics["guardrails"]["warnings"] = warnings
     metrics["guardrails"]["high_variance_risk"] = cv["f1_macro_std"] > 0.18
-    metrics["augmentation"]["requires_approval"] = False
-    metrics["augmentation"]["authorization"] = "User permits augmentation within training folds only"
     metrics["trained_at"] = datetime.now(timezone.utc).isoformat()
     metrics["evaluation_validity"] = {
         "real_public_ground_truth": True, "status": "observed_public_labels_group_holdout",
         "reason": provenance["source"]["scope"], "deployment_approved": False,
-        "native_labels": True, "test_synthetic_rows": 0,
+        "native_labels": True, "synthetic_rows": 0,
     }
     metrics["baseline"] = baseline_for(y_train, y_test)
     metrics["hyperparameters"] = {**params, "selection_method": "cross_validated", "cv_folds": cv["folds"], "cv_f1_macro_mean": cv["f1_macro_mean"]}
@@ -167,10 +145,9 @@ def train(model: str, use_augmentation: bool = False) -> dict:
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--model", choices=list(ADAPTERS), action="append")
-    parser.add_argument("--augment", action="store_true", help="Generate rows only inside training folds")
     args = parser.parse_args()
     for model in args.model or list(ADAPTERS):
-        train(model, args.augment)
+        train(model)
 
 
 if __name__ == "__main__":

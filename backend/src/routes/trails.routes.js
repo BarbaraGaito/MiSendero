@@ -63,49 +63,6 @@ const getWeatherRecommendation = (riskLevel) => {
   return "Condiciones favorables para iniciar, manteniendo equipo basico, agua y seguimiento de la ruta.";
 };
 
-const getBaseTemperature = (isNorth, isPatagonia, isSummer) => {
-  if (isNorth) return isSummer ? 29 : 22;
-  if (isPatagonia) return isSummer ? 14 : 6;
-  return isSummer ? 24 : 15;
-};
-
-const getTrailClimateRegion = (latitude) => ({
-  isNorth: latitude > -30,
-  isPatagonia: latitude < -40,
-});
-
-const getFallbackRainProbability = ({ isNorth, isPatagonia }) => {
-  if (isNorth) return 42;
-  if (isPatagonia) return 35;
-  return 24;
-};
-
-const getFallbackWeather = (trail) => {
-  const latitude = Number(trail.center_lat || 0);
-  const month = new Date().getMonth();
-  const isSummer = month >= 9 || month <= 2;
-  const { isNorth, isPatagonia } = getTrailClimateRegion(latitude);
-  const baseTemperature = getBaseTemperature(isNorth, isPatagonia, isSummer);
-  const windKmh = isPatagonia ? 28 : 14;
-  const rainProbability = getFallbackRainProbability({ isNorth, isPatagonia });
-  const condition = rainProbability >= 40 ? "Parcialmente nublado" : "Mayormente despejado";
-  const riskLevel = getRiskLevel(windKmh, rainProbability, condition);
-
-  return {
-    trail_id: trail.id,
-    date: new Date().toISOString().slice(0, 10),
-    temperature_c: baseTemperature,
-    min_temperature_c: baseTemperature - 4,
-    max_temperature_c: baseTemperature + 5,
-    condition,
-    wind_kmh: windKmh,
-    rain_probability: rainProbability,
-    risk_level: riskLevel,
-    recommendation: getWeatherRecommendation(riskLevel),
-    source: "Estimacion local sin conexion al servicio meteorologico",
-  };
-};
-
 const mapWeatherResponse = (trail, weatherData) => {
   const current = weatherData.current || {};
   const daily = weatherData.daily || {};
@@ -168,8 +125,9 @@ router.get("/:id/weather", async (req, res, next) => {
     const trail = await getTrailOr404(req.params.id, res);
     if (!trail) return;
 
+    // Never estimate a forecast locally: without real data the client shows it as unavailable.
     if (trail.center_lat === null || trail.center_lng === null) {
-      return res.json(getFallbackWeather(trail));
+      return res.status(422).json({ message: "El sendero no tiene coordenadas para consultar el pronostico" });
     }
 
     const params = new URLSearchParams({
@@ -185,13 +143,13 @@ router.get("/:id/weather", async (req, res, next) => {
       const response = await fetch(`https://api.open-meteo.com/v1/forecast?${params.toString()}`);
 
       if (!response.ok) {
-        return res.json(getFallbackWeather(trail));
+        return res.status(503).json({ message: "Pronostico no disponible" });
       }
 
       const weatherData = await response.json();
       res.json(mapWeatherResponse(trail, weatherData));
     } catch {
-      res.json(getFallbackWeather(trail));
+      res.status(503).json({ message: "Pronostico no disponible" });
     }
   } catch (error) {
     next(error);

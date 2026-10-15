@@ -1,12 +1,11 @@
 {
-  "schema_version": 2,
+  "schema_version": 3,
   "dataset": {
     "name": "Tramos argentinos \u2014 OSM + IGN",
     "declared_source": "OpenStreetMap contributors + IGN MDE-Ar v2.1 30 m / original public snapshots",
     "source_note": "sac_scale publicado en tramos argentinos, con geometr\u00eda OSM y relieve IGN de 30 m. Test por regiones completas; faltan regiones, observaciones y validaci\u00f3n de rutas completas y seguridad.",
     "rows_total": 288,
     "rows_train": 239,
-    "rows_train_after_augmentation": 239,
     "rows_test": 49,
     "rows_by_label": {
       "alpine_hiking": 5,
@@ -27,25 +26,8 @@
       "dem_max_abs_grade_pct"
     ]
   },
-  "augmentation": {
-    "used": false,
-    "synthetic_rows": 0,
-    "synthetic_to_real_train_ratio": 0.0,
-    "requires_approval": false,
-    "authorization": "User permits augmentation within training folds only"
-  },
   "metrics": {
     "train": {
-      "accuracy": 0.8242677824267782,
-      "precision_macro": 0.7176237353021602,
-      "recall_macro": 0.8868932819029252,
-      "f1_macro": 0.7712082021292548,
-      "precision_weighted": 0.8714334748627897,
-      "recall_weighted": 0.8242677824267782,
-      "f1_weighted": 0.8388354347944745,
-      "support": 239
-    },
-    "train_real": {
       "accuracy": 0.8242677824267782,
       "precision_macro": 0.7176237353021602,
       "recall_macro": 0.8868932819029252,
@@ -77,14 +59,13 @@
     "underfitting_risk": true,
     "high_variance_risk": false,
     "insufficient_real_data": true,
-    "high_synthetic_ratio": false,
     "train_test_f1_gap": 0.4952225390468175,
     "warnings": [
       "sac_scale publicado en tramos argentinos, con geometr\u00eda OSM y relieve IGN de 30 m. Test por regiones completas; faltan regiones, observaciones y validaci\u00f3n de rutas completas y seguridad.",
       "Dataset real chico: sumar muestras reales por clase antes de usar estas metricas como evidencia de performance en campo.",
       "Posible overfitting: la diferencia de F1 macro entre train y test es 0.50.",
       "Posible underfitting: el F1 macro de test esta por debajo del umbral minimo (0.60).",
-      "Entrenamiento sin augmentation; todas las filas base provienen de observaciones p\u00fablicas."
+      "Todas las filas de entrenamiento, validaci\u00f3n y prueba son observaciones p\u00fablicas; no se generan datos sint\u00e9ticos."
     ]
   },
   "accuracy": 0.9591836734693877,
@@ -197,14 +178,14 @@
       "support": 49.0
     }
   },
-  "trained_at": "2026-10-15T01:57:31.075149+00:00",
+  "trained_at": "2026-10-15T17:37:12.193685+00:00",
   "evaluation_validity": {
     "real_public_ground_truth": true,
     "status": "observed_public_labels_group_holdout",
     "reason": "sac_scale publicado en tramos argentinos, con geometr\u00eda OSM y relieve IGN de 30 m. Test por regiones completas; faltan regiones, observaciones y validaci\u00f3n de rutas completas y seguridad.",
     "deployment_approved": false,
     "native_labels": true,
-    "test_synthetic_rows": 0
+    "synthetic_rows": 0
   },
   "baseline": {
     "strategy": "most_frequent_training_label",
@@ -555,8 +536,7 @@
         ],
         "validation_groups": [
           "01bde7c5a42fbf20c655c158"
-        ],
-        "synthetic_training_rows": 0
+        ]
       },
       {
         "train_groups": [
@@ -566,8 +546,7 @@
         ],
         "validation_groups": [
           "51bf993bb6ecbf57131bcceb"
-        ],
-        "synthetic_training_rows": 0
+        ]
       },
       {
         "train_groups": [
@@ -577,8 +556,7 @@
         ],
         "validation_groups": [
           "ce19e51002a542728764e768"
-        ],
-        "synthetic_training_rows": 0
+        ]
       },
       {
         "train_groups": [
@@ -588,8 +566,7 @@
         ],
         "validation_groups": [
           "4f2843b0ea4912f992df80ab"
-        ],
-        "synthetic_training_rows": 0
+        ]
       }
     ],
     "provenance_sha256": "ea30de863e9cd19a4832e15b067d2d5373a452fdb38d2358a27ac0d4b99ea17d"

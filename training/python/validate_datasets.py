@@ -1,11 +1,11 @@
 """Check that every tracked training CSV is free of personal or exact-location fields.
 
-Run before committing a new dataset export or after editing `build_datasets.py`:
+Run before committing a new dataset export:
 
     py training/python/validate_datasets.py
 
-This applies the same `assert_no_restricted_columns` denylist the `train.py`
-scripts enforce at training time (see `training/python/common/privacy.py`),
+This applies the same `assert_no_restricted_columns` denylist that
+`validate_public.py` enforces (see `training/python/common/privacy.py`),
 but here it runs on demand against the tracked CSVs so a bad column is caught
 before it ever reaches a commit or a training run.
 """
@@ -20,12 +20,7 @@ from common.privacy import assert_no_restricted_columns
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 
-TRACKED_CSVS = [
-    REPO_ROOT / "ai" / "datasets" / "fatigue_windows.csv",
-    REPO_ROOT / "ai" / "datasets" / "physio_risk.csv",
-    REPO_ROOT / "training" / "route-difficulty" / "datasets" / "route_difficulty_training.csv",
-]
-TRACKED_CSVS.extend(sorted((REPO_ROOT / "training/data/public").glob("*/dataset.csv")))
+TRACKED_CSVS = sorted((REPO_ROOT / "training/data/public").glob("*/dataset.csv"))
 
 
 def main() -> None:

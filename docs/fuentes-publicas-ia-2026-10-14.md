@@ -1,10 +1,10 @@
 # Fuentes públicas adicionales para MiSendero
 
-Investigación inicial: 14/10/2026. Objetivo: complementar modelos conservando mediciones públicas, etiquetas independientes y augmentation solo en entrenamiento. Tras la autorización posterior se incorporaron APN, IGN y la ampliación OSM argentina: ver [implementación, fuentes y resultados](datasets-argentina-2026-10-14.md).
+Investigación inicial: 14/10/2026. Objetivo: complementar modelos conservando mediciones públicas y etiquetas independientes. Desde el 15/10/2026 no se admiten datos sintéticos, tampoco como augmentation de entrenamiento. Tras la autorización posterior se incorporaron APN, IGN y la ampliación OSM argentina: ver [implementación, fuentes y resultados](datasets-argentina-2026-10-14.md).
 
 ## Relación con el PFI
 
-Se revisaron las secciones 2.1.5 y 2.1.6 del documento proporcionado (páginas impresas 11–13; páginas PDF 13–15). El texto propone señales inerciales/cardíacas para fatiga; HR, SpO2, HRV y contexto para riesgo; y OSM más relieve para rutas. La mención del PDF a datos sintéticos no sustituye el requisito posterior del usuario, que solo permite augmentation de train.
+Se revisaron las secciones 2.1.5 y 2.1.6 del documento proporcionado (páginas impresas 11–13; páginas PDF 13–15). El texto propone señales inerciales/cardíacas para fatiga; HR, SpO2, HRV y contexto para riesgo; y OSM más relieve para rutas. La mención del PDF a datos sintéticos no sustituye el requisito posterior del usuario, que no admite datos sintéticos.
 
 El objetivo práctico no es acumular filas: hacen falta mediciones relevantes, etiquetas de la misma tarea y variables que la app pueda medir en condiciones equivalentes. Una publicación abierta no implica que sus registros individuales sean abiertos.
 
@@ -67,7 +67,7 @@ No asignar AMS basándose en SpO2/HR y luego evaluar contra ese AMS inventado. S
 3. **Fatiga por movimiento:** auditar WHAMAP para un modelo IMU propio solo si se dispone de sensores/ubicaciones comparables en el producto.
 4. **AMS:** comprobar archivos/variables de Dryad y Regina Margherita; mantener resultados nocturnos, de reposo y durante marcha separados. No prometer una mejora ni habilitar alertas sin evidencia de la tarea de campo.
 
-Para todo dataset admitido: fijar versión/URL/checksum/licencia; registrar etiqueta y momento original; filtrar o quitar variables ausentes; conservar grupos independientes; aplicar augmentation solo dentro de train; sellar el test antes de nuevas decisiones de modelado y publicar métricas y baseline aun si empeoran.
+Para todo dataset admitido: fijar versión/URL/checksum/licencia; registrar etiqueta y momento original; filtrar o quitar variables ausentes; conservar grupos independientes; no generar filas sintéticas; sellar el test antes de nuevas decisiones de modelado y publicar métricas y baseline aun si empeoran.
 
 ## Nivel de verificación
 

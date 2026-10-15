@@ -766,7 +766,7 @@ function AiModelMetricBlock({ metrics }: { metrics: AiTrainingMetrics }) {
             {metrics.dataset.source_note}
           </Text>
           <Text style={styles.aiModelMeta}>
-            {metrics.dataset.rows_total} filas base - {metrics.augmentation.synthetic_rows} sinteticas - {formatDate(metrics.trained_at)}
+            {metrics.dataset.rows_total} filas reales - {metrics.evaluation_validity.synthetic_rows} sinteticas - {formatDate(metrics.trained_at)}
           </Text>
         </View>
         <Text
@@ -843,6 +843,9 @@ function getWearableLabel(runtime: WearableRuntimeStatus | null) {
   if (!runtime) return "Revisar";
   if (runtime.status === "requires_consent") return "Requiere permiso";
   if (runtime.status === "not_linked") return "No vinculado";
+  if (runtime.latestSample?.simulated || runtime.connection.provider === "development_simulator") {
+    return "Simulador (pruebas)";
+  }
   if (runtime.status === "waiting_for_native_data") return "Preparado";
   return "Vinculado";
 }

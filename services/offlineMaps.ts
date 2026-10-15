@@ -9,7 +9,22 @@ import {
   getOfflineTileCoverageForTrail,
   OfflineTileDownloadOptions,
 } from "./mapTileCache";
+import { Coordinate, parseRouteCoordinates } from "./geoUtils";
+import {
+  buildTerrainElevationCacheKey,
+  getTerrainElevation,
+  TerrainGridData,
+} from "./terrainElevation";
 
+// Grilla DEM real (Open-Meteo / Copernicus GLO-90) guardada con el mapa para
+// la vista 3D sin conexion. Solo contiene valores devueltos por el proveedor.
+export type OfflineTerrainGrid = TerrainGridData & {
+  version: 1;
+  // Mismo SHA-256 de geometria que el perfil descargado (trail.elevation).
+  geometry_hash: string;
+  // Clave del trazado consultado; si la ruta cambia, la grilla se descarta.
+  route_key: string;
+};
 
 export interface OfflineMap {
   id: number;
@@ -26,6 +41,7 @@ export interface OfflineMap {
   lastError: string | null;
   trail: Trail | null;
   reports: TrailReport[];
+  terrain: OfflineTerrainGrid | null;
 }
 
 export interface OfflineMapsSummary {
@@ -50,7 +66,8 @@ const initOfflineMapsTable = async () => {
       downloaded_tiles INTEGER NOT NULL DEFAULT 0,
       total_tiles INTEGER NOT NULL DEFAULT 0,
       verified_at INTEGER,
-      last_error TEXT
+      last_error TEXT,
+      terrain_json TEXT
     );
   `);
 
@@ -90,6 +107,10 @@ const initOfflineMapsTable = async () => {
   if (!columnNames.includes("last_error")) {
     await db.execAsync(`ALTER TABLE offline_maps ADD COLUMN last_error TEXT;`);
   }
+
+  if (!columnNames.includes("terrain_json")) {
+    await db.execAsync(`ALTER TABLE offline_maps ADD COLUMN terrain_json TEXT;`);
+  }
 };
 
 const parseJson = <T>(value: string | null, fallback: T): T => {
@@ -116,7 +137,8 @@ const offlineMapColumns = `
   verified_at,
   last_error,
   trail_json,
-  reports_json
+  reports_json,
+  terrain_json
 `;
 
 type OfflineMapRow = {
@@ -134,6 +156,7 @@ type OfflineMapRow = {
   last_error: string | null;
   trail_json: string | null;
   reports_json: string | null;
+  terrain_json: string | null;
 };
 
 const toOfflineMap = (row: OfflineMapRow): OfflineMap => ({
@@ -151,6 +174,7 @@ const toOfflineMap = (row: OfflineMapRow): OfflineMap => ({
   lastError: row.last_error,
   trail: parseJson<Trail | null>(row.trail_json, null),
   reports: parseJson<TrailReport[]>(row.reports_json, []),
+  terrain: parseJson<OfflineTerrainGrid | null>(row.terrain_json, null),
 });
 
 const getCurrentUserId = async () => {
@@ -274,6 +298,9 @@ export const saveOfflineTrailMap = async (
       [JSON.stringify(trail), JSON.stringify(reports), now, geometry.id, userId]
     );
   }
+  // Misma consulta y cache en memoria que la vista 3D; corre junto a los tiles.
+  const route = parseRouteCoordinates(trail.route_coordinates);
+  const terrainRequest = getTerrainElevation(trail.id, route).catch(() => null);
   const tileCache = await downloadOfflineTilesForTrail(trail, onTileProgress, options);
   const coverage = await getOfflineTileCoverageForTrail(trail);
 
@@ -283,6 +310,17 @@ export const saveOfflineTrailMap = async (
     );
   }
 
+  // Si el DEM falla no se guarda grilla (ni valores de relleno): el mapa 2D y
+  // el perfil quedan completos y la vista 3D sin conexion, no disponible.
+  // Una grilla real ya guardada para este mismo trazado se conserva.
+  const fetchedTerrain = await terrainRequest;
+  const keptTerrain = geometry?.terrain && isTerrainGridFor(geometry.terrain, trail, route)
+    ? geometry.terrain
+    : null;
+  const terrain = fetchedTerrain
+    ? toOfflineTerrainGrid(trail, route, fetchedTerrain)
+    : keptTerrain;
+  const terrainJson = terrain ? JSON.stringify(terrain) : null;
   const sizeMb = estimateTrailMapSizeMb(trail, reports) + tileCache.sizeMb;
   const existing = await db.getFirstAsync<{ id: number }>(
     `SELECT id FROM offline_maps WHERE user_id IS ? AND trail_id = ? LIMIT 1`,
@@ -301,7 +339,8 @@ export const saveOfflineTrailMap = async (
            verified_at = ?,
            last_error = ?,
            trail_json = ?,
-           reports_json = ?
+           reports_json = ?,
+           terrain_json = ?
        WHERE id = ? AND user_id IS ?`,
       [
         trail.name,
@@ -314,6 +353,7 @@ export const saveOfflineTrailMap = async (
         null,
         JSON.stringify(trail),
         JSON.stringify(reports),
+        terrainJson,
         existing.id,
         userId,
       ]
@@ -336,9 +376,10 @@ export const saveOfflineTrailMap = async (
        downloaded_tiles,
        total_tiles,
        verified_at,
-       last_error
+       last_error,
+       terrain_json
      )
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     [
       userId,
       trail.name,
@@ -353,10 +394,67 @@ export const saveOfflineTrailMap = async (
       coverage.totalTiles,
       now,
       null,
+      terrainJson,
     ]
   );
 
   return getOfflineMapByTrailId(trail.id);
+};
+
+const toOfflineTerrainGrid = (
+  trail: Trail,
+  route: readonly Coordinate[],
+  { grid, source }: TerrainGridData
+): OfflineTerrainGrid | null =>
+  trail.elevation
+    ? {
+        version: 1,
+        geometry_hash: trail.elevation.geometry_hash,
+        route_key: buildTerrainElevationCacheKey(trail.id, route),
+        grid,
+        source,
+      }
+    : null;
+
+const isTerrainGridFor = (
+  terrain: OfflineTerrainGrid,
+  trail: Trail,
+  route: readonly Coordinate[]
+) =>
+  terrain.version === 1 &&
+  terrain.geometry_hash === trail.elevation?.geometry_hash &&
+  terrain.route_key === buildTerrainElevationCacheKey(trail.id, route);
+
+// Lectura local para la vista 3D: nunca consulta al proveedor. Devuelve la
+// grilla solo si corresponde al perfil descargado y al trazado indicado.
+export const getOfflineTerrainGrid = async (
+  trailId: number,
+  route: readonly Coordinate[]
+): Promise<OfflineTerrainGrid | null> => {
+  const local = await getOfflineMapByTrailId(trailId);
+  return local?.trail && local.terrain && isTerrainGridFor(local.terrain, local.trail, route)
+    ? local.terrain
+    : null;
+};
+
+// Mapas descargados sin grilla: con conexion se guarda la grilla real ya
+// consultada por la vista 3D, solo si coincide con el trazado descargado.
+export const backfillOfflineTerrainGrid = async (
+  trailId: number,
+  route: readonly Coordinate[],
+  data: TerrainGridData
+) => {
+  const local = await getOfflineMapByTrailId(trailId);
+  if (!local?.trail) return;
+  const terrain = toOfflineTerrainGrid(local.trail, route, data);
+  const downloadedRoute = parseRouteCoordinates(local.trail.route_coordinates);
+  if (!terrain || !isTerrainGridFor(terrain, local.trail, downloadedRoute)) return;
+  const userId = await getCurrentUserId();
+  await db.runAsync(
+    `UPDATE offline_maps SET terrain_json = ?, updated_at = ?
+     WHERE id = ? AND user_id IS ? AND trail_json = ?`,
+    [JSON.stringify(terrain), Date.now(), local.id, userId, JSON.stringify(local.trail)]
+  );
 };
 
 export const refreshOfflineTrailElevation = async (trail: Trail) => {

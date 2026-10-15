@@ -54,18 +54,6 @@ automaticamente: `GET /:id/reports` excluye los mas viejos que `REPORT_STALE_AFT
 (default 30 dias, configurable por variable de entorno), y el servidor corre una limpieza
 que los borra de la base cada 24hs (`src/cleanupStaleReports.js`), ademas de al iniciar.
 
-## Aplicar dificultad de ruta entrenada
-
-`training/route-difficulty/` (Python + Scikit-learn) genera predicciones de dificultad por
-sendero en `training/route-difficulty/output/predictions.json`. Para llevarlas a la base:
-
-```bash
-npm run apply:route-difficulty
-```
-
-Es un script manual, no un endpoint HTTP: es una tarea de mantenimiento offline, no algo que
-la app dispare en tiempo de ejecucion.
-
 ## Logging
 
 El servidor usa `pino` (`src/logger.js`) para logs estructurados y `pino-http` para logging

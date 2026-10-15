@@ -10,7 +10,7 @@ El navegador integrado falló dos veces al inicializar: `failed to write kernel 
 
 Validación ejecutada: TypeScript sin errores; frontend 8 suites y 35 tests aprobados; backend 7 suites y 31 tests aprobados. Se ejecutaron además diagnósticos locales sin red ni sensores sobre los modelos, el planificador de mapas y los colores. Los tests actuales prueban componentes, pero no demuestran la entrega de SOS, la operación con pantalla bloqueada ni un recorrido completo en modo avión.
 
-Evidencia reproducible: [script de diagnóstico](D:/AppPFI/MiSendero/docs/revision-pfi-evidencia/diagnostics.cjs) y [resultados](D:/AppPFI/MiSendero/docs/revision-pfi-evidencia/diagnostics.json). Se ejecuta desde la raíz con `node docs/revision-pfi-evidencia/diagnostics.cjs`. No modifica datos de la app ni envía mensajes.
+Evidencia: [resultados](D:/AppPFI/MiSendero/docs/revision-pfi-evidencia/diagnostics.json). El script de diagnóstico se eliminó el 15/10/2026 junto con los modelos que evaluaba; queda en el historial de Git.
 
 ## 1. Faltantes frente al documento
 

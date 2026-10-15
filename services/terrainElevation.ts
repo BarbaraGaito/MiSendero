@@ -127,6 +127,9 @@ export type TerrainElevationData = {
   source: TerrainElevationSource;
 };
 
+// Lo que usa la vista 3D: la grilla real del DEM y su fuente.
+export type TerrainGridData = Pick<TerrainElevationData, "grid" | "source">;
+
 export type ElevationFetch = (
   input: string,
   init?: { signal?: AbortSignal }
@@ -865,6 +868,13 @@ export const clearTerrainElevationCache = (trailKey?: string | number) => {
     if (key.startsWith(prefix)) elevationCache.delete(key);
   });
 };
+
+// Solo lee el cache en memoria: sin conexion no se consulta al proveedor.
+export const peekTerrainElevation = (
+  trailKey: string | number,
+  route: readonly Coordinate[]
+): Promise<TerrainElevationData | null> | null =>
+  elevationCache.get(buildTerrainElevationCacheKey(trailKey, route)) ?? null;
 
 export const getTerrainElevation = (
   trailKey: string | number,

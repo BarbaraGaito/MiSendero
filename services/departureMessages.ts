@@ -2,6 +2,10 @@ import * as SMS from "expo-sms";
 import { db, initDB } from "../database/database";
 import { getAuthSession } from "./authSession";
 import { getEmergencyContact } from "./emergencyContact";
+import { isTestingLocationActive } from "./testingMode";
+
+export const TESTING_MODE_PLAN_MESSAGE =
+  "Modo prueba: no se envía plan de salida. Para enviar un plan real, desactivá \"Simular ubicacion en ruta\" en Perfil.";
 
 export interface DepartureMessage {
   id: number;
@@ -72,6 +76,8 @@ export const sendDeparturePlanSms = async (draft: {
 }, confirmUnknown: () => Promise<boolean>) => {
   const userId = (await getAuthSession())?.user.id;
   if (!userId) throw new Error("Inicia sesion antes de enviar el plan de regreso.");
+  // Test runs never use a real plan: sending one for a test would warn a real contact.
+  if (await isTestingLocationActive()) throw new Error(TESTING_MODE_PLAN_MESSAGE);
   if (!Number.isInteger(draft.trailId) || draft.trailId <= 0 || !draft.messageBody.trim()) {
     throw new Error("Prepara un plan con un sendero valido antes de enviar el SMS.");
   }

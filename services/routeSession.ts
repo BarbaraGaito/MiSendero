@@ -1,6 +1,9 @@
 import { db, initDB } from "../database/database";
 import { getAuthSession } from "./authSession";
 import { DepartureMessageRequiredError, getDepartureMessage, initDepartureMessages } from "./departureMessages";
+import type { RouteTrackingSummary } from "./routeTracking";
+import { isTestingLocationActive } from "./testingMode";
+import { RouteTrackingPoint } from "../types";
 
 export interface RouteSessionState {
   user_id: number;
@@ -18,6 +21,14 @@ export const subscribeRouteSession = (listener: () => void) => {
   return () => { listeners.delete(listener); };
 };
 const notify = () => listeners.forEach((listener) => listener());
+// Testing-location sessions live only in memory: neither the session nor its
+// synthetic points are persisted, listed as activity or queued for sync.
+let simulatedRoute: RouteSessionState | null = null;
+let simulatedPoints: RouteTrackingPoint[] = [];
+const findSimulatedRoute = (userId: number | null, trailId?: number, startedAt?: number) =>
+  simulatedRoute && simulatedRoute.user_id === userId &&
+  (trailId === undefined || (simulatedRoute.trail_id === trailId && simulatedRoute.started_at === startedAt))
+    ? simulatedRoute : null;
 const owner = async () => (await getAuthSession())?.user.id ?? null;
 const init = async () => {
   await initDB();
@@ -49,16 +60,22 @@ const init = async () => {
 
 export const getRouteSession = async (trailId: number, startedAt: number) => {
   await init();
+  const userId = await owner();
+  const simulated = findSimulatedRoute(userId, trailId, startedAt);
+  if (simulated) return { ...simulated };
   return db.getFirstAsync<RouteSessionState>(
     "SELECT * FROM route_runtime WHERE user_id = ? AND trail_id = ? AND started_at = ?",
-    [await owner(), trailId, startedAt]
+    [userId, trailId, startedAt]
   );
 };
 export const getActiveRouteSession = async () => {
   await init();
+  const userId = await owner();
+  const simulated = findSimulatedRoute(userId);
+  if (simulated && simulated.state !== "completed") return { ...simulated };
   return db.getFirstAsync<RouteSessionState>(
     "SELECT * FROM route_runtime WHERE user_id = ? AND state != 'completed' ORDER BY started_at DESC LIMIT 1",
-    [await owner()]
+    [userId]
   );
 };
 export const ensureRouteSession = async (trailId: number, startedAt: number, simulated = false) => {
@@ -70,6 +87,16 @@ export const ensureRouteSession = async (trailId: number, startedAt: number, sim
   const active = await getActiveRouteSession();
   if (active && (active.trail_id !== trailId || active.started_at !== startedAt)) {
     throw new Error("Ya tenés un recorrido abierto. Retomalo o finalizalo antes de empezar otro.");
+  }
+  if (simulated) {
+    // A test run never requires, reads or consumes a real departure plan, so it
+    // may only start while testing-location mode is verified for this account.
+    if (!await isTestingLocationActive()) throw new Error("El modo prueba no está activo. Volvé a iniciar el recorrido.");
+    simulatedRoute = { user_id: userId, trail_id: trailId, started_at: startedAt, state: "running",
+      paused_at: null, paused_ms: 0, ended_at: null, simulated: 1 };
+    simulatedPoints = [];
+    notify();
+    return { ...simulatedRoute };
   }
   const message = await getDepartureMessage(trailId);
   if (!message || message.user_id !== userId) throw new DepartureMessageRequiredError();
@@ -97,20 +124,57 @@ export const activeRouteSeconds = (route: RouteSessionState, now = Date.now()) =
 
 export const pauseRouteSession = async (trailId: number, startedAt: number) => {
   await init();
-  await db.runAsync("UPDATE route_runtime SET state = 'paused', paused_at = ? WHERE user_id = ? AND trail_id = ? AND started_at = ? AND state = 'running'",
-    [Date.now(), await owner(), trailId, startedAt]);
+  const userId = await owner();
+  const simulated = findSimulatedRoute(userId, trailId, startedAt);
+  if (simulated) {
+    if (simulated.state === "running") simulatedRoute = { ...simulated, state: "paused", paused_at: Date.now() };
+  } else {
+    await db.runAsync("UPDATE route_runtime SET state = 'paused', paused_at = ? WHERE user_id = ? AND trail_id = ? AND started_at = ? AND state = 'running'",
+      [Date.now(), userId, trailId, startedAt]);
+  }
   notify();
 };
 export const resumeRouteSession = async (trailId: number, startedAt: number) => {
   await init();
-  await db.runAsync("UPDATE route_runtime SET paused_ms = paused_ms + MAX(0, ? - paused_at), paused_at = NULL, state = 'running' WHERE user_id = ? AND trail_id = ? AND started_at = ? AND state = 'paused'",
-    [Date.now(), await owner(), trailId, startedAt]);
+  const userId = await owner();
+  const simulated = findSimulatedRoute(userId, trailId, startedAt);
+  if (simulated) {
+    if (simulated.state === "paused") {
+      simulatedRoute = { ...simulated, state: "running", paused_at: null,
+        paused_ms: simulated.paused_ms + Math.max(0, Date.now() - (simulated.paused_at ?? Date.now())) };
+    }
+  } else {
+    await db.runAsync("UPDATE route_runtime SET paused_ms = paused_ms + MAX(0, ? - paused_at), paused_at = NULL, state = 'running' WHERE user_id = ? AND trail_id = ? AND started_at = ? AND state = 'paused'",
+      [Date.now(), userId, trailId, startedAt]);
+  }
   notify();
 };
 export const finishRouteSession = async (trailId: number, startedAt: number) => {
   await init();
-  await db.runAsync("UPDATE route_runtime SET state = 'completed', ended_at = ? WHERE user_id = ? AND trail_id = ? AND started_at = ? AND state != 'completed'",
-    [Date.now(), await owner(), trailId, startedAt]);
+  const userId = await owner();
+  const simulated = findSimulatedRoute(userId, trailId, startedAt);
+  if (simulated) {
+    if (simulated.state !== "completed") simulatedRoute = { ...simulated, state: "completed", ended_at: Date.now() };
+  } else {
+    await db.runAsync("UPDATE route_runtime SET state = 'completed', ended_at = ? WHERE user_id = ? AND trail_id = ? AND started_at = ? AND state != 'completed'",
+      [Date.now(), userId, trailId, startedAt]);
+  }
   notify();
   return getRouteSession(trailId, startedAt);
+};
+
+export const saveSimulatedRouteTrackingPoint = (point: RouteTrackingPoint) => {
+  if (simulatedRoute?.trail_id !== point.trailId || simulatedRoute.started_at !== point.startedAt) return;
+  simulatedPoints.push({ ...point, simulated: true });
+};
+export const getSimulatedRouteTrackingSummary = (trailId: number, startedAt: number): RouteTrackingSummary => {
+  const points = simulatedRoute?.trail_id === trailId && simulatedRoute.started_at === startedAt ? simulatedPoints : [];
+  const lastPoint = points[points.length - 1] ?? null;
+  return {
+    points: points.length,
+    distanceMeters: points.reduce((total, point) => total + point.distanceDeltaMeters, 0),
+    startedAt,
+    lastRecordedAt: lastPoint?.recordedAt ?? null,
+    lastPoint,
+  };
 };

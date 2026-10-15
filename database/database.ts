@@ -1,8 +1,5 @@
 import { db } from "./connection";
-import {
-  heartRateLogsTableSql,
-  wearableStorageSql,
-} from "./wearableSchema";
+import { wearableStorageSql } from "./wearableSchema";
 
 export { db };
 
@@ -43,6 +40,44 @@ const addColumnIfMissing = async ({
   }
 };
 
+// Older versions persisted testing-simulator data as if it were measured. Remove
+// every row that can be identified as simulated. Wearable samples a previous
+// version stored under a real provider name cannot be told apart and remain.
+export const purgeSimulatedData = async () => {
+  // Only the removed tracking hook wrote heart_rate_logs, mixing simulator pulses
+  // with real ones that cannot be told apart; nothing reads it anymore.
+  await db.execAsync("DROP TABLE IF EXISTS heart_rate_logs");
+  // No fatigue model was ever approved: stored levels came from a column default
+  // or from that hook, so none of them is a real estimate.
+  await db.runAsync("UPDATE sessions SET avg_fatigue = NULL WHERE avg_fatigue IS NOT NULL");
+  await db.runAsync("DELETE FROM wearable_metric_samples WHERE provider = 'development_simulator'");
+  await db.runAsync("DELETE FROM wearable_connections WHERE provider = 'development_simulator'");
+
+  const routeRuntime = await db.getFirstAsync<{ name: string }>(
+    "SELECT name FROM sqlite_master WHERE type = 'table' AND name = 'route_runtime'"
+  );
+  const isSimulatedSession = `(
+    EXISTS (SELECT 1 FROM route_tracking_points p WHERE p.simulated = 1
+      AND p.user_id IS sessions.user_id AND p.trail_id = sessions.trail_id AND p.started_at = sessions.started_at)
+    ${routeRuntime ? `OR EXISTS (SELECT 1 FROM route_runtime r WHERE r.simulated = 1
+      AND r.user_id IS sessions.user_id AND r.trail_id = sessions.trail_id AND r.started_at = sessions.started_at)` : ""}
+  )`;
+
+  // Activities already synced live on the backend and cannot be removed from here.
+  await db.runAsync(
+    `DELETE FROM pending_operations
+     WHERE entity_type = 'activity' AND status != 'synced' AND dedupe_key IN (
+       SELECT COALESCE(sessions.user_id, 'guest') || ':activity:local-session-' || sessions.id
+       FROM sessions WHERE ${isSimulatedSession}
+     )`
+  );
+  await db.runAsync(`DELETE FROM sessions WHERE ${isSimulatedSession}`);
+  await db.runAsync("DELETE FROM route_tracking_points WHERE simulated = 1");
+  if (routeRuntime) {
+    await db.runAsync("DELETE FROM route_runtime WHERE simulated = 1");
+  }
+};
+
 const runInitDB = async () => {
   await db.execAsync(`
     CREATE TABLE IF NOT EXISTS sessions (
@@ -63,8 +98,6 @@ const runInitDB = async () => {
       review_text TEXT,
       reviewed_at INTEGER
     );
-
-    ${heartRateLogsTableSql}
 
     CREATE TABLE IF NOT EXISTS route_tracking_points (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -166,7 +199,7 @@ const runInitDB = async () => {
     ["sessions", "started_at", "ALTER TABLE sessions ADD COLUMN started_at INTEGER NOT NULL DEFAULT 0;"],
     ["sessions", "user_id", "ALTER TABLE sessions ADD COLUMN user_id INTEGER;"],
     ["sessions", "ended_at", "ALTER TABLE sessions ADD COLUMN ended_at INTEGER;"],
-    ["sessions", "avg_fatigue", "ALTER TABLE sessions ADD COLUMN avg_fatigue TEXT DEFAULT 'bajo';"],
+    ["sessions", "avg_fatigue", "ALTER TABLE sessions ADD COLUMN avg_fatigue TEXT;"],
     ["sessions", "trail_id", "ALTER TABLE sessions ADD COLUMN trail_id INTEGER;"],
     [
       "sessions",
@@ -206,6 +239,7 @@ const runInitDB = async () => {
     ON pending_operations (dedupe_key)
     WHERE dedupe_key IS NOT NULL;
   `);
+  await purgeSimulatedData();
 };
 
 export const initDB = async () => {

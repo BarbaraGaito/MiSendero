@@ -59,7 +59,8 @@ def validate(model):
         "f1_macro": f1_score(held_out["observed"], held_out["predicted"], labels=metrics["labels"], average="macro", zero_division=0),
     }.items():
         require(np.isclose(actual, metrics["metrics"]["test"][key], rtol=0, atol=1e-12), "Reported test metric differs from predictions")
-    require(metrics["evaluation_validity"]["test_synthetic_rows"] == 0 and provenance["synthetic_base_rows"] == 0, "Synthetic observations in base/test")
+    require(metrics["evaluation_validity"]["synthetic_rows"] == 0 and provenance["synthetic_base_rows"] == 0, "Synthetic observations in dataset")
+    require(metrics["dataset"]["rows_train"] == metrics["metrics"]["train"]["support"] == len(train_keys), "Model was fitted on rows other than the observed training partition")
     majority = original.loc[original["row_key"].isin(train_keys), "label"].value_counts().index[0]
     require(majority == metrics["baseline"]["label"], "Baseline was not fitted only on training")
     require(np.isclose(accuracy_score(held_out["observed"], [majority]*len(held_out)), metrics["baseline"]["test_accuracy"]), "Incorrect reported baseline")

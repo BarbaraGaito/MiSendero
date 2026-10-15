@@ -1,7 +1,7 @@
 {
   "type": "random_forest_json",
   "version": 1,
-  "trained_at": "2026-10-15T01:57:16.921255+00:00",
+  "trained_at": "2026-10-15T17:37:18.272031+00:00",
   "feature_order": [
     "published_distance_km",
     "published_duration_minutes",
@@ -21128,6 +21128,6 @@
     "reason": "Dificultad publicada por APN para recorridos completos. Distancias y duraciones son estimaciones publicadas, no tiempos medidos de caminantes. Evaluaci\u00f3n con parques completos separados; no certifica seguridad ni generalizaci\u00f3n nacional.",
     "deployment_approved": false,
     "native_labels": true,
-    "test_synthetic_rows": 0
+    "synthetic_rows": 0
   }
 }

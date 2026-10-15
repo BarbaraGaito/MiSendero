@@ -1,5 +1,5 @@
 import { db } from "./database";
-import { FatigueLevel, SessionRow } from "../types";
+import { SessionRow } from "../types";
 import { getAuthSession } from "../services/authSession";
 
 type SessionCompletionStatus = SessionRow["completion_status"];
@@ -32,51 +32,6 @@ export interface CompletedSessionResult {
 const getCurrentUserId = async () => {
   const session = await getAuthSession().catch(() => null);
   return session?.user.id ?? null;
-};
-
-export const createSession = async (startedAt: number, trailId?: number | null) => {
-  const userId = await getCurrentUserId();
-  const result = await db.runAsync(
-    `INSERT INTO sessions (user_id, started_at, duration, distance, avg_fatigue, trail_id, completion_status)
-     VALUES (?, ?, 0, 0, ?, ?, ?)`,
-    [userId, startedAt, "bajo", trailId ?? null, "paused"]
-  );
-
-  return result.lastInsertRowId;
-};
-
-export const saveHeartRateLog = async (
-  hr: number,
-  timestamp: number,
-  sessionId: number
-) => {
-  await db.runAsync(
-    `INSERT INTO heart_rate_logs (hr, timestamp, session_id)
-     VALUES (?, ?, ?)`,
-    [hr, timestamp, sessionId]
-  );
-};
-
-export const finishSession = async (
-  sessionId: number,
-  endedAt: number,
-  duration: number,
-  distance: number,
-  avgFatigue: FatigueLevel,
-  trailId?: number | null
-) => {
-  const userId = await getCurrentUserId();
-  await db.runAsync(
-    `UPDATE sessions
-     SET ended_at = ?,
-         duration = ?,
-         distance = ?,
-         avg_fatigue = ?,
-         completion_status = ?,
-         trail_id = COALESCE(?, trail_id)
-     WHERE id = ? AND user_id IS ?`,
-    [endedAt, duration, distance, avgFatigue, "completed", trailId ?? null, sessionId, userId]
-  );
 };
 
 export const getOrCreateCompletedSession = async ({

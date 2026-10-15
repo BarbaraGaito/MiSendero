@@ -2,10 +2,11 @@ jest.mock("expo-sms", () => ({ isAvailableAsync: jest.fn().mockResolvedValue(tru
 
 import { db, initDB } from "../../database/database";
 import { saveAuthSession } from "../authSession";
-import { activeRouteSeconds, ensureRouteSession, finishRouteSession, getActiveRouteSession, getRouteSession, pauseRouteSession, resumeRouteSession } from "../routeSession";
+import { activeRouteSeconds, ensureRouteSession, finishRouteSession, getActiveRouteSession, getRouteSession, getSimulatedRouteTrackingSummary, pauseRouteSession, resumeRouteSession, saveSimulatedRouteTrackingPoint } from "../routeSession";
 import { getOrCreatePausedSession, getOrCreateCompletedSession } from "../../database/sessionsRepository";
 import { saveEmergencyContact } from "../emergencyContact";
-import { sendDeparturePlanSms } from "../departureMessages";
+import { getDepartureMessage, sendDeparturePlanSms } from "../departureMessages";
+import { saveTestingLocationMode } from "../testingMode";
 
 const sendPlan = async (trailId: number) => {
   await saveEmergencyContact({ name: "Contacto", phone: "+5491112345678", relationship: "Familia" });
@@ -13,9 +14,14 @@ const sendPlan = async (trailId: number) => {
 };
 
 const login = (id: number) => saveAuthSession({ token: `test-${id}`, user: { id, name: "Test", email: `${id}@example.test` } });
+const startTestingMode = async (id: number) => {
+  await saveAuthSession({ token: `test-${id}`, user: { id, name: "Test", email: `${id}@example.test`, role: "admin" } });
+  await saveTestingLocationMode(true);
+};
 beforeAll(() => initDB());
 beforeEach(async () => {
   await login(21);
+  await saveTestingLocationMode(false);
   await getActiveRouteSession();
   await db.runAsync("DELETE FROM route_runtime");
   await db.runAsync("DELETE FROM sessions");
@@ -60,4 +66,30 @@ test("an older periodic save cannot reopen a completed activity", async () => {
   const stale = await getOrCreatePausedSession({ trailId: 3, startedAt: 10000, duration: 25, distance: 120 });
   expect(stale.ended_at).toBe(completed.session.ended_at);
   expect(stale.distance).toBe(200);
+});
+
+test("a testing-location session lives only in memory and is never persisted", async () => {
+  const now = jest.spyOn(Date, "now").mockReturnValue(500000);
+  await sendPlan(6);
+  await startTestingMode(21);
+  expect((await ensureRouteSession(6, 500000, true))?.simulated).toBe(1);
+  expect(await getActiveRouteSession()).toMatchObject({ trail_id: 6, started_at: 500000, state: "running" });
+  saveSimulatedRouteTrackingPoint({ trailId: 6, startedAt: 500000, latitude: -41.1, longitude: -71.1,
+    accuracyMeters: 0, speedKmh: 4, distanceDeltaMeters: 25, recordedAt: 503000, simulated: true });
+  expect(getSimulatedRouteTrackingSummary(6, 500000)).toMatchObject({ points: 1, distanceMeters: 25 });
+  await login(22);
+  expect(await getActiveRouteSession()).toBeNull();
+  await login(21);
+  now.mockReturnValue(560000);
+  await pauseRouteSession(6, 500000);
+  now.mockReturnValue(620000);
+  await resumeRouteSession(6, 500000);
+  now.mockReturnValue(680000);
+  expect(activeRouteSeconds((await finishRouteSession(6, 500000))!)).toBe(120);
+  expect(await getActiveRouteSession()).toBeNull();
+  const count = async (table: string) => (await db.getFirstAsync<{ count: number }>(`SELECT COUNT(*) AS count FROM ${table}`))?.count;
+  expect(await count("route_runtime")).toBe(0);
+  expect(await count("route_tracking_points")).toBe(0);
+  expect(await count("sessions")).toBe(0);
+  expect(await getDepartureMessage(6)).not.toBeNull(); // a test run does not consume the real plan
 });

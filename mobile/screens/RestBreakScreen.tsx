@@ -1,4 +1,4 @@
-import { activeRouteSeconds, getRouteSession, pauseRouteSession, resumeRouteSession } from "../../services/routeSession";
+import { activeRouteSeconds, getRouteSession, getSimulatedRouteTrackingSummary, pauseRouteSession, resumeRouteSession } from "../../services/routeSession";
 import { getRouteTrackingSummary } from "../../services/routeTracking";
 import { formatDistance as formatMeters } from "../../services/geoUtils";
 import { router, useLocalSearchParams } from "expo-router";
@@ -59,7 +59,10 @@ export default function RestBreakScreen() {
   const [savedDistance, setSavedDistance] = useState<string | undefined>(traveledMeters);
   useEffect(() => {
     void pauseRouteSession(trailId, startedAtMs).then(async () => {
-      const [state, summary] = await Promise.all([getRouteSession(trailId, startedAtMs), getRouteTrackingSummary(trailId, startedAtMs)]);
+      const state = await getRouteSession(trailId, startedAtMs);
+      const summary = state?.simulated
+        ? getSimulatedRouteTrackingSummary(trailId, startedAtMs)
+        : await getRouteTrackingSummary(trailId, startedAtMs);
       if (state) setActiveMinutes(Math.floor(activeRouteSeconds(state) / 60));
       setSavedDistance(String(summary.distanceMeters));
     }).catch(() => setError("No pudimos guardar la pausa. Volvé a intentarlo."));
@@ -128,7 +131,9 @@ export default function RestBreakScreen() {
       </Card>
 
       <Card tone={wearableRuntime?.prediction?.level === "high" ? "red" : "white"}>
-        <Text style={styles.cardTitle}>Metricas del reloj</Text>
+        <Text style={styles.cardTitle}>
+          {wearableRuntime?.latestSample?.simulated ? "Metricas simuladas (pruebas)" : "Metricas del reloj"}
+        </Text>
         {wearableRuntime?.latestSample ? (
           <>
             <InfoRow

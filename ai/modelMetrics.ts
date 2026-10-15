@@ -39,11 +39,12 @@ export interface AiTrainingMetrics {
     independent_group_count: number;
     test_groups: string[];
   };
-  evaluation_validity?: {
+  evaluation_validity: {
     real_public_ground_truth: boolean;
     status: string;
     reason: string;
-    deployment_approved?: boolean;
+    deployment_approved: boolean;
+    synthetic_rows: number;
   };
   schema_version: number;
   trained_at: string;
@@ -53,20 +54,12 @@ export interface AiTrainingMetrics {
     source_note: string;
     rows_total: number;
     rows_train: number;
-    rows_train_after_augmentation: number;
     rows_test: number;
     rows_by_label: Record<string, number>;
     features: string[];
   };
-  augmentation: {
-    used: boolean;
-    synthetic_rows: number;
-    synthetic_to_real_train_ratio: number;
-    requires_approval: boolean;
-  };
   metrics: {
     train: AiMetricSummary;
-    train_real: AiMetricSummary | null;
     test: AiMetricSummary;
     cross_validation: AiCrossValidationSummary | null;
   };
@@ -76,7 +69,6 @@ export interface AiTrainingMetrics {
     underfitting_risk: boolean;
     high_variance_risk: boolean;
     insufficient_real_data: boolean;
-    high_synthetic_ratio: boolean;
     train_test_f1_gap: number;
     warnings: string[];
   };

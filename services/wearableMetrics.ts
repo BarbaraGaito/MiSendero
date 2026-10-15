@@ -34,7 +34,7 @@ const providerNames: Record<WearableProvider, string> = {
   apple_healthkit: "Apple Watch / Salud",
   android_health_connect: "Android / Health Connect",
   wear_os_health_services: "Wear OS / Health Connect",
-  development_simulator: "Simulador de desarrollo",
+  development_simulator: "Simulador (pruebas)",
 };
 
 const androidNativeProviders: WearableProvider[] = [
@@ -180,6 +180,10 @@ export const unlinkWearableConnection = async () => {
 export const saveWearableMetricSample = async (
   sample: Omit<WearableMetricSample, "id" | "user_id" | "createdAt">
 ) => {
+  if (sample.simulated || sample.provider === "development_simulator") {
+    throw new Error("Las metricas simuladas no se guardan.");
+  }
+
   await initWearableTables();
 
   const userId = await getCurrentUserId();
@@ -431,11 +435,37 @@ const getScenarioPoint = (
 const clampMetric = (value: number, min: number, max: number) =>
   Math.max(min, Math.min(max, value));
 
+// Simulator readings exist only in memory, for testing alert rules. They are
+// never written to SQLite, synced, or attributed to a real provider.
+const MAX_SIMULATED_SAMPLES = 12;
+let simulatedSamples: WearableMetricSample[] = [];
+
+const keepSimulatedSamples = async (samples: WearableMetricSample[]) => {
+  const userId = await getCurrentUserId();
+  if (!userId) {
+    throw new Error("Sesion requerida para simular metricas del reloj.");
+  }
+
+  const owned = samples.map((sample) => ({ ...sample, user_id: userId }));
+  simulatedSamples = [
+    ...simulatedSamples.filter((sample) => sample.user_id === userId),
+    ...owned,
+  ]
+    .sort((left, right) => left.recordedAt - right.recordedAt)
+    .slice(-MAX_SIMULATED_SAMPLES);
+
+  return owned;
+};
+
+// Most recent first, only for the current account.
+export const getSimulatedWearableMetricSamples = async () => {
+  const userId = await getCurrentUserId();
+  return simulatedSamples.filter((sample) => sample.user_id === userId).reverse();
+};
+
 export const createDevelopmentMetricSample = async (
   scenario: WearableSimulationScenario = "normal"
 ) => {
-  const connection = await getWearableConnection();
-  const provider = connection.provider || "development_simulator";
   const now = Date.now();
   const range = simulationScenarioRanges[scenario] ?? simulationScenarioRanges.normal;
 
@@ -443,27 +473,28 @@ export const createDevelopmentMetricSample = async (
   const speedKmh = Number(randomInRange(range.speedMin, range.speedMax).toFixed(1));
   const oxygenSaturation = Number(randomInRange(range.spo2Min, range.spo2Max).toFixed(1));
 
-  await saveWearableMetricSample({
-    provider,
+  const [sample] = await keepSimulatedSamples([{
+    provider: "development_simulator",
+    simulated: true,
     heartRateBpm,
     steps: Math.round(randomInRange(range.stepsMin, range.stepsMax)),
     activeEnergyKcal: Number(randomInRange(range.kcalMin, range.kcalMax).toFixed(1)),
     speedKmh,
     oxygenSaturation,
     recordedAt: now,
-  });
+  }]);
+  return sample;
 };
 
 export const createDevelopmentMetricSequence = async (
   scenario: WearableSimulationScenario = "normal",
   sampleCount = 8
 ) => {
-  const connection = await getWearableConnection();
-  const provider = connection.provider || "development_simulator";
   const now = Date.now();
   const range = simulationScenarioRanges[scenario] ?? simulationScenarioRanges.normal;
   const resolvedSampleCount = Math.max(3, Math.min(12, Math.round(sampleCount)));
   const spacingMs = 2 * 60 * 1000;
+  const samples: WearableMetricSample[] = [];
 
   for (let index = 0; index < resolvedSampleCount; index += 1) {
     const progress = resolvedSampleCount <= 1 ? 1 : index / (resolvedSampleCount - 1);
@@ -475,8 +506,9 @@ export const createDevelopmentMetricSequence = async (
       (randomInRange(range.kcalMin, range.kcalMax) * (0.82 + progress * 0.32)).toFixed(1)
     );
 
-    await saveWearableMetricSample({
-      provider,
+    samples.push({
+      provider: "development_simulator",
+      simulated: true,
       heartRateBpm: point.heartRateBpm,
       steps,
       activeEnergyKcal,
@@ -485,6 +517,8 @@ export const createDevelopmentMetricSequence = async (
       recordedAt: now - (resolvedSampleCount - index - 1) * spacingMs,
     });
   }
+
+  return keepSimulatedSamples(samples);
 };
 
 export const linkNativeWearable = async () => {
@@ -542,12 +576,6 @@ export const syncNativeWearableSampleWithStatus = async (
     provider,
   });
   return saved ? "saved" : "duplicate";
-};
-
-export const syncNativeWearableSample = async (
-  options?: NativeWearableReadOptions
-) => {
-  return (await syncNativeWearableSampleWithStatus(options)) === "saved";
 };
 
 export const MAX_HEALTH_SAMPLE_AGE_MS = 5 * 60 * 1000;
@@ -737,14 +765,21 @@ const getHighWearablePredictionCopy = ({
 export const getWearableRuntimeStatus = async (
   elapsedMinutes = 0
 ): Promise<WearableRuntimeStatus> => {
-  const [connection, latestSample, privacy] = await Promise.all([
+  const [connection, persistedSample, privacy, [simulatedSample = null]] = await Promise.all([
     getWearableConnection(),
     getLatestWearableMetricSample(),
     getPrivacyPreferences(),
+    getSimulatedWearableMetricSamples(),
   ]);
 
+  // A fresh in-memory simulated reading takes precedence so alert rules can be
+  // tested; it is flagged as simulated and expires like any other reading.
+  const isSimulated = isFreshHealthSample(simulatedSample);
+  const latestSample = isSimulated ? simulatedSample : persistedSample;
+  const isLinked = isSimulated || (connection.linked && connection.permissionsGranted);
+
   const prediction =
-    connection.linked && connection.permissionsGranted && privacy.sensitiveDataConsent
+    isLinked && privacy.sensitiveDataConsent
       ? predictWearableHealth(latestSample, elapsedMinutes)
       : null;
 
@@ -752,13 +787,13 @@ export const getWearableRuntimeStatus = async (
     connection,
     status: !privacy.sensitiveDataConsent
       ? "requires_consent"
-      : connection.linked && connection.permissionsGranted
+      : isLinked
         ? latestSample
           ? isFreshHealthSample(latestSample) ? "linked" : "stale_data"
           : "waiting_for_native_data"
         : "not_linked",
     latestSample: privacy.sensitiveDataConsent ? latestSample : null,
     prediction,
-    displayName: getWearableProviderName(connection.provider),
+    displayName: getWearableProviderName(isSimulated ? "development_simulator" : connection.provider),
   };
 };

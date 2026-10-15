@@ -44,7 +44,7 @@ export default function OfflineDownload21Screen() {
         }
         const reports = await getTrailReports(trailId).catch(() => []);
 
-        await saveOfflineTrailMap(
+        const saved = await saveOfflineTrailMap(
           trailData,
           reports,
           (downloaded, total) => {
@@ -60,7 +60,11 @@ export default function OfflineDownload21Screen() {
 
         setTrail(trailData);
         setStatus("saved");
-        setMessage("Mapa disponible sin conexion.");
+        setMessage(
+          saved?.terrain
+            ? "Mapa disponible sin conexion."
+            : "Mapa disponible sin conexion. El relieve 3D no estara disponible sin conexion."
+        );
       } catch (downloadError) {
         if (!isMounted) return;
 

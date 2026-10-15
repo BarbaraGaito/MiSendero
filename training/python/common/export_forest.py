@@ -2,8 +2,8 @@
 
 The mobile TypeScript inference engine (`ai/inferenceEngine.ts`) has no
 Python/sklearn runtime available on-device, so the forest is flattened into
-arrays that a small hand-written tree-walker (in TS, and again in the
-route-difficulty Node script) can traverse without any ML library.
+arrays that a small hand-written TS tree-walker can traverse without any ML
+library.
 """
 
 from __future__ import annotations

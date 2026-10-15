@@ -1,4 +1,4 @@
-import { ensureRouteSession, getRouteSession, activeRouteSeconds, pauseRouteSession, resumeRouteSession } from "../../services/routeSession";
+import { ensureRouteSession, getRouteSession, getSimulatedRouteTrackingSummary, activeRouteSeconds, pauseRouteSession, resumeRouteSession } from "../../services/routeSession";
 import { DepartureMessageRequiredError } from "../../services/departureMessages";
 import { Ionicons } from "@expo/vector-icons";
 import * as Network from "expo-network";
@@ -11,7 +11,6 @@ import { getOfflineMapByTrailId, getVerifiedOfflineMapByTrailId } from "../../se
 import {
   createDevelopmentMetricSequence,
   getWearableRuntimeStatus,
-  saveWearableConnection,
   syncNativeWearableSampleWithStatus,
 } from "../../services/wearableMetrics";
 import {
@@ -299,7 +298,10 @@ export default function Screen04RouteMap() {
     if (!isActiveRoute || !isFocused || locationLoading) return;
     let mounted = true;
     const refresh = async () => {
-      const [summary, state] = await Promise.all([getRouteTrackingSummary(trailId, startedAtMs), getRouteSession(trailId, startedAtMs)]);
+      const state = await getRouteSession(trailId, startedAtMs);
+      const summary = state?.simulated
+        ? getSimulatedRouteTrackingSummary(trailId, startedAtMs)
+        : await getRouteTrackingSummary(trailId, startedAtMs);
       if (!mounted) return;
       setTrackedDistanceMeters(summary.distanceMeters);
       trackedDistanceMetersRef.current = summary.distanceMeters;
@@ -345,14 +347,11 @@ export default function Screen04RouteMap() {
     setTestingWearableScenario(scenario);
     setIsSimulatingWearable(true);
     try {
-      if (!wearableRuntime?.connection.linked) {
-        await saveWearableConnection("development_simulator", true, true);
-      }
       await createDevelopmentMetricSequence(scenario, 8);
       const status = await refreshWearableMetrics();
       setWearableRuntime(status);
       setTestingWearableMessage(
-        `Simulacion ${routeSimulationOptions.find((option) => option.id === scenario)?.title.toLowerCase()} aplicada.`
+        `Simulacion ${routeSimulationOptions.find((option) => option.id === scenario)?.title.toLowerCase()} aplicada (solo en memoria, no se guarda).`
       );
     } catch {
       setTestingWearableMessage("No pudimos generar la simulacion wearable.");
@@ -373,6 +372,7 @@ export default function Screen04RouteMap() {
   const severeReports = reports.filter((report) =>
     ["Alta", "Critica"].includes(report.severity)
   ).length;
+  const simulatedWearableLabel = wearableRuntime?.latestSample?.simulated ? " (simulado)" : "";
 
   if (isActiveRoute) {
     return (
@@ -454,7 +454,7 @@ export default function Screen04RouteMap() {
                   Testing activo
                 </Text>
                 <Text style={styles.testingBannerHint}>
-                  Simula ubicacion y situaciones del wearable.
+                  Ubicacion y reloj simulados: no se guardan.
                 </Text>
               </View>
               <Pressable
@@ -528,7 +528,7 @@ export default function Screen04RouteMap() {
             />
             <View style={styles.wearableText}>
               <Text style={styles.wearableTitle}>
-                {wearableRuntime.latestSample.heartRateBpm} bpm - {wearableRuntime.prediction.title}
+                {wearableRuntime.latestSample.heartRateBpm} bpm{simulatedWearableLabel} - {wearableRuntime.prediction.title}
               </Text>
               <Text numberOfLines={2} style={styles.wearableBody}>
                 {wearableRuntime.prediction.message}
@@ -548,11 +548,14 @@ export default function Screen04RouteMap() {
               setShowCriticalWearableAlert(false);
               router.push({
               pathname: "/confirmar-sos",
-              params: { id: String(trailId), startedAt: String(startedAtMs) },
+              // An alert raised by simulated data opens the SOS in test mode (nothing is sent).
+              params: { id: String(trailId), startedAt: String(startedAtMs),
+                ...(wearableRuntime?.latestSample?.simulated ? { simulated: "1" } : {}) },
               });
             }
           }
-          title={wearableRuntime?.prediction?.title}
+          simulated={Boolean(wearableRuntime?.latestSample?.simulated) || isTestingLocation}
+          title={wearableRuntime?.prediction?.title && `${wearableRuntime.prediction.title}${simulatedWearableLabel}`}
         />
 
         {showWearablePanel ? (
@@ -585,9 +588,11 @@ export default function Screen04RouteMap() {
                   />
                 </View>
                 <View style={styles.wearableText}>
-                  <Text style={styles.wearableEyebrow}>Estimación IA local</Text>
+                  <Text style={styles.wearableEyebrow}>
+                    {wearableRuntime.latestSample.simulated ? "Estimación IA local · datos simulados" : "Estimación IA local"}
+                  </Text>
                   <Text style={styles.wearableTitle}>
-                    {wearableRuntime.latestSample.heartRateBpm} bpm - {wearableRuntime.prediction.title}
+                    {wearableRuntime.latestSample.heartRateBpm} bpm{simulatedWearableLabel} - {wearableRuntime.prediction.title}
                   </Text>
                 </View>
               </View>
@@ -637,7 +642,9 @@ export default function Screen04RouteMap() {
             </View>
             <View style={styles.finishRouteTextBox}>
               <Text style={styles.finishRouteLabel}>Terminar ruta</Text>
-              <Text style={styles.finishRouteHint}>Guardar actividad y dejar opinion</Text>
+              <Text style={styles.finishRouteHint}>
+                {isTestingLocation ? "Simulacion: no se guarda como actividad" : "Guardar actividad y dejar opinion"}
+              </Text>
             </View>
             <Ionicons name="chevron-forward" size={20} color={colors.white} />
           </Pressable>
@@ -742,10 +749,10 @@ export default function Screen04RouteMap() {
           </View>
           <View style={styles.activeTelemetryRow}>
             <Text style={styles.activeTelemetryText}>
-              GPS: {formatDistance(trackedDistanceMeters)}
+              {isTestingLocation ? "GPS simulado" : "GPS"}: {formatDistance(trackedDistanceMeters)}
             </Text>
             <Text style={styles.activeTelemetryText}>
-              {lastGpsRecordedAt ? "Ultimo punto guardado" : "Esperando punto GPS"}
+              {lastGpsRecordedAt ? (isTestingLocation ? "Punto simulado (no se guarda)" : "Ultimo punto guardado") : "Esperando punto GPS"}
             </Text>
           </View>
         </View>
@@ -810,7 +817,7 @@ export default function Screen04RouteMap() {
                     weather?.risk_level === "medio" && styles.riskBadgeTextMedium,
                   ]}
                 >
-                  {weather ? `Riesgo ${weather.risk_level}` : "Consultando"}
+                  {weather ? `Riesgo ${weather.risk_level}` : isContextLoading ? "Consultando" : "Pronóstico no disponible"}
                 </Text>
               </View>
             </View>
@@ -964,7 +971,9 @@ function WearableRealtimePanel({
       <View style={styles.wearablePanelHeader}>
         <View style={styles.wearablePanelTitleBox}>
           <Ionicons name="pulse-outline" size={18} color={colors.green} />
-          <Text style={styles.wearablePanelTitle}>Metricas del reloj</Text>
+          <Text style={styles.wearablePanelTitle}>
+            {latest?.simulated ? "Metricas simuladas (pruebas)" : "Metricas del reloj"}
+          </Text>
         </View>
         <Pressable
           accessibilityLabel="Cerrar metricas del reloj"
@@ -1027,11 +1036,13 @@ function CriticalWearableModal({
   isVisible,
   message,
   onSendSos,
+  simulated,
   title,
 }: {
   isVisible: boolean;
   message?: string;
   onSendSos: () => void;
+  simulated: boolean;
   title?: string;
 }) {
   return (
@@ -1048,11 +1059,14 @@ function CriticalWearableModal({
             {message ??
               "Las metricas del reloj muestran una senal critica. Detenete en un lugar seguro y evalua pedir ayuda."}
           </Text>
+          {simulated ? (
+            <Text style={styles.criticalModalBody}>Modo prueba: el SOS no se envía.</Text>
+          ) : null}
           <View style={styles.criticalModalActions}>
             <Pressable onPress={onSendSos} style={styles.criticalModalPrimary}>
               <Ionicons name="alert-circle-outline" size={18} color={colors.white} />
               <Text style={styles.criticalModalPrimaryText}>
-                Enviar mensaje de ayuda
+                {simulated ? "Probar SOS (no se envía)" : "Enviar mensaje de ayuda"}
               </Text>
             </Pressable>
           </View>

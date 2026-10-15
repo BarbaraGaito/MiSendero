@@ -6,6 +6,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
 
 import public_sources
 from train_public import group_split, grouped_cv
@@ -25,25 +26,19 @@ class PublicEvaluationTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "four independent groups"):
             group_split(pd.DataFrame({"group_key": ["one"] * 100}))
 
-    def test_augmentation_is_rebuilt_inside_cv_training_only(self):
+    def test_cross_validation_fits_only_observed_training_rows(self):
         x = pd.DataFrame({"hr": list(range(70, 94))})
         y = pd.Series(["observed-A", "observed-B"] * 12)
         groups = pd.Series([str(i // 2) for i in range(24)])
-        original = x.copy(deep=True)
-        calls = []
-        from common.augment import augment_dataset as actual
-        def spy(rows, *args, **kwargs):
-            calls.append(set(rows["hr"]))
-            return actual(rows, *args, **kwargs)
-        with patch("train_public.augment_dataset", side_effect=spy):
-            result = grouped_cv(x, y, groups, {"n_estimators": 5, "max_depth": 2, "min_samples_leaf": 2}, True)
-        self.assertEqual(len(calls), result["folds"])
-        for fold, used in zip(result["partitions"], calls):
-            validation = set(fold["validation_groups"])
-            validation_values = set(x.loc[groups.isin(validation), "hr"])
-            self.assertFalse(used & validation_values)
-            self.assertGreater(fold["synthetic_training_rows"], 0)
-        pd.testing.assert_frame_equal(x, original)
+        fitted_sizes = []
+        original_fit = RandomForestClassifier.fit
+        def spy(self, features, labels, *args, **kwargs):
+            fitted_sizes.append(len(features))
+            return original_fit(self, features, labels, *args, **kwargs)
+        with patch.object(RandomForestClassifier, "fit", spy):
+            result = grouped_cv(x, y, groups, {"n_estimators": 5, "max_depth": 2, "min_samples_leaf": 2})
+        for fold, size in zip(result["partitions"], fitted_sizes):
+            self.assertEqual(size, int(groups.isin(fold["train_groups"]).sum()))
 
     def test_changed_public_source_fails_closed(self):
         with tempfile.TemporaryDirectory() as temp:

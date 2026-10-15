@@ -12,7 +12,8 @@ import { EmergencyContact, Trail } from "../../types";
 import { buildTripPlanMessage, getTrailForMessage } from "../../services/trailMessages";
 import { getTrailById } from "../../services/trailRepository";
 import { getEstimatedReturnHours } from "../../services/trailDuration";
-import { DepartureMessage, getDepartureMessage, invalidateDepartureMessage, sendDeparturePlanSms } from "../../services/departureMessages";
+import { DepartureMessage, getDepartureMessage, invalidateDepartureMessage, sendDeparturePlanSms, TESTING_MODE_PLAN_MESSAGE } from "../../services/departureMessages";
+import { isTestingLocationActive } from "../../services/testingMode";
 
 export default function TripPlanScreen() {
   const { id } = useLocalSearchParams<{ id?: string }>();
@@ -27,6 +28,7 @@ export default function TripPlanScreen() {
   const [busy, setBusy] = useState(false);
   const [closePending, setClosePending] = useState(false);
   const [departureMessage, setDepartureMessage] = useState<DepartureMessage | null>(null);
+  const [testingMode, setTestingMode] = useState(false);
   const requestRef = useRef<Parameters<typeof createTripPlan>[0] | null>(null);
   const busyRef = useRef(false);
   const hoursEditedRef = useRef(false);
@@ -52,6 +54,7 @@ export default function TripPlanScreen() {
     let mounted = true;
     void getEmergencyContact().then((value) => { if (mounted) setContact(value); }).catch(() => undefined);
     void getDepartureMessage(trailId).then((value) => { if (mounted) setDepartureMessage(value); }).catch(() => { if (mounted) setDepartureMessage(null); });
+    void isTestingLocationActive().then((value) => { if (mounted) setTestingMode(value); }).catch(() => undefined);
     return () => { mounted = false; };
   }, [trailId]));
   const invalidateNotice = async () => {
@@ -84,6 +87,8 @@ export default function TripPlanScreen() {
     }
     busyRef.current = true; setBusy(true);
     try {
+      // A test run never registers a backend trip plan (no check-ins or escalation notices).
+      if (await isTestingLocationActive()) { setTestingMode(true); throw new Error(TESTING_MODE_PLAN_MESSAGE); }
       const session = await getAuthSession();
       if (!session) throw new Error("Iniciá sesión para registrar el plan en el servidor.");
       if (!requestRef.current) await invalidateNotice();
@@ -152,6 +157,10 @@ export default function TripPlanScreen() {
   };
   return <AppScreen withBottomNav={false}>
     <ScreenTitle eyebrow="Antes de salir" title="Plan de regreso" subtitle="Acordá el regreso cuando todavía tengas conexión." />
+    {testingMode && <Card tone="orange">
+      <Text style={{ color: colors.ink, fontWeight: "700" }}>Modo prueba: no se envía plan de salida</Text>
+      <Text style={{ color: colors.muted, marginTop: 8 }}>Los recorridos de prueba no necesitan plan: no se envía SMS, no se registra en el servidor y tu contacto no recibe avisos. Para enviar un plan real, desactivá "Simular ubicacion en ruta" en Perfil.</Text>
+    </Card>}
     <Card>
       <Text style={{ color: colors.ink, fontWeight: "700" }}>{contact ? `${contact.name} · ${contact.phone}` : "Falta un contacto de emergencia"}</Text>
       <Text style={{ color: colors.muted, marginTop: 8 }}>Si vos o tu contacto pierden señal, un aviso puede demorarse. Acordá también una persona alternativa y las acciones a seguir.</Text>
@@ -164,18 +173,18 @@ export default function TripPlanScreen() {
     {!isActive && <Card>
       {trail?.duration && <Text style={{ color: colors.muted, marginBottom: 8 }}>Duración estimada del recorrido: {trail.duration}.</Text>}
       <Text>Horas hasta el regreso</Text>
-      <TextInput editable={!busy && !requestRef.current} accessibilityLabel="Horas hasta el regreso" keyboardType="decimal-pad" value={hours}
+      <TextInput editable={!busy && !requestRef.current && !testingMode} accessibilityLabel="Horas hasta el regreso" keyboardType="decimal-pad" value={hours}
         placeholder={loadingTrail ? "Cargando duración..." : "Horas"}
         onChangeText={(value) => { hoursEditedRef.current = true; setHours(value); void invalidateNotice().catch(() => setNotice("No pudimos actualizar el aviso. Volvé a enviarlo antes de salir.")); }}
         style={{ minHeight: 48, borderBottomWidth: 1, borderColor: colors.muted }} />
       <Text>Margen de espera en minutos</Text>
-      <TextInput editable={!busy && !requestRef.current} accessibilityLabel="Margen de espera en minutos" keyboardType="number-pad" value={grace} onChangeText={(value) => { setGrace(value); void invalidateNotice().catch(() => setNotice("Volvé a enviar el plan actualizado antes de salir.")); }} style={{ minHeight: 48, borderBottomWidth: 1, borderColor: colors.muted }} />
+      <TextInput editable={!busy && !requestRef.current && !testingMode} accessibilityLabel="Margen de espera en minutos" keyboardType="number-pad" value={grace} onChangeText={(value) => { setGrace(value); void invalidateNotice().catch(() => setNotice("Volvé a enviar el plan actualizado antes de salir.")); }} style={{ minHeight: 48, borderBottomWidth: 1, borderColor: colors.muted }} />
       {requestRef.current && <Text style={{ color: colors.muted }}>Reintentaremos el mismo plan, con regreso previsto a las {new Date(requestRef.current.expected_return_at).toLocaleString("es-AR")}, para evitar duplicar el aviso.</Text>}
       <Text style={{ color: colors.muted, marginTop: 10 }}>Al registrar autorizás el aviso al contacto si no confirmás el regreso antes del plazo. El servicio debe tener un canal configurado.</Text>
-      <PrimaryButton label="Registrar aviso por atraso" disabled={busy} onPress={create} />
+      <PrimaryButton label="Registrar aviso por atraso" disabled={busy || testingMode} onPress={create} />
     </Card>}
     <View style={{ gap: 10 }}>
-      <PrimaryButton label={busy ? "Procesando..." : "Enviar plan por SMS"} icon="chatbubble-outline" disabled={busy} onPress={share} tone="secondary" />
+      <PrimaryButton label={busy ? "Procesando..." : "Enviar plan por SMS"} icon="chatbubble-outline" disabled={busy || testingMode} onPress={share} tone="secondary" />
       {departureMessage && <>
         <Text style={{ color: colors.green }}>Aviso {departureMessage.confirmation === "user_confirmed" ? "confirmado por vos" : "confirmado por el teléfono"}. Regreso: {new Date(departureMessage.expected_return_at).toLocaleString("es-AR")}.</Text>
         <PrimaryButton label="Volver al inicio del recorrido" disabled={busy} onPress={() => router.replace({ pathname: "/trail-start", params: { id: String(trailId) } })} />

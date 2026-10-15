@@ -2,6 +2,7 @@ const request = require("supertest");
 const jwt = require("jsonwebtoken");
 const runMigrations = require("../src/migrate");
 const seedDatabase = require("../src/seed");
+const { query } = require("../src/db");
 const app = require("../src/server");
 
 let adminToken;
@@ -100,10 +101,18 @@ describe("trails", () => {
     }
   });
 
-  test("reseeding preserves IDs and adds no simulated reports to new trails", async () => {
+  test("reseeding preserves IDs, adds no reports and removes previously seeded fabricated reports", async () => {
     const definitions = require("../src/data/additionalTrailDefinitions");
     const before = await request(app).get("/api/trails");
+    const seededTrail = before.body.find((trail) => trail.name === "Sendero a Confluencia");
+    await query(
+      `INSERT INTO trail_reports (trail_id, issue_summary, severity, trail_state, cause, blocks_path, details, reporter_name)
+       VALUES ($1, 'Barro y rocas sueltas', 'Media', 'Precaucion', 'Lluvia', false, 'Tramo humedo en sectores de bosque.', 'Senderista verificado')`,
+      [seededTrail.id]
+    );
     await seedDatabase();
+    const { rows: fabricated } = await query("SELECT id FROM trail_reports WHERE reporter_name = 'Senderista verificado'");
+    expect(fabricated).toEqual([]);
     const after = await request(app).get("/api/trails");
     expect(after.body.map((trail) => [trail.name, trail.id]).sort()).toEqual(
       before.body.map((trail) => [trail.name, trail.id]).sort()
@@ -122,7 +131,7 @@ describe("trails", () => {
     expect(response.status).toBe(404);
   });
 
-  test("falls back to a local weather estimate when the trail has no coordinates", async () => {
+  test("reports weather as unavailable instead of estimating it when the trail has no coordinates", async () => {
     const created = await request(app)
       .post("/api/trails")
       .set("Authorization", `Bearer ${adminToken}`)
@@ -130,8 +139,18 @@ describe("trails", () => {
 
     const response = await request(app).get(`/api/trails/${created.body.id}/weather`);
 
-    expect(response.status).toBe(200);
-    expect(response.body.source).toContain("sin conexion");
+    expect(response.status).toBe(422);
+    expect(response.body.temperature_c).toBeUndefined();
+  });
+
+  test("reports weather as unavailable when the forecast service cannot be reached", async () => {
+    const trails = await request(app).get("/api/trails");
+    const trail = trails.body.find((item) => item.center_lat !== null);
+
+    const response = await request(app).get(`/api/trails/${trail.id}/weather`);
+
+    expect(response.status).toBe(503);
+    expect(response.body.temperature_c).toBeUndefined();
   });
 
   test("rejects trail creation without authentication", async () => {

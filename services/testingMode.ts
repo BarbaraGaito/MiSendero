@@ -1,4 +1,5 @@
 import { db } from "../database/connection";
+import { getAuthSession } from "./authSession";
 
 
 export interface TestingLocationMode {
@@ -38,4 +39,11 @@ export const saveTestingLocationMode = async (enabled: boolean) => {
      VALUES (1, ?, ?)`,
     [enabled ? 1 : 0, Date.now()]
   );
+};
+
+// Same rule as the location hook: the switch only counts for admin accounts.
+// Services use it to refuse real side effects (SOS, departure plans) in a test run.
+export const isTestingLocationActive = async () => {
+  const [mode, session] = await Promise.all([getTestingLocationMode(), getAuthSession()]);
+  return mode.enabled && session?.user.role === "admin";
 };

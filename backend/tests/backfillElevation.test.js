@@ -1,0 +1,13 @@
+jest.mock("../src/db", () => ({ query: jest.fn(), getPool: jest.fn() }));
+jest.mock("../src/migrate", () => jest.fn());
+jest.mock("../src/trailElevation", () => ({ ensureTrailElevation: jest.fn() }));
+const { query, getPool } = require("../src/db");
+const migrate = require("../src/migrate");
+const { ensureTrailElevation } = require("../src/trailElevation");
+const end = jest.fn();
+const run = async () => { jest.isolateModules(() => require("../src/backfillElevation")); for (let i = 0; i < 20; i++) await Promise.resolve(); };
+beforeEach(() => { jest.clearAllMocks(); getPool.mockResolvedValue({ end }); migrate.mockResolvedValue(undefined); query.mockResolvedValue({ rows: [{ id: 1, name: "Uno" }, { id: 2, name: "Dos" }] }); ensureTrailElevation.mockResolvedValue({ ascent_m: 20, descent_m: 10, points: [1, 2] }); jest.spyOn(console, "log").mockImplementation(() => {}); jest.spyOn(console, "error").mockImplementation(() => {}); });
+afterEach(() => { process.exitCode = 0; jest.restoreAllMocks(); });
+test("backfill persists actual provider elevations and closes the pool after a complete run", async () => { await run(); expect(ensureTrailElevation).toHaveBeenCalledTimes(2); expect(ensureTrailElevation).toHaveBeenCalledWith({ id: 1, name: "Uno" }, { timeoutMs: 60000 }); expect(console.log).toHaveBeenLastCalledWith("Altimetria: 2/2 rutas disponibles."); expect(end).toHaveBeenCalledTimes(1); expect(process.exitCode).toBe(0); });
+test("one unavailable route does not stop others and returns a failed process status", async () => { ensureTrailElevation.mockRejectedValueOnce(new Error("provider offline")); await run(); expect(ensureTrailElevation).toHaveBeenCalledTimes(2); expect(console.error).toHaveBeenCalledWith("1: Uno: provider offline"); expect(process.exitCode).toBe(1); expect(end).toHaveBeenCalledTimes(1); });
+test("migration failure prevents provider calls and still closes the pool", async () => { migrate.mockRejectedValueOnce(new Error("migration failed")); await run(); expect(ensureTrailElevation).not.toHaveBeenCalled(); expect(console.error).toHaveBeenCalledWith("migration failed"); expect(process.exitCode).toBe(1); expect(end).toHaveBeenCalledTimes(1); });

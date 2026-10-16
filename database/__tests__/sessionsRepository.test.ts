@@ -1,0 +1,37 @@
+import { db, initDB } from "../database";
+import * as sessions from "../sessionsRepository";
+import { saveAuthSession } from "../../services/authSession";
+const login = (id: number) => saveAuthSession({ token: `session-${id}`, user: { id, name: "Test", email: `${id}@example.test` } });
+const start = Date.UTC(2026, 9, 10, 10);
+beforeAll(() => initDB());
+beforeEach(async () => { await db.runAsync("DELETE FROM sessions"); await login(31); });
+test("updates a paused record then finalizes exactly once without losing measured progress", async () => {
+  const first = await sessions.getOrCreatePausedSession({ trailId: 7, startedAt: start, duration: 30, distance: 20 });
+  const paused = await sessions.getOrCreatePausedSession({ trailId: 7, startedAt: start, duration: 40, distance: 25 });
+  expect(paused.id).toBe(first.id); expect(paused.distance).toBe(25);
+  const data = { trailId: 7, startedAt: start, endedAt: start + 60000, duration: 60, distance: 40, completionStatus: "ended_early" as const, routeProgressMeters: 40, routeTotalMeters: 500 };
+  expect((await sessions.getOrCreateCompletedSession(data)).didFinalizeNow).toBe(true);
+  expect((await sessions.getOrCreateCompletedSession({ ...data, distance: 999 })).didFinalizeNow).toBe(false);
+  expect((await sessions.getOrCreatePausedSession({ trailId: 7, startedAt: start, duration: 99, distance: 99 })).distance).toBe(40);
+  expect((await sessions.getSessions())[0]).toMatchObject({ completion_status: "ended_early", route_progress_meters: 40 });
+});
+test("reviews, averages and local history belong only to the current account", async () => {
+  const a = await sessions.getOrCreateCompletedSession({ trailId: 7, startedAt: start, endedAt: start + 1, duration: 1, distance: 1000 });
+  const b = await sessions.getOrCreateCompletedSession({ trailId: 7, startedAt: start + 2, endedAt: start + 3, duration: 1, distance: 2000 });
+  await sessions.saveSessionReview(a.session.id, 7, 4, "  Buen sendero  ");
+  await sessions.saveSessionReview(b.session.id, 7, 2, "  ");
+  expect(await sessions.getTrailRatingSummary(7)).toEqual({ averageRating: 3, reviewCount: 2 });
+  expect((await sessions.getTrailReviews(7)).map((row) => row.reviewText).sort()).toEqual([null, "Buen sendero"].sort());
+  expect((await sessions.getLatestCompletedSession())?.id).toBe(b.session.id);
+  expect(await sessions.getRecentSessions(1)).toHaveLength(1);
+  expect(await sessions.getSessionsSummary()).toMatchObject({ totalDistance: 3000, completedCount: 2 });
+  await login(32);
+  await sessions.saveSessionReview(a.session.id, 7, 1, "other account");
+  await sessions.attachTrailToSession(a.session.id, 99);
+  expect(await sessions.getTrailReviews(7)).toEqual([]);
+  expect(await sessions.getTrailRatingSummary(7)).toBeNull();
+  expect(await sessions.getLatestCompletedSession()).toBeNull();
+  expect(await sessions.getSessionsSummary()).toEqual({ totalDistance: 0, completedCount: 0, currentMonthCount: 0 });
+  await login(31);
+  expect((await sessions.getSessions()).find((row) => row.id === a.session.id)?.trail_id).toBe(7);
+});

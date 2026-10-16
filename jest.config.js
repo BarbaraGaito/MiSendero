@@ -1,5 +1,10 @@
 module.exports = {
   preset: "jest-expo",
   testMatch: ["**/__tests__/**/*.test.ts", "**/__tests__/**/*.test.tsx"],
-  testPathIgnorePatterns: ["/node_modules/", "<rootDir>/backend/", "<rootDir>/training/"],
+  testPathIgnorePatterns: ["/node_modules/", "<rootDir>/backend/", "<rootDir>/training/", "<rootDir>/tmp/"],
+  modulePathIgnorePatterns: ["<rootDir>/tmp/"],
+  collectCoverageFrom: require("./testing/coverage-scope.cjs").client,
+  coverageProvider: "babel",
+  coverageDirectory: "<rootDir>/coverage/client",
+  coverageReporters: ["json", "json-summary", "lcov", "html", "text-summary"],
 };

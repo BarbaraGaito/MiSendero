@@ -1,0 +1,321 @@
+{
+  "date": "2026-10-16",
+  "base_revision": "c33b658b2556a089db7040e7c935796152848eb4",
+  "working_tree_changes": true,
+  "baseline": {
+    "tests": {
+      "client": 185,
+      "backend": 93
+    },
+    "coverage": {
+      "lines": {
+        "total": 6123,
+        "covered": 2744,
+        "skipped": 0,
+        "pct": 44.8146
+      },
+      "statements": {
+        "total": 6962,
+        "covered": 2980,
+        "skipped": 0,
+        "pct": 42.8038
+      },
+      "branches": {
+        "total": 4890,
+        "covered": 1698,
+        "skipped": 0,
+        "pct": 34.7239
+      },
+      "functions": {
+        "total": 1484,
+        "covered": 513,
+        "skipped": 0,
+        "pct": 34.5687
+      }
+    },
+    "coverage_command_exit": 1,
+    "reason": "85 percent line threshold; tests themselves passed",
+    "environment": "Initially installed Expo 54/React 19.1; retained solely as baseline"
+  },
+  "clean_install": {
+    "node": "v24.19.0",
+    "npm": "11.17.0",
+    "client_command": "npm ci --legacy-peer-deps --ignore-scripts --no-audit --no-fund",
+    "backend_command": "npm ci --ignore-scripts --no-audit --no-fund",
+    "client_exit": 0,
+    "backend_exit": 0,
+    "lockfiles_unchanged": true
+  },
+  "primary": {
+    "command": "npm run test:coverage -- --output=coverage/final --randomize --seed=20261016 --showSeed",
+    "exit": 0,
+    "seed": 20261016,
+    "workers": 1,
+    "components": {
+      "client": {
+        "lines": {
+          "total": 5190,
+          "covered": 4539,
+          "skipped": 0,
+          "pct": 87.45
+        },
+        "statements": {
+          "total": 5893,
+          "covered": 4931,
+          "skipped": 0,
+          "pct": 83.67
+        },
+        "functions": {
+          "total": 1318,
+          "covered": 1015,
+          "skipped": 0,
+          "pct": 77.01
+        },
+        "branches": {
+          "total": 4422,
+          "covered": 3233,
+          "skipped": 0,
+          "pct": 73.11
+        },
+        "branchesTrue": {
+          "total": 0,
+          "covered": 0,
+          "skipped": 0,
+          "pct": 100
+        },
+        "tests": {
+          "suites": 44,
+          "passed": 308,
+          "failed": 0,
+          "pending": 0,
+          "success": true
+        }
+      },
+      "backend": {
+        "lines": {
+          "total": 933,
+          "covered": 818,
+          "skipped": 0,
+          "pct": 87.67
+        },
+        "statements": {
+          "total": 1069,
+          "covered": 914,
+          "skipped": 0,
+          "pct": 85.5
+        },
+        "functions": {
+          "total": 166,
+          "covered": 136,
+          "skipped": 0,
+          "pct": 81.92
+        },
+        "branches": {
+          "total": 468,
+          "covered": 357,
+          "skipped": 0,
+          "pct": 76.28
+        },
+        "branchesTrue": {
+          "total": 0,
+          "covered": 0,
+          "skipped": 0,
+          "pct": 100
+        },
+        "tests": {
+          "suites": 16,
+          "passed": 114,
+          "failed": 0,
+          "pending": 0,
+          "success": true
+        }
+      }
+    },
+    "combined": {
+      "lines": {
+        "total": 6123,
+        "covered": 5357,
+        "skipped": 0,
+        "pct": 87.4898
+      },
+      "statements": {
+        "total": 6962,
+        "covered": 5845,
+        "skipped": 0,
+        "pct": 83.9558
+      },
+      "branches": {
+        "total": 4890,
+        "covered": 3590,
+        "skipped": 0,
+        "pct": 73.4151
+      },
+      "functions": {
+        "total": 1484,
+        "covered": 1151,
+        "skipped": 0,
+        "pct": 77.5606
+      }
+    },
+    "lock_matches": true
+  },
+  "repeat": {
+    "seed": 73,
+    "workers": 2,
+    "client_exit": 0,
+    "backend_exit": 0,
+    "components": {
+      "client": {
+        "lines": {
+          "total": 5190,
+          "covered": 4539,
+          "skipped": 0,
+          "pct": 87.45
+        },
+        "statements": {
+          "total": 5893,
+          "covered": 4931,
+          "skipped": 0,
+          "pct": 83.67
+        },
+        "functions": {
+          "total": 1318,
+          "covered": 1015,
+          "skipped": 0,
+          "pct": 77.01
+        },
+        "branches": {
+          "total": 4422,
+          "covered": 3233,
+          "skipped": 0,
+          "pct": 73.11
+        },
+        "branchesTrue": {
+          "total": 0,
+          "covered": 0,
+          "skipped": 0,
+          "pct": 100
+        },
+        "tests": {
+          "suites": 44,
+          "passed": 308,
+          "failed": 0,
+          "pending": 0,
+          "success": true
+        }
+      },
+      "backend": {
+        "lines": {
+          "total": 933,
+          "covered": 818,
+          "skipped": 0,
+          "pct": 87.67
+        },
+        "statements": {
+          "total": 1069,
+          "covered": 914,
+          "skipped": 0,
+          "pct": 85.5
+        },
+        "functions": {
+          "total": 166,
+          "covered": 136,
+          "skipped": 0,
+          "pct": 81.92
+        },
+        "branches": {
+          "total": 468,
+          "covered": 357,
+          "skipped": 0,
+          "pct": 76.28
+        },
+        "branchesTrue": {
+          "total": 0,
+          "covered": 0,
+          "skipped": 0,
+          "pct": 100
+        },
+        "tests": {
+          "suites": 16,
+          "passed": 114,
+          "failed": 0,
+          "pending": 0,
+          "success": true
+        }
+      }
+    },
+    "combined": {
+      "lines": {
+        "total": 6123,
+        "covered": 5357,
+        "skipped": 0,
+        "pct": 87.4898
+      },
+      "statements": {
+        "total": 6962,
+        "covered": 5845,
+        "skipped": 0,
+        "pct": 83.9558
+      },
+      "branches": {
+        "total": 4890,
+        "covered": 3590,
+        "skipped": 0,
+        "pct": 73.4151
+      },
+      "functions": {
+        "total": 1484,
+        "covered": 1151,
+        "skipped": 0,
+        "pct": 77.5606
+      }
+    },
+    "all_aggregate_counters_equal": true,
+    "all_file_counters_equal": true
+  },
+  "typecheck": {
+    "command": "npm run typecheck",
+    "exit": 0
+  },
+  "aggregator_tests": {
+    "command": "node --test testing/coverage-tools.test.cjs",
+    "passed": 2,
+    "exit": 0
+  },
+  "python": {
+    "command": "npm run test:coverage:python",
+    "exit": 0,
+    "passed": 14,
+    "coverage": {
+      "covered_lines": 485,
+      "num_statements": 696,
+      "percent_covered": 68.3049147442327,
+      "percent_covered_display": "68.30",
+      "missing_lines": 211,
+      "excluded_lines": 0,
+      "num_branches": 301,
+      "num_partial_branches": 44,
+      "covered_branches": 196,
+      "missing_branches": 105
+    },
+    "separate_from_product": true
+  },
+  "thesis": {
+    "pdf": "D:/Importante/UADE/PFI/PFI25/main.pdf",
+    "pdf_sha256": "2cc353ecbce27d4cfb63c8c45a49a85158c5c67c0e8a44ee9e533bee3b2321c3",
+    "pages": 154,
+    "rendered_and_reviewed_pdf_pages": [
+      115,
+      116,
+      117,
+      118,
+      119
+    ],
+    "compile_passes": 2,
+    "compile_exit_codes": [
+      0,
+      0
+    ],
+    "only_section_4_4_source_replaced": true
+  }
+}

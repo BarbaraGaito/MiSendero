@@ -67,9 +67,29 @@ cd backend && npm test # backend: auth, trails, activities, emergency-alerts, li
                        # reportes obsoletos, aplicacion de dificultad de ruta (via pg-mem, sin Docker)
 ```
 
-CI (`.github/workflows/ci.yml`) corre `npx tsc --noEmit` + `npm test` (frontend) y `npm test`
-(backend) en cada push y pull request. Requiere Node 22+ (el mock de `expo-sqlite` usado en los
-tests del frontend se apoya en `node:sqlite`).
+La auditoría, el alcance completo, los resultados por componente y las brechas están en
+[el informe de cobertura del 16/10/2026](docs/coverage-audit-2026-10-16/README.md).
+
+```bash
+npm ci --legacy-peer-deps --ignore-scripts
+npm ci --prefix backend --ignore-scripts
+npm run typecheck
+npm run test:coverage
+```
+
+El primer comando conserva el grafo del lockfile sin resolver nuevamente los pares nativos
+opcionales de Expo. No cambia versiones. CI usa Node 24.19.0, comprueba tipos y ejecuta las
+pruebas de ambos componentes con instrumentación Babel/Istanbul. Falla si la cobertura conjunta
+de líneas es menor al 85 %, hay archivos del inventario ausentes o hay pruebas fallidas u omitidas.
+Conserva HTML, LCOV, JSON, CSV por archivo y hashes como artefacto incluso cuando falla.
+Los mocks de SQLite usan `node:sqlite`; las pruebas nativas y de dispositivo se acreditan aparte.
+
+La investigación Python tiene un informe independiente, sin sumarlo al porcentaje del producto:
+
+```bash
+.venv-ai/Scripts/python.exe -m pip install -r testing/requirements-coverage.txt
+npm run test:coverage:python
+```
 
 ## Trazabilidad contra el planteo del PFI
 

@@ -8,12 +8,14 @@ const app = require("../src/server");
 let adminToken;
 let userToken;
 let elevationFetch;
+let lastCatalogId;
 const testPassword = process.env.TEST_USER_PASSWORD;
 
 beforeAll(async () => {
   elevationFetch = jest.spyOn(global, "fetch").mockRejectedValue(new Error("No external network in tests"));
   await runMigrations();
   await seedDatabase();
+  lastCatalogId = (await query("SELECT MAX(id) AS id FROM trails")).rows[0].id;
 
   const admin = await request(app).post("/api/auth/register").send({
     name: "Admin Uno",
@@ -38,6 +40,10 @@ beforeAll(async () => {
 });
 
 afterAll(() => elevationFetch.mockRestore());
+beforeEach(async () => {
+  await query("DELETE FROM trail_reports");
+  await query("DELETE FROM trails WHERE id > $1", [lastCatalogId]);
+});
 
 describe("trails", () => {
   test("lists seeded trails", async () => {

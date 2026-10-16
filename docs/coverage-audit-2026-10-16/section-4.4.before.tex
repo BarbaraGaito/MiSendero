@@ -1,0 +1,127 @@
+\section{Pruebas funcionales y resultados}\label{sec:pruebas-funcionales}
+
+La validación de MiSendero se realizó mediante pruebas automatizadas sobre los servicios de la aplicación móvil y la API del backend. El propósito fue comprobar el comportamiento de los componentes implementados frente a los escenarios definidos en los casos de prueba, con especial atención al seguimiento de recorridos, la gestión de información sin conexión, la sincronización diferida, la autenticación y los mecanismos de asistencia y emergencia.
+
+La selección de las funcionalidades evaluadas responde al alcance del prototipo y a las necesidades identificadas en la investigación con usuarios: disponer de información durante la actividad, conservar los registros ante conectividad intermitente y contar con servicios que apoyen la planificación y el seguimiento de una salida. De este modo, las pruebas vinculan los requerimientos del proyecto con comportamientos verificables del software.
+
+\subsection{Técnicas y herramientas utilizadas}
+
+Se aplicaron las siguientes técnicas de validación:
+
+\begin{itemize}
+    \item \textbf{Pruebas unitarias:} destinadas a comprobar funciones y servicios específicos, como el cálculo de distancia, el progreso de una ruta, la administración de preferencias y el procesamiento de métricas. Su finalidad fue contrastar las salidas obtenidas con los valores esperados para las entradas definidas en cada caso.
+    \item \textbf{Pruebas funcionales automatizadas:} orientadas a verificar comportamientos asociados con las funcionalidades del sistema, entre ellos la pausa y reanudación de una sesión, la gestión de favoritos, el almacenamiento offline, la autenticación y el tratamiento de reportes y actividades.
+    \item \textbf{Pruebas de integración de servicios y API:} empleadas para evaluar la interacción entre componentes en los escenarios automatizados, incluyendo solicitudes al backend, controles de autorización, sincronización, procesamiento de alertas y reintentos de notificación.
+\end{itemize}
+
+Para la ejecución automatizada se utilizó Jest, junto con Jest Expo y la configuración correspondiente a React Native para los módulos móviles. El backend contó con su propia configuración de Jest.
+
+\subsection{Funcionalidades evaluadas}
+
+En la aplicación móvil se verificaron los servicios relacionados con el recorrido y su seguimiento, la persistencia local y el procesamiento de información complementaria. En el backend se evaluaron las operaciones de acceso, gestión de senderos, actividades, colaboración y asistencia. La Tabla~\ref{tab:technical-validation} sintetiza los comportamientos incluidos en las suites ejecutadas y su resultado.
+
+\begingroup
+\small
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.12}
+\begin{longtable}{|p{3cm}|p{7.8cm}|p{3.4cm}|}
+    \caption{Funcionalidades verificadas mediante pruebas automatizadas de MiSendero}\label{tab:technical-validation} \\
+    \hline
+    \textbf{Componente} & \textbf{Comportamientos evaluados} & \textbf{Resultado} \\
+    \hline
+    \endfirsthead
+
+    \multicolumn{3}{r}{\footnotesize Continuación de la tabla} \\
+    \hline
+    \textbf{Componente} & \textbf{Comportamientos evaluados} & \textbf{Resultado} \\
+    \hline
+    \endhead
+
+    \hline
+    \endfoot
+
+    \hline
+    \endlastfoot
+
+    Seguimiento del recorrido & Cálculo de distancia y progreso de ruta, procesamiento del seguimiento GPS y pausa y reanudación de sesiones. & Casos ejecutados aprobados. \\
+    \hline
+    Senderos y preferencias & Repositorio de senderos, gestión de favoritos y preferencias asociadas con cada cuenta. & Casos ejecutados aprobados. \\
+    \hline
+    Mapas & Servicios de mapas offline y tratamiento de gestos del mapa. & Casos ejecutados aprobados. \\
+    \hline
+    Sincronización offline & Cola de operaciones pendientes y resiliencia del procesamiento mediante reintentos. & Casos ejecutados aprobados. \\
+    \hline
+    Asistencia local & Lógica de alertas SOS locales. & Casos ejecutados aprobados. \\
+    \hline
+    Métricas e inferencia & Procesamiento de métricas, contrato del puente de HealthKit con mocks, avisos por reglas y abstención ante variables requeridas ausentes o inválidas. El control de aprobación de modelos se distingue en RF-20.2. & Evidencia de los casos ejecutados; aceptación integral pendiente. \\
+    \hline
+    Autenticación y autorización & Registro, inicio de sesión, autenticación y permisos de administración en la API. & Casos ejecutados aprobados. \\
+    \hline
+    Gestión de senderos & Listado, consulta de detalle y creación de senderos mediante el backend. La consulta meteorológica y el tratamiento de su indisponibilidad se separan en RF-16 y RF-16.1. & Evidencia de los casos ejecutados; verificar correspondencia con la versión del fallback. \\
+    \hline
+    Reportes colaborativos & Operaciones sobre reportes, limpieza de registros vencidos y eliminación de los reportes de ejemplo cargados por versiones anteriores. & Casos ejecutados aprobados. \\
+    \hline
+    Actividades & Tratamiento de actividades finalizadas y no completadas, e idempotencia de las operaciones evaluadas. & Casos ejecutados aprobados. \\
+    \hline
+    Emergencias y planes & Procesamiento de alertas de emergencia, planes de salida, confirmaciones de seguimiento (\emph{check-in}) y reintentos de notificación. & Casos ejecutados aprobados. \\
+    \hline
+    Datos simulados & Lecturas del simulador de métricas y recorridos del modo de ubicación de prueba que no se guardan ni se sincronizan, SOS y planes de salida que no se envían en modo prueba, y limpieza de los datos simulados almacenados por versiones anteriores. & Casos ejecutados aprobados. \\
+    \hline
+    Relieve 3D & Construcción del relieve solo a partir de elevaciones reales de Copernicus DEM, con escala vertical 1:1, estado no disponible cuando faltan datos y grilla guardada con el mapa descargado para uso sin conexión. & Casos ejecutados aprobados. \\
+    \hline
+\end{longtable}
+\endgroup
+
+Los escenarios evaluados abarcan tanto operaciones habituales como mecanismos destinados a mantener la consistencia de la información. En particular, las pruebas de reintentos e idempotencia son relevantes para el enfoque offline-first: permiten verificar el tratamiento de operaciones pendientes y de solicitudes repetidas en los casos definidos. Por su parte, las comprobaciones de autorización y vigencia de reportes contribuyen a validar el control de acceso y la actualización de la información colaborativa.
+
+\subsection{Resultados obtenidos}
+
+La ejecución de las pruebas se realizó mediante los siguientes comandos:
+
+\begin{itemize}
+    \item \verb|npm test -- --runInBand|, para las suites de la aplicación y sus servicios móviles.
+    \item \verb|npm --prefix backend test -- --runInBand|, para las suites del backend y la API.
+\end{itemize}
+
+La opción \verb|--runInBand| ejecuta las suites de Jest de manera secuencial. Las pruebas móviles utilizan mocks de APIs nativas y almacenamiento; las pruebas del backend utilizan PostgreSQL en memoria mediante pg-mem. Los resultados acreditan los escenarios automatizados en ese entorno. La Tabla~\ref{tab:resultados-pruebas} presenta los resultados obtenidos.
+
+\begin{table}[H]
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{|p{5.8cm}|p{2cm}|p{2.4cm}|p{4cm}|}
+\hline
+\textbf{Componente evaluado} & \textbf{Suites} & \textbf{Casos} & \textbf{Resultado} \\
+\hline
+Aplicación y servicios móviles & 29 & 173 & Aprobado; sin fallos. \\
+\hline
+Backend y API & 10 & 86 & Aprobado; sin fallos. \\
+\hline
+\textbf{Total de pruebas automatizadas} & \textbf{39} & \textbf{259} & \textbf{259 casos aprobados.} \\
+\hline
+\end{tabular}
+\caption{Resultados de la ejecución de pruebas automatizadas.}
+\label{tab:resultados-pruebas}
+\end{table}
+
+Se aprobaron los 259 casos de prueba distribuidos en 39 suites, lo que representa el 100\,\% de los casos ejecutados. Este porcentaje expresa la proporción de pruebas aprobadas dentro del conjunto ejecutado.
+
+La autora informa que la medición de la entrega alcanza el mínimo exigido del 85\,\% de cobertura automatizada de líneas de código ejecutable. El indicador expresa la proporción de líneas cubiertas respecto de las líneas ejecutables del alcance y se distingue de la proporción de casos aprobados. La aceptación de RNF-11 requiere vincular ese resultado con el informe instrumentado, el inventario de módulos, las exclusiones y la versión evaluada; la declaración del resultado se distingue de esa acreditación documental.
+
+\subsection{Discusión de resultados y decisiones adoptadas}
+
+Los resultados aportan evidencia de que los componentes evaluados responden de acuerdo con los comportamientos esperados en los escenarios automatizados. La aprobación de las suites móviles y del backend permite analizar de forma conjunta la lógica local y los servicios centrales, dos niveles que sostienen la arquitectura de MiSendero.
+
+En relación con el seguimiento de recorridos, la validación del cálculo de distancia, el progreso y las transiciones de pausa y reanudación respalda la coherencia de los servicios que generan la información de actividad. Este resultado es relevante porque dichos datos constituyen la base del registro del recorrido y de su posterior consulta.
+
+Las pruebas de persistencia, cola de sincronización y reintentos respaldan la decisión de conservar información localmente y procesar las operaciones pendientes mediante servicios específicos. La aprobación de los casos de idempotencia complementa esta decisión, al verificar el comportamiento previsto frente a solicitudes repetidas. Se mantiene, por tanto, la estrategia de sincronización diferida como parte de la arquitectura del prototipo.
+
+En el backend, los resultados de autenticación y autorización respaldan la separación entre operaciones de usuario y funciones administrativas. A su vez, las pruebas de reportes y limpieza de registros vencidos apoyan el criterio de vigencia temporal de la información colaborativa, mientras que las de actividades verifican el tratamiento diferenciado de recorridos finalizados y no completados. Estas comprobaciones contribuyen a sostener la consistencia de los datos utilizados por la aplicación.
+
+Las pruebas de alertas SOS, planes de salida, confirmaciones de seguimiento y reintentos de notificación verifican la lógica implementada para registrar y procesar los eventos de asistencia. Las pruebas de métricas fisiológicas, puente de HealthKit e inferencia aportan evidencia sobre el procesamiento de datos y la interacción entre los componentes evaluados. Las pruebas de datos simulados verifican que las lecturas del simulador y los recorridos del modo de ubicación de prueba no se almacenan ni se sincronizan, y que en ese modo no se envían pedidos de SOS ni planes de salida; las de relieve verifican que la vista 3D solo se construye con elevaciones reales, también sin conexión.
+
+Como decisión derivada del proceso de validación, se adoptaron las suites automatizadas como una base reproducible para detectar regresiones ante modificaciones posteriores.
+
+En conjunto, los resultados documentan una validación satisfactoria de las funcionalidades incluidas en las suites ejecutadas. La evidencia obtenida respalda las decisiones de implementación relacionadas con el seguimiento, la persistencia local, la sincronización, el control de acceso y el procesamiento de información colaborativa y de asistencia, en correspondencia con el alcance del prototipo desarrollado.
+

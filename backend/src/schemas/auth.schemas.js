@@ -4,7 +4,7 @@ const registerSchema = z.object({
   name: z.string().trim().min(1).max(120),
   email: z.string().trim().email().max(200),
   password: z.string().min(8).max(200),
-  accepted_terms_version: z.union([z.string(), z.number()]),
+  accepted_terms_version: z.literal(require("../terms.json").version),
 });
 
 const loginSchema = z.object({

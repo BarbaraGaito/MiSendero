@@ -507,7 +507,7 @@ function getSyncStatusMessage(
   if (status === "saved") return "Metricas sincronizadas desde el dispositivo.";
   if (status === "duplicate") return "No hay lecturas nuevas para guardar.";
   if (status === "permission_denied") {
-    return "Falta permiso de frecuencia cardiaca. Revisa los permisos de Salud o Health Connect.";
+    return "Revisá tu autorización de datos fisiológicos en Perfil y los permisos de Salud o Health Connect.";
   }
   if (status === "not_linked") return "Primero vincula un reloj o app de salud.";
   if (status === "unavailable") {

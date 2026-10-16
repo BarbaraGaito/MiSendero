@@ -1,0 +1,11 @@
+{
+  "version": "2026-10-16",
+  "sections": [
+    { "title": "Uso informativo", "body": "MiSendero es una herramienta de apoyo para senderismo. No constituye diagnóstico, evaluación clínica, servicio de rescate ni garantía de seguridad. Las lecturas pueden faltar, demorarse o ser imprecisas; la ausencia de avisos no confirma que sea seguro continuar." },
+    { "title": "Métricas y modelos", "body": "Las métricas fisiológicas se leen desde Salud o Health Connect cuando lo autorizás. Los modelos de investigación no están habilitados para uso en campo. Los avisos por umbrales son reglas experimentales y no acreditan inferencia de IA ni validación clínica." },
+    { "title": "Mensajes y asistencia", "body": "Preparar un mensaje, abrir la aplicación de SMS, recibir una alerta en la API y entregar un mensaje al contacto son etapas distintas. MiSendero no confirma asistencia ni activa un servicio de rescate. Los avisos de regreso dependen del canal configurado y su aceptación no acredita entrega." },
+    { "title": "Mapas y reportes", "body": "Las rutas, el relieve y los reportes pueden tener errores o estar desactualizados. Los reportes son contenido de usuarios: evitá incluir nombres, teléfonos u otros datos personales. Podés denunciar contenido, bloquear a su autor, corregir o retirar tus propios reportes. Sin conexión no se reciben correcciones ni retiros; las copias tienen vencimiento." },
+    { "title": "Decisiones de privacidad", "body": "Aceptar estos términos no autoriza el tratamiento fisiológico ni la analítica. Cada opción es independiente, opcional y revocable en Perfil. Los permisos técnicos se administran por separado en el sistema operativo. Las muestras fisiológicas permanecen locales; no existe un envío implementado de muestras para entrenamiento ni una anonimización acreditada." },
+    { "title": "Cuenta y datos", "body": "Podés iniciar la eliminación desde Perfil o desde el recurso web de cuenta, con tu contraseña. La baja elimina los datos asociados en la API y revoca el acceso. Las demás instalaciones limpian sus copias al conectar; los mensajes ya compartidos con contactos y los respaldos requieren gestión adicional. El recurso web permite descargar datos remotos y actualizar el nombre. La política completa y los canales del responsable deben corresponder al servicio efectivamente publicado." }
+  ]
+}

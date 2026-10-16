@@ -1,4 +1,5 @@
 import { useNetworkState } from "expo-network";
+import { router } from "expo-router";
 import { getOfflineTilePlanForTrail } from "../../services/mapTileCache";
 ﻿import { Ionicons } from "@expo/vector-icons";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -370,8 +371,8 @@ const getVisibleTiles = (
 
 const getMapAttribution = (layer: MapLayer) => {
   if (layer !== "satellite" && process.env.EXPO_PUBLIC_OFFLINE_TILE_ATTRIBUTION) return process.env.EXPO_PUBLIC_OFFLINE_TILE_ATTRIBUTION;
-  if (layer === "terrain") return "Esri World Topo Map · Ruta © OpenStreetMap";
-  if (layer === "satellite") return "Esri World Imagery · Ruta © OpenStreetMap";
+  if (layer === "terrain") return "Esri World Topo Map · Esri, HERE, TomTom, Intermap, GEBCO, USGS, FAO, NPS, NRCAN, GeoBase, IGN, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China, swisstopo, MapmyIndia y comunidad GIS · Ruta © OpenStreetMap";
+  if (layer === "satellite") return "Esri World Imagery · Esri, Maxar, Earthstar Geographics y comunidad GIS · Ruta © OpenStreetMap";
   return "© OpenStreetMap contributors (ODbL)";
 };
 
@@ -1239,7 +1240,7 @@ export function TrailMap({
       ) : null}
 
       {!isPerspective ? (
-        <Text style={styles.attribution}>
+        <Text style={styles.attribution} accessibilityRole="link" onPress={() => router.push("/atribuciones")}>
           {getMapAttribution(layer)}
         </Text>
       ) : null}

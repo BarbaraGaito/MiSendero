@@ -90,12 +90,12 @@ test("missing elevation prevents an apparently complete offline download", async
 });
 
 test("legacy maps gain a persisted profile without losing reports", async () => {
-  await saveOfflineTrailMap(elevated, [{ id: 42 } as never]);
+  await saveOfflineTrailMap(elevated, [{ id: 42, created_at: new Date().toISOString() } as never]);
   await db.runAsync("UPDATE offline_maps SET trail_json = ? WHERE trail_id = ?", [JSON.stringify(trail), 7]);
   expect(await getVerifiedOfflineMapByTrailId(7)).toBeNull();
   expect(await refreshOfflineTrailElevation(elevated)).toEqual(elevated);
   expect((await getOfflineMapByTrailId(7))?.trail?.elevation).toEqual(elevated.elevation);
-  expect((await getOfflineMapByTrailId(7))?.reports).toEqual([{ id: 42 }]);
+  expect((await getOfflineMapByTrailId(7))?.reports).toEqual([expect.objectContaining({ id: 42 })]);
 });
 
 test("a new geometry cannot overwrite the downloaded trace and its elevation", async () => {

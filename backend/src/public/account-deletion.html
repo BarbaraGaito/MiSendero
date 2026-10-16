@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="es">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MiSendero · Privacidad y baja de cuenta</title>
+<link rel="stylesheet" href="/account-assets/account.css">
+<main>
+  <h1>MiSendero: tu cuenta y tus datos</h1>
+  <p>Podés descargar los datos remotos de tu cuenta, actualizar tu nombre y eliminar tu cuenta sin instalar la app.</p>
+  <p>La baja elimina la cuenta, sus actividades, reportes, decisiones de privacidad, planes, avisos y datos de contactos guardados por la API. Las credenciales dejan de funcionar en otras instalaciones. Sus datos locales se limpian cuando vuelven a conectar. No podemos retirar mensajes que ya recibieron otras personas.</p>
+  <p>Las muestras fisiológicas permanecen en tu dispositivo: revocá su uso desde Perfil y administrá los permisos de Salud en el sistema operativo. Las copias de seguridad y los dispositivos sin conexión requieren el procedimiento operativo de supresión.</p>
+  <form id="account-form">
+    <label for="email">Email de la cuenta</label><input id="email" type="email" autocomplete="username" required maxlength="200">
+    <label for="password">Contraseña actual</label><input id="password" type="password" autocomplete="current-password" required maxlength="200">
+    <button type="submit">Verificar mi cuenta</button>
+  </form>
+  <section id="actions" hidden>
+    <button id="sign-out" type="button">Cerrar sesión web</button>
+    <h2>Acceso y actualización</h2>
+    <button id="export" type="button">Descargar mis datos remotos</button>
+    <form id="name-form"><label for="name">Nombre actualizado</label><input id="name" maxlength="120" required><button type="submit">Guardar nombre</button></form>
+    <h2>Eliminar cuenta</h2>
+    <p>La eliminación es irreversible. Cancela los planes y avisos que aún no se hayan enviado. Si se interrumpe la conexión, verificá nuevamente tu cuenta antes de dar la baja por finalizada.</p>
+    <label><input id="confirm" type="checkbox">Quiero eliminar definitivamente mi cuenta y sus datos remotos.</label>
+    <button id="delete" type="button">Eliminar definitivamente</button>
+  </section>
+  <p id="status" role="status" aria-live="polite"></p>
+  <section id="moderation" hidden><h2>Moderación de denuncias</h2><button id="refresh-moderation" type="button">Actualizar denuncias</button><div id="flags"></div></section>
+  <p><a id="contact" hidden>Contactar por privacidad y datos de contactos</a></p>
+</main>
+<script src="/account-assets/account.js" defer></script>
+</html>

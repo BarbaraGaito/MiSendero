@@ -14,7 +14,7 @@ beforeAll(async () => {
     name: "Excursionista",
     email: "excursionista@misendero.app",
     password: testPassword,
-    accepted_terms_version: "2026-08-13",
+    accepted_terms_version: "2026-10-16",
   });
   token = registered.body.token;
 });

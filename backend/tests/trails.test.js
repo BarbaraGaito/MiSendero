@@ -19,15 +19,16 @@ beforeAll(async () => {
     name: "Admin Uno",
     email: "admin@misendero.app",
     password: testPassword,
-    accepted_terms_version: "2026-08-13",
+    accepted_terms_version: "2026-10-16",
   });
+  await query("UPDATE users SET role = 'admin' WHERE id = $1", [admin.body.user.id]);
   adminToken = jwt.sign({ userId: admin.body.user.id, role: "admin" }, process.env.JWT_SECRET);
 
   const user = await request(app).post("/api/auth/register").send({
     name: "Usuaria Dos",
     email: "usuaria@misendero.app",
     password: testPassword,
-    accepted_terms_version: "2026-08-13",
+    accepted_terms_version: "2026-10-16",
   });
   userToken = jwt.sign(
     { userId: user.body.user.id, role: "user" },
@@ -215,7 +216,8 @@ describe("trails", () => {
       });
 
     expect(created.status).toBe(201);
-    expect(created.body.reporter_name).toBe("Usuaria Dos");
+    expect(created.body.reporter_name).toBeUndefined();
+    expect(created.body.reporter_user_id).toBeUndefined();
     expect(created.body.latitude).toBeCloseTo(-41.17123);
     expect(created.body.route_progress_meters).toBe(1240);
 

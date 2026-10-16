@@ -17,6 +17,7 @@ const createTrailSchema = z.object({
 });
 
 const createReportSchema = z.object({
+  observed_at: z.iso.datetime().refine((value) => Date.parse(value) <= Date.now() + 300000, "La observación no puede estar en el futuro").optional(),
   issue_summary: z.string().trim().min(1).max(300),
   severity: z.string().trim().min(1).max(50),
   trail_state: z.string().trim().min(1).max(50),

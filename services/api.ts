@@ -1,11 +1,11 @@
 import { AuthResponse, NationalPark, Profile, Trail, TrailReport, TrailWeather } from "../types";
 import Constants from "expo-constants";
-
-const API_PORT = "3001";
+import { resolveApiUrl } from "./apiConfig";
+import { getAuthSession, clearAuthSession } from "./authSession";
+import { eraseLocalAccountData, isAccountDeletionPending } from "./accountLifecycle";
 
 const getApiUrl = () => {
   const configuredUrl = process.env.EXPO_PUBLIC_API_URL;
-  if (configuredUrl) return configuredUrl.replace(/\/$/, "");
   const expoHost = Constants.expoConfig?.hostUri?.split(":")[0];
   const configuredHost =
     process.env.EXPO_PUBLIC_API_HOST ||
@@ -14,10 +14,11 @@ const getApiUrl = () => {
       : null);
   const host = configuredHost || expoHost || "localhost";
 
-  return `http://${host}:${API_PORT}/api`;
+  return resolveApiUrl(configuredUrl, typeof __DEV__ !== "undefined" && __DEV__, host);
 };
 
 const API_URL = getApiUrl();
+export const accountDataPageUrl = `${API_URL.replace(/\/api$/, "")}/account-deletion`;
 
 export interface TripPlanRecord {
   id: number;
@@ -38,12 +39,21 @@ export const closeTripPlan = (id: number, status: "checked_in" | "cancelled", to
   request<TripPlanRecord>(`/trip-plans/${id}/close`, { method: "POST", body: { status }, token });
 
 type RequestOptions = {
-  method?: "GET" | "POST";
+  method?: "GET" | "POST" | "DELETE" | "PATCH";
   body?: unknown;
   token?: string;
 };
+export class ApiError extends Error {
+  constructor(message: string, public readonly status: number, public readonly code?: string) { super(message); }
+}
 
 async function request<T>(path: string, options: RequestOptions = {}): Promise<T> {
+  if (options.token && options.method && options.method !== "GET" && options.method !== "DELETE") {
+    const session = await getAuthSession();
+    if (session?.token === options.token && await isAccountDeletionPending(session.user.id)) {
+      throw new Error("La baja está pendiente. Reintentá eliminar la cuenta desde Perfil; los envíos están suspendidos.");
+    }
+  }
   const headers: Record<string, string> = {};
 
   if (options.body) {
@@ -73,6 +83,15 @@ async function request<T>(path: string, options: RequestOptions = {}): Promise<T
 
   if (!response.ok) {
     const errorBody = await response.json().catch(() => null);
+    if (errorBody?.code === "ACCOUNT_DELETED" && options.token) {
+      const session = await getAuthSession();
+      if (session?.token === options.token) {
+        await eraseLocalAccountData(session.user.id);
+        await clearAuthSession();
+      }
+      // A prior deletion may have succeeded while its response was lost.
+      if (path === "/auth/me" && options.method === "DELETE") return { deleted: true } as T;
+    }
     const issueMessage =
       Array.isArray(errorBody?.issues) && errorBody.issues.length > 0
         ? errorBody.issues
@@ -82,7 +101,7 @@ async function request<T>(path: string, options: RequestOptions = {}): Promise<T
             .join(". ")
         : null;
 
-    throw new Error(issueMessage || errorBody?.message || "No se pudo completar la solicitud");
+    throw new ApiError(issueMessage || errorBody?.message || "No se pudo completar la solicitud", response.status, errorBody?.code);
   }
 
   return response.json();
@@ -131,12 +150,19 @@ export const getTrailWeather = async (id: number): Promise<TrailWeather> => {
 };
 
 export const getTrailReports = async (id: number): Promise<TrailReport[]> => {
-  return request<TrailReport[]>(`/trails/${id}/reports`);
+  const session = await getAuthSession();
+  return request<TrailReport[]>(`/trails/${id}/reports`, { token: session?.token });
 };
+
+export const flagReport = (id: number, reason: string, token: string) => request(`/reports/${id}/flag`, { method: "POST", token, body: { reason } });
+export const blockReportAuthor = (id: number, token: string) => request<{ hidden_report_ids: number[] }>(`/reports/${id}/block-author`, { method: "POST", token });
+export const withdrawReport = (id: number, token: string) => request(`/reports/${id}`, { method: "DELETE", token });
+export const correctReport = (id: number, issue_summary: string, details: string, token: string) => request(`/reports/${id}`, { method: "PATCH", body: { issue_summary, details }, token });
 
 export const createTrailReport = async (
   trailId: number,
   report: {
+    observed_at?: string;
     issue_summary: string;
     severity: string;
     trail_state: string;
@@ -160,6 +186,12 @@ export const createTrailReport = async (
 export const getProfile = async (token: string): Promise<Profile> => {
   return request<Profile>("/auth/me", { token });
 };
+
+export const deleteAccount = (token: string, password: string) =>
+  request<{ deleted: boolean }>("/auth/me", { method: "DELETE", token, body: { password } });
+export const exportAccountData = (token: string) => request<Record<string, unknown>>("/auth/me/data", { token });
+export const recordPrivacyDecision = (decision: Record<string, unknown>, token: string) =>
+  request<{ recorded: boolean }>("/auth/me/privacy-decisions", { method: "POST", body: decision, token });
 
 export interface ActivityRecord {
   id: number;

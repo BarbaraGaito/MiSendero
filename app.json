@@ -25,7 +25,7 @@
       [
         "@kingstinct/react-native-healthkit",
         {
-          "NSHealthShareUsageDescription": "MiSendero necesita leer, con tu autorizacion, frecuencia cardiaca, actividad y oxigeno de Salud para mostrar metricas de tu recorrido y predicciones locales orientativas.",
+          "NSHealthShareUsageDescription": "MiSendero permite leer, con tu autorización opcional, frecuencia cardiaca, actividad y oxígeno de Salud para mostrar métricas locales de tu recorrido. No realiza diagnóstico ni tiene modelos aprobados para uso en campo.",
           "NSHealthUpdateUsageDescription": false,
           "background": true
         }
@@ -43,6 +43,7 @@
       }
     },
     "android": {
+      "allowBackup": false,
       "package": "com.misendero.app",
       "permissions": [
         "android.permission.ACCESS_COARSE_LOCATION",

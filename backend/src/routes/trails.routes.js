@@ -8,6 +8,7 @@ const { cachedElevation, ensureTrailElevation } = require("../trailElevation");
 const { liveStatus } = require("./nationalParks.routes");
 
 const router = express.Router();
+const { publicReportColumns, publicReport } = require("../reportContract");
 
 const weatherLabels = {
   0: "Despejado",
@@ -156,19 +157,22 @@ router.get("/:id/weather", async (req, res, next) => {
   }
 });
 
-router.get("/:id/reports", async (req, res, next) => {
+router.get("/:id/reports", (req, res, next) => req.headers.authorization ? requireAuth(req, res, next) : next(), async (req, res, next) => {
   try {
     const { rows } = await query(
       `
-        SELECT * FROM trail_reports
+        SELECT ${publicReportColumns}, reporter_user_id FROM trail_reports
         WHERE trail_id = $1
-          AND created_at > now() - ($2 || ' days')::interval
+          AND moderation_status = 'visible'
+          AND (reporter_user_id IS NULL OR reporter_user_id NOT IN
+            (SELECT blocked_user_id FROM report_blocks WHERE user_id = $3))
+          AND COALESCE(observed_at, created_at) > now() - ($2 || ' days')::interval
         ORDER BY created_at DESC
         LIMIT 6
       `,
-      [req.params.id, REPORT_STALE_AFTER_DAYS]
+      [req.params.id, REPORT_STALE_AFTER_DAYS, req.userId ?? null]
     );
-    res.json(rows);
+    res.set("Cache-Control", "no-store").json(rows.map((row) => ({ ...publicReport(row), is_mine: row.reporter_user_id === req.userId })));
   } catch (error) {
     next(error);
   }
@@ -194,19 +198,15 @@ router.post(
         longitude,
         accuracy_meters,
         route_progress_meters,
+        observed_at,
       } = req.body;
-
-      const { rows: userRows } = await query("SELECT name FROM users WHERE id = $1", [
-        req.userId,
-      ]);
-      const reporterName = userRows[0]?.name || "Usuario MiSendero";
 
       const { rows } = await query(
         `
           INSERT INTO trail_reports (
             trail_id, reporter_user_id, issue_summary, severity, trail_state,
             cause, blocks_path, details, latitude, longitude, accuracy_meters,
-            route_progress_meters, reporter_name
+            route_progress_meters, observed_at
           )
           VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
           RETURNING *
@@ -224,11 +224,11 @@ router.post(
           longitude ?? null,
           accuracy_meters ?? null,
           route_progress_meters ?? null,
-          reporterName,
+          observed_at ?? new Date().toISOString(),
         ]
       );
 
-      res.status(201).json(rows[0]);
+      res.status(201).json(publicReport(rows[0]));
     } catch (error) {
       next(error);
     }

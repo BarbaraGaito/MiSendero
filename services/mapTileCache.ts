@@ -274,7 +274,18 @@ export const downloadOfflineTilesForTrail = async (
   }
 
   const providers = [process.env.EXPO_PUBLIC_OFFLINE_STANDARD_TILE_URL, process.env.EXPO_PUBLIC_OFFLINE_TERRAIN_TILE_URL];
-  if (providers.some((url) => !url || !url.startsWith("https://") || !["{z}", "{x}", "{y}"].every((part) => url.includes(part)) || /(^|\.)tile\.openstreetmap\.org$/i.test(new URL(url).hostname))) {
+  const validProvider = (value: string | undefined) => {
+    try {
+      const url = new URL(value || "");
+      return url.protocol === "https:" && !url.username && !url.password &&
+        ["{z}", "{x}", "{y}"].every((part) => value?.includes(part)) &&
+        !/(^|\.)tile\.openstreetmap\.org$/i.test(url.hostname);
+    } catch { return false; }
+  };
+  const licenseReference = process.env.EXPO_PUBLIC_OFFLINE_TILE_LICENSE_URL;
+  if (providers.some((url) => !validProvider(url)) ||
+      !licenseReference?.startsWith("https://") || !process.env.EXPO_PUBLIC_OFFLINE_TILE_ATTRIBUTION?.trim() ||
+      process.env.EXPO_PUBLIC_OFFLINE_TILE_LICENSE_CONFIRMED !== "true") {
     throw new MapTileDownloadError("provider-not-configured", "La descarga del mapa base requiere configurar un proveedor que permita uso offline. El trazado y los reportes quedan guardados en este teléfono.");
   }
 

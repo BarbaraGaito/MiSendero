@@ -39,9 +39,22 @@ app.use(
   })
 );
 if (process.env.NODE_ENV !== "test") {
-  app.use(pinoHttp({ logger }));
+  app.use(pinoHttp({ logger, serializers: {
+    req: (req) => ({ id: req.id, method: req.method }),
+    res: (res) => ({ statusCode: res.statusCode }),
+  } }));
 }
 app.use(express.json());
+app.use((req, res, next) => {
+  if (req.path.startsWith("/api/auth") || req.path.startsWith("/account")) res.set("Cache-Control", "no-store");
+  next();
+});
+app.get("/account-deletion", (_req, res) => res.sendFile(require("path").join(__dirname, "public", "account-deletion.html")));
+app.use("/account-assets", express.static(require("path").join(__dirname, "public")));
+app.get("/api/privacy-contact", (_req, res) => {
+  const url = process.env.PRIVACY_CONTACT_URL || "";
+  res.json({ url: /^(https:\/\/|mailto:)/.test(url) ? url : null });
+});
 
 const authLimiter = rateLimit({
   windowMs: Number(process.env.AUTH_RATE_LIMIT_WINDOW_MS || 15 * 60 * 1000),
@@ -57,8 +70,11 @@ app.get("/api/health", (_req, res) => {
 
 app.use("/api/auth/login", authLimiter);
 app.use("/api/auth/register", authLimiter);
+app.use("/api/auth/me", (req, res, next) => req.method === "DELETE" ? authLimiter(req, res, next) : next());
 app.use("/api/auth", authRoutes);
+app.use("/api/auth", require("./routes/account.routes"));
 app.use("/api/trails", trailsRoutes);
+app.use("/api/reports", require("./routes/reportModeration.routes"));
 app.use("/api/national-parks", nationalParksRoutes);
 app.use("/api/activities", activitiesRoutes);
 app.use("/api/emergency-alerts", emergencyAlertsRoutes);
@@ -69,7 +85,7 @@ app.use((_req, res) => {
 });
 
 app.use((error, _req, res, _next) => {
-  logger.error(error);
+  logger.error({ err: error }, "Solicitud fallida");
   res.status(500).json({ message: "Error interno del servidor" });
 });
 

@@ -1,10 +1,11 @@
 import * as Network from "expo-network";
 import { db, initDB } from "../database/database";
 import { getAuthSession } from "./authSession";
-import { createActivity, createEmergencyAlert, createTrailReport, getTrailReports, closeTripPlan } from "./api";
+import { createActivity, createEmergencyAlert, createTrailReport, getTrailReports, closeTripPlan, recordPrivacyDecision } from "./api";
+import { isAccountDeletionPending } from "./accountLifecycle";
 import { refreshOfflineTrailReports, getOfflineMaps } from "./offlineMaps";
 
-export type PendingEntityType = "trail_report" | "activity" | "emergency_alert" | "trip_check_in";
+export type PendingEntityType = "trail_report" | "activity" | "emergency_alert" | "trip_check_in" | "privacy_decision";
 export type PendingStatus = "pending" | "syncing" | "synced" | "failed" | "abandoned";
 
 // After this many failed attempts, an operation stops being retried automatically
@@ -70,6 +71,7 @@ export const enqueue = async (
 ): Promise<number> => {
   await initDB();
   const owner = (await getAuthSession())?.user.id ?? null;
+  if (owner && await isAccountDeletionPending(owner)) throw new Error("La cuenta tiene una baja pendiente; no se guardan nuevos envíos.");
   if (!owner && entityType !== "emergency_alert") throw new Error("Iniciá sesión para guardar esta operación.");
   const now = Date.now();
   const result = await db.runAsync(
@@ -90,6 +92,7 @@ export const enqueueUnique = async (
   const owner = (await getAuthSession())?.user.id ?? null;
   if (!owner && entityType !== "emergency_alert") throw new Error("Iniciá sesión para guardar esta operación.");
   dedupeKey = `${owner ?? "guest"}:${dedupeKey}`;
+  if (owner && await isAccountDeletionPending(owner)) throw new Error("La cuenta tiene una baja pendiente; no se guardan nuevos envíos.");
   const existing = await db.getFirstAsync<{ id: number }>(
     `SELECT id FROM pending_operations
      WHERE dedupe_key = ?
@@ -220,6 +223,10 @@ const dispatchOperation = async (
   token: string
 ): Promise<number | null> => {
   switch (operation.entityType) {
+    case "privacy_decision": {
+      await recordPrivacyDecision(operation.payload, token);
+      return null;
+    }
     case "trip_check_in": {
       const payload = operation.payload as { planId: number; status: "checked_in" | "cancelled" };
       const result = await closeTripPlan(payload.planId, payload.status, token);
@@ -281,7 +288,7 @@ const syncOnce = async (): Promise<{ processed: number; failed: number }> => {
   }
 
   const session = await getAuthSession();
-  if (!session) {
+  if (!session || await isAccountDeletionPending(session.user.id)) {
     return { processed: 0, failed: 0 };
   }
 
@@ -297,7 +304,7 @@ const syncOnce = async (): Promise<{ processed: number; failed: number }> => {
 
   for (const operation of retryableOperations) {
     const current = await getAuthSession();
-    if (current?.user.id !== session.user.id || current.token !== session.token) break;
+    if (current?.user.id !== session.user.id || current.token !== session.token || await isAccountDeletionPending(session.user.id)) break;
     await markSyncing(operation.id);
 
     try {
@@ -311,14 +318,16 @@ const syncOnce = async (): Promise<{ processed: number; failed: number }> => {
     }
   }
 
-  if (processed > 0) {
+  if (processed > 0 || Date.now() - (reportsRefreshedAt.get(session.user.id) || 0) > 300000) {
     await refreshDownloadedTrailReports();
+    reportsRefreshedAt.set(session.user.id, Date.now());
   }
 
   return { processed, failed };
 };
 
 let syncInFlight: Promise<{ processed: number; failed: number }> | null = null;
+const reportsRefreshedAt = new Map<number, number>();
 export const runSync = () => {
   if (!syncInFlight) syncInFlight = syncOnce().finally(() => { syncInFlight = null; });
   return syncInFlight;

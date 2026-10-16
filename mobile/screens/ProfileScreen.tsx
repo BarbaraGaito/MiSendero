@@ -1,6 +1,10 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { router, useFocusEffect } from "expo-router";
-import { Alert, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Alert, ScrollView, StyleSheet, Text, View, TextInput } from "react-native";
+import { deleteCurrentAccount } from "../../services/deleteAccount";
+import * as Linking from "expo-linking";
+import { accountDataPageUrl } from "../../services/api";
+import { isAccountDeletionPending } from "../../services/accountLifecycle";
 import {
   AppScreen,
   Card,
@@ -22,6 +26,7 @@ import {
   getPrivacyPreferences,
   PrivacyPreferences,
   savePrivacyPreferences,
+  privacyNotices,
 } from "../../services/privacyConsent";
 import {
   getTestingLocationMode,
@@ -185,6 +190,18 @@ export default function ProfileScreen() {
     useState<WearableRuntimeStatus | null>(null);
   const [syncSummary, setSyncSummary] = useState<SyncSummary>(emptySyncSummary);
   const [isSyncing, setIsSyncing] = useState(false);
+  const [deletePassword, setDeletePassword] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
+  const privacySaving = useRef(false);
+  const confirmDeletion = () => Alert.alert("Eliminar cuenta", "Se eliminarán la cuenta, actividades, reportes, planes y avisos pendientes del servidor. También se borrarán los datos locales de esta cuenta. Requiere conexión y no se puede deshacer. Los mensajes ya enviados a contactos no se pueden retirar.", [
+    { text: "Cancelar", style: "cancel" },
+    { text: "Eliminar definitivamente", style: "destructive", onPress: async () => {
+      setIsDeleting(true);
+      try { await deleteCurrentAccount(deletePassword); setDeletePassword(""); router.replace("/"); }
+      catch (cause) { setError(`${cause instanceof Error ? cause.message : "No se pudo completar la baja."} Reintentá la baja. Si se perdió la respuesta, los envíos quedan suspendidos hasta confirmar su resultado.`); }
+      finally { setIsDeleting(false); }
+    } },
+  ]);
 
   const refreshWearableRuntime = useCallback(async () => {
     setWearableRuntime(await getWearableRuntimeStatus());
@@ -240,7 +257,9 @@ export default function ProfileScreen() {
         .catch(() => null)
         .finally(refreshSyncSummary);
 
-      if (data.profile.user) {
+      const current = await getAuthSession();
+      if (current?.token !== data.session.token) return;
+      if (data.profile.user && !(await isAccountDeletionPending(data.session.user.id))) {
         await saveAuthSession({
           token: data.session.token,
           user: data.profile.user,
@@ -302,6 +321,9 @@ export default function ProfileScreen() {
   };
 
   const updatePrivacy = async (nextPrivacy: Omit<PrivacyPreferences, "updatedAt">) => {
+    if (privacySaving.current) return;
+    privacySaving.current = true;
+    try {
     await savePrivacyPreferences(nextPrivacy);
     const [privacyPreferences, wearable] = await Promise.all([
       getPrivacyPreferences(),
@@ -309,6 +331,8 @@ export default function ProfileScreen() {
     ]);
     setPrivacy(privacyPreferences);
     setWearableRuntime(wearable);
+    } catch (cause) { setError(cause instanceof Error ? cause.message : "No se pudo guardar la decisión."); }
+    finally { privacySaving.current = false; }
   };
 
   const updateTestingLocationMode = async (enabled: boolean) => {
@@ -370,6 +394,14 @@ export default function ProfileScreen() {
           updateAppPreferences={updateAppPreferences}
         />
         <PrivacyCard privacy={privacy} updatePrivacy={updatePrivacy} />
+        <PrimaryButton label="Fuentes y licencias" tone="secondary" href="/atribuciones" />
+        <Card>
+          <Text style={styles.cardTitle}>Eliminar mi cuenta</Text>
+          <Text style={styles.privacyText}>La baja incluye actividades, reportes, contactos enviados y planes. En otras instalaciones, la limpieza se realiza al conectar con la API. Revisá también las copias y mensajes que compartiste fuera de MiSendero.</Text>
+          <TextInput accessibilityLabel="Contraseña para eliminar la cuenta" placeholder="Tu contraseña actual" secureTextEntry autoCapitalize="none" value={deletePassword} onChangeText={setDeletePassword} />
+          <PrimaryButton label="Eliminar cuenta" tone="danger" disabled={!deletePassword} isLoading={isDeleting} onPress={confirmDeletion} />
+          <PrimaryButton label="Acceder o actualizar mis datos en la web" tone="secondary" onPress={() => { void Linking.openURL(accountDataPageUrl); }} />
+        </Card>
         <AdminAiMetricsCard isAdmin={isAdmin} />
         <AdminTestingCard
           isAdmin={isAdmin}
@@ -653,19 +685,20 @@ function PrivacyCard({
     <Card>
       <Text style={styles.cardTitle}>Privacidad e IA</Text>
       <Text style={styles.privacyText}>
-        Los datos fisiologicos se guardan localmente. Si aceptas colaborar con
-        mejoras del servicio, se usan datos anonimizados y sin ubicacion exacta.
+        Cada opción es independiente y opcional. Los permisos del sistema operativo se administran por separado. No hay un modelo aprobado para uso en campo.
       </Text>
       <SettingRow
         label="Usar datos sensibles"
         value={privacy.sensitiveDataConsent ? "Permitido" : "Requiere aceptar"}
         onPress={() => updatePrivacy(getNextSensitivePrivacy(privacy))}
       />
+      <Text style={styles.privacyText}>{privacyNotices.sensitiveDataConsent}</Text>
       <SettingRow
         label="Mejorar recomendaciones"
-        value={privacy.analyticsTrainingConsent ? "Anonimizado" : "Desactivado"}
+        value={privacy.analyticsTrainingConsent ? "Autorizado" : "Desactivado"}
         onPress={() => updatePrivacy(getNextAnalyticsPrivacy(privacy))}
       />
+      <Text style={styles.privacyText}>{privacyNotices.analyticsTrainingConsent}</Text>
       <SettingRow
         label="Terminos y disclaimers"
         value="Ver"
@@ -859,16 +892,13 @@ function getNextSensitivePrivacy(privacy: PrivacyPreferences) {
 
   return {
     sensitiveDataConsent,
-    analyticsTrainingConsent: sensitiveDataConsent
-      ? privacy.analyticsTrainingConsent
-      : false,
+    analyticsTrainingConsent: privacy.analyticsTrainingConsent,
   };
 }
 
 function getNextAnalyticsPrivacy(privacy: PrivacyPreferences) {
   return {
-    sensitiveDataConsent:
-      privacy.sensitiveDataConsent || !privacy.analyticsTrainingConsent,
+    sensitiveDataConsent: privacy.sensitiveDataConsent,
     analyticsTrainingConsent: !privacy.analyticsTrainingConsent,
   };
 }

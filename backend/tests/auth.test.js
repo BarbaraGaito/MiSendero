@@ -18,7 +18,7 @@ describe("auth", () => {
       name: "Ana Pereyra",
       email: "ana@misendero.app",
       password: testPassword,
-      accepted_terms_version: "2026-08-13",
+      accepted_terms_version: "2026-10-16",
     });
 
     expect(response.status).toBe(201);
@@ -27,12 +27,12 @@ describe("auth", () => {
     expect(response.body.user.password_hash).toBeUndefined();
   });
 
-  test("registers every additional user as admin", async () => {
+  test("registers every additional user without administrator privileges", async () => {
     const response = await request(app).post("/api/auth/register").send({
       name: "Luis Ferreyra",
       email: "luis@misendero.app",
       password: testPassword,
-      accepted_terms_version: "2026-08-13",
+      accepted_terms_version: "2026-10-16",
     });
 
     expect(response.status).toBe(201);
@@ -71,7 +71,7 @@ describe("auth", () => {
       name: "Ana Otra",
       email: "ana@misendero.app",
       password: testPassword,
-      accepted_terms_version: "2026-08-13",
+      accepted_terms_version: "2026-10-16",
     });
 
     expect(response.status).toBe(409);

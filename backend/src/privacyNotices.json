@@ -1,0 +1,5 @@
+{
+  "version": "2026-10-16",
+  "sensitiveDataConsent": "Autorizo el almacenamiento y uso local de métricas fisiológicas para mostrar mi actividad. Es opcional, no constituye diagnóstico y puedo retirar esta autorización y borrar las muestras locales desde Perfil. Los permisos de Salud se administran por separado en el sistema operativo.",
+  "analyticsTrainingConsent": "Autorizo de forma opcional el uso de datos para analítica y mejora de recomendaciones. Esta decisión es independiente del acceso a datos fisiológicos y puedo retirarla desde Perfil. Actualmente MiSendero no implementa un envío de muestras para entrenamiento ni acredita su anonimización."
+}

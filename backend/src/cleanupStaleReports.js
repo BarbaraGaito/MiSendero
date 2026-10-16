@@ -5,7 +5,7 @@ const REPORT_STALE_AFTER_DAYS = Number(process.env.REPORT_STALE_AFTER_DAYS || 30
 
 const cleanupStaleReports = async () => {
   const { rowCount } = await query(
-    `DELETE FROM trail_reports WHERE created_at <= now() - ($1 || ' days')::interval`,
+    `DELETE FROM trail_reports WHERE COALESCE(observed_at, created_at) <= now() - ($1 || ' days')::interval`,
     [REPORT_STALE_AFTER_DAYS]
   );
 

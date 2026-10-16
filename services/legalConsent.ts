@@ -1,7 +1,8 @@
 import { db } from "../database/connection";
 
 
-export const CURRENT_TERMS_VERSION = "2026-08-13";
+export { version as CURRENT_TERMS_VERSION } from "../backend/src/terms.json";
+import { version as CURRENT_TERMS_VERSION } from "../backend/src/terms.json";
 
 export interface TermsAcceptance {
   accepted: boolean;

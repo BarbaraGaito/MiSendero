@@ -3,7 +3,7 @@ import { Coordinate, getDistanceMeters } from "./geoUtils";
 export const OPEN_METEO_ELEVATION_URL =
   "https://api.open-meteo.com/v1/elevation";
 export const OPEN_METEO_ELEVATION_ATTRIBUTION =
-  "Elevation: Open-Meteo · Copernicus DEM GLO-90";
+  "Elevación: Open-Meteo · Copernicus DEM GLO-90 · © DLR e.V. (2010–2014), Airbus Defence and Space GmbH (2014–2018); COPERNICUS, Unión Europea y ESA. Derechos reservados.";
 export const TERRAIN_DEM_RESOLUTION_METERS = 90;
 export const TERRAIN_GRID_SIZE = 17;
 export const TERRAIN_PROFILE_MIN_POINTS = 32;

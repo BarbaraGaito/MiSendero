@@ -159,6 +159,7 @@ export default function ReportTerrainScreen() {
     setSubmitError(null);
 
     const report = {
+      observed_at: new Date().toISOString(),
       issue_summary: selectedIssues.join(", "),
       severity,
       trail_state: trailState,

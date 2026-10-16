@@ -215,9 +215,14 @@ export interface TrailReport {
   details: string | null;
   latitude: number | null;
   longitude: number | null;
-  accuracy_meters: number | null;
+  accuracy_meters?: number | null;
   route_progress_meters: number | null;
-  reporter_name: string;
+  reporter_name?: string;
+  observed_at?: string;
+  received_at?: string;
+  updated_at?: string;
+  expires_at?: string;
+  is_mine?: boolean;
   created_at: string;
 }
 

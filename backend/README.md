@@ -58,6 +58,34 @@ que los borra de la base cada 24hs (`src/cleanupStaleReports.js`), ademas de al 
 
 El servidor usa `pino` (`src/logger.js`) para logs estructurados y `pino-http` para logging
 de requests (desactivado en tests). Configurable con `LOG_LEVEL` (`info` por defecto).
+Los logs HTTP omiten URL, IP, headers y cuerpo; los errores omiten detalles SQL y existe
+redacción adicional de credenciales, contactos y coordenadas. Revisar también el recolector
+y su conservación: esta configuración no demuestra el estado de la infraestructura publicada.
+
+## Cuenta, privacidad y moderación
+
+`DELETE /api/auth/me` exige sesión y contraseña actual en JSON. Elimina la cuenta y sus
+datos asociados, incluidos reportes con textos/nombres, actividades, planes y avisos pendientes.
+Cada solicitud autenticada consulta la existencia y el rol actual de la cuenta.
+
+`GET /api/auth/me/data` exporta datos remotos del titular; `PATCH /api/auth/me` permite
+actualizar el nombre. `POST /api/auth/me/privacy-decisions` registra decisiones versionadas
+por finalidad con fecha del cliente y recepción del servidor.
+
+El recurso `/account-deletion` permite estas acciones desde la web. Configurar
+`PRIVACY_CONTACT_URL` con el canal atendido del responsable para otros derechos y contactos.
+Un administrador autenticado puede revisar denuncias y ocultar/restaurar reportes desde
+esa misma página. Su rol se comprueba en la base de datos.
+
+`POST /api/reports/:id/flag`, `POST /api/reports/:id/block-author`,
+`DELETE /api/reports/:id`, `PATCH /api/reports/:id`, `GET /api/reports/moderation` y
+`POST /api/reports/:id/moderate` gestionan denuncias, bloqueo, retiro, corrección y moderación.
+La lista pública omite datos del autor y distingue observación, recepción, corrección y
+vencimiento; con sesión informa `is_mine` y aplica los bloqueos del titular.
+
+Ver [evidencia y pendientes](../docs/implementacion-privacidad-2026-10-16.md) antes de
+dar por cerrado cualquier requisito legal o de distribución. No se ensayaron aquí
+infraestructura publicada ni restauración de respaldos.
 
 ## Tests
 

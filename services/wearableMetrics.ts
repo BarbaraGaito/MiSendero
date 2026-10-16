@@ -20,6 +20,7 @@ import {
   getNativeWearableBridge,
 } from "./nativeWearableBridge";
 import { getPrivacyPreferences } from "./privacyConsent";
+import { isAccountDeletionPending } from "./accountLifecycle";
 
 
 const defaultConnection: WearableConnection = {
@@ -190,6 +191,9 @@ export const saveWearableMetricSample = async (
   if (!userId) {
     throw new Error("Sesion requerida para guardar metricas del reloj.");
   }
+  if (!(await getPrivacyPreferences()).sensitiveDataConsent || await isAccountDeletionPending(userId)) {
+    throw new Error("Se requiere autorización vigente para guardar métricas fisiológicas.");
+  }
 
   const createdAt = Date.now();
   const existing = await db.getFirstAsync<{ id: number }>(
@@ -223,7 +227,9 @@ export const saveWearableMetricSample = async (
        recorded_at,
        created_at
      )
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+     SELECT ?, ?, ?, ?, ?, ?, ?, ?, ?
+     WHERE EXISTS (SELECT 1 FROM user_privacy_preferences WHERE id = ? AND sensitive_data_consent = 1)
+       AND NOT EXISTS (SELECT 1 FROM account_deletion_state WHERE user_id = ?)`,
     [
       userId,
       sample.provider,
@@ -234,6 +240,8 @@ export const saveWearableMetricSample = async (
       sample.oxygenSaturation,
       sample.recordedAt,
       createdAt,
+      userId,
+      userId,
     ]
   );
 
@@ -547,6 +555,7 @@ export const linkNativeWearableProvider = async (
 export const syncNativeWearableSampleWithStatus = async (
   options?: NativeWearableReadOptions
 ): Promise<NativeWearableSyncStatus> => {
+  if (!(await getPrivacyPreferences()).sensitiveDataConsent) return "permission_denied";
   const bridge = getNativeWearableBridge();
   const isAvailable = await bridge.isAvailable();
 
@@ -567,6 +576,9 @@ export const syncNativeWearableSampleWithStatus = async (
   if (!permissionsGranted) return "permission_denied";
 
   const sample = await bridge.readLatestSample(options);
+
+  // Recheck after the native read, since consent can be withdrawn while it runs.
+  if (!(await getPrivacyPreferences()).sensitiveDataConsent) return "permission_denied";
 
   await saveWearableConnection(provider, true, true);
   if (!sample) return "no_data";
@@ -667,7 +679,7 @@ export const predictWearableHealth = (
     fatigueConfidence: fatiguePrediction.confidence,
     riskLabel,
     riskConfidence: risk.confidence,
-    analysisSummary: `Modelo experimental local. Fatiga: ${fatigue === "sin_datos" ? "sin datos" : fatigue}. Riesgo: ${riskLabel === "sin_datos" ? "no estimable; faltan variables medidas" : riskLabel}. No evalúa si es seguro continuar.`,
+    analysisSummary: `Modelos de investigación sin habilitar. Avisos por reglas experimentales. Fatiga: ${fatigue === "sin_datos" ? "sin datos" : fatigue}. Riesgo: ${riskLabel === "sin_datos" ? "no estimable; faltan variables medidas" : riskLabel}. No evalúa si es seguro continuar.`,
     factors,
     recommendedAction,
   };

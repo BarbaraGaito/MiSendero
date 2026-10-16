@@ -154,3 +154,8 @@ training/data/raw/
 
 # Temporary Expo web exports used for visual verification
 .expo-export-*-check/
+
+# Local privacy verification artifacts; compact evidence is kept in docs/.
+/tmp/privacy-web-export/
+/tmp/privacy-app-tests.json
+/tmp/privacy-api-tests.json

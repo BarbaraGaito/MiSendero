@@ -1,5 +1,6 @@
 import * as api from "./api";
-import { getOfflineMapByTrailId, getOfflineMaps, refreshOfflineTrailElevation } from "./offlineMaps";
+import { getOfflineMapByTrailId, getOfflineMaps, refreshOfflineTrailElevation, refreshOfflineTrailReports } from "./offlineMaps";
+import { sanitizeReports } from "./reportPrivacy";
 import { Trail, TrailReport } from "../types";
 import * as Network from "expo-network";
 import { isNationalParkTrail } from "./trailFilters";
@@ -28,8 +29,16 @@ export const getTrailById = async (id: number): Promise<Trail> => {
 
 export const getTrailReports = async (id: number): Promise<TrailReport[]> => {
   const local = await getOfflineMapByTrailId(id);
-  if (local?.trail) return local.reports ?? [];
-  return api.getTrailReports(id);
+  const network = await Network.getNetworkStateAsync().catch(() => null);
+  if (network?.isConnected !== false && network?.isInternetReachable !== false) {
+    try {
+      const fresh = sanitizeReports(await api.getTrailReports(id));
+      if (local?.trail) await refreshOfflineTrailReports(id, fresh);
+      return fresh;
+    } catch (error) { if (!local?.trail) throw error; }
+  }
+  if (local?.trail) return sanitizeReports(local.reports ?? []);
+  return sanitizeReports(await api.getTrailReports(id));
 };
 
 export const getTrails = async (): Promise<Trail[]> => {

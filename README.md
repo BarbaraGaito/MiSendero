@@ -57,6 +57,10 @@ ejecutarlo manualmente.
 
 ## Tests
 
+Los cambios de privacidad, baja de cuenta y moderación del 16/10/2026, junto con su evidencia
+local y los pendientes operativos/jurídicos, están en
+[implementacion-privacidad-2026-10-16.md](docs/implementacion-privacidad-2026-10-16.md).
+
 ```bash
 npm test              # frontend: geoUtils, mapas offline, favoritos, tracking, cola offline e IA
 cd backend && npm test # backend: auth, trails, activities, emergency-alerts, limpieza de

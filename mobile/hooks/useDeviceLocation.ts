@@ -1,4 +1,4 @@
-import { useIsFocused } from "expo-router";
+import { useScreenFocused } from "./useScreenFocused";
 import { useEffect, useState } from "react";
 import {
   DeviceLocation,
@@ -13,7 +13,7 @@ export const useDeviceLocation = (
   watch = true,
   simulatedCoordinate?: Coordinate | null
 ) => {
-  const isFocused = useIsFocused();
+  const isFocused = useScreenFocused();
   const [location, setLocation] = useState<DeviceLocation | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [permissionDenied, setPermissionDenied] = useState(false);

@@ -31,6 +31,9 @@ const loadMapTileCache = async ({
   jest.resetModules();
   process.env.EXPO_PUBLIC_OFFLINE_STANDARD_TILE_URL = "https://tiles.example.test/standard/{z}/{x}/{y}.png";
   process.env.EXPO_PUBLIC_OFFLINE_TERRAIN_TILE_URL = "https://tiles.example.test/terrain/{z}/{x}/{y}.png";
+  process.env.EXPO_PUBLIC_OFFLINE_TILE_LICENSE_URL = "https://tiles.example.test/offline-license";
+  process.env.EXPO_PUBLIC_OFFLINE_TILE_LICENSE_CONFIRMED = "true";
+  process.env.EXPO_PUBLIC_OFFLINE_TILE_ATTRIBUTION = "Test tiles";
 
   const files = new Map<string, FileRecord>();
   const getInfoAsync = jest.fn(async (uri: string) => {

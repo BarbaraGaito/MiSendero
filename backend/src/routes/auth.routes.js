@@ -71,11 +71,11 @@ router.post("/register", validateBody(registerSchema), async (req, res, next) =>
 
     const { rows: insertedRows } = await query(
       `
-        INSERT INTO users (name, email, password_hash, role, terms_version, terms_accepted_at)
-        VALUES ($1, $2, $3, $4, $5, $6)
+        INSERT INTO users (name, email, password_hash, role, terms_version, terms_accepted_at, terms_text)
+        VALUES ($1, $2, $3, $4, $5, $6, $7)
         RETURNING id, name, email, role, terms_version, terms_accepted_at
       `,
-      [name, normalizedEmail, passwordHash, role, String(accepted_terms_version), termsAcceptedAt]
+      [name, normalizedEmail, passwordHash, role, String(accepted_terms_version), termsAcceptedAt, JSON.stringify(require("../terms.json"))]
     );
     const user = insertedRows[0];
 

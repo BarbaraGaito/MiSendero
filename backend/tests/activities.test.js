@@ -15,7 +15,7 @@ beforeAll(async () => {
     name: "Corredora",
     email: "corredora@misendero.app",
     password: testPassword,
-    accepted_terms_version: "2026-08-13",
+    accepted_terms_version: "2026-10-16",
   });
   token = registered.body.token;
 

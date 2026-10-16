@@ -5,6 +5,7 @@ import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { loginUser, registerUser } from "../../services/api";
 import { saveAuthSession } from "../../services/authSession";
+import { isAccountDeletionPending } from "../../services/accountLifecycle";
 import {
   CURRENT_TERMS_VERSION,
   saveTermsAcceptance,
@@ -94,7 +95,13 @@ export default function LoginScreen() {
         await saveTermsAcceptance(CURRENT_TERMS_VERSION);
       }
 
-      await saveAuthSession(auth);
+      // A fresh server login can restore a volatile session solely to finish a
+      // pending deletion. Its persistent marker still prevents every upload.
+      await saveAuthSession(auth, { deletionRetryLogin: true });
+      if (await isAccountDeletionPending(auth.user.id)) {
+        router.replace("/perfil");
+        return;
+      }
       await redirectAfterAuth(isRegister);
     } catch (submitError) {
       setError(getSubmitErrorMessage(submitError));

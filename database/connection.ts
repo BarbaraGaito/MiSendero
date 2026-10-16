@@ -1,6 +1,6 @@
 import * as SQLite from "expo-sqlite";
 
-type AsyncDatabase = Pick<SQLite.SQLiteDatabase, "execAsync" | "runAsync" | "getFirstAsync" | "getAllAsync">;
+type AsyncDatabase = Pick<SQLite.SQLiteDatabase, "execAsync" | "runAsync" | "getFirstAsync" | "getAllAsync" | "withTransactionAsync">;
 let connectionPromise: Promise<SQLite.SQLiteDatabase> | undefined;
 
 const getConnection = () => {
@@ -21,6 +21,7 @@ const forward = <K extends keyof AsyncDatabase>(method: K): AsyncDatabase[K] =>
   }) as AsyncDatabase[K];
 
 export const db: AsyncDatabase = {
+  withTransactionAsync: forward("withTransactionAsync"),
   execAsync: forward("execAsync"),
   runAsync: forward("runAsync"),
   getFirstAsync: forward("getFirstAsync"),

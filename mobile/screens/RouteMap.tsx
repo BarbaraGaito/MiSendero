@@ -2,7 +2,9 @@ import { ensureRouteSession, getRouteSession, getSimulatedRouteTrackingSummary, 
 import { DepartureMessageRequiredError } from "../../services/departureMessages";
 import { Ionicons } from "@expo/vector-icons";
 import * as Network from "expo-network";
-import { router, useIsFocused, useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
+import { useScreenFocused } from "../hooks/useScreenFocused";
+import { ReportActions } from "../components/ReportActions";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Modal, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
@@ -130,7 +132,7 @@ const getSimulatedRouteStart = (
 
 export default function Screen04RouteMap() {
   const insets = useSafeAreaInsets();
-  const isFocused = useIsFocused();
+  const isFocused = useScreenFocused();
   const [activeSeconds, setActiveSeconds] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const { active, id, startedAt } = useLocalSearchParams<{
@@ -900,13 +902,15 @@ export default function Screen04RouteMap() {
                         : ""}
                     </Text>
                     <Text style={styles.reportDate}>
-                      {formatReportDateTime(report.created_at)}
+                      Observado: {formatReportDateTime(report.observed_at || report.created_at)}
+                      {" · Recibido: "}{formatReportDateTime(report.received_at || report.created_at)}
                     </Text>
                     {report.details ? (
                       <Text numberOfLines={2} style={styles.reportDetails}>
                         {report.details}
                       </Text>
                     ) : null}
+                    <ReportActions report={report} onChanged={async () => setReports(await getTrailReports(trailId))} />
                   </View>
                 </View>
               ))}

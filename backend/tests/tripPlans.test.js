@@ -10,7 +10,7 @@ const auth = () => ({ Authorization: `Bearer ${token}` });
 beforeAll(async () => {
   await runMigrations(); await seedDatabase();
   trailId = (await query("SELECT id FROM trails LIMIT 1")).rows[0].id;
-  const register = (email) => request(app).post("/api/auth/register").send({ name: "Test", email, password: process.env.TEST_USER_PASSWORD, accepted_terms_version: "2026-08-13" });
+  const register = (email) => request(app).post("/api/auth/register").send({ name: "Test", email, password: process.env.TEST_USER_PASSWORD, accepted_terms_version: "2026-10-16" });
   token = (await register("plan@example.test")).body.token;
   otherToken = (await register("other-plan@example.test")).body.token;
 });

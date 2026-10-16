@@ -165,6 +165,14 @@ export default function ConfirmSosScreen() {
         <Text style={styles.title}>{testing ? "Mensaje de ejemplo (no se envía)" : "Mensaje para compartir"}</Text>
         <Text selectable style={styles.body}>{message}</Text>
       </Card>
+      {!testing && <Card>
+        <Text style={styles.title}>Estado de cada etapa</Text>
+        <Text style={styles.body}>Preparación: mensaje disponible en este teléfono.</Text>
+        <Text style={styles.body}>Envío a la API: {registered ? "recibido por la API" : operation?.status === "syncing" ? "en curso" : operationId ? "pendiente o con error; revisá el registro" : "sin iniciar"}.</Text>
+        <Text style={styles.body}>Envío al contacto: {smsStatus || "sin confirmación; abrí Mensajes o llamá al contacto"}.</Text>
+        <Text style={styles.body}>Entrega al contacto: sin confirmación en MiSendero.</Text>
+        <Text style={styles.body}>Asistencia: sin confirmación. MiSendero no activa ni garantiza un rescate.</Text>
+      </Card>}
       <View style={styles.actions}>
         <PrimaryButton label={testing ? "Probar pedido SOS (no se envía)" : busy ? "Guardando pedido…" : operationId ? "Reintentar registro" : "Guardar pedido SOS"} onPress={handleSos} tone={testing ? "secondary" : "danger"} />
         {!testing && <PrimaryButton label="Preparar SMS al contacto" onPress={handleSms} isLoading={preparingSms} loadingLabel="Preparando mensaje" />}

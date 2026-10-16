@@ -1,0 +1,445 @@
+{
+  "date": "2026-10-16",
+  "generated_at": "2026-10-16T19:16:28.867Z",
+  "reference_commit": "64f3007ed801cb631fdf2a5902dd2e9de6bbc670",
+  "node_version": "v24.19.0",
+  "application": {
+    "command": "npm test -- --runInBand",
+    "success": true,
+    "suites_passed": 30,
+    "suites_failed": 0,
+    "tests_passed": 185,
+    "tests_failed": 0,
+    "tests_pending": 0,
+    "raw_results_sha256": "bdb5a034b9575096673dc18a938b47cb8126c1be09b2e850139a40428af6b774",
+    "new_controls": [
+      {
+        "file": "services/__tests__/privacyControls.test.ts",
+        "name": "release configuration rejects HTTP, missing endpoint and credentials",
+        "status": "passed"
+      },
+      {
+        "file": "services/__tests__/privacyControls.test.ts",
+        "name": "distribution build configuration fails before building without an HTTPS API",
+        "status": "passed"
+      },
+      {
+        "file": "services/__tests__/privacyControls.test.ts",
+        "name": "unavailable keystore holds credentials only in memory; legacy plaintext is discarded",
+        "status": "passed"
+      },
+      {
+        "file": "services/__tests__/privacyControls.test.ts",
+        "name": "secure persistence writes a sentinel, never the token, and fails closed on write failure",
+        "status": "passed"
+      },
+      {
+        "file": "services/__tests__/privacyControls.test.ts",
+        "name": "each privacy decision is independent; denial and withdrawal keep an exact audit and erase samples",
+        "status": "passed"
+      },
+      {
+        "file": "services/__tests__/privacyControls.test.ts",
+        "name": "old coupled grants without an independent notice need new authorization",
+        "status": "passed"
+      },
+      {
+        "file": "services/__tests__/privacyControls.test.ts",
+        "name": "a lost deletion response suspends all queue writes and retries; successful retry cleans only that owner",
+        "status": "passed"
+      },
+      {
+        "file": "services/__tests__/privacyControls.test.ts",
+        "name": "cleanup removes contacts, health and optional stores without requiring all screens to have run",
+        "status": "passed"
+      },
+      {
+        "file": "services/__tests__/privacyControls.test.ts",
+        "name": "an explicit password rejection leaves the active account usable",
+        "status": "passed"
+      },
+      {
+        "file": "services/__tests__/privacyControls.test.ts",
+        "name": "a remote deletion response erases an idle installation even without queued operations",
+        "status": "passed"
+      },
+      {
+        "file": "services/__tests__/privacyControls.test.ts",
+        "name": "offline contract strips personal fields and rejects expired and undated reports",
+        "status": "passed"
+      }
+    ]
+  },
+  "backend": {
+    "command": "npm test -- --runInBand (backend)",
+    "success": true,
+    "suites_passed": 12,
+    "suites_failed": 0,
+    "tests_passed": 93,
+    "tests_failed": 0,
+    "tests_pending": 0,
+    "raw_results_sha256": "72980d2f6640d0bdc7a38839c617ff0bb46e22051b07cd0968c9160bcbafbbe7",
+    "new_controls": [
+      {
+        "file": "backend/tests/privacyControls.test.js",
+        "name": "records exact versioned decisions and withdrawal without changing another purpose",
+        "status": "passed"
+      },
+      {
+        "file": "backend/tests/privacyControls.test.js",
+        "name": "terms acceptance stores its text and excludes physiological or analytics grants",
+        "status": "passed"
+      },
+      {
+        "file": "backend/tests/privacyControls.test.js",
+        "name": "deletion requires password and removes names, activities, contact copies, jobs and all installation credentials",
+        "status": "passed"
+      },
+      {
+        "file": "backend/tests/privacyControls.test.js",
+        "name": "reports omit author and distinguish old observations uploaded recently",
+        "status": "passed"
+      },
+      {
+        "file": "backend/tests/privacyControls.test.js",
+        "name": "withdrawal, correction, blocking, flags and admin moderation enforce ownership",
+        "status": "passed"
+      },
+      {
+        "file": "backend/tests/privacyControls.test.js",
+        "name": "web account resource and data export support self service without exposing credentials",
+        "status": "passed"
+      },
+      {
+        "file": "backend/tests/logPrivacy.test.js",
+        "name": "redacts credentials, contact and location fields and suppresses database error contents",
+        "status": "passed"
+      }
+    ]
+  },
+  "typecheck": {
+    "command": "npm run typecheck",
+    "exit_code": 0
+  },
+  "expo_web_export": {
+    "command": "expo export --platform web --output-dir tmp/privacy-web-export",
+    "exit_code": 0,
+    "test_api_url": "https://api.example.test/api",
+    "deployment": false,
+    "warnings": [
+      "three loader export paths resolved with file-based fallback"
+    ],
+    "index_sha256": "afd2ff4f9d20ee7166fbe89c7367b2b0854f296049bcb0124a5ca647fbaddfd3"
+  },
+  "visual_browser_check": {
+    "status": "not_executed",
+    "reason": "No browser surfaces enabled; Browser is not available: iab"
+  },
+  "postgres_real_device_production_check": {
+    "status": "not_executed",
+    "reason": "No Docker, physical devices, production credentials or infrastructure evidence available"
+  },
+  "licence_inventory": {
+    "entries": 1625,
+    "missing_metadata": 3,
+    "sha256": "8c818a4b4cb22c59b06c48e41ae46e360b37ff324ca09157237e438ba5e4143c"
+  },
+  "changed_files": [
+    {
+      "file": "__mocks__/expo-crypto.js",
+      "sha256": "147e53292a8e9f7a487c8f0d29bd8ac10b3932956061649230e97468df7fabe4"
+    },
+    {
+      "file": "app.config.js",
+      "sha256": "cc1e88883d01693d94f77a0f78ba4c4a9a83ee76a3a36e32e14989dd5c771da4"
+    },
+    {
+      "file": "app/atribuciones.tsx",
+      "sha256": "961115dfd97cf678e88691a7642021956178651a7552750cb88deacbe441d862"
+    },
+    {
+      "file": "backend/migrations/008_privacy_and_moderation.sql",
+      "sha256": "2ce6e6a910db4eed0af85c3e7c2868e182b53530e7e4faf02925b7900a6b8eb6"
+    },
+    {
+      "file": "backend/src/privacyNotices.json",
+      "sha256": "ec1690864d9ea38fc2dda7c57af26778d3e157e5d8e150ac6cd9de4c99f56724"
+    },
+    {
+      "file": "backend/src/public/account-deletion.html",
+      "sha256": "f6372760dcb486a2e2648c64f9bc1b4b09a1627fc70c5a921255972506eff44d"
+    },
+    {
+      "file": "backend/src/public/account.css",
+      "sha256": "30a119dc309ccb705891e52bbd95d86505072122491a3f825dc8972e6753588c"
+    },
+    {
+      "file": "backend/src/public/account.js",
+      "sha256": "a2e2232f2d29ce1c36304f4e96139249e761639ef4b77f7627d56f8a2aa4a435"
+    },
+    {
+      "file": "backend/src/reportContract.js",
+      "sha256": "7faad4e946afee4b25b8130e55781482c7f122ee5b44e1935a236d2472264d61"
+    },
+    {
+      "file": "backend/src/routes/account.routes.js",
+      "sha256": "434a28348329ed0a8249cb8e5a889f1d7c902fbda3284b06a752de13b6a6825a"
+    },
+    {
+      "file": "backend/src/routes/reportModeration.routes.js",
+      "sha256": "a95f23da24762d114c9985ca80e5e4a71637f234d4ade1f369332030d401d65f"
+    },
+    {
+      "file": "backend/src/terms.json",
+      "sha256": "e9454e2e2436f004acccdc52c2467beffa5af2b1379c516921e38b9830d1004a"
+    },
+    {
+      "file": "backend/tests/logPrivacy.test.js",
+      "sha256": "d10bb63f9692d34b1c8c4be0859859c5321759c3305e6f00042cdd3422262ad3"
+    },
+    {
+      "file": "backend/tests/privacyControls.test.js",
+      "sha256": "d8435e0dd7e232e67068a6bfa3ee9492c0e24ada914d6a2be12ab6cca70475da"
+    },
+    {
+      "file": "docs/dependency-licenses.csv",
+      "sha256": "8c818a4b4cb22c59b06c48e41ae46e360b37ff324ca09157237e438ba5e4143c"
+    },
+    {
+      "file": "docs/implementacion-privacidad-2026-10-16.md",
+      "sha256": "86284cb021b19117d1fca0ab1a2d516a3929c0d15186637a43691df2bf9a3c2f"
+    },
+    {
+      "file": "docs/pendientes-originales-2026-10-16.md",
+      "sha256": "52a60e55215de968a340d6d62447ba1d28acd3f6e85a38f7326ece545c269ae7"
+    },
+    {
+      "file": "mobile/components/ReportActions.tsx",
+      "sha256": "cd13d5bb7e7eef83576e5e29865982ee3f5955f4faf6fea527f0a9ee2188cb22"
+    },
+    {
+      "file": "mobile/hooks/useScreenFocused.ts",
+      "sha256": "d874e1616365506b35ecd6991470ed7147f0d0f138c9a409a193bfdcc69ed7f9"
+    },
+    {
+      "file": "mobile/screens/AttributionsScreen.tsx",
+      "sha256": "152f5d0512f50251c9575cad4f0dc2259805f6cd52640074657a577dc531f94e"
+    },
+    {
+      "file": "scripts/license-inventory.js",
+      "sha256": "3089f2248c935ce0d108bf8c1ccc281f94d3fb7d932a954583be8d2f6985e398"
+    },
+    {
+      "file": "services/__tests__/privacyControls.test.ts",
+      "sha256": "c26824c6cd99631f9de658679598078fd0d41acbf5775cb29d2c18db1cf18f4d"
+    },
+    {
+      "file": "services/accountLifecycle.ts",
+      "sha256": "6db6d2b30a6c9eaf47a1cbea5cb01d314f1443693e29fb428cc2ffbffe81284b"
+    },
+    {
+      "file": "services/apiConfig.ts",
+      "sha256": "6f85c9bf6ee198f87a031ba17d90d6b988e18d7aef2f961f03a6e9c4ab193078"
+    },
+    {
+      "file": "services/deleteAccount.ts",
+      "sha256": "0f24d54d9d5888f9e41a6f5e8a1cb4b7c5b727bcd3a3a0fd7e16360dff19bd51"
+    },
+    {
+      "file": "services/reportPrivacy.ts",
+      "sha256": "fe790017c1014fd85ef37d323218d679176b12a45b8a0d402754dc84c429c301"
+    },
+    {
+      "file": ".env.example",
+      "sha256": "cf5137e8876d17d3ffb6712c004d7e205722a677c27144d6a6a66c6d757eb42c"
+    },
+    {
+      "file": ".gitignore",
+      "sha256": "84f4f737cefc074867eaff4b4711de07696f1e4512cff681c9af87a13c55f90b"
+    },
+    {
+      "file": "README.md",
+      "sha256": "75f60004a1e8642793961265c0c844e7741a420618103e232d7b379f5583bfb4"
+    },
+    {
+      "file": "__mocks__/expo-sqlite.js",
+      "sha256": "68f3dc4dc3319d7ab1b7818c260a3b2fbec2eb69580c26ec10c5fecb16fdb18a"
+    },
+    {
+      "file": "app.json",
+      "sha256": "9a51767adb75d22765a86236e86ac0fd67579cf0f32473cf04825113b4605d1a"
+    },
+    {
+      "file": "backend/.env.example",
+      "sha256": "efb5cab7b77d23a616b439376c1a35915a63efdbdbbfb2504593991865269cb7"
+    },
+    {
+      "file": "backend/README.md",
+      "sha256": "6c6c75ddb072daf4dfcd7694380900256bf4ccf84e17209f30a4c955315c2625"
+    },
+    {
+      "file": "backend/src/cleanupStaleReports.js",
+      "sha256": "5e21b40e73ad838ab55fbcd4fdbb48643f8068e55dd6ba5854ae75c3c7ff992d"
+    },
+    {
+      "file": "backend/src/logger.js",
+      "sha256": "625238e5b7ef41bce8fc70a1a38ae4135cdc686ef1426e9c2a3769f5ee2b57ad"
+    },
+    {
+      "file": "backend/src/middleware/requireAuth.js",
+      "sha256": "91e111d2232b7a9e6e9bf12fdf5e2079d9deb1755b1c7193e79dd999abfb04d1"
+    },
+    {
+      "file": "backend/src/routes/auth.routes.js",
+      "sha256": "85a4e851a0801c867d769aa36eafc0d876d1ce2ebe2526cf4f6d54331160f735"
+    },
+    {
+      "file": "backend/src/routes/trails.routes.js",
+      "sha256": "310907efddd396a022344dc71dbde0c7b81d384a6c6f0773bd2a4e541e388300"
+    },
+    {
+      "file": "backend/src/schemas/auth.schemas.js",
+      "sha256": "752656938eec511b78b5b76b0fabb1d66ef51be5c897bc843636e4f3519de393"
+    },
+    {
+      "file": "backend/src/schemas/trails.schemas.js",
+      "sha256": "16507276103e9a0cf0fef281e049f20eaeb605585e297ef5d32605afccb0a114"
+    },
+    {
+      "file": "backend/src/server.js",
+      "sha256": "4c5d853f4b0b399ff273f4225f214b2aeaf72a24c030d137d0a8484dffccba56"
+    },
+    {
+      "file": "backend/tests/activities.test.js",
+      "sha256": "9ec9c8b50d9ecd8c9b1b408f24299ff9be00e489dfb7b68db6dfc57608a15dc2"
+    },
+    {
+      "file": "backend/tests/auth.test.js",
+      "sha256": "b002edd3af4b13ff5b609808a92ec6e50e76773a63895a2304382075d02deb98"
+    },
+    {
+      "file": "backend/tests/emergencyAlerts.test.js",
+      "sha256": "8e0ef58d15f6f772b5631a57d99dacdcae06647b2ec4a4040764ee50f0d159d7"
+    },
+    {
+      "file": "backend/tests/trails.test.js",
+      "sha256": "451d333a8f150a911ea2bf24133ba424967a63b2e216381797d994690dbd6d29"
+    },
+    {
+      "file": "backend/tests/tripPlans.test.js",
+      "sha256": "0819d79ad97368b9df532f241aacc93a04b94f5dd45db7f1aadb3c0b1136ee6b"
+    },
+    {
+      "file": "database/connection.ts",
+      "sha256": "d2f7f8b9e7366c1a6fb8f9142e9a0cd116b5fc50cad43a5b90ebc6643a1525b6"
+    },
+    {
+      "file": "eas.json",
+      "sha256": "22add1928cad2ce3db86e8dec50ee290a9992d6b151bd83bbfe67b779081c25e"
+    },
+    {
+      "file": "mobile/components/MiSenderoUI.tsx",
+      "sha256": "6e50d9b86865f5fac9e19267a9d37217463b50c926977253d2ff55a028e9e6ee"
+    },
+    {
+      "file": "mobile/components/TrailMap.tsx",
+      "sha256": "659a7d9f769df7c2de5837fa77405cd1b787fd302dcc4c789188f4d7d55cf544"
+    },
+    {
+      "file": "mobile/hooks/useDeviceLocation.ts",
+      "sha256": "7986fddd742c81b589be712020a421ea19d7113c2211f48658857d568c80b04f"
+    },
+    {
+      "file": "mobile/screens/ConfirmSosScreen.tsx",
+      "sha256": "7f44f3772b7802979bad1d2475c457ae46f6f7ce5ea8c071eccc8ea01e3f31f4"
+    },
+    {
+      "file": "mobile/screens/HomeScreen.tsx",
+      "sha256": "ee069a92633cb1614de352f63b492fc133789674191ffd7a285ebbddc36d8c00"
+    },
+    {
+      "file": "mobile/screens/LoginScreen.tsx",
+      "sha256": "0e6ca137b21100e70a3347e7dcb734998a5dc23f8031235912606adda30f5248"
+    },
+    {
+      "file": "mobile/screens/ProfileScreen.tsx",
+      "sha256": "454e40520059e87d69f28a3e5418633b626ecc40e12487f45296aef546246b79"
+    },
+    {
+      "file": "mobile/screens/ReportTerrainScreen.tsx",
+      "sha256": "5e21eee96f5a3fb45b2d038f6f19e61710eac52e8eb976d607ce6667e34ac679"
+    },
+    {
+      "file": "mobile/screens/RouteMap.tsx",
+      "sha256": "e272c475bc69896a05acc28257936d24cd7e2834911b6bf770d28b307f17f4ee"
+    },
+    {
+      "file": "mobile/screens/TermsScreen.tsx",
+      "sha256": "fb2bd7f2aa2629659c0d4c73587dba22cf08784fd468e639724a3a3f583a4977"
+    },
+    {
+      "file": "mobile/screens/WearableSettingsScreen.tsx",
+      "sha256": "bcd1e49e2247c2eddffd9f4e279db66472ada0fa47e70c5ff3dfef2df89860b4"
+    },
+    {
+      "file": "services/SyncCoordinator.tsx",
+      "sha256": "5764ba512ccb08893d46cd1602a9da87ed68f6b0a9d5be7f4b5ea2fc69834fb3"
+    },
+    {
+      "file": "services/__tests__/mapTileCache.test.ts",
+      "sha256": "4e0b677905a1fe1242f90ff9c5ac046d771a4cdace23a6f544169d64ff3dd2b9"
+    },
+    {
+      "file": "services/__tests__/offlineElevation.test.ts",
+      "sha256": "ac871b8f6d3bb858da63182077cb4d04ca6ef4f9d49825991de166e3ca192ba0"
+    },
+    {
+      "file": "services/__tests__/trailRepository.test.ts",
+      "sha256": "a068997c1892c2bc323e80868112391727109d8fa3c11ccba50ce22b0f6ea319"
+    },
+    {
+      "file": "services/api.ts",
+      "sha256": "2adfa241783e6c049c430f7d25de65476e5f5f8c10b45b54295c55409e406c59"
+    },
+    {
+      "file": "services/authSession.ts",
+      "sha256": "d1a818d4f0b94e9cc9c0be463adcf9b3c735bd006be41eef45f643f0d7c82eb8"
+    },
+    {
+      "file": "services/legalConsent.ts",
+      "sha256": "4b25f9858d11ff99abf6a2619b86d55fccbcafa21209b1afdac1f799f6331342"
+    },
+    {
+      "file": "services/mapTileCache.ts",
+      "sha256": "fe4dd659a38d9630587f108f36a59d754d25fdd64fca080469cf1d8db53c9a02"
+    },
+    {
+      "file": "services/offlineMaps.ts",
+      "sha256": "02a0f362973f331b9dc777e71334187003d8b8fac196acdf6751ee245e3880dc"
+    },
+    {
+      "file": "services/privacyConsent.ts",
+      "sha256": "e217d50bfd49197db37c46800e0d3b88e3f0af78e4ccdcb1009dc0e11f19d13e"
+    },
+    {
+      "file": "services/syncQueue.ts",
+      "sha256": "d3c2850ffa55ed3e36109826dfaaa4e47583bb6e080c92f17ec245a7871ee385"
+    },
+    {
+      "file": "services/terrainElevation.ts",
+      "sha256": "cfd10f029dc5717f05e5083862f59fe2ca4d72d215fc45d7adb499e4d3b7ed93"
+    },
+    {
+      "file": "services/trailRepository.ts",
+      "sha256": "60fe1e5f65e3fb41abc18538399cf8f893ec835bae45b135f1b5195434f51fc3"
+    },
+    {
+      "file": "services/wearableMetrics.ts",
+      "sha256": "36acbf19a3868efbaa937bf663af109aee6ce213e16b2e464e39fc9598858342"
+    },
+    {
+      "file": "types/index.ts",
+      "sha256": "4d294a3bc468910d510c7404452c50c719ff1d8bbedeaa4b6f4868f34f853fc5"
+    }
+  ]
+}

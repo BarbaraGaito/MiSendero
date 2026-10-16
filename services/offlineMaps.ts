@@ -2,6 +2,7 @@ import { db } from "../database/connection";
 import { Trail, TrailReport } from "../types";
 import { getAuthSession } from "./authSession";
 import { initDB } from "../database/database";
+import { sanitizeReports } from "./reportPrivacy";
 import { getTrailById as fetchTrailById } from "./api";
 import {
   deleteOfflineTilesForTrail,
@@ -111,6 +112,11 @@ const initOfflineMapsTable = async () => {
   if (!columnNames.includes("terrain_json")) {
     await db.execAsync(`ALTER TABLE offline_maps ADD COLUMN terrain_json TEXT;`);
   }
+  const cached = await db.getAllAsync<{ id: number; reports_json: string | null }>("SELECT id, reports_json FROM offline_maps WHERE reports_json IS NOT NULL");
+  for (const row of cached) {
+    const clean = JSON.stringify(sanitizeReports(parseJson<TrailReport[]>(row.reports_json, [])));
+    if (clean !== row.reports_json) await db.runAsync("UPDATE offline_maps SET reports_json = ? WHERE id = ?", [clean, row.id]);
+  }
 };
 
 const parseJson = <T>(value: string | null, fallback: T): T => {
@@ -173,7 +179,7 @@ const toOfflineMap = (row: OfflineMapRow): OfflineMap => ({
   verifiedAt: row.verified_at,
   lastError: row.last_error,
   trail: parseJson<Trail | null>(row.trail_json, null),
-  reports: parseJson<TrailReport[]>(row.reports_json, []),
+  reports: sanitizeReports(parseJson<TrailReport[]>(row.reports_json, [])),
   terrain: parseJson<OfflineTerrainGrid | null>(row.terrain_json, null),
 });
 
@@ -276,6 +282,7 @@ export const saveOfflineTrailMap = async (
   onTileProgress?: (downloaded: number, total: number) => void,
   options: OfflineTileDownloadOptions = {}
 ) => {
+  reports = sanitizeReports(reports);
   await initOfflineMapsTable();
   const userId = await getCurrentUserId();
 
@@ -489,7 +496,7 @@ export const refreshOfflineTrailReports = async (
      SET reports_json = ?,
          updated_at = ?
      WHERE user_id IS ? AND trail_id = ?`,
-    [JSON.stringify(reports), Date.now(), userId, trailId]
+    [JSON.stringify(sanitizeReports(reports)), Date.now(), userId, trailId]
   );
 };
 

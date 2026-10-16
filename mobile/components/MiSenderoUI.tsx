@@ -918,6 +918,9 @@ statusIcon: {
   justifyContent: "center",
   width: 26,
 },
+  statusIconError: { backgroundColor: "#FFF4F2" },
+  statusIconWarning: { backgroundColor: colors.orangeSoft },
+  statusIconSuccess: { backgroundColor: colors.mint },
 
 statusBody: {
   flex: 1,

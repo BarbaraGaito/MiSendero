@@ -78,3 +78,19 @@ test("provider failure and a stale lease are retried with the same notification 
   expect(send).toHaveBeenCalledTimes(2);
   expect(send.mock.calls[0][1]).toBe(send.mock.calls[1][1]);
 });
+
+test("the actual webhook adapter authenticates and deduplicates retries, recording acceptance rather than delivery", async () => {
+  const body = payload(); await create(body);
+  const now = new Date(Date.parse(body.expected_return_at) + 40 * 60000);
+  const fetchMock = jest.spyOn(global, "fetch").mockResolvedValueOnce({ ok: false, status: 503 }).mockResolvedValue({ ok: true });
+  try {
+    expect(await processTripNotifications({ now })).toEqual({ accepted: 0 });
+    expect(await processTripNotifications({ now: new Date(now.getTime() + 120000) })).toEqual({ accepted: 1 });
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+    const first = fetchMock.mock.calls[0][1], second = fetchMock.mock.calls[1][1];
+    expect(first.headers.Authorization).toBe("Bearer test-channel-only"); expect(first.headers["Idempotency-Key"]).toBe(second.headers["Idempotency-Key"]);
+    expect(JSON.parse(first.body)).toMatchObject({ event: "trip_return_unconfirmed", contact: { phone: body.contact_phone }, grace_minutes: 30 });
+    expect(JSON.parse(first.body).message).toContain("Esto no confirma un accidente");
+    expect((await query("SELECT * FROM trip_notifications")).rows[0].status).toBe("accepted");
+  } finally { fetchMock.mockRestore(); }
+});

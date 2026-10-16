@@ -1,0 +1,78 @@
+import "../../testing/mobileSetup";
+jest.mock("../syncQueue", () => ({ runSync: jest.fn().mockResolvedValue({ processed: 0, failed: 0 }) }));
+jest.mock("../api", () => ({ getProfile: jest.fn().mockResolvedValue({ user: { id: 1 } }) }));
+jest.mock("../authSession", () => ({ getAuthSession: jest.fn().mockResolvedValue({ token: "one", user: { id: 1 } }) }));
+jest.mock("../trailRepository", () => ({ getTrailById: jest.fn().mockResolvedValue({ route_coordinates: "[[0,0],[0,0.0001],[0,0.0002]]" }) }));
+jest.mock("../deviceLocation", () => ({ watchDeviceLocation: jest.fn() }));
+jest.mock("../routeSession", () => ({ getActiveRouteSession: jest.fn(), getRouteSession: jest.fn(), subscribeRouteSession: jest.fn(), getSimulatedRouteTrackingSummary: jest.fn(), saveSimulatedRouteTrackingPoint: jest.fn(), activeRouteSeconds: jest.fn(() => 60) }));
+jest.mock("../routeTracking", () => ({ saveRouteTrackingPoint: jest.fn().mockResolvedValue(undefined), getRouteTrackingSummary: jest.fn().mockResolvedValue({ distanceMeters: 10 }) }));
+jest.mock("../../database/sessionsRepository", () => ({ getOrCreatePausedSession: jest.fn().mockResolvedValue({}) }));
+jest.mock("expo-network", () => ({ addNetworkStateListener: jest.fn() }));
+import { AppState } from "react-native";
+import * as Network from "expo-network";
+import * as route from "../routeSession";
+import * as auth from "../authSession";
+import * as tracking from "../routeTracking";
+import { watchDeviceLocation } from "../deviceLocation";
+import { runSync } from "../syncQueue";
+import { getProfile } from "../api";
+import { SyncCoordinator } from "../SyncCoordinator";
+import { RouteTrackingCoordinator } from "../RouteTrackingCoordinator";
+import { act, flush, mount } from "../../testing/mobileHarness";
+let appChange: (state: string) => void, networkChange: (state: any) => void, routeChange: () => void, fix: (location: any) => void;
+let remove: jest.Mock, unregister: jest.Mock;
+const outing = { user_id: 1, trail_id: 7, started_at: 1700000000000, state: "running", simulated: 0 };
+beforeEach(() => {
+  jest.useFakeTimers(); remove = jest.fn(); unregister = jest.fn();
+  Object.defineProperty(AppState, "currentState", { configurable: true, value: "active" });
+  jest.spyOn(AppState, "addEventListener").mockImplementation((_event, callback) => { appChange = callback as any; return { remove: unregister }; });
+  (Network.addNetworkStateListener as jest.Mock).mockImplementation((callback) => { networkChange = callback; return { remove: unregister }; });
+  (route.subscribeRouteSession as jest.Mock).mockImplementation((callback) => { routeChange = callback; return unregister; });
+  (route.getActiveRouteSession as jest.Mock).mockResolvedValue(outing); (route.getRouteSession as jest.Mock).mockResolvedValue(outing);
+  (route.getSimulatedRouteTrackingSummary as jest.Mock).mockReturnValue({ lastPoint: null });
+  (auth.getAuthSession as jest.Mock).mockResolvedValue({ token: "one", user: { id: 1 } });
+  (watchDeviceLocation as jest.Mock).mockImplementation(async (callback) => { fix = callback; return { remove }; });
+});
+afterEach(() => jest.useRealTimers());
+test("sync validates idle sessions, reacts only to reachable network/foreground and removes listeners", async () => {
+  const tree = await mount(SyncCoordinator);
+  expect(getProfile).toHaveBeenCalledWith("one"); expect(runSync).toHaveBeenCalledTimes(1);
+  await act(async () => { networkChange({ isConnected: false }); appChange("background"); await flush(); });
+  expect(runSync).toHaveBeenCalledTimes(1);
+  await act(async () => { networkChange({ isConnected: true, isInternetReachable: true }); await flush(); });
+  expect(runSync).toHaveBeenCalledTimes(2);
+  await act(async () => { appChange("active"); await flush(); }); expect(runSync).toHaveBeenCalledTimes(3);
+  await act(async () => tree.unmount()); expect(unregister).toHaveBeenCalledTimes(2);
+});
+test("a failed session validation never dispatches queued personal data", async () => {
+  (getProfile as jest.Mock).mockRejectedValueOnce(new Error("revoked")); await mount(SyncCoordinator);
+  expect(runSync).not.toHaveBeenCalled();
+});
+test("GPS writer rejects stale, inaccurate, reversed and implausibly fast fixes", async () => {
+  const tree = await mount(RouteTrackingCoordinator); const now = Date.now();
+  const emit = async (coordinate: number[], timestamp: number, accuracy: number | null = 5) => act(async () => { fix({ coordinate, timestamp, accuracy }); await flush(); });
+  await emit([0, 0], now - 31000); await emit([0, 0], now, 80); await emit([0, 0], now, null);
+  expect(tracking.saveRouteTrackingPoint).not.toHaveBeenCalled();
+  await emit([0, 0], now - 10000); await emit([0, 0.00005], now - 5000);
+  expect(tracking.saveRouteTrackingPoint).toHaveBeenCalledTimes(2);
+  expect((tracking.saveRouteTrackingPoint as jest.Mock).mock.calls[1][0].distanceDeltaMeters).toBeGreaterThan(5);
+  await emit([0, 0.00005], now - 5000); await emit([1, 1], now);
+  expect(tracking.saveRouteTrackingPoint).toHaveBeenCalledTimes(2);
+  await act(async () => tree.unmount()); expect(remove).toHaveBeenCalledTimes(1);
+});
+test("backgrounding or switching account prevents further points from the old route", async () => {
+  await mount(RouteTrackingCoordinator);
+  (auth.getAuthSession as jest.Mock).mockResolvedValue({ token: "two", user: { id: 2 } });
+  await act(async () => { fix({ coordinate: [0, 0], timestamp: Date.now(), accuracy: 5 }); await flush(); });
+  expect(tracking.saveRouteTrackingPoint).not.toHaveBeenCalled();
+  Object.defineProperty(AppState, "currentState", { configurable: true, value: "background" });
+  await act(async () => { appChange("background"); await flush(); }); expect(remove).toHaveBeenCalledTimes(1);
+});
+test("the simulator advances in memory and never invokes the persistent GPS writer", async () => {
+  (route.getActiveRouteSession as jest.Mock).mockResolvedValue({ ...outing, simulated: 1 });
+  (route.getRouteSession as jest.Mock).mockResolvedValue({ ...outing, simulated: 1 });
+  await mount(RouteTrackingCoordinator); await act(async () => { await jest.advanceTimersByTimeAsync(3000); await flush(); });
+  expect(watchDeviceLocation).not.toHaveBeenCalled(); expect(tracking.saveRouteTrackingPoint).not.toHaveBeenCalled();
+  expect(route.saveSimulatedRouteTrackingPoint).toHaveBeenCalledWith(expect.objectContaining({ simulated: true, longitude: 0.0001 }));
+  (route.getActiveRouteSession as jest.Mock).mockResolvedValue(null); await act(async () => { routeChange(); await flush(); });
+});

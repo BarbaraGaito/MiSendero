@@ -2,6 +2,7 @@ const request = require("supertest");
 const runMigrations = require("../src/migrate");
 const seedDatabase = require("../src/seed");
 const app = require("../src/server");
+const { query } = require("../src/db");
 
 let token;
 let trailId;
@@ -23,6 +24,7 @@ beforeAll(async () => {
   trailId = trails.body[0].id;
 });
 
+beforeEach(() => query("DELETE FROM activities"));
 describe("activities", () => {
   test("rejects creation without authentication", async () => {
     const response = await request(app).post("/api/activities").send({
@@ -67,6 +69,9 @@ describe("activities", () => {
   });
 
   test("persists an activity ended before destination without counting it as completed", async () => {
+    await request(app).post("/api/activities").set("Authorization", `Bearer ${token}`).send({
+      trail_id: trailId, started_at: "2026-10-01T08:00:00Z", ended_at: "2026-10-01T09:00:00Z", distance_km: 8.4, duration_minutes: 60,
+    }).expect(201);
     const startedAt = new Date(Date.now() - 45 * 60 * 1000).toISOString();
     const endedAt = new Date().toISOString();
 

@@ -159,3 +159,6 @@ training/data/raw/
 /tmp/privacy-web-export/
 /tmp/privacy-app-tests.json
 /tmp/privacy-api-tests.json
+
+# Raw temporary coverage experiments; retained evidence is in docs/coverage-audit-2026-10-16/.
+/tmp/coverage-*

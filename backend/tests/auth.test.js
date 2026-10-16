@@ -9,6 +9,10 @@ const app = require("../src/server");
 beforeAll(async () => {
   await runMigrations();
 });
+beforeEach(() => query("DELETE FROM users"));
+const seedAccount = (email) => request(app).post("/api/auth/register").send({
+  name: "Fixture", email, password: process.env.TEST_USER_PASSWORD, accepted_terms_version: "2026-10-16",
+}).expect(201);
 
 describe("auth", () => {
   const testPassword = process.env.TEST_USER_PASSWORD;
@@ -40,6 +44,7 @@ describe("auth", () => {
   });
 
   test("does not promote regular users when migrations run", async () => {
+    await seedAccount("luis@misendero.app");
     await query("UPDATE users SET role = 'user' WHERE email = $1", [
       "luis@misendero.app",
     ]);
@@ -67,6 +72,7 @@ describe("auth", () => {
   });
 
   test("rejects duplicate email", async () => {
+    await seedAccount("ana@misendero.app");
     const response = await request(app).post("/api/auth/register").send({
       name: "Ana Otra",
       email: "ana@misendero.app",
@@ -78,6 +84,7 @@ describe("auth", () => {
   });
 
   test("logs in with valid credentials", async () => {
+    await seedAccount("ana@misendero.app");
     const response = await request(app).post("/api/auth/login").send({
       email: "ana@misendero.app",
       password: testPassword,
@@ -88,6 +95,7 @@ describe("auth", () => {
   });
 
   test("rejects invalid credentials", async () => {
+    await seedAccount("ana@misendero.app");
     const response = await request(app).post("/api/auth/login").send({
       email: "ana@misendero.app",
       password: `${testPassword}-invalid`,
@@ -97,6 +105,7 @@ describe("auth", () => {
   });
 
   test("/me requires a valid session", async () => {
+    await seedAccount("ana@misendero.app");
     const withoutToken = await request(app).get("/api/auth/me");
     expect(withoutToken.status).toBe(401);
 

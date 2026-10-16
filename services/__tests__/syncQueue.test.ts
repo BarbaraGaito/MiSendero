@@ -46,8 +46,9 @@ beforeAll(async () => {
   });
 });
 
-beforeEach(() => {
+beforeEach(async () => {
   jest.clearAllMocks();
+  await db.runAsync("DELETE FROM pending_operations");
 });
 
 describe("syncQueue", () => {
@@ -130,6 +131,10 @@ describe("syncQueue", () => {
   });
 
   test("getSyncSummary reflects counts across statuses", async () => {
+    const synced = await enqueue("activity", {});
+    const failed = await enqueue("activity", {});
+    await db.runAsync("UPDATE pending_operations SET status = 'synced' WHERE id = ?", [synced]);
+    await db.runAsync("UPDATE pending_operations SET status = 'failed' WHERE id = ?", [failed]);
     const summary = await getSyncSummary();
 
     expect(summary.synced).toBeGreaterThanOrEqual(1);

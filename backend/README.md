@@ -4,6 +4,13 @@ API REST en Node.js + Express, persistida en PostgreSQL (ver ADR-03 del document
 proyecto). Autenticacion con JWT, contrasenas con bcrypt, validacion de entrada con zod,
 `helmet` y rate limiting en los endpoints de auth.
 
+El asistente **Descubrí tu sendero** utiliza una encuesta de cuatro pasos y devuelve
+un sendero verificado mediante `POST /api/ai/recommend-trail` (requiere sesión).
+Configurar `OPENAI_API_KEY`, `OPENAI_MODEL` y, opcionalmente, `AI_TIMEOUT_MS` únicamente
+en el servidor. Ver la [guía de configuración, pruebas y AWS](../docs/trail-recommendation.md).
+El servicio nuevo está escrito en TypeScript: `npm run dev` lo compila automáticamente;
+antes de ejecutar `npm start` manualmente, ejecutar `npm run build`. Docker ya lo compila.
+
 ## Desarrollo local
 
 Con Docker, desde la raiz del repositorio:

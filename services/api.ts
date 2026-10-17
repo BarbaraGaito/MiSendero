@@ -3,6 +3,7 @@ import Constants from "expo-constants";
 import { resolveApiUrl } from "./apiConfig";
 import { getAuthSession, clearAuthSession } from "./authSession";
 import { eraseLocalAccountData, isAccountDeletionPending } from "./accountLifecycle";
+import type { RecommendationResponse, TrailPreferences } from "../backend/src/ai/contracts";
 
 const getApiUrl = () => {
   const configuredUrl = process.env.EXPO_PUBLIC_API_URL;
@@ -42,6 +43,7 @@ type RequestOptions = {
   method?: "GET" | "POST" | "DELETE" | "PATCH";
   body?: unknown;
   token?: string;
+  timeoutMs?: number;
 };
 export class ApiError extends Error {
   constructor(message: string, public readonly status: number, public readonly code?: string) { super(message); }
@@ -66,7 +68,7 @@ async function request<T>(path: string, options: RequestOptions = {}): Promise<T
 
   let response: Response;
   const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 10000);
+  const timeout = setTimeout(() => controller.abort(), options.timeoutMs ?? 10000);
 
   try {
     response = await fetch(`${API_URL}${path}`, {
@@ -137,6 +139,9 @@ export const registerUser = async (
 export const getTrails = async (): Promise<Trail[]> => {
   return request<Trail[]>("/trails");
 };
+
+export const recommendTrail = (preferences: TrailPreferences, token: string) =>
+  request<RecommendationResponse>("/ai/recommend-trail", { method: "POST", body: preferences, token, timeoutMs: 25000 });
 
 export const getTrailById = async (id: number): Promise<Trail> => {
   return request<Trail>(`/trails/${id}`);

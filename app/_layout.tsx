@@ -31,6 +31,7 @@ export default function RootLayout() {
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="index" />
         <Stack.Screen name="explore" />
+        <Stack.Screen name="descubri-tu-sendero" />
         <Stack.Screen name="trail-detail" />
         <Stack.Screen name="sendero-opiniones" />
         <Stack.Screen name="route-map" />

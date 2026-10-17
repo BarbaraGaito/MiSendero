@@ -259,6 +259,11 @@ function ExploreRoutesHeader({
         subtitle="Busca por nombre o zona y filtra por dificultad o distancia."
       />
       <RouteSearchBox searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+      <Pressable accessibilityRole="button" onPress={() => router.push("/descubri-tu-sendero")}
+        style={{ padding: 18, borderRadius: 18, backgroundColor: colors.mint, marginBottom: 16 }}>
+        <Text style={{ color: colors.greenDark, fontSize: 19, fontWeight: "800" }}>🥾 Descubrí tu sendero</Text>
+        <Text style={{ color: colors.muted, fontSize: 14, marginTop: 6 }}>Respondé cuatro preguntas y encontrá una ruta con IA.</Text>
+      </Pressable>
       <Pressable accessibilityRole="button" onPress={() => router.push("/parques-nacionales")}
         style={{ flexDirection: "row", alignItems: "center", gap: 8, minHeight: 44, marginBottom: 14 }}>
         <Ionicons name="shield-checkmark-outline" size={21} color={colors.greenDark} />

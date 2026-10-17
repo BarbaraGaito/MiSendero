@@ -79,12 +79,15 @@ app.use("/api/national-parks", nationalParksRoutes);
 app.use("/api/activities", activitiesRoutes);
 app.use("/api/emergency-alerts", emergencyAlertsRoutes);
 app.use("/api/trip-plans", tripPlansRoutes);
+app.use("/api/ai", require("./routes/ai.routes"));
 
 app.use((_req, res) => {
   res.status(404).json({ message: "Ruta no encontrada" });
 });
 
 app.use((error, _req, res, _next) => {
+  if (error.type === "entity.too.large") return res.status(413).json({ message: "La solicitud es demasiado extensa." });
+  if (error.type === "entity.parse.failed") return res.status(400).json({ message: "El JSON de la solicitud no es válido." });
   logger.error({ err: error }, "Solicitud fallida");
   res.status(500).json({ message: "Error interno del servidor" });
 });

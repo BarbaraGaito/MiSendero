@@ -4,6 +4,8 @@
 
 # MiSendero
 
+La funcionalidad **Descubrí tu sendero** incorpora una encuesta de cuatro pasos y una recomendación de trekking con IA. Configuración, pruebas y actualización de AWS: [guía de implementación](docs/trail-recommendation.md).
+
 Aplicacion movil (Expo/React Native) de asistencia y seguridad para trekking, con backend
 Node.js/Express + PostgreSQL, modulo de IA entrenado en Python/Scikit-learn, mapas y navegacion
 offline, y sincronizacion diferida de reportes, actividad y alertas de emergencia.

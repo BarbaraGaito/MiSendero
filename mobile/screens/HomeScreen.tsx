@@ -110,6 +110,9 @@ export default function HomeScreen() {
           </View>
 
           <View style={styles.sectionHeader}>
+            <PrimaryButton label="Descubrí tu sendero" href="/descubri-tu-sendero" icon="sparkles-outline" />
+          </View>
+          <View style={styles.sectionHeader}>
             <Text style={styles.sectionTitle}>Recomendada para vos</Text>
             <Text
               onPress={() => router.push("/explorar-rutas")}

@@ -1,3 +1,7 @@
+# Revisión de imágenes y mapas
+
+La revisión posterior se documenta en [MEDIA.md](MEDIA.md): 19 fichas enriquecidas y retirada de Piedra Movediza a pedido de la propietaria; total local 51. Los conteos de 20/52 y campos faltantes del informe original describen la carga inicial, no el estado posterior.
+
 # Ampliación del catálogo: 20 senderos reales
 
 Revisión de fuentes: **17 de octubre de 2026**. Carga aplicada únicamente a PostgreSQL local: **32 → 52 registros**, sin modificar los 32 anteriores. Ver [evidencia de la transacción](local-import.json). No se conectó ni se modificó Amazon RDS.
@@ -78,7 +82,7 @@ No ejecutar `db:seed` ni migraciones para cargar esta ampliación. El esquema ex
 
 El importador ejecuta una transacción, bloquea la tabla durante la carga, valida las 20 fichas, compara claves/nombres/alias normalizados y utiliza `ON CONFLICT DO NOTHING`. Verifica un SHA-256 de **todas las columnas de los registros anteriores** antes de confirmar. Si algo falla, revierte la transacción. Repetirlo no sobrescribe fichas existentes ni crea copias. No requiere que la base tenga exactamente 32 registros: esa era la cantidad auditada localmente, no una condición del código.
 
-El CLI comprueba que la conexión sea a `localhost`, `127.0.0.1` o `::1`; rechaza hosts remotos, incluso en simulación. No se cambió la URL de la aplicación, que continúa apuntando a AWS. **Los nuevos registros no aparecerán en esa app hasta efectuar una carga explícita y revisada en RDS.** Esta entrega no realiza esa operación ni altera `misendero.service`, Nginx o credenciales de producción.
+Los comandos locales comprueban que la conexión sea a `localhost`, `127.0.0.1` o `::1`. El modo remoto exige `--remote` y, para aplicar, la identidad exacta `HOST:PORT/DATABASE` mostrada por la vista previa. Se comprueba también la conexión efectiva de pg antes de consultar el catálogo. La vista previa usa transacciones de solo lectura y revierte; las operaciones tienen límites de espera de consulta y bloqueo. No se cambió la URL de la aplicación, que continúa apuntando a AWS. **Los nuevos registros no aparecerán en esa app hasta efectuar una carga explícita y revisada en RDS.** No se ejecutó esa operación ni se alteraron `misendero.service`, Nginx o credenciales de producción. [Procedimiento desde EC2](AWS.md).
 
 ## Uso posterior en Machine Learning
 
@@ -93,7 +97,7 @@ No asociar artificialmente la dificultad publicada con una etiqueta de satisfacc
 ## Archivos de esta ampliación
 
 - `backend/src/data/catalogExpansion20261017.js`: fichas documentadas y conversiones reproducibles.
-- `backend/scripts/importCatalogExpansion.js`: validación, deduplicación e importación local explícita.
+- `backend/scripts/importCatalogExpansion.js`: validación, deduplicación e importación explícita local o remota con confirmación del destino.
 - `backend/scripts/exportCatalogFeatures.js`: exportación de características sin información personal.
 - `backend/tests/catalogExpansion.test.js`: pruebas del lote y del importador.
 - `backend/package.json`: comandos de simulación, carga y exportación.

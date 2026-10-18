@@ -1,6 +1,6 @@
 # Recomendador local: datos, entrenamiento e inferencia
 
-El producto usa una encuesta de cinco preguntas y devuelve una ruta de PostgreSQL. No tiene chat. El código de entrenamiento supervisado está implementado; **no hay un modelo personalizado entrenado con evidencia real suficiente todavía**. En ese estado la API utiliza una referencia determinista y lo declara en `ranking.method`.
+El producto usa una encuesta de cuatro preguntas, toma la experiencia del perfil guardado de la cuenta y devuelve una ruta de PostgreSQL. Si el perfil falta, la app exige completar primero su encuesta y luego vuelve al recomendador. No tiene chat. El código de entrenamiento supervisado está implementado; **no hay un modelo personalizado entrenado con evidencia real suficiente todavía**. En ese estado la API utiliza una referencia determinista y lo declara en `ranking.method`.
 
 ## Decisión de modelo
 
@@ -8,7 +8,9 @@ Se implementó *learning to rank pointwise*: `RandomForestRegressor` de scikit-l
 
 La elección permite relaciones no lineales en datos tabulares y tratamiento nativo de faltantes, con recursos CPU acotados. [Referencia oficial de Random Forest 1.7](https://scikit-learn.org/1.7/modules/generated/sklearn.ensemble.RandomForestRegressor.html). Regresión logística sería una buena referencia para etiquetas binarias, pero perdería la graduación propuesta; HistGradientBoosting es una alternativa futura a comparar cuando haya más datos. No se afirma que Random Forest sea superior antes de medirlo con etiquetas reales.
 
-Los filtros obligatorios de destino, duración, dificultad y experiencia se aplican **antes** del modelo y no puede anularlos. Principiante permite dificultad Baja; Intermedio excluye Alta; Avanzado admite las tres. Son límites conservadores del producto, no certificaciones de aptitud médica o seguridad. Omitir experiencia desde un cliente antiguo conserva el límite de principiante; el dataset de entrenamiento exige experiencia explícita.
+La ubicación se aplica **antes** del modelo y nunca se amplía a otra ciudad para completar la respuesta. La política v4 devuelve una alternativa local aun cuando difieran el tiempo, paisaje o dificultad. Prioriza el perfil: Principiante favorece Baja; Intermedio favorece Baja/Media; Avanzado admite las tres. Si no hay ninguna dentro del nivel, selecciona el nivel menos exigente disponible y advierte que supera el perfil, sin afirmar aptitud. Omitir experiencia conserva la prioridad de principiante; las etiquetas para entrenar exigen experiencia explícita.
+
+La política v4 prioriza coincidencias exactas; cuando faltan, conserva primero paisaje, luego duración, luego dificultad, sin descartar todos los candidatos por esos valores. Las diferencias aparecen en `preferenceAdjustments` y las plantillas explicativas. Se conservan los aliases documentados, los calificadores provinciales y la diferencia entre ciudad explícita y provincia. Un posible error de una letra exige confirmar la escritura: no se cambia automáticamente de ciudad.
 
 ## Dataset y contrato de etiquetas
 
@@ -56,7 +58,7 @@ Cada fila debe tener exactamente estos campos. Los marcadores son una descripci�
 
 Fuentes de etiquetas admitidas: `expert_judgment` y `consented_user_rating`. Escala consistente: 0 no lo elegiría, 1 coincidencia débil, 2 adecuado, 3 muy adecuado. El estudio debe fijar instrucciones y documentar si el evaluador es un experto o el propio usuario. No confundir evaluación experta con satisfacción observada.
 
-Cada consulta debe tener una valoración explícita para **todos sus candidatos compatibles** en el snapshot. Repetir las mismas preferencias y grupo en cada fila. La preparación rechaza candidatos desconocidos, incompatibles, duplicados o ausentes, campos personales adicionales y datos sintéticos. No convierte rutas no elegidas, clics ni actividades finalizadas en etiquetas negativas. La app no guarda encuestas ni activa recolección de datos automáticamente; un estudio requiere su protocolo y consentimiento.
+Cada consulta debe tener una valoración explícita para **todos sus candidatos compatibles de la primera etapa no vacía** en el snapshot. Repetir las mismas preferencias y grupo en cada fila. La preparación comparte la política del endpoint y agrupa aliases de la misma área geográfica al calcular la huella de preferencias, evitando separar consultas equivalentes entre entrenamiento y evaluación. Rechaza candidatos desconocidos, incompatibles, duplicados o ausentes, campos personales adicionales y datos sintéticos. No convierte rutas no elegidas, clics ni actividades finalizadas en etiquetas negativas. La app no guarda encuestas ni activa recolección de datos automáticamente; un estudio requiere su protocolo y consentimiento.
 
 ## Características y faltantes
 
@@ -66,7 +68,7 @@ Incluye coincidencia de paisajes, cercanía al tiempo preferido, minutos, distan
 
 `null` pasa a `NaN` únicamente dentro de scikit-learn. No se rellena el catálogo con alturas, terrenos o distancias estimados por el modelo. Las referencias de elevación disponibles pueden provenir de trazas y DEM, son aproximadas y no mediciones de campo. Un desnivel genérico no se transforma en ascenso acumulado. Los tiempos derivados de ida permanecen señalados; estudiar por separado su incertidumbre. El modelo no recibe clima, accesibilidad o seguridad actual no verificada.
 
-La referencia determinista asigna `4 × coincidencia de tipos + 2 × cercanía de duración + margen de esfuerzo`. Si un filtro explícito no coincide no se relaja para completar una respuesta. Los empates se resuelven por ID, de forma estable. Es una referencia basada en reglas, **no ML entrenado**.
+La referencia determinista asigna `4 × coincidencia de tipos + 2 × cercanía de duración + margen de esfuerzo + cercanía de dificultad preferida` dentro de la etapa seleccionada. Los empates se resuelven por ID. Es una referencia basada en reglas, **no ML entrenado**. La versión 4 conserva el orden de vectores y cambia política y referencia: regenerar ejemplos, entrenar y evaluar de nuevo. La versión/hash rechaza artefactos anteriores. La duración sin alcance documentado pasa a null en proximidad y minutos del vector; no se trata como un total conocido. Las fichas antiguas sin fuente se identifican como `catalog_only`, no como verificadas externamente.
 
 ## Entrenar y evaluar
 

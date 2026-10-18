@@ -1,0 +1,226 @@
+{
+  "revision": 1,
+  "checked_at": "2026-10-17",
+  "photos": {
+    "mburucuya-che-roga": {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/a/a1/Cartel_en_el_Sendero_Che_Roga.jpg",
+      "file": "Cartel en el Sendero Che Roga.jpg",
+      "author": "Tencho",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Cartel_en_el_Sendero_Che_Roga.jpg",
+      "license": "CC BY-SA 3.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+      "context": "Cartelería real del sendero Che Roga, Parque Nacional Mburucuyá.",
+      "retrieved_at": "2026-10-17",
+      "sha256": "1e79ce9aee402a06b7373ab370d88f4cb85dd4847c798f03017f257238109a82"
+    },
+    "mburucuya-tape-pora": {
+      "url": "https://www.argentina.gob.ar/sites/default/files/pn_mburucuya_banner.png",
+      "author": "Administración de Parques Nacionales",
+      "page_url": "https://www.argentina.gob.ar/node/150096",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "license_source_url": "https://www.argentina.gob.ar/normativa/nacional/disposici%C3%B3n-14-2018-313616/texto",
+      "context": "Fotografía del entorno histórico del Parque Nacional Mburucuyá publicada por APN; no identifica cada tramo del sendero.",
+      "retrieved_at": "2026-10-17",
+      "sha256": "30376174dee47f161d2887733cb429ea167a953e2cccd878cacdc8fc5f475682"
+    },
+    "el-rey-la-chuna": {
+      "url": "https://www.argentina.gob.ar/sites/default/files/pn_el_rey25.png",
+      "author": "Administración de Parques Nacionales",
+      "page_url": "https://www.argentina.gob.ar/parquesnacionales/region-noroeste/parque-nacional-el-rey/actividades",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "license_source_url": "https://www.argentina.gob.ar/normativa/nacional/disposici%C3%B3n-14-2018-313616/texto",
+      "context": "Fotografía del entorno de senderismo del Parque Nacional El Rey publicada por APN.",
+      "retrieved_at": "2026-10-17",
+      "sha256": "0ef538f9c4a91e16616da7f268fce2e259e2b2ef483a531989e40ea13e108c31"
+    },
+    "el-rey-laguna-patitos": {
+      "url": "https://www.argentina.gob.ar/sites/default/files/pn_el_rey13.png",
+      "author": "Administración de Parques Nacionales",
+      "page_url": "https://www.argentina.gob.ar/parquesnacionales/region-noroeste/parque-nacional-el-rey/actividades",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "license_source_url": "https://www.argentina.gob.ar/normativa/nacional/disposici%C3%B3n-14-2018-313616/texto",
+      "context": "Foto de un carpintero en el Parque Nacional El Rey publicada por APN. Imagen de fauna del entorno del parque; no es una foto identificada de Laguna Los Patitos.",
+      "retrieved_at": "2026-10-17",
+      "sha256": "b4c49e83aea6c81ad874fc0ca1a3bccd82692e51c142fd0c57509384af04185a"
+    },
+    "lihue-piedra-movediza": {
+      "url": "https://www.argentina.gob.ar/sites/default/files/pn_lihue_calel29.png",
+      "author": "Administración de Parques Nacionales",
+      "page_url": "https://www.argentina.gob.ar/parquesnacionales/regionpatagonia/parque-nacional-lihue-calel/actividades",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "license_source_url": "https://www.argentina.gob.ar/normativa/nacional/disposici%C3%B3n-14-2018-313616/texto",
+      "context": "Foto de las sierras del Parque Nacional Lihué Calel publicada por APN. Imagen del entorno del parque; no identifica la Piedra Movediza.",
+      "retrieved_at": "2026-10-17",
+      "sha256": "64ef45381870d1c7d8960469d136da58516c347e7be02acab5569cddc44860e5"
+    },
+    "quijadas-farallones": {
+      "url": "https://www.argentina.gob.ar/sites/default/files/pn_sierra_de_las_quijadas21.png",
+      "author": "Administración de Parques Nacionales",
+      "page_url": "https://www.argentina.gob.ar/parquesnacionales/centro/parque-nacional-sierra-de-las-quijadas/actividades",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "license_source_url": "https://www.argentina.gob.ar/normativa/nacional/disposici%C3%B3n-14-2018-313616/texto",
+      "context": "Fotografía publicada por APN junto a la descripción del sendero Farallones.",
+      "retrieved_at": "2026-10-17",
+      "sha256": "ab3eac99c59d11f35921e5dae4a5cefaf938feacbb1680da872c126f396eeba2"
+    },
+    "leoncito-cerro": {
+      "url": "https://www.argentina.gob.ar/sites/default/files/pn_el_leoncito19_banner.png",
+      "author": "Administración de Parques Nacionales",
+      "page_url": "https://www.argentina.gob.ar/parquesnacionales/centro/parque-nacional-el-leoncito/actividades",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "license_source_url": "https://www.argentina.gob.ar/normativa/nacional/disposici%C3%B3n-14-2018-313616/texto",
+      "context": "Fotografía del paisaje del Parque Nacional El Leoncito publicada por APN; referencia del entorno del parque.",
+      "retrieved_at": "2026-10-17",
+      "sha256": "d74e2d51e6033ea624aa0bd898573d4243a555766792b26a90f6b373899a4638"
+    },
+    "fuego-pampa-alta": {
+      "url": "https://www.argentina.gob.ar/sites/default/files/pn_tierra_del_fuego21.png",
+      "author": "Administración de Parques Nacionales",
+      "page_url": "https://www.argentina.gob.ar/parquesnacionales/patagonia-austral/parque-nacional-tierra-del-fuego/actividades",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "license_source_url": "https://www.argentina.gob.ar/normativa/nacional/disposici%C3%B3n-14-2018-313616/texto",
+      "context": "Foto del bosque del Parque Nacional Tierra del Fuego publicada por APN. Imagen del entorno del parque; no identifica cada tramo de Pampa Alta.",
+      "retrieved_at": "2026-10-17",
+      "sha256": "df24af267f0a5a0e4f0fa20a9b75386d1955594399bfca55b2c959cb8bd5d435"
+    },
+    "alerces-alto-petiso": {
+      "url": "https://www.argentina.gob.ar/sites/default/files/panoramicas_pnla5.png",
+      "author": "Administración de Parques Nacionales",
+      "page_url": "https://www.argentina.gob.ar/parquesnacionales/regionpatagonia/parque-nacional-los-alerces/actividades",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "license_source_url": "https://www.argentina.gob.ar/normativa/nacional/disposici%C3%B3n-14-2018-313616/texto",
+      "context": "Fotografía panorámica del Parque Nacional Los Alerces publicada por APN; referencia del entorno, no del trazado exacto.",
+      "retrieved_at": "2026-10-17",
+      "sha256": "d4650c01b7a452f945d3a501957f81c2557c9f8b1b93955108556074d0e9c101"
+    },
+    "alerces-laguna-escondida": {
+      "url": "https://www.argentina.gob.ar/sites/default/files/panoramicas_pnla3.png",
+      "author": "Administración de Parques Nacionales",
+      "page_url": "https://www.argentina.gob.ar/parquesnacionales/regionpatagonia/parque-nacional-los-alerces/actividades",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "license_source_url": "https://www.argentina.gob.ar/normativa/nacional/disposici%C3%B3n-14-2018-313616/texto",
+      "context": "Fotografía del entorno de senderismo del Parque Nacional Los Alerces publicada por APN.",
+      "retrieved_at": "2026-10-17",
+      "sha256": "66f872332a9b478252e986c7e44fa8a579f2003e4efc19fb6a21b6d831ae907f"
+    },
+    "alerces-arroyo-hacha": {
+      "url": "https://www.argentina.gob.ar/sites/default/files/panoramicas_los_alerces20.png",
+      "author": "Administración de Parques Nacionales",
+      "page_url": "https://www.argentina.gob.ar/parquesnacionales/regionpatagonia/parque-nacional-los-alerces/actividades",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "license_source_url": "https://www.argentina.gob.ar/normativa/nacional/disposici%C3%B3n-14-2018-313616/texto",
+      "context": "Fotografía del entorno lacustre del Parque Nacional Los Alerces publicada por APN; no es una fotografía identificada de la cascada.",
+      "retrieved_at": "2026-10-17",
+      "sha256": "839aeb39a9306ab748a9b981cd53523470b1e54491f05e50db72d452cb5dd11d"
+    },
+    "alerces-cerro-cocinero": {
+      "url": "https://www.argentina.gob.ar/sites/default/files/panoramicas_los_alerces22.png",
+      "author": "Administración de Parques Nacionales",
+      "page_url": "https://www.argentina.gob.ar/parquesnacionales/regionpatagonia/parque-nacional-los-alerces/actividades",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "license_source_url": "https://www.argentina.gob.ar/normativa/nacional/disposici%C3%B3n-14-2018-313616/texto",
+      "context": "Foto de un embarcadero y del entorno lacustre del Parque Nacional Los Alerces publicada por APN. No es una foto identificada del Cerro Cocinero.",
+      "retrieved_at": "2026-10-17",
+      "sha256": "e3cf06538190c4c98013354ad21d452f7050b6caed22b3cfa4ec2957e930c836"
+    },
+    "llao-llao-villa-tacul": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d6/Cerro_Llao_Llao_%2830753958590%29.jpg/1280px-Cerro_Llao_Llao_%2830753958590%29.jpg",
+      "file": "Cerro Llao Llao (30753958590).jpg",
+      "author": "Los Paseos from Earth",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Cerro_Llao_Llao_(30753958590).jpg",
+      "license": "CC BY-SA 2.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
+      "context": "Fotografía real de una caminata por el Cerro Llao Llao.",
+      "retrieved_at": "2026-10-17",
+      "sha256": "26b86ae4a02af0c59543918c25c71a48cea288134380328d8cbcdba90db9a767"
+    },
+    "condorito-secretos-pies": {
+      "url": "https://www.argentina.gob.ar/sites/default/files/pn_quebrada_del_condorito27.png",
+      "author": "Administración de Parques Nacionales",
+      "page_url": "https://www.argentina.gob.ar/parquesnacionales/centro/parque-nacional-quebrada-del-condorito/actividades",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "license_source_url": "https://www.argentina.gob.ar/normativa/nacional/disposici%C3%B3n-14-2018-313616/texto",
+      "context": "Fotografía publicada por APN junto a la descripción de Secretos bajo nuestros pies.",
+      "retrieved_at": "2026-10-17",
+      "sha256": "fa343d08f839d4d3f0c6ce60bedba32a6b0abe3cc589f79d641773c09dc1fede"
+    },
+    "aconquija-puesto-chorizos": {
+      "url": "https://www.argentina.gob.ar/sites/default/files/pn_aconquija17.png",
+      "author": "Administración de Parques Nacionales",
+      "page_url": "https://www.argentina.gob.ar/parquesnacionales/region-noroeste/parque-nacional-aconquija/actividades",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "license_source_url": "https://www.argentina.gob.ar/normativa/nacional/disposici%C3%B3n-14-2018-313616/texto",
+      "context": "Fotografía publicada por APN junto a la descripción del sendero Puesto Los Chorizos.",
+      "retrieved_at": "2026-10-17",
+      "sha256": "5dae40ba6ada7e42553fec969c1ec678850f6428e5d39db48f51f1c41f7f82d1"
+    },
+    "aconquija-el-pozon": {
+      "url": "https://www.argentina.gob.ar/sites/default/files/pn_aconquija9.png",
+      "author": "Administración de Parques Nacionales",
+      "page_url": "https://www.argentina.gob.ar/parquesnacionales/region-noroeste/parque-nacional-aconquija/actividades",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "license_source_url": "https://www.argentina.gob.ar/normativa/nacional/disposici%C3%B3n-14-2018-313616/texto",
+      "context": "Fotografía publicada por APN junto a la descripción del sendero El Pozón.",
+      "retrieved_at": "2026-10-17",
+      "sha256": "954f59ac2f189bbf97451dd186880e02ae0ab3157337914edc518e49942fb456"
+    },
+    "moreno-belgrano-chico": {
+      "url": "https://www.argentina.gob.ar/sites/default/files/panoramica_pn_perito_moreno_02.png",
+      "author": "Administración de Parques Nacionales",
+      "page_url": "https://www.argentina.gob.ar/parquesnacionales/patagonia-austral/parque-nacional-perito-moreno/actividades",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "license_source_url": "https://www.argentina.gob.ar/normativa/nacional/disposici%C3%B3n-14-2018-313616/texto",
+      "context": "Fotografía del Parque Nacional Perito Moreno publicada por APN; referencia del entorno del parque.",
+      "retrieved_at": "2026-10-17",
+      "sha256": "c433544dce044689897e8f01488d29d7e398b9e482dadd255bb154699c3b04f7"
+    },
+    "moreno-belgrano-grande": {
+      "url": "https://www.argentina.gob.ar/sites/default/files/panoramica_pn_perito_moreno_08.png",
+      "author": "Administración de Parques Nacionales",
+      "page_url": "https://www.argentina.gob.ar/parquesnacionales/patagonia-austral/parque-nacional-perito-moreno/actividades",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "license_source_url": "https://www.argentina.gob.ar/normativa/nacional/disposici%C3%B3n-14-2018-313616/texto",
+      "context": "Fotografía del Parque Nacional Perito Moreno publicada por APN; referencia del entorno del parque.",
+      "retrieved_at": "2026-10-17",
+      "sha256": "d1e6d7c0354b8f4262c42f1b5391676944e2056b273fd5160ee41c013486a35c"
+    },
+    "lanin-cara-sur-puerto-canoa": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d6/Cara_Sur_Volc%C3%A1n_Lan%C3%ADn..JPG/1280px-Cara_Sur_Volc%C3%A1n_Lan%C3%ADn..JPG",
+      "file": "Cara Sur Volcán Lanín..JPG",
+      "author": "Preiva",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Cara_Sur_Volc%C3%A1n_Lan%C3%ADn..JPG",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "context": "Fotografía real de la cara sur del Volcán Lanín.",
+      "retrieved_at": "2026-10-17",
+      "sha256": "078d25a1337c1ea60c9822aac313604941576e1902feb79a2f0d3763b9ca640c"
+    },
+    "lanin-rosales-san-martin": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f5/Laguna_Rosales%2C_San_Mart%C3%ADn_de_Los_Andes%2C_Argentina%2C_2024.jpg/1280px-Laguna_Rosales%2C_San_Mart%C3%ADn_de_Los_Andes%2C_Argentina%2C_2024.jpg",
+      "file": "Laguna Rosales, San Martín de Los Andes, Argentina, 2024.jpg",
+      "author": "Vlasta x",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Laguna_Rosales,_San_Mart%C3%ADn_de_Los_Andes,_Argentina,_2024.jpg",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "context": "Fotografía real de Laguna Rosales, San Martín de los Andes.",
+      "retrieved_at": "2026-10-17",
+      "sha256": "2148f0df5aca03a947ca5eb8871185375b863340b7ca9d0257f05acd21435b7e"
+    }
+  }
+}

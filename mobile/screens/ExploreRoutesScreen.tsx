@@ -20,7 +20,6 @@ import {
   ScreenTitle,
   StatusNotice,
   colors,
-  trailImages,
 } from "../components/MiSenderoUI";
 import { getTrails } from "../../services/trailRepository";
 import { formatKilometers } from "../../services/geoUtils";
@@ -86,9 +85,9 @@ export default function ExploreRoutesScreen() {
   );
   const visibleRouteItems = useMemo(
     () =>
-      visibleTrails.map((trail, index) => ({
+      visibleTrails.map((trail) => ({
         trail,
-        image: trail.image_url || (index % 2 === 0 ? trailImages.mountain : trailImages.forest),
+        image: trail.image_url || "",
       })),
     [visibleTrails]
   );
@@ -97,7 +96,7 @@ export default function ExploreRoutesScreen() {
       ...new Set(
         visibleRouteItems
           .map((item) => item.image)
-          .filter((imageUrl) => !loadedImages[imageUrl])
+          .filter((imageUrl) => imageUrl.length > 0 && !loadedImages[imageUrl])
       ),
     ],
     [loadedImages, visibleRouteItems]
@@ -162,7 +161,7 @@ export default function ExploreRoutesScreen() {
     ({ item }) => (
       <RouteCard
         image={item.image}
-        imageReady={Boolean(paintedImages[item.image])}
+        imageReady={!item.image || Boolean(paintedImages[item.image])}
         isFavorite={favoriteIdSet.has(item.trail.id)}
         onImageReady={markImagePainted}
         trail={item.trail}
@@ -549,10 +548,10 @@ function RouteCard({
         onLoad={() => {
           requestAnimationFrame(() => onImageReady(image));
         }}
-        source={{ uri: image }}
+        source={image ? { uri: image } : undefined}
         style={styles.imageBox}
       >
-        {imageFailed && <Text style={{ color: colors.muted }}>Foto no disponible</Text>}
+        {(!image || imageFailed) && <Text style={{ color: colors.muted }}>Foto no disponible</Text>}
         <View style={styles.badge}>
           <Text style={styles.badgeText}>{trail.difficulty}</Text>
         </View>

@@ -1,21 +1,70 @@
 jest.mock("expo-network", () => ({ getNetworkStateAsync: jest.fn() }));
 jest.mock("../authSession", () => ({ getAuthSession: jest.fn() }));
+jest.mock("../experienceProfile", () => ({ getExperienceProfile: jest.fn() }));
 jest.mock("../api", () => ({ recommendTrail: jest.fn(), getTrailRecommendationDestinations: jest.fn() }));
 import * as Network from "expo-network";
 import { getAuthSession } from "../authSession";
+import { getExperienceProfile } from "../experienceProfile";
 import { recommendTrail, getTrailRecommendationDestinations } from "../api";
-import { findRecommendedTrail, getCoveredDestinations, TrailPreferences } from "../trailAssistant";
+import { ExperienceProfileRequiredError, findRecommendedTrail, getCoveredDestinations, TrailPreferences } from "../trailAssistant";
 const preferences: TrailPreferences = { destination: "El Chaltén", trailTypes: ["lagos"], duration: "1-2", difficulty: "facil" };
 const empty = { status: "no_results", message: "Sin resultados", recommendation: null };
+test("catalog-only records are accepted only when the response discloses missing verification and time scope", async () => {
+  const recommendation = { trailId: 1, name: "Sendero a Confluencia", location: "Mendoza", imageUrl: null, trailTypes: ["montaña"], difficulty: "moderada",
+    duration: "4 a 5 h", durationMinutes: 300, routeType: "unknown", distanceKm: 14, description: "Datos de la ficha del catálogo.",
+    explanation: "Sendero del destino elegido.", sources: [], checkedAt: null, catalogVerification: "catalog_only", durationScopeVerified: false,
+    dataWarnings: ["Fuente y alcance del tiempo pendientes de documentación."] };
+  (recommendTrail as jest.Mock).mockResolvedValue({ status: "ok", message: "Alternativa del destino", recommendation });
+  expect((await findRecommendedTrail(preferences)).recommendation).toMatchObject({ checkedAt: null, routeType: "unknown" });
+  for (const change of [{ dataWarnings: [] }, { dataWarnings: undefined }, { catalogVerification: "verified" }, { durationScopeVerified: true }]) {
+    (recommendTrail as jest.Mock).mockResolvedValue({ status: "ok", message: "Alternativa", recommendation: { ...recommendation, ...change } });
+    await expect(findRecommendedTrail(preferences)).rejects.toThrow("no es válida");
+  }
+});
 beforeEach(() => {
   jest.clearAllMocks();
   (Network.getNetworkStateAsync as jest.Mock).mockResolvedValue({ isConnected: true, isInternetReachable: true });
-  (getAuthSession as jest.Mock).mockResolvedValue({ token: "session" });
+  (getAuthSession as jest.Mock).mockResolvedValue({ token: "session", user: { id: 31 } });
+  (getExperienceProfile as jest.Mock).mockResolvedValue({ completed: true, skipped: false, level: "principiante" });
   (recommendTrail as jest.Mock).mockResolvedValue(empty);
 });
-test("sends exactly the survey and existing session to the backend", async () => {
+test("sends the survey with the authenticated account's saved profile and session", async () => {
   expect(await findRecommendedTrail(preferences)).toEqual(empty);
-  expect(recommendTrail).toHaveBeenCalledWith(preferences, "session");
+  expect(getExperienceProfile).toHaveBeenCalledWith(31);
+  expect(recommendTrail).toHaveBeenCalledWith({ ...preferences, experience: "principiante" }, "session");
+});
+
+test.each(["principiante", "intermedio", "avanzado"])("uses the saved %s level, overriding caller-provided experience", async (level) => {
+  (getExperienceProfile as jest.Mock).mockResolvedValue({ completed: true, skipped: false, level });
+  await findRecommendedTrail({ ...preferences, experience: "avanzado" } as TrailPreferences);
+  expect(recommendTrail).toHaveBeenCalledWith({ ...preferences, experience: level }, "session");
+});
+
+test("each search reloads the profile so edits and account changes take effect", async () => {
+  await findRecommendedTrail(preferences);
+  (getAuthSession as jest.Mock).mockResolvedValue({ token: "other", user: { id: 32 } });
+  (getExperienceProfile as jest.Mock).mockResolvedValue({ completed: true, skipped: false, level: "intermedio" });
+  await findRecommendedTrail(preferences);
+  expect(getExperienceProfile).toHaveBeenLastCalledWith(32);
+  expect(recommendTrail).toHaveBeenLastCalledWith({ ...preferences, experience: "intermedio" }, "other");
+});
+
+test.each([
+  { completed: false, skipped: false, level: null },
+  { completed: false, skipped: true, level: null },
+  { completed: true, skipped: false, level: null },
+  { completed: true, skipped: true, level: "avanzado" },
+  { completed: true, skipped: false, level: "invalid" },
+])("incomplete, skipped or invalid profiles require setup before calling the backend", async (profile) => {
+  (getExperienceProfile as jest.Mock).mockResolvedValue(profile);
+  await expect(findRecommendedTrail(preferences)).rejects.toBeInstanceOf(ExperienceProfileRequiredError);
+  expect(recommendTrail).not.toHaveBeenCalled();
+});
+
+test("failed profile reads never default to an invented level or call the backend", async () => {
+  (getExperienceProfile as jest.Mock).mockRejectedValue(new Error("storage"));
+  await expect(findRecommendedTrail(preferences)).rejects.toThrow("storage");
+  expect(recommendTrail).not.toHaveBeenCalled();
 });
 test.each([{ isConnected: false }, { isConnected: true, isInternetReachable: false }])("offline survey never queues or fabricates a recommendation", async (network) => {
   (Network.getNetworkStateAsync as jest.Mock).mockResolvedValue(network);
@@ -61,7 +110,10 @@ test("a fully validated trail can be displayed, while incomplete facts are rejec
     sources: [{ title: "Ficha", url: "https://www.argentina.gob.ar/parquesnacionales" }], checkedAt: "2026-10-11" };
   (recommendTrail as jest.Mock).mockResolvedValue({ status: "ok", message: "Encontramos", recommendation: trail });
   expect((await findRecommendedTrail(preferences)).recommendation).toEqual(trail);
-  for (const change of [{ distanceKm: null }, { trailTypes: null }, { imageUrl: "javascript:alert(1)" }, { sources: [] }, { routeType: "invented" }]) {
+  (recommendTrail as jest.Mock).mockResolvedValue({ status: "ok", message: "Alternativa", recommendation: { ...trail, preferenceAdjustments: ["Duración fuera del rango elegido."] } });
+  expect((await findRecommendedTrail(preferences)).recommendation?.preferenceAdjustments).toEqual(["Duración fuera del rango elegido."]);
+  for (const change of [{ distanceKm: null }, { trailTypes: null }, { imageUrl: "javascript:alert(1)" }, { sources: [] }, { routeType: "invented" },
+    { preferenceAdjustments: [] }, { preferenceAdjustments: [42] }, { preferenceAdjustments: ["x".repeat(301)] }, { preferenceAdjustments: Array(5).fill("Too many") }]) {
     (recommendTrail as jest.Mock).mockResolvedValue({ status: "ok", message: "Encontramos", recommendation: { ...trail, ...change } });
     await expect(findRecommendedTrail(preferences)).rejects.toThrow("no es válida");
   }

@@ -926,6 +926,7 @@ export default function Screen04RouteMap() {
           <PrimaryButton
             label="Iniciar recorrido"
             icon="navigate-outline"
+            disabled={trail?.provenance?.mapping?.navigation_ready === false}
             onPress={() =>
               router.push({
                 pathname: "/trail-start",

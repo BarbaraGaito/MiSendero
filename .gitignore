@@ -148,6 +148,10 @@ reports/
 # Public dataset downloads can be hundreds of MB or several GB.
 training/data/raw/
 .venv-ai/
+.venv-trail-ranking/
+training/data/trail-ranking/prepared/
+training/data/trail-ranking/private/
+backend/ml/artifacts/
 
 # Public-source research downloads; canonical training evidence is in raw/.
 /tmp/ai-source-research/
@@ -165,3 +169,12 @@ training/data/raw/
 
 # Scratch files for functional validation; publishable evidence lives in validation/.
 /tmp/functional-audit/
+# Local catalog research, image QA and database backups. Canonical evidence is versioned in backend/src/data/.
+/tmp/expansion-review/
+/tmp/pdfs/
+/tmp/*expansion*.cjs
+/tmp/review_kml.py
+/tmp/expansion_contact_sheet.py
+/tmp/review-expansion.cjs
+/tmp/promote-route-builder.cjs
+/tmp/audit-recommendation-exclusions.cjs

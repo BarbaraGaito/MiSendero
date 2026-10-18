@@ -17,6 +17,8 @@ test("consent and profiles do not carry over to another account, and revocation 
   await login(202);
   expect((await getPrivacyPreferences()).sensitiveDataConsent).toBe(false);
   expect((await getExperienceProfile()).completed).toBe(false);
+  expect((await getExperienceProfile(201)).completed).toBe(true);
+  expect((await getExperienceProfile(202)).completed).toBe(false);
   expect((await getAppPreferences()).distanceUnit).toBe("km");
   await savePrivacyPreferences({ sensitiveDataConsent: false, analyticsTrainingConsent: false });
   await login(201);

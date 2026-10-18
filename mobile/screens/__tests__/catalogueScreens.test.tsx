@@ -84,6 +84,34 @@ test("trail details toggle a favorite and download a verified local copy", async
   const download = tree.root.findAll((node: any) => typeof node.props.onPress === "function" && /Descargar mapa/i.test(node.props.label || ""))[0];
   expect(download).toBeDefined(); await act(async () => download.props.onPress()); expect(maps.saveOfflineTrailMap).toHaveBeenCalled(); expect(text(tree)).toContain("Mapa descargado");
 });
+test("a documented circuit without GPS shows its facts and source without offering a map download", async () => {
+  const entry = require("../../../backend/src/data/catalogExpansion20261017").trails.find((item: any) => item.provenance.catalog_key === "moreno-belgrano-chico");
+  (trails.getTrailById as jest.Mock).mockResolvedValue({ ...trail, ...entry, id: 7, elevation: null, route_coordinates: null });
+  const tree = await mount(Detail);
+  const content = text(tree);
+  expect(content).toContain("Circuito completo");
+  expect(content).toContain("Traza GPS pendiente");
+  expect(content).toContain("Fuentes del recorrido");
+  expect(content).not.toContain("Solo ida; coordinar el regreso");
+  expect(tree.root.findAll((node: any) => ["Ver ruta", "Descargar mapa"].includes(node.props.label))).toHaveLength(0);
+});
+test("the enriched circuit displays its real image, source and map actions without the pending-GPS notice", async () => {
+  const entry = require("../../../backend/src/data/catalogExpansion20261017").trails.find((item: any) => item.provenance.catalog_key === "moreno-belgrano-chico");
+  (trails.getTrailById as jest.Mock).mockResolvedValue({ ...trail, ...entry, id: 7, elevation: null, route_coordinates: JSON.stringify(entry.route_coordinates) });
+  const tree = await mount(Detail);
+  expect(text(tree)).not.toContain("Traza GPS pendiente");
+  expect(text(tree)).toContain("Cartografía:");
+  expect(tree.root.findAll((node: any) => node.props.label === "Ver ruta").length).toBeGreaterThan(0);
+  expect(tree.root.findAll((node: any) => node.props.source?.uri === entry.image_url).length).toBeGreaterThan(0);
+});
+test("a reference map keeps the normal trail card without an incomplete-route banner", async () => {
+  const entry = require("../../../backend/src/data/catalogExpansion20261017").trails.find((item: any) => item.provenance.catalog_key === "quijadas-farallones");
+  (trails.getTrailById as jest.Mock).mockResolvedValue({ ...trail, ...entry, id: 7, elevation: null, route_coordinates: JSON.stringify(entry.route_coordinates) });
+  const tree = await mount(Detail);
+  expect(text(tree)).not.toContain("Mapa de referencia parcial");
+  expect(text(tree)).not.toContain("Traza GPS pendiente");
+  expect(tree.root.findAll((node: any) => node.props.label === "Ver ruta").length).toBeGreaterThan(0);
+});
 test("a missing trail and a failed download never claim offline availability", async () => {
   (useLocalSearchParams as jest.Mock).mockReturnValue({ id: "invalid" }); expect(text(await mount(Detail))).toContain("No se encontro");
   (useLocalSearchParams as jest.Mock).mockReturnValue({ id: "7" }); (maps.saveOfflineTrailMap as jest.Mock).mockRejectedValue(new Error("provider-not-configured"));

@@ -232,6 +232,10 @@ export default function Screen05TrailStart() {
 
   const beginRoute = async () => {
     if (starting) return;
+    if (trail?.provenance?.mapping?.navigation_ready === false) {
+      Alert.alert("Traza completa pendiente", "El mapa disponible es una referencia parcial. Consultá al administrador del sendero antes de planificar la salida.");
+      return;
+    }
     setStarting(true);
     try {
       const existing = await getActiveRouteSession();

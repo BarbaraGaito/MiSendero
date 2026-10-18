@@ -1,0 +1,12 @@
+{
+  "purpose": "functional coverage only; generated survey cases are not training data or real accuracy evidence",
+  "databaseWrites": 0,
+  "catalogRecords": 51,
+  "eligibleRecords": 51,
+  "catalogOnlyRecords": 10,
+  "destinations": 38,
+  "surveyCombinationsPerDestination": 504,
+  "cases": 19152,
+  "empty": 0,
+  "outsideDestination": 0
+}

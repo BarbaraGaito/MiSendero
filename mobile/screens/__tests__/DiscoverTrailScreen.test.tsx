@@ -1,11 +1,14 @@
 import "../../../testing/mobileSetup";
-jest.mock("../../../services/trailAssistant", () => ({ findRecommendedTrail: jest.fn() }));
+jest.mock("../../../services/trailAssistant", () => ({
+  findRecommendedTrail: jest.fn(), getRecommendationExperience: jest.fn(),
+  ExperienceProfileRequiredError: class extends Error {},
+}));
 jest.mock("expo-network", () => ({ useNetworkState: jest.fn() }));
 import { useNetworkState } from "expo-network";
 import { TextInput, Image } from "react-native";
 import { router } from "expo-router";
 import { mount, press, text, act } from "../../../testing/mobileHarness";
-import { findRecommendedTrail } from "../../../services/trailAssistant";
+import { ExperienceProfileRequiredError, findRecommendedTrail, getRecommendationExperience } from "../../../services/trailAssistant";
 import Discover from "../DiscoverTrailScreen";
 jest.setTimeout(15000);
 const recommendation = {
@@ -16,6 +19,7 @@ const recommendation = {
 };
 const success = { status: "ok", message: "¡Encontramos un sendero para vos!", recommendation };
 beforeEach(() => {
+  (getRecommendationExperience as jest.Mock).mockResolvedValue("principiante");
   (findRecommendedTrail as jest.Mock).mockResolvedValue(success);
   (useNetworkState as jest.Mock).mockReturnValue({ isConnected: true, isInternetReachable: true });
 });
@@ -72,6 +76,70 @@ test("a broken representative image is hidden and point-to-point duration includ
   const photo = tree.root.findByType(Image); await act(async () => photo.props.onError());
   expect(tree.root.findAllByType(Image)).toHaveLength(0);
 });
+
+test("nearby alternatives disclose changed preferences on the single result card", async () => {
+  (findRecommendedTrail as jest.Mock).mockResolvedValue({ ...success, message: "Encontramos una alternativa cercana a tus preferencias",
+    recommendation: { ...recommendation, preferenceAdjustments: ["Dura aproximadamente 3 h, fuera del rango elegido.", "Su dificultad es menor que la seleccionada."] } });
+  const tree = await mount(Discover); await fill(tree); await press(tree, "Encontrar mi sendero");
+  expect(text(tree)).toContain("Te sugerimos una alternativa en este destino");
+  expect(text(tree)).toContain("No encontramos un sendero que coincida con todo lo que elegiste");
+  expect(tree.root.findAll((node: any) => node.props.accessibilityRole === "alert").length).toBeGreaterThan(0);
+  expect(text(tree)).toContain("fuera del rango elegido");
+  expect(text(tree)).toContain("menor que la seleccionada");
+  expect(tree.root.findAllByType(TextInput)).toHaveLength(0);
+  await press(tree, "Buscar otro sendero");
+  expect(tree.root.findByType(TextInput).props.value).toBe("El Chaltén");
+});
+test("a catalog-only result never invents a verification date or return-trip duration", async () => {
+  (findRecommendedTrail as jest.Mock).mockResolvedValue({ ...success, recommendation: { ...recommendation,
+    checkedAt: null, sources: [], routeType: "unknown", catalogVerification: "catalog_only", durationScopeVerified: false,
+    dataWarnings: ["No se documentó si el tiempo incluye el regreso."],
+    preferenceAdjustments: ["La duración total debe confirmarse."] } });
+  const tree = await mount(Discover); await fill(tree); await press(tree, "Encontrar mi sendero");
+  expect(text(tree)).toContain("verificación externa pendiente");
+  expect(text(tree)).toContain("confirmar si incluye el regreso");
+  expect(text(tree)).not.toContain("Datos del catálogo revisados el");
+  expect(text(tree)).not.toContain("(ida y vuelta)");
+});
+
+test("the destination is free text and the survey ends at difficulty without repeating the profile", async () => {
+  const tree = await mount(Discover);
+  await act(async () => tree.root.findByType(TextInput).props.onChangeText("Atlantis"));
+  expect(tree.root.findAll((n: any) => n.props.label === "Continuar")[0].props.disabled).toBe(false);
+  expect(tree.root.findAll((n: any) => n.props.accessibilityRole === "radio")).toHaveLength(0);
+  await fill(tree);
+  expect(text(tree)).toContain("Paso 4 de 4");
+  expect(text(tree)).not.toContain("Principiante");
+  expect(text(tree)).not.toContain("¿Qué experiencia tenés");
+  await press(tree, "Encontrar mi sendero");
+  expect(findRecommendedTrail).toHaveBeenCalledWith(expect.not.objectContaining({ experience: expect.anything() }));
+});
+
+test("a missing profile redirects to profile setup before showing any survey inputs", async () => {
+  (getRecommendationExperience as jest.Mock).mockRejectedValue(new ExperienceProfileRequiredError());
+  const tree = await mount(Discover);
+  expect(router.replace).toHaveBeenCalledWith({ pathname: "/onboarding-experiencia", params: { returnTo: "recommendation" } });
+  expect(tree.root.findAllByType(TextInput)).toHaveLength(0);
+  expect(findRecommendedTrail).not.toHaveBeenCalled();
+});
+
+test("profile storage errors can be retried without inventing an experience level", async () => {
+  (getRecommendationExperience as jest.Mock).mockRejectedValueOnce(new Error("storage"));
+  const tree = await mount(Discover);
+  expect(text(tree)).toContain("No pudimos leer tu perfil");
+  expect(router.replace).not.toHaveBeenCalled();
+  expect(tree.root.findAllByType(TextInput)).toHaveLength(0);
+  await press(tree, "Reintentar");
+  expect(tree.root.findAllByType(TextInput)).toHaveLength(1);
+});
+
+test("clearing the profile after entering the survey redirects to setup on submission", async () => {
+  (findRecommendedTrail as jest.Mock).mockRejectedValue(new ExperienceProfileRequiredError());
+  const tree = await mount(Discover); await fill(tree); await press(tree, "Encontrar mi sendero");
+  expect(router.replace).toHaveBeenCalledWith({ pathname: "/onboarding-experiencia", params: { returnTo: "recommendation" } });
+  expect(text(tree)).not.toContain("¡Encontramos un sendero para vos!");
+});
+
 test("the Internet notice appears only offline and disappears on reconnection without losing answers", async () => {
   const tree = await mount(Discover);
   expect(text(tree)).not.toContain("Necesitás Internet para generar");

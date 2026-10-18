@@ -1,128 +1,216 @@
-# Descubrí tu sendero
+# Descubrí tu sendero: recomendador propio
 
-Implementación de encuesta de cuatro etapas con **una única recomendación**. No hay chat, historial, campos de consultas ni endpoint de conversación. Accesos: Inicio → Descubrí tu sendero, o Explorar → Descubrí tu sendero. Ruta Expo Router: `/descubri-tu-sendero`.
+Encuesta de cuatro etapas y experiencia guardada en el perfil → una recomendación de PostgreSQL → fin. No hay chat, consultas libres posteriores, historial ni proveedor generativo. Se reutilizan navegación Expo Router (`/descubri-tu-sendero`), colores/componentes verdes, sesión y servicio HTTP existentes.
 
-## Arquitectura y datos
+## Estado real
 
-React Native → `services/trailAssistant.ts` → API autenticada `POST /api/ai/recommend-trail` → catálogo PostgreSQL → filtros verificables → OpenAI Responses API con JSON Schema estricto → validación Zod → tarjeta única.
+La auditoría local encontró 52 senderos, 35 elegibles y **cero pares etiquetados de preferencias/elecciones**. Hay un baseline operativo y un pipeline supervisado de Random Forest completamente implementado, pero aún no un recomendador personalizado entrenado con evidencia real suficiente. El entrenamiento se niega a fabricar etiquetas y deja métricas nulas. [Datos disponibles y fuentes externas](trail-ranking-2026-10-17/README.md).
 
-El catálogo proviene de `trails`, cargado por el seed existente desde `backend/src/data/additionalTrailDefinitions.js`, `additionalTrails.js` y las trazas de OpenStreetMap documentadas en `additionalTrailRoutes.json`. Se exige `provenance`, fecha de revisión, fuentes HTTPS de los organismos/operadores admitidos, distancia positiva y una base explícita para la duración total. Se excluyen los registros antiguos sin procedencia, las estimaciones de planificación sin referencia oficial de duración y los registros incompletos. La clasificación de paisajes se deriva de los nombres y las descripciones positivas del catálogo; no se consideran las variantes que la descripción excluye.
+Flujo: React Native → Express autenticado → `trails` de PostgreSQL → verificación/filtros → baseline o inferencia privada Python → ID de candidato → explicación con plantillas → JSON Zod → tarjeta única. No se usan ni se necesitan `OPENAI_API_KEY`, `OPENAI_MODEL` o `AI_TIMEOUT_MS`. Las variables antiguas pueden retirarse del entorno del servidor cuando ya no se requiera volver a una versión anterior; no se editaron archivos de secretos automáticamente.
 
-Se filtra primero por el lugar y sus alias locales documentados (por ejemplo, Bariloche → Refugio Frey; Ushuaia → los recorridos registrados de Tierra del Fuego), después por al menos una experiencia seleccionada, duración total y dificultad. Las preferencias explícitas son obligatorias: no se relajan silenciosamente. La IA elige un ID entre los candidatos con mayor coincidencia de experiencias. Una duración de ida y vuelta no se vuelve a duplicar. En recorridos que terminan en otro punto se aclara que la duración cubre solo la ida y que hay que coordinar transporte.
+El modelo es ranking supervisado *pointwise*, mediante `RandomForestRegressor`, entrenado fuera del servidor. La [documentación del módulo](../backend/ml/README.md) describe elección, etiquetas, características, métricas, particiones, mínimos, artefactos y límites de las conclusiones académicas.
 
-No se hacen búsquedas geográficas abiertas ni se completan coordenadas. Los destinos desconocidos devuelven `no_results`; destinos demasiado amplios como “Patagonia” devuelven `clarification` y permiten editar la misma pregunta. La cobertura depende del catálogo, no de los conocimientos generales del modelo. Por ejemplo, **Bariloche + lagos + 2–4 h + fácil actualmente puede devolver sin resultados**; no se sustituye por Frey, cuya duración y dificultad no coinciden.
+## Encuesta y restricciones
 
-La IA genera la explicación mediante un plan estructurado de motivos (`destination`, `landscape`, `duration`, `difficulty`). El servidor convierte ese plan en oraciones naturales con los valores del sendero y los filtros del usuario. Esta restricción evita publicar texto libre que contenga afirmaciones inventadas: nombres, tiempos, dificultad, distancia, imagen y enlace salen exclusivamente del registro real. La selección y el orden de los motivos sí los procesa el modelo. Se usa `store: false` y no se envían tokens de sesión, correos ni otros datos de la cuenta al proveedor.
+1. Escribir el destino como texto libre, sin opciones ni sugerencias. El backend busca coincidencias exclusivamente dentro del catálogo elegible.
+2. Elegir uno o varios paisajes; «Cualquiera» es exclusivo.
+3. Seleccionar duración total de caminata; ida y vuelta cuando corresponda.
+4. Elegir dificultad.
 
-La integración sigue la [documentación oficial de Structured Outputs](https://developers.openai.com/api/docs/guides/structured-outputs). Se llama a OpenAI desde el servidor mediante `fetch`, sin SDK adicional. El modelo se configura explícitamente; el ejemplo usa `gpt-4o-mini`, y puede reemplazarse por otro compatible con Responses y JSON Schema estricto que esté habilitado para la cuenta.
+La experiencia no se pregunta de nuevo: se lee del perfil local de la cuenta autenticada en cada búsqueda y se envía como `experience`. Si el perfil falta, fue omitido o no tiene un nivel válido, se abre primero la encuesta existente de `/onboarding-experiencia` con `returnTo=recommendation`. Al guardar vuelve automáticamente a `/descubri-tu-sendero`; también se permite cancelar y volver al inicio. En este flujo no se puede omitir el perfil para obtener una recomendación. Los perfiles siguen almacenados en SQLite por cuenta; este cambio no agrega sincronización con RDS ni modifica el esquema.
 
-## Configuración local
+Las respuestas se conservan al retroceder, corregir errores o buscar otro sendero. La carga muestra «Buscando el sendero ideal para vos...». Sin resultados se permite modificar las respuestas. Las travesías advierten que el regreso no está incluido; los circuitos y rangos oficiales se conservan. El aviso de Internet se muestra solo cuando el dispositivo detecta falta de conexión. No se agregan solicitudes a la cola offline ni se modifican mapas descargados.
 
-En `backend/.env` para el servidor local, o en `.env` de la raíz para Docker Compose:
+### Búsqueda ampliada
 
-```dotenv
-OPENAI_API_KEY=tu_clave_privada_del_servidor
-OPENAI_MODEL=gpt-4o-mini
-AI_TIMEOUT_MS=12000
-```
+La ubicación es obligatoria: **nunca se recomienda en otra ciudad por falta de coincidencias locales**. Se reconocen tildes, mayúsculas, espacios, prefijos de provincia/parque y aliases documentados, incluyendo provincia sin coma. Ante un posible error de una letra o una transposición, se sugieren nombres de al menos cinco caracteres del catálogo y se pide modificar el destino antes de recomendar. No se corrige automáticamente: un nombre parecido puede ser otra ciudad real que todavía no esté registrada (por ejemplo, Salto y Salta). Los calificadores geográficos se conservan: «Bariloche, Santa Cruz» no se convierte en «Bariloche, Río Negro». «Ciudad de Córdoba» exige documentación de la localidad; mencionar solo una provincia no verifica una ciudad.
 
-No colocar la clave en variables `EXPO_PUBLIC_*`, código móvil, repositorio, imágenes Docker ni logs. Conservar `DATABASE_URL`, `JWT_SECRET`, `CORS_ORIGIN` y demás configuración existente. El timeout se limita al intervalo 1–20 segundos; el cliente espera hasta 25 segundos. Si no se configura la IA, el endpoint devuelve 503 al intentar generar una coincidencia; nunca simula una respuesta de IA.
+La política v4 mantiene la ubicación como restricción obligatoria. Si hay candidatos utilizables en ese destino, siempre devuelve uno: duración, paisaje y dificultad ordenan las opciones, sin vaciar la búsqueda. Primero se prioriza el nivel de experiencia del perfil; si ninguno lo respeta, se conserva el nivel menos exigente disponible y se avisa que supera el perfil. Dentro de ese grupo se priorizan coincidencias exactas y luego paisaje, duración y dificultad. El modelo solo ordena el grupo seleccionado; nunca puede elegir otra ciudad. No hay un límite artificial de minutos ni un techo de dificultad elegida que elimine todos los candidatos locales.
 
-Desde la raíz, para desarrollo local (abrir Docker Desktop y esperar a que su motor esté iniciado antes de levantar PostgreSQL):
+Una alternativa devuelve «No encontramos una coincidencia exacta; te sugerimos otro sendero en el destino que elegiste» y `recommendation.preferenceAdjustments` con las diferencias reales: paisaje, tiempo, dificultad mayor o menor y experiencia, cuando corresponda. La tarjeta muestra un aviso visible y accesible, «Te sugerimos una alternativa en este destino». No se modifican los atributos de PostgreSQL para ajustarlos a la encuesta. `no_results` se reserva para destinos sin fichas utilizables; los destinos ambiguos o con posibles errores siguen pidiendo aclaración.
 
-```powershell
-npm ci --legacy-peer-deps --ignore-scripts
-npm --prefix backend ci --ignore-scripts
-docker compose up -d db
-npm --prefix backend run db:migrate
-npm --prefix backend run db:seed
-npm --prefix backend run dev
-```
+La política de candidatos cambió a la versión 4 del contrato de características. El pipeline usa exactamente la misma selección que el endpoint; antes de entrenar hay que regenerar los ejemplos y volver a evaluar. Los artefactos anteriores son rechazados por versión/hash y se mantiene el baseline. [Resultados locales, entrenamiento y actualización AWS](trail-ranking-2026-10-17/POLICY-V4.md).
 
-`dev` compila el servicio TypeScript antes de iniciar el servidor existente. Al editar los archivos `backend/src/ai/*.ts`, volver a ejecutar `npm --prefix backend run build` y reiniciar el backend. Para ejecutar directamente `npm --prefix backend start`, compilar primero con ese mismo comando. No se agregaron migraciones de base de datos.
-
-En otra terminal, con `EXPO_PUBLIC_API_URL` apuntando al backend (incluye `/api`; usar la IP LAN de la computadora cuando se prueba en teléfono):
-
-```powershell
-npx expo start --go --lan
-```
-
-Si `.env` apunta a AWS y se quiere probar el backend local, crear `.env.development.local` en la raíz con `EXPO_PUBLIC_API_URL=http://IP_LAN_DE_LA_PC:3001/api`. Ese archivo está ignorado por Git y solo se aplica al entorno de desarrollo. Reiniciar Expo con `npx expo start --go --lan --clear` después de cambiar la URL. Para probar contra AWS, quitar esa configuración local y actualizar primero el backend desplegado. Una versión anterior del servidor devuelve 404 para el endpoint de IA; eso no indica que no existan senderos.
-
-Usar un único backend en el puerto 3001: si Docker ya lo ocupa, reconstruirlo con `docker compose up -d --build backend`; no iniciar simultáneamente `npm --prefix backend run dev` en ese puerto. Las claves de `.env` raíz se aplican al contenedor, mientras que el inicio manual usa `backend/.env`.
-
-Iniciar sesión, abrir Inicio o Explorar y completar la encuesta. Ejemplo con coincidencia actual: **El Chaltén → Lagos o lagunas → Entre 1 y 2 horas → Fácil**, que puede elegir Mirador de las Águilas. Otro ejemplo: **Misiones → Cascadas → Entre 2 y 4 horas → Moderada**, para Macuco. Comprobar que “Ver sendero” abre el registro real y “Buscar otro sendero” permite revisar las respuestas guardadas durante esa visita. No hay persistencia de conversaciones ni de encuestas.
-
-El aviso de conexión aparece únicamente cuando el dispositivo detecta que no tiene Internet y desaparece al reconectarse. Con modo avión, el envío informa que hace falta Internet, conserva las respuestas en pantalla y permite reintentar; no se agrega a la cola offline. Los mapas descargados y demás funciones offline conservan sus flujos existentes.
+Se exigen nombre, ubicación, distancia positiva, dificultad reconocida y duración interpretable. Las fichas con procedencia conservan sus fuentes admitidas; una fuente suministrada inválida sigue rechazándose. Las fichas antiguas sin procedencia se admiten como `catalogVerification: catalog_only`, con `checkedAt: null`, fuentes vacías y avisos explícitos. No se inventa su verificación, tipo de itinerario (`unknown`) ni el alcance del tiempo (`durationScopeVerified: false`). La duración total desconocida no se presenta como coincidencia exacta y sus características de tiempo se mantienen nulas para el modelo. Las estimaciones de planificación documentadas también se admiten y se identifican. Los paisajes proceden de metadatos o de descripciones positivas; no se generan rutas, coordenadas ni estados de apertura.
 
 ## Contrato HTTP
 
-Requiere `Authorization: Bearer <token de sesión>`. El cuerpo es estricto, máximo 2 KB, con destino de 2–120 caracteres:
+`GET /api/ai/destinations`, con Bearer token, devuelve `{ "destinations": [ ... ] }`. La cobertura depende de los registros verificados de la base consultada, no de una cantidad fija o una lista de ciudades inventadas.
+
+`POST /api/ai/recommend-trail`, con Bearer token, cuerpo estricto <=2 KB:
 
 ```json
 {
-  "destination": "El Chaltén",
-  "trailTypes": ["lagos"],
-  "duration": "1-2",
-  "difficulty": "facil"
+  "destination": "Misiones",
+  "trailTypes": ["cascadas"],
+  "duration": "2-4",
+  "difficulty": "moderada",
+  "experience": "intermedio"
 }
 ```
 
-Valores admitidos:
-
 | Campo | Valores |
-| --- | --- |
+|---|---|
+| destination | Lugar del catálogo, 2–120 caracteres |
 | trailTypes | naturaleza, montaña, cascadas, lagos, bosques, miradores, cualquiera |
 | duration | menos-1, 1-2, 2-4, 4-6, mas-6, cualquiera |
 | difficulty | facil, moderada, dificil, cualquiera |
+| experience | principiante, intermedio, avanzado |
 
-`cualquiera` en tipos es exclusivo. Las franjas de tiempo usan minutos totales: menos de 60; 60–120; 120–240; 240–360; más de 360. Las fronteras compartidas son inclusivas.
+Para compatibilidad, los clientes antiguos que omiten experiencia usan la prioridad de principiante. El frontend actualizado siempre la envía desde el perfil completado, sin permitir reemplazarla desde la encuesta. Las franjas comparten fronteras inclusivas: 60–120, 120–240 y 240–360 minutos; menos de 60 y más de 360. Un rango publicado debe caber completo en la franja solicitada para afirmar coincidencia exacta; fuera de ella se ofrece como alternativa con aviso.
 
-Respuesta `200`: `{ "status": "ok", "message": "¡Encontramos un sendero para vos!", "recommendation": { ... } }`. Contiene un objeto, nunca un listado. Estados `no_results`, `clarification` y `out_of_scope` incluyen un mensaje y `recommendation: null`. Errores: 400 validación/JSON incorrecto, 401 sesión ausente o inválida, 413 cuerpo extenso, 429 límite de búsquedas, 503 proveedor ocupado/no configurado/timeout/respuesta inválida. La respuesta del proveedor no se reenvía al cliente.
+Respuesta 200: `{ "status": "ok", "message": "...", "recommendation": { ... }, "ranking": { "method": "baseline", "modelVersion": null } }`. Con un artefacto apto y disponible, `method` es `supervised` y contiene la versión. Esto identifica el método, no un porcentaje de confianza. `recommendation` es un solo objeto con el ID real, atributos, fuentes y 2–4 motivos basados en las coincidencias. No hay lista ni texto generado por un LLM.
 
-Se aplican 10 solicitudes por cuenta y 30 por IP cada 15 minutos, y hasta cuatro búsquedas concurrentes por proceso. Estos límites usan memoria del proceso; al escalar a varias instancias, configurar además un límite compartido en la infraestructura o un store centralizado. No se habilita confianza indiscriminada en `X-Forwarded-For`: detrás de un proxy las IP pueden compartir el presupuesto, mientras que cada cuenta mantiene su límite individual. No hay configuración nueva de proxy/puertos/CORS.
+`no_results`, `clarification` y `out_of_scope` devuelven `recommendation: null`. Una solicitud fuera de alcance recibe el mensaje restringido de MiSendero. Otros errores: 400 validación, 401 sesión, 413 tamaño, 429 límite, 503 saturación concurrente, 500 fallo de catálogo/servidor. Fallar el modelo no es un 500: se usa baseline.
 
-El destino admite nombres de lugares, no instrucciones: longitud, caracteres, número de palabras y patrones de cambio de rol se validan antes del proveedor. Además, únicamente se envían candidatos que ya coinciden con el destino; el modelo no tiene herramientas ni recibe un historial. La salida debe tener un ID admisible y un plan de motivos enumerados, sin texto libre ni campos adicionales.
+Se mantienen 10 búsquedas por cuenta y 30 por IP cada 15 minutos, máximo cuatro concurrentes por proceso, plazo de lectura del catálogo de 5 segundos y respuestas `no-store`. Los límites están en memoria y requieren store compartido al escalar instancias. No se cambió `trust proxy`: verificar la configuración existente de Nginx; no habilitar confianza indiscriminada en encabezados de IP del cliente.
 
-## Pruebas
+## Configuración y pruebas locales
+
+Conservar `DATABASE_URL`/PG*, `JWT_SECRET`, `PORT`, CORS y el resto del entorno existente. No cambiar `EXPO_PUBLIC_API_URL` si la app debe seguir apuntando a AWS. En `backend/.env` solo son nuevas estas variables opcionales de servidor:
+
+```dotenv
+# Vacío: baseline, sin requerir Python ni artefacto.
+TRAIL_ML_MODEL_DIR=
+TRAIL_ML_PYTHON=python3
+TRAIL_ML_TIMEOUT_MS=1500
+```
+
+Con modelo futuro: usar rutas absolutas al intérprete del venv y al directorio versionado del artefacto. Plazo de inferencia limitado a 100–5000 ms. Nunca poner estas rutas ni credenciales en variables `EXPO_PUBLIC_*`.
+
+Desde la raíz:
 
 ```powershell
-npm run typecheck
+npm --prefix backend ci --ignore-scripts
 npm --prefix backend run build
-npm test -- --runInBand
+npm run typecheck
 npm --prefix backend test -- --runInBand
+npm test -- --runInBand
+py -m unittest discover -s backend/ml/tests -v
 ```
 
-Las pruebas agregadas cubren selección desde registros reales del seed, cambios de respuestas, restricciones temáticas/inyección, destino sin datos, ambigüedad, incompatibilidad de filtros, ida y vuelta/solo ida, validación de entrada y salida, claves ausentes, timeout, errores del proveedor, sesión, rate limiting, progreso, edición, carga, navegación real e imagen fallida. El proveedor de IA está simulado en las pruebas: no se consumen créditos ni se requieren claves reales. La integración real con OpenAI y la instalación móvil requieren configurar la clave y ejecutar la prueba manual indicada.
+El baseline no necesita instalar Python. Para entrenar o verificar el worker, crear el entorno indicado en [el módulo ML](../backend/ml/README.md). La auditoría `npm --prefix backend run ranking:prepare` es de lectura y no carga datos ni ejecuta migraciones.
 
-## AWS y Docker
+También se puede ejecutar `npm --prefix backend run ranking:smoke`: usa HTTP local y PostgreSQL real local, firma un token efímero de una cuenta local existente y comprueba que la recomendación corresponda al mismo registro. No imprime el token ni escribe en la base. Rechaza destinos de base remotos y requiere que el catálogo local tenga la consulta de prueba documentada.
 
-Se mantiene el despliegue existente. `docker-compose.yml` y `docker-compose.images.yml` ya pasan `.env` mediante `env_file`; las tres variables nuevas llegan al contenedor sin modificar puertos, base de datos o infraestructura. El Dockerfile agrega una etapa de compilación TypeScript y copia `dist/ai` a la imagen final, que mantiene dependencias de producción y usuario `node`.
+Si se inicia el backend local: `npm --prefix backend run dev`. Su comportamiento de desarrollo conserva las inicializaciones existentes; **no usarlo con RDS**. En producción `NODE_ENV=production` omite migraciones y seeds al arrancar. Para `npm start`, compilar previamente. No se añadió ninguna migración.
 
-En el servidor que construye desde código:
+Expo contra AWS, después de actualizar el backend allí:
 
 ```powershell
-docker compose up -d --build backend
+npx expo start --go --lan --clear
 ```
 
-Si AWS usa la imagen publicada por el flujo existente de GitHub, publicar primero una nueva versión con estos cambios y en el host:
+Iniciar sesión → Inicio/Explorar → Descubrí tu sendero. Probar Misiones/Cascadas/2–4 h/Moderada/Intermedio. Con la ampliación de catálogo cargada en esa base también probar Corrientes/Lagos/2–4 h/Moderada/Intermedio o Neuquén/Montaña/>6 h/Difícil/Avanzado. Una base sin esos registros puede devolver sin resultados correctamente. Principiante con dificultad Difícil debe dar sin coincidencias, nunca sustituir por una ruta exigente. Probar destino cubierto, cambio de respuestas, resultado único, acceso al detalle, modo avión y reconexión.
 
-```powershell
-docker compose -f docker-compose.images.yml pull backend
-docker compose -f docker-compose.images.yml up -d backend
+## AWS EC2: actualización con systemd y Amazon RDS
+
+Procedimiento **para ejecutar manualmente tras revisar las rutas del servidor**. Esta implementación no se conectó a EC2/RDS, no desplegó ni modificó producción. No ejecutar migraciones o seeds durante estos pasos. La ampliación local de senderos es independiente; no se copia una base local encima de RDS.
+
+Inspeccionar primero:
+
+```bash
+sudo systemctl cat misendero.service
+sudo systemctl show misendero.service -p User -p WorkingDirectory -p ExecStart -p EnvironmentFiles
+command -v node
+python3 --version
 ```
 
-Configurar la clave únicamente en el entorno del servidor/servicio (o mecanismo de secretos ya utilizado), acceso saliente HTTPS a `api.openai.com`, y `OPENAI_MODEL` habilitado en esa cuenta. El arranque existente ejecuta migraciones y seed. No cambiar ni reemplazar la base de datos. Comprobar `/api/health` y después realizar una encuesta autenticada desde Expo contra la URL HTTPS de AWS. Para una instalación sin Docker: `npm ci --ignore-scripts`, `npm run build`, reiniciar con el comando de servicio existente que ejecuta `npm start`.
+Conservar el EnvironmentFile que ya contiene la conexión RDS y los secretos; no imprimirlo ni reemplazarlo por ejemplos. Anotar release/revisión anterior, usuario del servicio, ruta real de Node y archivo de configuración vigente. Si se va a instalar Python para inferencia, usar 3.11 o 3.12 con venv; los paquetes concretos del sistema dependen de la distribución. No es necesario instalarlo para activar inicialmente el baseline.
 
-Esta implementación no despliega recursos ni modifica secretos de AWS automáticamente.
+Preparar un checkout separado del release, sin cambiar los archivos que está ejecutando el servicio. Ejemplo, reemplazando rutas/revisión por las reales y usando una ruta de candidato nueva:
 
-## Archivos
+```bash
+git -C /ruta/repositorio fetch origin
+git -C /ruta/repositorio worktree add --detach /ruta/releases/recomendador-v1 REVISION_REVISADA
+cd /ruta/releases/recomendador-v1/backend
+npm ci --ignore-scripts
+npm run build
+npm test -- --runInBand
+```
 
-- Encuesta y tarjeta: `app/descubri-tu-sendero.tsx`, `mobile/screens/DiscoverTrailScreen.tsx`, `mobile/components/TrailRecommendationCard.tsx`.
-- Navegación: `app/_layout.tsx`, `mobile/screens/HomeScreen.tsx`, `mobile/screens/ExploreRoutesScreen.tsx`.
-- Cliente y contrato compartido: `services/api.ts`, `services/trailAssistant.ts`, `backend/src/ai/contracts.ts` (importación de tipos solamente en Expo).
-- Servidor: `backend/src/routes/ai.routes.js`, `backend/src/server.js`, `backend/src/ai/{schemas,catalog,model,assistant}.ts`.
-- Compilación y pruebas: `backend/tsconfig.ai.json`, `backend/package.json`, `backend/package-lock.json`, `backend/Dockerfile`, `backend/jest.config.js`, `backend/tests/typescriptTransformer.cjs`.
-- Casos de prueba: `backend/tests/aiRecommendations.test.js`, `services/__tests__/trailAssistant.test.ts`, `mobile/screens/__tests__/DiscoverTrailScreen.test.tsx`.
-- Configuración y guía: `.env.example`, `backend/.env.example`, `docs/trail-recommendation.md`.
-- Referencias desde el proyecto: `README.md`, `backend/README.md`.
+Las pruebas usan pg-mem con `NODE_ENV=test`; no realizan cambios en RDS. No iniciar el candidato con `npm run dev`. Publicar previamente estos cambios en la revisión revisada; este trabajo no hizo commits ni pushes automáticos.
+
+Para el futuro artefacto apto, instalar dependencias en un venv del release con el mismo Python menor y versiones de entrenamiento:
+
+```bash
+python3.12 -m venv /ruta/releases/recomendador-v1/.venv-trail-ranking
+/ruta/releases/recomendador-v1/.venv-trail-ranking/bin/python -m pip install -r /ruta/releases/recomendador-v1/backend/ml/requirements.lock.txt
+/ruta/releases/recomendador-v1/.venv-trail-ranking/bin/python /ruta/releases/recomendador-v1/backend/ml/inspect_artifact.py /ruta/modelos/VERSION_REVISADA
+```
+
+Usar `python3.11` si esa fue la versión de entrenamiento. Copiar únicamente artefactos propios revisados a un directorio versionado legible por el usuario del servicio. El inspector debe dar `ready` antes de configurar `TRAIL_ML_MODEL_DIR`. Hoy, sin etiquetas, dejarlo vacío. No desplegar las fixtures sintéticas ni un modelo `deployable: false`.
+
+Para conmutar el servicio, crear un drop-in específico. Si ya existe ese nombre, respaldarlo y revisarlo antes de editar. Conservar el usuario, dependencias, límites y EnvironmentFile existentes:
+
+```bash
+sudo install -d /etc/systemd/system/misendero.service.d
+sudoedit /etc/systemd/system/misendero.service.d/50-trail-ranker.conf
+```
+
+Contenido orientativo con **rutas reales absolutas** y la conexión/secretos existentes conservados:
+
+```ini
+[Service]
+WorkingDirectory=/ruta/releases/recomendador-v1/backend
+# Añadir esta línea solo si el servicio anterior cargaba .env exclusivamente con dotenv:
+# EnvironmentFile=/ruta/anterior/backend/.env
+ExecStart=
+ExecStart=/usr/bin/env NODE_ENV=production /ruta/absoluta/node /ruta/releases/recomendador-v1/backend/src/server.js
+Environment=TRAIL_ML_MODEL_DIR=
+Environment=TRAIL_ML_TIMEOUT_MS=1500
+# Solo cuando exista un artefacto apto:
+# Environment=TRAIL_ML_PYTHON=/ruta/releases/recomendador-v1/.venv-trail-ranking/bin/python
+# Environment=TRAIL_ML_MODEL_DIR=/ruta/modelos/VERSION_REVISADA
+```
+
+Si el comando actual contiene flags o un wrapper necesario, preservarlos al adaptar `ExecStart`. Las variables de un EnvironmentFile pueden prevalecer sobre `Environment`: evitar definiciones duplicadas de `TRAIL_ML_*` en la configuración activa. `NODE_ENV=production` se fija al invocar Node para impedir inicializaciones de desarrollo, incluso si el archivo antiguo tenía otro valor. No tocar `DATABASE_URL` ni sustituirlo por localhost.
+
+```bash
+sudo systemctl daemon-reload
+sudo systemctl restart misendero.service
+sudo systemctl status misendero.service --no-pager
+sudo journalctl -u misendero.service -n 50 --no-pager
+curl --fail http://127.0.0.1:3001/api/health
+```
+
+Adaptar el puerto al ya configurado. Nginx mantiene el proxy existente a Express: no hay puerto Python nuevo ni cambio de dominio. Verificar también `/api/health` por la URL HTTPS pública y una encuesta autenticada. Si `destinations` o `recommend-trail` dan 404, la revisión nueva no está atendiendo esa URL; no es ausencia de senderos.
+
+Prueba HTTP manual con un token de una cuenta de prueba y la URL real:
+
+```bash
+API_BASE='https://DOMINIO_EXISTENTE/api'
+TOKEN='TOKEN_DE_SESION_DE_PRUEBA'
+curl --fail "$API_BASE/ai/destinations" -H "Authorization: Bearer $TOKEN"
+curl --fail "$API_BASE/ai/recommend-trail" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' --data '{"destination":"Misiones","trailTypes":["cascadas"],"duration":"2-4","difficulty":"moderada","experience":"intermedio"}'
+```
+
+Un `no_results` puede ser correcto si RDS no tiene candidatos compatibles/documentados. No sincronizarla mediante el seed general para resolverlo. El backend siempre lee su catálogo real.
+
+## Reversión
+
+Para desactivar solo ML y conservar la nueva encuesta, dejar `TRAIL_ML_MODEL_DIR` vacío en la configuración efectiva y reiniciar. La API queda con baseline, sin cambiar la base.
+
+Para volver al release anterior, retirar únicamente el drop-in nuevo (o restaurar su respaldo si existía) y reiniciar. Si el archivo fue creado en este despliegue:
+
+```bash
+sudo mv /etc/systemd/system/misendero.service.d/50-trail-ranker.conf /etc/systemd/system/misendero.service.d/50-trail-ranker.conf.disabled
+sudo systemctl daemon-reload
+sudo systemctl restart misendero.service
+sudo systemctl status misendero.service --no-pager
+```
+
+Conservar el checkout y el entorno anteriores hasta validar el nuevo release. No hay rollback SQL, borrado de tablas ni cambio de credenciales porque esta implementación no cambia el esquema o los datos de producción. Al volver a un backend anterior verificar la compatibilidad de `/ai/recommend-trail` con los cuatro campos de la encuesta y `experience` del perfil; revertir también la versión móvil si corresponde.
+
+## Docker opcional
+
+El Dockerfile conserva una imagen por defecto con Node y baseline. Copia el código del worker pero no exige Python. Para una imagen con inferencia CPU instalar explícitamente las dependencias: `docker build --build-arg INSTALL_TRAIL_ML=true -t misendero-backend:ranking backend`. Montar un artefacto propio revisado como solo lectura y configurar `TRAIL_ML_MODEL_DIR`; el Python del venv está en `/opt/trail-ml/bin/python`. No se construyó ni publicó esa imagen en esta sesión.
+
+## Archivos principales
+
+- `backend/src/ai/{contracts,schemas,catalog,features,assistant,model}.ts` y `featureSpec.json`: contrato, catálogo, filtros, vectores, baseline, explicación y control del worker.
+- `backend/src/routes/ai.routes.js`, `backend/src/server.js`: endpoints, límites, lectura con plazo y arranque sin seed/migraciones en producción.
+- `backend/ml/{ranking,train,serve,inspect_artifact}.py`, lock de dependencias y pruebas: ML offline, evaluación, artefactos e inferencia.
+- `backend/scripts/prepareTrailRanking.js`: dataset basado en catálogo y etiquetas revisadas; sin escrituras en PostgreSQL.
+- `mobile/screens/{DiscoverTrailScreen,ExperienceOnboardingScreen}.tsx`, `services/{api,trailAssistant,experienceProfile}.ts`: cuatro preguntas, destino como texto libre, experiencia desde el perfil y configuración previa con retorno automático si falta.
+- Tests de recomendación, worker, servicios y encuesta; ejemplos de entorno y soporte opcional Docker.

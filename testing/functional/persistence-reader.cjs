@@ -9,6 +9,7 @@ const root = path.resolve(__dirname, '../..');
 const database = new DatabaseSync(process.argv[2]);
 let owner = 901;
 const adapter = {
+  closeAsync: async () => {},
   execAsync: async sql => database.exec(sql),
   runAsync: async (sql, args = []) => {
     const result = database.prepare(sql).run(...args);
@@ -24,6 +25,9 @@ const adapter = {
 };
 const originalLoad = Module._load;
 Module._load = function (name, parent, main) {
+  if (name === 'react-native') return { Platform: { OS: 'ios' } };
+  if (name === 'expo-crypto') return { randomUUID: require('node:crypto').randomUUID };
+  if (name.endsWith('/protectedStorage')) return { openProtectedDatabase: async () => adapter };
   if (name === 'expo-sqlite') return { openDatabaseAsync: async () => adapter };
   if (name === 'expo-sms') return {};
   if (parent?.filename.startsWith(root) && /(?:^|\/)authSession$/.test(name)) {

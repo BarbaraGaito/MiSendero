@@ -7,6 +7,7 @@ const { DatabaseSync } = require("node:sqlite");
 const databasesByName = new Map();
 
 const wrap = (nativeDb) => ({
+  closeAsync: async () => {},
   withTransactionAsync: async (work) => {
     nativeDb.exec("BEGIN");
     try { await work(); nativeDb.exec("COMMIT"); }

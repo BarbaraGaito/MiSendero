@@ -34,7 +34,7 @@ router.post("/", requireAuth, validateBody(createActivitySchema), async (req, re
       ended_longitude,
     } = req.body;
 
-    const { rows } = await query(
+    let { rows } = await query(
       `
         INSERT INTO activities (
           user_id,
@@ -52,17 +52,7 @@ router.post("/", requireAuth, validateBody(createActivitySchema), async (req, re
         )
         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
         ON CONFLICT (user_id, client_session_id)
-        DO UPDATE SET
-          trail_id = EXCLUDED.trail_id,
-          started_at = EXCLUDED.started_at,
-          ended_at = EXCLUDED.ended_at,
-          distance_km = EXCLUDED.distance_km,
-          duration_minutes = EXCLUDED.duration_minutes,
-          completion_status = EXCLUDED.completion_status,
-          route_progress_meters = EXCLUDED.route_progress_meters,
-          route_total_meters = EXCLUDED.route_total_meters,
-          ended_latitude = EXCLUDED.ended_latitude,
-          ended_longitude = EXCLUDED.ended_longitude
+        DO NOTHING
         RETURNING *
       `,
       [
@@ -81,6 +71,20 @@ router.post("/", requireAuth, validateBody(createActivitySchema), async (req, re
       ]
     );
 
+    if (client_session_id) {
+      rows = (await query("SELECT * FROM activities WHERE user_id = $1 AND client_session_id = $2", [req.userId, client_session_id])).rows;
+      const row = rows[0];
+      const date = (v) => v == null ? null : new Date(v).toISOString();
+      const number = (v) => v == null ? null : Number(v);
+      const canonical = (v) => JSON.stringify([
+        number(v.trail_id), date(v.started_at), date(v.ended_at), number(v.distance_km),
+        number(v.duration_minutes), v.completion_status, number(v.route_progress_meters),
+        number(v.route_total_meters), number(v.ended_latitude), number(v.ended_longitude),
+      ]);
+      if (!row || canonical(row) !== canonical(req.body)) {
+        return res.status(409).json({ code: "IDEMPOTENCY_CONFLICT", error: "La identidad de actividad ya pertenece a otros datos; no se sobrescribió." });
+      }
+    }
     res.status(201).json(rows[0]);
   } catch (error) {
     next(error);

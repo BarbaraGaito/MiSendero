@@ -8,7 +8,12 @@
     "scheme": "misendero",
     "plugins": [
       "expo-router",
-      "expo-sqlite",
+      [
+        "expo-sqlite",
+        {
+          "useSQLCipher": true
+        }
+      ],
       "expo-asset",
       "expo-location",
       "react-native-health-connect",

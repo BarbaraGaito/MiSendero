@@ -1,4 +1,8 @@
-import { db } from "./database";
+import { db, initDB } from "./database";
+import { withWriteTransaction } from "./connection";
+import { persistActivityOutbox } from "./activityOutbox";
+import { randomUUID } from "expo-crypto";
+import { isAccountDeletionPending } from "../services/accountLifecycle";
 import { SessionRow } from "../types";
 import { getAuthSession } from "../services/authSession";
 
@@ -58,35 +62,89 @@ export const getOrCreateCompletedSession = async ({
   endedLongitude?: number | null;
 }): Promise<CompletedSessionResult> => {
   const userId = await getCurrentUserId();
-  const existing = await db.getFirstAsync<SessionRow>(
-    `SELECT * FROM sessions
-     WHERE user_id IS ? AND trail_id = ? AND started_at = ?
-     LIMIT 1`,
-    [userId, trailId, startedAt]
-  );
+  await initDB();
+  if (!userId || await isAccountDeletionPending(userId)) throw new Error("Iniciá sesión con una cuenta activa para guardar el recorrido.");
+  return withWriteTransaction(async (tx) => {
+    const existing = await tx.getFirstAsync<SessionRow>(
+      `SELECT * FROM sessions
+       WHERE user_id IS ? AND trail_id = ? AND started_at = ?
+       LIMIT 1`,
+      [userId, trailId, startedAt]
+    );
 
-  if (existing) {
-    const alreadyFinalized =
-      existing.ended_at !== null && existing.completion_status !== "paused";
+    if (existing) {
+      const alreadyFinalized =
+        existing.ended_at !== null && existing.completion_status !== "paused";
 
-    if (alreadyFinalized) {
-      return { session: existing, didFinalizeNow: false };
+      if (alreadyFinalized) {
+        await persistActivityOutbox(tx, existing);
+        return { session: existing, didFinalizeNow: false };
+      }
+
+      await tx.runAsync(
+        `UPDATE sessions
+         SET client_session_id = COALESCE(client_session_id, ?), ended_at = ?,
+             duration = ?,
+             distance = ?,
+             avg_fatigue = COALESCE(avg_fatigue, ?),
+             trail_id = ?,
+             completion_status = ?,
+             route_progress_meters = ?,
+             route_total_meters = ?,
+             ended_latitude = ?,
+             ended_longitude = ?
+         WHERE id = ? AND user_id IS ?`,
+        [
+          randomUUID(),
+          endedAt,
+          duration,
+          distance,
+          null,
+          trailId,
+          completionStatus,
+          routeProgressMeters,
+          routeTotalMeters,
+          endedLatitude,
+          endedLongitude,
+          existing.id,
+          userId,
+        ]
+      );
+
+      const updated = await tx.getFirstAsync<SessionRow>(
+        `SELECT * FROM sessions WHERE id = ? AND user_id IS ?`,
+        [existing.id, userId]
+      );
+
+      if (!updated) {
+        throw new Error("completed-session-not-found");
+      }
+
+      await persistActivityOutbox(tx, updated);
+      return { session: updated, didFinalizeNow: true };
     }
 
-    await db.runAsync(
-      `UPDATE sessions
-       SET ended_at = ?,
-           duration = ?,
-           distance = ?,
-           avg_fatigue = COALESCE(avg_fatigue, ?),
-           trail_id = ?,
-           completion_status = ?,
-           route_progress_meters = ?,
-           route_total_meters = ?,
-           ended_latitude = ?,
-           ended_longitude = ?
-       WHERE id = ? AND user_id IS ?`,
+    const result = await tx.runAsync(
+      `INSERT INTO sessions (
+         user_id,
+         client_session_id,
+         started_at,
+         ended_at,
+         duration,
+         distance,
+         avg_fatigue,
+         trail_id,
+         completion_status,
+         route_progress_meters,
+         route_total_meters,
+         ended_latitude,
+         ended_longitude
+       )
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
+        userId,
+        randomUUID(),
+        startedAt,
         endedAt,
         duration,
         distance,
@@ -97,65 +155,21 @@ export const getOrCreateCompletedSession = async ({
         routeTotalMeters,
         endedLatitude,
         endedLongitude,
-        existing.id,
-        userId,
       ]
     );
 
-    const updated = await db.getFirstAsync<SessionRow>(
+    const row = await tx.getFirstAsync<SessionRow>(
       `SELECT * FROM sessions WHERE id = ? AND user_id IS ?`,
-      [existing.id, userId]
+      [result.lastInsertRowId, userId]
     );
 
-    if (!updated) {
+    if (!row) {
       throw new Error("completed-session-not-found");
     }
 
-    return { session: updated, didFinalizeNow: true };
-  }
-
-  const result = await db.runAsync(
-    `INSERT INTO sessions (
-       user_id,
-       started_at,
-       ended_at,
-       duration,
-       distance,
-       avg_fatigue,
-       trail_id,
-       completion_status,
-       route_progress_meters,
-       route_total_meters,
-       ended_latitude,
-       ended_longitude
-     )
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-    [
-      userId,
-      startedAt,
-      endedAt,
-      duration,
-      distance,
-      null,
-      trailId,
-      completionStatus,
-      routeProgressMeters,
-      routeTotalMeters,
-      endedLatitude,
-      endedLongitude,
-    ]
-  );
-
-  const row = await db.getFirstAsync<SessionRow>(
-    `SELECT * FROM sessions WHERE id = ? AND user_id IS ?`,
-    [result.lastInsertRowId, userId]
-  );
-
-  if (!row) {
-    throw new Error("completed-session-not-found");
-  }
-
-  return { session: row, didFinalizeNow: true };
+    await persistActivityOutbox(tx, row);
+    return { session: row, didFinalizeNow: true };
+  });
 };
 
 export const getOrCreatePausedSession = async ({
@@ -170,62 +184,67 @@ export const getOrCreatePausedSession = async ({
   distance: number;
 }): Promise<SessionRow> => {
   const userId = await getCurrentUserId();
-  const existing = await db.getFirstAsync<SessionRow>(
-    `SELECT * FROM sessions
-     WHERE user_id IS ? AND trail_id = ? AND started_at = ?
-     LIMIT 1`,
-    [userId, trailId, startedAt]
-  );
-
-  if (existing?.ended_at != null) return existing;
-
-  if (existing) {
-    await db.runAsync(
-      `UPDATE sessions
-       SET ended_at = NULL,
-           duration = ?,
-           distance = ?,
-           completion_status = ?,
-           trail_id = ?
-       WHERE id = ? AND user_id IS ? AND ended_at IS NULL`,
-      [duration, distance, "paused", trailId, existing.id, userId]
+  await initDB();
+  if (!userId || await isAccountDeletionPending(userId)) throw new Error("Iniciá sesión con una cuenta activa para guardar el recorrido.");
+  return withWriteTransaction(async (tx) => {
+    const existing = await tx.getFirstAsync<SessionRow>(
+      `SELECT * FROM sessions
+       WHERE user_id IS ? AND trail_id = ? AND started_at = ?
+       LIMIT 1`,
+      [userId, trailId, startedAt]
     );
 
-    return {
-      ...existing,
-      ended_at: null,
-      duration,
-      distance,
-      completion_status: "paused",
-      trail_id: trailId,
-    };
-  }
+    if (existing?.ended_at != null) return existing;
 
-  const result = await db.runAsync(
-    `INSERT INTO sessions (
-       user_id,
-       started_at,
-       ended_at,
-       duration,
-       distance,
-       avg_fatigue,
-       trail_id,
-       completion_status
-     )
-     VALUES (?, ?, NULL, ?, ?, ?, ?, ?)`,
-    [userId, startedAt, duration, distance, null, trailId, "paused"]
-  );
+    if (existing) {
+      await tx.runAsync(
+        `UPDATE sessions
+         SET ended_at = NULL,
+             duration = ?,
+             distance = ?,
+             completion_status = ?,
+             trail_id = ?
+         WHERE id = ? AND user_id IS ? AND ended_at IS NULL`,
+        [duration, distance, "paused", trailId, existing.id, userId]
+      );
 
-  const row = await db.getFirstAsync<SessionRow>(
-    `SELECT * FROM sessions WHERE id = ? AND user_id IS ?`,
-    [result.lastInsertRowId, userId]
-  );
+      return {
+        ...existing,
+        ended_at: null,
+        duration,
+        distance,
+        completion_status: "paused",
+        trail_id: trailId,
+      };
+    }
 
-  if (!row) {
-    throw new Error("paused-session-not-found");
-  }
+    const result = await tx.runAsync(
+      `INSERT INTO sessions (
+         user_id,
+         client_session_id,
+         started_at,
+         ended_at,
+         duration,
+         distance,
+         avg_fatigue,
+         trail_id,
+         completion_status
+       )
+       VALUES (?, ?, ?, NULL, ?, ?, ?, ?, ?)`,
+      [userId, randomUUID(), startedAt, duration, distance, null, trailId, "paused"]
+    );
 
-  return row;
+    const row = await tx.getFirstAsync<SessionRow>(
+      `SELECT * FROM sessions WHERE id = ? AND user_id IS ?`,
+      [result.lastInsertRowId, userId]
+    );
+
+    if (!row) {
+      throw new Error("paused-session-not-found");
+    }
+
+    return row;
+  });
 };
 
 export const attachTrailToSession = async (

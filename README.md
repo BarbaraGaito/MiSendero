@@ -158,9 +158,11 @@ y alcance de investigación. Ver `ai/datasets/README.md` para instalación y des
 - **BLE nativo**: la integracion con wearables usa Apple HealthKit / Android Health
   Connect (APIs del sistema operativo) mas un simulador de desarrollo, no un
   emparejamiento BLE directo a dispositivo.
-- **Infraestructura AWS real**: el codigo y `docker-compose.yml` reproducen la arquitectura
-  de Amazon RDS (PostgreSQL) para desarrollo local; no hay una instancia de RDS desplegada
-  como parte de este repositorio.
+- **Infraestructura AWS**: el prototipo utiliza un despliegue EC2/RDS, informado por la
+  responsable y documentado en las guías de operación. La IP registrada resuelve a EC2
+  en us-east-2. Compose es el entorno local, no evidencia de ausencia de AWS. El repositorio
+  no contiene un inventario verificable de clase de instancia, VPC, KMS, TLS y backups;
+  esos controles requieren revisar la configuración efectiva. Ver [correcciones](docs/architecture-remediation-2026-10-18.md).
 - **Emergencia**: el modo SOS persiste y sincroniza la alerta (ubicacion, hora, contacto),
   pero no dispara un envio real de SMS/telefonia — el propio documento excluye la
   automatizacion de respuesta de emergencia por organismos externos del alcance del

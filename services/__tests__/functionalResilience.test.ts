@@ -6,6 +6,7 @@ jest.mock("expo-sqlite", () => {
   const filename = path.join(directory, "fixture.sqlite");
   let connection = new DatabaseSync(filename);
   const adapter = {
+    closeAsync: async () => {},
     execAsync: async (sql: string) => connection.exec(sql),
     runAsync: async (sql: string, args: unknown[] = []) => {
       const info = connection.prepare(sql).run(...args);
@@ -39,6 +40,7 @@ import { saveRouteTrackingPoint, getRouteTrackingSummary } from "../routeTrackin
 import { saveEmergencyContact } from "../emergencyContact";
 import { sendDeparturePlanSms } from "../departureMessages";
 import { findRecommendedTrail } from "../trailAssistant";
+import { saveExperienceProfile } from "../experienceProfile";
 import * as Network from "expo-network";
 import * as api from "../api";
 import * as tiles from "../mapTileCache";
@@ -113,6 +115,7 @@ test("MF10 ENOSPC cannot advertise a downloaded map as usable", async () => {
 });
 
 test("MF14 failed AI request leaves verified offline navigation and GPS persistence usable", async () => {
+  await saveExperienceProfile({});
   await saveOfflineTrailMap(trail);
   (Network.getNetworkStateAsync as jest.Mock).mockResolvedValue({ isConnected: true, isInternetReachable: true });
   (api.recommendTrail as jest.Mock).mockRejectedValueOnce(new Error("AI provider unavailable"));

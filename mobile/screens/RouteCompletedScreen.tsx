@@ -1,4 +1,4 @@
-import { finishRouteSession, activeRouteSeconds, getSimulatedRouteTrackingSummary } from "../../services/routeSession";
+import { getRouteSession, finishRouteSession, activeRouteSeconds, getSimulatedRouteTrackingSummary } from "../../services/routeSession";
 import { router, useLocalSearchParams } from "expo-router";
 import type { Href } from "expo-router";
 import { useEffect, useState } from "react";
@@ -29,7 +29,6 @@ import {
   getOrCreateCompletedSession,
   saveSessionReview,
 } from "../../database/sessionsRepository";
-import { enqueueUnique } from "../../services/syncQueue";
 import { SessionRow } from "../../types";
 import { getRouteTrackingSummary } from "../../services/routeTracking";
 import { formatKilometers } from "../../services/geoUtils";
@@ -93,48 +92,6 @@ const getExistingCompletionSession = async (trailId: number) => {
   return completedSession;
 };
 
-const enqueueCompletedActivity = async ({
-  completedSession,
-  trailId,
-  startedAtMs,
-  endedAt,
-  duration,
-  distance,
-  routeProgressMeters,
-  routeTotalMeters,
-}: {
-  completedSession: SessionRow;
-  trailId: number;
-  startedAtMs: number;
-  endedAt: number;
-  duration: number;
-  distance: number;
-  routeProgressMeters: number;
-  routeTotalMeters: number | null;
-}) => {
-  const clientSessionId = `local-session-${completedSession.id}`;
-  const syncEndedAt = completedSession.ended_at ?? endedAt;
-  const syncDuration = completedSession.duration ?? duration;
-  const syncDistance = completedSession.distance ?? distance;
-  const syncRouteProgress =
-    completedSession.route_progress_meters ?? routeProgressMeters;
-  const syncRouteTotal = completedSession.route_total_meters ?? routeTotalMeters;
-
-  await enqueueUnique("activity", {
-    client_session_id: clientSessionId,
-    trail_id: trailId,
-    started_at: new Date(startedAtMs).toISOString(),
-    ended_at: new Date(syncEndedAt).toISOString(),
-    distance_km: Number((syncDistance / 1000).toFixed(2)),
-    duration_minutes: Math.round(syncDuration / 60),
-    completion_status: completedSession.completion_status,
-    route_progress_meters: Math.round(syncRouteProgress),
-    route_total_meters: syncRouteTotal ? Math.round(syncRouteTotal) : null,
-    ended_latitude: completedSession.ended_latitude,
-    ended_longitude: completedSession.ended_longitude,
-  }, `activity:${clientSessionId}`);
-};
-
 const createCompletionSession = async (params: RouteCompletionParams) => {
   const trailId = Number(params.id);
   const startedAtMs = Number(params.startedAt);
@@ -147,7 +104,8 @@ const createCompletionSession = async (params: RouteCompletionParams) => {
     };
   }
 
-  const runtime = await finishRouteSession(trailId, startedAtMs);
+  const activeRuntime = await getRouteSession(trailId, startedAtMs);
+  const runtime = activeRuntime?.simulated ? await finishRouteSession(trailId, startedAtMs) : activeRuntime;
   const isSimulated = Boolean(runtime?.simulated);
   const endedAt = runtime?.ended_at ?? Date.now();
   const trackingSummary = isSimulated
@@ -211,16 +169,7 @@ const createCompletionSession = async (params: RouteCompletionParams) => {
     endedLongitude,
   });
 
-  await enqueueCompletedActivity({
-    completedSession: completedResult.session,
-    trailId,
-    startedAtMs,
-    endedAt,
-    duration,
-    distance,
-    routeProgressMeters,
-    routeTotalMeters: routeTotal,
-  });
+  await finishRouteSession(trailId, startedAtMs);
 
   return {
     session: completedResult.session,

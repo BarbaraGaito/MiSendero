@@ -4,19 +4,26 @@ export const normalize = (value: string) => value.normalize("NFD").replace(/[\u0
 export interface CatalogRow {
   id: number; name: string; location: string; difficulty: string; duration: string;
   distance_km: number | string; description: string; image_url: string | null;
+  verified_ascent_m?: number | null;
   provenance: { checked_at: string; route_type: string; duration_basis: string;
-    sources: { title: string; url: string }[] } | null;
+    sources: { title: string; url: string }[];
+    recommendation?: { trail_types?: TrailType[]; terrain?: string[]; source_url?: string };
+  } | null;
 }
 export type Candidate = Omit<TrailRecommendation, "explanation">;
 const trustedHosts = new Set(["www.argentina.gob.ar", "www.barilocheturismo.gob.ar", "refugiofreybariloche.com",
   "larutanatural.gob.ar", "turismocapilla.gob.ar", "www.ambiente.gba.gob.ar", "www.turismoelbolson.gob.ar",
   "saltaciudad.travel", "www.turismo.jujuy.gob.ar", "www.tucumanturismo.gob.ar", "turismo.neuquen.gob.ar",
-  "villapehuenia.gob.ar", "villademerlo.tur.ar", "www.esquel.tur.ar", "misiones.tur.ar"]);
+  "villapehuenia.gob.ar", "villademerlo.tur.ar", "www.esquel.tur.ar", "misiones.tur.ar",
+  "barilochetrekking.com", "patagonia.gob.ar"]);
 const safeUrl = (value: unknown, source = false): value is string => {
   try { const url = new URL(String(value)); return url.protocol === "https:" && !url.username && !url.password &&
     (!source || trustedHosts.has(url.hostname)); } catch { return false; }
 };
 export function durationMinutes(value: string): number | null {
+  // Keep the source interval in duration; use the conservative upper endpoint for ranking.
+  const range = value.trim().match(/^(\d+)\s*[-–]\s*(\d+)\s*h$/i);
+  if (range) return Number(range[1]) > 0 && Number(range[2]) >= Number(range[1]) ? Number(range[2]) * 60 : null;
   const match = value.trim().match(/^(\d+)\s*h(?:\s+(\d+)\s*min)?$/i);
   const minutes = value.trim().match(/^(\d+)\s*min$/i);
   return match ? Number(match[1]) * 60 + Number(match[2] || 0) : minutes ? Number(minutes[1]) : null;
@@ -34,8 +41,10 @@ export function durationFits(minutes: number, preference: Duration): boolean {
 export function verifiedCatalog(rows: CatalogRow[]): Candidate[] {
   return rows.flatMap((row) => {
     const p = row.provenance;
-    if (!p || !/^\d{4}-\d{2}-\d{2}$/.test(p.checked_at) || !Array.isArray(p.sources)) return [];
-    const sources = p.sources.filter((s) => safeUrl(s.url, true));
+    if (!Number.isSafeInteger(row.id) || row.id <= 0 || typeof row.name !== "string" || !row.name.trim() || row.name.length > 200 ||
+      typeof row.location !== "string" || !row.location.trim() || row.location.length > 200 || typeof row.description !== "string" || !row.description || row.description.length > 2000) return [];
+    if (!p || !/^\d{4}-\d{2}-\d{2}$/.test(p.checked_at) || !Number.isFinite(Date.parse(p.checked_at)) || !Array.isArray(p.sources) || typeof row.difficulty !== "string") return [];
+    const sources = p.sources.filter((s) => s && typeof s.title === "string" && safeUrl(s.url, true));
     const minutes = typeof row.duration === "string" ? durationMinutes(row.duration) : null;
     const difficulty: Difficulty | undefined = ({ baja: "facil", media: "moderada", alta: "dificil" } as const)[normalize(row.difficulty) as "baja" | "media" | "alta"];
     // An out-and-back itinerary must explicitly document a total duration.
@@ -52,10 +61,18 @@ export function verifiedCatalog(rows: CatalogRow[]): Candidate[] {
     if (/laguna|lago\b/.test(text)) trailTypes.push("lagos");
     if (/bosque|selva|yunga|caldenes/.test(text)) trailTypes.push("bosques");
     if (/mirador|balcon|panoramic/.test(text)) trailTypes.push("miradores");
+    const metadata = p.recommendation;
+    const documented = metadata && sources.some((s) => s.url === metadata.source_url);
+    if (documented && Array.isArray(metadata.trail_types) && metadata.trail_types.length && metadata.trail_types.every((t) => ["naturaleza", "montaña", "cascadas", "lagos", "bosques", "miradores"].includes(t))) {
+      trailTypes.splice(0, trailTypes.length, ...new Set(metadata.trail_types));
+    }
+    const terrain = documented && Array.isArray(metadata.terrain) && metadata.terrain.every((t) => ["rocky", "steep", "boardwalk", "mud", "sand"].includes(t)) ? metadata.terrain : null;
     return [{ trailId: row.id, name: row.name, location: row.location,
       imageUrl: safeUrl(row.image_url) ? row.image_url : null, trailTypes, difficulty,
       duration: row.duration, durationMinutes: minutes, routeType: p.route_type as Candidate["routeType"],
-      distanceKm: Number(row.distance_km), description: row.description, sources, checkedAt: p.checked_at }];
+      distanceKm: Number(row.distance_km), description: row.description, sources, checkedAt: p.checked_at,
+      durationIsEstimated: p.duration_basis === "round_trip_from_official_one_way",
+      ascentM: typeof row.verified_ascent_m === "number" && Number.isFinite(row.verified_ascent_m) && row.verified_ascent_m >= 0 ? row.verified_ascent_m : null, terrain }];
   });
 }
 
@@ -82,6 +99,27 @@ export function compatibleCandidates(catalog: Candidate[], preferences: TrailPre
   return catalog.filter((c) => destinationMatches(c, normalize(preferences.destination)) &&
     (!desired.length || desired.some((type) => c.trailTypes.includes(type))) &&
     durationFits(c.durationMinutes, preferences.duration) &&
+    // A published 3-4h circuit must not match a 4-6h request just because its upper bound is 4h.
+    durationFits(Number(c.duration.match(/^(\d+)\s*[-–]/)?.[1] || c.durationMinutes / 60) * 60, preferences.duration) &&
+    experienceFits(c, preferences) &&
     (preferences.difficulty === "cualquiera" || c.difficulty === preferences.difficulty))
     .sort((a, b) => desired.filter((t) => b.trailTypes.includes(t)).length - desired.filter((t) => a.trailTypes.includes(t)).length || a.trailId - b.trailId);
+}
+
+export function experienceFits(candidate: Candidate, preferences: TrailPreferences): boolean {
+  const level = preferences.experience || "principiante";
+  return level === "avanzado" || (level === "intermedio" ? candidate.difficulty !== "dificil" : candidate.difficulty === "facil");
+}
+
+export function catalogDestinations(catalog: Candidate[]): string[] {
+  const values = new Set<string>();
+  for (const c of catalog) {
+    values.add(c.location);
+    c.location.split(",").map((part) => part.trim()).filter((part) => part.length >= 2).forEach((part) => values.add(part));
+  }
+  for (const key of Object.keys(aliases)) if (catalog.some((c) => destinationMatches(c, key))) {
+    const labels: Record<string, string> = { bariloche: "Bariloche", "el chalten": "El Chaltén", ushuaia: "Ushuaia", cordoba: "Córdoba", mendoza: "Mendoza", "san martin de los andes": "San Martín de los Andes" };
+    values.add(labels[key]);
+  }
+  return [...values].filter((v) => v.length <= 120).sort((a, b) => a.localeCompare(b, "es"));
 }

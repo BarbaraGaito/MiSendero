@@ -124,7 +124,7 @@ export interface TrailElevation {
 
 export interface TrailProvenance {
   checked_at: string;
-  route_type: "out_and_back" | "point_to_point";
+  route_type: "out_and_back" | "point_to_point" | "loop";
   access: string;
   precautions: string;
   duration_basis: string;

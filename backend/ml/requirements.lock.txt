@@ -1,0 +1,6 @@
+# CPU only, Python 3.11/3.12. Train and serve with the SAME pinned environment.
+numpy==2.2.5
+scipy==1.15.2
+scikit-learn==1.7.0
+joblib==1.5.1
+threadpoolctl==3.6.0

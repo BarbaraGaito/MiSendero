@@ -148,6 +148,10 @@ reports/
 # Public dataset downloads can be hundreds of MB or several GB.
 training/data/raw/
 .venv-ai/
+.venv-trail-ranking/
+training/data/trail-ranking/prepared/
+training/data/trail-ranking/private/
+backend/ml/artifacts/
 
 # Public-source research downloads; canonical training evidence is in raw/.
 /tmp/ai-source-research/

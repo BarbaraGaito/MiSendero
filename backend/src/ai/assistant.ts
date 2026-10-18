@@ -1,7 +1,8 @@
 import type { RecommendationResponse, TrailPreferences } from "./contracts";
 import type { CatalogRow, Candidate } from "./catalog";
 import { compatibleCandidates, normalize, verifiedCatalog } from "./catalog";
-import { selectTrail } from "./model";
+import { localRanker, Ranker } from "./model";
+import { baselineScore, featuresFor } from "./features";
 import { responseSchema } from "./schemas";
 
 export const SCOPE_MESSAGE = "🥾 Soy el asistente de senderos de MiSendero. Solo puedo ayudarte a encontrar y elegir rutas de trekking. ¿Querés que busquemos un sendero para vos?";
@@ -18,12 +19,12 @@ function explain(candidate: Candidate, preferences: TrailPreferences, reasons: s
     destination: `Está en ${candidate.location}, dentro del destino que elegiste.`,
     landscape: wanted.length ? `Combina ${wanted.join(" y ")}, en línea con la experiencia que buscás.`
       : `Te permite descubrir un entorno de ${candidate.trailTypes.join(" y ")}.`,
-    duration: `Su duración aproximada de ${candidate.duration} ${candidate.routeType === "out_and_back" ? "incluye ida y vuelta" : candidate.routeType === "loop" ? "cubre el circuito completo" : "corresponde al trayecto de ida; necesitás coordinar el regreso"}${preferences.duration !== "cualquiera" ? ", dentro del tiempo que seleccionaste" : ""}.`,
-    difficulty: `Tiene dificultad ${labels[candidate.difficulty]}${preferences.difficulty !== "cualquiera" ? ", como pediste" : ", para que puedas valorar el esfuerzo antes de salir"}.`,
+    duration: `Su duración aproximada de ${candidate.duration} ${candidate.routeType === "out_and_back" ? "incluye ida y vuelta" : candidate.routeType === "loop" ? "cubre el circuito completo" : "corresponde al trayecto de ida; necesitás coordinar el regreso"}${preferences.duration !== "cualquiera" ? ", dentro del tiempo que seleccionaste" : ""}.${candidate.durationIsEstimated ? " El total se calculó a partir de una referencia publicada de ida." : ""}`,
+    difficulty: `Su dificultad ${labels[candidate.difficulty]} respeta el límite aplicado para tu experiencia ${preferences.experience || "principiante"}${preferences.difficulty !== "cualquiera" ? " y coincide con la dificultad que elegiste" : ""}.`,
   };
   return reasons.map((reason) => sentences[reason]).join(" ");
 }
-export async function recommendTrail(preferences: TrailPreferences, rows: CatalogRow[]): Promise<RecommendationResponse> {
+export async function recommendTrail(preferences: TrailPreferences, rows: CatalogRow[], ranker: Ranker = localRanker): Promise<RecommendationResponse> {
   const empty = (status: RecommendationResponse["status"], message: string): RecommendationResponse => ({ status, message, recommendation: null });
   if (!destinationIsSafe(preferences.destination)) return empty("out_of_scope", SCOPE_MESSAGE);
   const catalog = verifiedCatalog(rows);
@@ -33,11 +34,15 @@ export async function recommendTrail(preferences: TrailPreferences, rows: Catalo
   }
   const candidates = compatibleCandidates(catalog, preferences);
   if (!candidates.length) return empty("no_results", "No encontramos un sendero verificado compatible con esas respuestas. Probá modificar el destino, el tipo de sendero, la duración o la dificultad.");
-  // Geography and all hard filters have already been enforced. Preserve the highest landscape match.
-  const score = (c: Candidate) => preferences.trailTypes.filter((t) => c.trailTypes.includes(t)).length;
-  const finalists = candidates.filter((c) => score(c) === score(candidates[0])).slice(0, 20);
-  const decision = await selectTrail(preferences, finalists);
-  const selected = finalists.find((c) => c.trailId === decision.trailId)!;
+  const vectors = candidates.map((c) => featuresFor(preferences, c));
+  let prediction = null;
+  try { prediction = await ranker.predict(vectors); } catch { /* Keep the API usable if inference fails. */ }
+  if (prediction && (!Array.isArray(prediction.scores) || prediction.scores.length !== candidates.length || prediction.scores.some((s) => !Number.isFinite(s)) || typeof prediction.modelVersion !== "string" || !prediction.modelVersion || prediction.modelVersion.length > 100)) prediction = null;
+  const scores = prediction?.scores || vectors.map(baselineScore);
+  const selected = candidates.map((candidate, i) => ({ candidate, score: scores[i] }))
+    .sort((a, b) => b.score - a.score || a.candidate.trailId - b.candidate.trailId)[0].candidate;
+  const reasons = ["destination", "landscape", "duration", "difficulty"];
   return responseSchema.parse({ status: "ok", message: "¡Encontramos un sendero para vos!",
-    recommendation: { ...selected, explanation: explain(selected, preferences, decision.reasons) } });
+    ranking: { method: prediction ? "supervised" : "baseline", modelVersion: prediction?.modelVersion || null },
+    recommendation: { ...selected, explanation: explain(selected, preferences, reasons) } });
 }

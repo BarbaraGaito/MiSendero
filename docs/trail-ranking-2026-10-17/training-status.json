@@ -1,0 +1,26 @@
+{
+  "status": "insufficient_real_data",
+  "synthetic": false,
+  "technicalTestOnly": false,
+  "trained": false,
+  "algorithm": "random-forest-pointwise-relevance-v1",
+  "data": {
+    "counts": {
+      "rows": 0,
+      "queries": 0,
+      "independent_groups": 0,
+      "trails": 0,
+      "informative_queries": 0
+    },
+    "minimums": {
+      "rows": 300,
+      "queries": 100,
+      "independent_groups": 10,
+      "trails": 10,
+      "informative_queries": 60
+    },
+    "sufficient": false
+  },
+  "metrics": null,
+  "limitation": "Catalog features are not preference/relevance labels; no real accuracy can be claimed."
+}

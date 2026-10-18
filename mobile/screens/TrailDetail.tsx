@@ -26,7 +26,7 @@ import {
 import { initDB } from "../../database/database";
 import { Trail, TrailWeather } from "../../types";
 import { NationalParkEntry } from "../components/NationalParkUI";
-import { formatKilometers } from "../../services/geoUtils";
+import { formatKilometers, parseRouteCoordinates } from "../../services/geoUtils";
 
 const loadTrailDetailData = async (trailId: number) => {
   await initDB();
@@ -189,6 +189,7 @@ function TrailDetailContent({
   weather: TrailWeather | null;
 }) {
   const beforeYouGoTips = getBeforeYouGoTips(trail, weather);
+  const hasGeometry = parseRouteCoordinates(trail.route_coordinates).length >= 2;
 
   return (
     <>
@@ -203,19 +204,22 @@ function TrailDetailContent({
       <DescriptionCard trail={trail} />
       <DifficultyCard trail={trail} weather={weather} />
       <BeforeYouGoCard tips={trail.provenance ? [trail.provenance.precautions, ...beforeYouGoTips] : beforeYouGoTips} />
-      <AltimetrySection trail={trail} />
+      {hasGeometry ? <AltimetrySection trail={trail} /> : null}
       {trail.national_park && <NationalParkEntry park={trail.national_park} trailId={trail.id} trailName={trail.name} />}
       <TrailSources trail={trail} />
-      <OfflineMapCard
+      {hasGeometry ? <OfflineMapCard
         downloadMessage={downloadMessage}
         isDownloaded={isDownloaded}
-      />
-      <TrailDetailActions
+      /> : <InfoCard style={styles.card}>
+        <Text style={styles.cardTitle}>Traza GPS pendiente</Text>
+        <Text style={styles.body}>La ficha está documentada, pero todavía no contamos con una traza GPS verificada para mostrar o descargar este recorrido.</Text>
+      </InfoCard>}
+      {hasGeometry ? <TrailDetailActions
         downloadMap={downloadMap}
         isDownloaded={isDownloaded}
         isDownloading={isDownloading}
         trail={trail}
-      />
+      /> : null}
     </>
   );
 }
@@ -334,8 +338,8 @@ function DescriptionCard({ trail }: { trail: Trail }) {
         <>
           <Text style={styles.routeMetadata}>Inicio: {trail.provenance.access}</Text>
           <Text style={styles.routeMetadata}>
-            {trail.provenance.route_type === "out_and_back" ? "Ida y vuelta" : "Solo ida; coordinar el regreso"}
-            {trail.provenance.duration_basis === "planning_estimate" ? ". Tiempo orientativo, no oficial." : "."}
+            {trail.provenance.route_type === "out_and_back" ? "Ida y vuelta" : trail.provenance.route_type === "loop" ? "Circuito completo" : "Solo ida; coordinar el regreso"}
+            {["planning_estimate", "round_trip_from_official_one_way"].includes(trail.provenance.duration_basis) ? ". Tiempo total orientativo calculado; no publicado como ida y vuelta." : "."}
           </Text>
         </>
       ) : null}
@@ -344,7 +348,7 @@ function DescriptionCard({ trail }: { trail: Trail }) {
 }
 
 function TrailSources({ trail }: { trail: Trail }) {
-  const source = trail.provenance?.sources.find((item) => item.title === "Ficha del recorrido");
+  const source = trail.provenance?.sources.find((item) => item.title === "Ficha del recorrido") ?? trail.provenance?.sources[0];
   if (!source) return null;
   const openSource = (url: string) => {
     Linking.openURL(url).catch(() => Alert.alert("No se pudo abrir la fuente", "Revisa tu conexion e intenta nuevamente."));

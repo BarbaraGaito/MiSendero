@@ -143,6 +143,9 @@ export const getTrails = async (): Promise<Trail[]> => {
 export const recommendTrail = (preferences: TrailPreferences, token: string) =>
   request<RecommendationResponse>("/ai/recommend-trail", { method: "POST", body: preferences, token, timeoutMs: 25000 });
 
+export const getTrailRecommendationDestinations = (token: string) =>
+  request<{ destinations: string[] }>("/ai/destinations", { token });
+
 export const getTrailById = async (id: number): Promise<Trail> => {
   return request<Trail>(`/trails/${id}`);
 };

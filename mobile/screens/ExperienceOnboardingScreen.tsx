@@ -78,7 +78,9 @@ const questions: Question[] = [
 
 export default function ExperienceOnboardingScreen() {
   const insets = useSafeAreaInsets();
-  const { mode } = useLocalSearchParams<{ mode?: string }>();
+  const { mode, returnTo } = useLocalSearchParams<{ mode?: string; returnTo?: string }>();
+  const forRecommendation = returnTo === "recommendation";
+  const destination = forRecommendation ? "/descubri-tu-sendero" : "/inicio";
   const [isCheckingProfile, setIsCheckingProfile] = useState(mode !== "edit");
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
@@ -93,8 +95,8 @@ export default function ExperienceOnboardingScreen() {
     const redirectCompletedProfile = async () => {
       const profile = await getExperienceProfile();
 
-      if (profile.completed) {
-        router.replace("/inicio");
+      if (profile.completed && !profile.skipped && profile.level && ["principiante", "intermedio", "avanzado"].includes(profile.level)) {
+        router.replace(destination);
         return;
       }
 
@@ -102,7 +104,7 @@ export default function ExperienceOnboardingScreen() {
     };
 
     redirectCompletedProfile();
-  }, [mode]);
+  }, [mode, destination]);
 
   const selectAnswer = (value: string) => {
     setAnswers((current) => ({
@@ -120,7 +122,7 @@ export default function ExperienceOnboardingScreen() {
     }
 
     await saveExperienceProfile(answers);
-    router.replace("/inicio");
+    router.replace(destination);
   };
 
   const skipFlow = async () => {
@@ -194,9 +196,9 @@ export default function ExperienceOnboardingScreen() {
             icon={isLastStep ? "checkmark-outline" : "arrow-forward-outline"}
             onPress={continueFlow}
           />
-          <Pressable onPress={skipFlow} style={styles.skipButton}>
+          {forRecommendation ? <PrimaryButton label="Volver al inicio" tone="secondary" onPress={() => router.replace("/inicio")} /> : <Pressable onPress={skipFlow} style={styles.skipButton}>
             <Text style={styles.skipText}>Omitir y hacerlo mas tarde</Text>
-          </Pressable>
+          </Pressable>}
         </View>
       </ScrollView>
     </ScreenShell>

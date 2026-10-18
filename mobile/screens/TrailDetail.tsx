@@ -11,7 +11,6 @@ import {
   StatPill,
   TopBar,
   colors,
-  trailImages,
 } from "../components/MiSenderoUI";
 import { getTrailById, getTrailReports, getTrailWeather } from "../../services/trailRepository";
 import {
@@ -26,7 +25,7 @@ import {
 import { initDB } from "../../database/database";
 import { Trail, TrailWeather } from "../../types";
 import { NationalParkEntry } from "../components/NationalParkUI";
-import { formatKilometers } from "../../services/geoUtils";
+import { formatKilometers, parseRouteCoordinates } from "../../services/geoUtils";
 
 const loadTrailDetailData = async (trailId: number) => {
   await initDB();
@@ -189,6 +188,7 @@ function TrailDetailContent({
   weather: TrailWeather | null;
 }) {
   const beforeYouGoTips = getBeforeYouGoTips(trail, weather);
+  const hasGeometry = parseRouteCoordinates(trail.route_coordinates).length >= 2;
 
   return (
     <>
@@ -202,20 +202,23 @@ function TrailDetailContent({
       />
       <DescriptionCard trail={trail} />
       <DifficultyCard trail={trail} weather={weather} />
-      <BeforeYouGoCard tips={trail.provenance ? [trail.provenance.precautions, ...beforeYouGoTips] : beforeYouGoTips} />
-      <AltimetrySection trail={trail} />
+      <BeforeYouGoCard tips={trail.provenance ? [...(trail.provenance.source_notice ? [trail.provenance.source_notice] : []), trail.provenance.precautions, ...beforeYouGoTips] : beforeYouGoTips} />
+      {hasGeometry ? <AltimetrySection trail={trail} /> : null}
       {trail.national_park && <NationalParkEntry park={trail.national_park} trailId={trail.id} trailName={trail.name} />}
       <TrailSources trail={trail} />
-      <OfflineMapCard
+      {hasGeometry ? <OfflineMapCard
         downloadMessage={downloadMessage}
         isDownloaded={isDownloaded}
-      />
-      <TrailDetailActions
+      /> : <InfoCard style={styles.card}>
+        <Text style={styles.cardTitle}>Traza GPS pendiente</Text>
+        <Text style={styles.body}>{trail.provenance?.mapping_pending_reason || "La ficha está documentada, pero todavía no contamos con una traza GPS verificada para mostrar o descargar este recorrido."}</Text>
+      </InfoCard>}
+      {hasGeometry ? <TrailDetailActions
         downloadMap={downloadMap}
         isDownloaded={isDownloaded}
         isDownloading={isDownloading}
         trail={trail}
-      />
+      /> : null}
     </>
   );
 }
@@ -228,11 +231,13 @@ function TrailCover({
   trail: Trail;
 }) {
   return (
+    <>
     <ImageBackground
-      source={{ uri: trail.image_url || trailImages.mountain }}
+      source={trail.image_url ? { uri: trail.image_url } : undefined}
       style={styles.cover}
       imageStyle={styles.coverImage}
     >
+      {!trail.image_url ? <Text style={styles.body}>Foto no disponible</Text> : null}
       {ratingSummary ? (
         <Pressable
           onPress={() =>
@@ -263,6 +268,8 @@ function TrailCover({
         </Pressable>
       )}
     </ImageBackground>
+    {trail.provenance?.photo?.context ? <Text style={styles.routeMetadata}>{trail.provenance.photo.context}</Text> : null}
+    </>
   );
 }
 
@@ -334,8 +341,8 @@ function DescriptionCard({ trail }: { trail: Trail }) {
         <>
           <Text style={styles.routeMetadata}>Inicio: {trail.provenance.access}</Text>
           <Text style={styles.routeMetadata}>
-            {trail.provenance.route_type === "out_and_back" ? "Ida y vuelta" : "Solo ida; coordinar el regreso"}
-            {trail.provenance.duration_basis === "planning_estimate" ? ". Tiempo orientativo, no oficial." : "."}
+            {trail.provenance.route_type === "out_and_back" ? "Ida y vuelta" : trail.provenance.route_type === "loop" ? "Circuito completo" : "Solo ida; coordinar el regreso"}
+            {["planning_estimate", "round_trip_from_official_one_way"].includes(trail.provenance.duration_basis) ? ". Tiempo total orientativo calculado; no publicado como ida y vuelta." : "."}
           </Text>
         </>
       ) : null}
@@ -344,7 +351,7 @@ function DescriptionCard({ trail }: { trail: Trail }) {
 }
 
 function TrailSources({ trail }: { trail: Trail }) {
-  const source = trail.provenance?.sources.find((item) => item.title === "Ficha del recorrido");
+  const source = trail.provenance?.sources.find((item) => item.title === "Ficha del recorrido") ?? trail.provenance?.sources[0];
   if (!source) return null;
   const openSource = (url: string) => {
     Linking.openURL(url).catch(() => Alert.alert("No se pudo abrir la fuente", "Revisa tu conexion e intenta nuevamente."));
@@ -356,6 +363,9 @@ function TrailSources({ trail }: { trail: Trail }) {
         <Ionicons name="open-outline" size={16} color={colors.greenDark} />
         <Text style={styles.sourceText}>Ficha del recorrido</Text>
       </Pressable>
+      {trail.provenance?.mapping ? <Pressable accessibilityRole="link" onPress={() => openSource(trail.provenance!.mapping!.source_url)} style={styles.sourceLink}>
+        <Text style={styles.sourceText}>Cartografía: {trail.provenance.mapping.source} · {trail.provenance.mapping.license}</Text>
+      </Pressable> : null}
     </View>
   );
 }

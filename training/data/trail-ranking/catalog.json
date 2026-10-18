@@ -1,0 +1,1515 @@
+{
+  "schemaVersion": 1,
+  "audit": {
+    "exportedAt": "2026-10-18T01:52:42.653Z",
+    "catalogRecords": 51,
+    "eligibleRecords": 51,
+    "excludedRecords": 0,
+    "withProvenance": 41,
+    "catalogOnlyRecords": 10,
+    "withUnconfirmedDurationScope": 11,
+    "withDocumentedTerrain": 2,
+    "withAscentReference": 32,
+    "preferenceOrRankingTables": [],
+    "labeledQueriesAvailable": 0,
+    "labeledQueriesNote": "No preference/relevance collection exists in this application; catalog attributes are not relevance labels.",
+    "featureSchemaVersion": 4,
+    "labeledRowsPrepared": 0
+  },
+  "candidates": [
+    {
+      "trailId": 1,
+      "name": "Sendero a Confluencia",
+      "location": "Parque Provincial Aconcagua, Mendoza",
+      "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Aconcagua%20confluencia.jpg?width=1400",
+      "trailTypes": [
+        "naturaleza",
+        "montaña"
+      ],
+      "difficulty": "moderada",
+      "duration": "4 a 5 h",
+      "durationMinutes": 300,
+      "routeType": "unknown",
+      "distanceKm": 14,
+      "description": "Trekking clasico de aproximacion al Aconcagua desde Horcones hasta el campamento Confluencia, con vistas de alta montana.",
+      "sources": [],
+      "checkedAt": null,
+      "catalogVerification": "catalog_only",
+      "durationScopeVerified": false,
+      "dataWarnings": [
+        "Esta ficha proviene del catálogo de MiSendero y todavía no tiene una fuente externa ni una fecha de verificación documentadas.",
+        "La duración está registrada en la ficha, pero no está documentado si incluye ida y vuelta. Confirmá el tiempo total antes de planificar la salida."
+      ],
+      "durationIsEstimated": false,
+      "ascentM": 678,
+      "terrain": null
+    },
+    {
+      "trailId": 2,
+      "name": "Volcan Lanin - Base a Refugio BIM",
+      "location": "Parque Nacional Lanin, Neuquen",
+      "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Argentina%20-%20Neuqu%C3%A9n%20-%20Volc%C3%A1n%20Lan%C3%ADn.jpg?width=1400",
+      "trailTypes": [
+        "naturaleza",
+        "montaña"
+      ],
+      "difficulty": "dificil",
+      "duration": "6 a 8 h",
+      "durationMinutes": 480,
+      "routeType": "unknown",
+      "distanceKm": 13,
+      "description": "Ruta normal desde la base del volcan Lanin hasta el refugio BIM, con fuerte desnivel, ambiente andino y vistas al cono volcanico.",
+      "sources": [],
+      "checkedAt": null,
+      "catalogVerification": "catalog_only",
+      "durationScopeVerified": false,
+      "dataWarnings": [
+        "Esta ficha proviene del catálogo de MiSendero y todavía no tiene una fuente externa ni una fecha de verificación documentadas.",
+        "La duración está registrada en la ficha, pero no está documentado si incluye ida y vuelta. Confirmá el tiempo total antes de planificar la salida."
+      ],
+      "durationIsEstimated": false,
+      "ascentM": 1142,
+      "terrain": null
+    },
+    {
+      "trailId": 3,
+      "name": "Garganta del Diablo de Tilcara",
+      "location": "Tilcara, Jujuy",
+      "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Quebrada%20de%20Humahuaca%2001.jpg?width=1400",
+      "trailTypes": [
+        "naturaleza",
+        "cascadas"
+      ],
+      "difficulty": "moderada",
+      "duration": "1 h 30 min a 2 h",
+      "durationMinutes": 120,
+      "routeType": "unknown",
+      "distanceKm": 3.14,
+      "description": "Recorrido desde Tilcara hacia la quebrada y cascada de la Garganta del Diablo, con vistas de la Quebrada de Humahuaca.",
+      "sources": [],
+      "checkedAt": null,
+      "catalogVerification": "catalog_only",
+      "durationScopeVerified": false,
+      "dataWarnings": [
+        "Esta ficha proviene del catálogo de MiSendero y todavía no tiene una fuente externa ni una fecha de verificación documentadas.",
+        "La duración está registrada en la ficha, pero no está documentado si incluye ida y vuelta. Confirmá el tiempo total antes de planificar la salida."
+      ],
+      "durationIsEstimated": false,
+      "ascentM": 416,
+      "terrain": null
+    },
+    {
+      "trailId": 4,
+      "name": "Garganta del Diablo - Quebrada de las Conchas",
+      "location": "Cafayate, Salta",
+      "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Quebrada%20de%20las%20Conchas-%20Salta-.jpg?width=1400",
+      "trailTypes": [
+        "naturaleza"
+      ],
+      "difficulty": "facil",
+      "duration": "30 a 45 min",
+      "durationMinutes": 45,
+      "routeType": "unknown",
+      "distanceKm": 0.65,
+      "description": "Caminata corta entre paredones rojizos y formaciones naturales de la Quebrada de las Conchas, en los Valles Calchaquies.",
+      "sources": [],
+      "checkedAt": null,
+      "catalogVerification": "catalog_only",
+      "durationScopeVerified": false,
+      "dataWarnings": [
+        "Esta ficha proviene del catálogo de MiSendero y todavía no tiene una fuente externa ni una fecha de verificación documentadas.",
+        "La duración está registrada en la ficha, pero no está documentado si incluye ida y vuelta. Confirmá el tiempo total antes de planificar la salida."
+      ],
+      "durationIsEstimated": false,
+      "ascentM": 119,
+      "terrain": null
+    },
+    {
+      "trailId": 5,
+      "name": "Lahuan Solitario - Puerto Chucao",
+      "location": "Parque Nacional Los Alerces, Chubut",
+      "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Alerce%20milenario.jpg?width=1400",
+      "trailTypes": [
+        "naturaleza"
+      ],
+      "difficulty": "facil",
+      "duration": "1 h 30 min",
+      "durationMinutes": 90,
+      "routeType": "unknown",
+      "distanceKm": 3,
+      "description": "Sendero desde la pasarela del rio Arrayanes hasta Puerto Chucao, bordeando el rio Menendez y pasando junto a un lahuan de unos 300 anos.",
+      "sources": [],
+      "checkedAt": null,
+      "catalogVerification": "catalog_only",
+      "durationScopeVerified": false,
+      "dataWarnings": [
+        "Esta ficha proviene del catálogo de MiSendero y todavía no tiene una fuente externa ni una fecha de verificación documentadas.",
+        "La duración está registrada en la ficha, pero no está documentado si incluye ida y vuelta. Confirmá el tiempo total antes de planificar la salida."
+      ],
+      "durationIsEstimated": false,
+      "ascentM": 70,
+      "terrain": null
+    },
+    {
+      "trailId": 6,
+      "name": "Sendero El Mollar - El Palmar",
+      "location": "Parque Nacional El Palmar, Entre Rios",
+      "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Parque%20nacional%20El%20Palmar%20Entre%20R%C3%ADos.JPG?width=1400",
+      "trailTypes": [
+        "naturaleza"
+      ],
+      "difficulty": "facil",
+      "duration": "30 a 45 min",
+      "durationMinutes": 45,
+      "routeType": "unknown",
+      "distanceKm": 1.4,
+      "description": "Circuito oficial junto al camping que atraviesa palmares y muestra el manejo de especies vegetales exoticas del Parque Nacional El Palmar.",
+      "sources": [],
+      "checkedAt": null,
+      "catalogVerification": "catalog_only",
+      "durationScopeVerified": false,
+      "dataWarnings": [
+        "Esta ficha proviene del catálogo de MiSendero y todavía no tiene una fuente externa ni una fecha de verificación documentadas.",
+        "La duración está registrada en la ficha, pero no está documentado si incluye ida y vuelta. Confirmá el tiempo total antes de planificar la salida."
+      ],
+      "durationIsEstimated": false,
+      "ascentM": 10,
+      "terrain": null
+    },
+    {
+      "trailId": 7,
+      "name": "Ascenso Cerro Tres Picos",
+      "location": "Sierra de la Ventana, Buenos Aires",
+      "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Cerro%20Tres%20Picos.jpg?width=1400",
+      "trailTypes": [
+        "naturaleza",
+        "montaña"
+      ],
+      "difficulty": "dificil",
+      "duration": "8 a 10 h",
+      "durationMinutes": 600,
+      "routeType": "unknown",
+      "distanceKm": 18.3,
+      "description": "Ascenso al punto mas alto de la provincia de Buenos Aires, con pendientes sostenidas y amplias vistas serranas.",
+      "sources": [],
+      "checkedAt": null,
+      "catalogVerification": "catalog_only",
+      "durationScopeVerified": false,
+      "dataWarnings": [
+        "Esta ficha proviene del catálogo de MiSendero y todavía no tiene una fuente externa ni una fecha de verificación documentadas.",
+        "La duración está registrada en la ficha, pero no está documentado si incluye ida y vuelta. Confirmá el tiempo total antes de planificar la salida."
+      ],
+      "durationIsEstimated": false,
+      "ascentM": 970,
+      "terrain": null
+    },
+    {
+      "trailId": 8,
+      "name": "Caminata al Cerro Morado",
+      "location": "Parque Provincial Ischigualasto, San Juan",
+      "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Ischigualasto%2C%20prov.%20de%20San%20Juan%2C%20Argentina.jpg?width=1400",
+      "trailTypes": [
+        "naturaleza",
+        "montaña",
+        "miradores"
+      ],
+      "difficulty": "dificil",
+      "duration": "3 h",
+      "durationMinutes": 180,
+      "routeType": "unknown",
+      "distanceKm": 5.73,
+      "description": "Trekking oficial hasta la cumbre del Cerro Morado, el punto mas alto de Ischigualasto, con vistas panoramicas del Valle de la Luna.",
+      "sources": [],
+      "checkedAt": null,
+      "catalogVerification": "catalog_only",
+      "durationScopeVerified": false,
+      "dataWarnings": [
+        "Esta ficha proviene del catálogo de MiSendero y todavía no tiene una fuente externa ni una fecha de verificación documentadas.",
+        "La duración está registrada en la ficha, pero no está documentado si incluye ida y vuelta. Confirmá el tiempo total antes de planificar la salida."
+      ],
+      "durationIsEstimated": false,
+      "ascentM": 433,
+      "terrain": null
+    },
+    {
+      "trailId": 9,
+      "name": "Campo de Piedra Pomez",
+      "location": "Antofagasta de la Sierra, Catamarca",
+      "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Campo%20de%20Piedra%20Pomez.jpg?width=1400",
+      "trailTypes": [
+        "naturaleza",
+        "montaña"
+      ],
+      "difficulty": "facil",
+      "duration": "1 a 2 h",
+      "durationMinutes": 120,
+      "routeType": "unknown",
+      "distanceKm": 2,
+      "description": "Caminata corta entre formaciones de piedra pomez, paisaje de puna y suelos volcanicos en Antofagasta de la Sierra.",
+      "sources": [],
+      "checkedAt": null,
+      "catalogVerification": "catalog_only",
+      "durationScopeVerified": false,
+      "dataWarnings": [
+        "Esta ficha proviene del catálogo de MiSendero y todavía no tiene una fuente externa ni una fecha de verificación documentadas.",
+        "La duración está registrada en la ficha, pero no está documentado si incluye ida y vuelta. Confirmá el tiempo total antes de planificar la salida."
+      ],
+      "durationIsEstimated": false,
+      "ascentM": 0,
+      "terrain": null
+    },
+    {
+      "trailId": 10,
+      "name": "Laguna del Tesoro - Aconquija",
+      "location": "Parque Nacional Aconquija, Tucuman",
+      "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/VistadeTafidelValle.jpg?width=1400",
+      "trailTypes": [
+        "naturaleza",
+        "montaña",
+        "lagos",
+        "bosques"
+      ],
+      "difficulty": "dificil",
+      "duration": "10 a 12 h",
+      "durationMinutes": 720,
+      "routeType": "unknown",
+      "distanceKm": 20.6,
+      "description": "Sendero exigente desde el portal Cochuna hacia Laguna del Tesoro, atravesando yungas y ambiente de montana del Aconquija.",
+      "sources": [],
+      "checkedAt": null,
+      "catalogVerification": "catalog_only",
+      "durationScopeVerified": false,
+      "dataWarnings": [
+        "Esta ficha proviene del catálogo de MiSendero y todavía no tiene una fuente externa ni una fecha de verificación documentadas.",
+        "La duración está registrada en la ficha, pero no está documentado si incluye ida y vuelta. Confirmá el tiempo total antes de planificar la salida."
+      ],
+      "durationIsEstimated": false,
+      "ascentM": 977,
+      "terrain": null
+    },
+    {
+      "trailId": 71,
+      "name": "Sendero Macuco - Salto Arrechea",
+      "location": "Parque Nacional Iguazu, Misiones",
+      "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a2/Salto_Arrechea_04.JPG/1280px-Salto_Arrechea_04.JPG",
+      "trailTypes": [
+        "naturaleza",
+        "cascadas",
+        "bosques"
+      ],
+      "difficulty": "moderada",
+      "duration": "3 h",
+      "durationMinutes": 180,
+      "routeType": "out_and_back",
+      "distanceKm": 7.453,
+      "description": "Caminata por la selva hasta el Salto Arrechea, con regreso por el mismo sendero.",
+      "sources": [
+        {
+          "url": "https://www.argentina.gob.ar/node/284859",
+          "title": "Ficha del recorrido"
+        },
+        {
+          "url": "https://www.argentina.gob.ar/node/168245",
+          "title": "Informacion complementaria"
+        }
+      ],
+      "checkedAt": "2026-10-11",
+      "catalogVerification": "verified",
+      "durationScopeVerified": true,
+      "durationIsEstimated": false,
+      "ascentM": 57,
+      "terrain": null
+    },
+    {
+      "trailId": 72,
+      "name": "Refugio Frey desde Villa Catedral",
+      "location": "Parque Nacional Nahuel Huapi, Rio Negro",
+      "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7f/Refugio_Frey_-_panoramio.jpg/1280px-Refugio_Frey_-_panoramio.jpg",
+      "trailTypes": [
+        "naturaleza",
+        "montaña",
+        "lagos"
+      ],
+      "difficulty": "moderada",
+      "duration": "8 h",
+      "durationMinutes": 480,
+      "routeType": "out_and_back",
+      "distanceKm": 18.84,
+      "description": "Ascenso por el valle del arroyo Van Titter hasta el acceso al refugio y la laguna Toncek. Regreso por la misma senda; no incluye el filo del Catedral.",
+      "sources": [
+        {
+          "url": "https://www.barilocheturismo.gob.ar/es/refugio-frey",
+          "title": "Ficha del recorrido"
+        },
+        {
+          "url": "https://refugiofreybariloche.com/preguntas-frecuentes/",
+          "title": "Informacion complementaria"
+        }
+      ],
+      "checkedAt": "2026-10-11",
+      "catalogVerification": "verified",
+      "durationScopeVerified": true,
+      "durationIsEstimated": true,
+      "ascentM": 1228,
+      "terrain": null
+    },
+    {
+      "trailId": 73,
+      "name": "Quebrada del Condorito - Balcon Norte",
+      "location": "Parque Nacional Quebrada del Condorito, Cordoba",
+      "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/25/Quebrada_del_Condorito_panorama.jpg/1280px-Quebrada_del_Condorito_panorama.jpg",
+      "trailTypes": [
+        "naturaleza",
+        "miradores"
+      ],
+      "difficulty": "moderada",
+      "duration": "5 h",
+      "durationMinutes": 300,
+      "routeType": "out_and_back",
+      "distanceKm": 10.14,
+      "description": "Travesia de la pampa de altura hasta el Balcon Norte de la quebrada, con regreso al estacionamiento. No incluye la bajada al rio ni el Balcon Sur.",
+      "sources": [
+        {
+          "url": "https://www.argentina.gob.ar/parquesnacionales/centro/parque-nacional-quebrada-del-condorito/actividades",
+          "title": "Ficha del recorrido"
+        }
+      ],
+      "checkedAt": "2026-10-11",
+      "catalogVerification": "verified",
+      "durationScopeVerified": true,
+      "durationIsEstimated": false,
+      "ascentM": 369,
+      "terrain": null
+    },
+    {
+      "trailId": 74,
+      "name": "Laguna Esmeralda",
+      "location": "Valle de Tierra Mayor, Tierra del Fuego",
+      "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5e/Laguna_Esmeralda_Landscape.jpg/1280px-Laguna_Esmeralda_Landscape.jpg",
+      "trailTypes": [
+        "naturaleza",
+        "lagos",
+        "bosques"
+      ],
+      "difficulty": "moderada",
+      "duration": "5 h",
+      "durationMinutes": 300,
+      "routeType": "out_and_back",
+      "distanceKm": 8.755,
+      "description": "Sendero hasta la orilla sur de la laguna Esmeralda, pasando por bosque y turberas, con regreso al mismo acceso. No incluye Ojo del Albino.",
+      "sources": [
+        {
+          "url": "https://larutanatural.gob.ar/es/circuito/10/de-rio-grande-a-ushuaia",
+          "title": "Ficha del recorrido"
+        }
+      ],
+      "checkedAt": "2026-10-11",
+      "catalogVerification": "verified",
+      "durationScopeVerified": true,
+      "durationIsEstimated": false,
+      "ascentM": 233,
+      "terrain": null
+    },
+    {
+      "trailId": 75,
+      "name": "Senda Costera - Tierra del Fuego",
+      "location": "Parque Nacional Tierra del Fuego, Tierra del Fuego",
+      "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3d/Bahia_Ensenada_Tierra_del_Fuego.JPG/1280px-Bahia_Ensenada_Tierra_del_Fuego.JPG",
+      "trailTypes": [
+        "naturaleza",
+        "bosques"
+      ],
+      "difficulty": "moderada",
+      "duration": "4 h",
+      "durationMinutes": 240,
+      "routeType": "point_to_point",
+      "distanceKm": 7.637,
+      "description": "Recorrido costero entre Ensenada Zaratiegui y el interior del parque, entre bosque y bahias del canal Beagle. Es solo ida: coordinar transporte al finalizar.",
+      "sources": [
+        {
+          "url": "https://www.argentina.gob.ar/parquesnacionales/patagonia-austral/senderos-del-parque-nacional-tierra-del-fuego",
+          "title": "Ficha del recorrido"
+        }
+      ],
+      "checkedAt": "2026-10-11",
+      "catalogVerification": "verified",
+      "durationScopeVerified": true,
+      "durationIsEstimated": false,
+      "ascentM": 387,
+      "terrain": null
+    },
+    {
+      "trailId": 76,
+      "name": "Lago Acigami - Hito XXIV",
+      "location": "Parque Nacional Tierra del Fuego, Tierra del Fuego",
+      "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/35/Lago_Acigami%2C_Tierra_del_Fuego_National_Park%2C_Argentina.jpg/1280px-Lago_Acigami%2C_Tierra_del_Fuego_National_Park%2C_Argentina.jpg",
+      "trailTypes": [
+        "naturaleza",
+        "lagos"
+      ],
+      "difficulty": "moderada",
+      "duration": "3 h",
+      "durationMinutes": 180,
+      "routeType": "out_and_back",
+      "distanceKm": 7.21,
+      "description": "Caminata por la costa del lago hasta el hito fronterizo XXIV. Regresa por la misma senda y no continua hacia Chile.",
+      "sources": [
+        {
+          "url": "https://www.argentina.gob.ar/parquesnacionales/patagonia-austral/senderos-del-parque-nacional-tierra-del-fuego",
+          "title": "Ficha del recorrido"
+        }
+      ],
+      "checkedAt": "2026-10-11",
+      "catalogVerification": "verified",
+      "durationScopeVerified": true,
+      "durationIsEstimated": false,
+      "ascentM": 456,
+      "terrain": null
+    },
+    {
+      "trailId": 77,
+      "name": "Sendero Namuncura",
+      "location": "Parque Nacional Lihue Calel, La Pampa",
+      "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b4/Parque_Nacional_Lihu%C3%A9_Calel.jpg/1280px-Parque_Nacional_Lihu%C3%A9_Calel.jpg",
+      "trailTypes": [
+        "naturaleza",
+        "montaña",
+        "bosques"
+      ],
+      "difficulty": "facil",
+      "duration": "45 min",
+      "durationMinutes": 45,
+      "routeType": "out_and_back",
+      "distanceKm": 0.738,
+      "description": "Paseo entre caldenes y sierras hasta el comienzo del ascenso al Cerro Alto. No incluye la cumbre.",
+      "sources": [
+        {
+          "url": "https://www.argentina.gob.ar/node/307077",
+          "title": "Ficha del recorrido"
+        }
+      ],
+      "checkedAt": "2026-10-11",
+      "catalogVerification": "verified",
+      "durationScopeVerified": true,
+      "durationIsEstimated": false,
+      "ascentM": 5,
+      "terrain": null
+    },
+    {
+      "trailId": 78,
+      "name": "Cerro Alto desde Namuncura",
+      "location": "Parque Nacional Lihue Calel, La Pampa",
+      "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b4/Parque_Nacional_Lihu%C3%A9_Calel.jpg/1280px-Parque_Nacional_Lihu%C3%A9_Calel.jpg",
+      "trailTypes": [
+        "naturaleza",
+        "montaña"
+      ],
+      "difficulty": "moderada",
+      "duration": "2 h",
+      "durationMinutes": 120,
+      "routeType": "out_and_back",
+      "distanceKm": 2.736,
+      "description": "Ascenso a la cima del Cerro Alto, de 590 m sobre el nivel del mar, incluyendo Namuncura y el regreso por el mismo camino. No incluye la variante hacia el Valle de las Pinturas.",
+      "sources": [
+        {
+          "url": "https://www.argentina.gob.ar/node/307077",
+          "title": "Ficha del recorrido"
+        }
+      ],
+      "checkedAt": "2026-10-11",
+      "catalogVerification": "verified",
+      "durationScopeVerified": true,
+      "dataWarnings": [
+        "La duración de esta ficha es una estimación de planificación, no un tiempo oficial publicado."
+      ],
+      "durationIsEstimated": true,
+      "ascentM": 194,
+      "terrain": null
+    },
+    {
+      "trailId": 79,
+      "name": "Miradores de Sierra de las Quijadas",
+      "location": "Parque Nacional Sierra de las Quijadas, San Luis",
+      "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/38/Potrero_de_la_Aguada_Parque_Nacional_Sierra_de_las_Quijadas.jpg/1280px-Potrero_de_la_Aguada_Parque_Nacional_Sierra_de_las_Quijadas.jpg",
+      "trailTypes": [
+        "naturaleza",
+        "miradores"
+      ],
+      "difficulty": "facil",
+      "duration": "1 h 30 min",
+      "durationMinutes": 90,
+      "routeType": "out_and_back",
+      "distanceKm": 2.646,
+      "description": "Caminata panoramica sobre el borde del Potrero de la Aguada. La traza cargada sigue la senda principal de ida y vuelta; no incluye el descenso a los farallones.",
+      "sources": [
+        {
+          "url": "https://www.argentina.gob.ar/parquesnacionales/centro/parque-nacional-sierra-de-las-quijadas/actividades",
+          "title": "Ficha del recorrido"
+        }
+      ],
+      "checkedAt": "2026-10-11",
+      "catalogVerification": "verified",
+      "durationScopeVerified": false,
+      "dataWarnings": [
+        "La duración está registrada en la ficha, pero no está documentado si incluye ida y vuelta. Confirmá el tiempo total antes de planificar la salida."
+      ],
+      "durationIsEstimated": false,
+      "ascentM": 99,
+      "terrain": null
+    },
+    {
+      "trailId": 80,
+      "name": "Sendero Guanacos - Sierra de las Quijadas",
+      "location": "Parque Nacional Sierra de las Quijadas, San Luis",
+      "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f8/Sierra_de_las_Quijadas_National_Park.jpg/1280px-Sierra_de_las_Quijadas_National_Park.jpg",
+      "trailTypes": [
+        "naturaleza",
+        "miradores"
+      ],
+      "difficulty": "dificil",
+      "duration": "3 h",
+      "durationMinutes": 180,
+      "routeType": "out_and_back",
+      "distanceKm": 5.117,
+      "description": "Trekking por terreno agreste hasta un mirador elevado de los farallones y el sector sur del Potrero de la Aguada. Vuelve por el mismo camino.",
+      "sources": [
+        {
+          "url": "https://www.argentina.gob.ar/parquesnacionales/centro/parque-nacional-sierra-de-las-quijadas/actividades",
+          "title": "Ficha del recorrido"
+        }
+      ],
+      "checkedAt": "2026-10-11",
+      "catalogVerification": "verified",
+      "durationScopeVerified": true,
+      "durationIsEstimated": false,
+      "ascentM": 179,
+      "terrain": null
+    },
+    {
+      "trailId": 81,
+      "name": "Mirador de los Condores - El Chalten",
+      "location": "Parque Nacional Los Glaciares, Santa Cruz",
+      "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2d/El_Chalt%C3%A9n%2C_panoramic_view.jpg/1280px-El_Chalt%C3%A9n%2C_panoramic_view.jpg",
+      "trailTypes": [
+        "naturaleza",
+        "montaña",
+        "miradores"
+      ],
+      "difficulty": "facil",
+      "duration": "1 h 30 min",
+      "durationMinutes": 90,
+      "routeType": "out_and_back",
+      "distanceKm": 2.59,
+      "description": "Ascenso corto hasta el mirador del pueblo, los valles y el macizo del Fitz Roy. Regresa por la misma senda; no incluye el mirador de las Aguilas.",
+      "sources": [
+        {
+          "url": "https://www.argentina.gob.ar/sites/default/files/2019/06/folleto_senderos_zona_norte_pnlg_ingles.pdf",
+          "title": "Ficha del recorrido"
+        }
+      ],
+      "checkedAt": "2026-10-11",
+      "catalogVerification": "verified",
+      "durationScopeVerified": true,
+      "durationIsEstimated": true,
+      "ascentM": 141,
+      "terrain": null
+    },
+    {
+      "trailId": 82,
+      "name": "Mirador de las Aguilas - El Chalten",
+      "location": "Parque Nacional Los Glaciares, Santa Cruz",
+      "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/68/Lago_Viedma_-_Mirador_de_Las_Aguilas_-_panoramio.jpg/1280px-Lago_Viedma_-_Mirador_de_Las_Aguilas_-_panoramio.jpg",
+      "trailTypes": [
+        "naturaleza",
+        "lagos",
+        "miradores"
+      ],
+      "difficulty": "facil",
+      "duration": "2 h",
+      "durationMinutes": 120,
+      "routeType": "out_and_back",
+      "distanceKm": 4.5,
+      "description": "Sendero hasta el mirador orientado al lago Viedma y la estepa. Comparte el acceso con la senda de los Condores, pero no visita ese mirador.",
+      "sources": [
+        {
+          "url": "https://www.argentina.gob.ar/sites/default/files/2019/06/folleto_senderos_zona_norte_pnlg_ingles.pdf",
+          "title": "Ficha del recorrido"
+        }
+      ],
+      "checkedAt": "2026-10-11",
+      "catalogVerification": "verified",
+      "durationScopeVerified": true,
+      "durationIsEstimated": true,
+      "ascentM": 177,
+      "terrain": null
+    },
+    {
+      "trailId": 171,
+      "name": "Cerro Uritorco - ascenso tradicional",
+      "location": "Capilla del Monte, Cordoba",
+      "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/96/CerroUritorco.jpg/1280px-CerroUritorco.jpg",
+      "trailTypes": [
+        "naturaleza",
+        "montaña"
+      ],
+      "difficulty": "dificil",
+      "duration": "7 h",
+      "durationMinutes": 420,
+      "routeType": "out_and_back",
+      "distanceKm": 10.279,
+      "description": "Ascenso por la senda tradicional hasta la cumbre del Uritorco, con regreso al mismo acceso. Parque natural privado; no pertenece a un parque nacional.",
+      "sources": [
+        {
+          "url": "https://turismocapilla.gob.ar/capilla-aventura-cerros-y-sitios-naturales/",
+          "title": "Ficha del recorrido"
+        }
+      ],
+      "checkedAt": "2026-10-11",
+      "catalogVerification": "verified",
+      "durationScopeVerified": true,
+      "durationIsEstimated": false,
+      "ascentM": 1139,
+      "terrain": null
+    },
+    {
+      "trailId": 172,
+      "name": "Cerro Ventana - Hueco de la Ventana",
+      "location": "Parque Provincial Ernesto Tornquist, Buenos Aires",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/b/ba/Sierra_de_la_Ventana2.JPG",
+      "trailTypes": [
+        "naturaleza",
+        "montaña"
+      ],
+      "difficulty": "dificil",
+      "duration": "6 h",
+      "durationMinutes": 360,
+      "routeType": "out_and_back",
+      "distanceKm": 5.349,
+      "description": "Ascenso guiado al hueco natural del Cerro Ventana y regreso por la misma senda. No incluye Garganta del Diablo ni los senderos autoguiados del parque provincial.",
+      "sources": [
+        {
+          "url": "https://www.ambiente.gba.gob.ar/node/1368",
+          "title": "Ficha del recorrido"
+        }
+      ],
+      "checkedAt": "2026-10-11",
+      "catalogVerification": "verified",
+      "durationScopeVerified": true,
+      "durationIsEstimated": false,
+      "ascentM": 610,
+      "terrain": null
+    },
+    {
+      "trailId": 173,
+      "name": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "location": "Cerro Piltriquitron, El Bolson, Rio Negro",
+      "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2f/Bosque_tallado.jpg/1280px-Bosque_tallado.jpg",
+      "trailTypes": [
+        "naturaleza",
+        "montaña",
+        "bosques"
+      ],
+      "difficulty": "moderada",
+      "duration": "1 h 30 min",
+      "durationMinutes": 90,
+      "routeType": "out_and_back",
+      "distanceKm": 2.315,
+      "description": "Caminata de ascenso hasta las esculturas del Bosque Tallado y regreso a la plataforma. No continua al refugio ni a la cumbre del Piltriquitron.",
+      "sources": [
+        {
+          "url": "https://www.turismoelbolson.gob.ar/actividades-invernales",
+          "title": "Ficha del recorrido"
+        }
+      ],
+      "checkedAt": "2026-10-11",
+      "catalogVerification": "verified",
+      "durationScopeVerified": true,
+      "durationIsEstimated": true,
+      "ascentM": 246,
+      "terrain": null
+    },
+    {
+      "trailId": 174,
+      "name": "Cerro San Bernardo por las escalinatas",
+      "location": "Ciudad de Salta, Salta",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/2d/Vista_de_la_ciudad_de_Salta_desde_el_cerro_San_Bernardo.jpg",
+      "trailTypes": [
+        "naturaleza",
+        "montaña"
+      ],
+      "difficulty": "moderada",
+      "duration": "2 h",
+      "durationMinutes": 120,
+      "routeType": "out_and_back",
+      "distanceKm": 2.616,
+      "description": "Ascenso a pie por las escalinatas del Cerro San Bernardo y regreso por el mismo camino. No utiliza el teleferico ni la ruta vehicular de ascenso.",
+      "sources": [
+        {
+          "url": "https://saltaciudad.travel/posts/cerro-san-bernardo",
+          "title": "Ficha del recorrido"
+        }
+      ],
+      "checkedAt": "2026-10-11",
+      "catalogVerification": "verified",
+      "durationScopeVerified": true,
+      "dataWarnings": [
+        "La duración de esta ficha es una estimación de planificación, no un tiempo oficial publicado."
+      ],
+      "durationIsEstimated": true,
+      "ascentM": 179,
+      "terrain": null
+    },
+    {
+      "trailId": 175,
+      "name": "Mirador Cerro El Porito - Purmamarca",
+      "location": "Purmamarca, Jujuy",
+      "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/69/Purmamarca_097.JPG/1280px-Purmamarca_097.JPG",
+      "trailTypes": [
+        "naturaleza",
+        "montaña",
+        "miradores"
+      ],
+      "difficulty": "facil",
+      "duration": "30 min",
+      "durationMinutes": 30,
+      "routeType": "out_and_back",
+      "distanceKm": 0.118,
+      "description": "Ascenso corto por la escalinata al mirador sobre Purmamarca y el Cerro de Siete Colores. Regresa por el mismo acceso; no incluye el circuito de Los Colorados ni asciende al Cerro de Siete Colores.",
+      "sources": [
+        {
+          "url": "https://www.turismo.jujuy.gob.ar/wp-content/uploads/Manual-para-Guias-Idoneos_QUEBRADA_v5.pdf",
+          "title": "Ficha del recorrido"
+        },
+        {
+          "url": "https://www.argentina.gob.ar/node/301483",
+          "title": "Informacion complementaria"
+        }
+      ],
+      "checkedAt": "2026-10-11",
+      "catalogVerification": "verified",
+      "durationScopeVerified": true,
+      "dataWarnings": [
+        "La duración de esta ficha es una estimación de planificación, no un tiempo oficial publicado."
+      ],
+      "durationIsEstimated": true,
+      "ascentM": 7,
+      "terrain": null
+    },
+    {
+      "trailId": 176,
+      "name": "Sendero Puerta del Cielo - Horco Molle a San Javier",
+      "location": "Sierra de San Javier, Tucuman",
+      "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bf/Parque_San_Javier-Acceso_por_Horco_Molle.jpg/1280px-Parque_San_Javier-Acceso_por_Horco_Molle.jpg",
+      "trailTypes": [
+        "naturaleza",
+        "montaña",
+        "bosques"
+      ],
+      "difficulty": "moderada",
+      "duration": "2 h",
+      "durationMinutes": 120,
+      "routeType": "point_to_point",
+      "distanceKm": 3.501,
+      "description": "Ascenso por la yunga desde Horco Molle hasta San Javier. La traza sigue los tramos cartografiados de Puerta del Cielo; es solo ida y requiere coordinar el regreso.",
+      "sources": [
+        {
+          "url": "https://www.tucumanturismo.gob.ar/articulos/articulo/520/sendero-puerta-del-cielo",
+          "title": "Ficha del recorrido"
+        }
+      ],
+      "checkedAt": "2026-10-11",
+      "catalogVerification": "verified",
+      "durationScopeVerified": true,
+      "durationIsEstimated": false,
+      "ascentM": 596,
+      "terrain": null
+    },
+    {
+      "trailId": 177,
+      "name": "Volcan Batea Mahuida - mirador del crater",
+      "location": "Villa Pehuenia, Neuquen",
+      "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0d/Crater_del_volcan_Batea_Mahuida_-_Villa_Pehuenia_-_Neuquen_-_Argentina.JPG/1280px-Crater_del_volcan_Batea_Mahuida_-_Villa_Pehuenia_-_Neuquen_-_Argentina.JPG",
+      "trailTypes": [
+        "naturaleza",
+        "montaña",
+        "miradores"
+      ],
+      "difficulty": "dificil",
+      "duration": "3 h",
+      "durationMinutes": 180,
+      "routeType": "out_and_back",
+      "distanceKm": 3.32,
+      "description": "Caminata por la huella de ascenso hasta el mirador elevado del crater del Batea Mahuida y regreso por el mismo camino. El recorrido comienza en el crater, no en Villa Pehuenia.",
+      "sources": [
+        {
+          "url": "https://turismo.neuquen.gob.ar/al-amparo-del-pehuen/",
+          "title": "Ficha del recorrido"
+        },
+        {
+          "url": "https://villapehuenia.gob.ar/turismo",
+          "title": "Informacion complementaria"
+        }
+      ],
+      "checkedAt": "2026-10-11",
+      "catalogVerification": "verified",
+      "durationScopeVerified": true,
+      "dataWarnings": [
+        "La duración de esta ficha es una estimación de planificación, no un tiempo oficial publicado."
+      ],
+      "durationIsEstimated": true,
+      "ascentM": 68,
+      "terrain": null
+    },
+    {
+      "trailId": 178,
+      "name": "Salto del Tabaquillo - Villa de Merlo",
+      "location": "Reserva Florofaunistica, Villa de Merlo, San Luis",
+      "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/52/Salto_del_Tabaquillo%2C_San_Luis.JPG/1280px-Salto_del_Tabaquillo%2C_San_Luis.JPG",
+      "trailTypes": [
+        "naturaleza",
+        "cascadas"
+      ],
+      "difficulty": "dificil",
+      "duration": "4 h",
+      "durationMinutes": 240,
+      "routeType": "out_and_back",
+      "distanceKm": 2.879,
+      "description": "Trekking guiado por la quebrada hasta el Salto del Tabaquillo, con regreso al acceso. No incluye la subida al Mogote Bayo ni el Filo Serrano.",
+      "sources": [
+        {
+          "url": "https://villademerlo.tur.ar/wp-content/uploads/2025/09/Guia-Informativa.pdf",
+          "title": "Ficha del recorrido"
+        },
+        {
+          "url": "https://villademerlo.tur.ar/pagina/circuitos/",
+          "title": "Informacion complementaria"
+        }
+      ],
+      "checkedAt": "2026-10-11",
+      "catalogVerification": "verified",
+      "durationScopeVerified": true,
+      "durationIsEstimated": false,
+      "ascentM": 449,
+      "terrain": null
+    },
+    {
+      "trailId": 179,
+      "name": "Cerro La Cruz desde barrio Baden - Esquel",
+      "location": "Esquel, Chubut",
+      "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a8/PanoramicadeEsquel.jpg/1280px-PanoramicadeEsquel.jpg",
+      "trailTypes": [
+        "naturaleza",
+        "montaña"
+      ],
+      "difficulty": "moderada",
+      "duration": "3 h",
+      "durationMinutes": 180,
+      "routeType": "out_and_back",
+      "distanceKm": 7.503,
+      "description": "Ascenso periurbano por la huella desde barrio Baden y el tramo peatonal final hasta la cruz, con regreso por la misma variante. No corresponde al acceso por barrio Ceferino.",
+      "sources": [
+        {
+          "url": "https://www.esquel.tur.ar/extras/folletos/folleto-recorre-esquel-en-zapatillas-2019.pdf",
+          "title": "Ficha del recorrido"
+        },
+        {
+          "url": "https://www.esquel.tur.ar/disfruta/excursiones-aventura/senderos-periurbanos",
+          "title": "Informacion complementaria"
+        }
+      ],
+      "checkedAt": "2026-10-11",
+      "catalogVerification": "verified",
+      "durationScopeVerified": true,
+      "dataWarnings": [
+        "La duración de esta ficha es una estimación de planificación, no un tiempo oficial publicado."
+      ],
+      "durationIsEstimated": true,
+      "ascentM": 605,
+      "terrain": null
+    },
+    {
+      "trailId": 180,
+      "name": "Salto Encantado - sendero al mirador frontal",
+      "location": "Parque Provincial Salto Encantado, Misiones",
+      "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/25/Vista2_de_frente_del_Salto_Encantado.JPG/1280px-Vista2_de_frente_del_Salto_Encantado.JPG",
+      "trailTypes": [
+        "naturaleza",
+        "cascadas",
+        "miradores"
+      ],
+      "difficulty": "facil",
+      "duration": "45 min",
+      "durationMinutes": 45,
+      "routeType": "out_and_back",
+      "distanceKm": 0.689,
+      "description": "Paseo por el deck hasta el mirador frontal del Salto Encantado y regreso por la misma pasarela. No baja a la base del salto ni incluye el sendero a Salto La Olla.",
+      "sources": [
+        {
+          "url": "https://misiones.tur.ar/encantado/",
+          "title": "Ficha del recorrido"
+        },
+        {
+          "url": "https://misiones.tur.ar/wp-content/uploads/2024/10/SALTO-ENCANTADO-FOLLETO24.pdf",
+          "title": "Informacion complementaria"
+        }
+      ],
+      "checkedAt": "2026-10-11",
+      "catalogVerification": "verified",
+      "durationScopeVerified": true,
+      "dataWarnings": [
+        "La duración de esta ficha es una estimación de planificación, no un tiempo oficial publicado."
+      ],
+      "durationIsEstimated": true,
+      "ascentM": 49,
+      "terrain": null
+    },
+    {
+      "trailId": 309,
+      "name": "Sendero Che Roga - Mburucuyá",
+      "location": "Parque Nacional Mburucuyá, Corrientes",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a1/Cartel_en_el_Sendero_Che_Roga.jpg",
+      "trailTypes": [
+        "naturaleza",
+        "lagos"
+      ],
+      "difficulty": "moderada",
+      "duration": "2 h 30 min",
+      "durationMinutes": 150,
+      "routeType": "out_and_back",
+      "distanceKm": 4.4,
+      "description": "Recorrido interpretativo entre monte, palmares jóvenes y lagunas de Mburucuyá.",
+      "sources": [
+        {
+          "url": "https://www.argentina.gob.ar/node/150096",
+          "title": "APN - Mburucuyá - Actividades"
+        }
+      ],
+      "checkedAt": "2026-10-17",
+      "catalogVerification": "verified",
+      "durationScopeVerified": true,
+      "durationIsEstimated": false,
+      "ascentM": null,
+      "terrain": null
+    },
+    {
+      "trailId": 310,
+      "name": "Histórico Tapé Porá - Mburucuyá",
+      "location": "Parque Nacional Mburucuyá, Corrientes",
+      "imageUrl": "https://www.argentina.gob.ar/sites/default/files/pn_mburucuya_banner.png",
+      "trailTypes": [
+        "naturaleza"
+      ],
+      "difficulty": "facil",
+      "duration": "1 h",
+      "durationMinutes": 60,
+      "routeType": "out_and_back",
+      "distanceKm": 1,
+      "description": "Paseo interpretativo sobre la historia de las estancias Santa Teresa y Santa María, hoy parte del parque.",
+      "sources": [
+        {
+          "url": "https://www.argentina.gob.ar/node/150096",
+          "title": "APN - Mburucuyá - Actividades"
+        }
+      ],
+      "checkedAt": "2026-10-17",
+      "catalogVerification": "verified",
+      "durationScopeVerified": true,
+      "durationIsEstimated": false,
+      "ascentM": null,
+      "terrain": null
+    },
+    {
+      "trailId": 311,
+      "name": "Sendero La Chuña - El Rey",
+      "location": "Parque Nacional El Rey, Salta",
+      "imageUrl": "https://www.argentina.gob.ar/sites/default/files/pn_el_rey25.png",
+      "trailTypes": [
+        "naturaleza"
+      ],
+      "difficulty": "facil",
+      "duration": "2 h",
+      "durationMinutes": 120,
+      "routeType": "out_and_back",
+      "distanceKm": 4,
+      "description": "Antigua senda ganadera que permite observar la recuperación del ambiente natural.",
+      "sources": [
+        {
+          "url": "https://www.argentina.gob.ar/parquesnacionales/region-noroeste/parque-nacional-el-rey/actividades",
+          "title": "APN - El Rey - Actividades"
+        }
+      ],
+      "checkedAt": "2026-10-17",
+      "catalogVerification": "verified",
+      "durationScopeVerified": true,
+      "durationIsEstimated": false,
+      "ascentM": null,
+      "terrain": null
+    },
+    {
+      "trailId": 312,
+      "name": "Laguna Los Patitos - El Rey",
+      "location": "Parque Nacional El Rey, Salta",
+      "imageUrl": "https://www.argentina.gob.ar/sites/default/files/pn_el_rey13.png",
+      "trailTypes": [
+        "naturaleza",
+        "lagos"
+      ],
+      "difficulty": "facil",
+      "duration": "1 h 30 min",
+      "durationMinutes": 90,
+      "routeType": "out_and_back",
+      "distanceKm": 3,
+      "description": "Caminata hasta un pequeño embalse artificial aprovechado por aves y mamíferos de la zona.",
+      "sources": [
+        {
+          "url": "https://www.argentina.gob.ar/parquesnacionales/region-noroeste/parque-nacional-el-rey/actividades",
+          "title": "APN - El Rey - Actividades"
+        }
+      ],
+      "checkedAt": "2026-10-17",
+      "catalogVerification": "verified",
+      "durationScopeVerified": true,
+      "durationIsEstimated": false,
+      "ascentM": null,
+      "terrain": null
+    },
+    {
+      "trailId": 314,
+      "name": "Farallones - Sierra de las Quijadas",
+      "location": "Parque Nacional Sierra de las Quijadas, San Luis",
+      "imageUrl": "https://www.argentina.gob.ar/sites/default/files/pn_sierra_de_las_quijadas21.png",
+      "trailTypes": [
+        "naturaleza"
+      ],
+      "difficulty": "dificil",
+      "duration": "4 h",
+      "durationMinutes": 240,
+      "routeType": "out_and_back",
+      "distanceKm": 9,
+      "description": "Descenso al Potrero de la Aguada para conocer el pie de los paredones rojos de los Farallones. Requiere guía.",
+      "sources": [
+        {
+          "url": "https://www.argentina.gob.ar/parquesnacionales/centro/parque-nacional-sierra-de-las-quijadas/actividades",
+          "title": "APN - Sierra de las Quijadas - Actividades"
+        }
+      ],
+      "checkedAt": "2026-10-17",
+      "catalogVerification": "verified",
+      "durationScopeVerified": true,
+      "durationIsEstimated": false,
+      "ascentM": null,
+      "terrain": null
+    },
+    {
+      "trailId": 315,
+      "name": "Cerro Leoncito - El Leoncito",
+      "location": "Parque Nacional El Leoncito, San Juan",
+      "imageUrl": "https://www.argentina.gob.ar/sites/default/files/pn_el_leoncito19_banner.png",
+      "trailTypes": [
+        "naturaleza",
+        "montaña",
+        "miradores"
+      ],
+      "difficulty": "dificil",
+      "duration": "3 h",
+      "durationMinutes": 180,
+      "routeType": "out_and_back",
+      "distanceKm": 8,
+      "description": "Ascenso por quebradas y un filo de precordillera hasta una cima con vistas de los Andes.",
+      "sources": [
+        {
+          "url": "https://www.argentina.gob.ar/parquesnacionales/centro/parque-nacional-el-leoncito/actividades",
+          "title": "APN - El Leoncito - Actividades"
+        }
+      ],
+      "checkedAt": "2026-10-17",
+      "catalogVerification": "verified",
+      "durationScopeVerified": true,
+      "durationIsEstimated": false,
+      "ascentM": null,
+      "terrain": null
+    },
+    {
+      "trailId": 316,
+      "name": "Pampa Alta - Tierra del Fuego",
+      "location": "Parque Nacional Tierra del Fuego, Ushuaia, Tierra del Fuego",
+      "imageUrl": "https://www.argentina.gob.ar/sites/default/files/pn_tierra_del_fuego21.png",
+      "trailTypes": [
+        "naturaleza",
+        "bosques"
+      ],
+      "difficulty": "moderada",
+      "duration": "2 h",
+      "durationMinutes": 120,
+      "routeType": "point_to_point",
+      "distanceKm": 4.7,
+      "description": "Travesía por el bosque entre Ensenada y el río Pipo, con interpretación del ambiente forestal.",
+      "sources": [
+        {
+          "url": "https://www.argentina.gob.ar/parquesnacionales/patagonia-austral/senderos-del-parque-nacional-tierra-del-fuego",
+          "title": "APN - Senderos del PN Tierra del Fuego"
+        }
+      ],
+      "checkedAt": "2026-10-17",
+      "catalogVerification": "verified",
+      "durationScopeVerified": true,
+      "durationIsEstimated": false,
+      "ascentM": null,
+      "terrain": null
+    },
+    {
+      "trailId": 317,
+      "name": "Cerro Alto El Petiso - Los Alerces",
+      "location": "Parque Nacional Los Alerces, Chubut",
+      "imageUrl": "https://www.argentina.gob.ar/sites/default/files/panoramicas_pnla5.png",
+      "trailTypes": [
+        "naturaleza",
+        "montaña",
+        "bosques"
+      ],
+      "difficulty": "dificil",
+      "duration": "7 h",
+      "durationMinutes": 420,
+      "routeType": "out_and_back",
+      "distanceKm": 16,
+      "description": "Ascenso desde Puerto Mermoud por bosque, arroyo, filo y pedrero hasta la cumbre. Requiere guía y registro.",
+      "sources": [
+        {
+          "url": "https://www.argentina.gob.ar/parquesnacionales/regionpatagonia/parque-nacional-los-alerces/actividades",
+          "title": "APN - Los Alerces - Actividades"
+        }
+      ],
+      "checkedAt": "2026-10-17",
+      "catalogVerification": "verified",
+      "durationScopeVerified": true,
+      "durationIsEstimated": false,
+      "ascentM": null,
+      "terrain": [
+        "rocky",
+        "steep"
+      ]
+    },
+    {
+      "trailId": 318,
+      "name": "Laguna Escondida - Los Alerces",
+      "location": "Parque Nacional Los Alerces, Chubut",
+      "imageUrl": "https://www.argentina.gob.ar/sites/default/files/panoramicas_pnla3.png",
+      "trailTypes": [
+        "naturaleza",
+        "lagos",
+        "bosques",
+        "miradores"
+      ],
+      "difficulty": "moderada",
+      "duration": "3 h 30 min",
+      "durationMinutes": 210,
+      "routeType": "out_and_back",
+      "distanceKm": 6,
+      "description": "Ascenso por bosque hasta la laguna, con vistas de los lagos Verde y Menéndez durante el recorrido.",
+      "sources": [
+        {
+          "url": "https://www.argentina.gob.ar/parquesnacionales/regionpatagonia/parque-nacional-los-alerces/actividades",
+          "title": "APN - Los Alerces - Actividades"
+        }
+      ],
+      "checkedAt": "2026-10-17",
+      "catalogVerification": "verified",
+      "durationScopeVerified": true,
+      "durationIsEstimated": false,
+      "ascentM": null,
+      "terrain": null
+    },
+    {
+      "trailId": 319,
+      "name": "Cascada Arroyo del Hacha - Los Alerces",
+      "location": "Parque Nacional Los Alerces, Chubut",
+      "imageUrl": "https://www.argentina.gob.ar/sites/default/files/panoramicas_los_alerces20.png",
+      "trailTypes": [
+        "naturaleza",
+        "cascadas",
+        "miradores"
+      ],
+      "difficulty": "moderada",
+      "duration": "1 h",
+      "durationMinutes": 60,
+      "routeType": "out_and_back",
+      "distanceKm": 2,
+      "description": "Recorrido desde la Seccional Rivadavia hasta una cascada y un mirador del lago Rivadavia.",
+      "sources": [
+        {
+          "url": "https://www.argentina.gob.ar/parquesnacionales/regionpatagonia/parque-nacional-los-alerces/actividades",
+          "title": "APN - Los Alerces - Actividades"
+        }
+      ],
+      "checkedAt": "2026-10-17",
+      "catalogVerification": "verified",
+      "durationScopeVerified": true,
+      "durationIsEstimated": false,
+      "ascentM": null,
+      "terrain": null
+    },
+    {
+      "trailId": 320,
+      "name": "Cerro Cocinero - Los Alerces",
+      "location": "Parque Nacional Los Alerces, Chubut",
+      "imageUrl": "https://www.argentina.gob.ar/sites/default/files/panoramicas_los_alerces22.png",
+      "trailTypes": [
+        "naturaleza",
+        "montaña"
+      ],
+      "difficulty": "dificil",
+      "duration": "6 h",
+      "durationMinutes": 360,
+      "routeType": "out_and_back",
+      "distanceKm": 16,
+      "description": "Ascenso desde el Arroyo Rañinto a uno de los cerros del Cordón Situación. Se recomienda guía habilitado.",
+      "sources": [
+        {
+          "url": "https://www.argentina.gob.ar/parquesnacionales/regionpatagonia/parque-nacional-los-alerces/actividades",
+          "title": "APN - Los Alerces - Actividades"
+        }
+      ],
+      "checkedAt": "2026-10-17",
+      "catalogVerification": "verified",
+      "durationScopeVerified": true,
+      "durationIsEstimated": false,
+      "ascentM": null,
+      "terrain": null
+    },
+    {
+      "trailId": 321,
+      "name": "Cerro Llao Llao desde Villa Tacul",
+      "location": "Parque Municipal Llao Llao, Bariloche, Río Negro",
+      "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d6/Cerro_Llao_Llao_%2830753958590%29.jpg/1280px-Cerro_Llao_Llao_%2830753958590%29.jpg",
+      "trailTypes": [
+        "naturaleza",
+        "montaña",
+        "bosques",
+        "lagos",
+        "miradores"
+      ],
+      "difficulty": "facil",
+      "duration": "2 h",
+      "durationMinutes": 120,
+      "routeType": "out_and_back",
+      "distanceKm": 5,
+      "description": "Ascenso al mirador del cerro desde Villa Tacul, con bosque y panorámicas de los lagos Moreno y Nahuel Huapi.",
+      "sources": [
+        {
+          "url": "https://barilochetrekking.com/sendero-mb2/",
+          "title": "Bariloche Trekking / Club Andino Bariloche - Cerro Llao Llao"
+        },
+        {
+          "url": "https://www.barilocheturismo.gob.ar/es/aventura-trekking",
+          "title": "Turismo de Bariloche - Bosque del Cerro Llao Llao"
+        }
+      ],
+      "checkedAt": "2026-10-17",
+      "catalogVerification": "verified",
+      "durationScopeVerified": true,
+      "durationIsEstimated": false,
+      "ascentM": null,
+      "terrain": null
+    },
+    {
+      "trailId": 322,
+      "name": "Secretos bajo nuestros pies - Quebrada del Condorito",
+      "location": "Parque Nacional Quebrada del Condorito, Córdoba",
+      "imageUrl": "https://www.argentina.gob.ar/sites/default/files/pn_quebrada_del_condorito27.png",
+      "trailTypes": [
+        "naturaleza"
+      ],
+      "difficulty": "facil",
+      "duration": "1 h",
+      "durationMinutes": 60,
+      "routeType": "out_and_back",
+      "distanceKm": 1.056,
+      "description": "Paseo interpretativo sobre el suelo, la erosión y la retención de agua, frente al Estacionamiento 1 del parque.",
+      "sources": [
+        {
+          "url": "https://www.argentina.gob.ar/parquesnacionales/centro/parque-nacional-quebrada-del-condorito/actividades",
+          "title": "APN - Quebrada del Condorito - Actividades"
+        }
+      ],
+      "checkedAt": "2026-10-17",
+      "catalogVerification": "verified",
+      "durationScopeVerified": true,
+      "durationIsEstimated": false,
+      "ascentM": null,
+      "terrain": null
+    },
+    {
+      "trailId": 323,
+      "name": "Puesto Los Chorizos - Aconquija",
+      "location": "Portal Campo de los Alisos, Parque Nacional Aconquija, Tucumán",
+      "imageUrl": "https://www.argentina.gob.ar/sites/default/files/pn_aconquija17.png",
+      "trailTypes": [
+        "naturaleza",
+        "bosques"
+      ],
+      "difficulty": "facil",
+      "duration": "3 h",
+      "durationMinutes": 180,
+      "routeType": "out_and_back",
+      "distanceKm": 9,
+      "description": "Caminata por selva montana desde Santa Rosa hasta el puesto, con retorno por el mismo sendero. El tiempo total es orientativo: se calculó duplicando el tiempo de ida publicado.",
+      "sources": [
+        {
+          "url": "https://www.argentina.gob.ar/parquesnacionales/region-noroeste/parque-nacional-aconquija/actividades",
+          "title": "APN - Aconquija - Actividades"
+        }
+      ],
+      "checkedAt": "2026-10-17",
+      "catalogVerification": "verified",
+      "durationScopeVerified": true,
+      "durationIsEstimated": true,
+      "ascentM": null,
+      "terrain": null
+    },
+    {
+      "trailId": 324,
+      "name": "El Pozón - Aconquija",
+      "location": "Portal Campo de los Alisos, Parque Nacional Aconquija, Tucumán",
+      "imageUrl": "https://www.argentina.gob.ar/sites/default/files/pn_aconquija9.png",
+      "trailTypes": [
+        "naturaleza",
+        "bosques"
+      ],
+      "difficulty": "facil",
+      "duration": "30 min",
+      "durationMinutes": 30,
+      "routeType": "out_and_back",
+      "distanceKm": 0.404,
+      "description": "Breve sendero de selva montana hasta un pozón natural del Arroyo Sufrimiento. El tiempo total es orientativo: se calculó duplicando el tiempo de ida publicado.",
+      "sources": [
+        {
+          "url": "https://www.argentina.gob.ar/parquesnacionales/region-noroeste/parque-nacional-aconquija/actividades",
+          "title": "APN - Aconquija - Actividades"
+        }
+      ],
+      "checkedAt": "2026-10-17",
+      "catalogVerification": "verified",
+      "durationScopeVerified": true,
+      "durationIsEstimated": true,
+      "ascentM": null,
+      "terrain": null
+    },
+    {
+      "trailId": 325,
+      "name": "Península Belgrano - Circuito Chico",
+      "location": "Parque Nacional Perito Moreno, Santa Cruz",
+      "imageUrl": "https://www.argentina.gob.ar/sites/default/files/panoramica_pn_perito_moreno_02.png",
+      "trailTypes": [
+        "naturaleza",
+        "lagos"
+      ],
+      "difficulty": "moderada",
+      "duration": "3-4 h",
+      "durationMinutes": 240,
+      "routeType": "loop",
+      "distanceKm": 9.6,
+      "description": "Circuito por el centro de la península, entre paisajes ondulados y vistas del Lago Belgrano.",
+      "sources": [
+        {
+          "url": "https://www.argentina.gob.ar/parquesnacionales/patagonia-austral/parque-nacional-perito-moreno/actividades",
+          "title": "APN - Perito Moreno - Actividades"
+        }
+      ],
+      "checkedAt": "2026-10-17",
+      "catalogVerification": "verified",
+      "durationScopeVerified": true,
+      "durationIsEstimated": false,
+      "ascentM": null,
+      "terrain": null
+    },
+    {
+      "trailId": 326,
+      "name": "Península Belgrano - Circuito Grande",
+      "location": "Parque Nacional Perito Moreno, Santa Cruz",
+      "imageUrl": "https://www.argentina.gob.ar/sites/default/files/panoramica_pn_perito_moreno_08.png",
+      "trailTypes": [
+        "naturaleza",
+        "lagos"
+      ],
+      "difficulty": "dificil",
+      "duration": "5-6 h",
+      "durationMinutes": 360,
+      "routeType": "loop",
+      "distanceKm": 16.8,
+      "description": "Circuito por las costas oeste y sur de la península. Comparte cabecera con el Chico, pero sigue otro itinerario.",
+      "sources": [
+        {
+          "url": "https://www.argentina.gob.ar/parquesnacionales/patagonia-austral/parque-nacional-perito-moreno/actividades",
+          "title": "APN - Perito Moreno - Actividades"
+        }
+      ],
+      "checkedAt": "2026-10-17",
+      "catalogVerification": "verified",
+      "durationScopeVerified": true,
+      "durationIsEstimated": false,
+      "ascentM": null,
+      "terrain": null
+    },
+    {
+      "trailId": 327,
+      "name": "Puerto Canoa - Cara Sur del Volcán Lanín",
+      "location": "Parque Nacional Lanín, Huechulafquen, Neuquén",
+      "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d6/Cara_Sur_Volc%C3%A1n_Lan%C3%ADn..JPG/1280px-Cara_Sur_Volc%C3%A1n_Lan%C3%ADn..JPG",
+      "trailTypes": [
+        "naturaleza",
+        "montaña",
+        "bosques",
+        "miradores"
+      ],
+      "difficulty": "dificil",
+      "duration": "9 h",
+      "durationMinutes": 540,
+      "routeType": "out_and_back",
+      "distanceKm": 20,
+      "description": "Ascenso desde Puerto Canoa por bosque hasta vistas de la cara sur y el glaciar del Lanín, regresando por la misma vía.",
+      "sources": [
+        {
+          "url": "https://patagonia.gob.ar/senderos/circuito-andino/",
+          "title": "Ente Oficial de Turismo Patagonia Argentina - Circuito Andino"
+        }
+      ],
+      "checkedAt": "2026-10-17",
+      "catalogVerification": "verified",
+      "durationScopeVerified": true,
+      "durationIsEstimated": false,
+      "ascentM": null,
+      "terrain": [
+        "rocky"
+      ]
+    },
+    {
+      "trailId": 328,
+      "name": "Laguna Rosales - San Martín de los Andes",
+      "location": "Laguna Rosales, San Martín de los Andes, Neuquén",
+      "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f5/Laguna_Rosales%2C_San_Mart%C3%ADn_de_Los_Andes%2C_Argentina%2C_2024.jpg/1280px-Laguna_Rosales%2C_San_Mart%C3%ADn_de_Los_Andes%2C_Argentina%2C_2024.jpg",
+      "trailTypes": [
+        "naturaleza",
+        "lagos",
+        "miradores"
+      ],
+      "difficulty": "facil",
+      "duration": "4 h",
+      "durationMinutes": 240,
+      "routeType": "point_to_point",
+      "distanceKm": 14,
+      "description": "Travesía desde el acceso a Laguna Rosales hacia San Martín de los Andes, con humedal y vistas del valle.",
+      "sources": [
+        {
+          "url": "https://patagonia.gob.ar/senderos/circuito-andino/",
+          "title": "Ente Oficial de Turismo Patagonia Argentina - Circuito Andino"
+        }
+      ],
+      "checkedAt": "2026-10-17",
+      "catalogVerification": "verified",
+      "durationScopeVerified": true,
+      "durationIsEstimated": false,
+      "ascentM": null,
+      "terrain": null
+    }
+  ]
+}

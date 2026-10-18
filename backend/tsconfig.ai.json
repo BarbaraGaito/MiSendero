@@ -3,7 +3,7 @@
     "target": "ES2022", "module": "CommonJS", "moduleResolution": "Node",
     "strict": true, "esModuleInterop": true, "skipLibCheck": true,
     "rootDir": "src/ai", "outDir": "dist/ai", "sourceMap": true,
-    "types": ["node"], "lib": ["ES2022", "DOM"]
+    "types": ["node"], "lib": ["ES2022", "DOM"], "resolveJsonModule": true
   },
   "include": ["src/ai/**/*.ts"]
 }

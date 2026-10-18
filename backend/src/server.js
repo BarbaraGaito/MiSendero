@@ -109,8 +109,12 @@ const scheduleStaleReportsCleanup = () => {
 };
 
 const start = async () => {
-  await runMigrations();
-  await seedDatabase();
+  // RDS schema and catalog changes are explicit operator actions, never production boot effects.
+  if (process.env.NODE_ENV !== "production") {
+    await runMigrations();
+    await seedDatabase();
+  }
+  void require("../dist/ai/model").localRanker.start();
   scheduleStaleReportsCleanup();
   const notifyTrips = () => processTripNotifications().catch((error) => logger.error(error, "No se pudieron procesar avisos de regreso"));
   void notifyTrips();

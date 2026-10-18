@@ -1,10 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { ActivityIndicator, KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
-import { router } from "expo-router";
+import { router, useFocusEffect } from "expo-router";
 import { useNetworkState } from "expo-network";
 import { Card, PrimaryButton, ScreenShell, ScreenTitle, colors } from "../components/MiSenderoUI";
 import { TrailRecommendationCard } from "../components/TrailRecommendationCard";
-import { findRecommendedTrail } from "../../services/trailAssistant";
+import { ExperienceProfileRequiredError, findRecommendedTrail, getRecommendationExperience } from "../../services/trailAssistant";
 import type { Difficulty, Duration, RecommendationResponse, TrailPreferences, TrailType } from "../../services/trailAssistant";
 
 const types: { value: TrailType; label: string }[] = [
@@ -23,6 +23,7 @@ const difficulties: { value: Difficulty; label: string }[] = [
   { value: "dificil", label: "Difícil" }, { value: "cualquiera", label: "Cualquiera" },
 ];
 const questions = ["¿A dónde querés ir?", "¿Qué tipo de sendero te gustaría hacer?", "¿Cuánto tiempo querés caminar?", "¿Qué dificultad preferís?"];
+const completeProfile = () => router.replace({ pathname: "/onboarding-experiencia", params: { returnTo: "recommendation" } });
 export default function DiscoverTrailScreen() {
   const network = useNetworkState();
   const offline = network.isConnected === false || network.isInternetReachable === false;
@@ -31,6 +32,9 @@ export default function DiscoverTrailScreen() {
   const [trailTypes, setTrailTypes] = useState<TrailType[]>([]);
   const [duration, setDuration] = useState<Duration | null>(null);
   const [difficulty, setDifficulty] = useState<Difficulty | null>(null);
+  const [profileReady, setProfileReady] = useState(false);
+  const [profileError, setProfileError] = useState<string | null>(null);
+  const [profileCheck, setProfileCheck] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<RecommendationResponse | null>(null);
@@ -41,20 +45,34 @@ export default function DiscoverTrailScreen() {
   const inFlight = useRef(false);
   const scroll = useRef<ScrollView>(null);
   useEffect(() => { mounted.current = true; return () => { mounted.current = false; }; }, []);
+  useFocusEffect(useCallback(() => {
+    let active = true;
+    setProfileReady(false); setProfileError(null);
+    void getRecommendationExperience().then(() => { if (active) setProfileReady(true); }).catch((error) => {
+      if (!active) return;
+      if (error instanceof ExperienceProfileRequiredError) completeProfile();
+      else setProfileError("No pudimos leer tu perfil de experiencia. Volvé a intentar.");
+    });
+    return () => { active = false; };
+  }, [profileCheck]));
   useEffect(() => { scroll.current?.scrollTo({ y: 0, animated: true }); }, [step, result, loading]);
   const toggleType = (type: TrailType) => setTrailTypes((current) => type === "cualquiera" ? [type] :
     current.includes(type) ? current.filter((t) => t !== type) : [...current.filter((t) => t !== "cualquiera"), type]);
-  const canContinue = [destination.trim().length >= 2, trailTypes.length > 0, duration !== null, difficulty !== null][step];
+  const hasDestination = destination.trim().length >= 2 && destination.trim().length <= 120;
+  const canContinue = [hasDestination, trailTypes.length > 0, duration !== null, difficulty !== null][step];
   const edit = () => { setResult(null); setError(null); setStep(0); };
   const submit = async () => {
-    if (inFlight.current || !duration || !difficulty || !trailTypes.length || destination.trim().length < 2) return;
+    if (inFlight.current || offline || !profileReady || !duration || !difficulty || !trailTypes.length || !hasDestination) return;
     inFlight.current = true; setLoading(true); setError(null);
     try {
       const preferences: TrailPreferences = { destination: destination.trim(), trailTypes, duration, difficulty };
       const response = await findRecommendedTrail(preferences);
       if (mounted.current) setResult(response);
     } catch (e) {
-      if (mounted.current) setError(e instanceof Error ? e.message : "No pudimos buscar tu sendero. Intentá nuevamente.");
+      if (mounted.current) {
+        if (e instanceof ExperienceProfileRequiredError) { setProfileReady(false); completeProfile(); }
+        else setError(e instanceof Error ? e.message : "No pudimos buscar tu sendero. Intentá nuevamente.");
+      }
     } finally { inFlight.current = false; if (mounted.current) setLoading(false); }
   };
   const options = step === 1 ? types : step === 2 ? durations : difficulties;
@@ -64,9 +82,14 @@ export default function DiscoverTrailScreen() {
         <Pressable accessibilityRole="button" accessibilityLabel="Volver" onPress={() => router.back()} style={styles.back}>
           <Text style={styles.backText}>‹ Volver</Text>
         </Pressable>
-        <ScreenTitle eyebrow="RECOMENDACIÓN CON IA" title="Descubrí tu sendero" subtitle="Cuatro respuestas para encontrar tu próxima caminata." />
+        <ScreenTitle eyebrow="TU PRÓXIMA CAMINATA" title="Descubrí tu sendero" subtitle="Cuatro respuestas para encontrar un recorrido para vos." />
         {offline ? <Text accessibilityLiveRegion="polite" style={styles.notice}>Necesitás Internet para generar recomendaciones nuevas. Los mapas descargados siguen disponibles sin conexión.</Text> : null}
-        {loading ? <Card>
+        {!profileReady ? <Card>
+          {profileError ? <>
+            <Text accessibilityRole="alert" style={styles.error}>{profileError}</Text>
+            <PrimaryButton label="Reintentar" onPress={() => setProfileCheck((value) => value + 1)} />
+          </> : <ActivityIndicator accessibilityLabel="Consultando tu perfil de experiencia" color={colors.green} />}
+        </Card> : loading ? <Card>
           <ActivityIndicator size="large" color={colors.green} accessibilityLabel="Buscando el sendero ideal para vos..." />
           <Text accessibilityLiveRegion="polite" style={styles.loading}>Buscando el sendero ideal para vos...</Text>
         </Card> : result ? <View accessibilityLiveRegion="polite">
@@ -83,10 +106,11 @@ export default function DiscoverTrailScreen() {
             <TextInput accessibilityLabel="Destino" placeholder="Por ejemplo: Bariloche o El Chaltén" placeholderTextColor={colors.muted}
               value={destination} onChangeText={setDestination} maxLength={120} autoCapitalize="words" returnKeyType="next"
               onSubmitEditing={() => { if (canContinue) setStep(1); }} style={styles.input} />
-            <Text style={styles.hint}>Escribí una ciudad, provincia o parque. Cuanto más preciso sea el lugar, mejor.</Text>
+            <Text style={styles.hint}>Escribí el lugar donde te gustaría hacer trekking.</Text>
           </Card> : <>
-            {step === 1 ? <Text style={styles.hint}>Podés elegir varias opciones. Buscaremos coincidencias con al menos una.</Text> : null}
-            {step === 2 ? <Text style={styles.hint}>Tiempo total de caminata, incluyendo ida y vuelta cuando corresponde.</Text> : null}
+            {step === 1 ? <Text style={styles.hint}>Podés elegir varias opciones. Priorizamos estos paisajes; si no hay coincidencias, te mostramos una alternativa y te avisamos.</Text> : null}
+            {step === 2 ? <Text style={styles.hint}>Tiempo total de caminata, incluyendo ida y vuelta cuando corresponde. Si no hay coincidencia exacta, podemos sugerir una duración cercana y te avisamos.</Text> : null}
+            {step === 3 ? <Text style={styles.hint}>Podemos sugerir una dificultad menor. Siempre respetamos el límite de experiencia de tu perfil.</Text> : null}
             {options.map((option) => {
               const selected = step === 1 ? trailTypes.includes(option.value as TrailType) : step === 2 ? duration === option.value : difficulty === option.value;
               return <Pressable key={option.value} accessibilityRole={step === 1 ? "checkbox" : "radio"} accessibilityLabel={option.label}
@@ -100,7 +124,7 @@ export default function DiscoverTrailScreen() {
           {error ? <Text accessibilityRole="alert" style={styles.error}>{error}</Text> : null}
           <View style={styles.actions}>
             {step > 0 ? <PrimaryButton label="Anterior" tone="secondary" onPress={() => { setError(null); setStep((s) => s - 1); }} /> : null}
-            <PrimaryButton label={step === 3 ? "Encontrar mi sendero" : "Continuar"} disabled={!canContinue}
+            <PrimaryButton label={step === 3 ? "Encontrar mi sendero" : "Continuar"} disabled={!canContinue || (step === 3 && offline)}
               onPress={() => { if (step === 3) void submit(); else { setError(null); setStep((s) => s + 1); } }} />
           </View>
         </>}

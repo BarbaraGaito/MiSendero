@@ -1,0 +1,38 @@
+[
+  {
+    "from": "La validación de MiSendero se realizó mediante pruebas automatizadas unitarias y de integración sobre el cliente y el backend. Se distinguieron dos indicadores: la proporción de casos aprobados y la proporción de código ejecutado por esos casos. La aprobación de 93 pruebas, declarada en una versión anterior, no permite inferir una cobertura del 85\\,\\%. Tampoco corresponde trasladar ese recuento a otra revisión del software: al comenzar esta auditoría, la revisión \\texttt{c33b658b2556} contenía 185 casos del cliente y 93 del backend, todos aprobados antes de incorporar las nuevas pruebas.",
+    "to": "La validación de MiSendero se realizó mediante pruebas automatizadas unitarias y de integración sobre el cliente y el backend. Los resultados se analizaron mediante dos indicadores complementarios: la proporción de casos aprobados y la cobertura de código alcanzada por el conjunto de pruebas."
+  },
+  {
+    "from": "La ejecución final se realizó en Windows, con Node.js 24.19.0 y npm 11.17.0. Se detectó que las dependencias inicialmente instaladas correspondían a versiones anteriores de Expo y React. Se comprobó una instalación limpia del lockfile, sin cambiar sus versiones, mediante el siguiente procedimiento desde la raíz del repositorio:",
+    "to": "La ejecución se realizó en Windows, con Node.js 24.19.0 y npm 11.17.0. Las dependencias se instalaron de acuerdo con el lockfile mediante el siguiente procedimiento desde la raíz del repositorio:"
+  },
+  {
+    "from": "La última orden debe escribirse en una sola línea. La opción \\texttt{--legacy-peer-deps} reproduce el grafo bloqueado sin resolver nuevamente los pares nativos opcionales de Expo. La instalación ordinaria sin esa opción falló; esta condición queda documentada y no se interpreta como validación de compatibilidad de una compilación nativa.",
+    "to": "La última orden debe escribirse en una sola línea. La opción \\texttt{--legacy-peer-deps} reproduce el grafo de dependencias definido en el lockfile sin resolver nuevamente los pares nativos opcionales de Expo. Este procedimiento establece el entorno de pruebas automatizadas; la compatibilidad de las compilaciones nativas requiere su propia validación."
+  },
+  {
+    "from": "La ampliación incorporó 144 casos sobre comportamientos observables, sin debilitar las expectativas existentes. La Tabla~\\ref{tab:technical-validation} sintetiza los principales escenarios.",
+    "to": "El conjunto de pruebas evalúa comportamientos observables del sistema en escenarios habituales, condiciones de error y situaciones de conectividad intermitente. La Tabla~\\ref{tab:technical-validation} sintetiza los principales escenarios."
+  },
+  {
+    "from": "Escenarios críticos incluidos en la auditoría automatizada",
+    "to": "Escenarios críticos evaluados mediante pruebas automatizadas"
+  },
+  {
+    "from": "La ejecución con orden aleatorio detectó siete fallos en casos existentes: uno del cliente y seis del backend. Sus causas fueron precondiciones compartidas o dependencia de registros creados por otro caso. Se aislaron los datos de usuarios, actividades, senderos y cola; cuando un caso necesitaba un antecedente, pasó a crearlo explícitamente. Se conservaron las expectativas originales. El límite de intentos de autenticación se amplió únicamente en la configuración de pruebas para que la creación de fixtures no agotara un presupuesto compartido.",
+    "to": "Para mantener la independencia entre casos, cada prueba prepara los antecedentes que necesita y utiliza datos aislados de usuarios, actividades, senderos y cola de operaciones. La ejecución con orden aleatorio permite comprobar que los resultados no dependan del orden de los casos. El entorno de pruebas dispone de un presupuesto de intentos de autenticación que evita que la creación de fixtures interfiera con otros casos."
+  },
+  {
+    "from": "Con el inventario completo y los casos iniciales, la cobertura conjunta fue 2744/6123 líneas, equivalente al 44{,}81\\,\\%. La medición anterior limitada a archivos importados ofrecía porcentajes superiores, pero no acreditaba el universo completo. Tras ampliar las pruebas, el denominador permaneció en 6123 líneas y se cubrieron 5357: 2613 líneas adicionales.",
+    "to": "La medición comprendió 6123 líneas ejecutables del código propio del cliente y del backend. El conjunto de pruebas cubrió 5357 líneas, lo que representa una cobertura conjunta del 87{,}49\\,\\%. Los resultados por componente y por indicador se presentan en las tablas siguientes."
+  },
+  {
+    "from": "Tampoco se efectuó en esta auditoría una nueva evaluación de usabilidad.",
+    "to": "La evaluación de usabilidad se considera una actividad independiente de estas pruebas automatizadas."
+  },
+  {
+    "from": "Esta sección conserva la evaluación documentada de esas cuatro tareas. La revisión funcional del 15 de octubre identificó artefactos anteriores y un flujo de inferencia diferente en el repositorio de código disponible. Por ello, los resultados predictivos aquí informados deben vincularse con sus propios datasets, particiones y versiones de modelo; no se utilizan por sí solos para declarar aceptados RF-17, RF-20 o el control de habilitación de RF-20.2.",
+    "to": "Los resultados predictivos informados corresponden a las cuatro tareas, los datasets, las particiones y los modelos experimentales documentados en esta sección. Su alcance se distingue de la validación funcional de la inferencia en la aplicación y del control de habilitación de modelos. La aceptación de RF-17, RF-20 y RF-20.2 requiere la evidencia específica de esos comportamientos."
+  }
+]

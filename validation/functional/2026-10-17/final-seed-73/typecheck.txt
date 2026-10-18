@@ -1,0 +1,7 @@
+$ executable: C:\Program Files\nodejs\node.exe
+$ args: ["D:\\AppPFI\\MiSendero\\node_modules\\typescript\\bin\\tsc","--noEmit"]
+$ cwd: D:\AppPFI\MiSendero
+
+STDOUT
+
+STDERR

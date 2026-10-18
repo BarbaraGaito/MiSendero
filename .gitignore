@@ -167,6 +167,8 @@ backend/ml/artifacts/
 # Raw temporary coverage experiments; retained evidence is in docs/coverage-audit-2026-10-16/.
 /tmp/coverage-*
 
+# Scratch files for functional validation; publishable evidence lives in validation/.
+/tmp/functional-audit/
 # Local catalog research, image QA and database backups. Canonical evidence is versioned in backend/src/data/.
 /tmp/expansion-review/
 /tmp/pdfs/

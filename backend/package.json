@@ -10,6 +10,11 @@
     "db:migrate": "node src/migrate.js",
     "db:seed": "node src/seed.js",
     "db:elevation": "node src/backfillElevation.js",
+    "db:catalog:preview": "node scripts/importCatalogExpansion.js --dry-run --local-only",
+    "db:catalog:apply": "node scripts/importCatalogExpansion.js --apply --local-only",
+    "catalog:export": "node scripts/exportCatalogFeatures.js",
+    "ranking:prepare": "npm run build && node scripts/prepareTrailRanking.js",
+    "ranking:smoke": "npm run build && node scripts/smokeTrailRanking.js",
     "test": "jest",
     "test:coverage": "jest --coverage --runInBand"
   },

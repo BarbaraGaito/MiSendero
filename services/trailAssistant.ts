@@ -1,8 +1,19 @@
 import * as Network from "expo-network";
-import { recommendTrail } from "./api";
+import { recommendTrail, getTrailRecommendationDestinations } from "./api";
 import { getAuthSession } from "./authSession";
 import type { RecommendationResponse, TrailPreferences } from "../backend/src/ai/contracts";
-export type { TrailPreferences, RecommendationResponse, TrailRecommendation, TrailType, Duration, Difficulty } from "../backend/src/ai/contracts";
+export type { TrailPreferences, RecommendationResponse, TrailRecommendation, TrailType, Duration, Difficulty, Experience } from "../backend/src/ai/contracts";
+
+export async function getCoveredDestinations(): Promise<string[]> {
+  const network = await Network.getNetworkStateAsync().catch(() => null);
+  if (network?.isConnected === false || network?.isInternetReachable === false) return [];
+  const session = await getAuthSession();
+  if (!session) return [];
+  const result = await getTrailRecommendationDestinations(session.token);
+  if (!result || !Array.isArray(result.destinations) || result.destinations.length > 10000 ||
+    !result.destinations.every((d) => typeof d === "string" && d.trim().length >= 2 && d.length <= 200)) throw new Error("El catálogo de destinos no es válido.");
+  return [...new Set(result.destinations)];
+}
 
 const isRecord = (value: unknown): value is Record<string, unknown> => !!value && typeof value === "object" && !Array.isArray(value);
 const isText = (value: unknown, limit: number) => typeof value === "string" && value.length > 0 && value.length <= limit;

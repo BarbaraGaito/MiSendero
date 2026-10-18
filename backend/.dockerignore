@@ -6,3 +6,6 @@ npm-debug.log*
 coverage
 reports
 data
+ml/artifacts
+ml/tests
+ml/**/__pycache__

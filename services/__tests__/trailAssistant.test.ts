@@ -1,10 +1,10 @@
 jest.mock("expo-network", () => ({ getNetworkStateAsync: jest.fn() }));
 jest.mock("../authSession", () => ({ getAuthSession: jest.fn() }));
-jest.mock("../api", () => ({ recommendTrail: jest.fn() }));
+jest.mock("../api", () => ({ recommendTrail: jest.fn(), getTrailRecommendationDestinations: jest.fn() }));
 import * as Network from "expo-network";
 import { getAuthSession } from "../authSession";
-import { recommendTrail } from "../api";
-import { findRecommendedTrail, TrailPreferences } from "../trailAssistant";
+import { recommendTrail, getTrailRecommendationDestinations } from "../api";
+import { findRecommendedTrail, getCoveredDestinations, TrailPreferences } from "../trailAssistant";
 const preferences: TrailPreferences = { destination: "El Chaltén", trailTypes: ["lagos"], duration: "1-2", difficulty: "facil" };
 const empty = { status: "no_results", message: "Sin resultados", recommendation: null };
 beforeEach(() => {
@@ -22,10 +22,25 @@ test.each([{ isConnected: false }, { isConnected: true, isInternetReachable: fal
   await expect(findRecommendedTrail(preferences)).rejects.toThrow("Necesitás Internet");
   expect(recommendTrail).not.toHaveBeenCalled();
 });
-test("missing login requires a session without calling the paid service", async () => {
+test("missing login requires a session without calling the ranking service", async () => {
   (getAuthSession as jest.Mock).mockResolvedValue(null);
   await expect(findRecommendedTrail(preferences)).rejects.toThrow("Iniciá sesión");
   expect(recommendTrail).not.toHaveBeenCalled();
+});
+
+test("covered destinations use the existing session and never fabricate offline coverage", async () => {
+  (getTrailRecommendationDestinations as jest.Mock).mockResolvedValue({ destinations: ["Córdoba", "Córdoba", "Bariloche"] });
+  expect(await getCoveredDestinations()).toEqual(["Córdoba", "Bariloche"]);
+  expect(getTrailRecommendationDestinations).toHaveBeenCalledWith("session");
+  (Network.getNetworkStateAsync as jest.Mock).mockResolvedValue({ isConnected: false });
+  expect(await getCoveredDestinations()).toEqual([]);
+});
+
+test("a malformed destination catalog cannot become selectable options", async () => {
+  for (const value of [{ destinations: [1] }, { destinations: ["x".repeat(201)] }, null]) {
+    (getTrailRecommendationDestinations as jest.Mock).mockResolvedValue(value);
+    await expect(getCoveredDestinations()).rejects.toThrow("catálogo de destinos");
+  }
 });
 test("a failed connectivity probe still allows an actual request", async () => {
   (Network.getNetworkStateAsync as jest.Mock).mockRejectedValue(new Error("probe"));

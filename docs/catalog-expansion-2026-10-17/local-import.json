@@ -1,0 +1,92 @@
+{
+  "batch": "catalog-2026-10-17",
+  "mode": "apply",
+  "before": 32,
+  "after": 52,
+  "inserted": [
+    {
+      "id": 309,
+      "name": "Sendero Che Roga - Mburucuyá"
+    },
+    {
+      "id": 310,
+      "name": "Histórico Tapé Porá - Mburucuyá"
+    },
+    {
+      "id": 311,
+      "name": "Sendero La Chuña - El Rey"
+    },
+    {
+      "id": 312,
+      "name": "Laguna Los Patitos - El Rey"
+    },
+    {
+      "id": 313,
+      "name": "Piedra Movediza - Lihué Calel"
+    },
+    {
+      "id": 314,
+      "name": "Farallones - Sierra de las Quijadas"
+    },
+    {
+      "id": 315,
+      "name": "Cerro Leoncito - El Leoncito"
+    },
+    {
+      "id": 316,
+      "name": "Pampa Alta - Tierra del Fuego"
+    },
+    {
+      "id": 317,
+      "name": "Cerro Alto El Petiso - Los Alerces"
+    },
+    {
+      "id": 318,
+      "name": "Laguna Escondida - Los Alerces"
+    },
+    {
+      "id": 319,
+      "name": "Cascada Arroyo del Hacha - Los Alerces"
+    },
+    {
+      "id": 320,
+      "name": "Cerro Cocinero - Los Alerces"
+    },
+    {
+      "id": 321,
+      "name": "Cerro Llao Llao desde Villa Tacul"
+    },
+    {
+      "id": 322,
+      "name": "Secretos bajo nuestros pies - Quebrada del Condorito"
+    },
+    {
+      "id": 323,
+      "name": "Puesto Los Chorizos - Aconquija"
+    },
+    {
+      "id": 324,
+      "name": "El Pozón - Aconquija"
+    },
+    {
+      "id": 325,
+      "name": "Península Belgrano - Circuito Chico"
+    },
+    {
+      "id": 326,
+      "name": "Península Belgrano - Circuito Grande"
+    },
+    {
+      "id": 327,
+      "name": "Puerto Canoa - Cara Sur del Volcán Lanín"
+    },
+    {
+      "id": 328,
+      "name": "Laguna Rosales - San Martín de los Andes"
+    }
+  ],
+  "pending": [],
+  "skipped": [],
+  "existingRowsPreserved": true,
+  "existingRowsSha256": "e5c18c361e75465667642bcf0cb6bc6cd03c87fb1ed5edfd08b4493f4910f379"
+}

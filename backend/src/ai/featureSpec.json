@@ -1,0 +1,5 @@
+{
+  "version": 2,
+  "names": ["destination_match", "type_match_fraction", "duration_proximity", "duration_minutes", "distance_km", "difficulty_rank", "experience_rank", "ascent_m", "terrain_rocky", "terrain_steep", "terrain_boardwalk", "terrain_mud", "terrain_sand", "difficulty_preference_rank"],
+  "baselineWeights": { "type_match_fraction": 4, "duration_proximity": 2, "effort_margin": 1 }
+}

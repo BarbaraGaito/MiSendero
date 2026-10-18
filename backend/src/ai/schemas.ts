@@ -7,12 +7,7 @@ export const preferencesSchema = z.object({
     .refine((v) => !v.includes("cualquiera") || v.length === 1),
   duration: z.enum(["menos-1", "1-2", "2-4", "4-6", "mas-6", "cualquiera"]),
   difficulty: z.enum(["facil", "moderada", "dificil", "cualquiera"]),
-}).strict();
-
-export const reasonSchema = z.enum(["destination", "landscape", "duration", "difficulty"]);
-export const decisionSchema = z.object({
-  trailId: z.number().int().positive(),
-  reasons: z.array(reasonSchema).min(2).max(4).refine((v) => new Set(v).size === v.length),
+  experience: z.enum(["principiante", "intermedio", "avanzado"]).default("principiante"),
 }).strict();
 
 export const recommendationSchema = z.object({
@@ -25,8 +20,12 @@ export const recommendationSchema = z.object({
   explanation: z.string().min(1).max(1500),
   sources: z.array(z.object({ title: z.string(), url: z.url() }).strict()).min(1),
   checkedAt: z.iso.date(),
+  ascentM: z.number().nonnegative().nullable().optional(),
+  terrain: z.array(z.enum(["rocky", "steep", "boardwalk", "mud", "sand"])).nullable().optional(),
+  durationIsEstimated: z.boolean().optional(),
 }).strict();
 export const responseSchema = z.object({
   status: z.enum(["ok", "no_results", "clarification", "out_of_scope"]),
   message: z.string(), recommendation: recommendationSchema.nullable(),
+  ranking: z.object({ method: z.enum(["baseline", "supervised"]), modelVersion: z.string().nullable() }).strict().optional(),
 }).strict().refine((v) => (v.status === "ok") === (v.recommendation !== null));

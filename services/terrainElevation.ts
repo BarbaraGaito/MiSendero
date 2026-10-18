@@ -706,14 +706,14 @@ export const fetchElevationsForCoordinates = async (
     } catch {
       throw new TerrainElevationError(
         "request-failed",
-        "No se pudo consultar el modelo digital de elevacion."
+        "No pudimos cargar las alturas del recorrido. Intentá nuevamente."
       );
     }
 
     if (!response.ok) {
       throw new TerrainElevationError(
         "request-failed",
-        "El proveedor de elevacion rechazo la consulta.",
+        "No pudimos cargar las alturas del recorrido. Intentá nuevamente más tarde.",
         response.status
       );
     }

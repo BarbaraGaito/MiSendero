@@ -1,4 +1,5 @@
 import { useFocusEffect } from "expo-router";
+import { offlineMapStatusLabel } from "../../services/offlineMapPresentation";
 import { useCallback, useEffect, useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import {
@@ -84,7 +85,7 @@ export default function OfflineMapsScreen() {
             <Text style={styles.emptyTitle}>No hay mapas descargados</Text>
             <Text style={styles.emptyText}>
               Cuando guardes una zona offline, va a aparecer aca con su estado y
-              espacio usado real.
+              espacio utilizado.
             </Text>
           </Card>
         ) : (
@@ -106,12 +107,7 @@ export default function OfflineMapsScreen() {
 }
 
 function formatMapStatus(map: OfflineMap) {
-  const tileStatus =
-    map.totalTiles > 0
-      ? `${map.downloadedTiles}/${map.totalTiles} tiles`
-      : "tiles sin verificar";
-
-  return `${map.status} - ${tileStatus}`;
+  return offlineMapStatusLabel(map);
 }
 
 function MapItem({

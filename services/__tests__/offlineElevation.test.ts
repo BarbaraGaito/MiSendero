@@ -58,18 +58,18 @@ beforeEach(async () => {
 });
 
 test("persists all elevations in SQLite and reads them after network loss", async () => {
-  await saveOfflineTrailMap(trail);
+  await saveOfflineTrailMap(elevated);
   (api.getTrailById as jest.Mock).mockRejectedValue(new Error("offline"));
   const local = await getOfflineMapByTrailId(7);
   expect(local?.trail?.elevation).toEqual(elevated.elevation);
   expect(local?.status).toBe("disponible");
-  expect(api.getTrailById).toHaveBeenCalledTimes(1);
+  expect(api.getTrailById).not.toHaveBeenCalled();
   expect((await getVerifiedOfflineMapByTrailId(7))?.trail?.elevation).toEqual(elevated.elevation);
 });
 
 test("tile failure still preserves elevation, without marking the map complete", async () => {
   (tiles.downloadOfflineTilesForTrail as jest.Mock).mockRejectedValue(new Error("tiles unavailable"));
-  await expect(saveOfflineTrailMap(trail)).rejects.toThrow("tiles unavailable");
+  await expect(saveOfflineTrailMap(elevated)).rejects.toThrow("tiles unavailable");
   expect((await getOfflineMapByTrailId(7))?.trail?.elevation).toEqual(elevated.elevation);
   expect((await getOfflineMapByTrailId(7))?.status).toBe("incompleto");
   expect(await getVerifiedOfflineMapByTrailId(7)).toBeNull();
@@ -82,17 +82,21 @@ test("downloaded trails retain their access, precautions, sources and photo attr
   expect((await getOfflineMapByTrailId(7))?.trail?.provenance).toEqual(provenance);
 });
 
-test("missing elevation prevents an apparently complete offline download", async () => {
+test("a complete basic map needs no elevation and makes no additional API request", async () => {
   (api.getTrailById as jest.Mock).mockResolvedValue(trail);
-  await expect(saveOfflineTrailMap(trail)).rejects.toThrow("offline-elevation-unavailable");
-  expect(tiles.downloadOfflineTilesForTrail).not.toHaveBeenCalled();
-  expect(await getOfflineMapByTrailId(7)).toBeNull();
+  const saved = await saveOfflineTrailMap(trail);
+  expect(saved?.status).toBe("disponible");
+  expect(saved?.terrain).toBeNull();
+  expect(tiles.downloadOfflineTilesForTrail).toHaveBeenCalledTimes(1);
+  expect(api.getTrailById).not.toHaveBeenCalled();
+  expect(global.fetch).not.toHaveBeenCalled();
+  expect((await getVerifiedOfflineMapByTrailId(7))?.trail).toEqual(trail);
 });
 
 test("legacy maps gain a persisted profile without losing reports", async () => {
   await saveOfflineTrailMap(elevated, [{ id: 42, created_at: new Date().toISOString() } as never]);
   await db.runAsync("UPDATE offline_maps SET trail_json = ? WHERE trail_id = ?", [JSON.stringify(trail), 7]);
-  expect(await getVerifiedOfflineMapByTrailId(7)).toBeNull();
+  expect(await getVerifiedOfflineMapByTrailId(7)).not.toBeNull();
   expect(await refreshOfflineTrailElevation(elevated)).toEqual(elevated);
   expect((await getOfflineMapByTrailId(7))?.trail?.elevation).toEqual(elevated.elevation);
   expect((await getOfflineMapByTrailId(7))?.reports).toEqual([expect.objectContaining({ id: 42 })]);

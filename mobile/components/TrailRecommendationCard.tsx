@@ -23,16 +23,12 @@ export function TrailRecommendationCard({ trail, onRestart }: { trail: TrailReco
       <Text style={styles.body}>📏 Aproximadamente {trail.distanceKm.toLocaleString("es-AR", { maximumFractionDigits: 1 })} km</Text>
     </View>
     {trail.routeType === "point_to_point" ? <Text style={styles.note}>El recorrido termina en otro punto. Coordiná el transporte de regreso.</Text> : null}
-    {trail.dataWarnings?.length ? <View style={styles.reason}>
-      <Text style={styles.subtitle}>Información de la ficha</Text>
-      {trail.dataWarnings.map(warning => <Text key={warning} style={styles.body}>{warning}</Text>)}
-    </View> : null}
     <Text style={styles.body}>{trail.description}</Text>
     <View style={styles.reason}>
       <Text style={styles.subtitle}>¿Por qué te recomendamos este sendero?</Text>
       <Text style={styles.body}>{trail.explanation}</Text>
     </View>
-    <Text style={styles.note}>{trail.checkedAt ? `Datos del catálogo revisados el ${trail.checkedAt.split("-").reverse().join("/")}.` : "Datos registrados en el catálogo de MiSendero; verificación externa pendiente."} Consultá el estado y la habilitación antes de salir.</Text>
+    {trail.checkedAt ? <Text style={styles.note}>Datos del catálogo revisados el {trail.checkedAt.split("-").reverse().join("/")}. Consultá el estado y la habilitación antes de salir.</Text> : null}
     <PrimaryButton label="Ver sendero" icon="trail-sign-outline" onPress={() => router.push({ pathname: "/trail-detail", params: { id: String(trail.trailId) } })} />
     <View style={styles.spacer} />
     <PrimaryButton label="Buscar otro sendero" tone="secondary" onPress={onRestart} />

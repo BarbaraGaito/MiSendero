@@ -1,9 +1,6 @@
 import { useEffect, useState } from "react";
 import { Coordinate } from "../../services/geoUtils";
-import {
-  backfillOfflineTerrainGrid,
-  getOfflineTerrainGrid,
-} from "../../services/offlineMaps";
+import { getOfflineTerrainGrid } from "../../services/offlineMaps";
 import {
   ElevationFetch,
   TerrainGridData,
@@ -45,9 +42,7 @@ export const loadTerrainElevationState = async (
   const data = await getTerrainElevation(trailKey, route, { fetchFn });
   if (!data) return { status: "unavailable", reason: "provider-error" };
 
-  if (trailId !== null) {
-    await backfillOfflineTerrainGrid(trailId, route, data).catch(() => undefined);
-  }
+  // Online 3D uses the session cache; it does not enlarge downloaded 2D maps.
   return { status: "ready", data };
 };
 

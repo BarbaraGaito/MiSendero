@@ -3,7 +3,6 @@ import { Trail, TrailReport } from "../types";
 import { getAuthSession } from "./authSession";
 import { initDB } from "../database/database";
 import { sanitizeReports } from "./reportPrivacy";
-import { getTrailById as fetchTrailById } from "./api";
 import {
   deleteOfflineTilesForTrail,
   downloadOfflineTilesForTrail,
@@ -13,12 +12,11 @@ import {
 import { Coordinate, parseRouteCoordinates } from "./geoUtils";
 import {
   buildTerrainElevationCacheKey,
-  getTerrainElevation,
   TerrainGridData,
 } from "./terrainElevation";
 
-// Grilla DEM real (Open-Meteo / Copernicus GLO-90) guardada con el mapa para
-// la vista 3D sin conexion. Solo contiene valores devueltos por el proveedor.
+// Compatibility with DEM grids saved by older app versions. New map downloads
+// contain only the basic map, route and available trail metadata.
 export type OfflineTerrainGrid = TerrainGridData & {
   version: 1;
   // Mismo SHA-256 de geometria que el perfil descargado (trail.elevation).
@@ -228,7 +226,7 @@ export const getVerifiedOfflineMapByTrailId = async (
 ): Promise<OfflineMap | null> => {
   const offlineMap = await getOfflineMapByTrailId(trailId);
 
-  if (!offlineMap?.trail?.elevation || offlineMap.status !== "disponible") {
+  if (!offlineMap?.trail || offlineMap.status !== "disponible") {
     return null;
   }
 
@@ -286,12 +284,6 @@ export const saveOfflineTrailMap = async (
   await initOfflineMapsTable();
   const userId = await getCurrentUserId();
 
-  if (!trail.elevation) {
-    const current = await fetchTrailById(trail.id);
-    if (!current.elevation) throw new Error("offline-elevation-unavailable");
-    trail = current;
-  }
-
   const now = Date.now();
   const geometry = await getOfflineMapByTrailId(trail.id);
   if (!geometry) {
@@ -305,9 +297,6 @@ export const saveOfflineTrailMap = async (
       [JSON.stringify(trail), JSON.stringify(reports), now, geometry.id, userId]
     );
   }
-  // Misma consulta y cache en memoria que la vista 3D; corre junto a los tiles.
-  const route = parseRouteCoordinates(trail.route_coordinates);
-  const terrainRequest = getTerrainElevation(trail.id, route).catch(() => null);
   const tileCache = await downloadOfflineTilesForTrail(trail, onTileProgress, options);
   const coverage = await getOfflineTileCoverageForTrail(trail);
 
@@ -317,16 +306,12 @@ export const saveOfflineTrailMap = async (
     );
   }
 
-  // Si el DEM falla no se guarda grilla (ni valores de relleno): el mapa 2D y
-  // el perfil quedan completos y la vista 3D sin conexion, no disponible.
-  // Una grilla real ya guardada para este mismo trazado se conserva.
-  const fetchedTerrain = await terrainRequest;
+  // New downloads never request 3D data. Preserve compatible legacy data only.
+  const route = parseRouteCoordinates(trail.route_coordinates);
   const keptTerrain = geometry?.terrain && isTerrainGridFor(geometry.terrain, trail, route)
     ? geometry.terrain
     : null;
-  const terrain = fetchedTerrain
-    ? toOfflineTerrainGrid(trail, route, fetchedTerrain)
-    : keptTerrain;
+  const terrain = keptTerrain;
   const terrainJson = terrain ? JSON.stringify(terrain) : null;
   const sizeMb = estimateTrailMapSizeMb(trail, reports) + tileCache.sizeMb;
   const existing = await db.getFirstAsync<{ id: number }>(

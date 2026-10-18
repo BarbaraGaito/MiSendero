@@ -1,6 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import { router, useFocusEffect } from "expo-router";
 import { useCallback, useState } from "react";
+import { getAuthSession } from "../../services/authSession";
 import { Platform, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import {
   createDevelopmentMetricSample,
@@ -37,7 +38,7 @@ const providerOptions: Array<{
   {
     provider: "apple_healthkit",
     title: "Apple Watch",
-    body: "Usa Salud/HealthKit en iPhone y una extension watchOS para datos en vivo.",
+    body: "Consultá las lecturas que tu Apple Watch comparte con Salud en el iPhone.",
     icon: "watch-outline",
   },
   {
@@ -59,6 +60,8 @@ const providerOptions: Array<{
     icon: "flask-outline",
   },
 ];
+
+const openWearableConsent = () => router.push({ pathname: "/perfil", params: { section: "privacy", returnTo: "wearable" } });
 
 const scenarioOptions: Array<{
   id: WearableSimulationScenario;
@@ -102,18 +105,22 @@ export default function WearableSettingsScreen() {
   const [samples, setSamples] = useState<WearableMetricSample[]>([]);
   const [simulatedSamples, setSimulatedSamples] = useState<WearableMetricSample[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [showTestTools, setShowTestTools] = useState(false);
   const [isSimulating, setIsSimulating] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const [scenario, setScenario] = useState<WearableSimulationScenario>("normal");
 
   const load = useCallback(async () => {
     setIsLoading(true);
-    const [status, recentSamples, sessionSamples] = await Promise.all([
+    const [status, recentSamples, sessionSamples, session] = await Promise.all([
       getWearableRuntimeStatus(),
       getRecentWearableMetricSamples(5),
       getSimulatedWearableMetricSamples(),
+      getAuthSession().catch(() => null),
     ]);
     setRuntime(status);
+    setIsAdmin(session?.user.role === "admin");
     setSamples(recentSamples);
     setSimulatedSamples(sessionSamples.slice(0, 5));
     setIsLoading(false);
@@ -127,7 +134,7 @@ export default function WearableSettingsScreen() {
 
   const connectProvider = async (provider: WearableProvider) => {
     if (runtime?.status === "requires_consent") {
-      setMessage("Primero activa el consentimiento de datos sensibles en Privacidad e IA.");
+      openWearableConsent();
       return;
     }
 
@@ -136,7 +143,7 @@ export default function WearableSettingsScreen() {
       setMessage(
         linked
           ? "Salud de Apple autorizada. Sincroniza para guardar la primera lectura disponible."
-          : "No se pudo abrir Salud de Apple. Usa una development build de iOS en un iPhone compatible."
+          : "No pudimos vincular Salud de Apple. Revisá los permisos de Salud en tu iPhone e intentá nuevamente."
       );
       await load();
       return;
@@ -148,8 +155,8 @@ export default function WearableSettingsScreen() {
         linked
           ? `${getWearableProviderName(provider)} autorizado. Sincroniza para guardar la primera lectura disponible.`
           : Platform.OS === "android"
-            ? "No se pudo abrir Health Connect. Usa una development build de Android con Health Connect disponible."
-            : "Wear OS y Health Connect se vinculan desde una build Android compatible."
+            ? "No pudimos vincular Health Connect. Comprobá que esté instalado y que tenga permiso para compartir tus lecturas."
+            : "Para vincular este reloj, abrí MiSendero en tu teléfono Android."
       );
       await load();
       return;
@@ -166,6 +173,7 @@ export default function WearableSettingsScreen() {
   };
 
   const simulateSample = async () => {
+    if (!isAdmin || !showTestTools) return;
     if (runtime?.status === "requires_consent") {
       setMessage("Primero activa el consentimiento de datos sensibles en Privacidad e IA.");
       return;
@@ -186,6 +194,7 @@ export default function WearableSettingsScreen() {
   };
 
   const simulateSingleSample = async (nextScenario: WearableSimulationScenario) => {
+    if (!isAdmin || !showTestTools) return;
     if (runtime?.status === "requires_consent") {
       setMessage("Primero activa el consentimiento de datos sensibles en Privacidad e IA.");
       return;
@@ -227,17 +236,24 @@ export default function WearableSettingsScreen() {
               <Text style={styles.cardText}>{getStatusMessage(runtime)}</Text>
             </View>
           </View>
+          {runtime?.status === "requires_consent" ? <PrimaryButton
+            label="Revisar consentimiento del reloj"
+            icon="shield-checkmark-outline"
+            onPress={openWearableConsent}
+          /> : null}
         </Card>
 
         {message ? <Text style={styles.message}>{message}</Text> : null}
 
+        {isAdmin ? <PrimaryButton label={showTestTools ? "Ocultar pruebas del dispositivo" : "Pruebas del dispositivo"} tone="secondary" onPress={() => setShowTestTools(value => !value)} /> : null}
+        {isAdmin && showTestTools ? <>
         <Card tone="orange">
           <View style={styles.labHeader}>
             <View style={styles.labIcon}>
               <Ionicons name="flask-outline" size={22} color={colors.orange} />
             </View>
             <View style={styles.providerText}>
-              <Text style={styles.cardTitle}>Laboratorio de testing</Text>
+              <Text style={styles.cardTitle}>Pruebas con lecturas simuladas</Text>
               <Text style={styles.cardText}>
                 Crea una ventana de 8 lecturas simuladas para probar alertas, fatiga y riesgo fisiologico.
                 Parten de estos rangos y se intensifican lectura a lectura. Quedan solo en memoria: no se
@@ -301,6 +317,7 @@ export default function WearableSettingsScreen() {
           </View>
         </Card>
 
+        </> : null}
         {runtime?.prediction ? (
           <Card tone={runtime.prediction.level === "high" ? "red" : runtime.prediction.level === "caution" ? "orange" : "white"}>
             <View style={styles.aiHeader}>
@@ -309,14 +326,13 @@ export default function WearableSettingsScreen() {
               </View>
               <View style={styles.providerText}>
                 <Text style={styles.cardTitle}>
-                  {latest?.simulated ? "Analisis de IA (datos simulados)" : "Analisis de IA"}
+                  {latest?.simulated ? "Resumen de actividad (datos de prueba)" : "Resumen de actividad"}
                 </Text>
                 <Text style={styles.cardText}>{runtime.prediction.analysisSummary}</Text>
               </View>
             </View>
             <View style={styles.metricGrid}>
               <MetricBox label="Riesgo" value={runtime.prediction.riskLabel === "sin_datos" ? "Sin datos" : runtime.prediction.riskLabel} />
-              <MetricBox label="Modelo" value="Experimental" />
               <MetricBox label="Fatiga" value={runtime.prediction.fatigue === "sin_datos" ? "Sin datos" : runtime.prediction.fatigue} />
               <MetricBox label="Uso" value="Orientativo" />
             </View>
@@ -336,14 +352,13 @@ export default function WearableSettingsScreen() {
         ) : null}
 
         <Card>
-          <Text style={styles.cardTitle}>Proveedor</Text>
+          <Text style={styles.cardTitle}>Conectá tu reloj</Text>
           <Text style={styles.cardText}>
-            Elegi la fuente de metricas. Los permisos reales se solicitan en iOS
-            con HealthKit y en Android con Health Connect para celulares y Wear OS.
+            Elegí tu dispositivo y autorizá el acceso a sus lecturas desde Salud o Health Connect.
           </Text>
 
           <View style={styles.providerList}>
-            {providerOptions.map((option) => {
+            {providerOptions.filter(option => option.provider !== "development_simulator" || (isAdmin && showTestTools)).map((option) => {
               const selected =
                 option.provider === "development_simulator"
                   ? Boolean(latest?.simulated)
@@ -400,13 +415,13 @@ export default function WearableSettingsScreen() {
             </>
           ) : (
             <Text style={styles.cardText}>
-              Todavia no hay muestras guardadas para este usuario.
+              Todavía no hay lecturas. Vinculá tu reloj y tocá Sincronizar dispositivo.
             </Text>
           )}
         </Card>
 
         <Card>
-          <Text style={styles.cardTitle}>Historial local</Text>
+          <Text style={styles.cardTitle}>Últimas lecturas</Text>
           {samples.length > 0 ? (
             <View style={styles.sampleList}>
               {samples.map((sample) => (
@@ -425,7 +440,7 @@ export default function WearableSettingsScreen() {
           )}
         </Card>
 
-        {simulatedSamples.length > 0 ? (
+        {isAdmin && showTestTools && simulatedSamples.length > 0 ? (
           <Card tone="orange">
             <Text style={styles.cardTitle}>Lecturas simuladas de esta sesion</Text>
             <Text style={styles.cardText}>
@@ -453,11 +468,11 @@ export default function WearableSettingsScreen() {
             tone="secondary"
             onPress={syncNativeSample}
           />
-          <PrimaryButton
+          {isAdmin && showTestTools ? <PrimaryButton
             label="Generar muestra simulada"
             icon="flask-outline"
             onPress={() => simulateSingleSample(scenario)}
-          />
+          /> : null}
           <PrimaryButton
             label="Desvincular"
             tone="secondary"
@@ -497,7 +512,7 @@ function getStatusMessage(runtime: WearableRuntimeStatus | null) {
   if (runtime.status === "waiting_for_native_data") {
     return "La conexion esta autorizada. Sincroniza una lectura disponible desde el reloj o la app de salud.";
   }
-  return "Metricas disponibles localmente para predicciones sin conexion.";
+  return "Podés consultar tus últimas lecturas también sin conexión.";
 }
 
 function getSyncStatusMessage(
@@ -512,8 +527,8 @@ function getSyncStatusMessage(
   if (status === "not_linked") return "Primero vincula un reloj o app de salud.";
   if (status === "unavailable") {
     return runtime?.connection.provider === "apple_healthkit"
-      ? "No se pudo abrir Salud de Apple. Usa una development build de iOS en un iPhone compatible."
-      : "El puente nativo todavia no esta disponible en esta build.";
+      ? "No pudimos acceder a Salud de Apple. Revisá sus permisos e intentá nuevamente."
+      : "No pudimos acceder a las lecturas del reloj. Revisá su conexión con la app de salud e intentá nuevamente.";
   }
 
   return runtime?.connection.provider === "android_health_connect" ||

@@ -1,4 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
+import { userMessage } from "../../services/userMessages";
 import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useMemo, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
@@ -191,7 +192,7 @@ export default function ReportTerrainScreen() {
       router.replace({ pathname: "/reporte-guardado", params: { pending: "1", id: String(trailId), startedAt: startedAt ?? "" } });
     } catch (error) {
       setSubmitError(
-        error instanceof Error ? error.message : "No pudimos guardar el reporte."
+        userMessage(error, "No pudimos guardar el reporte. Intentá nuevamente.")
       );
     } finally {
       setIsSubmitting(false);

@@ -15,12 +15,16 @@ import { EmergencyContact } from "../../types";
 import { AppScreen, Card, PrimaryButton, ScreenTitle, colors } from "../components/MiSenderoUI";
 
 export default function ConfirmSosScreen() {
-  const { id, startedAt, operationId: savedOperationId, simulated } = useLocalSearchParams<{ id?: string; startedAt?: string; operationId?: string; simulated?: string }>();
+  const { id, startedAt, operationId: savedOperationId, simulated, sendSms } = useLocalSearchParams<{ id?: string; startedAt?: string; operationId?: string; simulated?: string; sendSms?: string }>();
   const trailId = Number(id) || null;
   const startedAtMs = Number(startedAt) || null;
   const simulatedSource = simulated === "1";
   const eventId = useRef(Crypto.randomUUID());
   const saving = useRef(false);
+  const sendingSms = useRef(false);
+  const autoSmsHandled = useRef(false);
+  const smsMessage = useRef<string | null>(null);
+  const [contextReady, setContextReady] = useState(false);
   const [contact, setContact] = useState<EmergencyContact | null>(null);
   const [message, setMessage] = useState(buildEmergencyMessage({ latitude: null, longitude: null, trailId, timestamp: Date.now() }));
   const [operationId, setOperationId] = useState<number | null>(Number(savedOperationId) || null);
@@ -35,9 +39,18 @@ export default function ConfirmSosScreen() {
 
   useFocusEffect(useCallback(() => {
     let active = true;
-    void getEmergencyContact().then((value) => { if (active) setContact(value); }).catch(() => undefined);
-    void getEmergencyTestReason({ trailId, startedAt: startedAtMs, simulated: simulatedSource })
-      .then((reason) => { if (active) setTestReason(reason); });
+    setContextReady(false);
+    void Promise.all([
+      getEmergencyContact().catch(() => null),
+      getEmergencyTestReason({ trailId, startedAt: startedAtMs, simulated: simulatedSource }),
+    ]).then(([person, reason]) => {
+      if (!active) return;
+      setContact(person);
+      setTestReason(reason);
+      setContextReady(true);
+    }).catch(() => {
+      if (active) setSmsStatus("No pudimos preparar el SOS. Intentá nuevamente o llamá a tu contacto.");
+    });
     return () => { active = false; };
   }, [trailId, startedAtMs, simulatedSource]));
 
@@ -58,7 +71,7 @@ export default function ConfirmSosScreen() {
       const value = await getEmergencyOperation(operationId);
       if (!active) return;
       setOperation(value);
-      if (typeof value?.payload.message_body === "string") {
+      if (!smsMessage.current && typeof value?.payload.message_body === "string") {
         if (value.payload.message_body.includes("Sendero ID ")) {
           if (savedTrail === undefined) savedTrail = await getTrailForMessage(
             typeof value.payload.trail_id === "number" ? value.payload.trail_id : null
@@ -109,52 +122,65 @@ export default function ConfirmSosScreen() {
     router.replace({ pathname: "/confirmar-sos", params: { ...(id ? { id } : {}), ...(startedAt ? { startedAt } : {}) } });
   };
 
-  const handleSms = async () => {
-    if (preparingSms || testing) return;
+  const handleSms = useCallback(async () => {
+    if (sendingSms.current || !contextReady || testing) return;
     if (!contact) { router.push("/contacto-seguridad"); return; }
+    sendingSms.current = true;
     setPreparingSms(true);
+    setSmsStatus("");
     try {
       if (!(await SMS.isAvailableAsync())) {
         Alert.alert("SMS no disponible en este dispositivo", "Usá el mensaje preparado desde un teléfono con servicio celular.");
         return;
       }
-      let preparedMessage = message;
-      if (!operationId) {
-        const [location, trail] = await Promise.all([getEmergencyLocation(trailId, startedAtMs), getTrailForMessage(trailId)]);
-        preparedMessage = buildEmergencyMessage({ ...location, trail });
-        setMessage(preparedMessage);
-      }
+      // Refresh the location for every SMS, even when a previous SOS was saved.
+      // Native Messages can open without Internet or a backend acknowledgement.
+      const [location, trail] = await Promise.all([getEmergencyLocation(trailId, startedAtMs), getTrailForMessage(trailId)]);
+      const preparedMessage = buildEmergencyMessage({ ...location, trail });
+      smsMessage.current = preparedMessage;
+      setMessage(preparedMessage);
       const result = await sendEmergencySms(contact.phone, preparedMessage, { trailId, startedAt: startedAtMs, simulated: simulatedSource });
-      setSmsStatus(result.result === "cancelled" ? "SMS cancelado." : "Se abrió Mensajes. Verificá allí el estado del SMS; MiSendero no puede confirmar su entrega.");
+      setSmsStatus(result.result === "cancelled" ? "SMS cancelado. No se confirmó el envío a tu contacto."
+        : result.result === "sent" ? "El teléfono indicó que enviaste el SMS. Esto no confirma que tu contacto lo recibió."
+          : "Se abrió Mensajes. Verificá allí el estado del SMS; MiSendero no puede confirmar su entrega.");
     } catch (error) {
       if (error instanceof SimulatedEmergencyError) setTestReason(error.reason);
       else setSmsStatus("No pudimos abrir Mensajes. Intentá llamar al contacto.");
     }
-    finally { setPreparingSms(false); }
-  };
+    finally { sendingSms.current = false; setPreparingSms(false); }
+  }, [contact, contextReady, testing, trailId, startedAtMs, simulatedSource]);
+
+  useEffect(() => {
+    // Consume only an explicit tap on the route SOS. Returning from Messages
+    // must never open another composer automatically.
+    if (sendSms !== "1" || !contextReady || autoSmsHandled.current) return;
+    autoSmsHandled.current = true;
+    router.setParams({ sendSms: "0" });
+    void handleSms();
+  }, [sendSms, contextReady, handleSms]);
 
   const registered = operation?.status === "synced";
   return (
     <AppScreen withBottomNav={false}>
-      <ScreenTitle eyebrow={testing ? "Modo prueba" : "Emergencia"} title="Pedir ayuda" subtitle="El registro en MiSendero y el aviso a tu contacto son acciones distintas." />
+      <ScreenTitle eyebrow={testing ? "Modo prueba" : "Emergencia"} title="Pedir ayuda" subtitle="Enviá un SMS a tu contacto con el sendero y tu última ubicación disponible." />
       {testing ? <Card tone="orange">
         <Text style={styles.title}>Modo prueba: el SOS no se envía</Text>
         <Text style={styles.body}>{testDone
-          ? "Prueba completada. No se envió ningún SMS, no se registró en el servidor y no se guardó nada en el teléfono."
-          : `${testReason === "simulated_data" ? "Esta alerta salió de datos simulados del reloj." : "Estás en un recorrido con ubicación simulada."} No se envía SMS, no se registra en el servidor y no se guarda nada en el teléfono.`}</Text>
+          ? "Prueba completada. No se envió ningún SMS ni se guardó un pedido de ayuda."
+          : `${testReason === "simulated_data" ? "Esta alerta salió de datos simulados del reloj." : "Estás en un recorrido con ubicación simulada."} No se envía SMS ni se guarda un pedido de ayuda.`}</Text>
         <Text style={styles.body}>{testReason === "simulated_data"
           ? "¿Es una emergencia real? Abrí el SOS real: usa la ubicación GPS del teléfono, no los datos simulados."
           : "¿Es una emergencia real? Para enviar un SOS real tenés que salir del modo prueba: el botón desactiva \"Simular ubicacion en ruta\" y abre el SOS real con la ubicación GPS del teléfono. También podés llamar directamente a tu contacto."}</Text>
         <PrimaryButton label={testReason === "simulated_data" ? "Emergencia real: pedir ayuda" : "Emergencia real: salir del modo prueba"}
           onPress={() => void requestRealHelp()} tone="danger" />
       </Card> : <Card tone="red">
-        <Text style={styles.title}>{registered ? "SOS registrado en el servidor" : operationId ? "SOS guardado en este teléfono" : "Guardá tu pedido de ayuda"}</Text>
+        <Text style={styles.title}>{registered ? "Pedido guardado en MiSendero" : operationId ? "SOS guardado en este teléfono" : "Avisá a tu contacto"}</Text>
         <Text style={styles.body}>{registered
-          ? "El servidor recibió el registro. Esto no confirma que tu contacto haya sido avisado. Usá SMS o llamada."
+          ? "Guardamos tu pedido en MiSendero. Para avisar a tu contacto, usá SMS o llamada."
           : operationId
             ? operation?.userId === null ? "Sin sesión: conservamos el pedido localmente. Usá SMS o llamada; no se subirá con otra cuenta."
-              : "Pendiente de registro en el servidor. La app reintentará con internet mientras esté abierta. El contacto todavía no fue avisado."
-            : "Se guardará aunque falte GPS o internet. La última ubicación incluirá su hora; puede no ser tu posición actual."}</Text>
+              : "El pedido se guardó en este teléfono. Se enviará a MiSendero cuando tengas internet y la app esté abierta. Para avisar a tu contacto, usá SMS o llamada."
+            : "Abriremos Mensajes con el SOS preparado. Confirmá el envío desde allí. Si no hay GPS, podés enviar el pedido igualmente."}</Text>
       </Card>}
       <Card>
         <Text style={styles.title}>{contact ? `${contact.name} · ${contact.phone}` : "Sin contacto configurado"}</Text>
@@ -166,19 +192,19 @@ export default function ConfirmSosScreen() {
         <Text selectable style={styles.body}>{message}</Text>
       </Card>
       {!testing && <Card>
-        <Text style={styles.title}>Estado de cada etapa</Text>
+        <Text style={styles.title}>Estado del pedido</Text>
         <Text style={styles.body}>Preparación: mensaje disponible en este teléfono.</Text>
-        <Text style={styles.body}>Envío a la API: {registered ? "recibido por la API" : operation?.status === "syncing" ? "en curso" : operationId ? "pendiente o con error; revisá el registro" : "sin iniciar"}.</Text>
+        <Text style={styles.body}>Registro en MiSendero: {registered ? "guardado" : operation?.status === "syncing" ? "enviando" : operationId ? "por enviar" : "sin iniciar"}.</Text>
         <Text style={styles.body}>Envío al contacto: {smsStatus || "sin confirmación; abrí Mensajes o llamá al contacto"}.</Text>
         <Text style={styles.body}>Entrega al contacto: sin confirmación en MiSendero.</Text>
         <Text style={styles.body}>Asistencia: sin confirmación. MiSendero no activa ni garantiza un rescate.</Text>
       </Card>}
       <View style={styles.actions}>
-        <PrimaryButton label={testing ? "Probar pedido SOS (no se envía)" : busy ? "Guardando pedido…" : operationId ? "Reintentar registro" : "Guardar pedido SOS"} onPress={handleSos} tone={testing ? "secondary" : "danger"} />
-        {!testing && <PrimaryButton label="Preparar SMS al contacto" onPress={handleSms} isLoading={preparingSms} loadingLabel="Preparando mensaje" />}
+        {!testing && <PrimaryButton label="Enviar SOS por SMS" onPress={handleSms} tone="danger" disabled={!contextReady} isLoading={preparingSms} loadingLabel="Preparando mensaje" />}
         {contact && <PrimaryButton label="Llamar al contacto" tone="secondary" onPress={() => {
           void Linking.openURL(`tel:${contact.phone.replace(/[^+\d]/g, "")}`).catch(() => Alert.alert("No se pudo abrir Teléfono"));
         }} />}
+        <PrimaryButton label={testing ? "Probar pedido SOS (no se envía)" : busy ? "Guardando pedido…" : operationId ? "Reintentar registro" : "Guardar pedido SOS"} onPress={handleSos} tone="secondary" disabled={!contextReady || busy} />
         {!!smsStatus && <Text accessibilityLiveRegion="polite" style={styles.body}>{smsStatus}</Text>}
       </View>
       <Card tone="orange">

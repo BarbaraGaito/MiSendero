@@ -1,4 +1,5 @@
 import { useScreenFocused } from "./useScreenFocused";
+import { AppState } from "react-native";
 import { useEffect, useState } from "react";
 import {
   DeviceLocation,
@@ -14,6 +15,11 @@ export const useDeviceLocation = (
   simulatedCoordinate?: Coordinate | null
 ) => {
   const isFocused = useScreenFocused();
+  const [appActive, setAppActive] = useState(AppState.currentState === "active");
+  useEffect(() => {
+    const listener = AppState.addEventListener("change", state => setAppActive(state === "active"));
+    return () => listener.remove();
+  }, []);
   const [location, setLocation] = useState<DeviceLocation | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [permissionDenied, setPermissionDenied] = useState(false);
@@ -21,7 +27,7 @@ export const useDeviceLocation = (
   const [isTestingLocation, setIsTestingLocation] = useState(false);
 
   useEffect(() => {
-    if (!isFocused) return;
+    if (!isFocused || !appActive) return;
     let isMounted = true;
     let subscription: { remove: () => void } | null = null;
 
@@ -81,7 +87,7 @@ export const useDeviceLocation = (
       isMounted = false;
       subscription?.remove();
     };
-  }, [simulatedCoordinate?.[0], simulatedCoordinate?.[1], watch, isFocused]);
+  }, [simulatedCoordinate?.[0], simulatedCoordinate?.[1], watch, isFocused, appActive]);
 
   return {
     location,

@@ -1,3 +1,4 @@
+import { AccountContext, captureAccountContext, assertAccountContext } from "./accountContext";
 import { randomUUID } from "expo-crypto";
 import * as Network from "expo-network";
 import { db, initDB } from "../database/database";
@@ -70,14 +71,16 @@ export const enqueue = async (
   entityType: PendingEntityType,
   payload: Record<string, unknown>
 ): Promise<number> => {
+  const context = await captureAccountContext();
   await initDB();
-  const owner = (await getAuthSession())?.user.id ?? null;
+  const owner = context.userId;
   if (owner && await isAccountDeletionPending(owner)) throw new Error("La cuenta tiene una baja pendiente; no se guardan nuevos envíos.");
   if (!owner && entityType !== "emergency_alert") throw new Error("Iniciá sesión para guardar esta operación.");
   if (entityType === "trail_report") {
     const eventId = typeof payload.client_event_id === "string" ? payload.client_event_id : randomUUID();
-    return enqueueUnique(entityType, { ...payload, client_event_id: eventId }, `report:${eventId}`);
+    return enqueueUnique(entityType, { ...payload, client_event_id: eventId }, `report:${eventId}`, context);
   }
+  assertAccountContext(context);
   const now = Date.now();
   const result = await db.runAsync(
     `INSERT INTO pending_operations (entity_type, payload_json, user_id, status, created_at, updated_at)
@@ -91,10 +94,13 @@ export const enqueue = async (
 export const enqueueUnique = async (
   entityType: PendingEntityType,
   payload: Record<string, unknown>,
-  dedupeKey: string
+  dedupeKey: string,
+  captured?: AccountContext
 ): Promise<number> => {
+  const context = captured ?? await captureAccountContext();
+  assertAccountContext(context);
   await initDB();
-  const owner = (await getAuthSession())?.user.id ?? null;
+  const owner = context.userId;
   if (!owner && entityType !== "emergency_alert") throw new Error("Iniciá sesión para guardar esta operación.");
   dedupeKey = `${owner ?? "guest"}:${dedupeKey}`;
   if (owner && await isAccountDeletionPending(owner)) throw new Error("La cuenta tiene una baja pendiente; no se guardan nuevos envíos.");
@@ -105,6 +111,7 @@ export const enqueueUnique = async (
     [dedupeKey]
   );
 
+  assertAccountContext(context);
   if (existing) return existing.id;
 
   const now = Date.now();
@@ -323,7 +330,10 @@ const syncOnce = async (): Promise<{ processed: number; failed: number }> => {
       processed += 1;
     } catch (error) {
       const message = error instanceof Error ? error.message : "Error desconocido";
-      await markFailed(operation.id, operation.retryCount + 1, message);
+      if (error && typeof error === "object" && "status" in error && error.status === 429) {
+        const delay = "retryAfterMs" in error && typeof error.retryAfterMs === "number" && Number.isFinite(error.retryAfterMs) ? error.retryAfterMs : 900000;
+        await db.runAsync("UPDATE pending_operations SET status = 'failed', last_error = ?, updated_at = ?, next_attempt_at = ? WHERE id = ? AND user_id = ?", ["Límite temporal. Se reintentará después de la espera indicada por el servidor.",Date.now(),Date.now()+Math.max(1000,delay),operation.id,session.user.id]);
+      } else await markFailed(operation.id, operation.retryCount + 1, message);
       failed += 1;
     }
   }

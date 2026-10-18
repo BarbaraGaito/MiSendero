@@ -17,10 +17,9 @@ const emergencyAlertsRoutes = require("./routes/emergencyAlerts.routes");
 const tripPlansRoutes = require("./routes/tripPlans.routes");
 const { processTripNotifications } = require("./tripNotifications");
 
-if (!process.env.JWT_SECRET) {
-  logger.error(
-    "JWT_SECRET no esta configurado. Copia backend/.env.example a backend/.env y generá un secreto."
-  );
+try { require("./securityConfig").validateServerSecrets(); }
+catch (error) {
+  logger.error(error.message);
   process.exit(1);
 }
 
@@ -46,7 +45,7 @@ if (process.env.NODE_ENV !== "test") {
 }
 app.use(express.json());
 app.use((req, res, next) => {
-  if (req.path.startsWith("/api/auth") || req.path.startsWith("/account")) res.set("Cache-Control", "no-store");
+  if (req.path.startsWith("/api/") || req.path.startsWith("/account")) res.set("Cache-Control", "no-store");
   next();
 });
 app.get("/account-deletion", (_req, res) => res.sendFile(require("path").join(__dirname, "public", "account-deletion.html")));
@@ -68,6 +67,7 @@ app.get("/api/health", (_req, res) => {
   res.json({ ok: true, service: "misendero-backend" });
 });
 
+app.use("/api", require("./middleware/writeBudget").writeBudget);
 app.use("/api/auth/login", authLimiter);
 app.use("/api/auth/register", authLimiter);
 app.use("/api/auth/me", (req, res, next) => req.method === "DELETE" ? authLimiter(req, res, next) : next());
@@ -95,6 +95,7 @@ app.use((error, _req, res, _next) => {
 const scheduleStaleReportsCleanup = () => {
   const runCleanup = async () => {
     try {
+      await require("./dataRetention").applyRemoteRetention();
       const removed = await cleanupStaleReports();
       if (removed > 0) {
         logger.info({ removed }, "Reportes de terreno obsoletos descartados");

@@ -3,6 +3,7 @@ import Constants from "expo-constants";
 import { resolveApiUrl } from "./apiConfig";
 import { userMessage } from "./userMessages";
 import { getAuthSession, clearAuthSession } from "./authSession";
+import { captureAccountContext, assertAccountContext, AccountContextChanged } from "./accountContext";
 import { eraseLocalAccountData, isAccountDeletionPending } from "./accountLifecycle";
 import type { RecommendationResponse, TrailPreferences } from "../backend/src/ai/contracts";
 
@@ -32,6 +33,9 @@ export interface TripPlanRecord {
   contact_name: string;
   contact_phone: string;
   status: "active" | "overdue" | "checked_in" | "cancelled";
+  closed_at?: string | null;
+  retention_eligible_at?: string | null;
+  retention_purged_at?: string | null;
   notification_status?: "pending" | "processing" | "accepted" | "cancelled" | null;
 }
 export const getTripPlans = (token: string) => request<TripPlanRecord[]>("/trip-plans", { token });
@@ -47,11 +51,13 @@ type RequestOptions = {
   timeoutMs?: number;
 };
 export class ApiError extends Error {
-  constructor(message: string, public readonly status: number, public readonly code?: string) { super(message); }
+  constructor(message: string, public readonly status: number, public readonly code?: string, public readonly retryAfterMs?: number) { super(message); }
 }
 
 async function request<T>(path: string, options: RequestOptions = {}): Promise<T> {
-  if (options.token && options.method && options.method !== "GET" && options.method !== "DELETE") {
+  const requestContext = options.token && path !== "/auth/logout" ? await captureAccountContext() : null;
+  if (requestContext && requestContext.token !== options.token) throw new AccountContextChanged();
+  if (path !== "/auth/logout" && options.token && options.method && options.method !== "GET" && options.method !== "DELETE") {
     const session = await getAuthSession();
     if (session?.token === options.token && await isAccountDeletionPending(session.user.id)) {
       throw new Error("La baja está pendiente. Reintentá eliminar la cuenta desde Perfil; los envíos están suspendidos.");
@@ -72,18 +78,23 @@ async function request<T>(path: string, options: RequestOptions = {}): Promise<T
   const timeout = setTimeout(() => controller.abort(), options.timeoutMs ?? 10000);
 
   try {
+    if (requestContext) assertAccountContext(requestContext);
     response = await fetch(`${API_URL}${path}`, {
       method: options.method || "GET",
       headers,
       body: options.body ? JSON.stringify(options.body) : undefined,
       signal: controller.signal,
+      cache: "no-store",
+      redirect: "error",
     });
-  } catch {
+  } catch (cause) {
+    if (cause instanceof AccountContextChanged) throw cause;
     throw new Error("No pudimos conectar. Revisá la conexión e intentá nuevamente.");
   } finally {
     clearTimeout(timeout);
   }
 
+  if (requestContext) assertAccountContext(requestContext);
   if (!response.ok) {
     const errorBody = await response.json().catch(() => null);
     if (errorBody?.code === "ACCOUNT_DELETED" && options.token) {
@@ -110,10 +121,14 @@ async function request<T>(path: string, options: RequestOptions = {}): Promise<T
     const message = path === "/trip-plans" && options.method === "POST" && response.status === 503
       ? "No pudimos activar el aviso automático. Compartí el plan por SMS con tu contacto."
       : response.status >= 500 ? fallback : userMessage(issueMessage || errorBody?.message, fallback);
-    throw new ApiError(message, response.status, errorBody?.code);
+    const retry = response.headers?.get?.("retry-after");
+    const retryMs = retry && /^\d+$/.test(retry) ? Number(retry) * 1000 : undefined;
+    throw new ApiError(message, response.status, errorBody?.code, retryMs === undefined ? undefined : Math.min(86400000,Math.max(1000,retryMs)));
   }
 
-  return response.json();
+  const result = await response.json();
+  if (requestContext) assertAccountContext(requestContext);
+  return result;
 }
 
 export const loginUser = async (
@@ -170,7 +185,8 @@ export const getTrailReports = async (id: number): Promise<TrailReport[]> => {
 };
 
 export const flagReport = (id: number, reason: string, token: string) => request(`/reports/${id}/flag`, { method: "POST", token, body: { reason } });
-export const blockReportAuthor = (id: number, token: string) => request<{ hidden_report_ids: number[] }>(`/reports/${id}/block-author`, { method: "POST", token });
+export const blockReportAuthor = (id: number, token: string) => request<{ blocked: boolean }>(`/reports/${id}/block-author`, { method: "POST", token });
+export const revokeSession = (token: string) => request<{ revoked: boolean }>("/auth/logout", { method: "POST", token });
 export const withdrawReport = (id: number, token: string) => request(`/reports/${id}`, { method: "DELETE", token });
 export const correctReport = (id: number, issue_summary: string, details: string, token: string) => request(`/reports/${id}`, { method: "PATCH", body: { issue_summary, details }, token });
 

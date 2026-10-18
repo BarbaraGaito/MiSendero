@@ -43,7 +43,8 @@ test("export downloads the returned data and revokes the temporary object URL", 
 });
 test("deletion is gated by explicit confirmation, reports uncertainty, and clears the session only on success", async () => {
   await login(); const calls = fetchMock.mock.calls.length; await fire("delete"); expect(fetchMock).toHaveBeenCalledTimes(calls); expect(elements.status.textContent).toContain("confirmación");
-  elements.confirm.checked = true; fetchMock.mockRejectedValueOnce(new Error("response lost")); await fire("delete"); expect(elements.status.textContent).toBe("response lost"); expect(elements.actions.hidden).toBe(false); expect(elements.delete.disabled).toBe(false);
+  elements.confirm.checked = true; elements["delete-password"].value = "secret-test"; fetchMock.mockRejectedValueOnce(new Error("response lost")); await fire("delete"); expect(elements.status.textContent).toBe("response lost"); expect(elements.actions.hidden).toBe(false); expect(elements.delete.disabled).toBe(false);
+  expect(elements["delete-password"].value).toBe(""); elements["delete-password"].value = "secret-test";
   fetchMock.mockResolvedValueOnce(ok({})); await fire("delete"); expect(fetchMock).toHaveBeenLastCalledWith("/api/auth/me", expect.objectContaining({ method: "DELETE", body: JSON.stringify({ password: "secret-test" }) })); expect(elements.actions.hidden).toBe(true); expect(elements.status.textContent).toContain("remotos eliminados");
 });
 test("moderation renders untrusted text as text and applies hide/restore through the protected API", async () => {

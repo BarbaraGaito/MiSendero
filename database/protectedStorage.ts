@@ -91,3 +91,14 @@ export const openProtectedDatabase = async (useNewConnection = false) => {
   const connection = await migration;
   return useNewConnection ? openKeyed(await secret(), true) : connection;
 };
+
+// The connection coordinator waits for pending SQL before calling this. Remove
+// JS references too; this is not a claim of forensic zeroization of JS memory.
+export const releaseProtectedDatabase = async () => {
+  const current = migration;
+  keyPromise = undefined;
+  if (current) {
+    await (await current).closeAsync();
+    if (migration === current) migration = undefined;
+  }
+};

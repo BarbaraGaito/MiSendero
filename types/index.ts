@@ -226,6 +226,7 @@ export interface TrailReport {
   updated_at?: string;
   expires_at?: string;
   is_mine?: boolean;
+  position_precision_meters?: number;
   created_at: string;
 }
 

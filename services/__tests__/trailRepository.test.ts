@@ -41,8 +41,8 @@ test("online report refresh replaces the offline copy, including withdrawals and
   (api.getTrailReports as jest.Mock).mockResolvedValue([]);
   expect(await getTrailReports(8)).toEqual([]);
   expect(local.refreshOfflineTrailReports).toHaveBeenCalledWith(8, []);
-  (api.getTrailReports as jest.Mock).mockResolvedValue([{ ...old, issue_summary: "Corregido" }]);
-  expect((await getTrailReports(8))[0].issue_summary).toBe("Corregido");
+  (api.getTrailReports as jest.Mock).mockResolvedValue([{ ...old, issue_summary: "Nieve o hielo" }]);
+  expect((await getTrailReports(8))[0].issue_summary).toBe("Nieve o hielo");
 });
 
 test("an elevation refresh failure retains the downloaded route", async () => {

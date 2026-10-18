@@ -8,7 +8,7 @@ const notices = require("../privacyNotices.json");
 const router = express.Router();
 router.use(requireAuth);
 
-router.delete("/me", validateBody(z.object({ password: z.string().min(1).max(200) })), async (req, res, next) => {
+router.delete("/me", validateBody(z.object({ password: z.string().min(1).max(200).refine(value => Buffer.byteLength(value, "utf8") <= 72, "La credencial supera el límite UTF-8; requiere recuperación verificada.") })), async (req, res, next) => {
   const client = await (await getPool()).connect();
   try {
     await client.query("BEGIN");

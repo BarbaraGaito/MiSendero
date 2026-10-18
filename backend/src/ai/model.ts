@@ -24,7 +24,7 @@ export class LocalRanker implements Ranker {
       const settle = this.ready;
       this.ready = (value) => { clearTimeout(timer); settle(value); };
       try {
-        const env: NodeJS.ProcessEnv = { NODE_ENV: process.env.NODE_ENV || "production", PYTHONUNBUFFERED: "1", PYTHONNOUSERSITE: "1", OMP_NUM_THREADS: "1", OPENBLAS_NUM_THREADS: "1" };
+        const env: NodeJS.ProcessEnv = { NODE_ENV: process.env.NODE_ENV || "production", PYTHONUNBUFFERED: "1", PYTHONNOUSERSITE: "1", TRAIL_ML_TRUSTED_SHA256: process.env.TRAIL_ML_TRUSTED_SHA256 || "", OMP_NUM_THREADS: "1", OPENBLAS_NUM_THREADS: "1" };
         for (const key of ["PATH", "Path", "SystemRoot", "WINDIR", "TEMP", "TMP", "HOME"]) if (process.env[key]) env[key] = process.env[key];
         this.child = spawn(this.executable, ["-u", path.resolve(__dirname, "../../ml/serve.py"), "--model-dir", path.resolve(this.directory!)], { shell: false, windowsHide: true, env, stdio: "pipe" });
         this.child.stdout.setEncoding("utf8");

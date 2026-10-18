@@ -45,6 +45,10 @@ jobs:
         run: npm ci --ignore-scripts
         working-directory: backend
 
+      - name: Reject high or critical production dependency advisories in API
+        run: npm audit --omit=dev --audit-level=high --package-lock-only
+        working-directory: backend
+
       - name: Test all declared sources and enforce 85 percent weighted line coverage
         run: npm run test:coverage
 

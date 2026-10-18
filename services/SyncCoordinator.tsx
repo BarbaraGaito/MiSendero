@@ -1,9 +1,12 @@
 import { useEffect } from "react";
 import { AppState } from "react-native";
 import * as Network from "expo-network";
+import { initDB } from "../database/database";
+import { applyLocalRetention } from "../database/dataRetention";
 import { runSync } from "./syncQueue";
 import { getAuthSession } from "./authSession";
 import { getProfile } from "./api";
+import { flushPendingRevocations } from "./logoutSession";
 
 export function SyncCoordinator() {
   useEffect(() => {
@@ -12,6 +15,9 @@ export function SyncCoordinator() {
       if (validating) return;
       validating = true;
       void (async () => {
+        await initDB();
+        await applyLocalRetention();
+        await flushPendingRevocations();
         // Validate even an empty queue so a remotely deleted account is cleared
         // when another installation returns online.
         const session = await getAuthSession();

@@ -1,4 +1,5 @@
 const { Pool } = require("pg");
+const { databaseOptions } = require("./securityConfig");
 
 let poolPromise = null;
 
@@ -9,12 +10,7 @@ const createRealPool = () => {
     );
   }
 
-  return new Pool({
-    connectionString: process.env.DATABASE_URL,
-    max: Number(process.env.PG_POOL_MAX || 10),
-    idleTimeoutMillis: 30_000,
-    connectionTimeoutMillis: 5_000,
-  });
+  return new Pool(databaseOptions());
 };
 
 // pg-mem provides an in-memory Postgres-compatible engine so the test suite can run

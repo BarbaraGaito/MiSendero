@@ -32,7 +32,7 @@
         {
           "NSHealthShareUsageDescription": "MiSendero permite leer, con tu autorización opcional, frecuencia cardiaca, actividad y oxígeno de Salud para mostrar métricas locales de tu recorrido. No realiza diagnóstico ni tiene modelos aprobados para uso en campo.",
           "NSHealthUpdateUsageDescription": false,
-          "background": true
+          "background": false
         }
       ],
       "expo-secure-store",

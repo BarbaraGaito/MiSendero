@@ -1,13 +1,12 @@
 "use strict";
 (() => {
   let token = null;
-  let password = null;
   const byId = (id) => document.getElementById(id);
   const status = (message) => { byId("status").textContent = message; };
   const api = async (path, method = "GET", body) => {
     const response = await fetch(`/api${path.startsWith("/reports") ? "" : "/auth"}${path}`, { method, headers: {
       ...(token ? { Authorization: `Bearer ${token}` } : {}), ...(body ? { "Content-Type": "application/json" } : {}),
-    }, body: body ? JSON.stringify(body) : undefined, cache: "no-store" });
+    }, body: body ? JSON.stringify(body) : undefined, cache: "no-store", redirect: "error" });
     const data = await response.json();
     if (!response.ok) throw new Error(data.message || "No se pudo completar la solicitud");
     return data;
@@ -15,7 +14,8 @@
   byId("account-form").addEventListener("submit", async (event) => {
     event.preventDefault();
     try {
-      password = byId("password").value;
+      const password = byId("password").value;
+      byId("password").value = "";
       const login = await api("/login", "POST", { email: byId("email").value, password });
       token = login.token;
       byId("name").value = login.user.name;
@@ -23,7 +23,7 @@
       byId("actions").hidden = false;
       byId("moderation").hidden = login.user.role !== "admin";
       status("Cuenta verificada. Podés gestionar tus datos durante esta visita.");
-    } catch (error) { token = null; password = null; byId("actions").hidden = true; byId("moderation").hidden = true; byId("flags").replaceChildren(); status(error.message); }
+    } catch (error) { token = null; byId("password").value = ""; byId("actions").hidden = true; byId("moderation").hidden = true; byId("flags").replaceChildren(); status(error.message); }
   });
   byId("export").addEventListener("click", async () => {
     try {
@@ -41,10 +41,13 @@
   });
   byId("delete").addEventListener("click", async () => {
     if (!byId("confirm").checked) return status("Marcá la confirmación de eliminación para continuar.");
+    if (!byId("delete-password").value) return status("Volvé a ingresar la contraseña para confirmar la baja.");
     byId("delete").disabled = true;
     try {
+      const password = byId("delete-password").value;
+      byId("delete-password").value = "";
       await api("/me", "DELETE", { password });
-      token = null; password = null;
+      token = null;
       byId("actions").hidden = true;
       byId("moderation").hidden = true;
       byId("flags").replaceChildren();
@@ -76,10 +79,12 @@
       if (!flags.length) status("No hay denuncias registradas.");
     } catch (error) { status(error.message); }
   });
-  byId("sign-out").addEventListener("click", () => {
-    token = null; password = null;
+  byId("sign-out").addEventListener("click", async () => {
+    let confirmed = false;
+    try { await api("/logout", "POST"); confirmed = true; } catch { /* Explain residual access below. */ }
+    token = null; byId("delete-password").value = "";
     byId("account-form").reset(); byId("name-form").reset(); byId("confirm").checked = false;
     byId("actions").hidden = true; byId("moderation").hidden = true; byId("flags").replaceChildren();
-    status("Sesión web cerrada.");
+    status(confirmed ? "Sesión web cerrada y revocada." : "Sesión web cerrada localmente. No se confirmó revocación; la credencial podría seguir vigente hasta vencer.");
   });
 })();

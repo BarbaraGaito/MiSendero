@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const JWT_ALGORITHM = "HS256";
 const { query } = require("../db");
+const { isRevoked } = require("../sessionRevocation");
 
 const requireAuth = async (req, res, next) => {
   const authHeader = req.headers.authorization || "";
@@ -30,8 +31,11 @@ const requireAuth = async (req, res, next) => {
     const { rows } = await query("SELECT id, role FROM users WHERE id = $1", [payload.userId]);
     if (!rows[0]) return res.status(401).json({ message: "Cuenta eliminada", code: "ACCOUNT_DELETED" });
     if (expired) return res.status(401).json({ message: "Sesion vencida" });
+    if (await isRevoked(token)) return res.status(401).json({ message: "Sesión revocada", code: "SESSION_REVOKED" });
     req.userId = rows[0].id;
     req.userRole = rows[0].role;
+    req.authToken = token;
+    req.authExpiresAt = payload.exp;
     next();
   } catch (error) { next(error); }
 };

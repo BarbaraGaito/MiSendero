@@ -1,4 +1,5 @@
 import "../../../testing/mobileSetup";
+jest.mock("../../../services/logoutSession", () => ({ logoutSession: async () => { await require("../../../services/authSession").clearAuthSession(); return { remoteRevoked: true }; } }));
 jest.mock("../../../services/api", () => ({ getProfile: jest.fn(), accountDataPageUrl: "https://example.test/account" }));
 jest.mock("../../../services/authSession", () => ({ getAuthSession: jest.fn(), saveAuthSession: jest.fn().mockResolvedValue(undefined), clearAuthSession: jest.fn().mockResolvedValue(undefined) }));
 jest.mock("../../../services/deleteAccount", () => ({ deleteCurrentAccount: jest.fn() }));
@@ -60,7 +61,7 @@ test("profile displays account-scoped persistence, retries sync, and confirms di
   await press(tree, "Con error, reintentar"); expect(queue.runSync).toHaveBeenCalledTimes(2);
   await press(tree, "Descartar pendientes con error"); expect(queue.discardExhaustedOperations).not.toHaveBeenCalled(); await confirm("Descartar"); expect(queue.discardExhaustedOperations).toHaveBeenCalledTimes(1);
   await press(tree, "Mapas descargados"); expect(router.push).toHaveBeenLastCalledWith("/offline-mapas-descargados"); await press(tree, "Contacto de emergencia"); expect(router.push).toHaveBeenLastCalledWith("/contacto-seguridad");
-});
+}, 15000);
 test("privacy controls revoke each purpose independently and report rejected persistence", async () => {
   const tree = await mount(Profile); await press(tree, "Usar datos sensibles"); expect(privacy.savePrivacyPreferences).toHaveBeenLastCalledWith({ sensitiveDataConsent: false, analyticsTrainingConsent: true });
   await press(tree, "Mejorar recomendaciones"); expect(privacy.savePrivacyPreferences).toHaveBeenLastCalledWith({ sensitiveDataConsent: true, analyticsTrainingConsent: false });

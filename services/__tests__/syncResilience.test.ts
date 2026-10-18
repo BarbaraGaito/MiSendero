@@ -26,6 +26,16 @@ test("concurrent sync calls share one dispatch", async () => {
   expect(createEmergencyAlert).toHaveBeenCalledTimes(1);
 });
 
+test("429 respects Retry-After without exhausting automatic retry attempts", async () => {
+  (createEmergencyAlert as jest.Mock).mockRejectedValue(Object.assign(new Error("quota fixture"),{status:429,retryAfterMs:120000}));
+  const id=await enqueueUnique("emergency_alert",{client_event_id:"quota-fixture"},"quota-fixture");
+  const before=Date.now();
+  expect(await runSync()).toEqual({processed:0,failed:1});
+  const row=await db.getFirstAsync<{retry_count:number;next_attempt_at:number}>("SELECT retry_count,next_attempt_at FROM pending_operations WHERE id = ?",[id]);
+  expect(row?.retry_count).toBe(0);expect(row!.next_attempt_at).toBeGreaterThanOrEqual(before+120000);
+  await runSync();expect(createEmergencyAlert).toHaveBeenCalledTimes(1);
+});
+
 test("SOS retries with backoff beyond five failures and cannot be bulk discarded", async () => {
   (createEmergencyAlert as jest.Mock).mockRejectedValue(new Error("unreachable"));
   const id = await enqueueUnique("emergency_alert", { client_event_id: "one" }, "one");

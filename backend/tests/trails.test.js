@@ -202,6 +202,7 @@ describe("trails", () => {
   test("creates and lists reports for a trail, requiring authentication", async () => {
     const list = await request(app).get("/api/trails");
     const [trail] = list.body;
+    const [latitude, longitude] = JSON.parse(trail.route_coordinates)[0];
 
     const unauthenticated = await request(app)
       .post(`/api/trails/${trail.id}/reports`)
@@ -215,8 +216,8 @@ describe("trails", () => {
         issue_summary: "Barro",
         severity: "Media",
         trail_state: "Precaucion",
-        latitude: -41.17123,
-        longitude: -71.47567,
+        latitude,
+        longitude,
         accuracy_meters: 9,
         route_progress_meters: 1240,
       });
@@ -224,7 +225,7 @@ describe("trails", () => {
     expect(created.status).toBe(201);
     expect(created.body.reporter_name).toBeUndefined();
     expect(created.body.reporter_user_id).toBeUndefined();
-    expect(created.body.latitude).toBeCloseTo(-41.17123);
+    expect(created.body.latitude).toBeCloseTo(latitude);
     expect(created.body.route_progress_meters).toBe(1240);
 
     const reports = await request(app).get(`/api/trails/${trail.id}/reports`);

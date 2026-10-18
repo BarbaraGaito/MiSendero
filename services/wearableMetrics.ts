@@ -1,3 +1,4 @@
+import { AccountContext, AccountContextChanged, captureAccountContext, assertAccountContext } from "./accountContext";
 import { db } from "../database/connection";
 import { wearableStorageSql } from "../database/wearableSchema";
 import {
@@ -114,10 +115,12 @@ const parseProvider = (value: string): WearableProvider => {
 export const getWearableProviderName = (provider: WearableProvider) =>
   providerNames[provider];
 
-export const getWearableConnection = async (): Promise<WearableConnection> => {
+export const getWearableConnection = async (captured?: AccountContext): Promise<WearableConnection> => {
+  const context = captured ?? await captureAccountContext();
+  assertAccountContext(context);
   await initWearableTables();
 
-  const userId = await getCurrentUserId();
+  const userId = context.userId;
   if (!userId) return defaultConnection;
 
   const row = await db.getFirstAsync<{
@@ -133,21 +136,26 @@ export const getWearableConnection = async (): Promise<WearableConnection> => {
     [userId]
   );
 
+  assertAccountContext(context);
   return row ? toConnection(row) : defaultConnection;
 };
 
 export const saveWearableConnection = async (
   provider: WearableProvider,
   linked: boolean,
-  permissionsGranted: boolean
+  permissionsGranted: boolean,
+  captured?: AccountContext
 ) => {
+  const context = captured ?? await captureAccountContext();
+  assertAccountContext(context);
   await initWearableTables();
 
-  const userId = await getCurrentUserId();
+  const userId = context.userId;
   if (!userId) {
     throw new Error("Sesion requerida para vincular metricas de salud.");
   }
 
+  assertAccountContext(context);
   await db.runAsync(
     `INSERT OR REPLACE INTO wearable_connections (
        user_id,
@@ -179,19 +187,22 @@ export const unlinkWearableConnection = async () => {
 };
 
 export const saveWearableMetricSample = async (
-  sample: Omit<WearableMetricSample, "id" | "user_id" | "createdAt">
+  sample: Omit<WearableMetricSample, "id" | "user_id" | "createdAt">,
+  captured?: AccountContext
 ) => {
+  const context = captured ?? await captureAccountContext();
+  assertAccountContext(context);
   if (sample.simulated || sample.provider === "development_simulator") {
     throw new Error("Las metricas simuladas no se guardan.");
   }
 
   await initWearableTables();
 
-  const userId = await getCurrentUserId();
+  const userId = context.userId;
   if (!userId) {
     throw new Error("Sesion requerida para guardar metricas del reloj.");
   }
-  if (!(await getPrivacyPreferences()).sensitiveDataConsent || await isAccountDeletionPending(userId)) {
+  if (!(await getPrivacyPreferences(context)).sensitiveDataConsent || await isAccountDeletionPending(userId)) {
     throw new Error("Se requiere autorización vigente para guardar métricas fisiológicas.");
   }
 
@@ -204,6 +215,7 @@ export const saveWearableMetricSample = async (
     [userId, sample.provider, sample.recordedAt]
   );
 
+  assertAccountContext(context);
   if (existing) {
     await db.runAsync(
       `UPDATE wearable_connections
@@ -215,7 +227,8 @@ export const saveWearableMetricSample = async (
     return false;
   }
 
-  await db.runAsync(
+  assertAccountContext(context);
+  const inserted = await db.runAsync(
     `INSERT INTO wearable_metric_samples (
        user_id,
        provider,
@@ -253,7 +266,7 @@ export const saveWearableMetricSample = async (
     [sample.recordedAt, createdAt, userId]
   );
 
-  return true;
+  return inserted.changes > 0;
 };
 
 export const getLatestWearableMetricSample = async () => {
@@ -536,6 +549,8 @@ export const linkNativeWearable = async () => {
 export const linkNativeWearableProvider = async (
   preferredProvider?: WearableProvider
 ) => {
+  const context = await captureAccountContext();
+  if (!context.userId || !(await getPrivacyPreferences(context)).sensitiveDataConsent) return false;
   const bridge = getNativeWearableBridge();
   const isAvailable = await bridge.isAvailable();
 
@@ -548,20 +563,23 @@ export const linkNativeWearableProvider = async (
     preferredProvider && androidNativeProviders.includes(preferredProvider)
       ? preferredProvider
       : bridge.provider;
-  await saveWearableConnection(provider, true, true);
+  assertAccountContext(context);
+  await saveWearableConnection(provider, true, true, context);
   return true;
 };
 
 export const syncNativeWearableSampleWithStatus = async (
   options?: NativeWearableReadOptions
 ): Promise<NativeWearableSyncStatus> => {
-  if (!(await getPrivacyPreferences()).sensitiveDataConsent) return "permission_denied";
+  const context = await captureAccountContext();
+  try {
+  if (!context.userId || !(await getPrivacyPreferences(context)).sensitiveDataConsent) return "permission_denied";
   const bridge = getNativeWearableBridge();
   const isAvailable = await bridge.isAvailable();
 
   if (!isAvailable) return "unavailable";
 
-  const connection = await getWearableConnection();
+  const connection = await getWearableConnection(context);
   if (!connection.linked) return "not_linked";
 
   const provider =
@@ -578,16 +596,21 @@ export const syncNativeWearableSampleWithStatus = async (
   const sample = await bridge.readLatestSample(options);
 
   // Recheck after the native read, since consent can be withdrawn while it runs.
-  if (!(await getPrivacyPreferences()).sensitiveDataConsent) return "permission_denied";
+  assertAccountContext(context);
+  if (!(await getPrivacyPreferences(context)).sensitiveDataConsent) return "permission_denied";
 
-  await saveWearableConnection(provider, true, true);
+  await saveWearableConnection(provider, true, true, context);
   if (!sample) return "no_data";
 
   const saved = await saveWearableMetricSample({
     ...sample,
     provider,
-  });
+  }, context);
   return saved ? "saved" : "duplicate";
+  } catch (error) {
+    if (error instanceof AccountContextChanged) return "permission_denied";
+    throw error;
+  }
 };
 
 export const MAX_HEALTH_SAMPLE_AGE_MS = 5 * 60 * 1000;

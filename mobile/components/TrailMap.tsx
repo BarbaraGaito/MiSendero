@@ -370,23 +370,22 @@ const getVisibleTiles = (
 };
 
 const getMapAttribution = (layer: MapLayer) => {
-  if (layer !== "satellite" && process.env.EXPO_PUBLIC_OFFLINE_TILE_ATTRIBUTION) return process.env.EXPO_PUBLIC_OFFLINE_TILE_ATTRIBUTION;
-  if (layer === "terrain") return "Esri World Topo Map · Esri, HERE, TomTom, Intermap, GEBCO, USGS, FAO, NPS, NRCAN, GeoBase, IGN, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China, swisstopo, MapmyIndia y comunidad GIS · Ruta © OpenStreetMap";
-  if (layer === "satellite") return "Esri World Imagery · Esri, Maxar, Earthstar Geographics y comunidad GIS · Ruta © OpenStreetMap";
-  return "© OpenStreetMap contributors (ODbL)";
+  if (layer === "standard" && process.env.EXPO_PUBLIC_OFFLINE_TILE_ATTRIBUTION) return process.env.EXPO_PUBLIC_OFFLINE_TILE_ATTRIBUTION;
+  if (layer === "terrain" || layer === "satellite") return "© Esri · © OpenStreetMap contributors";
+  return "© OpenStreetMap contributors";
 };
 
 const getTerrainUnavailableMessage = (state: TerrainElevationState) => {
   if (state.status === "loading") {
-    return "Consultando alturas reales del terreno (Copernicus DEM, 90 m).";
+    return "Cargando el relieve del recorrido...";
   }
   if (state.status === "unavailable" && state.reason === "no-route") {
-    return "Se necesitan datos de elevacion reales y este sendero no tiene un trazado cargado.";
+    return "El relieve de este sendero no está disponible. Podés consultar la información del recorrido en su ficha.";
   }
   if (state.status === "unavailable" && state.reason === "offline") {
-    return "Se necesitan datos de elevacion reales. Sin conexion solo se muestra el relieve guardado con el mapa descargado o ya consultado en esta sesion; conectate para cargarlo.";
+    return "Conectate a Internet para cargar el relieve. Si ya descargaste el mapa, podés seguir usándolo sin conexión.";
   }
-  return "Se necesitan datos de elevacion reales y el proveedor no los entrego. Proba de nuevo mas tarde.";
+  return "No pudimos cargar el relieve. Intentá nuevamente más tarde o usá la vista de mapa.";
 };
 
 const getMapDecorations = ({ points, trailName }: {
@@ -481,7 +480,9 @@ export function TrailMap({
   );
   const savedZooms = useMemo(() => trail ? [...new Set(getOfflineTilePlanForTrail(trail).map((tile) => tile.zoom))] : [], [trail]);
   const maxZoom = offline && savedZooms.length ? Math.max(...savedZooms) : MAX_ZOOM_BY_LAYER[layer];
-  useEffect(() => { if (offline && layer === "satellite") setLayer("terrain"); }, [offline, layer]);
+  useEffect(() => {
+    if (offline) { setLayer("standard"); setIsPerspective(false); }
+  }, [offline]);
   const zoom = Math.min(activeZoom, maxZoom);
   const getInitialView = () =>
     fitRoute
@@ -759,6 +760,11 @@ export function TrailMap({
     }
 
     const nextTiles = mapState.tiles;
+    if (offline) {
+      setCachedTiles(nextTiles);
+      setIsTileLoading(false);
+      return;
+    }
     const generation = tileLoadRef.current + 1;
     tileLoadRef.current = generation;
     setIsTileLoading(true);
@@ -775,7 +781,7 @@ export function TrailMap({
           setIsTileLoading(false);
         }
       });
-  }, [isPerspective, tileSignature]);
+  }, [isPerspective, tileSignature, offline]);
 
   useEffect(() => {
     let isMounted = true;
@@ -936,7 +942,7 @@ export function TrailMap({
                   Arrastra para orbitar · Pellizca para acercar
                 </Text>
                 <Text style={styles.terrainSourceText}>
-                  Relieve real de Copernicus DEM (90 m), escala vertical 1:1 sin exagerar.
+                  Explorá las alturas y pendientes del recorrido.
                 </Text>
                 <Text style={styles.terrainSourceText}>
                   {OPEN_METEO_ELEVATION_ATTRIBUTION}
@@ -1001,7 +1007,7 @@ export function TrailMap({
               ))
             : null}
 
-          {mapState.tiles.map((tile) => (
+          {mapState.tiles.filter(tile => !offline || Boolean(tileUriOverrides[tile.key])).map((tile) => (
             <Image
               key={tile.key}
               fadeDuration={0}
@@ -1153,14 +1159,14 @@ export function TrailMap({
             Mapa
           </Text>
         </Pressable>
-        <Pressable
+        {!offline && <Pressable
           onPress={() => setLayer("terrain")}
           style={[styles.layerButton, layer === "terrain" && styles.layerButtonActive]}
         >
           <Text style={[styles.layerLabel, layer === "terrain" && styles.layerLabelActive]}>
             Terreno
           </Text>
-        </Pressable>
+        </Pressable>}
         {allowSatellite && !offline ? (
           <Pressable
             onPress={() => setLayer("satellite")}
@@ -1174,7 +1180,7 @@ export function TrailMap({
         </View>
       ) : null}
 
-      <Pressable
+      {!offline && <Pressable
         accessibilityLabel={isPerspective ? "Cambiar a mapa 2D" : "Cambiar a perspectiva 3D"}
         accessibilityRole="button"
         accessibilityState={{ selected: isPerspective }}
@@ -1199,7 +1205,7 @@ export function TrailMap({
         >
           {isPerspective ? "2D" : "3D"}
         </Text>
-      </Pressable>
+      </Pressable>}
 
       <View
         style={[
@@ -1240,7 +1246,8 @@ export function TrailMap({
       ) : null}
 
       {!isPerspective ? (
-        <Text style={styles.attribution} accessibilityRole="link" onPress={() => router.push("/atribuciones")}>
+        <Text style={styles.attribution} accessibilityRole="link" accessibilityLabel="Fuentes y licencias del mapa"
+          onPress={() => router.push(trail ? { pathname: "/atribuciones", params: { trailId: String(trail.id) } } : "/atribuciones")}>
           {getMapAttribution(layer)}
         </Text>
       ) : null}
@@ -1257,7 +1264,7 @@ export function TrailMap({
       {showTestingNotice ? (
         <View style={[styles.testingBadge, { top: testingNoticeTop }]}>
           <Ionicons name="flask-outline" size={14} color={colors.greenDark} />
-          <Text style={styles.testingBadgeText}>Testing</Text>
+          <Text style={styles.testingBadgeText}>Modo prueba</Text>
         </View>
       ) : null}
 
@@ -1656,14 +1663,15 @@ const styles = StyleSheet.create({
   },
   attribution: {
     backgroundColor: "rgba(255,255,255,0.86)",
-    bottom: 98,
+    bottom: 2,
     color: colors.muted,
     fontSize: 10,
-    fontWeight: "800",
-    paddingHorizontal: 7,
-    paddingVertical: 3,
+    fontWeight: "400",
+    maxWidth: "95%",
+    paddingHorizontal: 4,
+    paddingVertical: 1,
     position: "absolute",
-    right: 10,
+    right: 4,
     zIndex: 5,
   },
   locationWarning: {

@@ -27,6 +27,7 @@ import Activities from "../ActivitiesScreen";
 import History from "../HistoryScreen";
 import Reviews from "../TrailReviewsScreen";
 import Detail from "../TrailDetail";
+import Attributions from "../AttributionsScreen";
 import Offline from "../OfflineMapsScreen";
 import Search from "../OfflineMapsSearchScreen";
 import Parks from "../NationalParksScreen";
@@ -82,7 +83,7 @@ test("trail details toggle a favorite and download a verified local copy", async
   const favorite = tree.root.findAll((node: any) => typeof node.props.onPress === "function" && /favorit/i.test(node.props.accessibilityLabel || ""))[0];
   expect(favorite).toBeDefined(); await act(async () => favorite.props.onPress()); expect(favorites.setTrailFavorite).toHaveBeenCalledWith(7, true);
   const download = tree.root.findAll((node: any) => typeof node.props.onPress === "function" && /Descargar mapa/i.test(node.props.label || ""))[0];
-  expect(download).toBeDefined(); await act(async () => download.props.onPress()); expect(maps.saveOfflineTrailMap).toHaveBeenCalled(); expect(text(tree)).toContain("Mapa descargado");
+  expect(download).toBeDefined(); await act(async () => download.props.onPress()); expect(maps.saveOfflineTrailMap).toHaveBeenCalled(); expect(text(tree)).toContain("Mapa básico y recorrido descargados");
 });
 test("a documented circuit without GPS shows its facts and source without offering a map download", async () => {
   const entry = require("../../../backend/src/data/catalogExpansion20261017").trails.find((item: any) => item.provenance.catalog_key === "moreno-belgrano-chico");
@@ -90,7 +91,7 @@ test("a documented circuit without GPS shows its facts and source without offeri
   const tree = await mount(Detail);
   const content = text(tree);
   expect(content).toContain("Circuito completo");
-  expect(content).toContain("Traza GPS pendiente");
+  expect(content).toContain("Consultá el recorrido");
   expect(content).toContain("Fuentes del recorrido");
   expect(content).not.toContain("Solo ida; coordinar el regreso");
   expect(tree.root.findAll((node: any) => ["Ver ruta", "Descargar mapa"].includes(node.props.label))).toHaveLength(0);
@@ -100,7 +101,15 @@ test("the enriched circuit displays its real image, source and map actions witho
   (trails.getTrailById as jest.Mock).mockResolvedValue({ ...trail, ...entry, id: 7, elevation: null, route_coordinates: JSON.stringify(entry.route_coordinates) });
   const tree = await mount(Detail);
   expect(text(tree)).not.toContain("Traza GPS pendiente");
-  expect(text(tree)).toContain("Cartografía:");
+  expect(text(tree)).toContain("Créditos cartográficos");
+  expect(text(tree)).not.toContain(entry.provenance.photo.context);
+  expect(text(tree)).not.toContain(entry.provenance.mapping.license);
+  await press(tree, "Créditos cartográficos");
+  expect(router.push).toHaveBeenCalledWith({ pathname: "/atribuciones", params: { trailId: "7" } });
+  const credits = await mount(Attributions);
+  expect(text(credits)).toContain(entry.provenance.mapping.license);
+  expect(text(credits)).toContain(entry.provenance.photo.author);
+  expect(text(credits)).toContain(entry.provenance.photo.context);
   expect(tree.root.findAll((node: any) => node.props.label === "Ver ruta").length).toBeGreaterThan(0);
   expect(tree.root.findAll((node: any) => node.props.source?.uri === entry.image_url).length).toBeGreaterThan(0);
 });

@@ -638,7 +638,7 @@ export const predictWearableHealth = (
       : sample.oxygenSaturation < 90
       ? "Oxigeno bajo"
       : sample.oxygenSaturation !== null && sample.oxygenSaturation < 94
-        ? "SpO₂ por debajo del umbral de aviso experimental"
+        ? "Oxígeno en sangre bajo en la última lectura"
         : `SpO₂ medida: ${sample.oxygenSaturation}%`,
     fatigue === "sin_datos" ? "Fatiga sin datos suficientes" : fatigue === "alto"
       ? "Fatiga estimada alta"
@@ -679,7 +679,7 @@ export const predictWearableHealth = (
     fatigueConfidence: fatiguePrediction.confidence,
     riskLabel,
     riskConfidence: risk.confidence,
-    analysisSummary: `Modelos de investigación sin habilitar. Avisos por reglas experimentales. Fatiga: ${fatigue === "sin_datos" ? "sin datos" : fatigue}. Riesgo: ${riskLabel === "sin_datos" ? "no estimable; faltan variables medidas" : riskLabel}. No evalúa si es seguro continuar.`,
+    analysisSummary: `Resumen de tus últimas lecturas. Fatiga: ${fatigue === "sin_datos" ? "sin datos suficientes" : fatigue}. Riesgo: ${riskLabel === "sin_datos" ? "sin datos suficientes" : riskLabel}. Este resumen no determina si es seguro continuar.`,
     factors,
     recommendedAction,
   };
@@ -756,7 +756,7 @@ const getHighWearablePredictionCopy = ({
   if (criticalOxygen) {
     return {
       title: "SpO₂ baja: revisar lectura",
-      message: `Tu oxigeno en sangre (${oxygenSaturation}%) esta por debajo del umbral de aviso experimental. Deten la actividad, respira con calma y busca ayuda si no mejora.`,
+      message: `La última lectura de oxígeno en sangre (${oxygenSaturation}%) es baja. Deten la actividad, respira con calma y busca ayuda si no mejora.`,
     };
   }
 

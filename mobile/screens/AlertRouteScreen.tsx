@@ -101,7 +101,7 @@ export default function AlertRouteScreen() {
             {permissionDenied
               ? "Activa la ubicacion para calcular la distancia real."
               : isTestingLocation
-                ? "Modo testing activo: se simula que estas en el inicio."
+                ? "Modo prueba activo: se simula que estás en el inicio."
                 : isStartWarning
                   ? `Acercate al punto inicial antes de comenzar. Distancia actual: ${distanceText}.`
                   : `Vuelve hacia el tramo principal para retomar el circuito seguro. Distancia actual: ${distanceText}.`}

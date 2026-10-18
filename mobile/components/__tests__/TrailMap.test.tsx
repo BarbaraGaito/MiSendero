@@ -8,6 +8,7 @@ jest.mock("../../../services/mapTileCache", () => ({
 }));
 import { Image, PanResponder } from "react-native";
 import { useNetworkState } from "expo-network";
+import { router } from "expo-router";
 import { useDeviceLocation } from "../../hooks/useDeviceLocation";
 import { useTerrainElevation } from "../../hooks/useTerrainElevation";
 import { resolveCachedTileUri } from "../../../services/mapTileCache";
@@ -35,7 +36,11 @@ test("2D route uses local tile files where available and switches visible source
   const tree = await mount(TrailMap, { trail, fitRoute: true, selectedCoordinate: route[1] }); await layout(tree);
   expect(tree.root.findAllByType(Image).some((node: any) => node.props.source?.uri === "file:///saved-tile.png")).toBe(true);
   await press(tree, "Mapa"); expect(text(tree)).toContain("OpenStreetMap");
-  await press(tree, "Satelite"); expect(text(tree)).toContain("World Imagery");
+  await press(tree, "Satelite"); expect(text(tree)).toContain("© Esri");
+  expect(text(tree)).not.toContain("Earthstar Geographics");
+  const credits = tree.root.findAll((node: any) => node.props.accessibilityLabel === "Fuentes y licencias del mapa")[0];
+  await act(async () => credits.props.onPress());
+  expect(router.push).toHaveBeenCalledWith({ pathname: "/atribuciones", params: { trailId: String(trail.id) } });
   await press(tree, "Terreno"); expect(text(tree)).toContain(trail.name);
 });
 test("a selected point is snapped to the route, distant points and dragged taps are rejected", async () => {
@@ -71,9 +76,13 @@ test.each(["offline", "no-route", "provider-error"])("missing DEM data (%s) neve
   (useTerrainElevation as jest.Mock).mockReturnValue({ status: "unavailable", reason });
   const tree = await mount(TrailMap, { trail, initialPerspective: true }); expect(text(tree)).toContain("Relieve 3D no disponible"); expect(tree.root.findAllByType("Terrain3DScene")).toHaveLength(0);
 });
-test("offline mode disables satellite and reports denied location separately", async () => {
+test("offline mode uses only the basic local map, with no satellite, terrain or 3D requests", async () => {
   (useNetworkState as jest.Mock).mockReturnValue({ isConnected: false });
   (useDeviceLocation as jest.Mock).mockReturnValue({ location: null, permissionDenied: true, error: null, isTestingLocation: false });
   const tree = await mount(TrailMap, { trail }); await layout(tree);
   expect(text(tree)).not.toContain("Satelite"); expect(text(tree)).toContain("Activa la ubicacion");
+  expect(text(tree)).not.toContain("Terreno");
+  expect(text(tree)).not.toContain("3D");
+  expect(Image.prefetch).not.toHaveBeenCalled();
+  expect(tree.root.findAllByType(Image).some((node: any) => node.props.source?.uri?.startsWith("http"))).toBe(false);
 });

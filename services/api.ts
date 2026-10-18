@@ -1,6 +1,7 @@
 import { AuthResponse, NationalPark, Profile, Trail, TrailReport, TrailWeather } from "../types";
 import Constants from "expo-constants";
 import { resolveApiUrl } from "./apiConfig";
+import { userMessage } from "./userMessages";
 import { getAuthSession, clearAuthSession } from "./authSession";
 import { eraseLocalAccountData, isAccountDeletionPending } from "./accountLifecycle";
 import type { RecommendationResponse, TrailPreferences } from "../backend/src/ai/contracts";
@@ -98,12 +99,18 @@ async function request<T>(path: string, options: RequestOptions = {}): Promise<T
       Array.isArray(errorBody?.issues) && errorBody.issues.length > 0
         ? errorBody.issues
             .map((issue: { path?: string; message?: string }) =>
-              [issue.path, issue.message].filter(Boolean).join(": ")
+              issue.message
             )
             .join(". ")
         : null;
 
-    throw new ApiError(issueMessage || errorBody?.message || "No se pudo completar la solicitud", response.status, errorBody?.code);
+    const fallback = issueMessage ? "Revisá los datos ingresados e intentá nuevamente."
+      : response.status >= 500 ? "No pudimos completar la solicitud. Intentá nuevamente más tarde."
+        : "No se pudo completar la solicitud";
+    const message = path === "/trip-plans" && options.method === "POST" && response.status === 503
+      ? "No pudimos activar el aviso automático. Compartí el plan por SMS con tu contacto."
+      : response.status >= 500 ? fallback : userMessage(issueMessage || errorBody?.message, fallback);
+    throw new ApiError(message, response.status, errorBody?.code);
   }
 
   return response.json();

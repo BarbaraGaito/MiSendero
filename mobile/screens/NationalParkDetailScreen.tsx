@@ -1,4 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
+import { userMessage } from "../../services/userMessages";
 import { router, useLocalSearchParams } from "expo-router";
 import { ReactNode, useCallback, useEffect, useState } from "react";
 import { Alert, Linking, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
@@ -17,7 +18,7 @@ export default function NationalParkDetailScreen() {
     setResult(null); setLoading(true); setError(null);
     if (!slug) { setError("Parque no indicado."); setLoading(false); return; }
     try { setResult(await getNationalPark(slug)); }
-    catch (e) { setError(e instanceof Error ? e.message : "Ficha no disponible."); }
+    catch (e) { setError(userMessage(e, "No pudimos cargar el parque. Intentá nuevamente.")); }
     finally { setLoading(false); }
   }, [slug]);
   useEffect(() => { void load(); }, [load]);

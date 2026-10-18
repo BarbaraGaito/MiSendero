@@ -96,7 +96,9 @@ test("a catalog-only result never invents a verification date or return-trip dur
     dataWarnings: ["No se documentó si el tiempo incluye el regreso."],
     preferenceAdjustments: ["La duración total debe confirmarse."] } });
   const tree = await mount(Discover); await fill(tree); await press(tree, "Encontrar mi sendero");
-  expect(text(tree)).toContain("verificación externa pendiente");
+  expect(text(tree)).not.toContain("verificación externa pendiente");
+  expect(text(tree)).not.toContain("Datos registrados en el catálogo de MiSendero");
+  expect(text(tree)).not.toContain("Información de la ficha");
   expect(text(tree)).toContain("confirmar si incluye el regreso");
   expect(text(tree)).not.toContain("Datos del catálogo revisados el");
   expect(text(tree)).not.toContain("(ida y vuelta)");

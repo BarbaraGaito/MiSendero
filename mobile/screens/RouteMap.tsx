@@ -1,5 +1,6 @@
 import { ensureRouteSession, getRouteSession, getSimulatedRouteTrackingSummary, activeRouteSeconds, pauseRouteSession, resumeRouteSession } from "../../services/routeSession";
 import { DepartureMessageRequiredError } from "../../services/departureMessages";
+import { userMessage } from "../../services/userMessages";
 import { Ionicons } from "@expo/vector-icons";
 import * as Network from "expo-network";
 import { router, useLocalSearchParams } from "expo-router";
@@ -314,7 +315,7 @@ export default function Screen04RouteMap() {
     };
     void ensureRouteSession(trailId, startedAtMs, isTestingLocation).then(refresh).catch((error) => {
       if (error instanceof DepartureMessageRequiredError) router.replace({ pathname: "/trail-start", params: { id: String(trailId) } });
-      else setError(error.message);
+      else setError(userMessage(error, "No pudimos cargar el recorrido. Intentá nuevamente."));
     });
     const timer = setInterval(() => { void refresh().catch(() => undefined); }, 1000);
     return () => { mounted = false; clearInterval(timer); };
@@ -453,7 +454,7 @@ export default function Screen04RouteMap() {
               <Ionicons name="flask-outline" size={17} color={colors.greenDark} />
               <View style={styles.testingBannerTextBox}>
                 <Text style={styles.testingBannerText}>
-                  Testing activo
+                  Modo prueba activo
                 </Text>
                 <Text style={styles.testingBannerHint}>
                   Ubicacion y reloj simulados: no se guardan.
@@ -551,7 +552,7 @@ export default function Screen04RouteMap() {
               router.push({
               pathname: "/confirmar-sos",
               // An alert raised by simulated data opens the SOS in test mode (nothing is sent).
-              params: { id: String(trailId), startedAt: String(startedAtMs),
+              params: { id: String(trailId), startedAt: String(startedAtMs), sendSms: "1",
                 ...(wearableRuntime?.latestSample?.simulated ? { simulated: "1" } : {}) },
               });
             }
@@ -591,7 +592,7 @@ export default function Screen04RouteMap() {
                 </View>
                 <View style={styles.wearableText}>
                   <Text style={styles.wearableEyebrow}>
-                    {wearableRuntime.latestSample.simulated ? "Estimación IA local · datos simulados" : "Estimación IA local"}
+                    {wearableRuntime.latestSample.simulated ? "Actividad · datos de prueba" : "Resumen de actividad"}
                   </Text>
                   <Text style={styles.wearableTitle}>
                     {wearableRuntime.latestSample.heartRateBpm} bpm{simulatedWearableLabel} - {wearableRuntime.prediction.title}
@@ -601,10 +602,6 @@ export default function Screen04RouteMap() {
               <View style={styles.wearableMetricRow}>
                 <WearableChip label="Riesgo" value={wearableRuntime.prediction.riskLabel === "sin_datos" ? "Sin datos" : wearableRuntime.prediction.riskLabel} />
                 <WearableChip label="Fatiga" value={wearableRuntime.prediction.fatigue === "sin_datos" ? "Sin datos" : wearableRuntime.prediction.fatigue} />
-                <WearableChip
-                  label="Modelo"
-                  value="Experimental"
-                />
               </View>
               <Text numberOfLines={2} style={styles.wearableBody}>
                 {wearableRuntime.prediction.recommendedAction}
@@ -740,7 +737,7 @@ export default function Screen04RouteMap() {
               onPress={() =>
                 router.push({
                   pathname: "/confirmar-sos",
-                  params: { id: String(trailId), startedAt: String(startedAtMs) },
+                  params: { id: String(trailId), startedAt: String(startedAtMs), sendSms: "1" },
                 })
               }
               style={[styles.activeAction, styles.activeDangerAction]}
@@ -1091,7 +1088,7 @@ function WearableMetric({ label, value }: { label: string; value: string }) {
 }
 
 function getWearableRealtimeStatus(runtime: WearableRuntimeStatus | null) {
-  if (!runtime) return "Consultando conexion configurada...";
+  if (!runtime) return "Buscando tu reloj...";
   if (runtime.status === "requires_consent") {
     return "Activa Usar datos sensibles en Privacidad e IA.";
   }

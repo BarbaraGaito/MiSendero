@@ -37,7 +37,7 @@ test.each([
 });
 test("validation issues, non-JSON errors and network failures stay distinguishable", async () => {
   (fetch as jest.Mock).mockResolvedValueOnce({ ok: false, status: 400, json: async () => ({ issues: [{ path: "name", message: "required" }, { message: "invalid" }] }) });
-  await expect(api.getTrails()).rejects.toMatchObject({ status: 400, message: "name: required. invalid" });
+  await expect(api.getTrails()).rejects.toMatchObject({ status: 400, message: "Revisá los datos ingresados e intentá nuevamente." });
   (fetch as jest.Mock).mockResolvedValueOnce({ ok: false, status: 503, json: async () => { throw new Error("HTML response"); } });
   await expect(api.getTrails()).rejects.toMatchObject({ status: 503 });
   (fetch as jest.Mock).mockRejectedValueOnce(new Error("offline"));
@@ -54,4 +54,14 @@ test("a deletion marker blocks new writes before any request is sent", async () 
   (isAccountDeletionPending as jest.Mock).mockResolvedValueOnce(true);
   await expect(api.createTrailReport(7, body, "session-token")).rejects.toThrow("baja está pendiente");
   expect(fetch).not.toHaveBeenCalled();
+});
+
+test("server diagnostics stay out of the UI while status and error codes remain available", async () => {
+  (fetch as jest.Mock).mockResolvedValueOnce({ ok: false, status: 500, json: async () => ({ message: "relation trails does not exist", code: "DATABASE_FAILURE" }) });
+  await expect(api.getTrails()).rejects.toMatchObject({ status: 500, code: "DATABASE_FAILURE", message: "No pudimos completar la solicitud. Intentá nuevamente más tarde." });
+});
+
+test("an unavailable automatic notice offers SMS without claiming the plan was activated", async () => {
+  (fetch as jest.Mock).mockResolvedValueOnce({ ok: false, status: 503, json: async () => ({ message: "El canal no está configurado." }) });
+  await expect(api.createTripPlan(plan, "session-token")).rejects.toMatchObject({ status: 503, message: "No pudimos activar el aviso automático. Compartí el plan por SMS con tu contacto." });
 });

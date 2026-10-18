@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { userMessage } from "../../services/userMessages";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
@@ -29,14 +30,14 @@ const getFormError = (
   }
 
   if (isRegister && !acceptedTerms) {
-    return "Acepta los terminos y disclaimers de seguridad para continuar.";
+    return "Aceptá los términos y condiciones y los avisos de seguridad para continuar.";
   }
 
   return null;
 };
 
 const getSubmitErrorMessage = (submitError: unknown) =>
-  submitError instanceof Error ? submitError.message : "No pudimos iniciar sesion.";
+  userMessage(submitError, "No pudimos iniciar sesión. Intentá nuevamente.");
 
 const getSubmitButtonLabel = (isSubmitting: boolean, isRegister: boolean) => {
   if (isSubmitting) return "Un momento...";
@@ -207,7 +208,7 @@ export default function LoginScreen() {
                 ) : null}
               </Pressable>
               <Text style={styles.termsText}>
-                Acepto los terminos y condiciones, privacidad y disclaimers de
+                Acepto los términos y condiciones, privacidad y avisos de
                 seguridad.{" "}
                 <Text
                   onPress={() => router.push("/terminos-condiciones")}

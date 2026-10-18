@@ -1,0 +1,16 @@
+{
+  "date": "2026-10-17",
+  "file": "D:/Importante/UADE/PFI/PFI25/chapters/chapter04.tex",
+  "before_sha256": "ee16e0bfc1436bf6d182b70c36f0fb656e6ce8ad631b8e219a1d493443e4becb",
+  "after_sha256": "9efc8d216c63b246afa69bab2beda7686d4743ce6d44b0520b6c25542f6e60cb",
+  "only_first_sentence_changed": true,
+  "removed": "Se auditó el conjunto de pruebas de MiSendero y se amplió su alcance para obtener evidencia instrumentada de cobertura.",
+  "replacement": "La validación de MiSendero se realizó mediante pruebas automatizadas unitarias y de integración sobre el cliente y el backend.",
+  "coverage_reports_unchanged": true,
+  "pdf": {
+    "sha256": "b1d5cfc030870c2cf84e950071281fb999afa58a2920aebf4a86d70f9f99abf3",
+    "total_pages": 154,
+    "reviewed_pdf_page": 115,
+    "compile_exit_code": 0
+  }
+}

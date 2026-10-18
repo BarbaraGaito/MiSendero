@@ -1,0 +1,26 @@
+{
+  "date": "2026-10-17",
+  "file": "D:/Importante/UADE/PFI/PFI25/chapters/chapter04.tex",
+  "before_sha256": "9efc8d216c63b246afa69bab2beda7686d4743ce6d44b0520b6c25542f6e60cb",
+  "after_sha256": "fd9af1422c7ffe45e6dc262e4aa159dc23bd8a5251babbcb6994587cfa78a9ad",
+  "replacement_count": 9,
+  "final_results_preserved": true,
+  "coverage_reports_unchanged": true,
+  "pdf": {
+    "file": "D:/Importante/UADE/PFI/PFI25/main.pdf",
+    "sha256": "344140bc1078d1340547ffb6a9fe1e5485a52e46115c3701983af9ecdbb76c36",
+    "compile_exit_codes": [
+      0,
+      0
+    ],
+    "total_pages": 154,
+    "visually_reviewed_pdf_pages": [
+      115,
+      116,
+      117,
+      118,
+      119
+    ]
+  },
+  "edit_scope_verified": true
+}

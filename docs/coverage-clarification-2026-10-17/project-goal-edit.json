@@ -1,0 +1,31 @@
+{
+  "date": "2026-10-17",
+  "description": "Coverage presented as an internal project quality goal",
+  "changes": [
+    {
+      "file": "chapters/chapter04.tex",
+      "before_sha256": "b56589dbe71aad61ed253726827c01a174bebc4d89fbb1cb095518986b41a20b",
+      "after_sha256": "ee16e0bfc1436bf6d182b70c36f0fb656e6ce8ad631b8e219a1d493443e4becb"
+    },
+    {
+      "file": "tables/requirements_nfr_measurement.tex",
+      "before_sha256": "1e8a83c1ff0e03dc0f97cbc377cb2aee9cf50f76f8590c7b8553e47823338cbb",
+      "after_sha256": "bd3a98dfb22e9be27e413251aa2dddbc39f29f2121a121656404fdb6750e93ad"
+    }
+  ],
+  "coverage_reports_unchanged": true,
+  "verified_changes_limited_to_requested_wording": true,
+  "pdf": {
+    "file": "D:/Importante/UADE/PFI/PFI25/main.pdf",
+    "sha256": "818e5a210c6e8b65f42ca63e23e6cb51e6874d7d5ba723941ba060db797d94f1",
+    "total_pages": 154,
+    "compile_exit_codes": [
+      0,
+      0
+    ],
+    "visually_reviewed_pdf_pages": [
+      49,
+      115
+    ]
+  }
+}

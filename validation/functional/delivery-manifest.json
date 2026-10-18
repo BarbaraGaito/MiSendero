@@ -1,0 +1,37 @@
+{
+  "recordedAt": "2026-10-17T23:19:28.572Z",
+  "files": [
+    {
+      "file": "ESTRATEGIA.md",
+      "sha256": "49a13026dc0396378e7c6378b61533bed179415981575d00fe060bc7fd96deea"
+    },
+    {
+      "file": "RESULTADOS-2026-10-17.md",
+      "sha256": "8a58014f53fcdb95ab6fb7c02535164c598c9581468f84d1664ea889de7a08fa"
+    },
+    {
+      "file": "4.4-pruebas-funcionales.tex",
+      "sha256": "0fbeb382ed936488625c1beafc971786ff5ba45e38889cc206715f32bdfec337"
+    },
+    {
+      "file": "thesis-verification.json",
+      "sha256": "70a909a2cbab7a7552582c48853e0472c73677be43ecf3abdeb0909bb64f7450"
+    },
+    {
+      "file": "2026-10-17/README.md",
+      "sha256": "c864f19531fa4a18f10d1f3950459c0322931da4868285f80b9de7fcccb3545a"
+    },
+    {
+      "file": "2026-10-17/repeat-verification.txt",
+      "sha256": "597ddb80eb09a8b66bd6cbd4749c9fbfc1673fba97a88e41ea0c21767ac7f22e"
+    },
+    {
+      "file": "2026-10-17/final-seed-20261017/evidence-manifest.json",
+      "sha256": "d257ca6149ce5e17eb4b1b7de8c8efab49141c00730197d156f1462b7cc889cd"
+    },
+    {
+      "file": "2026-10-17/final-seed-73/evidence-manifest.json",
+      "sha256": "3e00273447ad7b65a6c95a76e368000b9b30c18fac1d38f99c173072ea6dfb2a"
+    }
+  ]
+}

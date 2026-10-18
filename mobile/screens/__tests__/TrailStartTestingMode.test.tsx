@@ -1,4 +1,7 @@
 jest.mock("expo-sms", () => ({ isAvailableAsync: jest.fn().mockResolvedValue(true), sendSMSAsync: jest.fn().mockResolvedValue({ result: "sent" }) }));
+// Instrumented native component initialization can exceed Jest's default budget.
+// This is a runner timeout, not a product latency assertion.
+jest.setTimeout(30000);
 jest.mock("expo-battery", () => ({ getBatteryLevelAsync: jest.fn().mockResolvedValue(0.9) }));
 jest.mock("expo-router", () => ({
   router: { push: jest.fn(), replace: jest.fn(), back: jest.fn() },
@@ -26,6 +29,7 @@ jest.mock("../../../services/api", () => ({
 
 import React from "react";
 import * as SMS from "expo-sms";
+import * as Battery from "expo-battery";
 import { router } from "expo-router";
 import TrailStart from "../TrailStart";
 import { PrimaryButton } from "../../components/MiSenderoUI";
@@ -39,6 +43,7 @@ import { saveTestingLocationMode } from "../../../services/testingMode";
 
 const renderer = require("react-test-renderer");
 type Screen = ReturnType<typeof renderer.create>;
+const mountedScreens = new Set<Screen>();
 
 const phone = "+5491112345678";
 const fetchMock = jest.fn(() => Promise.reject(new Error("network disabled in tests")));
@@ -52,7 +57,7 @@ const textOf = (screen: Screen) => JSON.stringify(screen.toJSON());
 const buttons = (screen: Screen) => screen.root.findAllByType(PrimaryButton) as Array<{ props: { label: string; onPress?: () => void } }>;
 const render = async () => {
   let screen: Screen;
-  await renderer.act(async () => { screen = renderer.create(<TrailStart />); });
+  await renderer.act(async () => { screen = renderer.create(<TrailStart />); mountedScreens.add(screen); });
   for (let attempt = 0; attempt < 100 && buttons(screen!).some((button) => button.props.label === "Verificando salida"); attempt += 1) await flush();
   return screen!;
 };
@@ -64,7 +69,15 @@ const press = async (screen: Screen, label: string) => {
 };
 
 beforeAll(() => initDB());
+afterEach(async () => {
+  await renderer.act(async () => {
+    for (const screen of mountedScreens) screen.unmount();
+    mountedScreens.clear();
+  });
+}, 30000);
 beforeEach(async () => {
+  mockTestingLocation = false;
+  (Battery.getBatteryLevelAsync as jest.Mock).mockResolvedValue(0.9);
   global.fetch = fetchMock as unknown as typeof fetch;
   await login(70, "user");
   await saveTestingLocationMode(false);
@@ -73,6 +86,22 @@ beforeEach(async () => {
   await db.runAsync("DELETE FROM departure_messages");
   await db.runAsync("DELETE FROM pending_operations");
   jest.clearAllMocks();
+});
+
+test.each([
+  [0.15, "Batería: 15%"],
+  [-1, "Batería: no disponible"],
+  [null, "Batería: no disponible"],
+])("MF11 battery reading %s is explicit and preserves the route preparation screen", async (level, expected) => {
+  if (level === null) (Battery.getBatteryLevelAsync as jest.Mock).mockRejectedValueOnce(new Error("Battery unavailable"));
+  else (Battery.getBatteryLevelAsync as jest.Mock).mockResolvedValueOnce(level);
+  const screen = await render();
+  try {
+    expect(textOf(screen)).toContain(expected);
+    expect(buttons(screen).some(button => button.props.label === "Enviar plan antes de salir")).toBe(true);
+    expect(await getActiveRouteSession()).toBeNull();
+    expect(SMS.sendSMSAsync).not.toHaveBeenCalled();
+  } finally { await renderer.act(async () => screen.unmount()); }
 });
 
 test("testing-mode start needs no departure plan and sends, registers or queues none", async () => {

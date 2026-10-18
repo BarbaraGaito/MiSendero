@@ -1,0 +1,85 @@
+$ executable: C:\Program Files\nodejs\node.exe
+$ args: ["testing/run-coverage.cjs","--output=D:\\AppPFI\\MiSendero\\coverage\\functional-1792278804991-20261017","--randomize","--seed=20261017","--showSeed"]
+$ cwd: D:\AppPFI\MiSendero
+
+STDOUT
+
+=============================== Coverage summary ===============================
+Statements   : 83.86% ( 5033/6001 )
+Branches     : 73.76% ( 3371/4570 )
+Functions    : 77.36% ( 1046/1352 )
+Lines        : 87.57% ( 4611/5265 )
+================================================================================
+
+=============================== Coverage summary ===============================
+Statements   : 86.89% ( 1107/1274 )
+Branches     : 78.48% ( 478/609 )
+Functions    : 84.28% ( 177/210 )
+Lines        : 88.98% ( 986/1108 )
+================================================================================
+{"output":"coverage/functional-1792278804991-20261017","complete":true,"components":{"client":{"total":5265,"covered":4611,"skipped":0,"pct":87.57},"backend":{"total":1108,"covered":986,"skipped":0,"pct":88.98}},"combined":{"total":6373,"covered":5597,"skipped":0,"pct":87.8236},"missing":[],"unexpected":[]}
+
+STDERR
+PASS mobile/screens/__tests__/TrailStartTestingMode.test.tsx (15.581 s)
+PASS mobile/screens/__tests__/catalogueScreens.test.tsx (6.867 s)
+PASS mobile/screens/__tests__/routeAndReportScreens.test.tsx (5.254 s)
+PASS mobile/screens/__tests__/offlineDownloadAndElevation.test.tsx (5.232 s)
+PASS mobile/screens/__tests__/profileAndWearableScreens.test.tsx
+PASS services/__tests__/simulatedSos.test.tsx
+PASS mobile/components/__tests__/TrailMap.test.tsx
+PASS mobile/screens/__tests__/accountAndTripScreens.test.tsx
+PASS services/__tests__/functionalResilience.test.ts
+PASS services/__tests__/privacyControls.test.ts
+PASS mobile/components/__tests__/Terrain3DScene.test.tsx
+PASS mobile/screens/__tests__/DiscoverTrailScreen.test.tsx
+PASS services/__tests__/simulatedRouteCompletion.test.tsx
+PASS services/__tests__/coordinators.test.tsx
+PASS mobile/screens/__tests__/RestBreakScreen.test.tsx
+PASS services/__tests__/accountPreferences.test.ts
+PASS services/__tests__/offlineTerrainGrid.test.ts
+PASS services/__tests__/geoUtils.test.ts
+PASS mobile/hooks/__tests__/useDeviceLocation.test.tsx
+PASS services/__tests__/mapTileCache.test.ts
+PASS services/__tests__/terrainElevation.test.ts
+PASS mobile/components/__tests__/terrainSceneModel.test.ts
+PASS services/__tests__/apiContract.test.ts
+PASS services/__tests__/offlineElevation.test.ts
+PASS services/__tests__/departureMessages.test.ts
+PASS services/__tests__/trailRepository.test.ts
+PASS services/__tests__/emergencyAlerts.test.ts
+PASS services/__tests__/wearableMetrics.test.ts
+PASS mobile/hooks/__tests__/useTerrainElevation.test.ts
+PASS services/__tests__/nativeWearablePlatforms.test.ts
+PASS services/__tests__/routeSession.test.ts
+PASS services/__tests__/favoriteTrails.test.ts
+PASS services/__tests__/tripPlans.test.ts
+PASS services/__tests__/nationalParks.test.ts
+PASS services/__tests__/syncQueue.test.ts
+PASS services/__tests__/syncResilience.test.ts
+PASS database/__tests__/sessionsRepository.test.ts
+PASS services/__tests__/trailAssistant.test.ts
+PASS services/__tests__/deviceLocation.test.ts
+PASS services/__tests__/nativeWearableBridge.test.ts
+PASS services/__tests__/routeTracking.test.ts
+PASS services/__tests__/trailMessages.test.ts
+PASS services/__tests__/trailDuration.test.ts
+PASS services/__tests__/simulatedDataPurge.test.ts
+PASS ai/__tests__/inferenceEngine.test.ts
+PASS services/__tests__/trailFilters.test.ts
+PASS services/__tests__/mapGestures.test.ts
+
+Seed:        20261017
+Test Suites: 47 passed, 47 total
+Tests:       336 passed, 336 total
+Snapshots:   0 total
+Time:        72.129 s
+Ran all test suites.
+Test results written to: coverage\functional-1792278804991-20261017\client\test-results.json
+
+Seed:        20261017
+Test Suites: 17 passed, 17 total
+Tests:       146 passed, 146 total
+Snapshots:   0 total
+Time:        31.394 s
+Ran all test suites.
+Test results written to: ..\coverage\functional-1792278804991-20261017\backend\test-results.json

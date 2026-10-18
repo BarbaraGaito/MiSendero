@@ -1,0 +1,216 @@
+$ executable: C:\Program Files\nodejs\node.exe
+$ args: ["testing/run-coverage.cjs","--output=D:\\AppPFI\\MiSendero\\coverage\\functional-1792278548562-73","--randomize","--seed=73","--showSeed"]
+$ cwd: D:\AppPFI\MiSendero
+
+STDOUT
+
+=============================== Coverage summary ===============================
+Statements   : 83.65% ( 5020/6001 )
+Branches     : 73.47% ( 3358/4570 )
+Functions    : 77.29% ( 1045/1352 )
+Lines        : 87.35% ( 4599/5265 )
+================================================================================
+
+=============================== Coverage summary ===============================
+Statements   : 86.89% ( 1107/1274 )
+Branches     : 78.48% ( 478/609 )
+Functions    : 84.28% ( 177/210 )
+Lines        : 88.98% ( 986/1108 )
+================================================================================
+{"output":"coverage/functional-1792278548562-73","complete":true,"components":{"client":{"total":5265,"covered":4599,"skipped":0,"pct":87.35},"backend":{"total":1108,"covered":986,"skipped":0,"pct":88.98}},"combined":{"total":6373,"covered":5585,"skipped":0,"pct":87.6353},"missing":[],"unexpected":[]}
+
+STDERR
+FAIL mobile/screens/__tests__/TrailStartTestingMode.test.tsx (16.406 s)
+  ● control: a real start still requires the departure plan
+
+    thrown: "Exceeded timeout of 5000 ms for a test.
+    Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout."
+
+      122 | });
+      123 |
+    > 124 | test("control: a real start still requires the departure plan", async () => {
+          | ^
+      125 |   await login(72, "user");
+      126 |   mockTestingLocation = false;
+      127 |
+
+      at Object.test (mobile/screens/__tests__/TrailStartTestingMode.test.tsx:124:1)
+
+  ● MF11 battery reading 0.15 is explicit and preserves the route preparation screen
+
+    Can't access .root on unmounted test renderer
+
+      51 | const flush = () => renderer.act(async () => { await new Promise((resolve) => setTimeout(resolve, 10)); });
+      52 | const textOf = (screen: Screen) => JSON.stringify(screen.toJSON());
+    > 53 | const buttons = (screen: Screen) => screen.root.findAllByType(PrimaryButton) as Array<{ props: { label: string; onPress?: () => void } }>;
+         |                                            ^
+      54 | const render = async () => {
+      55 |   let screen: Screen;
+      56 |   await renderer.act(async () => { screen = renderer.create(<TrailStart />); });
+
+      at Object.get [as root] (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:17446:19)
+      at root (mobile/screens/__tests__/TrailStartTestingMode.test.tsx:53:44)
+      at buttons (mobile/screens/__tests__/TrailStartTestingMode.test.tsx:57:42)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● testing-mode start needs no departure plan and sends, registers or queues none
+
+    Can't access .root on unmounted test renderer
+
+      51 | const flush = () => renderer.act(async () => { await new Promise((resolve) => setTimeout(resolve, 10)); });
+      52 | const textOf = (screen: Screen) => JSON.stringify(screen.toJSON());
+    > 53 | const buttons = (screen: Screen) => screen.root.findAllByType(PrimaryButton) as Array<{ props: { label: string; onPress?: () => void } }>;
+         |                                            ^
+      54 | const render = async () => {
+      55 |   let screen: Screen;
+      56 |   await renderer.act(async () => { screen = renderer.create(<TrailStart />); });
+
+      at Object.get [as root] (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:17446:19)
+      at root (mobile/screens/__tests__/TrailStartTestingMode.test.tsx:53:44)
+      at buttons (mobile/screens/__tests__/TrailStartTestingMode.test.tsx:57:42)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+
+ReferenceError: You are trying to `import` a file after the Jest environment has been torn down. From mobile/screens/__tests__/TrailStartTestingMode.test.tsx.
+
+      4 |   router: { push: jest.fn(), replace: jest.fn(), back: jest.fn() },
+      5 |   useLocalSearchParams: () => ({ id: "9" }),
+    > 6 |   useFocusEffect: (effect: () => void | (() => void)) => require("react").useEffect(effect, [effect]),
+        |                                                          ^
+      7 | }));
+      8 | jest.mock("@expo/vector-icons", () => ({ Ionicons: () => null }));
+      9 | jest.mock("react-native-safe-area-context", () => ({
+
+      at require (mobile/screens/__tests__/TrailStartTestingMode.test.tsx:6:58)
+      at Screen05TrailStart (mobile/screens/TrailStart.tsx:164:17)
+      at Object.react_stack_bottom_frame (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:15670:20)
+      at renderWithHooks (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4863:22)
+      at updateFunctionComponent (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:7018:19)
+      at beginWork (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:8499:18)
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at performUnitOfWork (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13224:22)
+      at workLoopSync (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13068:41)
+      at renderRootSync (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13049:11)
+      at performWorkOnRoot (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12181:11)
+      at performWorkOnRootViaSchedulerTask (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2908:7)
+      at flushActQueue (node_modules/react/cjs/react.development.js:590:34)
+      at recursivelyFlushAsyncActWork (node_modules/react/cjs/react.development.js:566:13)
+      at Immediate._onImmediate (node_modules/react/cjs/react.development.js:849:32)
+PASS mobile/screens/__tests__/catalogueScreens.test.tsx (7.177 s)
+PASS mobile/screens/__tests__/routeAndReportScreens.test.tsx (5.747 s)
+PASS mobile/screens/__tests__/offlineDownloadAndElevation.test.tsx
+PASS services/__tests__/simulatedSos.test.tsx
+PASS mobile/screens/__tests__/profileAndWearableScreens.test.tsx
+PASS mobile/components/__tests__/TrailMap.test.tsx
+PASS mobile/screens/__tests__/accountAndTripScreens.test.tsx
+PASS services/__tests__/functionalResilience.test.ts
+PASS mobile/screens/__tests__/DiscoverTrailScreen.test.tsx
+PASS services/__tests__/privacyControls.test.ts
+PASS mobile/components/__tests__/Terrain3DScene.test.tsx
+PASS services/__tests__/simulatedRouteCompletion.test.tsx
+PASS mobile/screens/__tests__/RestBreakScreen.test.tsx
+PASS services/__tests__/coordinators.test.tsx
+PASS services/__tests__/offlineTerrainGrid.test.ts
+PASS services/__tests__/nativeWearableBridge.test.ts
+PASS services/__tests__/geoUtils.test.ts
+PASS services/__tests__/mapTileCache.test.ts
+PASS services/__tests__/offlineElevation.test.ts
+PASS mobile/hooks/__tests__/useDeviceLocation.test.tsx
+PASS mobile/components/__tests__/terrainSceneModel.test.ts
+PASS services/__tests__/departureMessages.test.ts
+PASS services/__tests__/emergencyAlerts.test.ts
+PASS services/__tests__/apiContract.test.ts
+PASS services/__tests__/trailRepository.test.ts
+PASS services/__tests__/wearableMetrics.test.ts
+PASS services/__tests__/terrainElevation.test.ts
+PASS services/__tests__/routeSession.test.ts
+PASS services/__tests__/nativeWearablePlatforms.test.ts
+PASS services/__tests__/syncQueue.test.ts
+PASS services/__tests__/accountPreferences.test.ts
+PASS services/__tests__/routeTracking.test.ts
+PASS services/__tests__/tripPlans.test.ts
+PASS services/__tests__/favoriteTrails.test.ts
+PASS services/__tests__/trailAssistant.test.ts
+PASS services/__tests__/deviceLocation.test.ts
+PASS services/__tests__/nationalParks.test.ts
+PASS mobile/hooks/__tests__/useTerrainElevation.test.ts
+PASS database/__tests__/sessionsRepository.test.ts
+PASS services/__tests__/simulatedDataPurge.test.ts
+PASS services/__tests__/syncResilience.test.ts
+PASS services/__tests__/trailFilters.test.ts
+PASS services/__tests__/trailDuration.test.ts
+PASS ai/__tests__/inferenceEngine.test.ts
+PASS services/__tests__/trailMessages.test.ts
+PASS services/__tests__/mapGestures.test.ts
+
+Summary of all failing tests
+FAIL mobile/screens/__tests__/TrailStartTestingMode.test.tsx (16.406 s)
+  ● control: a real start still requires the departure plan
+
+    thrown: "Exceeded timeout of 5000 ms for a test.
+    Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout."
+
+      122 | });
+      123 |
+    > 124 | test("control: a real start still requires the departure plan", async () => {
+          | ^
+      125 |   await login(72, "user");
+      126 |   mockTestingLocation = false;
+      127 |
+
+      at Object.test (mobile/screens/__tests__/TrailStartTestingMode.test.tsx:124:1)
+
+  ● MF11 battery reading 0.15 is explicit and preserves the route preparation screen
+
+    Can't access .root on unmounted test renderer
+
+      51 | const flush = () => renderer.act(async () => { await new Promise((resolve) => setTimeout(resolve, 10)); });
+      52 | const textOf = (screen: Screen) => JSON.stringify(screen.toJSON());
+    > 53 | const buttons = (screen: Screen) => screen.root.findAllByType(PrimaryButton) as Array<{ props: { label: string; onPress?: () => void } }>;
+         |                                            ^
+      54 | const render = async () => {
+      55 |   let screen: Screen;
+      56 |   await renderer.act(async () => { screen = renderer.create(<TrailStart />); });
+
+      at Object.get [as root] (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:17446:19)
+      at root (mobile/screens/__tests__/TrailStartTestingMode.test.tsx:53:44)
+      at buttons (mobile/screens/__tests__/TrailStartTestingMode.test.tsx:57:42)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● testing-mode start needs no departure plan and sends, registers or queues none
+
+    Can't access .root on unmounted test renderer
+
+      51 | const flush = () => renderer.act(async () => { await new Promise((resolve) => setTimeout(resolve, 10)); });
+      52 | const textOf = (screen: Screen) => JSON.stringify(screen.toJSON());
+    > 53 | const buttons = (screen: Screen) => screen.root.findAllByType(PrimaryButton) as Array<{ props: { label: string; onPress?: () => void } }>;
+         |                                            ^
+      54 | const render = async () => {
+      55 |   let screen: Screen;
+      56 |   await renderer.act(async () => { screen = renderer.create(<TrailStart />); });
+
+      at Object.get [as root] (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:17446:19)
+      at root (mobile/screens/__tests__/TrailStartTestingMode.test.tsx:53:44)
+      at buttons (mobile/screens/__tests__/TrailStartTestingMode.test.tsx:57:42)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+
+Seed:        73
+Test Suites: 1 failed, 46 passed, 47 total
+Tests:       3 failed, 333 passed, 336 total
+Snapshots:   0 total
+Time:        73.744 s
+Ran all test suites.
+Test results written to: coverage\functional-1792278548562-73\client\test-results.json
+
+Seed:        73
+Test Suites: 17 passed, 17 total
+Tests:       146 passed, 146 total
+Snapshots:   0 total
+Time:        32.275 s
+Ran all test suites.
+Test results written to: ..\coverage\functional-1792278548562-73\backend\test-results.json

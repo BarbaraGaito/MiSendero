@@ -1,0 +1,25 @@
+$ executable: powershell.exe
+$ args: ["-NoProfile","-Command","$c=@((Join-Path $env:LOCALAPPDATA 'Android/Sdk/platform-tools/adb.exe'),(Join-Path $env:LOCALAPPDATA 'Android/Sdk/emulator/emulator.exe')); [pscustomobject]@{commands=@(Get-Command adb,emulator -ErrorAction SilentlyContinue | ForEach-Object {$_.Source}); candidates=@($c | ForEach-Object {[pscustomobject]@{path=$_;exists=(Test-Path -LiteralPath $_)}}); sdkRoot=$env:ANDROID_SDK_ROOT; androidHome=$env:ANDROID_HOME} | ConvertTo-Json -Depth 4; exit 0"]
+$ cwd: D:\AppPFI\MiSendero
+
+STDOUT
+{
+    "commands":  [
+
+                 ],
+    "candidates":  [
+                       {
+                           "path":  "C:\\Users\\bgaito\\AppData\\Local\\Android\\Sdk\\platform-tools\\adb.exe",
+                           "exists":  false
+                       },
+                       {
+                           "path":  "C:\\Users\\bgaito\\AppData\\Local\\Android\\Sdk\\emulator\\emulator.exe",
+                           "exists":  false
+                       }
+                   ],
+    "sdkRoot":  null,
+    "androidHome":  null
+}
+
+STDERR
+Error al intentar realizar la operación InitializeDefaultDrives en el proveedor 'FileSystem'.

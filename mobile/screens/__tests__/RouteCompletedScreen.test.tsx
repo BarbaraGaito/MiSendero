@@ -1,5 +1,5 @@
 import "../../../testing/mobileSetup";
-jest.mock("../../../services/routeSession", () => ({ finishRouteSession: jest.fn(), activeRouteSeconds: () => 3600, getSimulatedRouteTrackingSummary: jest.fn() }));
+jest.mock("../../../services/routeSession", () => ({ finishRouteSession: jest.fn(), getRouteSession: (...args: unknown[]) => require("../../../services/routeSession").finishRouteSession(...args), activeRouteSeconds: () => 3600, getSimulatedRouteTrackingSummary: jest.fn() }));
 jest.mock("../../../database/database", () => ({ initDB: jest.fn().mockResolvedValue(undefined) }));
 jest.mock("../../../database/sessionsRepository", () => ({ attachTrailToSession: jest.fn(), getLatestCompletedSession: jest.fn(), getOrCreateCompletedSession: jest.fn(), saveSessionReview: jest.fn() }));
 jest.mock("../../../services/routeTracking", () => ({ getRouteTrackingSummary: jest.fn() }));

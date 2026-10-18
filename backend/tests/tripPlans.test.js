@@ -73,6 +73,7 @@ test("provider failure and a stale lease are retried with the same notification 
   const send = jest.fn().mockRejectedValueOnce(new Error("offline")).mockResolvedValue(undefined);
   await processTripNotifications({ now, send });
   expect((await query("SELECT * FROM trip_notifications")).rows[0].status).toBe("pending");
+  expect((await query("SELECT status FROM trip_plans")).rows[0].status).toBe("overdue");
   await query("UPDATE trip_notifications SET status = 'processing', lease_until = $1", [now.toISOString()]);
   await processTripNotifications({ now: new Date(now.getTime() + 120000), send });
   expect(send).toHaveBeenCalledTimes(2);

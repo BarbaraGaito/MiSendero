@@ -9,7 +9,7 @@ const router = express.Router();
 router.get("/", requireAuth, async (req, res, next) => {
   try {
     const { rows } = await query(
-      `SELECT * FROM emergency_alerts WHERE user_id = $1 ORDER BY created_at DESC LIMIT 50`,
+      `SELECT * FROM emergency_alerts WHERE user_id = $1 AND retention_purged_at IS NULL ORDER BY created_at DESC LIMIT 50`,
       [req.userId]
     );
     res.json(rows);

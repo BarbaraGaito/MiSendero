@@ -7,6 +7,7 @@ import { getAuthSession } from "../../../services/authSession";
 import { getTestingLocationMode } from "../../../services/testingMode";
 import { useDeviceLocation } from "../useDeviceLocation";
 import { mount, act, flush } from "../../../testing/mobileHarness";
+import { AppState, AppStateStatus } from "react-native";
 let state: ReturnType<typeof useDeviceLocation>;
 function Probe({ watch = true, simulated }: { watch?: boolean; simulated?: [number, number] }) { state = useDeviceLocation(watch, simulated); return null; }
 beforeEach(() => {
@@ -34,4 +35,17 @@ test("only an administrator in testing mode can use simulated coordinates", asyn
 test("provider errors surface without synthesizing a successful fix", async () => {
   (getCurrentDeviceLocation as jest.Mock).mockRejectedValue(new Error("GPS")); await mount(Probe);
   expect(state!.error).toContain("No pudimos obtener"); expect(state!.location).toBeNull();
+});
+
+test("background removes the watcher and a late native callback cannot update the screen", async()=>{
+  let changed:(state:AppStateStatus)=>void=()=>{};let update:(location:unknown)=>void=()=>{};
+  const remove=jest.fn();
+  const listener=jest.spyOn(AppState,'addEventListener').mockImplementation((_type,callback)=>{changed=callback;return {remove:jest.fn()};});
+  (watchDeviceLocation as jest.Mock).mockImplementation(async callback=>{update=callback;return {remove};});
+  const tree=await mount(Probe);
+  await act(async()=>{changed('background');await flush();});
+  expect(remove).toHaveBeenCalled();
+  await act(async()=>{update({coordinate:[8,9],timestamp:Date.now(),accuracy:3});});
+  expect(state.location?.coordinate).toEqual([1,2]);
+  await act(async()=>tree.unmount());listener.mockRestore();
 });

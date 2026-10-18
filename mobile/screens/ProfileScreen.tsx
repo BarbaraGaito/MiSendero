@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import { Alert, ScrollView, StyleSheet, Text, View, TextInput } from "react-native";
 import { deleteCurrentAccount } from "../../services/deleteAccount";
+import { logoutSession } from "../../services/logoutSession";
 import * as Linking from "expo-linking";
 import { accountDataPageUrl } from "../../services/api";
 import { userMessage } from "../../services/userMessages";
@@ -325,8 +326,12 @@ export default function ProfileScreen() {
           text: "Cerrar sesion",
           style: "destructive",
           onPress: async () => {
-            await clearAuthSession();
-            router.replace("/");
+            try {
+              const result = await logoutSession();
+              if (!result.remoteRevoked) Alert.alert("Sesión local cerrada", "La revocación remota quedó pendiente. Se reintentará cuando la app tenga conexión.");
+            } catch (cause) {
+              Alert.alert("Revisá el cierre de sesión", userMessage(cause, "No se pudo completar la limpieza. Reintentá con el equipo desbloqueado."));
+            } finally { router.replace("/"); }
           },
         },
       ]

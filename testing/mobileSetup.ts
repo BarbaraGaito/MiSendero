@@ -1,4 +1,6 @@
 // Native boundaries only. Product screens and UI components remain real.
+import { AppState } from "react-native";
+Object.defineProperty(AppState, "currentState", { configurable: true, writable: true, value: "active" });
 jest.mock("@expo/vector-icons", () => ({ Ionicons: "Icon" }));
 jest.mock("react-native-safe-area-context", () => ({
   SafeAreaView: require("react-native").View,

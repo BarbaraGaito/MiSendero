@@ -2,6 +2,8 @@
 from __future__ import annotations
 
 import hashlib
+import io
+import os
 import json
 import math
 import platform
@@ -192,11 +194,20 @@ def load_artifact(directory: Path, *, synthetic_test=False):
         raise ValueError("Artifact runtime mismatch")
     if not isinstance(meta.get("modelVersion"), str) or not re.fullmatch(r"[a-zA-Z0-9._-]{1,100}", meta["modelVersion"]):
         raise ValueError("Invalid model version")
-    if sha256(model_path) != meta.get("modelSha256"):
+    payload = model_path.read_bytes()
+    actual_sha256 = hashlib.sha256(payload).hexdigest()
+    if actual_sha256 != meta.get("modelSha256"):
         raise ValueError("Artifact checksum mismatch")
+    # Pin comes from the operator's deployment configuration, never from metadata
+    # packaged next to the pickle. Verify the exact bytes that will be loaded.
+    trusted = os.environ.get("TRAIL_ML_TRUSTED_SHA256", "")
+    if os.environ.get("NODE_ENV") == "production" and not re.fullmatch(r"[a-fA-F0-9]{64}", trusted):
+        raise ValueError("Production artifact requires an operator trust pin")
+    if trusted and actual_sha256 != trusted.lower():
+        raise ValueError("Artifact is not trusted by this deployment")
     # joblib is pickle-based: load ONLY operator-owned artifacts produced by this pipeline.
     # A checksum detects corruption; it does not establish trust in third-party files.
-    model = joblib.load(model_path)
+    model = joblib.load(io.BytesIO(payload))
     if type(model) is not RandomForestRegressor or model.n_features_in_ != len(SPEC["names"]):
         raise ValueError("Unexpected fitted estimator")
     model.n_jobs = 1

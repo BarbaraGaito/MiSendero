@@ -1,0 +1,34 @@
+{
+  "issue_summary": [
+    "Barro",
+    "Rocas sueltas",
+    "Arbol caido",
+    "Sendero cortado",
+    "Nieve o hielo",
+    "Agua alta",
+    "Derrumbe",
+    "Senalizacion faltante",
+    "Animales",
+    "Basura"
+  ],
+  "severity": [
+    "Leve",
+    "Media",
+    "Alta",
+    "Critica"
+  ],
+  "trail_state": [
+    "Transitable",
+    "Precaucion",
+    "Paso dificil",
+    "No transitable"
+  ],
+  "cause": [
+    "Lluvia",
+    "Viento",
+    "Deshielo",
+    "Uso intenso",
+    "Mantenimiento",
+    "No se sabe"
+  ]
+}

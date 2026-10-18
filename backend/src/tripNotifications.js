@@ -1,4 +1,4 @@
-const { query } = require("./db");
+const { query, getPool } = require("./db");
 
 const isNotificationChannelConfigured = () => {
   try {
@@ -14,6 +14,7 @@ const sendTripNotification = async (plan, notificationId) => {
     method: "POST",
     headers: { "Content-Type": "application/json", Authorization: `Bearer ${process.env.ALERT_WEBHOOK_TOKEN}`, "Idempotency-Key": `trip-overdue-${notificationId}` },
     signal: AbortSignal.timeout(10000),
+    redirect: "error",
     body: JSON.stringify({
       event: "trip_return_unconfirmed", notification_id: `trip-overdue-${notificationId}`,
       contact: { name: plan.contact_name, phone: plan.contact_phone },
@@ -45,22 +46,38 @@ async function processDue({ now = new Date(), send = sendTripNotification } = {}
       [item.id, new Date(now.getTime() + 60000).toISOString(), timestamp]);
     const job = claim.rows[0];
     if (!job) continue;
-    const result = await query(`SELECT p.*, u.name AS user_name, t.name AS trail_name FROM trip_plans p JOIN users u ON u.id = p.user_id LEFT JOIN trails t ON t.id = p.trail_id WHERE p.id = $1`, [job.plan_id]);
-    const plan = result.rows[0];
-    if (!plan || !["active", "overdue"].includes(plan.status)) {
-      await query("UPDATE trip_notifications SET status = 'cancelled', lease_until = NULL WHERE id = $1", [job.id]);
-      continue;
-    }
-    await query("UPDATE trip_plans SET status = 'overdue' WHERE id = $1 AND status = 'active'", [plan.id]);
+    await query("UPDATE trip_plans SET status = 'overdue' WHERE id = $1 AND status = 'active'",[job.plan_id]);
     try {
-      await send(plan, job.id);
-      await query("UPDATE trip_notifications SET status = 'accepted', accepted_at = $2, lease_until = NULL, last_error = NULL WHERE id = $1", [job.id, timestamp]);
-      accepted++;
+      const state = await sendUnderAccountLock(job, send, timestamp);
+      if (state === "cancelled") await query("UPDATE trip_notifications SET status = 'cancelled', lease_until = NULL WHERE id = $1", [job.id]);
+      if (state === "accepted") accepted++;
     } catch {
       const retryAt = new Date(now.getTime() + Math.min(900000, 30000 * 2 ** Math.min(job.attempts - 1, 5))).toISOString();
       await query("UPDATE trip_notifications SET status = 'pending', lease_until = NULL, next_attempt_at = $2, last_error = 'channel-unavailable' WHERE id = $1", [job.id, retryAt]);
     }
   }
   return { accepted };
+}
+// Share the account lock used by account deletion, then lock plan and job in
+// cascade order. The bounded send completes before a concurrent deletion can
+// commit. Messages accepted by a receiver still cannot be withdrawn afterwards.
+async function sendUnderAccountLock(claim, send, timestamp) {
+  const client = await (await getPool()).connect();
+  try {
+    await client.query("BEGIN");
+    const owner=(await client.query("SELECT user_id FROM trip_plans WHERE id = $1",[claim.plan_id])).rows[0];
+    if (!owner) {await client.query("COMMIT");return "cancelled";}
+    const user=(await client.query("SELECT id, name FROM users WHERE id = $1 FOR UPDATE",[owner.user_id])).rows[0];
+    const plan=(await client.query("SELECT * FROM trip_plans WHERE id = $1 FOR UPDATE",[claim.plan_id])).rows[0];
+    if (!user || !plan || !["active","overdue"].includes(plan.status)) {await client.query("COMMIT");return "cancelled";}
+    const job=(await client.query("SELECT status, lease_until FROM trip_notifications WHERE id = $1 FOR UPDATE",[claim.id])).rows[0];
+    if (!job || job.status !== "processing" || new Date(job.lease_until).getTime() !== new Date(claim.lease_until).getTime()) {await client.query("COMMIT");return "stale";}
+    const trail=plan.trail_id ? (await client.query("SELECT name FROM trails WHERE id = $1",[plan.trail_id])).rows[0] : null;
+    await client.query("UPDATE trip_plans SET status = 'overdue' WHERE id = $1 AND status = 'active'",[plan.id]);
+    await send({...plan,user_name:user.name,trail_name:trail?.name},claim.id);
+    await client.query("UPDATE trip_notifications SET status = 'accepted', accepted_at = $2, lease_until = NULL, last_error = NULL WHERE id = $1",[claim.id,timestamp]);
+    await client.query("COMMIT");return "accepted";
+  } catch (error) {await client.query("ROLLBACK");throw error;}
+  finally {client.release();}
 }
 module.exports = { isNotificationChannelConfigured, processTripNotifications };

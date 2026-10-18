@@ -32,8 +32,7 @@ router.post("/:reportId/block-author", reportId, async (req, res, next) => {
     if (!report?.reporter_user_id) return res.status(404).json({ message: "El autor ya no está disponible" });
     if (report.reporter_user_id === req.userId) return res.status(400).json({ message: "Podés retirar tu propio reporte" });
     await query(`INSERT INTO report_blocks (user_id, blocked_user_id) VALUES ($1,$2) ON CONFLICT (user_id, blocked_user_id) DO NOTHING`, [req.userId, report.reporter_user_id]);
-    const { rows } = await query("SELECT id FROM trail_reports WHERE reporter_user_id = $1", [report.reporter_user_id]);
-    res.json({ hidden_report_ids: rows.map((row) => row.id) });
+    res.json({ blocked: true });
   } catch (error) { next(error); }
 });
 router.delete("/:reportId", reportId, async (req, res, next) => {
@@ -48,7 +47,7 @@ router.patch("/:reportId", reportId, validateBody(z.object({ issue_summary: z.st
     const { rows } = await query(`UPDATE trail_reports SET issue_summary = $3, details = $4, updated_at = now()
       WHERE id = $1 AND reporter_user_id = $2 RETURNING ${publicReportColumns}`, [req.params.reportId, req.userId, req.body.issue_summary, req.body.details]);
     if (!rows[0]) return res.status(404).json({ message: "Reporte propio no encontrado" });
-    res.json(publicReport(rows[0]));
+    res.json(publicReport(rows[0], true));
   } catch (error) { next(error); }
 });
 router.post("/:reportId/moderate", reportId, requireAdmin, validateBody(z.object({ status: z.enum(["visible", "hidden"]) })), async (req, res, next) => {

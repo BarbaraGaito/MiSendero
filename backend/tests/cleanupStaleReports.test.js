@@ -31,7 +31,9 @@ describe("cleanupStaleReports", () => {
 
     expect(response.status).toBe(200);
     expect(response.body.some((report) => report.issue_summary === "Reporte viejo")).toBe(false);
-    expect(response.body.some((report) => report.issue_summary === "Reporte reciente")).toBe(true);
+    expect(response.body).toHaveLength(1);
+    expect(response.body[0].severity).toBe("Leve");
+    expect(response.body[0].issue_summary).toBe("Incidente de terreno");
   });
 
   test("cleanupStaleReports deletes only the reports past the staleness window", async () => {

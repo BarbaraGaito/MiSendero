@@ -10,6 +10,7 @@ const { liveStatus } = require("./nationalParks.routes");
 
 const router = express.Router();
 const { publicReportColumns, publicReport } = require("../reportContract");
+const { validateReportPosition } = require("../reportPrivacy");
 
 const weatherLabels = {
   0: "Despejado",
@@ -173,7 +174,7 @@ router.get("/:id/reports", (req, res, next) => req.headers.authorization ? requi
       `,
       [req.params.id, REPORT_STALE_AFTER_DAYS, req.userId ?? null]
     );
-    res.set("Cache-Control", "no-store").json(rows.map((row) => ({ ...publicReport(row), is_mine: row.reporter_user_id === req.userId })));
+    res.set("Cache-Control", "no-store").json(rows.map((row) => ({ ...publicReport(row, row.reporter_user_id === req.userId), is_mine: row.reporter_user_id === req.userId })));
   } catch (error) {
     next(error);
   }
@@ -187,6 +188,8 @@ router.post(
     try {
       const trail = await getTrailOr404(req.params.id, res);
       if (!trail) return;
+
+      if (!validateReportPosition(trail, req.body)) return res.status(400).json({ message: "El punto debe pertenecer al sendero. No se publicó el reporte.", code: "REPORT_OUTSIDE_TRAIL" });
 
       const {
         client_event_id,
@@ -244,7 +247,7 @@ router.post(
           return res.status(409).json({ code: "IDEMPOTENCY_CONFLICT", error: "La identidad del reporte ya fue usada con otros datos." });
         }
       }
-      res.status(201).json(publicReport(rows[0]));
+      res.status(201).json(publicReport(rows[0], true));
     } catch (error) {
       next(error);
     }

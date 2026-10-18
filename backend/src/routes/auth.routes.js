@@ -1,6 +1,8 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const { randomUUID } = require("node:crypto");
+const { revokeToken } = require("../sessionRevocation");
 const { query } = require("../db");
 const { requireAuth } = require("../middleware/requireAuth");
 const { validateBody } = require("../middleware/validate");
@@ -12,7 +14,8 @@ const JWT_ALGORITHM = "HS256";
 const signToken = (user) =>
   jwt.sign({ userId: user.id, role: user.role }, process.env.JWT_SECRET, {
     algorithm: JWT_ALGORITHM,
-    expiresIn: "7d",
+    expiresIn: "1d",
+    jwtid: randomUUID(),
   });
 
 const getUserStats = async (userId) => {
@@ -32,6 +35,13 @@ const getUserStats = async (userId) => {
     total_distance_km: Number(Number(rows[0].total_distance_km).toFixed(1)),
   };
 };
+
+router.post("/logout", requireAuth, async (req, res, next) => {
+  try {
+    await revokeToken(req.authToken, req.userId, req.authExpiresAt);
+    res.json({ revoked: true });
+  } catch (error) { next(error); }
+});
 
 router.get("/me", requireAuth, async (req, res, next) => {
   try {

@@ -87,11 +87,12 @@ beforeEach(async () => {
   await db.runAsync("DELETE FROM route_runtime");
   await db.runAsync("DELETE FROM departure_messages");
   jest.clearAllMocks();
+  (SMS.sendSMSAsync as jest.Mock).mockReset().mockResolvedValue({ result: "sent" });
 });
 
 test.each([
   ["cancelled", "SMS cancelado."],
-  ["sent", "MiSendero no puede confirmar su entrega."],
+  ["sent", "Esto no confirma que tu contacto lo recibió."],
 ])("MF12 offline SOS with SMS result %s never confirms remote registration or delivery", async (smsResult, expectedMessage) => {
   (Network.getNetworkStateAsync as jest.Mock).mockResolvedValue({ isConnected: false, isInternetReachable: false });
   (SMS.sendSMSAsync as jest.Mock).mockResolvedValueOnce({ result: smsResult });
@@ -101,9 +102,9 @@ test.each([
     await waitFor(() => textOf(screen).includes("SOS guardado en este teléfono"));
     expect(createEmergencyAlert).not.toHaveBeenCalled();
     expect(await db.getFirstAsync("SELECT status FROM pending_operations")).toMatchObject({ status: "pending" });
-    expect(textOf(screen)).toContain("El contacto todavía no fue avisado");
+    expect(textOf(screen)).toContain("Entrega al contacto: sin confirmación en MiSendero.");
     expect(textOf(screen)).not.toContain("SOS registrado en el servidor");
-    await press(screen, "Preparar SMS al contacto");
+    await press(screen, "Enviar SOS por SMS");
     expect(textOf(screen)).toContain(expectedMessage);
     expect(textOf(screen)).toContain("Entrega al contacto: sin confirmación en MiSendero.");
     expect(createEmergencyAlert).not.toHaveBeenCalled();

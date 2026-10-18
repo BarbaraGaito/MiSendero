@@ -159,16 +159,7 @@ const appleHealthKitBridge: NativeWearableBridge = {
         toRead: healthKitReadTypes,
       });
 
-      if (granted) {
-        await healthKit.configureBackgroundTypes(
-          [
-            "HKQuantityTypeIdentifierHeartRate",
-            "HKQuantityTypeIdentifierStepCount",
-            "HKQuantityTypeIdentifierActiveEnergyBurned",
-          ],
-          healthKit.UpdateFrequency.hourly
-        );
-      }
+      // Reads are foreground/on demand. Background delivery is not requested.
 
       return granted;
     } catch {

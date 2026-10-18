@@ -2,6 +2,7 @@ import { db, withWriteTransaction } from "./connection";
 import { randomUUID } from "expo-crypto";
 import type { SessionRow } from "../types";
 import { persistActivityOutbox } from "./activityOutbox";
+import { installRetentionPolicy } from "./dataRetention";
 import { wearableStorageSql } from "./wearableSchema";
 
 export { db };
@@ -243,6 +244,7 @@ const runInitDB = async () => {
     ON pending_operations (dedupe_key)
     WHERE dedupe_key IS NOT NULL;
   `);
+  await installRetentionPolicy();
   await purgeSimulatedData();
   await recoverActivityOutbox();
 };

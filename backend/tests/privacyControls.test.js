@@ -101,7 +101,7 @@ test("withdrawal, correction, blocking, flags and admin moderation enforce owner
   expect((await request(app).post(`${path}/moderate`).set(auth(admin)).send({ status: "hidden" })).status).toBe(200);
   expect((await request(app).get(`/api/trails/${trailId}/reports`)).body.some((item) => item.id === first.id)).toBe(false);
   const blocked = await request(app).post(`/api/reports/${second.id}/block-author`).set(auth(reader));
-  expect(blocked.body.hidden_report_ids).toEqual(expect.arrayContaining([first.id, second.id]));
+  expect(blocked.body).toEqual({ blocked: true });
   expect((await request(app).get(`/api/trails/${trailId}/reports`).set(auth(reader))).body.some((item) => item.id === second.id)).toBe(false);
   expect((await request(app).delete(`/api/reports/${second.id}`).set(auth(author))).status).toBe(200);
 });

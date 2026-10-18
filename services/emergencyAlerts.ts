@@ -5,6 +5,7 @@ import { enqueueUnique, runSync } from "./syncQueue";
 import { getLastRouteTrackingPoint } from "./routeTracking";
 import { EmergencyContact, Trail } from "../types";
 import { getAuthSession } from "./authSession";
+import { captureAccountContext, assertAccountContext } from "./accountContext";
 import { formatTrailMessageContext, getTrailForMessage } from "./trailMessages";
 import { getRouteSession } from "./routeSession";
 import { isTestingLocationActive } from "./testingMode";
@@ -87,6 +88,7 @@ export const getEmergencyLocation = async (trailId?: number | null, startedAt?: 
 };
 
 export const sendEmergencyAlert = async (options: SendEmergencyAlertOptions = {}) => {
+  const accountContext = await captureAccountContext();
   await assertRealEmergency(options);
   const owner = (await getAuthSession())?.user.id ?? null;
   const eventId = options.eventId ?? Crypto.randomUUID();
@@ -107,7 +109,7 @@ export const sendEmergencyAlert = async (options: SendEmergencyAlertOptions = {}
     contact_phone: options.contact?.phone ?? null,
     message_body: message,
     last_known_at: location.latitude === null ? null : new Date(location.timestamp).toISOString(),
-  }, `sos:${eventId}`);
+  }, `sos:${eventId}`, accountContext);
   void runSync().catch(() => undefined);
   return { eventId, operationId, message };
 };

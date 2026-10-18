@@ -35,9 +35,9 @@ test("missing or failed Android reads do not fabricate a pulse; oxygen-only samp
   (connect.readRecords as jest.Mock).mockImplementation(async (type: string) => ({ records: type === "OxygenSaturation" ? [{ percentage: 98.2, time: iso() }] : [] }));
   expect(await bridge.readLatestSample({ requireHeartRate: true })).toBeNull(); expect(await bridge.readLatestSample()).toMatchObject({ heartRateBpm: null, oxygenSaturation: 98.2, recordedAt: now });
 });
-test("iOS authorization enables only declared background types and availability errors stay unavailable", async () => {
+test("iOS authorization requests foreground reads without enabling background delivery", async () => {
   Platform.OS = "ios"; const bridge = getNativeWearableBridge(); (kit.isHealthDataAvailableAsync as jest.Mock).mockResolvedValue(true); (kit.requestAuthorization as jest.Mock).mockResolvedValue(true); (kit.configureBackgroundTypes as jest.Mock).mockResolvedValue(undefined);
-  expect(await bridge.isAvailable()).toBe(true); expect(await bridge.requestPermissions()).toBe(true); expect(kit.configureBackgroundTypes).toHaveBeenCalledWith(expect.arrayContaining(["HKQuantityTypeIdentifierHeartRate"]), 1);
+  expect(await bridge.isAvailable()).toBe(true); expect(await bridge.requestPermissions()).toBe(true); expect(kit.configureBackgroundTypes).not.toHaveBeenCalled();
   (kit.isHealthDataAvailableAsync as jest.Mock).mockRejectedValue(new Error("native")); (kit.requestAuthorization as jest.Mock).mockRejectedValue(new Error("denied")); expect(await bridge.isAvailable()).toBe(false); expect(await bridge.requestPermissions()).toBe(false);
   (kit.getMostRecentQuantitySample as jest.Mock).mockRejectedValue(new Error("no data")); expect(await bridge.readLatestSample()).toBeNull();
 });

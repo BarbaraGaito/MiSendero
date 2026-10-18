@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { userMessage } from "../../services/userMessages";
 import { Ionicons } from "@expo/vector-icons";
+import { utf8Bytes } from "../../services/passwordPolicy";
 import { router } from "expo-router";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -28,6 +29,7 @@ const getFormError = (
   if (isRegister && password.length < 8) {
     return "La contrasena debe tener al menos 8 caracteres.";
   }
+  if (utf8Bytes(password) > 72) return "La contraseña supera 72 bytes UTF-8. Usá una clave más corta; los acentos pueden ocupar más de un byte.";
 
   if (isRegister && !acceptedTerms) {
     return "Aceptá los términos y condiciones y los avisos de seguridad para continuar.";

@@ -13,7 +13,7 @@ const schema = z.object({
 router.use(requireAuth);
 router.get("/", async (req, res, next) => {
   try {
-    const result = await query(`SELECT p.*, n.status AS notification_status FROM trip_plans p LEFT JOIN trip_notifications n ON n.plan_id = p.id WHERE p.user_id = $1 ORDER BY p.created_at DESC LIMIT 50`, [req.userId]);
+    const result = await query(`SELECT p.*, n.status AS notification_status FROM trip_plans p LEFT JOIN trip_notifications n ON n.plan_id = p.id WHERE p.user_id = $1 AND p.retention_purged_at IS NULL ORDER BY p.created_at DESC LIMIT 50`, [req.userId]);
     res.json(result.rows);
   } catch (error) { next(error); }
 });

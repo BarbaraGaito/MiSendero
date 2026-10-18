@@ -19,7 +19,12 @@ export function ReportActions({ report, onChanged }: { report: TrailReport; onCh
       if (!session) throw new Error("Iniciá sesión para gestionar reportes.");
       let removed: number[] = [];
       if (action === "flag") await flagReport(report.id, "Contenido inapropiado, abusivo o datos personales", session.token);
-      if (action === "block") removed = (await blockReportAuthor(report.id, session.token)).hidden_report_ids;
+      if (action === "block") {
+        await blockReportAuthor(report.id, session.token);
+        // Invalidate report copies without learning the author's other IDs.
+        // Geometry, elevations and downloaded tiles remain available offline.
+        await db.runAsync("UPDATE offline_maps SET reports_json = '[]' WHERE user_id = ?", [session.user.id]);
+      }
       if (action === "withdraw") { await withdrawReport(report.id, session.token); removed = [report.id]; }
       if (action === "correct") { await correctReport(report.id, summary, details, session.token); setEditing(false); }
       // Immediately purge affected public copies on this installation as well.

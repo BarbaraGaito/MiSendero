@@ -339,6 +339,7 @@ export default function ReportTerrainScreen() {
 
         <Card>
           <Text style={styles.label}>Detalle opcional</Text>
+          <Text style={styles.summaryText}>El punto del incidente se publica aproximado, con un margen de hasta 150 m y horario por hora. El texto libre queda disponible solo para vos y moderación. No ingreses datos de otras personas.</Text>
           <TextInput
             multiline
             value={details}

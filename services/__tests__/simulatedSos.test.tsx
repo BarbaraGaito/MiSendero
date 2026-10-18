@@ -22,6 +22,7 @@ jest.mock("../api", () => ({
 
 import React from "react";
 import * as SMS from "expo-sms";
+import * as Network from "expo-network";
 import { router } from "expo-router";
 import { db, initDB } from "../../database/database";
 import { saveAuthSession } from "../authSession";
@@ -77,6 +78,7 @@ const expectNothingSent = async () => {
 
 beforeAll(() => initDB());
 beforeEach(async () => {
+  (Network.getNetworkStateAsync as jest.Mock).mockResolvedValue({ isConnected: true, isInternetReachable: true });
   global.fetch = fetchMock as unknown as typeof fetch;
   await login(60, "user");
   await saveTestingLocationMode(false);
@@ -86,6 +88,27 @@ beforeEach(async () => {
   await db.runAsync("DELETE FROM departure_messages");
   jest.clearAllMocks();
 });
+
+test.each([
+  ["cancelled", "SMS cancelado."],
+  ["sent", "MiSendero no puede confirmar su entrega."],
+])("MF12 offline SOS with SMS result %s never confirms remote registration or delivery", async (smsResult, expectedMessage) => {
+  (Network.getNetworkStateAsync as jest.Mock).mockResolvedValue({ isConnected: false, isInternetReachable: false });
+  (SMS.sendSMSAsync as jest.Mock).mockResolvedValueOnce({ result: smsResult });
+  const screen = await render({});
+  try {
+    await press(screen, "Guardar pedido SOS");
+    await waitFor(() => textOf(screen).includes("SOS guardado en este teléfono"));
+    expect(createEmergencyAlert).not.toHaveBeenCalled();
+    expect(await db.getFirstAsync("SELECT status FROM pending_operations")).toMatchObject({ status: "pending" });
+    expect(textOf(screen)).toContain("El contacto todavía no fue avisado");
+    expect(textOf(screen)).not.toContain("SOS registrado en el servidor");
+    await press(screen, "Preparar SMS al contacto");
+    expect(textOf(screen)).toContain(expectedMessage);
+    expect(textOf(screen)).toContain("Entrega al contacto: sin confirmación en MiSendero.");
+    expect(createEmergencyAlert).not.toHaveBeenCalled();
+  } finally { await renderer.act(async () => screen.unmount()); }
+}, 20000);
 
 test("a SOS raised by simulated wearable data shows a test confirmation and sends, queues and stores nothing", async () => {
   await login(61, "user");

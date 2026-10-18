@@ -1,0 +1,43 @@
+$ executable: C:\Program Files\nodejs\node.exe
+$ args: ["D:\\AppPFI\\MiSendero\\backend\\node_modules\\jest\\bin\\jest.js","--runInBand","--randomize","--seed=20261017","--testMatch=**/*.probe.js","--runTestsByPath","tests/functional/reportRetry.probe.js","--json","--outputFile=D:\\AppPFI\\MiSendero\\validation\\functional\\2026-10-17\\final-seed-20261017\\probe-results.json"]
+$ cwd: D:\AppPFI\MiSendero\backend
+
+STDOUT
+
+STDERR
+  console.log
+    ◇ injected env (0) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+
+      at _log (node_modules/dotenv/lib/main.js:131:11)
+
+  console.info
+    {"scenario":"MF07","firstId":1,"retryId":2,"persistedRows":2}
+
+      at Object.<anonymous> (tests/functional/reportRetry.probe.js:24:11)
+
+FAIL tests/functional/reportRetry.probe.js
+  ● MF07 retrying a report after a lost response creates one remote observation
+
+    expect(received).toHaveLength(expected)
+
+    Expected length: 1
+    Received length: 2
+    Received array:  [{"id": 1}, {"id": 2}]
+
+      23 |   const persisted = (await query('SELECT id FROM trail_reports WHERE trail_id = $1', [trailId])).rows;
+      24 |   console.info(JSON.stringify({ scenario: 'MF07', firstId: first.body.id, retryId: retry.body.id, persistedRows: persisted.length }));
+    > 25 |   expect(persisted).toHaveLength(1);
+         |                     ^
+      26 |   expect(retry.body.id).toBe(first.body.id);
+      27 | });
+      28 |
+
+      at Object.<anonymous> (tests/functional/reportRetry.probe.js:25:21)
+
+Seed:        20261017
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 1 total
+Snapshots:   0 total
+Time:        2.451 s, estimated 3 s
+Ran all test suites within paths "tests/functional/reportRetry.probe.js".
+Test results written to: ..\validation\functional\2026-10-17\final-seed-20261017\probe-results.json

@@ -1,0 +1,15 @@
+{
+  "date": "2026-10-17",
+  "file": "D:/Importante/UADE/PFI/PFI25/chapters/chapter04.tex",
+  "before_sha256": "c5614f31993f04fea88e5d8f90618a5acede4e918f22fcddfb0c668c9cdf0cc8",
+  "after_sha256": "0c18e68183de461d9085eaddb5ca82b465eca0ee41fc8578fb905fe9656ddb0e",
+  "only_report_paragraph_changed": true,
+  "description": "Reports described as local command outputs rather than shared documentation files",
+  "coverage_reports_unchanged": true,
+  "pdf": {
+    "sha256": "2c7c246a9def7a074ce543dc3c9102cbd4f9cf1f44d4fde513b065458232d92b",
+    "total_pages": 154,
+    "reviewed_pdf_page": 118,
+    "compile_exit_code": 0
+  }
+}

@@ -1,0 +1,286 @@
+{
+  "recorded_at": "2026-10-17T23:03:27.716Z",
+  "node": "v24.19.0",
+  "platform": "win32",
+  "architecture": "x64",
+  "test_timezone": "UTC",
+  "lock_matches": false,
+  "mismatches": [
+    {
+      "component": "backend",
+      "name": "@types/node",
+      "installed": "26.3.0",
+      "locked": "22.20.5"
+    },
+    {
+      "component": "backend",
+      "name": "typescript",
+      "installed": null,
+      "locked": "5.9.3"
+    }
+  ],
+  "components": {
+    "client": {
+      "lock_sha256": "775d4aff7a6a038baf1f7b0298f25fd423c138c03966fdc3ae764cb625f34bd4",
+      "packages": {
+        "@expo-google-fonts/bricolage-grotesque": {
+          "installed": "0.4.1",
+          "locked": "0.4.1"
+        },
+        "@expo/vector-icons": {
+          "installed": "15.1.1",
+          "locked": "15.1.1"
+        },
+        "@kingstinct/react-native-healthkit": {
+          "installed": "14.0.2",
+          "locked": "14.0.2"
+        },
+        "expo": {
+          "installed": "57.0.26",
+          "locked": "57.0.26"
+        },
+        "expo-asset": {
+          "installed": "57.0.18",
+          "locked": "57.0.18"
+        },
+        "expo-battery": {
+          "installed": "57.0.3",
+          "locked": "57.0.3"
+        },
+        "expo-build-properties": {
+          "installed": "57.0.22",
+          "locked": "57.0.22"
+        },
+        "expo-constants": {
+          "installed": "57.0.20",
+          "locked": "57.0.20"
+        },
+        "expo-crypto": {
+          "installed": "57.0.3",
+          "locked": "57.0.3"
+        },
+        "expo-dev-client": {
+          "installed": "57.0.19",
+          "locked": "57.0.19"
+        },
+        "expo-file-system": {
+          "installed": "57.0.7",
+          "locked": "57.0.7"
+        },
+        "expo-font": {
+          "installed": "57.0.4",
+          "locked": "57.0.4"
+        },
+        "expo-gl": {
+          "installed": "57.0.2",
+          "locked": "57.0.2"
+        },
+        "expo-linking": {
+          "installed": "57.0.11",
+          "locked": "57.0.11"
+        },
+        "expo-location": {
+          "installed": "57.0.20",
+          "locked": "57.0.20"
+        },
+        "expo-modules-core": {
+          "installed": "57.0.21",
+          "locked": "57.0.21"
+        },
+        "expo-network": {
+          "installed": "57.0.2",
+          "locked": "57.0.2"
+        },
+        "expo-router": {
+          "installed": "57.0.24",
+          "locked": "57.0.24"
+        },
+        "expo-secure-store": {
+          "installed": "57.0.4",
+          "locked": "57.0.4"
+        },
+        "expo-sms": {
+          "installed": "57.0.2",
+          "locked": "57.0.2"
+        },
+        "expo-sqlite": {
+          "installed": "57.0.3",
+          "locked": "57.0.3"
+        },
+        "expo-status-bar": {
+          "installed": "57.0.1",
+          "locked": "57.0.1"
+        },
+        "expo-three": {
+          "installed": "8.0.0",
+          "locked": "8.0.0"
+        },
+        "react": {
+          "installed": "19.2.3",
+          "locked": "19.2.3"
+        },
+        "react-dom": {
+          "installed": "19.2.3",
+          "locked": "19.2.3"
+        },
+        "react-native": {
+          "installed": "0.86.3",
+          "locked": "0.86.3"
+        },
+        "react-native-health-connect": {
+          "installed": "4.1.3",
+          "locked": "4.1.3"
+        },
+        "react-native-nitro-modules": {
+          "installed": "0.36.5",
+          "locked": "0.36.5"
+        },
+        "react-native-safe-area-context": {
+          "installed": "5.7.0",
+          "locked": "5.7.0"
+        },
+        "react-native-screens": {
+          "installed": "4.26.2",
+          "locked": "4.26.2"
+        },
+        "react-native-svg": {
+          "installed": "15.15.4",
+          "locked": "15.15.4"
+        },
+        "react-native-web": {
+          "installed": "0.21.2",
+          "locked": "0.21.2"
+        },
+        "three": {
+          "installed": "0.166.0",
+          "locked": "0.166.0"
+        },
+        "@react-native/jest-preset": {
+          "installed": "0.86.3",
+          "locked": "0.86.3"
+        },
+        "@types/jest": {
+          "installed": "29.5.14",
+          "locked": "29.5.14"
+        },
+        "@types/react": {
+          "installed": "19.1.17",
+          "locked": "19.1.17"
+        },
+        "@types/three": {
+          "installed": "0.166.0",
+          "locked": "0.166.0"
+        },
+        "jest": {
+          "installed": "29.7.0",
+          "locked": "29.7.0"
+        },
+        "jest-expo": {
+          "installed": "57.0.5",
+          "locked": "57.0.5"
+        },
+        "typescript": {
+          "installed": "5.9.3",
+          "locked": "5.9.3"
+        },
+        "babel-plugin-istanbul": {
+          "installed": "6.1.1",
+          "locked": "6.1.1"
+        },
+        "istanbul-lib-coverage": {
+          "installed": "3.2.2",
+          "locked": "3.2.2"
+        },
+        "istanbul-lib-instrument": {
+          "installed": "5.2.1",
+          "locked": "5.2.1"
+        },
+        "react-test-renderer": {
+          "installed": "19.2.3",
+          "locked": "19.2.3"
+        }
+      }
+    },
+    "backend": {
+      "lock_sha256": "f070c51ddcf282aa02a11aee95476d1f1ad2c43bde03aa6a055f2c113106f5bc",
+      "packages": {
+        "bcrypt": {
+          "installed": "6.0.0",
+          "locked": "6.0.0"
+        },
+        "cors": {
+          "installed": "2.8.6",
+          "locked": "2.8.6"
+        },
+        "dotenv": {
+          "installed": "17.4.2",
+          "locked": "17.4.2"
+        },
+        "express": {
+          "installed": "5.2.1",
+          "locked": "5.2.1"
+        },
+        "express-rate-limit": {
+          "installed": "8.6.2",
+          "locked": "8.6.2"
+        },
+        "helmet": {
+          "installed": "8.3.0",
+          "locked": "8.3.0"
+        },
+        "jsonwebtoken": {
+          "installed": "9.0.3",
+          "locked": "9.0.3"
+        },
+        "pg": {
+          "installed": "8.23.0",
+          "locked": "8.23.0"
+        },
+        "pino": {
+          "installed": "10.3.1",
+          "locked": "10.3.1"
+        },
+        "pino-http": {
+          "installed": "11.0.0",
+          "locked": "11.0.0"
+        },
+        "zod": {
+          "installed": "4.4.3",
+          "locked": "4.4.3"
+        },
+        "@types/node": {
+          "installed": "26.3.0",
+          "locked": "22.20.5"
+        },
+        "jest": {
+          "installed": "30.4.2",
+          "locked": "30.4.2"
+        },
+        "pg-mem": {
+          "installed": "3.0.14",
+          "locked": "3.0.14"
+        },
+        "supertest": {
+          "installed": "7.2.2",
+          "locked": "7.2.2"
+        },
+        "typescript": {
+          "installed": null,
+          "locked": "5.9.3"
+        },
+        "babel-plugin-istanbul": {
+          "installed": "7.0.1",
+          "locked": "7.0.1"
+        },
+        "istanbul-lib-coverage": {
+          "installed": "3.2.2",
+          "locked": "3.2.2"
+        },
+        "istanbul-lib-instrument": {
+          "installed": "6.0.3",
+          "locked": "6.0.3"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,135 @@
+\section{Pruebas funcionales y resultados}\label{sec:pruebas-funcionales}
+
+La validación de MiSendero se realizó mediante pruebas automatizadas unitarias y de integración sobre el cliente y el backend. Los resultados se analizaron mediante dos indicadores complementarios: la proporción de casos aprobados y la cobertura de código alcanzada por el conjunto de pruebas.
+
+\subsection{Método, indicador y alcance}
+
+Como parte de la estrategia de validación de MiSendero, se estableció la meta de alcanzar al menos un 85\,\% de cobertura automatizada de líneas ejecutables mediante pruebas unitarias y de integración. Esta meta comprende el código propio del cliente y del backend y se formaliza en RNF-11 y en la matriz de medición. Su cumplimiento se evalúa a partir de la cobertura conjunta de ambos componentes, conservando el desglose individual y el inventario de archivos incluidos. La proporción de casos aprobados se informa de manera independiente de la cobertura.
+
+La instrumentación Babel/Istanbul contabilizó el código propio JavaScript y TypeScript del cliente y del backend, incluidos los archivos no importados por las pruebas. El inventario contiene 141 archivos del cliente y 31 del backend. Comprende rutas de entrada, pantallas, componentes, hooks, servicios, persistencia, lógica de inferencia, configuración de distribución, scripts auxiliares, API y código de la página web de gestión de cuentas. Las declaraciones sin instrucciones ejecutables se conservan en el inventario y aportan cero líneas al denominador.
+
+Se separaron el código de pruebas y sus mocks, las dependencias de terceros, los archivos generados y temporales, los documentos, los recursos gráficos, las migraciones SQL y los datos JSON. Estos últimos pueden intervenir en las pruebas, pero no constituyen instrucciones JavaScript o TypeScript instrumentables. El código Python de investigación se midió íntegramente con otra herramienta y se informa de manera independiente. No se retiraron pantallas o servicios por presentar baja cobertura ni se incorporaron directivas para ignorar código relevante.
+
+La cobertura conjunta se calculó mediante la suma de contadores de líneas de dos inventarios disjuntos:
+\[
+C_{\mathrm{líneas}}=100\times
+\frac{\sum_i L_{i,\mathrm{cubiertas}}}{\sum_i L_{i,\mathrm{ejecutables}}}.
+\]
+No se promediaron porcentajes de archivos o componentes. Ambos conjuntos utilizan el mismo proveedor de instrumentación y expresan contadores de código fuente. Las ramas, las sentencias y las funciones se conservaron como indicadores adicionales, con denominadores propios.
+
+\subsection{Herramientas y procedimiento reproducible}
+
+El cliente utiliza Jest 29.7.0 con jest-expo 57.0.5, React Test Renderer y mocks de los límites nativos. Se ejecutaron pantallas y componentes reales, geometrías de Three.js y operaciones SQL mediante el adaptador de pruebas de SQLite, basado en \texttt{node:sqlite}. El backend utiliza Jest 30.4.2 y Supertest sobre Express, con PostgreSQL emulado mediante pg-mem 3.0.14. Estos entornos permiten verificar los contratos y el comportamiento de la lógica implementada mediante dependencias controladas y datos de prueba aislados.
+
+La ejecución se realizó en Windows, con Node.js 24.19.0 y npm 11.17.0. Las dependencias se instalaron de acuerdo con el lockfile mediante el siguiente procedimiento desde la raíz del repositorio:
+
+\begin{verbatim}
+npm ci --legacy-peer-deps --ignore-scripts
+npm ci --prefix backend --ignore-scripts
+npm run typecheck
+npm run test:coverage -- --output=coverage/final 
+    --randomize --seed=20261016 --showSeed
+\end{verbatim}
+
+La última orden debe escribirse en una sola línea. La opción \texttt{--legacy-peer-deps} reproduce el grafo de dependencias definido en el lockfile sin resolver nuevamente los pares nativos opcionales de Expo. Este procedimiento establece las dependencias del entorno de pruebas automatizadas y permite reproducir la ejecución instrumentada.
+
+El comando de cobertura fija la zona horaria UTC, ejecuta ambos conjuntos y verifica el inventario. El control de aceptación comprueba que los casos estén aprobados, el inventario esté completo, las dependencias coincidan con el lockfile y la cobertura conjunta de líneas sea de al menos el 85\,\%. Dos pruebas adicionales del agregador verifican la suma ponderada, la inclusión de archivos no importados y la comparación del umbral con los contadores exactos. La integración continua utiliza el mismo procedimiento y conserva los reportes de ejecución.
+
+\subsection{Comportamientos evaluados}
+
+El conjunto de pruebas evalúa comportamientos observables del sistema en escenarios habituales, condiciones de error y situaciones de conectividad intermitente. La Tabla~\ref{tab:technical-validation} sintetiza los principales escenarios.
+
+\begingroup
+\small
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.12}
+\begin{longtable}{|p{3.1cm}|p{11.1cm}|}
+\caption{Escenarios críticos evaluados mediante pruebas automatizadas}\label{tab:technical-validation} \\
+\hline
+\textbf{Componente} & \textbf{Comportamientos comprobados} \\
+\hline
+\endfirsthead
+\multicolumn{2}{r}{\footnotesize Continuación de la tabla} \\
+\hline
+\textbf{Componente} & \textbf{Comportamientos comprobados} \\
+\hline
+\endhead
+\hline
+\endfoot
+\hline
+\endlastfoot
+Operación offline & Consulta del contexto local; progreso y cancelación de descarga; rechazo de paquetes incompletos; verificación de archivos antes de abrir; persistencia de reportes cuando falla la API. \\
+\hline
+Sincronización & Aislamiento por cuenta, reintentos, idempotencia, reanudación por conectividad o primer plano y distinción entre operación pendiente y confirmada. \\
+\hline
+Ubicación y recorrido & Denegación de permisos; rechazo de puntos antiguos, imprecisos, fuera de orden o con velocidad inverosímil; distancia persistida; pausa y reanudación; aviso de desvío y selección de coordenadas próximas al trazado. \\
+\hline
+Persistencia y acceso & Sesiones y reseñas en SQLite; caché de planes por usuario; registro y autenticación; aceptación de términos independiente de otras decisiones; revocación, baja de cuenta y prevención de reenvíos pendientes. \\
+\hline
+Asistencia y emergencias & Cola de SOS, estados de planes, confirmación de regreso y reintentos del adaptador de notificaciones con la misma clave de idempotencia. La aceptación HTTP no se representa como entrega al contacto. Los datos simulados mantienen el SOS en modo de prueba. \\
+\hline
+Mapas, relieve y métricas & Capas locales y gestos; geometría y liberación de recursos de Three.js; ausencia explícita de relieve sin DEM; perfil de elevación accesible; contratos de HealthKit y Health Connect; consentimiento previo a la lectura y separación de muestras simuladas. \\
+\hline
+Gestión web y datos externos & Exportación y corrección de datos, confirmación de eliminación, moderación y representación de contenido como texto; rechazo de fotografías sin metadatos de licencia; errores de altimetría y pronóstico. \\
+\hline
+\end{longtable}
+\endgroup
+
+Para mantener la independencia entre casos, cada prueba prepara los antecedentes que necesita y utiliza datos aislados de usuarios, actividades, senderos y cola de operaciones. La ejecución con orden aleatorio permite comprobar que los resultados no dependan del orden de los casos. El entorno de pruebas dispone de un presupuesto de intentos de autenticación que evita que la creación de fixtures interfiera con otros casos.
+
+\subsection{Resultados instrumentados}
+
+La medición comprendió 6123 líneas ejecutables del código propio del cliente y del backend. El conjunto de pruebas cubrió 5357 líneas, lo que representa una cobertura conjunta del 87{,}49\,\%. Los resultados por componente y por indicador se presentan en las tablas siguientes.
+
+\begin{table}[H]
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{|p{4.6cm}|p{2cm}|p{2cm}|p{4cm}|}
+\hline
+\textbf{Conjunto} & \textbf{Suites} & \textbf{Casos} & \textbf{Resultado} \\
+\hline
+Cliente y servicios móviles & 44 & 308 & Aprobados; sin omisiones. \\
+\hline
+Backend, API y script web & 16 & 114 & Aprobados; sin omisiones. \\
+\hline
+\textbf{Total del producto JS/TS} & \textbf{60} & \textbf{422} & \textbf{Sin fallos.} \\
+\hline
+\end{tabular}
+\caption{Pruebas del producto ejecutadas el 16 de octubre de 2026.}
+\label{tab:resultados-pruebas}
+\end{table}
+
+\begin{table}[H]
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{|p{2.7cm}|p{3.1cm}|p{2cm}|p{2cm}|p{2cm}|}
+\hline
+\textbf{Componente} & \textbf{Líneas cubiertas / total} & \textbf{Sentencias} & \textbf{Ramas} & \textbf{Funciones} \\
+\hline
+Cliente & 4539/5190 (87{,}45\,\%) & 83{,}67\,\% & 73{,}11\,\% & 77{,}01\,\% \\
+\hline
+Backend & 818/933 (87{,}67\,\%) & 85{,}50\,\% & 76{,}28\,\% & 81{,}92\,\% \\
+\hline
+\textbf{Conjunto} & \textbf{5357/6123 (87{,}49\,\%)} & 83{,}96\,\% & 73{,}42\,\% & 77{,}56\,\% \\
+\hline
+\end{tabular}
+\caption{Cobertura de código fuente con inventario completo y agregación ponderada.}
+\label{tab:cobertura-instrumentada}
+\end{table}
+
+La cobertura conjunta de líneas alcanzó el 87{,}49\,\%, superando la meta del 85\,\% establecida para el proyecto. Las coberturas de sentencias, ramas y funciones se presentan como indicadores complementarios. La aprobación del 100\,\% de los casos de la Tabla~\ref{tab:resultados-pruebas} se informa de manera independiente de la cobertura de código.
+
+Los reportes se generan localmente en \path{coverage/final/} mediante el procedimiento de ejecución indicado. La salida incluye informes HTML, archivos LCOV, contadores y resultados en JSON, y una tabla CSV por archivo. El resumen contiene el inventario de módulos y los hashes SHA-256 de las fuentes evaluadas. El registro de entorno identifica las dependencias instaladas y sus lockfiles.
+
+Una segunda ejecución utilizó la semilla 73 y dos procesos, frente a la semilla 20261016 y ejecución secuencial de la medición principal. Ambos órdenes aprobaron los mismos casos y reprodujeron los cuatro contadores agregados. La instalación limpia también reprodujo la cobertura. Estas comprobaciones aportan evidencia de independencia y repetibilidad de los escenarios ejecutados en el entorno de pruebas definido.
+
+\subsection{Pruebas de investigación y alcance de la evaluación}
+
+Las 14 pruebas Python de investigación se ejecutaron con unittest y coverage.py 7.6.1, sobre todos los módulos de \path{training/python/}, incluidos los no importados y excluyendo solamente sus pruebas. Alcanzaron 485/696 líneas (69{,}68\,\%) y 196/301 ramas (65{,}12\,\%); el indicador combinado de coverage.py fue 68{,}30\,\%. Estos resultados corresponden al código Python de investigación y se informan por separado del indicador conjunto del producto JavaScript/TypeScript, de acuerdo con su finalidad y su herramienta de instrumentación.
+
+El alcance de esta evaluación corresponde a las pruebas automatizadas del cliente y del backend en los entornos descriptos. Los límites nativos, la red y los proveedores externos se representaron mediante dobles de prueba, y la persistencia se comprobó con los adaptadores de bases de datos indicados. Los indicadores de cobertura describen la ejecución de código en este entorno. Las pruebas de extremo a extremo, las pruebas de dispositivos y la evaluación de usabilidad constituyen categorías de validación diferenciadas.
+

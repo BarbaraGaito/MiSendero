@@ -1,0 +1,19 @@
+$ executable: C:\Program Files\nodejs\node.exe
+$ args: ["--test","testing/coverage-tools.test.cjs"]
+$ cwd: D:\AppPFI\MiSendero
+
+STDOUT
+{"output":"","complete":false,"components":{"client":{"total":10,"covered":9,"skipped":0,"pct":90},"backend":{"total":100,"covered":40,"skipped":0,"pct":40}},"combined":{"total":110,"covered":49,"skipped":0,"pct":44.5455},"missing":[{"component":"client","file":"unimported.js"}],"unexpected":[]}
+{"output":"","complete":true,"components":{"client":{"total":10,"covered":9,"skipped":0,"pct":90},"backend":{"total":100,"covered":40,"skipped":0,"pct":40}},"combined":{"total":210,"covered":49,"skipped":0,"pct":23.3333},"missing":[],"unexpected":[]}
+✔ coverage sums disjoint counters rather than averaging percentages and detects omitted source files (58.8386ms)
+✔ the 85% gate uses exact counters and rejects failed, pending and empty runs (0.7507ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 279.7903
+
+STDERR

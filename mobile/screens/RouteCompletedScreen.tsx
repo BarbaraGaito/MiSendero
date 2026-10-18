@@ -1,7 +1,7 @@
 import { getRouteSession, finishRouteSession, activeRouteSeconds, getSimulatedRouteTrackingSummary } from "../../services/routeSession";
 import { router, useLocalSearchParams } from "expo-router";
 import type { Href } from "expo-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import {
   KeyboardAvoidingView,
@@ -32,6 +32,8 @@ import {
 import { SessionRow } from "../../types";
 import { getRouteTrackingSummary } from "../../services/routeTracking";
 import { formatKilometers } from "../../services/geoUtils";
+import { CompletionContactRequiredError, sendRouteCompletionSms } from "../../services/completionMessages";
+import { userMessage } from "../../services/userMessages";
 
 const ROUTE_COMPLETION_THRESHOLD = 0.95;
 
@@ -221,6 +223,9 @@ export default function RouteCompletedScreen() {
     useState<SessionRow["completion_status"]>("ended_early");
   const [trackingPointCount, setTrackingPointCount] = useState(0);
   const [isSimulated, setIsSimulated] = useState(false);
+  const [isPreparingSms, setIsPreparingSms] = useState(false);
+  const [smsStatus, setSmsStatus] = useState<string | null>(null);
+  const smsBusy = useRef(false);
 
   useEffect(() => {
     const loadSession = async () => {
@@ -284,6 +289,23 @@ export default function RouteCompletedScreen() {
     }
   };
 
+  const notifyContact = async () => {
+    if (!session || !trailId || isLoading || isSimulated || isPausedWithoutProgress || smsBusy.current) return;
+    smsBusy.current = true;
+    setIsPreparingSms(true);
+    setSmsStatus(null);
+    try {
+      const result = await sendRouteCompletionSms({ trailId, startedAt: session.started_at, simulated: isSimulated });
+      setSmsStatus(result.result === "sent"
+        ? "El teléfono indicó que enviaste el SMS. Esto no confirma que tu contacto lo recibió."
+        : result.result === "cancelled" ? "SMS cancelado. No se confirmó el envío a tu contacto."
+          : "Se abrió Mensajes. Revisá allí el estado del SMS; MiSendero no puede confirmar su entrega.");
+    } catch (error) {
+      if (error instanceof CompletionContactRequiredError) router.push("/contacto-seguridad");
+      else setSmsStatus(userMessage(error, "No pudimos preparar el SMS. Intentá nuevamente o avisá a tu contacto por otro medio."));
+    } finally { smsBusy.current = false; setIsPreparingSms(false); }
+  };
+
   return (
     <AppScreen activeTab="actividad">
       <KeyboardAvoidingView
@@ -302,7 +324,7 @@ export default function RouteCompletedScreen() {
         <Text style={styles.successCheck}>{completionCopy.icon}</Text>
       </View>
       <ScreenTitle
-        eyebrow={isSimulated ? "Modo testing" : isPausedWithoutProgress ? "Ruta pausada" : "Recorrido finalizado"}
+        eyebrow={isSimulated ? "Modo prueba" : isPausedWithoutProgress ? "Ruta pausada" : "Recorrido finalizado"}
         title={
           isSimulated
             ? "Recorrido simulado"
@@ -325,10 +347,11 @@ export default function RouteCompletedScreen() {
 
       {isLoading ? <Text style={styles.statusText}>Cargando resumen...</Text> : null}
 
-      {!!trailId && <Card tone="orange">
-        <Text style={styles.cardTitle}>Confirmá el regreso</Text>
-        <Text style={styles.cardText}>Finalizar el registro no avisa a tu contacto ni cierra un plan de salida. Confirmá tu regreso cuando estés a salvo.</Text>
-        <PrimaryButton label="Revisar y cerrar mi plan de regreso" tone="secondary" onPress={() => router.push({ pathname: "/plan-salida", params: { id: String(trailId) } })} />
+      {!isLoading && session && !!trailId && !isSimulated && !isPausedWithoutProgress && <Card tone="green">
+        <Text style={styles.cardTitle}>Informá que terminaste</Text>
+        <Text style={styles.cardText}>Avisale a tu contacto de emergencia que finalizaste tu recorrido. Abriremos Mensajes con el texto preparado para que confirmes el envío.</Text>
+        <PrimaryButton label="Informar a mi contacto de emergencia" icon="chatbubble-outline" onPress={notifyContact} isLoading={isPreparingSms} loadingLabel="Preparando mensaje" />
+        {!!smsStatus && <Text accessibilityLiveRegion="polite" style={styles.cardText}>{smsStatus}</Text>}
       </Card>}
 
       <CompletionSessionContent
@@ -468,7 +491,7 @@ function CompletionPerformanceCard({
       <Card tone="orange">
         <Text style={styles.cardTitle}>Datos simulados</Text>
         <Text style={styles.cardText}>
-          Distancia y tiempo calculados con ubicacion simulada para pruebas. No quedan en tu historial ni se envian al servidor.
+          Distancia y tiempo calculados con ubicación simulada para pruebas. No quedan en tu historial.
         </Text>
         {trackingPointCount > 0 ? (
           <Text style={styles.cardMeta}>{trackingPointCount} puntos simulados (no se guardan).</Text>

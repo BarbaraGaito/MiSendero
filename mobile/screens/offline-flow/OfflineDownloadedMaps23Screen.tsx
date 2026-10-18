@@ -1,4 +1,5 @@
 import { router, useFocusEffect } from "expo-router";
+import { offlineMapStatusLabel } from "../../../services/offlineMapPresentation";
 import { useCallback, useEffect, useState } from "react";
 import { ScrollView, Text, View } from "react-native";
 import {
@@ -141,10 +142,5 @@ function isOfflineMapReady(map: OfflineMap) {
 }
 
 function formatMapStatus(map: OfflineMap) {
-  const tileStatus =
-    map.totalTiles > 0
-      ? `${map.downloadedTiles}/${map.totalTiles} tiles`
-      : "tiles sin verificar";
-
-  return `${map.status} - ${tileStatus}`;
+  return offlineMapStatusLabel(map);
 }

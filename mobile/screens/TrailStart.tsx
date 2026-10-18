@@ -1,4 +1,5 @@
 import * as Battery from "expo-battery";
+import { userMessage } from "../../services/userMessages";
 import { getVerifiedOfflineMapByTrailId } from "../../services/offlineMaps";
 import { ensureRouteSession, getActiveRouteSession } from "../../services/routeSession";
 import { Ionicons } from "@expo/vector-icons";
@@ -121,7 +122,7 @@ const getLocationStatusText = ({
     return "Activa la ubicacion para validar si estas cerca del inicio.";
   }
   if (isTestingLocation) {
-    return "Modo testing activo: se simula que estas en el inicio de la ruta.";
+    return "Modo prueba activo: se simula que estás en el inicio de la ruta.";
   }
   if (isLocationLoading) return "Buscando tu ubicacion actual...";
   if (error) return error;
@@ -221,7 +222,7 @@ export default function Screen05TrailStart() {
   });
   const checklist = [
     { text: "Tengo agua y equipo suficiente", ready: waterReady, toggle: () => setWaterReady(!waterReady) },
-    { text: mapReady ? "Mapa offline verificado" : "Mapa offline pendiente de descarga completa", ready: mapReady },
+    { text: mapReady ? "Mapa disponible sin conexión" : "Descargá el mapa antes de salir", ready: mapReady },
     { text: battery === null ? "Batería: no disponible" : `Batería: ${battery}%`, ready: battery !== null && battery >= 60 },
     { text: "Acordé ruta y hora de regreso con mi contacto", ready: planAgreed, toggle: () => setPlanAgreed(!planAgreed) },
     // A test run never requires, sends or consumes a real departure plan.
@@ -233,7 +234,7 @@ export default function Screen05TrailStart() {
   const beginRoute = async () => {
     if (starting) return;
     if (trail?.provenance?.mapping?.navigation_ready === false) {
-      Alert.alert("Traza completa pendiente", "El mapa disponible es una referencia parcial. Consultá al administrador del sendero antes de planificar la salida.");
+      Alert.alert("Consultá el recorrido antes de salir", "Revisá los accesos y las indicaciones con la administración del sendero antes de iniciar esta ruta.");
       return;
     }
     setStarting(true);
@@ -250,7 +251,7 @@ export default function Screen05TrailStart() {
       router.push({ pathname: "/route-map", params: { active: "1", id: String(trailId), startedAt: String(start) } });
     } catch (error) {
       if (error instanceof DepartureMessageRequiredError) { setDepartureReady(false); router.push({ pathname: "/plan-salida", params: { id: String(trailId) } }); }
-      else Alert.alert("No se pudo iniciar", error instanceof Error ? error.message : "Intentá nuevamente.");
+      else Alert.alert("No se pudo iniciar", userMessage(error, "Intentá nuevamente."));
     } finally { setStarting(false); }
   };
 
@@ -325,7 +326,7 @@ export default function Screen05TrailStart() {
             <View style={styles.warningText}>
               <Text style={styles.warningTitle}>Modo prueba: no se envía plan de salida</Text>
               <Text style={styles.warningBody}>
-                El recorrido es simulado: no se envía SMS, no se registra un plan en el servidor y tu contacto no recibe avisos.
+                El recorrido es simulado: no se envía SMS ni avisos a tu contacto.
               </Text>
             </View>
           </InfoCard>

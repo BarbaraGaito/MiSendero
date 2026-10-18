@@ -108,20 +108,6 @@ export function ProgressHero({
         <Text style={styles.ringStatus}>{status}</Text>
       </View>
 
-      <View style={styles.statsRow}>
-        <View>
-          <Text style={styles.meta}>Descargado</Text>
-          <Text style={styles.statValue}>En curso</Text>
-        </View>
-        <View style={styles.statRight}>
-          <Text style={styles.meta}>Total</Text>
-          <Text style={styles.statValue}>A calcular</Text>
-        </View>
-      </View>
-      <View style={styles.activityRow}>
-        <View style={styles.activityDot} />
-        <Text style={styles.meta}>El progreso quedo guardado en el dispositivo</Text>
-      </View>
     </Card>
   );
 }

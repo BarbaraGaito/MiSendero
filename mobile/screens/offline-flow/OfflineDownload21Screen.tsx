@@ -44,13 +44,13 @@ export default function OfflineDownload21Screen() {
         }
         const reports = await getTrailReports(trailId).catch(() => []);
 
-        const saved = await saveOfflineTrailMap(
+        await saveOfflineTrailMap(
           trailData,
           reports,
           (downloaded, total) => {
             if (isMounted) {
               setProgress({ downloaded, total });
-              setMessage(`Descargando tiles ${downloaded}/${total}...`);
+              setMessage(total > 0 ? `Descargando mapa: ${Math.min(100, Math.round(downloaded / total * 100))}%` : "Preparando el mapa...");
             }
           },
           { shouldCancel: () => isCancelled }
@@ -60,11 +60,7 @@ export default function OfflineDownload21Screen() {
 
         setTrail(trailData);
         setStatus("saved");
-        setMessage(
-          saved?.terrain
-            ? "Mapa disponible sin conexion."
-            : "Mapa disponible sin conexion. El relieve 3D no estara disponible sin conexion."
-        );
+        setMessage("Mapa básico y recorrido disponibles sin conexión.");
       } catch (downloadError) {
         if (!isMounted) return;
 
@@ -118,8 +114,7 @@ export default function OfflineDownload21Screen() {
           value={message}
         />
         <Text style={styles.cardText}>
-          Se guardan coordenadas, centro del mapa, metadata de la ruta y reportes
-          recientes disponibles.
+          Guardá el recorrido y sus reportes para consultarlos cuando no tengas señal.
         </Text>
       </Card>
 
@@ -176,8 +171,9 @@ export default function OfflineDownload21Screen() {
 }
 
 function getDownloadErrorMessage(error: unknown) {
-  if (error instanceof Error && error.message === "offline-elevation-unavailable") {
-    return "No pudimos obtener la altimetria. Reintenta con conexion antes de descargar esta ruta.";
+  if (error instanceof Error && "code" in error) {
+    if (error.code === "provider-not-configured") return "Las descargas de mapas todavía no están disponibles. Podés consultar el sendero con conexión.";
+    if (error.code === "storage-unavailable") return "Este dispositivo no permite guardar mapas sin conexión. Probá desde tu teléfono.";
   }
   if (error instanceof Error && error.message.startsWith("offline-map-incomplete")) {
     return "La descarga quedo incompleta. Reintenta con una conexion estable antes de salir.";

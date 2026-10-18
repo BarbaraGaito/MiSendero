@@ -33,7 +33,8 @@ type TileDescriptor = {
 const TILE_SIZE = 256;
 const DEFAULT_ZOOM = 13;
 const MIN_ZOOM = 10;
-const MAX_DOWNLOAD_TILES = 220;
+// Same zooms as previous two-layer packages, so existing base tiles stay usable.
+const MAX_DOWNLOAD_TILES = 110;
 const MIN_VALID_TILE_BYTES = 96;
 const TILE_CACHE_DIR = `${FileSystem.documentDirectory || ""}misendero-tiles/`;
 const DEFAULT_CENTER: Coordinate = [-41.1734, -71.4752];
@@ -164,21 +165,19 @@ export const getOfflineTilePlanForTrail = (trail: Trail): TileDescriptor[] => {
   ];
   const points = route.length > 0 ? route : [fallbackCenter];
   const baseZoom = clamp(trail.map_zoom ?? DEFAULT_ZOOM, MIN_ZOOM, 15);
-  // Never truncate a layer or a route halfway. Reduce resolution until the
-  // complete bounds (including a one-tile margin) fit for BOTH layers.
+  // Download only the basic map. Reduce resolution rather than cutting off
+  // the route; the one-tile margin and legacy zoom selection are preserved.
   let zooms: number[] = [];
   for (let top = Math.min(15, baseZoom + 1); top >= MIN_ZOOM; top--) {
     const candidate = Array.from(new Set([Math.max(MIN_ZOOM, top - 2), Math.max(MIN_ZOOM, top - 1), top]));
     const count = candidate.reduce((sum, zoom) => {
       const bounds = getTileBounds(points, zoom, 1);
-      return sum + (bounds.maxX - bounds.minX + 1) * (bounds.maxY - bounds.minY + 1) * 2;
+      return sum + (bounds.maxX - bounds.minX + 1) * (bounds.maxY - bounds.minY + 1);
     }, 0);
     if (count <= MAX_DOWNLOAD_TILES) { zooms = candidate; break; }
   }
   const tiles = new Map<string, TileDescriptor>();
-  for (const layer of ["standard", "terrain"] as CachedMapLayer[]) {
-    for (const zoom of zooms) addTilesForLayerAndZoom(tiles, layer, zoom, points);
-  }
+  for (const zoom of zooms) addTilesForLayerAndZoom(tiles, "standard", zoom, points);
 
   return Array.from(tiles.values());
 };
@@ -269,11 +268,10 @@ export const downloadOfflineTilesForTrail = async (
   if (!FileSystem.documentDirectory) {
     throw new MapTileDownloadError(
       "storage-unavailable",
-      "No hay almacenamiento local disponible para guardar tiles offline."
+      "Este dispositivo no permite guardar mapas sin conexión. Probá desde tu teléfono."
     );
   }
 
-  const providers = [process.env.EXPO_PUBLIC_OFFLINE_STANDARD_TILE_URL, process.env.EXPO_PUBLIC_OFFLINE_TERRAIN_TILE_URL];
   const validProvider = (value: string | undefined) => {
     try {
       const url = new URL(value || "");
@@ -283,10 +281,10 @@ export const downloadOfflineTilesForTrail = async (
     } catch { return false; }
   };
   const licenseReference = process.env.EXPO_PUBLIC_OFFLINE_TILE_LICENSE_URL;
-  if (providers.some((url) => !validProvider(url)) ||
+  if (!validProvider(process.env.EXPO_PUBLIC_OFFLINE_STANDARD_TILE_URL) ||
       !licenseReference?.startsWith("https://") || !process.env.EXPO_PUBLIC_OFFLINE_TILE_ATTRIBUTION?.trim() ||
       process.env.EXPO_PUBLIC_OFFLINE_TILE_LICENSE_CONFIRMED !== "true") {
-    throw new MapTileDownloadError("provider-not-configured", "La descarga del mapa base requiere configurar un proveedor que permita uso offline. El trazado y los reportes quedan guardados en este teléfono.");
+    throw new MapTileDownloadError("provider-not-configured", "La descarga del mapa no está disponible en este momento. Intentá nuevamente más tarde.");
   }
 
   await ensureDirectory(TILE_CACHE_DIR);

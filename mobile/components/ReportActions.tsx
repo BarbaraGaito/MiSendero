@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Alert, Modal, Text, TextInput, View } from "react-native";
 import { getAuthSession } from "../../services/authSession";
 import { flagReport, blockReportAuthor, withdrawReport, correctReport } from "../../services/api";
+import { userMessage } from "../../services/userMessages";
 import { db } from "../../database/connection";
 import { TrailReport } from "../../types";
 import { PrimaryButton, Card } from "./MiSenderoUI";
@@ -31,7 +32,7 @@ export function ReportActions({ report, onChanged }: { report: TrailReport; onCh
       }
       await onChanged();
       if (action === "flag") Alert.alert("Denuncia recibida", "El reporte queda disponible para revisión por moderación. La denuncia no confirma su retiro.");
-    } catch (error) { Alert.alert("No se pudo completar", error instanceof Error ? error.message : "Reintentá con conexión."); }
+    } catch (error) { Alert.alert("No se pudo completar", userMessage(error, "Reintentá con conexión.")); }
     finally { setBusy(false); }
   };
   const open = () => Alert.alert("Gestionar reporte", "Podés denunciar contenido o dejar de ver reportes de su autor. Los cambios remotos requieren conexión.", [

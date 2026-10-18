@@ -110,6 +110,11 @@ npm run test:coverage:python
 
 ## Mapas, terreno y modo offline
 
+La descarga actual guarda solo un mapa básico 2D y el trazado; no necesita
+altimetría ni descarga relieve 3D. La fuente de imágenes debe estar publicada y
+configurada antes de probar una descarga real. Ver [configuración y preparación
+de mapas estáticos propios en AWS](docs/offline-basic-maps.md).
+
 La app combina tiles reales con capas locales para que el recorrido se entienda aun sin
 conexion. `services/mapTileCache.ts` resuelve las URLs remotas por capa (`Mapa`, `Terreno`,
 `Satelite`), guarda los tiles descargados y permite que `TrailMap` use primero el archivo

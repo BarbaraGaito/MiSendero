@@ -110,15 +110,19 @@ test("cancelling required profile setup returns home without marking it complete
   expect(experience.saveExperienceProfile).not.toHaveBeenCalled();
   expect(experience.skipExperienceProfile).not.toHaveBeenCalled();
 });
-test("trip registration validates deadlines and stores the same idempotent request when retrying", async () => {
-  const tree = await mount(Trip); await fill(tree, "Horas hasta el regreso", "0"); await press(tree, "Registrar aviso por atraso"); expect(text(tree)).toContain("72 horas"); expect(api.createTripPlan).not.toHaveBeenCalled();
-  await fill(tree, "Horas hasta el regreso", "2"); (api.createTripPlan as jest.Mock).mockRejectedValueOnce(new Error("respuesta perdida"));
-  await press(tree, "Registrar aviso por atraso"); expect(text(tree)).toContain("respuesta perdida"); await press(tree, "Registrar aviso por atraso");
-  expect((api.createTripPlan as jest.Mock).mock.calls[0][0]).toEqual((api.createTripPlan as jest.Mock).mock.calls[1][0]); expect(plans.saveTripPlanLocally).toHaveBeenCalledWith(plan); expect(text(tree)).toContain("Plan registrado");
+test("the SMS plan validates its deadline and no longer offers automatic notice activation", async () => {
+  const tree = await mount(Trip);
+  expect(text(tree)).not.toContain("Activar aviso por demora");
+  expect(text(tree)).not.toContain("El aviso automático es opcional");
+  await fill(tree, "Horas hasta el regreso", "0"); await press(tree, "Enviar plan por SMS");
+  expect(text(tree)).toContain("duración válida"); expect(departure.sendDeparturePlanSms).not.toHaveBeenCalled();
+  await fill(tree, "Horas hasta el regreso", "2"); await press(tree, "Enviar plan por SMS");
+  expect(departure.sendDeparturePlanSms).toHaveBeenCalledTimes(1);
+  expect(api.createTripPlan).not.toHaveBeenCalled();
 });
 test("sharing a plan confirms only the SMS action, and testing mode disables external actions", async () => {
   const tree = await mount(Trip); await press(tree, "Enviar plan por SMS"); expect(departure.sendDeparturePlanSms).toHaveBeenCalledWith(expect.objectContaining({ trailId: 7, contactPhone: person.phone }), expect.any(Function)); expect(text(tree)).toContain("no confirma");
-  (isTestingLocationActive as jest.Mock).mockResolvedValue(true); const testing = await mount(Trip); await expect(press(testing, "Registrar aviso por atraso")).rejects.toThrow("disabled");
+  (isTestingLocationActive as jest.Mock).mockResolvedValue(true); const testing = await mount(Trip); await expect(press(testing, "Enviar plan por SMS")).rejects.toThrow("disabled");
 });
 test("an offline check-in stays pending until the server acknowledges it", async () => {
   (plans.getSavedTripPlans as jest.Mock).mockResolvedValue([plan]); (plans.refreshTripPlans as jest.Mock).mockRejectedValue(new Error("offline"));
@@ -126,5 +130,5 @@ test("an offline check-in stays pending until the server acknowledges it", async
 });
 test("a successful server cancellation is shown separately from pending or delivered notifications", async () => {
   (plans.getSavedTripPlans as jest.Mock).mockResolvedValue([plan]); (plans.refreshTripPlans as jest.Mock).mockResolvedValueOnce([plan]).mockResolvedValue([{ ...plan, status: "cancelled" }]);
-  const tree = await mount(Trip); await press(tree, "Cancelar plan de salida"); expect(text(tree)).toContain("Plan cancelado"); expect(text(tree)).toContain("servidor confirmó");
+  const tree = await mount(Trip); await press(tree, "Cancelar plan de salida"); expect(text(tree)).toContain("Plan cancelado"); expect(text(tree)).toContain("El plan quedó cerrado");
 });

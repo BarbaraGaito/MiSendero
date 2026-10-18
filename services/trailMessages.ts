@@ -29,3 +29,9 @@ export const buildTripPlanMessage = ({ trail, expectedReturnAt, graceMinutes }: 
   expectedReturnAt: string;
   graceMinutes: string | number;
 }) => `Plan de salida MiSendero. ${formatTrailMessageContext(trail)} Regreso previsto: ${new Date(expectedReturnAt).toLocaleString("es-AR")}. Margen: ${graceMinutes} min. Acordemos qu\u00e9 hacer si no confirmo mi regreso; puedo estar sin se\u00f1al. Respondeme para confirmar que recibiste este plan.`;
+
+export const buildRouteCompletionMessage = (trail: Trail | null) => {
+  const route = trail?.name?.trim() ? `en el sendero ${trail.name.trim()}` : "de trekking";
+  const location = trail?.location?.trim() ? ` Ubicación: ${trail.location.trim()}.` : "";
+  return `MiSendero: terminé mi recorrido ${route}.${location} Te aviso para que sepas que finalicé mi salida.`;
+};

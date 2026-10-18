@@ -83,6 +83,7 @@ export interface Session {
 
 export interface SessionRow {
   id: number;
+  client_session_id?: string | null;
   user_id: number | null;
   started_at: number;
   ended_at: number | null;

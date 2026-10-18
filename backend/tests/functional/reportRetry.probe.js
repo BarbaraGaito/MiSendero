@@ -15,7 +15,7 @@ beforeAll(async () => {
   token = registered.body.token;
 });
 test('MF07 retrying a report after a lost response creates one remote observation', async () => {
-  const payload = { issue_summary: 'Barro funcional', severity: 'Media', trail_state: 'Precaución', observed_at: new Date().toISOString() };
+  const payload = { client_event_id: require('node:crypto').randomUUID(), issue_summary: 'Barro funcional', severity: 'Media', trail_state: 'Precaución', observed_at: new Date().toISOString() };
   const first = await request(app).post(`/api/trails/${trailId}/reports`).set('Authorization', `Bearer ${token}`).send(payload);
   expect(first.status).toBe(201); // Server commits; client is assumed to lose this acknowledgement.
   const retry = await request(app).post(`/api/trails/${trailId}/reports`).set('Authorization', `Bearer ${token}`).send(payload);

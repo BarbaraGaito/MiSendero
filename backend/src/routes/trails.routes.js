@@ -1,4 +1,5 @@
 const express = require("express");
+const { createHash } = require("node:crypto");
 const { query } = require("../db");
 const { requireAuth, requireAdmin } = require("../middleware/requireAuth");
 const { validateBody } = require("../middleware/validate");
@@ -188,6 +189,7 @@ router.post(
       if (!trail) return;
 
       const {
+        client_event_id,
         issue_summary,
         severity,
         trail_state,
@@ -201,14 +203,20 @@ router.post(
         observed_at,
       } = req.body;
 
-      const { rows } = await query(
+      const payloadHash = createHash("sha256").update(JSON.stringify([
+        trail.id, issue_summary, severity, trail_state, cause ?? null,
+        Boolean(blocks_path), details ?? null, latitude ?? null, longitude ?? null,
+        accuracy_meters ?? null, route_progress_meters ?? null, observed_at ?? null,
+      ])).digest("hex");
+      let { rows } = await query(
         `
           INSERT INTO trail_reports (
             trail_id, reporter_user_id, issue_summary, severity, trail_state,
             cause, blocks_path, details, latitude, longitude, accuracy_meters,
-            route_progress_meters, observed_at
+            route_progress_meters, observed_at, client_event_id, client_payload_hash
           )
-          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
+          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)
+          ON CONFLICT (reporter_user_id, client_event_id) DO NOTHING
           RETURNING *
         `,
         [
@@ -225,9 +233,17 @@ router.post(
           accuracy_meters ?? null,
           route_progress_meters ?? null,
           observed_at ?? new Date().toISOString(),
+          client_event_id ?? null,
+          payloadHash,
         ]
       );
-
+      if (client_event_id) {
+        rows = (await query(`SELECT * FROM trail_reports
+          WHERE reporter_user_id = $1 AND client_event_id = $2`, [req.userId, client_event_id])).rows;
+        if (!rows[0] || rows[0].client_payload_hash !== payloadHash) {
+          return res.status(409).json({ code: "IDEMPOTENCY_CONFLICT", error: "La identidad del reporte ya fue usada con otros datos." });
+        }
+      }
       res.status(201).json(publicReport(rows[0]));
     } catch (error) {
       next(error);

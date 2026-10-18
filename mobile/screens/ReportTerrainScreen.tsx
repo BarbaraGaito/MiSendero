@@ -2,9 +2,8 @@ import { Ionicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useMemo, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
-import { createTrailReport } from "../../services/api";
+import { randomUUID } from "expo-crypto";
 import { getTrailById } from "../../services/trailRepository";
-import { getAuthSession } from "../../services/authSession";
 import {
   Coordinate,
   formatDistance,
@@ -12,7 +11,7 @@ import {
   getRouteProgressMeters,
   parseRouteCoordinates,
 } from "../../services/geoUtils";
-import { enqueue, isOnline } from "../../services/syncQueue";
+import { enqueue, runSync } from "../../services/syncQueue";
 import { Trail } from "../../types";
 import {
   AppScreen,
@@ -159,6 +158,7 @@ export default function ReportTerrainScreen() {
     setSubmitError(null);
 
     const report = {
+      client_event_id: randomUUID(),
       observed_at: new Date().toISOString(),
       issue_summary: selectedIssues.join(", "),
       severity,
@@ -173,21 +173,9 @@ export default function ReportTerrainScreen() {
     };
 
     try {
-      const session = await getAuthSession();
-      const online = await isOnline();
-
-      if (session && online) {
-        try {
-          await createTrailReport(trailId, report, session.token);
-          router.replace({ pathname: "/reporte-guardado", params: { id: String(trailId), startedAt: startedAt ?? "" } });
-          return;
-        } catch {
-          // Falla de red/servidor a pesar de reportar "online": se encola igual,
-          // en lugar de perder el reporte que la persona ya completo (RF-10).
-        }
-      }
-
+      // Persist before the first HTTP attempt, also when online.
       await enqueue("trail_report", { trailId, ...report });
+      void runSync().catch(() => undefined);
       router.replace({ pathname: "/reporte-guardado", params: { pending: "1", id: String(trailId), startedAt: startedAt ?? "" } });
     } catch (error) {
       setSubmitError(

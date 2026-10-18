@@ -1,18 +1,6 @@
 jest.mock("expo-sms", () => ({ isAvailableAsync: jest.fn(), sendSMSAsync: jest.fn() }));
 jest.mock("../authSession", () => ({ getAuthSession: jest.fn() }));
-jest.mock("../../database/connection", () => {
-  const { DatabaseSync } = jest.requireActual("node:sqlite");
-  const store = new DatabaseSync(":memory:");
-  return { db: {
-    execAsync: async (sql: string) => store.exec(sql),
-    getAllAsync: async (sql: string, bindings: unknown[] = []) => store.prepare(sql).all(...bindings),
-    getFirstAsync: async (sql: string, bindings: unknown[] = []) => store.prepare(sql).get(...bindings) ?? null,
-    runAsync: async (sql: string, bindings: unknown[] = []) => {
-      const result = store.prepare(sql).run(...bindings);
-      return { changes: Number(result.changes), lastInsertRowId: Number(result.lastInsertRowid) };
-    },
-  } };
-});
+
 
 import * as SMS from "expo-sms";
 import { db } from "../../database/database";

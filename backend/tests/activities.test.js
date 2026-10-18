@@ -124,12 +124,16 @@ describe("activities", () => {
     const second = await request(app)
       .post("/api/activities")
       .set("Authorization", `Bearer ${token}`)
-      .send({ ...payload, distance_km: 2.8 });
+      .send(payload);
 
     expect(first.status).toBe(201);
     expect(second.status).toBe(201);
     expect(second.body.id).toBe(first.body.id);
-    expect(second.body.distance_km).toBe(2.8);
+    expect(second.body.distance_km).toBe(2.5);
+    const conflict = await request(app).post("/api/activities")
+      .set("Authorization", `Bearer ${token}`).send({ ...payload, distance_km: 2.8 });
+    expect(conflict.status).toBe(409);
+    expect(conflict.body.code).toBe("IDEMPOTENCY_CONFLICT");
 
     const list = await request(app)
       .get("/api/activities")

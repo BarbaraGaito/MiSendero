@@ -170,6 +170,7 @@ export const correctReport = (id: number, issue_summary: string, details: string
 export const createTrailReport = async (
   trailId: number,
   report: {
+    client_event_id?: string;
     observed_at?: string;
     issue_summary: string;
     severity: string;

@@ -23,7 +23,7 @@ export const saveAuthSession = async (session: AuthSession, options: { deletionR
   await initAuthSessionTable();
   const canUseSecureStore = await SecureStore.isAvailableAsync().catch(() => false);
   if (canUseSecureStore) {
-    await SecureStore.setItemAsync(AUTH_TOKEN_KEY, session.token);
+    await SecureStore.setItemAsync(AUTH_TOKEN_KEY, session.token, { keychainAccessible: SecureStore.WHEN_UNLOCKED_THIS_DEVICE_ONLY });
   } else {
     await db.runAsync("DELETE FROM auth_session WHERE id = 1");
     volatileSession = session;

@@ -1,5 +1,6 @@
 module.exports = {
   preset: "jest-expo",
+  setupFilesAfterEnv: ["<rootDir>/testing/storageSetup.cjs"],
   testMatch: ["**/__tests__/**/*.test.ts", "**/__tests__/**/*.test.tsx"],
   testPathIgnorePatterns: ["/node_modules/", "<rootDir>/backend/", "<rootDir>/training/", "<rootDir>/tmp/"],
   modulePathIgnorePatterns: ["<rootDir>/tmp/"],

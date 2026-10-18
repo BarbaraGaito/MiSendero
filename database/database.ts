@@ -1,4 +1,7 @@
-import { db } from "./connection";
+import { db, withWriteTransaction } from "./connection";
+import { randomUUID } from "expo-crypto";
+import type { SessionRow } from "../types";
+import { persistActivityOutbox } from "./activityOutbox";
 import { wearableStorageSql } from "./wearableSchema";
 
 export { db };
@@ -67,7 +70,7 @@ export const purgeSimulatedData = async () => {
   await db.runAsync(
     `DELETE FROM pending_operations
      WHERE entity_type = 'activity' AND status != 'synced' AND dedupe_key IN (
-       SELECT COALESCE(sessions.user_id, 'guest') || ':activity:local-session-' || sessions.id
+       SELECT COALESCE(sessions.user_id, 'guest') || ':activity:' || COALESCE(sessions.client_session_id, 'local-session-' || sessions.id)
        FROM sessions WHERE ${isSimulatedSession}
      )`
   );
@@ -198,6 +201,7 @@ const runInitDB = async () => {
     ["route_tracking_points", "user_id", "ALTER TABLE route_tracking_points ADD COLUMN user_id INTEGER;"],
     ["sessions", "started_at", "ALTER TABLE sessions ADD COLUMN started_at INTEGER NOT NULL DEFAULT 0;"],
     ["sessions", "user_id", "ALTER TABLE sessions ADD COLUMN user_id INTEGER;"],
+    ["sessions", "client_session_id", "ALTER TABLE sessions ADD COLUMN client_session_id TEXT;"],
     ["sessions", "ended_at", "ALTER TABLE sessions ADD COLUMN ended_at INTEGER;"],
     ["sessions", "avg_fatigue", "ALTER TABLE sessions ADD COLUMN avg_fatigue TEXT;"],
     ["sessions", "trail_id", "ALTER TABLE sessions ADD COLUMN trail_id INTEGER;"],
@@ -240,6 +244,29 @@ const runInitDB = async () => {
     WHERE dedupe_key IS NOT NULL;
   `);
   await purgeSimulatedData();
+  await recoverActivityOutbox();
+};
+
+export const recoverActivityOutbox = async () => {
+  await withWriteTransaction(async (tx) => {
+    const rows = await tx.getAllAsync<SessionRow>("SELECT * FROM sessions WHERE client_session_id IS NULL");
+    for (const row of rows) {
+      const oldKey = `${row.user_id ?? "guest"}:activity:local-session-${row.id}`;
+      const operation = await tx.getFirstAsync<{ id: number; status: string; retry_count: number; payload_json: string }>(
+        "SELECT id, status, retry_count, payload_json FROM pending_operations WHERE dedupe_key = ?", [oldKey]);
+      // An attempted operation may already exist remotely: preserve its old identity.
+      const attempted = operation && (operation.retry_count > 0 || ["synced", "syncing", "failed"].includes(operation.status));
+      const identity = attempted ? `local-session-${row.id}` : randomUUID();
+      await tx.runAsync("UPDATE sessions SET client_session_id = ? WHERE id = ?", [identity, row.id]);
+      if (operation && !attempted) {
+        const payload = { ...JSON.parse(operation.payload_json), client_session_id: identity };
+        await tx.runAsync("UPDATE pending_operations SET payload_json = ?, dedupe_key = ? WHERE id = ?",
+          [JSON.stringify(payload), `${row.user_id}:activity:${identity}`, operation.id]);
+      }
+      await persistActivityOutbox(tx, { ...row, client_session_id: identity });
+    }
+    await tx.execAsync("CREATE UNIQUE INDEX IF NOT EXISTS idx_sessions_client_identity ON sessions (client_session_id) WHERE client_session_id IS NOT NULL");
+  });
 };
 
 export const initDB = async () => {

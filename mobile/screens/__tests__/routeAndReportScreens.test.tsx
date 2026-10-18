@@ -8,7 +8,7 @@ jest.mock("../../../services/wearableMetrics", () => ({ getWearableRuntimeStatus
 jest.mock("../../hooks/useDeviceLocation", () => ({ useDeviceLocation: jest.fn() }));
 jest.mock("../../../services/authSession", () => ({ getAuthSession: jest.fn() }));
 jest.mock("../../../services/api", () => ({ createTrailReport: jest.fn() }));
-jest.mock("../../../services/syncQueue", () => ({ isOnline: jest.fn(), enqueue: jest.fn() }));
+jest.mock("../../../services/syncQueue", () => ({ isOnline: jest.fn(), enqueue: jest.fn(), runSync: jest.fn().mockResolvedValue({ processed: 0, failed: 0 }) }));
 jest.mock("expo-network", () => ({ getNetworkStateAsync: jest.fn(), NetworkStateType: { WIFI: "WIFI" } }));
 import { router, useLocalSearchParams } from "expo-router";
 import * as Network from "expo-network";
@@ -87,11 +87,20 @@ test("a simulated critical wearable reading always routes SOS into testing mode"
   await press(tree, "Riesgo"); expect(wearable.createDevelopmentMetricSequence).toHaveBeenCalledWith("riesgo_fisiologico", 8);
   await press(tree, "Probar SOS (no se envía)"); expect(router.push).toHaveBeenLastCalledWith(expect.objectContaining({ pathname: "/confirmar-sos", params: expect.objectContaining({ simulated: "1" }) }));
 });
-test("online terrain report preserves observation coordinates and chosen severity", async () => {
-  const tree = await mount(Report); await press(tree, "Alta"); await press(tree, "Derrumbe"); await act(async () => tree.root.findAllByType(TextInput)[0].props.onChangeText("Paso bloqueado"));
-  await press(tree, "Enviar reporte"); expect(createTrailReport).toHaveBeenCalledWith(7, expect.objectContaining({ latitude: -41, longitude: -71, accuracy_meters: 5, severity: "Alta", issue_summary: "Barro, Derrumbe", details: "Paso bloqueado", observed_at: new Date(startedAt).toISOString() }), "token"); expect(queue.enqueue).not.toHaveBeenCalled();
-  expect(router.replace).toHaveBeenCalledWith({ pathname: "/reporte-guardado", params: { id: "7", startedAt: String(startedAt) } });
+test("online report is durably queued before sync with stable event identity", async () => {
+  const tree = await mount(Report); await press(tree, "Alta"); await press(tree, "Derrumbe");
+  await act(async () => tree.root.findAllByType(TextInput)[0].props.onChangeText("Paso bloqueado"));
+  await press(tree, "Enviar reporte");
+  expect(queue.enqueue).toHaveBeenCalledWith("trail_report", expect.objectContaining({
+    trailId: 7, client_event_id: expect.stringMatching(/^[a-f0-9-]{36}$/), latitude: -41,
+    longitude: -71, accuracy_meters: 5, severity: "Alta", details: "Paso bloqueado",
+    observed_at: new Date(startedAt).toISOString(),
+  }));
+  expect(createTrailReport).not.toHaveBeenCalled();
+  expect((queue.enqueue as jest.Mock).mock.invocationCallOrder[0]).toBeLessThan((queue.runSync as jest.Mock).mock.invocationCallOrder[0]);
+  expect(router.replace).toHaveBeenCalledWith(expect.objectContaining({ params: expect.objectContaining({ pending: "1" }) }));
 });
+
 test.each(["offline", "server-error"])("terrain report is queued on %s and acknowledged only as pending", async (mode) => {
   if (mode === "offline") (queue.isOnline as jest.Mock).mockResolvedValue(false); else (createTrailReport as jest.Mock).mockRejectedValue(new Error("server"));
   const tree = await mount(Report); await press(tree, "Enviar reporte"); expect(queue.enqueue).toHaveBeenCalledWith("trail_report", expect.objectContaining({ trailId: 7, latitude: -41 })); expect(router.replace).toHaveBeenCalledWith(expect.objectContaining({ params: expect.objectContaining({ pending: "1" }) }));

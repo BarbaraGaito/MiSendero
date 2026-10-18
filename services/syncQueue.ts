@@ -1,3 +1,4 @@
+import { randomUUID } from "expo-crypto";
 import * as Network from "expo-network";
 import { db, initDB } from "../database/database";
 import { getAuthSession } from "./authSession";
@@ -73,6 +74,10 @@ export const enqueue = async (
   const owner = (await getAuthSession())?.user.id ?? null;
   if (owner && await isAccountDeletionPending(owner)) throw new Error("La cuenta tiene una baja pendiente; no se guardan nuevos envíos.");
   if (!owner && entityType !== "emergency_alert") throw new Error("Iniciá sesión para guardar esta operación.");
+  if (entityType === "trail_report") {
+    const eventId = typeof payload.client_event_id === "string" ? payload.client_event_id : randomUUID();
+    return enqueueUnique(entityType, { ...payload, client_event_id: eventId }, `report:${eventId}`);
+  }
   const now = Date.now();
   const result = await db.runAsync(
     `INSERT INTO pending_operations (entity_type, payload_json, user_id, status, created_at, updated_at)
@@ -305,6 +310,11 @@ const syncOnce = async (): Promise<{ processed: number; failed: number }> => {
   for (const operation of retryableOperations) {
     const current = await getAuthSession();
     if (current?.user.id !== session.user.id || current.token !== session.token || await isAccountDeletionPending(session.user.id)) break;
+    if (operation.entityType === "trail_report" && !operation.payload.client_event_id) {
+      operation.payload.client_event_id = randomUUID();
+      await db.runAsync("UPDATE pending_operations SET payload_json = ? WHERE id = ? AND user_id = ?",
+        [JSON.stringify(operation.payload), operation.id, session.user.id]);
+    }
     await markSyncing(operation.id);
 
     try {

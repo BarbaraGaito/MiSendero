@@ -11,7 +11,6 @@ import {
   StatPill,
   TopBar,
   colors,
-  trailImages,
 } from "../components/MiSenderoUI";
 import { getTrailById, getTrailReports, getTrailWeather } from "../../services/trailRepository";
 import {
@@ -203,7 +202,7 @@ function TrailDetailContent({
       />
       <DescriptionCard trail={trail} />
       <DifficultyCard trail={trail} weather={weather} />
-      <BeforeYouGoCard tips={trail.provenance ? [trail.provenance.precautions, ...beforeYouGoTips] : beforeYouGoTips} />
+      <BeforeYouGoCard tips={trail.provenance ? [...(trail.provenance.source_notice ? [trail.provenance.source_notice] : []), trail.provenance.precautions, ...beforeYouGoTips] : beforeYouGoTips} />
       {hasGeometry ? <AltimetrySection trail={trail} /> : null}
       {trail.national_park && <NationalParkEntry park={trail.national_park} trailId={trail.id} trailName={trail.name} />}
       <TrailSources trail={trail} />
@@ -212,7 +211,7 @@ function TrailDetailContent({
         isDownloaded={isDownloaded}
       /> : <InfoCard style={styles.card}>
         <Text style={styles.cardTitle}>Traza GPS pendiente</Text>
-        <Text style={styles.body}>La ficha está documentada, pero todavía no contamos con una traza GPS verificada para mostrar o descargar este recorrido.</Text>
+        <Text style={styles.body}>{trail.provenance?.mapping_pending_reason || "La ficha está documentada, pero todavía no contamos con una traza GPS verificada para mostrar o descargar este recorrido."}</Text>
       </InfoCard>}
       {hasGeometry ? <TrailDetailActions
         downloadMap={downloadMap}
@@ -232,11 +231,13 @@ function TrailCover({
   trail: Trail;
 }) {
   return (
+    <>
     <ImageBackground
-      source={{ uri: trail.image_url || trailImages.mountain }}
+      source={trail.image_url ? { uri: trail.image_url } : undefined}
       style={styles.cover}
       imageStyle={styles.coverImage}
     >
+      {!trail.image_url ? <Text style={styles.body}>Foto no disponible</Text> : null}
       {ratingSummary ? (
         <Pressable
           onPress={() =>
@@ -267,6 +268,8 @@ function TrailCover({
         </Pressable>
       )}
     </ImageBackground>
+    {trail.provenance?.photo?.context ? <Text style={styles.routeMetadata}>{trail.provenance.photo.context}</Text> : null}
+    </>
   );
 }
 
@@ -360,6 +363,9 @@ function TrailSources({ trail }: { trail: Trail }) {
         <Ionicons name="open-outline" size={16} color={colors.greenDark} />
         <Text style={styles.sourceText}>Ficha del recorrido</Text>
       </Pressable>
+      {trail.provenance?.mapping ? <Pressable accessibilityRole="link" onPress={() => openSource(trail.provenance!.mapping!.source_url)} style={styles.sourceLink}>
+        <Text style={styles.sourceText}>Cartografía: {trail.provenance.mapping.source} · {trail.provenance.mapping.license}</Text>
+      </Pressable> : null}
     </View>
   );
 }

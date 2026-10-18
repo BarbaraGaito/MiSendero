@@ -82,6 +82,34 @@ test("experience answers must be selected before advancing and are saved only at
 test("experience setup can be postponed without saving invented answers", async () => {
   const tree = await mount(Experience); await press(tree, "Omitir y hacerlo mas tarde"); expect(experience.skipExperienceProfile).toHaveBeenCalled(); expect(experience.saveExperienceProfile).not.toHaveBeenCalled();
 });
+
+test("recommendation entry requires completing the profile and returns to the recommendation survey after saving", async () => {
+  (useLocalSearchParams as jest.Mock).mockReturnValue({ returnTo: "recommendation" });
+  const tree = await mount(Experience);
+  expect(text(tree)).not.toContain("Omitir y hacerlo mas tarde");
+  expect(router.replace).not.toHaveBeenCalled();
+  for (const answer of ["Estoy empezando", "Moderada", "Hasta 5 km", "Simple y senalizado"]) { await press(tree, answer); await press(tree, "Continuar"); }
+  expect(router.replace).not.toHaveBeenCalled();
+  await press(tree, "Prefiero poco desnivel"); await press(tree, "Guardar perfil");
+  expect(experience.saveExperienceProfile).toHaveBeenCalled();
+  expect(experience.skipExperienceProfile).not.toHaveBeenCalled();
+  expect(router.replace).toHaveBeenCalledWith("/descubri-tu-sendero");
+});
+
+test("an already completed profile returns immediately to the requested recommendation screen", async () => {
+  (useLocalSearchParams as jest.Mock).mockReturnValue({ returnTo: "recommendation" });
+  (experience.getExperienceProfile as jest.Mock).mockResolvedValue({ completed: true, skipped: false, level: "intermedio" });
+  await mount(Experience);
+  expect(router.replace).toHaveBeenCalledWith("/descubri-tu-sendero");
+});
+
+test("cancelling required profile setup returns home without marking it completed or skipped", async () => {
+  (useLocalSearchParams as jest.Mock).mockReturnValue({ returnTo: "recommendation" });
+  const tree = await mount(Experience); await press(tree, "Volver al inicio");
+  expect(router.replace).toHaveBeenCalledWith("/inicio");
+  expect(experience.saveExperienceProfile).not.toHaveBeenCalled();
+  expect(experience.skipExperienceProfile).not.toHaveBeenCalled();
+});
 test("trip registration validates deadlines and stores the same idempotent request when retrying", async () => {
   const tree = await mount(Trip); await fill(tree, "Horas hasta el regreso", "0"); await press(tree, "Registrar aviso por atraso"); expect(text(tree)).toContain("72 horas"); expect(api.createTripPlan).not.toHaveBeenCalled();
   await fill(tree, "Horas hasta el regreso", "2"); (api.createTripPlan as jest.Mock).mockRejectedValueOnce(new Error("respuesta perdida"));

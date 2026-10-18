@@ -40,7 +40,7 @@ const initExperienceProfileTable = async () => {
   `);
 };
 
-export const getExperienceProfile = async (): Promise<ExperienceProfile> => {
+export const getExperienceProfile = async (accountId?: number): Promise<ExperienceProfile> => {
   await initExperienceProfileTable();
 
   const row = await db.getFirstAsync<{
@@ -61,7 +61,7 @@ export const getExperienceProfile = async (): Promise<ExperienceProfile> => {
        skipped_at,
        updated_at
      FROM user_experience_profile
-     WHERE id = ?`, [(await getAuthSession())?.user.id ?? null]
+     WHERE id = ?`, [accountId ?? (await getAuthSession())?.user.id ?? null]
   );
 
   if (!row) return defaultProfile;

@@ -1,4 +1,6 @@
 // Reviewed source facts, not synthetic training examples. No current opening/safety status is asserted.
+const photos = require("./catalogExpansionPhotos20261017.json").photos;
+const routes = require("./catalogExpansionRoutes20261017.json");
 const apn = (region, park) => `https://www.argentina.gob.ar/parquesnacionales/${region}/parque-nacional-${park}/actividades`;
 const sources = {
   mburucuya: { title: "APN - Mburucuyá - Actividades", url: "https://www.argentina.gob.ar/node/150096" },
@@ -16,7 +18,7 @@ const sources = {
 };
 
 // Native minutes/km refer to the scope in *_scope, NOT necessarily the full return trip.
-const definitions = [
+const catalogDefinitions = [
   { key: "mburucuya-che-roga", name: "Sendero Che Roga - Mburucuyá", aliases: ["Sendero pedestre Che Roga"],
     province: "Corrientes", area: "Parque Nacional Mburucuyá", source: "mburucuya", section: "Sendero pedestre Che Roga",
     km: 4.4, minutes: [150, 150], grade: "Media", types: ["naturaleza", "lagos"],
@@ -121,6 +123,10 @@ const definitions = [
     access: "Camino al Lolog y entrada al barrio Kaleuche; prever transporte de retorno.", precautions: "Distancia y tiempo de una cabecera a otra; no incluyen el regreso ni descansos. Consultar marcación y acceso actual." },
 ];
 
+// Explicitly withdrawn by the owner: no verified digital geometry was found.
+// Keep the reviewed facts in this audit record, but never seed/import/recommend it again.
+const retiredDefinitions = catalogDefinitions.filter(d => d.key === "lihue-piedra-movediza");
+const definitions = catalogDefinitions.filter(d => !retiredDefinitions.includes(d));
 const formatMinutes = (m) => m % 60 === 0 ? `${m / 60} h` : m < 60 ? `${m} min` : `${Math.floor(m / 60)} h ${m % 60} min`;
 const batch = "catalog-2026-10-17";
 const trails = definitions.map((d) => {
@@ -130,11 +136,15 @@ const trails = definitions.map((d) => {
   const min = d.minutes[0] * factor;
   const max = d.minutes[1] * factor;
   const distanceFactor = d.distance_scope === "one_way" && route === "out_and_back" ? 2 : 1;
+  const photo = photos[d.key];
+  const mapping = routes[d.key];
   return {
     name: d.name, location: `${d.area}, ${d.province}`, difficulty: ({ Baja: "Baja", Media: "Media", Moderada: "Media", Alta: "Alta", "Media/Alta": "Alta" })[d.grade],
     duration: min === max ? formatMinutes(min) : `${min / 60}-${max / 60} h`, distance_km: Number((d.km * distanceFactor).toFixed(3)),
     description: d.description + (factor === 2 ? " El tiempo total es orientativo: se calculó duplicando el tiempo de ida publicado." : ""),
-    image_url: null, center_lat: null, center_lng: null, map_zoom: null, route_coordinates: null,
+    image_url: photo.url,
+    center_lat: mapping?.points[0][0] ?? null, center_lng: mapping?.points[0][1] ?? null,
+    map_zoom: mapping ? 13 : null, route_coordinates: mapping?.points ?? null,
     provenance: {
       catalog_batch: batch, catalog_key: d.key, checked_at: "2026-10-17", province: d.province, area: d.area,
       route_type: route, duration_basis: factor === 2 ? "round_trip_from_official_one_way" : route === "loop" ? "official_circuit" : route === "point_to_point" ? "official_one_way" : "official_round_trip",
@@ -146,10 +156,15 @@ const trails = definitions.map((d) => {
         vertical_reference_m: d.vertical_reference_m ?? null, vertical_reference_basis: d.vertical_reference_m == null ? null : "source_unspecified_desnivel_not_accumulated_ascent" },
       duration_minutes_min: min, duration_minutes_max: max, duration_is_derived: factor === 2,
       recommendation: { trail_types: d.types, terrain: d.terrain || null, source_url: source.url },
-      missing_fields: ["gps_trace", "start_coordinates", "licensed_photo", "accumulated_ascent", ...(d.terrain ? [] : ["terrain"])],
+      photo,
+      mapping: mapping ? (({ points, ...metadata }) => metadata)(mapping) : null,
+      media_revision: "2026-10-17-reviewed-1",
+      source_notice: d.key === "alerces-cerro-cocinero" ? "La página de actividades de APN consultada el 17/10/2026 informa un cierre de Cerro Cocinero por incendio. Confirmar con el parque antes de planificar la salida." : null,
+      mapping_pending_reason: mapping ? null : "La ficha y el folleto de APN documentan Piedra Movediza, pero no se encontró una traza digital verificable. Requiere guía habilitado; solicitar el itinerario al parque.",
+      missing_fields: [...(mapping ? (mapping.navigation_ready ? [] : ["complete_trace"]) : ["gps_trace", "start_coordinates"]), "accumulated_ascent", ...(d.terrain ? [] : ["terrain"])],
       training: { record_type: "verified_catalog_features", relevance_label: null, synthetic: false },
     },
   };
 });
 
-module.exports = { batch, definitions, sources, trails };
+module.exports = { batch, definitions, retiredDefinitions, sources, trails };

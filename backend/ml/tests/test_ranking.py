@@ -44,6 +44,10 @@ class RankingTests(unittest.TestCase):
         vector = [1, 1, None, 90, 4, 0, 0] + [None] * 7
         self.assertTrue(math.isnan(matrix([vector])[0][7]))
         self.assertEqual(baseline(vector), 5)
+        vector[13] = 0
+        self.assertEqual(baseline(vector), 6)
+        vector[13] = 2
+        self.assertEqual(baseline(vector), 5)
         for invalid in [[], [[1]], [[float("nan")] * 14], [[True] * 14], [[1e12] * 14]]:
             with self.subTest(invalid=invalid), self.assertRaises(ValueError):
                 matrix(invalid)

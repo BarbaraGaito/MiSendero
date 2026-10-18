@@ -24,8 +24,19 @@ async function main() {
     if (!response.ok || result.status !== "ok") throw new Error("Local catalog has no match for the documented smoke query");
     const actual = (await pool.query("SELECT name, duration, distance_km FROM trails WHERE id = $1", [result.recommendation.trailId])).rows[0];
     if (!actual || actual.name !== result.recommendation.name || actual.duration !== result.recommendation.duration || Number(actual.distance_km) !== result.recommendation.distanceKm) throw new Error("Response does not match PostgreSQL");
+    let additionalRequests = 0;
+    for (const destination of ["Bariloche", "Mendoza", "Neuquén"]) {
+      const alternateResponse = await fetch(`${base}/recommend-trail`, { method: "POST", headers, signal: AbortSignal.timeout(10000),
+        body: JSON.stringify({ destination, trailTypes: ["cascadas"], duration: "menos-1", difficulty: "facil", experience: "principiante" }) });
+      const alternate = await alternateResponse.json();
+      if (!alternateResponse.ok || alternate.status !== "ok") throw new Error(`Local alternative was not returned for ${destination}`);
+      const record = (await pool.query("SELECT * FROM trails WHERE id=$1", [alternate.recommendation.trailId])).rows[0];
+      const { destinationMatches, verifiedCatalog } = require("../dist/ai/catalog");
+      if (!record || record.name !== alternate.recommendation.name || !destinationMatches(verifiedCatalog([record])[0], destination)) throw new Error("Alternative does not match the requested destination and PostgreSQL record");
+      additionalRequests++;
+    }
     console.log(JSON.stringify({ status: result.status, method: result.ranking.method, trailId: result.recommendation.trailId,
-      realPostgresRecordMatched: true, coveredDestinations: coverage.destinations.length, databaseWrites: 0 }, null, 2));
+      realPostgresRecordMatched: true, coveredDestinations: coverage.destinations.length, additionalRequests, databaseWrites: 0 }, null, 2));
   } finally {
     if (server.listening) await new Promise((resolve) => server.close(resolve));
     require("../dist/ai/model").localRanker.stop();

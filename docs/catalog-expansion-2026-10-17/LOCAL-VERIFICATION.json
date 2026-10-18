@@ -1,0 +1,21 @@
+{
+  "batch": "catalog-2026-10-17",
+  "target": "local PostgreSQL only",
+  "before": 52,
+  "after": 51,
+  "originalRows": 32,
+  "beforeOriginalSha256": "e5c18c361e75465667642bcf0cb6bc6cd03c87fb1ed5edfd08b4493f4910f379",
+  "afterOriginalSha256": "e5c18c361e75465667642bcf0cb6bc6cd03c87fb1ed5edfd08b4493f4910f379",
+  "withdrawn": [
+    {
+      "id": 313,
+      "name": "Piedra Movediza - Lihué Calel",
+      "key": "lihue-piedra-movediza"
+    }
+  ],
+  "activeBatch": 19,
+  "uniquePhotoUrls": 19,
+  "mappedTrails": 19,
+  "sameIdsForRetainedTrails": true,
+  "productionModified": false
+}

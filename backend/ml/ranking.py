@@ -45,7 +45,8 @@ def baseline(vector: list) -> float:
     weights = SPEC["baselineWeights"]
     return (weights["type_match_fraction"] * vector[1]
             + weights["duration_proximity"] * (vector[2] or 0)
-            + weights["effort_margin"] * (2 - vector[5]) / 2)
+            + weights["effort_margin"] * (2 - vector[5]) / 2
+            + weights["difficulty_match"] * (0 if vector[13] is None else 1 - abs(vector[5] - vector[13]) / 2))
 
 
 def estimator() -> RandomForestRegressor:

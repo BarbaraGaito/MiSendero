@@ -1,5 +1,7 @@
 # Auditoría del recomendador personalizado
 
+La revisión actual está en [POLICY-V4.md](POLICY-V4.md): 51 fichas utilizables con sus límites de documentación y cero etiquetas reales de relevancia. El informe original que sigue describe el snapshot inicial.
+
 Revisión local del 17/10/2026. No se consultó ni modificó RDS.
 
 | Dato observado | Cantidad |

@@ -18,15 +18,19 @@ export interface TrailRecommendation {
   difficulty: Exclude<Difficulty, "cualquiera">;
   duration: string;
   durationMinutes: number;
-  routeType: "out_and_back" | "loop" | "point_to_point";
+  routeType: "out_and_back" | "loop" | "point_to_point" | "unknown";
   distanceKm: number;
   description: string;
   explanation: string;
   sources: { title: string; url: string }[];
-  checkedAt: string;
+  checkedAt: string | null;
+  catalogVerification?: "verified" | "catalog_only";
+  durationScopeVerified?: boolean;
+  dataWarnings?: string[];
   ascentM?: number | null;
   terrain?: string[] | null;
   durationIsEstimated?: boolean;
+  preferenceAdjustments?: string[];
 }
 export interface RecommendationResponse {
   status: "ok" | "no_results" | "clarification" | "out_of_scope";

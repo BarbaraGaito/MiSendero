@@ -4,7 +4,7 @@ const path = require("path");
 const { createHash } = require("crypto");
 const { z } = require("zod");
 const { verifiedCatalog } = require("../dist/ai/catalog");
-const { compatibleCandidates, normalize } = require("../dist/ai/catalog");
+const { compatibleCandidates, destinationMatches, normalize, resolveDestination } = require("../dist/ai/catalog");
 const { destinationIsSafe } = require("../dist/ai/assistant");
 const { preferencesSchema } = require("../dist/ai/schemas");
 const { featureSpec, featuresFor } = require("../dist/ai/features");
@@ -22,7 +22,11 @@ function prepareLabels(labels, candidates) {
     const row = labelSchema.parse(raw);
     if (!destinationIsSafe(row.preferences.destination)) throw new Error("Invalid preference destination");
     const preferences = { ...row.preferences, destination: normalize(row.preferences.destination), trailTypes: [...row.preferences.trailTypes].sort() };
-    const preferenceKey = digest(JSON.stringify(preferences));
+    const resolved = resolveDestination(candidates, preferences.destination);
+    if (resolved.suggestions.length) throw new Error("Ambiguous preference destination");
+    // Aliases of the same catalog area must share a holdout group.
+    const area = candidates.filter((c) => destinationMatches(c, resolved.destination)).map((c) => c.trailId).sort((a, b) => a - b);
+    const preferenceKey = digest(JSON.stringify({ ...preferences, destination: area }));
     let query = queries.get(row.queryId);
     if (!query) { query = { preferenceKey, splitGroupId: row.splitGroupId, eligible: compatibleCandidates(candidates, preferences), rows: [] }; queries.set(row.queryId, query); }
     if (query.preferenceKey !== preferenceKey || query.splitGroupId !== row.splitGroupId) throw new Error("Inconsistent query preferences/group");
@@ -46,6 +50,8 @@ async function main() {
     const tables = (await pool.query("SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'")).rows.map((r) => r.table_name);
     const audit = { exportedAt: new Date().toISOString(), catalogRecords: rows.length, eligibleRecords: candidates.length,
       excludedRecords: rows.length - candidates.length, withProvenance: rows.filter((r) => r.provenance?.sources?.length).length,
+      catalogOnlyRecords: candidates.filter(c => c.catalogVerification === "catalog_only").length,
+      withUnconfirmedDurationScope: candidates.filter(c => c.durationScopeVerified === false).length,
       withDocumentedTerrain: candidates.filter((c) => c.terrain != null).length,
       withAscentReference: candidates.filter((c) => c.ascentM != null).length,
       preferenceOrRankingTables: tables.filter((t) => /recommend|preference|relevance|ranking/.test(t)),

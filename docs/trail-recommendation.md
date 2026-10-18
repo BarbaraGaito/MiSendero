@@ -1,6 +1,6 @@
 # Descubrí tu sendero: recomendador propio
 
-Encuesta de cinco etapas → una recomendación de PostgreSQL → fin. No hay chat, consultas libres posteriores, historial ni proveedor generativo. Se reutilizan navegación Expo Router (`/descubri-tu-sendero`), colores/componentes verdes, sesión y servicio HTTP existentes.
+Encuesta de cuatro etapas y experiencia guardada en el perfil → una recomendación de PostgreSQL → fin. No hay chat, consultas libres posteriores, historial ni proveedor generativo. Se reutilizan navegación Expo Router (`/descubri-tu-sendero`), colores/componentes verdes, sesión y servicio HTTP existentes.
 
 ## Estado real
 
@@ -12,15 +12,26 @@ El modelo es ranking supervisado *pointwise*, mediante `RandomForestRegressor`, 
 
 ## Encuesta y restricciones
 
-1. Buscar/seleccionar un destino obtenido del catálogo elegible.
+1. Escribir el destino como texto libre, sin opciones ni sugerencias. El backend busca coincidencias exclusivamente dentro del catálogo elegible.
 2. Elegir uno o varios paisajes; «Cualquiera» es exclusivo.
 3. Seleccionar duración total de caminata; ida y vuelta cuando corresponda.
 4. Elegir dificultad.
-5. Declarar experiencia: Principiante, Intermedio o Avanzado.
 
-Las respuestas se conservan al retroceder, corregir errores o buscar otro sendero. La carga muestra «Buscando el sendero ideal para vos...». Sin resultados se permite modificar las respuestas. No se relajan filtros para entregar una ruta arbitraria. Las travesías advierten que el regreso no está incluido; los circuitos y rangos oficiales se conservan. El aviso de Internet se muestra solo cuando el dispositivo detecta falta de conexión. No se agregan solicitudes a la cola offline ni se modifican mapas descargados.
+La experiencia no se pregunta de nuevo: se lee del perfil local de la cuenta autenticada en cada búsqueda y se envía como `experience`. Si el perfil falta, fue omitido o no tiene un nivel válido, se abre primero la encuesta existente de `/onboarding-experiencia` con `returnTo=recommendation`. Al guardar vuelve automáticamente a `/descubri-tu-sendero`; también se permite cancelar y volver al inicio. En este flujo no se puede omitir el perfil para obtener una recomendación. Los perfiles siguen almacenados en SQLite por cuenta; este cambio no agrega sincronización con RDS ni modifica el esquema.
 
-Se exige procedencia revisada, fuente admitida, nombre/ubicación, distancia, dificultad y duración con alcance conocido. Los paisajes se toman de metadatos documentados o de descripciones positivas del catálogo. Los valores faltantes permanecen desconocidos. No se hacen búsquedas geográficas abiertas, no se crean nombres/coordenadas y no se deduce seguridad o apertura actual. El detalle sin traza GPS verificada muestra la ficha y sus fuentes, sin ofrecer un mapa descargable inexistente.
+Las respuestas se conservan al retroceder, corregir errores o buscar otro sendero. La carga muestra «Buscando el sendero ideal para vos...». Sin resultados se permite modificar las respuestas. Las travesías advierten que el regreso no está incluido; los circuitos y rangos oficiales se conservan. El aviso de Internet se muestra solo cuando el dispositivo detecta falta de conexión. No se agregan solicitudes a la cola offline ni se modifican mapas descargados.
+
+### Búsqueda ampliada
+
+La ubicación es obligatoria: **nunca se recomienda en otra ciudad por falta de coincidencias locales**. Se reconocen tildes, mayúsculas, espacios, prefijos de provincia/parque y aliases documentados, incluyendo provincia sin coma. Ante un posible error de una letra o una transposición, se sugieren nombres de al menos cinco caracteres del catálogo y se pide modificar el destino antes de recomendar. No se corrige automáticamente: un nombre parecido puede ser otra ciudad real que todavía no esté registrada (por ejemplo, Salto y Salta). Los calificadores geográficos se conservan: «Bariloche, Santa Cruz» no se convierte en «Bariloche, Río Negro». «Ciudad de Córdoba» exige documentación de la localidad; mencionar solo una provincia no verifica una ciudad.
+
+La política v4 mantiene la ubicación como restricción obligatoria. Si hay candidatos utilizables en ese destino, siempre devuelve uno: duración, paisaje y dificultad ordenan las opciones, sin vaciar la búsqueda. Primero se prioriza el nivel de experiencia del perfil; si ninguno lo respeta, se conserva el nivel menos exigente disponible y se avisa que supera el perfil. Dentro de ese grupo se priorizan coincidencias exactas y luego paisaje, duración y dificultad. El modelo solo ordena el grupo seleccionado; nunca puede elegir otra ciudad. No hay un límite artificial de minutos ni un techo de dificultad elegida que elimine todos los candidatos locales.
+
+Una alternativa devuelve «No encontramos una coincidencia exacta; te sugerimos otro sendero en el destino que elegiste» y `recommendation.preferenceAdjustments` con las diferencias reales: paisaje, tiempo, dificultad mayor o menor y experiencia, cuando corresponda. La tarjeta muestra un aviso visible y accesible, «Te sugerimos una alternativa en este destino». No se modifican los atributos de PostgreSQL para ajustarlos a la encuesta. `no_results` se reserva para destinos sin fichas utilizables; los destinos ambiguos o con posibles errores siguen pidiendo aclaración.
+
+La política de candidatos cambió a la versión 4 del contrato de características. El pipeline usa exactamente la misma selección que el endpoint; antes de entrenar hay que regenerar los ejemplos y volver a evaluar. Los artefactos anteriores son rechazados por versión/hash y se mantiene el baseline. [Resultados locales, entrenamiento y actualización AWS](trail-ranking-2026-10-17/POLICY-V4.md).
+
+Se exigen nombre, ubicación, distancia positiva, dificultad reconocida y duración interpretable. Las fichas con procedencia conservan sus fuentes admitidas; una fuente suministrada inválida sigue rechazándose. Las fichas antiguas sin procedencia se admiten como `catalogVerification: catalog_only`, con `checkedAt: null`, fuentes vacías y avisos explícitos. No se inventa su verificación, tipo de itinerario (`unknown`) ni el alcance del tiempo (`durationScopeVerified: false`). La duración total desconocida no se presenta como coincidencia exacta y sus características de tiempo se mantienen nulas para el modelo. Las estimaciones de planificación documentadas también se admiten y se identifican. Los paisajes proceden de metadatos o de descripciones positivas; no se generan rutas, coordenadas ni estados de apertura.
 
 ## Contrato HTTP
 
@@ -46,7 +57,7 @@ Se exige procedencia revisada, fuente admitida, nombre/ubicación, distancia, di
 | difficulty | facil, moderada, dificil, cualquiera |
 | experience | principiante, intermedio, avanzado |
 
-Para compatibilidad, los clientes antiguos que omiten experiencia usan el límite conservador de principiante. El frontend actualizado siempre la envía. Las franjas comparten fronteras inclusivas: 60–120, 120–240 y 240–360 minutos; menos de 60 y más de 360. Un rango publicado debe caber completo en la franja solicitada.
+Para compatibilidad, los clientes antiguos que omiten experiencia usan la prioridad de principiante. El frontend actualizado siempre la envía desde el perfil completado, sin permitir reemplazarla desde la encuesta. Las franjas comparten fronteras inclusivas: 60–120, 120–240 y 240–360 minutos; menos de 60 y más de 360. Un rango publicado debe caber completo en la franja solicitada para afirmar coincidencia exacta; fuera de ella se ofrece como alternativa con aviso.
 
 Respuesta 200: `{ "status": "ok", "message": "...", "recommendation": { ... }, "ranking": { "method": "baseline", "modelVersion": null } }`. Con un artefacto apto y disponible, `method` es `supervised` y contiene la versión. Esto identifica el método, no un porcentaje de confianza. `recommendation` es un solo objeto con el ID real, atributos, fuentes y 2–4 motivos basados en las coincidencias. No hay lista ni texto generado por un LLM.
 
@@ -189,7 +200,7 @@ sudo systemctl restart misendero.service
 sudo systemctl status misendero.service --no-pager
 ```
 
-Conservar el checkout y el entorno anteriores hasta validar el nuevo release. No hay rollback SQL, borrado de tablas ni cambio de credenciales porque esta implementación no cambia el esquema o los datos de producción. Un frontend nuevo requiere `/ai/destinations`; al volver a un backend anterior revertir también la versión móvil correspondiente.
+Conservar el checkout y el entorno anteriores hasta validar el nuevo release. No hay rollback SQL, borrado de tablas ni cambio de credenciales porque esta implementación no cambia el esquema o los datos de producción. Al volver a un backend anterior verificar la compatibilidad de `/ai/recommend-trail` con los cuatro campos de la encuesta y `experience` del perfil; revertir también la versión móvil si corresponde.
 
 ## Docker opcional
 
@@ -201,5 +212,5 @@ El Dockerfile conserva una imagen por defecto con Node y baseline. Copia el cód
 - `backend/src/routes/ai.routes.js`, `backend/src/server.js`: endpoints, límites, lectura con plazo y arranque sin seed/migraciones en producción.
 - `backend/ml/{ranking,train,serve,inspect_artifact}.py`, lock de dependencias y pruebas: ML offline, evaluación, artefactos e inferencia.
 - `backend/scripts/prepareTrailRanking.js`: dataset basado en catálogo y etiquetas revisadas; sin escrituras en PostgreSQL.
-- `mobile/screens/DiscoverTrailScreen.tsx`, `services/{api,trailAssistant}.ts`: cinco preguntas, destinos cubiertos y envío de experiencia.
+- `mobile/screens/{DiscoverTrailScreen,ExperienceOnboardingScreen}.tsx`, `services/{api,trailAssistant,experienceProfile}.ts`: cuatro preguntas, destino como texto libre, experiencia desde el perfil y configuración previa con retorno automático si falta.
 - Tests de recomendación, worker, servicios y encuesta; ejemplos de entorno y soporte opcional Docker.

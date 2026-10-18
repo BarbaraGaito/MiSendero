@@ -1,4 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
+import { userMessage } from "../../services/userMessages";
 import { router, useFocusEffect } from "expo-router";
 import { useCallback, useState } from "react";
 import { Image, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
@@ -13,7 +14,7 @@ export default function NationalParksScreen() {
   const load = useCallback(async () => {
     setLoading(true); setError(null);
     try { setResult(await getNationalParks()); }
-    catch (e) { setError(e instanceof Error ? e.message : "No se pudieron consultar los parques."); }
+    catch (e) { setError(userMessage(e, "No se pudieron consultar los parques. Intentá nuevamente.")); }
     finally { setLoading(false); }
   }, []);
   useFocusEffect(useCallback(() => { void load(); }, [load]));
@@ -38,7 +39,7 @@ export default function NationalParksScreen() {
           </View>
         </View>
       </Pressable>)}
-      {result?.data.length === 0 && !loading && <Text style={styles.subtitle}>Sin parques con fichas verificadas en el catalogo.</Text>}
+      {result?.data.length === 0 && !loading && <Text style={styles.subtitle}>Todavía no hay parques para mostrar. Volvé a consultar más adelante.</Text>}
     </ScrollView>
   </AppScreen>;
 }

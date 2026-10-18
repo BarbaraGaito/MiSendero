@@ -67,7 +67,7 @@ test("active route pauses durably before navigating and passes measured distance
   active(); const tree = await mount(Route); expect(text(tree)).toContain("Ultimo punto guardado");
   await press(tree, "Pausa"); expect(sessions.pauseRouteSession).toHaveBeenCalledWith(7, startedAt); expect(router.push).toHaveBeenCalledWith(expect.objectContaining({ pathname: "/descanso", params: expect.objectContaining({ traveledMeters: "123" }) }));
   await press(tree, "Terminar ruta Guardar actividad y dejar opinion"); expect(router.push).toHaveBeenLastCalledWith(expect.objectContaining({ pathname: "/recorrido-finalizado", params: expect.objectContaining({ traveledMeters: "123", endedLatitude: "-41" }) }));
-  await press(tree, "SOS"); expect(router.push).toHaveBeenLastCalledWith({ pathname: "/confirmar-sos", params: { id: "7", startedAt: String(startedAt) } });
+  await press(tree, "SOS"); expect(router.push).toHaveBeenLastCalledWith({ pathname: "/confirmar-sos", params: { id: "7", startedAt: String(startedAt), sendSms: "1" } });
 });
 test("resume, failed pause and departure precondition are kept distinct", async () => {
   active(); (sessions.getRouteSession as jest.Mock).mockResolvedValue({ state: "paused" }); const paused = await mount(Route); await press(paused, "Reanudar"); expect(sessions.resumeRouteSession).toHaveBeenCalledWith(7, startedAt);

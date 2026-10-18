@@ -22,13 +22,14 @@ jest.mock("../mapTileCache", () => ({
 import { db } from "../../database/connection";
 import * as tiles from "../mapTileCache";
 import * as auth from "../authSession";
-import { getOfflineMapByTrailId, getOfflineTerrainGrid, saveOfflineTrailMap } from "../offlineMaps";
+import { backfillOfflineTerrainGrid, getOfflineMapByTrailId, getOfflineTerrainGrid, saveOfflineTrailMap } from "../offlineMaps";
 import { parseRouteCoordinates } from "../geoUtils";
 import {
   OPEN_METEO_ELEVATION_ATTRIBUTION,
   TERRAIN_GRID_SIZE,
   clearTerrainElevationCache,
   createTerrainGridCoordinates,
+  getTerrainElevation,
 } from "../terrainElevation";
 import { loadTerrainElevationState } from "../../mobile/hooks/useTerrainElevation";
 import { Trail } from "../../types";
@@ -78,6 +79,14 @@ const storedTerrainJson = async () =>
     "SELECT terrain_json FROM offline_maps WHERE trail_id = 7"
   ))?.terrain_json;
 
+// Build a legacy 3D cache explicitly; new base-map downloads never fetch a DEM.
+const storeLegacyTerrain = async () => {
+  await saveOfflineTrailMap(trail);
+  const data = await getTerrainElevation(trail.id, route);
+  if (data) await backfillOfflineTerrainGrid(trail.id, route, data);
+  return getOfflineMapByTrailId(trail.id);
+};
+
 beforeAll(() => {
   global.fetch = fetchMock as unknown as typeof fetch;
 });
@@ -92,8 +101,8 @@ beforeEach(async () => {
   (tiles.getOfflineTileCoverageForTrail as jest.Mock).mockResolvedValue({ isComplete: true, availableTiles: 2, totalTiles: 2 });
 });
 
-test("download stores the real fetched DEM grid with its source and geometry", async () => {
-  const saved = await saveOfflineTrailMap(trail);
+test("legacy DEM grids keep their real source and geometry readable", async () => {
+  const saved = await storeLegacyTerrain();
 
   expect(saved?.status).toBe("disponible");
   expect(saved?.terrain?.grid.size).toBe(TERRAIN_GRID_SIZE);
@@ -126,10 +135,12 @@ test.each([
     status: 200,
     json: async () => ({ elevation: new URL(input).searchParams.get("latitude")!.split(",").map(() => null) }),
   })],
-])("%s stores no grid but completes the 2D map and profile", async (_, failure) => {
+])("an online 3D failure (%s) does not damage the downloaded basic map", async (_, failure) => {
   fetchMock.mockImplementation(failure);
 
   const saved = await saveOfflineTrailMap(trail);
+  expect(fetchMock).not.toHaveBeenCalled();
+  expect((await loadTerrainElevationState(7, route, false)).status).toBe("unavailable");
 
   expect(saved?.status).toBe("disponible");
   expect(saved?.trail?.elevation).toEqual(trail.elevation);
@@ -142,7 +153,7 @@ test.each([
 });
 
 test("after a restart the persisted grid is used offline (and online) without calling the provider", async () => {
-  const stored = (await saveOfflineTrailMap(trail))!.terrain;
+  const stored = (await storeLegacyTerrain())!.terrain;
   clearTerrainElevationCache();
   fetchMock.mockClear();
   const fetchFn = jest.fn();
@@ -154,7 +165,7 @@ test("after a restart the persisted grid is used offline (and online) without ca
 });
 
 test("a route-geometry change invalidates the persisted grid", async () => {
-  await saveOfflineTrailMap(trail);
+  await storeLegacyTerrain();
   clearTerrainElevationCache();
   fetchMock.mockClear();
 
@@ -169,9 +180,10 @@ test("a route-geometry change invalidates the persisted grid", async () => {
   expect(fetchMock).not.toHaveBeenCalled();
 });
 
-test("re-downloading keeps a real grid only for the same geometry when the DEM fails", async () => {
-  const first = (await saveOfflineTrailMap(trail))!.terrain;
+test("basic re-download preserves compatible legacy data without requesting elevations", async () => {
+  const first = (await storeLegacyTerrain())!.terrain;
   clearTerrainElevationCache();
+  fetchMock.mockClear();
   fetchMock.mockRejectedValue(new Error("offline"));
 
   expect((await saveOfflineTrailMap(trail))?.terrain).toEqual(first);
@@ -179,9 +191,10 @@ test("re-downloading keeps a real grid only for the same geometry when the DEM f
   const moved = { ...trail, route_coordinates: movedRouteJson, elevation: { ...trail.elevation!, geometry_hash: "moved-geometry" } };
   expect((await saveOfflineTrailMap(moved))?.terrain).toBeNull();
   expect(await storedTerrainJson()).toBeNull();
+  expect(fetchMock).not.toHaveBeenCalled();
 });
 
-test("downloads without a grid are backfilled online only when the downloaded geometry matches", async () => {
+test("viewing 3D online does not add terrain to a basic downloaded map", async () => {
   await saveOfflineTrailMap(trail);
   await db.runAsync("UPDATE offline_maps SET terrain_json = NULL WHERE trail_id = 7");
   clearTerrainElevationCache();
@@ -192,18 +205,17 @@ test("downloads without a grid are backfilled online only when the downloaded ge
 
   const online = await loadTerrainElevationState(7, route, false);
   expect(online.status).toBe("ready");
-  const backfilled = await getOfflineTerrainGrid(7, route);
-  expect(backfilled?.grid.elevationsMeters).toEqual(expectedGridElevations());
+  expect(await getOfflineTerrainGrid(7, route)).toBeNull();
   expect((await getOfflineMapByTrailId(7))?.reports).toEqual([]);
 
   clearTerrainElevationCache();
   fetchMock.mockClear();
-  await expect(loadTerrainElevationState(7, route, true)).resolves.toEqual({ status: "ready", data: backfilled });
+  await expect(loadTerrainElevationState(7, route, true)).resolves.toEqual({ status: "unavailable", reason: "offline" });
   expect(fetchMock).not.toHaveBeenCalled();
 });
 
 test("the persisted grid is isolated by user", async () => {
-  await saveOfflineTrailMap(trail);
+  await storeLegacyTerrain();
   (auth.getAuthSession as jest.Mock).mockResolvedValue({ user: { id: 99 } });
 
   expect(await getOfflineTerrainGrid(7, route)).toBeNull();

@@ -73,7 +73,7 @@ export default function ElevationProfile({ elevation, onRetry }: {
       <Text accessibilityLiveRegion="polite" style={styles.readout}>
         {formatKilometers(active.distance_m / 1000)} - {Math.round(active.elevation_m)} m
       </Text>
-      <Text style={styles.meta}>Resolucion del terreno: {elevation.resolution_m} m. Desnivel aproximado sobre el trazado del mapa.</Text>
+      <Text style={styles.meta}>Las alturas y el desnivel son aproximados.</Text>
       <Pressable accessibilityRole="link" onPress={() => Linking.openURL(elevation.source_url)} style={styles.source}>
         <Text style={styles.link}>{elevation.source}</Text>
         <Ionicons name="open-outline" size={14} color={colors.green} />

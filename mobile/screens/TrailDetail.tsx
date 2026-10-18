@@ -97,15 +97,11 @@ export default function Screen03TrailDetail() {
     try {
       const reports = await getTrailReports(trail.id).catch(() => []);
       const saved = await saveOfflineTrailMap(trail, reports, (downloaded, total) => {
-        setDownloadMessage(`Descargando tiles ${downloaded}/${total}...`);
+        setDownloadMessage(total > 0 ? `Descargando mapa: ${Math.round(downloaded / total * 100)}%` : "Preparando el mapa...");
       });
       if (saved?.trail) setTrail(saved.trail);
       setIsDownloaded(true);
-      setDownloadMessage(
-        saved?.terrain
-          ? "Mapa descargado. Ya podes abrirlo sin conexion."
-          : "Mapa descargado. Ya podes abrirlo sin conexion. El relieve 3D no estara disponible sin conexion."
-      );
+      setDownloadMessage("Mapa básico y recorrido descargados. Ya podés abrirlos sin conexión.");
     } catch (downloadError) {
       setIsDownloaded(false);
       setDownloadMessage(getDownloadErrorMessage(downloadError));
@@ -210,8 +206,8 @@ function TrailDetailContent({
         downloadMessage={downloadMessage}
         isDownloaded={isDownloaded}
       /> : <InfoCard style={styles.card}>
-        <Text style={styles.cardTitle}>Traza GPS pendiente</Text>
-        <Text style={styles.body}>{trail.provenance?.mapping_pending_reason || "La ficha está documentada, pero todavía no contamos con una traza GPS verificada para mostrar o descargar este recorrido."}</Text>
+        <Text style={styles.cardTitle}>Consultá el recorrido</Text>
+        <Text style={styles.body}>Podés ver la información del sendero y sus accesos en la fuente del recorrido.</Text>
       </InfoCard>}
       {hasGeometry ? <TrailDetailActions
         downloadMap={downloadMap}
@@ -256,7 +252,7 @@ function TrailCover({
         </Pressable>
       ) : null}
       {trail.provenance?.photo && (
-        <Pressable accessibilityLabel="Creditos de la foto" accessibilityRole="button"
+        <Pressable accessibilityLabel="Creditos de la foto" accessibilityRole="button" hitSlop={8}
           onPress={() => {
             const photo = trail.provenance!.photo;
             Alert.alert("Creditos de la foto", `${photo.author} - ${photo.license}${photo.context ? `\n${photo.context}` : ""}`, [
@@ -264,11 +260,10 @@ function TrailCover({
               { text: "Ver fuente", onPress: () => { void Linking.openURL(photo.page_url).catch(() => Alert.alert("No se pudo abrir la foto")); } },
             ]);
           }} style={styles.photoCreditsButton}>
-          <Ionicons name="information-circle-outline" size={23} color={colors.ink} />
+          <Ionicons name="information-circle-outline" size={16} color={colors.muted} />
         </Pressable>
       )}
     </ImageBackground>
-    {trail.provenance?.photo?.context ? <Text style={styles.routeMetadata}>{trail.provenance.photo.context}</Text> : null}
     </>
   );
 }
@@ -363,8 +358,8 @@ function TrailSources({ trail }: { trail: Trail }) {
         <Ionicons name="open-outline" size={16} color={colors.greenDark} />
         <Text style={styles.sourceText}>Ficha del recorrido</Text>
       </Pressable>
-      {trail.provenance?.mapping ? <Pressable accessibilityRole="link" onPress={() => openSource(trail.provenance!.mapping!.source_url)} style={styles.sourceLink}>
-        <Text style={styles.sourceText}>Cartografía: {trail.provenance.mapping.source} · {trail.provenance.mapping.license}</Text>
+      {trail.provenance?.mapping ? <Pressable accessibilityRole="link" onPress={() => router.push({ pathname: "/atribuciones", params: { trailId: String(trail.id) } })} style={styles.sourceLink}>
+        <Text style={styles.creditsText}>Créditos cartográficos</Text>
       </Pressable> : null}
     </View>
   );
@@ -577,10 +572,10 @@ function normalizeDifficulty(difficulty: string) {
 }
 
 function getDownloadErrorMessage(error: unknown) {
-  if (error instanceof Error && error.message === "offline-elevation-unavailable") {
-    return "No pudimos obtener la altimetria. Reintenta con conexion antes de descargar esta ruta.";
+  if (error instanceof Error && "code" in error) {
+    if (error.code === "provider-not-configured") return "Las descargas de mapas todavía no están disponibles. Podés consultar el sendero con conexión.";
+    if (error.code === "storage-unavailable") return "Este dispositivo no permite guardar mapas sin conexión. Probá desde tu teléfono.";
   }
-  if (error instanceof Error && "code" in error && error.code === "provider-not-configured") return error.message;
   if (error instanceof Error && error.message.startsWith("offline-map-incomplete")) {
     return "La descarga no quedo completa. Reintenta con conexion estable antes de salir.";
   }
@@ -590,10 +585,11 @@ function getDownloadErrorMessage(error: unknown) {
 
 const styles = StyleSheet.create({
   photoCreditsButton: {
-    position: "absolute", bottom: 10, right: 10, width: 44, height: 44,
+    position: "absolute", bottom: 8, right: 8, width: 28, height: 28,
     alignItems: "center", justifyContent: "center", borderRadius: 8,
-    backgroundColor: "rgba(255,255,255,0.95)",
+    backgroundColor: "rgba(255,255,255,0.85)",
   },
+  creditsText: { color: colors.muted, fontSize: 11, lineHeight: 16 },
   routeMetadata: {
     color: colors.muted,
     fontSize: 14,

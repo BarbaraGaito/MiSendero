@@ -94,9 +94,9 @@ test("a SOS raised by simulated wearable data shows a test confirmation and send
   await ensureRouteSession(5, startedAt, false); // a real route: only the alert data is simulated
   jest.clearAllMocks();
 
-  const screen = await render({ id: "5", startedAt: String(startedAt), simulated: "1" });
+  const screen = await render({ id: "5", startedAt: String(startedAt), simulated: "1", sendSms: "1" });
   expect(textOf(screen)).toContain("Modo prueba: el SOS no se envía");
-  expect(labels(screen)).not.toContain("Preparar SMS al contacto");
+  expect(labels(screen)).not.toContain("Enviar SOS por SMS");
   await press(screen, "Probar pedido SOS (no se envía)");
   expect(textOf(screen)).toContain("Prueba completada");
 
@@ -114,10 +114,10 @@ test("in a testing-location route a manual SOS is a test, even after testing mod
   const startedAt = Date.now() - 60000;
   await ensureRouteSession(6, startedAt, true);
 
-  const screen = await render({ id: "6", startedAt: String(startedAt) });
+  const screen = await render({ id: "6", startedAt: String(startedAt), sendSms: "1" });
   await waitFor(() => textOf(screen).includes("Modo prueba: el SOS no se envía"));
   expect(textOf(screen)).toContain("tenés que salir del modo prueba");
-  expect(labels(screen)).not.toContain("Preparar SMS al contacto");
+  expect(labels(screen)).not.toContain("Enviar SOS por SMS");
   await press(screen, "Probar pedido SOS (no se envía)");
   expect(textOf(screen)).toContain("Prueba completada");
   await renderer.act(async () => screen.unmount());
@@ -160,14 +160,14 @@ test("control: a manual SOS in a real route with real data is still saved, synce
   await ensureRouteSession(7, startedAt, false);
   jest.clearAllMocks();
 
-  const screen = await render({ id: "7", startedAt: String(startedAt) });
+  const screen = await render({ id: "7", startedAt: String(startedAt), sendSms: "1" });
   expect(textOf(screen)).not.toContain("Modo prueba");
+  await waitFor(() => (SMS.sendSMSAsync as jest.Mock).mock.calls.length === 1);
   await press(screen, "Guardar pedido SOS");
   expect(await queued()).toBe(1);
   await waitFor(() => (createEmergencyAlert as jest.Mock).mock.calls.length === 1);
   expect((createEmergencyAlert as jest.Mock).mock.calls[0][0]).toMatchObject({ trail_id: 7 });
 
-  await press(screen, "Preparar SMS al contacto");
   expect(SMS.sendSMSAsync).toHaveBeenCalledWith([phone], expect.stringContaining("SOS MiSendero"));
   await renderer.act(async () => screen.unmount());
   await finishRouteSession(7, startedAt);

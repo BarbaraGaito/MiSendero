@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { router, useFocusEffect } from "expo-router";
+import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import { Alert, ScrollView, StyleSheet, Text, View, TextInput } from "react-native";
 import { deleteCurrentAccount } from "../../services/deleteAccount";
 import * as Linking from "expo-linking";
 import { accountDataPageUrl } from "../../services/api";
+import { userMessage } from "../../services/userMessages";
 import { isAccountDeletionPending } from "../../services/accountLifecycle";
 import {
   AppScreen,
@@ -150,8 +151,11 @@ const loadProfileData = async () => {
 };
 
 export default function ProfileScreen() {
+  const { section, returnTo } = useLocalSearchParams<{ section?: string; returnTo?: string }>();
+  const showWearableConsent = section === "privacy" && returnTo === "wearable";
   const [profile, setProfile] = useState<Profile | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [showAdminTools, setShowAdminTools] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [privacy, setPrivacy] = useState<PrivacyPreferences>({
     sensitiveDataConsent: false,
@@ -192,13 +196,14 @@ export default function ProfileScreen() {
   const [isSyncing, setIsSyncing] = useState(false);
   const [deletePassword, setDeletePassword] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isSavingPrivacy, setIsSavingPrivacy] = useState(false);
   const privacySaving = useRef(false);
   const confirmDeletion = () => Alert.alert("Eliminar cuenta", "Se eliminarán la cuenta, actividades, reportes, planes y avisos pendientes del servidor. También se borrarán los datos locales de esta cuenta. Requiere conexión y no se puede deshacer. Los mensajes ya enviados a contactos no se pueden retirar.", [
     { text: "Cancelar", style: "cancel" },
     { text: "Eliminar definitivamente", style: "destructive", onPress: async () => {
       setIsDeleting(true);
       try { await deleteCurrentAccount(deletePassword); setDeletePassword(""); router.replace("/"); }
-      catch (cause) { setError(`${cause instanceof Error ? cause.message : "No se pudo completar la baja."} Reintentá la baja. Si se perdió la respuesta, los envíos quedan suspendidos hasta confirmar su resultado.`); }
+      catch (cause) { setError(`${userMessage(cause, "No se pudo completar la baja.")} Reintentá la baja. Si se perdió la respuesta, los envíos quedan suspendidos hasta confirmar su resultado.`); }
       finally { setIsDeleting(false); }
     } },
   ]);
@@ -246,6 +251,14 @@ export default function ProfileScreen() {
     setError(null);
 
     try {
+      if (showWearableConsent) {
+        // Reading and deciding local consent must not depend on an AWS request.
+        const session = await getAuthSession();
+        if (!session) { router.replace("/"); return; }
+        const preferences = await getPrivacyPreferences();
+        setPrivacy(preferences);
+        return;
+      }
       const data = await loadProfileData();
 
       if (!data) {
@@ -289,7 +302,7 @@ export default function ProfileScreen() {
     } finally {
       setIsLoading(false);
     }
-  }, [refreshSyncSummary]);
+  }, [refreshSyncSummary, showWearableConsent]);
 
   useEffect(() => {
     loadProfile();
@@ -323,16 +336,15 @@ export default function ProfileScreen() {
   const updatePrivacy = async (nextPrivacy: Omit<PrivacyPreferences, "updatedAt">) => {
     if (privacySaving.current) return;
     privacySaving.current = true;
+    setIsSavingPrivacy(true);
+    setError(null);
     try {
-    await savePrivacyPreferences(nextPrivacy);
-    const [privacyPreferences, wearable] = await Promise.all([
-      getPrivacyPreferences(),
-      getWearableRuntimeStatus(),
-    ]);
-    setPrivacy(privacyPreferences);
-    setWearableRuntime(wearable);
-    } catch (cause) { setError(cause instanceof Error ? cause.message : "No se pudo guardar la decisión."); }
-    finally { privacySaving.current = false; }
+      await savePrivacyPreferences(nextPrivacy);
+      setPrivacy(await getPrivacyPreferences());
+      // A sensor refresh failure must not undo or hide the saved decision.
+      setWearableRuntime(await getWearableRuntimeStatus().catch(() => null));
+    } catch (cause) { setError(userMessage(cause, "No se pudo guardar la decisión. Intentá nuevamente.")); }
+    finally { privacySaving.current = false; setIsSavingPrivacy(false); }
   };
 
   const updateTestingLocationMode = async (enabled: boolean) => {
@@ -354,6 +366,19 @@ export default function ProfileScreen() {
   const email = user?.email || "Inicia sesion para ver tu cuenta";
   const initial = displayName.trim().charAt(0).toUpperCase() || "U";
   const isAdmin = user?.role === "admin";
+
+  if (showWearableConsent) return (
+    <AppScreen withBottomNav={false}>
+      <ScreenTitle eyebrow="Reloj y salud" title="Consentimiento del reloj" subtitle="Revisá la autorización y elegí si querés usar las lecturas de tu reloj." />
+      <ProfileNotices error={error} isLoading={isLoading} onRetry={loadProfile} />
+      <PrivacyCard privacy={privacy} updatePrivacy={updatePrivacy} saving={isSavingPrivacy || isLoading} />
+      {privacy.sensitiveDataConsent ? <StatusNotice tone="success" message="Consentimiento activado. Ya podés volver al reloj y autorizar el acceso en Salud o Health Connect." /> : null}
+      <PrimaryButton label="Volver al reloj" disabled={isSavingPrivacy} onPress={() => {
+        if (router.canGoBack()) router.back();
+        else router.replace("/reloj-salud");
+      }} />
+    </AppScreen>
+  );
 
   return (
     <AppScreen activeTab="perfil">
@@ -393,15 +418,17 @@ export default function ProfileScreen() {
           experienceProfile={experienceProfile}
           updateAppPreferences={updateAppPreferences}
         />
-        <PrivacyCard privacy={privacy} updatePrivacy={updatePrivacy} />
+        <PrivacyCard privacy={privacy} updatePrivacy={updatePrivacy} saving={isSavingPrivacy || isLoading} />
         <PrimaryButton label="Fuentes y licencias" tone="secondary" href="/atribuciones" />
         <Card>
           <Text style={styles.cardTitle}>Eliminar mi cuenta</Text>
-          <Text style={styles.privacyText}>La baja incluye actividades, reportes, contactos enviados y planes. En otras instalaciones, la limpieza se realiza al conectar con la API. Revisá también las copias y mensajes que compartiste fuera de MiSendero.</Text>
+          <Text style={styles.privacyText}>La baja incluye actividades, reportes, contactos enviados y planes. Los otros dispositivos actualizarán la cuenta cuando vuelvan a conectarse. Revisá también las copias y mensajes que compartiste fuera de MiSendero.</Text>
           <TextInput accessibilityLabel="Contraseña para eliminar la cuenta" placeholder="Tu contraseña actual" secureTextEntry autoCapitalize="none" value={deletePassword} onChangeText={setDeletePassword} />
           <PrimaryButton label="Eliminar cuenta" tone="danger" disabled={!deletePassword} isLoading={isDeleting} onPress={confirmDeletion} />
           <PrimaryButton label="Acceder o actualizar mis datos en la web" tone="secondary" onPress={() => { void Linking.openURL(accountDataPageUrl); }} />
         </Card>
+        {isAdmin ? <PrimaryButton label={showAdminTools ? "Ocultar herramientas de administración" : "Herramientas de administración"} tone="secondary" onPress={() => setShowAdminTools(value => !value)} /> : null}
+        {showAdminTools ? <>
         <AdminAiMetricsCard isAdmin={isAdmin} />
         <AdminTestingCard
           isAdmin={isAdmin}
@@ -409,6 +436,7 @@ export default function ProfileScreen() {
           updateTestingLocationMode={updateTestingLocationMode}
           wearableRuntime={wearableRuntime}
         />
+        </> : null}
         <PrimaryButton
           label="Cerrar sesion"
           icon="log-out-outline"
@@ -498,8 +526,8 @@ function SyncCard({
     <Card>
       <Text style={styles.cardTitle}>Sincronizacion</Text>
       <Text style={styles.privacyText}>
-        Reportes, actividades y alertas creados sin senal quedan en cola local
-        hasta recuperar conectividad.
+        Tus reportes, actividades y pedidos de ayuda se guardan en el teléfono
+        y se envían cuando recuperás la conexión.
       </Text>
       <SettingRow
         label="Pendientes de enviar"
@@ -677,30 +705,32 @@ function PreferencesCard({
 function PrivacyCard({
   privacy,
   updatePrivacy,
+  saving = false,
 }: {
   privacy: PrivacyPreferences;
   updatePrivacy: (privacy: Omit<PrivacyPreferences, "updatedAt">) => void;
+  saving?: boolean;
 }) {
   return (
     <Card>
       <Text style={styles.cardTitle}>Privacidad e IA</Text>
       <Text style={styles.privacyText}>
-        Cada opción es independiente y opcional. Los permisos del sistema operativo se administran por separado. No hay un modelo aprobado para uso en campo.
+        Elegí cómo querés usar tus datos. Podés cambiar cada permiso cuando quieras. El análisis de actividad es orientativo y no reemplaza la atención médica.
       </Text>
       <SettingRow
         label="Usar datos sensibles"
-        value={privacy.sensitiveDataConsent ? "Permitido" : "Requiere aceptar"}
-        onPress={() => updatePrivacy(getNextSensitivePrivacy(privacy))}
+        value={saving ? "Guardando..." : privacy.sensitiveDataConsent ? "Permitido" : "Requiere aceptar"}
+        onPress={saving ? undefined : () => updatePrivacy(getNextSensitivePrivacy(privacy))}
       />
       <Text style={styles.privacyText}>{privacyNotices.sensitiveDataConsent}</Text>
       <SettingRow
         label="Mejorar recomendaciones"
-        value={privacy.analyticsTrainingConsent ? "Autorizado" : "Desactivado"}
-        onPress={() => updatePrivacy(getNextAnalyticsPrivacy(privacy))}
+        value={saving ? "Guardando..." : privacy.analyticsTrainingConsent ? "Autorizado" : "Desactivado"}
+        onPress={saving ? undefined : () => updatePrivacy(getNextAnalyticsPrivacy(privacy))}
       />
       <Text style={styles.privacyText}>{privacyNotices.analyticsTrainingConsent}</Text>
       <SettingRow
-        label="Terminos y disclaimers"
+        label="Términos y condiciones"
         value="Ver"
         onPress={() => router.push("/terminos-condiciones")}
       />

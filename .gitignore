@@ -162,3 +162,6 @@ training/data/raw/
 
 # Raw temporary coverage experiments; retained evidence is in docs/coverage-audit-2026-10-16/.
 /tmp/coverage-*
+
+# Scratch files for functional validation; publishable evidence lives in validation/.
+/tmp/functional-audit/

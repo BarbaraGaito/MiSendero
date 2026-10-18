@@ -1,0 +1,7 @@
+$ executable: C:\Program Files\nodejs\node.exe
+$ args: ["D:\\AppPFI\\MiSendero\\node_modules\\typescript\\bin\\tsc","-p","tsconfig.ai.json"]
+$ cwd: D:\AppPFI\MiSendero\backend
+
+STDOUT
+
+STDERR

@@ -17,6 +17,7 @@
     "train:route-difficulty": "node scripts/train-ai.js --model route_difficulty",
     "train:apn-difficulty": "node scripts/train-ai.js --model apn_route_difficulty",
     "test": "jest",
+    "test:functional": "node testing/functional/run.cjs",
     "test:coverage": "node --test testing/coverage-tools.test.cjs && node testing/run-coverage.cjs",
     "test:coverage:python": "node testing/run-python-coverage.cjs",
     "validate:ai-data": "node scripts/train-ai.js --validate",

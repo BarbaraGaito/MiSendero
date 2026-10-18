@@ -1,0 +1,86 @@
+[
+  {
+    "file": "acceptance-probe.txt",
+    "sha256": "e3f18770dc190687df460f2231ce93a503c8ab6f92e2a099d2ba1e0723bb58c2"
+  },
+  {
+    "file": "backend-build.txt",
+    "sha256": "ae8e6c8ec70448dfb27070977e2266f215d68f9891c8ca66355abfc7c78ba257"
+  },
+  {
+    "file": "backend-coverage.json",
+    "sha256": "c1b9aecbceccff825743b74a7f58b5d73635d2a66cb7a867054f9345787fe166"
+  },
+  {
+    "file": "backend-results.json",
+    "sha256": "4055a8a11071121cc45b655ef019750563e4fbc43372f13d1ba42728bd682b21"
+  },
+  {
+    "file": "client-coverage.json",
+    "sha256": "8a03f1d2a26f0b7ac4d57198027fb49d26ce1bcb5893f07f7b09baddf4ef7b2e"
+  },
+  {
+    "file": "client-results.json",
+    "sha256": "97c0ee12cd62aa734d9c46f26c8c0ea22d341f3f603291acd0ef7a8fb79d370e"
+  },
+  {
+    "file": "commands.json",
+    "sha256": "031fa28c2f5181c25064a725f6c91c85b403799cb938d71bee504843c43fb22e"
+  },
+  {
+    "file": "coverage-environment.json",
+    "sha256": "f081ca43717c8378a481c0584c456a1ed1286865b040a9f2681cba69a7bcad8c"
+  },
+  {
+    "file": "coverage-modules.csv",
+    "sha256": "7f6b016522ea09594c68ebbf11521c501574fae720ebae65660577172620eca9"
+  },
+  {
+    "file": "coverage-summary.json",
+    "sha256": "6427823c1e78c3414881433264c8b6e957ff4d25ed9c33b583fa594d7756e40a"
+  },
+  {
+    "file": "coverage-tools.txt",
+    "sha256": "34803d5c6916fd00efdcfecd6bf3c23412e5ebff5f1d67b0560ec43a589948d3"
+  },
+  {
+    "file": "device-inventory.txt",
+    "sha256": "d94daf595a98cead3cbd1c5d23414f91826db543c4c549a496732c3044805b5a"
+  },
+  {
+    "file": "environment.json",
+    "sha256": "a92b2e27b09666d97f2753fd36d8e50a31f86affb4c06a39132e3d59105e494a"
+  },
+  {
+    "file": "matrix.csv",
+    "sha256": "98456df56a2857d233fcfe2292b0093e1a7446ec5f6492c4079aff0b23ce634c"
+  },
+  {
+    "file": "matrix.json",
+    "sha256": "965ce7a5739cfa12484a989b6d68d6a58f06f2b3adf3e44f879dc07e016bc5aa"
+  },
+  {
+    "file": "matrix.md",
+    "sha256": "73a9db174f65e029b1a56a2390e810e8b7738ac6f55e308fff657577249412b5"
+  },
+  {
+    "file": "probe-results.json",
+    "sha256": "c3de1ce3dd7e7e9ec8ad086e849c5c24d6464dd478c845e6edaebd98bcf1e2f0"
+  },
+  {
+    "file": "regression.txt",
+    "sha256": "96ed79476bcafddec2bf738af22a524d3585eaa78fba93ed2e2c8220c55ee98c"
+  },
+  {
+    "file": "source-manifest.json",
+    "sha256": "d3fbd9f78ec837cc1ae39dd2a2f53d5ea4ffdde42ee5f128cf6bbf9a4a05792f"
+  },
+  {
+    "file": "summary.json",
+    "sha256": "cad57ef79f407ead7a430d326b0bd3fdf8bf52dc4b8c5ef226d70788e981bff7"
+  },
+  {
+    "file": "typecheck.txt",
+    "sha256": "41c5d637ac5791e8577de4c2a562c8da57f21765fcb2cf157959935bb85182db"
+  }
+]

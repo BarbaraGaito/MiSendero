@@ -1,0 +1,175 @@
+\section{Pruebas funcionales y resultados}\label{sec:pruebas-funcionales}
+
+La validación funcional de MiSendero se organiza por escenarios de navegación, orientación y asistencia con conectividad limitada. La evidencia automatizada comprende pruebas unitarias y de integración del cliente y del backend, junto con una sonda de aceptación de reintentos. Se registran por separado el resultado de cada caso, la cobertura de código y los niveles de validación que requieren una build instalada o un dispositivo.
+
+\subsection{Método, indicador y alcance}
+
+Como parte de la estrategia de validación de MiSendero, se estableció la meta de alcanzar al menos un 85\,\% de cobertura automatizada de líneas ejecutables mediante pruebas unitarias y de integración. Esta meta comprende el código propio del cliente y del backend y se formaliza en RNF-11 y en la matriz de medición. Su cumplimiento se evalúa a partir de la cobertura conjunta de ambos componentes, conservando el desglose individual y el inventario de archivos incluidos. La proporción de casos aprobados se informa de manera independiente de la cobertura.
+
+La instrumentación Babel/Istanbul contabilizó el código propio JavaScript y TypeScript del cliente y del backend, incluidos los archivos no importados por las pruebas. El inventario contiene 145 archivos del cliente y 37 del backend. Comprende rutas de entrada, pantallas, componentes, hooks, servicios, persistencia, lógica de inferencia, configuración de distribución, scripts auxiliares, API y código de la página web de gestión de cuentas. Las declaraciones sin instrucciones ejecutables se conservan en el inventario y aportan cero líneas al denominador.
+
+Se separaron el código de pruebas y sus mocks, las dependencias de terceros, los archivos generados y temporales, los documentos, los recursos gráficos, las migraciones SQL y los datos JSON. Estos últimos pueden intervenir en las pruebas, pero no constituyen instrucciones JavaScript o TypeScript instrumentables. El código Python de investigación se midió íntegramente con otra herramienta y se informa de manera independiente. No se retiraron pantallas o servicios por presentar baja cobertura ni se incorporaron directivas para ignorar código relevante.
+
+La cobertura conjunta se calculó mediante la suma de contadores de líneas de dos inventarios disjuntos:
+\[
+C_{\mathrm{líneas}}=100\times
+\frac{\sum_i L_{i,\mathrm{cubiertas}}}{\sum_i L_{i,\mathrm{ejecutables}}}.
+\]
+No se promediaron porcentajes de archivos o componentes. Ambos conjuntos utilizan el mismo proveedor de instrumentación y expresan contadores de código fuente. Las ramas, las sentencias y las funciones se conservaron como indicadores adicionales, con denominadores propios.
+
+\subsection{Herramientas y procedimiento reproducible}
+
+El cliente utiliza Jest 29.7.0 con jest-expo 57.0.5, React Test Renderer y mocks de los límites nativos. Se ejecutaron pantallas y componentes reales, geometrías de Three.js y operaciones SQL mediante el adaptador de pruebas de SQLite, basado en \texttt{node:sqlite}. El backend utiliza Jest 30.4.2 y Supertest sobre Express, con PostgreSQL emulado mediante pg-mem 3.0.14. Estos entornos permiten verificar los contratos y el comportamiento de la lógica implementada mediante dependencias controladas y datos de prueba aislados.
+
+La ejecución se realizó en Windows, con Node.js 24.19.0 y npm 11.17.0. Las dependencias se instalaron de acuerdo con el lockfile mediante el siguiente procedimiento desde la raíz del repositorio:
+
+\begin{verbatim}
+npm.cmd ci --legacy-peer-deps --ignore-scripts
+npm.cmd ci --prefix backend --ignore-scripts
+npm.cmd run typecheck
+npm.cmd run test:coverage -- --output=coverage/final 
+    --randomize --seed=20261017 --showSeed
+\end{verbatim}
+
+La última orden debe escribirse en una sola línea. La opción \texttt{--legacy-peer-deps} reproduce el grafo de dependencias definido en el lockfile sin resolver nuevamente los pares nativos opcionales de Expo. Este procedimiento establece las dependencias del entorno de pruebas automatizadas y permite reproducir la ejecución instrumentada.
+
+El comando de cobertura fija la zona horaria UTC, ejecuta ambos conjuntos y verifica el inventario. El control del comando de cobertura comprueba que las suites convencionales estén aprobadas, el inventario esté completo, las dependencias coincidan con el lockfile y la cobertura conjunta de líneas sea de al menos el 85\,\%. Dos pruebas adicionales del agregador verifican la suma ponderada, la inclusión de archivos no importados y la comparación del umbral con los contadores exactos. La integración continua utiliza el mismo procedimiento y conserva los reportes de ejecución.
+
+Para mantener la independencia entre casos, cada prueba prepara los antecedentes que necesita y utiliza datos aislados de usuarios, actividades, senderos y cola de operaciones. La ejecución con orden aleatorio permite comprobar que los resultados no dependan del orden de los casos. El entorno de pruebas dispone de un presupuesto de intentos de autenticación que evita que la creación de fixtures interfiera con otros casos.
+
+\subsection{Resultados instrumentados}
+
+La medición comprendió 6373 líneas ejecutables del código propio del cliente y del backend. El conjunto de pruebas cubrió 5597 líneas, lo que representa una cobertura conjunta del 87{,}82\,\%. Los resultados por componente y por indicador se presentan en las tablas siguientes.
+
+\begin{table}[H]
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{|p{4.6cm}|p{2cm}|p{2cm}|p{4cm}|}
+\hline
+\textbf{Conjunto} & \textbf{Suites} & \textbf{Casos} & \textbf{Resultado} \\
+\hline
+Cliente y servicios móviles & 47 & 336 & Aprobados; sin omisiones. \\
+\hline
+Backend, API y script web & 17 & 146 & Aprobados; sin omisiones. \\
+\hline
+\textbf{Suites convencionales JS/TS} & \textbf{64} & \textbf{482} & \textbf{Sin fallos.} \\
+\hline
+\end{tabular}
+\caption{Suites convencionales ejecutadas el 17 de octubre de 2026. La sonda MF07 se informa en la discusión funcional.}
+\label{tab:resultados-pruebas}
+\end{table}
+
+\begin{table}[H]
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{|p{2.7cm}|p{3.1cm}|p{2cm}|p{2cm}|p{2cm}|}
+\hline
+\textbf{Componente} & \textbf{Líneas cubiertas / total} & \textbf{Sentencias} & \textbf{Ramas} & \textbf{Funciones} \\
+\hline
+Cliente & 4611/5265 (87{,}57\,\%) & 83{,}86\,\% & 73{,}76\,\% & 77{,}36\,\% \\
+\hline
+Backend & 986/1108 (88{,}98\,\%) & 86{,}89\,\% & 78{,}48\,\% & 84{,}28\,\% \\
+\hline
+\textbf{Conjunto} & \textbf{5597/6373 (87{,}82\,\%)} & 84{,}40\,\% & 74{,}32\,\% & 78{,}30\,\% \\
+\hline
+\end{tabular}
+\caption{Cobertura de código fuente con inventario completo y agregación ponderada.}
+\label{tab:cobertura-instrumentada}
+\end{table}
+
+La cobertura conjunta de líneas alcanzó el 87{,}82\,\%, superando la meta del 85\,\% establecida para el proyecto. Las coberturas de sentencias, ramas y funciones se presentan como indicadores complementarios. La aprobación del 100\,\% de los casos de la Tabla~\ref{tab:resultados-pruebas} se informa de manera independiente de la cobertura de código.
+
+Los reportes se generan localmente en \path{coverage/final/} mediante el procedimiento de ejecución indicado. La salida incluye informes HTML, archivos LCOV, contadores y resultados en JSON, y una tabla CSV por archivo. El resumen contiene el inventario de módulos y los hashes SHA-256 de las fuentes evaluadas. El registro de entorno identifica las dependencias instaladas y sus lockfiles.
+
+La campaña se ejecutó secuencialmente con las semillas 20261017 y 73. Ambos órdenes reprodujeron los resultados individuales, incluido el fallo de MF07, y los cuatro contadores agregados de cobertura de las suites convencionales. El registro de entorno verificó las versiones instaladas frente a los lockfiles. Los manifiestos SHA-256 identifican las fuentes y las evidencias de cada ejecución. Estas comprobaciones aportan evidencia de repetibilidad dentro del entorno definido.
+
+\subsection{Estrategia funcional y trazabilidad de escenarios}
+
+La estrategia funcional comprende 15 escenarios identificados como MF01 a MF15. Cada ficha establece los RF y RNF relacionados, el objetivo, las precondiciones, los datos de ensayo, los pasos, el resultado esperado, el resultado obtenido, la evidencia, el estado y las observaciones. Los resultados se registran por nivel de validación: unitario, integración, extremo a extremo, manual y dispositivo físico. La aprobación de una aserción automatizada se circunscribe al comportamiento y a las dependencias que efectivamente intervienen en ella.
+
+Las pruebas unitarias evalúan transformaciones, validación de muestras y reglas con entradas controladas. Las de integración comprueban servicios con SQLite, pantallas con sus dependencias y rutas HTTP con persistencia emulada. React Test Renderer permite inspeccionar el estado y las acciones de las pantallas en Node; Supertest ejecuta las rutas de Express con pg-mem. Las pruebas de extremo a extremo se definen como recorridos sobre una build instalada, conectada a un backend de ensayo. Las manuales incorporan la observación del operador; las físicas verifican además el comportamiento del sistema operativo, GPS, almacenamiento, batería y fuente de salud concretos. Estas categorías se registran separadamente de la cobertura de código y de la evaluación de usabilidad.
+
+La Tabla~\ref{tab:matriz-funcional} presenta la trazabilidad y los resultados automatizados. En cada fila se distingue la evidencia obtenida de las condiciones que requieren otro nivel de ejecución. Los pasos completos y las aserciones que sustentan cada resultado integran la matriz generada por el procedimiento reproducible.
+
+\begingroup
+\small
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.1}
+\begin{longtable}{|p{1.15cm}|p{3.25cm}|p{9.35cm}|}
+\caption{Matriz de escenarios funcionales y evidencia obtenida el 17 de octubre de 2026.}\label{tab:matriz-funcional} \\
+\hline
+\textbf{ID} & \textbf{Trazabilidad} & \textbf{Resultado y alcance} \\
+\hline
+\endfirsthead
+\multicolumn{3}{r}{\footnotesize Continuación de la tabla} \\
+\hline
+\textbf{ID} & \textbf{Trazabilidad} & \textbf{Resultado y alcance} \\
+\hline
+\endhead
+\hline
+\endfoot
+\hline
+\endlastfoot
+MF01 & RF-03, RF-03.1, RF-04; RNF-01 & Descarga previa: las pruebas comprueban el progreso y la disponibilidad posterior a la persistencia y verificación del paquete. El proveedor y el filesystem se representan con dobles. \\
+\hline
+MF02 & RF-03.1, RF-04, RF-06; RNF-01 & Acceso offline: se recuperan geometría y elevación persistidas sin consultar la API. La representación de tiles en una build instalada corresponde al protocolo físico. \\
+\hline
+MF03 & RF-05 a RF-05.3, RF-18; RNF-06 & Tracking: inicio, pausa, continuación y cierre conservan la identidad; las pausas se excluyen del tiempo activo y el cierre es terminal. Se emplean posiciones y relojes de ensayo. \\
+\hline
+MF04 & RF-06, RF-10, RF-11, RF-11.1; RNF-01 & Conectividad: el coordinador responde a eventos de red y la cola conserva la operación ante un fallo; una respuesta aceptada habilita su confirmación. Los cambios de red son controlados. \\
+\hline
+MF05 & RF-10, RF-14.2, RF-18; RNF-02, RNF-05 & Recuperación: otro proceso Node lee una sesión pausada, un punto GPS, un reporte pendiente y metadatos de mapa desde un archivo SQLite. La cuenta de control no accede a la sesión. No se ejecutó reinicio de teléfono. \\
+\hline
+MF06 & RF-08, RF-10, RF-11.1; RNF-05 & Reporte offline: queda pendiente sin invocar la API, conserva posibilidad de reintento ante error y registra el ID remoto tras la aceptación. La selección geográfica y el error de persistencia tienen controles de pantalla. \\
+\hline
+MF07 & RF-11, RF-11.1; RNF-05.1 & Reintentos: los controles de concurrencia, backoff e identidad de SOS aprueban. La sonda de reportes falla: dos peticiones de la misma observación generan los IDs 1 y 2 y dos filas, frente al único registro esperado. \\
+\hline
+MF08 & RF-09, RF-11.2; RNF-02, RNF-07 & Información desactualizada: la lectura del servidor reemplaza correcciones y retiros en la copia local; se comprueban caducidad y autorización. La carrera de ediciones entre instalaciones no se ejecutó. \\
+\hline
+MF09 & RF-06; RNF-06, RNF-07, RNF-10 & Ubicación: el permiso denegado impide leer o suscribir GPS; el fallo del proveedor no inventa coordenadas. Se rechazan muestras antiguas, imprecisas, invertidas o de velocidad inverosímil. \\
+\hline
+MF10 & RF-03.1, RF-04.1; RNF-05, RNF-07 & Descarga incompleta: un error ENOSPC inyectado conserva el paquete como incompleto; la verificación rechaza su apertura. El control de pantalla ofrece nueva descarga ante archivos dañados. \\
+\hline
+MF11 & RNF-06, RNF-07, RNF-10 & Batería y ciclo de vida: se muestran 15\,\% o lectura no disponible según la respuesta; la pantalla de preparación sigue accesible. Los eventos controlados de segundo plano retiran el watcher. No se midió autonomía ni restricción real del sistema operativo. \\
+\hline
+MF12 & RF-12 a RF-12.2; RNF-03, RNF-10 & SOS offline: permanece pendiente y la pantalla distingue guardado local, registro y entrega. Tanto la cancelación de SMS como el resultado \texttt{sent} del adaptador conservan la entrega sin confirmar. No se envió un aviso real. \\
+\hline
+MF13 & RF-19, RF-20; RNF-02.1, RNF-02.2, RNF-07 & Fisiología: lecturas faltantes, caducas, futuras o inválidas producen ausencia o análisis limitado; no generan mediciones ficticias. Los puentes de salud usan dobles, sin wearable físico. \\
+\hline
+MF14 & RF-17, RF-20, RF-20.2; RNF-01, RNF-07 & IA: un error de recomendación conserva el acceso al mapa verificado y la persistencia de un punto GPS; la entrada no evaluable o el modelo no habilitado producen abstención. La continuidad se comprueba entre servicios, sin sesión nativa completa. \\
+\hline
+MF15 & RF-14.1, RF-14.2; RNF-02, RNF-07 & Baja de cuenta implementada: se comprueban contraseña, revocación, limpieza y suspensión de envíos ante respuesta incierta. La trazabilidad corresponde a autenticación y aislamiento; el catálogo no asigna un RF específico a la baja. \\
+\hline
+\end{longtable}
+\endgroup
+
+La campaña funcional se reproduce desde la raíz del repositorio con:
+\begin{verbatim}
+npm.cmd run test:functional -- 
+    --output=validation/functional/mi-ejecucion --seed=20261017
+\end{verbatim}
+La orden debe escribirse en una sola línea y utilizar un directorio de salida vacío. Registra el entorno, los comandos y sus códigos de salida; ejecuta la comprobación de tipos, la compilación del módulo de IA del backend, los controles del agregador, las suites instrumentadas y la sonda MF07. Genera matrices Markdown, CSV y JSON, resultados individuales de Jest, salidas de consola, contadores por archivo y manifiestos SHA-256 de fuentes y evidencias. La existencia de un fallo conserva el código de salida 1; las aprobaciones de otros casos no lo reemplazan.
+
+\subsection{Discusión de los resultados funcionales}
+
+Las suites convencionales comprenden 482 casos aprobados: 336 del cliente y 146 del backend. La sonda de aceptación agrega un caso fallido, de modo que la campaña registra 483 casos ejecutados, 482 aprobados y uno fallido. Los 15 escenarios poseen aserciones vinculadas; 14 cuentan con evidencia aprobada en el alcance automatizado y MF07 conserva el fallo observado. Este recuento expresa el resultado de los casos ejecutados y no una proporción de requisitos acreditados en dispositivos.
+
+La evidencia demuestra la conservación de estados locales, la distinción entre pendiente y confirmado, el filtrado de ubicaciones no utilizables y la recuperación de escrituras SQLite confirmadas desde otro proceso. También comprueba que un error del servicio de recomendación deja utilizables los servicios de mapa local y registro GPS. La consulta de datos colaborativos usa la respuesta vigente del servidor para reemplazar la copia local, y las reglas de salud distinguen datos faltantes de mediciones evaluables.
+
+El resultado fallido de MF07 delimita el alcance de la idempotencia por entidad. La API de SOS conserva el identificador del evento ante el reintento; la creación de reportes inserta otra fila al recibir nuevamente el mismo contenido y fecha de observación. La pérdida del acuse se representa descartando la primera respuesta después de su aceptación por el servidor. Se mantiene como criterio de aceptación un único efecto remoto por observación y se registra el resultado como fallido. Esta decisión permite distinguir la deduplicación de una operación local del control del efecto remoto tras una respuesta incierta.
+
+Las decisiones de validación priorizan estados observables y datos de ensayo aislados. Una aceptación HTTP se interpreta como registro en el servidor, mientras que la entrega al contacto conserva su propia confirmación. El aviso de batería utiliza la lectura disponible y el retiro de la suscripción GPS en segundo plano sigue RNF-06. Los errores de espacio, red e IA se introducen en límites explícitos, y sus efectos se comprueban en los componentes y registros que realmente se ejecutan.
+
+Las pruebas de extremo a extremo, las sesiones manuales y los ensayos físicos se registran como no ejecutados. No se dispuso de un emulador o teléfono accesible mediante las herramientas consultadas ni se inició una build nativa. Por lo tanto, esta campaña no aporta observaciones de reinicio del teléfono, comportamiento del GPS desactivado desde ajustes, descarga sobre almacenamiento nativo agotado, restricciones reales de batería, consumo energético, recepción de SMS, mediciones de wearables o recorrido de campo. Tampoco se ejecutó la carrera de ediciones de un reporte entre instalaciones. Estas condiciones poseen precondiciones, pasos y resultados esperados en la matriz, con el resultado obtenido y la evidencia identificados como no ejecutados.
+
+
+\subsection{Pruebas de investigación y alcance de la evaluación}
+
+Las 14 pruebas Python de investigación se ejecutaron el 16 de octubre de 2026 con unittest y coverage.py 7.6.1, sobre todos los módulos de \path{training/python/}, incluidos los no importados y excluyendo solamente sus pruebas. Alcanzaron 485/696 líneas (69{,}68\,\%) y 196/301 ramas (65{,}12\,\%); el indicador combinado de coverage.py fue 68{,}30\,\%. Estos resultados corresponden al código Python de investigación y se informan por separado del indicador conjunto del producto JavaScript/TypeScript, de acuerdo con su finalidad y su herramienta de instrumentación.
+
+El alcance de esta evaluación corresponde a las pruebas automatizadas del cliente y del backend en los entornos descriptos. Los límites nativos, la red y los proveedores externos se representaron mediante dobles de prueba, y la persistencia se comprobó con los adaptadores de bases de datos indicados. Los indicadores de cobertura describen la ejecución de código en este entorno. Las pruebas de extremo a extremo, las pruebas de dispositivos y la evaluación de usabilidad constituyen categorías de validación diferenciadas.
+

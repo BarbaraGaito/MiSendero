@@ -1,0 +1,1086 @@
+[
+  {
+    "file": ".gitignore",
+    "sha256": "2ad415e745802e221cc0cc256623803f02c69d0e814e422dcc971f25b933973c"
+  },
+  {
+    "file": "ai/__tests__/inferenceEngine.test.ts",
+    "sha256": "b5aa004b1a90e3ff36b1d06a002fa26dd63e346478986736d7c6905e7851541e"
+  },
+  {
+    "file": "ai/inferenceEngine.ts",
+    "sha256": "af12216da79f1cffde5b7bbc16fbe1b8c360307bca45f0bfdac93b5c4a43aaa4"
+  },
+  {
+    "file": "ai/modelMetrics.ts",
+    "sha256": "7d47897f3b04a1afbf3060baf7870709f931729e42e5ce0ffce08f45868cbd1f"
+  },
+  {
+    "file": "ai/modelTypes.ts",
+    "sha256": "ba242145f1039a112723f548551d8abf2fa17eac018aefeedbd614ef8348d5c8"
+  },
+  {
+    "file": "app.config.js",
+    "sha256": "cc1e88883d01693d94f77a0f78ba4c4a9a83ee76a3a36e32e14989dd5c771da4"
+  },
+  {
+    "file": "app/_layout.tsx",
+    "sha256": "fd740dd2c613ad79483c834d24746026f19a33c1f0d46135b37e0647a89ac995"
+  },
+  {
+    "file": "app/actualizacion-fallida.tsx",
+    "sha256": "1ddeafdc8b6d0b4261c5937d6557b932e6e40ece3b69f2f6089d283431fd496d"
+  },
+  {
+    "file": "app/alerta-ruta.tsx",
+    "sha256": "e4e8fe9b5c84f74374f4f79be924dde46fc706e5ee52cf3e940817dfe0efc27e"
+  },
+  {
+    "file": "app/atribuciones.tsx",
+    "sha256": "961115dfd97cf678e88691a7642021956178651a7552750cb88deacbe441d862"
+  },
+  {
+    "file": "app/buscar-mapas-offline.tsx",
+    "sha256": "74f499ce4389ded6b60d6c3b0108376e67f8e567e40f3b60e201c24353db9983"
+  },
+  {
+    "file": "app/cargando-ruta.tsx",
+    "sha256": "23437a36de05cfe02d63df0162bded5cd5222de7fcae1b9a544ebab4b07643ab"
+  },
+  {
+    "file": "app/conexion-perdida.tsx",
+    "sha256": "e29a80ceb0cd4a5ac7dd14f25baa1b6764b9bc5ed3cb02b8848983c4c51e0fe4"
+  },
+  {
+    "file": "app/confirmar-sos.tsx",
+    "sha256": "d36acdb023dd47b44761a10da4df86593b28ae76542e9f348146248f3293fd7f"
+  },
+  {
+    "file": "app/contacto-seguridad.tsx",
+    "sha256": "b8b0f7e50b10d523bb291a4480ef9856aa835548b7f5825defcc5e9509677cd1"
+  },
+  {
+    "file": "app/descanso.tsx",
+    "sha256": "5ad264b7d935dfb525ebf543e412722bf5e6291d88c24b61de684a6938d5d81d"
+  },
+  {
+    "file": "app/descargar-mapa.tsx",
+    "sha256": "42dd60f95cbcccb31d8c38b1ba21865806f7a1b23491107a868418e7cd09bd66"
+  },
+  {
+    "file": "app/descubri-tu-sendero.tsx",
+    "sha256": "3046e99da704f5f1d5372b3aa44b5cb6dc12e49253e0582ff6accf74aafc487e"
+  },
+  {
+    "file": "app/explorar-rutas.tsx",
+    "sha256": "32052aa91f5aba8f210829beffa237db69761860a7ed9f1a3930d6615e136f4f"
+  },
+  {
+    "file": "app/explorar-skeletons.tsx",
+    "sha256": "3efbe92ef763b5a25f7ba086dc6fdc12d89890e00bf43cca0c8d87de8eb420d6"
+  },
+  {
+    "file": "app/explore.tsx",
+    "sha256": "f47adc949085145a6ae81edc93b5fcbe5da94766ddc6e5650c6d4cf16fa44d86"
+  },
+  {
+    "file": "app/filtros-mapas.tsx",
+    "sha256": "005bb48ae9bb3ea8aa5008107afd85b83fbc55c543328fe1d0c2eab5fac5064f"
+  },
+  {
+    "file": "app/history.tsx",
+    "sha256": "97baceecd5c54f0f20e08a1d4dea395fd8e2b77e92f70373e4ba26fbb6b4f724"
+  },
+  {
+    "file": "app/index.tsx",
+    "sha256": "8bc12f780bd33f74fda98bb31e09763177e75e9808cfc064fc54ee08278e6590"
+  },
+  {
+    "file": "app/inicio.tsx",
+    "sha256": "de8be6c4ad539fe1533984d7e4c8dfba264438e6e9f52927de33b651709096a0"
+  },
+  {
+    "file": "app/mapas-offline.tsx",
+    "sha256": "5eaf527b859375b2d72371fc510c73936044e19d07c33652422a1ceca0792a0e"
+  },
+  {
+    "file": "app/mis-actividades.tsx",
+    "sha256": "dd255d081784b5ae34f40040568acf671563811229e83e7ef9566b5054938abc"
+  },
+  {
+    "file": "app/offline-buscar.tsx",
+    "sha256": "b8d9f2b217ce265db0a2b19585fcae1ab2648ceb4aefb8b31cd8ecf57e703dcf"
+  },
+  {
+    "file": "app/offline-descarga-completa.tsx",
+    "sha256": "3ae80fdb0e7f8f5a430525e871680d9d14497c9a36adf6fe54e87f952954a26d"
+  },
+  {
+    "file": "app/offline-descarga.tsx",
+    "sha256": "0265197f453220a2b546fc33e17902cf3c884dcca7994021ec329d3a51298d88"
+  },
+  {
+    "file": "app/offline-detalle-zona.tsx",
+    "sha256": "a591578da10557e4b5555b8ac04210fe24a2ab032c8f1fa5df5f81dbe41e077d"
+  },
+  {
+    "file": "app/offline-filtros.tsx",
+    "sha256": "26e52eaf4996f58a1964ad7f2bddc1d9711c9e08477322d6fb428ea261a39ce1"
+  },
+  {
+    "file": "app/offline-mapas-descargados.tsx",
+    "sha256": "1752b1b79c14d1f740962aa12570591296df96763bccd8fa518bda86962187d7"
+  },
+  {
+    "file": "app/onboarding-experiencia.tsx",
+    "sha256": "ef74c8f57ece4642eee8e5d3882af984c4803b55a7104e586636813a83cfda17"
+  },
+  {
+    "file": "app/parque-nacional.tsx",
+    "sha256": "a2f52f5ac88d70241e387df3512b8a6c2ff13498108c6ad581c4be4bd995edd5"
+  },
+  {
+    "file": "app/parques-nacionales.tsx",
+    "sha256": "172362aa704da6b47af8eefc6ab7b6c99a2a58ae6e7f4b7da9cd8618061d73a8"
+  },
+  {
+    "file": "app/perfil.tsx",
+    "sha256": "7225ed88120528d154d8147731aa54a41882175a472b1e873584525e601828f5"
+  },
+  {
+    "file": "app/plan-salida.tsx",
+    "sha256": "038b4d05641f610a2e7eb6a7834f0a1aaabac9d669fff5e2a184c98c9b3e0e0d"
+  },
+  {
+    "file": "app/recorrido-finalizado.tsx",
+    "sha256": "0f95120af3a5ba9d469eb8e382a7234f7f04592abc1a0946defb172e1be281c7"
+  },
+  {
+    "file": "app/reloj-salud.tsx",
+    "sha256": "d8a30d1fde6973f8e650b727b0c6384bebc3f633c0f9d4a3a2e2ecb223cda529"
+  },
+  {
+    "file": "app/reportar-terreno.tsx",
+    "sha256": "55ec8183226441c093088899db05fe95dacfe9526fa15e42c709ffc6e6cd285c"
+  },
+  {
+    "file": "app/reporte-guardado.tsx",
+    "sha256": "5ae1c70ae9a76119c38f1010fffbbad87f65e1adc4f36f6ed4f75008ef5e7862"
+  },
+  {
+    "file": "app/route-map.tsx",
+    "sha256": "031e44bb702f6a3caf1b6e2e2694392ada60c2233fb11b82e2607b445ec6cb36"
+  },
+  {
+    "file": "app/sendero-opiniones.tsx",
+    "sha256": "a15e84012d8fef1749b41c15f33f4928550834287a37b43f9e643dff702176a3"
+  },
+  {
+    "file": "app/terminos-condiciones.tsx",
+    "sha256": "20e80b232adf36bf99b37ca953449cc0253465510866038bcee6c6452dcd21e6"
+  },
+  {
+    "file": "app/trail-detail.tsx",
+    "sha256": "d0df50ddd102ce595614a75a30c55401dc40f9521c6b1475190e497362b7cc9d"
+  },
+  {
+    "file": "app/trail-elevation.tsx",
+    "sha256": "f49a0eccb63695253fc6d9b2c7892f68b5a1b63a8fd92c69892edf966891bd86"
+  },
+  {
+    "file": "app/trail-start.tsx",
+    "sha256": "0c8a54fad9c6e69967b2299def38db1408181793aba512178346dc5b8e1b8102"
+  },
+  {
+    "file": "backend/jest.config.js",
+    "sha256": "04beababd637f5957de947821d8c58f28ce080741790367b955b5582f418ecb9"
+  },
+  {
+    "file": "backend/package-lock.json",
+    "sha256": "f070c51ddcf282aa02a11aee95476d1f1ad2c43bde03aa6a055f2c113106f5bc"
+  },
+  {
+    "file": "backend/package.json",
+    "sha256": "8e43626f47a7fa844865ac118326c572d00cdeac870c0ca76a496d19a750f3ac"
+  },
+  {
+    "file": "backend/scripts/catalogGeometry.js",
+    "sha256": "2f643970f4caee170e0b0c01340af450a8504c13eefc303457adfc59e45484b2"
+  },
+  {
+    "file": "backend/scripts/catalogPhotos.js",
+    "sha256": "23c3500d4a22803976af12a140f807c1f0e825a42c3bd10875f9ae25daeebe14"
+  },
+  {
+    "file": "backend/src/ai/assistant.ts",
+    "sha256": "c8152d32119838eae2f5a79f08a5bcb483c69b97c1844890fb93d44439a615e1"
+  },
+  {
+    "file": "backend/src/ai/catalog.ts",
+    "sha256": "68d3f58d98ec846621d015855fe18314d6169becfadac156a39ea6db1475a5c4"
+  },
+  {
+    "file": "backend/src/ai/contracts.ts",
+    "sha256": "49a3cfd8faa59c1e676218b130ad1c61f673e22ca33ea3736daf5d16c085972f"
+  },
+  {
+    "file": "backend/src/ai/model.ts",
+    "sha256": "258167dc90c407a3342121c46bf36b595f4341c72bd2bfd559c304c36d7167e6"
+  },
+  {
+    "file": "backend/src/ai/schemas.ts",
+    "sha256": "c45d91a9f50edc0a0b75def30e0d1685466144ec588d90f7fe78f22f8bc54990"
+  },
+  {
+    "file": "backend/src/backfillElevation.js",
+    "sha256": "1b2a863721ff2a8f8789f5598ea34ee1919f23b3fb565a0dfbccb06c2eac668f"
+  },
+  {
+    "file": "backend/src/cleanupStaleReports.js",
+    "sha256": "5e21b40e73ad838ab55fbcd4fdbb48643f8068e55dd6ba5854ae75c3c7ff992d"
+  },
+  {
+    "file": "backend/src/data/additionalTrailDefinitions.js",
+    "sha256": "680058799a487764fe3bac2050703a9b5b183e8c95e62cd9e32e24e5fa65fd59"
+  },
+  {
+    "file": "backend/src/data/additionalTrails.js",
+    "sha256": "1fec83cdd8ccddf5682288f4f272cc5e8ccd6e5e3e48880e44d9ecf2655423cc"
+  },
+  {
+    "file": "backend/src/data/nationalParks.js",
+    "sha256": "0db49ae9558810bc49c4f61b13a05e7ac8b47d02c4824f4ede5e53a13b05ca79"
+  },
+  {
+    "file": "backend/src/data/realTrailRoutes.js",
+    "sha256": "0c4bb7cb9f914d74b8e42477ed155c6c2b03216b21c34019fcfd1f4388bb58dc"
+  },
+  {
+    "file": "backend/src/db.js",
+    "sha256": "aad22096a719d3fe1b3ef2d092bd67c2bb285a646f52f3d1ff65736daaea697b"
+  },
+  {
+    "file": "backend/src/logger.js",
+    "sha256": "625238e5b7ef41bce8fc70a1a38ae4135cdc686ef1426e9c2a3769f5ee2b57ad"
+  },
+  {
+    "file": "backend/src/middleware/requireAuth.js",
+    "sha256": "91e111d2232b7a9e6e9bf12fdf5e2079d9deb1755b1c7193e79dd999abfb04d1"
+  },
+  {
+    "file": "backend/src/middleware/validate.js",
+    "sha256": "05ed5d71e3b5067ea9ecee5d32657085772e0ae3cd6623d8bdf63aac07ac2094"
+  },
+  {
+    "file": "backend/src/migrate.js",
+    "sha256": "895266ff1c511f20885312930cff8de4f8a98499ed6323cd7f8d58629b6179b3"
+  },
+  {
+    "file": "backend/src/public/account.js",
+    "sha256": "a2e2232f2d29ce1c36304f4e96139249e761639ef4b77f7627d56f8a2aa4a435"
+  },
+  {
+    "file": "backend/src/reportContract.js",
+    "sha256": "7faad4e946afee4b25b8130e55781482c7f122ee5b44e1935a236d2472264d61"
+  },
+  {
+    "file": "backend/src/routes/account.routes.js",
+    "sha256": "434a28348329ed0a8249cb8e5a889f1d7c902fbda3284b06a752de13b6a6825a"
+  },
+  {
+    "file": "backend/src/routes/activities.routes.js",
+    "sha256": "cee0f3d371dbac656fa05cc70396aeb5909bb21d4140d7b92ee047204066c377"
+  },
+  {
+    "file": "backend/src/routes/ai.routes.js",
+    "sha256": "92f8d46f12057ab458970656dc1b0f0148747397a92c950d6db11aef5f409bb2"
+  },
+  {
+    "file": "backend/src/routes/auth.routes.js",
+    "sha256": "85a4e851a0801c867d769aa36eafc0d876d1ce2ebe2526cf4f6d54331160f735"
+  },
+  {
+    "file": "backend/src/routes/emergencyAlerts.routes.js",
+    "sha256": "20c052d2b1ad9d6ee0cf21208e587ad9893186448b52b7e43d7d79239d3e14bd"
+  },
+  {
+    "file": "backend/src/routes/nationalParks.routes.js",
+    "sha256": "1559e72b5ab54e2bbd8606df11016b21f296f348e5faf691b7285f6107de754d"
+  },
+  {
+    "file": "backend/src/routes/reportModeration.routes.js",
+    "sha256": "a95f23da24762d114c9985ca80e5e4a71637f234d4ade1f369332030d401d65f"
+  },
+  {
+    "file": "backend/src/routes/trails.routes.js",
+    "sha256": "310907efddd396a022344dc71dbde0c7b81d384a6c6f0773bd2a4e541e388300"
+  },
+  {
+    "file": "backend/src/routes/tripPlans.routes.js",
+    "sha256": "7fc37d6f336df6238dc12071128263c1fa34789955e5f391206e4c5b36a2b877"
+  },
+  {
+    "file": "backend/src/schemas/activities.schemas.js",
+    "sha256": "ed9eb7ba0b889126a9702b0d37604689dd140bf961937a261d39c6c465740a7c"
+  },
+  {
+    "file": "backend/src/schemas/auth.schemas.js",
+    "sha256": "752656938eec511b78b5b76b0fabb1d66ef51be5c897bc843636e4f3519de393"
+  },
+  {
+    "file": "backend/src/schemas/emergencyAlerts.schemas.js",
+    "sha256": "c3f0709eca2ba61c36f8496fd833ffbddd9b0dcfb54a68108b4af822e6061290"
+  },
+  {
+    "file": "backend/src/schemas/trails.schemas.js",
+    "sha256": "16507276103e9a0cf0fef281e049f20eaeb605585e297ef5d32605afccb0a114"
+  },
+  {
+    "file": "backend/src/seed.js",
+    "sha256": "270f5807a8c513b43a2646eb4d1eec0f48eb6b9b9441f1c54d60d0bb364a50b4"
+  },
+  {
+    "file": "backend/src/server.js",
+    "sha256": "7db17e817db9f9ecd4d79e0a2ed2fe6296249d2b286ea9a30e25d951a3493f0e"
+  },
+  {
+    "file": "backend/src/trailElevation.js",
+    "sha256": "93941c06b3c34bf5f0d6afe2fe61d0d5a51c580c5ee6a258e73e8e9c00e0859b"
+  },
+  {
+    "file": "backend/src/tripNotifications.js",
+    "sha256": "46bad431a91707b0c0fe1840aaf57d73a58df0685131d868a98faa169613015e"
+  },
+  {
+    "file": "backend/tests/accountWeb.test.js",
+    "sha256": "6db3db195b5e1d7add83f83954cca0fe6b1cb5a0a71054b7c12c0c73df0c3e25"
+  },
+  {
+    "file": "backend/tests/activities.test.js",
+    "sha256": "de36c0bb7f24344857ba7f045bacc644f12d73afc0a3d555c78cab4edbba2cef"
+  },
+  {
+    "file": "backend/tests/additionalTrails.test.js",
+    "sha256": "9db08defa6cba010451aa370be8dbe04daf272ad4ebbab722386cb799f51b8ee"
+  },
+  {
+    "file": "backend/tests/aiRecommendations.test.js",
+    "sha256": "0b4fb87645dc52554947c8b86f7b6f6e937b236c5c9051c30bb2c824fd6e7ab2"
+  },
+  {
+    "file": "backend/tests/auth.test.js",
+    "sha256": "06bbfe3302329964ad7a073490dc21ae035f424c1a3ce8d7cd1a4da5bec03c66"
+  },
+  {
+    "file": "backend/tests/backfillElevation.test.js",
+    "sha256": "04c2d293cd3c718c5200c770f626d478d8fbfd66ce042b130839ecbeefcd6458"
+  },
+  {
+    "file": "backend/tests/catalogPhotos.test.js",
+    "sha256": "f74a06f57baa23d4442cf61cb0616bf1fdc542bb007d0e21105ad112ed6aafff"
+  },
+  {
+    "file": "backend/tests/cleanupStaleReports.test.js",
+    "sha256": "10d28802a650f127e7bfa8f583b0a2a7cf41fb192a8475eb657febc617600a08"
+  },
+  {
+    "file": "backend/tests/emergencyAlerts.test.js",
+    "sha256": "8e0ef58d15f6f772b5631a57d99dacdcae06647b2ec4a4040764ee50f0d159d7"
+  },
+  {
+    "file": "backend/tests/functional/reportRetry.probe.js",
+    "sha256": "31e5175e21b0bb82c2859673490825334497a166aaeb1f81ab8e9dcaeafb50c0"
+  },
+  {
+    "file": "backend/tests/logPrivacy.test.js",
+    "sha256": "d10bb63f9692d34b1c8c4be0859859c5321759c3305e6f00042cdd3422262ad3"
+  },
+  {
+    "file": "backend/tests/nationalParks.test.js",
+    "sha256": "d781df77f91a6062e7f0960521d824c1a34ded42d7d7b9f088451702c76f3957"
+  },
+  {
+    "file": "backend/tests/privacyControls.test.js",
+    "sha256": "d8435e0dd7e232e67068a6bfa3ee9492c0e24ada914d6a2be12ab6cca70475da"
+  },
+  {
+    "file": "backend/tests/realTrailRoutes.test.js",
+    "sha256": "5935421690730b4bf9e1d1e0f5c822ee2435a5f78e1269cde09d160e81f726ce"
+  },
+  {
+    "file": "backend/tests/setupEnv.js",
+    "sha256": "a5338c4cf9a60171ba0f80a752587eb2c5cd42e3fe7e2a40d62500b876f7d25c"
+  },
+  {
+    "file": "backend/tests/trailElevation.test.js",
+    "sha256": "c8ff261a11f2a35f703e94f5b52a19df8299f119c2f80d69ffa742ccf98d0635"
+  },
+  {
+    "file": "backend/tests/trails.test.js",
+    "sha256": "ef16ab9fb603cea06b6dfdbde51ad0fe9a3dbd6f377502e340c6e9f0d36d93b0"
+  },
+  {
+    "file": "backend/tests/tripPlans.test.js",
+    "sha256": "b688c48efa5ed903297d4cefa158bb207d44b12ef8fff43402e36b1e2edf92fa"
+  },
+  {
+    "file": "backend/tests/typescriptTransformer.cjs",
+    "sha256": "306bfeaf41edd9bd091e3cb0d40cec161c822577718f7a46ac05e5a394fd7fdb"
+  },
+  {
+    "file": "backend/tests/weatherAndHealth.test.js",
+    "sha256": "0d5fc6ff7249e6bfae0bad7b1045423237f85885412deccd6be5606904f4716b"
+  },
+  {
+    "file": "database/__tests__/sessionsRepository.test.ts",
+    "sha256": "78188d0d41a890e2d16a000a4c46f5945e1c2b989727031e00666a951a63eab7"
+  },
+  {
+    "file": "database/connection.ts",
+    "sha256": "d2f7f8b9e7366c1a6fb8f9142e9a0cd116b5fc50cad43a5b90ebc6643a1525b6"
+  },
+  {
+    "file": "database/database.ts",
+    "sha256": "8a4368d27ce73d16c0816ff4b3a41ca7026f023047e1b111f89505c7cb362de2"
+  },
+  {
+    "file": "database/sessionsRepository.ts",
+    "sha256": "6e699bc74c800454ba64efcb8eec700998ea5a943aa838e00c1bf617f8e530b1"
+  },
+  {
+    "file": "database/wearableSchema.ts",
+    "sha256": "cb45736f69a44a48280cdeb3e1f48341a580ce7fc7c7dc9c8d5bd843931dbabc"
+  },
+  {
+    "file": "jest.config.js",
+    "sha256": "195f760e6348bc1e897b3d075a2c3c648058d082eeccc2ac3a8b75eec086e8ea"
+  },
+  {
+    "file": "metro.config.js",
+    "sha256": "6ff15e79deb2920df93ab59fb320fa58fcab67bb95387517f51f362b2dd7e5ec"
+  },
+  {
+    "file": "mobile/components/ElevationProfile.tsx",
+    "sha256": "2662533ba7744bfed1eecbcab95cd3bc4900649290ec5ec3763dcf1be45c3a3b"
+  },
+  {
+    "file": "mobile/components/MiSenderoLogo.tsx",
+    "sha256": "fd450ac1d97819d13c102a12aa32d9f3d6ffda844b2ffea1c454e5d2e85d2201"
+  },
+  {
+    "file": "mobile/components/MiSenderoUI.tsx",
+    "sha256": "6e50d9b86865f5fac9e19267a9d37217463b50c926977253d2ff55a028e9e6ee"
+  },
+  {
+    "file": "mobile/components/NationalParkUI.tsx",
+    "sha256": "7e3d01cefc23b2bfbfc202d7a7d8556d884f5af3eef28ca39e0a5b24c3b360db"
+  },
+  {
+    "file": "mobile/components/ReportActions.tsx",
+    "sha256": "cd13d5bb7e7eef83576e5e29865982ee3f5955f4faf6fea527f0a9ee2188cb22"
+  },
+  {
+    "file": "mobile/components/ResumeRouteCard.tsx",
+    "sha256": "548d0a47df0193b5474cfcc188fe19033724dbdd0d920fef857308357b40f17c"
+  },
+  {
+    "file": "mobile/components/Terrain3DScene.tsx",
+    "sha256": "a54558a161d69b4344676304e1758f08a5d3612f1738cc040e7518ee64715c74"
+  },
+  {
+    "file": "mobile/components/TrailMap.tsx",
+    "sha256": "659a7d9f769df7c2de5837fa77405cd1b787fd302dcc4c789188f4d7d55cf544"
+  },
+  {
+    "file": "mobile/components/TrailRecommendationCard.tsx",
+    "sha256": "cb8f6f3e6f21e243a00cecd706e6d4025818b986694c4f8715e2b38c47e498bb"
+  },
+  {
+    "file": "mobile/components/__tests__/Terrain3DScene.test.tsx",
+    "sha256": "6118782fe03ee325cf45c01963e1e886fbb3be803a1296f4ca87a9bae570f75a"
+  },
+  {
+    "file": "mobile/components/__tests__/TrailMap.test.tsx",
+    "sha256": "95791afeb58fc7cfeafa27ea096230f13fc2c72f7068a82d3c302d52339459de"
+  },
+  {
+    "file": "mobile/components/__tests__/terrainSceneModel.test.ts",
+    "sha256": "6e0e60912bff94142b12fd835c2ef96285f044ae76a4623c3a5a58679e97b73e"
+  },
+  {
+    "file": "mobile/components/terrainSceneModel.ts",
+    "sha256": "a81581980dc11f97b93c62b1f2a5e139eae4d604133c1c122cbaa6c33ba4bece"
+  },
+  {
+    "file": "mobile/hooks/__tests__/useDeviceLocation.test.tsx",
+    "sha256": "bb38053256d41a549277ba6f303c075a94917550dca273d47e140082f16ce20a"
+  },
+  {
+    "file": "mobile/hooks/__tests__/useTerrainElevation.test.ts",
+    "sha256": "ea9af9a82a3893cd2e6d3d20e7f4bfa7f0302749f6ba648ad1090ed094b2697d"
+  },
+  {
+    "file": "mobile/hooks/useDeviceLocation.ts",
+    "sha256": "7986fddd742c81b589be712020a421ea19d7113c2211f48658857d568c80b04f"
+  },
+  {
+    "file": "mobile/hooks/useScreenFocused.ts",
+    "sha256": "d874e1616365506b35ecd6991470ed7147f0d0f138c9a409a193bfdcc69ed7f9"
+  },
+  {
+    "file": "mobile/hooks/useTerrainElevation.ts",
+    "sha256": "e6073d6bd3568807e3ed06e612676d60fcb5cba1650ac4a5ea96377c2edf9b47"
+  },
+  {
+    "file": "mobile/screens/ActivitiesScreen.tsx",
+    "sha256": "b29b68c4fb2ba8a3fc9beb2d3f03364989f44fcb766bde022ccdeb6555a504cb"
+  },
+  {
+    "file": "mobile/screens/AlertRouteScreen.tsx",
+    "sha256": "6faac64a88354d32b24b1f8ac46390aab5283fad650a2e1532e273fe49fab762"
+  },
+  {
+    "file": "mobile/screens/AttributionsScreen.tsx",
+    "sha256": "152f5d0512f50251c9575cad4f0dc2259805f6cd52640074657a577dc531f94e"
+  },
+  {
+    "file": "mobile/screens/ConfirmSosScreen.tsx",
+    "sha256": "7f44f3772b7802979bad1d2475c457ae46f6f7ce5ea8c071eccc8ea01e3f31f4"
+  },
+  {
+    "file": "mobile/screens/DiscoverTrailScreen.tsx",
+    "sha256": "ec1501c727d68e2041439aeb5d6558e4b82eb1e39ccf35fffb26ad787202aa11"
+  },
+  {
+    "file": "mobile/screens/ExperienceOnboardingScreen.tsx",
+    "sha256": "2cf35708f357b720be8142c4d53bb958c3990f105d7d1f91a33c656ae43b2b32"
+  },
+  {
+    "file": "mobile/screens/Explore.tsx",
+    "sha256": "42e0518ec9c640708275576c8fba3e422ecc6783a18dfbb7975a579f5fd1a69d"
+  },
+  {
+    "file": "mobile/screens/ExploreRoutesScreen.tsx",
+    "sha256": "b30f69a3a38fb6f61f8d8a098f0767bea709546b2d6088079b16de5af85cc50c"
+  },
+  {
+    "file": "mobile/screens/HistoryScreen.tsx",
+    "sha256": "08730f7490f461f43743188194e018e9c286c9eb5879490574a43419fcd674e0"
+  },
+  {
+    "file": "mobile/screens/HomeScreen.tsx",
+    "sha256": "bcc30192db19940d86340462a5b535f9965b627b8b9e4cdb8b0fdb0939025a69"
+  },
+  {
+    "file": "mobile/screens/LoginScreen.tsx",
+    "sha256": "0e6ca137b21100e70a3347e7dcb734998a5dc23f8031235912606adda30f5248"
+  },
+  {
+    "file": "mobile/screens/MapFiltersScreen.tsx",
+    "sha256": "d25a0dea787dfd242375da085221a9d2ff5401c1c4e6c52d2f0a4202eb9cb8be"
+  },
+  {
+    "file": "mobile/screens/NationalParkDetailScreen.tsx",
+    "sha256": "c66acb0d9bc04b5911a76bb67dd4e4d57dd29b40b3f351de62d62cc99df4e10f"
+  },
+  {
+    "file": "mobile/screens/NationalParksScreen.tsx",
+    "sha256": "363c67ee86899e03a709f991b95cd3c161f006ad0f875365fd78611678abc999"
+  },
+  {
+    "file": "mobile/screens/OfflineMapsScreen.tsx",
+    "sha256": "4e9dcb49555d96b731c09f0284325e8df6368b9da9785d4d25421ed47ebb0404"
+  },
+  {
+    "file": "mobile/screens/OfflineMapsSearchScreen.tsx",
+    "sha256": "beea5935fc2e112c531e7b82340792d4dfa327c92ae214b33c9817423fb1330a"
+  },
+  {
+    "file": "mobile/screens/ProfileScreen.tsx",
+    "sha256": "454e40520059e87d69f28a3e5418633b626ecc40e12487f45296aef546246b79"
+  },
+  {
+    "file": "mobile/screens/ReportSavedScreen.tsx",
+    "sha256": "5d37a3adf003bf1f85d0e69108725f97c5eaaaa45bcc73e81064aebab7a3ef58"
+  },
+  {
+    "file": "mobile/screens/ReportTerrainScreen.tsx",
+    "sha256": "5e21eee96f5a3fb45b2d038f6f19e61710eac52e8eb976d607ce6667e34ac679"
+  },
+  {
+    "file": "mobile/screens/RestBreakScreen.tsx",
+    "sha256": "b1d7534aff0d2aa43f85cfc1ebf8824f426ef60cf9ede7e2f4deb011b7f8186d"
+  },
+  {
+    "file": "mobile/screens/RouteCompletedScreen.tsx",
+    "sha256": "09056e66e5e21d2bfafc7c9977ac5c645d4ce0a4b6a847cf8bce87310cac2466"
+  },
+  {
+    "file": "mobile/screens/RouteMap.tsx",
+    "sha256": "e272c475bc69896a05acc28257936d24cd7e2834911b6bf770d28b307f17f4ee"
+  },
+  {
+    "file": "mobile/screens/SafetyContactScreen.tsx",
+    "sha256": "362803f5da1ca6d75b3b705f5f232047f8f85618d3300cf7046ce96d882a8481"
+  },
+  {
+    "file": "mobile/screens/TermsScreen.tsx",
+    "sha256": "fb2bd7f2aa2629659c0d4c73587dba22cf08784fd468e639724a3a3f583a4977"
+  },
+  {
+    "file": "mobile/screens/TrailDetail.tsx",
+    "sha256": "d1492ec66239219893038d6264eb74e10e0eb53fb29f56135291ad43f10644af"
+  },
+  {
+    "file": "mobile/screens/TrailElevationScreen.tsx",
+    "sha256": "65fd97aee67d5a249ee983737848039d45642ae874dd00c17aa2012801b13bcb"
+  },
+  {
+    "file": "mobile/screens/TrailReviewsScreen.tsx",
+    "sha256": "17a6e8f17c3eec4b2f420cbb7704b6966183c98cec2a04c85b196b12e628d62b"
+  },
+  {
+    "file": "mobile/screens/TrailStart.tsx",
+    "sha256": "398e796006ca30734c6765a9c77912e8fd9504380c49b9c1ebdfda36beb5a174"
+  },
+  {
+    "file": "mobile/screens/TripPlanScreen.tsx",
+    "sha256": "c19d5d403a21a0a6fa6aad309f86b9eb9448c116dd6daea2c1053c022717ea68"
+  },
+  {
+    "file": "mobile/screens/WearableSettingsScreen.tsx",
+    "sha256": "bcd1e49e2247c2eddffd9f4e279db66472ada0fa47e70c5ff3dfef2df89860b4"
+  },
+  {
+    "file": "mobile/screens/__tests__/DiscoverTrailScreen.test.tsx",
+    "sha256": "3f71cae8a70d608443b49f4ecefe118bf76b337aeed76b7dab17aeb5717fd7c0"
+  },
+  {
+    "file": "mobile/screens/__tests__/RestBreakScreen.test.tsx",
+    "sha256": "be4cbf5b926b7d02ee39e044e690ae818471c0aab33500551e1b8a00b31b1827"
+  },
+  {
+    "file": "mobile/screens/__tests__/TrailStartTestingMode.test.tsx",
+    "sha256": "7124e21dfacefa8a2ca5c6925e61b1fee3459c8c29f1dd663df1a31ab3b8cccf"
+  },
+  {
+    "file": "mobile/screens/__tests__/accountAndTripScreens.test.tsx",
+    "sha256": "f99c95c5ac46e0dec1b3a7856098d40109a86fdd1f5a50341d5c8ea0d424d379"
+  },
+  {
+    "file": "mobile/screens/__tests__/catalogueScreens.test.tsx",
+    "sha256": "5ed3156bd906016c901d0fe4a6eda9355ddfc44cda0506d6d9b314b564e35ad2"
+  },
+  {
+    "file": "mobile/screens/__tests__/offlineDownloadAndElevation.test.tsx",
+    "sha256": "de90825bb6e5b9f0421a5b5af0d0dfceddff121ffad852e04117bb788807999c"
+  },
+  {
+    "file": "mobile/screens/__tests__/profileAndWearableScreens.test.tsx",
+    "sha256": "2190867ab87bac4ad1833cfffcee50db02be43b8f1155eb4d8427cc66c240a58"
+  },
+  {
+    "file": "mobile/screens/__tests__/routeAndReportScreens.test.tsx",
+    "sha256": "a4e9171fd1ce336c7d0259f753cec17de1454c1455953b75b69f3d9b674732ae"
+  },
+  {
+    "file": "mobile/screens/initial-flow/DownloadMapScreen03.tsx",
+    "sha256": "c8d849f37d469676afc368474ccc9a15bb8170101c2f59e618dea8d924a289c5"
+  },
+  {
+    "file": "mobile/screens/initial-flow/ExploreSkeletonsScreen04.tsx",
+    "sha256": "4e492318e94d63096fbf631ea309df133b7cadc093b4319d5509ef254d8aa84e"
+  },
+  {
+    "file": "mobile/screens/initial-flow/LoadingRouteScreen02.tsx",
+    "sha256": "9b816233d1630506a1410bbfc8f9159f8850e197b7a0e60396ae7866048dcfcb"
+  },
+  {
+    "file": "mobile/screens/initial-flow/SplashScreen01.tsx",
+    "sha256": "fc4c90915da7e129214113a39326a7c91dd6b10bdc7432e7dfb310117e4fea29"
+  },
+  {
+    "file": "mobile/screens/offline-flow/ConnectionLost24Screen.tsx",
+    "sha256": "9466f431b49ffdc62c7e94a5386ac06ef7f84c0b6b5aba69792c644717a5c910"
+  },
+  {
+    "file": "mobile/screens/offline-flow/OfflineDownload21Screen.tsx",
+    "sha256": "e40f619c56775aa6aa2b4388678146ddb057038c97b09acfe0991e53376f7f17"
+  },
+  {
+    "file": "mobile/screens/offline-flow/OfflineDownloadComplete22Screen.tsx",
+    "sha256": "a7c6dd18feaf5661b2a9a04e7066a47800c7ceb37d1d0193f6c560abbfa79e84"
+  },
+  {
+    "file": "mobile/screens/offline-flow/OfflineDownloadedMaps23Screen.tsx",
+    "sha256": "724a2caf815f0bbccbd828e0eb326daa57f843b9571b76c5b7185e9afe261f16"
+  },
+  {
+    "file": "mobile/screens/offline-flow/OfflineFilters19Screen.tsx",
+    "sha256": "dc65163691ac68395f61bd7b0169e2d4cffda3d76b95638dc855adf09409ba98"
+  },
+  {
+    "file": "mobile/screens/offline-flow/OfflineFlowShared.tsx",
+    "sha256": "c224d70bf4e132e03fa44da50af169bafe7a9eabb60d1873fee47fb266dccd07"
+  },
+  {
+    "file": "mobile/screens/offline-flow/OfflineSearch18Screen.tsx",
+    "sha256": "55234f4e5029c8527e3a3e3b6bdca8aa51b268efa2075d84471a31fc37940ebf"
+  },
+  {
+    "file": "mobile/screens/offline-flow/OfflineZoneDetail20Screen.tsx",
+    "sha256": "82228e7b2a77d9fc13f965d9fb32976456b2676f6f4b1ec8e13997dacdf324d6"
+  },
+  {
+    "file": "mobile/screens/offline-flow/UpdateFailed25Screen.tsx",
+    "sha256": "7d9ad4388dc105cd928a8eb3a49e3d3b1e8b361a77c3d1a3a021feafddbc9863"
+  },
+  {
+    "file": "package-lock.json",
+    "sha256": "775d4aff7a6a038baf1f7b0298f25fd423c138c03966fdc3ae764cb625f34bd4"
+  },
+  {
+    "file": "package.json",
+    "sha256": "e0c873b32e039e6878cea8650e55582c76449188c4712b9ced9ef6b7e20c2a3e"
+  },
+  {
+    "file": "scripts/license-inventory.js",
+    "sha256": "3089f2248c935ce0d108bf8c1ccc281f94d3fb7d932a954583be8d2f6985e398"
+  },
+  {
+    "file": "scripts/train-ai.js",
+    "sha256": "daacccdbc96f288f3e50476ab7620fa2634c535162db240f6bcca7d7755c88b6"
+  },
+  {
+    "file": "services/RouteTrackingCoordinator.tsx",
+    "sha256": "25fc8e018d9d90ad516cdc57e33ec5a01799ec52c615aa64d2da4daf60d93594"
+  },
+  {
+    "file": "services/SyncCoordinator.tsx",
+    "sha256": "5764ba512ccb08893d46cd1602a9da87ed68f6b0a9d5be7f4b5ea2fc69834fb3"
+  },
+  {
+    "file": "services/__tests__/accountPreferences.test.ts",
+    "sha256": "85ea3881aadc8ab45f65f470cdd42509aa7af0eced5813fbe3ef1117a3471cb4"
+  },
+  {
+    "file": "services/__tests__/apiContract.test.ts",
+    "sha256": "1b12e6b5e696350d193f7338e5a24165c066198e84638895865cd0d87d940fcb"
+  },
+  {
+    "file": "services/__tests__/coordinators.test.tsx",
+    "sha256": "639c2ce39ea5b68ebdd6a552c8976870de5a71ec9026b804ff4577f948bebf5d"
+  },
+  {
+    "file": "services/__tests__/departureMessages.test.ts",
+    "sha256": "e6eb80f554ed5b49e3fb6ec700bff0a8cc6b7aee433c6185905eaf3a7499532d"
+  },
+  {
+    "file": "services/__tests__/deviceLocation.test.ts",
+    "sha256": "7cdd00cf7f7fd47598c46b7dfca9f94c0e261ae8e14859c1daa82295242cf0d7"
+  },
+  {
+    "file": "services/__tests__/emergencyAlerts.test.ts",
+    "sha256": "1ce657393c9547b3dc4763ffe26e7a733050fe837fb3bbbe3faf1cde288129ed"
+  },
+  {
+    "file": "services/__tests__/favoriteTrails.test.ts",
+    "sha256": "ab5f87ef0e9e058bb0fd060ed166451d3a2ff1de8e81ab75898ca47b0f1b4025"
+  },
+  {
+    "file": "services/__tests__/functionalResilience.test.ts",
+    "sha256": "9328b47109010172302a3749f943a64246d1134bea800de207b599864cf60ec8"
+  },
+  {
+    "file": "services/__tests__/geoUtils.test.ts",
+    "sha256": "b98d018530bb12e6224cf075f2da31dcfb3b03c3f836405a204ce93c99f454f8"
+  },
+  {
+    "file": "services/__tests__/mapGestures.test.ts",
+    "sha256": "17e00a63d220f9a1dd8666c24841f50e1d1d6b000a7ef02e54529bd8c1864c6b"
+  },
+  {
+    "file": "services/__tests__/mapTileCache.test.ts",
+    "sha256": "4e0b677905a1fe1242f90ff9c5ac046d771a4cdace23a6f544169d64ff3dd2b9"
+  },
+  {
+    "file": "services/__tests__/nationalParks.test.ts",
+    "sha256": "4fa32119a8ebd57218a747b9ead1c658e5cfd520a7dfcf9086f7daf77e02cdfc"
+  },
+  {
+    "file": "services/__tests__/nativeWearableBridge.test.ts",
+    "sha256": "41ea008184720971a5aa4caa26632e8faa55aea1ccac15699f1eacc848a076b6"
+  },
+  {
+    "file": "services/__tests__/nativeWearablePlatforms.test.ts",
+    "sha256": "13866bad3a47bf4812a5a264312e9a975eb8bf88d0d02da0f15c9f344e8388d5"
+  },
+  {
+    "file": "services/__tests__/offlineElevation.test.ts",
+    "sha256": "ac871b8f6d3bb858da63182077cb4d04ca6ef4f9d49825991de166e3ca192ba0"
+  },
+  {
+    "file": "services/__tests__/offlineTerrainGrid.test.ts",
+    "sha256": "a662bcc37d333ed29972b3dbe8b3ed058d6308a575c3ce73c979e9787128174e"
+  },
+  {
+    "file": "services/__tests__/privacyControls.test.ts",
+    "sha256": "c26824c6cd99631f9de658679598078fd0d41acbf5775cb29d2c18db1cf18f4d"
+  },
+  {
+    "file": "services/__tests__/routeSession.test.ts",
+    "sha256": "da0e0da1e4062f3628feca2713e2fa1c0bbe278d063a132ef3e3e37e865da994"
+  },
+  {
+    "file": "services/__tests__/routeTracking.test.ts",
+    "sha256": "1267d99f8eae2d092ec0ce203dac27bf57819ba8a9860eff5911b129c5412292"
+  },
+  {
+    "file": "services/__tests__/simulatedDataPurge.test.ts",
+    "sha256": "df03137f8c99a5d6a1d4590d50590e295990ae0d1564936231f11777e598c288"
+  },
+  {
+    "file": "services/__tests__/simulatedRouteCompletion.test.tsx",
+    "sha256": "55cf9ee9a4fed82de8bb3f60509e339d09a0cae9df005bdc52da0508e2be4909"
+  },
+  {
+    "file": "services/__tests__/simulatedSos.test.tsx",
+    "sha256": "094701897af357422796c9d683628a333b9c27d581b9b011a8c4ce0cb5453c0b"
+  },
+  {
+    "file": "services/__tests__/syncQueue.test.ts",
+    "sha256": "6bb9208c15542ddf526ec8e86ca55cf9c64bc1d3be912f3f72a3abe7bc86638c"
+  },
+  {
+    "file": "services/__tests__/syncResilience.test.ts",
+    "sha256": "a7ea6891a638e4b5aea8f8da25697a677c38f6b1d5fd299e967ed262d5e03a53"
+  },
+  {
+    "file": "services/__tests__/terrainElevation.test.ts",
+    "sha256": "dae770756774680fb5994fe04892789bea2f8c40144a9c639cc5c72b90f27db3"
+  },
+  {
+    "file": "services/__tests__/trailAssistant.test.ts",
+    "sha256": "4e60c655b64fe37bb1fcd1d3302cbbcf0f4b32313d6d0c33fd311cd39babb0f7"
+  },
+  {
+    "file": "services/__tests__/trailDuration.test.ts",
+    "sha256": "c5706b80cf932658b76907fe862b12fa0efca0b0d3cc457a536d3dd493292880"
+  },
+  {
+    "file": "services/__tests__/trailFilters.test.ts",
+    "sha256": "79261d5630ac4799f1a88b4b1c5068817bf6d4f995fcbe987c3499081aba4ade"
+  },
+  {
+    "file": "services/__tests__/trailMessages.test.ts",
+    "sha256": "a05c4e7c03ff66f1204a996c5e420b2a2657346a50d2cc85216dc50f3fe4e219"
+  },
+  {
+    "file": "services/__tests__/trailRepository.test.ts",
+    "sha256": "a068997c1892c2bc323e80868112391727109d8fa3c11ccba50ce22b0f6ea319"
+  },
+  {
+    "file": "services/__tests__/tripPlans.test.ts",
+    "sha256": "8a5785db8c469d49ef6954bfd979b3d55c78b4a6388f54451cb6b918ab29cd09"
+  },
+  {
+    "file": "services/__tests__/wearableMetrics.test.ts",
+    "sha256": "2b23be248f6125e91903b4f4790547ee132280ad70155b1907c63e3d1c40655b"
+  },
+  {
+    "file": "services/accountLifecycle.ts",
+    "sha256": "6db6d2b30a6c9eaf47a1cbea5cb01d314f1443693e29fb428cc2ffbffe81284b"
+  },
+  {
+    "file": "services/api.ts",
+    "sha256": "ae43268c2dd5ed182d64b5c64402071e00065807c00cec05aacfd42a12c1f0fb"
+  },
+  {
+    "file": "services/apiConfig.ts",
+    "sha256": "6f85c9bf6ee198f87a031ba17d90d6b988e18d7aef2f961f03a6e9c4ab193078"
+  },
+  {
+    "file": "services/appPreferences.ts",
+    "sha256": "ed20c04e7208ccf9d228f5bbfb418191f1e72368e05fdb4946babf0cf093f466"
+  },
+  {
+    "file": "services/authSession.ts",
+    "sha256": "d1a818d4f0b94e9cc9c0be463adcf9b3c735bd006be41eef45f643f0d7c82eb8"
+  },
+  {
+    "file": "services/deleteAccount.ts",
+    "sha256": "0f24d54d9d5888f9e41a6f5e8a1cb4b7c5b727bcd3a3a0fd7e16360dff19bd51"
+  },
+  {
+    "file": "services/departureMessages.ts",
+    "sha256": "8b4bb0e462cd713a8282a6e41e74c2ea1453ccb85ec5f5f86c10e7909aa09aab"
+  },
+  {
+    "file": "services/deviceLocation.ts",
+    "sha256": "36616b6d7703de045676c5825f1d6de301f6df541b1daff9d6823fae0994388c"
+  },
+  {
+    "file": "services/emergencyAlerts.ts",
+    "sha256": "f3594d2969f1245773c57cac30401e801324daa9d821799499e0ff2c361925c7"
+  },
+  {
+    "file": "services/emergencyContact.ts",
+    "sha256": "816b712d0ec707f3e4ad9b0973fc7dc9f66e2bde613eb3204aea90cb8918202c"
+  },
+  {
+    "file": "services/experienceProfile.ts",
+    "sha256": "45bb1e0690847855cd7ed03860275b8f39d32c963aa88d2f7df9cafb7299bd56"
+  },
+  {
+    "file": "services/favoriteTrails.ts",
+    "sha256": "b77b7cc5d6a26386fe9f34c7a94c660ecca9681640e5184f00e4b1ac9fd5c507"
+  },
+  {
+    "file": "services/geoUtils.ts",
+    "sha256": "0d87dc0a6146b4d6966afb509150b8b8e09b066f51cccc7bfb11d07c88b80ea2"
+  },
+  {
+    "file": "services/legalConsent.ts",
+    "sha256": "4b25f9858d11ff99abf6a2619b86d55fccbcafa21209b1afdac1f799f6331342"
+  },
+  {
+    "file": "services/mapGestures.ts",
+    "sha256": "d05a7535c7ff7149c9e2385735fe26fa256524f32678d095a3c318432e5eb2fa"
+  },
+  {
+    "file": "services/mapTileCache.ts",
+    "sha256": "fe4dd659a38d9630587f108f36a59d754d25fdd64fca080469cf1d8db53c9a02"
+  },
+  {
+    "file": "services/nationalParks.ts",
+    "sha256": "aa47f98fcc0438c88708313e64f6a62239137efa595145dd9753e47da6962e5c"
+  },
+  {
+    "file": "services/nativeWearableBridge.ts",
+    "sha256": "c5e3eddf6e91a940786d52d48a4910be8c575534a136781950d241a7ae16a337"
+  },
+  {
+    "file": "services/offlineMaps.ts",
+    "sha256": "02a0f362973f331b9dc777e71334187003d8b8fac196acdf6751ee245e3880dc"
+  },
+  {
+    "file": "services/privacyConsent.ts",
+    "sha256": "e217d50bfd49197db37c46800e0d3b88e3f0af78e4ccdcb1009dc0e11f19d13e"
+  },
+  {
+    "file": "services/reportPrivacy.ts",
+    "sha256": "fe790017c1014fd85ef37d323218d679176b12a45b8a0d402754dc84c429c301"
+  },
+  {
+    "file": "services/routeSession.ts",
+    "sha256": "6c5fb6abc17c07cd14dfe02d463a84351f3d2d8514a4980338803ce857fcde81"
+  },
+  {
+    "file": "services/routeTracking.ts",
+    "sha256": "16ace37dca2fddb112c64a8201d99c38f398b2c8f1c644dac9a4a21a312b88c1"
+  },
+  {
+    "file": "services/syncQueue.ts",
+    "sha256": "d3c2850ffa55ed3e36109826dfaaa4e47583bb6e080c92f17ec245a7871ee385"
+  },
+  {
+    "file": "services/terrainElevation.ts",
+    "sha256": "cfd10f029dc5717f05e5083862f59fe2ca4d72d215fc45d7adb499e4d3b7ed93"
+  },
+  {
+    "file": "services/testingMode.ts",
+    "sha256": "068f349f8bd099b60e8480550bf42dc02496889ce7df4e4f95e658139b3188d1"
+  },
+  {
+    "file": "services/trailAssistant.ts",
+    "sha256": "912555e8c879f76b1d9a845115610a3a6d94f8dca1449bd83fbd90b7928c8bdd"
+  },
+  {
+    "file": "services/trailDuration.ts",
+    "sha256": "b72f754f1154df1a2ed9ddf1bafec3662c7e241da74efeee02b7a8605260b1ef"
+  },
+  {
+    "file": "services/trailFilters.ts",
+    "sha256": "1b2550c9fd4be7d1979fec7ea7ec05be2a5c40efd3ad3846c6fd3e79a6b43fba"
+  },
+  {
+    "file": "services/trailMessages.ts",
+    "sha256": "5936f39b7587d274eda474e8b1bfe51cad1d04f65440e5687e10b1f614e6fd84"
+  },
+  {
+    "file": "services/trailRepository.ts",
+    "sha256": "60fe1e5f65e3fb41abc18538399cf8f893ec835bae45b135f1b5195434f51fc3"
+  },
+  {
+    "file": "services/tripPlans.ts",
+    "sha256": "dd86b45d0d49cc446be5d17f8330b3dc73f54033f49e2aecfdb8d90a9ed53fd9"
+  },
+  {
+    "file": "services/wearableMetrics.ts",
+    "sha256": "36acbf19a3868efbaa937bf663af109aee6ce213e16b2e464e39fc9598858342"
+  },
+  {
+    "file": "testing/coverage-environment.cjs",
+    "sha256": "d93983eb4fcaba1d5a12cf41566398f934d996f320c346dc452c13a7781730de"
+  },
+  {
+    "file": "testing/coverage-policy.cjs",
+    "sha256": "263a45a87197ac18dae249b2719b3f5bb688b5fc0b943367e2d43cd8e9626536"
+  },
+  {
+    "file": "testing/coverage-scope.cjs",
+    "sha256": "27e2018d187c52e54928322c1d0be55b2114b19dd8d291a85a7546dda200d64c"
+  },
+  {
+    "file": "testing/coverage-tools.test.cjs",
+    "sha256": "15be655815f24f5945b76ed8a1b7a0870339774b81355e94b969c821e63831c4"
+  },
+  {
+    "file": "testing/fixtures.ts",
+    "sha256": "2f7ea12ca00dc7b00deabcd83371b41a084b4e4b5d4e8454197cbd93e75eeaaf"
+  },
+  {
+    "file": "testing/functional/cases.cjs",
+    "sha256": "9276afc2af3a8d27c2cceb6a579d364a85c543840a2daeeac194fe7765ba1406"
+  },
+  {
+    "file": "testing/functional/persistence-reader.cjs",
+    "sha256": "5d48bf29658a39a848d13e18002e1faf87056ce27c25921bd71417f0740bac36"
+  },
+  {
+    "file": "testing/functional/run.cjs",
+    "sha256": "502f5980c4c5dbc5da65ce967f64c855d05fe1bb76553241a498b126e9f7edf8"
+  },
+  {
+    "file": "testing/mobileHarness.tsx",
+    "sha256": "5e280213e0d881b2ce0b55b1aab5966bf3b17fb6c9c102f70fff1d7d4ab6832f"
+  },
+  {
+    "file": "testing/mobileSetup.ts",
+    "sha256": "3b1e56538e3b9a102625261678844e194d773b29eb6c3ecb5e8e83c4a27cbb7a"
+  },
+  {
+    "file": "testing/python-coverage.ini",
+    "sha256": "cb609b4ecb569da280c951a6604287b6703fbc32376931cb7f8d3bf0342e674a"
+  },
+  {
+    "file": "testing/requirements-coverage.txt",
+    "sha256": "ce7d4004f9e53afa8cf2adc35223503e3a63885fd447e71c70ae7df1b54401a6"
+  },
+  {
+    "file": "testing/run-coverage.cjs",
+    "sha256": "705165b80e20e72eccb02f7ae4b98480747a06ab0d44584ba2588930867eb81c"
+  },
+  {
+    "file": "testing/run-python-coverage.cjs",
+    "sha256": "56458433f02485ba2f8c1de808d88522409a1a73eaec7d96e3c6c08f082aaf06"
+  },
+  {
+    "file": "testing/summarize-coverage.cjs",
+    "sha256": "e044bbb89ce36606518be0b11dbd6e0fcea4f9a0f84403e9df67fd6718f742fb"
+  },
+  {
+    "file": "types/index.ts",
+    "sha256": "4d294a3bc468910d510c7404452c50c719ff1d8bbedeaa4b6f4868f34f853fc5"
+  }
+]

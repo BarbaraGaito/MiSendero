@@ -1,0 +1,176 @@
+{
+  "startedAt": "2026-10-17T23:06:42.757Z",
+  "finishedAt": "2026-10-17T23:08:56.343Z",
+  "seed": 20261017,
+  "totals": {
+    "client": {
+      "suites": 47,
+      "total": 336,
+      "passed": 336,
+      "failed": 0,
+      "pending": 0,
+      "success": true
+    },
+    "backend": {
+      "suites": 17,
+      "total": 146,
+      "passed": 146,
+      "failed": 0,
+      "pending": 0,
+      "success": true
+    },
+    "acceptance-probe": {
+      "suites": 1,
+      "total": 1,
+      "passed": 0,
+      "failed": 1,
+      "pending": 0,
+      "success": false
+    }
+  },
+  "caseCount": 15,
+  "automatedCases": {
+    "supported": 14,
+    "failed": 1,
+    "missing": 0
+  },
+  "scope": "Scenario support is partial by validation level. Code coverage is an independent indicator.",
+  "coverage": {
+    "lines": {
+      "total": 6373,
+      "covered": 5597,
+      "skipped": 0,
+      "pct": 87.8236
+    },
+    "statements": {
+      "total": 7275,
+      "covered": 6140,
+      "skipped": 0,
+      "pct": 84.3986
+    },
+    "branches": {
+      "total": 5179,
+      "covered": 3849,
+      "skipped": 0,
+      "pct": 74.3194
+    },
+    "functions": {
+      "total": 1562,
+      "covered": 1223,
+      "skipped": 0,
+      "pct": 78.2971
+    }
+  },
+  "sourceReports": [
+    {
+      "component": "client",
+      "evidence": "client-results.json"
+    },
+    {
+      "component": "backend",
+      "evidence": "backend-results.json"
+    },
+    {
+      "component": "acceptance-probe",
+      "evidence": "probe-results.json"
+    }
+  ],
+  "commands": [
+    {
+      "name": "device-inventory",
+      "executable": "powershell.exe",
+      "args": [
+        "-NoProfile",
+        "-Command",
+        "$c=@((Join-Path $env:LOCALAPPDATA 'Android/Sdk/platform-tools/adb.exe'),(Join-Path $env:LOCALAPPDATA 'Android/Sdk/emulator/emulator.exe')); [pscustomobject]@{commands=@(Get-Command adb,emulator -ErrorAction SilentlyContinue | ForEach-Object {$_.Source}); candidates=@($c | ForEach-Object {[pscustomobject]@{path=$_;exists=(Test-Path -LiteralPath $_)}}); sdkRoot=$env:ANDROID_SDK_ROOT; androidHome=$env:ANDROID_HOME} | ConvertTo-Json -Depth 4; exit 0"
+      ],
+      "cwd": "D:\\AppPFI\\MiSendero",
+      "startedAt": "2026-10-17T23:06:42.758Z",
+      "finishedAt": "2026-10-17T23:06:46.220Z",
+      "exitCode": 0,
+      "error": null,
+      "evidence": "device-inventory.txt"
+    },
+    {
+      "name": "typecheck",
+      "executable": "C:\\Program Files\\nodejs\\node.exe",
+      "args": [
+        "D:\\AppPFI\\MiSendero\\node_modules\\typescript\\bin\\tsc",
+        "--noEmit"
+      ],
+      "cwd": "D:\\AppPFI\\MiSendero",
+      "startedAt": "2026-10-17T23:06:47.200Z",
+      "finishedAt": "2026-10-17T23:07:01.092Z",
+      "exitCode": 0,
+      "error": null,
+      "evidence": "typecheck.txt"
+    },
+    {
+      "name": "backend-build",
+      "executable": "C:\\Program Files\\nodejs\\node.exe",
+      "args": [
+        "D:\\AppPFI\\MiSendero\\backend\\node_modules\\typescript\\bin\\tsc",
+        "-p",
+        "tsconfig.ai.json"
+      ],
+      "cwd": "D:\\AppPFI\\MiSendero\\backend",
+      "startedAt": "2026-10-17T23:07:01.095Z",
+      "finishedAt": "2026-10-17T23:07:03.746Z",
+      "exitCode": 0,
+      "error": null,
+      "evidence": "backend-build.txt"
+    },
+    {
+      "name": "coverage-tools",
+      "executable": "C:\\Program Files\\nodejs\\node.exe",
+      "args": [
+        "--test",
+        "testing/coverage-tools.test.cjs"
+      ],
+      "cwd": "D:\\AppPFI\\MiSendero",
+      "startedAt": "2026-10-17T23:07:03.748Z",
+      "finishedAt": "2026-10-17T23:07:04.152Z",
+      "exitCode": 0,
+      "error": null,
+      "evidence": "coverage-tools.txt"
+    },
+    {
+      "name": "regression",
+      "executable": "C:\\Program Files\\nodejs\\node.exe",
+      "args": [
+        "testing/run-coverage.cjs",
+        "--output=D:\\AppPFI\\MiSendero\\coverage\\functional-1792278402757-20261017",
+        "--randomize",
+        "--seed=20261017",
+        "--showSeed"
+      ],
+      "cwd": "D:\\AppPFI\\MiSendero",
+      "startedAt": "2026-10-17T23:07:04.155Z",
+      "finishedAt": "2026-10-17T23:08:52.401Z",
+      "exitCode": 0,
+      "error": null,
+      "evidence": "regression.txt"
+    },
+    {
+      "name": "acceptance-probe",
+      "executable": "C:\\Program Files\\nodejs\\node.exe",
+      "args": [
+        "D:\\AppPFI\\MiSendero\\backend\\node_modules\\jest\\bin\\jest.js",
+        "--runInBand",
+        "--randomize",
+        "--seed=20261017",
+        "--testMatch=**/*.probe.js",
+        "--runTestsByPath",
+        "tests/functional/reportRetry.probe.js",
+        "--json",
+        "--outputFile=D:\\AppPFI\\MiSendero\\validation\\functional\\2026-10-17\\locked-seed-20261017\\probe-results.json"
+      ],
+      "cwd": "D:\\AppPFI\\MiSendero\\backend",
+      "startedAt": "2026-10-17T23:08:52.406Z",
+      "finishedAt": "2026-10-17T23:08:56.260Z",
+      "exitCode": 1,
+      "error": null,
+      "evidence": "acceptance-probe.txt"
+    }
+  ]
+}

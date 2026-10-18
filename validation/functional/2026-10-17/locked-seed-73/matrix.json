@@ -1,0 +1,1755 @@
+[
+  {
+    "id": "MF01",
+    "title": "Descarga previa de rutas y mapas",
+    "requirements": [
+      "RF-03",
+      "RF-03.1",
+      "RF-04",
+      "RNF-01"
+    ],
+    "priority": "alta",
+    "objective": "Obtener un paquete local íntegro antes de comenzar la salida.",
+    "preconditions": [
+      "Cuenta de prueba iniciada; red disponible.",
+      "Proveedor de tiles habilitado para descarga; espacio suficiente."
+    ],
+    "data": [
+      "Ruta con geometría, perfil de elevación, dos capas y reportes vigentes.",
+      "Registrar ID de ruta y número de tiles previsto."
+    ],
+    "steps": [
+      "Abrir detalle y descargar.",
+      "Observar progreso y esperar la finalización.",
+      "Consultar inventario local y comparar geometría, elevación y tiles con el plan."
+    ],
+    "expected": "El estado disponible aparece al terminar la persistencia y la verificación; los elementos del paquete coinciden con la ruta seleccionada.",
+    "selectors": [
+      {
+        "file": "services/__tests__/mapTileCache.test.ts",
+        "title": "descarga todos los tiles a archivos locales verificables",
+        "level": "integración"
+      },
+      {
+        "file": "mobile/screens/__tests__/offlineDownloadAndElevation.test.tsx",
+        "title": "download displays actual tile progress and becomes available only after persistence completes",
+        "level": "integración"
+      }
+    ],
+    "observation": "En automatización se controlan red, proveedor de tiles y filesystem; SQLite ejecuta SQL real. No equivale a una descarga sobre almacenamiento nativo.",
+    "automated": {
+      "status": "Aprobado en el alcance automatizado",
+      "selections": [
+        {
+          "file": "services/__tests__/mapTileCache.test.ts",
+          "title": "descarga todos los tiles a archivos locales verificables",
+          "level": "integración",
+          "matched": [
+            {
+              "component": "client",
+              "file": "services/__tests__/mapTileCache.test.ts",
+              "fullName": "mapTileCache descarga todos los tiles a archivos locales verificables",
+              "status": "passed",
+              "durationMs": 101,
+              "evidence": "client-results.json",
+              "failureMessages": []
+            }
+          ],
+          "status": "Aprobado"
+        },
+        {
+          "file": "mobile/screens/__tests__/offlineDownloadAndElevation.test.tsx",
+          "title": "download displays actual tile progress and becomes available only after persistence completes",
+          "level": "integración",
+          "matched": [
+            {
+              "component": "client",
+              "file": "mobile/screens/__tests__/offlineDownloadAndElevation.test.tsx",
+              "fullName": "download displays actual tile progress and becomes available only after persistence completes",
+              "status": "passed",
+              "durationMs": 106,
+              "evidence": "client-results.json",
+              "failureMessages": []
+            }
+          ],
+          "status": "Aprobado"
+        }
+      ]
+    },
+    "obtained": [
+      "passed: mapTileCache descarga todos los tiles a archivos locales verificables",
+      "passed: download displays actual tile progress and becomes available only after persistence completes"
+    ],
+    "evidence": [
+      "client-results.json"
+    ],
+    "status": "Validación parcial por nivel",
+    "endToEnd": {
+      "status": "No ejecutado",
+      "obtained": "No se lanzó una build de la aplicación conectada al backend.",
+      "evidence": []
+    },
+    "manual": {
+      "status": "No ejecutado",
+      "obtained": "Protocolo definido; no se registró una sesión manual de validación.",
+      "evidence": []
+    },
+    "physicalDevice": {
+      "status": "No ejecutado",
+      "obtained": "No se utilizó un teléfono ni wearable físico en esta campaña.",
+      "evidence": []
+    }
+  },
+  {
+    "id": "MF02",
+    "title": "Acceso sin red al mapa descargado",
+    "requirements": [
+      "RF-03.1",
+      "RF-04",
+      "RF-06",
+      "RNF-01"
+    ],
+    "priority": "alta",
+    "objective": "Consultar geometría y elevación locales y visualizar tiles ya descargados sin depender de la API.",
+    "preconditions": [
+      "MF01 completado y cuenta conservada.",
+      "Mapa verificado antes de desconectar."
+    ],
+    "data": [
+      "Misma ruta de MF01.",
+      "Modo avión con Wi-Fi y datos desactivados; GPS independiente de la red."
+    ],
+    "steps": [
+      "Desconectar toda red.",
+      "Abrir mapa descargado y recorrer las dos capas y extremos del trazado.",
+      "Consultar elevación y detalle; observar solicitudes fallidas sin perder el contenido local."
+    ],
+    "expected": "Se conservan trazado, capas locales y elevación; la falta de información externa se representa explícitamente.",
+    "selectors": [
+      {
+        "file": "services/__tests__/offlineElevation.test.ts",
+        "title": "persists all elevations in SQLite and reads them after network loss",
+        "level": "integración"
+      },
+      {
+        "file": "services/__tests__/trailRepository.test.ts",
+        "title": "a downloaded elevation profile needs no network",
+        "level": "integración"
+      }
+    ],
+    "observation": "La lectura local y la ausencia de consulta remota tienen evidencia automatizada. La representación gráfica de los tiles en el teléfono requiere ejecución nativa.",
+    "automated": {
+      "status": "Aprobado en el alcance automatizado",
+      "selections": [
+        {
+          "file": "services/__tests__/offlineElevation.test.ts",
+          "title": "persists all elevations in SQLite and reads them after network loss",
+          "level": "integración",
+          "matched": [
+            {
+              "component": "client",
+              "file": "services/__tests__/offlineElevation.test.ts",
+              "fullName": "persists all elevations in SQLite and reads them after network loss",
+              "status": "passed",
+              "durationMs": 9,
+              "evidence": "client-results.json",
+              "failureMessages": []
+            }
+          ],
+          "status": "Aprobado"
+        },
+        {
+          "file": "services/__tests__/trailRepository.test.ts",
+          "title": "a downloaded elevation profile needs no network",
+          "level": "integración",
+          "matched": [
+            {
+              "component": "client",
+              "file": "services/__tests__/trailRepository.test.ts",
+              "fullName": "a downloaded elevation profile needs no network",
+              "status": "passed",
+              "durationMs": 1,
+              "evidence": "client-results.json",
+              "failureMessages": []
+            }
+          ],
+          "status": "Aprobado"
+        }
+      ]
+    },
+    "obtained": [
+      "passed: persists all elevations in SQLite and reads them after network loss",
+      "passed: a downloaded elevation profile needs no network"
+    ],
+    "evidence": [
+      "client-results.json"
+    ],
+    "status": "Validación parcial por nivel",
+    "endToEnd": {
+      "status": "No ejecutado",
+      "obtained": "No se lanzó una build de la aplicación conectada al backend.",
+      "evidence": []
+    },
+    "manual": {
+      "status": "No ejecutado",
+      "obtained": "Protocolo definido; no se registró una sesión manual de validación.",
+      "evidence": []
+    },
+    "physicalDevice": {
+      "status": "No ejecutado",
+      "obtained": "No se utilizó un teléfono ni wearable físico en esta campaña.",
+      "evidence": []
+    }
+  },
+  {
+    "id": "MF03",
+    "title": "Ciclo de tracking GPS",
+    "requirements": [
+      "RF-05",
+      "RF-05.1",
+      "RF-05.2",
+      "RF-05.3",
+      "RF-18",
+      "RNF-06"
+    ],
+    "priority": "alta",
+    "objective": "Mantener identidad, tiempo activo y distancia durante inicio, pausa, continuación y finalización.",
+    "preconditions": [
+      "Cuenta, contacto y confirmación de plan de salida válidos.",
+      "GPS y permisos disponibles; mapa local verificado."
+    ],
+    "data": [
+      "Tres posiciones válidas separadas en tiempo; pausa conocida.",
+      "Sesión sin otra ruta activa."
+    ],
+    "steps": [
+      "Iniciar recorrido y registrar posiciones.",
+      "Pausar; esperar y desplazarse durante la pausa.",
+      "Continuar, registrar otra posición y finalizar.",
+      "Abrir historial e intentar reanudar la sesión terminada."
+    ],
+    "expected": "La pausa no suma tiempo activo ni puntos; continuar conserva la sesión; finalizar es terminal y el resumen coincide con lo persistido.",
+    "selectors": [
+      {
+        "file": "services/__tests__/routeSession.test.ts",
+        "title": "pause/resume preserves identity and excludes multiple pauses from active time",
+        "level": "integración"
+      },
+      {
+        "file": "mobile/screens/__tests__/routeAndReportScreens.test.tsx",
+        "title": "active route pauses durably before navigating and passes measured distance when finishing",
+        "level": "integración"
+      },
+      {
+        "file": "services/__tests__/routeTracking.test.ts",
+        "title": "stores GPS points and summarizes real distance",
+        "level": "integración"
+      }
+    ],
+    "observation": "Se usan posiciones y relojes controlados; no se atribuye al recorrido distancia medida en campo.",
+    "automated": {
+      "status": "Aprobado en el alcance automatizado",
+      "selections": [
+        {
+          "file": "services/__tests__/routeSession.test.ts",
+          "title": "pause/resume preserves identity and excludes multiple pauses from active time",
+          "level": "integración",
+          "matched": [
+            {
+              "component": "client",
+              "file": "services/__tests__/routeSession.test.ts",
+              "fullName": "pause/resume preserves identity and excludes multiple pauses from active time",
+              "status": "passed",
+              "durationMs": 9,
+              "evidence": "client-results.json",
+              "failureMessages": []
+            }
+          ],
+          "status": "Aprobado"
+        },
+        {
+          "file": "mobile/screens/__tests__/routeAndReportScreens.test.tsx",
+          "title": "active route pauses durably before navigating and passes measured distance when finishing",
+          "level": "integración",
+          "matched": [
+            {
+              "component": "client",
+              "file": "mobile/screens/__tests__/routeAndReportScreens.test.tsx",
+              "fullName": "active route pauses durably before navigating and passes measured distance when finishing",
+              "status": "passed",
+              "durationMs": 40,
+              "evidence": "client-results.json",
+              "failureMessages": []
+            }
+          ],
+          "status": "Aprobado"
+        },
+        {
+          "file": "services/__tests__/routeTracking.test.ts",
+          "title": "stores GPS points and summarizes real distance",
+          "level": "integración",
+          "matched": [
+            {
+              "component": "client",
+              "file": "services/__tests__/routeTracking.test.ts",
+              "fullName": "routeTracking stores GPS points and summarizes real distance",
+              "status": "passed",
+              "durationMs": 4,
+              "evidence": "client-results.json",
+              "failureMessages": []
+            }
+          ],
+          "status": "Aprobado"
+        }
+      ]
+    },
+    "obtained": [
+      "passed: pause/resume preserves identity and excludes multiple pauses from active time",
+      "passed: active route pauses durably before navigating and passes measured distance when finishing",
+      "passed: routeTracking stores GPS points and summarizes real distance"
+    ],
+    "evidence": [
+      "client-results.json"
+    ],
+    "status": "Validación parcial por nivel",
+    "endToEnd": {
+      "status": "No ejecutado",
+      "obtained": "No se lanzó una build de la aplicación conectada al backend.",
+      "evidence": []
+    },
+    "manual": {
+      "status": "No ejecutado",
+      "obtained": "Protocolo definido; no se registró una sesión manual de validación.",
+      "evidence": []
+    },
+    "physicalDevice": {
+      "status": "No ejecutado",
+      "obtained": "No se utilizó un teléfono ni wearable físico en esta campaña.",
+      "evidence": []
+    }
+  },
+  {
+    "id": "MF04",
+    "title": "Pérdida y recuperación de conectividad",
+    "requirements": [
+      "RF-06",
+      "RF-10",
+      "RF-11",
+      "RF-11.1",
+      "RNF-01"
+    ],
+    "priority": "alta",
+    "objective": "Conservar la operación local y retomar los envíos al recuperarse una conexión utilizable.",
+    "preconditions": [
+      "Recorrido activo, mapa local y cuenta autorizada.",
+      "Posibilidad de alternar red sin alterar el permiso GPS."
+    ],
+    "data": [
+      "Evento de red no alcanzable, fallo de petición y posterior respuesta confirmada."
+    ],
+    "steps": [
+      "Durante el recorrido, cortar Wi-Fi y datos.",
+      "Crear un reporte y continuar consultando el mapa.",
+      "Restablecer la red; observar la cola y la confirmación de la API."
+    ],
+    "expected": "El reporte permanece local durante el corte; el coordinador reintenta con conectividad y sólo confirma al recibir aceptación.",
+    "selectors": [
+      {
+        "file": "services/__tests__/coordinators.test.tsx",
+        "title": "sync validates idle sessions, reacts only to reachable network/foreground and removes listeners",
+        "level": "integración"
+      },
+      {
+        "file": "services/__tests__/functionalResilience.test.ts",
+        "title": "MF06 offline report remains pending until connectivity and API acknowledgement",
+        "level": "integración"
+      }
+    ],
+    "observation": "La secuencia de conectividad es inyectada. La continuidad simultánea de GPS, mapa y sincronización en una build instalada queda en el protocolo de dispositivo.",
+    "automated": {
+      "status": "Aprobado en el alcance automatizado",
+      "selections": [
+        {
+          "file": "services/__tests__/coordinators.test.tsx",
+          "title": "sync validates idle sessions, reacts only to reachable network/foreground and removes listeners",
+          "level": "integración",
+          "matched": [
+            {
+              "component": "client",
+              "file": "services/__tests__/coordinators.test.tsx",
+              "fullName": "sync validates idle sessions, reacts only to reachable network/foreground and removes listeners",
+              "status": "passed",
+              "durationMs": 4,
+              "evidence": "client-results.json",
+              "failureMessages": []
+            }
+          ],
+          "status": "Aprobado"
+        },
+        {
+          "file": "services/__tests__/functionalResilience.test.ts",
+          "title": "MF06 offline report remains pending until connectivity and API acknowledgement",
+          "level": "integración",
+          "matched": [
+            {
+              "component": "client",
+              "file": "services/__tests__/functionalResilience.test.ts",
+              "fullName": "MF06 offline report remains pending until connectivity and API acknowledgement",
+              "status": "passed",
+              "durationMs": 74,
+              "evidence": "client-results.json",
+              "failureMessages": []
+            }
+          ],
+          "status": "Aprobado"
+        }
+      ]
+    },
+    "obtained": [
+      "passed: sync validates idle sessions, reacts only to reachable network/foreground and removes listeners",
+      "passed: MF06 offline report remains pending until connectivity and API acknowledgement"
+    ],
+    "evidence": [
+      "client-results.json"
+    ],
+    "status": "Validación parcial por nivel",
+    "endToEnd": {
+      "status": "No ejecutado",
+      "obtained": "No se lanzó una build de la aplicación conectada al backend.",
+      "evidence": []
+    },
+    "manual": {
+      "status": "No ejecutado",
+      "obtained": "Protocolo definido; no se registró una sesión manual de validación.",
+      "evidence": []
+    },
+    "physicalDevice": {
+      "status": "No ejecutado",
+      "obtained": "No se utilizó un teléfono ni wearable físico en esta campaña.",
+      "evidence": []
+    }
+  },
+  {
+    "id": "MF05",
+    "title": "Persistencia y recuperación tras cierre",
+    "requirements": [
+      "RF-10",
+      "RF-14.2",
+      "RF-18",
+      "RNF-05",
+      "RNF-02"
+    ],
+    "priority": "alta",
+    "objective": "Recuperar escrituras confirmadas y conservar su propietario al abrir otro proceso.",
+    "preconditions": [
+      "Sesión pausada, punto GPS, reporte pendiente y metadatos de mapa persistidos.",
+      "No desinstalar ni borrar datos al cerrar."
+    ],
+    "data": [
+      "Cuenta A y cuenta B; SQLite temporal dedicado.",
+      "ID de sesión, distancia y contenido del reporte registrados antes del cierre."
+    ],
+    "steps": [
+      "Persistir los datos y cerrar la aplicación completamente.",
+      "Reabrir con la misma cuenta y comparar estado, puntos, distancia y cola.",
+      "Cambiar a cuenta B y verificar aislamiento.",
+      "Repetir tras reinicio del dispositivo sin borrar datos."
+    ],
+    "expected": "Las escrituras confirmadas reaparecen sin cambiar de propietario; una sesión pausada no se convierte en otro recorrido.",
+    "selectors": [
+      {
+        "file": "services/__tests__/functionalResilience.test.ts",
+        "title": "MF05 committed route, points, report and map survive an independent Node process",
+        "level": "integración"
+      }
+    ],
+    "observation": "Se cierra la conexión y otro proceso Node abre el archivo SQLite y ejecuta los repositorios de lectura. Identidad y SMS son dobles. No se ensaya corte de energía, terminación durante una transacción ni reinicio del teléfono.",
+    "automated": {
+      "status": "Aprobado en el alcance automatizado",
+      "selections": [
+        {
+          "file": "services/__tests__/functionalResilience.test.ts",
+          "title": "MF05 committed route, points, report and map survive an independent Node process",
+          "level": "integración",
+          "matched": [
+            {
+              "component": "client",
+              "file": "services/__tests__/functionalResilience.test.ts",
+              "fullName": "MF05 committed route, points, report and map survive an independent Node process",
+              "status": "passed",
+              "durationMs": 1042,
+              "evidence": "client-results.json",
+              "failureMessages": []
+            }
+          ],
+          "status": "Aprobado"
+        }
+      ]
+    },
+    "obtained": [
+      "passed: MF05 committed route, points, report and map survive an independent Node process"
+    ],
+    "evidence": [
+      "client-results.json"
+    ],
+    "status": "Validación parcial por nivel",
+    "endToEnd": {
+      "status": "No ejecutado",
+      "obtained": "No se lanzó una build de la aplicación conectada al backend.",
+      "evidence": []
+    },
+    "manual": {
+      "status": "No ejecutado",
+      "obtained": "Protocolo definido; no se registró una sesión manual de validación.",
+      "evidence": []
+    },
+    "physicalDevice": {
+      "status": "No ejecutado",
+      "obtained": "No se utilizó un teléfono ni wearable físico en esta campaña.",
+      "evidence": []
+    }
+  },
+  {
+    "id": "MF06",
+    "title": "Reporte colaborativo creado offline",
+    "requirements": [
+      "RF-08",
+      "RF-10",
+      "RF-11.1",
+      "RNF-05"
+    ],
+    "priority": "alta",
+    "objective": "Conservar una observación local con sus datos y un estado de envío honesto.",
+    "preconditions": [
+      "Cuenta iniciada; sin red.",
+      "Ubicación válida o punto del trazado elegido y validado."
+    ],
+    "data": [
+      "Barro; severidad Media; estado Precaución; fecha de observación y coordenadas.",
+      "Cuenta propietaria A."
+    ],
+    "steps": [
+      "Crear reporte offline.",
+      "Consultar cola y reabrir el formulario o historial pertinente.",
+      "Restablecer red, provocar un error transitorio y luego permitir la aceptación.",
+      "Comparar contenido enviado y registro confirmado."
+    ],
+    "expected": "El reporte queda pendiente localmente, conserva el contenido y pasa a sincronizado tras la aceptación; el error mantiene posibilidad de reintento.",
+    "selectors": [
+      {
+        "file": "services/__tests__/functionalResilience.test.ts",
+        "title": "MF06 offline report remains pending until connectivity and API acknowledgement",
+        "level": "integración"
+      },
+      {
+        "file": "mobile/screens/__tests__/routeAndReportScreens.test.tsx",
+        "title": "a distant GPS fix cannot submit; a validated map choice can and local persistence failure remains visible",
+        "level": "integración"
+      }
+    ],
+    "observation": "La prueba nueva ejercita cola y SQL con transporte controlado; la prueba de pantalla verifica selección geográfica y error de persistencia. No constituyen un flujo de interfaz completo entre dos procesos.",
+    "automated": {
+      "status": "Aprobado en el alcance automatizado",
+      "selections": [
+        {
+          "file": "services/__tests__/functionalResilience.test.ts",
+          "title": "MF06 offline report remains pending until connectivity and API acknowledgement",
+          "level": "integración",
+          "matched": [
+            {
+              "component": "client",
+              "file": "services/__tests__/functionalResilience.test.ts",
+              "fullName": "MF06 offline report remains pending until connectivity and API acknowledgement",
+              "status": "passed",
+              "durationMs": 74,
+              "evidence": "client-results.json",
+              "failureMessages": []
+            }
+          ],
+          "status": "Aprobado"
+        },
+        {
+          "file": "mobile/screens/__tests__/routeAndReportScreens.test.tsx",
+          "title": "a distant GPS fix cannot submit; a validated map choice can and local persistence failure remains visible",
+          "level": "integración",
+          "matched": [
+            {
+              "component": "client",
+              "file": "mobile/screens/__tests__/routeAndReportScreens.test.tsx",
+              "fullName": "a distant GPS fix cannot submit; a validated map choice can and local persistence failure remains visible",
+              "status": "passed",
+              "durationMs": 262,
+              "evidence": "client-results.json",
+              "failureMessages": []
+            }
+          ],
+          "status": "Aprobado"
+        }
+      ]
+    },
+    "obtained": [
+      "passed: MF06 offline report remains pending until connectivity and API acknowledgement",
+      "passed: a distant GPS fix cannot submit; a validated map choice can and local persistence failure remains visible"
+    ],
+    "evidence": [
+      "client-results.json"
+    ],
+    "status": "Validación parcial por nivel",
+    "endToEnd": {
+      "status": "No ejecutado",
+      "obtained": "No se lanzó una build de la aplicación conectada al backend.",
+      "evidence": []
+    },
+    "manual": {
+      "status": "No ejecutado",
+      "obtained": "Protocolo definido; no se registró una sesión manual de validación.",
+      "evidence": []
+    },
+    "physicalDevice": {
+      "status": "No ejecutado",
+      "obtained": "No se utilizó un teléfono ni wearable físico en esta campaña.",
+      "evidence": []
+    }
+  },
+  {
+    "id": "MF07",
+    "title": "Sincronización diferida, reintentos y duplicados",
+    "requirements": [
+      "RF-11",
+      "RF-11.1",
+      "RNF-05.1"
+    ],
+    "priority": "crítica",
+    "objective": "Comprobar reintentos y un único efecto remoto por observación ante respuestas perdidas.",
+    "preconditions": [
+      "Operación local pendiente y backend de prueba aislado.",
+      "Posibilidad de aceptar la petición en el servidor y descartar su primera respuesta."
+    ],
+    "data": [
+      "Mismo contenido y fecha de observación en ambas peticiones.",
+      "SOS con el mismo client_event_id y actividad con la misma identidad de sesión."
+    ],
+    "steps": [
+      "Enviar una observación; hacer que el cliente no reciba su confirmación.",
+      "Reintentar la misma operación.",
+      "Contar registros remotos y comparar IDs.",
+      "Repetir el control con SOS y comprobar bloqueo de envíos concurrentes y backoff."
+    ],
+    "expected": "Un reintento de la misma observación produce un solo registro remoto y conserva su ID; la cola respeta el backoff y evita despachos simultáneos.",
+    "selectors": [
+      {
+        "file": "services/__tests__/syncResilience.test.ts",
+        "title": "concurrent sync calls share one dispatch",
+        "level": "integración"
+      },
+      {
+        "file": "services/__tests__/syncResilience.test.ts",
+        "title": "SOS retries with backoff beyond five failures and cannot be bulk discarded",
+        "level": "integración"
+      },
+      {
+        "file": "backend/tests/emergencyAlerts.test.js",
+        "title": "accepts an SOS without GPS, ignores claimed delivery and deduplicates retries",
+        "level": "integración"
+      },
+      {
+        "file": "backend/tests/functional/reportRetry.probe.js",
+        "title": "MF07 retrying a report after a lost response creates one remote observation",
+        "level": "integración"
+      }
+    ],
+    "observation": "La sonda ejecuta dos peticiones sobre la API y cuenta filas en pg-mem. La pérdida de respuesta se representa descartando el primer acuse: no se afirma haber cortado un enlace físico.",
+    "automated": {
+      "status": "Fallido",
+      "selections": [
+        {
+          "file": "services/__tests__/syncResilience.test.ts",
+          "title": "concurrent sync calls share one dispatch",
+          "level": "integración",
+          "matched": [
+            {
+              "component": "client",
+              "file": "services/__tests__/syncResilience.test.ts",
+              "fullName": "concurrent sync calls share one dispatch",
+              "status": "passed",
+              "durationMs": 3,
+              "evidence": "client-results.json",
+              "failureMessages": []
+            }
+          ],
+          "status": "Aprobado"
+        },
+        {
+          "file": "services/__tests__/syncResilience.test.ts",
+          "title": "SOS retries with backoff beyond five failures and cannot be bulk discarded",
+          "level": "integración",
+          "matched": [
+            {
+              "component": "client",
+              "file": "services/__tests__/syncResilience.test.ts",
+              "fullName": "SOS retries with backoff beyond five failures and cannot be bulk discarded",
+              "status": "passed",
+              "durationMs": 18,
+              "evidence": "client-results.json",
+              "failureMessages": []
+            }
+          ],
+          "status": "Aprobado"
+        },
+        {
+          "file": "backend/tests/emergencyAlerts.test.js",
+          "title": "accepts an SOS without GPS, ignores claimed delivery and deduplicates retries",
+          "level": "integración",
+          "matched": [
+            {
+              "component": "backend",
+              "file": "backend/tests/emergencyAlerts.test.js",
+              "fullName": "emergency alerts accepts an SOS without GPS, ignores claimed delivery and deduplicates retries",
+              "status": "passed",
+              "durationMs": 33,
+              "evidence": "backend-results.json",
+              "failureMessages": []
+            }
+          ],
+          "status": "Aprobado"
+        },
+        {
+          "file": "backend/tests/functional/reportRetry.probe.js",
+          "title": "MF07 retrying a report after a lost response creates one remote observation",
+          "level": "integración",
+          "matched": [
+            {
+              "component": "acceptance-probe",
+              "file": "backend/tests/functional/reportRetry.probe.js",
+              "fullName": "MF07 retrying a report after a lost response creates one remote observation",
+              "status": "failed",
+              "durationMs": 84,
+              "evidence": "probe-results.json",
+              "failureMessages": [
+                "Error: expect(received).toHaveLength(expected)\n\nExpected length: 1\nReceived length: 2\nReceived array:  [{\"id\": 1}, {\"id\": 2}]\n    at Object.<anonymous> (D:\\AppPFI\\MiSendero\\backend\\tests\\functional\\reportRetry.probe.js:25:21)"
+              ]
+            }
+          ],
+          "status": "Fallido"
+        }
+      ]
+    },
+    "obtained": [
+      "passed: concurrent sync calls share one dispatch",
+      "passed: SOS retries with backoff beyond five failures and cannot be bulk discarded",
+      "passed: emergency alerts accepts an SOS without GPS, ignores claimed delivery and deduplicates retries",
+      "failed: MF07 retrying a report after a lost response creates one remote observation"
+    ],
+    "evidence": [
+      "client-results.json",
+      "backend-results.json",
+      "probe-results.json"
+    ],
+    "status": "Fallo observado",
+    "endToEnd": {
+      "status": "No ejecutado",
+      "obtained": "No se lanzó una build de la aplicación conectada al backend.",
+      "evidence": []
+    },
+    "manual": {
+      "status": "No ejecutado",
+      "obtained": "Protocolo definido; no se registró una sesión manual de validación.",
+      "evidence": []
+    },
+    "physicalDevice": {
+      "status": "No ejecutado",
+      "obtained": "No se utilizó un teléfono ni wearable físico en esta campaña.",
+      "evidence": []
+    }
+  },
+  {
+    "id": "MF08",
+    "title": "Conflictos y reportes desactualizados",
+    "requirements": [
+      "RF-09",
+      "RF-11.2",
+      "RNF-02",
+      "RNF-07"
+    ],
+    "priority": "alta",
+    "objective": "Evitar que una copia local vieja prevalezca sobre una corrección, retiro o vencimiento aceptado por el servidor.",
+    "preconditions": [
+      "Dos cuentas y dos sesiones de la cuenta autora.",
+      "Mapa con reportes almacenados y servidor con una corrección o retiro posterior."
+    ],
+    "data": [
+      "Reporte vigente, reporte observado hace 40 días y reporte retirado.",
+      "Copia local anterior a la corrección; reloj fijado para el control de caducidad."
+    ],
+    "steps": [
+      "Leer y almacenar reporte.",
+      "Corregirlo o retirarlo desde otra sesión autorizada; intentar modificarlo desde otra cuenta.",
+      "Recuperar red y actualizar el paquete local.",
+      "Consultar reportes vigentes y comparar fechas de observación y recepción.",
+      "En dos sesiones del autor, enviar correcciones sucesivas y comprobar el último estado aceptado."
+    ],
+    "expected": "La lectura actualizada usa la respuesta del servidor; no reaparecen retirados o vencidos; una cuenta ajena no modifica el reporte. Las correcciones sucesivas se representan con el último estado aceptado, sin atribuir una fusión de ediciones.",
+    "selectors": [
+      {
+        "file": "services/__tests__/trailRepository.test.ts",
+        "title": "online report refresh replaces the offline copy, including withdrawals and corrections",
+        "level": "integración"
+      },
+      {
+        "file": "backend/tests/privacyControls.test.js",
+        "title": "reports omit author and distinguish old observations uploaded recently",
+        "level": "integración"
+      },
+      {
+        "file": "backend/tests/privacyControls.test.js",
+        "title": "withdrawal, correction, blocking, flags and admin moderation enforce ownership",
+        "level": "integración"
+      }
+    ],
+    "observation": "Hay evidencia de actualización, caducidad y autorización. No se ejecutó una carrera de ediciones entre dos instalaciones; las pruebas seleccionadas no acreditan una resolución transaccional de versiones concurrentes.",
+    "automated": {
+      "status": "Aprobado en el alcance automatizado",
+      "selections": [
+        {
+          "file": "services/__tests__/trailRepository.test.ts",
+          "title": "online report refresh replaces the offline copy, including withdrawals and corrections",
+          "level": "integración",
+          "matched": [
+            {
+              "component": "client",
+              "file": "services/__tests__/trailRepository.test.ts",
+              "fullName": "online report refresh replaces the offline copy, including withdrawals and corrections",
+              "status": "passed",
+              "durationMs": 1,
+              "evidence": "client-results.json",
+              "failureMessages": []
+            }
+          ],
+          "status": "Aprobado"
+        },
+        {
+          "file": "backend/tests/privacyControls.test.js",
+          "title": "reports omit author and distinguish old observations uploaded recently",
+          "level": "integración",
+          "matched": [
+            {
+              "component": "backend",
+              "file": "backend/tests/privacyControls.test.js",
+              "fullName": "reports omit author and distinguish old observations uploaded recently",
+              "status": "passed",
+              "durationMs": 219,
+              "evidence": "backend-results.json",
+              "failureMessages": []
+            }
+          ],
+          "status": "Aprobado"
+        },
+        {
+          "file": "backend/tests/privacyControls.test.js",
+          "title": "withdrawal, correction, blocking, flags and admin moderation enforce ownership",
+          "level": "integración",
+          "matched": [
+            {
+              "component": "backend",
+              "file": "backend/tests/privacyControls.test.js",
+              "fullName": "withdrawal, correction, blocking, flags and admin moderation enforce ownership",
+              "status": "passed",
+              "durationMs": 643,
+              "evidence": "backend-results.json",
+              "failureMessages": []
+            }
+          ],
+          "status": "Aprobado"
+        }
+      ]
+    },
+    "obtained": [
+      "passed: online report refresh replaces the offline copy, including withdrawals and corrections",
+      "passed: reports omit author and distinguish old observations uploaded recently",
+      "passed: withdrawal, correction, blocking, flags and admin moderation enforce ownership"
+    ],
+    "evidence": [
+      "client-results.json",
+      "backend-results.json"
+    ],
+    "status": "Validación parcial por nivel",
+    "endToEnd": {
+      "status": "No ejecutado",
+      "obtained": "No se lanzó una build de la aplicación conectada al backend.",
+      "evidence": []
+    },
+    "manual": {
+      "status": "No ejecutado",
+      "obtained": "Protocolo definido; no se registró una sesión manual de validación.",
+      "evidence": []
+    },
+    "physicalDevice": {
+      "status": "No ejecutado",
+      "obtained": "No se utilizó un teléfono ni wearable físico en esta campaña.",
+      "evidence": []
+    }
+  },
+  {
+    "id": "MF09",
+    "title": "GPS desactivado, permiso denegado y precisión insuficiente",
+    "requirements": [
+      "RF-06",
+      "RNF-06",
+      "RNF-07",
+      "RNF-10"
+    ],
+    "priority": "alta",
+    "objective": "Representar ubicación no disponible y descartar puntos inadecuados sin inventar coordenadas.",
+    "preconditions": [
+      "Ruta local consultable.",
+      "Control de permisos, proveedor GPS y muestras de ubicación."
+    ],
+    "data": [
+      "Permiso denegado; excepción del proveedor; precisión nula o 80 m; posición con más de 30 s y fecha invertida."
+    ],
+    "steps": [
+      "Denegar permiso y abrir recorrido.",
+      "Con permiso concedido, desactivar GPS en ajustes y volver.",
+      "Inyectar o registrar posiciones con precisión insuficiente y observar distancia y aviso.",
+      "Restablecer GPS y comprobar recuperación con una posición válida."
+    ],
+    "expected": "No se fabrican posiciones ni se suman puntos rechazados; la denegación no inicia lectura nativa; el mapa local continúa consultable.",
+    "selectors": [
+      {
+        "file": "services/__tests__/deviceLocation.test.ts",
+        "title": "denial prevents both a GPS read and a location subscription",
+        "level": "unitaria"
+      },
+      {
+        "file": "services/__tests__/deviceLocation.test.ts",
+        "title": "provider failure is not replaced with invented coordinates",
+        "level": "unitaria"
+      },
+      {
+        "file": "services/__tests__/coordinators.test.tsx",
+        "title": "GPS writer rejects stale, inaccurate, reversed and implausibly fast fixes",
+        "level": "integración"
+      }
+    ],
+    "observation": "El fallo del proveedor es un doble del límite nativo. No se acredita la detección del interruptor GPS de un modelo de teléfono concreto.",
+    "automated": {
+      "status": "Aprobado en el alcance automatizado",
+      "selections": [
+        {
+          "file": "services/__tests__/deviceLocation.test.ts",
+          "title": "denial prevents both a GPS read and a location subscription",
+          "level": "unitaria",
+          "matched": [
+            {
+              "component": "client",
+              "file": "services/__tests__/deviceLocation.test.ts",
+              "fullName": "denial prevents both a GPS read and a location subscription",
+              "status": "passed",
+              "durationMs": 2,
+              "evidence": "client-results.json",
+              "failureMessages": []
+            }
+          ],
+          "status": "Aprobado"
+        },
+        {
+          "file": "services/__tests__/deviceLocation.test.ts",
+          "title": "provider failure is not replaced with invented coordinates",
+          "level": "unitaria",
+          "matched": [
+            {
+              "component": "client",
+              "file": "services/__tests__/deviceLocation.test.ts",
+              "fullName": "provider failure is not replaced with invented coordinates",
+              "status": "passed",
+              "durationMs": 11,
+              "evidence": "client-results.json",
+              "failureMessages": []
+            }
+          ],
+          "status": "Aprobado"
+        },
+        {
+          "file": "services/__tests__/coordinators.test.tsx",
+          "title": "GPS writer rejects stale, inaccurate, reversed and implausibly fast fixes",
+          "level": "integración",
+          "matched": [
+            {
+              "component": "client",
+              "file": "services/__tests__/coordinators.test.tsx",
+              "fullName": "GPS writer rejects stale, inaccurate, reversed and implausibly fast fixes",
+              "status": "passed",
+              "durationMs": 6,
+              "evidence": "client-results.json",
+              "failureMessages": []
+            }
+          ],
+          "status": "Aprobado"
+        }
+      ]
+    },
+    "obtained": [
+      "passed: denial prevents both a GPS read and a location subscription",
+      "passed: provider failure is not replaced with invented coordinates",
+      "passed: GPS writer rejects stale, inaccurate, reversed and implausibly fast fixes"
+    ],
+    "evidence": [
+      "client-results.json"
+    ],
+    "status": "Validación parcial por nivel",
+    "endToEnd": {
+      "status": "No ejecutado",
+      "obtained": "No se lanzó una build de la aplicación conectada al backend.",
+      "evidence": []
+    },
+    "manual": {
+      "status": "No ejecutado",
+      "obtained": "Protocolo definido; no se registró una sesión manual de validación.",
+      "evidence": []
+    },
+    "physicalDevice": {
+      "status": "No ejecutado",
+      "obtained": "No se utilizó un teléfono ni wearable físico en esta campaña.",
+      "evidence": []
+    }
+  },
+  {
+    "id": "MF10",
+    "title": "Descarga incompleta y almacenamiento insuficiente",
+    "requirements": [
+      "RF-03.1",
+      "RF-04.1",
+      "RNF-05",
+      "RNF-07"
+    ],
+    "priority": "alta",
+    "objective": "Impedir que una descarga parcial o un error de escritura habiliten un mapa aparentemente completo.",
+    "preconditions": [
+      "Cuenta y ruta válida.",
+      "Filesystem controlado o volumen de prueba limitado; no llenar el almacenamiento personal."
+    ],
+    "data": [
+      "Error de descarga; tile corrupto; error ENOSPC; mapa previamente completo."
+    ],
+    "steps": [
+      "Interrumpir descarga antes del último tile.",
+      "Intentar abrir el paquete.",
+      "Repetir con error de espacio y revisar estado persistido.",
+      "Liberar espacio de prueba, descargar nuevamente y verificar el paquete."
+    ],
+    "expected": "El paquete incompleto no se abre como disponible; el fallo es visible y permite recuperarse mediante nueva descarga.",
+    "selectors": [
+      {
+        "file": "services/__tests__/functionalResilience.test.ts",
+        "title": "MF10 ENOSPC cannot advertise a downloaded map as usable",
+        "level": "integración"
+      },
+      {
+        "file": "services/__tests__/offlineElevation.test.ts",
+        "title": "tile failure still preserves elevation, without marking the map complete",
+        "level": "integración"
+      },
+      {
+        "file": "mobile/screens/__tests__/offlineDownloadAndElevation.test.tsx",
+        "title": "download list verifies local files again before opening and offers redownload for a damaged map",
+        "level": "integración"
+      }
+    ],
+    "observation": "ENOSPC se inyecta en el adaptador de descarga; se comprueba el estado real en SQLite. No se agotó un disco ni se ensayó el error nativo de Expo.",
+    "automated": {
+      "status": "Aprobado en el alcance automatizado",
+      "selections": [
+        {
+          "file": "services/__tests__/functionalResilience.test.ts",
+          "title": "MF10 ENOSPC cannot advertise a downloaded map as usable",
+          "level": "integración",
+          "matched": [
+            {
+              "component": "client",
+              "file": "services/__tests__/functionalResilience.test.ts",
+              "fullName": "MF10 ENOSPC cannot advertise a downloaded map as usable",
+              "status": "passed",
+              "durationMs": 195,
+              "evidence": "client-results.json",
+              "failureMessages": []
+            }
+          ],
+          "status": "Aprobado"
+        },
+        {
+          "file": "services/__tests__/offlineElevation.test.ts",
+          "title": "tile failure still preserves elevation, without marking the map complete",
+          "level": "integración",
+          "matched": [
+            {
+              "component": "client",
+              "file": "services/__tests__/offlineElevation.test.ts",
+              "fullName": "tile failure still preserves elevation, without marking the map complete",
+              "status": "passed",
+              "durationMs": 12,
+              "evidence": "client-results.json",
+              "failureMessages": []
+            }
+          ],
+          "status": "Aprobado"
+        },
+        {
+          "file": "mobile/screens/__tests__/offlineDownloadAndElevation.test.tsx",
+          "title": "download list verifies local files again before opening and offers redownload for a damaged map",
+          "level": "integración",
+          "matched": [
+            {
+              "component": "client",
+              "file": "mobile/screens/__tests__/offlineDownloadAndElevation.test.tsx",
+              "fullName": "download list verifies local files again before opening and offers redownload for a damaged map",
+              "status": "passed",
+              "durationMs": 33,
+              "evidence": "client-results.json",
+              "failureMessages": []
+            }
+          ],
+          "status": "Aprobado"
+        }
+      ]
+    },
+    "obtained": [
+      "passed: MF10 ENOSPC cannot advertise a downloaded map as usable",
+      "passed: tile failure still preserves elevation, without marking the map complete",
+      "passed: download list verifies local files again before opening and offers redownload for a damaged map"
+    ],
+    "evidence": [
+      "client-results.json"
+    ],
+    "status": "Validación parcial por nivel",
+    "endToEnd": {
+      "status": "No ejecutado",
+      "obtained": "No se lanzó una build de la aplicación conectada al backend.",
+      "evidence": []
+    },
+    "manual": {
+      "status": "No ejecutado",
+      "obtained": "Protocolo definido; no se registró una sesión manual de validación.",
+      "evidence": []
+    },
+    "physicalDevice": {
+      "status": "No ejecutado",
+      "obtained": "No se utilizó un teléfono ni wearable físico en esta campaña.",
+      "evidence": []
+    }
+  },
+  {
+    "id": "MF11",
+    "title": "Batería baja y restricciones de segundo plano",
+    "requirements": [
+      "RNF-06",
+      "RNF-07",
+      "RNF-10"
+    ],
+    "priority": "alta",
+    "objective": "Presentar el nivel conocido y respetar el ciclo de vida sin suscripciones o puntos residuales.",
+    "preconditions": [
+      "Recorrido en primer plano y batería consultable.",
+      "Equipo de prueba con ahorro de energía y suspensión configurables."
+    ],
+    "data": [
+      "Nivel 15%; lectura no disponible; fallo de consulta.",
+      "Transiciones active → background → active."
+    ],
+    "steps": [
+      "Abrir preparación con batería baja.",
+      "Repetir con lectura ausente o fallida.",
+      "Iniciar recorrido, enviar a segundo plano y bloquear pantalla.",
+      "Activar restricción de batería y volver a primer plano; observar estado y suscripciones."
+    ],
+    "expected": "La batería desconocida se muestra como no disponible; al pasar a segundo plano se retira el watcher según RNF-06. Volver no crea varios escritores ni transforma el intervalo sin medición en distancia recorrida.",
+    "selectors": [
+      {
+        "file": "mobile/screens/__tests__/TrailStartTestingMode.test.tsx",
+        "title": "MF11 battery reading",
+        "level": "integración"
+      },
+      {
+        "file": "services/__tests__/coordinators.test.tsx",
+        "title": "backgrounding or switching account prevents further points from the old route",
+        "level": "integración"
+      }
+    ],
+    "observation": "Se prueban consultas y eventos controlados. No se mide autonomía, consumo, supervivencia al ahorro de energía ni tracking continuo en segundo plano. La checklist de batería es informativa; el umbral visual de 60% no bloquea por sí solo el inicio.",
+    "automated": {
+      "status": "Fallido",
+      "selections": [
+        {
+          "file": "mobile/screens/__tests__/TrailStartTestingMode.test.tsx",
+          "title": "MF11 battery reading",
+          "level": "integración",
+          "matched": [
+            {
+              "component": "client",
+              "file": "mobile/screens/__tests__/TrailStartTestingMode.test.tsx",
+              "fullName": "MF11 battery reading -1 is explicit and preserves the route preparation screen",
+              "status": "passed",
+              "durationMs": 68,
+              "evidence": "client-results.json",
+              "failureMessages": []
+            },
+            {
+              "component": "client",
+              "file": "mobile/screens/__tests__/TrailStartTestingMode.test.tsx",
+              "fullName": "MF11 battery reading null is explicit and preserves the route preparation screen",
+              "status": "passed",
+              "durationMs": 36,
+              "evidence": "client-results.json",
+              "failureMessages": []
+            },
+            {
+              "component": "client",
+              "file": "mobile/screens/__tests__/TrailStartTestingMode.test.tsx",
+              "fullName": "MF11 battery reading 0.15 is explicit and preserves the route preparation screen",
+              "status": "failed",
+              "durationMs": 2,
+              "evidence": "client-results.json",
+              "failureMessages": [
+                "Error: Can't access .root on unmounted test renderer\n    at Object.get [as root] (D:\\AppPFI\\MiSendero\\node_modules\\react-test-renderer\\cjs\\react-test-renderer.development.js:17446:19)\n    at root (D:\\AppPFI\\MiSendero\\mobile\\screens\\__tests__\\TrailStartTestingMode.test.tsx:53:44)\n    at buttons (D:\\AppPFI\\MiSendero\\mobile\\screens\\__tests__\\TrailStartTestingMode.test.tsx:57:42)\n    at Generator.next (<anonymous>)\n    at asyncGeneratorStep (D:\\AppPFI\\MiSendero\\node_modules\\@babel\\runtime\\helpers\\asyncToGenerator.js:3:17)\n    at _next (D:\\AppPFI\\MiSendero\\node_modules\\@babel\\runtime\\helpers\\asyncToGenerator.js:17:9)"
+              ]
+            }
+          ],
+          "status": "Fallido"
+        },
+        {
+          "file": "services/__tests__/coordinators.test.tsx",
+          "title": "backgrounding or switching account prevents further points from the old route",
+          "level": "integración",
+          "matched": [
+            {
+              "component": "client",
+              "file": "services/__tests__/coordinators.test.tsx",
+              "fullName": "backgrounding or switching account prevents further points from the old route",
+              "status": "passed",
+              "durationMs": 2,
+              "evidence": "client-results.json",
+              "failureMessages": []
+            }
+          ],
+          "status": "Aprobado"
+        }
+      ]
+    },
+    "obtained": [
+      "passed: MF11 battery reading -1 is explicit and preserves the route preparation screen",
+      "passed: MF11 battery reading null is explicit and preserves the route preparation screen",
+      "failed: MF11 battery reading 0.15 is explicit and preserves the route preparation screen",
+      "passed: backgrounding or switching account prevents further points from the old route"
+    ],
+    "evidence": [
+      "client-results.json"
+    ],
+    "status": "Fallo observado",
+    "endToEnd": {
+      "status": "No ejecutado",
+      "obtained": "No se lanzó una build de la aplicación conectada al backend.",
+      "evidence": []
+    },
+    "manual": {
+      "status": "No ejecutado",
+      "obtained": "Protocolo definido; no se registró una sesión manual de validación.",
+      "evidence": []
+    },
+    "physicalDevice": {
+      "status": "No ejecutado",
+      "obtained": "No se utilizó un teléfono ni wearable físico en esta campaña.",
+      "evidence": []
+    }
+  },
+  {
+    "id": "MF12",
+    "title": "SOS sin cobertura y confirmaciones de envío",
+    "requirements": [
+      "RF-12",
+      "RF-12.1",
+      "RF-12.2",
+      "RNF-03",
+      "RNF-10"
+    ],
+    "priority": "crítica",
+    "objective": "Mantener un SOS pendiente y distinguir registro, apertura de canal y entrega al contacto.",
+    "preconditions": [
+      "Instalación dedicada; contactos ficticios.",
+      "Sin red IP y sin servicio celular; no efectuar llamadas o avisos a servicios de emergencia reales."
+    ],
+    "data": [
+      "SOS sin GPS; última posición fechada; client_event_id constante.",
+      "Adaptador SMS cancelado o no disponible y respuesta API registered."
+    ],
+    "steps": [
+      "Sin cobertura, confirmar creación de SOS en entorno de prueba.",
+      "Consultar estado local y texto mostrado.",
+      "Cancelar compositor SMS; comprobar que abrirlo no declara entrega.",
+      "Restablecer sólo red IP y reintentar; comparar ID y estado de registro."
+    ],
+    "expected": "El evento se conserva pendiente sin inventar ubicación ni entrega. Un acuse HTTP se identifica como registro; reintentar conserva identidad.",
+    "selectors": [
+      {
+        "file": "services/__tests__/emergencyAlerts.test.ts",
+        "title": "persists SOS without authentication or GPS and retries the same event without duplication",
+        "level": "integración"
+      },
+      {
+        "file": "backend/tests/emergencyAlerts.test.js",
+        "title": "accepts an SOS without GPS, ignores claimed delivery and deduplicates retries",
+        "level": "integración"
+      },
+      {
+        "file": "services/__tests__/simulatedSos.test.tsx",
+        "title": "MF12 offline SOS with SMS result",
+        "level": "integración"
+      }
+    ],
+    "observation": "Las pruebas ejecutadas no contactan personas ni servicios reales. La ausencia de señal celular y la interfaz nativa SMS requieren dispositivo y canal de ensayo dedicado.",
+    "automated": {
+      "status": "Aprobado en el alcance automatizado",
+      "selections": [
+        {
+          "file": "services/__tests__/emergencyAlerts.test.ts",
+          "title": "persists SOS without authentication or GPS and retries the same event without duplication",
+          "level": "integración",
+          "matched": [
+            {
+              "component": "client",
+              "file": "services/__tests__/emergencyAlerts.test.ts",
+              "fullName": "persists SOS without authentication or GPS and retries the same event without duplication",
+              "status": "passed",
+              "durationMs": 4,
+              "evidence": "client-results.json",
+              "failureMessages": []
+            }
+          ],
+          "status": "Aprobado"
+        },
+        {
+          "file": "backend/tests/emergencyAlerts.test.js",
+          "title": "accepts an SOS without GPS, ignores claimed delivery and deduplicates retries",
+          "level": "integración",
+          "matched": [
+            {
+              "component": "backend",
+              "file": "backend/tests/emergencyAlerts.test.js",
+              "fullName": "emergency alerts accepts an SOS without GPS, ignores claimed delivery and deduplicates retries",
+              "status": "passed",
+              "durationMs": 33,
+              "evidence": "backend-results.json",
+              "failureMessages": []
+            }
+          ],
+          "status": "Aprobado"
+        },
+        {
+          "file": "services/__tests__/simulatedSos.test.tsx",
+          "title": "MF12 offline SOS with SMS result",
+          "level": "integración",
+          "matched": [
+            {
+              "component": "client",
+              "file": "services/__tests__/simulatedSos.test.tsx",
+              "fullName": "MF12 offline SOS with SMS result cancelled never confirms remote registration or delivery",
+              "status": "passed",
+              "durationMs": 159,
+              "evidence": "client-results.json",
+              "failureMessages": []
+            },
+            {
+              "component": "client",
+              "file": "services/__tests__/simulatedSos.test.tsx",
+              "fullName": "MF12 offline SOS with SMS result sent never confirms remote registration or delivery",
+              "status": "passed",
+              "durationMs": 125,
+              "evidence": "client-results.json",
+              "failureMessages": []
+            }
+          ],
+          "status": "Aprobado"
+        }
+      ]
+    },
+    "obtained": [
+      "passed: persists SOS without authentication or GPS and retries the same event without duplication",
+      "passed: emergency alerts accepts an SOS without GPS, ignores claimed delivery and deduplicates retries",
+      "passed: MF12 offline SOS with SMS result cancelled never confirms remote registration or delivery",
+      "passed: MF12 offline SOS with SMS result sent never confirms remote registration or delivery"
+    ],
+    "evidence": [
+      "client-results.json",
+      "backend-results.json"
+    ],
+    "status": "Validación parcial por nivel",
+    "endToEnd": {
+      "status": "No ejecutado",
+      "obtained": "No se lanzó una build de la aplicación conectada al backend.",
+      "evidence": []
+    },
+    "manual": {
+      "status": "No ejecutado",
+      "obtained": "Protocolo definido; no se registró una sesión manual de validación.",
+      "evidence": []
+    },
+    "physicalDevice": {
+      "status": "No ejecutado",
+      "obtained": "No se utilizó un teléfono ni wearable físico en esta campaña.",
+      "evidence": []
+    }
+  },
+  {
+    "id": "MF13",
+    "title": "Lecturas fisiológicas faltantes o incorrectas",
+    "requirements": [
+      "RF-19",
+      "RF-20",
+      "RNF-02.1",
+      "RNF-02.2",
+      "RNF-07"
+    ],
+    "priority": "alta",
+    "objective": "Conservar procedencia y antigüedad y abstenerse ante datos no evaluables.",
+    "preconditions": [
+      "Consentimiento y permisos de salud configurables.",
+      "Fuente de ensayo identificada; navegación local disponible."
+    ],
+    "data": [
+      "SpO2 y velocidad nulas; pulso NaN; muestra con 301 s de antigüedad o 60 s futura.",
+      "Dispositivo compatible sin registros o con permiso revocado."
+    ],
+    "steps": [
+      "Consultar métricas sin lecturas.",
+      "Presentar muestras incompletas, caducas e inválidas.",
+      "Revocar permiso o desconectar la fuente y volver al recorrido.",
+      "Verificar texto, procedencia y ausencia de datos fabricados."
+    ],
+    "expected": "Se informa ausencia o análisis limitado; no se atribuye confianza ni medición válida a datos incorrectos; se conserva acceso al recorrido.",
+    "selectors": [
+      {
+        "file": "services/__tests__/wearableMetrics.test.ts",
+        "title": "does not present missing oxygen or speed as stable measured values",
+        "level": "unitaria"
+      },
+      {
+        "file": "services/__tests__/wearableMetrics.test.ts",
+        "title": "does not infer from stale, future, or invalid pulse readings",
+        "level": "unitaria"
+      },
+      {
+        "file": "services/__tests__/nativeWearablePlatforms.test.ts",
+        "title": "missing or failed Android reads do not fabricate a pulse; oxygen-only samples retain their actual timestamp",
+        "level": "unitaria"
+      }
+    ],
+    "observation": "Las muestras son fixtures; HealthKit y Health Connect se representan con dobles. No se compararon mediciones de wearables ni se validó una interpretación clínica.",
+    "automated": {
+      "status": "Aprobado en el alcance automatizado",
+      "selections": [
+        {
+          "file": "services/__tests__/wearableMetrics.test.ts",
+          "title": "does not present missing oxygen or speed as stable measured values",
+          "level": "unitaria",
+          "matched": [
+            {
+              "component": "client",
+              "file": "services/__tests__/wearableMetrics.test.ts",
+              "fullName": "predictWearableHealth does not present missing oxygen or speed as stable measured values",
+              "status": "passed",
+              "durationMs": 2,
+              "evidence": "client-results.json",
+              "failureMessages": []
+            }
+          ],
+          "status": "Aprobado"
+        },
+        {
+          "file": "services/__tests__/wearableMetrics.test.ts",
+          "title": "does not infer from stale, future, or invalid pulse readings",
+          "level": "unitaria",
+          "matched": [
+            {
+              "component": "client",
+              "file": "services/__tests__/wearableMetrics.test.ts",
+              "fullName": "predictWearableHealth does not infer from stale, future, or invalid pulse readings",
+              "status": "passed",
+              "durationMs": 1,
+              "evidence": "client-results.json",
+              "failureMessages": []
+            }
+          ],
+          "status": "Aprobado"
+        },
+        {
+          "file": "services/__tests__/nativeWearablePlatforms.test.ts",
+          "title": "missing or failed Android reads do not fabricate a pulse; oxygen-only samples retain their actual timestamp",
+          "level": "unitaria",
+          "matched": [
+            {
+              "component": "client",
+              "file": "services/__tests__/nativeWearablePlatforms.test.ts",
+              "fullName": "missing or failed Android reads do not fabricate a pulse; oxygen-only samples retain their actual timestamp",
+              "status": "passed",
+              "durationMs": 3,
+              "evidence": "client-results.json",
+              "failureMessages": []
+            }
+          ],
+          "status": "Aprobado"
+        }
+      ]
+    },
+    "obtained": [
+      "passed: predictWearableHealth does not present missing oxygen or speed as stable measured values",
+      "passed: predictWearableHealth does not infer from stale, future, or invalid pulse readings",
+      "passed: missing or failed Android reads do not fabricate a pulse; oxygen-only samples retain their actual timestamp"
+    ],
+    "evidence": [
+      "client-results.json"
+    ],
+    "status": "Validación parcial por nivel",
+    "endToEnd": {
+      "status": "No ejecutado",
+      "obtained": "No se lanzó una build de la aplicación conectada al backend.",
+      "evidence": []
+    },
+    "manual": {
+      "status": "No ejecutado",
+      "obtained": "Protocolo definido; no se registró una sesión manual de validación.",
+      "evidence": []
+    },
+    "physicalDevice": {
+      "status": "No ejecutado",
+      "obtained": "No se utilizó un teléfono ni wearable físico en esta campaña.",
+      "evidence": []
+    }
+  },
+  {
+    "id": "MF14",
+    "title": "Fallo de IA y continuidad de navegación básica",
+    "requirements": [
+      "RF-17",
+      "RF-20",
+      "RF-20.2",
+      "RNF-01",
+      "RNF-07"
+    ],
+    "priority": "alta",
+    "objective": "Mantener disponibles los servicios de navegación local cuando falla una recomendación o los datos no permiten inferir.",
+    "preconditions": [
+      "Mapa verificado y cuenta de prueba.",
+      "Servicio IA controlado con respuesta de error y modelo con política de habilitación."
+    ],
+    "data": [
+      "Error AI provider unavailable; entrada NaN; modelo no aprobado.",
+      "Ruta y punto GPS válidos."
+    ],
+    "steps": [
+      "Provocar fallo de la recomendación.",
+      "Abrir el mapa local y persistir un punto de recorrido.",
+      "Consultar inferencia con entrada no válida y modelo no habilitado.",
+      "Volver a navegación y comprobar su estado."
+    ],
+    "expected": "Se informa el fallo o la abstención; mapa y persistencia GPS continúan disponibles y no se fabrica una recomendación.",
+    "selectors": [
+      {
+        "file": "services/__tests__/functionalResilience.test.ts",
+        "title": "MF14 failed AI request leaves verified offline navigation and GPS persistence usable",
+        "level": "integración"
+      },
+      {
+        "file": "ai/__tests__/inferenceEngine.test.ts",
+        "title": "forests run only with deployment approval and complete inputs",
+        "level": "unitaria"
+      },
+      {
+        "file": "mobile/screens/__tests__/DiscoverTrailScreen.test.tsx",
+        "title": "loading blocks repeat submissions, then an offline error preserves answers for retry",
+        "level": "integración"
+      }
+    ],
+    "observation": "La independencia se comprueba entre servicios y mediante pantallas aisladas. No se fuerza una excepción arbitraria dentro de un modelo mientras corre una build nativa ni se acredita exactitud predictiva.",
+    "automated": {
+      "status": "Aprobado en el alcance automatizado",
+      "selections": [
+        {
+          "file": "services/__tests__/functionalResilience.test.ts",
+          "title": "MF14 failed AI request leaves verified offline navigation and GPS persistence usable",
+          "level": "integración",
+          "matched": [
+            {
+              "component": "client",
+              "file": "services/__tests__/functionalResilience.test.ts",
+              "fullName": "MF14 failed AI request leaves verified offline navigation and GPS persistence usable",
+              "status": "passed",
+              "durationMs": 57,
+              "evidence": "client-results.json",
+              "failureMessages": []
+            }
+          ],
+          "status": "Aprobado"
+        },
+        {
+          "file": "ai/__tests__/inferenceEngine.test.ts",
+          "title": "forests run only with deployment approval and complete inputs",
+          "level": "unitaria",
+          "matched": [
+            {
+              "component": "client",
+              "file": "ai/__tests__/inferenceEngine.test.ts",
+              "fullName": "public ground-truth deployment policy forests run only with deployment approval and complete inputs",
+              "status": "passed",
+              "durationMs": 2,
+              "evidence": "client-results.json",
+              "failureMessages": []
+            }
+          ],
+          "status": "Aprobado"
+        },
+        {
+          "file": "mobile/screens/__tests__/DiscoverTrailScreen.test.tsx",
+          "title": "loading blocks repeat submissions, then an offline error preserves answers for retry",
+          "level": "integración",
+          "matched": [
+            {
+              "component": "client",
+              "file": "mobile/screens/__tests__/DiscoverTrailScreen.test.tsx",
+              "fullName": "loading blocks repeat submissions, then an offline error preserves answers for retry",
+              "status": "passed",
+              "durationMs": 104,
+              "evidence": "client-results.json",
+              "failureMessages": []
+            }
+          ],
+          "status": "Aprobado"
+        }
+      ]
+    },
+    "obtained": [
+      "passed: MF14 failed AI request leaves verified offline navigation and GPS persistence usable",
+      "passed: public ground-truth deployment policy forests run only with deployment approval and complete inputs",
+      "passed: loading blocks repeat submissions, then an offline error preserves answers for retry"
+    ],
+    "evidence": [
+      "client-results.json"
+    ],
+    "status": "Validación parcial por nivel",
+    "endToEnd": {
+      "status": "No ejecutado",
+      "obtained": "No se lanzó una build de la aplicación conectada al backend.",
+      "evidence": []
+    },
+    "manual": {
+      "status": "No ejecutado",
+      "obtained": "Protocolo definido; no se registró una sesión manual de validación.",
+      "evidence": []
+    },
+    "physicalDevice": {
+      "status": "No ejecutado",
+      "obtained": "No se utilizó un teléfono ni wearable físico en esta campaña.",
+      "evidence": []
+    }
+  },
+  {
+    "id": "MF15",
+    "title": "Eliminación de cuenta y datos",
+    "requirements": [
+      "RF-14.1",
+      "RF-14.2",
+      "RNF-02",
+      "RNF-07"
+    ],
+    "priority": "crítica",
+    "objective": "Eliminar datos de la cuenta autorizada y evitar reenvíos con credenciales revocadas.",
+    "preconditions": [
+      "Cuenta desechable A y cuenta de control B.",
+      "Datos de actividad, reportes, contacto y cola asociados a A; contraseña conocida."
+    ],
+    "data": [
+      "Contraseña incorrecta y correcta; dos tokens de A.",
+      "Respuesta de eliminación perdida y posterior reintento."
+    ],
+    "steps": [
+      "Solicitar baja con contraseña incorrecta y comprobar que la cuenta siga utilizable.",
+      "Solicitarla con contraseña válida; descartar el acuse y reintentar.",
+      "Comprobar datos locales/remotos y rechazos de credenciales anteriores.",
+      "Comprobar que B conserve sus datos y que la cola de A no vuelva a enviarse."
+    ],
+    "expected": "Sólo la baja autorizada elimina datos; una respuesta incierta suspende envíos de A; la confirmación limpia su información y las credenciales dejan de autorizar operaciones.",
+    "selectors": [
+      {
+        "file": "services/__tests__/privacyControls.test.ts",
+        "title": "a lost deletion response suspends all queue writes and retries; successful retry cleans only that owner",
+        "level": "integración"
+      },
+      {
+        "file": "backend/tests/privacyControls.test.js",
+        "title": "deletion requires password and removes names, activities, contact copies, jobs and all installation credentials",
+        "level": "integración"
+      }
+    ],
+    "observation": "La eliminación está implementada. Se vincula con autenticación y aislamiento; el catálogo RF no posee un identificador específico de baja. No se acredita eliminación física en backups o proveedores externos.",
+    "automated": {
+      "status": "Aprobado en el alcance automatizado",
+      "selections": [
+        {
+          "file": "services/__tests__/privacyControls.test.ts",
+          "title": "a lost deletion response suspends all queue writes and retries; successful retry cleans only that owner",
+          "level": "integración",
+          "matched": [
+            {
+              "component": "client",
+              "file": "services/__tests__/privacyControls.test.ts",
+              "fullName": "a lost deletion response suspends all queue writes and retries; successful retry cleans only that owner",
+              "status": "passed",
+              "durationMs": 26,
+              "evidence": "client-results.json",
+              "failureMessages": []
+            }
+          ],
+          "status": "Aprobado"
+        },
+        {
+          "file": "backend/tests/privacyControls.test.js",
+          "title": "deletion requires password and removes names, activities, contact copies, jobs and all installation credentials",
+          "level": "integración",
+          "matched": [
+            {
+              "component": "backend",
+              "file": "backend/tests/privacyControls.test.js",
+              "fullName": "deletion requires password and removes names, activities, contact copies, jobs and all installation credentials",
+              "status": "passed",
+              "durationMs": 700,
+              "evidence": "backend-results.json",
+              "failureMessages": []
+            }
+          ],
+          "status": "Aprobado"
+        }
+      ]
+    },
+    "obtained": [
+      "passed: a lost deletion response suspends all queue writes and retries; successful retry cleans only that owner",
+      "passed: deletion requires password and removes names, activities, contact copies, jobs and all installation credentials"
+    ],
+    "evidence": [
+      "client-results.json",
+      "backend-results.json"
+    ],
+    "status": "Validación parcial por nivel",
+    "endToEnd": {
+      "status": "No ejecutado",
+      "obtained": "No se lanzó una build de la aplicación conectada al backend.",
+      "evidence": []
+    },
+    "manual": {
+      "status": "No ejecutado",
+      "obtained": "Protocolo definido; no se registró una sesión manual de validación.",
+      "evidence": []
+    },
+    "physicalDevice": {
+      "status": "No ejecutado",
+      "obtained": "No se utilizó un teléfono ni wearable físico en esta campaña.",
+      "evidence": []
+    }
+  }
+]

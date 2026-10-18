@@ -1,0 +1,44 @@
+{
+  "date": "2026-10-17",
+  "reason": "Faculty feedback supplied by author; explicit quantitative goal and separation of project metric",
+  "changes": [
+    {
+      "file": "chapters/chapter04.tex",
+      "before_sha256": "79f949a85fbf0b2c833ef3b8fcbb296f75e8d82fb6c8ec8c274812355ca9ec76",
+      "after_sha256": "b56589dbe71aad61ed253726827c01a174bebc4d89fbb1cb095518986b41a20b"
+    },
+    {
+      "file": "tables/requirements_rnf.tex",
+      "before_sha256": "651d668b319bcee46180803c817b67996d8949b462dfdec4b744729222938c71",
+      "after_sha256": "03a78ffddcee299539bd67221bb71ed2e905783014ee6cdf2d588fca84befa8e"
+    },
+    {
+      "file": "tables/requirements_nfr_measurement.tex",
+      "before_sha256": "eb9d6d3ec4448d68d15b9cda0ab7aab6fe8d365c8c7d26988e81ecc870792a9f",
+      "after_sha256": "1e8a83c1ff0e03dc0f97cbc377cb2aee9cf50f76f8590c7b8553e47823338cbb"
+    }
+  ],
+  "measurement_reports_unchanged": true,
+  "edit_scope_verified": true,
+  "verification": {
+    "chapter_only_method_paragraph": true,
+    "requirements_only_rnf11_rows": true
+  },
+  "pdf": {
+    "file": "D:/Importante/UADE/PFI/PFI25/main.pdf",
+    "sha256": "bfc7a893d3373bef7d4c0d1de04e5009d6ccc05597664eec6101bdf57d2e95ef",
+    "compile_passes": 2,
+    "compile_exit_codes": [
+      0,
+      0
+    ],
+    "total_pages": 154,
+    "visually_reviewed_pdf_pages": [
+      46,
+      49,
+      115,
+      116,
+      118
+    ]
+  }
+}

@@ -16,6 +16,14 @@ from train_public import baseline_for, group_split
 
 
 class ArgentinaSourceTests(unittest.TestCase):
+    def test_distance_scanning_keeps_explicit_units_and_rejects_malformed_numbers(self):
+        for text, expected in (("1.5 km", 1.5), ("1500 mts", 1.5), ("Distancia:500m", 0.5)):
+            with self.subTest(value=text):
+                self.assertEqual(argentina_sources.distance_km(text), expected)
+        for text in ("1:30 m", ".5 km", "1.2.3 km", "2 km o 3 km"):
+            with self.subTest(value=text), self.assertRaises(ValueError):
+                argentina_sources.distance_km(text)
+
     def test_numeric_parsers_reject_long_malformed_values_without_partial_matches(self):
         for text in ("1" * 50000 + " unknown", "1" + " " * 50000 + "unknown"):
             with self.subTest(value=text[:20]), self.assertRaises(ValueError):
@@ -33,6 +41,16 @@ class ArgentinaSourceTests(unittest.TestCase):
         self.assertFalse(discarded)
         self.assertEqual(rows[0]["label"], "media-alta")
         self.assertEqual(rows[0]["lineage"]["published_label"], "media / alta")
+
+    def test_duration_scanning_accepts_explicit_formats_without_reinterpreting_malformed_numbers(self):
+        for text, expected in (("1,5 h", 90), ("1.5 horas", 90), ("2 hs 15 minutos", 135),
+                               ("Duración:30 min", 30), ("2h", 120), ("1:05 horas", 65)):
+            with self.subTest(value=text):
+                self.assertEqual(argentina_sources.duration_minutes(text), expected)
+        for text in ("1:99 horas", "1:999 horas", "1.2.3 h", "30:00 min", "2 h o 3 h"):
+            with self.subTest(value=text), self.assertRaises(ValueError):
+                argentina_sources.duration_minutes(text)
+        self.assertEqual(argentina_sources.duration_minutes("1" * 50000 + "unknown 5 min"), 5)
 
     def parse(self, html, exclusions=None):
         with tempfile.TemporaryDirectory() as temp:

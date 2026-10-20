@@ -22,8 +22,8 @@ SEED = 42
 MINIMUMS = {"rows": 300, "queries": 100, "independent_groups": 10, "trails": 10, "informative_queries": 60}
 
 
-def sha256(path: Path) -> str:
-    return hashlib.sha256(path.read_bytes()).hexdigest()
+def sha256(payload: bytes) -> str:
+    return hashlib.sha256(payload).hexdigest()
 
 
 def spec_sha256() -> str:

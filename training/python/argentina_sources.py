@@ -28,9 +28,11 @@ def normalized_text(tag):
     return " ".join(tag.get_text(" ", strip=True).split())
 
 
-DISTANCE = re.compile(r"(?<![\d.,])(?P<value>\d+(?:[.,]\d+)?)\s*(?P<unit>km|mts?|metros?|m)\b", re.I)
-DURATION = re.compile(r"(?P<value>\d+(?::\d{2}|[.,]\d+)?)\s*(?P<unit>horas?|hs?|minutos?|min)\b", re.I)
-DIFFICULTY = re.compile(r"\bDificultad\s*:?\s*(baja|media(?:\s*[-/]\s*alta)?|alta)\b", re.I)
+# Python 3.11+: possessive quantifiers avoid repartitioning numbers/whitespace.
+# Numeric boundaries prevent searches from restarting inside the same number.
+DISTANCE = re.compile(r"(?<![\d.,])(?P<value>\d++(?:[.,]\d++)?)\s*+(?P<unit>km|mts?|metros?|m)\b", re.I)
+DURATION = re.compile(r"(?<!\d)(?P<value>\d++(?::\d{2}|[.,]\d++)?)\s*+(?P<unit>horas?|hs?|minutos?|min)\b", re.I)
+DIFFICULTY = re.compile(r"\bDificultad\s*+:?\s*+(baja|media(?:\s*+[-/]\s*+alta)?|alta)\b", re.I)
 
 
 def distance_km(text):
@@ -110,7 +112,7 @@ def parse_apn_page(path, park, exclusions):
             # Los Alerces publishes the time before the distance.
             first_numeric = re.search(r"\d", prefix)
             name = prefix[:first_numeric.start()].strip(" .") if first_numeric and prefix[:first_numeric.start()].strip(" .") else heading
-            pieces = re.split(r"\s*[/|]\s*", prefix)
+            pieces = [piece.strip() for piece in re.split(r"[/|]", prefix)]
             distance_text = " / ".join(piece for piece in pieces if DISTANCE.search(piece))
             duration_text = " / ".join(piece for piece in pieces if DURATION.search(piece))
             if not first or not any(sep in text[:label.start()] for sep in ("/", "|")):
@@ -131,7 +133,7 @@ def parse_apn_page(path, park, exclusions):
         duration_basis = basis(duration_text)
         # Normalize typography only: media/alta and media-alta are the same
         # compound label. Never collapse a compound label into media or alta.
-        native = re.sub(r"\s*[-/]\s*", "-", label[1].casefold())
+        native = "".join(label[1].casefold().split()).replace("/", "-")
         records.append({
             "published_distance_km": distance,
             "published_duration_minutes": duration,

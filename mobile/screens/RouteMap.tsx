@@ -201,6 +201,7 @@ export default function Screen04RouteMap() {
         if (!isMounted) return;
 
         const fallbackContext = await loadFallbackRouteContext(trailId);
+        if (!isMounted) return;
         setTrail(fallbackContext.trail);
         setReports(fallbackContext.reports);
         setIsWifiConnected(fallbackContext.hasWifi);
@@ -216,7 +217,9 @@ export default function Screen04RouteMap() {
       }
     };
 
-    load();
+    void load().catch(() => {
+      if (isMounted) setError("No pudimos cargar el mapa de este sendero.");
+    });
 
     return () => {
       isMounted = false;
@@ -256,10 +259,12 @@ export default function Screen04RouteMap() {
 
     let isMounted = true;
 
-    const refreshIfMounted = async () => {
-      const status = await refreshWearableMetrics();
-      if (!isMounted) return;
-      setWearableRuntime(status);
+    const refreshIfMounted = () => {
+      void refreshWearableMetrics().then((status) => {
+        if (isMounted) setWearableRuntime(status);
+      }).catch(() => {
+        if (isMounted) setWearableRuntime(null);
+      });
     };
 
     refreshIfMounted();

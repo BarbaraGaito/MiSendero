@@ -14,18 +14,40 @@ from ranking import (SPEC, ALGORITHM, SEED, baseline, estimator, evaluate, matri
                      read_examples, sha256, spec_sha256, split_examples, sufficiency)
 
 
+ML_ROOT = Path(__file__).resolve().parent
+DATA_ROOT = ML_ROOT.parents[1] / "training/data/trail-ranking"
+ARTIFACTS_ROOT = ML_ROOT / "artifacts"
+
+
+def confined_path(path: Path, root: Path) -> Path:
+    """Resolve CLI paths and symlinks before checking the fixed trusted boundary."""
+    resolved = path.resolve()
+    if not resolved.is_relative_to(root):
+        raise ValueError("Training path is outside its allowed directory")
+    return resolved
+
+
 def train(catalog: Path, prepared: Path, output: Path, *, synthetic_test=False) -> dict:
-    if (output / "model.joblib").exists() or (output / "metadata.json").exists():
+    catalog = confined_path(catalog, DATA_ROOT)
+    prepared = confined_path(prepared, DATA_ROOT)
+    output = confined_path(output, ARTIFACTS_ROOT)
+    # Children need their own checks: a file may link outside an allowed directory.
+    manifest_file = confined_path(prepared / "manifest.json", DATA_ROOT)
+    examples_file = confined_path(prepared / "examples.jsonl", DATA_ROOT)
+    model_file = confined_path(output / "model.joblib", ARTIFACTS_ROOT)
+    metadata_file = confined_path(output / "metadata.json", ARTIFACTS_ROOT)
+    status_file = confined_path(output / "training-status.json", ARTIFACTS_ROOT)
+    if model_file.exists() or metadata_file.exists():
         raise ValueError("Use a new version directory; never overwrite deployed artifacts")
-    manifest = json.loads((prepared / "manifest.json").read_text(encoding="utf-8"))
-    examples_file = prepared / "examples.jsonl"
+    manifest = json.loads(manifest_file.read_text(encoding="utf-8"))
+    catalog_payload = catalog.read_bytes()
     if (manifest.get("schemaVersion") != 1 or manifest.get("featureSchemaVersion") != SPEC["version"]
             or manifest.get("featureNames") != SPEC["names"] or manifest.get("synthetic") is not synthetic_test
             or manifest.get("completeCandidateJudgments") is not True
-            or manifest.get("catalogSha256") != sha256(catalog)
-            or manifest.get("examplesSha256") != sha256(examples_file)):
+            or manifest.get("catalogSha256") != sha256(catalog_payload)
+            or manifest.get("examplesSha256") != sha256(examples_file.read_bytes())):
         raise ValueError("Prepared data checksum/schema mismatch; re-run the Node export")
-    snapshot = json.loads(catalog.read_text(encoding="utf-8"))
+    snapshot = json.loads(catalog_payload.decode("utf-8"))
     candidates = snapshot["candidates"]
     ids = {c["trailId"] for c in candidates}
     rows = read_examples(examples_file, synthetic_test=synthetic_test)
@@ -58,7 +80,6 @@ def train(catalog: Path, prepared: Path, output: Path, *, synthetic_test=False) 
                       metrics=metrics, deployable=deployable,
                       partitions={name: {"rows": len(part), "queries": len({r["queryId"] for r in part}), "participants": len({r["splitGroupId"] for r in part})}
                                   for name, part in (("training", training), ("validation", validation), ("test", test))})
-        model_file = output / "model.joblib"
         joblib.dump(model, model_file, compress=3)
         code_hash = hashlib.sha256((Path(__file__).read_bytes() + Path(__file__).with_name("ranking.py").read_bytes())).hexdigest()
         spec_hash = spec_sha256()
@@ -67,7 +88,7 @@ def train(catalog: Path, prepared: Path, output: Path, *, synthetic_test=False) 
                 "featureSchemaVersion": SPEC["version"], "featureNames": SPEC["names"], "seed": SEED,
                 "featureSpecSha256": spec_hash, "trainingCodeSha256": code_hash,
                 "preparationCodeSha256": manifest.get("preparationCodeSha256"),
-                "modelSha256": sha256(model_file), "catalogSha256": manifest["catalogSha256"],
+                "modelSha256": sha256(model_file.read_bytes()), "catalogSha256": manifest["catalogSha256"],
                 "datasetSha256": manifest["examplesSha256"], "sklearnVersion": sklearn.__version__,
                 "numpyVersion": np.__version__, "pythonMinor": ".".join(platform.python_version_tuple()[:2]),
                 "trainedAt": datetime.now(timezone.utc).isoformat(), "synthetic": synthetic_test, "technicalTestOnly": synthetic_test, "deployable": deployable,
@@ -75,16 +96,19 @@ def train(catalog: Path, prepared: Path, output: Path, *, synthetic_test=False) 
                 "promotionRule": "validation NDCG@1 >= baseline + .01; NDCG@3 and Precision@1 noninferior; hard constraints = 1",
                 "splitPolicy": "60/20/20 connected participant + identical preferences; warm catalog, unseen preference groups",
                 "hyperparameters": model.get_params()}
-        (output / "metadata.json").write_text(json.dumps(meta, indent=2, allow_nan=False) + "\n", encoding="utf-8")
-    (output / "training-status.json").write_text(json.dumps(report, indent=2, allow_nan=False) + "\n", encoding="utf-8")
+        metadata_file.write_text(json.dumps(meta, indent=2, allow_nan=False) + "\n", encoding="utf-8")
+    status_file.write_text(json.dumps(report, indent=2, allow_nan=False) + "\n", encoding="utf-8")
     return report
 
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--catalog", required=True, type=Path)
-    parser.add_argument("--prepared", required=True, type=Path)
-    parser.add_argument("--output", required=True, type=Path)
+    parser.add_argument("--catalog", required=True, type=Path,
+                        help="Catalog file under training/data/trail-ranking")
+    parser.add_argument("--prepared", required=True, type=Path,
+                        help="Prepared data directory under training/data/trail-ranking")
+    parser.add_argument("--output", required=True, type=Path,
+                        help="New version directory under backend/ml/artifacts")
     args = parser.parse_args()
     report = train(args.catalog, args.prepared, args.output)
     print(json.dumps({"status": report["status"], "trained": report["trained"], "data": report["data"]}, indent=2))

@@ -60,6 +60,8 @@ export function useTerrainElevation(
     setState({ status: "loading" });
     loadTerrainElevationState(trailKey, route, offline).then((next) => {
       if (active) setState(next);
+    }).catch(() => {
+      if (active) setState({ status: "unavailable", reason: "provider-error" });
     });
 
     return () => {

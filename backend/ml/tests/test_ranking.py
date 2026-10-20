@@ -7,13 +7,27 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from contextlib import contextmanager
 from pathlib import Path
+from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from ranking import SPEC, baseline, components, evaluate, load_artifact, matrix, read_examples, sha256, split_examples
+import train as training
 from train import train
 
 ML = Path(__file__).resolve().parents[1]
+
+
+@contextmanager
+def training_paths(root):
+    """Give tests trusted temporary roots without exposing a production bypass."""
+    root = root.resolve()
+    data, artifacts = root / "data", root / "artifacts"
+    data.mkdir()
+    artifacts.mkdir()
+    with patch.object(training, "DATA_ROOT", data), patch.object(training, "ARTIFACTS_ROOT", artifacts):
+        yield data, artifacts
 
 
 def fixture(root, *, count=100):
@@ -33,8 +47,8 @@ def fixture(root, *, count=100):
     examples = prepared / "examples.jsonl"
     examples.write_text("\n".join(json.dumps(r) for r in rows), encoding="utf-8")
     manifest = {"schemaVersion": 1, "featureSchemaVersion": SPEC["version"], "featureNames": SPEC["names"],
-                "synthetic": True, "completeCandidateJudgments": True, "catalogSha256": sha256(catalog),
-                "examplesSha256": sha256(examples), "rowCount": len(rows), "catalogSize": 30}
+                "synthetic": True, "completeCandidateJudgments": True, "catalogSha256": sha256(catalog.read_bytes()),
+                "examplesSha256": sha256(examples.read_bytes()), "rowCount": len(rows), "catalogSize": 30}
     (prepared / "manifest.json").write_text(json.dumps(manifest), encoding="utf-8")
     return catalog, prepared, rows
 
@@ -68,12 +82,12 @@ class RankingTests(unittest.TestCase):
         self.assertIsNone(evaluate(zeros, [0, 0, 0], 6)["ndcg@1"])
 
     def test_synthetic_rows_cannot_enter_the_real_training_path(self):
-        with tempfile.TemporaryDirectory() as name:
-            catalog, prepared, _ = fixture(Path(name))
+        with tempfile.TemporaryDirectory() as name, training_paths(Path(name)) as (data, artifacts):
+            catalog, prepared, _ = fixture(data)
             with self.assertRaises(ValueError):
                 read_examples(prepared / "examples.jsonl")
             with self.assertRaises(ValueError):
-                train(catalog, prepared, Path(name) / "production")
+                train(catalog, prepared, artifacts / "production")
 
     def test_grouped_holdout_is_reproducible_without_participant_or_preference_overlap(self):
         with tempfile.TemporaryDirectory() as name:
@@ -89,24 +103,22 @@ class RankingTests(unittest.TestCase):
             self.assertEqual(membership[rows[0]["queryId"]], membership[copied["queryId"]])
 
     def test_no_real_labels_produces_no_model_or_metrics(self):
-        with tempfile.TemporaryDirectory() as name:
-            root = Path(name)
-            catalog, prepared, _ = fixture(root, count=0)
+        with tempfile.TemporaryDirectory() as name, training_paths(Path(name)) as (data, artifacts):
+            catalog, prepared, _ = fixture(data, count=0)
             manifest_path = prepared / "manifest.json"
             manifest = json.loads(manifest_path.read_text())
             manifest["synthetic"] = False
             manifest_path.write_text(json.dumps(manifest))
-            result = train(catalog, prepared, root / "out")
+            result = train(catalog, prepared, artifacts / "out")
             self.assertFalse(result["trained"])
             self.assertIsNone(result["metrics"])
             self.assertEqual(result["status"], "insufficient_real_data")
-            self.assertFalse((root / "out/model.joblib").exists())
+            self.assertFalse((artifacts / "out/model.joblib").exists())
 
     def test_actual_sklearn_fit_load_and_private_worker_protocol_only_in_explicit_technical_mode(self):
-        with tempfile.TemporaryDirectory() as name:
-            root = Path(name)
-            catalog, prepared, rows = fixture(root)
-            out = root / "technical"
+        with tempfile.TemporaryDirectory() as name, training_paths(Path(name)) as (data, artifacts):
+            catalog, prepared, rows = fixture(data)
+            out = artifacts / "technical"
             result = train(catalog, prepared, out, synthetic_test=True)
             self.assertTrue(result["trained"])
             self.assertTrue(result["synthetic"])

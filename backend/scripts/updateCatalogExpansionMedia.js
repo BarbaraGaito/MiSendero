@@ -2,7 +2,7 @@ const { createHash } = require("node:crypto");
 const { batch, trails, retiredDefinitions } = require("../src/data/catalogExpansion20261017");
 const { validateCatalog, runCatalogCli } = require("./importCatalogExpansion");
 const canonical = value => Array.isArray(value) ? value.map(canonical) : value && typeof value === "object" && !(value instanceof Date)
-  ? Object.fromEntries(Object.keys(value).sort().map(key => [key, canonical(value[key])])) : value;
+  ? Object.fromEntries(Object.keys(value).sort((a, b) => a.localeCompare(b, "en")).map(key => [key, canonical(value[key])])) : value;
 const digest = rows => createHash("sha256").update(JSON.stringify(canonical(rows))).digest("hex");
 
 // Target existing batch+key, never numeric IDs or names alone. No migrations or seeds.
@@ -53,7 +53,7 @@ async function updateCatalogMedia(client, { apply = false, entries = trails } = 
         source_notice: entry.provenance.source_notice,
         media_revision: entry.provenance.media_revision, mapping_pending_reason: entry.provenance.mapping_pending_reason,
         missing_fields: [...new Set([...(row.provenance.missing_fields || []).filter(f => !["gps_trace", "start_coordinates", "licensed_photo", "complete_trace"].includes(f)),
-          ...entry.provenance.missing_fields])].sort() };
+          ...entry.provenance.missing_fields])].sort((a, b) => a.localeCompare(b, "en")) };
       const next = { ...row, image_url: entry.image_url, center_lat: entry.center_lat, center_lng: entry.center_lng,
         map_zoom: entry.map_zoom, route_coordinates: entry.route_coordinates, provenance };
       // center_* is PostgreSQL REAL (float32), unlike the full-precision JSON geometry.

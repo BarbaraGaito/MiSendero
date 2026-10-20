@@ -31,7 +31,7 @@ function durationInterval(value: string): { min: number; max: number } | null {
     const min = Number(sameUnit[1]) * factor, max = Number(sameUnit[2]) * factor;
     return min > 0 && max >= min ? { min, max } : null;
   }
-  const range = text.split(/\s+(?:a|-|–)\s+/i);
+  const range = text.replace(/\s+/g, " ").split(/ (?:a|-|–) /i);
   if (range.length === 2) {
     const min = singleDurationMinutes(range[0]), max = singleDurationMinutes(range[1]);
     return min != null && max != null && min > 0 && max >= min ? { min, max } : null;

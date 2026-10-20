@@ -81,6 +81,8 @@ npm --prefix backend run ranking:prepare
 .\.venv-trail-ranking\Scripts\python.exe backend/ml/train.py --catalog training/data/trail-ranking/catalog.json --prepared training/data/trail-ranking/prepared --output backend/ml/artifacts/version-nueva
 ```
 
+El entrenamiento admite rutas relativas al directorio actual o absolutas, pero `--catalog` y `--prepared` deben quedar dentro de `training/data/trail-ranking`, y `--output` dentro de `backend/ml/artifacts`. Estas ubicaciones se fijan desde el archivo del programa, no desde argumentos CLI. Las rutas se resuelven antes de leer o escribir: se rechazan escapes mediante `..` o enlaces simbólicos, incluidos los archivos internos de datos y de salida.
+
 En Linux reemplazar el intérprete por el de su entorno virtual. No se entrena dentro del servidor ni durante una solicitud. El entrenamiento sin etiquetas devuelve `insufficient_real_data`, código de salida 2, un `training-status.json`, **ningún modelo y métricas nulas**. Es el resultado esperado del catálogo actual.
 
 La política mínima de ingeniería exige 300 pares, 100 consultas, 10 componentes independientes, 10 senderos y 60 consultas con valoraciones distintas entre candidatos. No son una garantía estadística ni un tamaño universalmente suficiente. Debe justificarse representatividad, diversidad de preferencias, acuerdo entre evaluadores y potencia de la evaluación. La política no fabrica filas para alcanzar los mínimos.

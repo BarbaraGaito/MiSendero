@@ -2,17 +2,19 @@ const fs = require("node:fs");
 const path = require("node:path");
 const { spawnSync } = require("node:child_process");
 const { root } = require("./coverage-scope.cjs");
-const output = path.resolve(root, process.argv.find((arg) => arg.startsWith("--output="))?.slice(9) || "coverage");
+const coveragePath = require("./coverage-paths.cjs");
+const output = coveragePath(process.argv.find((arg) => arg.startsWith("--output="))?.slice(9) || "coverage", root);
+const environmentPath = coveragePath(path.join(output, "environment.json"), root);
 fs.mkdirSync(output, { recursive: true });
-fs.writeFileSync(path.join(output, "environment.json"), JSON.stringify(require("./coverage-environment.cjs")(root), null, 2) + "\n");
+fs.writeFileSync(environmentPath, JSON.stringify(require("./coverage-environment.cjs")(root), null, 2) + "\n");
 let failed = false;
 for (const component of ["client", "backend"]) {
   const cwd = component === "client" ? root : path.join(root, "backend");
-  const directory = path.join(output, component);
+  const directory = coveragePath(path.join(output, component), root);
   fs.mkdirSync(directory, { recursive: true });
   // A crashed run must never reuse another execution's successful evidence.
   for (const file of ["test-results.json", "coverage-summary.json", "coverage-final.json", "lcov.info"]) {
-    fs.rmSync(path.join(directory, file), { force: true });
+    fs.rmSync(coveragePath(path.join(directory, file), root), { force: true });
   }
   const jest = require.resolve("jest/bin/jest", { paths: [cwd] });
   const args = [jest, "--coverage", "--runInBand", "--json", `--outputFile=${path.join(directory, "test-results.json")}`,

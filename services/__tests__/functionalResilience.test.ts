@@ -79,7 +79,7 @@ test("MF05 committed route, points, report and map survive an independent Node p
   fixture.close();
   try {
     const child = require("node:child_process").spawnSync(process.execPath,
-      [require("node:path").resolve("testing/functional/persistence-reader.cjs"), fixture.filename], { encoding: "utf8", timeout: 30000 });
+      [require("node:path").resolve("testing/functional/persistence-reader.cjs"), require("node:path").basename(require("node:path").dirname(fixture.filename))], { encoding: "utf8", timeout: 30000 });
     expect({ exit: child.status, error: child.error?.message, stderr: child.status ? child.stderr : undefined }).toEqual({ exit: 0 });
     const recovered = JSON.parse(child.stdout);
     expect(recovered.session).toMatchObject({ user_id: 901, trail_id: 7, state: "paused", started_at: startedAt });

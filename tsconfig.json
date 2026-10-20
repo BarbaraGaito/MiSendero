@@ -1,6 +1,6 @@
 {
   "extends": "expo/tsconfig.base",
-  "exclude": ["**/node_modules/**", "tmp", "coverage"],
+  "exclude": ["**/node_modules/**", "backend", "tmp", "coverage"],
   "compilerOptions": {
     "strict": true,
     "target": "ESNext",

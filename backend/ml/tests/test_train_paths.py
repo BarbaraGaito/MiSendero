@@ -16,6 +16,18 @@ from test_ranking import fixture, training_paths
 
 
 class TrainingPathTests(unittest.TestCase):
+    def test_manifest_rejects_paths_in_preparation_checksum_before_creating_artifacts(self):
+        with tempfile.TemporaryDirectory() as name, training_paths(Path(name)) as (data, artifacts):
+            catalog, prepared, _ = fixture(data, count=0)
+            manifest_path = prepared / "manifest.json"
+            manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+            for value in ("../../outside/model.joblib", "file:///outside", {"filename": "../outside"}):
+                with self.subTest(value=value):
+                    manifest_path.write_text(json.dumps({**manifest, "preparationCodeSha256": value}), encoding="utf-8")
+                    with self.assertRaisesRegex(ValueError, "Invalid preparation code checksum"):
+                        training.train(catalog, prepared, artifacts / "new-version", synthetic_test=True)
+                    self.assertFalse((artifacts / "new-version").exists())
+
     def assert_refused_before_data_io(self, catalog, prepared, output):
         with ExitStack() as stack:
             for method in ("read_bytes", "read_text", "write_bytes", "write_text", "mkdir"):

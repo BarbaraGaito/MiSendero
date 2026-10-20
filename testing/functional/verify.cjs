@@ -32,7 +32,7 @@ const executions = directories.map(directory => {
   const coverage = json(path.join(directory, 'coverage-summary.json'));
   assert.equal(coverage.integrity.complete, true);
   console.log(JSON.stringify({ directory: path.relative(root, directory), integrity: 'verified', totals: summary.totals, scenarios: summary.automatedCases }));
-  return { assertions: assertions.sort(), coverage: Object.fromEntries(['lines', 'statements', 'branches', 'functions'].map(metric => [metric, coverage.combined[metric]])), manifest };
+  return { assertions: assertions.sort((a, b) => a.localeCompare(b, 'en')), coverage: Object.fromEntries(['lines', 'statements', 'branches', 'functions'].map(metric => [metric, coverage.combined[metric]])), manifest };
 });
 if (executions.length > 1) for (const execution of executions.slice(1)) {
   assert.deepEqual(execution.assertions, executions[0].assertions, 'Assertion outcomes differ between runs');

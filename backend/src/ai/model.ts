@@ -17,7 +17,7 @@ export class LocalRanker implements Ranker {
   constructor(private directory = process.env.TRAIL_ML_MODEL_DIR, private executable = process.env.TRAIL_ML_PYTHON || "python3") {}
   start(): Promise<boolean> {
     if (!this.directory) return Promise.resolve(false);
-    if (this.startup) return this.startup;
+    if (this.startup !== null) return this.startup;
     this.startup = new Promise((resolve) => {
       this.ready = resolve;
       const timer = setTimeout(() => this.stop(), 15000); timer.unref();

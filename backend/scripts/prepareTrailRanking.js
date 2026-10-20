@@ -21,7 +21,7 @@ function prepareLabels(labels, candidates) {
   for (const raw of labels) {
     const row = labelSchema.parse(raw);
     if (!destinationIsSafe(row.preferences.destination)) throw new Error("Invalid preference destination");
-    const preferences = { ...row.preferences, destination: normalize(row.preferences.destination), trailTypes: [...row.preferences.trailTypes].sort() };
+    const preferences = { ...row.preferences, destination: normalize(row.preferences.destination), trailTypes: [...row.preferences.trailTypes].sort((a, b) => a.localeCompare(b, "en")) };
     const resolved = resolveDestination(candidates, preferences.destination);
     if (resolved.suggestions.length) throw new Error("Ambiguous preference destination");
     // Aliases of the same catalog area must share a holdout group.

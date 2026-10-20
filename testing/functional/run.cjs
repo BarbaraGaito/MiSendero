@@ -37,13 +37,11 @@ const nativeInventory = (() => { try { return JSON.parse(inventory.stdout); } ca
 const deviceCandidates = [...(nativeInventory.commands || []), ...(nativeInventory.candidates || []).filter(c => c.exists && /adb\.exe$/i.test(c.path)).map(c => c.path)];
 let adb = null;
 if (deviceCandidates.length) adb = run('adb-devices', deviceCandidates[0], ['devices', '-l']);
-const revision = spawnSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8' });
-const worktree = spawnSync('git', ['status', '--short'], { cwd: root, encoding: 'utf8' });
-const npm = spawnSync('cmd.exe', ['/d', '/c', 'npm.cmd --version'], { cwd: root, encoding: 'utf8' });
+const tools = require('./environment-tools.cjs')(root);
 json('environment.json', {
   startedAt, calendarDate: new Intl.DateTimeFormat('sv-SE', { timeZone: 'America/Argentina/Buenos_Aires' }).format(new Date()),
   calendarTimezone: 'America/Argentina/Buenos_Aires', testTimezone: 'UTC', os: { platform: os.platform(), release: os.release(), architecture: os.arch() },
-  node: process.version, npm: npm.stdout.trim(), gitHead: revision.stdout.trim(), worktree: worktree.stdout,
+  node: process.version, ...tools,
   packages: require('../coverage-environment.cjs')(root), nativeInventory,
   connectedDevices: adb ? { evidence: 'adb-devices.txt', exitCode: adb.status } : null,
   executionScope: 'Node/Jest; React Test Renderer; controlled native/network boundaries; SQLite; Express/Supertest with pg-mem',
@@ -124,8 +122,8 @@ function walk(directory) {
   }
 }
 for (const directory of ['testing', 'services/__tests__', 'mobile/screens/__tests__', 'mobile/components/__tests__', 'mobile/hooks/__tests__', 'database/__tests__', 'ai/__tests__', 'backend/tests']) if (fs.existsSync(path.join(root, directory))) walk(directory);
-json('source-manifest.json', [...sourceFiles].filter(file => fs.existsSync(path.join(root, file))).sort().map(file => ({ file, sha256: sha(path.join(root, file)) })));
-json('evidence-manifest.json', fs.readdirSync(output).sort().filter(file => file !== 'evidence-manifest.json').map(file => ({ file, sha256: sha(path.join(output, file)) })));
+json('source-manifest.json', [...sourceFiles].filter(file => fs.existsSync(path.join(root, file))).sort((a, b) => a.localeCompare(b, 'en')).map(file => ({ file, sha256: sha(path.join(root, file)) })));
+json('evidence-manifest.json', fs.readdirSync(output).sort((a, b) => a.localeCompare(b, 'en')).filter(file => file !== 'evidence-manifest.json').map(file => ({ file, sha256: sha(path.join(output, file)) })));
 const failed = stages.some(stage => stage.exitCode !== 0) || matrix.some(row => row.automated.status !== 'Aprobado en el alcance automatizado');
 console.log(JSON.stringify({ output: relative(output), totals, cases: summary.automatedCases, result: failed ? 'FAILURES_RETAINED' : 'PASSED_WITHIN_AUTOMATED_SCOPE' }));
 process.exitCode = failed ? 1 : 0;

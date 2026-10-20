@@ -13,6 +13,8 @@ test.each([
   ["1,5 h", 1.5],
   ["45 minutos", 0.75],
   ["2 horas 30 minutos", 2.5],
+  ["1 h\t a\n 2 h", 2],
+  ["30 min  —\t 1 h", 1],
 ])("prefills %s as %s hours, using the upper end of a range", (duration, hours) => {
   expect(getEstimatedReturnHours(duration)).toBe(hours);
 });
@@ -22,3 +24,7 @@ test.each([null, undefined, "", "a confirmar", "0 h", "-2 h", "100 h", "3 dias",
     expect(getEstimatedReturnHours(duration)).toBeNull();
   }
 );
+
+test("long whitespace followed by an invalid separator is rejected", () => {
+  expect(getEstimatedReturnHours(`1 h${" ".repeat(100000)}x`)).toBeNull();
+});

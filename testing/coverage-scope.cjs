@@ -12,6 +12,6 @@ function walk(directory) {
   });
 }
 const client = ["app", "mobile", "services", "database", "ai", "types", "scripts"].flatMap(walk)
-  .concat(["app.config.js", "metro.config.js"]).sort();
-const backend = ["backend/src", "backend/scripts"].flatMap(walk).sort();
+  .concat(["app.config.js", "metro.config.js"]).sort((a, b) => a.localeCompare(b, "en"));
+const backend = ["backend/src", "backend/scripts"].flatMap(walk).sort((a, b) => a.localeCompare(b, "en"));
 module.exports = { root, client, backend };

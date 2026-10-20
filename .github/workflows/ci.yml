@@ -45,15 +45,20 @@ jobs:
         run: npm ci --ignore-scripts
         working-directory: backend
 
+      - name: Build API and Check Types
+        run: npm run build
+        working-directory: backend
+
       - name: Reject high or critical production dependency advisories in API
         run: npm audit --omit=dev --audit-level=high --package-lock-only
         working-directory: backend
 
       - name: Test all declared sources and enforce 85 percent weighted line coverage
+        id: coverage
         run: npm run test:coverage
 
       - name: Retain coverage evidence even when the threshold fails
-        if: always()
+        if: always() && (steps.coverage.outcome == 'success' || steps.coverage.outcome == 'failure')
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: coverage-${{ github.sha }}

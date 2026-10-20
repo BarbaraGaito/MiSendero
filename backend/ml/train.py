@@ -1,8 +1,10 @@
 """Offline, reproducible training and holdout evaluation. Never called by the API."""
 import argparse
 import hashlib
+import io
 import json
 import platform
+import re
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -40,6 +42,12 @@ def train(catalog: Path, prepared: Path, output: Path, *, synthetic_test=False) 
     if model_file.exists() or metadata_file.exists():
         raise ValueError("Use a new version directory; never overwrite deployed artifacts")
     manifest = json.loads(manifest_file.read_text(encoding="utf-8"))
+    if not isinstance(manifest, dict):
+        raise ValueError("Prepared manifest must be an object")
+    preparation_hash = manifest.get("preparationCodeSha256")
+    if preparation_hash is not None and (not isinstance(preparation_hash, str)
+                                         or not re.fullmatch(r"[a-f0-9]{64}", preparation_hash)):
+        raise ValueError("Invalid preparation code checksum")
     catalog_payload = catalog.read_bytes()
     if (manifest.get("schemaVersion") != 1 or manifest.get("featureSchemaVersion") != SPEC["version"]
             or manifest.get("featureNames") != SPEC["names"] or manifest.get("synthetic") is not synthetic_test
@@ -80,15 +88,19 @@ def train(catalog: Path, prepared: Path, output: Path, *, synthetic_test=False) 
                       metrics=metrics, deployable=deployable,
                       partitions={name: {"rows": len(part), "queries": len({r["queryId"] for r in part}), "participants": len({r["splitGroupId"] for r in part})}
                                   for name, part in (("training", training), ("validation", validation), ("test", test))})
-        joblib.dump(model, model_file, compress=3)
+        # The serializer receives no filesystem path, including from training data.
+        with io.BytesIO() as buffer:
+            joblib.dump(model, buffer, compress=3)
+            model_payload = buffer.getvalue()
+        model_file.write_bytes(model_payload)
         code_hash = hashlib.sha256((Path(__file__).read_bytes() + Path(__file__).with_name("ranking.py").read_bytes())).hexdigest()
         spec_hash = spec_sha256()
         version = hashlib.sha256((manifest["examplesSha256"] + code_hash + spec_hash).encode()).hexdigest()[:12]
         meta = {"modelVersion": "rf-v1-" + version, "algorithm": ALGORITHM,
                 "featureSchemaVersion": SPEC["version"], "featureNames": SPEC["names"], "seed": SEED,
                 "featureSpecSha256": spec_hash, "trainingCodeSha256": code_hash,
-                "preparationCodeSha256": manifest.get("preparationCodeSha256"),
-                "modelSha256": sha256(model_file.read_bytes()), "catalogSha256": manifest["catalogSha256"],
+                "preparationCodeSha256": preparation_hash,
+                "modelSha256": sha256(model_payload), "catalogSha256": manifest["catalogSha256"],
                 "datasetSha256": manifest["examplesSha256"], "sklearnVersion": sklearn.__version__,
                 "numpyVersion": np.__version__, "pythonMinor": ".".join(platform.python_version_tuple()[:2]),
                 "trainedAt": datetime.now(timezone.utc).isoformat(), "synthetic": synthetic_test, "technicalTestOnly": synthetic_test, "deployable": deployable,

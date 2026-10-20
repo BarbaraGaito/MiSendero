@@ -1,4 +1,4 @@
-// Isolated Node process: production SQL/repositories, file-backed SQLite.
+// Isolated Node process: production SQL/repositories, a private file-backed SQLite snapshot.
 // Native identity and SMS boundaries are controlled; this is not an app restart.
 const fs = require('node:fs');
 const path = require('node:path');
@@ -7,16 +7,24 @@ const Module = require('node:module');
 const ts = require('typescript');
 const { DatabaseSync } = require('node:sqlite');
 const root = path.resolve(__dirname, '../..');
-// Accept a fixture identifier, never a filename, URI or connection string.
-const fixtureDirectory = process.argv[2];
-if (process.argv.length !== 3 || !/^misendero-functional-[A-Za-z0-9]{6}$/.test(fixtureDirectory || '')) {
-  throw new Error('Expected a temporary persistence fixture identifier');
+// The parent sends committed database bytes on stdin, never a connection string.
+if (process.argv.length !== 2) {
+  throw new Error('Persistence reader accepts no CLI arguments');
 }
-const fixtureFilename = path.join(fs.realpathSync(os.tmpdir()), fixtureDirectory, 'fixture.sqlite');
-if (fs.realpathSync(fixtureFilename) !== fixtureFilename || !fs.statSync(fixtureFilename).isFile()) {
-  throw new Error('Persistence fixture must be a regular file without symbolic links');
+const snapshot = fs.readFileSync(0);
+if (!snapshot.subarray(0, 16).equals(Buffer.from('SQLite format 3\0'))) {
+  throw new Error('Expected a SQLite snapshot on stdin');
 }
-const database = new DatabaseSync(fixtureFilename);
+const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'misendero-reader-'));
+const fixtureFilename = path.join(directory, 'fixture.sqlite');
+let database;
+process.once('exit', () => {
+  database?.close();
+  for (const suffix of ['', '-journal', '-wal', '-shm']) fs.rmSync(`${fixtureFilename}${suffix}`, { force: true });
+  fs.rmdirSync(directory);
+});
+fs.writeFileSync(fixtureFilename, snapshot, { flag: 'wx' });
+database = new DatabaseSync(fixtureFilename);
 let owner = 901;
 const adapter = {
   closeAsync: async () => {},
@@ -61,6 +69,5 @@ require.extensions['.ts'] = (module, filename) => {
   const maps = database.prepare('SELECT status FROM offline_maps WHERE user_id = ?').all(owner);
   owner = 902;
   const otherAccount = await route.getActiveRouteSession();
-  database.close();
   process.stdout.write(JSON.stringify({ session, summary, queued, maps, otherAccount }));
 })().catch(error => { console.error(error); process.exitCode = 1; });

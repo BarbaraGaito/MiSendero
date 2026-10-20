@@ -16,6 +16,51 @@ from test_ranking import fixture, training_paths
 
 
 class TrainingPathTests(unittest.TestCase):
+    def test_manifest_content_cannot_select_artifact_paths(self):
+        with tempfile.TemporaryDirectory() as name, training_paths(Path(name)) as (data, artifacts):
+            catalog, prepared, _ = fixture(data)
+            outside = Path(name) / "outside.json"
+            outside.write_bytes(b"preserve external bytes")
+            manifest_path = prepared / "manifest.json"
+            manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+            manifest.update(output=str(outside), metadataFile=str(outside),
+                            modelVersion="../../outside", preparationCodeSha256="a" * 64)
+            manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+            output = artifacts / "new-version"
+
+            report = training.train(catalog, prepared, output, synthetic_test=True)
+
+            self.assertTrue(report["trained"])
+            self.assertEqual(outside.read_bytes(), b"preserve external bytes")
+            self.assertEqual({path.name for path in output.iterdir()},
+                             {"model.joblib", "metadata.json", "training-status.json"})
+            metadata_text = (output / "metadata.json").read_text(encoding="utf-8")
+            metadata = json.loads(metadata_text)
+            self.assertRegex(metadata["modelVersion"], r"^rf-v1-[a-f0-9]{12}$")
+            self.assertEqual(metadata["preparationCodeSha256"], "a" * 64)
+            self.assertEqual(metadata["catalogSha256"], sha256(catalog.read_bytes()))
+            self.assertEqual(metadata["datasetSha256"], sha256((prepared / "examples.jsonl").read_bytes()))
+            self.assertTrue(metadata_text.endswith("\n"))
+            self.assertEqual(json.loads((output / "training-status.json").read_text(encoding="utf-8")), report)
+
+    def test_metadata_created_after_initial_validation_is_not_overwritten(self):
+        with tempfile.TemporaryDirectory() as name, training_paths(Path(name)) as (data, artifacts):
+            catalog, prepared, _ = fixture(data)
+            output = artifacts / "new-version"
+            metadata_file = output / "metadata.json"
+            original_estimator = training.estimator
+
+            def create_metadata_during_training():
+                metadata_file.write_bytes(b"preserve existing metadata")
+                return original_estimator()
+
+            with patch.object(training, "estimator", side_effect=create_metadata_during_training):
+                with self.assertRaises(FileExistsError):
+                    training.train(catalog, prepared, output, synthetic_test=True)
+
+            self.assertEqual(metadata_file.read_bytes(), b"preserve existing metadata")
+            self.assertFalse((output / "training-status.json").exists())
+
     def test_manifest_rejects_paths_in_preparation_checksum_before_creating_artifacts(self):
         with tempfile.TemporaryDirectory() as name, training_paths(Path(name)) as (data, artifacts):
             catalog, prepared, _ = fixture(data, count=0)
@@ -30,7 +75,7 @@ class TrainingPathTests(unittest.TestCase):
 
     def assert_refused_before_data_io(self, catalog, prepared, output):
         with ExitStack() as stack:
-            for method in ("read_bytes", "read_text", "write_bytes", "write_text", "mkdir"):
+            for method in ("open", "read_bytes", "read_text", "write_bytes", "write_text", "mkdir"):
                 stack.enter_context(patch.object(Path, method, side_effect=AssertionError("Data I/O before path validation")))
             stack.enter_context(patch.object(training.joblib, "dump", side_effect=AssertionError("Artifact write before path validation")))
             with self.assertRaises(ValueError):

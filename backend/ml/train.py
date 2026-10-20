@@ -108,8 +108,13 @@ def train(catalog: Path, prepared: Path, output: Path, *, synthetic_test=False) 
                 "promotionRule": "validation NDCG@1 >= baseline + .01; NDCG@3 and Precision@1 noninferior; hard constraints = 1",
                 "splitPolicy": "60/20/20 connected participant + identical preferences; warm catalog, unseen preference groups",
                 "hyperparameters": model.get_params()}
-        metadata_file.write_text(json.dumps(meta, indent=2, allow_nan=False) + "\n", encoding="utf-8")
-    status_file.write_text(json.dumps(report, indent=2, allow_nan=False) + "\n", encoding="utf-8")
+        # Only the confined path selects a file; manifest values are JSON content.
+        with metadata_file.open("x", encoding="utf-8") as metadata_stream:
+            json.dump(meta, metadata_stream, indent=2, allow_nan=False)
+            metadata_stream.write("\n")
+    with status_file.open("w", encoding="utf-8") as status_stream:
+        json.dump(report, status_stream, indent=2, allow_nan=False)
+        status_stream.write("\n")
     return report
 
 

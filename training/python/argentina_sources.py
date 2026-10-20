@@ -28,42 +28,65 @@ def normalized_text(tag):
     return " ".join(tag.get_text(" ", strip=True).split())
 
 
-# Python 3.11+: possessive quantifiers avoid repartitioning numbers/whitespace.
-# Numeric boundaries prevent searches from restarting inside the same number.
-DISTANCE = re.compile(r"(?<![\d.,])(?P<value>\d++(?:[.,]\d++)?)\s*+(?P<unit>km|mts?|metros?|m)\b", re.I)
-DURATION = re.compile(r"(?<!\d)(?P<value>\d++(?::\d{2}|[.,]\d++)?)\s*+(?P<unit>horas?|hs?|minutos?|min)\b", re.I)
-DIFFICULTY = re.compile(r"\bDificultad\s*+:?\s*+(baja|media(?:\s*+[-/]\s*+alta)?|alta)\b", re.I)
+# Find only unit words; their numeric prefixes are scanned separately in one pass.
+DISTANCE = re.compile(r"(?:km|mts?|metros?|m)\b", re.I)
+DURATION = re.compile(r"(?:horas?|hs?|minutos?|min)\b", re.I)
+# normalized_text has already collapsed whitespace to single spaces.
+DIFFICULTY = re.compile(r"\bDificultad ?:? ?(baja|media(?: ?[-/] ?alta)?|alta)\b", re.I)
+
+
+def published_measurements(text, units, *, allow_clock=False):
+    for unit in units.finditer(text):
+        end = unit.start()
+        while end > 0 and text[end - 1].isspace():
+            end -= 1
+        start = end
+        while start > 0 and (text[start - 1].isdecimal() or text[start - 1] in ".,:"):
+            start -= 1
+        value = text[start:end].lstrip(":")
+        if ":" in value:
+            parts = value.split(":")
+            valid = allow_clock and len(parts) == 2 and all(part.isdecimal() for part in parts) and len(parts[1]) == 2
+        else:
+            parts = value.replace(",", ".").split(".")
+            valid = len(parts) <= 2 and all(part.isdecimal() for part in parts)
+        if valid:
+            yield value, unit[0]
 
 
 def distance_km(text):
-    values = list(DISTANCE.finditer(text))
+    values = list(published_measurements(text, DISTANCE))
     if len(values) != 1:
         raise ValueError("Distance missing or multiple published alternatives")
-    item = values[0]
-    value = float(item["value"].replace(",", "."))
-    return value if item["unit"].lower() == "km" else value / 1000
+    number, unit = values[0]
+    value = float(number.replace(",", "."))
+    return value if unit.lower() == "km" else value / 1000
+
+
+def duration_measurements(text):
+    return published_measurements(text, DURATION, allow_clock=True)
 
 
 def duration_minutes(text):
-    values = list(DURATION.finditer(text))
+    values = list(duration_measurements(text))
     if not values:
         raise ValueError("No explicit published duration")
     total = 0.0
     units = set()
-    for item in values:
-        hours = item["unit"].lower().startswith("h")
+    for value, unit in values:
+        hours = unit.lower().startswith("h")
         if hours in units:
             raise ValueError("Multiple alternative durations")
         units.add(hours)
-        if ":" in item["value"]:
+        if ":" in value:
             if not hours:
                 raise ValueError("Ambiguous minute notation")
-            hour, minute = map(int, item["value"].split(":"))
+            hour, minute = map(int, value.split(":"))
             if minute >= 60:
                 raise ValueError("Invalid published hour notation")
             total += hour * 60 + minute
         else:
-            total += float(item["value"].replace(",", ".")) * (60 if hours else 1)
+            total += float(value.replace(",", ".")) * (60 if hours else 1)
     return total
 
 
@@ -108,13 +131,13 @@ def parse_apn_page(path, park, exclusions):
             duration_text = re.split(r"Duraci.n:\s*", text, maxsplit=1)[-1].split("Desnivel", 1)[0]
         else:
             prefix = text[:label.start()].rstrip(" /|")
-            first = DISTANCE.search(prefix) or DURATION.search(prefix)
+            first = next(published_measurements(prefix, DISTANCE), None) or next(duration_measurements(prefix), None)
             # Los Alerces publishes the time before the distance.
             first_numeric = re.search(r"\d", prefix)
             name = prefix[:first_numeric.start()].strip(" .") if first_numeric and prefix[:first_numeric.start()].strip(" .") else heading
             pieces = [piece.strip() for piece in re.split(r"[/|]", prefix)]
-            distance_text = " / ".join(piece for piece in pieces if DISTANCE.search(piece))
-            duration_text = " / ".join(piece for piece in pieces if DURATION.search(piece))
+            distance_text = " / ".join(piece for piece in pieces if next(published_measurements(piece, DISTANCE), None))
+            duration_text = " / ".join(piece for piece in pieces if next(duration_measurements(piece), None))
             if not first or not any(sep in text[:label.start()] for sep in ("/", "|")):
                 continue
         reason = exclusions.get(name)

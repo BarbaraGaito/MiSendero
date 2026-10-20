@@ -11,7 +11,7 @@ const definitions = [
 const writeBudget = (req, res, next) => {
   const definition = ['POST','PATCH'].includes(req.method) && definitions.find(([pattern]) => pattern.test(req.path));
   if (!definition) return next();
-  requireAuth(req,res,async error => {
+  return requireAuth(req,res,async error => {
     if (error) return next(error);
     try {
       const [,resource,limit,table,idColumn,ownerColumn] = definition;
@@ -29,6 +29,6 @@ const writeBudget = (req, res, next) => {
       }
       next();
     } catch (cause) { next(cause); }
-  });
+  }).catch(next);
 };
 module.exports = { writeBudget };

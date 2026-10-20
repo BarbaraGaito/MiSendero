@@ -16,6 +16,24 @@ from train_public import baseline_for, group_split
 
 
 class ArgentinaSourceTests(unittest.TestCase):
+    def test_numeric_parsers_reject_long_malformed_values_without_partial_matches(self):
+        for text in ("1" * 50000 + " unknown", "1" + " " * 50000 + "unknown"):
+            with self.subTest(value=text[:20]), self.assertRaises(ValueError):
+                argentina_sources.distance_km(text)
+            with self.subTest(value=text[:20]), self.assertRaises(ValueError):
+                argentina_sources.duration_minutes(text)
+        self.assertIsNone(argentina_sources.DIFFICULTY.search("Dificultad" + " " * 50000 + "unknown"))
+
+    def test_published_units_and_compound_label_whitespace_are_preserved(self):
+        self.assertEqual(argentina_sources.distance_km("Distancia: 1,5 km"), 1.5)
+        self.assertEqual(argentina_sources.distance_km("500 metros"), 0.5)
+        self.assertEqual(argentina_sources.duration_minutes("Duración:30 min"), 30)
+        self.assertEqual(argentina_sources.duration_minutes("1:30 horas y 5 min"), 95)
+        rows, discarded = self.parse('<p>Ruta A. 8 km   |   3 h / Dificultad : media / alta.</p>')
+        self.assertFalse(discarded)
+        self.assertEqual(rows[0]["label"], "media-alta")
+        self.assertEqual(rows[0]["lineage"]["published_label"], "media / alta")
+
     def parse(self, html, exclusions=None):
         with tempfile.TemporaryDirectory() as temp:
             path = Path(temp) / "source.html"

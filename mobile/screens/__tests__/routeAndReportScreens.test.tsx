@@ -63,6 +63,17 @@ test.each([false, true])("offline route loads cached context, including when the
 test("missing offline map is an explicit failure, not an invented route", async () => {
   (Network.getNetworkStateAsync as jest.Mock).mockRejectedValue(new Error("network unavailable")); const tree = await mount(Route); expect(text(tree)).toContain("No pudimos cargar el mapa"); expect(tree.root.findByType("TrailMap").props.trail).toBeNull();
 });
+
+test("wearable refresh handles a rejected session lookup and retries on the next interval", async () => {
+  active();
+  (sessions.getRouteSession as jest.Mock).mockRejectedValue(new Error("Session unavailable"));
+  await mount(Route);
+  expect(wearable.getWearableRuntimeStatus).not.toHaveBeenCalled();
+  (sessions.getRouteSession as jest.Mock).mockResolvedValue({ state: "active", simulated: false });
+  await act(async () => { jest.advanceTimersByTime(5000); await flush(); });
+  expect(wearable.getWearableRuntimeStatus).toHaveBeenCalledTimes(2);
+  expect(wearable.syncNativeWearableSampleWithStatus).toHaveBeenCalledTimes(1);
+});
 test("active route pauses durably before navigating and passes measured distance when finishing", async () => {
   active(); const tree = await mount(Route); expect(text(tree)).toContain("Ultimo punto guardado");
   await press(tree, "Pausa"); expect(sessions.pauseRouteSession).toHaveBeenCalledWith(7, startedAt); expect(router.push).toHaveBeenCalledWith(expect.objectContaining({ pathname: "/descanso", params: expect.objectContaining({ traveledMeters: "123" }) }));

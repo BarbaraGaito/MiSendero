@@ -2,11 +2,21 @@
 // Native identity and SMS boundaries are controlled; this is not an app restart.
 const fs = require('node:fs');
 const path = require('node:path');
+const os = require('node:os');
 const Module = require('node:module');
 const ts = require('typescript');
 const { DatabaseSync } = require('node:sqlite');
 const root = path.resolve(__dirname, '../..');
-const database = new DatabaseSync(process.argv[2]);
+// Accept a fixture identifier, never a filename, URI or connection string.
+const fixtureDirectory = process.argv[2];
+if (process.argv.length !== 3 || !/^misendero-functional-[A-Za-z0-9]{6}$/.test(fixtureDirectory || '')) {
+  throw new Error('Expected a temporary persistence fixture identifier');
+}
+const fixtureFilename = path.join(fs.realpathSync(os.tmpdir()), fixtureDirectory, 'fixture.sqlite');
+if (fs.realpathSync(fixtureFilename) !== fixtureFilename || !fs.statSync(fixtureFilename).isFile()) {
+  throw new Error('Persistence fixture must be a regular file without symbolic links');
+}
+const database = new DatabaseSync(fixtureFilename);
 let owner = 901;
 const adapter = {
   closeAsync: async () => {},

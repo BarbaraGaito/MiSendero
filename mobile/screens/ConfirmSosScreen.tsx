@@ -77,7 +77,7 @@ export default function ConfirmSosScreen() {
             typeof value.payload.trail_id === "number" ? value.payload.trail_id : null
           );
           if (!active) return;
-          const recordedAt = typeof value.payload.last_known_at === "string" ? Date.parse(value.payload.last_known_at) : NaN;
+          const recordedAt = typeof value.payload.last_known_at === "string" ? Date.parse(value.payload.last_known_at) : Number.NaN;
           setMessage(buildEmergencyMessage({
             trail: savedTrail,
             latitude: typeof value.payload.latitude === "number" ? value.payload.latitude : null,

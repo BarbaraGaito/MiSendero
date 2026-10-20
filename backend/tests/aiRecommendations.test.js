@@ -316,6 +316,13 @@ test("documented planning estimates can be returned with their actual time and a
   expect(result.recommendation.explanation).not.toContain("El total se calculó a partir");
 });
 
+test("duration ranges accept whitespace variants and refuse long malformed separators", () => {
+  expect(durationMinutes("1 h\t a\n 2 h")).toBe(120);
+  expect(durationMinutes("30 min  –\t 1 h")).toBe(60);
+  expect(durationMinutes("2 h    -   1 h")).toBeNull();
+  expect(durationMinutes(`1 h${" ".repeat(100000)}x`)).toBeNull();
+});
+
 test("whole duration intervals fit mandatory windows and one-way durations remain explicit", async () => {
   expect(durationMinutes("3-4 h")).toBe(240);
   expect(durationMinutes("1 h 30 min")).toBe(90);

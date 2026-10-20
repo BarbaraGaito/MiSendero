@@ -11,7 +11,9 @@ import {
   TERRAIN_GRID_SIZE,
   clearTerrainElevationCache,
 } from "../../../services/terrainElevation";
-import { loadTerrainElevationState } from "../useTerrainElevation";
+import * as terrainElevation from "../../../services/terrainElevation";
+import { mount } from "../../../testing/mobileHarness";
+import { loadTerrainElevationState, TerrainElevationState, useTerrainElevation } from "../useTerrainElevation";
 
 const route: Coordinate[] = [
   [-41.01, -71.01],
@@ -27,6 +29,17 @@ const okFetch = () =>
       json: async () => ({ elevation: Array.from({ length: count }, (_, index) => 800 + index) }),
     };
   }) as ElevationFetch;
+
+test("the terrain hook handles an unexpected rejected load as unavailable", async () => {
+  jest.spyOn(terrainElevation, "peekTerrainElevation").mockRejectedValueOnce(new Error("Cache unavailable"));
+  let state: TerrainElevationState | undefined;
+  const Probe = () => {
+    state = useTerrainElevation(1, route, { enabled: true, offline: false });
+    return null;
+  };
+  await mount(Probe);
+  expect(state).toEqual({ status: "unavailable", reason: "provider-error" });
+});
 
 describe("loadTerrainElevationState", () => {
   beforeEach(() => {

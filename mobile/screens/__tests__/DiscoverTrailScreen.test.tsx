@@ -102,6 +102,26 @@ test("a catalog-only result never invents a verification date or return-trip dur
   expect(text(tree)).toContain("confirmar si incluye el regreso");
   expect(text(tree)).not.toContain("Datos del catálogo revisados el");
   expect(text(tree)).not.toContain("(ida y vuelta)");
+  expect(text(tree)).toContain("Desnivel de ascenso: no documentado");
+});
+
+test("the result card displays documented ascent, including a genuine zero", async () => {
+  for (const ascentM of [123, 0]) {
+    (findRecommendedTrail as jest.Mock).mockResolvedValue({ ...success, recommendation: { ...recommendation, ascentM } });
+    const tree = await mount(Discover); await fill(tree); await press(tree, "Encontrar mi sendero");
+    expect(text(tree)).toContain(`Desnivel de ascenso estimado: ${ascentM} m`);
+    expect(text(tree)).toContain("no es una medición de campo");
+    expect(text(tree)).not.toContain("Desnivel de ascenso: no documentado");
+  }
+});
+
+test("partial source verification and conflicting times remain visible on the result card", async () => {
+  (findRecommendedTrail as jest.Mock).mockResolvedValue({ ...success, recommendation: { ...recommendation,
+    catalogVerification: "partial", durationScopeVerified: false,
+    dataWarnings: ["Las fuentes oficiales difieren en la duración total: 4–5 h y 6–8 h."] } });
+  const tree = await mount(Discover); await fill(tree); await press(tree, "Encontrar mi sendero");
+  expect(text(tree)).toContain("Las fuentes oficiales difieren");
+  expect(text(tree)).toContain("confirmar si incluye el regreso");
 });
 
 test("the destination is free text and the survey ends at difficulty without repeating the profile", async () => {

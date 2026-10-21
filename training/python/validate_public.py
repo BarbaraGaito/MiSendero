@@ -5,6 +5,7 @@ import pandas as pd
 from sklearn.metrics import accuracy_score, f1_score
 
 from common.privacy import assert_no_restricted_columns
+from common.evaluation import holdout_details
 from public_sources import ADAPTERS, OUTPUT, digest, verify_source_snapshot
 
 
@@ -54,6 +55,12 @@ def validate(model):
     held_out = pd.read_csv(directory / "test_predictions.csv", dtype=str)
     require(not held_out["row_key"].duplicated().any() and set(held_out["row_key"]) == test_keys, "Test prediction rows mismatch")
     require(all(labels[key] == observed for key, observed in zip(held_out["row_key"], held_out["observed"])), "Test labels differ from public observations")
+    if "evaluation_details" in metrics:
+        training_rows = original[original["row_key"].isin(train_keys)]
+        group_by_key = dict(zip(original["row_key"], original["group_key"]))
+        expected = holdout_details(training_rows["label"], held_out["observed"], held_out["predicted"], metrics["labels"],
+                                   training_rows["group_key"], [group_by_key[key] for key in held_out["row_key"]])
+        require(metrics["evaluation_details"] == expected, "Extended evaluation differs from held-out predictions and training-only baseline")
     for key, actual in {
         "accuracy": accuracy_score(held_out["observed"], held_out["predicted"]),
         "f1_macro": f1_score(held_out["observed"], held_out["predicted"], labels=metrics["labels"], average="macro", zero_division=0),

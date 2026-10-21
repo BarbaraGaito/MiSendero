@@ -39,7 +39,6 @@ async function main() {
       realPostgresRecordMatched: true, coveredDestinations: coverage.destinations.length, additionalRequests, databaseWrites: 0 }, null, 2));
   } finally {
     if (server.listening) await new Promise((resolve) => server.close(resolve));
-    require("../dist/ai/model").localRanker.stop();
     await pool.end();
   }
 }

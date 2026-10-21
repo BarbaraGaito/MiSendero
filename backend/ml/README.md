@@ -1,6 +1,8 @@
-# Recomendador local: datos, entrenamiento e inferencia
+# Pipeline histórico de ranking por valoraciones (fuera del recomendador)
 
-El producto usa una encuesta de cuatro preguntas, toma la experiencia del perfil guardado de la cuenta y devuelve una ruta de PostgreSQL. Si el perfil falta, la app exige completar primero su encuesta y luego vuelve al recomendador. No tiene chat. El código de entrenamiento supervisado está implementado; **no hay un modelo personalizado entrenado con evidencia real suficiente todavía**. En ese estado la API utiliza una referencia determinista y lo declara en `ranking.method`.
+El recomendador actual usa exclusivamente reglas sobre datos del catálogo y declara `ranking.method: catalog`. No importa este modelo, no inicia su worker y no consulta opiniones, puntuaciones de relevancia ni artefactos, aunque existan variables `TRAIL_ML_*`. No necesita recolectar valoraciones ni entrenar este pipeline. Ver [funcionamiento actual](../../docs/trail-recommendation.md).
+
+Los archivos de esta carpeta se conservan como código histórico de investigación. Las instrucciones siguientes describen ese experimento retirado; no habilitan inferencia en la API actual. La selección de candidatos también cambió: duración y dificultad preceden al paisaje. Los ejemplos y métricas históricos no evalúan la política actual. Los modelos públicos de fatiga, AMS y dificultad de OSM/APN son tareas separadas y conservan sus datos y evaluación.
 
 ## Decisión de modelo
 

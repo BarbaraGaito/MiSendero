@@ -8,6 +8,7 @@ export interface CatalogRow {
   provenance: { checked_at: string; route_type: string; duration_basis: string;
     sources: { title: string; url: string }[];
     recommendation?: { trail_types?: TrailType[]; terrain?: string[]; source_url?: string };
+    review?: { confirmed_fields: string[]; unconfirmed_fields: string[]; finding: string; warning: string | null };
   } | null;
 }
 export type Candidate = Omit<TrailRecommendation, "explanation">;
@@ -15,7 +16,8 @@ const trustedHosts = new Set(["www.argentina.gob.ar", "www.barilocheturismo.gob.
   "larutanatural.gob.ar", "turismocapilla.gob.ar", "www.ambiente.gba.gob.ar", "www.turismoelbolson.gob.ar",
   "saltaciudad.travel", "www.turismo.jujuy.gob.ar", "www.tucumanturismo.gob.ar", "turismo.neuquen.gob.ar",
   "villapehuenia.gob.ar", "villademerlo.tur.ar", "www.esquel.tur.ar", "misiones.tur.ar",
-  "barilochetrekking.com", "patagonia.gob.ar"]);
+  "barilochetrekking.com", "patagonia.gob.ar", "informacionoficial.mendoza.gob.ar",
+  "experiencias.turismosalta.gov.ar", "fundacionfunke.org.ar", "www.ischigualasto.gob.ar"]);
 const safeUrl = (value: unknown, source = false): value is string => {
   try { const url = new URL(String(value)); return url.protocol === "https:" && !url.username && !url.password &&
     (!source || trustedHosts.has(url.hostname)); } catch { return false; }
@@ -65,17 +67,18 @@ export function verifiedCatalog(rows: CatalogRow[]): Candidate[] {
     const minutes = typeof row.duration === "string" ? durationMinutes(row.duration) : null;
     const difficulty: Difficulty | undefined = ({ baja: "facil", media: "moderada", alta: "dificil" } as const)[normalize(row.difficulty) as "baja" | "media" | "alta"];
     // An out-and-back itinerary must explicitly document a total duration.
-    const durationKnown = p?.route_type === "out_and_back"
+    const durationKnown = p?.duration_basis === "official_total_itinerary" || (p?.route_type === "out_and_back"
       ? ["official_round_trip", "round_trip_from_official_one_way", "planning_estimate"].includes(p.duration_basis)
       : p?.route_type === "point_to_point" ? p.duration_basis === "official_one_way"
-        : p?.route_type === "loop" && p.duration_basis === "official_circuit";
+        : p?.route_type === "loop" && p.duration_basis === "official_circuit");
     // Legacy catalog records remain usable without pretending their provenance or time scope was verified.
     // A malformed supplied provenance is still rejected; missing facts are never generated.
     if ((p && !sources.length) || !minutes || !difficulty || !Number.isFinite(Number(row.distance_km)) || Number(row.distance_km) <= 0 || !row.description) return [];
     const routeType = p && ["out_and_back", "loop", "point_to_point"].includes(p.route_type) ? p.route_type as Candidate["routeType"] : "unknown";
     const dataWarnings: string[] = [];
+    if (p?.review?.warning) dataWarnings.push(p.review.warning);
     if (!p) dataWarnings.push("Esta ficha proviene del catálogo de MiSendero y todavía no tiene una fuente externa ni una fecha de verificación documentadas.");
-    if (!durationKnown) dataWarnings.push("La duración está registrada en la ficha, pero no está documentado si incluye ida y vuelta. Confirmá el tiempo total antes de planificar la salida.");
+    if (!durationKnown && !p?.review?.warning) dataWarnings.push("La duración está registrada en la ficha, pero no está documentado si incluye ida y vuelta. Confirmá el tiempo total antes de planificar la salida.");
     else if (p?.duration_basis === "planning_estimate") dataWarnings.push("La duración de esta ficha es una estimación de planificación, no un tiempo oficial publicado.");
     // Only positive descriptions are used: variants explicitly excluded by the catalog are not facets.
     const text = normalize(`${row.name} ${row.description.split(/\bno\b/i)[0]}`);
@@ -95,7 +98,7 @@ export function verifiedCatalog(rows: CatalogRow[]): Candidate[] {
       imageUrl: safeUrl(row.image_url) ? row.image_url : null, trailTypes, difficulty,
       duration: row.duration, durationMinutes: minutes, routeType,
       distanceKm: Number(row.distance_km), description: row.description, sources, checkedAt: p?.checked_at ?? null,
-      catalogVerification: p ? "verified" : "catalog_only", durationScopeVerified: Boolean(durationKnown),
+      catalogVerification: p ? p.review?.unconfirmed_fields.length ? "partial" : "verified" : "catalog_only", durationScopeVerified: Boolean(durationKnown),
       ...(dataWarnings.length ? { dataWarnings } : {}),
       durationIsEstimated: ["round_trip_from_official_one_way", "planning_estimate"].includes(p?.duration_basis || ""),
       ascentM: typeof row.verified_ascent_m === "number" && Number.isFinite(row.verified_ascent_m) && row.verified_ascent_m >= 0 ? row.verified_ascent_m : null, terrain }];
@@ -203,11 +206,11 @@ export function compatibleCandidates(catalog: Candidate[], preferences: TrailPre
   const experienced = local.filter((c) => experienceFits(c, preferences));
   const lowestDifficulty = Math.min(...local.map(c => difficultyRank[c.difficulty]));
   const pool = experienced.length ? experienced : local.filter(c => difficultyRank[c.difficulty] === lowestDifficulty);
-  // The first non-empty tier wins: exact first, then landscape, duration and difficulty.
-  // Scores/model cannot override geography or the best available experience tier.
-  const tier = (c: Candidate) => Number(!landscapeFits(c, preferences)) * 4 +
-    Number(!candidateDurationFits(c, preferences.duration)) * 2 +
-    Number(preferences.difficulty !== "cualquiera" && c.difficulty !== preferences.difficulty);
+  // Essential trip constraints precede scenery: total duration, difficulty, landscape.
+  // These are explicit product rules, not learned relevance or scientific thresholds.
+  const tier = (c: Candidate) => Number(!candidateDurationFits(c, preferences.duration)) * 4 +
+    Number(preferences.difficulty !== "cualquiera" && c.difficulty !== preferences.difficulty) * 2 +
+    Number(!landscapeFits(c, preferences));
   const bestTier = Math.min(...pool.map(tier));
   return pool.filter((c) => tier(c) === bestTier)
     .sort((a, b) => desired.filter((t) => b.trailTypes.includes(t)).length - desired.filter((t) => a.trailTypes.includes(t)).length || a.trailId - b.trailId);

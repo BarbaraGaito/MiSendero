@@ -17,7 +17,7 @@ from sklearn.metrics import f1_score
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import GroupKFold, GroupShuffleSplit
 
-from common.evaluation import evaluate_training_run
+from common.evaluation import evaluate_training_run, holdout_details
 from common.export_forest import export_random_forest
 from public_sources import ADAPTERS, OUTPUT, ROOT, build_public_dataset, digest
 
@@ -131,6 +131,8 @@ def train(model: str) -> dict:
     }
     # Held-out predictions permit independent recomputation of every metric.
     test_prediction = clf.predict(x_test)
+    metrics["evaluation_details"] = holdout_details(y_train, y_test, test_prediction, labels,
+                                                   frame.iloc[train_idx]["group_key"], frame.iloc[test_idx]["group_key"])
     pd.DataFrame({"row_key": frame.iloc[test_idx]["row_key"].to_numpy(), "observed": y_test.to_numpy(), "predicted": test_prediction}).to_csv(OUTPUT / model / "test_predictions.csv", index=False)
     metrics["test_predictions_sha256"] = digest(OUTPUT / model / "test_predictions.csv")
     payload = export_random_forest(clf, features, list(clf.classes_), {"evaluation_validity": metrics["evaluation_validity"]})

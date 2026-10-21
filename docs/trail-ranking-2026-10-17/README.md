@@ -1,6 +1,8 @@
 # Auditoría del recomendador personalizado
 
-La revisión actual está en [POLICY-V4.md](POLICY-V4.md): 51 fichas utilizables con sus límites de documentación y cero etiquetas reales de relevancia. El informe original que sigue describe el snapshot inicial.
+Informe histórico del experimento de ranking por valoraciones, retirado del flujo de la API. El recomendador actual usa [reglas sobre datos del catálogo](../trail-recommendation.md), sin etiquetas de relevancia ni modelo por opiniones. Las cifras y políticas de este directorio describen snapshots anteriores.
+
+La revisión histórica posterior está en [POLICY-V4.md](POLICY-V4.md): 51 fichas utilizables con sus límites de documentación y cero etiquetas reales de relevancia. El informe original que sigue describe el snapshot inicial.
 
 Revisión local del 17/10/2026. No se consultó ni modificó RDS.
 

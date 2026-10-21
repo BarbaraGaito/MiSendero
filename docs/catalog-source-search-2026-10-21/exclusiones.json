@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-10-21",
+  "scope": "Registro de revisión metodológica; los campos de esta lista no integran las tablas de datos ni los denominadores de sus análisis.",
+  "exclusion_unit": "trail_and_field",
+  "records": [
+    {
+      "name": "Sendero a Confluencia", "field": "duration_total_minutes",
+      "reason": "Conflicto entre intervalos de fuentes oficiales para Horcones-Confluencia-Horcones; no se promedian ni se elige un extremo para completar la ficha.",
+      "sources": ["https://informacionoficial.mendoza.gob.ar/energiayambiente/aconcagua/", "https://www.argentina.gob.ar/viaja-por-argentina/que-hacer/hacer-trekking-en-la-cumbre-de-america"]
+    },
+    {
+      "name": "Garganta del Diablo de Tilcara", "field": "duration_total_minutes",
+      "reason": "El manual oficial distingue el acceso por herradura desde Tilcara y el tramo a la cascada. No respalda un tiempo total para la misma traza de 3,14 km de la ficha. Se descartan resultados de la Cueva del Inca y la travesía Tilcara-Calilegua.",
+      "sources": ["https://www.turismo.jujuy.gob.ar/wp-content/uploads/Manual-para-Guias-Idoneos_QUEBRADA_v5.pdf", "https://www.turismo.jujuy.gob.ar/wp-content/uploads/Manual-para-Guias-Idoneos_v5.pdf"]
+    },
+    {
+      "name": "Garganta del Diablo - Quebrada de las Conchas", "field": "duration_total_minutes",
+      "reason": "La ficha oficial no especifica una duración del sendero. Se descartan tiempos de excursiones vehiculares por los Valles Calchaquíes y de Garganta del Diablo en Iguazú.",
+      "sources": ["https://experiencias.turismosalta.gov.ar/quebrada-de-las-conchas/"]
+    },
+    {
+      "name": "Sendero El Mollar - El Palmar", "field": "duration_total_minutes",
+      "reason": "APN y su plan de gestión describen el circuito de 1,4 km, sin un tiempo específico. Las dos horas publicadas en el plan corresponden al Sendero de la Selva. Se descartan resultados de El Mollar en Tucumán y relatos personales.",
+      "sources": ["https://www.argentina.gob.ar/parquesnacionales/centro/parque-nacional-el-palmar/actividades", "https://pruebas.sib.gob.ar/archivos/019448_19448_19448"]
+    },
+    {
+      "name": "Campo de Piedra Pomez", "field": "duration_total_minutes",
+      "reason": "Las fuentes oficiales describen el área y el acceso, sin delimitar el mismo recorrido peatonal de 2 km. No se transfieren tiempos de excursión 4x4 ni de otros sitios del circuito regional.",
+      "sources": ["https://www.argentina.gob.ar/jefatura/turismo/viaja-por-argentina/caminar-en-el-campo-de-piedra-pomez", "https://larutanatural.gob.ar/es/circuito/18/de-san-fernando-del-valle-de-catamarca-a-antofagasta-de-la-sierra"]
+    },
+    {
+      "name": "Laguna del Tesoro - Aconquija", "field": "duration_total_minutes",
+      "reason": "Las fichas oficiales publican seis horas desde Cochuna hasta la laguna. No se encontró un tiempo de regreso explícito; no se duplica el tiempo de ida ni se adopta el intervalo anterior de 10-12 h como observación.",
+      "sources": ["https://www.tucumanturismo.gob.ar/articulos/articulo/960/senderos-parque-nacional-aconquija", "https://www.tucumanturismo.gob.ar/articulos/articulo/97/ecosendas?lang=EN"]
+    },
+    {
+      "name": "Miradores de Sierra de las Quijadas", "field": "duration_total_minutes",
+      "reason": "APN publica 90 minutos, pero no explicita su alcance de ida y vuelta para la traza de la ficha. No se transfiere a Miradores la aclaración de regreso publicada para Guanacos o Farallones.",
+      "sources": ["https://www.argentina.gob.ar/parquesnacionales/centro/parque-nacional-sierra-de-las-quijadas/actividades"]
+    },
+    {
+      "name": "Histórico Tapé Porá - Mburucuyá", "field": "accumulated_ascent_m",
+      "reason": "La geometría oficial conservada es parcial y no se localizó un ascenso acumulado con respaldo del administrador para el itinerario completo. No se asigna cero por tratarse de una región llana.",
+      "sources": ["https://www.argentina.gob.ar/node/150096", "https://www.google.com/maps/d/viewer?mid=1sggSbbuusRIxFOAprWsrL96YMRgaku7M"]
+    },
+    {
+      "name": "Laguna Los Patitos - El Rey", "field": "accumulated_ascent_m",
+      "reason": "La traza conservada es parcial. Los resultados de plataformas comunitarias no proporcionan un perfil reproducible y coincidente del itinerario oficial de la ficha.",
+      "sources": ["https://www.argentina.gob.ar/parquesnacionales/region-noroeste/parque-nacional-el-rey/actividades", "https://www.google.com/maps/d/viewer?mid=1ULnLCqJekBzDwSVMPGQ5cWG7pXYylMCX"]
+    },
+    {
+      "name": "Farallones - Sierra de las Quijadas", "field": "accumulated_ascent_m",
+      "reason": "APN confirma el itinerario de ida y vuelta pero no publica ascenso acumulado. Hay cifras diferentes de actividades comunitarias y trazas de solo ida; no se mezclan con la geometría parcial del catálogo.",
+      "sources": ["https://www.argentina.gob.ar/parquesnacionales/centro/parque-nacional-sierra-de-las-quijadas/actividades", "https://es.wikiloc.com/rutas-senderismo/sendero-de-los-farallones-en-el-parque-nacional-sierra-de-las-quijadas-176791316", "https://es.wikiloc.com/rutas-senderismo/p-n-sierra-de-las-quijadas-farallones-146580855"]
+    },
+    {
+      "name": "Cerro Leoncito - El Leoncito", "field": "accumulated_ascent_m",
+      "reason": "APN publica un desnivel de 300 m, sin identificarlo como ascenso acumulado. Se conserva la distinción entre referencia vertical y suma de ascensos; no se sustituye la variable de la tesis por una medida distinta.",
+      "sources": ["https://www.argentina.gob.ar/parquesnacionales/centro/parque-nacional-el-leoncito/actividades"]
+    },
+    {
+      "name": "Cerro Alto El Petiso - Los Alerces", "field": "accumulated_ascent_m",
+      "reason": "Se encontraron valores en guías y publicaciones comunitarias, pero no una referencia del administrador o un perfil completo verificable de la misma traza. La altitud de cumbre y diferencias de altura no se convierten en ascenso acumulado.",
+      "sources": ["https://www.argentina.gob.ar/node/276965", "https://www.andeshandbook.org/montanismo/cerro/3156/alto_el_petiso", "https://comarcauna.com.ar/entradas/notas/trekking-a-la-cumbre-del-cerro-alto-el-petiso/"]
+    },
+    {
+      "name": "Cascada Arroyo del Hacha - Los Alerces", "field": "accumulated_ascent_m",
+      "reason": "No se localizó un ascenso acumulado técnico del administrador o un perfil completo reproducible de la traza. Se descartan registros que mezclan el paseo con decenas de kilómetros de desplazamiento y referencias de blogs sin el mismo alcance.",
+      "sources": ["https://www.argentina.gob.ar/node/276965", "https://viajaresdescubrir.com/parque-nacional-los-alerces-14-senderos/amp/", "https://gl.wikiloc.com/rutas-sendeirismo/cascada-arroyo-el-hacha-165365680"]
+    },
+    {
+      "name": "Cerro Cocinero - Los Alerces", "field": "accumulated_ascent_m",
+      "reason": "La traza es parcial. Se distinguen el paseo al refugio y la expedición de varios días a la cumbre; no se transfieren a la ficha altitudes o desniveles de otro objetivo.",
+      "sources": ["https://www.argentina.gob.ar/node/276965", "https://www.esquel.tur.ar/blog/conoce-los-8-senderos-imperdibles-para-los-amantes-del-trekking-en-el-parque-nacional-los-alerces/"]
+    },
+    {
+      "name": "Laguna Rosales - San Martín de los Andes", "field": "accumulated_ascent_m",
+      "reason": "La etapa oficial no publica ascenso acumulado. Las actividades localizadas incluyen desvíos, circuitos de bicicleta o etapas de carreras diferentes; no verifican el mismo itinerario de la ficha.",
+      "sources": ["https://patagonia.gob.ar/senderos/circuito-andino/", "https://es.wikiloc.com/rutas-senderismo/san-martin-de-los-andes-laguna-rosales-11894451"]
+    }
+  ]
+}

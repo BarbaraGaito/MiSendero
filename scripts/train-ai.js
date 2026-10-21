@@ -14,6 +14,7 @@ if (args[0] === "--prepare") command = [path.join(pythonDir, "prepare_public.py"
 else if (args[0] === "--fetch") command = [path.join(pythonDir, "fetch_public.py"), ...args.slice(1)];
 else if (args[0] === "--test") command = ["-m", "unittest", "discover", "-s", pythonDir, "-p", "test_*.py", "-v"];
 else if (args[0] === "--validate") command = [path.join(pythonDir, "validate_public.py")];
+else if (args[0] === "--refresh-evaluation") command = [path.join(pythonDir, "refresh_evaluation.py")];
 else command = [path.join(pythonDir, "train_public.py"), ...args];
 // Research forests use native public labels and are never copied over the
 // app's old low/medium/high models. Their metrics declare scope and limitations.

@@ -29,6 +29,23 @@ export interface AiCrossValidationSummary {
 }
 
 export interface AiTrainingMetrics {
+  evaluation_details?: {
+    version: number;
+    model: AiMetricSummary & { balanced_accuracy: number };
+    baseline: AiMetricSummary & { label: string; balanced_accuracy: number };
+    difference_from_baseline: { accuracy: number; f1_macro: number; balanced_accuracy: number };
+    class_coverage: {
+      training_counts: Record<string, number>;
+      test_counts: Record<string, number>;
+      missing_in_training: string[];
+      missing_in_test: string[];
+      labels_total: number;
+      labels_in_training: number;
+      labels_in_test: number;
+    };
+    group_support: { training: number; test: number };
+    interpretation: string;
+  };
   baseline?: {
     test_accuracy: number;
     label: string;

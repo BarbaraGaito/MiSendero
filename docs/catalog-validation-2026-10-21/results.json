@@ -1,0 +1,487 @@
+{
+  "schemaVersion": 1,
+  "evaluatedAt": "2026-10-21T22:33:23.724Z",
+  "runtime": {
+    "node": "v24.19.0",
+    "platform": "win32"
+  },
+  "evaluationType": "functional_conformance_with_documented_catalog",
+  "dataScope": "Repository definitions; IDs and historical ascent references from the 2026-10-18 local export. No RDS access.",
+  "catalog": {
+    "records": 51,
+    "withoutSources": 0,
+    "partiallyVerified": 9,
+    "unconfirmedTotalDuration": 9,
+    "newRecomputableDemProfiles": 11,
+    "missingAscentReferences": 8,
+    "historicalAscentReferences": 32
+  },
+  "scenariosPassed": 12,
+  "scenarios": [
+    {
+      "id": "published-time-and-grade",
+      "expected": "Che Roga: 4.4 km, 150 min, media; exact requested window and difficulty",
+      "sourceUrls": [
+        "https://www.argentina.gob.ar/node/150096"
+      ],
+      "preferences": {
+        "destination": "Corrientes",
+        "trailTypes": [
+          "cualquiera"
+        ],
+        "duration": "2-4",
+        "difficulty": "moderada",
+        "experience": "intermedio"
+      },
+      "actual": {
+        "status": "ok",
+        "trailId": 309,
+        "name": "Sendero Che Roga - Mburucuyá"
+      },
+      "passed": true
+    },
+    {
+      "id": "essential-time-before-landscape",
+      "expected": "Tapé Porá fits 1–2 h and beginner; requested lakes and media must be disclosed as mismatches",
+      "sourceUrls": [
+        "https://www.argentina.gob.ar/node/150096"
+      ],
+      "preferences": {
+        "destination": "Corrientes",
+        "trailTypes": [
+          "lagos"
+        ],
+        "duration": "1-2",
+        "difficulty": "moderada",
+        "experience": "principiante"
+      },
+      "actual": {
+        "status": "ok",
+        "trailId": 310,
+        "name": "Histórico Tapé Porá - Mburucuyá"
+      },
+      "passed": true
+    },
+    {
+      "id": "published-round-trip",
+      "expected": "Lahuán: APN 90 min round trip, low difficulty, 1.5 km one way = 3 km return itinerary",
+      "sourceUrls": [
+        "https://www.argentina.gob.ar/node/276965"
+      ],
+      "preferences": {
+        "destination": "Chubut",
+        "trailTypes": [
+          "cualquiera"
+        ],
+        "duration": "1-2",
+        "difficulty": "facil",
+        "experience": "principiante"
+      },
+      "actual": {
+        "status": "ok",
+        "trailId": 5,
+        "name": "Lahuan Solitario - Puerto Chucao"
+      },
+      "passed": true
+    },
+    {
+      "id": "total-time-with-unknown-route-shape",
+      "expected": "Cerro Morado: 3 h for full itinerary, 5.73 km, alta; do not infer a loop",
+      "sourceUrls": [
+        "https://www.ischigualasto.gob.ar/?page_id=1823"
+      ],
+      "preferences": {
+        "destination": "San Juan",
+        "trailTypes": [
+          "cualquiera"
+        ],
+        "duration": "2-4",
+        "difficulty": "dificil",
+        "experience": "avanzado"
+      },
+      "actual": {
+        "status": "ok",
+        "trailId": 8,
+        "name": "Caminata al Cerro Morado"
+      },
+      "passed": true
+    },
+    {
+      "id": "conflicting-official-times",
+      "expected": "Conflicting official 4–5 h and 6–8 h cannot become an exact 4–6 h match",
+      "sourceUrls": [
+        "https://informacionoficial.mendoza.gob.ar/energiayambiente/aconcagua/",
+        "https://www.argentina.gob.ar/viaja-por-argentina/que-hacer/hacer-trekking-en-la-cumbre-de-america"
+      ],
+      "preferences": {
+        "destination": "Mendoza",
+        "trailTypes": [
+          "cualquiera"
+        ],
+        "duration": "4-6",
+        "difficulty": "moderada",
+        "experience": "intermedio"
+      },
+      "actual": {
+        "status": "ok",
+        "trailId": 1,
+        "name": "Sendero a Confluencia"
+      },
+      "passed": true
+    },
+    {
+      "id": "one-way-source-is-not-total-time",
+      "expected": "Tesoro: intermediate difficulty; 6 h one way does not verify the old total duration",
+      "sourceUrls": [
+        "https://www.tucumanturismo.gob.ar/articulos/articulo/960/senderos-parque-nacional-aconquija"
+      ],
+      "preferences": {
+        "destination": "Tucumán",
+        "trailTypes": [
+          "cualquiera"
+        ],
+        "duration": "mas-6",
+        "difficulty": "moderada",
+        "experience": "intermedio"
+      },
+      "actual": {
+        "status": "ok",
+        "trailId": 10,
+        "name": "Laguna del Tesoro - Aconquija"
+      },
+      "passed": true
+    },
+    {
+      "id": "geography-preserved",
+      "expected": "A short forest request in Bariloche must not silently move to El Bolsón",
+      "sourceUrls": [],
+      "preferences": {
+        "destination": "Bariloche",
+        "trailTypes": [
+          "bosques"
+        ],
+        "duration": "menos-1",
+        "difficulty": "cualquiera",
+        "experience": "avanzado"
+      },
+      "actual": {
+        "status": "ok",
+        "trailId": 321,
+        "name": "Cerro Llao Llao desde Villa Tacul"
+      },
+      "passed": true
+    },
+    {
+      "id": "typo-needs-confirmation",
+      "expected": "Barilcohe asks to clarify; no automatic change to Bariloche",
+      "sourceUrls": [],
+      "preferences": {
+        "destination": "Barilcohe",
+        "trailTypes": [
+          "cualquiera"
+        ],
+        "duration": "cualquiera",
+        "difficulty": "cualquiera",
+        "experience": "avanzado"
+      },
+      "actual": {
+        "status": "clarification",
+        "trailId": null,
+        "name": null
+      },
+      "passed": true
+    },
+    {
+      "id": "absent-place",
+      "expected": "An absent destination returns no fabricated trail",
+      "sourceUrls": [],
+      "preferences": {
+        "destination": "Atlantis",
+        "trailTypes": [
+          "cualquiera"
+        ],
+        "duration": "cualquiera",
+        "difficulty": "cualquiera",
+        "experience": "avanzado"
+      },
+      "actual": {
+        "status": "no_results",
+        "trailId": null,
+        "name": null
+      },
+      "passed": true
+    },
+    {
+      "id": "ambiguous-destination",
+      "expected": "Argentina requires a more precise destination",
+      "sourceUrls": [],
+      "preferences": {
+        "destination": "Argentina",
+        "trailTypes": [
+          "cualquiera"
+        ],
+        "duration": "cualquiera",
+        "difficulty": "cualquiera",
+        "experience": "avanzado"
+      },
+      "actual": {
+        "status": "clarification",
+        "trailId": null,
+        "name": null
+      },
+      "passed": true
+    },
+    {
+      "id": "profile-overrun-disclosed",
+      "expected": "A beginner with only a demanding local trail receives an explicit profile warning",
+      "sourceUrls": [
+        "https://patagonia.gob.ar/senderos/circuito-andino/"
+      ],
+      "preferences": {
+        "destination": "Neuquén",
+        "trailTypes": [
+          "cualquiera"
+        ],
+        "duration": "cualquiera",
+        "difficulty": "facil",
+        "experience": "principiante"
+      },
+      "actual": {
+        "status": "ok",
+        "trailId": 327,
+        "name": "Puerto Canoa - Cara Sur del Volcán Lanín"
+      },
+      "passed": true
+    },
+    {
+      "id": "partial-geometry-keeps-missing-ascent",
+      "expected": "Incomplete Tapé Porá geometry cannot acquire a full-route ascent",
+      "sourceUrls": [
+        "https://www.argentina.gob.ar/node/150096"
+      ],
+      "preferences": {
+        "destination": "Corrientes",
+        "trailTypes": [
+          "cualquiera"
+        ],
+        "duration": "1-2",
+        "difficulty": "facil",
+        "experience": "principiante"
+      },
+      "actual": {
+        "status": "ok",
+        "trailId": 310,
+        "name": "Histórico Tapé Porá - Mburucuyá"
+      },
+      "passed": true
+    }
+  ],
+  "pendingDocumentation": [
+    {
+      "name": "Sendero a Confluencia",
+      "unconfirmedFields": [
+        "distance_km",
+        "duration"
+      ],
+      "finding": "Mendoza publica 4–5 h totales; Turismo Nación publica 6–8 h para Horcones–Confluencia–Horcones. Se conserva el dato previo, sin considerarlo un tiempo confirmado.",
+      "sources": [
+        {
+          "title": "Gobierno de Mendoza - Aconcagua",
+          "url": "https://informacionoficial.mendoza.gob.ar/energiayambiente/aconcagua/"
+        },
+        {
+          "title": "Turismo Nación - Horcones, Confluencia y regreso",
+          "url": "https://www.argentina.gob.ar/viaja-por-argentina/que-hacer/hacer-trekking-en-la-cumbre-de-america"
+        }
+      ]
+    },
+    {
+      "name": "Volcan Lanin - Base a Refugio BIM",
+      "unconfirmedFields": [
+        "distance_km",
+        "duration",
+        "difficulty",
+        "route_type"
+      ],
+      "finding": "La fuente describe el ascenso a cumbre; no certifica distancia, duración ni dificultad del tramo específico Base–BIM.",
+      "sources": [
+        {
+          "title": "Turismo Nación - Ascender el Volcán Lanín (contexto del destino)",
+          "url": "https://www.argentina.gob.ar/viaja-por-argentina/que-hacer/ascender-el-volcan-lanin"
+        }
+      ]
+    },
+    {
+      "name": "Garganta del Diablo de Tilcara",
+      "unconfirmedFields": [
+        "distance_km",
+        "duration",
+        "difficulty",
+        "route_type"
+      ],
+      "finding": "La fuente distingue 4 km por herradura hasta el acceso y 20 min adicionales hasta la cascada; no confirma el alcance de los 3,14 km del catálogo.",
+      "sources": [
+        {
+          "title": "Jujuy Turismo - Manual de guías, Quebrada",
+          "url": "https://www.turismo.jujuy.gob.ar/wp-content/uploads/Manual-para-Guias-Idoneos_QUEBRADA_v5.pdf"
+        }
+      ]
+    },
+    {
+      "name": "Garganta del Diablo - Quebrada de las Conchas",
+      "unconfirmedFields": [
+        "distance_km",
+        "duration",
+        "route_type"
+      ],
+      "finding": "La ficha oficial clasifica el recorrido como fácil, pero deja la duración sin valor y no publica distancia.",
+      "sources": [
+        {
+          "title": "Ministerio de Turismo de Salta - Quebrada de las Conchas",
+          "url": "https://experiencias.turismosalta.gov.ar/quebrada-de-las-conchas/"
+        }
+      ]
+    },
+    {
+      "name": "Sendero El Mollar - El Palmar",
+      "unconfirmedFields": [
+        "duration",
+        "difficulty",
+        "route_type"
+      ],
+      "finding": "APN publica 1,4 km para El Mollar; no se transfiere a este sendero la dificultad genérica de la mayoría de senderos del parque.",
+      "sources": [
+        {
+          "title": "APN - El Palmar, Sendero El Mollar",
+          "url": "https://www.argentina.gob.ar/parquesnacionales/centro/parque-nacional-el-palmar/actividades"
+        }
+      ]
+    },
+    {
+      "name": "Ascenso Cerro Tres Picos",
+      "unconfirmedFields": [
+        "distance_km",
+        "duration",
+        "difficulty",
+        "route_type"
+      ],
+      "finding": "El administrador confirma acceso desde Estancia Funke y distintos circuitos; su página no proporciona los valores numéricos de esta ficha.",
+      "sources": [
+        {
+          "title": "Fundación Funke - Turismo y acceso a Tres Picos",
+          "url": "https://fundacionfunke.org.ar/turismo/"
+        }
+      ]
+    },
+    {
+      "name": "Caminata al Cerro Morado",
+      "unconfirmedFields": [
+        "route_type"
+      ],
+      "finding": "El administrador publica 5,73 km, 3 h para el recorrido incluida la permanencia en cumbre y dificultad alta. No se infiere que circuito signifique una traza circular.",
+      "sources": [
+        {
+          "title": "Parque Provincial Ischigualasto - Caminata al Cerro Morado",
+          "url": "https://www.ischigualasto.gob.ar/?page_id=1823"
+        }
+      ]
+    },
+    {
+      "name": "Campo de Piedra Pomez",
+      "unconfirmedFields": [
+        "distance_km",
+        "duration",
+        "difficulty",
+        "route_type"
+      ],
+      "finding": "La fuente confirma el área y acceso desde El Peñón, sin delimitar un sendero de 2 km o su duración.",
+      "sources": [
+        {
+          "title": "Turismo Nación - Campo de Piedra Pómez",
+          "url": "https://www.argentina.gob.ar/jefatura/turismo/viaja-por-argentina/caminar-en-el-campo-de-piedra-pomez"
+        }
+      ]
+    },
+    {
+      "name": "Laguna del Tesoro - Aconquija",
+      "unconfirmedFields": [
+        "duration"
+      ],
+      "finding": "El portal oficial publica 10,3 km y 6 h desde Cochuna hasta la laguna, dificultad intermedia. Se corrige Alta a Media. No se declara un tiempo oficial de regreso al duplicar las 6 h.",
+      "sources": [
+        {
+          "title": "Tucumán Turismo - Senderos, Portal Cochuna",
+          "url": "https://www.tucumanturismo.gob.ar/articulos/articulo/960/senderos-parque-nacional-aconquija"
+        }
+      ]
+    }
+  ],
+  "pendingElevation": [
+    {
+      "name": "Histórico Tapé Porá - Mburucuyá",
+      "reason": "Partial geometry: do not extrapolate a full-route ascent",
+      "geometrySource": "https://www.google.com/maps/d/viewer?mid=1sggSbbuusRIxFOAprWsrL96YMRgaku7M"
+    },
+    {
+      "name": "Laguna Los Patitos - El Rey",
+      "reason": "Partial geometry: do not extrapolate a full-route ascent",
+      "geometrySource": "https://www.google.com/maps/d/viewer?mid=1ULnLCqJekBzDwSVMPGQ5cWG7pXYylMCX"
+    },
+    {
+      "name": "Farallones - Sierra de las Quijadas",
+      "reason": "Partial geometry: do not extrapolate a full-route ascent",
+      "geometrySource": "https://www.google.com/maps/d/viewer?mid=1QcnHRODe4FHzqqCDvH_zYu4E1iaVUwbQ"
+    },
+    {
+      "name": "Cerro Leoncito - El Leoncito",
+      "reason": "Partial geometry: do not extrapolate a full-route ascent",
+      "geometrySource": "https://www.google.com/maps/d/viewer?mid=10DICzZmEMiPZoWiNaG1su3d-QMD66IjT"
+    },
+    {
+      "name": "Cerro Alto El Petiso - Los Alerces",
+      "reason": "Partial geometry: do not extrapolate a full-route ascent",
+      "geometrySource": "https://www.google.com/maps/d/viewer?mid=1qzpIFZpovu1alDAuCrCl2d8jTvePoLZz"
+    },
+    {
+      "name": "Cascada Arroyo del Hacha - Los Alerces",
+      "reason": "Partial geometry: do not extrapolate a full-route ascent",
+      "geometrySource": "https://www.google.com/maps/d/viewer?mid=1qzpIFZpovu1alDAuCrCl2d8jTvePoLZz"
+    },
+    {
+      "name": "Cerro Cocinero - Los Alerces",
+      "reason": "Partial geometry: do not extrapolate a full-route ascent",
+      "geometrySource": "https://www.google.com/maps/d/viewer?mid=1qzpIFZpovu1alDAuCrCl2d8jTvePoLZz"
+    },
+    {
+      "name": "Laguna Rosales - San Martín de los Andes",
+      "reason": "Partial geometry: do not extrapolate a full-route ascent",
+      "geometrySource": "https://www.openstreetmap.org/relation/9379221"
+    }
+  ],
+  "limitations": [
+    "Scenarios are deterministic functional checks, not sampled human observations or training labels.",
+    "Passing checks does not demonstrate satisfaction, physical suitability, clinical safety or field accuracy.",
+    "Profile matching, priority order and shorter-route tie breaking remain explicit, unvalidated product policies.",
+    "DEM values are estimates over the stored geometry, not field measurements or GPS altitude samples.",
+    "A source confirming a destination does not verify missing attributes of its trail."
+  ],
+  "inputSha256": {
+    "backend/src/ai/assistant.ts": "ae0677db849fe0517302ce4d11ac7110ac9da85a8bf0b2cdab49ae3dfb60d5e9",
+    "backend/src/ai/catalog.ts": "9f25d1fce0bd501dfe6aad5350d5133fea7d928219a0e8dd671898df7cfe6b1b",
+    "backend/src/ai/schemas.ts": "db96b1507757b990a455be8b2bf3671ab6d974d25f4b340fc43c171879a38e8a",
+    "backend/src/ai/contracts.ts": "0640550176a65253caa1645f565dcd1b7c24f7b305e708ccbbda330733272411",
+    "backend/src/trailElevation.js": "c2727a47df27063328855fd69d11b701f7e0031433f7859018bed5ace896face",
+    "backend/src/data/reviewedTrailFacts.js": "bd8c5e361ac12e7718a8764e44e0369fa3f3371fb05ee5370974f2a80eba53dd",
+    "backend/src/data/additionalTrails.js": "1fec83cdd8ccddf5682288f4f272cc5e8ccd6e5e3e48880e44d9ecf2655423cc",
+    "backend/src/data/reviewedTrailFacts20261021.json": "a1f18cac11092807105d4065d8ec4d0f53886aef4a7f79087e11cbd0ddcbaa7d",
+    "backend/src/data/recommendationElevation20261021.json": "fbcf5b224a55d92760a7ba43b9f8d37b2a1ffeddcfeeb5625ce7ed7c2b6d1923",
+    "backend/src/data/legacyTrails.js": "81e012385c4f840001caa1fafeb6fb2088bea8e5189fa9bcd8e6c6eec9ef59bd",
+    "backend/src/data/additionalTrailDefinitions.js": "680058799a487764fe3bac2050703a9b5b183e8c95e62cd9e32e24e5fa65fd59",
+    "backend/src/data/additionalTrailRoutes.json": "4b8e54ca243ca47bb342e46d7a4631632cfe4dd617fe32cbcd326176fc82044b",
+    "backend/src/data/catalogExpansion20261017.js": "51fd467392a8deaddd2ce47f790e4b89c82fa02159d09875b87998bcd8b75a58",
+    "backend/src/data/catalogExpansionRoutes20261017.json": "237b358d0e61c8a0e1cde9b7e2c72cfb083bd1252e7a0ac7a51c6bc9385e14a3",
+    "backend/src/data/realTrailRoutes.js": "0c4bb7cb9f914d74b8e42477ed155c6c2b03216b21c34019fcfd1f4388bb58dc",
+    "training/data/trail-ranking/catalog.json": "214bfd70005c96c90ac16643eb799ebe2af106e34b12ee84285d4334d7ac0ff4",
+    "backend/scripts/validateCatalogRecommendations.js": "80a03634bca4344b3208a95e33cc96521d4abde6d58f2a52e7430445cccb933b"
+  }
+}

@@ -304,5 +304,57 @@
     ],
     "provenance_sha256": "0205f96e2575e8babfa4635973c608c899aad5c51cca6906d1b753cf5c30b9ce"
   },
-  "test_predictions_sha256": "7eaf3d7ac234954f28df0763bc174431f1011d571d6f110fba1282c53866ce10"
+  "test_predictions_sha256": "7eaf3d7ac234954f28df0763bc174431f1011d571d6f110fba1282c53866ce10",
+  "evaluation_details": {
+    "version": 1,
+    "model": {
+      "accuracy": 0.625,
+      "precision_macro": 0.6333333333333333,
+      "recall_macro": 0.625,
+      "f1_macro": 0.6190476190476191,
+      "precision_weighted": 0.6333333333333333,
+      "recall_weighted": 0.625,
+      "f1_weighted": 0.6190476190476191,
+      "support": 8,
+      "balanced_accuracy": 0.625
+    },
+    "baseline": {
+      "label": "AMS-",
+      "accuracy": 0.5,
+      "precision_macro": 0.25,
+      "recall_macro": 0.5,
+      "f1_macro": 0.3333333333333333,
+      "precision_weighted": 0.25,
+      "recall_weighted": 0.5,
+      "f1_weighted": 0.3333333333333333,
+      "support": 8,
+      "balanced_accuracy": 0.5
+    },
+    "difference_from_baseline": {
+      "accuracy": 0.125,
+      "f1_macro": 0.28571428571428575,
+      "balanced_accuracy": 0.125
+    },
+    "class_coverage": {
+      "training_counts": {
+        "AMS+": 7,
+        "AMS-": 9
+      },
+      "test_counts": {
+        "AMS+": 4,
+        "AMS-": 4
+      },
+      "missing_in_training": [],
+      "missing_in_test": [],
+      "labels_total": 2,
+      "labels_in_training": 2,
+      "labels_in_test": 2
+    },
+    "group_support": {
+      "training": 16,
+      "test": 8
+    },
+    "interpretation": "Descriptive comparison on the existing held-out observations; not a significance test or deployment approval."
+  },
+  "evaluation_refreshed_at": "2026-10-21T15:28:36.857605+00:00"
 }

@@ -42,7 +42,8 @@ function validRecommendation(value: unknown): boolean {
     isText(value.description, 2000) && isText(value.explanation, 1500) &&
     (value.preferenceAdjustments === undefined || (Array.isArray(value.preferenceAdjustments) && value.preferenceAdjustments.length > 0 &&
       value.preferenceAdjustments.length <= 4 && value.preferenceAdjustments.every((v: unknown) => isText(v, 300)))) &&
-    (value.catalogVerification === undefined || ["verified", "catalog_only"].includes(String(value.catalogVerification))) &&
+    (value.catalogVerification === undefined || ["verified", "partial", "catalog_only"].includes(String(value.catalogVerification))) &&
+    (value.ascentM == null || (typeof value.ascentM === "number" && Number.isFinite(value.ascentM) && value.ascentM >= 0)) &&
     (value.durationScopeVerified === undefined || typeof value.durationScopeVerified === "boolean") &&
     (value.dataWarnings === undefined || (Array.isArray(value.dataWarnings) && value.dataWarnings.length > 0 && value.dataWarnings.length <= 3 && value.dataWarnings.every((v: unknown) => isText(v, 300)))) &&
     Array.isArray(value.sources) && value.sources.every((s: unknown) => isRecord(s) && isText(s.title, 200) && isHttps(s.url)) &&

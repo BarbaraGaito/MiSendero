@@ -52,13 +52,13 @@ export interface WearableMetricSample {
 }
 
 export interface WearableHealthPrediction {
+  method: "sensor_rules";
+  coverage: "pulse_and_oxygen" | "pulse_only" | "oxygen_only";
   level: HealthPredictionLevel;
   title: string;
   message: string;
-  fatigue: FatigueLevel | "sin_datos";
-  fatigueConfidence: number;
-  riskLabel: "bajo" | "medio" | "alto" | "sin_datos";
-  riskConfidence: number;
+  cardiacLoad: "baja" | "media" | "alta" | null;
+  readingAlert: string;
   analysisSummary: string;
   factors: string[];
   recommendedAction: string;

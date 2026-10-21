@@ -1,0 +1,111 @@
+{
+  "reviewed_at": "2026-10-21",
+  "entries": [
+    {
+      "name": "Sendero a Confluencia",
+      "sources": [
+        { "title": "Gobierno de Mendoza - Aconcagua", "url": "https://informacionoficial.mendoza.gob.ar/energiayambiente/aconcagua/" },
+        { "title": "Turismo Nación - Horcones, Confluencia y regreso", "url": "https://www.argentina.gob.ar/viaja-por-argentina/que-hacer/hacer-trekking-en-la-cumbre-de-america" }
+      ],
+      "confirmed_fields": ["name", "location", "difficulty", "route_type"],
+      "unconfirmed_fields": ["distance_km", "duration"],
+      "route_type": "out_and_back",
+      "duration_basis": "conflicting_sources",
+      "finding": "Mendoza publica 4–5 h totales; Turismo Nación publica 6–8 h para Horcones–Confluencia–Horcones. Se conserva el dato previo, sin considerarlo un tiempo confirmado.",
+      "warning": "Las fuentes oficiales difieren en la duración total (4–5 h y 6–8 h). Confirmá el tiempo con el administrador; la distancia de catálogo también requiere revisión."
+    },
+    {
+      "name": "Volcan Lanin - Base a Refugio BIM",
+      "sources": [{ "title": "Turismo Nación - Ascender el Volcán Lanín (contexto del destino)", "url": "https://www.argentina.gob.ar/viaja-por-argentina/que-hacer/ascender-el-volcan-lanin" }],
+      "confirmed_fields": ["location"],
+      "unconfirmed_fields": ["distance_km", "duration", "difficulty", "route_type"],
+      "route_type": "unknown",
+      "duration_basis": "not_documented",
+      "finding": "La fuente describe el ascenso a cumbre; no certifica distancia, duración ni dificultad del tramo específico Base–BIM.",
+      "warning": "La fuente describe el volcán, no la ficha específica Base–BIM. La distancia, duración, dificultad y alcance del recorrido siguen pendientes de confirmación."
+    },
+    {
+      "name": "Garganta del Diablo de Tilcara",
+      "sources": [{ "title": "Jujuy Turismo - Manual de guías, Quebrada", "url": "https://www.turismo.jujuy.gob.ar/wp-content/uploads/Manual-para-Guias-Idoneos_QUEBRADA_v5.pdf" }],
+      "confirmed_fields": ["name", "location"],
+      "unconfirmed_fields": ["distance_km", "duration", "difficulty", "route_type"],
+      "route_type": "unknown",
+      "duration_basis": "different_itinerary_scope",
+      "finding": "La fuente distingue 4 km por herradura hasta el acceso y 20 min adicionales hasta la cascada; no confirma el alcance de los 3,14 km del catálogo.",
+      "warning": "La fuente distingue el acceso desde Tilcara y el tramo a la cascada. No confirma el mismo itinerario de esta ficha; distancia, tiempo total y dificultad requieren revisión."
+    },
+    {
+      "name": "Garganta del Diablo - Quebrada de las Conchas",
+      "sources": [{ "title": "Ministerio de Turismo de Salta - Quebrada de las Conchas", "url": "https://experiencias.turismosalta.gov.ar/quebrada-de-las-conchas/" }],
+      "confirmed_fields": ["name", "location", "difficulty"],
+      "unconfirmed_fields": ["distance_km", "duration", "route_type"],
+      "route_type": "unknown",
+      "duration_basis": "not_documented",
+      "finding": "La ficha oficial clasifica el recorrido como fácil, pero deja la duración sin valor y no publica distancia.",
+      "warning": "La fuente confirma el atractivo y la dificultad fácil, pero no publica distancia ni duración. Esos valores del catálogo y el alcance del regreso siguen sin confirmar."
+    },
+    {
+      "name": "Lahuan Solitario - Puerto Chucao",
+      "sources": [{ "title": "APN - Los Alerces, Lahuán Solitario", "url": "https://www.argentina.gob.ar/node/276965" }],
+      "confirmed_fields": ["name", "location", "difficulty", "distance_km", "duration", "route_type"],
+      "unconfirmed_fields": [],
+      "route_type": "out_and_back",
+      "duration_basis": "official_round_trip",
+      "finding": "APN publica dificultad baja, 1,5 km de ida y 1:30 h de ida y vuelta. Los 3 km totales se derivan únicamente de la distancia de ida publicada.",
+      "official_distance_km": 1.5,
+      "distance_basis": "round_trip_from_official_one_way"
+    },
+    {
+      "name": "Sendero El Mollar - El Palmar",
+      "sources": [{ "title": "APN - El Palmar, Sendero El Mollar", "url": "https://www.argentina.gob.ar/parquesnacionales/centro/parque-nacional-el-palmar/actividades" }],
+      "confirmed_fields": ["name", "location", "distance_km"],
+      "unconfirmed_fields": ["duration", "difficulty", "route_type"],
+      "route_type": "unknown",
+      "duration_basis": "not_documented",
+      "finding": "APN publica 1,4 km para El Mollar; no se transfiere a este sendero la dificultad genérica de la mayoría de senderos del parque.",
+      "warning": "APN confirma 1,4 km, pero no publica tiempo ni dificultad específicos de El Mollar. Esos valores del catálogo y el tipo de recorrido siguen pendientes."
+    },
+    {
+      "name": "Ascenso Cerro Tres Picos",
+      "sources": [{ "title": "Fundación Funke - Turismo y acceso a Tres Picos", "url": "https://fundacionfunke.org.ar/turismo/" }],
+      "confirmed_fields": ["name", "location"],
+      "unconfirmed_fields": ["distance_km", "duration", "difficulty", "route_type"],
+      "route_type": "unknown",
+      "duration_basis": "not_documented",
+      "finding": "El administrador confirma acceso desde Estancia Funke y distintos circuitos; su página no proporciona los valores numéricos de esta ficha.",
+      "warning": "El administrador confirma el acceso a Tres Picos, pero no los valores de esta ficha. Distancia, tiempo total y dificultad deben confirmarse para el itinerario elegido."
+    },
+    {
+      "name": "Caminata al Cerro Morado",
+      "sources": [{ "title": "Parque Provincial Ischigualasto - Caminata al Cerro Morado", "url": "https://www.ischigualasto.gob.ar/?page_id=1823" }],
+      "confirmed_fields": ["name", "location", "difficulty", "distance_km", "duration"],
+      "unconfirmed_fields": ["route_type"],
+      "route_type": "unknown",
+      "duration_basis": "official_total_itinerary",
+      "finding": "El administrador publica 5,73 km, 3 h para el recorrido incluida la permanencia en cumbre y dificultad alta. No se infiere que circuito signifique una traza circular."
+    },
+    {
+      "name": "Campo de Piedra Pomez",
+      "sources": [{ "title": "Turismo Nación - Campo de Piedra Pómez", "url": "https://www.argentina.gob.ar/jefatura/turismo/viaja-por-argentina/caminar-en-el-campo-de-piedra-pomez" }],
+      "confirmed_fields": ["name", "location"],
+      "unconfirmed_fields": ["distance_km", "duration", "difficulty", "route_type"],
+      "route_type": "unknown",
+      "duration_basis": "not_documented",
+      "finding": "La fuente confirma el área y acceso desde El Peñón, sin delimitar un sendero de 2 km o su duración.",
+      "warning": "La fuente describe el área protegida, no un sendero delimitado de 2 km. Distancia, duración y dificultad de esta ficha siguen pendientes de confirmación."
+    },
+    {
+      "name": "Laguna del Tesoro - Aconquija",
+      "sources": [{ "title": "Tucumán Turismo - Senderos, Portal Cochuna", "url": "https://www.tucumanturismo.gob.ar/articulos/articulo/960/senderos-parque-nacional-aconquija" }],
+      "confirmed_fields": ["name", "location", "distance_km", "difficulty"],
+      "unconfirmed_fields": ["duration"],
+      "route_type": "out_and_back",
+      "duration_basis": "official_one_way_only",
+      "difficulty": "Media",
+      "official_distance_km": 10.3,
+      "distance_basis": "round_trip_from_official_one_way",
+      "finding": "El portal oficial publica 10,3 km y 6 h desde Cochuna hasta la laguna, dificultad intermedia. Se corrige Alta a Media. No se declara un tiempo oficial de regreso al duplicar las 6 h.",
+      "warning": "La fuente publica 6 h hasta la laguna, sin tiempo de regreso. Las 10–12 h del catálogo no son un total oficial confirmado; consultá la duración completa."
+    }
+  ]
+}

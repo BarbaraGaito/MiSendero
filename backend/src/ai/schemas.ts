@@ -20,7 +20,7 @@ export const recommendationSchema = z.object({
   explanation: z.string().min(1).max(1500),
   sources: z.array(z.object({ title: z.string(), url: z.url() }).strict()),
   checkedAt: z.iso.date().nullable(),
-  catalogVerification: z.enum(["verified", "catalog_only"]).optional(),
+  catalogVerification: z.enum(["verified", "partial", "catalog_only"]).optional(),
   durationScopeVerified: z.boolean().optional(),
   dataWarnings: z.array(z.string().min(1).max(300)).min(1).max(3).optional(),
   ascentM: z.number().nonnegative().nullable().optional(),
@@ -32,5 +32,5 @@ export const recommendationSchema = z.object({
 export const responseSchema = z.object({
   status: z.enum(["ok", "no_results", "clarification", "out_of_scope"]),
   message: z.string(), recommendation: recommendationSchema.nullable(),
-  ranking: z.object({ method: z.enum(["baseline", "supervised"]), modelVersion: z.string().nullable() }).strict().optional(),
+  ranking: z.object({ method: z.literal("catalog"), modelVersion: z.null() }).strict().optional(),
 }).strict().refine((v) => (v.status === "ok") === (v.recommendation !== null));

@@ -332,8 +332,8 @@ export default function WearableSettingsScreen() {
               </View>
             </View>
             <View style={styles.metricGrid}>
-              <MetricBox label="Riesgo" value={runtime.prediction.riskLabel === "sin_datos" ? "Sin datos" : runtime.prediction.riskLabel} />
-              <MetricBox label="Fatiga" value={runtime.prediction.fatigue === "sin_datos" ? "Sin datos" : runtime.prediction.fatigue} />
+              <MetricBox label="Avisos de lectura" value={runtime.prediction.readingAlert} />
+              {runtime.prediction.cardiacLoad ? <MetricBox label="Carga por pulso" value={runtime.prediction.cardiacLoad} /> : null}
               <MetricBox label="Uso" value="Orientativo" />
             </View>
             <Text style={styles.aiAction}>{runtime.prediction.recommendedAction}</Text>
@@ -346,7 +346,7 @@ export default function WearableSettingsScreen() {
               ))}
             </View>
             <Text style={styles.disclaimer}>
-              Prediccion local orientativa. No diagnostica condiciones medicas.
+              Orientación por lecturas. No mide fatiga ni diagnostica condiciones médicas.
             </Text>
           </Card>
         ) : null}

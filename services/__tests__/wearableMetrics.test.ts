@@ -26,18 +26,41 @@ const sample = (overrides: Partial<WearableMetricSample>): WearableMetricSample 
 });
 
 describe("predictWearableHealth", () => {
+  test("fresh sensor readings produce an actual assessment without an unavailable model or fabricated confidence", () => {
+    const result = predictWearableHealth(sample({ heartRateBpm: 90, speedKmh: 4.5, oxygenSaturation: 98 }));
+    expect(result).toMatchObject({ method: "sensor_rules", coverage: "pulse_and_oxygen", level: "normal", cardiacLoad: "baja", readingAlert: "Sin umbrales activados" });
+    expect(result?.title).toBe("Lecturas revisadas");
+    expect(JSON.stringify(result)).not.toMatch(/sin_datos|Sin datos|modelo validado/);
+    expect(result).not.toHaveProperty("riskConfidence");
+    expect(result).not.toHaveProperty("fatigueConfidence");
+  });
   test("does not present missing oxygen or speed as stable measured values", () => {
     const result = predictWearableHealth(sample({ oxygenSaturation: null, speedKmh: null }));
-    expect(result?.riskLabel).toBe("sin_datos");
-    expect(result?.fatigue).toBe("sin_datos");
-    expect(result?.factors).toContain("SpO₂ sin lectura válida");
-    expect(result?.title).toBe("Análisis limitado");
+    expect(result).toMatchObject({ coverage: "pulse_only", cardiacLoad: "baja", level: "normal" });
+    expect(result?.factors).toContain("Pulso medido: 90 bpm");
+    expect(result?.factors?.join(" ")).not.toContain("SpO₂ medida");
+    expect(result?.factors?.join(" ")).not.toContain("Velocidad medida");
+    expect(result?.analysisSummary).toContain("solo pulso");
     expect(result?.analysisSummary).not.toContain("Confianza");
   });
   test("does not infer from stale, future, or invalid pulse readings", () => {
     expect(predictWearableHealth(sample({ recordedAt: Date.now() - 301000 }))).toBeNull();
     expect(predictWearableHealth(sample({ recordedAt: Date.now() + 60000 }))).toBeNull();
-    expect(predictWearableHealth(sample({ heartRateBpm: Number.NaN }))).toBeNull();
+    expect(predictWearableHealth(sample({ heartRateBpm: Number.NaN, oxygenSaturation: null }))).toBeNull();
+  });
+  test("oxygen alone still triggers review without inventing pulse or cardiac load", () => {
+    const result = predictWearableHealth(sample({ heartRateBpm: null, oxygenSaturation: 88, speedKmh: null }));
+    expect(result).toMatchObject({ coverage: "oxygen_only", level: "high", cardiacLoad: null, title: "SpO₂ baja: revisar lectura" });
+    expect(result?.analysisSummary).toContain("solo SpO₂");
+    expect(result?.factors?.join(" ")).not.toContain("Pulso medido");
+  });
+  test("an oxygen notice is not hidden by an ordinary pulse reading", () => {
+    expect(predictWearableHealth(sample({ heartRateBpm: 90, oxygenSaturation: 92 }))?.level).toBe("caution");
+  });
+  test("invalid supplementary values are ignored and never treated as measurements", () => {
+    const result = predictWearableHealth(sample({ heartRateBpm: 150, oxygenSaturation: NaN, speedKmh: -1 }), Infinity);
+    expect(result).toMatchObject({ coverage: "pulse_only", level: "caution", cardiacLoad: "media" });
+    expect(result?.factors?.join(" ")).not.toMatch(/NaN|Infinity|Velocidad|Tiempo de actividad/);
   });
   test("mantiene esfuerzo moderado y fatiga alta como advertencia sin emergencia", () => {
     expect(

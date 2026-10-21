@@ -77,6 +77,19 @@ test("preferences retain unrelated values, and testing location is available onl
   await press(admin, "Herramientas de administración");
   expect(text(admin)).toContain("Simular ubicacion en ruta"); await press(admin, "Simular ubicacion en ruta"); expect(testing.saveTestingLocationMode).toHaveBeenLastCalledWith(false);
 });
+
+test("admin evaluation compares macro F1 with its baseline and discloses missing held-out classes", async () => {
+  (getProfile as jest.Mock).mockResolvedValue({ user: { ...user, role: "admin" } });
+  const tree = await mount(Profile);
+  await press(tree, "Herramientas de administración");
+  const content = text(tree);
+  expect(content).toContain("F1 de referencia");
+  expect(content).toContain("Accuracy balanceada");
+  expect(content).toContain("Clases evaluadas");
+  expect(content).toContain("Sin observaciones en test");
+  expect(content).toContain("El test contiene un solo grupo");
+  expect(content).toContain("no acredita validación para uso en campo");
+});
 test("profile redirects missing authentication and does not resurrect a pending deletion", async () => {
   (auth.getAuthSession as jest.Mock).mockResolvedValue(null); await mount(Profile); expect(router.replace).toHaveBeenCalledWith("/");
   (auth.getAuthSession as jest.Mock).mockResolvedValue(session); (isAccountDeletionPending as jest.Mock).mockResolvedValue(true); await mount(Profile); expect(auth.saveAuthSession).not.toHaveBeenCalled();
@@ -174,7 +187,7 @@ test("each native provider is linked through its bridge; disconnect and unavaila
 test("simulations remain clearly separated from stored device history and handle failed generation", async () => {
   (auth.getAuthSession as jest.Mock).mockResolvedValue({ ...session, user: { ...user, role: "admin" } });
   (wearable.getRecentWearableMetricSamples as jest.Mock).mockResolvedValue([sample]); (wearable.getSimulatedWearableMetricSamples as jest.Mock).mockResolvedValue([{ ...sample, simulated: true }]);
-  (wearable.getWearableRuntimeStatus as jest.Mock).mockResolvedValue({ ...status, latestSample: sample, prediction: { title: "Orientativo", level: "caution", riskLabel: "bajo", fatigue: "media", factors: ["Pulso"], recommendedAction: "Descansar" } });
+  (wearable.getWearableRuntimeStatus as jest.Mock).mockResolvedValue({ ...status, latestSample: sample, prediction: { title: "Orientativo", level: "caution", method: "sensor_rules", coverage: "pulse_and_oxygen", readingAlert: "Revisar lectura", cardiacLoad: "media", factors: ["Pulso"], recommendedAction: "Descansar" } });
   const tree = await mount(Wearable); expect(text(tree)).toContain("Últimas lecturas");
   expect(text(tree)).not.toContain("Lecturas simuladas de esta sesion");
   await press(tree, "Pruebas del dispositivo");
@@ -184,4 +197,17 @@ test("simulations remain clearly separated from stored device history and handle
 });
 test.each([["saved", "Metricas sincronizadas"], ["duplicate", "No hay lecturas nuevas"], ["permission_denied", "permisos de Salud"], ["not_linked", "Primero vincula"], ["unavailable", "Revisá sus permisos"], ["no_data", "lectura autorizada disponible"]])("native sync response %s is not confused with a saved sample", async (outcome, message) => {
   (wearable.syncNativeWearableSampleWithStatus as jest.Mock).mockResolvedValue(outcome); const tree = await mount(Wearable); await press(tree, "Sincronizar dispositivo"); expect(text(tree)).toContain(message);
+});
+
+test.each([150, null])("the wearable screen uses the actual sensor assessment with pulse %s and never shows Sin datos", async heartRateBpm => {
+  const latestSample = { ...sample, heartRateBpm, oxygenSaturation: 92, recordedAt: Date.now() };
+  const prediction = jest.requireActual("../../../services/wearableMetrics").predictWearableHealth(latestSample, 30);
+  (wearable.getWearableRuntimeStatus as jest.Mock).mockResolvedValue({ ...status, latestSample, prediction });
+  const tree = await mount(Wearable);
+  expect(text(tree)).toContain("Avisos de lectura");
+  expect(text(tree)).toContain("Revisar lectura");
+  expect(text(tree)).not.toMatch(/Sin datos|sin_datos|falta un modelo validado/);
+  expect(text(tree)).toContain("No mide fatiga");
+  if (heartRateBpm === null) expect(text(tree)).not.toContain("Carga por pulso");
+  else { expect(text(tree)).toContain("Carga por pulso"); expect(text(tree)).toContain("media"); }
 });

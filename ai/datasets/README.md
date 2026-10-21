@@ -49,8 +49,10 @@ Las fichas APN aportan estimaciones publicadas, no tiempos individuales observad
 
 ## Resultados y uso en la app
 
+Para ampliar la comparación con la referencia sin reentrenar ni alterar las observaciones, ejecutar `npm.cmd run evaluate:ai`. Añade F1 de referencia, accuracy balanceada y cobertura de clases; el panel de administración presenta estas comparaciones. Ver [el procedimiento y sus límites](../../docs/evaluacion-modelos-reales.md).
+
 Ver [auditoría y resultados](../../docs/ai-real-data-audit.md) e [incorporación de fuentes argentinas](../../docs/datasets-argentina-2026-10-14.md). El panel presenta estas métricas como investigación y muestra su tarea/población; la evaluación real de una fuente no demuestra rendimiento clínico ni transferencia a trekking.
 
-`npm run train:ai` ejecuta el pipeline público y copia solo las métricas a `ai/models/*Metrics.json` para el panel. Los bosques no se incluyen en la app: ninguno tiene aprobación para el uso concreto, así que el motor de inferencia devuelve `sin_datos`.
+`npm run train:ai` ejecuta el pipeline público y copia solo las métricas a `ai/models/*Metrics.json` para el panel. Los bosques no se incluyen en la app: ninguno tiene aprobación para el uso concreto. Sus funciones de inferencia conservan la abstención cuando falta validación, pero ya no bloquean el resumen del reloj. El resumen usa las lecturas recientes de pulso y SpO₂ con reglas explícitas de aviso, sin presentar etiquetas de fatiga/riesgo clínico ni porcentajes de confianza del modelo. Ver [análisis operativo de lecturas](../../docs/analisis-lecturas-wearable.md).
 
 Esta separación evita usar una evaluación de Borg, AMS nocturno o sac_scale como si validara las antiguas salidas bajo/medio/alto. Los modelos públicos requieren más datos, variables relevantes y una validación de la tarea final antes de habilitar inferencia de campo.

@@ -23,6 +23,7 @@
     "test:coverage": "node --test testing/coverage-tools.test.cjs && node testing/run-coverage.cjs",
     "test:coverage:python": "node testing/run-python-coverage.cjs",
     "validate:ai-data": "node scripts/train-ai.js --validate",
+    "evaluate:ai": "node scripts/train-ai.js --refresh-evaluation",
     "test:ai-data": "node scripts/train-ai.js --test",
     "fetch:ai-data": "node scripts/train-ai.js --fetch",
     "build:android:preview": "npx eas-cli build --platform android --profile preview",

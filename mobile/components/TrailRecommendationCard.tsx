@@ -19,10 +19,13 @@ export function TrailRecommendationCard({ trail, onRestart }: { trail: TrailReco
     <View style={styles.metrics}>
       <Text style={styles.body}>🌿 {trail.trailTypes.join(" · ")}</Text>
       <Text style={styles.body}>🥾 Dificultad: {difficulty}</Text>
-      <Text style={styles.body}>⏱️ Aproximadamente {trail.duration} {trail.durationScopeVerified === false || trail.routeType === "unknown" ? "(confirmar si incluye el regreso)" : trail.routeType === "out_and_back" ? "(ida y vuelta)" : trail.routeType === "loop" ? "(circuito completo)" : "(solo ida)"}</Text>
+      <Text style={styles.body}>⏱️ Aproximadamente {trail.duration} {trail.durationScopeVerified === false ? "(confirmar si incluye el regreso)" : trail.routeType === "out_and_back" ? "(ida y vuelta)" : trail.routeType === "loop" ? "(circuito completo)" : trail.routeType === "point_to_point" ? "(solo ida)" : "(recorrido completo)"}</Text>
       <Text style={styles.body}>📏 Aproximadamente {trail.distanceKm.toLocaleString("es-AR", { maximumFractionDigits: 1 })} km</Text>
     </View>
     {trail.routeType === "point_to_point" ? <Text style={styles.note}>El recorrido termina en otro punto. Coordiná el transporte de regreso.</Text> : null}
+    <Text style={styles.body}>{trail.ascentM == null ? "Desnivel de ascenso: no documentado" : `Desnivel de ascenso estimado: ${trail.ascentM.toLocaleString("es-AR")} m`}</Text>
+    {trail.ascentM != null ? <Text style={styles.note}>Estimación del modelo de elevación sobre la traza disponible; no es una medición de campo.</Text> : null}
+    {trail.dataWarnings?.map(warning => <Text key={warning} style={styles.note}>{warning}</Text>)}
     <Text style={styles.body}>{trail.description}</Text>
     <View style={styles.reason}>
       <Text style={styles.subtitle}>¿Por qué te recomendamos este sendero?</Text>

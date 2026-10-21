@@ -13,6 +13,7 @@ export interface OfflineAiModel {
 }
 
 export interface OfflinePrediction {
+  status?: "available" | "model_not_approved" | "missing_inputs";
   reason?: string;
   label: string;
   confidence: number;

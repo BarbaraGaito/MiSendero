@@ -119,7 +119,7 @@ export default function OfflineDownloadedMaps23Screen() {
 
                   router.push({
                     pathname: "/route-map",
-                    params: { id: String(map.trail.id) },
+                    params: { id: String(map.trail.id), offline: "1" },
                   });
                 }}
                 onSecondaryPress={() => removeMap(map.id)}

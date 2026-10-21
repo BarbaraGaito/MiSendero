@@ -69,8 +69,8 @@ const getNetworkStatus = async () => {
   return { hasWifi, hasInternet };
 };
 
-const loadRouteContext = async (trailId: number) => {
-  const { hasWifi, hasInternet } = await getNetworkStatus();
+const loadRouteContext = async (trailId: number, offlineOnly = false) => {
+  const { hasWifi, hasInternet } = offlineOnly ? {hasWifi:false,hasInternet:false} : await getNetworkStatus();
 
   if (hasInternet) {
     const [trail, reports, offlineMap] = await Promise.all([
@@ -136,10 +136,11 @@ export default function Screen04RouteMap() {
   const isFocused = useScreenFocused();
   const [activeSeconds, setActiveSeconds] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-  const { active, id, startedAt } = useLocalSearchParams<{
+  const { active, id, startedAt, offline } = useLocalSearchParams<{
     active?: string;
     id?: string;
     startedAt?: string;
+    offline?: string;
   }>();
   const trailId = Number(id) || 1;
   const isActiveRoute = active === "1";
@@ -177,7 +178,7 @@ export default function Screen04RouteMap() {
 
       try {
         if (!isMounted) return;
-        const context = await loadRouteContext(trailId);
+        const context = await loadRouteContext(trailId, offline === "1");
         if (!isMounted) return;
 
         setTrail(context.trail);
@@ -224,7 +225,7 @@ export default function Screen04RouteMap() {
     return () => {
       isMounted = false;
     };
-  }, [trailId]);
+  }, [trailId, offline]);
 
   const refreshWearableMetrics = useCallback(async () => {
     const state = await getRouteSession(trailId, startedAtMs);
@@ -386,6 +387,7 @@ export default function Screen04RouteMap() {
     return (
       <SafeAreaView edges={["top", "bottom"]} style={styles.activeShell}>
         <TrailMap
+          offlineOnly={offline === "1"}
           trail={trail}
           weather={weather}
           fitRoute
@@ -780,6 +782,7 @@ export default function Screen04RouteMap() {
         {error ? <Text style={styles.statusText}>{error}</Text> : null}
 
         <TrailMap
+          offlineOnly={offline === "1"}
           trail={trail}
           weather={weather}
           allowSatellite={hasInternetConnection}

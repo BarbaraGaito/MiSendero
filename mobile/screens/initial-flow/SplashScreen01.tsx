@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { colors } from "../../components/MiSenderoUI";
 import { MiSenderoLogo } from "../../components/MiSenderoLogo";
@@ -9,7 +9,10 @@ const splashColors = {
   neutral: "#DFDFDF",
 };
 
-export default function SplashScreen01() {
+export default function SplashScreen01({startupError = false, onRetry}: {
+  startupError?: boolean;
+  onRetry?: () => void;
+}) {
   return (
     <SafeAreaView edges={["top", "bottom"]} style={styles.safeArea}>
       <View style={styles.content}>
@@ -21,10 +24,15 @@ export default function SplashScreen01() {
         </View>
 
         <View style={styles.loader}>
-          <View style={styles.loaderTrack}>
+          {!startupError ? <View style={styles.loaderTrack}>
             <View style={styles.loaderFill} />
-          </View>
-          <Text style={styles.loadingText}>Cargando rutas cercanas...</Text>
+          </View> : null}
+          <Text accessibilityRole={startupError ? "alert" : undefined} style={styles.loadingText}>
+            {startupError ? "No pudimos abrir los datos guardados. Reintentá con el teléfono desbloqueado." : "Cargando rutas cercanas..."}
+          </Text>
+          {startupError ? <Pressable accessibilityRole="button" onPress={onRetry} style={styles.retryButton}>
+            <Text style={styles.retryLabel}>Reintentar inicio</Text>
+          </Pressable> : null}
         </View>
       </View>
     </SafeAreaView>
@@ -80,5 +88,8 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: "700",
     marginTop: 12,
+    textAlign: "center",
   },
+  retryButton: {backgroundColor:splashColors.brand,borderRadius:16,marginTop:18,paddingHorizontal:24,paddingVertical:14},
+  retryLabel: {color:splashColors.background,fontSize:15,fontWeight:"700"},
 });

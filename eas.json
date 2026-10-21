@@ -1,10 +1,35 @@
 {
+  "cli": {
+    "version": ">= 25.2.0",
+    "appVersionSource": "local"
+  },
   "build": {
     "development": {
       "developmentClient": true,
       "distribution": "internal"
     },
-    "preview": { "distribution": "internal" },
-    "production": {}
+    "preview": {
+      "distribution": "internal",
+      "developmentClient": false,
+      "environment": "preview",
+      "env": {
+        "EXPO_PUBLIC_API_URL": "https://18-218-87-168.sslip.io/api"
+      },
+      "android": {
+        "buildType": "apk",
+        "credentialsSource": "remote"
+      }
+    },
+    "production": {
+      "developmentClient": false,
+      "environment": "production",
+      "env": {
+        "EXPO_PUBLIC_API_URL": "https://18-218-87-168.sslip.io/api"
+      },
+      "android": {
+        "buildType": "app-bundle",
+        "credentialsSource": "remote"
+      }
+    }
   }
 }

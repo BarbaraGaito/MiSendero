@@ -1,6 +1,11 @@
 {
   "extends": "expo/tsconfig.base",
-  "exclude": ["**/node_modules/**", "backend", "tmp", "coverage"],
+  "exclude": [
+    "**/node_modules/**",
+    "backend",
+    "tmp",
+    "coverage"
+  ],
   "compilerOptions": {
     "strict": true,
     "target": "ESNext",
@@ -12,7 +17,13 @@
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "paths": {
-      "@/*": ["./*"]
-    }
+      "@/*": [
+        "./*"
+      ]
+    },
+    "types": [
+      "jest",
+      "node"
+    ]
   }
 }

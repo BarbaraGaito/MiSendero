@@ -155,6 +155,10 @@ backend/ml/artifacts/
 
 # Public-source research downloads; canonical training evidence is in raw/.
 /tmp/ai-source-research/
+/tmp/offline-*
+/tmp/apk-eas-archive/
+/tmp/apk-eas-archive-final/
+/artifacts/
 
 # Temporary Expo web exports used for visual verification
 .expo-export-*-check/

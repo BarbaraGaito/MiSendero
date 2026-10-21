@@ -1,5 +1,5 @@
 import { GLView, ExpoWebGLRenderingContext } from "expo-gl";
-import { Renderer, TextureLoader } from "expo-three";
+import { createTerrainRenderer, loadTerrainTexture } from "./terrainGraphics";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { StyleSheet } from "react-native";
 import * as THREE from "three";
@@ -29,6 +29,7 @@ type Terrain3DSceneProps = {
   weather?: TerrainSceneWeather | null;
   navigationMode?: boolean;
   satelliteTextureEnabled?: boolean;
+  onError?: (error: unknown) => void;
 };
 
 type NavigationView = {
@@ -41,7 +42,7 @@ type SceneHandles = {
   animationFrame: number;
   camera: THREE.PerspectiveCamera;
   gl: ExpoWebGLRenderingContext;
-  renderer: Renderer;
+  renderer: THREE.WebGLRenderer;
   routeGroup: THREE.Group;
   scene: THREE.Scene;
   terrainGroup: THREE.Group;
@@ -147,11 +148,7 @@ const applySatelliteTexture = (
   model: TerrainSceneModel,
   onLoad: (texture: THREE.Texture) => void
 ) => {
-  const loader = new TextureLoader();
-  loader.setCrossOrigin("anonymous");
-  loader.load(
-    getSatelliteTextureUrl(model),
-    (texture) => {
+  void loadTerrainTexture(getSatelliteTextureUrl(model)).then((texture) => {
       texture.colorSpace = THREE.SRGBColorSpace;
       texture.anisotropy = 4;
       texture.needsUpdate = true;
@@ -162,11 +159,7 @@ const applySatelliteTexture = (
       material.roughness = 0.94;
       material.needsUpdate = true;
       onLoad(texture);
-    },
-    undefined,
-    // Si la imagen falla, el relieve conserva el tinte por altura.
-    () => undefined
-  );
+    }).catch(() => undefined); // Sin imagen se conserva el tinte por altura.
 };
 
 const buildTerrainSkirt = (model: TerrainSceneModel) => {
@@ -607,8 +600,39 @@ export function Terrain3DScene({
   weather,
   navigationMode = false,
   satelliteTextureEnabled = true,
+  onError,
 }: Terrain3DSceneProps) {
   const handlesRef = useRef<SceneHandles | null>(null);
+  const renderedFrameRef = useRef(false);
+  const onErrorRef = useRef(onError);
+  onErrorRef.current = onError;
+  const disposeScene = useCallback(() => {
+    const handles = handlesRef.current;
+    handlesRef.current = null;
+    if (!handles) return;
+    cancelAnimationFrame(handles.animationFrame);
+    // Cleanup must not prevent returning to the 2D map after a lost context.
+    try {
+      clearGroup(handles.terrainGroup);
+      clearGroup(handles.routeGroup);
+      clearGroup(handles.weatherGroup);
+      handles.scene.traverse((object) => {
+        if (object instanceof THREE.Light) object.shadow?.dispose();
+      });
+      handles.renderer.dispose();
+    } catch { /* Context may already be destroyed by the native view. */ }
+  }, []);
+  const failScene = useCallback((error: unknown) => {
+    disposeScene();
+    onErrorRef.current?.(error);
+  }, [disposeScene]);
+  useEffect(() => {
+    // Some native GL failures never call onContextCreate. Keep 2D available.
+    const timer = setTimeout(() => {
+      if (!renderedFrameRef.current) failScene(new Error("El contexto 3D no respondió."));
+    }, 12000);
+    return () => clearTimeout(timer);
+  }, [failScene]);
   const propsRef = useRef({
     terrain,
     userCoordinate,
@@ -755,29 +779,17 @@ export function Terrain3DScene({
   }, []);
 
   useEffect(() => {
-    rebuildScene();
-  }, [terrain, geometrySignature, rebuildScene]);
+    try { rebuildScene(); } catch (error) { failScene(error); }
+  }, [terrain, geometrySignature, rebuildScene, failScene]);
 
   useEffect(() => {
     const handles = handlesRef.current;
     if (!handles) return;
-    updateTrackedPosition(handles, userCoordinate, navigationMode);
-  }, [userCoordinate, navigationMode]);
+    try { updateTrackedPosition(handles, userCoordinate, navigationMode); }
+    catch (error) { failScene(error); }
+  }, [userCoordinate, navigationMode, failScene]);
 
-  useEffect(
-    () => () => {
-      const handles = handlesRef.current;
-      if (!handles) return;
-
-      cancelAnimationFrame(handles.animationFrame);
-      clearGroup(handles.terrainGroup);
-      clearGroup(handles.routeGroup);
-      clearGroup(handles.weatherGroup);
-      handles.renderer.dispose();
-      handlesRef.current = null;
-    },
-    []
-  );
+  useEffect(() => disposeScene, [disposeScene]);
 
   const updateCamera = useCallback((
     camera: THREE.PerspectiveCamera,
@@ -842,97 +854,102 @@ export function Terrain3DScene({
 
   const onContextCreate = useCallback(
     (gl: ExpoWebGLRenderingContext) => {
-      const width = gl.drawingBufferWidth || 1;
-      const height = gl.drawingBufferHeight || 1;
-      const renderer = new Renderer({
-        gl,
-        width,
-        height,
-        pixelRatio: 1,
-        antialias: true,
-        clearColor: "#DCEFF7",
-      });
-      renderer.shadowMap.enabled = true;
-      renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-      renderer.toneMapping = THREE.ACESFilmicToneMapping;
-      renderer.toneMappingExposure = 1.08;
-      renderer.outputColorSpace = THREE.SRGBColorSpace;
+      disposeScene();
+      let renderer: THREE.WebGLRenderer | undefined;
+      try {
+        const width = gl.drawingBufferWidth || 1;
+        const height = gl.drawingBufferHeight || 1;
+        renderer = createTerrainRenderer(gl);
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 1.08;
+        renderer.outputColorSpace = THREE.SRGBColorSpace;
 
-      const scene = new THREE.Scene();
-      scene.fog = new THREE.FogExp2("#CFE9F2", 0.035);
+        const scene = new THREE.Scene();
+        scene.fog = new THREE.FogExp2("#CFE9F2", 0.035);
 
-      const camera = new THREE.PerspectiveCamera(43, width / height, 0.1, 80);
-      updateCamera(camera, null);
+        const camera = new THREE.PerspectiveCamera(43, width / height, 0.1, 80);
+        updateCamera(camera, null);
 
-      const terrainGroup = new THREE.Group();
-      const routeGroup = new THREE.Group();
-      const weatherGroup = new THREE.Group();
-      scene.add(weatherGroup);
-      scene.add(terrainGroup);
-      scene.add(routeGroup);
+        const terrainGroup = new THREE.Group();
+        const routeGroup = new THREE.Group();
+        const weatherGroup = new THREE.Group();
+        scene.add(weatherGroup);
+        scene.add(terrainGroup);
+        scene.add(routeGroup);
 
-      const hemiLight = new THREE.HemisphereLight("#DDF6FF", "#335C36", 1.5);
-      const sunLight = new THREE.DirectionalLight("#FFF3D9", 2.7);
-      const fillLight = new THREE.DirectionalLight("#A9CBE8", 0.6);
-      sunLight.position.set(-6, 6.5, 4.5);
-      sunLight.castShadow = true;
-      sunLight.shadow.mapSize.set(1024, 1024);
-      sunLight.shadow.camera.left = -6;
-      sunLight.shadow.camera.right = 6;
-      sunLight.shadow.camera.top = 6;
-      sunLight.shadow.camera.bottom = -6;
-      sunLight.shadow.camera.near = 1;
-      sunLight.shadow.camera.far = 18;
-      sunLight.shadow.bias = -0.0025;
-      sunLight.shadow.radius = 2;
-      fillLight.position.set(5, 4, -4);
-      scene.add(hemiLight);
-      scene.add(sunLight);
-      scene.add(fillLight);
+        const hemiLight = new THREE.HemisphereLight("#DDF6FF", "#335C36", 1.5);
+        const sunLight = new THREE.DirectionalLight("#FFF3D9", 2.7);
+        const fillLight = new THREE.DirectionalLight("#A9CBE8", 0.6);
+        sunLight.position.set(-6, 6.5, 4.5);
+        sunLight.castShadow = true;
+        sunLight.shadow.mapSize.set(1024, 1024);
+        sunLight.shadow.camera.left = -6;
+        sunLight.shadow.camera.right = 6;
+        sunLight.shadow.camera.top = 6;
+        sunLight.shadow.camera.bottom = -6;
+        sunLight.shadow.camera.near = 1;
+        sunLight.shadow.camera.far = 18;
+        sunLight.shadow.bias = -0.0025;
+        sunLight.shadow.radius = 2;
+        fillLight.position.set(5, 4, -4);
+        scene.add(hemiLight);
+        scene.add(sunLight);
+        scene.add(fillLight);
 
-      handlesRef.current = {
-        alignmentRotation: 0,
-        animationFrame: 0,
-        camera,
-        gl,
-        renderer,
-        routeGroup,
-        scene,
-        terrainGroup,
-        weatherGroup,
-        sunLight,
-        hemiLight,
-        navigationView: null,
-        model: null,
-        terrainRoute: [],
-        trackedObject: null,
-        rebuildId: 0,
-      };
-      rebuildScene();
+        handlesRef.current = {
+          alignmentRotation: 0,
+          animationFrame: 0,
+          camera,
+          gl,
+          renderer,
+          routeGroup,
+          scene,
+          terrainGroup,
+          weatherGroup,
+          sunLight,
+          hemiLight,
+          navigationView: null,
+          model: null,
+          terrainRoute: [],
+          trackedObject: null,
+          rebuildId: 0,
+        };
+        rebuildScene();
 
-      const render = () => {
-        const handles = handlesRef.current;
-        if (!handles) return;
+        const render = () => {
+          const handles = handlesRef.current;
+          if (!handles) return;
+          try {
+            if (handles.gl.isContextLost?.()) throw new Error("Se perdió el contexto GL.");
+            updateCamera(handles.camera, handles.navigationView, handles.alignmentRotation);
+            const elapsed = Date.now() / 1000;
+            handles.weatherGroup.children.forEach((child) => {
+              if (child.name === "weather-cloud") {
+                const originX = Number(child.userData.originX) || 0;
+                const speed = Number(child.userData.speed) || 0.02;
+                child.position.x = originX + Math.sin(elapsed * speed * 8 + originX) * 0.34;
+              } else if (child.name === "weather-precipitation") {
+                child.position.y = -((elapsed * 0.72) % 0.8);
+              }
+            });
+            handles.renderer.render(handles.scene, handles.camera);
+            handles.gl.endFrameEXP?.();
+            renderedFrameRef.current = true;
+            handles.animationFrame = requestAnimationFrame(render);
+          } catch (error) { failScene(error); }
+        };
 
-        updateCamera(handles.camera, handles.navigationView, handles.alignmentRotation);
-        const elapsed = Date.now() / 1000;
-        handles.weatherGroup.children.forEach((child) => {
-          if (child.name === "weather-cloud") {
-            const originX = Number(child.userData.originX) || 0;
-            const speed = Number(child.userData.speed) || 0.02;
-            child.position.x = originX + Math.sin(elapsed * speed * 8 + originX) * 0.34;
-          } else if (child.name === "weather-precipitation") {
-            child.position.y = -((elapsed * 0.72) % 0.8);
-          }
-        });
-        handles.renderer.render(handles.scene, handles.camera);
-        handles.gl.endFrameEXP?.();
-        handles.animationFrame = requestAnimationFrame(render);
-      };
-
-      render();
+        render();
+      } catch (error) {
+        if (!handlesRef.current) {
+          try { renderer?.dispose(); } catch { /* Context lost during creation. */ }
+        }
+        failScene(error);
+      }
     },
-    [rebuildScene, updateCamera]
+    [rebuildScene, updateCamera, disposeScene, failScene]
   );
 
   return <GLView style={styles.canvas} onContextCreate={onContextCreate} />;

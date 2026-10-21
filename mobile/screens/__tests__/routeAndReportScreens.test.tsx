@@ -64,6 +64,16 @@ test("missing offline map is an explicit failure, not an invented route", async 
   (Network.getNetworkStateAsync as jest.Mock).mockRejectedValue(new Error("network unavailable")); const tree = await mount(Route); expect(text(tree)).toContain("No pudimos cargar el mapa"); expect(tree.root.findByType("TrailMap").props.trail).toBeNull();
 });
 
+test("opening from Downloads reads the saved route even with Wi-Fi and forces the local 2D viewer", async () => {
+  (useLocalSearchParams as jest.Mock).mockReturnValue({id:"7",offline:"1"});
+  (maps.getOfflineMapByTrailId as jest.Mock).mockResolvedValue({trail,reports:[],status:"disponible"});
+  const tree = await mount(Route);
+  expect(tree.root.findByType("TrailMap").props).toMatchObject({trail,offlineOnly:true,allowSatellite:false});
+  expect(repository.getTrailById).not.toHaveBeenCalled();
+  expect(repository.getTrailReports).not.toHaveBeenCalled();
+  expect(repository.getTrailWeather).not.toHaveBeenCalled();
+});
+
 test("wearable refresh handles a rejected session lookup and retries on the next interval", async () => {
   active();
   (sessions.getRouteSession as jest.Mock).mockRejectedValue(new Error("Session unavailable"));

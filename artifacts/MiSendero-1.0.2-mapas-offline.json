@@ -1,0 +1,11 @@
+{
+  "file": "artifacts\\MiSendero-1.0.2-mapas-offline.apk",
+  "version": "1.0.2",
+  "versionCode": 3,
+  "bytes": 146704427,
+  "sha256": "27eb7a17c3f4402f0fb2000cc1cfabd6fe090dab1b02b5b4ec78e1d0702eed4b",
+  "offlineRegions": 37,
+  "archiveIntegrity": "OK",
+  "offlineBundle": "OK",
+  "buildId": "85ac7a98-9d9d-4a0f-9c53-1fc477d0ea32"
+}

@@ -8,6 +8,13 @@ const KEY_NAME = "misendero.sqlite.key.v1";
 const SECURE_DB = "trekking-secure-v1.db";
 const LEGACY_DB = "trekking.db";
 const MARKER = "_misendero_encrypted_migration";
+// SQLite returns an absolute Android path, while File expects a file:// URI.
+const databaseFile = (name: string) => new File(
+  SQLite.defaultDatabaseDirectory.startsWith("/")
+    ? `file://${SQLite.defaultDatabaseDirectory}`
+    : SQLite.defaultDatabaseDirectory,
+  name
+);
 let keyPromise: Promise<string> | undefined;
 let migration: Promise<SQLite.SQLiteDatabase> | undefined;
 const secret = () => keyPromise ??= (async () => {
@@ -69,12 +76,12 @@ const initialize = async () => {
     }
     // Copy -> validate -> remove. Failure is visible; the verified copy remains.
     try {
-      if (new File(SQLite.defaultDatabaseDirectory, LEGACY_DB).exists) {
+      if (databaseFile(LEGACY_DB).exists) {
         await SQLite.deleteDatabaseAsync(LEGACY_DB);
       }
       // Expo deletes the main file only. A crash may leave plaintext sidecars.
       for (const suffix of ["-wal", "-shm", "-journal"]) {
-        const file = new File(SQLite.defaultDatabaseDirectory, LEGACY_DB + suffix);
+        const file = databaseFile(LEGACY_DB + suffix);
         if (file.exists) file.delete();
       }
     } catch {

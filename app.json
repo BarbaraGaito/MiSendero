@@ -2,7 +2,9 @@
   "expo": {
     "name": "MiSendero",
     "slug": "misendero",
-    "version": "1.0.0",
+    "owner": "lara_alonso",
+    "version": "1.0.3",
+    "icon": "./assets/icon.png",
     "orientation": "portrait",
     "userInterfaceStyle": "automatic",
     "scheme": "misendero",
@@ -15,14 +17,28 @@
         }
       ],
       "expo-asset",
-      "expo-location",
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "MiSendero usa tu ubicación durante el recorrido para mostrar tu posición y registrar la actividad.",
+          "isAndroidBackgroundLocationEnabled": false,
+          "isAndroidForegroundServiceEnabled": false
+        }
+      ],
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash-icon.png",
+          "imageWidth": 180,
+          "resizeMode": "contain",
+          "backgroundColor": "#F5F1E8"
+        }
+      ],
       "react-native-health-connect",
       [
         "expo-build-properties",
         {
           "android": {
-            "compileSdkVersion": 36,
-            "targetSdkVersion": 36,
             "minSdkVersion": 26
           }
         }
@@ -50,6 +66,16 @@
     "android": {
       "allowBackup": false,
       "package": "com.misendero.app",
+      "versionCode": 4,
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#F5F1E8"
+      },
+      "blockedPermissions": [
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.SYSTEM_ALERT_WINDOW"
+      ],
       "permissions": [
         "android.permission.ACCESS_COARSE_LOCATION",
         "android.permission.ACCESS_FINE_LOCATION",
@@ -59,6 +85,12 @@
         "android.permission.health.READ_SPEED",
         "android.permission.health.READ_OXYGEN_SATURATION"
       ]
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "3241b7f2-c7d3-490d-bf59-7da957bda44f"
+      }
     }
   }
 }

@@ -42,6 +42,8 @@ import {
 import { colors } from "./MiSenderoUI";
 import { Terrain3DScene } from "./Terrain3DScene";
 import { buildTerrainSceneModel } from "./terrainSceneModel";
+import { BasicOfflineMap, containsMapCoordinate, readBasicOfflineMap } from "../../services/basicOfflineMap";
+import { BasicMapLayer } from "./BasicMapLayer";
 
 type MapLayer = "standard" | "terrain" | "satellite";
 
@@ -103,6 +105,7 @@ type TrailMapProps = {
   onSelectionRejected?: (distanceToRouteMeters: number | null) => void;
   onInteractionChange?: (isInteracting: boolean) => void;
   navigationMode?: boolean;
+  offlineOnly?: boolean;
 };
 
 const TILE_SIZE = 256;
@@ -225,13 +228,14 @@ const getFittedView = (
   layout: { width: number; height: number },
   maxZoom: number,
   fallbackCenter: Coordinate,
-  fallbackZoom: number
+  fallbackZoom: number,
+  minZoom = MIN_ZOOM
 ) => {
   if (points.length < 2 || !layout.width || !layout.height) {
     return { center: fallbackCenter, zoom: fallbackZoom };
   }
 
-  for (let candidateZoom = maxZoom; candidateZoom >= MIN_ZOOM; candidateZoom -= 1) {
+  for (let candidateZoom = maxZoom; candidateZoom >= minZoom; candidateZoom -= 1) {
     const projectedPoints = points.map((point) => project(point, candidateZoom));
     const xs = projectedPoints.map((point) => point.x);
     const ys = projectedPoints.map((point) => point.y);
@@ -250,7 +254,7 @@ const getFittedView = (
     }
   }
 
-  const projectedPoints = points.map((point) => project(point, MIN_ZOOM));
+  const projectedPoints = points.map((point) => project(point, minZoom));
   const xs = projectedPoints.map((point) => point.x);
   const ys = projectedPoints.map((point) => point.y);
 
@@ -260,9 +264,9 @@ const getFittedView = (
         x: (Math.min(...xs) + Math.max(...xs)) / 2,
         y: (Math.min(...ys) + Math.max(...ys)) / 2,
       },
-      MIN_ZOOM
+      minZoom
     ),
-    zoom: MIN_ZOOM,
+    zoom: minZoom,
   };
 };
 
@@ -416,10 +420,17 @@ export function TrailMap({
   onSelectionRejected,
   onInteractionChange,
   navigationMode = false,
+  offlineOnly = false,
 }: TrailMapProps) {
+  const network = useNetworkState();
+  const offline = offlineOnly || network.isConnected === false || network.isInternetReachable === false;
+  const [basicMap, setBasicMap] = useState<BasicOfflineMap | null>(null);
   const [layout, setLayout] = useState({ width: 0, height: 0 });
-  const [layer, setLayer] = useState<MapLayer>("terrain");
-  const [isPerspective, setIsPerspective] = useState(initialPerspective);
+  const [selectedLayer, setLayer] = useState<MapLayer>("terrain");
+  const layer = offline ? "standard" : selectedLayer;
+  const [perspectiveEnabled, setIsPerspective] = useState(initialPerspective);
+  const [terrainRenderFailed, setTerrainRenderFailed] = useState(false);
+  const isPerspective = !offline && perspectiveEnabled;
   const [activeZoom, setActiveZoom] = useState(trail?.map_zoom || DEFAULT_ZOOM);
   const [activeCenter, setActiveCenter] = useState<Coordinate>(DEFAULT_CENTER);
   const [panOffset, setPanOffset] = useState({ x: 0, y: 0 });
@@ -432,6 +443,7 @@ export function TrailMap({
   const centerRef = useRef(activeCenter);
   const zoomRef = useRef(activeZoom);
   const maxZoomRef = useRef(MAX_ZOOM_BY_LAYER.terrain);
+  const minZoomRef = useRef(MIN_ZOOM);
   const isPerspectiveRef = useRef(isPerspective);
   const panOffsetRef = useRef(panOffset);
   const layoutRef = useRef(layout);
@@ -465,8 +477,13 @@ export function TrailMap({
   );
   const { location, permissionDenied, error: locationError, isTestingLocation } =
     useDeviceLocation(showUserLocation, simulatedStartLocation);
-  const network = useNetworkState();
-  const offline = network.isConnected === false || network.isInternetReachable === false;
+  useEffect(() => {
+    let active = true;
+    setBasicMap(null);
+    if (trail) void readBasicOfflineMap(trail).then(value => { if (active) setBasicMap(value); });
+    return () => { active = false; };
+  }, [trail?.id, trail?.route_coordinates, trail?.center_lat, trail?.center_lng]);
+  const showBasicMap = Boolean(basicMap && layer === "standard" && !isPerspective);
   const terrainElevation = useTerrainElevation(trail?.id ?? 0, route, {
     enabled: isPerspective,
     offline,
@@ -479,11 +496,12 @@ export function TrailMap({
     [terrainElevation, route]
   );
   const savedZooms = useMemo(() => trail ? [...new Set(getOfflineTilePlanForTrail(trail).map((tile) => tile.zoom))] : [], [trail]);
-  const maxZoom = offline && savedZooms.length ? Math.max(...savedZooms) : MAX_ZOOM_BY_LAYER[layer];
+  const maxZoom = offline && !basicMap && savedZooms.length ? Math.max(...savedZooms) : MAX_ZOOM_BY_LAYER[layer];
+  const minZoom = offline && !basicMap && savedZooms.length ? Math.min(...savedZooms) : MIN_ZOOM;
   useEffect(() => {
     if (offline) { setLayer("standard"); setIsPerspective(false); }
   }, [offline]);
-  const zoom = Math.min(activeZoom, maxZoom);
+  const zoom = clamp(activeZoom, minZoom, maxZoom);
   const getInitialView = () =>
     fitRoute
       ? getFittedView(
@@ -491,11 +509,12 @@ export function TrailMap({
           layout,
           maxZoom,
           trailCenter,
-          Math.min(trail?.map_zoom || DEFAULT_ZOOM, maxZoom)
+          clamp(trail?.map_zoom || DEFAULT_ZOOM, minZoom, maxZoom),
+          minZoom
         )
       : {
           center: trailCenter,
-          zoom: Math.min(trail?.map_zoom || DEFAULT_ZOOM, maxZoom),
+          zoom: clamp(trail?.map_zoom || DEFAULT_ZOOM, minZoom, maxZoom),
         };
 
   useEffect(() => {
@@ -511,7 +530,7 @@ export function TrailMap({
     setTerrainOffset({ x: 0, y: 0 });
     setTerrainScale(1);
     setPinchPreviewScale(1);
-  }, [trail?.id, trailCenter[0], trailCenter[1], layout.width, layout.height, fitRoute, layer, maxZoom]);
+  }, [trail?.id, trailCenter[0], trailCenter[1], layout.width, layout.height, fitRoute, layer, maxZoom, minZoom]);
 
   useEffect(() => {
     centerRef.current = activeCenter;
@@ -519,10 +538,11 @@ export function TrailMap({
     panOffsetRef.current = panOffset;
     layoutRef.current = layout;
     maxZoomRef.current = maxZoom;
+    minZoomRef.current = minZoom;
     isPerspectiveRef.current = isPerspective;
     terrainOffsetRef.current = terrainOffset;
     terrainScaleRef.current = terrainScale;
-  }, [activeCenter, isPerspective, layout, maxZoom, panOffset, terrainOffset, terrainScale, zoom]);
+  }, [activeCenter, isPerspective, layout, maxZoom, minZoom, panOffset, terrainOffset, terrainScale, zoom]);
 
   useEffect(() => {
     if (activeZoom > maxZoom) {
@@ -606,7 +626,7 @@ export function TrailMap({
               const zoomDelta = getPinchZoomDelta(ratio);
               const nextZoom = clamp(
                 pinchStartZoomRef.current + zoomDelta,
-                MIN_ZOOM,
+                minZoomRef.current,
                 maxZoomRef.current
               );
 
@@ -666,7 +686,7 @@ export function TrailMap({
     }
 
     setActiveZoom((currentZoom) =>
-      Math.max(MIN_ZOOM, Math.min(maxZoom, currentZoom + delta))
+      Math.max(minZoom, Math.min(maxZoom, currentZoom + delta))
     );
   };
 
@@ -754,7 +774,7 @@ export function TrailMap({
   );
 
   useEffect(() => {
-    if (isPerspective || mapState.tiles.length === 0) {
+    if (isPerspective || showBasicMap || mapState.tiles.length === 0) {
       setIsTileLoading(false);
       return;
     }
@@ -781,10 +801,15 @@ export function TrailMap({
           setIsTileLoading(false);
         }
       });
-  }, [isPerspective, tileSignature, offline]);
+    return () => { tileLoadRef.current += 1; };
+  }, [isPerspective, tileSignature, offline, showBasicMap]);
 
   useEffect(() => {
     let isMounted = true;
+    if (showBasicMap) {
+      setTileUriOverrides({});
+      return;
+    }
 
     const loadLocalTileUris = async () => {
       const entries = await Promise.all(
@@ -809,12 +834,12 @@ export function TrailMap({
       );
     };
 
-    loadLocalTileUris();
+    void loadLocalTileUris().catch(() => { if (isMounted) setTileUriOverrides({}); });
 
     return () => {
       isMounted = false;
     };
-  }, [tileSignature]);
+  }, [tileSignature, showBasicMap]);
 
   const mapDecorations = useMemo(
     () =>
@@ -845,7 +870,7 @@ export function TrailMap({
     : zoom >= maxZoom;
   const isZoomOutDisabled = isPerspective
     ? terrainScale <= MIN_TERRAIN_SCALE
-    : zoom <= MIN_ZOOM;
+    : zoom <= minZoom;
   const isInitialTileLoad = cachedTiles.length === 0;
   const loaderTop = isInitialTileLoad
     ? Math.max(128, layout.height / 2 - 24)
@@ -905,6 +930,10 @@ export function TrailMap({
           {terrainModel ? (
             <>
               <Terrain3DScene
+                onError={() => {
+                  setTerrainRenderFailed(true);
+                  setIsPerspective(false);
+                }}
                 terrain={terrainModel}
                 userCoordinate={location?.coordinate ?? null}
                 viewOffset={{
@@ -992,7 +1021,8 @@ export function TrailMap({
             },
           ]}
         >
-          {isTileLoading && cachedTiles.length > 0
+          {showBasicMap && basicMap ? <BasicMapLayer map={basicMap} center={activeCenter} zoom={zoom} width={layout.width} height={layout.height} /> : null}
+          {!offline && !showBasicMap && isTileLoading && cachedTiles.length > 0
             ? cachedTiles.map((tile) => (
                 <Image
                   key={`cached-${tile.key}`}
@@ -1007,7 +1037,7 @@ export function TrailMap({
               ))
             : null}
 
-          {mapState.tiles.filter(tile => !offline || Boolean(tileUriOverrides[tile.key])).map((tile) => (
+          {mapState.tiles.filter(tile => !showBasicMap && (!offline || Boolean(tileUriOverrides[tile.key]))).map((tile) => (
             <Image
               key={tile.key}
               fadeDuration={0}
@@ -1127,6 +1157,13 @@ export function TrailMap({
         </View>
       )}
 
+      {offline && showMapNotices ? <View pointerEvents="none" style={[styles.locationWarning, {top: controlsTopOffset+52}]}>
+        <Ionicons name="cloud-offline-outline" size={16} color={colors.green} />
+        <Text style={[styles.locationWarningText,{color:colors.greenDark}]}>
+          {basicMap ? containsMapCoordinate(basicMap,activeCenter) ? "Mapa básico 2D · guardado en el teléfono" : "Fuera de la zona descargada · volvé al recorrido" : "Mapa sin conexión · solo zona descargada"}
+        </Text>
+      </View> : null}
+
       {!isPerspective && isTileLoading ? (
         <View pointerEvents="none" style={[styles.mapLoaderLayer, { top: loaderTop }]}>
           <View
@@ -1180,11 +1217,21 @@ export function TrailMap({
         </View>
       ) : null}
 
+      {terrainRenderFailed && !isPerspective ? (
+        <View pointerEvents="none" style={[styles.terrain3dOverlay, {top:terrainOverlayTop}]}>
+          <View style={styles.terrain3dPill}>
+            <Text style={styles.terrain3dPillText}>Relieve 3D no disponible. Mostrando mapa 2D.</Text>
+          </View>
+        </View>
+      ) : null}
       {!offline && <Pressable
         accessibilityLabel={isPerspective ? "Cambiar a mapa 2D" : "Cambiar a perspectiva 3D"}
         accessibilityRole="button"
         accessibilityState={{ selected: isPerspective }}
-        onPress={() => setIsPerspective((current) => !current)}
+        onPress={() => {
+          setTerrainRenderFailed(false);
+          setIsPerspective((current) => !current);
+        }}
         style={[
           styles.perspectiveButton,
           { top: isPerspective ? controlsTopOffset : controlsTopOffset + 50 },
@@ -1248,7 +1295,7 @@ export function TrailMap({
       {!isPerspective ? (
         <Text style={styles.attribution} accessibilityRole="link" accessibilityLabel="Fuentes y licencias del mapa"
           onPress={() => router.push(trail ? { pathname: "/atribuciones", params: { trailId: String(trail.id) } } : "/atribuciones")}>
-          {getMapAttribution(layer)}
+          {showBasicMap && basicMap ? basicMap.attribution : getMapAttribution(layer)}
         </Text>
       ) : null}
 

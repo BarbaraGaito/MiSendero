@@ -93,7 +93,7 @@ export default function OfflineDownload21Screen() {
       <ScreenTitle
         eyebrow="Descarga"
         title={isSaved ? "Mapa descargado" : "Descargando zona"}
-        subtitle="Guardamos los datos de la ruta para usarlos sin conexion."
+        subtitle="Guardamos el mapa básico 2D y el recorrido en tu teléfono."
       />
 
       <ProgressHero
@@ -114,7 +114,7 @@ export default function OfflineDownload21Screen() {
           value={message}
         />
         <Text style={styles.cardText}>
-          Guardá el recorrido y sus reportes para consultarlos cuando no tengas señal.
+          Incluye caminos, senderos, agua y referencias de la zona. Una vez guardado, abrilo desde Mapas descargados sin conexión.
         </Text>
       </Card>
 
@@ -131,7 +131,7 @@ export default function OfflineDownload21Screen() {
               onPress={() =>
                 router.push({
                   pathname: "/route-map",
-                  params: { id: String(trailId) },
+                  params: { id: String(trailId), offline: "1" },
                 })
               }
             />
@@ -172,6 +172,7 @@ export default function OfflineDownload21Screen() {
 
 function getDownloadErrorMessage(error: unknown) {
   if (error instanceof Error && "code" in error) {
+    if (error.code === "basic-map-unavailable") return "Todavía no hay un mapa básico disponible para esta zona. Podés consultar el sendero con conexión.";
     if (error.code === "provider-not-configured") return "Las descargas de mapas todavía no están disponibles. Podés consultar el sendero con conexión.";
     if (error.code === "storage-unavailable") return "Este dispositivo no permite guardar mapas sin conexión. Probá desde tu teléfono.";
   }

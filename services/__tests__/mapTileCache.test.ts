@@ -83,6 +83,12 @@ const loadMapTileCache = async ({
     moveAsync,
     downloadAsync,
   }));
+  const saveBasicOfflineMap = jest.fn().mockResolvedValue({downloadedTiles:1,totalTiles:1,sizeMb:.1});
+  jest.doMock("../basicOfflineMap", () => ({
+    readBasicOfflineMap: jest.fn().mockResolvedValue(null),
+    saveBasicOfflineMap,
+    deleteBasicOfflineMap: jest.fn(),
+  }));
 
   const module = require("../mapTileCache") as typeof import("../mapTileCache");
 
@@ -94,6 +100,7 @@ const loadMapTileCache = async ({
     getInfoAsync,
     makeDirectoryAsync,
     moveAsync,
+    saveBasicOfflineMap,
   };
 };
 
@@ -118,10 +125,11 @@ describe("mapTileCache", () => {
     await expect(cache.downloadOfflineTilesForTrail(trail)).rejects.toMatchObject({ code: "provider-not-configured" });
     expect(cache.downloadAsync).not.toHaveBeenCalled();
   });
-  test("a missing base-map source fails before any download starts", async () => {
+  test("without an external tile source it saves the bundled basic 2D region", async () => {
     const cache = await loadMapTileCache();
     delete process.env.EXPO_PUBLIC_OFFLINE_STANDARD_TILE_URL;
-    await expect(cache.downloadOfflineTilesForTrail(trail)).rejects.toMatchObject({ code: "provider-not-configured" });
+    await expect(cache.downloadOfflineTilesForTrail(trail)).resolves.toMatchObject({ totalTiles: 1 });
+    expect(cache.saveBasicOfflineMap).toHaveBeenCalledWith(trail, undefined, {});
     expect(cache.downloadAsync).not.toHaveBeenCalled();
   });
   test("descarga todos los tiles a archivos locales verificables", async () => {

@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { Stack } from "expo-router";
 import { useFonts } from "expo-font";
 import {
@@ -6,7 +5,6 @@ import {
   BricolageGrotesque_800ExtraBold,
 } from "@expo-google-fonts/bricolage-grotesque";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { initDB } from "../database/database";
 import { SyncCoordinator } from "../services/SyncCoordinator";
 import { RouteTrackingCoordinator } from "../services/RouteTrackingCoordinator";
 import { StoragePrivacyGuard } from "../services/StoragePrivacyGuard";
@@ -16,10 +14,6 @@ export default function RootLayout() {
     BricolageGrotesque_700Bold,
     BricolageGrotesque_800ExtraBold,
   });
-
-  useEffect(() => {
-    void initDB();
-  }, []);
 
   if (!fontsLoaded && !fontError) {
     return null;

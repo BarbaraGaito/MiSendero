@@ -1,6 +1,7 @@
 ﻿import * as FileSystem from "expo-file-system/legacy";
 import { Trail } from "../types";
 import { Coordinate, parseRouteCoordinates } from "./geoUtils";
+import { deleteBasicOfflineMap, getBasicOfflineMapSizeMb, readBasicOfflineMap, saveBasicOfflineMap } from "./basicOfflineMap";
 
 export type CachedMapLayer = "standard" | "terrain";
 
@@ -239,6 +240,11 @@ export const getOfflineTileCoverageForTrail = async (
     return { availableTiles: 0, totalTiles: 0, sizeMb: 0, isComplete: false };
   }
 
+  const basicMap = await readBasicOfflineMap(trail);
+  if (basicMap) {
+    return { availableTiles: 1, totalTiles: 1, sizeMb: await getBasicOfflineMapSizeMb(trail), isComplete: true };
+  }
+
   const tileList = getOfflineTilePlanForTrail(trail);
   let availableTiles = 0;
   let totalBytes = 0;
@@ -270,6 +276,10 @@ export const downloadOfflineTilesForTrail = async (
       "storage-unavailable",
       "Este dispositivo no permite guardar mapas sin conexión. Probá desde tu teléfono."
     );
+  }
+
+  if (!process.env.EXPO_PUBLIC_OFFLINE_STANDARD_TILE_URL?.trim()) {
+    return saveBasicOfflineMap(trail, onProgress, options);
   }
 
   const validProvider = (value: string | undefined) => {
@@ -420,6 +430,8 @@ const throwTileDownloadError = (
 
 export const deleteOfflineTilesForTrail = async (trail: Trail): Promise<number> => {
   if (!FileSystem.documentDirectory) return 0;
+
+  await deleteBasicOfflineMap(trail);
 
   const tileList = getOfflineTilePlanForTrail(trail);
   let deletedTiles = 0;

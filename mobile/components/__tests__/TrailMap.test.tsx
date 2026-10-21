@@ -3,6 +3,9 @@ jest.mock("expo-network", () => ({ useNetworkState: jest.fn() }));
 jest.mock("../../hooks/useDeviceLocation", () => ({ useDeviceLocation: jest.fn() }));
 jest.mock("../../hooks/useTerrainElevation", () => ({ useTerrainElevation: jest.fn() }));
 jest.mock("../Terrain3DScene", () => ({ Terrain3DScene: "Terrain3DScene" }));
+jest.mock("../../../services/basicOfflineMap", () => ({
+  ...jest.requireActual("../../../services/basicOfflineMap"), readBasicOfflineMap:jest.fn().mockResolvedValue(null),
+}));
 jest.mock("../../../services/mapTileCache", () => ({
   ...jest.requireActual("../../../services/mapTileCache"), resolveCachedTileUri: jest.fn().mockResolvedValue(null), getOfflineTilePlanForTrail: jest.fn(() => [{ zoom: 12 }]),
 }));
@@ -12,6 +15,7 @@ import { router } from "expo-router";
 import { useDeviceLocation } from "../../hooks/useDeviceLocation";
 import { useTerrainElevation } from "../../hooks/useTerrainElevation";
 import { resolveCachedTileUri } from "../../../services/mapTileCache";
+import { readBasicOfflineMap } from "../../../services/basicOfflineMap";
 import { TrailMap } from "../TrailMap";
 import { trail } from "../../../testing/fixtures";
 import { act, mount, press, text, flush } from "../../../testing/mobileHarness";
@@ -23,6 +27,7 @@ beforeEach(() => {
   (useDeviceLocation as jest.Mock).mockReturnValue({ location: { coordinate: [-41, -71], accuracy: 5 }, permissionDenied: false, error: null, isTestingLocation: false });
   (useTerrainElevation as jest.Mock).mockReturnValue({ status: "ready", data: { grid } });
   (resolveCachedTileUri as jest.Mock).mockResolvedValue(null);
+  (readBasicOfflineMap as jest.Mock).mockResolvedValue(null);
   jest.spyOn(PanResponder, "create").mockImplementation((config) => { gestures = config; return { panHandlers: {} } as any; });
 });
 const surface = (tree: any) => tree.root.findAll((node: any) => typeof node.props.onTouchStart === "function" && typeof node.props.onLayout === "function")[0];
@@ -85,4 +90,16 @@ test("offline mode uses only the basic local map, with no satellite, terrain or 
   expect(text(tree)).not.toContain("3D");
   expect(Image.prefetch).not.toHaveBeenCalled();
   expect(tree.root.findAllByType(Image).some((node: any) => node.props.source?.uri?.startsWith("http"))).toBe(false);
+});
+
+test("opening a downloaded map while connected displays the saved 2D features without remote requests", async () => {
+  (readBasicOfflineMap as jest.Mock).mockResolvedValue({version:1,id:"saved",attribution:"© OpenStreetMap contributors",bounds:{south:-42,north:-40,west:-72,east:-70},
+    features:[{id:"path1",kind:"path",name:"Camino guardado",points:route}]});
+  const tree = await mount(TrailMap,{trail,offlineOnly:true,initialPerspective:true}); await layout(tree);
+  expect(tree.root.findAll((node: any) => node.props.testID === "offline-basic-map").length).toBeGreaterThan(0);
+  expect(text(tree)).toContain("guardado en el teléfono");
+  expect(text(tree)).not.toContain("Satelite");
+  expect(tree.root.findAllByType("Terrain3DScene")).toHaveLength(0);
+  expect(Image.prefetch).not.toHaveBeenCalled();
+  expect(tree.root.findAllByType(Image)).toHaveLength(0);
 });

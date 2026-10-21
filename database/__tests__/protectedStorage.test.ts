@@ -34,7 +34,11 @@ function setup(scenario: Scenario = {}) {
     setItemAsync: jest.fn().mockResolvedValue(undefined), WHEN_UNLOCKED_THIS_DEVICE_ONLY: 1 };
   jest.doMock('expo-file-system', () => ({ File: class {
     exists = true;
-    constructor(_directory: string, private filename: string) {}
+    constructor(directory: string, private filename: string) {
+      // Android's java.io.File(URI) rejects bare paths supplied by SQLite.
+      if (!directory.startsWith('file://')) throw new Error('URI is not absolute');
+      events.push(`file ${directory}/${filename}`);
+    }
     delete() { events.push(`delete ${this.filename}`); }
   } }));
   jest.doMock('expo-sqlite', () => sqlite); jest.doMock('expo-secure-store', () => store);
@@ -61,6 +65,7 @@ test('exports before verification and only then removes plaintext; new connectio
   expect(s.events.indexOf('PRAGMA cipher_integrity_check')).toBeLessThan(s.events.indexOf('delete plaintext'));
   expect(s.events).toEqual(expect.arrayContaining(['delete trekking.db-wal', 'delete trekking.db-shm', 'delete trekking.db-journal']));
   expect(s.events.indexOf('delete plaintext')).toBeLessThan(s.events.indexOf('delete trekking.db-wal'));
+  expect(s.events).toContain('file file:///private/SQLite/trekking.db');
   expect(s.store.setItemAsync).toHaveBeenCalledWith('misendero.sqlite.key.v1', expect.stringMatching(/^[a-f0-9]{64}$/), { keychainAccessible: 1 });
   await s.openProtectedDatabase(true);
   expect(s.sqlite.openDatabaseAsync).toHaveBeenLastCalledWith('trekking-secure-v1.db', { useNewConnection: true });

@@ -1,11 +1,11 @@
 jest.mock("expo-gl", () => ({ GLView: "GLView" }));
-jest.mock("expo-three", () => ({
-  Renderer: jest.fn().mockImplementation(() => ({ shadowMap: {}, render: jest.fn(), setClearColor: jest.fn(), dispose: jest.fn() })),
-  TextureLoader: jest.fn().mockImplementation(() => ({ setCrossOrigin: jest.fn(), load: jest.fn() })),
+jest.mock("../terrainGraphics", () => ({
+  createTerrainRenderer: jest.fn().mockImplementation(() => ({ shadowMap: {}, render: jest.fn(), setClearColor: jest.fn(), dispose: jest.fn() })),
+  loadTerrainTexture: jest.fn(() => new Promise(() => {})),
 }));
 import React from "react";
 import * as THREE from "three";
-import { Renderer, TextureLoader } from "expo-three";
+import { createTerrainRenderer, loadTerrainTexture } from "../terrainGraphics";
 import { Terrain3DScene } from "../Terrain3DScene";
 import { buildTerrainSceneModel } from "../terrainSceneModel";
 const renderer = require("react-test-renderer");
@@ -22,7 +22,7 @@ const mount = async (extra = {}) => {
   await renderer.act(async () => { screen = renderer.create(<Terrain3DScene terrain={terrain} viewOffset={{ x: 0, y: 0 }} viewScale={1} satelliteTextureEnabled={false} {...extra} />); });
   const gl = { drawingBufferWidth: 320, drawingBufferHeight: 480, endFrameEXP: jest.fn() };
   await renderer.act(async () => screen.root.findByType("GLView").props.onContextCreate(gl));
-  return { gl, gpu: (Renderer as jest.Mock).mock.results.at(-1)!.value };
+  return { gl, gpu: (createTerrainRenderer as jest.Mock).mock.results.at(-1)!.value };
 };
 test("builds actual Three geometries from the DEM, frames them above ground, and disposes resources", async () => {
   const { gpu, gl } = await mount({ userCoordinate: [0.5, 0.5] });
@@ -60,14 +60,22 @@ test("a changed model rebuilds geometries; an outside-grid user receives no inve
   await renderer.act(async () => frame?.(100));
   expect(gpu.render.mock.calls.at(-1)[1].zoom).toBe(1.9); // public maximum zoom
 });
-test("late satellite images are disposed after scene replacement and network errors keep DEM geometry", async () => {
+test("late satellite images are disposed after scene replacement", async () => {
+  let accept!: (texture: THREE.Texture) => void;
+  (loadTerrainTexture as jest.Mock).mockReturnValueOnce(new Promise(resolve => { accept = resolve; }));
   const { gpu } = await mount({ satelliteTextureEnabled: true });
-  const loader = (TextureLoader as unknown as jest.Mock).mock.results[0].value;
-  const [url, accept, , reject] = loader.load.mock.calls[0];
+  const [url] = (loadTerrainTexture as jest.Mock).mock.calls[0];
   expect(url).toContain("bbox=0%2C0%2C1%2C1");
   const texture = new THREE.Texture(); const disposed = jest.spyOn(texture, "dispose");
   await renderer.act(async () => screen.update(<Terrain3DScene terrain={terrain} viewOffset={{ x: 0, y: 0 }} viewScale={1} satelliteTextureEnabled={false} />));
-  accept(texture); reject(new Error("offline"));
+  await renderer.act(async () => { accept(texture); });
   expect(disposed).toHaveBeenCalledTimes(1);
   expect(gpu.render.mock.calls[0][0].children[1].children).toHaveLength(2);
+});
+
+test("a native renderer failure returns control to the 2D viewer", async () => {
+  const error = new Error("GL unavailable"), onError = jest.fn();
+  (createTerrainRenderer as jest.Mock).mockImplementationOnce(() => { throw error; });
+  await mount({onError});
+  expect(onError).toHaveBeenCalledWith(error);
 });

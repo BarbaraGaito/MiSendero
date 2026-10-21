@@ -15,6 +15,7 @@ describe("public ground-truth deployment policy", () => {
   test("live measurements abstain because no fatigue model is approved", () => {
     const prediction = predictFatigue({ hr: 150, speedKmh: 2, elapsedMinutes: 90 });
     expect(prediction.label).toBe("sin_datos");
+    expect(prediction.status).toBe("model_not_approved");
     expect(prediction.confidence).toBe(0);
     expect(prediction.distances).toEqual({});
     expect(prediction.reason).toContain("validación aprobada");
@@ -34,5 +35,8 @@ describe("public ground-truth deployment policy", () => {
     expect(predictRandomForest(forest(true), { x: Number.NaN }).label).toBe("sin_datos");
     expect(predictRandomForest(forest(true), { x: 3 })).toMatchObject({ label: "A", confidence: 1 });
     expect(predictRandomForest(forest(true), { x: 7 })).toMatchObject({ label: "B", confidence: 1 });
+    expect(predictRandomForest(forest(false), { x: 3 }).status).toBe("model_not_approved");
+    expect(predictRandomForest(forest(true), { x: Number.NaN }).status).toBe("missing_inputs");
+    expect(predictRandomForest(forest(true), { x: 3 }).status).toBe("available");
   });
 });

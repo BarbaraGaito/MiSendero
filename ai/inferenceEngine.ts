@@ -7,7 +7,8 @@ import { OfflinePrediction, RandomForestModel } from "./modelTypes";
 const NO_APPROVED_MODEL =
   "No hay un modelo con validación aprobada con mediciones y etiquetas públicas reales para este uso.";
 
-const unavailable = (reason: string): OfflinePrediction => ({ label: "sin_datos", confidence: 0, distances: {}, reason });
+const unavailable = (reason: string, status: "model_not_approved" | "missing_inputs" = "model_not_approved"): OfflinePrediction =>
+  ({ status, label: "sin_datos", confidence: 0, distances: {}, reason });
 
 // sklearn's exported tree.children_left uses -1 to mark a leaf node; there is
 // no separate "is_leaf" flag, so that convention is the traversal stop
@@ -21,7 +22,7 @@ export const predictRandomForest = (
     return unavailable("El modelo no tiene validación aprobada con mediciones y etiquetas públicas reales para este uso.");
   }
   if (model.feature_order.some((feature) => !Number.isFinite(input[feature]))) {
-    return unavailable("Faltan variables requeridas por el modelo.");
+    return unavailable("Faltan variables requeridas por el modelo.", "missing_inputs");
   }
   const featureValues = model.feature_order.map((feature) => input[feature]);
   const classCount = model.classes.length;
@@ -57,6 +58,7 @@ export const predictRandomForest = (
   }
 
   return {
+    status: "available",
     label: model.classes[bestIndex],
     confidence: Number(averageProbabilities[bestIndex].toFixed(2)),
     distances,

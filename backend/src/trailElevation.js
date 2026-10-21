@@ -1,5 +1,6 @@
 const { createHash } = require("node:crypto");
 const { query } = require("./db");
+const referenceElevations = require("./data/recommendationElevation20261021.json").entries;
 
 const VERSION = 1;
 const RESOLUTION_M = 90;
@@ -25,8 +26,11 @@ const geometryHash = (trail) => createHash("sha256")
 
 const cachedElevation = (trail) => {
   try {
-    return trail.elevation?.version === VERSION &&
-      trail.elevation.geometry_hash === geometryHash(trail) ? trail.elevation : null;
+    const hash = geometryHash(trail);
+    if (trail.elevation?.version === VERSION && trail.elevation.geometry_hash === hash) return trail.elevation;
+    const reference = referenceElevations[trail.provenance?.catalog_key];
+    return reference?.name === trail.name && reference.elevation?.version === VERSION &&
+      reference.elevation.geometry_hash === hash ? reference.elevation : null;
   } catch {
     return null;
   }

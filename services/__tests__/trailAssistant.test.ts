@@ -28,6 +28,23 @@ beforeEach(() => {
   (getExperienceProfile as jest.Mock).mockResolvedValue({ completed: true, skipped: false, level: "principiante" });
   (recommendTrail as jest.Mock).mockResolvedValue(empty);
 });
+
+test("partial source verification preserves warnings and rejects invalid ascent values before rendering", async () => {
+  const recommendation = { trailId: 1, name: "Sendero a Confluencia", location: "Mendoza", imageUrl: null,
+    trailTypes: ["montaña"], difficulty: "moderada", duration: "4 a 5 h", durationMinutes: 300,
+    routeType: "out_and_back", distanceKm: 14, description: "Ficha con fuentes en conflicto.",
+    explanation: "El tiempo total de la ficha no está confirmado.", catalogVerification: "partial", durationScopeVerified: false,
+    sources: [{ title: "Fuente revisada", url: "https://www.argentina.gob.ar/" }], checkedAt: "2026-10-21",
+    dataWarnings: ["Las fuentes difieren en el tiempo total."] };
+  for (const ascentM of [null, 0, 123]) {
+    (recommendTrail as jest.Mock).mockResolvedValue({ status: "ok", message: "Alternativa", recommendation: { ...recommendation, ascentM } });
+    expect((await findRecommendedTrail(preferences)).recommendation).toMatchObject({ catalogVerification: "partial", ascentM });
+  }
+  for (const ascentM of [-1, NaN, Infinity, "123"]) {
+    (recommendTrail as jest.Mock).mockResolvedValue({ status: "ok", message: "Alternativa", recommendation: { ...recommendation, ascentM } });
+    await expect(findRecommendedTrail(preferences)).rejects.toThrow("no es válida");
+  }
+});
 test("sends the survey with the authenticated account's saved profile and session", async () => {
   expect(await findRecommendedTrail(preferences)).toEqual(empty);
   expect(getExperienceProfile).toHaveBeenCalledWith(31);

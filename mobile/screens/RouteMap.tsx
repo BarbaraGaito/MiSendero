@@ -349,7 +349,7 @@ export default function Screen04RouteMap() {
     if (isSimulatingWearable) return;
 
     if (wearableRuntime?.status === "requires_consent") {
-      setTestingWearableMessage("Activa datos sensibles en Perfil para ver el analisis IA.");
+      setTestingWearableMessage("Activa datos sensibles en Perfil para ver el análisis de lecturas.");
       return;
     }
 
@@ -510,7 +510,7 @@ export default function Screen04RouteMap() {
             <Text style={styles.testingBannerStatus}>
               {isSimulatingWearable
                 ? "Generando ventana de metricas..."
-                : testingWearableMessage || "Toca un escenario para probar el analisis IA."}
+                : testingWearableMessage || "Tocá un escenario para probar los avisos de lectura."}
             </Text>
           </View>
         ) : null}
@@ -538,7 +538,7 @@ export default function Screen04RouteMap() {
             />
             <View style={styles.wearableText}>
               <Text style={styles.wearableTitle}>
-                {wearableRuntime.latestSample.heartRateBpm} bpm{simulatedWearableLabel} - {wearableRuntime.prediction.title}
+                {wearableRuntime.prediction.coverage === "oxygen_only" ? `${wearableRuntime.latestSample.oxygenSaturation}% SpO₂` : `${wearableRuntime.latestSample.heartRateBpm} bpm`}{simulatedWearableLabel} - {wearableRuntime.prediction.title}
               </Text>
               <Text numberOfLines={2} style={styles.wearableBody}>
                 {wearableRuntime.prediction.message}
@@ -602,13 +602,13 @@ export default function Screen04RouteMap() {
                     {wearableRuntime.latestSample.simulated ? "Actividad · datos de prueba" : "Resumen de actividad"}
                   </Text>
                   <Text style={styles.wearableTitle}>
-                    {wearableRuntime.latestSample.heartRateBpm} bpm{simulatedWearableLabel} - {wearableRuntime.prediction.title}
+                    {wearableRuntime.prediction.coverage === "oxygen_only" ? `${wearableRuntime.latestSample.oxygenSaturation}% SpO₂` : `${wearableRuntime.latestSample.heartRateBpm} bpm`}{simulatedWearableLabel} - {wearableRuntime.prediction.title}
                   </Text>
                 </View>
               </View>
               <View style={styles.wearableMetricRow}>
-                <WearableChip label="Riesgo" value={wearableRuntime.prediction.riskLabel === "sin_datos" ? "Sin datos" : wearableRuntime.prediction.riskLabel} />
-                <WearableChip label="Fatiga" value={wearableRuntime.prediction.fatigue === "sin_datos" ? "Sin datos" : wearableRuntime.prediction.fatigue} />
+                <WearableChip label="Avisos de lectura" value={wearableRuntime.prediction.readingAlert} />
+                {wearableRuntime.prediction.cardiacLoad ? <WearableChip label="Carga por pulso" value={wearableRuntime.prediction.cardiacLoad} /> : null}
               </View>
               <Text numberOfLines={2} style={styles.wearableBody}>
                 {wearableRuntime.prediction.recommendedAction}
@@ -1030,7 +1030,7 @@ function WearableRealtimePanel({
         />
         <View style={styles.wearableWarningText}>
           <Text style={styles.wearableWarningTitle}>
-            {prediction?.title ?? "Sin advertencias activas"}
+            {prediction?.title ?? "Esperando lecturas recientes"}
           </Text>
           <Text style={styles.wearableWarningBody}>
             {prediction?.message ??

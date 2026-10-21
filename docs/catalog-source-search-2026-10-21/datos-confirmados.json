@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-10-21",
+  "scope": "Referencias documentales para la tesis; no se modificó el catálogo de ejecución de la app.",
+  "records": [
+    {
+      "trail_id": 7,
+      "name": "Ascenso Cerro Tres Picos",
+      "field": "duration_total_minutes",
+      "value": 540,
+      "unit": "minutes",
+      "approximate": true,
+      "itinerary": "Cerro Tres Picos en el día, desde el estacionamiento de Estancia Funke, ascenso a cumbre y regreso",
+      "scope": "round_trip_activity",
+      "source_kind": "administrator_technical_document",
+      "evidence_kind": "published_planning_reference",
+      "field_measurement": false,
+      "source_title": "Turismo Funke - Circuitos trekking y equipamiento",
+      "source_url": "https://drive.google.com/file/d/1qGcyDs0k1Zo_X0dMARqLEBIHd2KHf-Uk/view",
+      "administrator_url": "https://fundacionfunke.org.ar/turismo/",
+      "discovery_path": ["https://fundacionfunke.org.ar/turismo/", "https://linktr.ee/turismofun", "https://drive.google.com/drive/folders/15Pfc8HgQWtFC81RLH08sRtEdoTlKSC14"],
+      "source_page": 3,
+      "source_file": "sources/funke-circuitos-trekking.pdf",
+      "context": "El documento distingue 6 km de acceso vehicular y 18,5 km caminando entre ida y vuelta. El valor elegido corresponde al tiempo total publicado de la actividad, no a las 4 h de ascenso ni a la variante de dos jornadas.",
+      "eligible_analysis": "published_total_itinerary_duration"
+    },
+    {
+      "trail_id": 2,
+      "name": "Volcan Lanin - Base a Refugio BIM",
+      "field": "duration_total_minutes",
+      "value": 540,
+      "unit": "minutes",
+      "approximate": true,
+      "itinerary": "Seccional Río Turbio, base norte del volcán Lanín, refugio BIM y descenso",
+      "scope": "round_trip_trekking_program",
+      "source_kind": "operator_technical_program",
+      "evidence_kind": "published_planning_reference",
+      "field_measurement": false,
+      "source_title": "Destino Andino - Refugio Volcán Lanín, cara norte",
+      "source_url": "https://www.destinoandino.tur.ar/servicios/Trekking-en-San-Martin-de-los-Andes---Refugio-Volcan-Lanin,-cara-norte/UUWX1T8MIKSM/",
+      "context": "La ficha identifica BIM y el descenso y declara 9 h de trekking. El horario general de 7 a 20 h incluye una excursión más extensa con traslado y no se usa como duración de caminata. No se utiliza un tiempo de ascenso a la cumbre del volcán.",
+      "eligible_analysis": "published_total_itinerary_duration"
+    }
+  ]
+}

@@ -109,7 +109,7 @@ export default function DiscoverTrailScreen() {
               onSubmitEditing={() => { if (canContinue) setStep(1); }} style={styles.input} />
             <Text style={styles.hint}>Escribí el lugar donde te gustaría hacer trekking.</Text>
           </Card> : <>
-            {step === 1 ? <Text style={styles.hint}>Podés elegir varias opciones. Priorizamos estos paisajes; si no hay coincidencias, te mostramos una alternativa y te avisamos.</Text> : null}
+            {step === 1 ? <Text style={styles.hint}>Podés elegir varias opciones. Primero consideramos tu experiencia, tiempo y dificultad; después estos paisajes. Si hay diferencias, te avisamos.</Text> : null}
             {step === 2 ? <Text style={styles.hint}>Tiempo total de caminata, incluyendo ida y vuelta cuando corresponde. Si no hay coincidencia exacta, podemos sugerir una duración cercana y te avisamos.</Text> : null}
             {step === 3 ? <Text style={styles.hint}>Priorizamos tu experiencia. Si la alternativa tiene otra dificultad, te lo avisamos.</Text> : null}
             {options.map((option) => {

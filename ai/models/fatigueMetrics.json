@@ -1177,5 +1177,71 @@
     ],
     "provenance_sha256": "bfbaa487f9ea20c125e0b637cee5b94576c644b140c780d8c00a758193234004"
   },
-  "test_predictions_sha256": "2b3cf23f0bd0ec344b9e13f299f3ddf8f475c12ea93166d5bbc33584fa577575"
+  "test_predictions_sha256": "2b3cf23f0bd0ec344b9e13f299f3ddf8f475c12ea93166d5bbc33584fa577575",
+  "evaluation_details": {
+    "version": 1,
+    "model": {
+      "accuracy": 0.24022346368715083,
+      "precision_macro": 0.19479883824248143,
+      "recall_macro": 0.24985261651928317,
+      "f1_macro": 0.19037124516271817,
+      "precision_weighted": 0.291638819740472,
+      "recall_weighted": 0.24022346368715083,
+      "f1_weighted": 0.24572388434594963,
+      "support": 179,
+      "balanced_accuracy": 0.24985261651928317
+    },
+    "baseline": {
+      "label": "Borg 3",
+      "accuracy": 0.25139664804469275,
+      "precision_macro": 0.02793296089385475,
+      "recall_macro": 0.1111111111111111,
+      "f1_macro": 0.044642857142857144,
+      "precision_weighted": 0.06320027464810712,
+      "recall_weighted": 0.25139664804469275,
+      "f1_weighted": 0.10100758180367118,
+      "support": 179,
+      "balanced_accuracy": 0.1111111111111111
+    },
+    "difference_from_baseline": {
+      "accuracy": -0.011173184357541915,
+      "f1_macro": 0.14572838801986102,
+      "balanced_accuracy": 0.13874150540817207
+    },
+    "class_coverage": {
+      "training_counts": {
+        "Borg 1": 6,
+        "Borg 2": 36,
+        "Borg 3": 140,
+        "Borg 4": 113,
+        "Borg 5": 91,
+        "Borg 6": 54,
+        "Borg 7": 31,
+        "Borg 8": 12,
+        "Borg 9": 4
+      },
+      "test_counts": {
+        "Borg 1": 2,
+        "Borg 2": 13,
+        "Borg 3": 45,
+        "Borg 4": 39,
+        "Borg 5": 35,
+        "Borg 6": 26,
+        "Borg 7": 11,
+        "Borg 8": 6,
+        "Borg 9": 2
+      },
+      "missing_in_training": [],
+      "missing_in_test": [],
+      "labels_total": 9,
+      "labels_in_training": 9,
+      "labels_in_test": 9
+    },
+    "group_support": {
+      "training": 28,
+      "test": 12
+    },
+    "interpretation": "Descriptive comparison on the existing held-out observations; not a significance test or deployment approval."
+  },
+  "evaluation_refreshed_at": "2026-10-21T15:28:36.857605+00:00"
 }

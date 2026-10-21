@@ -24,7 +24,7 @@ export interface TrailRecommendation {
   explanation: string;
   sources: { title: string; url: string }[];
   checkedAt: string | null;
-  catalogVerification?: "verified" | "catalog_only";
+  catalogVerification?: "verified" | "partial" | "catalog_only";
   durationScopeVerified?: boolean;
   dataWarnings?: string[];
   ascentM?: number | null;
@@ -36,5 +36,5 @@ export interface RecommendationResponse {
   status: "ok" | "no_results" | "clarification" | "out_of_scope";
   message: string;
   recommendation: TrailRecommendation | null;
-  ranking?: { method: "baseline" | "supervised"; modelVersion: string | null };
+  ranking?: { method: "catalog"; modelVersion: null };
 }

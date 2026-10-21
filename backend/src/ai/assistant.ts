@@ -1,8 +1,6 @@
 import type { RecommendationResponse, TrailPreferences } from "./contracts";
 import type { CatalogRow, Candidate } from "./catalog";
 import { candidateDurationFits, compatibleCandidates, experienceFits, landscapeFits, normalize, resolveDestination, verifiedCatalog } from "./catalog";
-import { localRanker, Ranker } from "./model";
-import { baselineScore, featuresFor } from "./features";
 import { responseSchema } from "./schemas";
 
 export const SCOPE_MESSAGE = "🥾 Soy el asistente de senderos de MiSendero. Solo puedo ayudarte a encontrar y elegir rutas de trekking. ¿Querés que busquemos un sendero para vos?";
@@ -19,12 +17,13 @@ function explain(candidate: Candidate, preferences: TrailPreferences, reasons: s
     destination: `Está en ${candidate.location}, dentro del destino que elegiste.`,
     landscape: wanted.length ? `Combina ${wanted.join(" y ")}, en línea con la experiencia que buscás.`
       : `Te permite descubrir un entorno de ${candidate.trailTypes.join(" y ")}${landscapeFits(candidate, preferences) ? "" : "; no tiene documentados los paisajes que seleccionaste"}.`,
-    duration: `Su duración registrada es ${candidate.duration}${candidate.durationScopeVerified === false ? "; la ficha no confirma si incluye ida y vuelta" : candidate.routeType === "out_and_back" ? " e incluye ida y vuelta" : candidate.routeType === "loop" ? " para el circuito completo" : " para el trayecto de ida; necesitás coordinar el regreso"}${preferences.duration !== "cualquiera" && candidate.durationScopeVerified !== false ? candidateDurationFits(candidate, preferences.duration) ? ", dentro del tiempo que seleccionaste" : ", fuera del rango que seleccionaste" : ""}.${candidate.durationIsEstimated ? " Es un tiempo orientativo de planificación." : ""}`,
+    duration: `Su duración registrada es ${candidate.duration}${candidate.durationScopeVerified === false ? "; el tiempo total de la ficha no está confirmado" : candidate.routeType === "out_and_back" ? " e incluye ida y vuelta" : candidate.routeType === "loop" ? " para el circuito completo" : candidate.routeType === "point_to_point" ? " para el trayecto de ida; necesitás coordinar el regreso" : " para el recorrido completo"}${preferences.duration !== "cualquiera" && candidate.durationScopeVerified !== false ? candidateDurationFits(candidate, preferences.duration) ? ", dentro del tiempo que seleccionaste" : ", fuera del rango que seleccionaste" : ""}.${candidate.durationIsEstimated ? " Es un tiempo orientativo de planificación." : ""}`,
     difficulty: `Su dificultad es ${labels[candidate.difficulty]}${preferences.difficulty !== "cualquiera" ? candidate.difficulty === preferences.difficulty ? " y coincide con la que elegiste" : ", diferente de la que elegiste" : ""}. ${experienceFits(candidate, preferences) ? `Está dentro del nivel de dificultad considerado para tu perfil ${preferences.experience || "principiante"}.` : `Supera el nivel considerado para tu perfil ${preferences.experience || "principiante"}. Es una alternativa del destino, no una indicación de que sea adecuada para tu experiencia.`}`,
   };
-  return reasons.map((reason) => sentences[reason]).join(" ");
+  const facts = `Distancia registrada: ${candidate.distanceKm} km. ${candidate.ascentM == null ? "Desnivel de ascenso no documentado." : `Desnivel de ascenso estimado: ${candidate.ascentM} m.`}`;
+  return `${reasons.map((reason) => sentences[reason]).join(" ")} ${facts}`;
 }
-export async function recommendTrail(preferences: TrailPreferences, rows: CatalogRow[], ranker: Ranker = localRanker): Promise<RecommendationResponse> {
+export async function recommendTrail(preferences: TrailPreferences, rows: CatalogRow[]): Promise<RecommendationResponse> {
   const empty = (status: RecommendationResponse["status"], message: string): RecommendationResponse => ({ status, message, recommendation: null });
   if (!destinationIsSafe(preferences.destination)) return empty("out_of_scope", SCOPE_MESSAGE);
   const catalog = verifiedCatalog(rows);
@@ -38,18 +37,20 @@ export async function recommendTrail(preferences: TrailPreferences, rows: Catalo
     : `El destino puede referirse a varios lugares del catálogo: ${resolved.suggestions.join(" o ")}. Escribí el nombre completo y, si hace falta, la provincia.`);
   const candidates = compatibleCandidates(catalog, { ...preferences, destination: resolved.destination });
   if (!candidates.length) return empty("no_results", "No tenemos senderos registrados con información suficiente para ese destino. Probá escribir la ciudad, la provincia o el parque con otro nombre.");
-  const vectors = candidates.map((c) => featuresFor(preferences, c));
-  let prediction = null;
-  try { prediction = await ranker.predict(vectors); } catch { /* Keep the API usable if inference fails. */ }
-  if (prediction && (!Array.isArray(prediction.scores) || prediction.scores.length !== candidates.length || prediction.scores.some((s) => !Number.isFinite(s)) || typeof prediction.modelVersion !== "string" || !prediction.modelVersion || prediction.modelVersion.length > 100)) prediction = null;
-  const scores = prediction?.scores || vectors.map(baselineScore);
-  const selected = candidates.map((candidate, i) => ({ candidate, score: scores[i] }))
-    .sort((a, b) => b.score - a.score || a.candidate.trailId - b.candidate.trailId)[0].candidate;
+  // Explicit catalog rules, with no learned relevance, ratings or weighted score.
+  // Among equally compatible options prefer lower published difficulty, a known
+  // total duration, then shorter duration/distance. Unknown ascent is never zero.
+  const difficultyRank = { facil: 0, moderada: 1, dificil: 2 };
+  const selected = candidates.slice().sort((a, b) =>
+    difficultyRank[a.difficulty] - difficultyRank[b.difficulty] ||
+    Number(a.durationScopeVerified === false) - Number(b.durationScopeVerified === false) ||
+    (a.durationScopeVerified !== false && b.durationScopeVerified !== false ? a.durationMinutes - b.durationMinutes : 0) ||
+    a.distanceKm - b.distanceKm || a.trailId - b.trailId)[0];
   const reasons = ["destination", "landscape", "duration", "difficulty"];
   const adjustments: string[] = [];
   if (!landscapeFits(selected, preferences)) adjustments.push(`Este sendero tiene otros paisajes: ${selected.trailTypes.join(", ")}. No tiene documentados los que seleccionaste.`);
   if (!candidateDurationFits(selected, preferences.duration)) adjustments.push(selected.durationScopeVerified === false
-    ? `La ficha indica ${selected.duration}, pero no confirma el tiempo total incluyendo el regreso. No podemos asegurar que se ajuste al rango que elegiste.`
+    ? `La ficha indica ${selected.duration}, pero el tiempo total del recorrido no está confirmado. No podemos asegurar que se ajuste al rango que elegiste.`
     : `Dura aproximadamente ${selected.duration}, fuera del rango elegido. Revisá si disponés de ese tiempo antes de elegirlo.`);
   const grades = { facil: "fácil", moderada: "moderada", dificil: "difícil" };
   const gradeRank = { facil: 0, moderada: 1, dificil: 2 };
@@ -58,6 +59,6 @@ export async function recommendTrail(preferences: TrailPreferences, rows: Catalo
   const alternative = !landscapeFits(selected, preferences) || !candidateDurationFits(selected, preferences.duration) ||
     (preferences.difficulty !== "cualquiera" && selected.difficulty !== preferences.difficulty) || !experienceFits(selected, preferences);
   return responseSchema.parse({ status: "ok", message: alternative ? "No encontramos una coincidencia exacta; te sugerimos otro sendero en el destino que elegiste" : "¡Encontramos un sendero para vos!",
-    ranking: { method: prediction ? "supervised" : "baseline", modelVersion: prediction?.modelVersion || null },
+    ranking: { method: "catalog", modelVersion: null },
     recommendation: { ...selected, ...(adjustments.length ? { preferenceAdjustments: adjustments } : {}), explanation: explain(selected, preferences, reasons) } });
 }

@@ -115,7 +115,6 @@ const start = async () => {
     await runMigrations();
     await seedDatabase();
   }
-  void require("../dist/ai/model").localRanker.start();
   scheduleStaleReportsCleanup();
   const notifyTrips = () => processTripNotifications().catch((error) => logger.error(error, "No se pudieron procesar avisos de regreso"));
   void notifyTrips();

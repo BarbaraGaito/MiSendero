@@ -11,12 +11,55 @@ from sklearn.metrics import (
     classification_report,
     confusion_matrix,
     precision_recall_fscore_support,
+    recall_score,
 )
 
 MIN_REAL_ROWS_TOTAL = 30
 MIN_REAL_ROWS_PER_LABEL = 10
 OVERFITTING_F1_GAP = 0.15
 UNDERFITTING_F1 = 0.60
+
+
+def holdout_details(y_train, y_test, predictions, labels, train_groups, test_groups):
+    """Compare fixed predictions with a train-only baseline, without fitting or sampling rows."""
+    y_train, y_test, predictions = list(y_train), list(y_test), list(predictions)
+    train_groups, test_groups = list(train_groups), list(test_groups)
+    if (not y_train or not y_test or len(y_test) != len(predictions)
+            or len(y_train) != len(train_groups) or len(y_test) != len(test_groups)):
+        raise ValueError("Holdout rows, predictions and groups must match")
+    if set(train_groups) & set(test_groups):
+        raise ValueError("Holdout group leakage")
+    if len(labels) != len(set(labels)) or not set(y_train + y_test + predictions) <= set(labels):
+        raise ValueError("Unknown or duplicate evaluation labels")
+    # Keep the original train-only majority tie policy (first occurrence).
+    baseline_label = pd.Series(y_train).value_counts().index[0]
+
+    def score(values):
+        result = _summary_metrics(y_test, values, labels)
+        # Balanced accuracy averages recall only over classes observed in test.
+        # F1 macro above retains the full, explicitly declared label vocabulary.
+        result["balanced_accuracy"] = float(recall_score(y_test, values, labels=sorted(set(y_test)), average="macro", zero_division=0))
+        return result
+
+    model_scores = score(predictions)
+    baseline_scores = score([baseline_label] * len(y_test))
+    train_counts, test_counts = Counter(y_train), Counter(y_test)
+    return {
+        "version": 1,
+        "model": model_scores,
+        "baseline": {"label": str(baseline_label), **baseline_scores},
+        "difference_from_baseline": {key: model_scores[key] - baseline_scores[key]
+                                     for key in ("accuracy", "f1_macro", "balanced_accuracy")},
+        "class_coverage": {
+            "training_counts": {label: int(train_counts[label]) for label in labels},
+            "test_counts": {label: int(test_counts[label]) for label in labels},
+            "missing_in_training": [label for label in labels if not train_counts[label]],
+            "missing_in_test": [label for label in labels if not test_counts[label]],
+            "labels_total": len(labels), "labels_in_training": len(train_counts), "labels_in_test": len(test_counts),
+        },
+        "group_support": {"training": len(set(train_groups)), "test": len(set(test_groups))},
+        "interpretation": "Descriptive comparison on the existing held-out observations; not a significance test or deployment approval.",
+    }
 
 
 def _summary_metrics(y_true, y_pred, labels: list[str]) -> dict[str, Any]:
@@ -81,8 +124,8 @@ def evaluate_training_run(
         )
     if underfitting_risk:
         warnings.append(
-            "Posible underfitting: el F1 macro de test esta por debajo del umbral "
-            f"minimo ({UNDERFITTING_F1:.2f})."
+            "F1 macro de test bajo el umbral heurístico de revisión "
+            f"({UNDERFITTING_F1:.2f}); este resultado no identifica por sí solo la causa del error."
         )
 
     if insufficient_real_data:

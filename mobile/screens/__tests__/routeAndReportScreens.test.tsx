@@ -103,10 +103,22 @@ test("real GPS deviation warns and opens recovery while a completed route redire
 test("a simulated critical wearable reading always routes SOS into testing mode", async () => {
   active(); (useDeviceLocation as jest.Mock).mockReturnValue({ location: gps, isLoading: false, isTestingLocation: true });
   (sessions.getRouteSession as jest.Mock).mockResolvedValue({ state: "active", simulated: true });
-  (wearable.getWearableRuntimeStatus as jest.Mock).mockResolvedValue({ ...runtime, latestSample: { simulated: true, heartRateBpm: 180, speedKmh: 4, steps: 200, oxygenSaturation: 98 }, prediction: { level: "high", title: "Riesgo alto", message: "Detenete", recommendedAction: "Descansar", factors: ["Pulso"], riskLabel: "alto", fatigue: "alta" } });
+  (wearable.getWearableRuntimeStatus as jest.Mock).mockResolvedValue({ ...runtime, latestSample: { simulated: true, heartRateBpm: 180, speedKmh: 4, steps: 200, oxygenSaturation: 98 }, prediction: { level: "high", title: "Riesgo alto", message: "Detenete", recommendedAction: "Descansar", factors: ["Pulso"], method: "sensor_rules", coverage: "pulse_and_oxygen", readingAlert: "Priorizar revisión", cardiacLoad: "alta" } });
   const tree = await mount(Route); await press(tree, "Ver metricas del reloj"); expect(text(tree)).toContain("Metricas simuladas"); await press(tree, "Cerrar metricas del reloj");
   await press(tree, "Riesgo"); expect(wearable.createDevelopmentMetricSequence).toHaveBeenCalledWith("riesgo_fisiologico", 8);
   await press(tree, "Probar SOS (no se envía)"); expect(router.push).toHaveBeenLastCalledWith(expect.objectContaining({ pathname: "/confirmar-sos", params: expect.objectContaining({ simulated: "1" }) }));
+});
+
+test("an oxygen-only device assessment shows its real reading and omits a fabricated pulse load on the map", async () => {
+  active();
+  const latestSample = { provider: "apple_healthkit", heartRateBpm: null, oxygenSaturation: 97, speedKmh: null, steps: null, activeEnergyKcal: null, recordedAt: Date.now() };
+  const prediction = jest.requireActual("../../../services/wearableMetrics").predictWearableHealth(latestSample);
+  (wearable.getWearableRuntimeStatus as jest.Mock).mockResolvedValue({ ...runtime, latestSample, prediction });
+  const tree = await mount(Route);
+  expect(text(tree)).toContain("97% SpO₂");
+  expect(text(tree)).toContain("Avisos de lectura");
+  expect(text(tree)).not.toContain("Carga por pulso");
+  expect(text(tree)).not.toMatch(/Sin datos|sin_datos|null bpm/);
 });
 test("online report is durably queued before sync with stable event identity", async () => {
   const tree = await mount(Report); await press(tree, "Alta"); await press(tree, "Derrumbe");

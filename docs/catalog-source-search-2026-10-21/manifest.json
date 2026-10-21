@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-10-21",
+  "evidence_type": "documentary_source_review",
+  "files": {
+    "datos-confirmados.json": {
+      "sha256": "014a1ad1b0450a62bb92d8356e55aeb8beefcba2d9a2b504b183d007aa0d7f45",
+      "bytes": 2520
+    },
+    "exclusiones.json": {
+      "sha256": "03859702a857f9ff44d7a007b5d887dbed8639c574ed4f9742237a6ed83c8067",
+      "bytes": 7813
+    },
+    "sources/funke-circuitos-trekking.pdf": {
+      "sha256": "4cdd9c7637ef883d5bee592aa0054e1acf5680c1d888f3c3ea8e142261eddd36",
+      "bytes": 3498524
+    }
+  }
+}

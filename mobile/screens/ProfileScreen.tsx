@@ -855,6 +855,13 @@ function AiModelMetricBlock({ metrics }: { metrics: AiTrainingMetrics }) {
         <AiMetric label="Precision" value={formatPercent(test.precision_macro)} />
         <AiMetric label="Recall" value={formatPercent(test.recall_macro)} />
         <AiMetric label="F1 macro" value={formatPercent(test.f1_macro)} />
+        {metrics.evaluation_details && (
+          <>
+            <AiMetric label="F1 de referencia" value={formatPercent(metrics.evaluation_details.baseline.f1_macro)} />
+            <AiMetric label="Accuracy balanceada" value={formatPercent(metrics.evaluation_details.model.balanced_accuracy)} />
+            <AiMetric label="Clases evaluadas" value={`${metrics.evaluation_details.class_coverage.labels_in_test}/${metrics.evaluation_details.class_coverage.labels_total}`} />
+          </>
+        )}
         {metrics.baseline && (
           <AiMetric
             label="Accuracy de referencia"
@@ -880,6 +887,17 @@ function AiModelMetricBlock({ metrics }: { metrics: AiTrainingMetrics }) {
       <Text style={styles.aiWarningText}>
         {metrics.guardrails.warnings[0] || "Evaluación interna; falta validación independiente."}
       </Text>
+      {metrics.evaluation_details && (
+        <Text style={styles.aiWarningText}>
+          {metrics.evaluation_details.class_coverage.missing_in_training.length > 0
+            ? `Sin ejemplos de entrenamiento: ${metrics.evaluation_details.class_coverage.missing_in_training.join(", ")}. ` : ""}
+          {metrics.evaluation_details.class_coverage.missing_in_test.length > 0
+            ? `Sin observaciones en test: ${metrics.evaluation_details.class_coverage.missing_in_test.join(", ")}. ` : ""}
+          {metrics.evaluation_details.group_support.test < 2
+            ? "El test contiene un solo grupo; falta evaluar otros grupos independientes. " : ""}
+          Comparación descriptiva con una referencia simple; no acredita validación para uso en campo.
+        </Text>
+      )}
     </View>
   );
 }

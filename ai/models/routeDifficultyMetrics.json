@@ -571,5 +571,69 @@
     ],
     "provenance_sha256": "ea30de863e9cd19a4832e15b067d2d5373a452fdb38d2358a27ac0d4b99ea17d"
   },
-  "test_predictions_sha256": "ab4072213867b2999296626fab45382dc761f10060f46b0d4349afbfcfadf53e"
+  "test_predictions_sha256": "ab4072213867b2999296626fab45382dc761f10060f46b0d4349afbfcfadf53e",
+  "evaluation_details": {
+    "version": 1,
+    "model": {
+      "accuracy": 0.9591836734693877,
+      "precision_macro": 0.32978723404255317,
+      "recall_macro": 0.25,
+      "f1_macro": 0.27598566308243727,
+      "precision_weighted": 0.9596178897090751,
+      "recall_weighted": 0.9591836734693877,
+      "f1_weighted": 0.9558920342330481,
+      "support": 49,
+      "balanced_accuracy": 0.5
+    },
+    "baseline": {
+      "label": "hiking",
+      "accuracy": 0.9387755102040817,
+      "precision_macro": 0.1564625850340136,
+      "recall_macro": 0.16666666666666666,
+      "f1_macro": 0.16140350877192983,
+      "precision_weighted": 0.8812994585589338,
+      "recall_weighted": 0.9387755102040817,
+      "f1_weighted": 0.9091299677765843,
+      "support": 49,
+      "balanced_accuracy": 0.3333333333333333
+    },
+    "difference_from_baseline": {
+      "accuracy": 0.020408163265306034,
+      "f1_macro": 0.11458215431050744,
+      "balanced_accuracy": 0.16666666666666669
+    },
+    "class_coverage": {
+      "training_counts": {
+        "alpine_hiking": 5,
+        "demanding_alpine_hiking": 1,
+        "demanding_mountain_hiking": 12,
+        "difficult_alpine_hiking": 4,
+        "hiking": 183,
+        "mountain_hiking": 34
+      },
+      "test_counts": {
+        "alpine_hiking": 0,
+        "demanding_alpine_hiking": 0,
+        "demanding_mountain_hiking": 1,
+        "difficult_alpine_hiking": 0,
+        "hiking": 46,
+        "mountain_hiking": 2
+      },
+      "missing_in_training": [],
+      "missing_in_test": [
+        "alpine_hiking",
+        "demanding_alpine_hiking",
+        "difficult_alpine_hiking"
+      ],
+      "labels_total": 6,
+      "labels_in_training": 6,
+      "labels_in_test": 3
+    },
+    "group_support": {
+      "training": 4,
+      "test": 2
+    },
+    "interpretation": "Descriptive comparison on the existing held-out observations; not a significance test or deployment approval."
+  },
+  "evaluation_refreshed_at": "2026-10-21T15:28:36.857605+00:00"
 }

@@ -1,0 +1,855 @@
+{
+  "source": "https://doi.org/10.17632/8zt9g9g64c.1",
+  "source_version": 1,
+  "scope": "Native WHAMAP f-level per recording; first 2 MiB (approximately initial 30-40 seconds) of each controlled walking/uphill trace; phone-only input; no trekking accuracy claim",
+  "validation": "Leave-one-participant-out; four complete recordings kept together per person",
+  "model": "StandardScaler + Ridge(alpha=10); fixed before scoring, rounded to native level 0-4",
+  "feature_definition": "For phone acceleration and gyroscope vector magnitudes: mean, standard deviation, median, 90th percentile over the downloaded prefix",
+  "source_integrity": "HTTP 206 and Content-Range total checked against repository size; source full-file SHA-256 listed but not independently verified in this evaluation",
+  "labels_are_constant_in_downloaded_prefix": true,
+  "sample_counts_are_sensor_rows_not_independent_fatigue_labels": true,
+  "label_counts": {
+    "0": 3,
+    "1": 16,
+    "2": 14,
+    "3": 7
+  },
+  "excluded_recordings": [],
+  "records": [
+    {
+      "participant": "subject_01",
+      "recording": "uphill.csv",
+      "activity": "uphill",
+      "block": "first",
+      "f_level": 1,
+      "total_samples": 1661,
+      "valid_samples": 1661,
+      "source_sha256": "93043f6f23f28a528b5fe5f86164edf57e60b291dd14a08d612cdd26f53be642",
+      "downloaded_prefix_sha256": "c8bc4ac21b6fb27088ec354bc70b078202a520bb406259f4c7f4f011e92799a4"
+    },
+    {
+      "participant": "subject_01",
+      "recording": "uphill_B.csv",
+      "activity": "uphill",
+      "block": "second",
+      "f_level": 2,
+      "total_samples": 1659,
+      "valid_samples": 1659,
+      "source_sha256": "e922167c8e68a0be6c5db42be85ac36ea499d9d96cf40293944dbdfe2b804a69",
+      "downloaded_prefix_sha256": "4b76c40d3d21c995764bda15b7dcaf2246b6564cea283ef077c3f236fb78dde2"
+    },
+    {
+      "participant": "subject_01",
+      "recording": "walking.csv",
+      "activity": "walking",
+      "block": "first",
+      "f_level": 1,
+      "total_samples": 1652,
+      "valid_samples": 1652,
+      "source_sha256": "46306c25d68a066a40cafeae4b521d7ce8271344b96722e62bc67a0229dc7298",
+      "downloaded_prefix_sha256": "73e226bcaa85946d1113091c000dcbf304fbbea62153aab66a1eb2393b773cd3"
+    },
+    {
+      "participant": "subject_01",
+      "recording": "walking_B.csv",
+      "activity": "walking",
+      "block": "second",
+      "f_level": 2,
+      "total_samples": 1653,
+      "valid_samples": 1652,
+      "source_sha256": "73f62069a51ec3ae1459007d3a82323df5835cb7e482b15fa606248d7ba0d519",
+      "downloaded_prefix_sha256": "0390b1c15034611f1da69b2c1487385929c0d8865cffbc4f13cc41dd5eca5436"
+    },
+    {
+      "participant": "subject_02",
+      "recording": "uphill.csv",
+      "activity": "uphill",
+      "block": "first",
+      "f_level": 1,
+      "total_samples": 1642,
+      "valid_samples": 1642,
+      "source_sha256": "086539ef195c308278ffc048a657dd41b82ba39a3bd4ed269dd348df6b8722a6",
+      "downloaded_prefix_sha256": "869bfe10d874c46d974caaf242d54e72e41a158d1e6cdc8093702434cfe1ee59"
+    },
+    {
+      "participant": "subject_02",
+      "recording": "uphill_B.csv",
+      "activity": "uphill",
+      "block": "second",
+      "f_level": 2,
+      "total_samples": 1642,
+      "valid_samples": 1642,
+      "source_sha256": "ddcc1251a4e089d3d0e476dbf826669670161aecd81d90f0c028d46d482462d5",
+      "downloaded_prefix_sha256": "e3292f15084f11c72f681c129a3f16e5c2b38ce4eb32c15fa467b2e0a1cdda8d"
+    },
+    {
+      "participant": "subject_02",
+      "recording": "walking.csv",
+      "activity": "walking",
+      "block": "first",
+      "f_level": 1,
+      "total_samples": 1641,
+      "valid_samples": 1627,
+      "source_sha256": "e5cd4f1ba4daf84c13c9b5e17b45319f3b96c4530003aa3ac5a1d20285fd541a",
+      "downloaded_prefix_sha256": "57bf0bce8cdbbffeccda1a78abac2f0dd842a3f755acc7f80d06d4a3f4fab72a"
+    },
+    {
+      "participant": "subject_02",
+      "recording": "walking_B.csv",
+      "activity": "walking",
+      "block": "second",
+      "f_level": 3,
+      "total_samples": 1638,
+      "valid_samples": 1638,
+      "source_sha256": "0e41e93473f692c045513e04784d16dcab0254472306d9d57f52cd8889ef967e",
+      "downloaded_prefix_sha256": "4e2223f832f0731bbb548b6850c35bc1f5440f2a71062bd4bf239083cceae146"
+    },
+    {
+      "participant": "subject_03",
+      "recording": "uphill.csv",
+      "activity": "uphill",
+      "block": "first",
+      "f_level": 1,
+      "total_samples": 1658,
+      "valid_samples": 1644,
+      "source_sha256": "70ce3f9779d8a61e20934ffe0f80b47e40f23e9b4cd871a44819f29f8d42da59",
+      "downloaded_prefix_sha256": "8d45e9ceb6b5c7cedb4461fa3a737bca485d96661a09da1a984ce5dfe4d7d5a2"
+    },
+    {
+      "participant": "subject_03",
+      "recording": "uphill_B.csv",
+      "activity": "uphill",
+      "block": "second",
+      "f_level": 3,
+      "total_samples": 1654,
+      "valid_samples": 1654,
+      "source_sha256": "2954fc2c2d2700032662225e38f38c59483f44f3987f784fcb0edd5f35075a1a",
+      "downloaded_prefix_sha256": "40f2e1806fac4b27258800e929d734bf8b44be564212c3b3998feb3cdd2036e4"
+    },
+    {
+      "participant": "subject_03",
+      "recording": "walking.csv",
+      "activity": "walking",
+      "block": "first",
+      "f_level": 1,
+      "total_samples": 1649,
+      "valid_samples": 1649,
+      "source_sha256": "c058f78e8f9898fc99e9736a740d45ba2150a9391c94bd777424b1172a97a11e",
+      "downloaded_prefix_sha256": "d6979423d5bf4d1019611b5a72f60592c44966d530c0775d419d18cceacc4751"
+    },
+    {
+      "participant": "subject_03",
+      "recording": "walking_B.csv",
+      "activity": "walking",
+      "block": "second",
+      "f_level": 2,
+      "total_samples": 1652,
+      "valid_samples": 1638,
+      "source_sha256": "656ca64c3f0c72fa37da0473f53fa2f106bcfcc633244e7aede0fee49b0fd880",
+      "downloaded_prefix_sha256": "028b73e1421067ec3763a646d37fefcbabc9f7a40cddb552bcff0ed89975f832"
+    },
+    {
+      "participant": "subject_04",
+      "recording": "uphill.csv",
+      "activity": "uphill",
+      "block": "first",
+      "f_level": 1,
+      "total_samples": 1658,
+      "valid_samples": 1658,
+      "source_sha256": "c2e7f492ad99ad3aeeb16b18e1a4412ed86d9cfea2479f4e81c9e1b3e1fa79fb",
+      "downloaded_prefix_sha256": "7436dd2b45563bc0fcf3033745e00b2b1c54b06c7ababbb2f212b68ce83e7f41"
+    },
+    {
+      "participant": "subject_04",
+      "recording": "uphill_B.csv",
+      "activity": "uphill",
+      "block": "second",
+      "f_level": 2,
+      "total_samples": 1658,
+      "valid_samples": 1658,
+      "source_sha256": "cf4d683680c169ea123a276328eacbb493af1ec70390f1ac4166e66e502a598d",
+      "downloaded_prefix_sha256": "97211d824cbd27d3d4b6dd49d1c69f7838f912895a7618cbcf3a1bc2c9c05c4a"
+    },
+    {
+      "participant": "subject_04",
+      "recording": "walking.csv",
+      "activity": "walking",
+      "block": "first",
+      "f_level": 1,
+      "total_samples": 1651,
+      "valid_samples": 1648,
+      "source_sha256": "63049d2dd797669b5e64b44af124afa18d89dfceeff7596b9d3763e64e50a31e",
+      "downloaded_prefix_sha256": "efe0b106dac1a67f1efc3aa05bedf48d94d29a763643f808bb67e926bb88e431"
+    },
+    {
+      "participant": "subject_04",
+      "recording": "walking_B.csv",
+      "activity": "walking",
+      "block": "second",
+      "f_level": 1,
+      "total_samples": 1650,
+      "valid_samples": 1636,
+      "source_sha256": "0222608585a5d6f0cadc0deb1dafd110d99b7693bf328fb2ef76ebc4bcb6a979",
+      "downloaded_prefix_sha256": "87724c0c5cf17d0a9002c69ef3470e199ff372401923aff4fa717a6485412cb8"
+    },
+    {
+      "participant": "subject_05",
+      "recording": "uphill.csv",
+      "activity": "uphill",
+      "block": "first",
+      "f_level": 0,
+      "total_samples": 1674,
+      "valid_samples": 1671,
+      "source_sha256": "b3c9eca3f5d11507ee57038068f811536318f8665e8e55b4c8653858a508cce8",
+      "downloaded_prefix_sha256": "46e8221bf929290e995cc21b350ffbc1881d4be43980f9ab5c5b25a9644e37e9"
+    },
+    {
+      "participant": "subject_05",
+      "recording": "uphill_B.csv",
+      "activity": "uphill",
+      "block": "second",
+      "f_level": 3,
+      "total_samples": 1655,
+      "valid_samples": 1655,
+      "source_sha256": "b5aff881deacd3afb388845d550c18cdc628307e11520e33bb8655f25f7ce23c",
+      "downloaded_prefix_sha256": "82df63f90e43922e7e84f87d4086974c3d443e0075c5e763206f217ddb87fee0"
+    },
+    {
+      "participant": "subject_05",
+      "recording": "walking.csv",
+      "activity": "walking",
+      "block": "first",
+      "f_level": 1,
+      "total_samples": 1667,
+      "valid_samples": 1664,
+      "source_sha256": "392a4a983cd21c7394d37bcb827c0191512386f7ef782815423dda909adbeb71",
+      "downloaded_prefix_sha256": "b2d75dc327c742859178ff0cd76c0be9b301afe5706fe4a8aab4d4027d92214e"
+    },
+    {
+      "participant": "subject_05",
+      "recording": "walking_B.csv",
+      "activity": "walking",
+      "block": "second",
+      "f_level": 3,
+      "total_samples": 1667,
+      "valid_samples": 1657,
+      "source_sha256": "5668cf9e5e4bd5e321387ddbf17d53d8f193bc27f4767aaae72ef8b41f7acdd5",
+      "downloaded_prefix_sha256": "088138d8295802f943b290c55241b1a3809168689716e38c6c2cf8fb1bec3924"
+    },
+    {
+      "participant": "subject_06",
+      "recording": "uphill.csv",
+      "activity": "uphill",
+      "block": "first",
+      "f_level": 0,
+      "total_samples": 1664,
+      "valid_samples": 1664,
+      "source_sha256": "b0b0f21bcd65ea234e696be6f2368b0b0337246bb9f170b0081552cc22a840ef",
+      "downloaded_prefix_sha256": "540b0591c15ea57302da0fa2b9c99be47f86b5e1183fe07291cf19e7dbaaa03a"
+    },
+    {
+      "participant": "subject_06",
+      "recording": "uphill_B.csv",
+      "activity": "uphill",
+      "block": "second",
+      "f_level": 2,
+      "total_samples": 1666,
+      "valid_samples": 1666,
+      "source_sha256": "6b96aee83e0065f1a3d055450ca983be1a6c7004dc7f6cdf2df962552043b212",
+      "downloaded_prefix_sha256": "285639e960c0d9d62098ff782317098bfc02479e6ab2a00ad6fb29fa8172c369"
+    },
+    {
+      "participant": "subject_06",
+      "recording": "walking.csv",
+      "activity": "walking",
+      "block": "first",
+      "f_level": 0,
+      "total_samples": 1666,
+      "valid_samples": 1666,
+      "source_sha256": "644fec354a5d2e293013cfc4c296ea074d2c62f17c698c354900f0293d97baf0",
+      "downloaded_prefix_sha256": "681ca4520a833e893c4ae8ed6332b8c10c6eb20e46b419eb66688b4f37bd8600"
+    },
+    {
+      "participant": "subject_06",
+      "recording": "walking_B.csv",
+      "activity": "walking",
+      "block": "second",
+      "f_level": 2,
+      "total_samples": 1658,
+      "valid_samples": 1658,
+      "source_sha256": "26f50961e71541c40cef6bf63f2e2ae86d9a1c1f97024b17abade3247a5b78c8",
+      "downloaded_prefix_sha256": "30b7ceb6c9bf1a4f46cc1e1f3e67cd93f86efd773faa3f6ffa49bfb814a3bff1"
+    },
+    {
+      "participant": "subject_07",
+      "recording": "uphill.csv",
+      "activity": "uphill",
+      "block": "first",
+      "f_level": 1,
+      "total_samples": 1675,
+      "valid_samples": 1675,
+      "source_sha256": "0ee1b38f26106aa6c548506db102882cd72f2edd3e1b3a5321efa79f8503036d",
+      "downloaded_prefix_sha256": "1cffc82f8f25ab045a3086c3f7f9825c047b8e726f2f326ff2290bbf4400d140"
+    },
+    {
+      "participant": "subject_07",
+      "recording": "uphill_B.csv",
+      "activity": "uphill",
+      "block": "second",
+      "f_level": 3,
+      "total_samples": 1674,
+      "valid_samples": 1674,
+      "source_sha256": "072e89b866776c5eac335f4de20f9fe44628166fc4746d37fe4572af49f1ac0f",
+      "downloaded_prefix_sha256": "731361eeffdf789fab73ee8f97b572746053bb9f247d47d621a30e8c99b73db0"
+    },
+    {
+      "participant": "subject_07",
+      "recording": "walking.csv",
+      "activity": "walking",
+      "block": "first",
+      "f_level": 1,
+      "total_samples": 1669,
+      "valid_samples": 1669,
+      "source_sha256": "24e273a6d0e693b266352e8c371861fdd5ca4e852748c6d442325da12ef705d9",
+      "downloaded_prefix_sha256": "0f92a544c1f1da02a8b04e2cd7e06d2368c50cfec173f6639b5d68f03424ab9b"
+    },
+    {
+      "participant": "subject_07",
+      "recording": "walking_B.csv",
+      "activity": "walking",
+      "block": "second",
+      "f_level": 2,
+      "total_samples": 1668,
+      "valid_samples": 1668,
+      "source_sha256": "b5dbdcc1a282ca8e10849aba224663c691550951d481315492b91d4716d02f74",
+      "downloaded_prefix_sha256": "6e1ac9aae102163e7182889b8e96df8c8caf690ecfb144c82a8675e20b070f33"
+    },
+    {
+      "participant": "subject_08",
+      "recording": "uphill.csv",
+      "activity": "uphill",
+      "block": "first",
+      "f_level": 2,
+      "total_samples": 1655,
+      "valid_samples": 1644,
+      "source_sha256": "4b31291b2a1b0007c290c6dcce2a167ee5f7ea500ccaffde3b1603245943128b",
+      "downloaded_prefix_sha256": "38e57d824eaabe18ef58a19499be2469575fd4d5ed1a9802c6dc7e908df56820"
+    },
+    {
+      "participant": "subject_08",
+      "recording": "uphill_B.csv",
+      "activity": "uphill",
+      "block": "second",
+      "f_level": 2,
+      "total_samples": 1657,
+      "valid_samples": 1657,
+      "source_sha256": "1d7d21772b5ce76076ec84112fd0b441e81531fa1984bf79f8f36f7495e9ffd9",
+      "downloaded_prefix_sha256": "c3dafbeb164f55ba8e86b283616adc66223217b192d5543674cd03472567dd8f"
+    },
+    {
+      "participant": "subject_08",
+      "recording": "walking.csv",
+      "activity": "walking",
+      "block": "first",
+      "f_level": 1,
+      "total_samples": 1646,
+      "valid_samples": 1646,
+      "source_sha256": "2153083e8a14f13e8af644f1fd5cbbe7e4514f4744e87b5eb977c8815e18f529",
+      "downloaded_prefix_sha256": "d960bb11d1397be1d17bd728ac08805414e75a72ef87060a31c1ac208f3c1f6c"
+    },
+    {
+      "participant": "subject_08",
+      "recording": "walking_B.csv",
+      "activity": "walking",
+      "block": "second",
+      "f_level": 1,
+      "total_samples": 1651,
+      "valid_samples": 1651,
+      "source_sha256": "14218c3b37d14e18a6d89fee49daad65898864bbe004895de5f4c6dec446dfe8",
+      "downloaded_prefix_sha256": "5b67d9c70c6326cc39452e271029ee26fe1444041344a54c8997f5cded6e0a1d"
+    },
+    {
+      "participant": "subject_09",
+      "recording": "uphill.csv",
+      "activity": "uphill",
+      "block": "first",
+      "f_level": 2,
+      "total_samples": 1653,
+      "valid_samples": 1653,
+      "source_sha256": "8b38fa21dac4516ebc22097fe1df3dc5fecc6597477297f0a1de22fbfd7e4f6e",
+      "downloaded_prefix_sha256": "fb8c4076246d072eb622cabcb13d9204107ca40933b2f523f0fa060f9c0589d5"
+    },
+    {
+      "participant": "subject_09",
+      "recording": "uphill_B.csv",
+      "activity": "uphill",
+      "block": "second",
+      "f_level": 2,
+      "total_samples": 1655,
+      "valid_samples": 1655,
+      "source_sha256": "cccf74d10d180293d11d65682656f4adcca86b2bdde00118b01b2255f9473555",
+      "downloaded_prefix_sha256": "0937461eb7854d4f0fa604f55b1c9caa06d75992eb1749e22c15b418b3f29eea"
+    },
+    {
+      "participant": "subject_09",
+      "recording": "walking.csv",
+      "activity": "walking",
+      "block": "first",
+      "f_level": 1,
+      "total_samples": 1650,
+      "valid_samples": 1636,
+      "source_sha256": "789ae30768890bdd48d7d5eec6fc9909d52c28369bf41d582fa525f14ecfd8ba",
+      "downloaded_prefix_sha256": "e98c9dffa54dae0aace222ab6d9a15dac110389b311c528e58e71fefcfebcc0d"
+    },
+    {
+      "participant": "subject_09",
+      "recording": "walking_B.csv",
+      "activity": "walking",
+      "block": "second",
+      "f_level": 1,
+      "total_samples": 1648,
+      "valid_samples": 1648,
+      "source_sha256": "9d9fc3c503b37c68cc446e86eac6f046bf75512ccddb2647c5cef2ae3d117735",
+      "downloaded_prefix_sha256": "9078703e1fbca741c1c8c3385ad895734ea446159102653c8372eca789d140fc"
+    },
+    {
+      "participant": "subject_10",
+      "recording": "uphill.csv",
+      "activity": "uphill",
+      "block": "first",
+      "f_level": 3,
+      "total_samples": 1659,
+      "valid_samples": 1659,
+      "source_sha256": "656faf6f5de26e451ebd2624873356902cb0e910c1628393678fa5f7e5979f1f",
+      "downloaded_prefix_sha256": "3ee31cda8d1b297909f08e6fa09c33cd3025562bad3a96fec732f03445cb9da1"
+    },
+    {
+      "participant": "subject_10",
+      "recording": "uphill_B.csv",
+      "activity": "uphill",
+      "block": "second",
+      "f_level": 3,
+      "total_samples": 1657,
+      "valid_samples": 1657,
+      "source_sha256": "a1d204c0e94da4c545abf687d47f1d3ce8886be8d7f5cd05ed4ee4c7ecf572b8",
+      "downloaded_prefix_sha256": "4b19cc3137fcc46133390a812a40372e05dc90fa9ceaf27359eed95c03836ca8"
+    },
+    {
+      "participant": "subject_10",
+      "recording": "walking.csv",
+      "activity": "walking",
+      "block": "first",
+      "f_level": 2,
+      "total_samples": 1648,
+      "valid_samples": 1648,
+      "source_sha256": "a37ebb30e4a80bf3a504814352f21570d7f3fc9ee1819d9106228af7baacf91b",
+      "downloaded_prefix_sha256": "0b0ec48f55f44fba082d04d61ae32e909183eb5c277eb7a885637d0366d1514e"
+    },
+    {
+      "participant": "subject_10",
+      "recording": "walking_B.csv",
+      "activity": "walking",
+      "block": "second",
+      "f_level": 2,
+      "total_samples": 1654,
+      "valid_samples": 1654,
+      "source_sha256": "0bbffc0582e9b9d1851718d55aeda26ccada49d77e143cc2006dd3217c299ad4",
+      "downloaded_prefix_sha256": "3896120334a61633a306af7d77fec64d731c7d82feea950317e2142f1330d8a0"
+    }
+  ],
+  "phone_ridge": {
+    "recordings": 40,
+    "exact_accuracy": 0.4,
+    "within_one_accuracy": 0.9,
+    "mae_native_level": 0.7
+  },
+  "majority_baseline": {
+    "recordings": 40,
+    "exact_accuracy": 0.4,
+    "within_one_accuracy": 0.825,
+    "mae_native_level": 0.775
+  },
+  "activity_block_baseline": {
+    "recordings": 40,
+    "exact_accuracy": 0.6,
+    "within_one_accuracy": 0.975,
+    "mae_native_level": 0.425
+  },
+  "by_activity": {
+    "walking": {
+      "phone_ridge": {
+        "recordings": 20,
+        "exact_accuracy": 0.4,
+        "within_one_accuracy": 0.9,
+        "mae_native_level": 0.7
+      },
+      "majority_baseline": {
+        "recordings": 20,
+        "exact_accuracy": 0.55,
+        "within_one_accuracy": 0.9,
+        "mae_native_level": 0.55
+      },
+      "activity_block_baseline": {
+        "recordings": 20,
+        "exact_accuracy": 0.65,
+        "within_one_accuracy": 1.0,
+        "mae_native_level": 0.35
+      }
+    },
+    "uphill": {
+      "phone_ridge": {
+        "recordings": 20,
+        "exact_accuracy": 0.4,
+        "within_one_accuracy": 0.9,
+        "mae_native_level": 0.7
+      },
+      "majority_baseline": {
+        "recordings": 20,
+        "exact_accuracy": 0.25,
+        "within_one_accuracy": 0.75,
+        "mae_native_level": 1.0
+      },
+      "activity_block_baseline": {
+        "recordings": 20,
+        "exact_accuracy": 0.55,
+        "within_one_accuracy": 0.95,
+        "mae_native_level": 0.5
+      }
+    }
+  },
+  "predictions": [
+    {
+      "participant": "subject_01",
+      "recording": "uphill.csv",
+      "observed": 1,
+      "phone_ridge": 2,
+      "majority_baseline": 1,
+      "activity_block_baseline": 1
+    },
+    {
+      "participant": "subject_01",
+      "recording": "uphill_B.csv",
+      "observed": 2,
+      "phone_ridge": 2,
+      "majority_baseline": 1,
+      "activity_block_baseline": 2
+    },
+    {
+      "participant": "subject_01",
+      "recording": "walking.csv",
+      "observed": 1,
+      "phone_ridge": 2,
+      "majority_baseline": 1,
+      "activity_block_baseline": 1
+    },
+    {
+      "participant": "subject_01",
+      "recording": "walking_B.csv",
+      "observed": 2,
+      "phone_ridge": 2,
+      "majority_baseline": 1,
+      "activity_block_baseline": 2
+    },
+    {
+      "participant": "subject_02",
+      "recording": "uphill.csv",
+      "observed": 1,
+      "phone_ridge": 2,
+      "majority_baseline": 1,
+      "activity_block_baseline": 1
+    },
+    {
+      "participant": "subject_02",
+      "recording": "uphill_B.csv",
+      "observed": 2,
+      "phone_ridge": 2,
+      "majority_baseline": 1,
+      "activity_block_baseline": 2
+    },
+    {
+      "participant": "subject_02",
+      "recording": "walking.csv",
+      "observed": 1,
+      "phone_ridge": 2,
+      "majority_baseline": 1,
+      "activity_block_baseline": 1
+    },
+    {
+      "participant": "subject_02",
+      "recording": "walking_B.csv",
+      "observed": 3,
+      "phone_ridge": 1,
+      "majority_baseline": 1,
+      "activity_block_baseline": 2
+    },
+    {
+      "participant": "subject_03",
+      "recording": "uphill.csv",
+      "observed": 1,
+      "phone_ridge": 2,
+      "majority_baseline": 1,
+      "activity_block_baseline": 1
+    },
+    {
+      "participant": "subject_03",
+      "recording": "uphill_B.csv",
+      "observed": 3,
+      "phone_ridge": 2,
+      "majority_baseline": 1,
+      "activity_block_baseline": 2
+    },
+    {
+      "participant": "subject_03",
+      "recording": "walking.csv",
+      "observed": 1,
+      "phone_ridge": 1,
+      "majority_baseline": 1,
+      "activity_block_baseline": 1
+    },
+    {
+      "participant": "subject_03",
+      "recording": "walking_B.csv",
+      "observed": 2,
+      "phone_ridge": 2,
+      "majority_baseline": 1,
+      "activity_block_baseline": 2
+    },
+    {
+      "participant": "subject_04",
+      "recording": "uphill.csv",
+      "observed": 1,
+      "phone_ridge": 2,
+      "majority_baseline": 1,
+      "activity_block_baseline": 1
+    },
+    {
+      "participant": "subject_04",
+      "recording": "uphill_B.csv",
+      "observed": 2,
+      "phone_ridge": 2,
+      "majority_baseline": 1,
+      "activity_block_baseline": 2
+    },
+    {
+      "participant": "subject_04",
+      "recording": "walking.csv",
+      "observed": 1,
+      "phone_ridge": 2,
+      "majority_baseline": 1,
+      "activity_block_baseline": 1
+    },
+    {
+      "participant": "subject_04",
+      "recording": "walking_B.csv",
+      "observed": 1,
+      "phone_ridge": 2,
+      "majority_baseline": 1,
+      "activity_block_baseline": 2
+    },
+    {
+      "participant": "subject_05",
+      "recording": "uphill.csv",
+      "observed": 0,
+      "phone_ridge": 2,
+      "majority_baseline": 1,
+      "activity_block_baseline": 1
+    },
+    {
+      "participant": "subject_05",
+      "recording": "uphill_B.csv",
+      "observed": 3,
+      "phone_ridge": 2,
+      "majority_baseline": 1,
+      "activity_block_baseline": 2
+    },
+    {
+      "participant": "subject_05",
+      "recording": "walking.csv",
+      "observed": 1,
+      "phone_ridge": 2,
+      "majority_baseline": 1,
+      "activity_block_baseline": 1
+    },
+    {
+      "participant": "subject_05",
+      "recording": "walking_B.csv",
+      "observed": 3,
+      "phone_ridge": 2,
+      "majority_baseline": 1,
+      "activity_block_baseline": 2
+    },
+    {
+      "participant": "subject_06",
+      "recording": "uphill.csv",
+      "observed": 0,
+      "phone_ridge": 2,
+      "majority_baseline": 1,
+      "activity_block_baseline": 1
+    },
+    {
+      "participant": "subject_06",
+      "recording": "uphill_B.csv",
+      "observed": 2,
+      "phone_ridge": 2,
+      "majority_baseline": 1,
+      "activity_block_baseline": 2
+    },
+    {
+      "participant": "subject_06",
+      "recording": "walking.csv",
+      "observed": 0,
+      "phone_ridge": 2,
+      "majority_baseline": 1,
+      "activity_block_baseline": 1
+    },
+    {
+      "participant": "subject_06",
+      "recording": "walking_B.csv",
+      "observed": 2,
+      "phone_ridge": 2,
+      "majority_baseline": 1,
+      "activity_block_baseline": 2
+    },
+    {
+      "participant": "subject_07",
+      "recording": "uphill.csv",
+      "observed": 1,
+      "phone_ridge": 2,
+      "majority_baseline": 1,
+      "activity_block_baseline": 1
+    },
+    {
+      "participant": "subject_07",
+      "recording": "uphill_B.csv",
+      "observed": 3,
+      "phone_ridge": 2,
+      "majority_baseline": 1,
+      "activity_block_baseline": 2
+    },
+    {
+      "participant": "subject_07",
+      "recording": "walking.csv",
+      "observed": 1,
+      "phone_ridge": 2,
+      "majority_baseline": 1,
+      "activity_block_baseline": 1
+    },
+    {
+      "participant": "subject_07",
+      "recording": "walking_B.csv",
+      "observed": 2,
+      "phone_ridge": 2,
+      "majority_baseline": 1,
+      "activity_block_baseline": 2
+    },
+    {
+      "participant": "subject_08",
+      "recording": "uphill.csv",
+      "observed": 2,
+      "phone_ridge": 2,
+      "majority_baseline": 1,
+      "activity_block_baseline": 1
+    },
+    {
+      "participant": "subject_08",
+      "recording": "uphill_B.csv",
+      "observed": 2,
+      "phone_ridge": 2,
+      "majority_baseline": 1,
+      "activity_block_baseline": 2
+    },
+    {
+      "participant": "subject_08",
+      "recording": "walking.csv",
+      "observed": 1,
+      "phone_ridge": 1,
+      "majority_baseline": 1,
+      "activity_block_baseline": 1
+    },
+    {
+      "participant": "subject_08",
+      "recording": "walking_B.csv",
+      "observed": 1,
+      "phone_ridge": 2,
+      "majority_baseline": 1,
+      "activity_block_baseline": 2
+    },
+    {
+      "participant": "subject_09",
+      "recording": "uphill.csv",
+      "observed": 2,
+      "phone_ridge": 2,
+      "majority_baseline": 1,
+      "activity_block_baseline": 1
+    },
+    {
+      "participant": "subject_09",
+      "recording": "uphill_B.csv",
+      "observed": 2,
+      "phone_ridge": 2,
+      "majority_baseline": 1,
+      "activity_block_baseline": 2
+    },
+    {
+      "participant": "subject_09",
+      "recording": "walking.csv",
+      "observed": 1,
+      "phone_ridge": 1,
+      "majority_baseline": 1,
+      "activity_block_baseline": 1
+    },
+    {
+      "participant": "subject_09",
+      "recording": "walking_B.csv",
+      "observed": 1,
+      "phone_ridge": 1,
+      "majority_baseline": 1,
+      "activity_block_baseline": 2
+    },
+    {
+      "participant": "subject_10",
+      "recording": "uphill.csv",
+      "observed": 3,
+      "phone_ridge": 2,
+      "majority_baseline": 1,
+      "activity_block_baseline": 1
+    },
+    {
+      "participant": "subject_10",
+      "recording": "uphill_B.csv",
+      "observed": 3,
+      "phone_ridge": 2,
+      "majority_baseline": 1,
+      "activity_block_baseline": 2
+    },
+    {
+      "participant": "subject_10",
+      "recording": "walking.csv",
+      "observed": 2,
+      "phone_ridge": 1,
+      "majority_baseline": 1,
+      "activity_block_baseline": 1
+    },
+    {
+      "participant": "subject_10",
+      "recording": "walking_B.csv",
+      "observed": 2,
+      "phone_ridge": 1,
+      "majority_baseline": 1,
+      "activity_block_baseline": 2
+    }
+  ],
+  "participant_bootstrap": {
+    "resamples": 10000,
+    "unit": "participant",
+    "seed": 42,
+    "phone_minus_protocol_exact_accuracy_95pct": [
+      -0.4,
+      0.025
+    ],
+    "phone_minus_protocol_mae_95pct": [
+      0.025,
+      0.5
+    ]
+  }
+}

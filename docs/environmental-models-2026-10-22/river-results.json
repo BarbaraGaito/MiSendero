@@ -1,0 +1,910 @@
+{
+  "models": [
+    {
+      "series_id": 36964,
+      "station": "Iguazú - Pto. Iguazú",
+      "station_coordinates": {
+        "type": "Point",
+        "coordinates": [
+          -54.58,
+          -25.5933333333333
+        ]
+      },
+      "horizon_hours": 3,
+      "source": {
+        "url": "https://alerta.ina.gob.ar/a5/obs/puntual/series/36964?timestart=2023-01-01T00%3A00%3A00Z&timeend=2026-10-22T23%3A59%3A59Z",
+        "retrieved_at": null,
+        "note": "Existing research cache predates acquisition sidecar; acquisition instant unknown.",
+        "sha256": "a85a50bc1565b6cd092b0a896aebf4fe22ef85a555821d212a53f438d10f0472",
+        "bytes": 9009350
+      },
+      "counts": {
+        "train": 2002,
+        "validation": 3710,
+        "test": 3578
+      },
+      "measurement_exclusions": {
+        "identical_duplicate_timestamp": 0
+      },
+      "window_exclusions": {
+        "no_exact_observed_target": 1631,
+        "insufficient_fresh_available_history": 2067
+      },
+      "units": "m",
+      "deployment_approved": false,
+      "route_association_approved": false,
+      "status": "experimental",
+      "selection": "random_forest",
+      "selection_method": "Minimum validation MAE, tie preference persistence; test not used for selection",
+      "validation": {
+        "persistence": {
+          "mae_m": 0.5760269541778975,
+          "rmse_m": 0.7571925020595504,
+          "observations": 3710
+        },
+        "linear": {
+          "mae_m": 1.144070387177411,
+          "rmse_m": 1.3051778623372714,
+          "observations": 3710
+        },
+        "random_forest": {
+          "mae_m": 0.49921014211727466,
+          "rmse_m": 0.9636657186242465,
+          "observations": 3710
+        },
+        "xgboost": {
+          "mae_m": 0.7838142556445394,
+          "rmse_m": 1.2122282211260305,
+          "observations": 3710
+        }
+      },
+      "test": {
+        "persistence": {
+          "mae_m": 0.6943320290665175,
+          "rmse_m": 0.8779816084993194,
+          "observations": 3578
+        },
+        "linear": {
+          "mae_m": 0.6491566986349603,
+          "rmse_m": 0.8058979626698578,
+          "observations": 3578
+        },
+        "random_forest": {
+          "mae_m": 0.7167137656090123,
+          "rmse_m": 1.5245551448648365,
+          "observations": 3578
+        },
+        "xgboost": {
+          "mae_m": 0.8203756117620677,
+          "rmse_m": 1.520094708749106,
+          "observations": 3578
+        }
+      },
+      "beats_test_persistence": false,
+      "test_predictions_file": "training\\data\\environmental\\private\\river-36964-3h-test.csv",
+      "test_predictions_sha256": "705b2b52b3741a1e086e8021ef1b84c69a4e32ec3aab438a69a9fe306b035962",
+      "test_by_calendar_month": {
+        "2025-07": {
+          "selected": {
+            "mae_m": 0.571145399634336,
+            "rmse_m": 1.2220293564423852,
+            "observations": 675
+          },
+          "persistence": {
+            "mae_m": 0.6057925925925925,
+            "rmse_m": 0.7748025315930267,
+            "observations": 675
+          }
+        },
+        "2025-08": {
+          "selected": {
+            "mae_m": 0.6879057942910141,
+            "rmse_m": 1.489924475897891,
+            "observations": 593
+          },
+          "persistence": {
+            "mae_m": 0.6511635750421585,
+            "rmse_m": 0.8686559950717144,
+            "observations": 593
+          }
+        },
+        "2025-09": {
+          "selected": {
+            "mae_m": 0.7284605853131894,
+            "rmse_m": 1.7359932589554699,
+            "observations": 640
+          },
+          "persistence": {
+            "mae_m": 0.679875,
+            "rmse_m": 0.8741163395109371,
+            "observations": 640
+          }
+        },
+        "2025-10": {
+          "selected": {
+            "mae_m": 0.7071737176859153,
+            "rmse_m": 1.6235102507227002,
+            "observations": 623
+          },
+          "persistence": {
+            "mae_m": 0.742728731942215,
+            "rmse_m": 0.9328115563601111,
+            "observations": 623
+          }
+        },
+        "2025-11": {
+          "selected": {
+            "mae_m": 0.8360955043728311,
+            "rmse_m": 1.5863503677588533,
+            "observations": 586
+          },
+          "persistence": {
+            "mae_m": 0.7520819112627987,
+            "rmse_m": 0.9113772722770785,
+            "observations": 586
+          }
+        },
+        "2025-12": {
+          "selected": {
+            "mae_m": 0.8117453498916549,
+            "rmse_m": 1.4327385980310166,
+            "observations": 461
+          },
+          "persistence": {
+            "mae_m": 0.7607592190889372,
+            "rmse_m": 0.9169329002718071,
+            "observations": 461
+          }
+        }
+      },
+      "partition_ranges": {
+        "train": {
+          "first_issue": "2024-09-20T19:00:00+00:00",
+          "last_target": "2024-12-31T20:00:00+00:00",
+          "last_target_available_at": "2024-12-31T23:00:59.866000+00:00"
+        },
+        "validation": {
+          "first_issue": "2025-01-01T00:00:00+00:00",
+          "last_target": "2025-06-30T17:00:00+00:00",
+          "last_target_available_at": "2025-06-30T19:01:24.800000+00:00"
+        },
+        "test": {
+          "first_issue": "2025-07-01T01:00:00+00:00",
+          "last_target": "2025-12-31T23:00:00+00:00",
+          "last_target_available_at": "2026-01-01T02:01:43.957000+00:00"
+        }
+      },
+      "model_artifact": {
+        "id": "river-36964-3h",
+        "model_type": "river_level",
+        "version": 1,
+        "algorithm": "random_forest",
+        "features": [
+          "latest_level_m",
+          "previous_1_m",
+          "previous_2_m",
+          "previous_3_m",
+          "change_1_m",
+          "change_2_m",
+          "change_3_m",
+          "age_hours",
+          "history_hours",
+          "day_sin",
+          "day_cos",
+          "hour_sin",
+          "hour_cos"
+        ],
+        "target_transform": "future_observed_level_minus_latest_available_level",
+        "series_id": 36964,
+        "horizon_hours": 3,
+        "model_file": "river-36964-3h.joblib",
+        "model_sha256": "7742dcf9e654d56dfd058a8d4492ddaa690c98a1df05c1776fb2d8d85f493a96",
+        "validation": {
+          "mae_m": 0.49921014211727466,
+          "rmse_m": 0.9636657186242465,
+          "observations": 3710
+        },
+        "test": {
+          "mae_m": 0.7167137656090123,
+          "rmse_m": 1.5245551448648365,
+          "observations": 3578
+        },
+        "source_sha256": "a85a50bc1565b6cd092b0a896aebf4fe22ef85a555821d212a53f438d10f0472",
+        "trained_at": "2026-10-22T16:45:43.740030+00:00",
+        "deployment_approved": false
+      }
+    },
+    {
+      "series_id": 36964,
+      "station": "Iguazú - Pto. Iguazú",
+      "station_coordinates": {
+        "type": "Point",
+        "coordinates": [
+          -54.58,
+          -25.5933333333333
+        ]
+      },
+      "horizon_hours": 6,
+      "source": {
+        "url": "https://alerta.ina.gob.ar/a5/obs/puntual/series/36964?timestart=2023-01-01T00%3A00%3A00Z&timeend=2026-10-22T23%3A59%3A59Z",
+        "retrieved_at": null,
+        "note": "Existing research cache predates acquisition sidecar; acquisition instant unknown.",
+        "sha256": "a85a50bc1565b6cd092b0a896aebf4fe22ef85a555821d212a53f438d10f0472",
+        "bytes": 9009350
+      },
+      "counts": {
+        "train": 2000,
+        "validation": 3703,
+        "test": 3570
+      },
+      "measurement_exclusions": {
+        "identical_duplicate_timestamp": 0
+      },
+      "window_exclusions": {
+        "no_exact_observed_target": 1631,
+        "insufficient_fresh_available_history": 2082
+      },
+      "units": "m",
+      "deployment_approved": false,
+      "route_association_approved": false,
+      "status": "experimental",
+      "selection": "random_forest",
+      "selection_method": "Minimum validation MAE, tie preference persistence; test not used for selection",
+      "validation": {
+        "persistence": {
+          "mae_m": 0.7075047258979207,
+          "rmse_m": 0.912330407739898,
+          "observations": 3703
+        },
+        "linear": {
+          "mae_m": 1.8297381226430822,
+          "rmse_m": 2.0339134060829367,
+          "observations": 3703
+        },
+        "random_forest": {
+          "mae_m": 0.6295752792755661,
+          "rmse_m": 1.1463556606798955,
+          "observations": 3703
+        },
+        "xgboost": {
+          "mae_m": 1.5144804111471484,
+          "rmse_m": 2.037372155676634,
+          "observations": 3703
+        }
+      },
+      "test": {
+        "persistence": {
+          "mae_m": 0.8478823529411763,
+          "rmse_m": 1.035008383029421,
+          "observations": 3570
+        },
+        "linear": {
+          "mae_m": 0.8784412298926907,
+          "rmse_m": 1.0764873390699066,
+          "observations": 3570
+        },
+        "random_forest": {
+          "mae_m": 0.8890012657797787,
+          "rmse_m": 1.842460139887144,
+          "observations": 3570
+        },
+        "xgboost": {
+          "mae_m": 0.8999574950107593,
+          "rmse_m": 1.3974249305974717,
+          "observations": 3570
+        }
+      },
+      "beats_test_persistence": false,
+      "test_predictions_file": "training\\data\\environmental\\private\\river-36964-6h-test.csv",
+      "test_predictions_sha256": "cd485a06df207d2d69db4dd91e3aa90e47f79a685b78cad6dc17eeaca749fad9",
+      "test_by_calendar_month": {
+        "2025-07": {
+          "selected": {
+            "mae_m": 0.6773504676527237,
+            "rmse_m": 1.4434067182665005,
+            "observations": 675
+          },
+          "persistence": {
+            "mae_m": 0.7319851851851852,
+            "rmse_m": 0.8988614197148812,
+            "observations": 675
+          }
+        },
+        "2025-08": {
+          "selected": {
+            "mae_m": 0.9000814135073738,
+            "rmse_m": 2.0201166394285632,
+            "observations": 592
+          },
+          "persistence": {
+            "mae_m": 0.7841722972972973,
+            "rmse_m": 0.989438057140981,
+            "observations": 592
+          }
+        },
+        "2025-09": {
+          "selected": {
+            "mae_m": 0.8878038995113622,
+            "rmse_m": 2.023852991565907,
+            "observations": 640
+          },
+          "persistence": {
+            "mae_m": 0.8317499999999999,
+            "rmse_m": 1.0216062720050225,
+            "observations": 640
+          }
+        },
+        "2025-10": {
+          "selected": {
+            "mae_m": 0.9257246442933625,
+            "rmse_m": 1.9833890527022835,
+            "observations": 622
+          },
+          "persistence": {
+            "mae_m": 0.9140836012861735,
+            "rmse_m": 1.118590207112035,
+            "observations": 622
+          }
+        },
+        "2025-11": {
+          "selected": {
+            "mae_m": 0.9981073331651852,
+            "rmse_m": 1.7827783505804062,
+            "observations": 585
+          },
+          "persistence": {
+            "mae_m": 0.9386495726495727,
+            "rmse_m": 1.090324737951054,
+            "observations": 585
+          }
+        },
+        "2025-12": {
+          "selected": {
+            "mae_m": 0.9995323290185947,
+            "rmse_m": 1.7327923297308783,
+            "observations": 456
+          },
+          "persistence": {
+            "mae_m": 0.9180482456140351,
+            "rmse_m": 1.1059306829266455,
+            "observations": 456
+          }
+        }
+      },
+      "partition_ranges": {
+        "train": {
+          "first_issue": "2024-09-20T19:00:00+00:00",
+          "last_target": "2024-12-31T20:00:00+00:00",
+          "last_target_available_at": "2024-12-31T23:00:59.866000+00:00"
+        },
+        "validation": {
+          "first_issue": "2025-01-01T00:00:00+00:00",
+          "last_target": "2025-06-30T17:00:00+00:00",
+          "last_target_available_at": "2025-06-30T19:01:24.800000+00:00"
+        },
+        "test": {
+          "first_issue": "2025-07-01T01:00:00+00:00",
+          "last_target": "2025-12-31T23:00:00+00:00",
+          "last_target_available_at": "2026-01-01T02:01:43.957000+00:00"
+        }
+      },
+      "model_artifact": {
+        "id": "river-36964-6h",
+        "model_type": "river_level",
+        "version": 1,
+        "algorithm": "random_forest",
+        "features": [
+          "latest_level_m",
+          "previous_1_m",
+          "previous_2_m",
+          "previous_3_m",
+          "change_1_m",
+          "change_2_m",
+          "change_3_m",
+          "age_hours",
+          "history_hours",
+          "day_sin",
+          "day_cos",
+          "hour_sin",
+          "hour_cos"
+        ],
+        "target_transform": "future_observed_level_minus_latest_available_level",
+        "series_id": 36964,
+        "horizon_hours": 6,
+        "model_file": "river-36964-6h.joblib",
+        "model_sha256": "55e3870192163f690f6557151a926265ff9d1fb58382d764c8d739c1029a298f",
+        "validation": {
+          "mae_m": 0.6295752792755661,
+          "rmse_m": 1.1463556606798955,
+          "observations": 3703
+        },
+        "test": {
+          "mae_m": 0.8890012657797787,
+          "rmse_m": 1.842460139887144,
+          "observations": 3570
+        },
+        "source_sha256": "a85a50bc1565b6cd092b0a896aebf4fe22ef85a555821d212a53f438d10f0472",
+        "trained_at": "2026-10-22T16:45:46.910338+00:00",
+        "deployment_approved": false
+      }
+    },
+    {
+      "series_id": 37019,
+      "station": "Manso - Los Moscos",
+      "station_coordinates": {
+        "type": "Point",
+        "coordinates": [
+          -71.6413888888889,
+          -41.3533333333333
+        ]
+      },
+      "horizon_hours": 3,
+      "source": {
+        "url": "https://alerta.ina.gob.ar/a5/obs/puntual/series/37019?timestart=2023-01-01T00%3A00%3A00Z&timeend=2026-10-22T23%3A59%3A59Z",
+        "retrieved_at": null,
+        "note": "Existing research cache predates acquisition sidecar; acquisition instant unknown.",
+        "sha256": "e30b1e62e7492327719adacb8004dfb06c7096d274a5eecbe9f29203f0ca50f2",
+        "bytes": 1055222
+      },
+      "counts": {
+        "train": 561,
+        "validation": 944,
+        "test": 880
+      },
+      "measurement_exclusions": {
+        "identical_duplicate_timestamp": 0
+      },
+      "window_exclusions": {
+        "no_exact_observed_target": 12031,
+        "insufficient_fresh_available_history": 465
+      },
+      "units": "m",
+      "deployment_approved": false,
+      "route_association_approved": false,
+      "status": "experimental",
+      "selection": "persistence",
+      "selection_method": "Minimum validation MAE, tie preference persistence; test not used for selection",
+      "validation": {
+        "persistence": {
+          "mae_m": 0.002902542372881356,
+          "rmse_m": 0.006904309634237426,
+          "observations": 944
+        },
+        "linear": {
+          "mae_m": 0.00858835604413606,
+          "rmse_m": 0.010489565326537486,
+          "observations": 944
+        },
+        "random_forest": {
+          "mae_m": 0.005281267803101796,
+          "rmse_m": 0.0070480509369093315,
+          "observations": 944
+        },
+        "xgboost": {
+          "mae_m": 0.006842641028237802,
+          "rmse_m": 0.00938980710283632,
+          "observations": 944
+        }
+      },
+      "test": {
+        "persistence": {
+          "mae_m": 0.005,
+          "rmse_m": 0.012586067332931718,
+          "observations": 880
+        },
+        "linear": {
+          "mae_m": 0.006261830589663082,
+          "rmse_m": 0.009223506762762837,
+          "observations": 880
+        },
+        "random_forest": {
+          "mae_m": 0.007644710025980746,
+          "rmse_m": 0.011769240390805801,
+          "observations": 880
+        },
+        "xgboost": {
+          "mae_m": 0.008876236290474874,
+          "rmse_m": 0.01378345844941104,
+          "observations": 880
+        }
+      },
+      "beats_test_persistence": false,
+      "test_predictions_file": "training\\data\\environmental\\private\\river-37019-3h-test.csv",
+      "test_predictions_sha256": "8883bc26c46edcc44db0ecaab9389b9fa0c7bfa9788bc48189de4732f9d073d4",
+      "test_by_calendar_month": {
+        "2025-07": {
+          "selected": {
+            "mae_m": 0.006666666666666665,
+            "rmse_m": 0.02166289559942608,
+            "observations": 153
+          },
+          "persistence": {
+            "mae_m": 0.006666666666666665,
+            "rmse_m": 0.02166289559942608,
+            "observations": 153
+          }
+        },
+        "2025-08": {
+          "selected": {
+            "mae_m": 0.010764331210191084,
+            "rmse_m": 0.017320508075688777,
+            "observations": 157
+          },
+          "persistence": {
+            "mae_m": 0.010764331210191084,
+            "rmse_m": 0.017320508075688777,
+            "observations": 157
+          }
+        },
+        "2025-09": {
+          "selected": {
+            "mae_m": 0.004295774647887328,
+            "rmse_m": 0.007267523746672645,
+            "observations": 142
+          },
+          "persistence": {
+            "mae_m": 0.004295774647887328,
+            "rmse_m": 0.007267523746672645,
+            "observations": 142
+          }
+        },
+        "2025-10": {
+          "selected": {
+            "mae_m": 0.004302325581395349,
+            "rmse_m": 0.007470873676376285,
+            "observations": 172
+          },
+          "persistence": {
+            "mae_m": 0.004302325581395349,
+            "rmse_m": 0.007470873676376285,
+            "observations": 172
+          }
+        },
+        "2025-11": {
+          "selected": {
+            "mae_m": 0.0022463768115942033,
+            "rmse_m": 0.004739595775584879,
+            "observations": 138
+          },
+          "persistence": {
+            "mae_m": 0.0022463768115942033,
+            "rmse_m": 0.004739595775584879,
+            "observations": 138
+          }
+        },
+        "2025-12": {
+          "selected": {
+            "mae_m": 0.0002542372881355925,
+            "rmse_m": 0.001594482010358197,
+            "observations": 118
+          },
+          "persistence": {
+            "mae_m": 0.0002542372881355925,
+            "rmse_m": 0.001594482010358197,
+            "observations": 118
+          }
+        }
+      },
+      "partition_ranges": {
+        "train": {
+          "first_issue": "2024-09-20T20:00:00+00:00",
+          "last_target": "2024-12-31T19:00:00+00:00",
+          "last_target_available_at": "2024-12-31T23:01:00.554000+00:00"
+        },
+        "validation": {
+          "first_issue": "2025-01-01T00:00:00+00:00",
+          "last_target": "2025-06-30T19:00:00+00:00",
+          "last_target_available_at": "2025-06-30T21:01:25.098000+00:00"
+        },
+        "test": {
+          "first_issue": "2025-07-01T00:00:00+00:00",
+          "last_target": "2025-12-31T23:00:00+00:00",
+          "last_target_available_at": "2026-01-01T02:01:45.456000+00:00"
+        }
+      },
+      "model_artifact": {
+        "id": "river-37019-3h",
+        "model_type": "river_level",
+        "version": 1,
+        "algorithm": "persistence",
+        "features": [
+          "latest_level_m",
+          "previous_1_m",
+          "previous_2_m",
+          "previous_3_m",
+          "change_1_m",
+          "change_2_m",
+          "change_3_m",
+          "age_hours",
+          "history_hours",
+          "day_sin",
+          "day_cos",
+          "hour_sin",
+          "hour_cos"
+        ],
+        "target_transform": "future_observed_level_minus_latest_available_level",
+        "series_id": 37019,
+        "horizon_hours": 3,
+        "model_file": null,
+        "model_sha256": null,
+        "validation": {
+          "mae_m": 0.002902542372881356,
+          "rmse_m": 0.006904309634237426,
+          "observations": 944
+        },
+        "test": {
+          "mae_m": 0.005,
+          "rmse_m": 0.012586067332931718,
+          "observations": 880
+        },
+        "source_sha256": "e30b1e62e7492327719adacb8004dfb06c7096d274a5eecbe9f29203f0ca50f2",
+        "trained_at": "2026-10-22T16:45:48.454064+00:00",
+        "deployment_approved": false
+      }
+    },
+    {
+      "series_id": 37019,
+      "station": "Manso - Los Moscos",
+      "station_coordinates": {
+        "type": "Point",
+        "coordinates": [
+          -71.6413888888889,
+          -41.3533333333333
+        ]
+      },
+      "horizon_hours": 6,
+      "source": {
+        "url": "https://alerta.ina.gob.ar/a5/obs/puntual/series/37019?timestart=2023-01-01T00%3A00%3A00Z&timeend=2026-10-22T23%3A59%3A59Z",
+        "retrieved_at": null,
+        "note": "Existing research cache predates acquisition sidecar; acquisition instant unknown.",
+        "sha256": "e30b1e62e7492327719adacb8004dfb06c7096d274a5eecbe9f29203f0ca50f2",
+        "bytes": 1055222
+      },
+      "counts": {
+        "train": 574,
+        "validation": 993,
+        "test": 935
+      },
+      "measurement_exclusions": {
+        "identical_duplicate_timestamp": 0
+      },
+      "window_exclusions": {
+        "no_exact_observed_target": 12029,
+        "insufficient_fresh_available_history": 306
+      },
+      "units": "m",
+      "deployment_approved": false,
+      "route_association_approved": false,
+      "status": "experimental",
+      "selection": "persistence",
+      "selection_method": "Minimum validation MAE, tie preference persistence; test not used for selection",
+      "validation": {
+        "persistence": {
+          "mae_m": 0.00404833836858006,
+          "rmse_m": 0.008975742177304005,
+          "observations": 993
+        },
+        "linear": {
+          "mae_m": 0.01657384312395606,
+          "rmse_m": 0.019404835263698357,
+          "observations": 993
+        },
+        "random_forest": {
+          "mae_m": 0.0073169136338054564,
+          "rmse_m": 0.00966199996219657,
+          "observations": 993
+        },
+        "xgboost": {
+          "mae_m": 0.0050558943503021415,
+          "rmse_m": 0.009006663685282919,
+          "observations": 993
+        }
+      },
+      "test": {
+        "persistence": {
+          "mae_m": 0.0070695187165775416,
+          "rmse_m": 0.017486434772975273,
+          "observations": 935
+        },
+        "linear": {
+          "mae_m": 0.010008617980313599,
+          "rmse_m": 0.014369401685454251,
+          "observations": 935
+        },
+        "random_forest": {
+          "mae_m": 0.011563209798672789,
+          "rmse_m": 0.017718389064256806,
+          "observations": 935
+        },
+        "xgboost": {
+          "mae_m": 0.009908389454679957,
+          "rmse_m": 0.01802704030684856,
+          "observations": 935
+        }
+      },
+      "beats_test_persistence": false,
+      "test_predictions_file": "training\\data\\environmental\\private\\river-37019-6h-test.csv",
+      "test_predictions_sha256": "d45a366b52e99a643136c42a33de4986fdc4872044aa6d37e90cf1cae806c875",
+      "test_by_calendar_month": {
+        "2025-07": {
+          "selected": {
+            "mae_m": 0.009378881987577638,
+            "rmse_m": 0.030492846121611433,
+            "observations": 161
+          },
+          "persistence": {
+            "mae_m": 0.009378881987577638,
+            "rmse_m": 0.030492846121611433,
+            "observations": 161
+          }
+        },
+        "2025-08": {
+          "selected": {
+            "mae_m": 0.01588957055214724,
+            "rmse_m": 0.025101022881413648,
+            "observations": 163
+          },
+          "persistence": {
+            "mae_m": 0.01588957055214724,
+            "rmse_m": 0.025101022881413648,
+            "observations": 163
+          }
+        },
+        "2025-09": {
+          "selected": {
+            "mae_m": 0.006168831168831174,
+            "rmse_m": 0.0091523895112825,
+            "observations": 154
+          },
+          "persistence": {
+            "mae_m": 0.006168831168831174,
+            "rmse_m": 0.0091523895112825,
+            "observations": 154
+          }
+        },
+        "2025-10": {
+          "selected": {
+            "mae_m": 0.006067415730337079,
+            "rmse_m": 0.009421467239438892,
+            "observations": 178
+          },
+          "persistence": {
+            "mae_m": 0.006067415730337079,
+            "rmse_m": 0.009421467239438892,
+            "observations": 178
+          }
+        },
+        "2025-11": {
+          "selected": {
+            "mae_m": 0.002933333333333334,
+            "rmse_m": 0.0054160256030906405,
+            "observations": 150
+          },
+          "persistence": {
+            "mae_m": 0.002933333333333334,
+            "rmse_m": 0.0054160256030906405,
+            "observations": 150
+          }
+        },
+        "2025-12": {
+          "selected": {
+            "mae_m": 0.0003100775193798435,
+            "rmse_m": 0.0017609018126512393,
+            "observations": 129
+          },
+          "persistence": {
+            "mae_m": 0.0003100775193798435,
+            "rmse_m": 0.0017609018126512393,
+            "observations": 129
+          }
+        }
+      },
+      "partition_ranges": {
+        "train": {
+          "first_issue": "2024-09-20T21:00:00+00:00",
+          "last_target": "2024-12-31T19:00:00+00:00",
+          "last_target_available_at": "2024-12-31T23:01:00.554000+00:00"
+        },
+        "validation": {
+          "first_issue": "2025-01-01T01:00:00+00:00",
+          "last_target": "2025-06-30T19:00:00+00:00",
+          "last_target_available_at": "2025-06-30T21:01:25.098000+00:00"
+        },
+        "test": {
+          "first_issue": "2025-07-01T01:00:00+00:00",
+          "last_target": "2025-12-31T23:00:00+00:00",
+          "last_target_available_at": "2026-01-01T02:01:45.456000+00:00"
+        }
+      },
+      "model_artifact": {
+        "id": "river-37019-6h",
+        "model_type": "river_level",
+        "version": 1,
+        "algorithm": "persistence",
+        "features": [
+          "latest_level_m",
+          "previous_1_m",
+          "previous_2_m",
+          "previous_3_m",
+          "change_1_m",
+          "change_2_m",
+          "change_3_m",
+          "age_hours",
+          "history_hours",
+          "day_sin",
+          "day_cos",
+          "hour_sin",
+          "hour_cos"
+        ],
+        "target_transform": "future_observed_level_minus_latest_available_level",
+        "series_id": 37019,
+        "horizon_hours": 6,
+        "model_file": null,
+        "model_sha256": null,
+        "validation": {
+          "mae_m": 0.00404833836858006,
+          "rmse_m": 0.008975742177304005,
+          "observations": 993
+        },
+        "test": {
+          "mae_m": 0.0070695187165775416,
+          "rmse_m": 0.017486434772975273,
+          "observations": 935
+        },
+        "source_sha256": "e30b1e62e7492327719adacb8004dfb06c7096d274a5eecbe9f29203f0ca50f2",
+        "trained_at": "2026-10-22T16:45:50.002869+00:00",
+        "deployment_approved": false
+      }
+    }
+  ],
+  "satellite_models": {
+    "snow": {
+      "status": "no_data",
+      "reason": "earthdata_authentication_required",
+      "source": "https://nsidc.org/data/mod10a1/versions/61",
+      "product": "MOD10A1.061",
+      "target": "Next-day observed snow cover only for valid cloud-free land pixels",
+      "constraints": [
+        "Earthdata authentication is not configured; user requested work only with accessible sources.",
+        "Product publication lags observation. Calendar observation date is not availability time.",
+        "Cloud, polar darkness, water, fill and invalid QA cannot become negative snow labels."
+      ]
+    },
+    "fire_detection": {
+      "status": "not_approved",
+      "reason": "experimental_validation_required_before_route_use",
+      "source": "https://planetarycomputer.microsoft.com/dataset/modis-14A1-061",
+      "target": "Next-24h nominal/high-confidence MODIS detection in a qualified Argentine land pixel",
+      "constraints": [
+        "Actual MOD14A1 daily masks and QA are acquired separately by fire_sources.py; results are in fire-results.json.",
+        "FIRMS positive-only CSV is not used to invent negative labels; daily observed non-fire land is class 5 with valid land QA.",
+        "Publication can lag by weeks; classification performance and calibration must be checked before any experimental route visualization.",
+        "No operational approval or prediction of wildfire propagation, transitability or evacuation safety."
+      ]
+    }
+  },
+  "synthetic_observations": 0,
+  "temporal_protocol": {
+    "training_target_before": "2025-01-01T00:00:00+00:00",
+    "validation_target_before": "2025-07-01T00:00:00+00:00",
+    "test_target_before": "2026-01-01T00:00:00+00:00",
+    "split": "Chronological per station; purge targets crossing split boundaries; training/validation labels available before their cutoff"
+  },
+  "versions": {
+    "numpy": "2.5.4",
+    "pandas": "3.0.6",
+    "sklearn": "1.9.1",
+    "xgboost": "3.4.1"
+  },
+  "limitations": [
+    "Historical timeupdate is used as a conservative availability bound of the published final version, not assumed to be first publication.",
+    "Last four actually available observations, not interpolated hourly series. Missing exact targets are excluded.",
+    "Raw directly measured station values may lack consolidated quality control and may contain sensor errors.",
+    "Station-specific validation does not establish transfer between stations or applicability to any trail or river crossing.",
+    "No precipitation reanalysis, synthetic labels, imputation, SMOTE or generated observations.",
+    "Only validation selects the model. Test comparison does not automatically approve operational use."
+  ],
+  "scope_exclusions": {
+    "32926": "Excluded from the active project and thesis at user request on 2026-10-22; located in Entre Rios, Argentina."
+  }
+}

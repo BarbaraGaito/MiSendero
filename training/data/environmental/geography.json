@@ -1,0 +1,173 @@
+{
+  "schema_version": 1,
+  "regions": [
+    {
+      "name": "Refugio Frey desde Villa Catedral",
+      "location": "Parque Nacional Nahuel Huapi, Rio Negro",
+      "latitude": -41.1904696,
+      "longitude": -71.4612884,
+      "definition": "backend/src/data/additionalTrails.js",
+      "geometry_sha256": "9947df55746c5b8033b0955a9bdd8b2ddb61db1dad2621b1fc0d72fa1e21acdf",
+      "sources": [
+        {
+          "title": "Ficha del recorrido",
+          "url": "https://www.barilocheturismo.gob.ar/es/refugio-frey"
+        },
+        {
+          "title": "Informacion complementaria",
+          "url": "https://refugiofreybariloche.com/preguntas-frecuentes/"
+        }
+      ]
+    },
+    {
+      "name": "Mirador de los Condores - El Chalten",
+      "location": "Parque Nacional Los Glaciares, Santa Cruz",
+      "latitude": -49.3396775,
+      "longitude": -72.88296034999999,
+      "definition": "backend/src/data/additionalTrails.js",
+      "geometry_sha256": "46d58e71988d2ace1d3f9389efc3928d9314d8958f220a91c4e934a157d4d1ca",
+      "sources": [
+        {
+          "title": "Ficha del recorrido",
+          "url": "https://www.argentina.gob.ar/sites/default/files/2019/06/folleto_senderos_zona_norte_pnlg_ingles.pdf"
+        }
+      ]
+    },
+    {
+      "name": "Pampa Alta - Tierra del Fuego",
+      "location": "Parque Nacional Tierra del Fuego, Ushuaia, Tierra del Fuego",
+      "latitude": -54.844262,
+      "longitude": -68.482652,
+      "definition": "backend/src/data/catalogExpansion20261017.js",
+      "geometry_sha256": "bc0f862a0a3e08f3d3cb9f4df9cd6c6a504fa60e1a05f006ae95c830ff78dd86",
+      "sources": [
+        {
+          "title": "APN - Senderos del PN Tierra del Fuego",
+          "url": "https://www.argentina.gob.ar/parquesnacionales/patagonia-austral/senderos-del-parque-nacional-tierra-del-fuego"
+        }
+      ]
+    }
+  ],
+  "fire_regions": [
+    {
+      "name": "Sendero Macuco - Salto Arrechea",
+      "location": "Parque Nacional Iguazu, Misiones",
+      "latitude": -25.66715775,
+      "longitude": -54.452823,
+      "definition": "backend/src/data/additionalTrails.js",
+      "geometry_sha256": "148e8cb09cd0d851b88a1875e60763f34efffe046a68c1cb886911fde629477b",
+      "sources": [
+        {
+          "title": "Ficha del recorrido",
+          "url": "https://www.argentina.gob.ar/node/284859"
+        },
+        {
+          "title": "Informacion complementaria",
+          "url": "https://www.argentina.gob.ar/node/168245"
+        }
+      ]
+    },
+    {
+      "name": "Refugio Frey desde Villa Catedral",
+      "location": "Parque Nacional Nahuel Huapi, Rio Negro",
+      "latitude": -41.1904696,
+      "longitude": -71.4612884,
+      "definition": "backend/src/data/additionalTrails.js",
+      "geometry_sha256": "9947df55746c5b8033b0955a9bdd8b2ddb61db1dad2621b1fc0d72fa1e21acdf",
+      "sources": [
+        {
+          "title": "Ficha del recorrido",
+          "url": "https://www.barilocheturismo.gob.ar/es/refugio-frey"
+        },
+        {
+          "title": "Informacion complementaria",
+          "url": "https://refugiofreybariloche.com/preguntas-frecuentes/"
+        }
+      ]
+    },
+    {
+      "name": "Quebrada del Condorito - Balcon Norte",
+      "location": "Parque Nacional Quebrada del Condorito, Cordoba",
+      "latitude": -31.65000375,
+      "longitude": -64.70201284999999,
+      "definition": "backend/src/data/additionalTrails.js",
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74",
+      "sources": [
+        {
+          "title": "Ficha del recorrido",
+          "url": "https://www.argentina.gob.ar/parquesnacionales/centro/parque-nacional-quebrada-del-condorito/actividades"
+        }
+      ]
+    },
+    {
+      "name": "Sendero Namuncura",
+      "location": "Parque Nacional Lihue Calel, La Pampa",
+      "latitude": -38.0057717,
+      "longitude": -65.59634514999999,
+      "definition": "backend/src/data/additionalTrails.js",
+      "geometry_sha256": "9ffaf89538fec8fb40b3d760b8e8b8fbcc154794b28d438fa6b046429fc5d32c",
+      "sources": [
+        {
+          "title": "Ficha del recorrido",
+          "url": "https://www.argentina.gob.ar/node/307077"
+        }
+      ]
+    },
+    {
+      "name": "Cerro Ventana - Hueco de la Ventana",
+      "location": "Parque Provincial Ernesto Tornquist, Buenos Aires",
+      "latitude": -38.055006000000006,
+      "longitude": -62.0162207,
+      "definition": "backend/src/data/additionalTrails.js",
+      "geometry_sha256": "61e1a9b62ae9b691b29c437aed7792b3723c7af54f03feb2311d4322fd3f5066",
+      "sources": [
+        {
+          "title": "Ficha del recorrido",
+          "url": "https://www.ambiente.gba.gob.ar/node/1368"
+        }
+      ]
+    },
+    {
+      "name": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "location": "Cerro Piltriquitron, El Bolson, Rio Negro",
+      "latitude": -41.97003735,
+      "longitude": -71.4756338,
+      "definition": "backend/src/data/additionalTrails.js",
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa",
+      "sources": [
+        {
+          "title": "Ficha del recorrido",
+          "url": "https://www.turismoelbolson.gob.ar/actividades-invernales"
+        }
+      ]
+    },
+    {
+      "name": "Sendero Che Roga - Mburucuyá",
+      "location": "Parque Nacional Mburucuyá, Corrientes",
+      "latitude": -28.0180651,
+      "longitude": -58.0286895,
+      "definition": "backend/src/data/catalogExpansion20261017.js",
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e",
+      "sources": [
+        {
+          "title": "APN - Mburucuyá - Actividades",
+          "url": "https://www.argentina.gob.ar/node/150096"
+        }
+      ]
+    },
+    {
+      "name": "Sendero La Chuña - El Rey",
+      "location": "Parque Nacional El Rey, Salta",
+      "latitude": -24.722283,
+      "longitude": -64.645613,
+      "definition": "backend/src/data/catalogExpansion20261017.js",
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b",
+      "sources": [
+        {
+          "title": "APN - El Rey - Actividades",
+          "url": "https://www.argentina.gob.ar/parquesnacionales/region-noroeste/parque-nacional-el-rey/actividades"
+        }
+      ]
+    }
+  ]
+}

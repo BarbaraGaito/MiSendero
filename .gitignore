@@ -147,6 +147,7 @@ reports/
 
 # Public dataset downloads can be hundreds of MB or several GB.
 training/data/raw/
+training/data/environmental/private/
 .venv-ai/
 .venv-trail-ranking/
 training/data/trail-ranking/prepared/

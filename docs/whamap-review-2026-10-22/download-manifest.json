@@ -1,0 +1,38 @@
+[
+  {
+    "file": "originals\\WHAMAP\\README.md",
+    "bytes": 4699,
+    "sha256": "5848ce67c2aec612995fc76dede71c5ede0eb454faf051e2b375e982bb916ab9",
+    "source": "https://data.mendeley.com/public-files/datasets/8zt9g9g64c/files/0e64f0fa-079c-454d-bfe6-d4906f4d339f/file_downloaded"
+  },
+  {
+    "file": "originals\\WHAMAP\\User_data.csv",
+    "bytes": 362,
+    "sha256": "1b4b62e524e0de22b2bfa68d2bd03f485814a4c50c399a5c41130c4d8b8e88ac",
+    "source": "https://data.mendeley.com/public-files/datasets/8zt9g9g64c/files/f5be7257-83a2-452b-8a9b-758d761e81c9/file_downloaded"
+  },
+  {
+    "file": "originals\\subject_01\\uphill.csv",
+    "bytes": 22608462,
+    "sha256": "93043f6f23f28a528b5fe5f86164edf57e60b291dd14a08d612cdd26f53be642",
+    "source": "https://data.mendeley.com/public-files/datasets/8zt9g9g64c/files/73e0b8eb-9d4c-42c0-a8c2-248f642c3ab8/file_downloaded"
+  },
+  {
+    "file": "originals\\subject_01\\walking.csv",
+    "bytes": 23062227,
+    "sha256": "46306c25d68a066a40cafeae4b521d7ce8271344b96722e62bc67a0229dc7298",
+    "source": "https://data.mendeley.com/public-files/datasets/8zt9g9g64c/files/ebbde0ea-e712-4fdf-b80f-99be9cad0873/file_downloaded"
+  },
+  {
+    "file": "originals\\subject_10\\uphill_B.csv",
+    "bytes": 19655771,
+    "sha256": "a1d204c0e94da4c545abf687d47f1d3ce8886be8d7f5cd05ed4ee4c7ecf572b8",
+    "source": "https://data.mendeley.com/public-files/datasets/8zt9g9g64c/files/64f54d7d-a770-438c-999d-011ade3b04a0/file_downloaded"
+  },
+  {
+    "file": "originals\\subject_10\\walking_B.csv",
+    "bytes": 18872119,
+    "sha256": "0bbffc0582e9b9d1851718d55aeda26ccada49d77e143cc2006dd3217c299ad4",
+    "source": "https://data.mendeley.com/public-files/datasets/8zt9g9g64c/files/2385879d-5708-4503-9f5a-f103bcdd844d/file_downloaded"
+  }
+]

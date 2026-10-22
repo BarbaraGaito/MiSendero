@@ -1,0 +1,521 @@
+{
+  "source": "https://doi.org/10.26255/heal.mjhj-gsm4",
+  "source_sha256": "4f4d4139a8e6da30d5e071317b9afc000f2234f73714add69e885ef2f3bc828e",
+  "task": "Borg 6-20 exertion reported after hike, predicted at third checkpoint",
+  "status": "Exploratory follow-up after initial source evaluation; not an untouched external test or a fatigue detector",
+  "protocol": "Outer leave-one-person-out (17); inner 4-fold GroupKFold on training people; selection by continuous MAE; both visits stay together",
+  "candidate_pool": [
+    [
+      "constant_median",
+      "raw",
+      null
+    ],
+    [
+      "ridge",
+      "raw",
+      1.0
+    ],
+    [
+      "ridge",
+      "raw",
+      10.0
+    ],
+    [
+      "ridge",
+      "raw",
+      100.0
+    ],
+    [
+      "ridge",
+      "pulse_change_and_elapsed",
+      1.0
+    ],
+    [
+      "ridge",
+      "pulse_change_and_elapsed",
+      10.0
+    ],
+    [
+      "ridge",
+      "pulse_change_and_elapsed",
+      100.0
+    ]
+  ],
+  "features": {
+    "raw": "HR at start and three checkpoints",
+    "pulse_change_and_elapsed": "Raw HR; checkpoint minus starting HR; third minus first HR; sum of first three lap times. No final lap, endpoint HR, lab measurements or answers as inputs."
+  },
+  "people": 17,
+  "visits": 34,
+  "selected_counts": {
+    "['constant_median', 'raw', None]": 17
+  },
+  "model": {
+    "observations": 34,
+    "exact_accuracy": 0.35294117647058826,
+    "within_one_accuracy": 0.5294117647058824,
+    "mae_borg_6_20_points": 1.3823529411764706,
+    "errors_three_or_more": 7,
+    "continuous_mae": 1.3823529411764706
+  },
+  "median_baseline": {
+    "observations": 34,
+    "exact_accuracy": 0.35294117647058826,
+    "within_one_accuracy": 0.5294117647058824,
+    "mae_borg_6_20_points": 1.3823529411764706,
+    "errors_three_or_more": 7,
+    "continuous_mae": 1.3823529411764706
+  },
+  "uncertainty_rounded_predictions": {
+    "unit": "participant",
+    "resamples": 10000,
+    "seed": 42,
+    "mae_model_minus_baseline_95pct": [
+      0.0,
+      0.0
+    ]
+  },
+  "absolute_uncertainty": {
+    "unit": "participant",
+    "resamples": 10000,
+    "seed": 42,
+    "exact_accuracy_95pct": [
+      0.17647058823529413,
+      0.5294117647058824
+    ],
+    "mae_points_95pct": [
+      0.8823529411764706,
+      1.911764705882353
+    ],
+    "scope": "Exploratory percentile intervals of fixed out-of-fold predictions; not all training or source-selection uncertainty"
+  },
+  "folds": [
+    {
+      "held_out_person": "1",
+      "selected": [
+        "constant_median",
+        "raw",
+        null
+      ],
+      "inner_mae": 1.28125
+    },
+    {
+      "held_out_person": "2",
+      "selected": [
+        "constant_median",
+        "raw",
+        null
+      ],
+      "inner_mae": 1.3125
+    },
+    {
+      "held_out_person": "3",
+      "selected": [
+        "constant_median",
+        "raw",
+        null
+      ],
+      "inner_mae": 1.34375
+    },
+    {
+      "held_out_person": "4",
+      "selected": [
+        "constant_median",
+        "raw",
+        null
+      ],
+      "inner_mae": 1.375
+    },
+    {
+      "held_out_person": "5",
+      "selected": [
+        "constant_median",
+        "raw",
+        null
+      ],
+      "inner_mae": 1.375
+    },
+    {
+      "held_out_person": "6",
+      "selected": [
+        "constant_median",
+        "raw",
+        null
+      ],
+      "inner_mae": 1.46875
+    },
+    {
+      "held_out_person": "7",
+      "selected": [
+        "constant_median",
+        "raw",
+        null
+      ],
+      "inner_mae": 1.4375
+    },
+    {
+      "held_out_person": "8",
+      "selected": [
+        "constant_median",
+        "raw",
+        null
+      ],
+      "inner_mae": 1.40625
+    },
+    {
+      "held_out_person": "9",
+      "selected": [
+        "constant_median",
+        "raw",
+        null
+      ],
+      "inner_mae": 1.375
+    },
+    {
+      "held_out_person": "10",
+      "selected": [
+        "constant_median",
+        "raw",
+        null
+      ],
+      "inner_mae": 1.46875
+    },
+    {
+      "held_out_person": "11",
+      "selected": [
+        "constant_median",
+        "raw",
+        null
+      ],
+      "inner_mae": 1.46875
+    },
+    {
+      "held_out_person": "12",
+      "selected": [
+        "constant_median",
+        "raw",
+        null
+      ],
+      "inner_mae": 1.34375
+    },
+    {
+      "held_out_person": "13",
+      "selected": [
+        "constant_median",
+        "raw",
+        null
+      ],
+      "inner_mae": 1.46875
+    },
+    {
+      "held_out_person": "14",
+      "selected": [
+        "constant_median",
+        "raw",
+        null
+      ],
+      "inner_mae": 1.4375
+    },
+    {
+      "held_out_person": "15",
+      "selected": [
+        "constant_median",
+        "raw",
+        null
+      ],
+      "inner_mae": 1.21875
+    },
+    {
+      "held_out_person": "16",
+      "selected": [
+        "constant_median",
+        "raw",
+        null
+      ],
+      "inner_mae": 1.40625
+    },
+    {
+      "held_out_person": "17",
+      "selected": [
+        "constant_median",
+        "raw",
+        null
+      ],
+      "inner_mae": 1.40625
+    }
+  ],
+  "predictions": [
+    {
+      "person": "1",
+      "condition": "np",
+      "observed": 8,
+      "predicted": 11,
+      "continuous_prediction": 11.0,
+      "baseline": 11
+    },
+    {
+      "person": "1",
+      "condition": "wp",
+      "observed": 8,
+      "predicted": 11,
+      "continuous_prediction": 11.0,
+      "baseline": 11
+    },
+    {
+      "person": "2",
+      "condition": "np",
+      "observed": 8,
+      "predicted": 11,
+      "continuous_prediction": 11.0,
+      "baseline": 11
+    },
+    {
+      "person": "2",
+      "condition": "wp",
+      "observed": 9,
+      "predicted": 11,
+      "continuous_prediction": 11.0,
+      "baseline": 11
+    },
+    {
+      "person": "3",
+      "condition": "np",
+      "observed": 9,
+      "predicted": 11,
+      "continuous_prediction": 11.0,
+      "baseline": 11
+    },
+    {
+      "person": "3",
+      "condition": "wp",
+      "observed": 13,
+      "predicted": 11,
+      "continuous_prediction": 11.0,
+      "baseline": 11
+    },
+    {
+      "person": "4",
+      "condition": "np",
+      "observed": 14,
+      "predicted": 11,
+      "continuous_prediction": 11.0,
+      "baseline": 11
+    },
+    {
+      "person": "4",
+      "condition": "wp",
+      "observed": 11,
+      "predicted": 11,
+      "continuous_prediction": 11.0,
+      "baseline": 11
+    },
+    {
+      "person": "5",
+      "condition": "np",
+      "observed": 10,
+      "predicted": 11,
+      "continuous_prediction": 11.0,
+      "baseline": 11
+    },
+    {
+      "person": "5",
+      "condition": "wp",
+      "observed": 13,
+      "predicted": 11,
+      "continuous_prediction": 11.0,
+      "baseline": 11
+    },
+    {
+      "person": "6",
+      "condition": "np",
+      "observed": 11,
+      "predicted": 11,
+      "continuous_prediction": 11.0,
+      "baseline": 11
+    },
+    {
+      "person": "6",
+      "condition": "wp",
+      "observed": 11,
+      "predicted": 11,
+      "continuous_prediction": 11.0,
+      "baseline": 11
+    },
+    {
+      "person": "7",
+      "condition": "np",
+      "observed": 12,
+      "predicted": 11,
+      "continuous_prediction": 11.0,
+      "baseline": 11
+    },
+    {
+      "person": "7",
+      "condition": "wp",
+      "observed": 11,
+      "predicted": 11,
+      "continuous_prediction": 11.0,
+      "baseline": 11
+    },
+    {
+      "person": "8",
+      "condition": "np",
+      "observed": 11,
+      "predicted": 11,
+      "continuous_prediction": 11.0,
+      "baseline": 11
+    },
+    {
+      "person": "8",
+      "condition": "wp",
+      "observed": 9,
+      "predicted": 11,
+      "continuous_prediction": 11.0,
+      "baseline": 11
+    },
+    {
+      "person": "9",
+      "condition": "np",
+      "observed": 11,
+      "predicted": 11,
+      "continuous_prediction": 11.0,
+      "baseline": 11
+    },
+    {
+      "person": "9",
+      "condition": "wp",
+      "observed": 8,
+      "predicted": 11,
+      "continuous_prediction": 11.0,
+      "baseline": 11
+    },
+    {
+      "person": "10",
+      "condition": "np",
+      "observed": 11,
+      "predicted": 11,
+      "continuous_prediction": 11.0,
+      "baseline": 11
+    },
+    {
+      "person": "10",
+      "condition": "wp",
+      "observed": 11,
+      "predicted": 11,
+      "continuous_prediction": 11.0,
+      "baseline": 11
+    },
+    {
+      "person": "11",
+      "condition": "np",
+      "observed": 11,
+      "predicted": 11,
+      "continuous_prediction": 11.0,
+      "baseline": 11
+    },
+    {
+      "person": "11",
+      "condition": "wp",
+      "observed": 11,
+      "predicted": 11,
+      "continuous_prediction": 11.0,
+      "baseline": 11
+    },
+    {
+      "person": "12",
+      "condition": "np",
+      "observed": 9,
+      "predicted": 11,
+      "continuous_prediction": 11.0,
+      "baseline": 11
+    },
+    {
+      "person": "12",
+      "condition": "wp",
+      "observed": 9,
+      "predicted": 11,
+      "continuous_prediction": 11.0,
+      "baseline": 11
+    },
+    {
+      "person": "13",
+      "condition": "np",
+      "observed": 13,
+      "predicted": 11,
+      "continuous_prediction": 11.0,
+      "baseline": 11
+    },
+    {
+      "person": "13",
+      "condition": "wp",
+      "observed": 12,
+      "predicted": 11,
+      "continuous_prediction": 11.0,
+      "baseline": 11
+    },
+    {
+      "person": "14",
+      "condition": "np",
+      "observed": 11,
+      "predicted": 11,
+      "continuous_prediction": 11.0,
+      "baseline": 11
+    },
+    {
+      "person": "14",
+      "condition": "wp",
+      "observed": 10,
+      "predicted": 11,
+      "continuous_prediction": 11.0,
+      "baseline": 11
+    },
+    {
+      "person": "15",
+      "condition": "np",
+      "observed": 7,
+      "predicted": 11,
+      "continuous_prediction": 11.0,
+      "baseline": 11
+    },
+    {
+      "person": "15",
+      "condition": "wp",
+      "observed": 7,
+      "predicted": 11,
+      "continuous_prediction": 11.0,
+      "baseline": 11
+    },
+    {
+      "person": "16",
+      "condition": "np",
+      "observed": 12,
+      "predicted": 11,
+      "continuous_prediction": 11.0,
+      "baseline": 11
+    },
+    {
+      "person": "16",
+      "condition": "wp",
+      "observed": 12,
+      "predicted": 11,
+      "continuous_prediction": 11.0,
+      "baseline": 11
+    },
+    {
+      "person": "17",
+      "condition": "np",
+      "observed": 13,
+      "predicted": 11,
+      "continuous_prediction": 11.0,
+      "baseline": 11
+    },
+    {
+      "person": "17",
+      "condition": "wp",
+      "observed": 11,
+      "predicted": 11,
+      "continuous_prediction": 11.0,
+      "baseline": 11
+    }
+  ]
+}

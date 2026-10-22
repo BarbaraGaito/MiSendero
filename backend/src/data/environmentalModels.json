@@ -1,0 +1,105 @@
+{
+  "schema_version": 1,
+  "models": {
+    "snow": {
+      "source": {
+        "name": "NASA NSIDC · MOD10A1 6.1",
+        "url": "https://nsidc.org/data/mod10a1/versions/61",
+        "license": "NASA data use and citation policy"
+      },
+      "unavailable_message": "No hay una estimación de nieve evaluada para este sector.",
+      "limitations": [
+        "Las nubes pueden impedir observar la nieve.",
+        "La ausencia de nieve detectada no determina la transitabilidad del sendero."
+      ]
+    },
+    "river_level": {
+      "source": {
+        "name": "Instituto Nacional del Agua · API pública",
+        "url": "https://www.argentina.gob.ar/node/228063",
+        "license": null
+      },
+      "unavailable_message": "Este recorrido no tiene una estación de referencia verificada.",
+      "limitations": [
+        "El nivel de una estación no determina si un río se puede cruzar."
+      ]
+    },
+    "fire_detection": {
+      "source": {
+        "name": "NASA MODIS/Terra · MOD14A1",
+        "url": "https://modis.gsfc.nasa.gov/data/dataprod/mod14.php",
+        "license": null
+      },
+      "unavailable_message": "El modelo experimental de detección de fuego no alcanzó la fiabilidad necesaria para ofrecer estimaciones durante el trekking.",
+      "limitations": [
+        "La falta de una detección satelital no descarta fuego.",
+        "Consultá los avisos y cierres oficiales."
+      ],
+      "fallback_status": "not_approved"
+    }
+  },
+  "artifacts": {
+    "river-36964-3h": {
+      "model_type": "river_level",
+      "version": "1",
+      "series_id": 36964,
+      "station_name": "Iguazú - Pto. Iguazú",
+      "horizon_hours": 3,
+      "algorithm": "random_forest",
+      "evidence_sha256": "183455603dd6cf6266e86dfbf64dcf620e0e1238a9d3f4e4fe6b67ad3c38829b",
+      "historical_mae_m": 0.7167137656090123,
+      "visualization_allowed": false,
+      "deployment_approved": false,
+      "scope": "Station-specific retrospective chronological test; trail applicability not approved."
+    },
+    "river-36964-6h": {
+      "model_type": "river_level",
+      "version": "1",
+      "series_id": 36964,
+      "station_name": "Iguazú - Pto. Iguazú",
+      "horizon_hours": 6,
+      "algorithm": "random_forest",
+      "evidence_sha256": "183455603dd6cf6266e86dfbf64dcf620e0e1238a9d3f4e4fe6b67ad3c38829b",
+      "historical_mae_m": 0.8890012657797787,
+      "visualization_allowed": false,
+      "deployment_approved": false,
+      "scope": "Station-specific retrospective chronological test; trail applicability not approved."
+    },
+    "river-37019-3h": {
+      "model_type": "river_level",
+      "version": "1",
+      "series_id": 37019,
+      "station_name": "Manso - Los Moscos",
+      "horizon_hours": 3,
+      "algorithm": "persistence",
+      "evidence_sha256": "183455603dd6cf6266e86dfbf64dcf620e0e1238a9d3f4e4fe6b67ad3c38829b",
+      "historical_mae_m": 0.005,
+      "visualization_allowed": false,
+      "deployment_approved": false,
+      "scope": "Station-specific retrospective chronological test; trail applicability not approved."
+    },
+    "river-37019-6h": {
+      "model_type": "river_level",
+      "version": "1",
+      "series_id": 37019,
+      "station_name": "Manso - Los Moscos",
+      "horizon_hours": 6,
+      "algorithm": "persistence",
+      "evidence_sha256": "183455603dd6cf6266e86dfbf64dcf620e0e1238a9d3f4e4fe6b67ad3c38829b",
+      "historical_mae_m": 0.0070695187165775416,
+      "visualization_allowed": false,
+      "deployment_approved": false,
+      "scope": "Station-specific retrospective chronological test; trail applicability not approved."
+    },
+    "fire-mod14a1-daily": {
+      "model_type": "fire_detection",
+      "version": "1",
+      "algorithm": "xgboost",
+      "evidence_sha256": "cffd0300fb6896e396e9cdfbdb408f0a057fdc719fc280f15716c837bcc64f75",
+      "visualization_allowed": false,
+      "deployment_approved": false,
+      "scope": "One qualified Argentine land pixel; next 24h MODIS detection, not wildfire safety."
+    }
+  },
+  "reviewed_route_associations": []
+}

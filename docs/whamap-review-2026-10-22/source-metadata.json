@@ -1,0 +1,39 @@
+{
+  "id": "8zt9g9g64c",
+  "version": 1,
+  "name": "WHAMAP",
+  "description": "WHAMAP dataset contains inertial data collected from five IMU sensors positioned on the lower limbs (thighs, shanks, and right feet), along with data from smartphone sensors, from a group of 10 participants performing five activities: sitting, standing, walking, uphill walking, and squatting. In addition, the walking, uphill walking, and squatting activities include fatigue variations, annotated according to the Borg Rating of Perceived Exertion scale. ",
+  "method": "The WHAMAP dataset was collected using a Flutter-based mobile application that synchronizes, via Bluetooth Low Energy (BLE), data from five WT9011DCL-BT50 inertial sensors positioned on the lower limbs (thighs, shanks, and right foot) with data from the smartphone’s built-in sensors. All sensor data were synchronized at 50 Hz and exported in CSV format. Ten participants (subject01–subject10) performed five activities: sitting, standing, walking, uphill walking, and squatting. The walking, uphill walking, and squatting activities also included controlled variations in fatigue, annotated according to the Borg Rating of Perceived Exertion scale (levels 0–4).",
+  "doi": "10.17632/8zt9g9g64c.1",
+  "publish_date": "2026-09-06T08:29:20.285Z",
+  "last_modification_date": "2026-09-01T18:42:55.215Z",
+  "licence": {
+    "id": "01d9c749-3c4d-4431-9df3-620b2dcfe144",
+    "short_name": "CC BY 4.0",
+    "full_name": "Creative Commons Attribution 4.0 International",
+    "description": "You can share, copy and modify this dataset so long as you give appropriate credit, provide a link to the CC BY license, and indicate if changes were made, but you may not do so in a way that suggests the rights holder has endorsed you or your use of the dataset. Note that further permission may be required for any content within the dataset that is identified as belonging to a third party.",
+    "url": "http://creativecommons.org/licenses/by/4.0",
+    "category": "Creative",
+    "customer_id": null
+  },
+  "institutions": [
+    {
+      "id": "1fca581c-5094-430f-813b-951cb895d870",
+      "name": "Universidade Federal de Ouro Preto",
+      "url": "http://www.ufop.br/",
+      "location": {
+        "name": "Ouro Preto",
+        "country": "Brazil",
+        "country_code": "BR",
+        "country_subdivision": "Minas Gerais"
+      },
+      "edm:identifier": [
+        {
+          "type": "idtype:ROR",
+          "value": "https://ror.org/056s65p46"
+        }
+      ]
+    }
+  ],
+  "related_links": []
+}

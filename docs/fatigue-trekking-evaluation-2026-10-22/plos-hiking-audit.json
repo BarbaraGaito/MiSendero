@@ -1,0 +1,17 @@
+{
+  "source": "https://journals.plos.org/plosone/article/file?id=10.1371/journal.pone.0177719.s003&type=supplementary",
+  "sha256": "2fd3b50d7f21b8509d02aa59b807df80ac34e8a6ab666664ab164502d8a1b843",
+  "bytes": 18770,
+  "format": "SPSS SAV",
+  "rows": 42,
+  "columns": 109,
+  "hiking_rpe_observations": {
+    "M_pre_RPE": 42,
+    "M_between_RPE": 42,
+    "M_post_RPE": 42
+  },
+  "hiking_rpe_scale": "Borg 6-20 as documented in the study",
+  "heart_rate_columns": [],
+  "subject_id_columns": [],
+  "decision": "Not suitable for external evaluation of the GeoFatigue model: no individual HR or wearable signal in the public supplement, and RPE scales differ."
+}

@@ -1,0 +1,1028 @@
+{
+  "source": "https://doi.org/10.5281/zenodo.7997851",
+  "license": "CC-BY-4.0",
+  "file_md5": "054b2be68060e0e4543a431fe49c4f14",
+  "file_sha256": "fe7cbdde64111b39b81fc5bcf9039b78af8ace328d287e5dc2d86f2a4dda341d",
+  "task": "Original NF/F running condition before/after a beep test to inability to keep pace",
+  "scope": "Exploratory source benchmark; no trekking, walking, wrist, phone, or real-time fatigue-onset validation",
+  "participants": 19,
+  "strides": 6006,
+  "samples_per_segment": 180,
+  "model": "Fixed RandomForest: 150 trees, depth 5, min leaf 10, balanced weights, seed 42",
+  "features": "Acceleration magnitude mean, std, median, p10, p90, RMS, range, RMS first difference",
+  "validation": "Leave one complete participant out; all strides from both conditions stay together",
+  "stride_level_model": {
+    "accuracy": 0.63003663003663,
+    "balanced_accuracy": 0.6313226247436774,
+    "fatigued_condition_precision_ppv": 0.6576047024246877,
+    "fatigued_condition_sensitivity": 0.5811688311688312,
+    "confusion_matrix_NF_F": [
+      [
+        1994,
+        932
+      ],
+      [
+        1290,
+        1790
+      ]
+    ]
+  },
+  "stride_level_majority_baseline": {
+    "accuracy": 0.5128205128205128,
+    "balanced_accuracy": 0.5,
+    "fatigued_condition_precision_ppv": 0.5128205128205128,
+    "fatigued_condition_sensitivity": 1.0,
+    "confusion_matrix_NF_F": [
+      [
+        0,
+        2926
+      ],
+      [
+        0,
+        3080
+      ]
+    ]
+  },
+  "mean_participant_balanced_accuracy": 0.627417303424499,
+  "participant_bootstrap_95pct_balanced_accuracy": [
+    0.5585886274627049,
+    0.6983316106957327
+  ],
+  "session_majority_vote": {
+    "accuracy": 0.6578947368421053,
+    "balanced_accuracy": 0.6578947368421053,
+    "fatigued_condition_precision_ppv": 0.6875,
+    "fatigued_condition_sensitivity": 0.5789473684210527,
+    "confusion_matrix_NF_F": [
+      [
+        14,
+        5
+      ],
+      [
+        8,
+        11
+      ]
+    ]
+  },
+  "participant_results": [
+    {
+      "person": "4",
+      "strides": 251,
+      "model": {
+        "accuracy": 0.47410358565737054,
+        "balanced_accuracy": 0.46169739351557537,
+        "fatigued_condition_precision_ppv": 0.49528301886792453,
+        "fatigued_condition_sensitivity": 0.8076923076923077,
+        "confusion_matrix_NF_F": [
+          [
+            14,
+            107
+          ],
+          [
+            25,
+            105
+          ]
+        ]
+      },
+      "majority_baseline": {
+        "accuracy": 0.5179282868525896,
+        "balanced_accuracy": 0.5,
+        "fatigued_condition_precision_ppv": 0.5179282868525896,
+        "fatigued_condition_sensitivity": 1.0,
+        "confusion_matrix_NF_F": [
+          [
+            0,
+            121
+          ],
+          [
+            0,
+            130
+          ]
+        ]
+      }
+    },
+    {
+      "person": "5",
+      "strides": 198,
+      "model": {
+        "accuracy": 0.7828282828282829,
+        "balanced_accuracy": 0.7824489795918368,
+        "fatigued_condition_precision_ppv": 0.8021978021978022,
+        "fatigued_condition_sensitivity": 0.7448979591836735,
+        "confusion_matrix_NF_F": [
+          [
+            82,
+            18
+          ],
+          [
+            25,
+            73
+          ]
+        ]
+      },
+      "majority_baseline": {
+        "accuracy": 0.494949494949495,
+        "balanced_accuracy": 0.5,
+        "fatigued_condition_precision_ppv": 0.494949494949495,
+        "fatigued_condition_sensitivity": 1.0,
+        "confusion_matrix_NF_F": [
+          [
+            0,
+            100
+          ],
+          [
+            0,
+            98
+          ]
+        ]
+      }
+    },
+    {
+      "person": "6",
+      "strides": 318,
+      "model": {
+        "accuracy": 0.6761006289308176,
+        "balanced_accuracy": 0.6729094076655052,
+        "fatigued_condition_precision_ppv": 0.6580310880829016,
+        "fatigued_condition_sensitivity": 0.774390243902439,
+        "confusion_matrix_NF_F": [
+          [
+            88,
+            66
+          ],
+          [
+            37,
+            127
+          ]
+        ]
+      },
+      "majority_baseline": {
+        "accuracy": 0.5157232704402516,
+        "balanced_accuracy": 0.5,
+        "fatigued_condition_precision_ppv": 0.5157232704402516,
+        "fatigued_condition_sensitivity": 1.0,
+        "confusion_matrix_NF_F": [
+          [
+            0,
+            154
+          ],
+          [
+            0,
+            164
+          ]
+        ]
+      }
+    },
+    {
+      "person": "7",
+      "strides": 159,
+      "model": {
+        "accuracy": 0.5849056603773585,
+        "balanced_accuracy": 0.6064285714285714,
+        "fatigued_condition_precision_ppv": 0.5323741007194245,
+        "fatigued_condition_sensitivity": 0.9866666666666667,
+        "confusion_matrix_NF_F": [
+          [
+            19,
+            65
+          ],
+          [
+            1,
+            74
+          ]
+        ]
+      },
+      "majority_baseline": {
+        "accuracy": 0.4716981132075472,
+        "balanced_accuracy": 0.5,
+        "fatigued_condition_precision_ppv": 0.4716981132075472,
+        "fatigued_condition_sensitivity": 1.0,
+        "confusion_matrix_NF_F": [
+          [
+            0,
+            84
+          ],
+          [
+            0,
+            75
+          ]
+        ]
+      }
+    },
+    {
+      "person": "8",
+      "strides": 403,
+      "model": {
+        "accuracy": 0.8982630272952854,
+        "balanced_accuracy": 0.8985148514851485,
+        "fatigued_condition_precision_ppv": 0.8305785123966942,
+        "fatigued_condition_sensitivity": 1.0,
+        "confusion_matrix_NF_F": [
+          [
+            161,
+            41
+          ],
+          [
+            0,
+            201
+          ]
+        ]
+      },
+      "majority_baseline": {
+        "accuracy": 0.4987593052109181,
+        "balanced_accuracy": 0.5,
+        "fatigued_condition_precision_ppv": 0.4987593052109181,
+        "fatigued_condition_sensitivity": 1.0,
+        "confusion_matrix_NF_F": [
+          [
+            0,
+            202
+          ],
+          [
+            0,
+            201
+          ]
+        ]
+      }
+    },
+    {
+      "person": "9",
+      "strides": 407,
+      "model": {
+        "accuracy": 0.5036855036855037,
+        "balanced_accuracy": 0.5378776820902058,
+        "fatigued_condition_precision_ppv": 0.7209302325581395,
+        "fatigued_condition_sensitivity": 0.14027149321266968,
+        "confusion_matrix_NF_F": [
+          [
+            174,
+            12
+          ],
+          [
+            190,
+            31
+          ]
+        ]
+      },
+      "majority_baseline": {
+        "accuracy": 0.542997542997543,
+        "balanced_accuracy": 0.5,
+        "fatigued_condition_precision_ppv": 0.542997542997543,
+        "fatigued_condition_sensitivity": 1.0,
+        "confusion_matrix_NF_F": [
+          [
+            0,
+            186
+          ],
+          [
+            0,
+            221
+          ]
+        ]
+      }
+    },
+    {
+      "person": "10",
+      "strides": 327,
+      "model": {
+        "accuracy": 0.6697247706422018,
+        "balanced_accuracy": 0.6867796610169492,
+        "fatigued_condition_precision_ppv": 0.8415841584158416,
+        "fatigued_condition_sensitivity": 0.480225988700565,
+        "confusion_matrix_NF_F": [
+          [
+            134,
+            16
+          ],
+          [
+            92,
+            85
+          ]
+        ]
+      },
+      "majority_baseline": {
+        "accuracy": 0.5412844036697247,
+        "balanced_accuracy": 0.5,
+        "fatigued_condition_precision_ppv": 0.5412844036697247,
+        "fatigued_condition_sensitivity": 1.0,
+        "confusion_matrix_NF_F": [
+          [
+            0,
+            150
+          ],
+          [
+            0,
+            177
+          ]
+        ]
+      }
+    },
+    {
+      "person": "11",
+      "strides": 368,
+      "model": {
+        "accuracy": 0.6358695652173914,
+        "balanced_accuracy": 0.6625258799171843,
+        "fatigued_condition_precision_ppv": 0.8230088495575221,
+        "fatigued_condition_sensitivity": 0.4492753623188406,
+        "confusion_matrix_NF_F": [
+          [
+            141,
+            20
+          ],
+          [
+            114,
+            93
+          ]
+        ]
+      },
+      "majority_baseline": {
+        "accuracy": 0.5625,
+        "balanced_accuracy": 0.5,
+        "fatigued_condition_precision_ppv": 0.5625,
+        "fatigued_condition_sensitivity": 1.0,
+        "confusion_matrix_NF_F": [
+          [
+            0,
+            161
+          ],
+          [
+            0,
+            207
+          ]
+        ]
+      }
+    },
+    {
+      "person": "12",
+      "strides": 235,
+      "model": {
+        "accuracy": 0.7361702127659574,
+        "balanced_accuracy": 0.7350427350427351,
+        "fatigued_condition_precision_ppv": 0.6555555555555556,
+        "fatigued_condition_sensitivity": 1.0,
+        "confusion_matrix_NF_F": [
+          [
+            55,
+            62
+          ],
+          [
+            0,
+            118
+          ]
+        ]
+      },
+      "majority_baseline": {
+        "accuracy": 0.502127659574468,
+        "balanced_accuracy": 0.5,
+        "fatigued_condition_precision_ppv": 0.502127659574468,
+        "fatigued_condition_sensitivity": 1.0,
+        "confusion_matrix_NF_F": [
+          [
+            0,
+            117
+          ],
+          [
+            0,
+            118
+          ]
+        ]
+      }
+    },
+    {
+      "person": "13",
+      "strides": 156,
+      "model": {
+        "accuracy": 0.4358974358974359,
+        "balanced_accuracy": 0.4657142857142857,
+        "fatigued_condition_precision_ppv": 0.6,
+        "fatigued_condition_sensitivity": 0.36,
+        "confusion_matrix_NF_F": [
+          [
+            32,
+            24
+          ],
+          [
+            64,
+            36
+          ]
+        ]
+      },
+      "majority_baseline": {
+        "accuracy": 0.6410256410256411,
+        "balanced_accuracy": 0.5,
+        "fatigued_condition_precision_ppv": 0.6410256410256411,
+        "fatigued_condition_sensitivity": 1.0,
+        "confusion_matrix_NF_F": [
+          [
+            0,
+            56
+          ],
+          [
+            0,
+            100
+          ]
+        ]
+      }
+    },
+    {
+      "person": "14",
+      "strides": 421,
+      "model": {
+        "accuracy": 0.5249406175771971,
+        "balanced_accuracy": 0.5404386798859161,
+        "fatigued_condition_precision_ppv": 0.6195652173913043,
+        "fatigued_condition_sensitivity": 0.25675675675675674,
+        "confusion_matrix_NF_F": [
+          [
+            164,
+            35
+          ],
+          [
+            165,
+            57
+          ]
+        ]
+      },
+      "majority_baseline": {
+        "accuracy": 0.5273159144893111,
+        "balanced_accuracy": 0.5,
+        "fatigued_condition_precision_ppv": 0.5273159144893111,
+        "fatigued_condition_sensitivity": 1.0,
+        "confusion_matrix_NF_F": [
+          [
+            0,
+            199
+          ],
+          [
+            0,
+            222
+          ]
+        ]
+      }
+    },
+    {
+      "person": "15",
+      "strides": 261,
+      "model": {
+        "accuracy": 0.29118773946360155,
+        "balanced_accuracy": 0.2907640687544149,
+        "fatigued_condition_precision_ppv": 0.26717557251908397,
+        "fatigued_condition_sensitivity": 0.28225806451612906,
+        "confusion_matrix_NF_F": [
+          [
+            41,
+            96
+          ],
+          [
+            89,
+            35
+          ]
+        ]
+      },
+      "majority_baseline": {
+        "accuracy": 0.47509578544061304,
+        "balanced_accuracy": 0.5,
+        "fatigued_condition_precision_ppv": 0.47509578544061304,
+        "fatigued_condition_sensitivity": 1.0,
+        "confusion_matrix_NF_F": [
+          [
+            0,
+            137
+          ],
+          [
+            0,
+            124
+          ]
+        ]
+      }
+    },
+    {
+      "person": "17",
+      "strides": 419,
+      "model": {
+        "accuracy": 0.5560859188544153,
+        "balanced_accuracy": 0.5561656944950784,
+        "fatigued_condition_precision_ppv": 0.5609756097560976,
+        "fatigued_condition_sensitivity": 0.5450236966824644,
+        "confusion_matrix_NF_F": [
+          [
+            118,
+            90
+          ],
+          [
+            96,
+            115
+          ]
+        ]
+      },
+      "majority_baseline": {
+        "accuracy": 0.5035799522673031,
+        "balanced_accuracy": 0.5,
+        "fatigued_condition_precision_ppv": 0.5035799522673031,
+        "fatigued_condition_sensitivity": 1.0,
+        "confusion_matrix_NF_F": [
+          [
+            0,
+            208
+          ],
+          [
+            0,
+            211
+          ]
+        ]
+      }
+    },
+    {
+      "person": "18",
+      "strides": 268,
+      "model": {
+        "accuracy": 0.8507462686567164,
+        "balanced_accuracy": 0.8657363977485929,
+        "fatigued_condition_precision_ppv": 0.7461538461538462,
+        "fatigued_condition_sensitivity": 0.9326923076923077,
+        "confusion_matrix_NF_F": [
+          [
+            131,
+            33
+          ],
+          [
+            7,
+            97
+          ]
+        ]
+      },
+      "majority_baseline": {
+        "accuracy": 0.3880597014925373,
+        "balanced_accuracy": 0.5,
+        "fatigued_condition_precision_ppv": 0.3880597014925373,
+        "fatigued_condition_sensitivity": 1.0,
+        "confusion_matrix_NF_F": [
+          [
+            0,
+            164
+          ],
+          [
+            0,
+            104
+          ]
+        ]
+      }
+    },
+    {
+      "person": "19",
+      "strides": 320,
+      "model": {
+        "accuracy": 0.615625,
+        "balanced_accuracy": 0.6195524859646997,
+        "fatigued_condition_precision_ppv": 0.70625,
+        "fatigued_condition_sensitivity": 0.5978835978835979,
+        "confusion_matrix_NF_F": [
+          [
+            84,
+            47
+          ],
+          [
+            76,
+            113
+          ]
+        ]
+      },
+      "majority_baseline": {
+        "accuracy": 0.590625,
+        "balanced_accuracy": 0.5,
+        "fatigued_condition_precision_ppv": 0.590625,
+        "fatigued_condition_sensitivity": 1.0,
+        "confusion_matrix_NF_F": [
+          [
+            0,
+            131
+          ],
+          [
+            0,
+            189
+          ]
+        ]
+      }
+    },
+    {
+      "person": "20",
+      "strides": 420,
+      "model": {
+        "accuracy": 0.888095238095238,
+        "balanced_accuracy": 0.8884895349100886,
+        "fatigued_condition_precision_ppv": 0.8319672131147541,
+        "fatigued_condition_sensitivity": 0.9712918660287081,
+        "confusion_matrix_NF_F": [
+          [
+            170,
+            41
+          ],
+          [
+            6,
+            203
+          ]
+        ]
+      },
+      "majority_baseline": {
+        "accuracy": 0.4976190476190476,
+        "balanced_accuracy": 0.5,
+        "fatigued_condition_precision_ppv": 0.4976190476190476,
+        "fatigued_condition_sensitivity": 1.0,
+        "confusion_matrix_NF_F": [
+          [
+            0,
+            211
+          ],
+          [
+            0,
+            209
+          ]
+        ]
+      }
+    },
+    {
+      "person": "21",
+      "strides": 362,
+      "model": {
+        "accuracy": 0.5469613259668509,
+        "balanced_accuracy": 0.5350073313782991,
+        "fatigued_condition_precision_ppv": 0.75,
+        "fatigued_condition_sensitivity": 0.10227272727272728,
+        "confusion_matrix_NF_F": [
+          [
+            180,
+            6
+          ],
+          [
+            158,
+            18
+          ]
+        ]
+      },
+      "majority_baseline": {
+        "accuracy": 0.4861878453038674,
+        "balanced_accuracy": 0.5,
+        "fatigued_condition_precision_ppv": 0.4861878453038674,
+        "fatigued_condition_sensitivity": 1.0,
+        "confusion_matrix_NF_F": [
+          [
+            0,
+            186
+          ],
+          [
+            0,
+            176
+          ]
+        ]
+      }
+    },
+    {
+      "person": "22",
+      "strides": 322,
+      "model": {
+        "accuracy": 0.4503105590062112,
+        "balanced_accuracy": 0.43580075028038834,
+        "fatigued_condition_precision_ppv": 0.484251968503937,
+        "fatigued_condition_sensitivity": 0.727810650887574,
+        "confusion_matrix_NF_F": [
+          [
+            22,
+            131
+          ],
+          [
+            46,
+            123
+          ]
+        ]
+      },
+      "majority_baseline": {
+        "accuracy": 0.5248447204968945,
+        "balanced_accuracy": 0.5,
+        "fatigued_condition_precision_ppv": 0.5248447204968945,
+        "fatigued_condition_sensitivity": 1.0,
+        "confusion_matrix_NF_F": [
+          [
+            0,
+            153
+          ],
+          [
+            0,
+            169
+          ]
+        ]
+      }
+    },
+    {
+      "person": "23",
+      "strides": 391,
+      "model": {
+        "accuracy": 0.690537084398977,
+        "balanced_accuracy": 0.6790343741800053,
+        "fatigued_condition_precision_ppv": 0.7962962962962963,
+        "fatigued_condition_sensitivity": 0.4648648648648649,
+        "confusion_matrix_NF_F": [
+          [
+            184,
+            22
+          ],
+          [
+            99,
+            86
+          ]
+        ]
+      },
+      "majority_baseline": {
+        "accuracy": 0.4731457800511509,
+        "balanced_accuracy": 0.5,
+        "fatigued_condition_precision_ppv": 0.4731457800511509,
+        "fatigued_condition_sensitivity": 1.0,
+        "confusion_matrix_NF_F": [
+          [
+            0,
+            206
+          ],
+          [
+            0,
+            185
+          ]
+        ]
+      }
+    }
+  ],
+  "sessions": [
+    {
+      "person": "4",
+      "condition": "NF",
+      "strides": 121,
+      "observed": 0,
+      "predicted": 1
+    },
+    {
+      "person": "4",
+      "condition": "F",
+      "strides": 130,
+      "observed": 1,
+      "predicted": 1
+    },
+    {
+      "person": "5",
+      "condition": "NF",
+      "strides": 100,
+      "observed": 0,
+      "predicted": 0
+    },
+    {
+      "person": "5",
+      "condition": "F",
+      "strides": 98,
+      "observed": 1,
+      "predicted": 1
+    },
+    {
+      "person": "6",
+      "condition": "NF",
+      "strides": 154,
+      "observed": 0,
+      "predicted": 0
+    },
+    {
+      "person": "6",
+      "condition": "F",
+      "strides": 164,
+      "observed": 1,
+      "predicted": 1
+    },
+    {
+      "person": "7",
+      "condition": "NF",
+      "strides": 84,
+      "observed": 0,
+      "predicted": 1
+    },
+    {
+      "person": "7",
+      "condition": "F",
+      "strides": 75,
+      "observed": 1,
+      "predicted": 1
+    },
+    {
+      "person": "8",
+      "condition": "NF",
+      "strides": 202,
+      "observed": 0,
+      "predicted": 0
+    },
+    {
+      "person": "8",
+      "condition": "F",
+      "strides": 201,
+      "observed": 1,
+      "predicted": 1
+    },
+    {
+      "person": "9",
+      "condition": "NF",
+      "strides": 186,
+      "observed": 0,
+      "predicted": 0
+    },
+    {
+      "person": "9",
+      "condition": "F",
+      "strides": 221,
+      "observed": 1,
+      "predicted": 0
+    },
+    {
+      "person": "10",
+      "condition": "NF",
+      "strides": 150,
+      "observed": 0,
+      "predicted": 0
+    },
+    {
+      "person": "10",
+      "condition": "F",
+      "strides": 177,
+      "observed": 1,
+      "predicted": 0
+    },
+    {
+      "person": "11",
+      "condition": "NF",
+      "strides": 161,
+      "observed": 0,
+      "predicted": 0
+    },
+    {
+      "person": "11",
+      "condition": "F",
+      "strides": 207,
+      "observed": 1,
+      "predicted": 0
+    },
+    {
+      "person": "12",
+      "condition": "NF",
+      "strides": 117,
+      "observed": 0,
+      "predicted": 1
+    },
+    {
+      "person": "12",
+      "condition": "F",
+      "strides": 118,
+      "observed": 1,
+      "predicted": 1
+    },
+    {
+      "person": "13",
+      "condition": "NF",
+      "strides": 56,
+      "observed": 0,
+      "predicted": 0
+    },
+    {
+      "person": "13",
+      "condition": "F",
+      "strides": 100,
+      "observed": 1,
+      "predicted": 0
+    },
+    {
+      "person": "14",
+      "condition": "NF",
+      "strides": 199,
+      "observed": 0,
+      "predicted": 0
+    },
+    {
+      "person": "14",
+      "condition": "F",
+      "strides": 222,
+      "observed": 1,
+      "predicted": 0
+    },
+    {
+      "person": "15",
+      "condition": "NF",
+      "strides": 137,
+      "observed": 0,
+      "predicted": 1
+    },
+    {
+      "person": "15",
+      "condition": "F",
+      "strides": 124,
+      "observed": 1,
+      "predicted": 0
+    },
+    {
+      "person": "17",
+      "condition": "NF",
+      "strides": 208,
+      "observed": 0,
+      "predicted": 0
+    },
+    {
+      "person": "17",
+      "condition": "F",
+      "strides": 211,
+      "observed": 1,
+      "predicted": 1
+    },
+    {
+      "person": "18",
+      "condition": "NF",
+      "strides": 164,
+      "observed": 0,
+      "predicted": 0
+    },
+    {
+      "person": "18",
+      "condition": "F",
+      "strides": 104,
+      "observed": 1,
+      "predicted": 1
+    },
+    {
+      "person": "19",
+      "condition": "NF",
+      "strides": 131,
+      "observed": 0,
+      "predicted": 0
+    },
+    {
+      "person": "19",
+      "condition": "F",
+      "strides": 189,
+      "observed": 1,
+      "predicted": 1
+    },
+    {
+      "person": "20",
+      "condition": "NF",
+      "strides": 211,
+      "observed": 0,
+      "predicted": 0
+    },
+    {
+      "person": "20",
+      "condition": "F",
+      "strides": 209,
+      "observed": 1,
+      "predicted": 1
+    },
+    {
+      "person": "21",
+      "condition": "NF",
+      "strides": 186,
+      "observed": 0,
+      "predicted": 0
+    },
+    {
+      "person": "21",
+      "condition": "F",
+      "strides": 176,
+      "observed": 1,
+      "predicted": 0
+    },
+    {
+      "person": "22",
+      "condition": "NF",
+      "strides": 153,
+      "observed": 0,
+      "predicted": 1
+    },
+    {
+      "person": "22",
+      "condition": "F",
+      "strides": 169,
+      "observed": 1,
+      "predicted": 1
+    },
+    {
+      "person": "23",
+      "condition": "NF",
+      "strides": 206,
+      "observed": 0,
+      "predicted": 0
+    },
+    {
+      "person": "23",
+      "condition": "F",
+      "strides": 185,
+      "observed": 1,
+      "predicted": 0
+    }
+  ],
+  "limitations": [
+    "Protocol phase is a condition label, not a continuous independent measure of physiological fatigue.",
+    "All NF recordings precede the fatiguing protocol; phase/order/speed can confound prediction.",
+    "Segments are strides provided by the source, not independent fatigue assessments.",
+    "Lumbar sensor location and stride segmentation differ from current app inputs.",
+    "No threshold or deployment decision was tuned to these held-out results."
+  ]
+}

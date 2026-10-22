@@ -1,0 +1,13 @@
+# Exact packages relevant to river training in the evaluated local environment.
+# Python version/platform are recorded in environment.json. Other project
+# research tools are not required to fit or audit these river models.
+joblib==1.6.0
+numpy==2.5.4
+pandas==3.0.6
+scikit-learn==1.9.1
+scipy==1.18.1
+threadpoolctl==3.7.0
+python-dateutil==2.9.0.post0
+six==1.17.0
+tzdata==2026.5
+xgboost==3.4.1

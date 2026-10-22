@@ -1,0 +1,157 @@
+{
+  "river_stations": [
+    {
+      "series_id": 36964,
+      "station": "Iguazú - Pto. Iguazú",
+      "coordinates": {
+        "type": "Point",
+        "coordinates": [
+          -54.58,
+          -25.5933333333333
+        ]
+      },
+      "variable": {
+        "id": 2,
+        "var": "H",
+        "nombre": "Altura hidrométrica",
+        "abrev": "altura",
+        "type": "num",
+        "datatype": "Continuous",
+        "valuetype": "Field Observation",
+        "GeneralCategory": "Hydrology",
+        "VariableName": "Gage height",
+        "SampleMedium": "Surface Water",
+        "def_unit_id": "11",
+        "timeSupport": {
+          "years": 0,
+          "months": 0,
+          "days": 0,
+          "hours": 0,
+          "minutes": 0,
+          "seconds": 0,
+          "milliseconds": 0
+        },
+        "def_hora_corte": null
+      },
+      "units": {
+        "id": 11,
+        "nombre": "metros",
+        "abrev": "m",
+        "UnitsID": 52,
+        "UnitsType": "Length"
+      },
+      "procedure": {
+        "id": 1,
+        "nombre": "medición directa",
+        "abrev": "medicion",
+        "descripcion": "Medición directa"
+      },
+      "source": {
+        "url": "https://alerta.ina.gob.ar/a5/obs/puntual/series/36964?timestart=2023-01-01T00%3A00%3A00Z&timeend=2026-10-22T23%3A59%3A59Z",
+        "retrieved_at": null,
+        "note": "Existing research cache predates acquisition sidecar; acquisition instant unknown.",
+        "sha256": "a85a50bc1565b6cd092b0a896aebf4fe22ef85a555821d212a53f438d10f0472",
+        "bytes": 9009350
+      },
+      "original_rows": 33599,
+      "accepted_rows": 33599,
+      "exclusions": {
+        "identical_duplicate_timestamp": 0
+      },
+      "source_quality": "Direct sensor measurements; not certified as consolidated quality-controlled SNIH data.",
+      "route_association": "Not approved: a nearby station is not proof of hydrological applicability to a trail."
+    },
+    {
+      "series_id": 37019,
+      "station": "Manso - Los Moscos",
+      "coordinates": {
+        "type": "Point",
+        "coordinates": [
+          -71.6413888888889,
+          -41.3533333333333
+        ]
+      },
+      "variable": {
+        "id": 2,
+        "var": "H",
+        "nombre": "Altura hidrométrica",
+        "abrev": "altura",
+        "type": "num",
+        "datatype": "Continuous",
+        "valuetype": "Field Observation",
+        "GeneralCategory": "Hydrology",
+        "VariableName": "Gage height",
+        "SampleMedium": "Surface Water",
+        "def_unit_id": "11",
+        "timeSupport": {
+          "years": 0,
+          "months": 0,
+          "days": 0,
+          "hours": 0,
+          "minutes": 0,
+          "seconds": 0,
+          "milliseconds": 0
+        },
+        "def_hora_corte": null
+      },
+      "units": {
+        "id": 11,
+        "nombre": "metros",
+        "abrev": "m",
+        "UnitsID": 52,
+        "UnitsType": "Length"
+      },
+      "procedure": {
+        "id": 1,
+        "nombre": "medición directa",
+        "abrev": "medicion",
+        "descripcion": "Medición directa"
+      },
+      "source": {
+        "url": "https://alerta.ina.gob.ar/a5/obs/puntual/series/37019?timestart=2023-01-01T00%3A00%3A00Z&timeend=2026-10-22T23%3A59%3A59Z",
+        "retrieved_at": null,
+        "note": "Existing research cache predates acquisition sidecar; acquisition instant unknown.",
+        "sha256": "e30b1e62e7492327719adacb8004dfb06c7096d274a5eecbe9f29203f0ca50f2",
+        "bytes": 1055222
+      },
+      "original_rows": 3934,
+      "accepted_rows": 3934,
+      "exclusions": {
+        "identical_duplicate_timestamp": 0
+      },
+      "source_quality": "Direct sensor measurements; not certified as consolidated quality-controlled SNIH data.",
+      "route_association": "Not approved: a nearby station is not proof of hydrological applicability to a trail."
+    }
+  ],
+  "excluded_river_stations": {
+    "32926": "Excluded from the active project and thesis at user request on 2026-10-22; located in Entre Rios, Argentina."
+  },
+  "satellite_models": {
+    "snow": {
+      "status": "no_data",
+      "reason": "earthdata_authentication_required",
+      "source": "https://nsidc.org/data/mod10a1/versions/61",
+      "product": "MOD10A1.061",
+      "target": "Next-day observed snow cover only for valid cloud-free land pixels",
+      "constraints": [
+        "Earthdata authentication is not configured; user requested work only with accessible sources.",
+        "Product publication lags observation. Calendar observation date is not availability time.",
+        "Cloud, polar darkness, water, fill and invalid QA cannot become negative snow labels."
+      ]
+    },
+    "fire_detection": {
+      "status": "not_approved",
+      "reason": "experimental_validation_required_before_route_use",
+      "source": "https://planetarycomputer.microsoft.com/dataset/modis-14A1-061",
+      "target": "Next-24h nominal/high-confidence MODIS detection in a qualified Argentine land pixel",
+      "constraints": [
+        "Actual MOD14A1 daily masks and QA are acquired separately by fire_sources.py; results are in fire-results.json.",
+        "FIRMS positive-only CSV is not used to invent negative labels; daily observed non-fire land is class 5 with valid land QA.",
+        "Publication can lag by weeks; classification performance and calibration must be checked before any experimental route visualization.",
+        "No operational approval or prediction of wildfire propagation, transitability or evacuation safety."
+      ]
+    }
+  },
+  "license_note": "NASA data require product citation; INA public access does not by itself establish redistribution terms. No raw observations published.",
+  "synthetic_observations": 0
+}

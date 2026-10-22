@@ -26,6 +26,7 @@ import { initDB } from "../../database/database";
 import { Trail, TrailWeather } from "../../types";
 import { NationalParkEntry } from "../components/NationalParkUI";
 import { formatKilometers, parseRouteCoordinates } from "../../services/geoUtils";
+import EnvironmentalConditions from "../components/EnvironmentalConditions";
 
 const loadTrailDetailData = async (trailId: number) => {
   await initDB();
@@ -198,6 +199,7 @@ function TrailDetailContent({
       />
       <DescriptionCard trail={trail} />
       <DifficultyCard trail={trail} weather={weather} />
+      <EnvironmentalConditions trail={trail} />
       <BeforeYouGoCard tips={trail.provenance ? [...(trail.provenance.source_notice ? [trail.provenance.source_notice] : []), trail.provenance.precautions, ...beforeYouGoTips] : beforeYouGoTips} />
       {hasGeometry ? <AltimetrySection trail={trail} /> : null}
       {trail.national_park && <NationalParkEntry park={trail.national_park} trailId={trail.id} trailName={trail.name} />}

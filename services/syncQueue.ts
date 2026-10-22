@@ -6,6 +6,7 @@ import { getAuthSession } from "./authSession";
 import { createActivity, createEmergencyAlert, createTrailReport, getTrailReports, closeTripPlan, recordPrivacyDecision } from "./api";
 import { isAccountDeletionPending } from "./accountLifecycle";
 import { refreshOfflineTrailReports, getOfflineMaps } from "./offlineMaps";
+import { getTrailEnvironmental } from "./environmental";
 
 export type PendingEntityType = "trail_report" | "activity" | "emergency_alert" | "trip_check_in" | "privacy_decision";
 export type PendingStatus = "pending" | "syncing" | "synced" | "failed" | "abandoned";
@@ -289,6 +290,11 @@ const refreshDownloadedTrailReports = async () => {
     const freshReports = await getTrailReports(offlineMap.trail.id).catch(() => null);
     if (freshReports) {
       await refreshOfflineTrailReports(offlineMap.trail.id, freshReports);
+    }
+    const cached = offlineMap.environmental as { generated_at?: string } | null;
+    const generatedAt = Date.parse(cached?.generated_at || "");
+    if (!Number.isFinite(generatedAt) || Date.now() - generatedAt > 15 * 60 * 1000) {
+      await getTrailEnvironmental(offlineMap.trail).catch(() => undefined);
     }
   }
 };

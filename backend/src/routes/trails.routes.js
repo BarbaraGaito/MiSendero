@@ -123,6 +123,19 @@ router.get("/", async (_req, res, next) => {
   }
 });
 
+router.get("/:id/environmental", async (req, res, next) => {
+  try {
+    if (!/^[1-9]\d*$/.test(req.params.id) || !Number.isSafeInteger(Number(req.params.id))) return res.status(400).json({ message: "Identificador de sendero inválido" });
+    const trail = await getTrailOr404(req.params.id, res);
+    if (!trail) return;
+    try { require("../environmental").geometryHash(trail); }
+    catch {
+      return res.status(422).json({ message: "El sendero no tiene ubicación verificable" });
+    }
+    return res.json(await require("../environmental").getEnvironmentalBatch(trail));
+  } catch (error) { next(error); }
+});
+
 router.get("/:id/weather", async (req, res, next) => {
   try {
     const trail = await getTrailOr404(req.params.id, res);

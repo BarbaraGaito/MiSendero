@@ -1,0 +1,31 @@
+{
+  "task": "GeoFatigue original modified Borg 0-10 ratings during 20-minute outdoor load carrying",
+  "source": "https://doi.org/10.5683/SP3/I0KSNR",
+  "prediction_sha256": "2b3cf23f0bd0ec344b9e13f299f3ddf8f475c12ea93166d5bbc33584fa577575",
+  "held_out_participants": 12,
+  "model": {
+    "n": 179,
+    "exact_accuracy": 0.24022346368715083,
+    "mae_borg_points": 1.541899441340782,
+    "within_one_point": 0.553072625698324,
+    "errors_three_or_more_points": 0.18994413407821228
+  },
+  "training_majority_baseline": {
+    "label": "Borg 3",
+    "n": 179,
+    "exact_accuracy": 0.25139664804469275,
+    "mae_borg_points": 1.6201117318435754,
+    "within_one_point": 0.5418994413407822,
+    "errors_three_or_more_points": 0.25139664804469275
+  },
+  "uncertainty": {
+    "unit": "participant",
+    "repetitions": 2000,
+    "seed": 42,
+    "mae_model_minus_baseline_95pct_percentile": [
+      -0.3651685393258426,
+      0.23888888888888893
+    ]
+  },
+  "scope": "In-source research evaluation only; no trekking fatigue ground truth or field performance estimate."
+}

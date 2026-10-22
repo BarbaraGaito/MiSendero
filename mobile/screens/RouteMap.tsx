@@ -6,6 +6,7 @@ import * as Network from "expo-network";
 import { router, useLocalSearchParams } from "expo-router";
 import { useScreenFocused } from "../hooks/useScreenFocused";
 import { ReportActions } from "../components/ReportActions";
+import EnvironmentalConditions from "../components/EnvironmentalConditions";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Modal, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
@@ -163,6 +164,7 @@ export default function Screen04RouteMap() {
   const [testingWearableMessage, setTestingWearableMessage] = useState<string | null>(null);
   const [isSimulatingWearable, setIsSimulatingWearable] = useState(false);
   const [showWearablePanel, setShowWearablePanel] = useState(false);
+  const [showEnvironmentalPanel, setShowEnvironmentalPanel] = useState(false);
   const [showCriticalWearableAlert, setShowCriticalWearableAlert] = useState(false);
   const [trackedDistanceMeters, setTrackedDistanceMeters] = useState(0);
   const [lastGpsRecordedAt, setLastGpsRecordedAt] = useState<number | null>(null);
@@ -568,6 +570,15 @@ export default function Screen04RouteMap() {
           title={wearableRuntime?.prediction?.title && `${wearableRuntime.prediction.title}${simulatedWearableLabel}`}
         />
 
+        <Modal visible={showEnvironmentalPanel} animationType="slide" onRequestClose={() => setShowEnvironmentalPanel(false)}>
+          {showEnvironmentalPanel ? <ScreenShell>
+            <TopBar title="Condiciones ambientales" onBack={() => setShowEnvironmentalPanel(false)} />
+            <ScrollView contentContainerStyle={{ padding: 20, paddingBottom: Math.max(24, insets.bottom + 18) }}>
+              {trail ? <EnvironmentalConditions trail={trail} offlineOnly={offline === "1"} /> : null}
+            </ScrollView>
+          </ScreenShell> : null}
+        </Modal>
+
         {showWearablePanel ? (
           <WearableRealtimePanel
             bottom={Math.max(190, insets.bottom + 184)}
@@ -740,6 +751,11 @@ export default function Screen04RouteMap() {
               <Ionicons name="trail-sign-outline" size={20} color={colors.greenDark} />
               <Text style={styles.activeActionText}>Ruta</Text>
             </Pressable>
+            <Pressable accessibilityRole="button" accessibilityLabel="Consultar condiciones ambientales" disabled={!trail}
+              onPress={() => setShowEnvironmentalPanel(true)} style={styles.activeAction}>
+              <Ionicons name="cloud-outline" size={20} color={colors.greenDark} />
+              <Text style={styles.activeActionText}>Ambiente</Text>
+            </Pressable>
             <Pressable
               onPress={() =>
                 router.push({
@@ -864,6 +880,7 @@ export default function Screen04RouteMap() {
           </InfoCard>
         ) : null}
 
+        {trail ? <EnvironmentalConditions trail={trail} offlineOnly={offline === "1"} /> : null}
         <InfoCard style={styles.previewCard}>
           <View style={styles.sectionHeader}>
             <View style={styles.sectionHeaderText}>

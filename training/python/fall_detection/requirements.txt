@@ -1,0 +1,7 @@
+# Fall detection pipeline (run from training/python with: py -m fall_detection.run_loso)
+numpy==2.5.4
+scipy==1.18.1
+scikit-learn==1.9.1
+xgboost==3.4.1
+# only for fall_detection.cnn_eval (evaluation, not deployed):
+torch==2.14.1  # CPU wheel: pip install torch --index-url https://download.pytorch.org/whl/cpu

@@ -26,7 +26,7 @@ export const eraseLocalAccountData = async (userId: number) => {
     emergency_contacts: "user_id", saved_trip_plans: "user_id", departure_messages: "user_id",
     user_favorite_trails: "user_id", offline_maps: "user_id", privacy_decision_events: "user_id",
     user_privacy_preferences: "id", user_app_preferences: "id", user_experience_profile: "id",
-    hidden_reports: "user_id",
+    hidden_reports: "user_id", fall_detection_events: "user_id", fall_detection_settings: "user_id",
   };
   for (const [table, column] of Object.entries(stores)) {
     const exists = await db.getFirstAsync("SELECT name FROM sqlite_master WHERE type = 'table' AND name = ?", [table]);

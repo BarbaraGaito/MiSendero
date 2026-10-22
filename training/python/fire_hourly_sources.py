@@ -25,7 +25,8 @@ from scipy.ndimage import binary_erosion
 from environmental_sources import PUBLIC, RAW, ROOT, sha256, utc
 from fire_sources import PRIVATE, REPORT_DIR
 
-BASE = 'https://noaa-goes16.s3.amazonaws.com/'
+SATELLITE = 'G16'
+BASE = f'https://noaa-goes{SATELLITE[1:]}.s3.amazonaws.com/'
 DIRECTORY = RAW / 'fire-goes16'
 PROTOCOL = PUBLIC / 'fire-hourly-protocol.json'
 OBSERVATIONS = PRIVATE / 'fire-hourly-observations.csv.gz'
@@ -45,6 +46,23 @@ def qualified_label(mask, dqf):
     return None
 
 
+def sample_plane(variable, grid):
+    """Read only small native-grid windows around the fixed route samples."""
+    values = np.empty(len(grid), dtype=variable.dtype)
+    groups = {}
+    for index, point in enumerate(grid):
+        groups.setdefault(point['region'], []).append((index, point['row'], point['col']))
+    for points in groups.values():
+        row0 = min(point[1] for point in points)
+        row1 = max(point[1] for point in points) + 1
+        col0 = min(point[2] for point in points)
+        col1 = max(point[2] for point in points) + 1
+        window = np.asarray(variable[row0:row1, col0:col1])
+        for index, row, col in points:
+            values[index] = window[row - row0, col - col0]
+    return values
+
+
 def acquire(hour):
     prefix = hour.strftime('ABI-L2-FDCF/%Y/%j/%H/')
     listing = DIRECTORY / (hour.strftime('%Y%m%d%H') + '.listing.xml')
@@ -58,7 +76,7 @@ def acquire(hour):
     if root.findtext('s:IsTruncated', namespaces=NS) == 'true':
         raise ValueError('Unexpected truncated hourly listing')
     rows = sorted(root.findall('s:Contents', NS), key=lambda r: r.findtext('s:Key', namespaces=NS))
-    matches = [r for r in rows if Path(r.findtext('s:Key', namespaces=NS)).name.startswith('OR_ABI-L2-FDCF-M6_G16_')]
+    matches = [r for r in rows if Path(r.findtext('s:Key', namespaces=NS)).name.startswith(f'OR_ABI-L2-FDCF-M6_{SATELLITE}_')]
     matches = [r for r in matches if hour <= datetime.strptime(
         Path(r.findtext('s:Key', namespaces=NS)).name.split('_s', 1)[1][:13], '%Y%j%H%M%S').replace(tzinfo=timezone.utc)
         < hour + timedelta(minutes=12)]
@@ -133,7 +151,7 @@ def geometry(ds, regions, country, offsets):
         cols, rows = [p[1] for p in points], [p[0] for p in points]
         lon, lat = transform(crs, 'EPSG:4326', x[cols].tolist(), y[rows].tolist())
         for (rr, cc), latitude, longitude in zip(points, lat, lon):
-            grid.append({'region': region['name'], 'pixel_id': f'G16:{rr}:{cc}', 'row': rr, 'col': cc,
+            grid.append({'region': region['name'], 'pixel_id': f'{SATELLITE}:{rr}:{cc}', 'row': rr, 'col': cc,
                 'latitude': latitude, 'longitude': longitude})
     return grid, {k: str(projection.getncattr(k)) for k in projection.ncattrs()}, x, y
 
@@ -160,8 +178,8 @@ def extract(manifest, config):
             if sha256(path) != source['sha256']:
                 raise ValueError('Original file hash mismatch')
             with netCDF4.Dataset(path) as ds:
-                if ds.platform_ID != 'G16' or ds.scene_id != 'Full Disk':
-                    raise ValueError('Only reviewed GOES-16 full disk may enter this experiment')
+                if ds.platform_ID != SATELLITE or ds.scene_id != 'Full Disk':
+                    raise ValueError(f'Only reviewed {SATELLITE} full disk may enter this experiment')
                 start, end = utc(ds.time_coverage_start), utc(ds.time_coverage_end)
                 if not utc(source['hour']) <= start < utc(source['hour']) + timedelta(minutes=12) or not start <= end <= start + timedelta(minutes=11):
                     raise ValueError(f'Scan cadence/window mismatch: {source["hour"]} {start.isoformat()} {end.isoformat()}')
@@ -177,9 +195,10 @@ def extract(manifest, config):
                     height = float(ds['goes_imager_projection'].perspective_point_height)
                     if signature != projection_signature or not np.array_equal(np.asarray(ds['x'][:]) * height, reference_x) or not np.array_equal(np.asarray(ds['y'][:]) * height, reference_y):
                         raise ValueError('Native raster geometry changed')
-                # NetCDF C libraries are not used in worker threads. Read each compressed plane once.
+                # Read only the fixed small windows around the eight route areas.
                 ds.set_auto_maskandscale(False)
-                masks, qualities = np.asarray(ds['Mask'][:])[rows, cols], np.asarray(ds['DQF'][:])[rows, cols]
+                masks = sample_plane(ds['Mask'], grid)
+                qualities = sample_plane(ds['DQF'], grid)
                 for point, mask, dqf in zip(grid, masks, qualities):
                     label = qualified_label(int(mask), int(dqf))
                     counts['excluded_rows' if label is None else 'positive_rows' if label else 'negative_rows'] += 1
@@ -204,7 +223,11 @@ def main():
     protocol_path = Path(sys.argv[1]) if len(sys.argv) > 1 else PROTOCOL
     config = plan(protocol_path)
     experiment_id = config.get('experiment_id', 'fire-hourly')
-    global DIRECTORY, OBSERVATIONS, MANIFEST
+    global DIRECTORY, OBSERVATIONS, MANIFEST, SATELLITE, BASE
+    SATELLITE = config.get('satellite_id', 'G16')
+    if SATELLITE not in ('G16', 'G19'):
+        raise ValueError('Only explicitly reviewed GOES-16 or GOES-19 experiments are supported')
+    BASE = f'https://noaa-goes{SATELLITE[1:]}.s3.amazonaws.com/'
     DIRECTORY = RAW / experiment_id
     OBSERVATIONS = PRIVATE / f'{experiment_id}-observations.csv.gz'
     MANIFEST = PRIVATE / f'{experiment_id}-source-manifest.json'
@@ -215,11 +238,12 @@ def main():
         hours.append(current)
         current += timedelta(hours=1)
     sources = []
+    print(f'Acquiring {len(hours)} hourly slots from {BASE}', flush=True)
     with ThreadPoolExecutor(max_workers=6) as executor:
         futures = [executor.submit(retry_acquire, hour) for hour in hours]
         for future in as_completed(futures):
             sources.append(future.result())
-            if len(sources) % 50 == 0:
+            if len(sources) % 10 == 0:
                 print('Acquired', len(sources), '/', len(hours), 'UTC hourly slots', flush=True)
     sources.sort(key=lambda r: r['hour'])
     summary = extract(sources, config)

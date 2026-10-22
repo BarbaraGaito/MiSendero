@@ -1,6 +1,7 @@
 {
   "experiment_id": "fire-goes16-2025-q1",
   "manifest_sha256": "62ff993eb097befbbded76ed7d3d6f88cf64d7e70d30a75d0e144398552c758a",
+  "availability_table_sha256": "c06221f800ce4d7b316dc7d5615266d1d6c432e678896d2f52420f24392c906a",
   "product_created_minus_scan_end": {
     "count": 2154,
     "median_minutes": 0.21333333333333335,

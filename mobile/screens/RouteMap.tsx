@@ -3,6 +3,7 @@ import { DepartureMessageRequiredError } from "../../services/departureMessages"
 import { userMessage } from "../../services/userMessages";
 import { Ionicons } from "@expo/vector-icons";
 import * as Network from "expo-network";
+import { FallDetectionStatusLine } from "../components/FallDetectionCard";
 import { router, useLocalSearchParams } from "expo-router";
 import { useScreenFocused } from "../hooks/useScreenFocused";
 import { ReportActions } from "../components/ReportActions";
@@ -777,6 +778,7 @@ export default function Screen04RouteMap() {
               {lastGpsRecordedAt ? (isTestingLocation ? "Punto simulado (no se guarda)" : "Ultimo punto guardado") : "Esperando punto GPS"}
             </Text>
           </View>
+          <FallDetectionStatusLine />
         </View>
       </SafeAreaView>
     );

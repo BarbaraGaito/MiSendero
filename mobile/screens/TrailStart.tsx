@@ -2,6 +2,7 @@ import * as Battery from "expo-battery";
 import { userMessage } from "../../services/userMessages";
 import { getVerifiedOfflineMapByTrailId } from "../../services/offlineMaps";
 import EnvironmentalConditions from "../components/EnvironmentalConditions";
+import { FallDetectionCard } from "../components/FallDetectionCard";
 import { ensureRouteSession, getActiveRouteSession } from "../../services/routeSession";
 import { Ionicons } from "@expo/vector-icons";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
@@ -349,6 +350,8 @@ export default function Screen05TrailStart() {
             </Text>
           </View>
         </InfoCard>
+
+        <FallDetectionCard />
 
         <InfoCard style={isFarFromStart ? styles.startWarning : styles.locationCard}>
           <Ionicons

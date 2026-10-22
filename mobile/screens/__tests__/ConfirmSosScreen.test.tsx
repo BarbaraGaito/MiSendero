@@ -119,3 +119,13 @@ test("rapid repeat taps open only one native composer", async () => {
   expect(sendEmergencySms).toHaveBeenCalledTimes(1);
   await act(async () => { finish({ result: "sent" }); await flush(); });
 });
+
+test("opened from a possible fall it says so, shows the connectivity notice and sends nothing by itself", async () => {
+  (useLocalSearchParams as jest.Mock).mockReturnValue({ id: "7", startedAt: "1791626400000", origen: "caida" });
+  const tree = await mount(ConfirmSos);
+  expect(text(tree)).toContain("Abierto desde la detección de caídas (IA experimental)");
+  expect(text(tree)).toContain("MiSendero no envió ni llamó a nadie");
+  expect(text(tree)).toContain("Cobertura celular: MiSendero no puede medirla");
+  expect(sendEmergencySms).not.toHaveBeenCalled();
+  expect(sendEmergencyAlert).not.toHaveBeenCalled();
+});

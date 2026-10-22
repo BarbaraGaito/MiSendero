@@ -1,0 +1,98 @@
+{
+  "status": "acquired",
+  "source": "https://noaa-goes19.s3.amazonaws.com/",
+  "protocol_sha256": "cbf6962e07ed4b19bfa6d78e45acec8823f8ff022d6381fa38bef465dc2628d9",
+  "generated_at": "2026-10-22T20:33:36.734783+00:00",
+  "expected_hourly_slots": 2952,
+  "original_files": 2932,
+  "missing_scans": [
+    "2025-11-06T20:00:00+00:00",
+    "2025-11-06T21:00:00+00:00",
+    "2025-11-06T22:00:00+00:00",
+    "2025-11-06T23:00:00+00:00",
+    "2025-11-07T00:00:00+00:00",
+    "2025-11-07T01:00:00+00:00",
+    "2025-11-07T02:00:00+00:00",
+    "2025-11-07T03:00:00+00:00",
+    "2025-11-07T04:00:00+00:00",
+    "2025-11-07T05:00:00+00:00",
+    "2025-11-07T06:00:00+00:00",
+    "2025-11-07T07:00:00+00:00",
+    "2025-11-07T08:00:00+00:00",
+    "2025-11-07T09:00:00+00:00",
+    "2025-11-07T10:00:00+00:00",
+    "2025-11-07T11:00:00+00:00",
+    "2025-11-07T12:00:00+00:00",
+    "2025-11-07T13:00:00+00:00",
+    "2025-11-07T14:00:00+00:00",
+    "2026-01-15T17:00:00+00:00"
+  ],
+  "original_bytes": 5310216823,
+  "manifest_sha256": "dc1106672934cefc5f759da0793e33bb82430f0ae31bc3aabf2ad1883a3e5bec",
+  "summary": {
+    "positive_rows": 218,
+    "negative_rows": 3453049,
+    "excluded_rows": 1994389,
+    "sampled_native_pixels": 1858,
+    "positive_region_days": {
+      "Quebrada del Condorito - Balcon Norte": [
+        "2025-10-11",
+        "2025-10-14"
+      ],
+      "Sendero La Chu\u00f1a - El Rey": [
+        "2025-10-11",
+        "2025-10-13"
+      ],
+      "Sendero Macuco - Salto Arrechea": [
+        "2025-10-15"
+      ],
+      "Sendero Che Roga - Mburucuy\u00e1": [
+        "2025-10-21",
+        "2025-10-23",
+        "2026-01-24"
+      ],
+      "Bosque Tallado desde la plataforma del Piltriquitron": [
+        "2025-12-05",
+        "2025-12-07",
+        "2025-12-08",
+        "2025-12-09",
+        "2025-12-11",
+        "2026-01-05",
+        "2026-01-06",
+        "2026-01-07",
+        "2026-01-08",
+        "2026-01-09",
+        "2026-01-10",
+        "2026-01-11",
+        "2026-01-12",
+        "2026-01-13",
+        "2026-01-14",
+        "2026-01-19",
+        "2026-01-20",
+        "2026-01-21",
+        "2026-01-22",
+        "2026-01-24",
+        "2026-01-25",
+        "2026-01-26",
+        "2026-01-27"
+      ],
+      "Cerro Ventana - Hueco de la Ventana": [
+        "2026-01-03",
+        "2026-01-05",
+        "2026-01-19",
+        "2026-01-20"
+      ],
+      "Sendero Namuncura": [
+        "2026-01-14",
+        "2026-01-17"
+      ]
+    },
+    "median_publication_lag_minutes": 0.5416666666666666,
+    "maximum_publication_lag_minutes": 161.48833333333332,
+    "observations_sha256": "07bdecf2b7d88ee94403ca97b4a7a9cbf67e4efeb5a9d5ad1b75151eaacad98b",
+    "geography_sha256": "7e475b478db7bb678cc0a1539fdf484e0c8de0a9baa98916fb90f652f75ff834",
+    "country_sha256": "b086852064c26813d9f607c82c91b4e74e18ea83fd21993ddedd473cf8495af5"
+  },
+  "synthetic_observations": 0,
+  "deployment_approved": false
+}

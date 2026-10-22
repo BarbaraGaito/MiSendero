@@ -25,7 +25,7 @@ Las siete filas positivas no son siete incendios independientes: pertenecen a un
 
 GOES ofrece observaciones mucho más frecuentes que la capa diaria MODIS y la demora medida en esta muestra fue baja. Sin embargo, este mes y estos ocho sectores no contienen suficientes eventos para aprender ni validar un pronóstico de 30 minutos a 12 horas. Tampoco se puede afirmar una probabilidad garantizada. La fuente puede servir para estudiar detecciones recientes, pero esta corrida no demuestra que la cobertura ni el nivel de falsas alarmas sean adecuados para alertas de seguridad en trekking.
 
-La siguiente evaluación debería ampliar el período y medir más eventos independientes antes de entrenar. Como el GOES-16 ya no representa el satélite operativo actual, una implementación en vivo también requeriría revisar el sensor sucesor y repetir la validación con una fuente histórica comparable. El modelo MODIS diario existente continúa inhabilitado.
+La ampliación enero-marzo de 2025, que incluye el incendio documentado de El Bolsón, está en [fire-goes16-2025-q1.md](fire-goes16-2025-q1.md). Aun con esa temporada, los eventos independientes son insuficientes para entrenamiento y evaluación predictiva. GOES-16 ya no es el satélite operativo; una implementación en vivo requiere verificar GOES-19 con validación propia. El modelo MODIS diario existente continúa inhabilitado.
 
 ## Reproducción y artefactos
 

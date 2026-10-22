@@ -8,6 +8,7 @@ import csv
 import gzip
 import io
 import json
+import sys
 import time
 import urllib.parse
 import urllib.request
@@ -32,8 +33,8 @@ MANIFEST = PRIVATE / 'fire-hourly-source-manifest.json'
 NS = {'s': 'http://s3.amazonaws.com/doc/2006-03-01/'}
 
 
-def plan():
-    return json.loads(PROTOCOL.read_text(encoding='utf-8'))
+def plan(protocol_path=PROTOCOL):
+    return json.loads(Path(protocol_path).read_text(encoding='utf-8'))
 
 
 def qualified_label(mask, dqf):
@@ -200,7 +201,13 @@ def extract(manifest, config):
 
 
 def main():
-    config = plan()
+    protocol_path = Path(sys.argv[1]) if len(sys.argv) > 1 else PROTOCOL
+    config = plan(protocol_path)
+    experiment_id = config.get('experiment_id', 'fire-hourly')
+    global DIRECTORY, OBSERVATIONS, MANIFEST
+    DIRECTORY = RAW / experiment_id
+    OBSERVATIONS = PRIVATE / f'{experiment_id}-observations.csv.gz'
+    MANIFEST = PRIVATE / f'{experiment_id}-source-manifest.json'
     DIRECTORY.mkdir(parents=True, exist_ok=True)
     PRIVATE.mkdir(parents=True, exist_ok=True)
     hours, current = [], utc(config['start'])
@@ -217,13 +224,13 @@ def main():
     sources.sort(key=lambda r: r['hour'])
     summary = extract(sources, config)
     MANIFEST.write_text(json.dumps(sources, indent=2) + '\n', encoding='utf-8')
-    report = {'status': 'acquired', 'source': BASE, 'protocol_sha256': sha256(PROTOCOL),
+    report = {'status': 'acquired', 'source': BASE, 'protocol_sha256': sha256(protocol_path),
         'generated_at': datetime.now(timezone.utc).isoformat(), 'expected_hourly_slots': len(hours),
         'original_files': sum(s['status'] == 'acquired' for s in sources),
         'missing_scans': [s['hour'] for s in sources if s['status'] != 'acquired'],
         'original_bytes': sum(s.get('bytes', 0) for s in sources), 'manifest_sha256': sha256(MANIFEST),
         'summary': summary, 'synthetic_observations': 0, 'deployment_approved': False}
-    (REPORT_DIR / 'fire-hourly-source-audit.json').write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')
+    (REPORT_DIR / f'{experiment_id}-source-audit.json').write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')
     print(json.dumps(report, indent=2), flush=True)
 
 

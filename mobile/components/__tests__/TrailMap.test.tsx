@@ -68,7 +68,11 @@ test("pan and pinch gestures finish interactions and update scale in both map mo
   await act(async () => gestures.onPanResponderRelease({}, { dx: 15, dy: 12 }));
   await act(async () => { gestures.onPanResponderGrant(pinch(100)); gestures.onPanResponderMove(pinch(180), { dx: 0, dy: 0 }); });
   await act(async () => gestures.onPanResponderRelease({}, { dx: 0, dy: 0 }));
-  await press(tree, "Cambiar a perspectiva 3D"); expect(text(tree)).toContain("ESCALA REAL");
+  await press(tree, "Cambiar a perspectiva 3D");
+  expect(tree.root.findAllByType("Terrain3DScene")).toHaveLength(1);
+  expect(text(tree)).not.toContain("LECTURA DEL TERRENO");
+  expect(text(tree)).not.toContain("ESCALA REAL");
+  expect(text(tree)).toContain("Open-Meteo");
   await act(async () => { gestures.onPanResponderGrant(pinch(100)); gestures.onPanResponderMove(pinch(150), { dx: 0, dy: 0 }); });
   await act(async () => gestures.onPanResponderRelease({}, { dx: 0, dy: 0 }));
   expect(tree.root.findByType("Terrain3DScene").props.viewScale).toBe(1.5);
@@ -97,7 +101,7 @@ test("opening a downloaded map while connected displays the saved 2D features wi
     features:[{id:"path1",kind:"path",name:"Camino guardado",points:route}]});
   const tree = await mount(TrailMap,{trail,offlineOnly:true,initialPerspective:true}); await layout(tree);
   expect(tree.root.findAll((node: any) => node.props.testID === "offline-basic-map").length).toBeGreaterThan(0);
-  expect(text(tree)).toContain("guardado en el teléfono");
+  expect(text(tree)).toContain("Mapa descargado");
   expect(text(tree)).not.toContain("Satelite");
   expect(tree.root.findAllByType("Terrain3DScene")).toHaveLength(0);
   expect(Image.prefetch).not.toHaveBeenCalled();

@@ -13,6 +13,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
+import { OfflineConnectionBanner } from "./OfflineConnectionBanner";
 
 const fontFamily = {
   bold: "BricolageGrotesque_700Bold",
@@ -67,6 +68,7 @@ export function ScreenShell({
 }) {
   return (
     <SafeAreaView edges={["top", "bottom"]} style={[styles.shell, style]}>
+      <OfflineConnectionBanner />
       <View style={styles.content}>{children}</View>
       {footer}
     </SafeAreaView>

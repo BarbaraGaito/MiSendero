@@ -54,8 +54,18 @@ ejecutarlo manualmente.
 3. **App movil** (en otra terminal, desde la raiz del repo):
    ```bash
    npm install
-   npm start
+   npx expo start --go
    ```
+
+   Escaneá el QR con el iPhone para abrir el proyecto en Expo Go. La computadora
+   y el teléfono deben estar en la misma red. Si Metro ya estaba abierto,
+   reinicialo con `npx expo start --go --clear`.
+
+   Expo Go usa una base temporal en memoria: los datos locales se reinician al
+   recargar o cerrar completamente el proyecto. Permite probar las pantallas y
+   la API sin SQLCipher. Las builds de desarrollo propias y de distribución
+   siguen usando la base cifrada persistente; Salud/HealthKit requiere una build
+   propia con su módulo nativo.
 
 ## Tests
 

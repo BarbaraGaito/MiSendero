@@ -1,6 +1,7 @@
 import "../../../testing/mobileSetup";
 jest.mock("../../../services/api", () => ({ getTrailById: jest.fn(), getTrailReports: jest.fn() }));
 jest.mock("../../../services/trailRepository", () => ({ getTrailById: jest.fn() }));
+jest.mock("expo-network", () => ({ getNetworkStateAsync: jest.fn(), addNetworkStateListener: jest.fn(() => ({ remove: jest.fn() })) }));
 jest.mock("../../../services/offlineMaps", () => ({ saveOfflineTrailMap: jest.fn(), getOfflineMaps: jest.fn(), deleteOfflineMap: jest.fn(), getVerifiedOfflineMapByTrailId: jest.fn() }));
 import { useLocalSearchParams, router } from "expo-router";
 import { Linking } from "react-native";
@@ -8,6 +9,8 @@ import { mount, press, text, act, flush } from "../../../testing/mobileHarness";
 import { trail } from "../../../testing/fixtures";
 import * as api from "../../../services/api";
 import * as maps from "../../../services/offlineMaps";
+import * as Network from "expo-network";
+import { ConnectivityProvider } from "../../../services/ConnectivityProvider";
 import { getTrailById } from "../../../services/trailRepository";
 import Download from "../offline-flow/OfflineDownload21Screen";
 import Downloaded from "../offline-flow/OfflineDownloadedMaps23Screen";
@@ -15,6 +18,7 @@ import Elevation from "../TrailElevationScreen";
 const saved = { id: 3, trail, name: trail.name, status: "disponible", totalTiles: 4, downloadedTiles: 4, sizeMb: 8, updatedAt: Date.UTC(2026, 9, 16), verifiedAt: Date.UTC(2026, 9, 16) };
 const elevation = { source: "Copernicus DEM", source_url: "https://example.test/dem", min_m: 100, max_m: 200, ascent_m: 100, descent_m: 0, distance_m: 1000, resolution_m: 90, points: [{ distance_m: 0, elevation_m: 100 }, { distance_m: 500, elevation_m: 150 }, { distance_m: 1000, elevation_m: 200 }] };
 beforeEach(() => {
+  (Network.getNetworkStateAsync as jest.Mock).mockResolvedValue({ isConnected: false });
   (useLocalSearchParams as jest.Mock).mockReturnValue({ id: "7" }); (api.getTrailById as jest.Mock).mockResolvedValue(trail); (api.getTrailReports as jest.Mock).mockResolvedValue([]);
   (maps.saveOfflineTrailMap as jest.Mock).mockResolvedValue({ ...saved, terrain: {} }); (maps.getOfflineMaps as jest.Mock).mockResolvedValue([saved]); (maps.deleteOfflineMap as jest.Mock).mockResolvedValue(undefined); (maps.getVerifiedOfflineMapByTrailId as jest.Mock).mockResolvedValue(saved);
   (getTrailById as jest.Mock).mockResolvedValue({ ...trail, elevation });
@@ -44,6 +48,29 @@ test("download list verifies local files again before opening and offers redownl
   const tree = await mount(Downloaded); expect(text(tree)).toContain("Disponible sin conexión"); await press(tree, "Abrir"); expect(router.push).toHaveBeenLastCalledWith({ pathname: "/route-map", params: { id: "7", offline: "1" } });
   (maps.getVerifiedOfflineMapByTrailId as jest.Mock).mockResolvedValue(null); await press(tree, "Abrir"); expect(router.push).toHaveBeenLastCalledWith({ pathname: "/offline-descarga", params: { id: "7" } });
   (maps.getOfflineMaps as jest.Mock).mockResolvedValue([]); await press(tree, "Eliminar"); expect(maps.deleteOfflineMap).toHaveBeenCalledWith(3); expect(text(tree)).toContain("No hay mapas descargados");
+});
+
+test("offline Downloads opens a locally verified map without requesting the API", async () => {
+  const tree = await mount(() => <ConnectivityProvider><Downloaded /></ConnectivityProvider>);
+  expect(text(tree)).toContain("No hay conexión");
+  await press(tree, "Abrir");
+  expect(maps.getVerifiedOfflineMapByTrailId).toHaveBeenCalledWith(7);
+  expect(router.push).toHaveBeenLastCalledWith({ pathname: "/route-map", params: { id: "7", offline: "1" } });
+  expect(api.getTrailById).not.toHaveBeenCalled();
+  expect(api.getTrailReports).not.toHaveBeenCalled();
+  await expect(press(tree, "Descargar zona")).rejects.toThrow("disabled");
+});
+
+test("offline Downloads keeps incomplete maps on screen and handles an unreadable saved map", async () => {
+  const tree = await mount(() => <ConnectivityProvider><Downloaded /></ConnectivityProvider>);
+  (maps.getVerifiedOfflineMapByTrailId as jest.Mock).mockResolvedValueOnce(null);
+  await press(tree, "Abrir");
+  expect(text(tree)).toContain("necesita completar su descarga");
+  expect(router.push).not.toHaveBeenCalled();
+  (maps.getVerifiedOfflineMapByTrailId as jest.Mock).mockRejectedValueOnce(new Error("read failure"));
+  await press(tree, "Abrir");
+  expect(text(tree)).toContain("No pudimos abrir el mapa guardado");
+  expect(router.push).not.toHaveBeenCalled();
 });
 test("download list distinguishes unreadable storage, incomplete tiles and failed deletion", async () => {
   (maps.getOfflineMaps as jest.Mock).mockRejectedValue(new Error("read")); const failed = await mount(Downloaded); expect(text(failed)).toContain("No pudimos cargar");

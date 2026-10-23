@@ -6,6 +6,8 @@ import * as Network from "expo-network";
 import { router, useLocalSearchParams } from "expo-router";
 import { useScreenFocused } from "../hooks/useScreenFocused";
 import { ReportActions } from "../components/ReportActions";
+import { OfflineConnectionBanner } from "../components/OfflineConnectionBanner";
+import { useIsOffline } from "../../services/ConnectivityProvider";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Modal, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
@@ -133,6 +135,8 @@ const getSimulatedRouteStart = (
 
 export default function Screen04RouteMap() {
   const insets = useSafeAreaInsets();
+  const isOffline = useIsOffline();
+  const [offlineBannerHeight, setOfflineBannerHeight] = useState(48);
   const isFocused = useScreenFocused();
   const [activeSeconds, setActiveSeconds] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
@@ -368,7 +372,7 @@ export default function Screen04RouteMap() {
       setIsSimulatingWearable(false);
     }
   };
-  const activeTop = Math.max(22, insets.top + 14);
+  const activeTop = Math.max(22, insets.top + 14) + (isOffline ? offlineBannerHeight + 8 : 0);
   const activeBannerTop = activeTop + 68;
   const hasStatusBanner =
     isLoading || Boolean(error) || (!isLoading && !error && locationPermissionDenied);
@@ -386,6 +390,12 @@ export default function Screen04RouteMap() {
   if (isActiveRoute) {
     return (
       <SafeAreaView edges={["top", "bottom"]} style={styles.activeShell}>
+        {isOffline ? <View
+          style={{ position: "absolute", top: insets.top + 4, left: 14, right: 14, zIndex: 30 }}
+          onLayout={event => setOfflineBannerHeight(event.nativeEvent.layout.height)}
+        >
+          <OfflineConnectionBanner style={{ marginHorizontal: 0, marginBottom: 0 }} />
+        </View> : null}
         <TrailMap
           offlineOnly={offline === "1"}
           trail={trail}

@@ -5,7 +5,6 @@ import {
   Animated,
   Easing,
   FlatList,
-  Image,
   ImageBackground,
   ListRenderItem,
   Pressable,
@@ -47,6 +46,7 @@ type RouteListItem = {
   trail: Trail;
   image: string;
 };
+type PhotoStatus = "loaded" | "failed";
 
 export default function ExploreRoutesScreen() {
   const [trails, setTrails] = useState<Trail[]>([]);
@@ -56,8 +56,7 @@ export default function ExploreRoutesScreen() {
   const [activeAreaFilter, setActiveAreaFilter] = useState<TrailAreaFilter>("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [visibleCount, setVisibleCount] = useState(ROUTES_PAGE_SIZE);
-  const [loadedImages, setLoadedImages] = useState<Record<string, boolean>>({});
-  const [paintedImages, setPaintedImages] = useState<Record<string, boolean>>({});
+  const [photoStatuses, setPhotoStatuses] = useState<Record<string, PhotoStatus>>({});
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -68,16 +67,22 @@ export default function ExploreRoutesScreen() {
     [favoriteTrailIds]
   );
   const filteredTrails = useMemo(
-    () =>
-      filterTrails(
+    () => {
+      const photoRank = (trail: Trail) => {
+        const url = trail.image_url?.trim();
+        if (!url || photoStatuses[url] === "failed") return 2;
+        return photoStatuses[url] === "loaded" ? 0 : 1;
+      };
+      return filterTrails(
         trails,
         favoriteTrailIds,
         searchQuery,
         activeFilter,
         activeDistanceFilter,
         activeAreaFilter
-      ),
-    [activeAreaFilter, activeDistanceFilter, activeFilter, favoriteTrailIds, searchQuery, trails]
+      ).sort((a, b) => photoRank(a) - photoRank(b));
+    },
+    [activeAreaFilter, activeDistanceFilter, activeFilter, favoriteTrailIds, searchQuery, trails, photoStatuses]
   );
   const visibleTrails = useMemo(
     () => filteredTrails.slice(0, visibleCount),
@@ -87,19 +92,9 @@ export default function ExploreRoutesScreen() {
     () =>
       visibleTrails.map((trail) => ({
         trail,
-        image: trail.image_url || "",
+        image: trail.image_url?.trim() || "",
       })),
     [visibleTrails]
-  );
-  const pendingImageUrls = useMemo(
-    () => [
-      ...new Set(
-        visibleRouteItems
-          .map((item) => item.image)
-          .filter((imageUrl) => imageUrl.length > 0 && !loadedImages[imageUrl])
-      ),
-    ],
-    [loadedImages, visibleRouteItems]
   );
   const isSearchingRoutes = isLoading;
 
@@ -114,6 +109,7 @@ export default function ExploreRoutesScreen() {
         getFavoriteTrailIds(),
       ]);
       setTrails(trailList);
+      setPhotoStatuses({});
       setFavoriteTrailIds(favoriteIds);
     } catch {
       setError("No pudimos cargar los senderos en este momento.");
@@ -136,18 +132,9 @@ export default function ExploreRoutesScreen() {
     );
   }, [filteredTrails.length]);
 
-  const markImageLoaded = useCallback((imageUrl: string) => {
-    setLoadedImages((currentImages) => ({
-      ...currentImages,
-      [imageUrl]: true,
-    }));
-  }, []);
-
-  const markImagePainted = useCallback((imageUrl: string) => {
-    setPaintedImages((currentImages) => ({
-      ...currentImages,
-      [imageUrl]: true,
-    }));
+  const markPhotoStatus = useCallback((imageUrl: string, status: PhotoStatus) => {
+    if (!imageUrl) return;
+    setPhotoStatuses(current => current[imageUrl] === status ? current : { ...current, [imageUrl]: status });
   }, []);
 
   const clearFilters = useCallback(() => {
@@ -161,13 +148,13 @@ export default function ExploreRoutesScreen() {
     ({ item }) => (
       <RouteCard
         image={item.image}
-        imageReady={!item.image || Boolean(paintedImages[item.image])}
+        imageFailed={photoStatuses[item.image] === "failed"}
         isFavorite={favoriteIdSet.has(item.trail.id)}
-        onImageReady={markImagePainted}
+        onPhotoStatus={markPhotoStatus}
         trail={item.trail}
       />
     ),
-    [favoriteIdSet, markImagePainted, paintedImages]
+    [favoriteIdSet, markPhotoStatus, photoStatuses]
   );
 
   return (
@@ -181,10 +168,8 @@ export default function ExploreRoutesScreen() {
           <ExploreRoutesFooter
             error={error}
             filteredCount={filteredTrails.length}
-            imageUrls={pendingImageUrls}
             isLoading={isLoading}
             isSearchingRoutes={isSearchingRoutes}
-            onImageLoaded={markImageLoaded}
             visibleCount={visibleRouteItems.length}
           />
         }
@@ -473,23 +458,18 @@ const getRoutesEmptyState = (hasActiveFilters: boolean) => ({
 function ExploreRoutesFooter({
   error,
   filteredCount,
-  imageUrls,
   isLoading,
   isSearchingRoutes,
-  onImageLoaded,
   visibleCount,
 }: {
   error: string | null;
   filteredCount: number;
-  imageUrls: string[];
   isLoading: boolean;
   isSearchingRoutes: boolean;
-  onImageLoaded: (imageUrl: string) => void;
   visibleCount: number;
 }) {
   return (
     <>
-      <ImagePreloadQueue imageUrls={imageUrls} onImageLoaded={onImageLoaded} />
       {isSearchingRoutes ? <RoutesLoader /> : null}
       {visibleCount < filteredCount ? (
         <Text style={styles.statusText}>Cargando mas rutas...</Text>
@@ -513,17 +493,16 @@ function SafetyTipCard() {
 function RouteCard({
   trail,
   image,
-  imageReady,
+  imageFailed,
   isFavorite,
-  onImageReady,
+  onPhotoStatus,
 }: {
   trail: Trail;
   image: string;
-  imageReady: boolean;
+  imageFailed: boolean;
   isFavorite: boolean;
-  onImageReady: (imageUrl: string) => void;
+  onPhotoStatus: (imageUrl: string, status: PhotoStatus) => void;
 }) {
-  const [imageFailed, setImageFailed] = useState(false);
   const distance = trail.distance_km ? formatKilometers(trail.distance_km) : "Distancia a confirmar";
 
   return (
@@ -544,11 +523,9 @@ function RouteCard({
       <ImageBackground
         fadeDuration={0}
         imageStyle={styles.image}
-        onError={() => { setImageFailed(true); onImageReady(image); }}
-        onLoad={() => {
-          requestAnimationFrame(() => onImageReady(image));
-        }}
-        source={image ? { uri: image } : undefined}
+        onError={() => onPhotoStatus(image, "failed")}
+        onLoad={() => onPhotoStatus(image, "loaded")}
+        source={image && !imageFailed ? { uri: image } : undefined}
         style={styles.imageBox}
       >
         {(!image || imageFailed) && <Text style={{ color: colors.muted }}>Foto no disponible</Text>}
@@ -614,29 +591,6 @@ function RoutesLoader() {
         </Animated.View>
       </View>
       <Text style={styles.routesLoaderText}>Buscando rutas</Text>
-    </View>
-  );
-}
-
-function ImagePreloadQueue({
-  imageUrls,
-  onImageLoaded,
-}: {
-  imageUrls: string[];
-  onImageLoaded: (imageUrl: string) => void;
-}) {
-  if (imageUrls.length === 0) return null;
-
-  return (
-    <View pointerEvents="none" style={styles.imagePreloadQueue}>
-      {imageUrls.map((imageUrl) => (
-        <Image
-          key={imageUrl}
-          onLoad={() => onImageLoaded(imageUrl)}
-          source={{ uri: imageUrl }}
-          style={styles.hiddenPreloadImage}
-        />
-      ))}
     </View>
   );
 }
@@ -810,19 +764,6 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: -7,
     width: 28,
-  },
-  imagePreloadQueue: {
-    height: 1,
-    left: -1000,
-    overflow: "hidden",
-    position: "absolute",
-    top: -1000,
-    width: 1,
-  },
-  hiddenPreloadImage: {
-    height: 1,
-    opacity: 0,
-    width: 1,
   },
   imageBox: {
     height: 126,

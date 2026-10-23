@@ -3,6 +3,7 @@ import { File } from "expo-file-system";
 import * as SecureStore from "expo-secure-store";
 import { randomUUID } from "expo-crypto";
 import { Platform } from "react-native";
+import { isRunningInExpoGo } from "expo";
 
 const KEY_NAME = "misendero.sqlite.key.v1";
 const SECURE_DB = "trekking-secure-v1.db";
@@ -17,6 +18,9 @@ const databaseFile = (name: string) => new File(
 );
 let keyPromise: Promise<string> | undefined;
 let migration: Promise<SQLite.SQLiteDatabase> | undefined;
+let preview: Promise<SQLite.SQLiteDatabase> | undefined;
+// Detect Expo Go itself: development clients still require encrypted storage.
+const isMemoryPreview = () => Platform.OS === "web" || (__DEV__ && isRunningInExpoGo());
 const secret = () => keyPromise ??= (async () => {
   if (!await SecureStore.isAvailableAsync()) throw new Error("El almacenamiento seguro no está disponible. No se abrió una base sin cifrar.");
   let key = await SecureStore.getItemAsync(KEY_NAME);
@@ -92,8 +96,15 @@ const initialize = async () => {
 };
 
 export const openProtectedDatabase = async (useNewConnection = false) => {
-  // Web is a volatile preview; no contacts, tracks or health persist in cleartext.
-  if (Platform.OS === "web") return SQLite.openDatabaseAsync(":memory:");
+  // Expo Go has no SQLCipher. Like web, keep preview data in RAM and never
+  // open/migrate the installed app's databases. Transactions must share this
+  // connection because a second :memory: connection has a different schema.
+  if (isMemoryPreview()) {
+    return preview ??= SQLite.openDatabaseAsync(":memory:").catch(error => {
+      preview = undefined;
+      throw error;
+    });
+  }
   migration ??= initialize().catch((error) => { migration = undefined; throw error; });
   const connection = await migration;
   return useNewConnection ? openKeyed(await secret(), true) : connection;
@@ -102,6 +113,9 @@ export const openProtectedDatabase = async (useNewConnection = false) => {
 // The connection coordinator waits for pending SQL before calling this. Remove
 // JS references too; this is not a claim of forensic zeroization of JS memory.
 export const releaseProtectedDatabase = async () => {
+  // Keep the preview schema/data across background/foreground transitions.
+  // Access remains suspended by the coordinator until the app is active.
+  if (isMemoryPreview()) return;
   const current = migration;
   keyPromise = undefined;
   if (current) {

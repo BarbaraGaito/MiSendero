@@ -949,35 +949,6 @@ export function TrailMap({
                 navigationMode={navigationMode}
                 satelliteTextureEnabled={allowSatellite && !offline}
               />
-              <View style={styles.terrainInfo}>
-                <View style={styles.terrainInfoHeader}>
-                  <View>
-                    <Text style={styles.terrainInfoEyebrow}>LECTURA DEL TERRENO</Text>
-                    <Text style={styles.terrainInfoTitle}>Perspectiva 3D</Text>
-                  </View>
-                  <View style={styles.terrainScaleBadge}>
-                    <Text style={styles.terrainScaleBadgeText}>ESCALA REAL</Text>
-                  </View>
-                </View>
-                {showDetailsCard ? (
-                  <Text numberOfLines={1} style={styles.terrainTrailName}>
-                    {trail?.name || "Mapa del recorrido"}
-                  </Text>
-                ) : null}
-                <Text style={styles.terrainInfoText}>
-                  {trail?.distance_km ? `${trail.distance_km} km` : "Distancia a confirmar"} · {trail?.difficulty || "Dificultad a confirmar"}
-                </Text>
-                <Text style={styles.terrainGestureText}>
-                  Arrastra para orbitar · Pellizca para acercar
-                </Text>
-                <Text style={styles.terrainSourceText}>
-                  Explorá las alturas y pendientes del recorrido.
-                </Text>
-                <Text style={styles.terrainSourceText}>
-                  {OPEN_METEO_ELEVATION_ATTRIBUTION}
-                  {allowSatellite && !offline ? " · Imagen: Esri World Imagery" : ""}
-                </Text>
-              </View>
               <View
                 pointerEvents="none"
                 style={[styles.terrain3dOverlay, { top: terrainOverlayTop }]}
@@ -1160,7 +1131,7 @@ export function TrailMap({
       {offline && showMapNotices ? <View pointerEvents="none" style={[styles.locationWarning, {top: controlsTopOffset+52}]}>
         <Ionicons name="cloud-offline-outline" size={16} color={colors.green} />
         <Text style={[styles.locationWarningText,{color:colors.greenDark}]}>
-          {basicMap ? containsMapCoordinate(basicMap,activeCenter) ? "Mapa básico 2D · guardado en el teléfono" : "Fuera de la zona descargada · volvé al recorrido" : "Mapa sin conexión · solo zona descargada"}
+          {basicMap ? containsMapCoordinate(basicMap,activeCenter) ? "Mapa descargado" : "Fuera de la zona descargada · volvé al recorrido" : "Mapa sin conexión · solo zona descargada"}
         </Text>
       </View> : null}
 
@@ -1292,12 +1263,12 @@ export function TrailMap({
         </View>
       ) : null}
 
-      {!isPerspective ? (
-        <Text style={styles.attribution} accessibilityRole="link" accessibilityLabel="Fuentes y licencias del mapa"
-          onPress={() => router.push(trail ? { pathname: "/atribuciones", params: { trailId: String(trail.id) } } : "/atribuciones")}>
-          {showBasicMap && basicMap ? basicMap.attribution : getMapAttribution(layer)}
-        </Text>
-      ) : null}
+      <Text style={styles.attribution} accessibilityRole="link" accessibilityLabel="Fuentes y licencias del mapa"
+        onPress={() => router.push(trail ? { pathname: "/atribuciones", params: { trailId: String(trail.id) } } : "/atribuciones")}>
+        {isPerspective
+          ? `${OPEN_METEO_ELEVATION_ATTRIBUTION}${allowSatellite && !offline ? " · Imagen: Esri World Imagery" : ""}`
+          : showBasicMap && basicMap ? basicMap.attribution : getMapAttribution(layer)}
+      </Text>
 
       {showLocationNotice ? (
         <View style={[styles.locationWarning, { top: floatingNoticeTop }]}>
@@ -1399,72 +1370,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#CFE6F1",
     flex: 1,
     overflow: "hidden",
-  },
-  terrainInfo: {
-    backgroundColor: "rgba(255,255,255,0.94)",
-    borderColor: "rgba(255,255,255,0.78)",
-    borderRadius: 18,
-    borderWidth: 1,
-    bottom: 14,
-    left: 14,
-    paddingHorizontal: 14,
-    paddingVertical: 12,
-    position: "absolute",
-    right: 14,
-    zIndex: 5,
-  },
-  terrainInfoHeader: {
-    alignItems: "center",
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  terrainInfoEyebrow: {
-    color: colors.green,
-    fontSize: 9,
-    fontWeight: "900",
-    letterSpacing: 0.9,
-  },
-  terrainInfoTitle: {
-    color: colors.ink,
-    fontSize: 17,
-    fontWeight: "900",
-    marginTop: 1,
-  },
-  terrainScaleBadge: {
-    backgroundColor: colors.primarySoft,
-    borderRadius: 999,
-    paddingHorizontal: 9,
-    paddingVertical: 5,
-  },
-  terrainScaleBadgeText: {
-    color: colors.greenDark,
-    fontSize: 9,
-    fontWeight: "900",
-    letterSpacing: 0.4,
-  },
-  terrainTrailName: {
-    color: colors.ink,
-    fontSize: 16,
-    fontWeight: "900",
-    marginTop: 6,
-  },
-  terrainInfoText: {
-    color: colors.muted,
-    fontSize: 12,
-    fontWeight: "800",
-    marginTop: 4,
-  },
-  terrainGestureText: {
-    color: colors.greenDark,
-    fontSize: 10,
-    fontWeight: "800",
-    marginTop: 4,
-  },
-  terrainSourceText: {
-    color: colors.muted,
-    fontSize: 10,
-    fontWeight: "700",
-    marginTop: 3,
   },
   terrainUnavailable: {
     alignItems: "center",

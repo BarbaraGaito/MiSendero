@@ -8,6 +8,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { SyncCoordinator } from "../services/SyncCoordinator";
 import { RouteTrackingCoordinator } from "../services/RouteTrackingCoordinator";
 import { StoragePrivacyGuard } from "../services/StoragePrivacyGuard";
+import { ConnectivityProvider } from "../services/ConnectivityProvider";
 
 export default function RootLayout() {
   const [fontsLoaded, fontError] = useFonts({
@@ -21,6 +22,7 @@ export default function RootLayout() {
 
   return (
     <SafeAreaProvider>
+      <ConnectivityProvider>
       <StoragePrivacyGuard>
       <SyncCoordinator />
       <RouteTrackingCoordinator />
@@ -65,6 +67,7 @@ export default function RootLayout() {
         <Stack.Screen name="perfil" />
       </Stack>
       </StoragePrivacyGuard>
+      </ConnectivityProvider>
     </SafeAreaProvider>
   );
 }

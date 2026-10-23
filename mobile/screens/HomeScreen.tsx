@@ -1,7 +1,7 @@
 import * as Network from "expo-network";
 import { StatusBar } from "expo-status-bar";
 import { ResumeRouteCard } from "../components/ResumeRouteCard";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import {
   ImageBackground,
   Pressable,
@@ -10,7 +10,7 @@ import {
   Text,
   View,
 } from "react-native";
-import { router } from "expo-router";
+import { router, useFocusEffect } from "expo-router";
 import { getProfile } from "../../services/api";
 import { getTrails } from "../../services/trailRepository";
 import { formatKilometers } from "../../services/geoUtils";
@@ -20,7 +20,6 @@ import {
   AppScreen,
   PrimaryButton,
   StatusNotice,
-  trailImages,
 } from "../components/MiSenderoUI";
 import {
   ExperienceProfile,
@@ -44,16 +43,20 @@ export default function HomeScreen() {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [experienceProfile, setExperienceProfile] =
     useState<ExperienceProfile | null>(null);
-  const [recommendedTrail, setRecommendedTrail] = useState<Trail | null>(null);
+  const [trails, setTrails] = useState<Trail[]>([]);
+  const [unavailableImageUrls, setUnavailableImageUrls] = useState<ReadonlySet<string>>(() => new Set());
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const requestId = useRef(0);
 
   const loadHome = useCallback(async () => {
+    const currentRequest = ++requestId.current;
     setIsLoading(true);
     setError(null);
 
     try {
       const session = await getAuthSession();
+      if (currentRequest !== requestId.current) return;
 
       if (!session) {
         router.replace("/");
@@ -65,30 +68,38 @@ export default function HomeScreen() {
       const [profileData, trails, experience] = await Promise.all([
         offline ? Promise.resolve({ user: session.user } as Profile) : getProfile(session.token).catch(() => ({ user: session.user } as Profile)),
         getTrails(),
-        getExperienceProfile(),
+        getExperienceProfile(session.user.id),
       ]);
 
+      if (currentRequest !== requestId.current) return;
       setProfile(profileData);
       setExperienceProfile(experience);
-      setRecommendedTrail(getRecommendedTrailForProfile(trails, experience));
+      setTrails(trails);
+      setUnavailableImageUrls(new Set());
     } catch {
-      setError("No pudimos actualizar tu inicio.");
+      if (currentRequest === requestId.current) setError("No pudimos actualizar tu inicio.");
     } finally {
-      setIsLoading(false);
+      if (currentRequest === requestId.current) setIsLoading(false);
     }
   }, []);
 
-  useEffect(() => {
-    loadHome();
-  }, [loadHome]);
+  useFocusEffect(useCallback(() => {
+    void loadHome();
+    return () => { requestId.current += 1; };
+  }, [loadHome]));
 
+  const recommendedTrail = useMemo(() => experienceProfile
+    ? getRecommendedTrailForProfile(trails, experienceProfile, unavailableImageUrls)
+    : null, [trails, experienceProfile, unavailableImageUrls]);
+  const photoUrl = recommendedTrail?.image_url?.trim();
+  const recommendedPhoto = photoUrl && !unavailableImageUrls.has(photoUrl) ? photoUrl : null;
   const userName = profile?.user?.name || "viajera";
   const distance = recommendedTrail?.distance_km
     ? formatKilometers(recommendedTrail.distance_km)
     : "Distancia a confirmar";
   const duration = recommendedTrail?.duration || "Duracion a confirmar";
   const difficulty = recommendedTrail?.difficulty || "A confirmar";
-  const canRecommend = experienceProfile?.completed;
+  const canRecommend = experienceProfile?.completed && !experienceProfile.skipped && Boolean(experienceProfile.level);
   const recommendationReasons =
     experienceProfile && recommendedTrail
       ? getTrailRecommendationReasons(recommendedTrail, experienceProfile)
@@ -121,6 +132,10 @@ export default function HomeScreen() {
               Ver rutas
             </Text>
           </View>
+
+          {!isLoading && !error && canRecommend ? (
+            <Text style={styles.experienceLevel}>{`Tu nivel: ${experienceProfile?.level}`}</Text>
+          ) : null}
 
           {isLoading ? (
             <StatusNotice
@@ -171,7 +186,13 @@ export default function HomeScreen() {
               }
             >
               <ImageBackground
-                source={{ uri: recommendedTrail.image_url || trailImages.mountain }}
+                key={recommendedTrail.id}
+                source={recommendedPhoto ? { uri: recommendedPhoto } : undefined}
+                onError={() => {
+                  if (!recommendedPhoto) return;
+                  setUnavailableImageUrls(current => current.has(recommendedPhoto)
+                    ? current : new Set([...current, recommendedPhoto]));
+                }}
                 imageStyle={styles.mapImage}
                 style={styles.mapPreview}
               >
@@ -179,6 +200,7 @@ export default function HomeScreen() {
                 <View style={styles.tags}>
                   <Tag label={difficulty} tone="orange" />
                 </View>
+                {!recommendedPhoto ? <Text style={styles.photoUnavailable}>Foto no disponible</Text> : null}
                 <Text style={styles.mapTitle}>{recommendedTrail.name}</Text>
               </ImageBackground>
 
@@ -208,8 +230,8 @@ export default function HomeScreen() {
 
           {!isLoading && !error && canRecommend && !recommendedTrail ? (
             <View style={styles.emptyCard}>
-              <Text style={styles.routeName}>No hay rutas disponibles por ahora</Text>
-              <Text style={styles.routeLocation}>Cuando agregues senderos, apareceran aca.</Text>
+              <Text style={styles.routeName}>No hay senderos acordes a tu nivel por ahora</Text>
+              <Text style={styles.routeLocation}>Cuando haya rutas compatibles con tu experiencia, aparecerán acá.</Text>
             </View>
           ) : null}
 
@@ -291,6 +313,12 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     lineHeight: 25,
   },
+  experienceLevel: {
+    color: colors.primary,
+    fontSize: 13,
+    fontWeight: "700",
+    marginTop: -12,
+  },
   sectionAction: {
     color: colors.primary,
     fontSize: 13,
@@ -340,10 +368,16 @@ const styles = StyleSheet.create({
     fontWeight: "800",
   },
   mapPreview: {
+    backgroundColor: colors.primary,
     height: 220,
     justifyContent: "space-between",
     overflow: "hidden",
     padding: 16,
+  },
+  photoUnavailable: {
+    color: colors.surface,
+    fontSize: 13,
+    textAlign: "center",
   },
   mapImage: {
     borderTopLeftRadius: 24,

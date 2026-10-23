@@ -15,6 +15,7 @@ import {
   OfflineMap,
 } from "../../../services/offlineMaps";
 import { DownloadedMapCard, styles } from "./OfflineFlowShared";
+import { useIsOffline } from "../../../services/ConnectivityProvider";
 
 const formatDate = (timestamp: number) =>
   new Date(timestamp).toLocaleDateString("es-AR", {
@@ -26,6 +27,7 @@ const formatStorage = (sizeMb: number) =>
   `${sizeMb.toLocaleString("es-AR", { maximumFractionDigits: 0 })} MB`;
 
 export default function OfflineDownloadedMaps23Screen() {
+  const offline = useIsOffline();
   const [maps, setMaps] = useState<OfflineMap[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [deletingMapId, setDeletingMapId] = useState<number | null>(null);
@@ -88,8 +90,9 @@ export default function OfflineDownloadedMaps23Screen() {
           <Card>
             <Text style={styles.cardTitle}>No hay mapas descargados</Text>
             <Text style={styles.cardText}>
-              Cuando guardes una zona offline, va a aparecer aca con su estado y
-              espacio usado real.
+              {offline
+                ? "Todavía no tenés mapas guardados. Cuando tengas conexión, descargá una zona para verla sin Internet."
+                : "Cuando guardes una zona offline, va a aparecer acá con su estado y espacio usado real."}
             </Text>
           </Card>
         ) : (
@@ -107,20 +110,21 @@ export default function OfflineDownloadedMaps23Screen() {
                 onPress={async () => {
                   if (!map.trail) return;
 
-                  const verifiedMap = await getVerifiedOfflineMapByTrailId(map.trail.id);
-
-                  if (!verifiedMap) {
-                    router.push({
-                      pathname: "/offline-descarga",
-                      params: { id: String(map.trail.id) },
-                    });
-                    return;
+                  setError(null);
+                  try {
+                    const verifiedMap = await getVerifiedOfflineMapByTrailId(map.trail.id);
+                    if (!verifiedMap) {
+                      if (offline) {
+                        setError("Este mapa necesita completar su descarga. Volvé a intentarlo cuando tengas conexión.");
+                        return;
+                      }
+                      router.push({ pathname: "/offline-descarga", params: { id: String(map.trail.id) } });
+                      return;
+                    }
+                    router.push({ pathname: "/route-map", params: { id: String(map.trail.id), offline: "1" } });
+                  } catch {
+                    setError("No pudimos abrir el mapa guardado. Volvé a intentarlo.");
                   }
-
-                  router.push({
-                    pathname: "/route-map",
-                    params: { id: String(map.trail.id), offline: "1" },
-                  });
                 }}
                 onSecondaryPress={() => removeMap(map.id)}
               />
@@ -130,7 +134,7 @@ export default function OfflineDownloadedMaps23Screen() {
       </ScrollView>
 
       <View style={styles.bottomActions}>
-        <PrimaryButton label="Descargar zona" icon="download-outline" href="/offline-buscar" />
+        <PrimaryButton label="Descargar zona" icon="download-outline" href="/offline-buscar" disabled={offline} />
         <PrimaryButton label="Volver a perfil" href="/perfil" tone="secondary" />
       </View>
     </AppScreen>

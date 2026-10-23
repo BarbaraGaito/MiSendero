@@ -1,5 +1,5 @@
 // Control-flow tests at the native boundary: these do not prove cryptography on a device.
-type Scenario = { noCipher?: boolean; noStore?: boolean; exportError?: boolean; integrityError?: boolean; ready?: boolean };
+type Scenario = { noCipher?: boolean; noStore?: boolean; exportError?: boolean; integrityError?: boolean; ready?: boolean; expoGo?: boolean };
 function setup(scenario: Scenario = {}) {
   jest.resetModules();
   const events: string[] = [];
@@ -44,6 +44,7 @@ function setup(scenario: Scenario = {}) {
   jest.doMock('expo-sqlite', () => sqlite); jest.doMock('expo-secure-store', () => store);
   jest.doMock('expo-crypto', () => ({ randomUUID: () => '12345678-1234-4234-a234-123456789abc' }));
   jest.doMock('react-native', () => ({ Platform: { OS: 'ios' } }));
+  jest.doMock('expo', () => ({ isRunningInExpoGo: () => !!scenario.expoGo }));
   return { ...jest.requireActual('../protectedStorage'), sqlite, store, events, secure, legacy };
 }
 test('refuses an unavailable keystore without opening plaintext', async () => {
@@ -73,4 +74,36 @@ test('exports before verification and only then removes plaintext; new connectio
 test('a committed migration resumes cleanup without exporting again', async () => {
   const s = setup({ ready: true }); await s.openProtectedDatabase();
   expect(s.legacy.getFirstAsync).not.toHaveBeenCalled(); expect(s.sqlite.deleteDatabaseAsync).toHaveBeenCalledTimes(1);
+});
+
+test('Expo Go shares a volatile preview across reads, writes and background transitions', async () => {
+  const s = setup({ expoGo: true, noCipher: true, noStore: true });
+  const main = await s.openProtectedDatabase();
+  expect(await s.openProtectedDatabase(true)).toBe(main);
+  await s.releaseProtectedDatabase();
+  expect(await s.openProtectedDatabase()).toBe(main);
+  expect(s.sqlite.openDatabaseAsync).toHaveBeenCalledTimes(1);
+  expect(s.sqlite.openDatabaseAsync).toHaveBeenCalledWith(':memory:');
+  expect(s.store.isAvailableAsync).not.toHaveBeenCalled();
+  expect(s.sqlite.deleteDatabaseAsync).not.toHaveBeenCalled();
+  expect(s.secure.closeAsync).not.toHaveBeenCalled();
+  expect(s.events).toEqual([]);
+});
+
+test('a failed Expo Go preview can retry opening', async () => {
+  const s = setup({ expoGo: true });
+  s.sqlite.openDatabaseAsync.mockRejectedValueOnce(new Error('preview failed'));
+  await expect(s.openProtectedDatabase()).rejects.toThrow('preview failed');
+  await expect(s.openProtectedDatabase()).resolves.toBe(s.secure);
+  expect(s.sqlite.openDatabaseAsync).toHaveBeenCalledTimes(2);
+});
+
+test('production never bypasses SQLCipher, even when the Expo Go detector matches', async () => {
+  const previous = __DEV__;
+  try {
+    (globalThis as any).__DEV__ = false;
+    const s = setup({ expoGo: true, noCipher: true });
+    await expect(s.openProtectedDatabase()).rejects.toThrow('SQLCipher');
+    expect(s.sqlite.openDatabaseAsync).toHaveBeenCalledWith('trekking-secure-v1.db', { useNewConnection: false });
+  } finally { (globalThis as any).__DEV__ = previous; }
 });

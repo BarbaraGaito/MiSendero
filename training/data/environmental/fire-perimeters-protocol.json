@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "experiment_id": "idecor-cordoba-fire-perimeters-2022-2026",
+  "defined_before_geometry_matching": "2026-10-22",
+  "source": "Official IDECOR Geoserver WFS; layers idecor:area_quemada_2022 through idecor:area_quemada_2026; GeoJSON",
+  "service": "https://idecor-ws.mapascordoba.gob.ar/geoserver/idecor/wfs",
+  "selection": "All published features in each annual layer, no feature selection by geometry or outcome",
+  "comparison_locations": "Eight fixed Argentine catalog fire-sector center coordinates in training/data/environmental/geography.json",
+  "distance_method": "Transform original GeoJSON geometry from its declared CRS to EPSG:4326, then compute approximate local equirectangular point-to-polygon distance from each sector center; a sector center is not the full trail geometry",
+  "proximity_radii_km": [5, 10, 25],
+  "target_semantics": "Official mapped burned-area perimeter and recorded fire date; not exact ignition time or an active-fire sensor truth label",
+  "synthetic_observations": 0,
+  "deployment_approved": false
+}

@@ -1,0 +1,73 @@
+{
+  "experiment_id": "snmf-reported-fire-starts-near-argentina-trail-centers-2022",
+  "meaning": "Inventory of reported positive event starts only; not a model evaluation.",
+  "sources": {
+    "official_source": "Sistema Nacional de Manejo del Fuego daily occurrence reports",
+    "event_extraction_sha256": "8ecb11f38419e5d75387db6379757be0ce853ee6a7a5303b89f717e3e0b9c797",
+    "report_manifest_sha256": "5c03566ff367225f8cd95d74aeb4d965a5f314b0fb5fa99061f50402d38b5394",
+    "geography_sha256": "7e475b478db7bb678cc0a1539fdf484e0c8de0a9baa98916fb90f652f75ff834"
+  },
+  "report_coverage": {
+    "period": [
+      "2022-04-02",
+      "2023-01-01"
+    ],
+    "calendar_days": 274,
+    "downloaded_report_days": 272,
+    "dates_without_a_report_at_checked_paths": 2,
+    "downloaded_days_by_month": {
+      "2022-04": 29,
+      "2022-05": 31,
+      "2022-06": 30,
+      "2022-07": 31,
+      "2022-08": 29,
+      "2022-09": 30,
+      "2022-10": 31,
+      "2022-11": 30,
+      "2022-12": 31
+    },
+    "reports_with_zero_extracted_event_rows": 1,
+    "interpretation": "No report is an unknown observation. A PDF with zero extracted rows may reflect report content or parser failure and was not called an official fire-free day."
+  },
+  "spatial_protocol": {
+    "regions": [
+      "Sendero Macuco - Salto Arrechea",
+      "Refugio Frey desde Villa Catedral",
+      "Quebrada del Condorito - Balcon Norte",
+      "Sendero Namuncura",
+      "Cerro Ventana - Hueco de la Ventana",
+      "Bosque Tallado desde la plataforma del Piltriquitron",
+      "Sendero Che Roga - Mburucuyá",
+      "Sendero La Chuña - El Rey"
+    ],
+    "distance_measure": "Haversine between incident coordinates and fixed route-sector center",
+    "radii_km": [
+      10,
+      20
+    ],
+    "unit": "route-sector start day; multiple incident records on the same route/date are grouped"
+  },
+  "results": {
+    "10": {
+      "incident_records_within_radius": 0,
+      "unique_route_sector_start_days": 0,
+      "unique_route_sector_days_by_region": {},
+      "route_sector_start_days": []
+    },
+    "20": {
+      "incident_records_within_radius": 0,
+      "unique_route_sector_start_days": 0,
+      "unique_route_sector_days_by_region": {},
+      "route_sector_start_days": []
+    }
+  },
+  "limitations": [
+    "Daily SNMF reports are jurisdiction-reported and not an exhaustive national event/no-event registry.",
+    "2 of 274 dates have no PDF at the checked paths; these are unknown, never negative.",
+    "The automated extraction has 289 report snapshot rows without coordinates and 1 reports with zero parsed event rows; original PDFs require review for those cases.",
+    "Event starts may be approximate and duplicate naming may remain; route-day aggregation avoids treating duplicate records at the same route/date as separate positives.",
+    "Route-sector centers do not represent the complete trail geometry."
+  ],
+  "synthetic_observations": 0,
+  "deployment_approved": false
+}

@@ -1,0 +1,147 @@
+{
+  "experiment_id": "noaa-viirs-efire-trail-mask-coverage-pilot-2025-01-05",
+  "purpose": "Single-swath geolocation and clear-land/fire-mask feasibility check; not model evaluation.",
+  "source": {
+    "dataset": "NOAA VIIRS I-band Enterprise Fire EDR v1r3",
+    "efire_filename": "EFIRE-VIIRSI_v1r3_n21_s202601050431179_e202601050432426_c202601050458169.nc",
+    "efire_sha256": "d28cf0706bf6c9b5e86cd6ac44fb052d0bb5c0de0d2083d49e4d3aecaadc8ff0",
+    "geolocation_filename": "GITCO_j02_d20260105_t0431179_e0432426_b16342_c20260105045019794000_oebc_ops.h5",
+    "geolocation_sha256": "40d32f63d3102148d882c5cf779c7535cd0a88e9b90f9f581a4c517da53ad2d3",
+    "time_coverage_start": "2026-01-05T04:31:17Z",
+    "time_coverage_end": "2026-01-05T04:32:42Z",
+    "geospatial_bounds": "POLYGON((-35.68 -43.81, -54.49 -42.56, -71.76 -38.27, -73.25 -40.52, -74.93 -42.85, -56.38 -47.51, -35.76 -48.86, -35.74 -46.27, -35.68 -43.81))",
+    "platform": "n21",
+    "mask_labels": {
+      "0": "not_processed",
+      "1": "bowtie_deletion",
+      "2": "sun_glint",
+      "3": "water",
+      "4": "cloud",
+      "5": "clear_land",
+      "6": "unclassified_fire",
+      "7": "low_confidence_fire",
+      "8": "nominal_confidence_fire",
+      "9": "high_confidence_fire"
+    },
+    "mask_grid_shape": [
+      1536,
+      6400
+    ]
+  },
+  "geometry": {
+    "path": "training\\data\\environmental\\private\\viirs-efire-barda-pilot-2026-01-05\\barda-snmf-point-geometry.json",
+    "sha256": "f1e9288b5df012ab14af770cc07f718da96bd1855abf44e4e4828a1748aaadba",
+    "route_count": 9,
+    "sampling": "About 100 trail vertices per route; nearest valid geolocated fire-mask pixel searched within 96 pixels of coarse 64-pixel geolocation sample."
+  },
+  "per_route": [
+    {
+      "route": "Sendero Macuco - Salto Arrechea",
+      "sampled_vertices": 110,
+      "vertices_resolved_to_swath_pixels": 0,
+      "nearest_pixel_mask_and_dqf_counts": {
+        "outside_or_unresolved_swath": 110
+      },
+      "median_nearest_pixel_distance_km": null,
+      "maximum_nearest_pixel_distance_km": null,
+      "median_nearest_coarse_sample_km": 1839.0001130553978
+    },
+    {
+      "route": "Refugio Frey desde Villa Catedral",
+      "sampled_vertices": 106,
+      "vertices_resolved_to_swath_pixels": 106,
+      "nearest_pixel_mask_and_dqf_counts": {
+        "5": 106,
+        "dqf_1": 106
+      },
+      "median_nearest_pixel_distance_km": 0.14823500310946777,
+      "maximum_nearest_pixel_distance_km": 0.28468894168816744,
+      "median_nearest_coarse_sample_km": 18.931586609485777
+    },
+    {
+      "route": "Quebrada del Condorito - Balcon Norte",
+      "sampled_vertices": 127,
+      "vertices_resolved_to_swath_pixels": 0,
+      "nearest_pixel_mask_and_dqf_counts": {
+        "outside_or_unresolved_swath": 127
+      },
+      "median_nearest_pixel_distance_km": null,
+      "maximum_nearest_pixel_distance_km": null,
+      "median_nearest_coarse_sample_km": 925.9501572966526
+    },
+    {
+      "route": "Sendero Namuncura",
+      "sampled_vertices": 37,
+      "vertices_resolved_to_swath_pixels": 0,
+      "nearest_pixel_mask_and_dqf_counts": {
+        "outside_or_unresolved_swath": 37
+      },
+      "median_nearest_pixel_distance_km": null,
+      "maximum_nearest_pixel_distance_km": null,
+      "median_nearest_coarse_sample_km": 232.1749058859009
+    },
+    {
+      "route": "Cerro Ventana - Hueco de la Ventana",
+      "sampled_vertices": 111,
+      "vertices_resolved_to_swath_pixels": 0,
+      "nearest_pixel_mask_and_dqf_counts": {
+        "outside_or_unresolved_swath": 111
+      },
+      "median_nearest_pixel_distance_km": null,
+      "maximum_nearest_pixel_distance_km": null,
+      "median_nearest_coarse_sample_km": 325.9423034167753
+    },
+    {
+      "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "sampled_vertices": 103,
+      "vertices_resolved_to_swath_pixels": 103,
+      "nearest_pixel_mask_and_dqf_counts": {
+        "5": 103,
+        "dqf_1": 103
+      },
+      "median_nearest_pixel_distance_km": 0.5457796194243735,
+      "maximum_nearest_pixel_distance_km": 0.7653227790516137,
+      "median_nearest_coarse_sample_km": 16.24712826873883
+    },
+    {
+      "route": "Sendero Che Roga - Mburucuyá",
+      "sampled_vertices": 117,
+      "vertices_resolved_to_swath_pixels": 0,
+      "nearest_pixel_mask_and_dqf_counts": {
+        "outside_or_unresolved_swath": 117
+      },
+      "median_nearest_pixel_distance_km": null,
+      "maximum_nearest_pixel_distance_km": null,
+      "median_nearest_coarse_sample_km": 1501.2071182536538
+    },
+    {
+      "route": "Sendero La Chuña - El Rey",
+      "sampled_vertices": 93,
+      "vertices_resolved_to_swath_pixels": 0,
+      "nearest_pixel_mask_and_dqf_counts": {
+        "outside_or_unresolved_swath": 93
+      },
+      "median_nearest_pixel_distance_km": null,
+      "maximum_nearest_pixel_distance_km": null,
+      "median_nearest_coarse_sample_km": 1654.1053152445165
+    },
+    {
+      "route": "Barda de La Loma SNMF point",
+      "sampled_vertices": 1,
+      "vertices_resolved_to_swath_pixels": 1,
+      "nearest_pixel_mask_and_dqf_counts": {
+        "5": 1,
+        "dqf_1": 1
+      },
+      "median_nearest_pixel_distance_km": 0.1926772349685377,
+      "maximum_nearest_pixel_distance_km": 0.1926772349685377,
+      "median_nearest_coarse_sample_km": 13.356756741457932
+    }
+  ],
+  "limitations": [
+    "One satellite swath cannot establish seasonal opportunity or route-level prediction reliability.",
+    "Clear land (mask 5) and detected-fire classes are product labels, not field-confirmed ground truth.",
+    "The pilot assumes the E-FIRE 24x100 sampled geolocation is a 64-pixel decimation beginning at row/column 8; it was verified against the supplied full geolocation file for this granule.",
+    "Routes not crossed by the swath are unknown, not fire-free."
+  ]
+}

@@ -1,0 +1,672 @@
+{
+  "experiment_id": "fire-goes19-2025q4-2026jan",
+  "observation_sha256": "07bdecf2b7d88ee94403ca97b4a7a9cbf67e4efeb5a9d5ad1b75151eaacad98b",
+  "method": {
+    "official_date_window_days_each_side": 1,
+    "pixel_to_perimeter_distance_thresholds_km": [
+      2.5,
+      5,
+      10
+    ],
+    "route_footprint_filter_km": 80,
+    "meaning": "A spatial-temporal coincidence audit only; no detection does not prove absence of fire, and the recorded perimeter date is not exact ignition time."
+  },
+  "goes_positive_rows": 218,
+  "official_perimeter_layers": {
+    "2025": {
+      "sha256": "4042d351f91c24438a00e94e54728d3a6200b2bf7729655dce9b1be14c5364fa",
+      "feature_count": 675
+    },
+    "2026": {
+      "sha256": "5713431fcb4877c098eafa13496a940dc449b1817a592b299b41ca961174c2a5",
+      "feature_count": 165
+    }
+  },
+  "eligible_events_near_sampled_route_footprints": 70,
+  "matched_events": [],
+  "unmatched_events": [
+    {
+      "layer_year": 2025,
+      "id": 563,
+      "fire_date": "2025-10-08",
+      "site": null,
+      "locality": "LA PAZ",
+      "area_ha": 2,
+      "nearest_route_center_distance_km": 70.545
+    },
+    {
+      "layer_year": 2025,
+      "id": "12153",
+      "fire_date": "2025-10-19",
+      "site": "Arroyo aguas Amarrillas",
+      "locality": "LA POBLACION",
+      "area_ha": 26,
+      "nearest_route_center_distance_km": 54.621
+    },
+    {
+      "layer_year": 2025,
+      "id": 567,
+      "fire_date": "2025-10-07",
+      "site": null,
+      "locality": "ALMAFUERTE",
+      "area_ha": 4,
+      "nearest_route_center_distance_km": 75.856
+    },
+    {
+      "layer_year": 2025,
+      "id": 579,
+      "fire_date": "2025-10-23",
+      "site": null,
+      "locality": "VILLA DOLORES",
+      "area_ha": 1,
+      "nearest_route_center_distance_km": 56.4
+    },
+    {
+      "layer_year": 2025,
+      "id": "11925",
+      "fire_date": "2025-10-11",
+      "site": "Aero club VGB",
+      "locality": "VILLA GENERAL BELGRANO",
+      "area_ha": 1,
+      "nearest_route_center_distance_km": 36.865
+    },
+    {
+      "layer_year": 2025,
+      "id": 581,
+      "fire_date": "2025-11-14",
+      "site": null,
+      "locality": "LA PAZ",
+      "area_ha": 4,
+      "nearest_route_center_distance_km": 70.362
+    },
+    {
+      "layer_year": 2025,
+      "id": 582,
+      "fire_date": "2025-11-17",
+      "site": null,
+      "locality": "LA PAZ",
+      "area_ha": 2,
+      "nearest_route_center_distance_km": 74.033
+    },
+    {
+      "layer_year": 2025,
+      "id": 583,
+      "fire_date": "2025-11-17",
+      "site": null,
+      "locality": "SAN JAVIER",
+      "area_ha": 2,
+      "nearest_route_center_distance_km": 47.533
+    },
+    {
+      "layer_year": 2025,
+      "id": "12858",
+      "fire_date": "2025-11-21",
+      "site": "sur de lutti",
+      "locality": "LUTTI",
+      "area_ha": 17,
+      "nearest_route_center_distance_km": 79.218
+    },
+    {
+      "layer_year": 2025,
+      "id": 590,
+      "fire_date": "2025-11-27",
+      "site": null,
+      "locality": "LA PAZ",
+      "area_ha": 1,
+      "nearest_route_center_distance_km": 71.103
+    },
+    {
+      "layer_year": 2025,
+      "id": 592,
+      "fire_date": "2025-10-07",
+      "site": null,
+      "locality": "LOS CERRILLOS",
+      "area_ha": 3,
+      "nearest_route_center_distance_km": 76.713
+    },
+    {
+      "layer_year": 2025,
+      "id": 595,
+      "fire_date": "2025-10-18",
+      "site": null,
+      "locality": "LA PAZ",
+      "area_ha": 1,
+      "nearest_route_center_distance_km": 73.05
+    },
+    {
+      "layer_year": 2025,
+      "id": "12400",
+      "fire_date": "2025-10-31",
+      "site": "Campo de Jorge Asia",
+      "locality": "VILLA SARMIENTO",
+      "area_ha": 4,
+      "nearest_route_center_distance_km": 55.334
+    },
+    {
+      "layer_year": 2025,
+      "id": "12221",
+      "fire_date": "2025-10-22",
+      "site": "Chacras de la merced",
+      "locality": "CORDOBA",
+      "area_ha": 7,
+      "nearest_route_center_distance_km": 62.07
+    },
+    {
+      "layer_year": 2025,
+      "id": 614,
+      "fire_date": "2025-10-20",
+      "site": null,
+      "locality": "MALVINAS ARGENTINAS",
+      "area_ha": 3,
+      "nearest_route_center_distance_km": 64.818
+    },
+    {
+      "layer_year": 2025,
+      "id": 609,
+      "fire_date": "2025-10-25",
+      "site": null,
+      "locality": "LOS GIGANTES",
+      "area_ha": 2,
+      "nearest_route_center_distance_km": 42.236
+    },
+    {
+      "layer_year": 2025,
+      "id": 612,
+      "fire_date": "2025-10-18",
+      "site": null,
+      "locality": "MALVINAS ARGENTINAS",
+      "area_ha": 6,
+      "nearest_route_center_distance_km": 63.113
+    },
+    {
+      "layer_year": 2025,
+      "id": 616,
+      "fire_date": "2025-10-18",
+      "site": null,
+      "locality": "LOS GIGANTES",
+      "area_ha": 8,
+      "nearest_route_center_distance_km": 27.283
+    },
+    {
+      "layer_year": 2025,
+      "id": 617,
+      "fire_date": "2025-10-03",
+      "site": null,
+      "locality": "LOS GIGANTES",
+      "area_ha": 17,
+      "nearest_route_center_distance_km": 23.317
+    },
+    {
+      "layer_year": 2025,
+      "id": "11962",
+      "fire_date": "2025-10-12",
+      "site": "Manantial",
+      "locality": "AMBUL",
+      "area_ha": 5,
+      "nearest_route_center_distance_km": 28.804
+    },
+    {
+      "layer_year": 2025,
+      "id": 619,
+      "fire_date": "2025-10-03",
+      "site": null,
+      "locality": "CHARACATO",
+      "area_ha": 7,
+      "nearest_route_center_distance_km": 44.577
+    },
+    {
+      "layer_year": 2025,
+      "id": 620,
+      "fire_date": "2025-10-26",
+      "site": null,
+      "locality": "LOS GIGANTES",
+      "area_ha": 5,
+      "nearest_route_center_distance_km": 44.205
+    },
+    {
+      "layer_year": 2025,
+      "id": 621,
+      "fire_date": "2025-11-02",
+      "site": null,
+      "locality": "CHARACATO",
+      "area_ha": 16,
+      "nearest_route_center_distance_km": 45.629
+    },
+    {
+      "layer_year": 2025,
+      "id": 622,
+      "fire_date": "2025-11-02",
+      "site": null,
+      "locality": "San Gerónimo",
+      "area_ha": 5,
+      "nearest_route_center_distance_km": 45.703
+    },
+    {
+      "layer_year": 2025,
+      "id": 623,
+      "fire_date": "2025-11-02",
+      "site": null,
+      "locality": "CHARACATO",
+      "area_ha": 3,
+      "nearest_route_center_distance_km": 46.406
+    },
+    {
+      "layer_year": 2025,
+      "id": "12396",
+      "fire_date": "2025-10-31",
+      "site": "Siglo 21 y Ciudad empresarial",
+      "locality": "GUIÑAZU",
+      "area_ha": 2,
+      "nearest_route_center_distance_km": 58.485
+    },
+    {
+      "layer_year": 2025,
+      "id": "12047",
+      "fire_date": "2025-10-15",
+      "site": "Villa Allende",
+      "locality": "GUIÑAZU",
+      "area_ha": 4,
+      "nearest_route_center_distance_km": 57.47
+    },
+    {
+      "layer_year": 2025,
+      "id": 626,
+      "fire_date": "2025-10-15",
+      "site": null,
+      "locality": "MALVINAS ARGENTINAS",
+      "area_ha": 5,
+      "nearest_route_center_distance_km": 68.744
+    },
+    {
+      "layer_year": 2025,
+      "id": 634,
+      "fire_date": "2025-10-06",
+      "site": null,
+      "locality": "TOLEDO",
+      "area_ha": 2,
+      "nearest_route_center_distance_km": 61.285
+    },
+    {
+      "layer_year": 2025,
+      "id": 627,
+      "fire_date": "2025-10-15",
+      "site": null,
+      "locality": "BOWER",
+      "area_ha": 3,
+      "nearest_route_center_distance_km": 50.695
+    },
+    {
+      "layer_year": 2025,
+      "id": 628,
+      "fire_date": "2025-10-15",
+      "site": null,
+      "locality": "VILLA CORAZON DE MARIA",
+      "area_ha": 4,
+      "nearest_route_center_distance_km": 62.932
+    },
+    {
+      "layer_year": 2025,
+      "id": 629,
+      "fire_date": "2025-10-15",
+      "site": null,
+      "locality": "CORDOBA",
+      "area_ha": 2,
+      "nearest_route_center_distance_km": 58.154
+    },
+    {
+      "layer_year": 2025,
+      "id": 630,
+      "fire_date": "2025-10-13",
+      "site": null,
+      "locality": "MALVINAS ARGENTINAS",
+      "area_ha": 4,
+      "nearest_route_center_distance_km": 65.948
+    },
+    {
+      "layer_year": 2025,
+      "id": "11923",
+      "fire_date": "2025-10-11",
+      "site": "Despeñaderos",
+      "locality": "DIQUE CHICO",
+      "area_ha": 51,
+      "nearest_route_center_distance_km": 35.547
+    },
+    {
+      "layer_year": 2025,
+      "id": "11835",
+      "fire_date": "2025-10-07",
+      "site": "Altas Cumbres ",
+      "locality": "MINA CLAVERO",
+      "area_ha": 10,
+      "nearest_route_center_distance_km": 20.89
+    },
+    {
+      "layer_year": 2025,
+      "id": "12044",
+      "fire_date": "2025-10-15",
+      "site": "Mina Clavero",
+      "locality": "MINA CLAVERO",
+      "area_ha": 1,
+      "nearest_route_center_distance_km": 33.283
+    },
+    {
+      "layer_year": 2025,
+      "id": "11911",
+      "fire_date": "2025-10-11",
+      "site": "Camino de los artesanos",
+      "locality": "VILLA GIARDINO",
+      "area_ha": 132,
+      "nearest_route_center_distance_km": 70.569
+    },
+    {
+      "layer_year": 2025,
+      "id": "13018",
+      "fire_date": "2025-11-28",
+      "site": "Saldan",
+      "locality": "SALDAN",
+      "area_ha": 66,
+      "nearest_route_center_distance_km": 49.897
+    },
+    {
+      "layer_year": 2025,
+      "id": 641,
+      "fire_date": "2025-12-09",
+      "site": null,
+      "locality": "San Gerónimo",
+      "area_ha": 3,
+      "nearest_route_center_distance_km": 34.751
+    },
+    {
+      "layer_year": 2025,
+      "id": "13030",
+      "fire_date": "2025-11-27",
+      "site": "Boca del rio",
+      "locality": "LAS TAPIAS",
+      "area_ha": 6,
+      "nearest_route_center_distance_km": 47.281
+    },
+    {
+      "layer_year": 2025,
+      "id": "13123",
+      "fire_date": "2025-12-01",
+      "site": "Villa de Pocho",
+      "locality": "Villa de Pocho",
+      "area_ha": 11,
+      "nearest_route_center_distance_km": 56.633
+    },
+    {
+      "layer_year": 2025,
+      "id": "12490",
+      "fire_date": "2025-11-04",
+      "site": "Paso de Vegas",
+      "locality": "Cruz de Caña",
+      "area_ha": 3,
+      "nearest_route_center_distance_km": 60.147
+    },
+    {
+      "layer_year": 2025,
+      "id": "12447",
+      "fire_date": "2025-11-03",
+      "site": "Bosque Alegre",
+      "locality": "FALDA DEL CARMEN",
+      "area_ha": 2,
+      "nearest_route_center_distance_km": 17.102
+    },
+    {
+      "layer_year": 2025,
+      "id": "12984",
+      "fire_date": "2025-11-25",
+      "site": "Valle del Golf",
+      "locality": "SIERRAS DE ORO",
+      "area_ha": 4,
+      "nearest_route_center_distance_km": 31.88
+    },
+    {
+      "layer_year": 2025,
+      "id": "12740",
+      "fire_date": "2025-11-17",
+      "site": "Caminos de San Agustin",
+      "locality": "LOS MOLINOS",
+      "area_ha": 2,
+      "nearest_route_center_distance_km": 41.302
+    },
+    {
+      "layer_year": 2025,
+      "id": 653,
+      "fire_date": "2025-11-14",
+      "site": null,
+      "locality": "VILLA CORAZON DE MARIA",
+      "area_ha": 7,
+      "nearest_route_center_distance_km": 64.003
+    },
+    {
+      "layer_year": 2025,
+      "id": 654,
+      "fire_date": "2025-12-09",
+      "site": null,
+      "locality": "MALVINAS ARGENTINAS",
+      "area_ha": 4,
+      "nearest_route_center_distance_km": 66.337
+    },
+    {
+      "layer_year": 2025,
+      "id": 656,
+      "fire_date": "2025-10-15",
+      "site": null,
+      "locality": "RIO SEGUNDO",
+      "area_ha": 4,
+      "nearest_route_center_distance_km": 71.035
+    },
+    {
+      "layer_year": 2025,
+      "id": 658,
+      "fire_date": "2025-11-22",
+      "site": null,
+      "locality": "EL DURAZNO",
+      "area_ha": 6,
+      "nearest_route_center_distance_km": 44.038
+    },
+    {
+      "layer_year": 2025,
+      "id": 659,
+      "fire_date": "2025-11-22",
+      "site": null,
+      "locality": "EL DURAZNO",
+      "area_ha": 8,
+      "nearest_route_center_distance_km": 43.78
+    },
+    {
+      "layer_year": 2025,
+      "id": 660,
+      "fire_date": "2025-12-03",
+      "site": null,
+      "locality": "CHARACATO",
+      "area_ha": 20,
+      "nearest_route_center_distance_km": 45.842
+    },
+    {
+      "layer_year": 2025,
+      "id": 661,
+      "fire_date": "2025-10-10",
+      "site": null,
+      "locality": "MALVINAS ARGENTINAS",
+      "area_ha": 2,
+      "nearest_route_center_distance_km": 63.83
+    },
+    {
+      "layer_year": 2025,
+      "id": "13529",
+      "fire_date": "2025-12-19",
+      "site": "Mi Granja",
+      "locality": "MI GRANJA",
+      "area_ha": 15,
+      "nearest_route_center_distance_km": 72.456
+    },
+    {
+      "layer_year": 2025,
+      "id": 663,
+      "fire_date": "2025-12-27",
+      "site": null,
+      "locality": "San Gerónimo",
+      "area_ha": 8,
+      "nearest_route_center_distance_km": 33.624
+    },
+    {
+      "layer_year": 2025,
+      "id": 664,
+      "fire_date": "2025-12-17",
+      "site": null,
+      "locality": "San Gerónimo",
+      "area_ha": 6,
+      "nearest_route_center_distance_km": 35.204
+    },
+    {
+      "layer_year": 2025,
+      "id": 665,
+      "fire_date": "2025-12-17",
+      "site": null,
+      "locality": "MONTE CRISTO",
+      "area_ha": 2,
+      "nearest_route_center_distance_km": 78.256
+    },
+    {
+      "layer_year": 2025,
+      "id": 667,
+      "fire_date": "2025-11-27",
+      "site": null,
+      "locality": "LOS GIGANTES",
+      "area_ha": 6,
+      "nearest_route_center_distance_km": 27.944
+    },
+    {
+      "layer_year": 2025,
+      "id": 670,
+      "fire_date": "2025-12-17",
+      "site": null,
+      "locality": "LOS GIGANTES",
+      "area_ha": 2,
+      "nearest_route_center_distance_km": 38.506
+    },
+    {
+      "layer_year": 2025,
+      "id": 671,
+      "fire_date": "2025-11-19",
+      "site": null,
+      "locality": "ARROYO DE LOS PATOS",
+      "area_ha": 2,
+      "nearest_route_center_distance_km": 20.054
+    },
+    {
+      "layer_year": 2025,
+      "id": 672,
+      "fire_date": "2025-12-10",
+      "site": null,
+      "locality": "RAFAEL GARCIA",
+      "area_ha": 1,
+      "nearest_route_center_distance_km": 41.134
+    },
+    {
+      "layer_year": 2025,
+      "id": "13339",
+      "fire_date": "2025-12-12",
+      "site": "Ruta 5",
+      "locality": "LOS CEDROS",
+      "area_ha": 1,
+      "nearest_route_center_distance_km": 39.594
+    },
+    {
+      "layer_year": 2026,
+      "id": 8,
+      "fire_date": "2026-01-21",
+      "site": null,
+      "locality": "San Gerónimo",
+      "area_ha": 1,
+      "nearest_route_center_distance_km": 29.271
+    },
+    {
+      "layer_year": 2026,
+      "id": "14191",
+      "fire_date": "2026-01-06",
+      "site": "Los Molles",
+      "locality": "Villa de Pocho",
+      "area_ha": 10,
+      "nearest_route_center_distance_km": 64.793
+    },
+    {
+      "layer_year": 2026,
+      "id": 21,
+      "fire_date": "2026-01-06",
+      "site": null,
+      "locality": "TOLEDO",
+      "area_ha": 1,
+      "nearest_route_center_distance_km": 62.4
+    },
+    {
+      "layer_year": 2026,
+      "id": "14533",
+      "fire_date": "2026-01-14",
+      "site": "La Mudana",
+      "locality": "Las Palmas",
+      "area_ha": 2,
+      "nearest_route_center_distance_km": 68.304
+    },
+    {
+      "layer_year": 2026,
+      "id": 30,
+      "fire_date": "2026-01-31",
+      "site": null,
+      "locality": "San Gerónimo",
+      "area_ha": 4,
+      "nearest_route_center_distance_km": 34.451
+    },
+    {
+      "layer_year": 2026,
+      "id": 33,
+      "fire_date": "2026-01-21",
+      "site": null,
+      "locality": "VILLA CORAZON DE MARIA",
+      "area_ha": 3,
+      "nearest_route_center_distance_km": 62.11
+    },
+    {
+      "layer_year": 2026,
+      "id": 34,
+      "fire_date": "2026-01-01",
+      "site": null,
+      "locality": "CORDOBA",
+      "area_ha": 1,
+      "nearest_route_center_distance_km": 46.899
+    },
+    {
+      "layer_year": 2026,
+      "id": 35,
+      "fire_date": "2026-01-11",
+      "site": null,
+      "locality": "MALVINAS ARGENTINAS",
+      "area_ha": 1,
+      "nearest_route_center_distance_km": 66.212
+    },
+    {
+      "layer_year": 2026,
+      "id": 36,
+      "fire_date": "2026-01-23",
+      "site": null,
+      "locality": "MALVINAS ARGENTINAS",
+      "area_ha": 2,
+      "nearest_route_center_distance_km": 69.39
+    }
+  ],
+  "matched_event_count": 0,
+  "unmatched_event_count": 70,
+  "event_matches_by_distance_threshold_km": {
+    "2.5": 0,
+    "5": 0,
+    "10": 0
+  },
+  "limitations": [
+    "Only events mapped in Córdoba layers 2025 and 2026 and recorded from 2025-10-01 through 2026-01-31 are evaluated.",
+    "The eight source samples are fixed pixels around route sectors, not complete route geometries or continuous wall-to-wall coverage.",
+    "Multiple detections or pixels may belong to one fire; they do not count as independent successes.",
+    "Burned-area perimeter and its recorded date are a different measurement from active-fire pixel detection."
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "experiment_id": "noaa-viirs-efire-snmf-event-coordinate-pass-audit",
+  "purpose": "Same-date sensor cross-check at SNMF incident coordinates; not an hourly event verification or prediction evaluation.",
+  "source": {
+    "dataset": "NOAA VIIRS I-band Enterprise Fire EDR v1r3",
+    "efire_filename": "EFIRE-VIIRSI_v1r3_n20_s202512091745171_e202512091746417_c202512091835412.nc",
+    "efire_sha256": "46fdf7aac97e73ee91bf59cc338a27cc9a38c3d52c6a8a60d29e5edd8a489bbe",
+    "geolocation_filename": "GITCO_j01_d20251209_t1745171_e1746417_b41759_c20251209182612983000_oeac_ops.h5",
+    "geolocation_sha256": "3883b5fc4e2d824d68ca01e59413802b66b00b82c32a917a94937f6c37e2375c",
+    "time_coverage_start_utc": "2025-12-09T17:45:17Z",
+    "time_coverage_end_utc": "2025-12-09T17:46:41Z",
+    "platform": "n20"
+  },
+  "snmf_route_event_source_sha256": "05b775d3ae38d20e3e12a3fa7966cf219b8e4741c1a32730051f407ffdba8c10",
+  "snmf_event_coordinate_source_sha256": "d8e95391641ccb7d884d7bbe88e3df6fff82251352a50154656f88096f4a87f4",
+  "observations": [
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2025-12-09",
+      "incident_name": "Callejón de los maestros",
+      "province": "Chubut",
+      "line_distance_km": 14.511,
+      "center_distance_km": 14.92,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa",
+      "event_latitude": -42.06535833333333,
+      "event_longitude": -71.60341944444444,
+      "nearest_coarse_swath_sample_km": 13.003909960657605,
+      "nearest_pixel_distance_km": 0.0575727934136133,
+      "mask_code": 5,
+      "mask_label": "clear_land",
+      "dqf_code": 1,
+      "mask_status": "observed_clear_land"
+    }
+  ],
+  "limitations": [
+    "The SNMF reported start date does not establish exact ignition time; a satellite pass on that date may be before or after the event.",
+    "A single nearest VIIRS pixel is not a complete fire perimeter or field-confirmed reference.",
+    "Cloud, bowtie, water, invalid, and unresolved pixels remain unknown, not negative.",
+    "Clear land means the sensor processed that pixel without detecting fire at the pass time; it does not prove no fire occurred.",
+    "This cross-check does not measure a forecast model or its precision."
+  ],
+  "synthetic_observations": 0,
+  "deployment_approved": false
+}

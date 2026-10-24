@@ -1,0 +1,440 @@
+{
+  "experiment_id": "viirs-geolocation-companion-readiness-barda-2026-jan",
+  "status": "all_exact_time_companions_found",
+  "target_incident": {
+    "incident_name": "Barda de La Loma",
+    "province": "Río Negro",
+    "reported_start_date": "2026-01-05",
+    "reported_status": "CONTROLADO",
+    "snmf_point_latitude": -41.98623333333333,
+    "snmf_point_longitude": -71.54853888888888,
+    "distance_to_route_km": 5.939,
+    "goes_model_valid_pixels": 13,
+    "goes_model_maximum_score": 0.0,
+    "goes_model_alert": false
+  },
+  "cmr_query": {
+    "endpoint": "https://cmr.earthdata.nasa.gov/search/granules.json",
+    "temporal_query_utc": [
+      "2026-01-04T04:48:00.000Z",
+      "2026-01-10T19:24:00.000Z"
+    ],
+    "spatial_query": "point -71.548539,-41.986233 at the reported SNMF incident coordinate",
+    "matching_rule": "Exact CMR time_start match to each fire-mask acquisition; newest metadata revision selected per acquisition.",
+    "metadata_query_downloaded_data": false
+  },
+  "products": {
+    "VNP03IMG": {
+      "paired_fire_mask_product": "VNP14IMG",
+      "expected_fire_mask_passes": 22,
+      "exact_time_matches": 22,
+      "missing_acquisition_times_utc": [],
+      "reported_total_size_mb": 3124.84,
+      "cmr_response_sha256": "7e7708700f36628fbeb7ba331fc3af02c760f9ab323582c5d883663d7f8d925d",
+      "matched_granules": [
+        {
+          "acquisition_start_utc": "2026-01-04T05:18:00.000Z",
+          "producer_granule_id": "VNP03IMG.A2026004.0518.002.2026004131739.nc",
+          "reported_size_mb": 143.199593544006,
+          "latest_metadata_update": "2026-01-04T13:54:02.970Z"
+        },
+        {
+          "acquisition_start_utc": "2026-01-04T07:00:00.000Z",
+          "producer_granule_id": "VNP03IMG.A2026004.0700.002.2026004145204.nc",
+          "reported_size_mb": 129.76226234436,
+          "latest_metadata_update": "2026-01-04T15:29:06.030Z"
+        },
+        {
+          "acquisition_start_utc": "2026-01-04T17:36:00.000Z",
+          "producer_granule_id": "VNP03IMG.A2026004.1736.002.2026005010909.nc",
+          "reported_size_mb": 154.015092849731,
+          "latest_metadata_update": "2026-01-05T01:34:01.860Z"
+        },
+        {
+          "acquisition_start_utc": "2026-01-04T19:18:00.000Z",
+          "producer_granule_id": "VNP03IMG.A2026004.1918.002.2026005023754.nc",
+          "reported_size_mb": 139.35375213623,
+          "latest_metadata_update": "2026-01-05T02:59:12.260Z"
+        },
+        {
+          "acquisition_start_utc": "2026-01-05T05:00:00.000Z",
+          "producer_granule_id": "VNP03IMG.A2026005.0500.002.2026005125749.nc",
+          "reported_size_mb": 142.610159873962,
+          "latest_metadata_update": "2026-01-05T13:34:09.620Z"
+        },
+        {
+          "acquisition_start_utc": "2026-01-05T06:42:00.000Z",
+          "producer_granule_id": "VNP03IMG.A2026005.0642.002.2026005145608.nc",
+          "reported_size_mb": 136.142144203186,
+          "latest_metadata_update": "2026-01-05T15:29:30.810Z"
+        },
+        {
+          "acquisition_start_utc": "2026-01-05T18:54:00.000Z",
+          "producer_granule_id": "VNP03IMG.A2026005.1854.002.2026006024804.nc",
+          "reported_size_mb": 141.334917068481,
+          "latest_metadata_update": "2026-01-06T04:00:41.580Z"
+        },
+        {
+          "acquisition_start_utc": "2026-01-06T06:18:00.000Z",
+          "producer_granule_id": "VNP03IMG.A2026006.0618.002.2026006143145.nc",
+          "reported_size_mb": 142.489506721497,
+          "latest_metadata_update": "2026-01-06T20:24:19.440Z"
+        },
+        {
+          "acquisition_start_utc": "2026-01-06T18:36:00.000Z",
+          "producer_granule_id": "VNP03IMG.A2026006.1836.002.2026007015210.nc",
+          "reported_size_mb": 143.569324493408,
+          "latest_metadata_update": "2026-01-07T03:34:17.890Z"
+        },
+        {
+          "acquisition_start_utc": "2026-01-07T04:24:00.000Z",
+          "producer_granule_id": "VNP03IMG.A2026007.0424.002.2026013152419.nc",
+          "reported_size_mb": 142.483186721802,
+          "latest_metadata_update": "2026-01-14T03:23:32.280Z"
+        },
+        {
+          "acquisition_start_utc": "2026-01-07T06:00:00.000Z",
+          "producer_granule_id": "VNP03IMG.A2026007.0600.002.2026013152419.nc",
+          "reported_size_mb": 144.344609260559,
+          "latest_metadata_update": "2026-01-14T03:23:32.280Z"
+        },
+        {
+          "acquisition_start_utc": "2026-01-07T18:18:00.000Z",
+          "producer_granule_id": "VNP03IMG.A2026007.1818.002.2026013152419.nc",
+          "reported_size_mb": 146.662051200867,
+          "latest_metadata_update": "2026-01-14T03:18:27.640Z"
+        },
+        {
+          "acquisition_start_utc": "2026-01-07T20:00:00.000Z",
+          "producer_granule_id": "VNP03IMG.A2026007.2000.002.2026013152418.nc",
+          "reported_size_mb": 133.574414253235,
+          "latest_metadata_update": "2026-01-14T03:23:28.810Z"
+        },
+        {
+          "acquisition_start_utc": "2026-01-08T05:42:00.000Z",
+          "producer_granule_id": "VNP03IMG.A2026008.0542.002.2026008121215.nc",
+          "reported_size_mb": 143.946494102478,
+          "latest_metadata_update": "2026-01-08T13:14:24.290Z"
+        },
+        {
+          "acquisition_start_utc": "2026-01-08T18:00:00.000Z",
+          "producer_granule_id": "VNP03IMG.A2026008.1800.002.2026009014320.nc",
+          "reported_size_mb": 151.517996788025,
+          "latest_metadata_update": "2026-01-09T02:09:12.730Z"
+        },
+        {
+          "acquisition_start_utc": "2026-01-08T19:42:00.000Z",
+          "producer_granule_id": "VNP03IMG.A2026008.1942.002.2026009014321.nc",
+          "reported_size_mb": 135.012234687805,
+          "latest_metadata_update": "2026-01-09T02:09:12.730Z"
+        },
+        {
+          "acquisition_start_utc": "2026-01-09T05:24:00.000Z",
+          "producer_granule_id": "VNP03IMG.A2026009.0524.002.2026009115153.nc",
+          "reported_size_mb": 142.605937004089,
+          "latest_metadata_update": "2026-01-09T12:24:08.530Z"
+        },
+        {
+          "acquisition_start_utc": "2026-01-09T17:42:00.000Z",
+          "producer_granule_id": "VNP03IMG.A2026009.1742.002.2026010011518.nc",
+          "reported_size_mb": 153.625971794128,
+          "latest_metadata_update": "2026-01-10T07:04:24.020Z"
+        },
+        {
+          "acquisition_start_utc": "2026-01-09T19:24:00.000Z",
+          "producer_granule_id": "VNP03IMG.A2026009.1924.002.2026010025419.nc",
+          "reported_size_mb": 138.251368522644,
+          "latest_metadata_update": "2026-01-10T08:14:16.050Z"
+        },
+        {
+          "acquisition_start_utc": "2026-01-10T05:06:00.000Z",
+          "producer_granule_id": "VNP03IMG.A2026010.0506.002.2026010130145.nc",
+          "reported_size_mb": 142.722328186035,
+          "latest_metadata_update": "2026-01-10T13:24:33.520Z"
+        },
+        {
+          "acquisition_start_utc": "2026-01-10T06:48:00.000Z",
+          "producer_granule_id": "VNP03IMG.A2026010.0648.002.2026010150147.nc",
+          "reported_size_mb": 134.133327484131,
+          "latest_metadata_update": "2026-01-10T15:24:06.830Z"
+        },
+        {
+          "acquisition_start_utc": "2026-01-10T19:06:00.000Z",
+          "producer_granule_id": "VNP03IMG.A2026010.1906.002.2026011025546.nc",
+          "reported_size_mb": 143.483641624451,
+          "latest_metadata_update": "2026-01-11T03:19:06.650Z"
+        }
+      ]
+    },
+    "VJ103IMG": {
+      "paired_fire_mask_product": "VJ114IMG",
+      "expected_fire_mask_passes": 21,
+      "exact_time_matches": 21,
+      "missing_acquisition_times_utc": [],
+      "reported_total_size_mb": 3009.3,
+      "cmr_response_sha256": "5532e6280d2e9bfb0ac168fa1334a66a0a1be99d616107651ab817bd9c2dc44a",
+      "matched_granules": [
+        {
+          "acquisition_start_utc": "2026-01-04T05:36:00.000Z",
+          "producer_granule_id": "VJ103IMG.A2026004.0536.021.2026004094419.nc",
+          "reported_size_mb": 147.731892585754,
+          "latest_metadata_update": "2026-01-04T10:59:13.180Z"
+        },
+        {
+          "acquisition_start_utc": "2026-01-04T17:54:00.000Z",
+          "producer_granule_id": "VJ103IMG.A2026004.1754.021.2026005002005.nc",
+          "reported_size_mb": 144.59480381012,
+          "latest_metadata_update": "2026-01-05T00:54:10.320Z"
+        },
+        {
+          "acquisition_start_utc": "2026-01-04T19:36:00.000Z",
+          "producer_granule_id": "VJ103IMG.A2026004.1936.021.2026005002002.nc",
+          "reported_size_mb": 139.074605941772,
+          "latest_metadata_update": "2026-01-05T00:54:10.320Z"
+        },
+        {
+          "acquisition_start_utc": "2026-01-05T05:18:00.000Z",
+          "producer_granule_id": "VJ103IMG.A2026005.0518.021.2026005102637.nc",
+          "reported_size_mb": 146.07023525238,
+          "latest_metadata_update": "2026-01-05T11:29:05.520Z"
+        },
+        {
+          "acquisition_start_utc": "2026-01-05T17:36:00.000Z",
+          "producer_granule_id": "VJ103IMG.A2026005.1736.021.2026005220833.nc",
+          "reported_size_mb": 145.673619270325,
+          "latest_metadata_update": "2026-01-06T03:20:37.060Z"
+        },
+        {
+          "acquisition_start_utc": "2026-01-05T19:18:00.000Z",
+          "producer_granule_id": "VJ103IMG.A2026005.1918.021.2026005233940.nc",
+          "reported_size_mb": 141.775190353394,
+          "latest_metadata_update": "2026-01-06T03:35:40.330Z"
+        },
+        {
+          "acquisition_start_utc": "2026-01-06T05:00:00.000Z",
+          "producer_granule_id": "VJ103IMG.A2026006.0500.021.2026006095743.nc",
+          "reported_size_mb": 144.632120132446,
+          "latest_metadata_update": "2026-01-06T11:00:25.760Z"
+        },
+        {
+          "acquisition_start_utc": "2026-01-06T06:42:00.000Z",
+          "producer_granule_id": "VJ103IMG.A2026006.0642.021.2026006123059.nc",
+          "reported_size_mb": 133.928984642029,
+          "latest_metadata_update": "2026-01-06T14:11:44.460Z"
+        },
+        {
+          "acquisition_start_utc": "2026-01-06T19:00:00.000Z",
+          "producer_granule_id": "VJ103IMG.A2026006.1900.021.2026007001035.nc",
+          "reported_size_mb": 144.534134864807,
+          "latest_metadata_update": "2026-01-07T02:55:43.220Z"
+        },
+        {
+          "acquisition_start_utc": "2026-01-07T04:42:00.000Z",
+          "producer_granule_id": "VJ103IMG.A2026007.0442.021.2026007102658.nc",
+          "reported_size_mb": 144.646697998047,
+          "latest_metadata_update": "2026-01-07T11:39:15.730Z"
+        },
+        {
+          "acquisition_start_utc": "2026-01-07T06:24:00.000Z",
+          "producer_granule_id": "VJ103IMG.A2026007.0624.021.2026007120918.nc",
+          "reported_size_mb": 137.386373519897,
+          "latest_metadata_update": "2026-01-07T13:44:25.420Z"
+        },
+        {
+          "acquisition_start_utc": "2026-01-07T18:42:00.000Z",
+          "producer_granule_id": "VJ103IMG.A2026007.1842.021.2026008001616.nc",
+          "reported_size_mb": 146.930132865906,
+          "latest_metadata_update": "2026-01-08T01:05:03.840Z"
+        },
+        {
+          "acquisition_start_utc": "2026-01-08T04:24:00.000Z",
+          "producer_granule_id": "VJ103IMG.A2026008.0424.021.2026008101523.nc",
+          "reported_size_mb": 142.011804580688,
+          "latest_metadata_update": "2026-01-08T13:14:11.310Z"
+        },
+        {
+          "acquisition_start_utc": "2026-01-08T06:06:00.000Z",
+          "producer_granule_id": "VJ103IMG.A2026008.0606.021.2026008115045.nc",
+          "reported_size_mb": 136.643568992615,
+          "latest_metadata_update": "2026-01-08T13:14:24.290Z"
+        },
+        {
+          "acquisition_start_utc": "2026-01-08T18:24:00.000Z",
+          "producer_granule_id": "VJ103IMG.A2026008.1824.021.2026009004352.nc",
+          "reported_size_mb": 150.611079216003,
+          "latest_metadata_update": "2026-01-09T01:19:00.220Z"
+        },
+        {
+          "acquisition_start_utc": "2026-01-09T05:42:00.000Z",
+          "producer_granule_id": "VJ103IMG.A2026009.0542.021.2026009100650.nc",
+          "reported_size_mb": 147.520939826965,
+          "latest_metadata_update": "2026-01-09T12:09:11.190Z"
+        },
+        {
+          "acquisition_start_utc": "2026-01-09T18:00:00.000Z",
+          "producer_granule_id": "VJ103IMG.A2026009.1800.021.2026010002753.nc",
+          "reported_size_mb": 144.00429725647,
+          "latest_metadata_update": "2026-01-10T06:39:20.520Z"
+        },
+        {
+          "acquisition_start_utc": "2026-01-09T19:42:00.000Z",
+          "producer_granule_id": "VJ103IMG.A2026009.1942.021.2026010002748.nc",
+          "reported_size_mb": 137.827292442322,
+          "latest_metadata_update": "2026-01-10T06:39:20.520Z"
+        },
+        {
+          "acquisition_start_utc": "2026-01-10T05:24:00.000Z",
+          "producer_granule_id": "VJ103IMG.A2026010.0524.021.2026010103051.nc",
+          "reported_size_mb": 147.02028465271,
+          "latest_metadata_update": "2026-01-10T12:20:48.990Z"
+        },
+        {
+          "acquisition_start_utc": "2026-01-10T17:42:00.000Z",
+          "producer_granule_id": "VJ103IMG.A2026010.1742.021.2026010222320.nc",
+          "reported_size_mb": 145.728840827942,
+          "latest_metadata_update": "2026-01-10T22:59:06.170Z"
+        },
+        {
+          "acquisition_start_utc": "2026-01-10T19:24:00.000Z",
+          "producer_granule_id": "VJ103IMG.A2026010.1924.021.2026010235915.nc",
+          "reported_size_mb": 140.954229354858,
+          "latest_metadata_update": "2026-01-11T00:34:12.160Z"
+        }
+      ]
+    },
+    "VJ203IMG": {
+      "paired_fire_mask_product": "VJ214IMG",
+      "expected_fire_mask_passes": 18,
+      "exact_time_matches": 18,
+      "missing_acquisition_times_utc": [],
+      "reported_total_size_mb": 2585.46,
+      "cmr_response_sha256": "ab3c5ecd385d66399980f8ed2538335e6a4325e2494ed72e17cb15a1501b02c3",
+      "matched_granules": [
+        {
+          "acquisition_start_utc": "2026-01-04T04:48:00.000Z",
+          "producer_granule_id": "VJ203IMG.A2026004.0448.021.2026004102312.nc",
+          "reported_size_mb": 145.906957626343,
+          "latest_metadata_update": "2026-01-04T10:56:16.960Z"
+        },
+        {
+          "acquisition_start_utc": "2026-01-04T06:30:00.000Z",
+          "producer_granule_id": "VJ203IMG.A2026004.0630.021.2026004123910.nc",
+          "reported_size_mb": 138.071561813354,
+          "latest_metadata_update": "2026-01-04T12:54:02.400Z"
+        },
+        {
+          "acquisition_start_utc": "2026-01-04T18:48:00.000Z",
+          "producer_granule_id": "VJ203IMG.A2026004.1848.021.2026005003729.nc",
+          "reported_size_mb": 146.771851539612,
+          "latest_metadata_update": "2026-01-05T00:49:10.970Z"
+        },
+        {
+          "acquisition_start_utc": "2026-01-05T04:30:00.000Z",
+          "producer_granule_id": "VJ203IMG.A2026005.0430.021.2026005103743.nc",
+          "reported_size_mb": 144.63071346283,
+          "latest_metadata_update": "2026-01-05T10:59:12.120Z"
+        },
+        {
+          "acquisition_start_utc": "2026-01-05T06:12:00.000Z",
+          "producer_granule_id": "VJ203IMG.A2026005.0612.021.2026005120637.nc",
+          "reported_size_mb": 137.716318130493,
+          "latest_metadata_update": "2026-01-05T12:24:22.240Z"
+        },
+        {
+          "acquisition_start_utc": "2026-01-05T18:30:00.000Z",
+          "producer_granule_id": "VJ203IMG.A2026005.1830.021.2026006001437.nc",
+          "reported_size_mb": 150.064344406128,
+          "latest_metadata_update": "2026-01-06T03:35:45.960Z"
+        },
+        {
+          "acquisition_start_utc": "2026-01-06T05:48:00.000Z",
+          "producer_granule_id": "VJ203IMG.A2026006.0548.021.2026006100938.nc",
+          "reported_size_mb": 146.644556999207,
+          "latest_metadata_update": "2026-01-06T10:30:28.490Z"
+        },
+        {
+          "acquisition_start_utc": "2026-01-06T18:06:00.000Z",
+          "producer_granule_id": "VJ203IMG.A2026006.1806.021.2026007004138.nc",
+          "reported_size_mb": 143.902550697327,
+          "latest_metadata_update": "2026-01-07T02:55:55.370Z"
+        },
+        {
+          "acquisition_start_utc": "2026-01-06T19:48:00.000Z",
+          "producer_granule_id": "VJ203IMG.A2026006.1948.021.2026007004136.nc",
+          "reported_size_mb": 137.560648918152,
+          "latest_metadata_update": "2026-01-07T02:55:55.370Z"
+        },
+        {
+          "acquisition_start_utc": "2026-01-07T05:30:00.000Z",
+          "producer_granule_id": "VJ203IMG.A2026007.0530.021.2026013212943.nc",
+          "reported_size_mb": 147.593299865723,
+          "latest_metadata_update": "2026-01-14T07:43:23.550Z"
+        },
+        {
+          "acquisition_start_utc": "2026-01-07T17:48:00.000Z",
+          "producer_granule_id": "VJ203IMG.A2026007.1748.021.2026013213457.nc",
+          "reported_size_mb": 145.974404335022,
+          "latest_metadata_update": "2026-01-14T07:33:22.670Z"
+        },
+        {
+          "acquisition_start_utc": "2026-01-07T19:30:00.000Z",
+          "producer_granule_id": "VJ203IMG.A2026007.1930.021.2026013213619.nc",
+          "reported_size_mb": 139.907208442688,
+          "latest_metadata_update": "2026-01-14T08:03:35.810Z"
+        },
+        {
+          "acquisition_start_utc": "2026-01-08T05:12:00.000Z",
+          "producer_granule_id": "VJ203IMG.A2026008.0512.021.2026008190915.nc",
+          "reported_size_mb": 145.867109298706,
+          "latest_metadata_update": "2026-01-08T19:34:03.660Z"
+        },
+        {
+          "acquisition_start_utc": "2026-01-08T17:30:00.000Z",
+          "producer_granule_id": "VJ203IMG.A2026008.1730.021.2026008221318.nc",
+          "reported_size_mb": 143.856902122498,
+          "latest_metadata_update": "2026-01-08T22:29:18.030Z"
+        },
+        {
+          "acquisition_start_utc": "2026-01-08T19:12:00.000Z",
+          "producer_granule_id": "VJ203IMG.A2026008.1912.021.2026009004324.nc",
+          "reported_size_mb": 142.939846038818,
+          "latest_metadata_update": "2026-01-09T00:59:06.640Z"
+        },
+        {
+          "acquisition_start_utc": "2026-01-09T04:54:00.000Z",
+          "producer_granule_id": "VJ203IMG.A2026009.0454.021.2026009100553.nc",
+          "reported_size_mb": 146.055756568909,
+          "latest_metadata_update": "2026-01-09T11:54:12.590Z"
+        },
+        {
+          "acquisition_start_utc": "2026-01-09T06:36:00.000Z",
+          "producer_granule_id": "VJ203IMG.A2026009.0636.021.2026009122822.nc",
+          "reported_size_mb": 136.205713272095,
+          "latest_metadata_update": "2026-01-09T12:49:12.050Z"
+        },
+        {
+          "acquisition_start_utc": "2026-01-09T18:54:00.000Z",
+          "producer_granule_id": "VJ203IMG.A2026009.1854.021.2026010001639.nc",
+          "reported_size_mb": 145.794602394104,
+          "latest_metadata_update": "2026-01-10T05:54:08.430Z"
+        }
+      ]
+    }
+  },
+  "expected_overpasses": 61,
+  "exact_time_matches": 61,
+  "reported_total_size_mb": 8719.61,
+  "reported_total_size_gb_decimal": 8.72,
+  "download_state": {
+    "downloaded_granules": 61,
+    "actual_bytes": 9143169360,
+    "actual_size_gb_decimal": 9.143
+  },
+  "limitations": [
+    "CMR granule footprint and reported size are metadata; neither establishes per-pixel observation validity.",
+    "This estimates the storage required to repeat the one-pass geolocation pairing across the Barda seven-day sample only.",
+    "Even a complete seven-day sample is not a representative alert cohort and cannot establish model precision."
+  ],
+  "synthetic_observations": 0,
+  "deployment_approved": false
+}

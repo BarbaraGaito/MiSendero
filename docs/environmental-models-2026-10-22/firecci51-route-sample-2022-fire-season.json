@@ -1,0 +1,1650 @@
+{
+  "experiment_id": "firecci51-route-month-label-coverage-audit",
+  "dataset": "ESA Fire_cci MODIS burned-area pixel product v5.1, South America tile AREA_2",
+  "source_url": "https://dap.ceda.ac.uk/neodc/esacci/fire/data/burned_area/MODIS/pixel/v5.1/compressed/2022/",
+  "periods": [
+    "2022-01",
+    "2022-02",
+    "2022-03",
+    "2022-09",
+    "2022-10",
+    "2022-11",
+    "2022-12"
+  ],
+  "product_note": "JD is the day of year of first burn detection; 0 means not burned in the month, -1 not observed, and -2 non-burnable. CL is the product's burned-pixel confidence score, not model probability.",
+  "spatial_rule": "Great-circle local approximation within a fixed radius of route-sector centers; not the full trail geometry.",
+  "routes": [
+    {
+      "month": "202201",
+      "route_center": "Sendero Macuco - Salto Arrechea",
+      "location": "Parque Nacional Iguazu, Misiones",
+      "radius_km": 10.0,
+      "sampled_pixel_count": 5617,
+      "jd_class_counts": {
+        "-2": 363,
+        "-1": 0,
+        "0": 5254,
+        "burned_pixel_count": 0
+      },
+      "burned_confidence_bins": {
+        "1_49": 0,
+        "50_79": 0,
+        "80_100": 0,
+        "outside_1_100": 0
+      },
+      "burn_days": [],
+      "source_hashes": {
+        "archive_sha256": "1fde22efb74303407038468798d0c82f31daeebdcdc4805dd203dcd3231fffa4",
+        "jd_sha256": "1e368a9448de0c4f7bd8933dc0e75f597fd82b0b97e603032c93d64f2d463e4a",
+        "cl_sha256": "0e7d6f044791ff9c184c9a6091566aea7544e03e361653d69ae4fe4087359043"
+      }
+    },
+    {
+      "month": "202201",
+      "route_center": "Refugio Frey desde Villa Catedral",
+      "location": "Parque Nacional Nahuel Huapi, Rio Negro",
+      "radius_km": 10.0,
+      "sampled_pixel_count": 6727,
+      "jd_class_counts": {
+        "-2": 794,
+        "-1": 0,
+        "0": 5933,
+        "burned_pixel_count": 0
+      },
+      "burned_confidence_bins": {
+        "1_49": 0,
+        "50_79": 0,
+        "80_100": 0,
+        "outside_1_100": 0
+      },
+      "burn_days": [],
+      "source_hashes": {
+        "archive_sha256": "1fde22efb74303407038468798d0c82f31daeebdcdc4805dd203dcd3231fffa4",
+        "jd_sha256": "1e368a9448de0c4f7bd8933dc0e75f597fd82b0b97e603032c93d64f2d463e4a",
+        "cl_sha256": "0e7d6f044791ff9c184c9a6091566aea7544e03e361653d69ae4fe4087359043"
+      }
+    },
+    {
+      "month": "202201",
+      "route_center": "Quebrada del Condorito - Balcon Norte",
+      "location": "Parque Nacional Quebrada del Condorito, Cordoba",
+      "radius_km": 10.0,
+      "sampled_pixel_count": 5952,
+      "jd_class_counts": {
+        "-2": 0,
+        "-1": 0,
+        "0": 5952,
+        "burned_pixel_count": 0
+      },
+      "burned_confidence_bins": {
+        "1_49": 0,
+        "50_79": 0,
+        "80_100": 0,
+        "outside_1_100": 0
+      },
+      "burn_days": [],
+      "source_hashes": {
+        "archive_sha256": "1fde22efb74303407038468798d0c82f31daeebdcdc4805dd203dcd3231fffa4",
+        "jd_sha256": "1e368a9448de0c4f7bd8933dc0e75f597fd82b0b97e603032c93d64f2d463e4a",
+        "cl_sha256": "0e7d6f044791ff9c184c9a6091566aea7544e03e361653d69ae4fe4087359043"
+      }
+    },
+    {
+      "month": "202201",
+      "route_center": "Sendero Namuncura",
+      "location": "Parque Nacional Lihue Calel, La Pampa",
+      "radius_km": 10.0,
+      "sampled_pixel_count": 6422,
+      "jd_class_counts": {
+        "-2": 0,
+        "-1": 0,
+        "0": 6422,
+        "burned_pixel_count": 0
+      },
+      "burned_confidence_bins": {
+        "1_49": 0,
+        "50_79": 0,
+        "80_100": 0,
+        "outside_1_100": 0
+      },
+      "burn_days": [],
+      "source_hashes": {
+        "archive_sha256": "1fde22efb74303407038468798d0c82f31daeebdcdc4805dd203dcd3231fffa4",
+        "jd_sha256": "1e368a9448de0c4f7bd8933dc0e75f597fd82b0b97e603032c93d64f2d463e4a",
+        "cl_sha256": "0e7d6f044791ff9c184c9a6091566aea7544e03e361653d69ae4fe4087359043"
+      }
+    },
+    {
+      "month": "202201",
+      "route_center": "Cerro Ventana - Hueco de la Ventana",
+      "location": "Parque Provincial Ernesto Tornquist, Buenos Aires",
+      "radius_km": 10.0,
+      "sampled_pixel_count": 6438,
+      "jd_class_counts": {
+        "-2": 0,
+        "-1": 0,
+        "0": 6438,
+        "burned_pixel_count": 0
+      },
+      "burned_confidence_bins": {
+        "1_49": 0,
+        "50_79": 0,
+        "80_100": 0,
+        "outside_1_100": 0
+      },
+      "burn_days": [],
+      "source_hashes": {
+        "archive_sha256": "1fde22efb74303407038468798d0c82f31daeebdcdc4805dd203dcd3231fffa4",
+        "jd_sha256": "1e368a9448de0c4f7bd8933dc0e75f597fd82b0b97e603032c93d64f2d463e4a",
+        "cl_sha256": "0e7d6f044791ff9c184c9a6091566aea7544e03e361653d69ae4fe4087359043"
+      }
+    },
+    {
+      "month": "202201",
+      "route_center": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "location": "Cerro Piltriquitron, El Bolson, Rio Negro",
+      "radius_km": 10.0,
+      "sampled_pixel_count": 6805,
+      "jd_class_counts": {
+        "-2": 72,
+        "-1": 0,
+        "0": 6733,
+        "burned_pixel_count": 0
+      },
+      "burned_confidence_bins": {
+        "1_49": 0,
+        "50_79": 0,
+        "80_100": 0,
+        "outside_1_100": 0
+      },
+      "burn_days": [],
+      "source_hashes": {
+        "archive_sha256": "1fde22efb74303407038468798d0c82f31daeebdcdc4805dd203dcd3231fffa4",
+        "jd_sha256": "1e368a9448de0c4f7bd8933dc0e75f597fd82b0b97e603032c93d64f2d463e4a",
+        "cl_sha256": "0e7d6f044791ff9c184c9a6091566aea7544e03e361653d69ae4fe4087359043"
+      }
+    },
+    {
+      "month": "202201",
+      "route_center": "Sendero Che Roga - Mburucuyá",
+      "location": "Parque Nacional Mburucuyá, Corrientes",
+      "radius_km": 10.0,
+      "sampled_pixel_count": 5731,
+      "jd_class_counts": {
+        "-2": 364,
+        "-1": 0,
+        "0": 5063,
+        "burned_pixel_count": 304
+      },
+      "burned_confidence_bins": {
+        "1_49": 10,
+        "50_79": 6,
+        "80_100": 288,
+        "outside_1_100": 0
+      },
+      "burn_days": [
+        {
+          "date": "2022-01-06",
+          "pixels": 8,
+          "confidence_ge_80_pixels": 8
+        },
+        {
+          "date": "2022-01-07",
+          "pixels": 12,
+          "confidence_ge_80_pixels": 11
+        },
+        {
+          "date": "2022-01-09",
+          "pixels": 20,
+          "confidence_ge_80_pixels": 19
+        },
+        {
+          "date": "2022-01-11",
+          "pixels": 17,
+          "confidence_ge_80_pixels": 17
+        },
+        {
+          "date": "2022-01-13",
+          "pixels": 4,
+          "confidence_ge_80_pixels": 4
+        },
+        {
+          "date": "2022-01-20",
+          "pixels": 111,
+          "confidence_ge_80_pixels": 108
+        },
+        {
+          "date": "2022-01-21",
+          "pixels": 4,
+          "confidence_ge_80_pixels": 3
+        },
+        {
+          "date": "2022-01-22",
+          "pixels": 126,
+          "confidence_ge_80_pixels": 118
+        },
+        {
+          "date": "2022-01-24",
+          "pixels": 2,
+          "confidence_ge_80_pixels": 0
+        }
+      ],
+      "source_hashes": {
+        "archive_sha256": "1fde22efb74303407038468798d0c82f31daeebdcdc4805dd203dcd3231fffa4",
+        "jd_sha256": "1e368a9448de0c4f7bd8933dc0e75f597fd82b0b97e603032c93d64f2d463e4a",
+        "cl_sha256": "0e7d6f044791ff9c184c9a6091566aea7544e03e361653d69ae4fe4087359043"
+      }
+    },
+    {
+      "month": "202201",
+      "route_center": "Sendero La Chuña - El Rey",
+      "location": "Parque Nacional El Rey, Salta",
+      "radius_km": 10.0,
+      "sampled_pixel_count": 5582,
+      "jd_class_counts": {
+        "-2": 0,
+        "-1": 0,
+        "0": 5582,
+        "burned_pixel_count": 0
+      },
+      "burned_confidence_bins": {
+        "1_49": 0,
+        "50_79": 0,
+        "80_100": 0,
+        "outside_1_100": 0
+      },
+      "burn_days": [],
+      "source_hashes": {
+        "archive_sha256": "1fde22efb74303407038468798d0c82f31daeebdcdc4805dd203dcd3231fffa4",
+        "jd_sha256": "1e368a9448de0c4f7bd8933dc0e75f597fd82b0b97e603032c93d64f2d463e4a",
+        "cl_sha256": "0e7d6f044791ff9c184c9a6091566aea7544e03e361653d69ae4fe4087359043"
+      }
+    },
+    {
+      "month": "202202",
+      "route_center": "Sendero Macuco - Salto Arrechea",
+      "location": "Parque Nacional Iguazu, Misiones",
+      "radius_km": 10.0,
+      "sampled_pixel_count": 5617,
+      "jd_class_counts": {
+        "-2": 363,
+        "-1": 0,
+        "0": 5254,
+        "burned_pixel_count": 0
+      },
+      "burned_confidence_bins": {
+        "1_49": 0,
+        "50_79": 0,
+        "80_100": 0,
+        "outside_1_100": 0
+      },
+      "burn_days": [],
+      "source_hashes": {
+        "archive_sha256": "a51d702e3a5ac1a83307c56190105b7b0556190c4572cba086190803feab1a74",
+        "jd_sha256": "fccdc0c416dbb4ebdbb1b005c99f331d26029ddee1cacdfa72090d8f81f5944e",
+        "cl_sha256": "96d217b2f7c651f5e7164643e6b56d3ddcbd84dabd3ebce02b4a508f795ec8ca"
+      }
+    },
+    {
+      "month": "202202",
+      "route_center": "Refugio Frey desde Villa Catedral",
+      "location": "Parque Nacional Nahuel Huapi, Rio Negro",
+      "radius_km": 10.0,
+      "sampled_pixel_count": 6727,
+      "jd_class_counts": {
+        "-2": 794,
+        "-1": 0,
+        "0": 5933,
+        "burned_pixel_count": 0
+      },
+      "burned_confidence_bins": {
+        "1_49": 0,
+        "50_79": 0,
+        "80_100": 0,
+        "outside_1_100": 0
+      },
+      "burn_days": [],
+      "source_hashes": {
+        "archive_sha256": "a51d702e3a5ac1a83307c56190105b7b0556190c4572cba086190803feab1a74",
+        "jd_sha256": "fccdc0c416dbb4ebdbb1b005c99f331d26029ddee1cacdfa72090d8f81f5944e",
+        "cl_sha256": "96d217b2f7c651f5e7164643e6b56d3ddcbd84dabd3ebce02b4a508f795ec8ca"
+      }
+    },
+    {
+      "month": "202202",
+      "route_center": "Quebrada del Condorito - Balcon Norte",
+      "location": "Parque Nacional Quebrada del Condorito, Cordoba",
+      "radius_km": 10.0,
+      "sampled_pixel_count": 5952,
+      "jd_class_counts": {
+        "-2": 0,
+        "-1": 0,
+        "0": 5952,
+        "burned_pixel_count": 0
+      },
+      "burned_confidence_bins": {
+        "1_49": 0,
+        "50_79": 0,
+        "80_100": 0,
+        "outside_1_100": 0
+      },
+      "burn_days": [],
+      "source_hashes": {
+        "archive_sha256": "a51d702e3a5ac1a83307c56190105b7b0556190c4572cba086190803feab1a74",
+        "jd_sha256": "fccdc0c416dbb4ebdbb1b005c99f331d26029ddee1cacdfa72090d8f81f5944e",
+        "cl_sha256": "96d217b2f7c651f5e7164643e6b56d3ddcbd84dabd3ebce02b4a508f795ec8ca"
+      }
+    },
+    {
+      "month": "202202",
+      "route_center": "Sendero Namuncura",
+      "location": "Parque Nacional Lihue Calel, La Pampa",
+      "radius_km": 10.0,
+      "sampled_pixel_count": 6422,
+      "jd_class_counts": {
+        "-2": 0,
+        "-1": 0,
+        "0": 6422,
+        "burned_pixel_count": 0
+      },
+      "burned_confidence_bins": {
+        "1_49": 0,
+        "50_79": 0,
+        "80_100": 0,
+        "outside_1_100": 0
+      },
+      "burn_days": [],
+      "source_hashes": {
+        "archive_sha256": "a51d702e3a5ac1a83307c56190105b7b0556190c4572cba086190803feab1a74",
+        "jd_sha256": "fccdc0c416dbb4ebdbb1b005c99f331d26029ddee1cacdfa72090d8f81f5944e",
+        "cl_sha256": "96d217b2f7c651f5e7164643e6b56d3ddcbd84dabd3ebce02b4a508f795ec8ca"
+      }
+    },
+    {
+      "month": "202202",
+      "route_center": "Cerro Ventana - Hueco de la Ventana",
+      "location": "Parque Provincial Ernesto Tornquist, Buenos Aires",
+      "radius_km": 10.0,
+      "sampled_pixel_count": 6438,
+      "jd_class_counts": {
+        "-2": 0,
+        "-1": 0,
+        "0": 6438,
+        "burned_pixel_count": 0
+      },
+      "burned_confidence_bins": {
+        "1_49": 0,
+        "50_79": 0,
+        "80_100": 0,
+        "outside_1_100": 0
+      },
+      "burn_days": [],
+      "source_hashes": {
+        "archive_sha256": "a51d702e3a5ac1a83307c56190105b7b0556190c4572cba086190803feab1a74",
+        "jd_sha256": "fccdc0c416dbb4ebdbb1b005c99f331d26029ddee1cacdfa72090d8f81f5944e",
+        "cl_sha256": "96d217b2f7c651f5e7164643e6b56d3ddcbd84dabd3ebce02b4a508f795ec8ca"
+      }
+    },
+    {
+      "month": "202202",
+      "route_center": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "location": "Cerro Piltriquitron, El Bolson, Rio Negro",
+      "radius_km": 10.0,
+      "sampled_pixel_count": 6805,
+      "jd_class_counts": {
+        "-2": 72,
+        "-1": 0,
+        "0": 6733,
+        "burned_pixel_count": 0
+      },
+      "burned_confidence_bins": {
+        "1_49": 0,
+        "50_79": 0,
+        "80_100": 0,
+        "outside_1_100": 0
+      },
+      "burn_days": [],
+      "source_hashes": {
+        "archive_sha256": "a51d702e3a5ac1a83307c56190105b7b0556190c4572cba086190803feab1a74",
+        "jd_sha256": "fccdc0c416dbb4ebdbb1b005c99f331d26029ddee1cacdfa72090d8f81f5944e",
+        "cl_sha256": "96d217b2f7c651f5e7164643e6b56d3ddcbd84dabd3ebce02b4a508f795ec8ca"
+      }
+    },
+    {
+      "month": "202202",
+      "route_center": "Sendero Che Roga - Mburucuyá",
+      "location": "Parque Nacional Mburucuyá, Corrientes",
+      "radius_km": 10.0,
+      "sampled_pixel_count": 5731,
+      "jd_class_counts": {
+        "-2": 364,
+        "-1": 0,
+        "0": 5185,
+        "burned_pixel_count": 182
+      },
+      "burned_confidence_bins": {
+        "1_49": 1,
+        "50_79": 1,
+        "80_100": 180,
+        "outside_1_100": 0
+      },
+      "burn_days": [
+        {
+          "date": "2022-02-01",
+          "pixels": 1,
+          "confidence_ge_80_pixels": 1
+        },
+        {
+          "date": "2022-02-02",
+          "pixels": 2,
+          "confidence_ge_80_pixels": 2
+        },
+        {
+          "date": "2022-02-05",
+          "pixels": 8,
+          "confidence_ge_80_pixels": 8
+        },
+        {
+          "date": "2022-02-07",
+          "pixels": 2,
+          "confidence_ge_80_pixels": 2
+        },
+        {
+          "date": "2022-02-08",
+          "pixels": 1,
+          "confidence_ge_80_pixels": 1
+        },
+        {
+          "date": "2022-02-16",
+          "pixels": 4,
+          "confidence_ge_80_pixels": 4
+        },
+        {
+          "date": "2022-02-18",
+          "pixels": 1,
+          "confidence_ge_80_pixels": 1
+        },
+        {
+          "date": "2022-02-19",
+          "pixels": 28,
+          "confidence_ge_80_pixels": 28
+        },
+        {
+          "date": "2022-02-23",
+          "pixels": 130,
+          "confidence_ge_80_pixels": 129
+        },
+        {
+          "date": "2022-02-27",
+          "pixels": 5,
+          "confidence_ge_80_pixels": 4
+        }
+      ],
+      "source_hashes": {
+        "archive_sha256": "a51d702e3a5ac1a83307c56190105b7b0556190c4572cba086190803feab1a74",
+        "jd_sha256": "fccdc0c416dbb4ebdbb1b005c99f331d26029ddee1cacdfa72090d8f81f5944e",
+        "cl_sha256": "96d217b2f7c651f5e7164643e6b56d3ddcbd84dabd3ebce02b4a508f795ec8ca"
+      }
+    },
+    {
+      "month": "202202",
+      "route_center": "Sendero La Chuña - El Rey",
+      "location": "Parque Nacional El Rey, Salta",
+      "radius_km": 10.0,
+      "sampled_pixel_count": 5582,
+      "jd_class_counts": {
+        "-2": 0,
+        "-1": 0,
+        "0": 5582,
+        "burned_pixel_count": 0
+      },
+      "burned_confidence_bins": {
+        "1_49": 0,
+        "50_79": 0,
+        "80_100": 0,
+        "outside_1_100": 0
+      },
+      "burn_days": [],
+      "source_hashes": {
+        "archive_sha256": "a51d702e3a5ac1a83307c56190105b7b0556190c4572cba086190803feab1a74",
+        "jd_sha256": "fccdc0c416dbb4ebdbb1b005c99f331d26029ddee1cacdfa72090d8f81f5944e",
+        "cl_sha256": "96d217b2f7c651f5e7164643e6b56d3ddcbd84dabd3ebce02b4a508f795ec8ca"
+      }
+    },
+    {
+      "month": "202203",
+      "route_center": "Sendero Macuco - Salto Arrechea",
+      "location": "Parque Nacional Iguazu, Misiones",
+      "radius_km": 10.0,
+      "sampled_pixel_count": 5617,
+      "jd_class_counts": {
+        "-2": 363,
+        "-1": 0,
+        "0": 5254,
+        "burned_pixel_count": 0
+      },
+      "burned_confidence_bins": {
+        "1_49": 0,
+        "50_79": 0,
+        "80_100": 0,
+        "outside_1_100": 0
+      },
+      "burn_days": [],
+      "source_hashes": {
+        "archive_sha256": "9898a3c4726c2fc7423db9c42da8cf08df59fb65c4c28a03900d3ce46a4576ad",
+        "jd_sha256": "7920366c652f7cf9b361e33b38cb8a3e3654c5815a56d7099f34364315d00803",
+        "cl_sha256": "a2370843963655a59b102ca05ee593f7bd7b8c6b1d71b38f747a9449c99f8792"
+      }
+    },
+    {
+      "month": "202203",
+      "route_center": "Refugio Frey desde Villa Catedral",
+      "location": "Parque Nacional Nahuel Huapi, Rio Negro",
+      "radius_km": 10.0,
+      "sampled_pixel_count": 6727,
+      "jd_class_counts": {
+        "-2": 794,
+        "-1": 0,
+        "0": 5933,
+        "burned_pixel_count": 0
+      },
+      "burned_confidence_bins": {
+        "1_49": 0,
+        "50_79": 0,
+        "80_100": 0,
+        "outside_1_100": 0
+      },
+      "burn_days": [],
+      "source_hashes": {
+        "archive_sha256": "9898a3c4726c2fc7423db9c42da8cf08df59fb65c4c28a03900d3ce46a4576ad",
+        "jd_sha256": "7920366c652f7cf9b361e33b38cb8a3e3654c5815a56d7099f34364315d00803",
+        "cl_sha256": "a2370843963655a59b102ca05ee593f7bd7b8c6b1d71b38f747a9449c99f8792"
+      }
+    },
+    {
+      "month": "202203",
+      "route_center": "Quebrada del Condorito - Balcon Norte",
+      "location": "Parque Nacional Quebrada del Condorito, Cordoba",
+      "radius_km": 10.0,
+      "sampled_pixel_count": 5952,
+      "jd_class_counts": {
+        "-2": 0,
+        "-1": 0,
+        "0": 5952,
+        "burned_pixel_count": 0
+      },
+      "burned_confidence_bins": {
+        "1_49": 0,
+        "50_79": 0,
+        "80_100": 0,
+        "outside_1_100": 0
+      },
+      "burn_days": [],
+      "source_hashes": {
+        "archive_sha256": "9898a3c4726c2fc7423db9c42da8cf08df59fb65c4c28a03900d3ce46a4576ad",
+        "jd_sha256": "7920366c652f7cf9b361e33b38cb8a3e3654c5815a56d7099f34364315d00803",
+        "cl_sha256": "a2370843963655a59b102ca05ee593f7bd7b8c6b1d71b38f747a9449c99f8792"
+      }
+    },
+    {
+      "month": "202203",
+      "route_center": "Sendero Namuncura",
+      "location": "Parque Nacional Lihue Calel, La Pampa",
+      "radius_km": 10.0,
+      "sampled_pixel_count": 6422,
+      "jd_class_counts": {
+        "-2": 0,
+        "-1": 0,
+        "0": 6422,
+        "burned_pixel_count": 0
+      },
+      "burned_confidence_bins": {
+        "1_49": 0,
+        "50_79": 0,
+        "80_100": 0,
+        "outside_1_100": 0
+      },
+      "burn_days": [],
+      "source_hashes": {
+        "archive_sha256": "9898a3c4726c2fc7423db9c42da8cf08df59fb65c4c28a03900d3ce46a4576ad",
+        "jd_sha256": "7920366c652f7cf9b361e33b38cb8a3e3654c5815a56d7099f34364315d00803",
+        "cl_sha256": "a2370843963655a59b102ca05ee593f7bd7b8c6b1d71b38f747a9449c99f8792"
+      }
+    },
+    {
+      "month": "202203",
+      "route_center": "Cerro Ventana - Hueco de la Ventana",
+      "location": "Parque Provincial Ernesto Tornquist, Buenos Aires",
+      "radius_km": 10.0,
+      "sampled_pixel_count": 6438,
+      "jd_class_counts": {
+        "-2": 0,
+        "-1": 0,
+        "0": 6438,
+        "burned_pixel_count": 0
+      },
+      "burned_confidence_bins": {
+        "1_49": 0,
+        "50_79": 0,
+        "80_100": 0,
+        "outside_1_100": 0
+      },
+      "burn_days": [],
+      "source_hashes": {
+        "archive_sha256": "9898a3c4726c2fc7423db9c42da8cf08df59fb65c4c28a03900d3ce46a4576ad",
+        "jd_sha256": "7920366c652f7cf9b361e33b38cb8a3e3654c5815a56d7099f34364315d00803",
+        "cl_sha256": "a2370843963655a59b102ca05ee593f7bd7b8c6b1d71b38f747a9449c99f8792"
+      }
+    },
+    {
+      "month": "202203",
+      "route_center": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "location": "Cerro Piltriquitron, El Bolson, Rio Negro",
+      "radius_km": 10.0,
+      "sampled_pixel_count": 6805,
+      "jd_class_counts": {
+        "-2": 72,
+        "-1": 0,
+        "0": 6733,
+        "burned_pixel_count": 0
+      },
+      "burned_confidence_bins": {
+        "1_49": 0,
+        "50_79": 0,
+        "80_100": 0,
+        "outside_1_100": 0
+      },
+      "burn_days": [],
+      "source_hashes": {
+        "archive_sha256": "9898a3c4726c2fc7423db9c42da8cf08df59fb65c4c28a03900d3ce46a4576ad",
+        "jd_sha256": "7920366c652f7cf9b361e33b38cb8a3e3654c5815a56d7099f34364315d00803",
+        "cl_sha256": "a2370843963655a59b102ca05ee593f7bd7b8c6b1d71b38f747a9449c99f8792"
+      }
+    },
+    {
+      "month": "202203",
+      "route_center": "Sendero Che Roga - Mburucuyá",
+      "location": "Parque Nacional Mburucuyá, Corrientes",
+      "radius_km": 10.0,
+      "sampled_pixel_count": 5731,
+      "jd_class_counts": {
+        "-2": 364,
+        "-1": 0,
+        "0": 4806,
+        "burned_pixel_count": 561
+      },
+      "burned_confidence_bins": {
+        "1_49": 9,
+        "50_79": 3,
+        "80_100": 549,
+        "outside_1_100": 0
+      },
+      "burn_days": [
+        {
+          "date": "2022-03-02",
+          "pixels": 485,
+          "confidence_ge_80_pixels": 476
+        },
+        {
+          "date": "2022-03-04",
+          "pixels": 22,
+          "confidence_ge_80_pixels": 21
+        },
+        {
+          "date": "2022-03-07",
+          "pixels": 36,
+          "confidence_ge_80_pixels": 34
+        },
+        {
+          "date": "2022-03-09",
+          "pixels": 17,
+          "confidence_ge_80_pixels": 17
+        },
+        {
+          "date": "2022-03-13",
+          "pixels": 1,
+          "confidence_ge_80_pixels": 1
+        }
+      ],
+      "source_hashes": {
+        "archive_sha256": "9898a3c4726c2fc7423db9c42da8cf08df59fb65c4c28a03900d3ce46a4576ad",
+        "jd_sha256": "7920366c652f7cf9b361e33b38cb8a3e3654c5815a56d7099f34364315d00803",
+        "cl_sha256": "a2370843963655a59b102ca05ee593f7bd7b8c6b1d71b38f747a9449c99f8792"
+      }
+    },
+    {
+      "month": "202203",
+      "route_center": "Sendero La Chuña - El Rey",
+      "location": "Parque Nacional El Rey, Salta",
+      "radius_km": 10.0,
+      "sampled_pixel_count": 5582,
+      "jd_class_counts": {
+        "-2": 0,
+        "-1": 0,
+        "0": 5582,
+        "burned_pixel_count": 0
+      },
+      "burned_confidence_bins": {
+        "1_49": 0,
+        "50_79": 0,
+        "80_100": 0,
+        "outside_1_100": 0
+      },
+      "burn_days": [],
+      "source_hashes": {
+        "archive_sha256": "9898a3c4726c2fc7423db9c42da8cf08df59fb65c4c28a03900d3ce46a4576ad",
+        "jd_sha256": "7920366c652f7cf9b361e33b38cb8a3e3654c5815a56d7099f34364315d00803",
+        "cl_sha256": "a2370843963655a59b102ca05ee593f7bd7b8c6b1d71b38f747a9449c99f8792"
+      }
+    },
+    {
+      "month": "202209",
+      "route_center": "Sendero Macuco - Salto Arrechea",
+      "location": "Parque Nacional Iguazu, Misiones",
+      "radius_km": 10.0,
+      "sampled_pixel_count": 5617,
+      "jd_class_counts": {
+        "-2": 363,
+        "-1": 0,
+        "0": 5254,
+        "burned_pixel_count": 0
+      },
+      "burned_confidence_bins": {
+        "1_49": 0,
+        "50_79": 0,
+        "80_100": 0,
+        "outside_1_100": 0
+      },
+      "burn_days": [],
+      "source_hashes": {
+        "archive_sha256": "28679d13343578429540b5869d74da595117c58a91226760f269e81b454af8af",
+        "jd_sha256": "b075b7c1d87316feaa063d7ab0c13c4b8b359932fb2d9d5245f342916f39b44a",
+        "cl_sha256": "1ffb99fb2d7d195104802ebe2062ca81af7908ad3173c7029f00ffd33139966f"
+      }
+    },
+    {
+      "month": "202209",
+      "route_center": "Refugio Frey desde Villa Catedral",
+      "location": "Parque Nacional Nahuel Huapi, Rio Negro",
+      "radius_km": 10.0,
+      "sampled_pixel_count": 6727,
+      "jd_class_counts": {
+        "-2": 801,
+        "-1": 1731,
+        "0": 4195,
+        "burned_pixel_count": 0
+      },
+      "burned_confidence_bins": {
+        "1_49": 0,
+        "50_79": 0,
+        "80_100": 0,
+        "outside_1_100": 0
+      },
+      "burn_days": [],
+      "source_hashes": {
+        "archive_sha256": "28679d13343578429540b5869d74da595117c58a91226760f269e81b454af8af",
+        "jd_sha256": "b075b7c1d87316feaa063d7ab0c13c4b8b359932fb2d9d5245f342916f39b44a",
+        "cl_sha256": "1ffb99fb2d7d195104802ebe2062ca81af7908ad3173c7029f00ffd33139966f"
+      }
+    },
+    {
+      "month": "202209",
+      "route_center": "Quebrada del Condorito - Balcon Norte",
+      "location": "Parque Nacional Quebrada del Condorito, Cordoba",
+      "radius_km": 10.0,
+      "sampled_pixel_count": 5952,
+      "jd_class_counts": {
+        "-2": 0,
+        "-1": 0,
+        "0": 5952,
+        "burned_pixel_count": 0
+      },
+      "burned_confidence_bins": {
+        "1_49": 0,
+        "50_79": 0,
+        "80_100": 0,
+        "outside_1_100": 0
+      },
+      "burn_days": [],
+      "source_hashes": {
+        "archive_sha256": "28679d13343578429540b5869d74da595117c58a91226760f269e81b454af8af",
+        "jd_sha256": "b075b7c1d87316feaa063d7ab0c13c4b8b359932fb2d9d5245f342916f39b44a",
+        "cl_sha256": "1ffb99fb2d7d195104802ebe2062ca81af7908ad3173c7029f00ffd33139966f"
+      }
+    },
+    {
+      "month": "202209",
+      "route_center": "Sendero Namuncura",
+      "location": "Parque Nacional Lihue Calel, La Pampa",
+      "radius_km": 10.0,
+      "sampled_pixel_count": 6422,
+      "jd_class_counts": {
+        "-2": 0,
+        "-1": 0,
+        "0": 6422,
+        "burned_pixel_count": 0
+      },
+      "burned_confidence_bins": {
+        "1_49": 0,
+        "50_79": 0,
+        "80_100": 0,
+        "outside_1_100": 0
+      },
+      "burn_days": [],
+      "source_hashes": {
+        "archive_sha256": "28679d13343578429540b5869d74da595117c58a91226760f269e81b454af8af",
+        "jd_sha256": "b075b7c1d87316feaa063d7ab0c13c4b8b359932fb2d9d5245f342916f39b44a",
+        "cl_sha256": "1ffb99fb2d7d195104802ebe2062ca81af7908ad3173c7029f00ffd33139966f"
+      }
+    },
+    {
+      "month": "202209",
+      "route_center": "Cerro Ventana - Hueco de la Ventana",
+      "location": "Parque Provincial Ernesto Tornquist, Buenos Aires",
+      "radius_km": 10.0,
+      "sampled_pixel_count": 6438,
+      "jd_class_counts": {
+        "-2": 0,
+        "-1": 0,
+        "0": 6438,
+        "burned_pixel_count": 0
+      },
+      "burned_confidence_bins": {
+        "1_49": 0,
+        "50_79": 0,
+        "80_100": 0,
+        "outside_1_100": 0
+      },
+      "burn_days": [],
+      "source_hashes": {
+        "archive_sha256": "28679d13343578429540b5869d74da595117c58a91226760f269e81b454af8af",
+        "jd_sha256": "b075b7c1d87316feaa063d7ab0c13c4b8b359932fb2d9d5245f342916f39b44a",
+        "cl_sha256": "1ffb99fb2d7d195104802ebe2062ca81af7908ad3173c7029f00ffd33139966f"
+      }
+    },
+    {
+      "month": "202209",
+      "route_center": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "location": "Cerro Piltriquitron, El Bolson, Rio Negro",
+      "radius_km": 10.0,
+      "sampled_pixel_count": 6805,
+      "jd_class_counts": {
+        "-2": 72,
+        "-1": 642,
+        "0": 6091,
+        "burned_pixel_count": 0
+      },
+      "burned_confidence_bins": {
+        "1_49": 0,
+        "50_79": 0,
+        "80_100": 0,
+        "outside_1_100": 0
+      },
+      "burn_days": [],
+      "source_hashes": {
+        "archive_sha256": "28679d13343578429540b5869d74da595117c58a91226760f269e81b454af8af",
+        "jd_sha256": "b075b7c1d87316feaa063d7ab0c13c4b8b359932fb2d9d5245f342916f39b44a",
+        "cl_sha256": "1ffb99fb2d7d195104802ebe2062ca81af7908ad3173c7029f00ffd33139966f"
+      }
+    },
+    {
+      "month": "202209",
+      "route_center": "Sendero Che Roga - Mburucuyá",
+      "location": "Parque Nacional Mburucuyá, Corrientes",
+      "radius_km": 10.0,
+      "sampled_pixel_count": 5731,
+      "jd_class_counts": {
+        "-2": 364,
+        "-1": 0,
+        "0": 5367,
+        "burned_pixel_count": 0
+      },
+      "burned_confidence_bins": {
+        "1_49": 0,
+        "50_79": 0,
+        "80_100": 0,
+        "outside_1_100": 0
+      },
+      "burn_days": [],
+      "source_hashes": {
+        "archive_sha256": "28679d13343578429540b5869d74da595117c58a91226760f269e81b454af8af",
+        "jd_sha256": "b075b7c1d87316feaa063d7ab0c13c4b8b359932fb2d9d5245f342916f39b44a",
+        "cl_sha256": "1ffb99fb2d7d195104802ebe2062ca81af7908ad3173c7029f00ffd33139966f"
+      }
+    },
+    {
+      "month": "202209",
+      "route_center": "Sendero La Chuña - El Rey",
+      "location": "Parque Nacional El Rey, Salta",
+      "radius_km": 10.0,
+      "sampled_pixel_count": 5582,
+      "jd_class_counts": {
+        "-2": 0,
+        "-1": 0,
+        "0": 5582,
+        "burned_pixel_count": 0
+      },
+      "burned_confidence_bins": {
+        "1_49": 0,
+        "50_79": 0,
+        "80_100": 0,
+        "outside_1_100": 0
+      },
+      "burn_days": [],
+      "source_hashes": {
+        "archive_sha256": "28679d13343578429540b5869d74da595117c58a91226760f269e81b454af8af",
+        "jd_sha256": "b075b7c1d87316feaa063d7ab0c13c4b8b359932fb2d9d5245f342916f39b44a",
+        "cl_sha256": "1ffb99fb2d7d195104802ebe2062ca81af7908ad3173c7029f00ffd33139966f"
+      }
+    },
+    {
+      "month": "202210",
+      "route_center": "Sendero Macuco - Salto Arrechea",
+      "location": "Parque Nacional Iguazu, Misiones",
+      "radius_km": 10.0,
+      "sampled_pixel_count": 5617,
+      "jd_class_counts": {
+        "-2": 363,
+        "-1": 0,
+        "0": 5254,
+        "burned_pixel_count": 0
+      },
+      "burned_confidence_bins": {
+        "1_49": 0,
+        "50_79": 0,
+        "80_100": 0,
+        "outside_1_100": 0
+      },
+      "burn_days": [],
+      "source_hashes": {
+        "archive_sha256": "e38d3d05364cd24c9572898be4cc8752f9dd356fbe99c7dae2aeaa5fd6cc5674",
+        "jd_sha256": "cdd9a0dcf7e66ad13ad39e31a5c3d5f9b22e16163e51ed5b0287c3155e197a2b",
+        "cl_sha256": "fd7ede5da8d4e88445a493b4ccee1c7ac5a70694eabf33a56af1af8f79206eb9"
+      }
+    },
+    {
+      "month": "202210",
+      "route_center": "Refugio Frey desde Villa Catedral",
+      "location": "Parque Nacional Nahuel Huapi, Rio Negro",
+      "radius_km": 10.0,
+      "sampled_pixel_count": 6727,
+      "jd_class_counts": {
+        "-2": 801,
+        "-1": 1692,
+        "0": 4234,
+        "burned_pixel_count": 0
+      },
+      "burned_confidence_bins": {
+        "1_49": 0,
+        "50_79": 0,
+        "80_100": 0,
+        "outside_1_100": 0
+      },
+      "burn_days": [],
+      "source_hashes": {
+        "archive_sha256": "e38d3d05364cd24c9572898be4cc8752f9dd356fbe99c7dae2aeaa5fd6cc5674",
+        "jd_sha256": "cdd9a0dcf7e66ad13ad39e31a5c3d5f9b22e16163e51ed5b0287c3155e197a2b",
+        "cl_sha256": "fd7ede5da8d4e88445a493b4ccee1c7ac5a70694eabf33a56af1af8f79206eb9"
+      }
+    },
+    {
+      "month": "202210",
+      "route_center": "Quebrada del Condorito - Balcon Norte",
+      "location": "Parque Nacional Quebrada del Condorito, Cordoba",
+      "radius_km": 10.0,
+      "sampled_pixel_count": 5952,
+      "jd_class_counts": {
+        "-2": 0,
+        "-1": 0,
+        "0": 5952,
+        "burned_pixel_count": 0
+      },
+      "burned_confidence_bins": {
+        "1_49": 0,
+        "50_79": 0,
+        "80_100": 0,
+        "outside_1_100": 0
+      },
+      "burn_days": [],
+      "source_hashes": {
+        "archive_sha256": "e38d3d05364cd24c9572898be4cc8752f9dd356fbe99c7dae2aeaa5fd6cc5674",
+        "jd_sha256": "cdd9a0dcf7e66ad13ad39e31a5c3d5f9b22e16163e51ed5b0287c3155e197a2b",
+        "cl_sha256": "fd7ede5da8d4e88445a493b4ccee1c7ac5a70694eabf33a56af1af8f79206eb9"
+      }
+    },
+    {
+      "month": "202210",
+      "route_center": "Sendero Namuncura",
+      "location": "Parque Nacional Lihue Calel, La Pampa",
+      "radius_km": 10.0,
+      "sampled_pixel_count": 6422,
+      "jd_class_counts": {
+        "-2": 0,
+        "-1": 0,
+        "0": 6422,
+        "burned_pixel_count": 0
+      },
+      "burned_confidence_bins": {
+        "1_49": 0,
+        "50_79": 0,
+        "80_100": 0,
+        "outside_1_100": 0
+      },
+      "burn_days": [],
+      "source_hashes": {
+        "archive_sha256": "e38d3d05364cd24c9572898be4cc8752f9dd356fbe99c7dae2aeaa5fd6cc5674",
+        "jd_sha256": "cdd9a0dcf7e66ad13ad39e31a5c3d5f9b22e16163e51ed5b0287c3155e197a2b",
+        "cl_sha256": "fd7ede5da8d4e88445a493b4ccee1c7ac5a70694eabf33a56af1af8f79206eb9"
+      }
+    },
+    {
+      "month": "202210",
+      "route_center": "Cerro Ventana - Hueco de la Ventana",
+      "location": "Parque Provincial Ernesto Tornquist, Buenos Aires",
+      "radius_km": 10.0,
+      "sampled_pixel_count": 6438,
+      "jd_class_counts": {
+        "-2": 0,
+        "-1": 0,
+        "0": 6438,
+        "burned_pixel_count": 0
+      },
+      "burned_confidence_bins": {
+        "1_49": 0,
+        "50_79": 0,
+        "80_100": 0,
+        "outside_1_100": 0
+      },
+      "burn_days": [],
+      "source_hashes": {
+        "archive_sha256": "e38d3d05364cd24c9572898be4cc8752f9dd356fbe99c7dae2aeaa5fd6cc5674",
+        "jd_sha256": "cdd9a0dcf7e66ad13ad39e31a5c3d5f9b22e16163e51ed5b0287c3155e197a2b",
+        "cl_sha256": "fd7ede5da8d4e88445a493b4ccee1c7ac5a70694eabf33a56af1af8f79206eb9"
+      }
+    },
+    {
+      "month": "202210",
+      "route_center": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "location": "Cerro Piltriquitron, El Bolson, Rio Negro",
+      "radius_km": 10.0,
+      "sampled_pixel_count": 6805,
+      "jd_class_counts": {
+        "-2": 72,
+        "-1": 387,
+        "0": 6346,
+        "burned_pixel_count": 0
+      },
+      "burned_confidence_bins": {
+        "1_49": 0,
+        "50_79": 0,
+        "80_100": 0,
+        "outside_1_100": 0
+      },
+      "burn_days": [],
+      "source_hashes": {
+        "archive_sha256": "e38d3d05364cd24c9572898be4cc8752f9dd356fbe99c7dae2aeaa5fd6cc5674",
+        "jd_sha256": "cdd9a0dcf7e66ad13ad39e31a5c3d5f9b22e16163e51ed5b0287c3155e197a2b",
+        "cl_sha256": "fd7ede5da8d4e88445a493b4ccee1c7ac5a70694eabf33a56af1af8f79206eb9"
+      }
+    },
+    {
+      "month": "202210",
+      "route_center": "Sendero Che Roga - Mburucuyá",
+      "location": "Parque Nacional Mburucuyá, Corrientes",
+      "radius_km": 10.0,
+      "sampled_pixel_count": 5731,
+      "jd_class_counts": {
+        "-2": 364,
+        "-1": 0,
+        "0": 5367,
+        "burned_pixel_count": 0
+      },
+      "burned_confidence_bins": {
+        "1_49": 0,
+        "50_79": 0,
+        "80_100": 0,
+        "outside_1_100": 0
+      },
+      "burn_days": [],
+      "source_hashes": {
+        "archive_sha256": "e38d3d05364cd24c9572898be4cc8752f9dd356fbe99c7dae2aeaa5fd6cc5674",
+        "jd_sha256": "cdd9a0dcf7e66ad13ad39e31a5c3d5f9b22e16163e51ed5b0287c3155e197a2b",
+        "cl_sha256": "fd7ede5da8d4e88445a493b4ccee1c7ac5a70694eabf33a56af1af8f79206eb9"
+      }
+    },
+    {
+      "month": "202210",
+      "route_center": "Sendero La Chuña - El Rey",
+      "location": "Parque Nacional El Rey, Salta",
+      "radius_km": 10.0,
+      "sampled_pixel_count": 5582,
+      "jd_class_counts": {
+        "-2": 0,
+        "-1": 0,
+        "0": 5582,
+        "burned_pixel_count": 0
+      },
+      "burned_confidence_bins": {
+        "1_49": 0,
+        "50_79": 0,
+        "80_100": 0,
+        "outside_1_100": 0
+      },
+      "burn_days": [],
+      "source_hashes": {
+        "archive_sha256": "e38d3d05364cd24c9572898be4cc8752f9dd356fbe99c7dae2aeaa5fd6cc5674",
+        "jd_sha256": "cdd9a0dcf7e66ad13ad39e31a5c3d5f9b22e16163e51ed5b0287c3155e197a2b",
+        "cl_sha256": "fd7ede5da8d4e88445a493b4ccee1c7ac5a70694eabf33a56af1af8f79206eb9"
+      }
+    },
+    {
+      "month": "202211",
+      "route_center": "Sendero Macuco - Salto Arrechea",
+      "location": "Parque Nacional Iguazu, Misiones",
+      "radius_km": 10.0,
+      "sampled_pixel_count": 5617,
+      "jd_class_counts": {
+        "-2": 363,
+        "-1": 0,
+        "0": 5254,
+        "burned_pixel_count": 0
+      },
+      "burned_confidence_bins": {
+        "1_49": 0,
+        "50_79": 0,
+        "80_100": 0,
+        "outside_1_100": 0
+      },
+      "burn_days": [],
+      "source_hashes": {
+        "archive_sha256": "93ff7c6488ad86a2e7bb2ae51564246f288a78bd52ce97d589be9e37d2dae75e",
+        "jd_sha256": "45eb39a3dacf05b2875d6fd32ce63ee70052c60d0982f260544a7e06431d5e68",
+        "cl_sha256": "0e1cb0d2313be743c8f8e34f87e9d251baf7421f73bc9706c81d7c88661cdfb5"
+      }
+    },
+    {
+      "month": "202211",
+      "route_center": "Refugio Frey desde Villa Catedral",
+      "location": "Parque Nacional Nahuel Huapi, Rio Negro",
+      "radius_km": 10.0,
+      "sampled_pixel_count": 6727,
+      "jd_class_counts": {
+        "-2": 795,
+        "-1": 123,
+        "0": 5809,
+        "burned_pixel_count": 0
+      },
+      "burned_confidence_bins": {
+        "1_49": 0,
+        "50_79": 0,
+        "80_100": 0,
+        "outside_1_100": 0
+      },
+      "burn_days": [],
+      "source_hashes": {
+        "archive_sha256": "93ff7c6488ad86a2e7bb2ae51564246f288a78bd52ce97d589be9e37d2dae75e",
+        "jd_sha256": "45eb39a3dacf05b2875d6fd32ce63ee70052c60d0982f260544a7e06431d5e68",
+        "cl_sha256": "0e1cb0d2313be743c8f8e34f87e9d251baf7421f73bc9706c81d7c88661cdfb5"
+      }
+    },
+    {
+      "month": "202211",
+      "route_center": "Quebrada del Condorito - Balcon Norte",
+      "location": "Parque Nacional Quebrada del Condorito, Cordoba",
+      "radius_km": 10.0,
+      "sampled_pixel_count": 5952,
+      "jd_class_counts": {
+        "-2": 0,
+        "-1": 0,
+        "0": 5952,
+        "burned_pixel_count": 0
+      },
+      "burned_confidence_bins": {
+        "1_49": 0,
+        "50_79": 0,
+        "80_100": 0,
+        "outside_1_100": 0
+      },
+      "burn_days": [],
+      "source_hashes": {
+        "archive_sha256": "93ff7c6488ad86a2e7bb2ae51564246f288a78bd52ce97d589be9e37d2dae75e",
+        "jd_sha256": "45eb39a3dacf05b2875d6fd32ce63ee70052c60d0982f260544a7e06431d5e68",
+        "cl_sha256": "0e1cb0d2313be743c8f8e34f87e9d251baf7421f73bc9706c81d7c88661cdfb5"
+      }
+    },
+    {
+      "month": "202211",
+      "route_center": "Sendero Namuncura",
+      "location": "Parque Nacional Lihue Calel, La Pampa",
+      "radius_km": 10.0,
+      "sampled_pixel_count": 6422,
+      "jd_class_counts": {
+        "-2": 0,
+        "-1": 0,
+        "0": 6422,
+        "burned_pixel_count": 0
+      },
+      "burned_confidence_bins": {
+        "1_49": 0,
+        "50_79": 0,
+        "80_100": 0,
+        "outside_1_100": 0
+      },
+      "burn_days": [],
+      "source_hashes": {
+        "archive_sha256": "93ff7c6488ad86a2e7bb2ae51564246f288a78bd52ce97d589be9e37d2dae75e",
+        "jd_sha256": "45eb39a3dacf05b2875d6fd32ce63ee70052c60d0982f260544a7e06431d5e68",
+        "cl_sha256": "0e1cb0d2313be743c8f8e34f87e9d251baf7421f73bc9706c81d7c88661cdfb5"
+      }
+    },
+    {
+      "month": "202211",
+      "route_center": "Cerro Ventana - Hueco de la Ventana",
+      "location": "Parque Provincial Ernesto Tornquist, Buenos Aires",
+      "radius_km": 10.0,
+      "sampled_pixel_count": 6438,
+      "jd_class_counts": {
+        "-2": 0,
+        "-1": 0,
+        "0": 6438,
+        "burned_pixel_count": 0
+      },
+      "burned_confidence_bins": {
+        "1_49": 0,
+        "50_79": 0,
+        "80_100": 0,
+        "outside_1_100": 0
+      },
+      "burn_days": [],
+      "source_hashes": {
+        "archive_sha256": "93ff7c6488ad86a2e7bb2ae51564246f288a78bd52ce97d589be9e37d2dae75e",
+        "jd_sha256": "45eb39a3dacf05b2875d6fd32ce63ee70052c60d0982f260544a7e06431d5e68",
+        "cl_sha256": "0e1cb0d2313be743c8f8e34f87e9d251baf7421f73bc9706c81d7c88661cdfb5"
+      }
+    },
+    {
+      "month": "202211",
+      "route_center": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "location": "Cerro Piltriquitron, El Bolson, Rio Negro",
+      "radius_km": 10.0,
+      "sampled_pixel_count": 6805,
+      "jd_class_counts": {
+        "-2": 72,
+        "-1": 228,
+        "0": 6505,
+        "burned_pixel_count": 0
+      },
+      "burned_confidence_bins": {
+        "1_49": 0,
+        "50_79": 0,
+        "80_100": 0,
+        "outside_1_100": 0
+      },
+      "burn_days": [],
+      "source_hashes": {
+        "archive_sha256": "93ff7c6488ad86a2e7bb2ae51564246f288a78bd52ce97d589be9e37d2dae75e",
+        "jd_sha256": "45eb39a3dacf05b2875d6fd32ce63ee70052c60d0982f260544a7e06431d5e68",
+        "cl_sha256": "0e1cb0d2313be743c8f8e34f87e9d251baf7421f73bc9706c81d7c88661cdfb5"
+      }
+    },
+    {
+      "month": "202211",
+      "route_center": "Sendero Che Roga - Mburucuyá",
+      "location": "Parque Nacional Mburucuyá, Corrientes",
+      "radius_km": 10.0,
+      "sampled_pixel_count": 5731,
+      "jd_class_counts": {
+        "-2": 364,
+        "-1": 0,
+        "0": 5367,
+        "burned_pixel_count": 0
+      },
+      "burned_confidence_bins": {
+        "1_49": 0,
+        "50_79": 0,
+        "80_100": 0,
+        "outside_1_100": 0
+      },
+      "burn_days": [],
+      "source_hashes": {
+        "archive_sha256": "93ff7c6488ad86a2e7bb2ae51564246f288a78bd52ce97d589be9e37d2dae75e",
+        "jd_sha256": "45eb39a3dacf05b2875d6fd32ce63ee70052c60d0982f260544a7e06431d5e68",
+        "cl_sha256": "0e1cb0d2313be743c8f8e34f87e9d251baf7421f73bc9706c81d7c88661cdfb5"
+      }
+    },
+    {
+      "month": "202211",
+      "route_center": "Sendero La Chuña - El Rey",
+      "location": "Parque Nacional El Rey, Salta",
+      "radius_km": 10.0,
+      "sampled_pixel_count": 5582,
+      "jd_class_counts": {
+        "-2": 0,
+        "-1": 0,
+        "0": 5582,
+        "burned_pixel_count": 0
+      },
+      "burned_confidence_bins": {
+        "1_49": 0,
+        "50_79": 0,
+        "80_100": 0,
+        "outside_1_100": 0
+      },
+      "burn_days": [],
+      "source_hashes": {
+        "archive_sha256": "93ff7c6488ad86a2e7bb2ae51564246f288a78bd52ce97d589be9e37d2dae75e",
+        "jd_sha256": "45eb39a3dacf05b2875d6fd32ce63ee70052c60d0982f260544a7e06431d5e68",
+        "cl_sha256": "0e1cb0d2313be743c8f8e34f87e9d251baf7421f73bc9706c81d7c88661cdfb5"
+      }
+    },
+    {
+      "month": "202212",
+      "route_center": "Sendero Macuco - Salto Arrechea",
+      "location": "Parque Nacional Iguazu, Misiones",
+      "radius_km": 10.0,
+      "sampled_pixel_count": 5617,
+      "jd_class_counts": {
+        "-2": 363,
+        "-1": 0,
+        "0": 5254,
+        "burned_pixel_count": 0
+      },
+      "burned_confidence_bins": {
+        "1_49": 0,
+        "50_79": 0,
+        "80_100": 0,
+        "outside_1_100": 0
+      },
+      "burn_days": [],
+      "source_hashes": {
+        "archive_sha256": "1afba0752ce165a2c2a1510a7ac90889a588a168c5992184986e1229b90b0f8d",
+        "jd_sha256": "c0cc0be548a08f4ad54f154fe4b31b88addb59d0d927535e6f287c4c5e8d8957",
+        "cl_sha256": "b2be31c3c0ba0e3ced4dac4fefd5dd1a31b497f304006f1e3e79f4fe381bf9bb"
+      }
+    },
+    {
+      "month": "202212",
+      "route_center": "Refugio Frey desde Villa Catedral",
+      "location": "Parque Nacional Nahuel Huapi, Rio Negro",
+      "radius_km": 10.0,
+      "sampled_pixel_count": 6727,
+      "jd_class_counts": {
+        "-2": 794,
+        "-1": 0,
+        "0": 5933,
+        "burned_pixel_count": 0
+      },
+      "burned_confidence_bins": {
+        "1_49": 0,
+        "50_79": 0,
+        "80_100": 0,
+        "outside_1_100": 0
+      },
+      "burn_days": [],
+      "source_hashes": {
+        "archive_sha256": "1afba0752ce165a2c2a1510a7ac90889a588a168c5992184986e1229b90b0f8d",
+        "jd_sha256": "c0cc0be548a08f4ad54f154fe4b31b88addb59d0d927535e6f287c4c5e8d8957",
+        "cl_sha256": "b2be31c3c0ba0e3ced4dac4fefd5dd1a31b497f304006f1e3e79f4fe381bf9bb"
+      }
+    },
+    {
+      "month": "202212",
+      "route_center": "Quebrada del Condorito - Balcon Norte",
+      "location": "Parque Nacional Quebrada del Condorito, Cordoba",
+      "radius_km": 10.0,
+      "sampled_pixel_count": 5952,
+      "jd_class_counts": {
+        "-2": 0,
+        "-1": 0,
+        "0": 5952,
+        "burned_pixel_count": 0
+      },
+      "burned_confidence_bins": {
+        "1_49": 0,
+        "50_79": 0,
+        "80_100": 0,
+        "outside_1_100": 0
+      },
+      "burn_days": [],
+      "source_hashes": {
+        "archive_sha256": "1afba0752ce165a2c2a1510a7ac90889a588a168c5992184986e1229b90b0f8d",
+        "jd_sha256": "c0cc0be548a08f4ad54f154fe4b31b88addb59d0d927535e6f287c4c5e8d8957",
+        "cl_sha256": "b2be31c3c0ba0e3ced4dac4fefd5dd1a31b497f304006f1e3e79f4fe381bf9bb"
+      }
+    },
+    {
+      "month": "202212",
+      "route_center": "Sendero Namuncura",
+      "location": "Parque Nacional Lihue Calel, La Pampa",
+      "radius_km": 10.0,
+      "sampled_pixel_count": 6422,
+      "jd_class_counts": {
+        "-2": 0,
+        "-1": 0,
+        "0": 6422,
+        "burned_pixel_count": 0
+      },
+      "burned_confidence_bins": {
+        "1_49": 0,
+        "50_79": 0,
+        "80_100": 0,
+        "outside_1_100": 0
+      },
+      "burn_days": [],
+      "source_hashes": {
+        "archive_sha256": "1afba0752ce165a2c2a1510a7ac90889a588a168c5992184986e1229b90b0f8d",
+        "jd_sha256": "c0cc0be548a08f4ad54f154fe4b31b88addb59d0d927535e6f287c4c5e8d8957",
+        "cl_sha256": "b2be31c3c0ba0e3ced4dac4fefd5dd1a31b497f304006f1e3e79f4fe381bf9bb"
+      }
+    },
+    {
+      "month": "202212",
+      "route_center": "Cerro Ventana - Hueco de la Ventana",
+      "location": "Parque Provincial Ernesto Tornquist, Buenos Aires",
+      "radius_km": 10.0,
+      "sampled_pixel_count": 6438,
+      "jd_class_counts": {
+        "-2": 0,
+        "-1": 0,
+        "0": 6438,
+        "burned_pixel_count": 0
+      },
+      "burned_confidence_bins": {
+        "1_49": 0,
+        "50_79": 0,
+        "80_100": 0,
+        "outside_1_100": 0
+      },
+      "burn_days": [],
+      "source_hashes": {
+        "archive_sha256": "1afba0752ce165a2c2a1510a7ac90889a588a168c5992184986e1229b90b0f8d",
+        "jd_sha256": "c0cc0be548a08f4ad54f154fe4b31b88addb59d0d927535e6f287c4c5e8d8957",
+        "cl_sha256": "b2be31c3c0ba0e3ced4dac4fefd5dd1a31b497f304006f1e3e79f4fe381bf9bb"
+      }
+    },
+    {
+      "month": "202212",
+      "route_center": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "location": "Cerro Piltriquitron, El Bolson, Rio Negro",
+      "radius_km": 10.0,
+      "sampled_pixel_count": 6805,
+      "jd_class_counts": {
+        "-2": 72,
+        "-1": 0,
+        "0": 6733,
+        "burned_pixel_count": 0
+      },
+      "burned_confidence_bins": {
+        "1_49": 0,
+        "50_79": 0,
+        "80_100": 0,
+        "outside_1_100": 0
+      },
+      "burn_days": [],
+      "source_hashes": {
+        "archive_sha256": "1afba0752ce165a2c2a1510a7ac90889a588a168c5992184986e1229b90b0f8d",
+        "jd_sha256": "c0cc0be548a08f4ad54f154fe4b31b88addb59d0d927535e6f287c4c5e8d8957",
+        "cl_sha256": "b2be31c3c0ba0e3ced4dac4fefd5dd1a31b497f304006f1e3e79f4fe381bf9bb"
+      }
+    },
+    {
+      "month": "202212",
+      "route_center": "Sendero Che Roga - Mburucuyá",
+      "location": "Parque Nacional Mburucuyá, Corrientes",
+      "radius_km": 10.0,
+      "sampled_pixel_count": 5731,
+      "jd_class_counts": {
+        "-2": 364,
+        "-1": 0,
+        "0": 5367,
+        "burned_pixel_count": 0
+      },
+      "burned_confidence_bins": {
+        "1_49": 0,
+        "50_79": 0,
+        "80_100": 0,
+        "outside_1_100": 0
+      },
+      "burn_days": [],
+      "source_hashes": {
+        "archive_sha256": "1afba0752ce165a2c2a1510a7ac90889a588a168c5992184986e1229b90b0f8d",
+        "jd_sha256": "c0cc0be548a08f4ad54f154fe4b31b88addb59d0d927535e6f287c4c5e8d8957",
+        "cl_sha256": "b2be31c3c0ba0e3ced4dac4fefd5dd1a31b497f304006f1e3e79f4fe381bf9bb"
+      }
+    },
+    {
+      "month": "202212",
+      "route_center": "Sendero La Chuña - El Rey",
+      "location": "Parque Nacional El Rey, Salta",
+      "radius_km": 10.0,
+      "sampled_pixel_count": 5582,
+      "jd_class_counts": {
+        "-2": 0,
+        "-1": 0,
+        "0": 5582,
+        "burned_pixel_count": 0
+      },
+      "burned_confidence_bins": {
+        "1_49": 0,
+        "50_79": 0,
+        "80_100": 0,
+        "outside_1_100": 0
+      },
+      "burn_days": [],
+      "source_hashes": {
+        "archive_sha256": "1afba0752ce165a2c2a1510a7ac90889a588a168c5992184986e1229b90b0f8d",
+        "jd_sha256": "c0cc0be548a08f4ad54f154fe4b31b88addb59d0d927535e6f287c4c5e8d8957",
+        "cl_sha256": "b2be31c3c0ba0e3ced4dac4fefd5dd1a31b497f304006f1e3e79f4fe381bf9bb"
+      }
+    }
+  ],
+  "official_event_crosscheck": [
+    {
+      "month": "202202",
+      "event": {
+        "name": "PN MBURUCUYA",
+        "latitude": -28.045555555555556,
+        "longitude": -58.01027777777778,
+        "reported_start_date": "2022-02-22",
+        "reported_extinguished_date": "2022-03-08",
+        "source_report_date": "2022-03-09",
+        "source_url": "https://www.argentina.gob.ar/sites/default/files/2021/09/reporte_diario_09-03-2022.pdf",
+        "radius_km": 10.0,
+        "date_margin_days": 3
+      },
+      "comparison_window": [
+        "2022-02-19",
+        "2022-03-11"
+      ],
+      "positive_pixels_within_radius_and_window": 297,
+      "date_matches": [
+        {
+          "burn_date": "2022-02-19",
+          "pixels_within_radius": 49,
+          "confidence_ge_80_pixels": 49,
+          "nearest_pixel_distance_km": 6.923
+        },
+        {
+          "burn_date": "2022-02-23",
+          "pixels_within_radius": 242,
+          "confidence_ge_80_pixels": 241,
+          "nearest_pixel_distance_km": 1.476
+        },
+        {
+          "burn_date": "2022-02-27",
+          "pixels_within_radius": 6,
+          "confidence_ge_80_pixels": 5,
+          "nearest_pixel_distance_km": 2.831
+        }
+      ],
+      "source_hashes": {
+        "archive_sha256": "a51d702e3a5ac1a83307c56190105b7b0556190c4572cba086190803feab1a74",
+        "jd_sha256": "fccdc0c416dbb4ebdbb1b005c99f331d26029ddee1cacdfa72090d8f81f5944e",
+        "cl_sha256": "96d217b2f7c651f5e7164643e6b56d3ddcbd84dabd3ebce02b4a508f795ec8ca"
+      }
+    },
+    {
+      "month": "202203",
+      "event": {
+        "name": "PN MBURUCUYA",
+        "latitude": -28.045555555555556,
+        "longitude": -58.01027777777778,
+        "reported_start_date": "2022-02-22",
+        "reported_extinguished_date": "2022-03-08",
+        "source_report_date": "2022-03-09",
+        "source_url": "https://www.argentina.gob.ar/sites/default/files/2021/09/reporte_diario_09-03-2022.pdf",
+        "radius_km": 10.0,
+        "date_margin_days": 3
+      },
+      "comparison_window": [
+        "2022-02-19",
+        "2022-03-11"
+      ],
+      "positive_pixels_within_radius_and_window": 643,
+      "date_matches": [
+        {
+          "burn_date": "2022-03-02",
+          "pixels_within_radius": 557,
+          "confidence_ge_80_pixels": 548,
+          "nearest_pixel_distance_km": 0.048
+        },
+        {
+          "burn_date": "2022-03-04",
+          "pixels_within_radius": 22,
+          "confidence_ge_80_pixels": 21,
+          "nearest_pixel_distance_km": 1.969
+        },
+        {
+          "burn_date": "2022-03-05",
+          "pixels_within_radius": 10,
+          "confidence_ge_80_pixels": 10,
+          "nearest_pixel_distance_km": 9.017
+        },
+        {
+          "burn_date": "2022-03-07",
+          "pixels_within_radius": 37,
+          "confidence_ge_80_pixels": 35,
+          "nearest_pixel_distance_km": 0.777
+        },
+        {
+          "burn_date": "2022-03-09",
+          "pixels_within_radius": 17,
+          "confidence_ge_80_pixels": 17,
+          "nearest_pixel_distance_km": 1.452
+        }
+      ],
+      "source_hashes": {
+        "archive_sha256": "9898a3c4726c2fc7423db9c42da8cf08df59fb65c4c28a03900d3ce46a4576ad",
+        "jd_sha256": "7920366c652f7cf9b361e33b38cb8a3e3654c5815a56d7099f34364315d00803",
+        "cl_sha256": "a2370843963655a59b102ca05ee593f7bd7b8c6b1d71b38f747a9449c99f8792"
+      }
+    }
+  ],
+  "limitations": [
+    "Single month is only a source usability/coverage audit, not a model evaluation.",
+    "Monthly burned-area mapping does not identify fire start time or prove that a fire was active at a particular hour.",
+    "A mapped unburned pixel is a negative only for mapped burned area within this month and product limitations; it is not a comprehensive fire-free observation.",
+    "FireCCI51 uses MODIS observations and includes MODIS active-fire information, so it is not fully sensor-independent from a MODIS-based predictor.",
+    "Route centers and radius are approximations; the next experiment must use trail geometries and a held-out year."
+  ]
+}

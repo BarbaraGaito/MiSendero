@@ -1,0 +1,360 @@
+{
+  "experiment_id": "smn-wrf-base-model-external-route-transfer-test-2023h2",
+  "candidate_status": "not_reliable",
+  "conclusion": "No route-day threshold reached 90% precision in validation; the novel-route subset had no positive MODIS route-days in validation or test. This cohort cannot support a reliable wildfire prediction claim.",
+  "source": "Frozen 2022 train / 2023 H1 validation model and threshold transferred to MODIS labels along catalog routes.",
+  "protocol": {
+    "base_training_period": "<2023-01-01",
+    "threshold_selection_period": "2023-01-01 to 2023-06-30",
+    "external_route_test_period": "2023-07-01 to 2023-12-31",
+    "frozen_threshold": 0.7245825147400184,
+    "base_validation_precision_at_threshold": 0.0423728813559322,
+    "base_validation_alerts": 118,
+    "target_validation_precision": 0.9,
+    "forecast_lead_hours": 27,
+    "target": "MOD14A1 nominal/high-confidence fire detection, not ignition.",
+    "route_day": "Positive if any valid MODIS pixel in an 11x11 route window is positive; score is maximum pixel score."
+  },
+  "validation": {
+    "weather_days": 173,
+    "pixel_day": {
+      "observations": 200046,
+      "positives": 11,
+      "prevalence": 5.498735290883097e-05,
+      "average_precision": 0.00027852575836331996,
+      "prevalence_baseline_ap": 5.498735290883097e-05
+    },
+    "route_day": {
+      "observations": 2121,
+      "positives": 5,
+      "prevalence": 0.0023573785950023575,
+      "average_precision": 0.016128068686767895,
+      "prevalence_baseline_ap": 0.0023573785950023575
+    },
+    "route_day_unique_positive_dates": 3,
+    "route_day_unique_positive_routes": 3,
+    "threshold_meeting_90pct_target": null,
+    "best_precision_at_least_5_alerts": {
+      "threshold": 0.6812414876409866,
+      "alerts": 140,
+      "tp": 4,
+      "precision": 0.02857142857142857,
+      "recall": 0.8,
+      "precision_exact_95pct": [
+        0.007838493891051398,
+        0.07153719832852214
+      ]
+    },
+    "novel_routes": {
+      "route_ids": [
+        "aconquija-el-pozon",
+        "aconquija-puesto-chorizos",
+        "alerces-alto-petiso",
+        "alerces-arroyo-hacha",
+        "alerces-cerro-cocinero",
+        "alerces-laguna-escondida",
+        "bateaMirador",
+        "cerroAlto",
+        "encantadoMirador",
+        "esquelCruz",
+        "guanacos",
+        "lanin-cara-sur-puerto-canoa",
+        "lanin-rosales-san-martin",
+        "leoncito-cerro",
+        "llao-llao-villa-tacul",
+        "miradoresQuijadas",
+        "porito",
+        "puertaCielo",
+        "quijadas-farallones",
+        "sanBernardo",
+        "tabaquillo",
+        "uritorco"
+      ],
+      "route_day": {
+        "observations": 319,
+        "positives": 0,
+        "prevalence": 0.0,
+        "average_precision": null,
+        "prevalence_baseline_ap": 0.0
+      },
+      "unique_positive_dates": 0,
+      "unique_positive_routes": 0,
+      "threshold_meeting_90pct_target": null,
+      "best_precision_at_least_5_alerts": {
+        "threshold": 0.6228560231407503,
+        "alerts": 5,
+        "tp": 0,
+        "precision": 0.0,
+        "recall": 0,
+        "precision_exact_95pct": [
+          0.0,
+          0.5218237501049814
+        ]
+      }
+    }
+  },
+  "counts": {
+    "catalog_routes_with_MODIS_coverage": 33,
+    "catalog_routes_excluded_for_missing_tiles": 8,
+    "catalog_routes_in_base_study_geography": 11,
+    "catalog_routes_outside_base_study_geography": 22,
+    "route_validation_weather_days": 173,
+    "route_test_weather_days": 176,
+    "route_test_pixel_days": 187158,
+    "route_test_positive_pixel_days": 4,
+    "route_test_positive_dates": 1,
+    "route_test_positive_route_days": 3,
+    "route_test_unique_positive_routes": 2,
+    "novel_route_test_positive_route_days": 0,
+    "novel_route_test_positive_dates": 0
+  },
+  "test": {
+    "pixel_day": {
+      "observations": 187158,
+      "positives": 4,
+      "prevalence": 2.137231643851719e-05,
+      "average_precision": 0.002535153861066414,
+      "prevalence_baseline_ap": 2.137231643851719e-05,
+      "at_frozen_threshold": {
+        "threshold": 0.7245825147400184,
+        "tp": 4,
+        "fp": 12899,
+        "fn": 0,
+        "alerts": 12903,
+        "precision": 0.00031000542509493915,
+        "recall": 1.0,
+        "precision_exact_95pct": [
+          8.447229750388313e-05,
+          0.00079354505257295
+        ]
+      }
+    },
+    "pixel_day_at_route_validation_best_precision": {
+      "observations": 187158,
+      "positives": 4,
+      "prevalence": 2.137231643851719e-05,
+      "average_precision": 0.002535153861066414,
+      "prevalence_baseline_ap": 2.137231643851719e-05,
+      "at_frozen_threshold": {
+        "threshold": 0.6812414876409866,
+        "tp": 4,
+        "fp": 15156,
+        "fn": 0,
+        "alerts": 15160,
+        "precision": 0.0002638522427440633,
+        "recall": 1.0,
+        "precision_exact_95pct": [
+          7.189538533639955e-05,
+          0.0006754274760089072
+        ]
+      }
+    },
+    "route_day": {
+      "observations": 2080,
+      "positives": 3,
+      "prevalence": 0.0014423076923076924,
+      "average_precision": 0.08648758648758648,
+      "prevalence_baseline_ap": 0.0014423076923076924,
+      "at_frozen_threshold": {
+        "threshold": 0.7245825147400184,
+        "tp": 3,
+        "fp": 198,
+        "fn": 0,
+        "alerts": 201,
+        "precision": 0.014925373134328358,
+        "recall": 1.0,
+        "precision_exact_95pct": [
+          0.003088610777693088,
+          0.04299640520178566
+        ]
+      }
+    },
+    "route_day_at_validation_threshold": null,
+    "route_day_at_validation_best_precision": {
+      "observations": 2080,
+      "positives": 3,
+      "prevalence": 0.0014423076923076924,
+      "average_precision": 0.08648758648758648,
+      "prevalence_baseline_ap": 0.0014423076923076924,
+      "at_frozen_threshold": {
+        "threshold": 0.6812414876409866,
+        "tp": 3,
+        "fp": 252,
+        "fn": 0,
+        "alerts": 255,
+        "precision": 0.011764705882352941,
+        "recall": 1.0,
+        "precision_exact_95pct": [
+          0.0024327675633168244,
+          0.03399457595135738
+        ]
+      }
+    },
+    "novel_routes": {
+      "route_day": {
+        "observations": 311,
+        "positives": 0,
+        "prevalence": 0.0,
+        "average_precision": null,
+        "prevalence_baseline_ap": 0.0,
+        "at_frozen_threshold": {
+          "threshold": 0.7245825147400184,
+          "tp": 0,
+          "fp": 3,
+          "fn": 0,
+          "alerts": 3,
+          "precision": 0.0,
+          "recall": null,
+          "precision_exact_95pct": [
+            0.0,
+            0.7075982261787133
+          ]
+        }
+      },
+      "route_day_at_validation_threshold": null,
+      "route_day_at_validation_best_precision": {
+        "observations": 311,
+        "positives": 0,
+        "prevalence": 0.0,
+        "average_precision": null,
+        "prevalence_baseline_ap": 0.0,
+        "at_frozen_threshold": {
+          "threshold": 0.6228560231407503,
+          "tp": 0,
+          "fp": 12,
+          "fn": 0,
+          "alerts": 12,
+          "precision": 0.0,
+          "recall": null,
+          "precision_exact_95pct": [
+            0.0,
+            0.2646484693970512
+          ]
+        }
+      }
+    },
+    "route_day_by_MODIS_tile": {
+      "h12v11": {
+        "observations": 640,
+        "positives": 3,
+        "prevalence": 0.0046875,
+        "average_precision": 0.15456349206349207,
+        "prevalence_baseline_ap": 0.0046875,
+        "at_frozen_threshold": {
+          "threshold": 0.7245825147400184,
+          "tp": 3,
+          "fp": 117,
+          "fn": 0,
+          "alerts": 120,
+          "precision": 0.025,
+          "recall": 1.0,
+          "precision_exact_95pct": [
+            0.005185574958321362,
+            0.07132319415690505
+          ]
+        }
+      },
+      "h12v12": {
+        "observations": 653,
+        "positives": 0,
+        "prevalence": 0.0,
+        "average_precision": null,
+        "prevalence_baseline_ap": 0.0,
+        "at_frozen_threshold": {
+          "threshold": 0.7245825147400184,
+          "tp": 0,
+          "fp": 24,
+          "fn": 0,
+          "alerts": 24,
+          "precision": 0.0,
+          "recall": null,
+          "precision_exact_95pct": [
+            0.0,
+            0.14247359772252563
+          ]
+        }
+      },
+      "h12v13": {
+        "observations": 472,
+        "positives": 0,
+        "prevalence": 0.0,
+        "average_precision": null,
+        "prevalence_baseline_ap": 0.0,
+        "at_frozen_threshold": {
+          "threshold": 0.7245825147400184,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0,
+          "alerts": 0,
+          "precision": null,
+          "recall": null,
+          "precision_exact_95pct": null
+        }
+      },
+      "h13v11": {
+        "observations": 162,
+        "positives": 0,
+        "prevalence": 0.0,
+        "average_precision": null,
+        "prevalence_baseline_ap": 0.0,
+        "at_frozen_threshold": {
+          "threshold": 0.7245825147400184,
+          "tp": 0,
+          "fp": 55,
+          "fn": 0,
+          "alerts": 55,
+          "precision": 0.0,
+          "recall": null,
+          "precision_exact_95pct": [
+            0.0,
+            0.0648707608254246
+          ]
+        }
+      },
+      "h13v12": {
+        "observations": 153,
+        "positives": 0,
+        "prevalence": 0.0,
+        "average_precision": null,
+        "prevalence_baseline_ap": 0.0,
+        "at_frozen_threshold": {
+          "threshold": 0.7245825147400184,
+          "tp": 0,
+          "fp": 2,
+          "fn": 0,
+          "alerts": 2,
+          "precision": 0.0,
+          "recall": null,
+          "precision_exact_95pct": [
+            0.0,
+            0.841886116991581
+          ]
+        }
+      }
+    }
+  },
+  "cohort": {
+    "routes": 33,
+    "route_pixels": 4179,
+    "weather_mapped_pixels": 1497,
+    "MODIS_target_dates": 685,
+    "weather_dates_mapped": 591,
+    "MODIS_dates_without_weather": 94,
+    "weather_mapping_distance_limit_km": 5.0
+  },
+  "limitations": [
+    "Only later satellite labels test transfer; independent physical fire confirmations are unavailable.",
+    "The frozen threshold had only 4.24% precision in validation and did not meet the predeclared 90% target.",
+    "The all-route test includes legacy route sectors represented in base training; the outside-base route subset is reported separately.",
+    "The 2023 H2 test includes only a few positive MODIS dates and correlated neighboring pixels.",
+    "Route-day precision intervals are descriptive binomial intervals; nearby routes/dates may share one wildfire.",
+    "The frozen score is not a calibrated probability and cannot support an app fire-safety recommendation."
+  ],
+  "source_hashes": {
+    "route_observations": "e832bc64066f89abe84f0cc4743859e0b91bd1ae715b740b630fff104859bb4d",
+    "weather_mapping_manifest": "c15e2b951ba5a1c30f2c001327ba8c25c0fe0b8e8d8b2e1175d0013151a13d71",
+    "base_database": "420cac84ca69d34b0895db27968d4051d5c6908aea6bee70f041c31868a3f3a3"
+  },
+  "synthetic_observations": 0,
+  "deployment_approved": false
+}

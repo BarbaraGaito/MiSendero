@@ -1,0 +1,2518 @@
+{
+  "experiment_id": "modis-2022-2023-full-raster-official-perimeter-comparison",
+  "method": {
+    "source_product": "NASA Terra MOD14A1.061 original daily FireMask and QA COGs",
+    "spatial_sample": "All MODIS pixels within a bounding window around each eligible official perimeter, read from original full-tile COGs; no fixed-point subsampling.",
+    "official_date_window": "same recorded date through 7 days afterward",
+    "maximum_pixel_center_distance_km": 0.75,
+    "match_rule": "QA land bits == 2, FireMask in {8,9}, and pixel center within tolerance of official burned perimeter",
+    "meaning": "Spatial-temporal detection coincidence audit, not ignition-time forecast evaluation."
+  },
+  "source_raster_count": 440,
+  "source_audit_sha256": "c7edc41807b410a8222142b0bb5c9e6757473dfbfae207d491b5b81d2447ac5c",
+  "source_dates": [
+    "2022-01-01",
+    "2023-12-31"
+  ],
+  "source_layers": {
+    "2022": {
+      "sha256": "e9419f2f9014ab8220d756640584ad91d0ee1e61dfacdc2c70118757987c5980",
+      "feature_count": 443
+    },
+    "2023": {
+      "sha256": "cde588dbdafb9dc787269f4220676909f8c9b6a495e7a8adf4ce13d8597bc4e2",
+      "feature_count": 446
+    }
+  },
+  "eligible_events": 80,
+  "events_without_valid_raster_coverage": [
+    {
+      "layer_year": 2022,
+      "id": null,
+      "recorded_date": "2022-12-05",
+      "site": "FABRICA HOLCIM",
+      "locality": "MALAGUEÑO",
+      "area_ha": 5,
+      "nearest_route_center_distance_km": 38.375
+    },
+    {
+      "layer_year": 2022,
+      "id": null,
+      "recorded_date": "2022-12-04",
+      "site": null,
+      "locality": "LOS MOLINOS",
+      "area_ha": 227,
+      "nearest_route_center_distance_km": 33.134
+    },
+    {
+      "layer_year": 2022,
+      "id": null,
+      "recorded_date": "2022-10-12",
+      "site": "PAMPA DE ACHALA",
+      "locality": "MINA CLAVERO",
+      "area_ha": 74,
+      "nearest_route_center_distance_km": 7.844
+    },
+    {
+      "layer_year": 2022,
+      "id": null,
+      "recorded_date": "2022-12-06",
+      "site": null,
+      "locality": "MALAGUEÑO",
+      "area_ha": 9,
+      "nearest_route_center_distance_km": 34.192
+    }
+  ],
+  "matched_events": [
+    {
+      "layer_year": 2022,
+      "id": null,
+      "recorded_date": "2022-11-16",
+      "site": "PROXIMO AL RIO HONDO",
+      "locality": "TALA CAÑADA",
+      "area_ha": 1912,
+      "nearest_route_center_distance_km": 39.828,
+      "valid_pixel_day_samples_in_window": 3944,
+      "days_with_valid_land_observations": 8,
+      "first_matched_detection": {
+        "latitude": -31.304166663855845,
+        "longitude": -64.94163523203325,
+        "distance_to_perimeter_km": 0.0,
+        "item_id": "MOD14A1.A2022321.h12v12.061.2022330010839",
+        "observed_date": "2022-11-17",
+        "lag_days": 1
+      },
+      "coincidence_count": 39,
+      "coincidences": [
+        {
+          "latitude": -31.304166663855845,
+          "longitude": -64.94163523203325,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2022321.h12v12.061.2022330010839",
+          "observed_date": "2022-11-17",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.31249999718844,
+          "longitude": -64.94738024775945,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2022321.h12v12.061.2022330010839",
+          "observed_date": "2022-11-17",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.31249999718844,
+          "longitude": -64.93762619200398,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2022321.h12v12.061.2022330010839",
+          "observed_date": "2022-11-17",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.31249999718844,
+          "longitude": -64.92787213624851,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2022321.h12v12.061.2022330010839",
+          "observed_date": "2022-11-17",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.320833330521026,
+          "longitude": -64.95312765417223,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2022321.h12v12.061.2022330010839",
+          "observed_date": "2022-11-17",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.320833330521026,
+          "longitude": -64.94337273524843,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2022321.h12v12.061.2022330010839",
+          "observed_date": "2022-11-17",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.320833330521026,
+          "longitude": -64.93361781632463,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2022321.h12v12.061.2022330010839",
+          "observed_date": "2022-11-17",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.320833330521026,
+          "longitude": -64.92386289740081,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2022321.h12v12.061.2022330010839",
+          "observed_date": "2022-11-17",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.329166663853613,
+          "longitude": -64.94912166969827,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2022321.h12v12.061.2022330010839",
+          "observed_date": "2022-11-17",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.304166663855845,
+          "longitude": -64.95138842497944,
+          "distance_to_perimeter_km": 0.201,
+          "item_id": "MOD14A1.A2022321.h12v12.061.2022330010839",
+          "observed_date": "2022-11-17",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.31249999718844,
+          "longitude": -64.94738024775945,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2022321.h12v12.061.2022330010839",
+          "observed_date": "2022-11-18",
+          "lag_days": 2
+        },
+        {
+          "latitude": -31.320833330521026,
+          "longitude": -64.95312765417223,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2022321.h12v12.061.2022330010839",
+          "observed_date": "2022-11-18",
+          "lag_days": 2
+        },
+        {
+          "latitude": -31.329166663853613,
+          "longitude": -64.9588774521496,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2022321.h12v12.061.2022330010839",
+          "observed_date": "2022-11-18",
+          "lag_days": 2
+        },
+        {
+          "latitude": -31.329166663853613,
+          "longitude": -64.94912166969827,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2022321.h12v12.061.2022330010839",
+          "observed_date": "2022-11-18",
+          "lag_days": 2
+        },
+        {
+          "latitude": -31.3374999971862,
+          "longitude": -64.97438628890814,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2022321.h12v12.061.2022330010839",
+          "observed_date": "2022-11-18",
+          "lag_days": 2
+        },
+        {
+          "latitude": -31.3374999971862,
+          "longitude": -64.96462964256997,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2022321.h12v12.061.2022330010839",
+          "observed_date": "2022-11-18",
+          "lag_days": 2
+        },
+        {
+          "latitude": -31.3374999971862,
+          "longitude": -64.95487299623181,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2022321.h12v12.061.2022330010839",
+          "observed_date": "2022-11-18",
+          "lag_days": 2
+        },
+        {
+          "latitude": -31.345833330518786,
+          "longitude": -64.96062671572797,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2022321.h12v12.061.2022330010839",
+          "observed_date": "2022-11-18",
+          "lag_days": 2
+        },
+        {
+          "latitude": -31.345833330518786,
+          "longitude": -64.95086920514356,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2022321.h12v12.061.2022330010839",
+          "observed_date": "2022-11-18",
+          "lag_days": 2
+        },
+        {
+          "latitude": -31.354166663851373,
+          "longitude": -64.96638282906615,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2022321.h12v12.061.2022330010839",
+          "observed_date": "2022-11-18",
+          "lag_days": 2
+        },
+        {
+          "latitude": -31.362499997183956,
+          "longitude": -64.97214133712632,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2022321.h12v12.061.2022330010839",
+          "observed_date": "2022-11-18",
+          "lag_days": 2
+        },
+        {
+          "latitude": -31.362499997183956,
+          "longitude": -64.96238209697053,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2022321.h12v12.061.2022330010839",
+          "observed_date": "2022-11-18",
+          "lag_days": 2
+        },
+        {
+          "latitude": -31.354166663851373,
+          "longitude": -64.95662445387589,
+          "distance_to_perimeter_km": 0.012,
+          "item_id": "MOD14A1.A2022321.h12v12.061.2022330010839",
+          "observed_date": "2022-11-18",
+          "lag_days": 2
+        },
+        {
+          "latitude": -31.345833330518786,
+          "longitude": -64.97038422631238,
+          "distance_to_perimeter_km": 0.019,
+          "item_id": "MOD14A1.A2022321.h12v12.061.2022330010839",
+          "observed_date": "2022-11-18",
+          "lag_days": 2
+        },
+        {
+          "latitude": -31.320833330521026,
+          "longitude": -64.96288257309605,
+          "distance_to_perimeter_km": 0.025,
+          "item_id": "MOD14A1.A2022321.h12v12.061.2022330010839",
+          "observed_date": "2022-11-18",
+          "lag_days": 2
+        },
+        {
+          "latitude": -31.3374999971862,
+          "longitude": -64.94511634989367,
+          "distance_to_perimeter_km": 0.028,
+          "item_id": "MOD14A1.A2022321.h12v12.061.2022330010839",
+          "observed_date": "2022-11-18",
+          "lag_days": 2
+        },
+        {
+          "latitude": -31.329166663853613,
+          "longitude": -64.96863323460094,
+          "distance_to_perimeter_km": 0.034,
+          "item_id": "MOD14A1.A2022321.h12v12.061.2022330010839",
+          "observed_date": "2022-11-18",
+          "lag_days": 2
+        },
+        {
+          "latitude": -31.320833330521026,
+          "longitude": -64.97263749201987,
+          "distance_to_perimeter_km": 0.064,
+          "item_id": "MOD14A1.A2022321.h12v12.061.2022330010839",
+          "observed_date": "2022-11-18",
+          "lag_days": 2
+        },
+        {
+          "latitude": -31.31249999718844,
+          "longitude": -64.95713430351492,
+          "distance_to_perimeter_km": 0.076,
+          "item_id": "MOD14A1.A2022321.h12v12.061.2022330010839",
+          "observed_date": "2022-11-18",
+          "lag_days": 2
+        },
+        {
+          "latitude": -31.362499997183956,
+          "longitude": -64.95262285681474,
+          "distance_to_perimeter_km": 0.154,
+          "item_id": "MOD14A1.A2022321.h12v12.061.2022330010839",
+          "observed_date": "2022-11-18",
+          "lag_days": 2
+        }
+      ]
+    },
+    {
+      "layer_year": 2022,
+      "id": null,
+      "recorded_date": "2022-11-25",
+      "site": null,
+      "locality": "AMBUL",
+      "area_ha": 7058,
+      "nearest_route_center_distance_km": 27.414,
+      "valid_pixel_day_samples_in_window": 6992,
+      "days_with_valid_land_observations": 8,
+      "first_matched_detection": {
+        "latitude": -31.49583333050536,
+        "longitude": -65.04505761118142,
+        "distance_to_perimeter_km": 0.0,
+        "item_id": "MOD14A1.A2022329.h12v12.061.2022350215016",
+        "observed_date": "2022-11-26",
+        "lag_days": 1
+      },
+      "coincidence_count": 63,
+      "coincidences": [
+        {
+          "latitude": -31.49583333050536,
+          "longitude": -65.04505761118142,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2022329.h12v12.061.2022350215016",
+          "observed_date": "2022-11-26",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.504166663837946,
+          "longitude": -65.04108122274438,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2022329.h12v12.061.2022350215016",
+          "observed_date": "2022-11-26",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.504166663837946,
+          "longitude": -65.03130722301147,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2022329.h12v12.061.2022350215016",
+          "observed_date": "2022-11-26",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.504166663837946,
+          "longitude": -65.02153322327852,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2022329.h12v12.061.2022350215016",
+          "observed_date": "2022-11-26",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.504166663837946,
+          "longitude": -65.0117592235456,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2022329.h12v12.061.2022350215016",
+          "observed_date": "2022-11-26",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.512499997170533,
+          "longitude": -65.06643011489956,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2022329.h12v12.061.2022350215016",
+          "observed_date": "2022-11-26",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.512499997170533,
+          "longitude": -65.04688037250796,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2022329.h12v12.061.2022350215016",
+          "observed_date": "2022-11-26",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.512499997170533,
+          "longitude": -65.03710550131215,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2022329.h12v12.061.2022350215016",
+          "observed_date": "2022-11-26",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.512499997170533,
+          "longitude": -65.02733063011632,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2022329.h12v12.061.2022350215016",
+          "observed_date": "2022-11-26",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.512499997170533,
+          "longitude": -65.01755575892051,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2022329.h12v12.061.2022350215016",
+          "observed_date": "2022-11-26",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.520833330503127,
+          "longitude": -65.05268193272997,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2022329.h12v12.061.2022350215016",
+          "observed_date": "2022-11-26",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.520833330503127,
+          "longitude": -65.03313044668809,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2022329.h12v12.061.2022350215016",
+          "observed_date": "2022-11-26",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.520833330503127,
+          "longitude": -65.02335470366717,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2022329.h12v12.061.2022350215016",
+          "observed_date": "2022-11-26",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.520833330503127,
+          "longitude": -65.01357896064624,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2022329.h12v12.061.2022350215016",
+          "observed_date": "2022-11-26",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.520833330503127,
+          "longitude": -65.00380321762532,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2022329.h12v12.061.2022350215016",
+          "observed_date": "2022-11-26",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.512499997170533,
+          "longitude": -65.05665524370376,
+          "distance_to_perimeter_km": 0.004,
+          "item_id": "MOD14A1.A2022329.h12v12.061.2022350215016",
+          "observed_date": "2022-11-26",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.512499997170533,
+          "longitude": -65.00778088772469,
+          "distance_to_perimeter_km": 0.02,
+          "item_id": "MOD14A1.A2022329.h12v12.061.2022350215016",
+          "observed_date": "2022-11-26",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.504166663837946,
+          "longitude": -65.0508552224773,
+          "distance_to_perimeter_km": 0.022,
+          "item_id": "MOD14A1.A2022329.h12v12.061.2022350215016",
+          "observed_date": "2022-11-26",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.504166663837946,
+          "longitude": -65.06062922221024,
+          "distance_to_perimeter_km": 0.137,
+          "item_id": "MOD14A1.A2022329.h12v12.061.2022350215016",
+          "observed_date": "2022-11-26",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.520833330503127,
+          "longitude": -65.04290618970903,
+          "distance_to_perimeter_km": 0.154,
+          "item_id": "MOD14A1.A2022329.h12v12.061.2022350215016",
+          "observed_date": "2022-11-26",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.49583333050536,
+          "longitude": -65.05483073981355,
+          "distance_to_perimeter_km": 0.408,
+          "item_id": "MOD14A1.A2022329.h12v12.061.2022350215016",
+          "observed_date": "2022-11-26",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.504166663837946,
+          "longitude": -65.07040322194315,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2022329.h12v12.061.2022350215016",
+          "observed_date": "2022-11-27",
+          "lag_days": 2
+        },
+        {
+          "latitude": -31.504166663837946,
+          "longitude": -65.02153322327852,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2022329.h12v12.061.2022350215016",
+          "observed_date": "2022-11-27",
+          "lag_days": 2
+        },
+        {
+          "latitude": -31.5374999971683,
+          "longitude": -65.05451480035346,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2022329.h12v12.061.2022350215016",
+          "observed_date": "2022-11-27",
+          "lag_days": 2
+        },
+        {
+          "latitude": -31.545833330500884,
+          "longitude": -65.07010108505439,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2022329.h12v12.061.2022350215016",
+          "observed_date": "2022-11-27",
+          "lag_days": 2
+        },
+        {
+          "latitude": -31.55416666383347,
+          "longitude": -65.06613306207439,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2022329.h12v12.061.2022350215016",
+          "observed_date": "2022-11-27",
+          "lag_days": 2
+        },
+        {
+          "latitude": -31.55416666383347,
+          "longitude": -65.05635382812802,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2022329.h12v12.061.2022350215016",
+          "observed_date": "2022-11-27",
+          "lag_days": 2
+        },
+        {
+          "latitude": -31.562499997166057,
+          "longitude": -65.07194581431897,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2022329.h12v12.061.2022350215016",
+          "observed_date": "2022-11-27",
+          "lag_days": 2
+        },
+        {
+          "latitude": -31.562499997166057,
+          "longitude": -65.06216570673432,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2022329.h12v12.061.2022350215016",
+          "observed_date": "2022-11-27",
+          "lag_days": 2
+        },
+        {
+          "latitude": -31.562499997166057,
+          "longitude": -65.0523855991497,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2022329.h12v12.061.2022350215016",
+          "observed_date": "2022-11-27",
+          "lag_days": 2
+        }
+      ]
+    },
+    {
+      "layer_year": 2022,
+      "id": null,
+      "recorded_date": "2022-09-07",
+      "site": null,
+      "locality": "DESPEÑADEROS",
+      "area_ha": 2721,
+      "nearest_route_center_distance_km": 37.297,
+      "valid_pixel_day_samples_in_window": 8097,
+      "days_with_valid_land_observations": 8,
+      "first_matched_detection": {
+        "latitude": -31.670833330489696,
+        "longitude": -64.2958714018596,
+        "distance_to_perimeter_km": 0.0,
+        "item_id": "MOD14A1.A2022249.h12v12.061.2022258104055",
+        "observed_date": "2022-09-07",
+        "lag_days": 0
+      },
+      "coincidence_count": 15,
+      "coincidences": [
+        {
+          "latitude": -31.670833330489696,
+          "longitude": -64.2958714018596,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2022249.h12v12.061.2022258104055",
+          "observed_date": "2022-09-07",
+          "lag_days": 0
+        },
+        {
+          "latitude": -31.679166663822286,
+          "longitude": -64.3016416021149,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2022249.h12v12.061.2022258104055",
+          "observed_date": "2022-09-07",
+          "lag_days": 0
+        },
+        {
+          "latitude": -31.687499997154873,
+          "longitude": -64.2976209428327,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2022249.h12v12.061.2022258104055",
+          "observed_date": "2022-09-07",
+          "lag_days": 0
+        },
+        {
+          "latitude": -31.69583333048746,
+          "longitude": -64.29360092177485,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2022249.h12v12.061.2022258104055",
+          "observed_date": "2022-09-07",
+          "lag_days": 0
+        },
+        {
+          "latitude": -31.69583333048746,
+          "longitude": -64.28380678651371,
+          "distance_to_perimeter_km": 0.004,
+          "item_id": "MOD14A1.A2022249.h12v12.061.2022258104055",
+          "observed_date": "2022-09-07",
+          "lag_days": 0
+        },
+        {
+          "latitude": -31.687499997154873,
+          "longitude": -64.28782768703452,
+          "distance_to_perimeter_km": 0.028,
+          "item_id": "MOD14A1.A2022249.h12v12.061.2022258104055",
+          "observed_date": "2022-09-07",
+          "lag_days": 0
+        },
+        {
+          "latitude": -31.679166663822286,
+          "longitude": -64.29184922541465,
+          "distance_to_perimeter_km": 0.045,
+          "item_id": "MOD14A1.A2022249.h12v12.061.2022258104055",
+          "observed_date": "2022-09-07",
+          "lag_days": 0
+        },
+        {
+          "latitude": -31.687499997154873,
+          "longitude": -64.30741419863087,
+          "distance_to_perimeter_km": 0.078,
+          "item_id": "MOD14A1.A2022249.h12v12.061.2022258104055",
+          "observed_date": "2022-09-07",
+          "lag_days": 0
+        },
+        {
+          "latitude": -31.66249999715711,
+          "longitude": -64.30968483617386,
+          "distance_to_perimeter_km": 0.124,
+          "item_id": "MOD14A1.A2022249.h12v12.061.2022258104055",
+          "observed_date": "2022-09-07",
+          "lag_days": 0
+        },
+        {
+          "latitude": -31.69583333048746,
+          "longitude": -64.303395057036,
+          "distance_to_perimeter_km": 0.126,
+          "item_id": "MOD14A1.A2022249.h12v12.061.2022258104055",
+          "observed_date": "2022-09-07",
+          "lag_days": 0
+        },
+        {
+          "latitude": -31.670833330489696,
+          "longitude": -64.30566289982684,
+          "distance_to_perimeter_km": 0.138,
+          "item_id": "MOD14A1.A2022249.h12v12.061.2022258104055",
+          "observed_date": "2022-09-07",
+          "lag_days": 0
+        },
+        {
+          "latitude": -31.654166663824522,
+          "longitude": -64.3039176697659,
+          "distance_to_perimeter_km": 0.16,
+          "item_id": "MOD14A1.A2022249.h12v12.061.2022258104055",
+          "observed_date": "2022-09-07",
+          "lag_days": 0
+        },
+        {
+          "latitude": -31.66249999715711,
+          "longitude": -64.29989421657484,
+          "distance_to_perimeter_km": 0.28,
+          "item_id": "MOD14A1.A2022249.h12v12.061.2022258104055",
+          "observed_date": "2022-09-07",
+          "lag_days": 0
+        },
+        {
+          "latitude": -31.679166663822286,
+          "longitude": -64.31143397881515,
+          "distance_to_perimeter_km": 0.538,
+          "item_id": "MOD14A1.A2022249.h12v12.061.2022258104055",
+          "observed_date": "2022-09-07",
+          "lag_days": 0
+        },
+        {
+          "latitude": -31.670833330489696,
+          "longitude": -64.28607990389236,
+          "distance_to_perimeter_km": 0.704,
+          "item_id": "MOD14A1.A2022249.h12v12.061.2022258104055",
+          "observed_date": "2022-09-07",
+          "lag_days": 0
+        }
+      ]
+    },
+    {
+      "layer_year": 2022,
+      "id": null,
+      "recorded_date": "2022-09-15",
+      "site": "MIRADOR CUESTA DE SAN LUIS",
+      "locality": "MINA CLAVERO",
+      "area_ha": 3990,
+      "nearest_route_center_distance_km": 30.9,
+      "valid_pixel_day_samples_in_window": 9506,
+      "days_with_valid_land_observations": 8,
+      "first_matched_detection": {
+        "latitude": -31.654166663824522,
+        "longitude": -65.04793803102096,
+        "distance_to_perimeter_km": 0.0,
+        "item_id": "MOD14A1.A2022257.h12v12.061.2022266015403",
+        "observed_date": "2022-09-16",
+        "lag_days": 1
+      },
+      "coincidence_count": 16,
+      "coincidences": [
+        {
+          "latitude": -31.654166663824522,
+          "longitude": -65.04793803102096,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2022257.h12v12.061.2022266015403",
+          "observed_date": "2022-09-16",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.66249999715711,
+          "longitude": -65.05377192569975,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2022257.h12v12.061.2022266015403",
+          "observed_date": "2022-09-16",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.66249999715711,
+          "longitude": -65.04398130610073,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2022257.h12v12.061.2022266015403",
+          "observed_date": "2022-09-16",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.670833330489696,
+          "longitude": -65.06939974127155,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2022257.h12v12.061.2022266015403",
+          "observed_date": "2022-09-16",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.670833330489696,
+          "longitude": -65.05960824330431,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2022257.h12v12.061.2022266015403",
+          "observed_date": "2022-09-16",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.670833330489696,
+          "longitude": -65.04981674533707,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2022257.h12v12.061.2022266015403",
+          "observed_date": "2022-09-16",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.679166663822286,
+          "longitude": -65.07523936143397,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2022257.h12v12.061.2022266015403",
+          "observed_date": "2022-09-16",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.679166663822286,
+          "longitude": -65.06544698473374,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2022257.h12v12.061.2022266015403",
+          "observed_date": "2022-09-16",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.670833330489696,
+          "longitude": -65.07919123923878,
+          "distance_to_perimeter_km": 0.008,
+          "item_id": "MOD14A1.A2022257.h12v12.061.2022266015403",
+          "observed_date": "2022-09-16",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.654166663824522,
+          "longitude": -65.0381482894255,
+          "distance_to_perimeter_km": 0.015,
+          "item_id": "MOD14A1.A2022257.h12v12.061.2022266015403",
+          "observed_date": "2022-09-16",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.679166663822286,
+          "longitude": -65.05565460803349,
+          "distance_to_perimeter_km": 0.018,
+          "item_id": "MOD14A1.A2022257.h12v12.061.2022266015403",
+          "observed_date": "2022-09-16",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.654166663824522,
+          "longitude": -65.02835854783004,
+          "distance_to_perimeter_km": 0.064,
+          "item_id": "MOD14A1.A2022257.h12v12.061.2022266015403",
+          "observed_date": "2022-09-16",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.654166663824522,
+          "longitude": -65.05772777261642,
+          "distance_to_perimeter_km": 0.116,
+          "item_id": "MOD14A1.A2022257.h12v12.061.2022266015403",
+          "observed_date": "2022-09-16",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.670833330489696,
+          "longitude": -65.04002524736983,
+          "distance_to_perimeter_km": 0.337,
+          "item_id": "MOD14A1.A2022257.h12v12.061.2022266015403",
+          "observed_date": "2022-09-16",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.679166663822286,
+          "longitude": -65.04586223133326,
+          "distance_to_perimeter_km": 0.588,
+          "item_id": "MOD14A1.A2022257.h12v12.061.2022266015403",
+          "observed_date": "2022-09-16",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.66249999715711,
+          "longitude": -65.0341906865017,
+          "distance_to_perimeter_km": 0.673,
+          "item_id": "MOD14A1.A2022257.h12v12.061.2022266015403",
+          "observed_date": "2022-09-16",
+          "lag_days": 1
+        }
+      ]
+    },
+    {
+      "layer_year": 2022,
+      "id": null,
+      "recorded_date": "2022-08-16",
+      "site": "PARQUE SAN JUAN",
+      "locality": "ALTA GRACIA",
+      "area_ha": 201,
+      "nearest_route_center_distance_km": 27.783,
+      "valid_pixel_day_samples_in_window": 2016,
+      "days_with_valid_land_observations": 8,
+      "first_matched_detection": {
+        "latitude": -31.670833330489696,
+        "longitude": -64.40357787949922,
+        "distance_to_perimeter_km": 0.0,
+        "item_id": "MOD14A1.A2022225.h12v12.061.2022234192138",
+        "observed_date": "2022-08-17",
+        "lag_days": 1
+      },
+      "coincidence_count": 10,
+      "coincidences": [
+        {
+          "latitude": -31.670833330489696,
+          "longitude": -64.40357787949922,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2022225.h12v12.061.2022234192138",
+          "observed_date": "2022-08-17",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.679166663822286,
+          "longitude": -64.39956536911731,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2022225.h12v12.061.2022234192138",
+          "observed_date": "2022-08-17",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.670833330489696,
+          "longitude": -64.393786381532,
+          "distance_to_perimeter_km": 0.177,
+          "item_id": "MOD14A1.A2022225.h12v12.061.2022234192138",
+          "observed_date": "2022-08-17",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.687499997154873,
+          "longitude": -64.4053467566125,
+          "distance_to_perimeter_km": 0.177,
+          "item_id": "MOD14A1.A2022225.h12v12.061.2022234192138",
+          "observed_date": "2022-08-17",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.679166663822286,
+          "longitude": -64.40935774581756,
+          "distance_to_perimeter_km": 0.18,
+          "item_id": "MOD14A1.A2022225.h12v12.061.2022234192138",
+          "observed_date": "2022-08-17",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.679166663822286,
+          "longitude": -64.38977299241706,
+          "distance_to_perimeter_km": 0.297,
+          "item_id": "MOD14A1.A2022225.h12v12.061.2022234192138",
+          "observed_date": "2022-08-17",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.670833330489696,
+          "longitude": -64.41336937746648,
+          "distance_to_perimeter_km": 0.341,
+          "item_id": "MOD14A1.A2022225.h12v12.061.2022234192138",
+          "observed_date": "2022-08-17",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.687499997154873,
+          "longitude": -64.39555350081434,
+          "distance_to_perimeter_km": 0.48,
+          "item_id": "MOD14A1.A2022225.h12v12.061.2022234192138",
+          "observed_date": "2022-08-17",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.66249999715711,
+          "longitude": -64.39780041256509,
+          "distance_to_perimeter_km": 0.506,
+          "item_id": "MOD14A1.A2022225.h12v12.061.2022234192138",
+          "observed_date": "2022-08-17",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.66249999715711,
+          "longitude": -64.40759103216412,
+          "distance_to_perimeter_km": 0.628,
+          "item_id": "MOD14A1.A2022225.h12v12.061.2022234192138",
+          "observed_date": "2022-08-17",
+          "lag_days": 1
+        }
+      ]
+    },
+    {
+      "layer_year": 2022,
+      "id": null,
+      "recorded_date": "2022-11-19",
+      "site": "PASO DE LAS PIEDRAS",
+      "locality": "MINA CLAVERO",
+      "area_ha": 47,
+      "nearest_route_center_distance_km": 10.849,
+      "valid_pixel_day_samples_in_window": 1672,
+      "days_with_valid_land_observations": 8,
+      "first_matched_detection": {
+        "latitude": -31.670833330489696,
+        "longitude": -64.8148207941233,
+        "distance_to_perimeter_km": 0.0,
+        "item_id": "MOD14A1.A2022321.h12v12.061.2022330010839",
+        "observed_date": "2022-11-19",
+        "lag_days": 0
+      },
+      "coincidence_count": 1,
+      "coincidences": [
+        {
+          "latitude": -31.670833330489696,
+          "longitude": -64.8148207941233,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2022321.h12v12.061.2022330010839",
+          "observed_date": "2022-11-19",
+          "lag_days": 0
+        }
+      ]
+    },
+    {
+      "layer_year": 2022,
+      "id": null,
+      "recorded_date": "2022-10-25",
+      "site": "CAÑADA LARGA",
+      "locality": "ARROYO DE LOS PATOS",
+      "area_ha": 905,
+      "nearest_route_center_distance_km": 28.225,
+      "valid_pixel_day_samples_in_window": 2987,
+      "days_with_valid_land_observations": 8,
+      "first_matched_detection": {
+        "latitude": -31.75416666381557,
+        "longitude": -64.99070095579627,
+        "distance_to_perimeter_km": 0.0,
+        "item_id": "MOD14A1.A2022297.h12v12.061.2022306220708",
+        "observed_date": "2022-10-25",
+        "lag_days": 0
+      },
+      "coincidence_count": 5,
+      "coincidences": [
+        {
+          "latitude": -31.75416666381557,
+          "longitude": -64.99070095579627,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2022297.h12v12.061.2022306220708",
+          "observed_date": "2022-10-25",
+          "lag_days": 0
+        },
+        {
+          "latitude": -31.762499997148158,
+          "longitude": -64.98675132987803,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2022297.h12v12.061.2022306220708",
+          "observed_date": "2022-10-25",
+          "lag_days": 0
+        },
+        {
+          "latitude": -31.762499997148158,
+          "longitude": -64.99655251400138,
+          "distance_to_perimeter_km": 0.137,
+          "item_id": "MOD14A1.A2022297.h12v12.061.2022306220708",
+          "observed_date": "2022-10-25",
+          "lag_days": 0
+        },
+        {
+          "latitude": -31.75416666381557,
+          "longitude": -64.98090065406124,
+          "distance_to_perimeter_km": 0.17,
+          "item_id": "MOD14A1.A2022297.h12v12.061.2022306220708",
+          "observed_date": "2022-10-25",
+          "lag_days": 0
+        },
+        {
+          "latitude": -31.75416666381557,
+          "longitude": -65.0005012575313,
+          "distance_to_perimeter_km": 0.281,
+          "item_id": "MOD14A1.A2022297.h12v12.061.2022306220708",
+          "observed_date": "2022-10-25",
+          "lag_days": 0
+        }
+      ]
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-10-08",
+      "site": "San Clemente",
+      "locality": "SAN CLEMENTE",
+      "area_ha": 1537,
+      "nearest_route_center_distance_km": 10.358,
+      "valid_pixel_day_samples_in_window": 5511,
+      "days_with_valid_land_observations": 8,
+      "first_matched_detection": {
+        "latitude": -31.687499997154873,
+        "longitude": -64.58162536097949,
+        "distance_to_perimeter_km": 0.0,
+        "item_id": "MOD14A1.A2023281.h12v12.061.2023290135428",
+        "observed_date": "2023-10-10",
+        "lag_days": 2
+      },
+      "coincidence_count": 8,
+      "coincidences": [
+        {
+          "latitude": -31.687499997154873,
+          "longitude": -64.58162536097949,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2023281.h12v12.061.2023290135428",
+          "observed_date": "2023-10-10",
+          "lag_days": 2
+        },
+        {
+          "latitude": -31.69583333048746,
+          "longitude": -64.58742497960925,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2023281.h12v12.061.2023290135428",
+          "observed_date": "2023-10-10",
+          "lag_days": 2
+        },
+        {
+          "latitude": -31.69583333048746,
+          "longitude": -64.57763084434809,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2023281.h12v12.061.2023290135428",
+          "observed_date": "2023-10-10",
+          "lag_days": 2
+        },
+        {
+          "latitude": -31.704166663820047,
+          "longitude": -64.59322700650499,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2023281.h12v12.061.2023290135428",
+          "observed_date": "2023-10-10",
+          "lag_days": 2
+        },
+        {
+          "latitude": -31.704166663820047,
+          "longitude": -64.58343199141565,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2023281.h12v12.061.2023290135428",
+          "observed_date": "2023-10-10",
+          "lag_days": 2
+        },
+        {
+          "latitude": -31.704166663820047,
+          "longitude": -64.57363697632634,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2023281.h12v12.061.2023290135428",
+          "observed_date": "2023-10-10",
+          "lag_days": 2
+        },
+        {
+          "latitude": -31.687499997154873,
+          "longitude": -64.57183210518131,
+          "distance_to_perimeter_km": 0.592,
+          "item_id": "MOD14A1.A2023281.h12v12.061.2023290135428",
+          "observed_date": "2023-10-10",
+          "lag_days": 2
+        },
+        {
+          "latitude": -31.69583333048746,
+          "longitude": -64.56783670908695,
+          "distance_to_perimeter_km": 0.741,
+          "item_id": "MOD14A1.A2023281.h12v12.061.2023290135428",
+          "observed_date": "2023-10-10",
+          "lag_days": 2
+        }
+      ]
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-08-28",
+      "site": "Loma Alta",
+      "locality": "POTRERO DE GARAY",
+      "area_ha": 1227,
+      "nearest_route_center_distance_km": 17.414,
+      "valid_pixel_day_samples_in_window": 3207,
+      "days_with_valid_land_observations": 8,
+      "first_matched_detection": {
+        "latitude": -31.812499997143682,
+        "longitude": -64.6884858884462,
+        "distance_to_perimeter_km": 0.0,
+        "item_id": "MOD14A1.A2023241.h12v12.061.2023251180915",
+        "observed_date": "2023-08-29",
+        "lag_days": 1
+      },
+      "coincidence_count": 25,
+      "coincidences": [
+        {
+          "latitude": -31.812499997143682,
+          "longitude": -64.6884858884462,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2023241.h12v12.061.2023251180915",
+          "observed_date": "2023-08-29",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.812499997143682,
+          "longitude": -64.67867940229618,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2023241.h12v12.061.2023251180915",
+          "observed_date": "2023-08-29",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.82083333047627,
+          "longitude": -64.70413086626499,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2023241.h12v12.061.2023251180915",
+          "observed_date": "2023-08-29",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.82083333047627,
+          "longitude": -64.69432349515981,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2023241.h12v12.061.2023251180915",
+          "observed_date": "2023-08-29",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.82083333047627,
+          "longitude": -64.68451612405465,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2023241.h12v12.061.2023251180915",
+          "observed_date": "2023-08-29",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.829166663808856,
+          "longitude": -64.700163524351,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2023241.h12v12.061.2023251180915",
+          "observed_date": "2023-08-29",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.829166663808856,
+          "longitude": -64.69035526792344,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2023241.h12v12.061.2023251180915",
+          "observed_date": "2023-08-29",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.829166663808856,
+          "longitude": -64.68054701149589,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2023241.h12v12.061.2023251180915",
+          "observed_date": "2023-08-29",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.83749999714145,
+          "longitude": -64.69619683480565,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2023241.h12v12.061.2023251180915",
+          "observed_date": "2023-08-29",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.812499997143682,
+          "longitude": -64.69829237459619,
+          "distance_to_perimeter_km": 0.054,
+          "item_id": "MOD14A1.A2023241.h12v12.061.2023251180915",
+          "observed_date": "2023-08-29",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.829166663808856,
+          "longitude": -64.70997178077856,
+          "distance_to_perimeter_km": 0.078,
+          "item_id": "MOD14A1.A2023241.h12v12.061.2023251180915",
+          "observed_date": "2023-08-29",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.82083333047627,
+          "longitude": -64.67470875294948,
+          "distance_to_perimeter_km": 0.171,
+          "item_id": "MOD14A1.A2023241.h12v12.061.2023251180915",
+          "observed_date": "2023-08-29",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.804166663811095,
+          "longitude": -64.68265070330749,
+          "distance_to_perimeter_km": 0.281,
+          "item_id": "MOD14A1.A2023241.h12v12.061.2023251180915",
+          "observed_date": "2023-08-29",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.804166663811095,
+          "longitude": -64.67284510174555,
+          "distance_to_perimeter_km": 0.416,
+          "item_id": "MOD14A1.A2023241.h12v12.061.2023251180915",
+          "observed_date": "2023-08-29",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.804166663811095,
+          "longitude": -64.69245630486944,
+          "distance_to_perimeter_km": 0.459,
+          "item_id": "MOD14A1.A2023241.h12v12.061.2023251180915",
+          "observed_date": "2023-08-29",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.812499997143682,
+          "longitude": -64.6688729161462,
+          "distance_to_perimeter_km": 0.509,
+          "item_id": "MOD14A1.A2023241.h12v12.061.2023251180915",
+          "observed_date": "2023-08-29",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.83749999714145,
+          "longitude": -64.70600597692297,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2023241.h12v12.061.2023251180915",
+          "observed_date": "2023-08-30",
+          "lag_days": 2
+        },
+        {
+          "latitude": -31.83749999714145,
+          "longitude": -64.69619683480565,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2023241.h12v12.061.2023251180915",
+          "observed_date": "2023-08-30",
+          "lag_days": 2
+        },
+        {
+          "latitude": -31.845833330474036,
+          "longitude": -64.72166088195411,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2023241.h12v12.061.2023251180915",
+          "observed_date": "2023-08-30",
+          "lag_days": 2
+        },
+        {
+          "latitude": -31.83749999714145,
+          "longitude": -64.72562426115763,
+          "distance_to_perimeter_km": 0.033,
+          "item_id": "MOD14A1.A2023241.h12v12.061.2023251180915",
+          "observed_date": "2023-08-30",
+          "lag_days": 2
+        },
+        {
+          "latitude": -31.83749999714145,
+          "longitude": -64.71581511904031,
+          "distance_to_perimeter_km": 0.049,
+          "item_id": "MOD14A1.A2023241.h12v12.061.2023251180915",
+          "observed_date": "2023-08-30",
+          "lag_days": 2
+        },
+        {
+          "latitude": -31.854166663806623,
+          "longitude": -64.71769815582489,
+          "distance_to_perimeter_km": 0.14,
+          "item_id": "MOD14A1.A2023241.h12v12.061.2023251180915",
+          "observed_date": "2023-08-30",
+          "lag_days": 2
+        },
+        {
+          "latitude": -31.845833330474036,
+          "longitude": -64.71185085377948,
+          "distance_to_perimeter_km": 0.27,
+          "item_id": "MOD14A1.A2023241.h12v12.061.2023251180915",
+          "observed_date": "2023-08-30",
+          "lag_days": 2
+        },
+        {
+          "latitude": -31.829166663808856,
+          "longitude": -64.72958829363367,
+          "distance_to_perimeter_km": 0.296,
+          "item_id": "MOD14A1.A2023241.h12v12.061.2023251180915",
+          "observed_date": "2023-08-30",
+          "lag_days": 2
+        },
+        {
+          "latitude": -31.845833330474036,
+          "longitude": -64.70204082560488,
+          "distance_to_perimeter_km": 0.749,
+          "item_id": "MOD14A1.A2023241.h12v12.061.2023251180915",
+          "observed_date": "2023-08-30",
+          "lag_days": 2
+        }
+      ]
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-10-09",
+      "site": "Las Minitas",
+      "locality": "VILLA CARLOS PAZ",
+      "area_ha": 3714,
+      "nearest_route_center_distance_km": 22.577,
+      "valid_pixel_day_samples_in_window": 4924,
+      "days_with_valid_land_observations": 8,
+      "first_matched_detection": {
+        "latitude": -31.404166663846897,
+        "longitude": -64.57137273221363,
+        "distance_to_perimeter_km": 0.0,
+        "item_id": "MOD14A1.A2023281.h12v12.061.2023290135428",
+        "observed_date": "2023-10-09",
+        "lag_days": 0
+      },
+      "coincidence_count": 46,
+      "coincidences": [
+        {
+          "latitude": -31.404166663846897,
+          "longitude": -64.57137273221363,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2023281.h12v12.061.2023290135428",
+          "observed_date": "2023-10-09",
+          "lag_days": 0
+        },
+        {
+          "latitude": -31.412499997179484,
+          "longitude": -64.57710747354805,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2023281.h12v12.061.2023290135428",
+          "observed_date": "2023-10-09",
+          "lag_days": 0
+        },
+        {
+          "latitude": -31.412499997179484,
+          "longitude": -64.56734303603788,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2023281.h12v12.061.2023290135428",
+          "observed_date": "2023-10-09",
+          "lag_days": 0
+        },
+        {
+          "latitude": -31.412499997179484,
+          "longitude": -64.58687191105822,
+          "distance_to_perimeter_km": 0.234,
+          "item_id": "MOD14A1.A2023281.h12v12.061.2023290135428",
+          "observed_date": "2023-10-09",
+          "lag_days": 0
+        },
+        {
+          "latitude": -31.404166663846897,
+          "longitude": -64.58113630259727,
+          "distance_to_perimeter_km": 0.567,
+          "item_id": "MOD14A1.A2023281.h12v12.061.2023290135428",
+          "observed_date": "2023-10-09",
+          "lag_days": 0
+        },
+        {
+          "latitude": -31.420833330512075,
+          "longitude": -64.55354868491972,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2023281.h12v12.061.2023290135428",
+          "observed_date": "2023-10-10",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.420833330512075,
+          "longitude": -64.54378337992239,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2023281.h12v12.061.2023290135428",
+          "observed_date": "2023-10-10",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.420833330512075,
+          "longitude": -64.53401807492503,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2023281.h12v12.061.2023290135428",
+          "observed_date": "2023-10-10",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.42916666384466,
+          "longitude": -64.55928559364739,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2023281.h12v12.061.2023290135428",
+          "observed_date": "2023-10-10",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.42916666384466,
+          "longitude": -64.54951942080213,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2023281.h12v12.061.2023290135428",
+          "observed_date": "2023-10-10",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.42916666384466,
+          "longitude": -64.53975324795684,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2023281.h12v12.061.2023290135428",
+          "observed_date": "2023-10-10",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.42916666384466,
+          "longitude": -64.52998707511156,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2023281.h12v12.061.2023290135428",
+          "observed_date": "2023-10-10",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.437499997177248,
+          "longitude": -64.56502488807915,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2023281.h12v12.061.2023290135428",
+          "observed_date": "2023-10-10",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.437499997177248,
+          "longitude": -64.54549080597096,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2023281.h12v12.061.2023290135428",
+          "observed_date": "2023-10-10",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.437499997177248,
+          "longitude": -64.53572376491687,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2023281.h12v12.061.2023290135428",
+          "observed_date": "2023-10-10",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.437499997177248,
+          "longitude": -64.52595672386276,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2023281.h12v12.061.2023290135428",
+          "observed_date": "2023-10-10",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.445833330509835,
+          "longitude": -64.57076656909419,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2023281.h12v12.061.2023290135428",
+          "observed_date": "2023-10-10",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.445833330509835,
+          "longitude": -64.56099865947024,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2023281.h12v12.061.2023290135428",
+          "observed_date": "2023-10-10",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.445833330509835,
+          "longitude": -64.55123074984628,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2023281.h12v12.061.2023290135428",
+          "observed_date": "2023-10-10",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.445833330509835,
+          "longitude": -64.54146284022234,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2023281.h12v12.061.2023290135428",
+          "observed_date": "2023-10-10",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.445833330509835,
+          "longitude": -64.53169493059838,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2023281.h12v12.061.2023290135428",
+          "observed_date": "2023-10-10",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.445833330509835,
+          "longitude": -64.52192702097445,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2023281.h12v12.061.2023290135428",
+          "observed_date": "2023-10-10",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.45416666384242,
+          "longitude": -64.56674185901724,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2023281.h12v12.061.2023290135428",
+          "observed_date": "2023-10-10",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.45416666384242,
+          "longitude": -64.55697308046227,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2023281.h12v12.061.2023290135428",
+          "observed_date": "2023-10-10",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.45416666384242,
+          "longitude": -64.5472043019073,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2023281.h12v12.061.2023290135428",
+          "observed_date": "2023-10-10",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.45416666384242,
+          "longitude": -64.53743552335234,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2023281.h12v12.061.2023290135428",
+          "observed_date": "2023-10-10",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.46249999717501,
+          "longitude": -64.55294815085163,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2023281.h12v12.061.2023290135428",
+          "observed_date": "2023-10-10",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.46249999717501,
+          "longitude": -64.54317850300436,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2023281.h12v12.061.2023290135428",
+          "observed_date": "2023-10-10",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.45416666384242,
+          "longitude": -64.52766674479737,
+          "distance_to_perimeter_km": 0.002,
+          "item_id": "MOD14A1.A2023281.h12v12.061.2023290135428",
+          "observed_date": "2023-10-10",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.437499997177248,
+          "longitude": -64.55525784702508,
+          "distance_to_perimeter_km": 0.016,
+          "item_id": "MOD14A1.A2023281.h12v12.061.2023290135428",
+          "observed_date": "2023-10-10",
+          "lag_days": 1
+        }
+      ]
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-10-10",
+      "site": "Estancia Vieja",
+      "locality": "VILLA DEL LAGO (Est. Vieja)",
+      "area_ha": 16,
+      "nearest_route_center_distance_km": 32.255,
+      "valid_pixel_day_samples_in_window": 1479,
+      "days_with_valid_land_observations": 8,
+      "first_matched_detection": {
+        "latitude": -31.39583333051431,
+        "longitude": -64.51682685694252,
+        "distance_to_perimeter_km": 0.025,
+        "item_id": "MOD14A1.A2023281.h12v12.061.2023290135428",
+        "observed_date": "2023-10-11",
+        "lag_days": 1
+      },
+      "coincidence_count": 3,
+      "coincidences": [
+        {
+          "latitude": -31.39583333051431,
+          "longitude": -64.51682685694252,
+          "distance_to_perimeter_km": 0.025,
+          "item_id": "MOD14A1.A2023281.h12v12.061.2023290135428",
+          "observed_date": "2023-10-11",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.404166663846897,
+          "longitude": -64.5225548802954,
+          "distance_to_perimeter_km": 0.315,
+          "item_id": "MOD14A1.A2023281.h12v12.061.2023290135428",
+          "observed_date": "2023-10-11",
+          "lag_days": 1
+        },
+        {
+          "latitude": -31.39583333051431,
+          "longitude": -64.52658956056014,
+          "distance_to_perimeter_km": 0.722,
+          "item_id": "MOD14A1.A2023281.h12v12.061.2023290135428",
+          "observed_date": "2023-10-11",
+          "lag_days": 1
+        }
+      ]
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-08-31",
+      "site": "Taruca Pampa",
+      "locality": "MINA CLAVERO",
+      "area_ha": 104,
+      "nearest_route_center_distance_km": 27.81,
+      "valid_pixel_day_samples_in_window": 2112,
+      "days_with_valid_land_observations": 8,
+      "first_matched_detection": {
+        "latitude": -31.512499997170533,
+        "longitude": -64.95890653174564,
+        "distance_to_perimeter_km": 0.0,
+        "item_id": "MOD14A1.A2023241.h12v12.061.2023251180915",
+        "observed_date": "2023-08-31",
+        "lag_days": 0
+      },
+      "coincidence_count": 5,
+      "coincidences": [
+        {
+          "latitude": -31.512499997170533,
+          "longitude": -64.95890653174564,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2023241.h12v12.061.2023251180915",
+          "observed_date": "2023-08-31",
+          "lag_days": 0
+        },
+        {
+          "latitude": -31.520833330503127,
+          "longitude": -64.9549245025207,
+          "distance_to_perimeter_km": 0.0,
+          "item_id": "MOD14A1.A2023241.h12v12.061.2023251180915",
+          "observed_date": "2023-08-31",
+          "lag_days": 0
+        },
+        {
+          "latitude": -31.520833330503127,
+          "longitude": -64.96470024554161,
+          "distance_to_perimeter_km": 0.201,
+          "item_id": "MOD14A1.A2023241.h12v12.061.2023251180915",
+          "observed_date": "2023-08-31",
+          "lag_days": 0
+        },
+        {
+          "latitude": -31.512499997170533,
+          "longitude": -64.94913166054982,
+          "distance_to_perimeter_km": 0.477,
+          "item_id": "MOD14A1.A2023241.h12v12.061.2023251180915",
+          "observed_date": "2023-08-31",
+          "lag_days": 0
+        },
+        {
+          "latitude": -31.512499997170533,
+          "longitude": -64.96868140294146,
+          "distance_to_perimeter_km": 0.658,
+          "item_id": "MOD14A1.A2023241.h12v12.061.2023251180915",
+          "observed_date": "2023-08-31",
+          "lag_days": 0
+        }
+      ]
+    }
+  ],
+  "unmatched_events": [
+    {
+      "layer_year": 2022,
+      "id": null,
+      "recorded_date": "2022-07-06",
+      "site": "MURALLON DEL DIQUE",
+      "locality": "VILLA CIUDAD DE AMERICA",
+      "area_ha": 72,
+      "nearest_route_center_distance_km": 26.366,
+      "valid_pixel_day_samples_in_window": 1601,
+      "days_with_valid_land_observations": 8
+    },
+    {
+      "layer_year": 2022,
+      "id": null,
+      "recorded_date": "2022-09-10",
+      "site": null,
+      "locality": "ESTANCIA VIEJA",
+      "area_ha": 7,
+      "nearest_route_center_distance_km": 34.287,
+      "valid_pixel_day_samples_in_window": 1281,
+      "days_with_valid_land_observations": 8
+    },
+    {
+      "layer_year": 2022,
+      "id": null,
+      "recorded_date": "2022-11-19",
+      "site": null,
+      "locality": "SAN ANTONIO DE ARREDONDO",
+      "area_ha": 5,
+      "nearest_route_center_distance_km": 13.523,
+      "valid_pixel_day_samples_in_window": 1520,
+      "days_with_valid_land_observations": 8
+    },
+    {
+      "layer_year": 2022,
+      "id": null,
+      "recorded_date": "2022-11-03",
+      "site": "LOMA DEL TIGRE",
+      "locality": "LOS REARTES",
+      "area_ha": 19,
+      "nearest_route_center_distance_km": 28.892,
+      "valid_pixel_day_samples_in_window": 1505,
+      "days_with_valid_land_observations": 8
+    },
+    {
+      "layer_year": 2022,
+      "id": null,
+      "recorded_date": "2022-09-06",
+      "site": "CAMINO A LAS JARILLAS",
+      "locality": "SAN ANTONIO DE ARREDONDO",
+      "area_ha": 63,
+      "nearest_route_center_distance_km": 22.354,
+      "valid_pixel_day_samples_in_window": 1760,
+      "days_with_valid_land_observations": 8
+    },
+    {
+      "layer_year": 2022,
+      "id": null,
+      "recorded_date": "2022-11-19",
+      "site": "CAMINO A COPINA",
+      "locality": "ICHO CRUZ",
+      "area_ha": 21,
+      "nearest_route_center_distance_km": 13.744,
+      "valid_pixel_day_samples_in_window": 1520,
+      "days_with_valid_land_observations": 8
+    },
+    {
+      "layer_year": 2022,
+      "id": null,
+      "recorded_date": "2022-09-09",
+      "site": null,
+      "locality": "TANTI",
+      "area_ha": 9,
+      "nearest_route_center_distance_km": 32.67,
+      "valid_pixel_day_samples_in_window": 1457,
+      "days_with_valid_land_observations": 8
+    },
+    {
+      "layer_year": 2022,
+      "id": null,
+      "recorded_date": "2022-08-26",
+      "site": "CIENAGA DE ALLENDE",
+      "locality": "MINA CLAVERO",
+      "area_ha": 30,
+      "nearest_route_center_distance_km": 38.773,
+      "valid_pixel_day_samples_in_window": 1672,
+      "days_with_valid_land_observations": 8
+    },
+    {
+      "layer_year": 2022,
+      "id": null,
+      "recorded_date": "2022-06-18",
+      "site": "VARIANTE COSTA AZUL",
+      "locality": "VILLA CARLOS PAZ",
+      "area_ha": 50,
+      "nearest_route_center_distance_km": 35.41,
+      "valid_pixel_day_samples_in_window": 1579,
+      "days_with_valid_land_observations": 8
+    },
+    {
+      "layer_year": 2022,
+      "id": null,
+      "recorded_date": "2022-07-01",
+      "site": "BARRIO LAS CAÑITAS",
+      "locality": "MALAGUEÑO",
+      "area_ha": 17,
+      "nearest_route_center_distance_km": 33.363,
+      "valid_pixel_day_samples_in_window": 1520,
+      "days_with_valid_land_observations": 8
+    },
+    {
+      "layer_year": 2022,
+      "id": null,
+      "recorded_date": "2022-09-23",
+      "site": "AL OESTE DE VILLA DEL PRADO",
+      "locality": "ALTA GRACIA",
+      "area_ha": 82,
+      "nearest_route_center_distance_km": 25.814,
+      "valid_pixel_day_samples_in_window": 2016,
+      "days_with_valid_land_observations": 8
+    },
+    {
+      "layer_year": 2022,
+      "id": null,
+      "recorded_date": "2022-09-18",
+      "site": null,
+      "locality": "MINA CLAVERO",
+      "area_ha": 13,
+      "nearest_route_center_distance_km": 13.779,
+      "valid_pixel_day_samples_in_window": 1520,
+      "days_with_valid_land_observations": 8
+    },
+    {
+      "layer_year": 2022,
+      "id": null,
+      "recorded_date": "2022-10-23",
+      "site": null,
+      "locality": "ANISACATE",
+      "area_ha": 192,
+      "nearest_route_center_distance_km": 27.86,
+      "valid_pixel_day_samples_in_window": 1693,
+      "days_with_valid_land_observations": 7
+    },
+    {
+      "layer_year": 2022,
+      "id": null,
+      "recorded_date": "2022-09-07",
+      "site": null,
+      "locality": "VILLA CARLOS PAZ",
+      "area_ha": 30,
+      "nearest_route_center_distance_km": 31.646,
+      "valid_pixel_day_samples_in_window": 1356,
+      "days_with_valid_land_observations": 8
+    },
+    {
+      "layer_year": 2022,
+      "id": null,
+      "recorded_date": "2022-09-09",
+      "site": null,
+      "locality": "MALAGUEÑO",
+      "area_ha": 15,
+      "nearest_route_center_distance_km": 32.524,
+      "valid_pixel_day_samples_in_window": 1516,
+      "days_with_valid_land_observations": 8
+    },
+    {
+      "layer_year": 2022,
+      "id": null,
+      "recorded_date": "2022-11-01",
+      "site": "COMUNIDAD TASHIGAR",
+      "locality": "TANTI",
+      "area_ha": 153,
+      "nearest_route_center_distance_km": 32.069,
+      "valid_pixel_day_samples_in_window": 1936,
+      "days_with_valid_land_observations": 8
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-09-11",
+      "site": "La Quintana",
+      "locality": "ANISACATE",
+      "area_ha": 672,
+      "nearest_route_center_distance_km": 28.68,
+      "valid_pixel_day_samples_in_window": 2412,
+      "days_with_valid_land_observations": 8
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-08-15",
+      "site": null,
+      "locality": "TALA HUASI",
+      "area_ha": 4,
+      "nearest_route_center_distance_km": 23.805,
+      "valid_pixel_day_samples_in_window": 1440,
+      "days_with_valid_land_observations": 8
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-10-20",
+      "site": "Lago Azul",
+      "locality": "VILLA DEL LAGO (Est. Vieja)",
+      "area_ha": 20,
+      "nearest_route_center_distance_km": 36.167,
+      "valid_pixel_day_samples_in_window": 1279,
+      "days_with_valid_land_observations": 8
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-10-29",
+      "site": "Puente Blanco",
+      "locality": "ATHOS PAMPA",
+      "area_ha": 11,
+      "nearest_route_center_distance_km": 39.795,
+      "valid_pixel_day_samples_in_window": 570,
+      "days_with_valid_land_observations": 3
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-11-13",
+      "site": "Los reartes",
+      "locality": "LOS REARTES",
+      "area_ha": 4,
+      "nearest_route_center_distance_km": 30.637,
+      "valid_pixel_day_samples_in_window": 1437,
+      "days_with_valid_land_observations": 8
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-10-11",
+      "site": null,
+      "locality": "DESPEÑADEROS (EstaciOn Lucas A",
+      "area_ha": 7,
+      "nearest_route_center_distance_km": 39.853,
+      "valid_pixel_day_samples_in_window": 1520,
+      "days_with_valid_land_observations": 8
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-07-04",
+      "site": null,
+      "locality": "MALAGUEÑO",
+      "area_ha": 3,
+      "nearest_route_center_distance_km": 26.125,
+      "valid_pixel_day_samples_in_window": 1434,
+      "days_with_valid_land_observations": 8
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-12-07",
+      "site": null,
+      "locality": "LAS MARAVILLAS",
+      "area_ha": 43,
+      "nearest_route_center_distance_km": 28.804,
+      "valid_pixel_day_samples_in_window": 1600,
+      "days_with_valid_land_observations": 8
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-10-11",
+      "site": "La Juanita",
+      "locality": "SIERRAS DE ORO",
+      "area_ha": 5,
+      "nearest_route_center_distance_km": 28.736,
+      "valid_pixel_day_samples_in_window": 1520,
+      "days_with_valid_land_observations": 8
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-10-28",
+      "site": null,
+      "locality": "FALDA DEL CARMEN",
+      "area_ha": 57,
+      "nearest_route_center_distance_km": 21.858,
+      "valid_pixel_day_samples_in_window": 880,
+      "days_with_valid_land_observations": 4
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-10-29",
+      "site": "Estancia San Bernardo",
+      "locality": "COPINA",
+      "area_ha": 113,
+      "nearest_route_center_distance_km": 12.816,
+      "valid_pixel_day_samples_in_window": 660,
+      "days_with_valid_land_observations": 3
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-11-02",
+      "site": "El Volcan",
+      "locality": "AMBUL",
+      "area_ha": 36,
+      "nearest_route_center_distance_km": 29.945,
+      "valid_pixel_day_samples_in_window": 209,
+      "days_with_valid_land_observations": 1
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-08-21",
+      "site": null,
+      "locality": "VILLA CIUDAD PARQUE LOS REARTES",
+      "area_ha": 3,
+      "nearest_route_center_distance_km": 26.287,
+      "valid_pixel_day_samples_in_window": 1139,
+      "days_with_valid_land_observations": 8
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-10-06",
+      "site": "Rio de la Suela",
+      "locality": "COPINA",
+      "area_ha": 1713,
+      "nearest_route_center_distance_km": 8.969,
+      "valid_pixel_day_samples_in_window": 3808,
+      "days_with_valid_land_observations": 8
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-10-04",
+      "site": null,
+      "locality": "LOS GIGANTES",
+      "area_ha": 94,
+      "nearest_route_center_distance_km": 25.974,
+      "valid_pixel_day_samples_in_window": 1760,
+      "days_with_valid_land_observations": 8
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-10-17",
+      "site": "Monte Redondo",
+      "locality": "VILLA CURA BROCHERO",
+      "area_ha": 48,
+      "nearest_route_center_distance_km": 27.275,
+      "valid_pixel_day_samples_in_window": 1848,
+      "days_with_valid_land_observations": 8
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-10-21",
+      "site": "San Lorenzo",
+      "locality": "VILLA CURA BROCHERO",
+      "area_ha": 25,
+      "nearest_route_center_distance_km": 29.429,
+      "valid_pixel_day_samples_in_window": 1520,
+      "days_with_valid_land_observations": 8
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-11-06",
+      "site": "Falda del carmen",
+      "locality": "FALDA DEL CARMEN",
+      "area_ha": 14,
+      "nearest_route_center_distance_km": 21.545,
+      "valid_pixel_day_samples_in_window": 950,
+      "days_with_valid_land_observations": 5
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-11-16",
+      "site": "San Lorenzo",
+      "locality": "SAN LORENZO",
+      "area_ha": 21,
+      "nearest_route_center_distance_km": 28.761,
+      "valid_pixel_day_samples_in_window": 1520,
+      "days_with_valid_land_observations": 8
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-11-08",
+      "site": null,
+      "locality": "LAS CALLES",
+      "area_ha": 4,
+      "nearest_route_center_distance_km": 22.5,
+      "valid_pixel_day_samples_in_window": 1330,
+      "days_with_valid_land_observations": 7
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-11-14",
+      "site": "Loma del Tigre",
+      "locality": "ATHOS PAMPA",
+      "area_ha": 35,
+      "nearest_route_center_distance_km": 29.451,
+      "valid_pixel_day_samples_in_window": 1600,
+      "days_with_valid_land_observations": 8
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-11-06",
+      "site": "Monte Redondo",
+      "locality": "MINA CLAVERO",
+      "area_ha": 10,
+      "nearest_route_center_distance_km": 28.748,
+      "valid_pixel_day_samples_in_window": 950,
+      "days_with_valid_land_observations": 5
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-11-18",
+      "site": "San Lorenzo",
+      "locality": "VILLA CURA BROCHERO",
+      "area_ha": 119,
+      "nearest_route_center_distance_km": 27.821,
+      "valid_pixel_day_samples_in_window": 1848,
+      "days_with_valid_land_observations": 8
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-11-20",
+      "site": "San Jose",
+      "locality": "LOS REARTES",
+      "area_ha": 3,
+      "nearest_route_center_distance_km": 27.994,
+      "valid_pixel_day_samples_in_window": 1347,
+      "days_with_valid_land_observations": 8
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-10-02",
+      "site": null,
+      "locality": "MINA CLAVERO",
+      "area_ha": 37,
+      "nearest_route_center_distance_km": 28.227,
+      "valid_pixel_day_samples_in_window": 1520,
+      "days_with_valid_land_observations": 8
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-10-29",
+      "site": null,
+      "locality": "MINA CLAVERO",
+      "area_ha": 43,
+      "nearest_route_center_distance_km": 20.116,
+      "valid_pixel_day_samples_in_window": 660,
+      "days_with_valid_land_observations": 3
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-10-09",
+      "site": null,
+      "locality": "VILLA CIUDAD DE AMERICA",
+      "area_ha": 9,
+      "nearest_route_center_distance_km": 21.522,
+      "valid_pixel_day_samples_in_window": 1286,
+      "days_with_valid_land_observations": 8
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-10-28",
+      "site": null,
+      "locality": "LA CUMBRECITA",
+      "area_ha": 22,
+      "nearest_route_center_distance_km": 35.101,
+      "valid_pixel_day_samples_in_window": 880,
+      "days_with_valid_land_observations": 4
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-10-04",
+      "site": null,
+      "locality": "LOS GIGANTES",
+      "area_ha": 35,
+      "nearest_route_center_distance_km": 25.278,
+      "valid_pixel_day_samples_in_window": 1760,
+      "days_with_valid_land_observations": 8
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-10-01",
+      "site": null,
+      "locality": "LA CUMBRECITA",
+      "area_ha": 11,
+      "nearest_route_center_distance_km": 24.496,
+      "valid_pixel_day_samples_in_window": 1520,
+      "days_with_valid_land_observations": 8
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-09-13",
+      "site": "Camino a 24 de septiembre",
+      "locality": "SAN CLEMENTE",
+      "area_ha": 14,
+      "nearest_route_center_distance_km": 12.651,
+      "valid_pixel_day_samples_in_window": 1520,
+      "days_with_valid_land_observations": 8
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-09-14",
+      "site": "Athos Pampa",
+      "locality": "VILLA GENERAL BELGRANO",
+      "area_ha": 9,
+      "nearest_route_center_distance_km": 36.408,
+      "valid_pixel_day_samples_in_window": 1520,
+      "days_with_valid_land_observations": 8
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-09-11",
+      "site": "Paso de la Pampa",
+      "locality": "SAN CLEMENTE",
+      "area_ha": 3,
+      "nearest_route_center_distance_km": 13.136,
+      "valid_pixel_day_samples_in_window": 1440,
+      "days_with_valid_land_observations": 8
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-09-14",
+      "site": null,
+      "locality": "TALA CAÑADA",
+      "area_ha": 22,
+      "nearest_route_center_distance_km": 29.426,
+      "valid_pixel_day_samples_in_window": 1672,
+      "days_with_valid_land_observations": 8
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-09-15",
+      "site": "Paraje Rio Hondo",
+      "locality": "MINA CLAVERO",
+      "area_ha": 42,
+      "nearest_route_center_distance_km": 21.62,
+      "valid_pixel_day_samples_in_window": 1600,
+      "days_with_valid_land_observations": 8
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-09-09",
+      "site": null,
+      "locality": "ALTA GRACIA",
+      "area_ha": 15,
+      "nearest_route_center_distance_km": 26.169,
+      "valid_pixel_day_samples_in_window": 1672,
+      "days_with_valid_land_observations": 8
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-09-18",
+      "site": "La Serranita",
+      "locality": "LA RANCHERITA Y LAS CASCADAS",
+      "area_ha": 9,
+      "nearest_route_center_distance_km": 23.927,
+      "valid_pixel_day_samples_in_window": 1514,
+      "days_with_valid_land_observations": 8
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-08-17",
+      "site": "La Marianita",
+      "locality": "ANISACATE",
+      "area_ha": 13,
+      "nearest_route_center_distance_km": 27.192,
+      "valid_pixel_day_samples_in_window": 1520,
+      "days_with_valid_land_observations": 8
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-08-30",
+      "site": null,
+      "locality": "AMBUL",
+      "area_ha": 28,
+      "nearest_route_center_distance_km": 31.372,
+      "valid_pixel_day_samples_in_window": 1600,
+      "days_with_valid_land_observations": 8
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-08-27",
+      "site": "Los Chañaritos",
+      "locality": "LA RANCHERITA Y LAS CASCADAS",
+      "area_ha": 624,
+      "nearest_route_center_distance_km": 26.857,
+      "valid_pixel_day_samples_in_window": 2625,
+      "days_with_valid_land_observations": 8
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-07-26",
+      "site": null,
+      "locality": "ALTA GRACIA",
+      "area_ha": 35,
+      "nearest_route_center_distance_km": 26.42,
+      "valid_pixel_day_samples_in_window": 1520,
+      "days_with_valid_land_observations": 8
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-08-11",
+      "site": "Quebrada del Condorito",
+      "locality": "LA CUMBRECITA",
+      "area_ha": 65,
+      "nearest_route_center_distance_km": 21.191,
+      "valid_pixel_day_samples_in_window": 1848,
+      "days_with_valid_land_observations": 8
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-08-16",
+      "site": "Loma Alta",
+      "locality": "POTRERO DE GARAY",
+      "area_ha": 42,
+      "nearest_route_center_distance_km": 19.734,
+      "valid_pixel_day_samples_in_window": 1672,
+      "days_with_valid_land_observations": 8
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-08-26",
+      "site": "Quebrada del Condorito",
+      "locality": "MINA CLAVERO",
+      "area_ha": 2,
+      "nearest_route_center_distance_km": 12.211,
+      "valid_pixel_day_samples_in_window": 1440,
+      "days_with_valid_land_observations": 8
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-07-31",
+      "site": "Las Maravillas",
+      "locality": "VILLA CURA BROCHERO",
+      "area_ha": 3,
+      "nearest_route_center_distance_km": 31.816,
+      "valid_pixel_day_samples_in_window": 1440,
+      "days_with_valid_land_observations": 8
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-01-11",
+      "site": "Quebra del Condorito",
+      "locality": "MINA CLAVERO",
+      "area_ha": 15,
+      "nearest_route_center_distance_km": 8.669,
+      "valid_pixel_day_samples_in_window": 1520,
+      "days_with_valid_land_observations": 8
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-09-15",
+      "site": null,
+      "locality": "SAN LORENZO",
+      "area_ha": 12,
+      "nearest_route_center_distance_km": 28.988,
+      "valid_pixel_day_samples_in_window": 1520,
+      "days_with_valid_land_observations": 8
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-09-16",
+      "site": null,
+      "locality": "LOS CEDROS",
+      "area_ha": 4,
+      "nearest_route_center_distance_km": 39.313,
+      "valid_pixel_day_samples_in_window": 1438,
+      "days_with_valid_land_observations": 8
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-09-15",
+      "site": null,
+      "locality": "LAS CALLES",
+      "area_ha": 69,
+      "nearest_route_center_distance_km": 31.528,
+      "valid_pixel_day_samples_in_window": 1654,
+      "days_with_valid_land_observations": 8
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-08-28",
+      "site": "Potrerillo",
+      "locality": "ALTA GRACIA",
+      "area_ha": 9,
+      "nearest_route_center_distance_km": 19.011,
+      "valid_pixel_day_samples_in_window": 1520,
+      "days_with_valid_land_observations": 8
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-08-21",
+      "site": "Los Morteritos",
+      "locality": "PANAHOLMA",
+      "area_ha": 528,
+      "nearest_route_center_distance_km": 28.964,
+      "valid_pixel_day_samples_in_window": 2496,
+      "days_with_valid_land_observations": 8
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-09-04",
+      "site": null,
+      "locality": "PANAHOLMA",
+      "area_ha": 11,
+      "nearest_route_center_distance_km": 26.53,
+      "valid_pixel_day_samples_in_window": 1520,
+      "days_with_valid_land_observations": 8
+    }
+  ],
+  "matched_event_count": 12,
+  "unmatched_event_count": 68,
+  "events_without_valid_raster_coverage_count": 4,
+  "limitations": [
+    "Córdoba perimeter layers are used only for years 2022 and 2023.",
+    "The search examines a geographic window around each perimeter using downloaded full-tile COGs; it does not scan all Argentina, and events outside the acquired tile/date coverage are not evaluated.",
+    "Daily product observations and perimeter-reported dates differ; the 0-7-day window is a sensitivity rule, not a claimed sensor latency.",
+    "Only nominal/high-confidence active-fire classes are counted; a satellite non-detection does not prove absence of fire.",
+    "Multiple perimeter features can belong to one physical fire; feature counts are not independent-event sample sizes."
+  ],
+  "synthetic_observations": 0,
+  "deployment_approved": false
+}

@@ -1,0 +1,91 @@
+{
+  "experiment_id": "gfs-snmf-proxy-class-weight-comparison-2026-jan",
+  "candidate_status": "not_reliable_for_fire_prediction",
+  "target": "SNMF-reported incident proxy within 10 km; not physical fire absence or ignition probability.",
+  "protocol": {
+    "train_period": "2024-01-20 through 2025-11-30",
+    "validation_period": "2025-12-01 through 2025-12-31",
+    "test_period": "2026-01-01 through 2026-01-31",
+    "selection_rule": "Choose class_weight by validation average precision; tie-break by lower validation Brier. Threshold selection uses validation only, >=80% proxy precision and >=5 alerts.",
+    "diagnostic_test_threshold": 0.5,
+    "test_used_for_selection": false
+  },
+  "data": {
+    "weather_model": "gfs",
+    "train_route_days": 3490,
+    "train_positive_route_days": 29,
+    "validation_route_days": 248,
+    "validation_positive_route_days": 4,
+    "test_route_days": 240,
+    "test_positive_route_days": 31,
+    "test_independent_route_sector_start_days": 6
+  },
+  "source_sha256": {
+    "openmeteo-gfs-previous-runs-argentina-trails-2024-01-01-2024-11-20.json.gz": "5242fa68ea6bdbf1b60a820998f9d8841631f83daf54249e8fcd3e9f74a7a60f",
+    "openmeteo-gfs-previous-runs-argentina-trails-2025-01-01-2026-02-01.json.gz": "832483042d55bed07e68bc9ccdd66dcbc1d0968c6f2e06317b61b9612e3f2ab7",
+    "snmf-2024-route-day-report-proxy.json": "e4197585524b1b09c7185181cc0254cfe0193f032914216784f1f88b160c5645",
+    "snmf-2025-route-day-report-proxy.json": "a102ad57e98cf09436886adf9450783588d1a71e10914ebe443852ed487c3236",
+    "snmf-2026-jan-route-day-report-proxy.json": "db76fedfc003f34e4f41882e99dd20ce18c90f419a047e3de99e1e96a581c233",
+    "fire-snmf-route-event-coverage-2026-jan.json": "6cea72c3e9edc230aba572b3af74b0ef74d035b6e2167643abedac4690598ddc"
+  },
+  "validation_candidates": {
+    "balanced": {
+      "class_weight": "balanced",
+      "validation_average_precision": 0.025153619595888563,
+      "validation_brier_score": 0.26545557902469347,
+      "validation_threshold": {
+        "selected": false,
+        "reason": "No validation threshold achieved >=80% proxy precision with at least 5 alerts."
+      }
+    },
+    "unweighted": {
+      "class_weight": null,
+      "validation_average_precision": 0.028752826170233517,
+      "validation_brier_score": 0.01617907917618726,
+      "validation_threshold": {
+        "selected": false,
+        "reason": "No validation threshold achieved >=80% proxy precision with at least 5 alerts."
+      }
+    }
+  },
+  "selected_candidate": "unweighted",
+  "test_selected_candidate_diagnostic": {
+    "route_days": 240,
+    "positive_route_days": 31,
+    "observed_positive_fraction": 0.12916666666666668,
+    "average_precision": 0.13693945444129785,
+    "brier_score": 0.12700525046825795,
+    "accuracy_at_0_5_diagnostic": 0.8708333333333333,
+    "precision_at_0_5_diagnostic": 0.0,
+    "recall_at_0_5_diagnostic": 0.0,
+    "confusion_matrix_labels_0_1": [
+      [
+        209,
+        0
+      ],
+      [
+        31,
+        0
+      ]
+    ],
+    "alerts_at_0_5_diagnostic": 0
+  },
+  "test_training_prevalence_baseline": {
+    "predicted_probability": 0.00830945558739255,
+    "brier_score": 0.1270891043587491
+  },
+  "test_brier_vs_baseline": {
+    "model": 0.12700525046825795,
+    "constant_prevalence": 0.1270891043587491,
+    "model_better": true
+  },
+  "limitations": [
+    "Validation contains very few positives; model selection is unstable.",
+    "January labels are reported-incident proxies and may omit physical fires.",
+    "Route-days repeat incidents; the event-start sample is very small.",
+    "The 0.5 test threshold is diagnostic only if no validation threshold qualifies.",
+    "No application or production artifact is changed."
+  ],
+  "synthetic_observations": 0,
+  "deployment_approved": false
+}

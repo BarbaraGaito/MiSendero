@@ -1,0 +1,2378 @@
+{
+  "experiment_id": "goes-gfs-24h-vs-independent-snmf-daily-report-snapshots-2026-01",
+  "interpretation": "Descriptive agreement with the daily incident listings only. A sector-day without a nearby listed incident is not proof that no physical fire occurred; these are not validated physical-fire precision/recall metrics.",
+  "protocol": {
+    "period": "2026-01-01 through 2026-01-31",
+    "alert_threshold": 0.5,
+    "spatial_rule": "A daily listed incident within 10 km of the fixed route-sector center",
+    "positive_rule": "At least one nearby snapshot incident with status ACTIVO, CONTENIDO, or CONTROLADO",
+    "negative_proxy_rule": "An archived SNMF report exists for the date and no nearby active or UNKNOWN incident is listed",
+    "missing_dates": "Excluded; not negative",
+    "model_lead_hours": 24
+  },
+  "sources": {
+    "model_evaluation_sha256": "390dde39ec4da98f1161b1d57fc5a8910be2b37ca11277f22e70749d87f1da37",
+    "snmf_event_archive_sha256": "ba18284a722410e225906de6ea1ba35e72d5670496c45793363e901beb6efcca",
+    "geography_sha256": "7e475b478db7bb678cc0a1539fdf484e0c8de0a9baa98916fb90f652f75ff834"
+  },
+  "report_dates_available": 30,
+  "route_sector_days_with_report_and_model_coverage": 232,
+  "route_sector_days_excluded_for_nearby_unknown_status": 0,
+  "route_sector_days_evaluated": 232,
+  "confusion_vs_daily_report_proxy": {
+    "true_positive_report_match": 27,
+    "alert_without_reported_active_incident": 106,
+    "missed_reported_active_incident": 2,
+    "no_alert_and_no_reported_active_incident": 97
+  },
+  "alert_precision_vs_report_proxy": 0.20300751879699247,
+  "recall_vs_report_proxy": 0.9310344827586207,
+  "persistence_confusion_vs_daily_report_proxy": {
+    "tp": 2,
+    "alert_without_reported_active_incident": 21,
+    "missed_reported_active_incident": 27,
+    "no_alert_and_no_reported_active_incident": 182
+  },
+  "limitations": [
+    "The SNMF daily report archive is not an exhaustive fire/no-fire survey; proxy negatives mean only that no active incident was listed nearby.",
+    "The 10 km radius is measured from route-sector centers, not trail polylines, and is exploratory rather than safety-validated.",
+    "The score threshold 0.5 is diagnostic, uncalibrated, and not chosen against this independent source.",
+    "Route-days repeat episodes and weather/satellite scans are correlated; descriptive counts are not independent event-level precision estimates.",
+    "Incident report dates and statuses do not provide an exact ignition time; the 24 h model horizon is relative to the satellite target scan."
+  ],
+  "deployment_approved": false,
+  "route_sector_day_rows": [
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "date": "2026-01-01",
+      "model_score": 0.8153984546661377,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": [
+        {
+          "name": "Basural",
+          "status": "EXTINGUIDO",
+          "distance_km": 9.832
+        }
+      ]
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "date": "2026-01-02",
+      "model_score": 0.7568318247795105,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "date": "2026-01-03",
+      "model_score": 0.7994815111160278,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "date": "2026-01-04",
+      "model_score": 0.8151585459709167,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "date": "2026-01-05",
+      "model_score": 0.8317415714263916,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": true,
+      "nearby_snapshot_incidents": [
+        {
+          "name": "Barda de La Loma",
+          "status": "CONTROLADO",
+          "distance_km": 6.29
+        }
+      ]
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "date": "2026-01-06",
+      "model_score": 0.9985344409942627,
+      "model_alert_at_0_5": true,
+      "persistence_alert": true,
+      "snmf_active_incident_within_10km": true,
+      "nearby_snapshot_incidents": [
+        {
+          "name": "Barda de La Loma",
+          "status": "CONTROLADO",
+          "distance_km": 6.29
+        }
+      ]
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "date": "2026-01-07",
+      "model_score": 0.9993273019790649,
+      "model_alert_at_0_5": true,
+      "persistence_alert": true,
+      "snmf_active_incident_within_10km": true,
+      "nearby_snapshot_incidents": [
+        {
+          "name": "Barda de La Loma",
+          "status": "CONTROLADO",
+          "distance_km": 6.29
+        }
+      ]
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "date": "2026-01-08",
+      "model_score": 0.9520211815834045,
+      "model_alert_at_0_5": true,
+      "persistence_alert": true,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": [
+        {
+          "name": "Barda de La Loma",
+          "status": "EXTINGUIDO",
+          "distance_km": 6.29
+        }
+      ]
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "date": "2026-01-09",
+      "model_score": 0.932334840297699,
+      "model_alert_at_0_5": true,
+      "persistence_alert": true,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "date": "2026-01-10",
+      "model_score": 0.9985232949256897,
+      "model_alert_at_0_5": true,
+      "persistence_alert": true,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "date": "2026-01-11",
+      "model_score": 0.9996218681335449,
+      "model_alert_at_0_5": true,
+      "persistence_alert": true,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": [
+        {
+          "name": "Aeródromo El Bolsón",
+          "status": "EXTINGUIDO",
+          "distance_km": 5.996
+        }
+      ]
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "date": "2026-01-12",
+      "model_score": 0.9728365540504456,
+      "model_alert_at_0_5": true,
+      "persistence_alert": true,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "date": "2026-01-13",
+      "model_score": 0.8072430491447449,
+      "model_alert_at_0_5": true,
+      "persistence_alert": true,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "date": "2026-01-14",
+      "model_score": 0.9826541543006897,
+      "model_alert_at_0_5": true,
+      "persistence_alert": true,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "date": "2026-01-15",
+      "model_score": 0.9797306060791016,
+      "model_alert_at_0_5": true,
+      "persistence_alert": true,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "date": "2026-01-16",
+      "model_score": 0.7634469866752625,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "date": "2026-01-17",
+      "model_score": 0.8555631637573242,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "date": "2026-01-18",
+      "model_score": 0.8209992051124573,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "date": "2026-01-19",
+      "model_score": 0.8353444337844849,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "date": "2026-01-20",
+      "model_score": 0.99614417552948,
+      "model_alert_at_0_5": true,
+      "persistence_alert": true,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "date": "2026-01-21",
+      "model_score": 0.9998282194137573,
+      "model_alert_at_0_5": true,
+      "persistence_alert": true,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "date": "2026-01-22",
+      "model_score": 0.9969491362571716,
+      "model_alert_at_0_5": true,
+      "persistence_alert": true,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "date": "2026-01-23",
+      "model_score": 0.9997649788856506,
+      "model_alert_at_0_5": true,
+      "persistence_alert": true,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "date": "2026-01-24",
+      "model_score": 0.8056261539459229,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "date": "2026-01-25",
+      "model_score": 0.9391630291938782,
+      "model_alert_at_0_5": true,
+      "persistence_alert": true,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "date": "2026-01-26",
+      "model_score": 0.9992989301681519,
+      "model_alert_at_0_5": true,
+      "persistence_alert": true,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "date": "2026-01-27",
+      "model_score": 0.9753580689430237,
+      "model_alert_at_0_5": true,
+      "persistence_alert": true,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "date": "2026-01-30",
+      "model_score": 0.5720437169075012,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "date": "2026-01-31",
+      "model_score": 0.758125364780426,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "date": "2026-01-01",
+      "model_score": 0.6935558915138245,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "date": "2026-01-02",
+      "model_score": 0.7551143169403076,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "date": "2026-01-03",
+      "model_score": 0.5381274223327637,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "date": "2026-01-04",
+      "model_score": 0.720101535320282,
+      "model_alert_at_0_5": true,
+      "persistence_alert": true,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "date": "2026-01-05",
+      "model_score": 0.6811906695365906,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "date": "2026-01-06",
+      "model_score": 0.3749312460422516,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "date": "2026-01-07",
+      "model_score": 0.03598371893167496,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "date": "2026-01-08",
+      "model_score": 0.5883621573448181,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "date": "2026-01-09",
+      "model_score": 0.5969181060791016,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "date": "2026-01-10",
+      "model_score": 0.6020619869232178,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "date": "2026-01-11",
+      "model_score": 0.7656905055046082,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "date": "2026-01-12",
+      "model_score": 0.5400144457817078,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "date": "2026-01-13",
+      "model_score": 0.5087226629257202,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "date": "2026-01-14",
+      "model_score": 0.7061833739280701,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "date": "2026-01-15",
+      "model_score": 0.7333597540855408,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "date": "2026-01-16",
+      "model_score": 0.6328320503234863,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "date": "2026-01-17",
+      "model_score": 0.5872186422348022,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "date": "2026-01-18",
+      "model_score": 0.5983932614326477,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "date": "2026-01-19",
+      "model_score": 0.6707432866096497,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "date": "2026-01-20",
+      "model_score": 0.6681574583053589,
+      "model_alert_at_0_5": true,
+      "persistence_alert": true,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "date": "2026-01-21",
+      "model_score": 0.9108486175537109,
+      "model_alert_at_0_5": true,
+      "persistence_alert": true,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "date": "2026-01-22",
+      "model_score": 0.5913388133049011,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "date": "2026-01-23",
+      "model_score": 0.255348265171051,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "date": "2026-01-24",
+      "model_score": 0.5048699378967285,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "date": "2026-01-25",
+      "model_score": 0.5263775587081909,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "date": "2026-01-26",
+      "model_score": 0.3441295623779297,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "date": "2026-01-27",
+      "model_score": 0.6094399094581604,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "date": "2026-01-28",
+      "model_score": 0.6394506692886353,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "date": "2026-01-30",
+      "model_score": 0.6930658221244812,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "date": "2026-01-31",
+      "model_score": 0.6390864253044128,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "date": "2026-01-01",
+      "model_score": 0.5940592288970947,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "date": "2026-01-02",
+      "model_score": 0.6909144520759583,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "date": "2026-01-03",
+      "model_score": 0.6025261878967285,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "date": "2026-01-04",
+      "model_score": 0.5263309478759766,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "date": "2026-01-05",
+      "model_score": 0.6624798774719238,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "date": "2026-01-06",
+      "model_score": 0.5733473300933838,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "date": "2026-01-07",
+      "model_score": 0.654891312122345,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "date": "2026-01-08",
+      "model_score": 0.2659584581851959,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "date": "2026-01-10",
+      "model_score": 0.116261325776577,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "date": "2026-01-11",
+      "model_score": 0.5719227194786072,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "date": "2026-01-12",
+      "model_score": 0.6142976880073547,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "date": "2026-01-13",
+      "model_score": 0.24116194248199463,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "date": "2026-01-14",
+      "model_score": 0.33157142996788025,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "date": "2026-01-15",
+      "model_score": 0.04684462398290634,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "date": "2026-01-16",
+      "model_score": 0.479763001203537,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "date": "2026-01-17",
+      "model_score": 0.34523066878318787,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "date": "2026-01-18",
+      "model_score": 0.1081809252500534,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "date": "2026-01-19",
+      "model_score": 0.10073056817054749,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "date": "2026-01-20",
+      "model_score": 0.3355359435081482,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "date": "2026-01-21",
+      "model_score": 0.4896531105041504,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "date": "2026-01-22",
+      "model_score": 0.48987671732902527,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "date": "2026-01-23",
+      "model_score": 0.5686795115470886,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "date": "2026-01-24",
+      "model_score": 0.25212639570236206,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "date": "2026-01-25",
+      "model_score": 0.3458573818206787,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "date": "2026-01-26",
+      "model_score": 0.023318428546190262,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "date": "2026-01-27",
+      "model_score": 0.32122111320495605,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "date": "2026-01-28",
+      "model_score": 0.2799014151096344,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "date": "2026-01-30",
+      "model_score": 0.6872705221176147,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "date": "2026-01-31",
+      "model_score": 0.6333339214324951,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "date": "2026-01-01",
+      "model_score": 0.829896092414856,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "date": "2026-01-02",
+      "model_score": 0.7857646346092224,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "date": "2026-01-03",
+      "model_score": 0.7881662845611572,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "date": "2026-01-04",
+      "model_score": 0.8257166147232056,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "date": "2026-01-05",
+      "model_score": 0.8495064973831177,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": true,
+      "nearby_snapshot_incidents": [
+        {
+          "name": "Cantera Eva Perón",
+          "status": "CONTENIDO",
+          "distance_km": 9.708
+        }
+      ]
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "date": "2026-01-06",
+      "model_score": 0.8114049434661865,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": true,
+      "nearby_snapshot_incidents": [
+        {
+          "name": "Cantera Eva Perón",
+          "status": "CONTENIDO",
+          "distance_km": 9.708
+        },
+        {
+          "name": "Vertedero Municipal",
+          "status": "ACTIVO",
+          "distance_km": 9.084
+        }
+      ]
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "date": "2026-01-07",
+      "model_score": 0.8057065606117249,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": true,
+      "nearby_snapshot_incidents": [
+        {
+          "name": "Cantera Eva Perón",
+          "status": "CONTROLADO",
+          "distance_km": 9.708
+        },
+        {
+          "name": "Vertedero Municipal",
+          "status": "CONTENIDO",
+          "distance_km": 9.077
+        }
+      ]
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "date": "2026-01-08",
+      "model_score": 0.841492235660553,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": true,
+      "nearby_snapshot_incidents": [
+        {
+          "name": "Cantera Eva Perón",
+          "status": "CONTROLADO",
+          "distance_km": 9.708
+        },
+        {
+          "name": "VERTEDERO MUNICIPAL",
+          "status": "CONTENIDO",
+          "distance_km": 9.284
+        }
+      ]
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "date": "2026-01-09",
+      "model_score": 0.8183009028434753,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "date": "2026-01-10",
+      "model_score": 0.7997717261314392,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": true,
+      "nearby_snapshot_incidents": [
+        {
+          "name": "Cantera Eva Perón",
+          "status": "CONTROLADO",
+          "distance_km": 9.708
+        },
+        {
+          "name": "VERTEDERO MUNICIPAL",
+          "status": "CONTENIDO",
+          "distance_km": 9.284
+        }
+      ]
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "date": "2026-01-11",
+      "model_score": 0.32621702551841736,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": true,
+      "nearby_snapshot_incidents": [
+        {
+          "name": "Cantera Eva Perón",
+          "status": "CONTROLADO",
+          "distance_km": 9.708
+        },
+        {
+          "name": "VERTEDERO MUNICIPAL",
+          "status": "CONTROLADO",
+          "distance_km": 9.284
+        }
+      ]
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "date": "2026-01-12",
+      "model_score": 0.0495576374232769,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": true,
+      "nearby_snapshot_incidents": [
+        {
+          "name": "Cantera Eva Perón",
+          "status": "CONTROLADO",
+          "distance_km": 9.708
+        },
+        {
+          "name": "VERTEDERO MUNICIPAL",
+          "status": "CONTROLADO",
+          "distance_km": 9.284
+        }
+      ]
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "date": "2026-01-13",
+      "model_score": 0.5991979837417603,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": true,
+      "nearby_snapshot_incidents": [
+        {
+          "name": "Cantera Eva Perón",
+          "status": "CONTROLADO",
+          "distance_km": 9.708
+        },
+        {
+          "name": "VERTEDERO MUNICIPAL",
+          "status": "CONTROLADO",
+          "distance_km": 9.284
+        }
+      ]
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "date": "2026-01-14",
+      "model_score": 0.6955603361129761,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": true,
+      "nearby_snapshot_incidents": [
+        {
+          "name": "Cantera Eva Perón",
+          "status": "EXTINGUIDO",
+          "distance_km": 9.708
+        },
+        {
+          "name": "VERTEDERO MUNICIPAL",
+          "status": "CONTROLADO",
+          "distance_km": 9.284
+        }
+      ]
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "date": "2026-01-15",
+      "model_score": 0.7190674543380737,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": true,
+      "nearby_snapshot_incidents": [
+        {
+          "name": "VERTEDERO MUNICIPAL",
+          "status": "CONTROLADO",
+          "distance_km": 9.284
+        }
+      ]
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "date": "2026-01-16",
+      "model_score": 0.7984039187431335,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": true,
+      "nearby_snapshot_incidents": [
+        {
+          "name": "VERTEDERO MUNICIPAL",
+          "status": "CONTROLADO",
+          "distance_km": 9.284
+        }
+      ]
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "date": "2026-01-17",
+      "model_score": 0.8795017004013062,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": true,
+      "nearby_snapshot_incidents": [
+        {
+          "name": "VERTEDERO MUNICIPAL",
+          "status": "CONTROLADO",
+          "distance_km": 9.284
+        }
+      ]
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "date": "2026-01-18",
+      "model_score": 0.8678738474845886,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": true,
+      "nearby_snapshot_incidents": [
+        {
+          "name": "VERTEDERO MUNICIPAL",
+          "status": "CONTROLADO",
+          "distance_km": 9.284
+        }
+      ]
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "date": "2026-01-19",
+      "model_score": 0.843612015247345,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": true,
+      "nearby_snapshot_incidents": [
+        {
+          "name": "VERTEDERO MUNICIPAL",
+          "status": "CONTROLADO",
+          "distance_km": 9.284
+        }
+      ]
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "date": "2026-01-20",
+      "model_score": 0.8579318523406982,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": true,
+      "nearby_snapshot_incidents": [
+        {
+          "name": "VERTEDERO MUNICIPAL",
+          "status": "CONTROLADO",
+          "distance_km": 9.284
+        }
+      ]
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "date": "2026-01-21",
+      "model_score": 0.8453771471977234,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": true,
+      "nearby_snapshot_incidents": [
+        {
+          "name": "VERTEDERO MUNICIPAL",
+          "status": "CONTROLADO",
+          "distance_km": 9.284
+        }
+      ]
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "date": "2026-01-22",
+      "model_score": 0.7561025619506836,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": true,
+      "nearby_snapshot_incidents": [
+        {
+          "name": "VERTEDERO MUNICIPAL",
+          "status": "CONTROLADO",
+          "distance_km": 9.284
+        }
+      ]
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "date": "2026-01-23",
+      "model_score": 0.8431908488273621,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": true,
+      "nearby_snapshot_incidents": [
+        {
+          "name": "VERTEDERO MUNICIPAL",
+          "status": "CONTROLADO",
+          "distance_km": 9.284
+        }
+      ]
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "date": "2026-01-24",
+      "model_score": 0.8317346572875977,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": true,
+      "nearby_snapshot_incidents": [
+        {
+          "name": "VERTEDERO MUNICIPAL",
+          "status": "CONTROLADO",
+          "distance_km": 9.284
+        }
+      ]
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "date": "2026-01-25",
+      "model_score": 0.8703179955482483,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": true,
+      "nearby_snapshot_incidents": [
+        {
+          "name": "VERTEDERO MUNICIPAL",
+          "status": "CONTROLADO",
+          "distance_km": 9.284
+        }
+      ]
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "date": "2026-01-26",
+      "model_score": 0.7976091504096985,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": true,
+      "nearby_snapshot_incidents": [
+        {
+          "name": "VERTEDERO MUNICIPAL",
+          "status": "CONTROLADO",
+          "distance_km": 9.284
+        }
+      ]
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "date": "2026-01-27",
+      "model_score": 0.6057342886924744,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": true,
+      "nearby_snapshot_incidents": [
+        {
+          "name": "tres lagunas) VERTEDERO MUNICIPAL",
+          "status": "CONTROLADO",
+          "distance_km": 9.284
+        }
+      ]
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "date": "2026-01-28",
+      "model_score": 0.2285609096288681,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": [
+        {
+          "name": "VERTEDERO MUNICIPAL",
+          "status": "EXTINGUIDO",
+          "distance_km": 9.284
+        }
+      ]
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "date": "2026-01-30",
+      "model_score": 0.4030967652797699,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "date": "2026-01-31",
+      "model_score": 0.21536517143249512,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "date": "2026-01-01",
+      "model_score": 0.17163600027561188,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "date": "2026-01-02",
+      "model_score": 0.2760428190231323,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "date": "2026-01-03",
+      "model_score": 0.3598664700984955,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "date": "2026-01-04",
+      "model_score": 0.2558116912841797,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "date": "2026-01-05",
+      "model_score": 0.26915743947029114,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "date": "2026-01-06",
+      "model_score": 0.24162819981575012,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "date": "2026-01-07",
+      "model_score": 0.3317241966724396,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "date": "2026-01-08",
+      "model_score": 0.13896915316581726,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "date": "2026-01-09",
+      "model_score": 0.025070421397686005,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "date": "2026-01-10",
+      "model_score": 0.005696022883057594,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "date": "2026-01-11",
+      "model_score": 0.23340623080730438,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "date": "2026-01-12",
+      "model_score": 0.27839934825897217,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "date": "2026-01-13",
+      "model_score": 0.22558166086673737,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "date": "2026-01-14",
+      "model_score": 0.24153800308704376,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "date": "2026-01-15",
+      "model_score": 0.1486535668373108,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "date": "2026-01-16",
+      "model_score": 0.0766853392124176,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "date": "2026-01-17",
+      "model_score": 0.0004050599236506969,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "date": "2026-01-18",
+      "model_score": 0.33164846897125244,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "date": "2026-01-19",
+      "model_score": 0.27944204211235046,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "date": "2026-01-20",
+      "model_score": 0.36262667179107666,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "date": "2026-01-21",
+      "model_score": 0.3022586703300476,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "date": "2026-01-22",
+      "model_score": 0.3090918958187103,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "date": "2026-01-23",
+      "model_score": 0.35222128033638,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "date": "2026-01-24",
+      "model_score": 0.38453155755996704,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "date": "2026-01-25",
+      "model_score": 0.4260557293891907,
+      "model_alert_at_0_5": false,
+      "persistence_alert": true,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "date": "2026-01-26",
+      "model_score": 0.3875022232532501,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "date": "2026-01-27",
+      "model_score": 0.3150673508644104,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "date": "2026-01-28",
+      "model_score": 0.47280412912368774,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "date": "2026-01-30",
+      "model_score": 0.3796631991863251,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "date": "2026-01-31",
+      "model_score": 0.3955763578414917,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "date": "2026-01-01",
+      "model_score": 0.21751563251018524,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "date": "2026-01-02",
+      "model_score": 0.4559100568294525,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "date": "2026-01-03",
+      "model_score": 0.5241331458091736,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "date": "2026-01-05",
+      "model_score": 0.21823403239250183,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "date": "2026-01-06",
+      "model_score": 0.7371504902839661,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "date": "2026-01-07",
+      "model_score": 0.5932403802871704,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "date": "2026-01-08",
+      "model_score": 0.4213303327560425,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "date": "2026-01-09",
+      "model_score": 0.011442710645496845,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "date": "2026-01-10",
+      "model_score": 0.019872721284627914,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "date": "2026-01-11",
+      "model_score": 0.5951082706451416,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "date": "2026-01-12",
+      "model_score": 0.7659745216369629,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "date": "2026-01-13",
+      "model_score": 0.7089192867279053,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "date": "2026-01-14",
+      "model_score": 0.6247528791427612,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "date": "2026-01-15",
+      "model_score": 0.5414434671401978,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "date": "2026-01-16",
+      "model_score": 0.255536288022995,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "date": "2026-01-18",
+      "model_score": 0.0008208639919757843,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "date": "2026-01-20",
+      "model_score": 0.0006164798978716135,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "date": "2026-01-21",
+      "model_score": 0.03255946561694145,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "date": "2026-01-22",
+      "model_score": 0.4501461088657379,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "date": "2026-01-23",
+      "model_score": 0.69760662317276,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "date": "2026-01-24",
+      "model_score": 0.6424517631530762,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "date": "2026-01-25",
+      "model_score": 0.5877992510795593,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "date": "2026-01-26",
+      "model_score": 0.5906572937965393,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "date": "2026-01-28",
+      "model_score": 0.005534862633794546,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "date": "2026-01-30",
+      "model_score": 0.5618398785591125,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "date": "2026-01-31",
+      "model_score": 0.08049219846725464,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "date": "2026-01-01",
+      "model_score": 2.243484260588957e-07,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "date": "2026-01-02",
+      "model_score": 0.2043951153755188,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "date": "2026-01-03",
+      "model_score": 0.32024359703063965,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "date": "2026-01-04",
+      "model_score": 0.4030536711215973,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "date": "2026-01-05",
+      "model_score": 0.23424962162971497,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "date": "2026-01-06",
+      "model_score": 0.2505927085876465,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "date": "2026-01-07",
+      "model_score": 0.22649218142032623,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "date": "2026-01-08",
+      "model_score": 0.35554268956184387,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "date": "2026-01-09",
+      "model_score": 0.2187386304140091,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "date": "2026-01-12",
+      "model_score": 0.1958797127008438,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "date": "2026-01-13",
+      "model_score": 0.22743208706378937,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "date": "2026-01-14",
+      "model_score": 0.2738962173461914,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "date": "2026-01-15",
+      "model_score": 0.25824812054634094,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "date": "2026-01-16",
+      "model_score": 0.1220448911190033,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "date": "2026-01-17",
+      "model_score": 0.16541635990142822,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "date": "2026-01-18",
+      "model_score": 0.20898330211639404,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "date": "2026-01-19",
+      "model_score": 0.36430594325065613,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "date": "2026-01-20",
+      "model_score": 0.27696874737739563,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "date": "2026-01-21",
+      "model_score": 0.29248446226119995,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "date": "2026-01-22",
+      "model_score": 0.32592931389808655,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "date": "2026-01-23",
+      "model_score": 0.30340054631233215,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "date": "2026-01-24",
+      "model_score": 0.30271628499031067,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "date": "2026-01-25",
+      "model_score": 0.33105307817459106,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "date": "2026-01-26",
+      "model_score": 0.3003474771976471,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "date": "2026-01-27",
+      "model_score": 0.28403475880622864,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "date": "2026-01-28",
+      "model_score": 0.3131989538669586,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "date": "2026-01-30",
+      "model_score": 0.12744541466236115,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "date": "2026-01-31",
+      "model_score": 0.3197888433933258,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "date": "2026-01-01",
+      "model_score": 0.8372578620910645,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "date": "2026-01-02",
+      "model_score": 0.8002182841300964,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "date": "2026-01-03",
+      "model_score": 0.663479208946228,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "date": "2026-01-04",
+      "model_score": 0.6912544965744019,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "date": "2026-01-05",
+      "model_score": 0.8044201731681824,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "date": "2026-01-06",
+      "model_score": 0.7593615055084229,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "date": "2026-01-07",
+      "model_score": 0.7883058190345764,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": true,
+      "nearby_snapshot_incidents": [
+        {
+          "name": "P.N. LIHUE CALEL",
+          "status": "CONTENIDO",
+          "distance_km": 1.615
+        }
+      ]
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "date": "2026-01-08",
+      "model_score": 0.7656030058860779,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": true,
+      "nearby_snapshot_incidents": [
+        {
+          "name": "P.N. LIHUE CALEL",
+          "status": "CONTENIDO",
+          "distance_km": 1.615
+        }
+      ]
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "date": "2026-01-09",
+      "model_score": 0.8136650919914246,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": true,
+      "nearby_snapshot_incidents": [
+        {
+          "name": "P.N. LIHUE CALEL",
+          "status": "CONTROLADO",
+          "distance_km": 1.615
+        }
+      ]
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "date": "2026-01-10",
+      "model_score": 0.765832245349884,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": true,
+      "nearby_snapshot_incidents": [
+        {
+          "name": "P.N. LIHUE CALEL",
+          "status": "CONTROLADO",
+          "distance_km": 1.615
+        }
+      ]
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "date": "2026-01-11",
+      "model_score": 0.8409843444824219,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": [
+        {
+          "name": "P.N. LIHUE CALEL",
+          "status": "EXTINGUIDO",
+          "distance_km": 1.615
+        }
+      ]
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "date": "2026-01-12",
+      "model_score": 0.7320957779884338,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "date": "2026-01-13",
+      "model_score": 0.7339073419570923,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "date": "2026-01-14",
+      "model_score": 0.8330421447753906,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "date": "2026-01-15",
+      "model_score": 0.9956606030464172,
+      "model_alert_at_0_5": true,
+      "persistence_alert": true,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "date": "2026-01-16",
+      "model_score": 0.8139920234680176,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "date": "2026-01-17",
+      "model_score": 0.8444161415100098,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "date": "2026-01-18",
+      "model_score": 0.9840829968452454,
+      "model_alert_at_0_5": true,
+      "persistence_alert": true,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "date": "2026-01-19",
+      "model_score": 0.82112056016922,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "date": "2026-01-20",
+      "model_score": 0.755626380443573,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "date": "2026-01-21",
+      "model_score": 0.7675250172615051,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "date": "2026-01-22",
+      "model_score": 0.6821032762527466,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "date": "2026-01-23",
+      "model_score": 0.2877330482006073,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "date": "2026-01-24",
+      "model_score": 0.5387206077575684,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "date": "2026-01-25",
+      "model_score": 0.46224868297576904,
+      "model_alert_at_0_5": false,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "date": "2026-01-26",
+      "model_score": 0.8081607222557068,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "date": "2026-01-27",
+      "model_score": 0.7651854753494263,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "date": "2026-01-28",
+      "model_score": 0.72072434425354,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "date": "2026-01-30",
+      "model_score": 0.8012222647666931,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "date": "2026-01-31",
+      "model_score": 0.7495551705360413,
+      "model_alert_at_0_5": true,
+      "persistence_alert": false,
+      "snmf_active_incident_within_10km": false,
+      "nearby_snapshot_incidents": []
+    }
+  ]
+}

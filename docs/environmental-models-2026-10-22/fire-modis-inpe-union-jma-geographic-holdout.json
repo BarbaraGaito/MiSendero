@@ -1,0 +1,847 @@
+{
+  "experiment_id": "unified-fire-jma-geographic-region-holdout-forward-time-v1",
+  "status": "spatially_blocked_exploratory_evaluation_not_reliable_prediction",
+  "target": "Any source-preserved route-day detection/event evidence in the MOD14A1 + INPE Aqua/MODIS + SNMF/GFA union.",
+  "negative_definition": "At least 80% clear-land MOD14A1 route-corridor QA with no MODIS fire detection and no catalogued source event; not physical-fire absence.",
+  "forecast": "JMA GSM Previous Runs previous_day1 (24 h lead), aggregated at each route midpoint.",
+  "time_protocol": {
+    "train": [
+      "2022-01-01",
+      "2023-01-01"
+    ],
+    "validation": [
+      "2023-01-01",
+      "2024-01-01"
+    ],
+    "test": [
+      "2024-01-01",
+      "2027-01-01"
+    ]
+  },
+  "geography_protocol": {
+    "unit": "connected group of route polylines",
+    "grouping": "Route polylines sampled at 10 km intervals; groups connected when sampled positions are within 100 km. Every held-out group is excluded from that fold's train and validation.",
+    "groups": [
+      [
+        "aconquija-el-pozon",
+        "aconquija-puesto-chorizos",
+        "puertaCielo"
+      ],
+      [
+        "aguilas",
+        "condores"
+      ],
+      [
+        "alerces-alto-petiso",
+        "alerces-arroyo-hacha",
+        "alerces-cerro-cocinero",
+        "alerces-laguna-escondida",
+        "bosqueTallado",
+        "esquelCruz",
+        "frey"
+      ],
+      [
+        "bateaMirador",
+        "lanin-cara-sur-puerto-canoa",
+        "lanin-rosales-san-martin"
+      ],
+      [
+        "cerroAlto",
+        "namuncura"
+      ],
+      [
+        "condorito",
+        "condorito-secretos-pies",
+        "tabaquillo",
+        "uritorco"
+      ],
+      [
+        "costera",
+        "esmeralda",
+        "fuego-pampa-alta",
+        "hito"
+      ],
+      [
+        "el-rey-la-chuna",
+        "el-rey-laguna-patitos",
+        "sanBernardo"
+      ],
+      [
+        "encantadoMirador"
+      ],
+      [
+        "guanacos",
+        "miradoresQuijadas",
+        "quijadas-farallones"
+      ],
+      [
+        "leoncito-cerro"
+      ],
+      [
+        "macuco"
+      ],
+      [
+        "mburucuya-che-roga",
+        "mburucuya-tape-pora"
+      ],
+      [
+        "porito"
+      ],
+      [
+        "ventana"
+      ]
+    ],
+    "warning": "This is a route-neighborhood block, not an official ecoregion or province partition; routes beyond the block radius can still share broad weather/fire regimes."
+  },
+  "model": {
+    "algorithm": "same class-balanced logistic regression for every fold; weather, annual season terms, route effect.",
+    "threshold_policy": "0.5 is a fixed diagnostic only. A >=90% precision with >=5 validation alerts threshold is selected independently in each fold when possible; test outcomes are never used for threshold selection.",
+    "features": [
+      "temperature_mean",
+      "temperature_max",
+      "humidity_mean",
+      "humidity_min",
+      "wind_mean",
+      "wind_max",
+      "precipitation_sum",
+      "annual_sin",
+      "annual_cos"
+    ]
+  },
+  "source_provenance": {
+    "route_count": 41,
+    "modis_qa": {
+      "route_dates_before_qa_rule": 44979,
+      "route_dates_after_qa_rule": 29024,
+      "insufficient_qa_coverage": 15955
+    },
+    "inpe": {
+      "annual_archives": {
+        "2018": {
+          "path": "training/data/environmental/private/inpe-ams-satellite-reference/focos_ams_ref_2018.zip",
+          "sha256": "5cd46751c6e68dc730e206ed92faef69c1e0851770a44a4e899f3078d7ad6af3"
+        },
+        "2019": {
+          "path": "training/data/environmental/private/inpe-ams-satellite-reference/focos_ams_ref_2019.zip",
+          "sha256": "f1ed473194672423cd1ed3424523a4e562c7cbce7e60af6e967720c4ec1c7e87"
+        },
+        "2020": {
+          "path": "training/data/environmental/private/inpe-ams-satellite-reference/focos_ams_ref_2020.zip",
+          "sha256": "1a477dcf2d09449e9850e3f64a7e6f04b6822b996c7039468a55eeafea1d6928"
+        },
+        "2021": {
+          "path": "training/data/environmental/private/inpe-ams-satellite-reference/focos_ams_ref_2021.zip",
+          "sha256": "461fd9f64fc97f7a30bb5cbaad79f076caf22d003457362af8bd2e370c02021c"
+        },
+        "2022": {
+          "path": "training/data/environmental/private/inpe-ams-satellite-reference/focos_ams_ref_2022.zip",
+          "sha256": "9a866617bc3889c19046fd3853e450a5ec4d2ad7539b805a71930422bce4b197"
+        },
+        "2023": {
+          "path": "training/data/environmental/private/inpe-ams-satellite-reference/focos_ams_ref_2023.zip",
+          "sha256": "822365b3166ecf9e26db9444a8c74a995cc45338d495a4986de4c1bc6cc000e7"
+        },
+        "2024": {
+          "path": "training/data/environmental/private/inpe-ams-satellite-reference/focos_ams_ref_2024.zip",
+          "sha256": "fad2c6e8d09876c67c0c41a83906a5f4c2bcdfb44d9acb7f1d75f50014e67df2"
+        },
+        "2025": {
+          "path": "training/data/environmental/private/inpe-ams-satellite-reference/focos_ams_ref_2025.zip",
+          "sha256": "36d8b7bae6e92200b4e385e3a78784f5417083291c8743afbd8957fae3985654"
+        }
+      },
+      "argentina_detection_rows_screened": 302680,
+      "route_date_detections_within_5km": 81,
+      "unique_route_count_with_detection": 17,
+      "unique_detection_coordinates": 234
+    },
+    "unmapped_catalog_routes": {},
+    "label_sha256": "7f1458ad11b180a3ba9cae69eba626a1ec29986618db1340f0af4176b3c7e694",
+    "catalog_sha256": "f5d6cfac1588cb2483d84dfc047ebfef224854302b20a6a7296386258bc5589f"
+  },
+  "fold_count": 15,
+  "scored_fold_count": 15,
+  "folds_with_positive_test_evidence": 3,
+  "folds_with_validation_threshold_meeting_gate": 0,
+  "unscored_test_routes": [],
+  "folds": [
+    {
+      "fold": 1,
+      "heldout_routes": [
+        "aconquija-el-pozon",
+        "aconquija-puesto-chorizos",
+        "puertaCielo"
+      ],
+      "region_radius_km": 100.0,
+      "counts": {
+        "train_route_days": 8152,
+        "train_positives": 14,
+        "validation_route_days": 8385,
+        "validation_positives": 33,
+        "test_route_days": 884,
+        "test_positives": 0,
+        "test_positive_dates": 0
+      },
+      "status": "scored",
+      "validation_threshold_90pct_precision_min_5_alerts": null,
+      "diagnostic_test_metrics_at_0_5": {
+        "prevalence": 0.0,
+        "threshold": 0.5,
+        "alerts": 316,
+        "true_positives": 0,
+        "false_positives": 316,
+        "false_negatives": 0,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": 0.0,
+        "recall": 0.0,
+        "average_precision": null,
+        "brier": 0.22014003378926983,
+        "confusion_matrix_tn_fp_fn_tp": [
+          568,
+          316,
+          0,
+          0
+        ],
+        "observations": 884,
+        "positive_observations": 0
+      },
+      "diagnostic_test_metrics_at_validation_threshold": null
+    },
+    {
+      "fold": 2,
+      "heldout_routes": [
+        "aguilas",
+        "condores"
+      ],
+      "region_radius_km": 100.0,
+      "counts": {
+        "train_route_days": 8612,
+        "train_positives": 16,
+        "validation_route_days": 8886,
+        "validation_positives": 34,
+        "test_route_days": 477,
+        "test_positives": 0,
+        "test_positive_dates": 0
+      },
+      "status": "scored",
+      "validation_threshold_90pct_precision_min_5_alerts": null,
+      "diagnostic_test_metrics_at_0_5": {
+        "prevalence": 0.0,
+        "threshold": 0.5,
+        "alerts": 2,
+        "true_positives": 0,
+        "false_positives": 2,
+        "false_negatives": 0,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": 0.0,
+        "recall": 0.0,
+        "average_precision": null,
+        "brier": 0.024843809506976802,
+        "confusion_matrix_tn_fp_fn_tp": [
+          475,
+          2,
+          0,
+          0
+        ],
+        "observations": 477,
+        "positive_observations": 0
+      },
+      "diagnostic_test_metrics_at_validation_threshold": null
+    },
+    {
+      "fold": 3,
+      "heldout_routes": [
+        "alerces-alto-petiso",
+        "alerces-arroyo-hacha",
+        "alerces-cerro-cocinero",
+        "alerces-laguna-escondida",
+        "bosqueTallado",
+        "esquelCruz",
+        "frey"
+      ],
+      "region_radius_km": 100.0,
+      "counts": {
+        "train_route_days": 7920,
+        "train_positives": 16,
+        "validation_route_days": 8109,
+        "validation_positives": 28,
+        "test_route_days": 1423,
+        "test_positives": 38,
+        "test_positive_dates": 26
+      },
+      "status": "scored",
+      "validation_threshold_90pct_precision_min_5_alerts": null,
+      "diagnostic_test_metrics_at_0_5": {
+        "prevalence": 0.026704146170063246,
+        "threshold": 0.5,
+        "alerts": 56,
+        "true_positives": 5,
+        "false_positives": 51,
+        "false_negatives": 33,
+        "precision": 0.08928571428571429,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": 0.044137902261357415,
+        "recall": 0.13157894736842105,
+        "average_precision": 0.061526698379629055,
+        "brier": 0.06302917880288027,
+        "confusion_matrix_tn_fp_fn_tp": [
+          1334,
+          51,
+          33,
+          5
+        ],
+        "observations": 1423,
+        "positive_observations": 38
+      },
+      "diagnostic_test_metrics_at_validation_threshold": null
+    },
+    {
+      "fold": 4,
+      "heldout_routes": [
+        "bateaMirador",
+        "lanin-cara-sur-puerto-canoa",
+        "lanin-rosales-san-martin"
+      ],
+      "region_radius_km": 100.0,
+      "counts": {
+        "train_route_days": 8437,
+        "train_positives": 16,
+        "validation_route_days": 8698,
+        "validation_positives": 34,
+        "test_route_days": 741,
+        "test_positives": 0,
+        "test_positive_dates": 0
+      },
+      "status": "scored",
+      "validation_threshold_90pct_precision_min_5_alerts": null,
+      "diagnostic_test_metrics_at_0_5": {
+        "prevalence": 0.0,
+        "threshold": 0.5,
+        "alerts": 68,
+        "true_positives": 0,
+        "false_positives": 68,
+        "false_negatives": 0,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": 0.0,
+        "recall": 0.0,
+        "average_precision": null,
+        "brier": 0.07583897804859627,
+        "confusion_matrix_tn_fp_fn_tp": [
+          673,
+          68,
+          0,
+          0
+        ],
+        "observations": 741,
+        "positive_observations": 0
+      },
+      "diagnostic_test_metrics_at_validation_threshold": null
+    },
+    {
+      "fold": 5,
+      "heldout_routes": [
+        "cerroAlto",
+        "namuncura"
+      ],
+      "region_radius_km": 100.0,
+      "counts": {
+        "train_route_days": 8449,
+        "train_positives": 15,
+        "validation_route_days": 8704,
+        "validation_positives": 33,
+        "test_route_days": 653,
+        "test_positives": 4,
+        "test_positive_dates": 3
+      },
+      "status": "scored",
+      "validation_threshold_90pct_precision_min_5_alerts": null,
+      "diagnostic_test_metrics_at_0_5": {
+        "prevalence": 0.006125574272588055,
+        "threshold": 0.5,
+        "alerts": 93,
+        "true_positives": 3,
+        "false_positives": 90,
+        "false_negatives": 1,
+        "precision": 0.03225806451612903,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": 0.01296404959747961,
+        "recall": 0.75,
+        "average_precision": 0.04596101999629986,
+        "brier": 0.10200434562028479,
+        "confusion_matrix_tn_fp_fn_tp": [
+          559,
+          90,
+          1,
+          3
+        ],
+        "observations": 653,
+        "positive_observations": 4
+      },
+      "diagnostic_test_metrics_at_validation_threshold": null
+    },
+    {
+      "fold": 6,
+      "heldout_routes": [
+        "condorito",
+        "condorito-secretos-pies",
+        "tabaquillo",
+        "uritorco"
+      ],
+      "region_radius_km": 100.0,
+      "counts": {
+        "train_route_days": 7847,
+        "train_positives": 16,
+        "validation_route_days": 8054,
+        "validation_positives": 31,
+        "test_route_days": 1310,
+        "test_positives": 0,
+        "test_positive_dates": 0
+      },
+      "status": "scored",
+      "validation_threshold_90pct_precision_min_5_alerts": null,
+      "diagnostic_test_metrics_at_0_5": {
+        "prevalence": 0.0,
+        "threshold": 0.5,
+        "alerts": 108,
+        "true_positives": 0,
+        "false_positives": 108,
+        "false_negatives": 0,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": 0.0,
+        "recall": 0.0,
+        "average_precision": null,
+        "brier": 0.08571575061442897,
+        "confusion_matrix_tn_fp_fn_tp": [
+          1202,
+          108,
+          0,
+          0
+        ],
+        "observations": 1310,
+        "positive_observations": 0
+      },
+      "diagnostic_test_metrics_at_validation_threshold": null
+    },
+    {
+      "fold": 7,
+      "heldout_routes": [
+        "costera",
+        "esmeralda",
+        "fuego-pampa-alta",
+        "hito"
+      ],
+      "region_radius_km": 100.0,
+      "counts": {
+        "train_route_days": 8374,
+        "train_positives": 16,
+        "validation_route_days": 8642,
+        "validation_positives": 34,
+        "test_route_days": 769,
+        "test_positives": 0,
+        "test_positive_dates": 0
+      },
+      "status": "scored",
+      "validation_threshold_90pct_precision_min_5_alerts": null,
+      "diagnostic_test_metrics_at_0_5": {
+        "prevalence": 0.0,
+        "threshold": 0.5,
+        "alerts": 0,
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 0,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": null,
+        "recall": 0.0,
+        "average_precision": null,
+        "brier": 0.005482864310533668,
+        "confusion_matrix_tn_fp_fn_tp": [
+          769,
+          0,
+          0,
+          0
+        ],
+        "observations": 769,
+        "positive_observations": 0
+      },
+      "diagnostic_test_metrics_at_validation_threshold": null
+    },
+    {
+      "fold": 8,
+      "heldout_routes": [
+        "el-rey-la-chuna",
+        "el-rey-laguna-patitos",
+        "sanBernardo"
+      ],
+      "region_radius_km": 100.0,
+      "counts": {
+        "train_route_days": 8136,
+        "train_positives": 16,
+        "validation_route_days": 8409,
+        "validation_positives": 34,
+        "test_route_days": 957,
+        "test_positives": 0,
+        "test_positive_dates": 0
+      },
+      "status": "scored",
+      "validation_threshold_90pct_precision_min_5_alerts": null,
+      "diagnostic_test_metrics_at_0_5": {
+        "prevalence": 0.0,
+        "threshold": 0.5,
+        "alerts": 752,
+        "true_positives": 0,
+        "false_positives": 752,
+        "false_negatives": 0,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": 2.160630833523726e-19,
+        "recall": 0.0,
+        "average_precision": null,
+        "brier": 0.40994498966657955,
+        "confusion_matrix_tn_fp_fn_tp": [
+          205,
+          752,
+          0,
+          0
+        ],
+        "observations": 957,
+        "positive_observations": 0
+      },
+      "diagnostic_test_metrics_at_validation_threshold": null
+    },
+    {
+      "fold": 9,
+      "heldout_routes": [
+        "encantadoMirador"
+      ],
+      "region_radius_km": 100.0,
+      "counts": {
+        "train_route_days": 8745,
+        "train_positives": 14,
+        "validation_route_days": 9010,
+        "validation_positives": 34,
+        "test_route_days": 316,
+        "test_positives": 0,
+        "test_positive_dates": 0
+      },
+      "status": "scored",
+      "validation_threshold_90pct_precision_min_5_alerts": null,
+      "diagnostic_test_metrics_at_0_5": {
+        "prevalence": 0.0,
+        "threshold": 0.5,
+        "alerts": 201,
+        "true_positives": 0,
+        "false_positives": 201,
+        "false_negatives": 0,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": 0.0,
+        "recall": 0.0,
+        "average_precision": null,
+        "brier": 0.31876491720171896,
+        "confusion_matrix_tn_fp_fn_tp": [
+          115,
+          201,
+          0,
+          0
+        ],
+        "observations": 316,
+        "positive_observations": 0
+      },
+      "diagnostic_test_metrics_at_validation_threshold": null
+    },
+    {
+      "fold": 10,
+      "heldout_routes": [
+        "guanacos",
+        "miradoresQuijadas",
+        "quijadas-farallones"
+      ],
+      "region_radius_km": 100.0,
+      "counts": {
+        "train_route_days": 8126,
+        "train_positives": 16,
+        "validation_route_days": 8331,
+        "validation_positives": 34,
+        "test_route_days": 1046,
+        "test_positives": 0,
+        "test_positive_dates": 0
+      },
+      "status": "scored",
+      "validation_threshold_90pct_precision_min_5_alerts": null,
+      "diagnostic_test_metrics_at_0_5": {
+        "prevalence": 0.0,
+        "threshold": 0.5,
+        "alerts": 135,
+        "true_positives": 0,
+        "false_positives": 135,
+        "false_negatives": 0,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": 0.0,
+        "recall": 0.0,
+        "average_precision": null,
+        "brier": 0.0994651158365396,
+        "confusion_matrix_tn_fp_fn_tp": [
+          911,
+          135,
+          0,
+          0
+        ],
+        "observations": 1046,
+        "positive_observations": 0
+      },
+      "diagnostic_test_metrics_at_validation_threshold": null
+    },
+    {
+      "fold": 11,
+      "heldout_routes": [
+        "leoncito-cerro"
+      ],
+      "region_radius_km": 100.0,
+      "counts": {
+        "train_route_days": 8718,
+        "train_positives": 16,
+        "validation_route_days": 8964,
+        "validation_positives": 34,
+        "test_route_days": 365,
+        "test_positives": 0,
+        "test_positive_dates": 0
+      },
+      "status": "scored",
+      "validation_threshold_90pct_precision_min_5_alerts": null,
+      "diagnostic_test_metrics_at_0_5": {
+        "prevalence": 0.0,
+        "threshold": 0.5,
+        "alerts": 14,
+        "true_positives": 0,
+        "false_positives": 14,
+        "false_negatives": 0,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": 0.0,
+        "recall": 0.0,
+        "average_precision": null,
+        "brier": 0.09341597052305832,
+        "confusion_matrix_tn_fp_fn_tp": [
+          351,
+          14,
+          0,
+          0
+        ],
+        "observations": 365,
+        "positive_observations": 0
+      },
+      "diagnostic_test_metrics_at_validation_threshold": null
+    },
+    {
+      "fold": 12,
+      "heldout_routes": [
+        "macuco"
+      ],
+      "region_radius_km": 100.0,
+      "counts": {
+        "train_route_days": 8754,
+        "train_positives": 16,
+        "validation_route_days": 9008,
+        "validation_positives": 34,
+        "test_route_days": 304,
+        "test_positives": 0,
+        "test_positive_dates": 0
+      },
+      "status": "scored",
+      "validation_threshold_90pct_precision_min_5_alerts": null,
+      "diagnostic_test_metrics_at_0_5": {
+        "prevalence": 0.0,
+        "threshold": 0.5,
+        "alerts": 278,
+        "true_positives": 0,
+        "false_positives": 278,
+        "false_negatives": 0,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": 0.0,
+        "recall": 0.0,
+        "average_precision": null,
+        "brier": 0.5265116586351272,
+        "confusion_matrix_tn_fp_fn_tp": [
+          26,
+          278,
+          0,
+          0
+        ],
+        "observations": 304,
+        "positive_observations": 0
+      },
+      "diagnostic_test_metrics_at_validation_threshold": null
+    },
+    {
+      "fold": 13,
+      "heldout_routes": [
+        "mburucuya-che-roga",
+        "mburucuya-tape-pora"
+      ],
+      "region_radius_km": 100.0,
+      "counts": {
+        "train_route_days": 8664,
+        "train_positives": 5,
+        "validation_route_days": 8911,
+        "validation_positives": 14,
+        "test_route_days": 406,
+        "test_positives": 0,
+        "test_positive_dates": 0
+      },
+      "status": "scored",
+      "validation_threshold_90pct_precision_min_5_alerts": null,
+      "diagnostic_test_metrics_at_0_5": {
+        "prevalence": 0.0,
+        "threshold": 0.5,
+        "alerts": 219,
+        "true_positives": 0,
+        "false_positives": 219,
+        "false_negatives": 0,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": 0.0,
+        "recall": 0.0,
+        "average_precision": null,
+        "brier": 0.32589349725430267,
+        "confusion_matrix_tn_fp_fn_tp": [
+          187,
+          219,
+          0,
+          0
+        ],
+        "observations": 406,
+        "positive_observations": 0
+      },
+      "diagnostic_test_metrics_at_validation_threshold": null
+    },
+    {
+      "fold": 14,
+      "heldout_routes": [
+        "porito"
+      ],
+      "region_radius_km": 100.0,
+      "counts": {
+        "train_route_days": 8712,
+        "train_positives": 16,
+        "validation_route_days": 8972,
+        "validation_positives": 34,
+        "test_route_days": 346,
+        "test_positives": 0,
+        "test_positive_dates": 0
+      },
+      "status": "scored",
+      "validation_threshold_90pct_precision_min_5_alerts": null,
+      "diagnostic_test_metrics_at_0_5": {
+        "prevalence": 0.0,
+        "threshold": 0.5,
+        "alerts": 8,
+        "true_positives": 0,
+        "false_positives": 8,
+        "false_negatives": 0,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": 0.0,
+        "recall": 0.0,
+        "average_precision": null,
+        "brier": 0.06486799199533808,
+        "confusion_matrix_tn_fp_fn_tp": [
+          338,
+          8,
+          0,
+          0
+        ],
+        "observations": 346,
+        "positive_observations": 0
+      },
+      "diagnostic_test_metrics_at_validation_threshold": null
+    },
+    {
+      "fold": 15,
+      "heldout_routes": [
+        "ventana"
+      ],
+      "region_radius_km": 100.0,
+      "counts": {
+        "train_route_days": 8746,
+        "train_positives": 16,
+        "validation_route_days": 9005,
+        "validation_positives": 31,
+        "test_route_days": 303,
+        "test_positives": 2,
+        "test_positive_dates": 2
+      },
+      "status": "scored",
+      "validation_threshold_90pct_precision_min_5_alerts": null,
+      "diagnostic_test_metrics_at_0_5": {
+        "prevalence": 0.006600660066006601,
+        "threshold": 0.5,
+        "alerts": 38,
+        "true_positives": 0,
+        "false_positives": 38,
+        "false_negatives": 2,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": 6.477691881102889e-18,
+        "recall": 0.0,
+        "average_precision": 0.020454545454545454,
+        "brier": 0.09323959333521063,
+        "confusion_matrix_tn_fp_fn_tp": [
+          263,
+          38,
+          2,
+          0
+        ],
+        "observations": 303,
+        "positive_observations": 2
+      },
+      "diagnostic_test_metrics_at_validation_threshold": null
+    }
+  ],
+  "pooled_heldout_route_day_metrics_at_fixed_0_5": {
+    "prevalence": 0.004271844660194175,
+    "threshold": 0.5,
+    "alerts": 2288,
+    "true_positives": 8,
+    "false_positives": 2280,
+    "false_negatives": 36,
+    "precision": 0.0034965034965034965,
+    "precision_wilson_one_sided_95_lower_bound_independent_days": 0.0019712510218439436,
+    "recall": 0.18181818181818182,
+    "average_precision": 0.00450500968863635,
+    "brier": 0.14657348740763854,
+    "confusion_matrix_tn_fp_fn_tp": [
+      7976,
+      2280,
+      36,
+      8
+    ],
+    "observations": 10300,
+    "positive_observations": 44
+  },
+  "pooled_heldout_event_date_metrics_at_fixed_0_5": {
+    "prevalence": 0.07537688442211055,
+    "threshold": 0.5,
+    "alerts": 377,
+    "true_positives": 30,
+    "false_positives": 347,
+    "false_negatives": 0,
+    "precision": 0.07957559681697612,
+    "precision_wilson_one_sided_95_lower_bound_independent_days": 0.05953087689401899,
+    "recall": 1.0,
+    "average_precision": 0.10084545648325095,
+    "brier": 0.5110128220193372,
+    "confusion_matrix_tn_fp_fn_tp": [
+      21,
+      347,
+      0,
+      30
+    ],
+    "event_dates": 398,
+    "positive_event_dates": 30
+  },
+  "pooled_event_date_wilson_lower_95_descriptive": 0.05953087689401899,
+  "limitations": [
+    "The positive target is heterogeneous evidence; lack of an entry is not proof that no fire occurred.",
+    "INPE's AMS reference detections use Aqua/MODIS and are not an independent sensor from MOD14A1.",
+    "MODIS clear QA creates observed no-detection labels for sampled pixels only; unresolved route corridor cells remain unobserved.",
+    "Weather is represented by one midpoint and the test archive has incomplete satellite periods in 2024-2026.",
+    "A 100 km route-neighborhood holdout is stronger than a random route-day split but does not establish transfer to unseen ecological or climatic regimes.",
+    "Wilson intervals are descriptive and ignore temporal autocorrelation and shared physical incidents.",
+    "This experiment does not establish calibrated fire probability, safe alert precision, or deployment readiness."
+  ],
+  "synthetic_observations": 0,
+  "model_artifact_written": false,
+  "deployment_approved": false
+}

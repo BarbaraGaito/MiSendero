@@ -1,0 +1,75 @@
+{
+  "experiment_id": "frozen-fire-model-route-day-audit",
+  "meaning": "Proxy agreement with MOD14A1 nominal/high-confidence pixel detections; not precision for physical fires.",
+  "protocol_sha256": "21c731c5266eb569e16936c77b3d1f4bc78088f97b3f35fa1b01ae9588f75555",
+  "threshold": 0.5,
+  "partitions": {
+    "temporal_test": {
+      "input_sha256": "acaa8859016c9e69c9cbd5ea9e17f1d00aae111899de665275dfd271a99db17d",
+      "pixel_days": 341975,
+      "unit": "one route-sector × UTC target day; positive if any sampled pixel is positive; score is maximum sampled-pixel score",
+      "xgboost": {
+        "route_days": 1013,
+        "positive_route_days": 16,
+        "alerts": 267,
+        "matched_positive_route_days": 12,
+        "unmatched_alert_route_days": 255,
+        "missed_positive_route_days": 4,
+        "proxy_precision": 0.0449438202247191,
+        "proxy_recall": 0.75,
+        "route_day_average_precision": 0.1053136687881426,
+        "threshold": 0.5
+      },
+      "persistence": {
+        "route_days": 1013,
+        "positive_route_days": 16,
+        "alerts": 14,
+        "matched_positive_route_days": 0,
+        "unmatched_alert_route_days": 14,
+        "missed_positive_route_days": 16,
+        "proxy_precision": 0.0,
+        "proxy_recall": 0.0,
+        "route_day_average_precision": 0.01579466929911155,
+        "threshold": 0.5
+      }
+    },
+    "geographic_test": {
+      "input_sha256": "5d0c95099c3a63838180b72405c0cd86277620cab31d41424faf7aca9b6fbd6b",
+      "pixel_days": 188950,
+      "unit": "one route-sector × UTC target day; positive if any sampled pixel is positive; score is maximum sampled-pixel score",
+      "xgboost": {
+        "route_days": 683,
+        "positive_route_days": 2,
+        "alerts": 0,
+        "matched_positive_route_days": 0,
+        "unmatched_alert_route_days": 0,
+        "missed_positive_route_days": 2,
+        "proxy_precision": null,
+        "proxy_recall": 0.0,
+        "route_day_average_precision": 0.0033724821879555673,
+        "threshold": 0.5
+      },
+      "persistence": {
+        "route_days": 683,
+        "positive_route_days": 2,
+        "alerts": 0,
+        "matched_positive_route_days": 0,
+        "unmatched_alert_route_days": 0,
+        "missed_positive_route_days": 2,
+        "proxy_precision": null,
+        "proxy_recall": 0.0,
+        "route_day_average_precision": 0.0029282576866764276,
+        "threshold": 0.5
+      }
+    }
+  },
+  "limitations": [
+    "Prediction rows were grouped to the route-sector/day unit before computing alert counts.",
+    "A route-day without a MODIS detection is not proven fire-free; therefore proxy precision can underestimate physical-fire precision.",
+    "MODIS positive detections are still only a sparse subset and these results do not validate ignition prediction.",
+    "The fixed threshold is from the frozen existing model protocol; no test threshold was tuned here.",
+    "The geographic test has very few positive route-days, so it cannot support a reliable geographic performance estimate."
+  ],
+  "synthetic_observations": 0,
+  "deployment_approved": false
+}

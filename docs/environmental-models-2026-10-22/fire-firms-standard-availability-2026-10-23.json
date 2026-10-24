@@ -1,0 +1,46 @@
+{
+  "experiment_id": "nasa-firms-standard-product-availability-lag-audit",
+  "status": "standard_products_not_yet_available_for_target_window",
+  "target_window_utc_dates": [
+    "2026-10-22",
+    "2026-10-23"
+  ],
+  "query_started_at_utc": "2026-10-23T18:04:46Z",
+  "query_completed_at_utc": "2026-10-23T18:04:47Z",
+  "sensors": {
+    "VIIRS_NOAA20_SP": [
+      "2018-04-01",
+      "2026-06-30"
+    ],
+    "VIIRS_NOAA21_SP": [
+      "2023-03-01",
+      "2026-06-30"
+    ],
+    "VIIRS_SNPP_SP": [
+      "2012-01-20",
+      "2026-06-30"
+    ]
+  },
+  "summary": {
+    "latest_standard_date_available_any_sensor": "2026-06-30",
+    "days_behind_target_end_date": 115,
+    "route_sensor_requests": 24,
+    "outside_available_date_range": 24,
+    "detection_queries_made": 0,
+    "negative_labels_created": 0,
+    "synthetic_observations": 0,
+    "deployment_approved": false
+  },
+  "source": {
+    "availability_response_file": "training/data/environmental/private/firms-route-detections-standard-availability-2026-10-23-auditable/firms-data-availability-viirs-snpp-sp-viirs-noaa20-sp-viirs-noaa21-sp.csv",
+    "availability_response_sha256": "aab642dd0602b9ef80792e1fa9211946355bfc85e5f21e69d3e520a69b4fcfb6",
+    "availability_response_bytes": 442,
+    "route_query_archive_sha256": "2c165793aacf70d858699418bacb29a54de5628ee59af681b59af4595555c565"
+  },
+  "interpretation": "NASA FIRMS standard VIIRS products were available only through 2026-06-30 at query time. No standard active-fire detections for 2026-10-22/23 could be requested; NRT is provisional and remains the only FIRMS source checked for this window.",
+  "limitations": [
+    "An unavailable date range is a source-availability limit, not a no-fire label.",
+    "FIRMS standard detections are positive evidence only; empty or unavailable records cannot verify fire absence without valid sensor-coverage masks.",
+    "The standard archive should be checked again after its processing lag; NASA says NRT is typically replaced after 2-3 months and can take up to 5 months."
+  ]
+}

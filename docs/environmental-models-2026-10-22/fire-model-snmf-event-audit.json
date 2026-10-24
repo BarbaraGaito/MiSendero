@@ -1,0 +1,232 @@
+{
+  "experiment_id": "fire-xgboost-heldout-snmf-event-audits",
+  "meaning": "Retrospective pilot spatial audits of two official SNMF event reports under a frozen exploratory rule; not a precision estimate or exhaustive test set.",
+  "evaluation_protocol": {
+    "protocol_id": "snmf-reported-event-spatial-audit-v1",
+    "frozen_on": "2026-10-22",
+    "status": "exploratory_for_existing_2023_cases; prospective_for_newly_collected_events",
+    "purpose": "Compare frozen model alerts against independently reported SNMF fire events near sampled trekking areas.",
+    "prediction_unit": "pixel-day alert; pixel-days are not independent events",
+    "event_unit": "one reported incident, deduplicated by incident name, province, start date, and location",
+    "model": "Existing frozen MOD14A1 XGBoost predictions; no retraining or model/threshold selection in this audit.",
+    "threshold": 0.5,
+    "primary_spatial_rule": {
+      "radius_km": 10,
+      "distance_measure": "Haversine distance between the model pixel center and the SNMF-reported incident coordinates",
+      "interpretation": "An event is detected if at least one pixel-day alert reaches the threshold within this radius during its documented event window. The radius is an operational tolerance for this exploratory analysis, not a validated fire-safety distance."
+    },
+    "event_window": "From the SNMF-reported start date through the latest date on which the reviewed SNMF report documents the incident. No unreported date is treated as a negative.",
+    "source_rule": "Use SNMF daily reports and retain direct source URLs, incident name, province, department, start date, report date, reported status, and coordinates. Exclude records lacking usable coordinates from spatial matching and report the exclusion.",
+    "deduplication_rule": "Merge repeated daily mentions of the same named incident and coordinates into one event; preserve the earliest reported start date and the latest reviewed report date.",
+    "metrics": [
+      "event sensitivity/recall may be reported only when every event in the selected region and period has been collected and deduplicated",
+      "precision requires review of every model alert against a sufficiently complete independent incident reference; report silence alone is not a negative",
+      "report event counts and confidence intervals; do not treat pixel-days as independent samples"
+    ],
+    "current_cases": [
+      {
+        "name": "Límite Potrero 13",
+        "province": "Corrientes",
+        "start_date": "2023-08-06",
+        "report_date": "2023-08-07",
+        "source_url": "https://www.argentina.gob.ar/sites/default/files/2023/06/reportediario_07-08-2023.pdf",
+        "status": "extinguished"
+      },
+      {
+        "name": "Ea. San Bernardo",
+        "province": "Córdoba",
+        "start_date": "2023-10-29",
+        "report_date": "2023-10-31",
+        "source_url": "https://www.argentina.gob.ar/sites/default/files/2023/06/reportediario_31-10-2023.pdf",
+        "status": "guardia de cenizas"
+      }
+    ],
+    "prohibitions": [
+      "Do not tune the model or threshold using these events.",
+      "Do not call this partial event sample a precision estimate.",
+      "Do not interpret the absence of an event from a report as proof of no fire.",
+      "Do not use the two existing cases to claim a reliable Argentina-wide accuracy figure."
+    ]
+  },
+  "evaluation_protocol_sha256": "eff3bdd798b318a9af8eb8515848634f98db63bd67ee0fa0fcb387742c757485",
+  "model": "validation-selected XGBoost from frozen MOD14A1 protocol",
+  "test_partition": "July-December 2023 temporal holdout",
+  "region": "Sendero Che Roga - Mburucuyá",
+  "target_day": "2023-08-06",
+  "threshold": 0.5,
+  "matching_radii_km": [
+    1,
+    5,
+    10
+  ],
+  "spatial_rule_status": "Exploratory sensitivity check; freeze a matching radius before evaluating a new independent cohort.",
+  "official_event": {
+    "name": "Límite Potrero 13",
+    "province": "Corrientes",
+    "department": "Mburucuyá",
+    "event_date": "2023-08-06",
+    "status": "Extinguido (06/08/2023)",
+    "latitude": -28.092916666666664,
+    "longitude": -58.108472222222225,
+    "reported_burned_area_ha": 393.0,
+    "source_url": "https://www.argentina.gob.ar/sites/default/files/2023/06/reportediario_07-08-2023.pdf",
+    "source_description": "SNMF daily fire report dated 07/08/2023; event start and extinguishment date 06/08/2023."
+  },
+  "additional_official_event_comparison": {
+    "name": "Ea. San Bernardo",
+    "province": "Córdoba",
+    "department": "Punilla",
+    "event_start_date": "2023-10-29",
+    "report_date": "2023-10-31",
+    "status_at_report": "Guardia de cenizas",
+    "latitude": -31.52958333333333,
+    "longitude": -64.66036111111111,
+    "source_url": "https://www.argentina.gob.ar/sites/default/files/2023/06/reportediario_31-10-2023.pdf",
+    "source_description": "SNMF daily report dated 31/10/2023; listed as Guardia de cenizas, with start date 29/10/2023 and coordinates.",
+    "model_region": "Quebrada del Condorito - Balcon Norte",
+    "evaluated_target_dates": [
+      "2023-10-29",
+      "2023-10-30",
+      "2023-10-31"
+    ],
+    "matching_radii_km": [
+      10,
+      20,
+      30
+    ],
+    "spatial_rule_status": "Exploratory; radii were not preregistered and cannot establish event-level precision.",
+    "threshold": 0.5,
+    "model_pixels_evaluated": 1299,
+    "model_pixels_with_missing_coordinates": 0,
+    "by_radius": {
+      "10_km": {
+        "pixels_evaluated": 125,
+        "threshold_alert_pixel_days": 0,
+        "maximum_score": 0.1199402,
+        "modis_labels_for_threshold_alerts": {}
+      },
+      "20_km": {
+        "pixels_evaluated": 458,
+        "threshold_alert_pixel_days": 0,
+        "maximum_score": 0.23631603,
+        "modis_labels_for_threshold_alerts": {}
+      },
+      "30_km": {
+        "pixels_evaluated": 825,
+        "threshold_alert_pixel_days": 9,
+        "maximum_score": 0.5126459,
+        "modis_labels_for_threshold_alerts": {
+          "0": 9
+        }
+      }
+    },
+    "nearest_threshold_alert": {
+      "target_date": "2023-10-29",
+      "score": 0.5126459,
+      "distance_km": 27.6801
+    },
+    "interpretation": "One more official reported event, evaluated descriptively. The report status is Guardia de cenizas; spatial radii are exploratory, so this is not a precision estimate."
+  },
+  "official_no_report_day": {
+    "date": "2023-12-20",
+    "source_url": "https://www.argentina.gob.ar/sites/default/files/2024/01/reporte_diario_20-12-2023.pdf",
+    "source_description": "The SNMF daily report states that no fires were reported in Argentina on this date."
+  },
+  "counts": {
+    "model_pixels_evaluated": 411,
+    "model_pixels_without_source_coordinates": 0,
+    "pixels_scoring_at_or_above_threshold": 5
+  },
+  "spatial_comparison": {
+    "1_km": {
+      "predicted_pixels": 0,
+      "threshold_alerts": 0,
+      "maximum_score": 0.0
+    },
+    "5_km": {
+      "predicted_pixels": 7,
+      "threshold_alerts": 0,
+      "maximum_score": 0.04201066
+    },
+    "10_km": {
+      "predicted_pixels": 33,
+      "threshold_alerts": 0,
+      "maximum_score": 0.05079227
+    }
+  },
+  "primary_protocol_radius_km": 10.0,
+  "primary_protocol_event_alerts": {
+    "Limite Potrero 13": 0,
+    "Ea. San Bernardo": 0
+  },
+  "nearest_threshold_alert": {
+    "pixel_id": "h12v11:989:1025",
+    "score": 0.6581753,
+    "distance_from_reported_event_km": 34.0343,
+    "threshold_alert": true
+  },
+  "no_report_day_comparison": {
+    "reported_fire_occurrences": 0,
+    "threshold_alert_pixel_days": 377,
+    "threshold_alert_region_days": 3,
+    "threshold_alerts_by_region": {
+      "Sendero Che Roga - Mburucuyá": 375,
+      "Sendero Macuco - Salto Arrechea": 1,
+      "Cerro Ventana - Hueco de la Ventana": 1
+    },
+    "modis_labels_for_alert_pixel_days": {
+      "modis_negative": 377,
+      "modis_positive": 0
+    },
+    "interpretation": "False alerts relative to the official SNMF reporting benchmark for this date; not proof of zero physical fires."
+  },
+  "zero_fire_monthly_province_comparison": {
+    "month": "2023-12",
+    "source_url": "https://www.argentina.gob.ar/sites/default/files/2024/01/informe_ocurrencia_diciembre2023.pdf",
+    "zero_reported_fire_count_by_province": {
+      "Corrientes": 0,
+      "Buenos Aires": 0
+    },
+    "region_provinces": {
+      "Sendero Che Roga - Mburucuyá": "Corrientes",
+      "Cerro Ventana - Hueco de la Ventana": "Buenos Aires"
+    },
+    "alert_pixel_days": 9293,
+    "alert_sector_days": 56,
+    "by_region": {
+      "Sendero Che Roga - Mburucuyá": {
+        "province": "Corrientes",
+        "official_reported_fires_in_province": 0,
+        "alert_pixel_days": 9266,
+        "alert_sector_days": 29,
+        "modis_labels_for_alert_pixel_days": {
+          "modis_negative": 9266
+        }
+      },
+      "Cerro Ventana - Hueco de la Ventana": {
+        "province": "Buenos Aires",
+        "official_reported_fires_in_province": 0,
+        "alert_pixel_days": 27,
+        "alert_sector_days": 27,
+        "modis_labels_for_alert_pixel_days": {
+          "modis_negative": 27
+        }
+      }
+    },
+    "interpretation": "Alerts in provinces with zero officially reported fire occurrences during the month; this is a benchmark against reported occurrences, not proof that no unreported physical fire existed."
+  },
+  "prediction_unit": "pixel-day; nearby model pixels are correlated and are not independent events",
+  "limitations": [
+    "This audit tests whether a model alert localized near one officially reported event; it does not estimate overall precision.",
+    "The SNMF daily report supports the occurrence, date, status, reported area, and reference coordinates of this event; it does not prove absence of other fires.",
+    "Thresholded alerts elsewhere cannot be labeled false positives from this single report.",
+    "The event is one independent case, so it cannot support a reliable population-level accuracy claim."
+  ],
+  "synthetic_observations": 0,
+  "inputs": {
+    "predictions": "training/data/environmental/private/fire-temporal_test-predictions.csv.gz",
+    "predictions_sha256": "acaa8859016c9e69c9cbd5ea9e17f1d00aae111899de665275dfd271a99db17d",
+    "observations": "training/data/environmental/private/fire-observations.csv.gz",
+    "observations_sha256": "f295457e48b4b40b7f6bc196a8e2ab3ec3905f9a4aa392216d73a93e174a0976"
+  }
+}

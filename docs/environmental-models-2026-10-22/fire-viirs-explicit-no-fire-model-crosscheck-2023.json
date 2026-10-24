@@ -1,0 +1,1021 @@
+{
+  "experiment_id": "frozen-modis-alerts-vs-viirs-daily-l3-on-snmf-explicit-no-fire-2023",
+  "status": "independent_satellite_crosscheck_complete_administrative_negative_cohort",
+  "created_at_utc": "2026-10-23T21:18:34Z",
+  "protocol": {
+    "frozen_model_test": "fire-model-explicit-national-no-fire-test-2023.json",
+    "source_negative_label": "SNMF explicitly reported no fires nationally on date; administrative-report negative only.",
+    "independent_observation": "NASA Suomi-NPP VIIRS VNP14A1.002 daily L3 1 km FireMask and QA.",
+    "route_spatial_unit": "10 km buffer around full route polyline; model test route-day rows with frozen max scores.",
+    "fire_observation": "FireMask classes 7-9; confidence classes retained in per-pixel class counts.",
+    "clear_land_observation": "FireMask class 5 with QA bits 0-1 equal 10 (land). Partial clear-land pixels do not imply complete observation of the route buffer.",
+    "threshold": 0.5,
+    "threshold_selection": "Diagnostic threshold fixed in the earlier test; this crosscheck does not tune any model."
+  },
+  "acquisition": {
+    "granules_verified": 20,
+    "dates": [
+      "2023-07-14",
+      "2023-07-18",
+      "2023-12-20",
+      "2023-12-21"
+    ],
+    "unique_tiles": [
+      "h12v11",
+      "h12v12",
+      "h12v13",
+      "h13v11",
+      "h13v12"
+    ],
+    "bytes": 4321473,
+    "size_mb_decimal": 4.321,
+    "granule_sha256_by_id": {
+      "VNP14A1.A2023195.h13v12.002.2023196100937": "70da03ad14d9dca889faa997cc00cedadd36d3a62cd9af509f85adae142e30cb",
+      "VNP14A1.A2023195.h12v12.002.2023196101702": "9c416be20881c6699f35b60fd6b326a72aa3f43eebd8e194eda8a645bdfe1c24",
+      "VNP14A1.A2023195.h12v11.002.2023196101704": "38926872722adfaf8af763e3e42143ef4d8c9c4b1f4d6579d132012405b9f380",
+      "VNP14A1.A2023195.h13v11.002.2023196101658": "5c4dc56aa2c903daecf86bad3139dcf920983087b98ae34602bf1f88d3907db8",
+      "VNP14A1.A2023199.h13v12.002.2023200102825": "08a61d0a8c86710908ea7ae7857dcaa5fc699e86fb730820c84ca52472d0cfaa",
+      "VNP14A1.A2023199.h12v12.002.2023200103928": "7f009b4d5cb95907955affc508f7ace8d12f28a39a7d9c4db61601309df66bf1",
+      "VNP14A1.A2023199.h12v11.002.2023200102825": "5a7974001574cd681a53c045366a251d645730a806aa6a71763e7cfcba914fdd",
+      "VNP14A1.A2023199.h13v11.002.2023200100411": "f1dc1b6e35fed068997f884979683850b1f5af69fe4e50273c2438104e686587",
+      "VNP14A1.A2023354.h13v12.002.2023355181648": "c308c46b5fff254b6df50d193efcb278c096abfef09fe7371b0afbd6f7493832",
+      "VNP14A1.A2023354.h12v12.002.2023355182122": "6741b70f42f1f7e30af669a8a256d8d2cca962355a8770c0226876c91a5c29b5",
+      "VNP14A1.A2023354.h12v11.002.2023355184750": "a80237d9120a06e6a8f5bf411519536544f7221f90eb666f20d3e16961578eb5",
+      "VNP14A1.A2023354.h13v11.002.2023355183343": "bb4fa9d066f49ff255b51e5f7ef385167ab47de39f265ab347dd72bbfe65dcab",
+      "VNP14A1.A2023355.h12v12.002.2023356100014": "0f2d1c6cb6941fdcaa3e894a40cd6fe24b947b81f1995318b9faef311f4f4c2f",
+      "VNP14A1.A2023355.h12v11.002.2023356100011": "0a9e093f18724a3352af423aa59b98e8ef3bb17bc20d8528fae88430db97d817",
+      "VNP14A1.A2023355.h13v11.002.2023356095949": "e411d6cc3130215806b010b96af06ad4cf999b2d163d4238a806c0da590b8afc"
+    }
+  },
+  "coverage": {
+    "frozen_model_route_days": 22,
+    "possible_route_days_in_four_report_dates": 32,
+    "route_days_with_any_viirs_fire_detection": 0,
+    "route_days_with_at_least_one_class5_qa_land_sample": 20,
+    "route_days_without_class5_qa_land_sample": 2,
+    "unique_logistic_or_xgboost_alert_route_days_at_0_5": 6,
+    "such_alert_route_days_with_class5_qa_land_sample": 5,
+    "such_alert_route_days_with_viirs_fire_detection": 0,
+    "route_dates_with_any_viirs_fire_detection": [],
+    "full_sensor_observation_mask_available": false
+  },
+  "crosscheck_by_model": {
+    "persistence": {
+      "route_days_alerted_at_diagnostic_0_5": 0,
+      "alerts_with_same_day_viirs_class7_9_in_10km_route_buffer": 0,
+      "alert_route_days_with_viirs_detections": [],
+      "all_covered_route_days_with_viirs_fire_detection": 0,
+      "report_cohort": "SNMF explicitly said no fires were reported nationally; not a physical-fire negative survey.",
+      "interpretation": "A VIIRS class 7-9 pixel is independent thermal-detection corroboration, not proof of wildfire or model correctness. No VIIRS detection is not proof of absence."
+    },
+    "logistic": {
+      "route_days_alerted_at_diagnostic_0_5": 5,
+      "alerts_with_same_day_viirs_class7_9_in_10km_route_buffer": 0,
+      "alert_route_days_with_viirs_detections": [],
+      "all_covered_route_days_with_viirs_fire_detection": 0,
+      "report_cohort": "SNMF explicitly said no fires were reported nationally; not a physical-fire negative survey.",
+      "interpretation": "A VIIRS class 7-9 pixel is independent thermal-detection corroboration, not proof of wildfire or model correctness. No VIIRS detection is not proof of absence."
+    },
+    "random_forest": {
+      "route_days_alerted_at_diagnostic_0_5": 0,
+      "alerts_with_same_day_viirs_class7_9_in_10km_route_buffer": 0,
+      "alert_route_days_with_viirs_detections": [],
+      "all_covered_route_days_with_viirs_fire_detection": 0,
+      "report_cohort": "SNMF explicitly said no fires were reported nationally; not a physical-fire negative survey.",
+      "interpretation": "A VIIRS class 7-9 pixel is independent thermal-detection corroboration, not proof of wildfire or model correctness. No VIIRS detection is not proof of absence."
+    },
+    "xgboost": {
+      "route_days_alerted_at_diagnostic_0_5": 4,
+      "alerts_with_same_day_viirs_class7_9_in_10km_route_buffer": 0,
+      "alert_route_days_with_viirs_detections": [],
+      "all_covered_route_days_with_viirs_fire_detection": 0,
+      "report_cohort": "SNMF explicitly said no fires were reported nationally; not a physical-fire negative survey.",
+      "interpretation": "A VIIRS class 7-9 pixel is independent thermal-detection corroboration, not proof of wildfire or model correctness. No VIIRS detection is not proof of absence."
+    }
+  },
+  "route_day_results": [
+    {
+      "date": "2023-07-14",
+      "route": "Cerro Ventana - Hueco de la Ventana",
+      "granule_id": "VNP14A1.A2023195.h13v12.002.2023196100937",
+      "tile": "h13v12",
+      "model_route_pixel_rows": 434,
+      "frozen_model_max_scores": {
+        "persistence": 0.0,
+        "logistic": 0.06986102470128006,
+        "random_forest": 0.029097296679470783,
+        "xgboost": 0.17420913
+      },
+      "diagnostic_alerts_at_0_5": {
+        "persistence": false,
+        "logistic": false,
+        "random_forest": false,
+        "xgboost": false
+      },
+      "model_scores_are_calibrated_probabilities": false,
+      "within_10km_full_route_polyline": {
+        "grid_sample_count": 417,
+        "fire_mask_class_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 8,
+          "5": 409,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "fire_pixels_7_9": 0,
+        "clear_land_class5_pixels_with_qa_land": 409,
+        "non_clear_land_or_fire_samples": 8,
+        "any_viirs_fire_detection": false,
+        "interpretation": "Class 5 with QA land is an observed clear-land non-detection sample; it does not prove the full buffer fire-free."
+      },
+      "sha256": "70da03ad14d9dca889faa997cc00cedadd36d3a62cd9af509f85adae142e30cb"
+    },
+    {
+      "date": "2023-07-14",
+      "route": "Quebrada del Condorito - Balcon Norte",
+      "granule_id": "VNP14A1.A2023195.h12v12.002.2023196101702",
+      "tile": "h12v12",
+      "model_route_pixel_rows": 432,
+      "frozen_model_max_scores": {
+        "persistence": 0.0,
+        "logistic": 0.043563808527625224,
+        "random_forest": 0.09465967232604983,
+        "xgboost": 0.02364864
+      },
+      "diagnostic_alerts_at_0_5": {
+        "persistence": false,
+        "logistic": false,
+        "random_forest": false,
+        "xgboost": false
+      },
+      "model_scores_are_calibrated_probabilities": false,
+      "within_10km_full_route_polyline": {
+        "grid_sample_count": 468,
+        "fire_mask_class_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 468,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "fire_pixels_7_9": 0,
+        "clear_land_class5_pixels_with_qa_land": 468,
+        "non_clear_land_or_fire_samples": 0,
+        "any_viirs_fire_detection": false,
+        "interpretation": "Class 5 with QA land is an observed clear-land non-detection sample; it does not prove the full buffer fire-free."
+      },
+      "sha256": "9c416be20881c6699f35b60fd6b326a72aa3f43eebd8e194eda8a645bdfe1c24"
+    },
+    {
+      "date": "2023-07-14",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "granule_id": "VNP14A1.A2023195.h12v11.002.2023196101704",
+      "tile": "h12v11",
+      "model_route_pixel_rows": 404,
+      "frozen_model_max_scores": {
+        "persistence": 0.0,
+        "logistic": 0.26598176852528604,
+        "random_forest": 0.2182052376218889,
+        "xgboost": 0.38303444
+      },
+      "diagnostic_alerts_at_0_5": {
+        "persistence": false,
+        "logistic": false,
+        "random_forest": false,
+        "xgboost": false
+      },
+      "model_scores_are_calibrated_probabilities": false,
+      "within_10km_full_route_polyline": {
+        "grid_sample_count": 412,
+        "fire_mask_class_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 44,
+          "4": 7,
+          "5": 361,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "fire_pixels_7_9": 0,
+        "clear_land_class5_pixels_with_qa_land": 361,
+        "non_clear_land_or_fire_samples": 51,
+        "any_viirs_fire_detection": false,
+        "interpretation": "Class 5 with QA land is an observed clear-land non-detection sample; it does not prove the full buffer fire-free."
+      },
+      "sha256": "38926872722adfaf8af763e3e42143ef4d8c9c4b1f4d6579d132012405b9f380"
+    },
+    {
+      "date": "2023-07-14",
+      "route": "Sendero La Chuña - El Rey",
+      "granule_id": "VNP14A1.A2023195.h12v11.002.2023196101704",
+      "tile": "h12v11",
+      "model_route_pixel_rows": 441,
+      "frozen_model_max_scores": {
+        "persistence": 0.0,
+        "logistic": 0.05442638378595031,
+        "random_forest": 0.028711905201881462,
+        "xgboost": 0.015113429
+      },
+      "diagnostic_alerts_at_0_5": {
+        "persistence": false,
+        "logistic": false,
+        "random_forest": false,
+        "xgboost": false
+      },
+      "model_scores_are_calibrated_probabilities": false,
+      "within_10km_full_route_polyline": {
+        "grid_sample_count": 406,
+        "fire_mask_class_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 406,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "fire_pixels_7_9": 0,
+        "clear_land_class5_pixels_with_qa_land": 406,
+        "non_clear_land_or_fire_samples": 0,
+        "any_viirs_fire_detection": false,
+        "interpretation": "Class 5 with QA land is an observed clear-land non-detection sample; it does not prove the full buffer fire-free."
+      },
+      "sha256": "38926872722adfaf8af763e3e42143ef4d8c9c4b1f4d6579d132012405b9f380"
+    },
+    {
+      "date": "2023-07-14",
+      "route": "Sendero Macuco - Salto Arrechea",
+      "granule_id": "VNP14A1.A2023195.h13v11.002.2023196101658",
+      "tile": "h13v11",
+      "model_route_pixel_rows": 168,
+      "frozen_model_max_scores": {
+        "persistence": 0.0,
+        "logistic": 0.48554469988793975,
+        "random_forest": 0.04616916816931765,
+        "xgboost": 0.02133592
+      },
+      "diagnostic_alerts_at_0_5": {
+        "persistence": false,
+        "logistic": false,
+        "random_forest": false,
+        "xgboost": false
+      },
+      "model_scores_are_calibrated_probabilities": false,
+      "within_10km_full_route_polyline": {
+        "grid_sample_count": 441,
+        "fire_mask_class_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 41,
+          "4": 2,
+          "5": 398,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "fire_pixels_7_9": 0,
+        "clear_land_class5_pixels_with_qa_land": 398,
+        "non_clear_land_or_fire_samples": 43,
+        "any_viirs_fire_detection": false,
+        "interpretation": "Class 5 with QA land is an observed clear-land non-detection sample; it does not prove the full buffer fire-free."
+      },
+      "sha256": "5c4dc56aa2c903daecf86bad3139dcf920983087b98ae34602bf1f88d3907db8"
+    },
+    {
+      "date": "2023-07-14",
+      "route": "Sendero Namuncura",
+      "granule_id": "VNP14A1.A2023195.h12v12.002.2023196101702",
+      "tile": "h12v12",
+      "model_route_pixel_rows": 386,
+      "frozen_model_max_scores": {
+        "persistence": 0.0,
+        "logistic": 0.03102425150857527,
+        "random_forest": 0.023897364556571425,
+        "xgboost": 0.0037627032
+      },
+      "diagnostic_alerts_at_0_5": {
+        "persistence": false,
+        "logistic": false,
+        "random_forest": false,
+        "xgboost": false
+      },
+      "model_scores_are_calibrated_probabilities": false,
+      "within_10km_full_route_polyline": {
+        "grid_sample_count": 375,
+        "fire_mask_class_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 375,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "fire_pixels_7_9": 0,
+        "clear_land_class5_pixels_with_qa_land": 375,
+        "non_clear_land_or_fire_samples": 0,
+        "any_viirs_fire_detection": false,
+        "interpretation": "Class 5 with QA land is an observed clear-land non-detection sample; it does not prove the full buffer fire-free."
+      },
+      "sha256": "9c416be20881c6699f35b60fd6b326a72aa3f43eebd8e194eda8a645bdfe1c24"
+    },
+    {
+      "date": "2023-07-18",
+      "route": "Cerro Ventana - Hueco de la Ventana",
+      "granule_id": "VNP14A1.A2023199.h13v12.002.2023200102825",
+      "tile": "h13v12",
+      "model_route_pixel_rows": 441,
+      "frozen_model_max_scores": {
+        "persistence": 0.0,
+        "logistic": 0.08210779648454063,
+        "random_forest": 0.021410582308833682,
+        "xgboost": 0.1648227
+      },
+      "diagnostic_alerts_at_0_5": {
+        "persistence": false,
+        "logistic": false,
+        "random_forest": false,
+        "xgboost": false
+      },
+      "model_scores_are_calibrated_probabilities": false,
+      "within_10km_full_route_polyline": {
+        "grid_sample_count": 417,
+        "fire_mask_class_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 71,
+          "5": 346,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "fire_pixels_7_9": 0,
+        "clear_land_class5_pixels_with_qa_land": 346,
+        "non_clear_land_or_fire_samples": 71,
+        "any_viirs_fire_detection": false,
+        "interpretation": "Class 5 with QA land is an observed clear-land non-detection sample; it does not prove the full buffer fire-free."
+      },
+      "sha256": "08a61d0a8c86710908ea7ae7857dcaa5fc699e86fb730820c84ca52472d0cfaa"
+    },
+    {
+      "date": "2023-07-18",
+      "route": "Quebrada del Condorito - Balcon Norte",
+      "granule_id": "VNP14A1.A2023199.h12v12.002.2023200103928",
+      "tile": "h12v12",
+      "model_route_pixel_rows": 51,
+      "frozen_model_max_scores": {
+        "persistence": 0.0,
+        "logistic": 0.045913900850171586,
+        "random_forest": 0.03112018217233644,
+        "xgboost": 0.0074521955
+      },
+      "diagnostic_alerts_at_0_5": {
+        "persistence": false,
+        "logistic": false,
+        "random_forest": false,
+        "xgboost": false
+      },
+      "model_scores_are_calibrated_probabilities": false,
+      "within_10km_full_route_polyline": {
+        "grid_sample_count": 468,
+        "fire_mask_class_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 468,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "fire_pixels_7_9": 0,
+        "clear_land_class5_pixels_with_qa_land": 468,
+        "non_clear_land_or_fire_samples": 0,
+        "any_viirs_fire_detection": false,
+        "interpretation": "Class 5 with QA land is an observed clear-land non-detection sample; it does not prove the full buffer fire-free."
+      },
+      "sha256": "7f009b4d5cb95907955affc508f7ace8d12f28a39a7d9c4db61601309df66bf1"
+    },
+    {
+      "date": "2023-07-18",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "granule_id": "VNP14A1.A2023199.h12v11.002.2023200102825",
+      "tile": "h12v11",
+      "model_route_pixel_rows": 416,
+      "frozen_model_max_scores": {
+        "persistence": 0.0,
+        "logistic": 0.3014659228421637,
+        "random_forest": 0.28255501480838663,
+        "xgboost": 0.36740234
+      },
+      "diagnostic_alerts_at_0_5": {
+        "persistence": false,
+        "logistic": false,
+        "random_forest": false,
+        "xgboost": false
+      },
+      "model_scores_are_calibrated_probabilities": false,
+      "within_10km_full_route_polyline": {
+        "grid_sample_count": 412,
+        "fire_mask_class_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 43,
+          "4": 0,
+          "5": 369,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "fire_pixels_7_9": 0,
+        "clear_land_class5_pixels_with_qa_land": 369,
+        "non_clear_land_or_fire_samples": 43,
+        "any_viirs_fire_detection": false,
+        "interpretation": "Class 5 with QA land is an observed clear-land non-detection sample; it does not prove the full buffer fire-free."
+      },
+      "sha256": "5a7974001574cd681a53c045366a251d645730a806aa6a71763e7cfcba914fdd"
+    },
+    {
+      "date": "2023-07-18",
+      "route": "Sendero La Chuña - El Rey",
+      "granule_id": "VNP14A1.A2023199.h12v11.002.2023200102825",
+      "tile": "h12v11",
+      "model_route_pixel_rows": 53,
+      "frozen_model_max_scores": {
+        "persistence": 0.0,
+        "logistic": 0.06118948466485414,
+        "random_forest": 0.023749800496445206,
+        "xgboost": 0.015113429
+      },
+      "diagnostic_alerts_at_0_5": {
+        "persistence": false,
+        "logistic": false,
+        "random_forest": false,
+        "xgboost": false
+      },
+      "model_scores_are_calibrated_probabilities": false,
+      "within_10km_full_route_polyline": {
+        "grid_sample_count": 406,
+        "fire_mask_class_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 406,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "fire_pixels_7_9": 0,
+        "clear_land_class5_pixels_with_qa_land": 406,
+        "non_clear_land_or_fire_samples": 0,
+        "any_viirs_fire_detection": false,
+        "interpretation": "Class 5 with QA land is an observed clear-land non-detection sample; it does not prove the full buffer fire-free."
+      },
+      "sha256": "5a7974001574cd681a53c045366a251d645730a806aa6a71763e7cfcba914fdd"
+    },
+    {
+      "date": "2023-07-18",
+      "route": "Sendero Macuco - Salto Arrechea",
+      "granule_id": "VNP14A1.A2023199.h13v11.002.2023200100411",
+      "tile": "h13v11",
+      "model_route_pixel_rows": 172,
+      "frozen_model_max_scores": {
+        "persistence": 0.0,
+        "logistic": 0.5292021789521012,
+        "random_forest": 0.04096485734204933,
+        "xgboost": 0.019986968
+      },
+      "diagnostic_alerts_at_0_5": {
+        "persistence": false,
+        "logistic": true,
+        "random_forest": false,
+        "xgboost": false
+      },
+      "model_scores_are_calibrated_probabilities": false,
+      "within_10km_full_route_polyline": {
+        "grid_sample_count": 441,
+        "fire_mask_class_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 28,
+          "4": 20,
+          "5": 393,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "fire_pixels_7_9": 0,
+        "clear_land_class5_pixels_with_qa_land": 393,
+        "non_clear_land_or_fire_samples": 48,
+        "any_viirs_fire_detection": false,
+        "interpretation": "Class 5 with QA land is an observed clear-land non-detection sample; it does not prove the full buffer fire-free."
+      },
+      "sha256": "f1dc1b6e35fed068997f884979683850b1f5af69fe4e50273c2438104e686587"
+    },
+    {
+      "date": "2023-07-18",
+      "route": "Sendero Namuncura",
+      "granule_id": "VNP14A1.A2023199.h12v12.002.2023200103928",
+      "tile": "h12v12",
+      "model_route_pixel_rows": 400,
+      "frozen_model_max_scores": {
+        "persistence": 0.0,
+        "logistic": 0.0880796035128526,
+        "random_forest": 0.01936900428223438,
+        "xgboost": 0.004182246
+      },
+      "diagnostic_alerts_at_0_5": {
+        "persistence": false,
+        "logistic": false,
+        "random_forest": false,
+        "xgboost": false
+      },
+      "model_scores_are_calibrated_probabilities": false,
+      "within_10km_full_route_polyline": {
+        "grid_sample_count": 375,
+        "fire_mask_class_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 375,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "fire_pixels_7_9": 0,
+        "clear_land_class5_pixels_with_qa_land": 375,
+        "non_clear_land_or_fire_samples": 0,
+        "any_viirs_fire_detection": false,
+        "interpretation": "Class 5 with QA land is an observed clear-land non-detection sample; it does not prove the full buffer fire-free."
+      },
+      "sha256": "7f009b4d5cb95907955affc508f7ace8d12f28a39a7d9c4db61601309df66bf1"
+    },
+    {
+      "date": "2023-12-20",
+      "route": "Cerro Ventana - Hueco de la Ventana",
+      "granule_id": "VNP14A1.A2023354.h13v12.002.2023355181648",
+      "tile": "h13v12",
+      "model_route_pixel_rows": 441,
+      "frozen_model_max_scores": {
+        "persistence": 0.0,
+        "logistic": 0.1712269274290748,
+        "random_forest": 0.06757250102000963,
+        "xgboost": 0.6973081
+      },
+      "diagnostic_alerts_at_0_5": {
+        "persistence": false,
+        "logistic": false,
+        "random_forest": false,
+        "xgboost": true
+      },
+      "model_scores_are_calibrated_probabilities": false,
+      "within_10km_full_route_polyline": {
+        "grid_sample_count": 417,
+        "fire_mask_class_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 389,
+          "5": 28,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "fire_pixels_7_9": 0,
+        "clear_land_class5_pixels_with_qa_land": 28,
+        "non_clear_land_or_fire_samples": 389,
+        "any_viirs_fire_detection": false,
+        "interpretation": "Class 5 with QA land is an observed clear-land non-detection sample; it does not prove the full buffer fire-free."
+      },
+      "sha256": "c308c46b5fff254b6df50d193efcb278c096abfef09fe7371b0afbd6f7493832"
+    },
+    {
+      "date": "2023-12-20",
+      "route": "Quebrada del Condorito - Balcon Norte",
+      "granule_id": "VNP14A1.A2023354.h12v12.002.2023355182122",
+      "tile": "h12v12",
+      "model_route_pixel_rows": 431,
+      "frozen_model_max_scores": {
+        "persistence": 0.0,
+        "logistic": 0.3544545869559656,
+        "random_forest": 0.1249721518036932,
+        "xgboost": 0.14490728
+      },
+      "diagnostic_alerts_at_0_5": {
+        "persistence": false,
+        "logistic": false,
+        "random_forest": false,
+        "xgboost": false
+      },
+      "model_scores_are_calibrated_probabilities": false,
+      "within_10km_full_route_polyline": {
+        "grid_sample_count": 468,
+        "fire_mask_class_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 468,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "fire_pixels_7_9": 0,
+        "clear_land_class5_pixels_with_qa_land": 468,
+        "non_clear_land_or_fire_samples": 0,
+        "any_viirs_fire_detection": false,
+        "interpretation": "Class 5 with QA land is an observed clear-land non-detection sample; it does not prove the full buffer fire-free."
+      },
+      "sha256": "6741b70f42f1f7e30af669a8a256d8d2cca962355a8770c0226876c91a5c29b5"
+    },
+    {
+      "date": "2023-12-20",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "granule_id": "VNP14A1.A2023354.h12v11.002.2023355184750",
+      "tile": "h12v11",
+      "model_route_pixel_rows": 383,
+      "frozen_model_max_scores": {
+        "persistence": 0.0,
+        "logistic": 0.8229567020513755,
+        "random_forest": 0.3639934891502106,
+        "xgboost": 0.91885704
+      },
+      "diagnostic_alerts_at_0_5": {
+        "persistence": false,
+        "logistic": true,
+        "random_forest": false,
+        "xgboost": true
+      },
+      "model_scores_are_calibrated_probabilities": false,
+      "within_10km_full_route_polyline": {
+        "grid_sample_count": 412,
+        "fire_mask_class_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 52,
+          "4": 0,
+          "5": 360,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "fire_pixels_7_9": 0,
+        "clear_land_class5_pixels_with_qa_land": 360,
+        "non_clear_land_or_fire_samples": 52,
+        "any_viirs_fire_detection": false,
+        "interpretation": "Class 5 with QA land is an observed clear-land non-detection sample; it does not prove the full buffer fire-free."
+      },
+      "sha256": "a80237d9120a06e6a8f5bf411519536544f7221f90eb666f20d3e16961578eb5"
+    },
+    {
+      "date": "2023-12-20",
+      "route": "Sendero Macuco - Salto Arrechea",
+      "granule_id": "VNP14A1.A2023354.h13v11.002.2023355183343",
+      "tile": "h13v11",
+      "model_route_pixel_rows": 79,
+      "frozen_model_max_scores": {
+        "persistence": 0.0,
+        "logistic": 0.9429488557975507,
+        "random_forest": 0.32158647796083056,
+        "xgboost": 0.7492273
+      },
+      "diagnostic_alerts_at_0_5": {
+        "persistence": false,
+        "logistic": true,
+        "random_forest": false,
+        "xgboost": true
+      },
+      "model_scores_are_calibrated_probabilities": false,
+      "within_10km_full_route_polyline": {
+        "grid_sample_count": 441,
+        "fire_mask_class_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 441,
+          "5": 0,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "fire_pixels_7_9": 0,
+        "clear_land_class5_pixels_with_qa_land": 0,
+        "non_clear_land_or_fire_samples": 441,
+        "any_viirs_fire_detection": false,
+        "interpretation": "Class 5 with QA land is an observed clear-land non-detection sample; it does not prove the full buffer fire-free."
+      },
+      "sha256": "bb4fa9d066f49ff255b51e5f7ef385167ab47de39f265ab347dd72bbfe65dcab"
+    },
+    {
+      "date": "2023-12-20",
+      "route": "Sendero Namuncura",
+      "granule_id": "VNP14A1.A2023354.h12v12.002.2023355182122",
+      "tile": "h12v12",
+      "model_route_pixel_rows": 393,
+      "frozen_model_max_scores": {
+        "persistence": 0.0,
+        "logistic": 0.2792911054258376,
+        "random_forest": 0.058917388580172,
+        "xgboost": 0.012246967
+      },
+      "diagnostic_alerts_at_0_5": {
+        "persistence": false,
+        "logistic": false,
+        "random_forest": false,
+        "xgboost": false
+      },
+      "model_scores_are_calibrated_probabilities": false,
+      "within_10km_full_route_polyline": {
+        "grid_sample_count": 375,
+        "fire_mask_class_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 375,
+          "5": 0,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "fire_pixels_7_9": 0,
+        "clear_land_class5_pixels_with_qa_land": 0,
+        "non_clear_land_or_fire_samples": 375,
+        "any_viirs_fire_detection": false,
+        "interpretation": "Class 5 with QA land is an observed clear-land non-detection sample; it does not prove the full buffer fire-free."
+      },
+      "sha256": "6741b70f42f1f7e30af669a8a256d8d2cca962355a8770c0226876c91a5c29b5"
+    },
+    {
+      "date": "2023-12-21",
+      "route": "Quebrada del Condorito - Balcon Norte",
+      "granule_id": "VNP14A1.A2023355.h12v12.002.2023356100014",
+      "tile": "h12v12",
+      "model_route_pixel_rows": 433,
+      "frozen_model_max_scores": {
+        "persistence": 0.0,
+        "logistic": 0.3635881344730293,
+        "random_forest": 0.14168611353067165,
+        "xgboost": 0.14490728
+      },
+      "diagnostic_alerts_at_0_5": {
+        "persistence": false,
+        "logistic": false,
+        "random_forest": false,
+        "xgboost": false
+      },
+      "model_scores_are_calibrated_probabilities": false,
+      "within_10km_full_route_polyline": {
+        "grid_sample_count": 468,
+        "fire_mask_class_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 468,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "fire_pixels_7_9": 0,
+        "clear_land_class5_pixels_with_qa_land": 468,
+        "non_clear_land_or_fire_samples": 0,
+        "any_viirs_fire_detection": false,
+        "interpretation": "Class 5 with QA land is an observed clear-land non-detection sample; it does not prove the full buffer fire-free."
+      },
+      "sha256": "0f2d1c6cb6941fdcaa3e894a40cd6fe24b947b81f1995318b9faef311f4f4c2f"
+    },
+    {
+      "date": "2023-12-21",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "granule_id": "VNP14A1.A2023355.h12v11.002.2023356100011",
+      "tile": "h12v11",
+      "model_route_pixel_rows": 381,
+      "frozen_model_max_scores": {
+        "persistence": 0.0,
+        "logistic": 0.8286657259197543,
+        "random_forest": 0.4763712319539449,
+        "xgboost": 0.91885704
+      },
+      "diagnostic_alerts_at_0_5": {
+        "persistence": false,
+        "logistic": true,
+        "random_forest": false,
+        "xgboost": true
+      },
+      "model_scores_are_calibrated_probabilities": false,
+      "within_10km_full_route_polyline": {
+        "grid_sample_count": 412,
+        "fire_mask_class_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 46,
+          "4": 0,
+          "5": 366,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "fire_pixels_7_9": 0,
+        "clear_land_class5_pixels_with_qa_land": 366,
+        "non_clear_land_or_fire_samples": 46,
+        "any_viirs_fire_detection": false,
+        "interpretation": "Class 5 with QA land is an observed clear-land non-detection sample; it does not prove the full buffer fire-free."
+      },
+      "sha256": "0a9e093f18724a3352af423aa59b98e8ef3bb17bc20d8528fae88430db97d817"
+    },
+    {
+      "date": "2023-12-21",
+      "route": "Sendero La Chuña - El Rey",
+      "granule_id": "VNP14A1.A2023355.h12v11.002.2023356100011",
+      "tile": "h12v11",
+      "model_route_pixel_rows": 441,
+      "frozen_model_max_scores": {
+        "persistence": 0.0,
+        "logistic": 0.4563570356412611,
+        "random_forest": 0.0942475069183329,
+        "xgboost": 0.090552896
+      },
+      "diagnostic_alerts_at_0_5": {
+        "persistence": false,
+        "logistic": false,
+        "random_forest": false,
+        "xgboost": false
+      },
+      "model_scores_are_calibrated_probabilities": false,
+      "within_10km_full_route_polyline": {
+        "grid_sample_count": 406,
+        "fire_mask_class_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 406,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "fire_pixels_7_9": 0,
+        "clear_land_class5_pixels_with_qa_land": 406,
+        "non_clear_land_or_fire_samples": 0,
+        "any_viirs_fire_detection": false,
+        "interpretation": "Class 5 with QA land is an observed clear-land non-detection sample; it does not prove the full buffer fire-free."
+      },
+      "sha256": "0a9e093f18724a3352af423aa59b98e8ef3bb17bc20d8528fae88430db97d817"
+    },
+    {
+      "date": "2023-12-21",
+      "route": "Sendero Macuco - Salto Arrechea",
+      "granule_id": "VNP14A1.A2023355.h13v11.002.2023356095949",
+      "tile": "h13v11",
+      "model_route_pixel_rows": 2,
+      "frozen_model_max_scores": {
+        "persistence": 0.0,
+        "logistic": 0.9027952054180886,
+        "random_forest": 0.12111577392182958,
+        "xgboost": 0.11770221
+      },
+      "diagnostic_alerts_at_0_5": {
+        "persistence": false,
+        "logistic": true,
+        "random_forest": false,
+        "xgboost": false
+      },
+      "model_scores_are_calibrated_probabilities": false,
+      "within_10km_full_route_polyline": {
+        "grid_sample_count": 441,
+        "fire_mask_class_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 37,
+          "4": 0,
+          "5": 404,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "fire_pixels_7_9": 0,
+        "clear_land_class5_pixels_with_qa_land": 404,
+        "non_clear_land_or_fire_samples": 37,
+        "any_viirs_fire_detection": false,
+        "interpretation": "Class 5 with QA land is an observed clear-land non-detection sample; it does not prove the full buffer fire-free."
+      },
+      "sha256": "e411d6cc3130215806b010b96af06ad4cf999b2d163d4238a806c0da590b8afc"
+    },
+    {
+      "date": "2023-12-21",
+      "route": "Sendero Namuncura",
+      "granule_id": "VNP14A1.A2023355.h12v12.002.2023356100014",
+      "tile": "h12v12",
+      "model_route_pixel_rows": 302,
+      "frozen_model_max_scores": {
+        "persistence": 0.0,
+        "logistic": 0.2882701086607937,
+        "random_forest": 0.056910364365609624,
+        "xgboost": 0.012246967
+      },
+      "diagnostic_alerts_at_0_5": {
+        "persistence": false,
+        "logistic": false,
+        "random_forest": false,
+        "xgboost": false
+      },
+      "model_scores_are_calibrated_probabilities": false,
+      "within_10km_full_route_polyline": {
+        "grid_sample_count": 375,
+        "fire_mask_class_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 375,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "fire_pixels_7_9": 0,
+        "clear_land_class5_pixels_with_qa_land": 375,
+        "non_clear_land_or_fire_samples": 0,
+        "any_viirs_fire_detection": false,
+        "interpretation": "Class 5 with QA land is an observed clear-land non-detection sample; it does not prove the full buffer fire-free."
+      },
+      "sha256": "0f2d1c6cb6941fdcaa3e894a40cd6fe24b947b81f1995318b9faef311f4f4c2f"
+    }
+  ],
+  "sources": {
+    "docs/environmental-models-2026-10-22/fire-model-explicit-national-no-fire-test-2023.json": "16289ebe54e3c42f8005337645eac6a8e0acdc029da651035ce50f6a33431de8",
+    "docs/environmental-models-2026-10-22/fire-snmf-national-no-fire-report-audit.json": "a57c45ee46b1bb97763432a9fa647fe9fc903b4550c427d4e46bb2be03a76396",
+    "docs/environmental-models-2026-10-22/fire-viirs-daily-l3-candidate-audit-2026-10-23.json": "0598401758ec20d500b3f6ac587958aa4aa12325a49653400901fe0c64150489",
+    "training/data/environmental/private/fire-route-geometries.json": "d622e3bd3bae7c97df9152d5ae22fa9cf3136f2bbb0ee807703eaddc21d6610a",
+    "training/data/environmental/private/viirs-daily-l3-explicit-no-fire-2023/acquisition-manifest.json": "fbfd4289d586bef1d962b0af660c5ca67cf24665330601298ea7f7ec40484b8f",
+    "docs/environmental-models-2026-10-22/fire-viirs-daily-l3-explicit-no-fire-2023-manifest.json": "48557cc29414c24cd1ab1228f31291f954d38c8e21b7348f28eab0ae6d2ec0a3"
+  },
+  "product_documentation": {
+    "nasa_viirs_active_fire_user_guide": "https://viirsland.gsfc.nasa.gov/PDF/VIIRS_activefire_User_Guide.pdf",
+    "nasa_laads_vnp14a1_file_specification": "https://ladsweb.modaps.eosdis.nasa.gov/filespec/VIIRS/1/VNP14A1"
+  },
+  "synthetic_observations": 0,
+  "deployment_approved": false,
+  "limitations": [
+    "The explicit SNMF no-fire phrase states what the report recorded; it does not establish that no physical fire existed.",
+    "VIIRS active-fire detections can include thermal anomalies that are not adjudicated wildfires.",
+    "A daily 1 km composite can miss small, obscured, or between-overpass fires; class 5 is not complete sensor coverage.",
+    "This is one independent sensor crosscheck on four report dates, not an estimate of model precision or recall.",
+    "A score alignment with a VIIRS detection does not establish that the frozen model predicted an ignition or route hazard."
+  ]
+}

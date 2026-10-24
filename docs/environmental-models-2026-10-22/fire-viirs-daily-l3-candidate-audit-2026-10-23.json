@@ -1,0 +1,149 @@
+{
+  "experiment_id": "viirs-daily-l3-candidate-audit-2026-10-23",
+  "status": "metadata_candidate_requires_pilot_download_and_scene_decode",
+  "created_at_utc": "2026-10-23T20:52:41Z",
+  "target": "Quality-screened VIIRS fire-mask detection in a 1-km route buffer during the next UTC day; not exact ignition prediction.",
+  "source_geometry": {
+    "path": "training/data/environmental/private/fire-route-geometries.json",
+    "sha256": "d622e3bd3bae7c97df9152d5ae22fa9cf3136f2bbb0ee807703eaddc21d6610a",
+    "route_count": 8
+  },
+  "spatial_sampling": {
+    "buffer_radius_km": 10.0,
+    "coverage_margin_km": 0.5,
+    "route_sample_step_km": 0.25,
+    "buffer_azimuth_step_degrees": 0.5,
+    "projection": "MODIS sinusoidal grid: x=R*longitude_radians*cos(latitude_radians), y=R*latitude_radians; tile indices use the official h/v origins and tile width.",
+    "unique_tiles": [
+      "h12v11",
+      "h12v12",
+      "h12v13",
+      "h13v11",
+      "h13v12"
+    ],
+    "unique_tile_count": 5,
+    "routes": [
+      {
+        "route": "Sendero Macuco - Salto Arrechea",
+        "geometry_sha256": "148e8cb09cd0d851b88a1875e60763f34efffe046a68c1cb886911fde629477b",
+        "vertices": 219,
+        "tiles": [
+          "h13v11"
+        ]
+      },
+      {
+        "route": "Refugio Frey desde Villa Catedral",
+        "geometry_sha256": "9947df55746c5b8033b0955a9bdd8b2ddb61db1dad2621b1fc0d72fa1e21acdf",
+        "vertices": 1057,
+        "tiles": [
+          "h12v13"
+        ]
+      },
+      {
+        "route": "Quebrada del Condorito - Balcon Norte",
+        "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74",
+        "vertices": 379,
+        "tiles": [
+          "h12v12"
+        ]
+      },
+      {
+        "route": "Sendero Namuncura",
+        "geometry_sha256": "9ffaf89538fec8fb40b3d760b8e8b8fbcc154794b28d438fa6b046429fc5d32c",
+        "vertices": 37,
+        "tiles": [
+          "h12v12"
+        ]
+      },
+      {
+        "route": "Cerro Ventana - Hueco de la Ventana",
+        "geometry_sha256": "61e1a9b62ae9b691b29c437aed7792b3723c7af54f03feb2311d4322fd3f5066",
+        "vertices": 221,
+        "tiles": [
+          "h13v12"
+        ]
+      },
+      {
+        "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa",
+        "vertices": 103,
+        "tiles": [
+          "h12v13"
+        ]
+      },
+      {
+        "route": "Sendero Che Roga - Mburucuyá",
+        "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e",
+        "vertices": 234,
+        "tiles": [
+          "h12v11"
+        ]
+      },
+      {
+        "route": "Sendero La Chuña - El Rey",
+        "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b",
+        "vertices": 93,
+        "tiles": [
+          "h12v11"
+        ]
+      }
+    ]
+  },
+  "products": {
+    "VNP14A1.002": {
+      "platform": "Suomi-NPP",
+      "doi": "https://doi.org/10.5067/VIIRS/VNP14A1.002"
+    },
+    "VJ114A1.002": {
+      "platform": "NOAA-20 / JPSS-1",
+      "doi": "https://doi.org/10.5067/VIIRS/VJ114A1.002"
+    },
+    "VJ214A1.002": {
+      "platform": "NOAA-21 / JPSS-2",
+      "doi": "https://doi.org/10.5067/VIIRS/VJ214A1.002"
+    }
+  },
+  "product_metadata": {
+    "grid_resolution_m": 1000,
+    "composite_period_hours": 24,
+    "source_fire_pixel_resolution_m": 750,
+    "layers": [
+      "FireMask",
+      "MaxFRP",
+      "QA",
+      "sample"
+    ],
+    "fire_mask": {
+      "0": "not processed / no data or poor quality",
+      "1": "bowtie deletion",
+      "2": "unused",
+      "3": "water",
+      "4": "cloud",
+      "5": "land/no fire class assigned",
+      "6": "unclassified",
+      "7": "low-confidence fire",
+      "8": "nominal-confidence fire",
+      "9": "high-confidence fire"
+    },
+    "qa_note": "QA includes land/water and day/night fields; it is not ground truth."
+  },
+  "local_acquisition_status": {
+    "granules_downloaded": 0,
+    "scenes_decoded": 0,
+    "model_metrics_created": false
+  },
+  "next_test": [
+    "Download a small set of daily tiles for independent SNMF event dates and candidate clear-land days.",
+    "Verify exact date, tile, product version, hashes, FireMask and QA against the official product guide.",
+    "Keep classes 0-4 and 6, missing granules and incomplete observation as unknown; class 5 is only an observed composite non-detection.",
+    "If the pilot passes, forecast next-day detections using only weather forecasts issued before the UTC day and test on untouched seasons."
+  ],
+  "limitations": [
+    "A 24-hour composite cannot validate hourly warning lead time or ignition time.",
+    "The 1-km grid is coarser than the 375-m I-band product.",
+    "Satellite fire detections are not independently confirmed wildfire events; SNMF/field records are still needed for that claim.",
+    "Clear-land non-detection cannot rule out small fires, cloud/smoke-obscured fires or fires between overpasses."
+  ],
+  "synthetic_observations": 0,
+  "deployment_approved": false
+}

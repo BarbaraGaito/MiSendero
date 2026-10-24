@@ -1,0 +1,11 @@
+# Validación geográfica y temporal del dataset unificado
+
+Se reservaron grupos completos de rutas próximas (distancia entre trazados muestreados ≤100 km). Cada pliegue entrenó con rutas de otros grupos en 2022, seleccionó umbral en 2023 y probó rutas reservadas en 2024-2026. El corte 0,5 se muestra solo como diagnóstico.
+
+Pliegues puntuados: 15 de 15; solo 7 grupos tuvieron evidencia positiva en el test y 0 encontraron un umbral de validación de 90% con cinco alertas mínimas. Métricas agregadas ruta-día a 0,5: {"prevalence": 0.006310679611650485, "threshold": 0.5, "alerts": 2598, "true_positives": 22, "false_positives": 2576, "false_negatives": 43, "precision": 0.008468052347959968, "precision_wilson_one_sided_95_lower_bound_independent_days": 0.005980017454952983, "recall": 0.3384615384615385, "average_precision": 0.007841754155677297, "brier": 0.16821405060040504, "confusion_matrix_tn_fp_fn_tp": [7659, 2576, 43, 22], "observations": 10300, "positive_observations": 65}.
+
+Con el corte de máxima precisión seleccionado por validación en cada región, el resultado agregado por fecha es {"event_dates": 398, "positive_event_dates": 42, "alerts": 7, "true_positives": 0, "false_positives": 7, "false_negatives": 42, "precision": 0.0, "recall": 0.0, "wilson_lower_95_descriptive": 0.0, "threshold_policy": "Per-region cutoff maximized precision on 2023 validation dates with >=5 alerts; no >=90% precision threshold passed."}.
+
+Métricas agrupadas por fecha: {"prevalence": 0.10552763819095477, "threshold": 0.5, "alerts": 370, "true_positives": 41, "false_positives": 329, "false_negatives": 1, "precision": 0.11081081081081082, "precision_wilson_one_sided_95_lower_bound_independent_days": 0.0867428262105635, "recall": 0.9761904761904762, "average_precision": 0.11101140409660737, "brier": 0.48594025495859694, "confusion_matrix_tn_fp_fn_tp": [27, 329, 1, 41], "event_dates": 398, "positive_event_dates": 42}; límite inferior Wilson descriptivo: 0.0867428262105635.
+
+Esta prueba reduce la contaminación geográfica entre rutas cercanas, pero los bloques son aproximaciones espaciales y la etiqueta no es verdad exhaustiva del fuego físico. Consultar el JSON para tamaños de pliegue, regiones, umbrales y linaje de fuentes.

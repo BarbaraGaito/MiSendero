@@ -1,0 +1,579 @@
+{
+  "experiment_id": "inpe-prospective-partial-detection-screen",
+  "as_of_utc": "2026-10-23T21:57:46Z",
+  "status": "incomplete_windows_not_scored",
+  "source": "INPE daily South America active-fire detection CSV; Argentina rows only",
+  "spatial_rule": "within 10 km of the complete reviewed route polylines, using a local planar point-to-segment distance",
+  "route_geometry_sha256": "d622e3bd3bae7c97df9152d5ae22fa9cf3136f2bbb0ee807703eaddc21d6610a",
+  "temporal_rule": "Only mature daily CSVs and detections in [forecast validity, min(validity + 24 h, as-of)) are included.",
+  "summary": {
+    "unique_forecast_windows": 8,
+    "windows_with_any_available_source_file": 3,
+    "windows_with_any_matured_daily_csv_segment": 1,
+    "windows_with_24h_of_matured_daily_csv_segments": 0,
+    "total_route_detection_records_in_available_files": 0,
+    "total_route_detection_records_in_matured_intervals": 0,
+    "synthetic_observations": 0,
+    "deployment_approved": false
+  },
+  "source_files": [
+    {
+      "date_utc": "2026-10-23",
+      "csv": "focos_diario_20261023.csv",
+      "sha256": "149971733a11d5f5c4fbdcca50a49c5427bb7e991655f247bb73ac1670a3ccce",
+      "bytes": 4923628,
+      "last_modified": "Fri, 23 Oct 2026 21:04:03 GMT",
+      "maturity_status": "not_mature",
+      "earliest_argentina_record_utc": "2026-10-23T00:00:00Z",
+      "latest_argentina_record_utc": "2026-10-23T18:15:00Z"
+    },
+    {
+      "date_utc": "2026-10-22",
+      "csv": "focos_diario_20261022.csv",
+      "sha256": "65fa7b7b0215f1ad18a5b8c0c38a1b153b4e7a7d16ac1a0a69953dc76d1fda55",
+      "bytes": 5655420,
+      "last_modified": "Fri, 23 Oct 2026 12:03:03 GMT",
+      "maturity_status": "mature_by_last_modified",
+      "earliest_argentina_record_utc": "2026-10-22T00:00:00Z",
+      "latest_argentina_record_utc": "2026-10-22T23:50:00Z"
+    }
+  ],
+  "forecasts": [
+    {
+      "source_capture": "capture_20261023T040732Z.json",
+      "horizon": "RF.PREV.T1.tif",
+      "forecast_run_utc": "2026-10-22T00:00:00Z",
+      "forecast_valid_utc": "2026-10-23T18:00:00Z",
+      "window_end_utc": "2026-10-24T18:00:00Z",
+      "partial_as_of_utc": "2026-10-23T21:57:46Z",
+      "hours_with_matured_daily_csv_segment": 0,
+      "available_csv_date_segments_for_positive_only_search": [
+        {
+          "start_utc": "2026-10-23T18:00:00Z",
+          "end_utc": "2026-10-23T21:57:46Z",
+          "source_file": "focos_diario_20261023.csv",
+          "maturity_status": "not_mature"
+        }
+      ],
+      "matured_csv_date_segments": [],
+      "route_detections": [
+        {
+          "route": "Sendero Macuco - Salto Arrechea",
+          "count": 0,
+          "mature_detection_count": 0,
+          "detections": []
+        },
+        {
+          "route": "Refugio Frey desde Villa Catedral",
+          "count": 0,
+          "mature_detection_count": 0,
+          "detections": []
+        },
+        {
+          "route": "Quebrada del Condorito - Balcon Norte",
+          "count": 0,
+          "mature_detection_count": 0,
+          "detections": []
+        },
+        {
+          "route": "Sendero Namuncura",
+          "count": 0,
+          "mature_detection_count": 0,
+          "detections": []
+        },
+        {
+          "route": "Cerro Ventana - Hueco de la Ventana",
+          "count": 0,
+          "mature_detection_count": 0,
+          "detections": []
+        },
+        {
+          "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "count": 0,
+          "mature_detection_count": 0,
+          "detections": []
+        },
+        {
+          "route": "Sendero Che Roga - Mburucuyá",
+          "count": 0,
+          "mature_detection_count": 0,
+          "detections": []
+        },
+        {
+          "route": "Sendero La Chuña - El Rey",
+          "count": 0,
+          "mature_detection_count": 0,
+          "detections": []
+        }
+      ],
+      "status": "partial_positive_detection_screen_only"
+    },
+    {
+      "source_capture": "capture_20261023T050641Z.json",
+      "horizon": "RF.PREV.T0.tif",
+      "forecast_run_utc": "2026-10-22T00:00:00Z",
+      "forecast_valid_utc": "2026-10-22T18:00:00Z",
+      "window_end_utc": "2026-10-23T18:00:00Z",
+      "partial_as_of_utc": "2026-10-23T21:57:46Z",
+      "hours_with_matured_daily_csv_segment": 6.0,
+      "available_csv_date_segments_for_positive_only_search": [
+        {
+          "start_utc": "2026-10-22T18:00:00Z",
+          "end_utc": "2026-10-23T00:00:00Z",
+          "source_file": "focos_diario_20261022.csv",
+          "maturity_status": "mature_by_last_modified"
+        },
+        {
+          "start_utc": "2026-10-23T00:00:00Z",
+          "end_utc": "2026-10-23T18:00:00Z",
+          "source_file": "focos_diario_20261023.csv",
+          "maturity_status": "not_mature"
+        }
+      ],
+      "matured_csv_date_segments": [
+        {
+          "start_utc": "2026-10-22T18:00:00Z",
+          "end_utc": "2026-10-23T00:00:00Z",
+          "source_file": "focos_diario_20261022.csv",
+          "maturity_status": "mature_by_last_modified"
+        }
+      ],
+      "route_detections": [
+        {
+          "route": "Sendero Macuco - Salto Arrechea",
+          "count": 0,
+          "mature_detection_count": 0,
+          "detections": []
+        },
+        {
+          "route": "Refugio Frey desde Villa Catedral",
+          "count": 0,
+          "mature_detection_count": 0,
+          "detections": []
+        },
+        {
+          "route": "Quebrada del Condorito - Balcon Norte",
+          "count": 0,
+          "mature_detection_count": 0,
+          "detections": []
+        },
+        {
+          "route": "Sendero Namuncura",
+          "count": 0,
+          "mature_detection_count": 0,
+          "detections": []
+        },
+        {
+          "route": "Cerro Ventana - Hueco de la Ventana",
+          "count": 0,
+          "mature_detection_count": 0,
+          "detections": []
+        },
+        {
+          "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "count": 0,
+          "mature_detection_count": 0,
+          "detections": []
+        },
+        {
+          "route": "Sendero Che Roga - Mburucuyá",
+          "count": 0,
+          "mature_detection_count": 0,
+          "detections": []
+        },
+        {
+          "route": "Sendero La Chuña - El Rey",
+          "count": 0,
+          "mature_detection_count": 0,
+          "detections": []
+        }
+      ],
+      "status": "partial_positive_detection_screen_only"
+    },
+    {
+      "source_capture": "capture_20261023T050641Z.json",
+      "horizon": "RF.PREV.T2.tif",
+      "forecast_run_utc": "2026-10-22T00:00:00Z",
+      "forecast_valid_utc": "2026-10-24T18:00:00Z",
+      "window_end_utc": "2026-10-25T18:00:00Z",
+      "partial_as_of_utc": "2026-10-23T21:57:46Z",
+      "hours_with_matured_daily_csv_segment": 0,
+      "available_csv_date_segments_for_positive_only_search": [],
+      "matured_csv_date_segments": [],
+      "route_detections": [
+        {
+          "route": "Sendero Macuco - Salto Arrechea",
+          "count": 0,
+          "mature_detection_count": 0,
+          "detections": []
+        },
+        {
+          "route": "Refugio Frey desde Villa Catedral",
+          "count": 0,
+          "mature_detection_count": 0,
+          "detections": []
+        },
+        {
+          "route": "Quebrada del Condorito - Balcon Norte",
+          "count": 0,
+          "mature_detection_count": 0,
+          "detections": []
+        },
+        {
+          "route": "Sendero Namuncura",
+          "count": 0,
+          "mature_detection_count": 0,
+          "detections": []
+        },
+        {
+          "route": "Cerro Ventana - Hueco de la Ventana",
+          "count": 0,
+          "mature_detection_count": 0,
+          "detections": []
+        },
+        {
+          "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "count": 0,
+          "mature_detection_count": 0,
+          "detections": []
+        },
+        {
+          "route": "Sendero Che Roga - Mburucuyá",
+          "count": 0,
+          "mature_detection_count": 0,
+          "detections": []
+        },
+        {
+          "route": "Sendero La Chuña - El Rey",
+          "count": 0,
+          "mature_detection_count": 0,
+          "detections": []
+        }
+      ],
+      "status": "no_source_file_available_yet"
+    },
+    {
+      "source_capture": "capture_20261023T050641Z.json",
+      "horizon": "RF.PREV.T3.tif",
+      "forecast_run_utc": "2026-10-22T00:00:00Z",
+      "forecast_valid_utc": "2026-10-25T18:00:00Z",
+      "window_end_utc": "2026-10-26T18:00:00Z",
+      "partial_as_of_utc": "2026-10-23T21:57:46Z",
+      "hours_with_matured_daily_csv_segment": 0,
+      "available_csv_date_segments_for_positive_only_search": [],
+      "matured_csv_date_segments": [],
+      "route_detections": [
+        {
+          "route": "Sendero Macuco - Salto Arrechea",
+          "count": 0,
+          "mature_detection_count": 0,
+          "detections": []
+        },
+        {
+          "route": "Refugio Frey desde Villa Catedral",
+          "count": 0,
+          "mature_detection_count": 0,
+          "detections": []
+        },
+        {
+          "route": "Quebrada del Condorito - Balcon Norte",
+          "count": 0,
+          "mature_detection_count": 0,
+          "detections": []
+        },
+        {
+          "route": "Sendero Namuncura",
+          "count": 0,
+          "mature_detection_count": 0,
+          "detections": []
+        },
+        {
+          "route": "Cerro Ventana - Hueco de la Ventana",
+          "count": 0,
+          "mature_detection_count": 0,
+          "detections": []
+        },
+        {
+          "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "count": 0,
+          "mature_detection_count": 0,
+          "detections": []
+        },
+        {
+          "route": "Sendero Che Roga - Mburucuyá",
+          "count": 0,
+          "mature_detection_count": 0,
+          "detections": []
+        },
+        {
+          "route": "Sendero La Chuña - El Rey",
+          "count": 0,
+          "mature_detection_count": 0,
+          "detections": []
+        }
+      ],
+      "status": "no_source_file_available_yet"
+    },
+    {
+      "source_capture": "capture_20261023T141831Z.json",
+      "horizon": "RF.PREV.T0.tif",
+      "forecast_run_utc": "2026-10-23T00:00:00Z",
+      "forecast_valid_utc": "2026-10-23T18:00:00Z",
+      "window_end_utc": "2026-10-24T18:00:00Z",
+      "partial_as_of_utc": "2026-10-23T21:57:46Z",
+      "hours_with_matured_daily_csv_segment": 0,
+      "available_csv_date_segments_for_positive_only_search": [
+        {
+          "start_utc": "2026-10-23T18:00:00Z",
+          "end_utc": "2026-10-23T21:57:46Z",
+          "source_file": "focos_diario_20261023.csv",
+          "maturity_status": "not_mature"
+        }
+      ],
+      "matured_csv_date_segments": [],
+      "route_detections": [
+        {
+          "route": "Sendero Macuco - Salto Arrechea",
+          "count": 0,
+          "mature_detection_count": 0,
+          "detections": []
+        },
+        {
+          "route": "Refugio Frey desde Villa Catedral",
+          "count": 0,
+          "mature_detection_count": 0,
+          "detections": []
+        },
+        {
+          "route": "Quebrada del Condorito - Balcon Norte",
+          "count": 0,
+          "mature_detection_count": 0,
+          "detections": []
+        },
+        {
+          "route": "Sendero Namuncura",
+          "count": 0,
+          "mature_detection_count": 0,
+          "detections": []
+        },
+        {
+          "route": "Cerro Ventana - Hueco de la Ventana",
+          "count": 0,
+          "mature_detection_count": 0,
+          "detections": []
+        },
+        {
+          "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "count": 0,
+          "mature_detection_count": 0,
+          "detections": []
+        },
+        {
+          "route": "Sendero Che Roga - Mburucuyá",
+          "count": 0,
+          "mature_detection_count": 0,
+          "detections": []
+        },
+        {
+          "route": "Sendero La Chuña - El Rey",
+          "count": 0,
+          "mature_detection_count": 0,
+          "detections": []
+        }
+      ],
+      "status": "partial_positive_detection_screen_only"
+    },
+    {
+      "source_capture": "capture_20261023T141831Z.json",
+      "horizon": "RF.PREV.T1.tif",
+      "forecast_run_utc": "2026-10-23T00:00:00Z",
+      "forecast_valid_utc": "2026-10-24T18:00:00Z",
+      "window_end_utc": "2026-10-25T18:00:00Z",
+      "partial_as_of_utc": "2026-10-23T21:57:46Z",
+      "hours_with_matured_daily_csv_segment": 0,
+      "available_csv_date_segments_for_positive_only_search": [],
+      "matured_csv_date_segments": [],
+      "route_detections": [
+        {
+          "route": "Sendero Macuco - Salto Arrechea",
+          "count": 0,
+          "mature_detection_count": 0,
+          "detections": []
+        },
+        {
+          "route": "Refugio Frey desde Villa Catedral",
+          "count": 0,
+          "mature_detection_count": 0,
+          "detections": []
+        },
+        {
+          "route": "Quebrada del Condorito - Balcon Norte",
+          "count": 0,
+          "mature_detection_count": 0,
+          "detections": []
+        },
+        {
+          "route": "Sendero Namuncura",
+          "count": 0,
+          "mature_detection_count": 0,
+          "detections": []
+        },
+        {
+          "route": "Cerro Ventana - Hueco de la Ventana",
+          "count": 0,
+          "mature_detection_count": 0,
+          "detections": []
+        },
+        {
+          "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "count": 0,
+          "mature_detection_count": 0,
+          "detections": []
+        },
+        {
+          "route": "Sendero Che Roga - Mburucuyá",
+          "count": 0,
+          "mature_detection_count": 0,
+          "detections": []
+        },
+        {
+          "route": "Sendero La Chuña - El Rey",
+          "count": 0,
+          "mature_detection_count": 0,
+          "detections": []
+        }
+      ],
+      "status": "no_source_file_available_yet"
+    },
+    {
+      "source_capture": "capture_20261023T141831Z.json",
+      "horizon": "RF.PREV.T2.tif",
+      "forecast_run_utc": "2026-10-23T00:00:00Z",
+      "forecast_valid_utc": "2026-10-25T18:00:00Z",
+      "window_end_utc": "2026-10-26T18:00:00Z",
+      "partial_as_of_utc": "2026-10-23T21:57:46Z",
+      "hours_with_matured_daily_csv_segment": 0,
+      "available_csv_date_segments_for_positive_only_search": [],
+      "matured_csv_date_segments": [],
+      "route_detections": [
+        {
+          "route": "Sendero Macuco - Salto Arrechea",
+          "count": 0,
+          "mature_detection_count": 0,
+          "detections": []
+        },
+        {
+          "route": "Refugio Frey desde Villa Catedral",
+          "count": 0,
+          "mature_detection_count": 0,
+          "detections": []
+        },
+        {
+          "route": "Quebrada del Condorito - Balcon Norte",
+          "count": 0,
+          "mature_detection_count": 0,
+          "detections": []
+        },
+        {
+          "route": "Sendero Namuncura",
+          "count": 0,
+          "mature_detection_count": 0,
+          "detections": []
+        },
+        {
+          "route": "Cerro Ventana - Hueco de la Ventana",
+          "count": 0,
+          "mature_detection_count": 0,
+          "detections": []
+        },
+        {
+          "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "count": 0,
+          "mature_detection_count": 0,
+          "detections": []
+        },
+        {
+          "route": "Sendero Che Roga - Mburucuyá",
+          "count": 0,
+          "mature_detection_count": 0,
+          "detections": []
+        },
+        {
+          "route": "Sendero La Chuña - El Rey",
+          "count": 0,
+          "mature_detection_count": 0,
+          "detections": []
+        }
+      ],
+      "status": "no_source_file_available_yet"
+    },
+    {
+      "source_capture": "capture_20261023T141831Z.json",
+      "horizon": "RF.PREV.T3.tif",
+      "forecast_run_utc": "2026-10-23T00:00:00Z",
+      "forecast_valid_utc": "2026-10-26T18:00:00Z",
+      "window_end_utc": "2026-10-27T18:00:00Z",
+      "partial_as_of_utc": "2026-10-23T21:57:46Z",
+      "hours_with_matured_daily_csv_segment": 0,
+      "available_csv_date_segments_for_positive_only_search": [],
+      "matured_csv_date_segments": [],
+      "route_detections": [
+        {
+          "route": "Sendero Macuco - Salto Arrechea",
+          "count": 0,
+          "mature_detection_count": 0,
+          "detections": []
+        },
+        {
+          "route": "Refugio Frey desde Villa Catedral",
+          "count": 0,
+          "mature_detection_count": 0,
+          "detections": []
+        },
+        {
+          "route": "Quebrada del Condorito - Balcon Norte",
+          "count": 0,
+          "mature_detection_count": 0,
+          "detections": []
+        },
+        {
+          "route": "Sendero Namuncura",
+          "count": 0,
+          "mature_detection_count": 0,
+          "detections": []
+        },
+        {
+          "route": "Cerro Ventana - Hueco de la Ventana",
+          "count": 0,
+          "mature_detection_count": 0,
+          "detections": []
+        },
+        {
+          "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "count": 0,
+          "mature_detection_count": 0,
+          "detections": []
+        },
+        {
+          "route": "Sendero Che Roga - Mburucuyá",
+          "count": 0,
+          "mature_detection_count": 0,
+          "detections": []
+        },
+        {
+          "route": "Sendero La Chuña - El Rey",
+          "count": 0,
+          "mature_detection_count": 0,
+          "detections": []
+        }
+      ],
+      "status": "no_source_file_available_yet"
+    }
+  ],
+  "limitations": [
+    "Incomplete forecast windows are not assigned positive or negative outcomes and no precision metric is computed.",
+    "No INPE detection in an observed interval does not establish fire absence; the satellite archive is positive-only for this purpose.",
+    "The spatial unit is a 10 km buffer around full route polylines; the INPE risk index itself is still sampled at route-sector centers.",
+    "An INPE active-fire point is a satellite detection, not a field-confirmed ignition or independent incident adjudication."
+  ]
+}

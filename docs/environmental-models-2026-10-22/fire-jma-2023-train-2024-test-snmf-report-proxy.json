@@ -1,0 +1,401 @@
+{
+  "experiment_id": "jma-gsm-2023-train-2024-heldout-snmf-reported-fire-route-day-transfer",
+  "status": "not_reliable_for_fire_prediction",
+  "target": "Same-day nearby SNMF-listed active incident proxy within the archived route-sector label definition; not physical fire absence or ignition probability.",
+  "protocol": {
+    "forecast_lead_hours": 24,
+    "model": "StandardScaler + route one-hot + class-balanced logistic regression (C=1, random_state=42).",
+    "train_period": "2023-07-01 through 2023-12-31",
+    "test_period": "2024-01-01 through 2024-12-31",
+    "thresholds": [
+      0.1,
+      0.2,
+      0.3,
+      0.5,
+      0.7,
+      0.8,
+      0.9
+    ],
+    "threshold_selection": "None; all are diagnostic and the 2024 test was not used to choose a threshold.",
+    "weather_features": [
+      "temperature_mean",
+      "temperature_max",
+      "humidity_mean",
+      "humidity_min",
+      "wind_mean",
+      "wind_max",
+      "precipitation_sum"
+    ],
+    "weather_window": "Complete 24 hourly JMA GSM Previous Runs forecasts for the target UTC date; incomplete route-days excluded.",
+    "route_day_label": "Positive if an SNMF report lists a nearby incident; zero otherwise. Zeros are report-record proxies, not verified physical no-fire observations."
+  },
+  "sources": {
+    "weather_sha256": {
+      "openmeteo-gfs-previous-runs-argentina-trails-jma_gsm-2023-07-01-2024-01-01.json.gz": "53a83da0d4479fd6de05199f21ca47d98f0047ee848ad4085d2d30a400944009",
+      "openmeteo-gfs-previous-runs-argentina-trails-jma_gsm-2024-01-01-2025-01-01.json.gz": "e3c8aea0aca987df527dbc6fd9037d7274efd2ebab2cfbe8a12880e7f297b20e"
+    },
+    "proxy_sha256": {
+      "snmf-2023-route-day-report-proxy.json": "930e2f33514705428d4b40aeb787119ce031e28e58992e90d3acab02002c7278",
+      "snmf-2024-route-day-report-proxy.json": "e4197585524b1b09c7185181cc0254cfe0193f032914216784f1f88b160c5645"
+    },
+    "explicit_no_fire_audit_sha256": "a57c45ee46b1bb97763432a9fa647fe9fc903b4550c427d4e46bb2be03a76396"
+  },
+  "counts": {
+    "aligned_route_days_2023_2024": 3170,
+    "training_route_days": 952,
+    "training_positive_route_days": 5,
+    "training_positive_route_day_clusters": 4,
+    "test_route_days": 2218,
+    "test_positive_route_days": 9,
+    "test_positive_route_day_clusters": 8,
+    "explicit_national_no_fire_report_dates_2024": 27,
+    "explicit_national_no_fire_dates": [
+      "2024-04-13",
+      "2024-04-14",
+      "2024-04-15",
+      "2024-05-04",
+      "2024-05-05",
+      "2024-05-11",
+      "2024-05-12",
+      "2024-05-13",
+      "2024-05-14",
+      "2024-05-16",
+      "2024-05-17",
+      "2024-05-18",
+      "2024-05-19",
+      "2024-05-23",
+      "2024-05-25",
+      "2024-05-26",
+      "2024-05-27",
+      "2024-05-29",
+      "2024-05-31",
+      "2024-06-04",
+      "2024-06-05",
+      "2024-06-16",
+      "2024-06-30",
+      "2024-07-03",
+      "2024-07-09",
+      "2024-07-10",
+      "2024-11-18"
+    ],
+    "covered_route_days_on_explicit_no_fire_dates": 216,
+    "possible_route_days_on_explicit_no_fire_dates": 216,
+    "route_days_missing_weather_coverage_on_explicit_no_fire_dates": 0
+  },
+  "test_report_proxy_metrics": {
+    "positive_fraction": 0.0040577096483318306,
+    "average_precision": 0.009557748205655296,
+    "training_prevalence_baseline_average_precision": 0.0040577096483318306,
+    "brier_score": 0.03107309660851468,
+    "training_prevalence_baseline_brier_score": 0.0040426712110612035,
+    "training_prevalence": 0.005252100840336135,
+    "threshold_metrics": {
+      "0.1": {
+        "threshold": 0.1,
+        "true_positives": 2,
+        "false_positives": 217,
+        "false_negatives": 7,
+        "true_negatives": 1992,
+        "alerts": 219,
+        "precision_on_report_proxy": 0.0091324200913242,
+        "recall_on_report_proxy": 0.2222222222222222,
+        "accuracy_on_report_proxy": 0.8990081154192967
+      },
+      "0.2": {
+        "threshold": 0.2,
+        "true_positives": 0,
+        "false_positives": 146,
+        "false_negatives": 9,
+        "true_negatives": 2063,
+        "alerts": 146,
+        "precision_on_report_proxy": 0.0,
+        "recall_on_report_proxy": 0.0,
+        "accuracy_on_report_proxy": 0.930117222723174
+      },
+      "0.3": {
+        "threshold": 0.3,
+        "true_positives": 0,
+        "false_positives": 108,
+        "false_negatives": 9,
+        "true_negatives": 2101,
+        "alerts": 108,
+        "precision_on_report_proxy": 0.0,
+        "recall_on_report_proxy": 0.0,
+        "accuracy_on_report_proxy": 0.9472497745716862
+      },
+      "0.5": {
+        "threshold": 0.5,
+        "true_positives": 0,
+        "false_positives": 73,
+        "false_negatives": 9,
+        "true_negatives": 2136,
+        "alerts": 73,
+        "precision_on_report_proxy": 0.0,
+        "recall_on_report_proxy": 0.0,
+        "accuracy_on_report_proxy": 0.9630297565374211
+      },
+      "0.7": {
+        "threshold": 0.7,
+        "true_positives": 0,
+        "false_positives": 54,
+        "false_negatives": 9,
+        "true_negatives": 2155,
+        "alerts": 54,
+        "precision_on_report_proxy": 0.0,
+        "recall_on_report_proxy": 0.0,
+        "accuracy_on_report_proxy": 0.9715960324616771
+      },
+      "0.8": {
+        "threshold": 0.8,
+        "true_positives": 0,
+        "false_positives": 46,
+        "false_negatives": 9,
+        "true_negatives": 2163,
+        "alerts": 46,
+        "precision_on_report_proxy": 0.0,
+        "recall_on_report_proxy": 0.0,
+        "accuracy_on_report_proxy": 0.9752028854824166
+      },
+      "0.9": {
+        "threshold": 0.9,
+        "true_positives": 0,
+        "false_positives": 32,
+        "false_negatives": 9,
+        "true_negatives": 2177,
+        "alerts": 32,
+        "precision_on_report_proxy": 0.0,
+        "recall_on_report_proxy": 0.0,
+        "accuracy_on_report_proxy": 0.9815148782687105
+      }
+    }
+  },
+  "explicit_no_fire_negative_challenge": {
+    "target": "Official SNMF report explicitly states no fires were reported nationally on that date; administrative negative proxy only.",
+    "report_dates": 27,
+    "adjacent_date_clusters": 14,
+    "threshold_results": {
+      "0.1": {
+        "covered_route_days": 216,
+        "possible_route_days": 216,
+        "alerted_route_days": 11,
+        "report_dates_with_any_alert": 10,
+        "alerts": [
+          {
+            "date": "2024-05-16",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.16412650768496231
+          },
+          {
+            "date": "2024-05-17",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.10502458521459541
+          },
+          {
+            "date": "2024-05-29",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.27380158313408454
+          },
+          {
+            "date": "2024-06-04",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.41569371548181844
+          },
+          {
+            "date": "2024-06-16",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.21203771517555065
+          },
+          {
+            "date": "2024-06-30",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.8284147050339831
+          },
+          {
+            "date": "2024-07-03",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.2863843357572202
+          },
+          {
+            "date": "2024-07-10",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.1268389772805304
+          },
+          {
+            "date": "2024-11-18",
+            "route_sector": "Sendero Namuncura",
+            "score": 0.16601745326884074
+          },
+          {
+            "date": "2024-05-18",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.15286807506074157
+          },
+          {
+            "date": "2024-06-30",
+            "route_sector": "Sendero La Chuña - El Rey",
+            "score": 0.17219532266237805
+          }
+        ]
+      },
+      "0.2": {
+        "covered_route_days": 216,
+        "possible_route_days": 216,
+        "alerted_route_days": 5,
+        "report_dates_with_any_alert": 5,
+        "alerts": [
+          {
+            "date": "2024-05-29",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.27380158313408454
+          },
+          {
+            "date": "2024-06-04",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.41569371548181844
+          },
+          {
+            "date": "2024-06-16",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.21203771517555065
+          },
+          {
+            "date": "2024-06-30",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.8284147050339831
+          },
+          {
+            "date": "2024-07-03",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.2863843357572202
+          }
+        ]
+      },
+      "0.3": {
+        "covered_route_days": 216,
+        "possible_route_days": 216,
+        "alerted_route_days": 2,
+        "report_dates_with_any_alert": 2,
+        "alerts": [
+          {
+            "date": "2024-06-04",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.41569371548181844
+          },
+          {
+            "date": "2024-06-30",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.8284147050339831
+          }
+        ]
+      },
+      "0.5": {
+        "covered_route_days": 216,
+        "possible_route_days": 216,
+        "alerted_route_days": 1,
+        "report_dates_with_any_alert": 1,
+        "alerts": [
+          {
+            "date": "2024-06-30",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.8284147050339831
+          }
+        ]
+      },
+      "0.7": {
+        "covered_route_days": 216,
+        "possible_route_days": 216,
+        "alerted_route_days": 1,
+        "report_dates_with_any_alert": 1,
+        "alerts": [
+          {
+            "date": "2024-06-30",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.8284147050339831
+          }
+        ]
+      },
+      "0.8": {
+        "covered_route_days": 216,
+        "possible_route_days": 216,
+        "alerted_route_days": 1,
+        "report_dates_with_any_alert": 1,
+        "alerts": [
+          {
+            "date": "2024-06-30",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.8284147050339831
+          }
+        ]
+      },
+      "0.9": {
+        "covered_route_days": 216,
+        "possible_route_days": 216,
+        "alerted_route_days": 0,
+        "report_dates_with_any_alert": 0,
+        "alerts": []
+      }
+    }
+  },
+  "positive_test_cases": [
+    {
+      "date": "2024-10-16",
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "score": 0.012908848481214166
+    },
+    {
+      "date": "2024-01-30",
+      "route_sector": "Sendero Namuncura",
+      "score": 0.00256963779800427
+    },
+    {
+      "date": "2024-01-31",
+      "route_sector": "Sendero Namuncura",
+      "score": 0.010293482905324057
+    },
+    {
+      "date": "2024-02-03",
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "score": 0.008942153904114424
+    },
+    {
+      "date": "2024-01-06",
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "score": 0.004806428196908541
+    },
+    {
+      "date": "2024-01-26",
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "score": 0.11387309114348117
+    },
+    {
+      "date": "2024-03-07",
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "score": 0.16379497264677534
+    },
+    {
+      "date": "2024-04-16",
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "score": 0.009128124664347313
+    },
+    {
+      "date": "2024-09-15",
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "score": 0.022560339352095445
+    }
+  ],
+  "interpretation": [
+    "At the fixed diagnostic threshold 0.5, the model alerted on 73 route-days and detected none of the nine 2024 positive report-proxy route-days.",
+    "At 0.1, recall was still only 2/9 and the model emitted 219 alerts; the test metrics do not identify a useful reliable threshold.",
+    "The 27 explicit national no-fire report days provide an additional selected negative challenge set; they do not prove absence of unreported physical fires.",
+    "Only five positive route-days were available for training and nine for the full held-out year. The 2024 results are too sparse to claim precision for physical fire or trail safety."
+  ],
+  "limitations": [
+    "SNMF reports document incidents supplied by jurisdictions; they are not a complete sensor-confirmed fire census.",
+    "No report entry near a route is not automatically physical absence. Only explicit national no-fire report dates are used as the stronger negative challenge set.",
+    "Positive route-days repeat some incidents; day rows and route sectors overstate the number of independent fires.",
+    "No confidence threshold was selected on an independent validation set; all listed thresholds are descriptive test diagnostics.",
+    "Forecast weather is only one part of fire occurrence; fuel condition, ignition likelihood, and route-level observed coverage are absent."
+  ],
+  "synthetic_observations": 0,
+  "deployment_approved": false
+}

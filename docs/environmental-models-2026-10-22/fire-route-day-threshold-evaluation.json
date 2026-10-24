@@ -1,0 +1,167 @@
+{
+  "experiment_id": "modis-fire-route-day-validation-threshold",
+  "created_at_utc": "2026-10-23T03:26:40.334329+00:00",
+  "status": "no_validation_threshold_met",
+  "meaning": "Route-day agreement with MODIS nominal/high-confidence fire detections only; not physical-fire precision or probability.",
+  "protocol_sha256": "21c731c5266eb569e16936c77b3d1f4bc78088f97b3f35fa1b01ae9588f75555",
+  "source_audit_sha256": "c7edc41807b410a8222142b0bb5c9e6757473dfbfae207d491b5b81d2447ac5c",
+  "selection": {
+    "unit": "one route-sector × UTC target day; score=max sampled pixel score; label=any sampled pixel positive",
+    "precision_target": 0.9,
+    "minimum_validation_alerts": 5,
+    "weight_multipliers": [
+      0.02,
+      0.1,
+      0.5,
+      1.0
+    ],
+    "selected_weight_multiplier": null,
+    "selected_threshold": null,
+    "threshold_rule": "max validation recall among thresholds with >=90% validation precision and >=5 validation route-day alerts",
+    "baseline_validation_persistence_at_0_5": {
+      "route_days": 945,
+      "positive_route_days": 9,
+      "alerts": 0,
+      "true_positive_alerts": 0,
+      "unmatched_alerts": 0,
+      "missed_positive_route_days": 9,
+      "precision": null,
+      "recall": 0.0,
+      "average_precision": 0.009523809523809525,
+      "threshold": 0.5
+    }
+  },
+  "partitions": {
+    "train": {
+      "pixel_days": 495190,
+      "positive_pixel_days": 106,
+      "route_days": 1426
+    },
+    "validation": {
+      "pixel_days": 332695,
+      "positive_pixel_days": 12,
+      "route_days": 945
+    },
+    "temporal_test": {
+      "pixel_days": 341975,
+      "positive_pixel_days": 31,
+      "route_days": 1013
+    },
+    "geographic_test": {
+      "pixel_days": 188950,
+      "positive_pixel_days": 3,
+      "route_days": 683
+    }
+  },
+  "candidate_validation": [
+    {
+      "weight_multiplier": 0.02,
+      "route_day_average_precision": 0.20908482772616302,
+      "threshold": null,
+      "at_diagnostic_threshold_0_5": {
+        "route_days": 945,
+        "positive_route_days": 9,
+        "alerts": 15,
+        "true_positive_alerts": 3,
+        "unmatched_alerts": 12,
+        "missed_positive_route_days": 6,
+        "precision": 0.2,
+        "recall": 0.3333333333333333,
+        "average_precision": 0.20908482772616302,
+        "threshold": 0.5
+      }
+    },
+    {
+      "weight_multiplier": 0.1,
+      "route_day_average_precision": 0.13208586856098406,
+      "threshold": null,
+      "at_diagnostic_threshold_0_5": {
+        "route_days": 945,
+        "positive_route_days": 9,
+        "alerts": 129,
+        "true_positive_alerts": 7,
+        "unmatched_alerts": 122,
+        "missed_positive_route_days": 2,
+        "precision": 0.05426356589147287,
+        "recall": 0.7777777777777778,
+        "average_precision": 0.13208586856098406,
+        "threshold": 0.5
+      }
+    },
+    {
+      "weight_multiplier": 0.5,
+      "route_day_average_precision": 0.1482346727536861,
+      "threshold": null,
+      "at_diagnostic_threshold_0_5": {
+        "route_days": 945,
+        "positive_route_days": 9,
+        "alerts": 215,
+        "true_positive_alerts": 7,
+        "unmatched_alerts": 208,
+        "missed_positive_route_days": 2,
+        "precision": 0.03255813953488372,
+        "recall": 0.7777777777777778,
+        "average_precision": 0.1482346727536861,
+        "threshold": 0.5
+      }
+    },
+    {
+      "weight_multiplier": 1.0,
+      "route_day_average_precision": 0.13304361408003315,
+      "threshold": null,
+      "at_diagnostic_threshold_0_5": {
+        "route_days": 945,
+        "positive_route_days": 9,
+        "alerts": 220,
+        "true_positive_alerts": 7,
+        "unmatched_alerts": 213,
+        "missed_positive_route_days": 2,
+        "precision": 0.031818181818181815,
+        "recall": 0.7777777777777778,
+        "average_precision": 0.13304361408003315,
+        "threshold": 0.5
+      }
+    }
+  ],
+  "tests": {
+    "temporal_test": {
+      "persistence_at_0_5": {
+        "route_days": 1013,
+        "positive_route_days": 16,
+        "alerts": 14,
+        "true_positive_alerts": 0,
+        "unmatched_alerts": 14,
+        "missed_positive_route_days": 16,
+        "precision": 0.0,
+        "recall": 0.0,
+        "average_precision": 0.01579466929911155,
+        "threshold": 0.5
+      }
+    },
+    "geographic_test": {
+      "persistence_at_0_5": {
+        "route_days": 683,
+        "positive_route_days": 2,
+        "alerts": 0,
+        "true_positive_alerts": 0,
+        "unmatched_alerts": 0,
+        "missed_positive_route_days": 2,
+        "precision": null,
+        "recall": 0.0,
+        "average_precision": 0.0029282576866764276,
+        "threshold": 0.5
+      }
+    }
+  },
+  "excluded_examples": {
+    "insufficient_or_stale_available_history": 176655
+  },
+  "limitations": [
+    "MOD14A1 labels detect satellite-observed fire in sampled native pixels; they do not establish ignition or exhaustive absence.",
+    "Route-day aggregation reduces correlated pixel rows but route-sector-days remain temporally correlated.",
+    "A high validation precision estimate is unstable with few positives and must be confirmed by prospective independent route-days.",
+    "No selected model or threshold is written to the app or approved for operational decisions."
+  ],
+  "synthetic_observations": 0,
+  "deployment_approved": false
+}

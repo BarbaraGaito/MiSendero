@@ -1,0 +1,507 @@
+{
+  "experiment_id": "mod14a1-xgboost-temporal-test-vs-globfire-2022-2023",
+  "sources": {
+    "predictions_path": "training/data/environmental/private/fire-temporal_test-predictions.csv.gz",
+    "predictions_sha256": "acaa8859016c9e69c9cbd5ea9e17f1d00aae111899de665275dfd271a99db17d",
+    "globfire": {
+      "2022": {
+        "url": "https://gwis.jrc.ec.europa.eu/downloads/country.profile/globfire_2022.gpkg.gz",
+        "gpkg_sha256": "8eb791ec253b00750189eaebadf599973000416933e07a2200ae0dbbf221f221"
+      },
+      "2023": {
+        "url": "https://gwis.jrc.ec.europa.eu/downloads/country.profile/globfire_2023.gpkg.gz",
+        "gpkg_sha256": "46f7eff76fdd01c50e7688c9f32c2e16162fdb682294ef416605d9d9c325be8d"
+      }
+    },
+    "observations_sha256": "f295457e48b4b40b7f6bc196a8e2ab3ec3905f9a4aa392216d73a93e174a0976"
+  },
+  "protocol": {
+    "test_window_utc": [
+      "2023-07-01",
+      "2024-01-01"
+    ],
+    "alert_threshold_xgboost": 0.5,
+    "event_center_radius_km": 40,
+    "alert_to_perimeter_radius_km": 10,
+    "event_date_uncertainty_margin_each_side_days": 3,
+    "unit": "one GlobFire event, not a pixel-day",
+    "purpose": "Independent-product retrospective coincidence audit; not a precision estimate."
+  },
+  "test_alert_pixel_days_at_threshold": 12881,
+  "eligible_events_near_route_sector_centers": 33,
+  "events_with_any_alert_coincidence": 3,
+  "events": [
+    {
+      "year": 2023,
+      "id": 19739200,
+      "initialdate": "2023-08-21T00:00:00.000",
+      "finaldate": "2023-08-24T00:00:00.000",
+      "area_ha": 515,
+      "nearest_route_sector": "Quebrada del Condorito - Balcon Norte",
+      "center_distance_km": 29.359,
+      "matched_xgboost_alerts": [
+        {
+          "pixel_id": "h12v12:189:560",
+          "target_date": "2023-08-27",
+          "distance_km": 7.453,
+          "score": 0.54029423
+        },
+        {
+          "pixel_id": "h12v12:192:560",
+          "target_date": "2023-08-27",
+          "distance_km": 4.725,
+          "score": 0.54029423
+        },
+        {
+          "pixel_id": "h12v12:198:560",
+          "target_date": "2023-08-27",
+          "distance_km": 3.189,
+          "score": 0.54029423
+        },
+        {
+          "pixel_id": "h12v12:201:560",
+          "target_date": "2023-08-27",
+          "distance_km": 5.529,
+          "score": 0.61209804
+        }
+      ]
+    },
+    {
+      "year": 2023,
+      "id": 19819072,
+      "initialdate": "2023-09-11T00:00:00.000",
+      "finaldate": "2023-09-11T00:00:00.000",
+      "area_ha": 86,
+      "nearest_route_sector": "Quebrada del Condorito - Balcon Norte",
+      "center_distance_km": 18.476,
+      "matched_xgboost_alerts": []
+    },
+    {
+      "year": 2023,
+      "id": 19766187,
+      "initialdate": "2023-08-26T00:00:00.000",
+      "finaldate": "2023-09-01T00:00:00.000",
+      "area_ha": 1266,
+      "nearest_route_sector": "Quebrada del Condorito - Balcon Norte",
+      "center_distance_km": 17.507,
+      "matched_xgboost_alerts": []
+    },
+    {
+      "year": 2023,
+      "id": 19761497,
+      "initialdate": "2023-08-24T00:00:00.000",
+      "finaldate": "2023-08-29T00:00:00.000",
+      "area_ha": 450,
+      "nearest_route_sector": "Quebrada del Condorito - Balcon Norte",
+      "center_distance_km": 26.671,
+      "matched_xgboost_alerts": []
+    },
+    {
+      "year": 2023,
+      "id": 19817948,
+      "initialdate": "2023-09-11T00:00:00.000",
+      "finaldate": "2023-09-13T00:00:00.000",
+      "area_ha": 729,
+      "nearest_route_sector": "Quebrada del Condorito - Balcon Norte",
+      "center_distance_km": 28.053,
+      "matched_xgboost_alerts": []
+    },
+    {
+      "year": 2023,
+      "id": 19902690,
+      "initialdate": "2023-10-09T00:00:00.000",
+      "finaldate": "2023-10-12T00:00:00.000",
+      "area_ha": 858,
+      "nearest_route_sector": "Quebrada del Condorito - Balcon Norte",
+      "center_distance_km": 10.291,
+      "matched_xgboost_alerts": []
+    },
+    {
+      "year": 2023,
+      "id": 19903707,
+      "initialdate": "2023-10-08T00:00:00.000",
+      "finaldate": "2023-10-14T00:00:00.000",
+      "area_ha": 3775,
+      "nearest_route_sector": "Quebrada del Condorito - Balcon Norte",
+      "center_distance_km": 23.326,
+      "matched_xgboost_alerts": []
+    },
+    {
+      "year": 2023,
+      "id": 19871647,
+      "initialdate": "2023-09-30T00:00:00.000",
+      "finaldate": "2023-10-03T00:00:00.000",
+      "area_ha": 258,
+      "nearest_route_sector": "Sendero Namuncura",
+      "center_distance_km": 15.039,
+      "matched_xgboost_alerts": []
+    },
+    {
+      "year": 2023,
+      "id": 20094486,
+      "initialdate": "2023-12-27T00:00:00.000",
+      "finaldate": "2023-12-30T00:00:00.000",
+      "area_ha": 1439,
+      "nearest_route_sector": "Sendero Namuncura",
+      "center_distance_km": 7.854,
+      "matched_xgboost_alerts": []
+    },
+    {
+      "year": 2023,
+      "id": 20098929,
+      "initialdate": "2023-12-26T00:00:00.000",
+      "finaldate": "2023-12-31T00:00:00.000",
+      "area_ha": 2685,
+      "nearest_route_sector": "Sendero Namuncura",
+      "center_distance_km": 8.131,
+      "matched_xgboost_alerts": []
+    },
+    {
+      "year": 2023,
+      "id": 19674224,
+      "initialdate": "2023-08-01T00:00:00.000",
+      "finaldate": "2023-08-01T00:00:00.000",
+      "area_ha": 64,
+      "nearest_route_sector": "Sendero Che Roga - Mburucuyá",
+      "center_distance_km": 32.718,
+      "matched_xgboost_alerts": []
+    },
+    {
+      "year": 2023,
+      "id": 19565281,
+      "initialdate": "2023-06-27T00:00:00.000",
+      "finaldate": "2023-07-06T00:00:00.000",
+      "area_ha": 1029,
+      "nearest_route_sector": "Sendero Che Roga - Mburucuyá",
+      "center_distance_km": 28.17,
+      "matched_xgboost_alerts": []
+    },
+    {
+      "year": 2023,
+      "id": 19682566,
+      "initialdate": "2023-08-02T00:00:00.000",
+      "finaldate": "2023-08-10T00:00:00.000",
+      "area_ha": 900,
+      "nearest_route_sector": "Sendero Che Roga - Mburucuyá",
+      "center_distance_km": 34.954,
+      "matched_xgboost_alerts": []
+    },
+    {
+      "year": 2023,
+      "id": 19608834,
+      "initialdate": "2023-07-12T00:00:00.000",
+      "finaldate": "2023-07-12T00:00:00.000",
+      "area_ha": 86,
+      "nearest_route_sector": "Sendero Che Roga - Mburucuyá",
+      "center_distance_km": 35.772,
+      "matched_xgboost_alerts": []
+    },
+    {
+      "year": 2023,
+      "id": 19635648,
+      "initialdate": "2023-07-18T00:00:00.000",
+      "finaldate": "2023-07-21T00:00:00.000",
+      "area_ha": 129,
+      "nearest_route_sector": "Sendero Che Roga - Mburucuyá",
+      "center_distance_km": 14.494,
+      "matched_xgboost_alerts": [
+        {
+          "pixel_id": "h12v11:986:1052",
+          "target_date": "2023-07-24",
+          "distance_km": 8.431,
+          "score": 0.7895804
+        },
+        {
+          "pixel_id": "h12v11:986:1055",
+          "target_date": "2023-07-24",
+          "distance_km": 6.972,
+          "score": 0.65170467
+        },
+        {
+          "pixel_id": "h12v11:986:1058",
+          "target_date": "2023-07-24",
+          "distance_km": 6.45,
+          "score": 0.7895804
+        },
+        {
+          "pixel_id": "h12v11:986:1061",
+          "target_date": "2023-07-24",
+          "distance_km": 6.629,
+          "score": 0.7895804
+        },
+        {
+          "pixel_id": "h12v11:986:1064",
+          "target_date": "2023-07-24",
+          "distance_km": 7.759,
+          "score": 0.7895804
+        },
+        {
+          "pixel_id": "h12v11:986:1067",
+          "target_date": "2023-07-24",
+          "distance_km": 9.426,
+          "score": 0.7895804
+        },
+        {
+          "pixel_id": "h12v11:989:1058",
+          "target_date": "2023-07-24",
+          "distance_km": 9.292,
+          "score": 0.7895804
+        },
+        {
+          "pixel_id": "h12v11:989:1061",
+          "target_date": "2023-07-24",
+          "distance_km": 9.217,
+          "score": 0.7594337
+        },
+        {
+          "pixel_id": "h12v11:989:1064",
+          "target_date": "2023-07-24",
+          "distance_km": 9.684,
+          "score": 0.7594337
+        }
+      ]
+    },
+    {
+      "year": 2023,
+      "id": 19648786,
+      "initialdate": "2023-07-25T00:00:00.000",
+      "finaldate": "2023-07-26T00:00:00.000",
+      "area_ha": 300,
+      "nearest_route_sector": "Sendero Che Roga - Mburucuyá",
+      "center_distance_km": 13.24,
+      "matched_xgboost_alerts": [
+        {
+          "pixel_id": "h12v11:986:1052",
+          "target_date": "2023-07-24",
+          "distance_km": 9.387,
+          "score": 0.7895804
+        },
+        {
+          "pixel_id": "h12v11:986:1055",
+          "target_date": "2023-07-24",
+          "distance_km": 7.609,
+          "score": 0.65170467
+        },
+        {
+          "pixel_id": "h12v11:986:1058",
+          "target_date": "2023-07-24",
+          "distance_km": 6.571,
+          "score": 0.7895804
+        },
+        {
+          "pixel_id": "h12v11:986:1061",
+          "target_date": "2023-07-24",
+          "distance_km": 6.538,
+          "score": 0.7895804
+        },
+        {
+          "pixel_id": "h12v11:986:1064",
+          "target_date": "2023-07-24",
+          "distance_km": 7.511,
+          "score": 0.7895804
+        },
+        {
+          "pixel_id": "h12v11:986:1067",
+          "target_date": "2023-07-24",
+          "distance_km": 9.056,
+          "score": 0.7895804
+        },
+        {
+          "pixel_id": "h12v11:989:1058",
+          "target_date": "2023-07-24",
+          "distance_km": 9.571,
+          "score": 0.7895804
+        },
+        {
+          "pixel_id": "h12v11:989:1061",
+          "target_date": "2023-07-24",
+          "distance_km": 9.215,
+          "score": 0.7594337
+        },
+        {
+          "pixel_id": "h12v11:989:1064",
+          "target_date": "2023-07-24",
+          "distance_km": 9.551,
+          "score": 0.7594337
+        }
+      ]
+    },
+    {
+      "year": 2023,
+      "id": 19674001,
+      "initialdate": "2023-07-30T00:00:00.000",
+      "finaldate": "2023-08-07T00:00:00.000",
+      "area_ha": 386,
+      "nearest_route_sector": "Sendero Che Roga - Mburucuyá",
+      "center_distance_km": 12.748,
+      "matched_xgboost_alerts": []
+    },
+    {
+      "year": 2023,
+      "id": 19608835,
+      "initialdate": "2023-07-12T00:00:00.000",
+      "finaldate": "2023-07-12T00:00:00.000",
+      "area_ha": 86,
+      "nearest_route_sector": "Sendero Che Roga - Mburucuyá",
+      "center_distance_km": 15.107,
+      "matched_xgboost_alerts": []
+    },
+    {
+      "year": 2023,
+      "id": 19664866,
+      "initialdate": "2023-07-29T00:00:00.000",
+      "finaldate": "2023-07-29T00:00:00.000",
+      "area_ha": 64,
+      "nearest_route_sector": "Sendero Che Roga - Mburucuyá",
+      "center_distance_km": 36.967,
+      "matched_xgboost_alerts": []
+    },
+    {
+      "year": 2023,
+      "id": 19671848,
+      "initialdate": "2023-08-01T00:00:00.000",
+      "finaldate": "2023-08-06T00:00:00.000",
+      "area_ha": 386,
+      "nearest_route_sector": "Sendero Che Roga - Mburucuyá",
+      "center_distance_km": 33.648,
+      "matched_xgboost_alerts": []
+    },
+    {
+      "year": 2023,
+      "id": 19706690,
+      "initialdate": "2023-08-08T00:00:00.000",
+      "finaldate": "2023-08-11T00:00:00.000",
+      "area_ha": 86,
+      "nearest_route_sector": "Sendero Che Roga - Mburucuyá",
+      "center_distance_km": 35.008,
+      "matched_xgboost_alerts": []
+    },
+    {
+      "year": 2023,
+      "id": 19662813,
+      "initialdate": "2023-07-28T00:00:00.000",
+      "finaldate": "2023-07-29T00:00:00.000",
+      "area_ha": 64,
+      "nearest_route_sector": "Sendero Che Roga - Mburucuyá",
+      "center_distance_km": 15.078,
+      "matched_xgboost_alerts": []
+    },
+    {
+      "year": 2023,
+      "id": 19674181,
+      "initialdate": "2023-08-01T00:00:00.000",
+      "finaldate": "2023-08-06T00:00:00.000",
+      "area_ha": 1672,
+      "nearest_route_sector": "Sendero Che Roga - Mburucuyá",
+      "center_distance_km": 6.406,
+      "matched_xgboost_alerts": []
+    },
+    {
+      "year": 2023,
+      "id": 19582444,
+      "initialdate": "2023-07-03T00:00:00.000",
+      "finaldate": "2023-07-06T00:00:00.000",
+      "area_ha": 107,
+      "nearest_route_sector": "Sendero Che Roga - Mburucuyá",
+      "center_distance_km": 9.436,
+      "matched_xgboost_alerts": []
+    },
+    {
+      "year": 2023,
+      "id": 19660146,
+      "initialdate": "2023-07-25T00:00:00.000",
+      "finaldate": "2023-08-01T00:00:00.000",
+      "area_ha": 450,
+      "nearest_route_sector": "Sendero Che Roga - Mburucuyá",
+      "center_distance_km": 11.176,
+      "matched_xgboost_alerts": []
+    },
+    {
+      "year": 2023,
+      "id": 19566131,
+      "initialdate": "2023-06-29T00:00:00.000",
+      "finaldate": "2023-06-29T00:00:00.000",
+      "area_ha": 107,
+      "nearest_route_sector": "Sendero Che Roga - Mburucuyá",
+      "center_distance_km": 27.274,
+      "matched_xgboost_alerts": []
+    },
+    {
+      "year": 2023,
+      "id": 19718425,
+      "initialdate": "2023-08-15T00:00:00.000",
+      "finaldate": "2023-08-22T00:00:00.000",
+      "area_ha": 814,
+      "nearest_route_sector": "Sendero Che Roga - Mburucuyá",
+      "center_distance_km": 29.57,
+      "matched_xgboost_alerts": []
+    },
+    {
+      "year": 2023,
+      "id": 19661112,
+      "initialdate": "2023-07-28T00:00:00.000",
+      "finaldate": "2023-08-10T00:00:00.000",
+      "area_ha": 1179,
+      "nearest_route_sector": "Sendero Che Roga - Mburucuyá",
+      "center_distance_km": 20.891,
+      "matched_xgboost_alerts": []
+    },
+    {
+      "year": 2023,
+      "id": 19719518,
+      "initialdate": "2023-08-12T00:00:00.000",
+      "finaldate": "2023-08-15T00:00:00.000",
+      "area_ha": 64,
+      "nearest_route_sector": "Sendero Che Roga - Mburucuyá",
+      "center_distance_km": 24.573,
+      "matched_xgboost_alerts": []
+    },
+    {
+      "year": 2023,
+      "id": 19744032,
+      "initialdate": "2023-08-22T00:00:00.000",
+      "finaldate": "2023-08-23T00:00:00.000",
+      "area_ha": 86,
+      "nearest_route_sector": "Sendero Che Roga - Mburucuyá",
+      "center_distance_km": 9.869,
+      "matched_xgboost_alerts": []
+    },
+    {
+      "year": 2023,
+      "id": 19856978,
+      "initialdate": "2023-09-24T00:00:00.000",
+      "finaldate": "2023-09-26T00:00:00.000",
+      "area_ha": 193,
+      "nearest_route_sector": "Sendero Che Roga - Mburucuyá",
+      "center_distance_km": 39.105,
+      "matched_xgboost_alerts": []
+    },
+    {
+      "year": 2023,
+      "id": 19763720,
+      "initialdate": "2023-08-25T00:00:00.000",
+      "finaldate": "2023-08-26T00:00:00.000",
+      "area_ha": 86,
+      "nearest_route_sector": "Sendero La Chuña - El Rey",
+      "center_distance_km": 34.298,
+      "matched_xgboost_alerts": []
+    },
+    {
+      "year": 2023,
+      "id": 19950913,
+      "initialdate": "2023-10-25T00:00:00.000",
+      "finaldate": "2023-10-25T00:00:00.000",
+      "area_ha": 86,
+      "nearest_route_sector": "Sendero La Chuña - El Rey",
+      "center_distance_km": 37.741,
+      "matched_xgboost_alerts": []
+    }
+  ],
+  "limitations": [
+    "GlobFire is also satellite-derived and is not ground truth independent of all remote sensing.",
+    "GlobFire event dates are estimated and are not exact ignition times.",
+    "The 40 km sector-center eligibility radius is exploratory and does not represent a route buffer.",
+    "Coincidence does not validate the alert as a calibrated probability or guarantee precision.",
+    "Events and pixels are spatially and temporally correlated; no independent precision interval is reported."
+  ]
+}

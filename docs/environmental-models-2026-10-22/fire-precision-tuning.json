@@ -1,0 +1,86 @@
+{
+  "experiment_id": "fire-xgboost-validation-tuned-precision-candidate",
+  "created_at_utc": "2026-10-23T06:14:01.557807+00:00",
+  "status": "no_validation_threshold_met_precision_target",
+  "purpose": "Exploratory reduction of false pixel-day alerts; no app artifact is written or approved.",
+  "selection_protocol": {
+    "class_weight_multipliers_of_frozen_training_class_ratio": [
+      0.02,
+      0.1,
+      0.5,
+      1.0
+    ],
+    "validation_precision_target": 0.9,
+    "minimum_validation_alert_pixel_days": 5,
+    "threshold_selection": "Among candidates meeting the precision target and minimum alert count, maximize validation recall, then precision, then average precision.",
+    "test_usage": "The selected candidate is evaluated once on both frozen test splits; test metrics never select a model or threshold."
+  },
+  "counts": {
+    "train_rows": 495190,
+    "train_positive_pixel_days": 106,
+    "validation_rows": 332695,
+    "validation_positive_pixel_days": 12,
+    "class_ratio_before_weight_multiplier": 4670.603773584906,
+    "quality": {
+      "sampled_pixel_days": 2204981,
+      "excluded_invalid_quality": 433962,
+      "identical_duplicate_pixel_days": 19146,
+      "unique_label_0": 1756393,
+      "unique_label_1": 184
+    },
+    "rejected_examples": {
+      "insufficient_or_stale_available_history": 176655
+    }
+  },
+  "candidate_validation_results": [
+    {
+      "class_weight_multiplier": 0.02,
+      "scale_pos_weight": 93.41207547169812,
+      "validation_average_precision": 0.0004514632530550463,
+      "validation_baseline_prevalence": 3.606907227340357e-05,
+      "threshold_choice": null
+    },
+    {
+      "class_weight_multiplier": 0.1,
+      "scale_pos_weight": 467.0603773584906,
+      "validation_average_precision": 0.0006631830555026939,
+      "validation_baseline_prevalence": 3.606907227340357e-05,
+      "threshold_choice": null
+    },
+    {
+      "class_weight_multiplier": 0.5,
+      "scale_pos_weight": 2335.301886792453,
+      "validation_average_precision": 0.0013528182716933223,
+      "validation_baseline_prevalence": 3.606907227340357e-05,
+      "threshold_choice": null
+    },
+    {
+      "class_weight_multiplier": 1.0,
+      "scale_pos_weight": 4670.603773584906,
+      "validation_average_precision": 0.0013252685061909738,
+      "validation_baseline_prevalence": 3.606907227340357e-05,
+      "threshold_choice": null
+    }
+  ],
+  "selected_candidate": {
+    "class_weight_multiplier": 0.5,
+    "scale_pos_weight": 2335.301886792453,
+    "validation_average_precision": 0.0013528182716933223,
+    "validation_baseline_prevalence": 3.606907227340357e-05,
+    "threshold_choice": null
+  },
+  "heldout_test_metrics": {},
+  "limitations": [
+    "Validation contains very few positive pixel-days; threshold selection can be unstable and requires a new independent dataset.",
+    "Pixel-days are correlated in space and time, so row-level precision is not event-level fire precision.",
+    "The labels are MODIS detections, not independently confirmed physical fires.",
+    "This script does not modify the production artifact, app, or frozen baseline results."
+  ],
+  "source_hashes": {
+    "protocol_sha256": "21c731c5266eb569e16936c77b3d1f4bc78088f97b3f35fa1b01ae9588f75555",
+    "source_audit_sha256": "c7edc41807b410a8222142b0bb5c9e6757473dfbfae207d491b5b81d2447ac5c",
+    "observations_sha256": "f295457e48b4b40b7f6bc196a8e2ab3ec3905f9a4aa392216d73a93e174a0976"
+  },
+  "synthetic_observations": 0,
+  "deployment_approved": false
+}

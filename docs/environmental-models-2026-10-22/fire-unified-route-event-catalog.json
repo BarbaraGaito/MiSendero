@@ -1,0 +1,4032 @@
+{
+  "schema_version": 1,
+  "experiment_id": "argentina-trails-unified-fire-event-evidence-catalog",
+  "created_at_utc": "2026-10-23T22:57:59.708672+00:00",
+  "scope": {
+    "geography": "the eight Argentine trail geometries in fire-route-geometries.json",
+    "route_buffer_km": 10.0,
+    "source_link_rule": "Automatic merge only for a unique one-to-one cross-source pair on the same route, within 2 calendar days and 3.0 km; looser matches are retained as possible links."
+  },
+  "source_counts": {
+    "snmf_national_deduplicated_event_rows_screened": 4863,
+    "snmf_route_event_records_within_10km": 23,
+    "gfa_route_event_records_within_10km": 20,
+    "inpe_route_points_within_10km": 243,
+    "inpe_route_clusters_within_10km": 67,
+    "snmf_route_keys_deduplicated": 23,
+    "snmf_route_events_with_valid_coordinates": 23
+  },
+  "unified_event_count": 101,
+  "event_counts_by_evidence_class": {
+    "multiple_products_same_satellite_family": 6,
+    "official_report_only": 21,
+    "official_report_plus_satellite_corroboration": 2,
+    "satellite_positive_candidate_only": 72
+  },
+  "auto_merged_cross_source_event_groups": 8,
+  "auto_merged_cross_source_pairs": 9,
+  "possible_cross_source_links_not_merged": [
+    {
+      "record_ids": [
+        "GFA:260016603",
+        "SNMF:4431903de8cdb77b"
+      ],
+      "route": "Quebrada del Condorito - Balcon Norte",
+      "date_gap_days": 0,
+      "distance_km": 2.438
+    },
+    {
+      "record_ids": [
+        "INPE:7c656c7b174e0727",
+        "SNMF:4431903de8cdb77b"
+      ],
+      "route": "Quebrada del Condorito - Balcon Norte",
+      "date_gap_days": 0,
+      "distance_km": 7.27
+    },
+    {
+      "record_ids": [
+        "GFA:260016603",
+        "INPE:7c656c7b174e0727"
+      ],
+      "route": "Quebrada del Condorito - Balcon Norte",
+      "date_gap_days": 0,
+      "distance_km": 5.696
+    },
+    {
+      "record_ids": [
+        "GFA:240105183",
+        "INPE:84e332ca78030af1"
+      ],
+      "route": "Sendero Namuncura",
+      "date_gap_days": 0,
+      "distance_km": 1.729
+    },
+    {
+      "record_ids": [
+        "GFA:230116859",
+        "INPE:5697640fbd5dd1f8"
+      ],
+      "route": "Cerro Ventana - Hueco de la Ventana",
+      "date_gap_days": 2,
+      "distance_km": 1.224
+    },
+    {
+      "record_ids": [
+        "GFA:230116860",
+        "INPE:5697640fbd5dd1f8"
+      ],
+      "route": "Cerro Ventana - Hueco de la Ventana",
+      "date_gap_days": 2,
+      "distance_km": 1.981
+    },
+    {
+      "record_ids": [
+        "INPE:4bc089b310659fc2",
+        "SNMF:101726e5490a05b4"
+      ],
+      "route": "Cerro Ventana - Hueco de la Ventana",
+      "date_gap_days": 0,
+      "distance_km": 0.922
+    },
+    {
+      "record_ids": [
+        "GFA:240127639",
+        "SNMF:101726e5490a05b4"
+      ],
+      "route": "Cerro Ventana - Hueco de la Ventana",
+      "date_gap_days": 1,
+      "distance_km": 2.205
+    },
+    {
+      "record_ids": [
+        "GFA:240127639",
+        "INPE:4bc089b310659fc2"
+      ],
+      "route": "Cerro Ventana - Hueco de la Ventana",
+      "date_gap_days": 1,
+      "distance_km": 2.578
+    },
+    {
+      "record_ids": [
+        "GFA:220084689",
+        "INPE:a7451e5007aa35ff"
+      ],
+      "route": "Sendero Che Roga - Mburucuyá",
+      "date_gap_days": 1,
+      "distance_km": 1.42
+    },
+    {
+      "record_ids": [
+        "GFA:230090808",
+        "INPE:73fca20ad5815e3f"
+      ],
+      "route": "Sendero Che Roga - Mburucuyá",
+      "date_gap_days": 1,
+      "distance_km": 1.058
+    },
+    {
+      "record_ids": [
+        "GFA:230090764",
+        "INPE:580c504e77a9fc90"
+      ],
+      "route": "Sendero Che Roga - Mburucuyá",
+      "date_gap_days": 2,
+      "distance_km": 2.015
+    },
+    {
+      "record_ids": [
+        "GFA:230090736",
+        "INPE:f924bd85d174c37f"
+      ],
+      "route": "Sendero Che Roga - Mburucuyá",
+      "date_gap_days": 0,
+      "distance_km": 4.748
+    },
+    {
+      "record_ids": [
+        "GFA:230090736",
+        "INPE:4d51caa63cf8e550"
+      ],
+      "route": "Sendero Che Roga - Mburucuyá",
+      "date_gap_days": 2,
+      "distance_km": 8.732
+    },
+    {
+      "record_ids": [
+        "GFA:230090750",
+        "INPE:f924bd85d174c37f"
+      ],
+      "route": "Sendero Che Roga - Mburucuyá",
+      "date_gap_days": 0,
+      "distance_km": 0.943
+    },
+    {
+      "record_ids": [
+        "GFA:230090750",
+        "INPE:4d51caa63cf8e550"
+      ],
+      "route": "Sendero Che Roga - Mburucuyá",
+      "date_gap_days": 2,
+      "distance_km": 4.768
+    },
+    {
+      "record_ids": [
+        "GFA:230090726",
+        "INPE:4d51caa63cf8e550"
+      ],
+      "route": "Sendero Che Roga - Mburucuyá",
+      "date_gap_days": 1,
+      "distance_km": 8.986
+    },
+    {
+      "record_ids": [
+        "GFA:230090726",
+        "INPE:75b2843bd7101ee8"
+      ],
+      "route": "Sendero Che Roga - Mburucuyá",
+      "date_gap_days": 2,
+      "distance_km": 9.134
+    }
+  ],
+  "events": [
+    {
+      "event_id": "EVT:ebfb1e3fc9a139dc44e2",
+      "route": "Sendero Namuncura",
+      "start_date": "2018-01-07",
+      "end_date": "2018-01-10",
+      "latitude_mean": -38.002776,
+      "longitude_mean": -65.587983,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "INPE:4edf598c59110d1a",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Sendero Namuncura",
+          "start_date": "2018-01-07",
+          "end_date": "2018-01-10",
+          "latitude": -38.002776,
+          "longitude": -65.587983,
+          "route_distance_km": 0.53,
+          "source_record_count": 58,
+          "source_record_ids": [
+            "029ac8ec-4256-36a7-a4bc-e1f712c2ffd4",
+            "03825327-ff99-35df-b4a1-498024371bbb",
+            "1b8ab8f5-fa8a-34fa-979d-c7ed015645be",
+            "1c91f29b-9356-3d88-8560-b2dc536d279d",
+            "1ece2032-79bc-3a18-a362-09ee2eda24e4",
+            "31c5224b-ea9d-38f9-b6da-6431fdc0de5c",
+            "32405eb0-6be8-3476-9473-724680bb06f0",
+            "356d43a7-2e83-3108-b4fa-31a35b7bac19",
+            "3587dbe3-7672-35b9-99b9-953982d359d5",
+            "3c67eedf-719e-35a2-9c90-b3f451ff4ae4",
+            "41f83841-32e8-3f7c-bf3d-608fb08c4625",
+            "42d8ed46-234c-363f-8495-a5236a3c3b36",
+            "4531e5e9-00a4-3a04-aab1-d23d8ada78bc",
+            "46a757d4-82de-36b9-951b-9a380a1d2569",
+            "4964d414-b279-3c0b-bf7b-94cc17b2fd13",
+            "49cd5098-7f7e-369e-998f-f4fbd4e5a1ec",
+            "4c9dee7e-3b38-346c-908d-2b635b0973b9",
+            "523241c2-d525-30c1-8f20-a5cfd4221630",
+            "5278828d-0595-3518-b82f-47252f278773",
+            "55cda9b3-7f6a-32d5-bd71-763fa143f6d5",
+            "57f88e76-7acc-3556-aa7b-120d820dd027",
+            "5b8a5149-39be-36fc-9538-a51335bfa15b",
+            "5b9a835f-8f3d-3c23-93ac-0733ad3c9e09",
+            "5bafd2d0-3a9a-377e-94d5-f4ea5eaf6863",
+            "7003969a-75ad-3280-9d85-4487e98a528c",
+            "71190974-6d78-3aa8-858e-b727b3d5a1fa",
+            "7f632dec-9ff8-3363-b05c-d84bdb8cfa4e",
+            "8013de4f-c351-33f0-a337-d11be00d1f64",
+            "858f3007-82de-37d8-aee9-c58269d44da3",
+            "85f9d3c6-a3da-348e-bd4f-2c065eab87ea",
+            "88820231-7711-3d85-99f3-856029a14ff7",
+            "8c961588-2318-38ab-a452-3159ccdef6fd",
+            "8d2c4247-d858-3133-9221-de760ea0361a",
+            "8dd86f3d-6889-37d2-8209-e9ec267ca10d",
+            "918334e1-92e2-3077-a6ce-189ca1a405ae",
+            "95682723-5d21-30f0-beb4-745da098e45b",
+            "a255dc98-0dfb-37b4-93d6-77e64f46082d",
+            "a258be5c-1938-345f-9b76-e750b3d4f436",
+            "a435f9d4-30d6-3958-bfe4-e96944e6851e",
+            "b9398f16-9851-3e59-9072-3f04f79e9fce",
+            "befc929f-c5c9-3cbb-bc9f-67330256783c",
+            "bf251027-7efe-3163-ae0b-03c5fd18080d",
+            "c277c157-386d-34fa-bf7a-49b25539cfd6",
+            "c60e9ada-57a3-361a-b221-956a0f37f34c",
+            "c96c054f-56cd-3731-9d64-c11423752f29",
+            "cf4a636b-c753-3210-9994-448eae53d153",
+            "cfb17dae-7a6e-3c20-9678-4640a0c367cc",
+            "d17357c1-5f8d-36db-8e23-32813d95b2cd",
+            "da532e47-b7d9-3a4f-a798-60c67ddd1b54",
+            "e0a218a8-40eb-365f-801f-697793677c99",
+            "e17e2772-2cc8-3db9-a132-abb67e3de7f4",
+            "e460e4ad-eac2-3b66-9945-6e7967426e1c",
+            "e5fe0c64-b497-3bb6-93b8-36eb46257e90",
+            "e703beb3-dde5-3188-ae5c-2ee6447a758b",
+            "ef686853-772d-3134-81d2-a55d24673cb4",
+            "f3a5108f-9f50-3f5b-8c23-a6b68ff94646",
+            "f783eb96-17f8-39d3-a5d3-3b46b02caf3e",
+            "fae5be10-da56-3904-bd95-7670cc19adb3"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:ea4f06be8977547dffcb",
+      "route": "Refugio Frey desde Villa Catedral",
+      "start_date": "2018-01-16",
+      "end_date": "2018-01-16",
+      "latitude_mean": -41.179,
+      "longitude_mean": -71.351,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "INPE:37652347c6381efa",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Refugio Frey desde Villa Catedral",
+          "start_date": "2018-01-16",
+          "end_date": "2018-01-16",
+          "latitude": -41.179,
+          "longitude": -71.351,
+          "route_distance_km": 9.317,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "e5241327-3fdd-3d27-8ee9-8e6da5774621"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:bbf576c450ac9d73a304",
+      "route": "Cerro Ventana - Hueco de la Ventana",
+      "start_date": "2018-02-15",
+      "end_date": "2018-02-15",
+      "latitude_mean": -38.084,
+      "longitude_mean": -62.015,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "INPE:1dc0e895c723e9c5",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Cerro Ventana - Hueco de la Ventana",
+          "start_date": "2018-02-15",
+          "end_date": "2018-02-15",
+          "latitude": -38.084,
+          "longitude": -62.015,
+          "route_distance_km": 3.226,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "ceae2b61-725f-3808-b503-cb7019eb5412"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:e5e96e9b0aaa2d6a7efd",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "start_date": "2018-08-10",
+      "end_date": "2018-08-10",
+      "latitude_mean": -28.0015,
+      "longitude_mean": -57.9795,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "INPE:b9869b8e7c931ebe",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Sendero Che Roga - Mburucuyá",
+          "start_date": "2018-08-10",
+          "end_date": "2018-08-10",
+          "latitude": -28.0015,
+          "longitude": -57.9795,
+          "route_distance_km": 4.915,
+          "source_record_count": 2,
+          "source_record_ids": [
+            "5dbb1034-b536-3591-8705-0352895188a1",
+            "bb29204f-5308-3196-8a8b-4f8da40171dc"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:4da75068dab664aa0c44",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "start_date": "2018-08-16",
+      "end_date": "2018-08-16",
+      "latitude_mean": -27.989,
+      "longitude_mean": -57.973,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "INPE:5922bcf1a90de61c",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Sendero Che Roga - Mburucuyá",
+          "start_date": "2018-08-16",
+          "end_date": "2018-08-16",
+          "latitude": -27.989,
+          "longitude": -57.973,
+          "route_distance_km": 6.351,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "3c9539b4-eec9-3b08-aaf8-12e422485dc1"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:0738bd8b6fe6c01b1303",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "start_date": "2018-08-22",
+      "end_date": "2018-08-22",
+      "latitude_mean": -27.94,
+      "longitude_mean": -58.078,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "INPE:11e8babc7feb921a",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Sendero Che Roga - Mburucuyá",
+          "start_date": "2018-08-22",
+          "end_date": "2018-08-22",
+          "latitude": -27.94,
+          "longitude": -58.078,
+          "route_distance_km": 9.94,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "f42bd95b-c5d5-318b-a546-8e7fc131f4ec"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:8e1de26ecabecc70ced9",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "start_date": "2018-08-22",
+      "end_date": "2018-08-22",
+      "latitude_mean": -28.094,
+      "longitude_mean": -58.028,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "INPE:ee6472a1a250bf96",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Sendero Che Roga - Mburucuyá",
+          "start_date": "2018-08-22",
+          "end_date": "2018-08-22",
+          "latitude": -28.094,
+          "longitude": -58.028,
+          "route_distance_km": 8.016,
+          "source_record_count": 2,
+          "source_record_ids": [
+            "374ea449-082b-3e40-9fda-b59c3adb3f91",
+            "49c95019-a92c-3a38-afdd-b4aac54a6f95"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:6a2379c3d227f1925244",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "start_date": "2018-08-27",
+      "end_date": "2018-08-28",
+      "latitude_mean": -28.0885,
+      "longitude_mean": -58.01525,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "INPE:6943ca07c6ba68f7",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Sendero Che Roga - Mburucuyá",
+          "start_date": "2018-08-27",
+          "end_date": "2018-08-28",
+          "latitude": -28.0885,
+          "longitude": -58.01525,
+          "route_distance_km": 7.344,
+          "source_record_count": 4,
+          "source_record_ids": [
+            "088698df-1e1b-3ce0-939e-bfb47c8324d7",
+            "6626c96d-a24a-3d0a-a9dd-3f2fa2c0c377",
+            "86f39020-0957-3798-9ee1-77405914c4ae",
+            "a08a8f2a-654e-3963-9ba6-53606cc58206"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:cf9125524dc1db9e210d",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "start_date": "2018-08-28",
+      "end_date": "2018-08-29",
+      "latitude_mean": -28.0248,
+      "longitude_mean": -58.0522,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "INPE:2c31ac9f11a33150",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Sendero Che Roga - Mburucuyá",
+          "start_date": "2018-08-28",
+          "end_date": "2018-08-29",
+          "latitude": -28.0248,
+          "longitude": -58.0522,
+          "route_distance_km": 0.543,
+          "source_record_count": 5,
+          "source_record_ids": [
+            "1097f3ba-9f01-3466-90b8-678f0e022a0d",
+            "128ce272-5690-300d-b813-41fdeba2a5c3",
+            "65fcea20-73d8-3dcd-934d-052bf41d466b",
+            "c4f92324-70a6-3ef7-9aef-06d620a322e3",
+            "c8df71e0-930a-3065-90d8-2379a408bc07"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:ad92c4c61ded7be695cf",
+      "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "start_date": "2019-01-24",
+      "end_date": "2019-01-24",
+      "latitude_mean": -41.988,
+      "longitude_mean": -71.553,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "INPE:dd972f4485d847f7",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "start_date": "2019-01-24",
+          "end_date": "2019-01-24",
+          "latitude": -41.988,
+          "longitude": -71.553,
+          "route_distance_km": 6.7,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "9e0330ac-f7b2-367c-a994-50cf5a9c08fb"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:a244a13d14e7d9a338a0",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "start_date": "2019-08-13",
+      "end_date": "2019-08-14",
+      "latitude_mean": -28.096333,
+      "longitude_mean": -58.036667,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "INPE:b8b2913a517f10e1",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Sendero Che Roga - Mburucuyá",
+          "start_date": "2019-08-13",
+          "end_date": "2019-08-14",
+          "latitude": -28.096333,
+          "longitude": -58.036667,
+          "route_distance_km": 8.588,
+          "source_record_count": 3,
+          "source_record_ids": [
+            "03e7dc5b-3b4a-3627-b8fb-19571abe46d4",
+            "24f69a90-22de-38f5-abc9-de8c4a67a04c",
+            "6b73d15b-62af-342f-9340-d7122f0d0ac8"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:5888924e4613b0050118",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "start_date": "2019-08-23",
+      "end_date": "2019-08-23",
+      "latitude_mean": -28.039,
+      "longitude_mean": -58.101,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "INPE:4550912d81c3cad0",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Sendero Che Roga - Mburucuyá",
+          "start_date": "2019-08-23",
+          "end_date": "2019-08-23",
+          "latitude": -28.039,
+          "longitude": -58.101,
+          "route_distance_km": 7.47,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "62a44fb4-c79d-3ff3-9a04-ea9706f5e707"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:ed920f2151ea7d6f3cf7",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "start_date": "2019-08-29",
+      "end_date": "2019-08-29",
+      "latitude_mean": -27.972,
+      "longitude_mean": -58.105,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "INPE:f67bf03848ce7483",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Sendero Che Roga - Mburucuyá",
+          "start_date": "2019-08-29",
+          "end_date": "2019-08-29",
+          "latitude": -27.972,
+          "longitude": -58.105,
+          "route_distance_km": 9.076,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "f39c1923-8305-3835-bdd7-09aaecc62802"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:362e02cd38ee406a54a4",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "start_date": "2020-03-24",
+      "end_date": "2020-03-24",
+      "latitude_mean": -27.946,
+      "longitude_mean": -57.991,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "INPE:c0b698658a2f9334",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Sendero Che Roga - Mburucuyá",
+          "start_date": "2020-03-24",
+          "end_date": "2020-03-24",
+          "latitude": -27.946,
+          "longitude": -57.991,
+          "route_distance_km": 8.827,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "af008ce9-4de3-37d8-861a-608bff2f843e"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:30fe9273cf88ef45e738",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "start_date": "2020-04-23",
+      "end_date": "2020-04-23",
+      "latitude_mean": -28.095,
+      "longitude_mean": -58.021,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "INPE:93c804bcd951fa9e",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Sendero Che Roga - Mburucuyá",
+          "start_date": "2020-04-23",
+          "end_date": "2020-04-23",
+          "latitude": -28.095,
+          "longitude": -58.021,
+          "route_distance_km": 8.588,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "56c9fa5d-fb1c-3435-987a-7d941a7f530a"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:c5f039ebfd14531f23ca",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "start_date": "2020-04-28",
+      "end_date": "2020-04-28",
+      "latitude_mean": -28.0385,
+      "longitude_mean": -58.0795,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "INPE:2d92013344be47e0",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Sendero Che Roga - Mburucuyá",
+          "start_date": "2020-04-28",
+          "end_date": "2020-04-28",
+          "latitude": -28.0385,
+          "longitude": -58.0795,
+          "route_distance_km": 5.339,
+          "source_record_count": 2,
+          "source_record_ids": [
+            "082d193f-b30c-3a7c-96f2-48eac3596f85",
+            "a92733d9-80a3-3de3-b170-d014811a801f"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:09c466feef9454a9ab06",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "start_date": "2020-06-13",
+      "end_date": "2020-06-13",
+      "latitude_mean": -28.044,
+      "longitude_mean": -58.001,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "INPE:0a9e46a21980b119",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Sendero Che Roga - Mburucuyá",
+          "start_date": "2020-06-13",
+          "end_date": "2020-06-13",
+          "latitude": -28.044,
+          "longitude": -58.001,
+          "route_distance_km": 3.963,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "b193cf22-0baa-30af-8b30-7c8f04c39512"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:bd4ff908fce78772e399",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "start_date": "2020-06-24",
+      "end_date": "2020-06-24",
+      "latitude_mean": -28.051333,
+      "longitude_mean": -58.013667,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "INPE:408cd8dd9424e123",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Sendero Che Roga - Mburucuyá",
+          "start_date": "2020-06-24",
+          "end_date": "2020-06-24",
+          "latitude": -28.051333,
+          "longitude": -58.013667,
+          "route_distance_km": 3.627,
+          "source_record_count": 3,
+          "source_record_ids": [
+            "6a7df540-af5f-3a14-8b08-8c8ee67c42bd",
+            "7e9111c9-1fa8-343f-92bb-81c1941078b2",
+            "929781a9-87c6-3ab3-98fe-3a6ec9d8c3b6"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:cfc0909b43cef00b8158",
+      "route": "Quebrada del Condorito - Balcon Norte",
+      "start_date": "2020-08-01",
+      "end_date": "2020-08-01",
+      "latitude_mean": -31.5756,
+      "longitude_mean": -64.6942,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "INPE:221e680c018e17b6",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Quebrada del Condorito - Balcon Norte",
+          "start_date": "2020-08-01",
+          "end_date": "2020-08-01",
+          "latitude": -31.5756,
+          "longitude": -64.6942,
+          "route_distance_km": 6.897,
+          "source_record_count": 10,
+          "source_record_ids": [
+            "13b64c74-8917-3a67-a8e5-cc41b6c77db9",
+            "328abd06-05d9-38b3-a012-263e04982dad",
+            "63ee9056-894f-3365-b208-02b9aa3cf189",
+            "7082cc8e-0ac7-37ea-9ee1-831abd868d7f",
+            "7d6b399d-44df-3689-b0a4-6cba19f90c12",
+            "92d71abd-07bc-38f2-8a03-407caefb3266",
+            "97ce7971-cb55-3284-9a73-fd994debc0ad",
+            "a02005b3-c9ef-34f7-9e1a-78e3b69d79d2",
+            "da35a96a-a5ba-398d-a48a-ab9a869bd3ee",
+            "e372b6f4-45a5-36bc-872b-d3d5bba6a4f7"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:b533e2ad0a56d5e6c303",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "start_date": "2020-08-06",
+      "end_date": "2020-08-06",
+      "latitude_mean": -28.104,
+      "longitude_mean": -58.038,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "INPE:1ef4c0594ee4b3a9",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Sendero Che Roga - Mburucuyá",
+          "start_date": "2020-08-06",
+          "end_date": "2020-08-06",
+          "latitude": -28.104,
+          "longitude": -58.038,
+          "route_distance_km": 9.445,
+          "source_record_count": 2,
+          "source_record_ids": [
+            "8a56f5a2-967f-37c2-8b88-caabc12ec2ec",
+            "c5e4e61b-acf5-3bc2-a02a-6fb4820e4400"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:4b7b1d6f5a7893a17bb8",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "start_date": "2020-09-22",
+      "end_date": "2020-09-22",
+      "latitude_mean": -28.092,
+      "longitude_mean": -58.029,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "INPE:ca54778b6e4e6833",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Sendero Che Roga - Mburucuyá",
+          "start_date": "2020-09-22",
+          "end_date": "2020-09-22",
+          "latitude": -28.092,
+          "longitude": -58.029,
+          "route_distance_km": 8.221,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "96eab099-2fc8-34e5-b687-6ad080260089"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:93edf10de7fa734ba06d",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "start_date": "2020-09-30",
+      "end_date": "2020-09-30",
+      "latitude_mean": -28.091,
+      "longitude_mean": -58.0165,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "INPE:62a15d377217083f",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Sendero Che Roga - Mburucuyá",
+          "start_date": "2020-09-30",
+          "end_date": "2020-09-30",
+          "latitude": -28.091,
+          "longitude": -58.0165,
+          "route_distance_km": 8.206,
+          "source_record_count": 2,
+          "source_record_ids": [
+            "768c61b8-59bd-35f1-af9d-f0b55568bd60",
+            "ba3d59e1-fa71-3396-b010-84516f8e6f04"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:88ad4746da7fe4af3492",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "start_date": "2020-11-22",
+      "end_date": "2020-11-22",
+      "latitude_mean": -28.019,
+      "longitude_mean": -57.929,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "INPE:21839124876a539f",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Sendero Che Roga - Mburucuyá",
+          "start_date": "2020-11-22",
+          "end_date": "2020-11-22",
+          "latitude": -28.019,
+          "longitude": -57.929,
+          "route_distance_km": 9.786,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "f35d0aef-615c-37eb-a20e-440080b17e56"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:1d666ab5215452816fdc",
+      "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "start_date": "2021-01-25",
+      "end_date": "2021-01-25",
+      "latitude_mean": -41.9296,
+      "longitude_mean": -71.4382,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "INPE:88853809349ad423",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "start_date": "2021-01-25",
+          "end_date": "2021-01-25",
+          "latitude": -41.9296,
+          "longitude": -71.4382,
+          "route_distance_km": 2.248,
+          "source_record_count": 10,
+          "source_record_ids": [
+            "472de6d0-53a5-3a03-96e8-4bd7014b0169",
+            "4b623643-664d-3bd4-a380-98ff4e6289f8",
+            "5105d59c-d40c-3ba4-971e-453c4cc56d62",
+            "5504799b-1e63-3b93-ae50-8a0f355dbab2",
+            "6aa1c389-bbed-3109-a140-75c35e3c6f6e",
+            "6b543846-7094-3975-bf18-8764e446669c",
+            "75854b7c-24be-333c-8703-784e024770ed",
+            "78b60cf8-c98e-33a2-852e-31f74fc3bf16",
+            "b956244c-9c21-39b6-8ec4-8b5ef38d5fdc",
+            "c506f696-42c4-3c5a-a448-a4cecc978f6a"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:69e552ecaa3629c125e3",
+      "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "start_date": "2021-02-02",
+      "end_date": "2021-02-03",
+      "latitude_mean": -41.896333,
+      "longitude_mean": -71.455333,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "INPE:426761d28d0ec11c",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "start_date": "2021-02-02",
+          "end_date": "2021-02-03",
+          "latitude": -41.896333,
+          "longitude": -71.455333,
+          "route_distance_km": 7.814,
+          "source_record_count": 3,
+          "source_record_ids": [
+            "69a55dd2-dd88-3672-830c-bded29de2a19",
+            "73877c3a-c156-369e-bb0e-e900f622372f",
+            "ea5e14ca-5333-3eb8-b1ae-1cbeedafc6d3"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:fded9f0d3ef97df979d0",
+      "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "start_date": "2021-02-03",
+      "end_date": "2021-02-03",
+      "latitude_mean": -41.997667,
+      "longitude_mean": -71.374333,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "INPE:db95a283ea681643",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "start_date": "2021-02-03",
+          "end_date": "2021-02-03",
+          "latitude": -41.997667,
+          "longitude": -71.374333,
+          "route_distance_km": 8.118,
+          "source_record_count": 3,
+          "source_record_ids": [
+            "0b3a0955-3ccb-32fe-8b04-f15c5acd127a",
+            "3990bc9a-42c4-38ad-aeb1-58dc57f17514",
+            "e3f15d62-b622-3fb5-874b-ba7a0e00c1be"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:c12fbeadac0542328a48",
+      "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "start_date": "2021-02-04",
+      "end_date": "2021-02-04",
+      "latitude_mean": -41.953,
+      "longitude_mean": -71.4445,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "INPE:8a53b5b0dc907926",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "start_date": "2021-02-04",
+          "end_date": "2021-02-04",
+          "latitude": -41.953,
+          "longitude": -71.4445,
+          "route_distance_km": 2.585,
+          "source_record_count": 2,
+          "source_record_ids": [
+            "0862de94-4133-3270-b278-66ea8c4711e1",
+            "88bce337-f0e1-3659-b59c-1c180bc95774"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:6defd7503023b03abc59",
+      "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "start_date": "2021-02-06",
+      "end_date": "2021-02-07",
+      "latitude_mean": -41.925667,
+      "longitude_mean": -71.4735,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "INPE:92e95fc0877363d0",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "start_date": "2021-02-06",
+          "end_date": "2021-02-07",
+          "latitude": -41.925667,
+          "longitude": -71.4735,
+          "route_distance_km": 4.12,
+          "source_record_count": 6,
+          "source_record_ids": [
+            "0803b704-1938-34d5-85be-872038845d1d",
+            "0adf9310-03e8-30ef-8e36-0b654824be53",
+            "510a1356-5069-34f6-82d1-efdd625d6fdf",
+            "75a968be-5e17-3646-8fc1-295257e6d108",
+            "8ee981d7-42da-3e18-86fe-3122c54363db",
+            "c068ba11-566e-3813-bbae-c218254b64cf"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:07f61775da330677d71e",
+      "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "start_date": "2021-02-10",
+      "end_date": "2021-02-10",
+      "latitude_mean": -41.926667,
+      "longitude_mean": -71.472667,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "INPE:1230f7ba3e41c1d3",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "start_date": "2021-02-10",
+          "end_date": "2021-02-10",
+          "latitude": -41.926667,
+          "longitude": -71.472667,
+          "route_distance_km": 4.565,
+          "source_record_count": 3,
+          "source_record_ids": [
+            "52ca29ef-a461-3735-8c93-67913e10a20d",
+            "bd343891-ccbb-3d4e-88df-7cf7ffde28b1",
+            "d51eb25c-22bb-3d06-b636-7ddf68282b45"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:312e5d74bbc6437c3881",
+      "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "start_date": "2021-03-09",
+      "end_date": "2021-03-09",
+      "latitude_mean": -42.011,
+      "longitude_mean": -71.519,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "INPE:2ccaaab58a748d8e",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "start_date": "2021-03-09",
+          "end_date": "2021-03-09",
+          "latitude": -42.011,
+          "longitude": -71.519,
+          "route_distance_km": 5.796,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "0ed0fdb6-bfea-3061-b53c-3e5056479f5e"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:d31fbee596907a90a250",
+      "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "start_date": "2021-03-20",
+      "end_date": "2021-03-20",
+      "latitude_mean": -42.03,
+      "longitude_mean": -71.438,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "INPE:e4ce2159d9fe6bdf",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "start_date": "2021-03-20",
+          "end_date": "2021-03-20",
+          "latitude": -42.03,
+          "longitude": -71.438,
+          "route_distance_km": 7.357,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "e79b805a-6937-3dc3-9ebd-32b0e77c78f9"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:306583e46f363f576a15",
+      "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "start_date": "2021-03-25",
+      "end_date": "2021-03-29",
+      "latitude_mean": -42.028333,
+      "longitude_mean": -71.438,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "INPE:ece5622535566dec",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "start_date": "2021-03-25",
+          "end_date": "2021-03-29",
+          "latitude": -42.028333,
+          "longitude": -71.438,
+          "route_distance_km": 7.043,
+          "source_record_count": 3,
+          "source_record_ids": [
+            "1c685071-c2ab-3765-b8ec-564027d37ae2",
+            "c21fa0c3-3c57-3db1-80ab-b11475082506",
+            "ece8a8df-450b-32d9-85fc-ab8b4e1cfab6"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:f840e0f162f661c95410",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "start_date": "2021-07-08",
+      "end_date": "2021-07-08",
+      "latitude_mean": -27.996,
+      "longitude_mean": -58.006,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "INPE:7e087526416c0ebe",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Sendero Che Roga - Mburucuyá",
+          "start_date": "2021-07-08",
+          "end_date": "2021-07-08",
+          "latitude": -27.996,
+          "longitude": -58.006,
+          "route_distance_km": 3.314,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "8f47fd0f-439a-3fe5-b801-f0f84adc42ca"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:2a171acd982961487ef7",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "start_date": "2021-08-13",
+      "end_date": "2021-08-13",
+      "latitude_mean": -28.05241,
+      "longitude_mean": -58.110745,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "INPE:e79a5bdfa6ab3bee",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Sendero Che Roga - Mburucuyá",
+          "start_date": "2021-08-13",
+          "end_date": "2021-08-13",
+          "latitude": -28.05241,
+          "longitude": -58.110745,
+          "route_distance_km": 8.728,
+          "source_record_count": 2,
+          "source_record_ids": [
+            "7f276e6d-d539-30fa-9b19-c66e4075daf5",
+            "b3cfeab5-86e7-32da-a16c-a8b1e1658c4c"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:4e95b9da4a494dedf9c4",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "start_date": "2021-08-28",
+      "end_date": "2021-08-28",
+      "latitude_mean": -27.97488,
+      "longitude_mean": -57.95745,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "INPE:23744e01d2fc6189",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Sendero Che Roga - Mburucuyá",
+          "start_date": "2021-08-28",
+          "end_date": "2021-08-28",
+          "latitude": -27.97488,
+          "longitude": -57.95745,
+          "route_distance_km": 8.484,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "8a88b069-2b34-3c64-bee6-d57254db544e"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:823e986b46546b7420cc",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "start_date": "2021-10-20",
+      "end_date": "2021-10-20",
+      "latitude_mean": -28.079025,
+      "longitude_mean": -57.996845,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "INPE:59043cac5af88771",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Sendero Che Roga - Mburucuyá",
+          "start_date": "2021-10-20",
+          "end_date": "2021-10-20",
+          "latitude": -28.079025,
+          "longitude": -57.996845,
+          "route_distance_km": 7.317,
+          "source_record_count": 2,
+          "source_record_ids": [
+            "25ef15c3-bbbb-37ab-a387-7d8be665e321",
+            "78f036f8-8bad-3f6d-a317-ed308aafbdb2"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:dd13c05ec8a22efc74b4",
+      "route": "Refugio Frey desde Villa Catedral",
+      "start_date": "2021-11-08",
+      "end_date": "2021-11-08",
+      "latitude_mean": -41.176045,
+      "longitude_mean": -71.35581,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "INPE:52a57844e71391bb",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Refugio Frey desde Villa Catedral",
+          "start_date": "2021-11-08",
+          "end_date": "2021-11-08",
+          "latitude": -41.176045,
+          "longitude": -71.35581,
+          "route_distance_km": 8.426,
+          "source_record_count": 2,
+          "source_record_ids": [
+            "4dffbc9e-d347-326b-8546-3f137261c8ae",
+            "bbab46a2-bb7e-374e-ba8f-ddccd8f8b6d6"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:3bfd5440420cca8612e9",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "start_date": "2022-01-16",
+      "end_date": "2022-01-16",
+      "latitude_mean": -28.08205,
+      "longitude_mean": -57.96678,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "INPE:90519bf382628fd5",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Sendero Che Roga - Mburucuyá",
+          "start_date": "2022-01-16",
+          "end_date": "2022-01-16",
+          "latitude": -28.08205,
+          "longitude": -57.96678,
+          "route_distance_km": 9.263,
+          "source_record_count": 2,
+          "source_record_ids": [
+            "7fbdb1ce-6e3b-3fcc-83ae-857d19de040e",
+            "962e90d1-cc7a-3636-9b63-4a6ce0e33ec9"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:52595006befd2ea470fe",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "start_date": "2022-02-01",
+      "end_date": "2022-02-03",
+      "latitude_mean": -27.9187,
+      "longitude_mean": -58.0548,
+      "source_families": [
+        "MODIS_DERIVED_FIRE_ATLAS"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "GFA:220084724",
+          "source": "Global_Fire_Atlas",
+          "source_family": "MODIS_DERIVED_FIRE_ATLAS",
+          "route": "Sendero Che Roga - Mburucuyá",
+          "start_date": "2022-02-01",
+          "end_date": "2022-02-03",
+          "latitude": -27.9187,
+          "longitude": -58.0548,
+          "route_distance_km": 9.689,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "220084724"
+          ],
+          "size_ha": 64.0,
+          "duration_days": "3",
+          "evidence_type": "atlas_ignition_point_and_fire_season",
+          "time_precision": "daily_inferred_start_date"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:4770c8b35202ecc4a75e",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "start_date": "2022-02-06",
+      "end_date": "2022-02-06",
+      "latitude_mean": -27.9562,
+      "longitude_mean": -57.9665,
+      "source_families": [
+        "MODIS_DERIVED_FIRE_ATLAS"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "GFA:220084785",
+          "source": "Global_Fire_Atlas",
+          "source_family": "MODIS_DERIVED_FIRE_ATLAS",
+          "route": "Sendero Che Roga - Mburucuyá",
+          "start_date": "2022-02-06",
+          "end_date": "2022-02-06",
+          "latitude": -27.9562,
+          "longitude": -57.9665,
+          "route_distance_km": 8.685,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "220084785"
+          ],
+          "size_ha": 43.0,
+          "duration_days": "1",
+          "evidence_type": "atlas_ignition_point_and_fire_season",
+          "time_precision": "daily_inferred_start_date"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:0e20b45a8f07024f53f3",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "start_date": "2022-02-15",
+      "end_date": "2022-03-03",
+      "latitude_mean": -28.013464,
+      "longitude_mean": -57.933438,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE",
+        "MODIS_DERIVED_FIRE_ATLAS"
+      ],
+      "evidence_class": "multiple_products_same_satellite_family",
+      "source_record_count": 2,
+      "source_records": [
+        {
+          "record_id": "GFA:220084689",
+          "source": "Global_Fire_Atlas",
+          "source_family": "MODIS_DERIVED_FIRE_ATLAS",
+          "route": "Sendero Che Roga - Mburucuyá",
+          "start_date": "2022-02-16",
+          "end_date": "2022-03-03",
+          "latitude": -28.0187,
+          "longitude": -57.9293,
+          "route_distance_km": 9.768,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "220084689"
+          ],
+          "size_ha": 4973.0,
+          "duration_days": "16",
+          "evidence_type": "atlas_ignition_point_and_fire_season",
+          "time_precision": "daily_inferred_start_date"
+        },
+        {
+          "record_id": "INPE:a7451e5007aa35ff",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Sendero Che Roga - Mburucuyá",
+          "start_date": "2022-02-15",
+          "end_date": "2022-02-15",
+          "latitude": -28.008227,
+          "longitude": -57.937577,
+          "route_distance_km": 8.266,
+          "source_record_count": 3,
+          "source_record_ids": [
+            "4a9f7c48-91c0-34ee-af41-82a93e3dc53c",
+            "82125343-24ed-37a9-8f60-5488e21e839e",
+            "cd78f1e9-6300-3c62-86c7-1b245c242bcc"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:f677ccc15c4e240ae117",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "start_date": "2022-02-23",
+      "end_date": "2022-02-25",
+      "latitude_mean": -28.0487,
+      "longitude_mean": -57.996155,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "INPE:57cbb33eb3d10301",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Sendero Che Roga - Mburucuyá",
+          "start_date": "2022-02-23",
+          "end_date": "2022-02-25",
+          "latitude": -28.0487,
+          "longitude": -57.996155,
+          "route_distance_km": 4.475,
+          "source_record_count": 2,
+          "source_record_ids": [
+            "90dd87db-e99e-3852-b441-321ecafb8fd4",
+            "a8054ea8-4260-3b5b-a885-2835e4d6f2ea"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:782f12d5f288e4b3d4e7",
+      "route": "Sendero Namuncura",
+      "start_date": "2022-09-02",
+      "end_date": "2022-09-02",
+      "latitude_mean": -37.952,
+      "longitude_mean": -65.5575,
+      "source_families": [
+        "MODIS_DERIVED_FIRE_ATLAS"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "GFA:230094749",
+          "source": "Global_Fire_Atlas",
+          "source_family": "MODIS_DERIVED_FIRE_ATLAS",
+          "route": "Sendero Namuncura",
+          "start_date": "2022-09-02",
+          "end_date": "2022-09-02",
+          "latitude": -37.952,
+          "longitude": -65.5575,
+          "route_distance_km": 6.719,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "230094749"
+          ],
+          "size_ha": 21.0,
+          "duration_days": "1",
+          "evidence_type": "atlas_ignition_point_and_fire_season",
+          "time_precision": "daily_inferred_start_date"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:bbd3e3772747d1b772bb",
+      "route": "Sendero Namuncura",
+      "start_date": "2022-09-02",
+      "end_date": "2022-09-04",
+      "latitude_mean": -37.9354,
+      "longitude_mean": -65.5532,
+      "source_families": [
+        "MODIS_DERIVED_FIRE_ATLAS"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "GFA:230094742",
+          "source": "Global_Fire_Atlas",
+          "source_family": "MODIS_DERIVED_FIRE_ATLAS",
+          "route": "Sendero Namuncura",
+          "start_date": "2022-09-02",
+          "end_date": "2022-09-04",
+          "latitude": -37.9354,
+          "longitude": -65.5532,
+          "route_distance_km": 8.535,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "230094742"
+          ],
+          "size_ha": 43.0,
+          "duration_days": "3",
+          "evidence_type": "atlas_ignition_point_and_fire_season",
+          "time_precision": "daily_inferred_start_date"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:8326f779f737e8b85519",
+      "route": "Refugio Frey desde Villa Catedral",
+      "start_date": "2023-01-15",
+      "end_date": "2023-01-15",
+      "latitude_mean": -41.17613,
+      "longitude_mean": -71.34983,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "INPE:8b420a14e300211a",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Refugio Frey desde Villa Catedral",
+          "start_date": "2023-01-15",
+          "end_date": "2023-01-15",
+          "latitude": -41.17613,
+          "longitude": -71.34983,
+          "route_distance_km": 9.067,
+          "source_record_count": 2,
+          "source_record_ids": [
+            "387196c9-848b-3807-816e-2ff56242c4d6",
+            "82eaff75-5824-3307-af94-9435dacfaa15"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:4cbc42e9f4f39a11cd83",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "start_date": "2023-02-06",
+      "end_date": "2023-02-07",
+      "latitude_mean": -28.063095,
+      "longitude_mean": -58.022855,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE",
+        "MODIS_DERIVED_FIRE_ATLAS"
+      ],
+      "evidence_class": "multiple_products_same_satellite_family",
+      "source_record_count": 2,
+      "source_records": [
+        {
+          "record_id": "GFA:230090808",
+          "source": "Global_Fire_Atlas",
+          "source_family": "MODIS_DERIVED_FIRE_ATLAS",
+          "route": "Sendero Che Roga - Mburucuyá",
+          "start_date": "2023-02-06",
+          "end_date": "2023-02-06",
+          "latitude": -28.0604,
+          "longitude": -58.0273,
+          "route_distance_km": 4.715,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "230090808"
+          ],
+          "size_ha": 21.0,
+          "duration_days": "1",
+          "evidence_type": "atlas_ignition_point_and_fire_season",
+          "time_precision": "daily_inferred_start_date"
+        },
+        {
+          "record_id": "INPE:73fca20ad5815e3f",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Sendero Che Roga - Mburucuyá",
+          "start_date": "2023-02-07",
+          "end_date": "2023-02-07",
+          "latitude": -28.06579,
+          "longitude": -58.01841,
+          "route_distance_km": 5.402,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "c5edb56f-dbdd-3087-a1c9-eb6af0130484"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:e3a6ef63cc0e9f5c6f09",
+      "route": "Cerro Ventana - Hueco de la Ventana",
+      "start_date": "2023-02-12",
+      "end_date": "2023-02-19",
+      "latitude_mean": -38.065773,
+      "longitude_mean": -62.009809,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE",
+        "MODIS_DERIVED_FIRE_ATLAS"
+      ],
+      "evidence_class": "multiple_products_same_satellite_family",
+      "source_record_count": 2,
+      "source_records": [
+        {
+          "record_id": "GFA:230116859",
+          "source": "Global_Fire_Atlas",
+          "source_family": "MODIS_DERIVED_FIRE_ATLAS",
+          "route": "Cerro Ventana - Hueco de la Ventana",
+          "start_date": "2023-02-12",
+          "end_date": "2023-02-19",
+          "latitude": -38.0604,
+          "longitude": -62.0083,
+          "route_distance_km": 0.659,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "230116859"
+          ],
+          "size_ha": 257.0,
+          "duration_days": "8",
+          "evidence_type": "atlas_ignition_point_and_fire_season",
+          "time_precision": "daily_inferred_start_date"
+        },
+        {
+          "record_id": "INPE:5697640fbd5dd1f8",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Cerro Ventana - Hueco de la Ventana",
+          "start_date": "2023-02-14",
+          "end_date": "2023-02-14",
+          "latitude": -38.071145,
+          "longitude": -62.011318,
+          "route_distance_km": 1.87,
+          "source_record_count": 4,
+          "source_record_ids": [
+            "015f9118-a291-3dfc-8ba8-fe4f06e86faf",
+            "87e15814-4351-3333-b3b0-fbe5b232ae4d",
+            "e76f3716-0f9e-3241-be5a-c419dff920fd",
+            "fdede01b-a105-3542-9f13-23fa40a697bc"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:e866eef067b52c0a2d48",
+      "route": "Cerro Ventana - Hueco de la Ventana",
+      "start_date": "2023-02-12",
+      "end_date": "2023-02-14",
+      "latitude_mean": -38.0687,
+      "longitude_mean": -61.9889,
+      "source_families": [
+        "MODIS_DERIVED_FIRE_ATLAS"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "GFA:230116860",
+          "source": "Global_Fire_Atlas",
+          "source_family": "MODIS_DERIVED_FIRE_ATLAS",
+          "route": "Cerro Ventana - Hueco de la Ventana",
+          "start_date": "2023-02-12",
+          "end_date": "2023-02-14",
+          "latitude": -38.0687,
+          "longitude": -61.9889,
+          "route_distance_km": 2.568,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "230116860"
+          ],
+          "size_ha": 43.0,
+          "duration_days": "3",
+          "evidence_type": "atlas_ignition_point_and_fire_season",
+          "time_precision": "daily_inferred_start_date"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:244327c307a579450d39",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "start_date": "2023-02-13",
+      "end_date": "2023-02-13",
+      "latitude_mean": -28.0604,
+      "longitude_mean": -58.0225,
+      "source_families": [
+        "MODIS_DERIVED_FIRE_ATLAS"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "GFA:230090809",
+          "source": "Global_Fire_Atlas",
+          "source_family": "MODIS_DERIVED_FIRE_ATLAS",
+          "route": "Sendero Che Roga - Mburucuyá",
+          "start_date": "2023-02-13",
+          "end_date": "2023-02-13",
+          "latitude": -28.0604,
+          "longitude": -58.0225,
+          "route_distance_km": 4.752,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "230090809"
+          ],
+          "size_ha": 21.0,
+          "duration_days": "1",
+          "evidence_type": "atlas_ignition_point_and_fire_season",
+          "time_precision": "daily_inferred_start_date"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:9f7069400d91071e212f",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "start_date": "2023-02-25",
+      "end_date": "2023-02-28",
+      "latitude_mean": -28.014825,
+      "longitude_mean": -58.013955,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE",
+        "MODIS_DERIVED_FIRE_ATLAS"
+      ],
+      "evidence_class": "multiple_products_same_satellite_family",
+      "source_record_count": 2,
+      "source_records": [
+        {
+          "record_id": "GFA:230090764",
+          "source": "Global_Fire_Atlas",
+          "source_family": "MODIS_DERIVED_FIRE_ATLAS",
+          "route": "Sendero Che Roga - Mburucuyá",
+          "start_date": "2023-02-27",
+          "end_date": "2023-02-28",
+          "latitude": -28.0104,
+          "longitude": -58.005,
+          "route_distance_km": 2.48,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "230090764"
+          ],
+          "size_ha": 150.0,
+          "duration_days": "2",
+          "evidence_type": "atlas_ignition_point_and_fire_season",
+          "time_precision": "daily_inferred_start_date"
+        },
+        {
+          "record_id": "INPE:580c504e77a9fc90",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Sendero Che Roga - Mburucuyá",
+          "start_date": "2023-02-25",
+          "end_date": "2023-02-25",
+          "latitude": -28.01925,
+          "longitude": -58.02291,
+          "route_distance_km": 0.582,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "af5f12d2-acd3-3112-922d-4f6c41bce7bd"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:bd1c862968f4b69906f2",
+      "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "start_date": "2023-03-05",
+      "end_date": "2023-03-05",
+      "latitude_mean": -41.9518,
+      "longitude_mean": -71.558435,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "INPE:c3c0be5fdde17c30",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "start_date": "2023-03-05",
+          "end_date": "2023-03-05",
+          "latitude": -41.9518,
+          "longitude": -71.558435,
+          "route_distance_km": 6.024,
+          "source_record_count": 2,
+          "source_record_ids": [
+            "9c560bbd-8a56-36a4-a307-770b601b9456",
+            "ab63561b-90a5-37ea-9ac8-0d803e35be27"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:7341b018e795a6d383a5",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "start_date": "2023-06-08",
+      "end_date": "2023-06-08",
+      "latitude_mean": -28.01634,
+      "longitude_mean": -57.94504,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "INPE:c9fec0bfc091a6ab",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Sendero Che Roga - Mburucuyá",
+          "start_date": "2023-06-08",
+          "end_date": "2023-06-08",
+          "latitude": -28.01634,
+          "longitude": -57.94504,
+          "route_distance_km": 8.214,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "34b1c9ae-5ad9-351b-af6c-7134d2169af7"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:fac2da0581bedb9e8811",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "start_date": "2023-07-22",
+      "end_date": "2023-07-22",
+      "latitude_mean": -28.02914,
+      "longitude_mean": -57.96213,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "INPE:bbf457dcd49f95ea",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Sendero Che Roga - Mburucuyá",
+          "start_date": "2023-07-22",
+          "end_date": "2023-07-22",
+          "latitude": -28.02914,
+          "longitude": -57.96213,
+          "route_distance_km": 6.648,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "0ecadee0-9076-342d-8f0f-f8320105eafc"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:a3968c25e0069c7e994e",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "start_date": "2023-07-29",
+      "end_date": "2023-07-29",
+      "latitude_mean": -27.98475,
+      "longitude_mean": -57.95468,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "INPE:9894a2a84cb3c885",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Sendero Che Roga - Mburucuyá",
+          "start_date": "2023-07-29",
+          "end_date": "2023-07-29",
+          "latitude": -27.98475,
+          "longitude": -57.95468,
+          "route_distance_km": 8.156,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "d9eeb269-0559-3cec-a335-8c655e70e023"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:61cbb480c526c886c0df",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "start_date": "2023-08-01",
+      "end_date": "2023-08-08",
+      "latitude_mean": -28.010655,
+      "longitude_mean": -57.948307,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE",
+        "MODIS_DERIVED_FIRE_ATLAS"
+      ],
+      "evidence_class": "multiple_products_same_satellite_family",
+      "source_record_count": 2,
+      "source_records": [
+        {
+          "record_id": "GFA:230090750",
+          "source": "Global_Fire_Atlas",
+          "source_family": "MODIS_DERIVED_FIRE_ATLAS",
+          "route": "Sendero Che Roga - Mburucuyá",
+          "start_date": "2023-08-01",
+          "end_date": "2023-08-08",
+          "latitude": -28.0104,
+          "longitude": -57.9531,
+          "route_distance_km": 7.478,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "230090750"
+          ],
+          "size_ha": 493.0,
+          "duration_days": "8",
+          "evidence_type": "atlas_ignition_point_and_fire_season",
+          "time_precision": "daily_inferred_start_date"
+        },
+        {
+          "record_id": "INPE:f924bd85d174c37f",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Sendero Che Roga - Mburucuyá",
+          "start_date": "2023-08-01",
+          "end_date": "2023-08-03",
+          "latitude": -28.01091,
+          "longitude": -57.943513,
+          "route_distance_km": 7.471,
+          "source_record_count": 6,
+          "source_record_ids": [
+            "069ad126-168f-3cd6-a850-72c3e2a79d1b",
+            "7870392d-4ebf-3016-9a1b-6bb4abb9cb69",
+            "88672cb5-429d-3419-be94-37571f756ecc",
+            "b02fefd7-e26c-3329-a36c-85d2ec1df993",
+            "c119c292-eb44-3ce9-951a-c636fae586ff",
+            "cf50d08a-1907-3512-84f2-0a6f3b4756de"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:e3dd5be24c4e575ef399",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "start_date": "2023-08-01",
+      "end_date": "2023-08-01",
+      "latitude_mean": -27.977,
+      "longitude_mean": -57.9729,
+      "source_families": [
+        "MODIS_DERIVED_FIRE_ATLAS"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "GFA:230090736",
+          "source": "Global_Fire_Atlas",
+          "source_family": "MODIS_DERIVED_FIRE_ATLAS",
+          "route": "Sendero Che Roga - Mburucuyá",
+          "start_date": "2023-08-01",
+          "end_date": "2023-08-01",
+          "latitude": -27.977,
+          "longitude": -57.9729,
+          "route_distance_km": 6.887,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "230090736"
+          ],
+          "size_ha": 21.0,
+          "duration_days": "1",
+          "evidence_type": "atlas_ignition_point_and_fire_season",
+          "time_precision": "daily_inferred_start_date"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:26cab10f173d76eb0db5",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "start_date": "2023-08-03",
+      "end_date": "2023-08-03",
+      "latitude_mean": -28.053265,
+      "longitude_mean": -57.95168,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "INPE:4d51caa63cf8e550",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Sendero Che Roga - Mburucuyá",
+          "start_date": "2023-08-03",
+          "end_date": "2023-08-03",
+          "latitude": -28.053265,
+          "longitude": -57.95168,
+          "route_distance_km": 8.087,
+          "source_record_count": 2,
+          "source_record_ids": [
+            "1bc3232c-8b23-3469-a62c-e3040cb4abc6",
+            "3614a314-9361-313b-9529-91a5894db856"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:649b6c9b59a55cb0697b",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "start_date": "2023-08-04",
+      "end_date": "2023-08-04",
+      "latitude_mean": -27.9729,
+      "longitude_mean": -57.9613,
+      "source_families": [
+        "MODIS_DERIVED_FIRE_ATLAS"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "GFA:230090726",
+          "source": "Global_Fire_Atlas",
+          "source_family": "MODIS_DERIVED_FIRE_ATLAS",
+          "route": "Sendero Che Roga - Mburucuyá",
+          "start_date": "2023-08-04",
+          "end_date": "2023-08-04",
+          "latitude": -27.9729,
+          "longitude": -57.9613,
+          "route_distance_km": 8.111,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "230090726"
+          ],
+          "size_ha": 21.0,
+          "duration_days": "1",
+          "evidence_type": "atlas_ignition_point_and_fire_season",
+          "time_precision": "daily_inferred_start_date"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:bd1ebb9e1764f26875a6",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "start_date": "2023-08-06",
+      "end_date": "2023-08-06",
+      "latitude_mean": -28.054775,
+      "longitude_mean": -57.95376,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "INPE:75b2843bd7101ee8",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Sendero Che Roga - Mburucuyá",
+          "start_date": "2023-08-06",
+          "end_date": "2023-08-06",
+          "latitude": -28.054775,
+          "longitude": -57.95376,
+          "route_distance_km": 7.821,
+          "source_record_count": 2,
+          "source_record_ids": [
+            "0067931c-7d68-36a9-bca1-9a2ff0a8a33f",
+            "c5955333-cff3-3c2a-b766-83ffe8f28aba"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:df6f6b81ea7a3927876a",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "start_date": "2023-08-17",
+      "end_date": "2023-08-17",
+      "latitude_mean": -28.06207,
+      "longitude_mean": -57.94728,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "INPE:bd4fe3038db2a92c",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Sendero Che Roga - Mburucuyá",
+          "start_date": "2023-08-17",
+          "end_date": "2023-08-17",
+          "latitude": -28.06207,
+          "longitude": -57.94728,
+          "route_distance_km": 9.369,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "a437dfb9-9345-3117-8b19-9ab7331f3dde"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:d3bb6ebb038bb8556527",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "start_date": "2023-08-22",
+      "end_date": "2023-08-22",
+      "latitude_mean": -27.927,
+      "longitude_mean": -58.0734,
+      "source_families": [
+        "MODIS_DERIVED_FIRE_ATLAS"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "GFA:230090691",
+          "source": "Global_Fire_Atlas",
+          "source_family": "MODIS_DERIVED_FIRE_ATLAS",
+          "route": "Sendero Che Roga - Mburucuyá",
+          "start_date": "2023-08-22",
+          "end_date": "2023-08-22",
+          "latitude": -27.927,
+          "longitude": -58.0734,
+          "route_distance_km": 9.308,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "230090691"
+          ],
+          "size_ha": 64.0,
+          "duration_days": "1",
+          "evidence_type": "atlas_ignition_point_and_fire_season",
+          "time_precision": "daily_inferred_start_date"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:74760e902cff774418d1",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "start_date": "2023-08-23",
+      "end_date": "2023-08-23",
+      "latitude_mean": -27.9354,
+      "longitude_mean": -58.0732,
+      "source_families": [
+        "MODIS_DERIVED_FIRE_ATLAS"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "GFA:230090697",
+          "source": "Global_Fire_Atlas",
+          "source_family": "MODIS_DERIVED_FIRE_ATLAS",
+          "route": "Sendero Che Roga - Mburucuyá",
+          "start_date": "2023-08-23",
+          "end_date": "2023-08-23",
+          "latitude": -27.9354,
+          "longitude": -58.0732,
+          "route_distance_km": 8.438,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "230090697"
+          ],
+          "size_ha": 21.0,
+          "duration_days": "1",
+          "evidence_type": "atlas_ignition_point_and_fire_season",
+          "time_precision": "daily_inferred_start_date"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:c9162ac4d4b32e02f3ed",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "start_date": "2023-08-25",
+      "end_date": "2023-08-25",
+      "latitude_mean": -28.01364,
+      "longitude_mean": -57.93526,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "INPE:4a3c3250deb98dec",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Sendero Che Roga - Mburucuyá",
+          "start_date": "2023-08-25",
+          "end_date": "2023-08-25",
+          "latitude": -28.01364,
+          "longitude": -57.93526,
+          "route_distance_km": 9.185,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "8daf9bd2-ba98-348c-bc84-79fab545ca96"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:78994f86284be1ffad36",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "start_date": "2023-08-27",
+      "end_date": "2023-08-27",
+      "latitude_mean": -28.07311,
+      "longitude_mean": -57.94901,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "INPE:305adbc370fdfc19",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Sendero Che Roga - Mburucuyá",
+          "start_date": "2023-08-27",
+          "end_date": "2023-08-27",
+          "latitude": -28.07311,
+          "longitude": -57.94901,
+          "route_distance_km": 9.93,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "cf931ae3-5916-3751-98be-7bc706d0d199"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:996309ba2dbdd55317b6",
+      "route": "Quebrada del Condorito - Balcon Norte",
+      "start_date": "2023-10-06",
+      "end_date": "2023-10-06",
+      "latitude_mean": -31.577167,
+      "longitude_mean": -64.662139,
+      "source_families": [
+        "OFFICIAL_INCIDENT_REPORT"
+      ],
+      "evidence_class": "official_report_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "SNMF:ab1b1fc13f6735eb",
+          "source": "SNMF_daily_reports",
+          "source_family": "OFFICIAL_INCIDENT_REPORT",
+          "route": "Quebrada del Condorito - Balcon Norte",
+          "start_date": "2023-10-06",
+          "end_date": "2023-10-06",
+          "latitude": -31.577166666666667,
+          "longitude": -64.66213888888889,
+          "route_distance_km": 7.393,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "ab1b1fc13f6735eb:2023-10-09"
+          ],
+          "incident_names": [
+            "RIO DE LA SUELA"
+          ],
+          "report_dates": [
+            "2023-10-09"
+          ],
+          "province": "CÓRDOBA",
+          "status": "CONTENIDO",
+          "evidence_type": "officially_reported_fire_incident",
+          "time_precision": "reported_start_date_only"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:c40953b49900040c2adc",
+      "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "start_date": "2023-12-19",
+      "end_date": "2023-12-19",
+      "latitude_mean": -42.010281,
+      "longitude_mean": -71.516389,
+      "source_families": [
+        "OFFICIAL_INCIDENT_REPORT"
+      ],
+      "evidence_class": "official_report_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "SNMF:7113c1d43db521a1",
+          "source": "SNMF_daily_reports",
+          "source_family": "OFFICIAL_INCIDENT_REPORT",
+          "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "start_date": "2023-12-19",
+          "end_date": "2023-12-19",
+          "latitude": -42.01028055555555,
+          "longitude": -71.51638888888888,
+          "route_distance_km": 5.199,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "7113c1d43db521a1:2023-12-19"
+          ],
+          "incident_names": [
+            "Quema golondrinas"
+          ],
+          "report_dates": [
+            "2023-12-19"
+          ],
+          "province": "Chubut",
+          "status": "EXTINGUIDO",
+          "evidence_type": "officially_reported_fire_incident",
+          "time_precision": "reported_start_date_only"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:880a7f5c7ef70c325c35",
+      "route": "Sendero Namuncura",
+      "start_date": "2023-12-27",
+      "end_date": "2023-12-29",
+      "latitude_mean": -37.940589,
+      "longitude_mean": -65.636168,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE",
+        "MODIS_DERIVED_FIRE_ATLAS"
+      ],
+      "evidence_class": "multiple_products_same_satellite_family",
+      "source_record_count": 2,
+      "source_records": [
+        {
+          "record_id": "GFA:240105183",
+          "source": "Global_Fire_Atlas",
+          "source_family": "MODIS_DERIVED_FIRE_ATLAS",
+          "route": "Sendero Namuncura",
+          "start_date": "2023-12-27",
+          "end_date": "2023-12-29",
+          "latitude": -37.9437,
+          "longitude": -65.6452,
+          "route_distance_km": 8.09,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "240105183"
+          ],
+          "size_ha": 43.0,
+          "duration_days": "3",
+          "evidence_type": "atlas_ignition_point_and_fire_season",
+          "time_precision": "daily_inferred_start_date"
+        },
+        {
+          "record_id": "INPE:84e332ca78030af1",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Sendero Namuncura",
+          "start_date": "2023-12-27",
+          "end_date": "2023-12-29",
+          "latitude": -37.937478,
+          "longitude": -65.627137,
+          "route_distance_km": 7.558,
+          "source_record_count": 6,
+          "source_record_ids": [
+            "03f0da6a-6387-387c-a8d5-abb10c83baca",
+            "389645ab-c5e0-3f31-8bac-41d741a9aba9",
+            "5541149b-630f-3e3e-9a17-4e0a602a8b97",
+            "56398eca-7be0-3f4f-bd66-a32a9bfec26d",
+            "98b17c8e-1cc2-3cfb-8208-8096542cbb65",
+            "dcba08f0-97e1-327e-a9c1-8ea82b9f55ae"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:28cd5e656e409b401d08",
+      "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "start_date": "2024-01-06",
+      "end_date": "2024-01-06",
+      "latitude_mean": -42.018389,
+      "longitude_mean": -71.541278,
+      "source_families": [
+        "OFFICIAL_INCIDENT_REPORT"
+      ],
+      "evidence_class": "official_report_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "SNMF:436800fe397afda8",
+          "source": "SNMF_daily_reports",
+          "source_family": "OFFICIAL_INCIDENT_REPORT",
+          "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "start_date": "2024-01-06",
+          "end_date": "2024-01-06",
+          "latitude": -42.018388888888886,
+          "longitude": -71.54127777777778,
+          "route_distance_km": 7.234,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "436800fe397afda8:2024-01-06"
+          ],
+          "incident_names": [
+            "El Eden (Las Golondrinas)"
+          ],
+          "report_dates": [
+            "2024-01-06"
+          ],
+          "province": "Chubut",
+          "status": "EXTINGUIDO",
+          "evidence_type": "officially_reported_fire_incident",
+          "time_precision": "reported_start_date_only"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:b1b2abe335beb7506548",
+      "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "start_date": "2024-01-26",
+      "end_date": "2024-01-26",
+      "latitude_mean": -42.01,
+      "longitude_mean": -71.57,
+      "source_families": [
+        "OFFICIAL_INCIDENT_REPORT"
+      ],
+      "evidence_class": "official_report_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "SNMF:dd1f003e9f21ae8a",
+          "source": "SNMF_daily_reports",
+          "source_family": "OFFICIAL_INCIDENT_REPORT",
+          "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "start_date": "2024-01-26",
+          "end_date": "2024-01-26",
+          "latitude": -42.01,
+          "longitude": -71.57,
+          "route_distance_km": 8.59,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "dd1f003e9f21ae8a:2024-01-27"
+          ],
+          "incident_names": [
+            "Callejon Los Lupinos"
+          ],
+          "report_dates": [
+            "2024-01-27"
+          ],
+          "province": "Chubut",
+          "status": "EXTINGUIDO",
+          "evidence_type": "officially_reported_fire_incident",
+          "time_precision": "reported_start_date_only"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:a6ec2610e8d568a02075",
+      "route": "Sendero Namuncura",
+      "start_date": "2024-01-30",
+      "end_date": "2024-01-30",
+      "latitude_mean": -37.9716,
+      "longitude_mean": -65.5632,
+      "source_families": [
+        "OFFICIAL_INCIDENT_REPORT"
+      ],
+      "evidence_class": "official_report_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "SNMF:37ebb92ec3519e10",
+          "source": "SNMF_daily_reports",
+          "source_family": "OFFICIAL_INCIDENT_REPORT",
+          "route": "Sendero Namuncura",
+          "start_date": "2024-01-30",
+          "end_date": "2024-01-30",
+          "latitude": -37.9716,
+          "longitude": -65.5632,
+          "route_distance_km": 4.614,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "37ebb92ec3519e10:2024-01-31"
+          ],
+          "incident_names": [
+            "Tranquerón"
+          ],
+          "report_dates": [
+            "2024-01-31"
+          ],
+          "province": "La Pampa",
+          "status": "CONTENIDO",
+          "evidence_type": "officially_reported_fire_incident",
+          "time_precision": "reported_start_date_only"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:6514ce346205ad9674eb",
+      "route": "Cerro Ventana - Hueco de la Ventana",
+      "start_date": "2024-02-03",
+      "end_date": "2024-02-05",
+      "latitude_mean": -38.067465,
+      "longitude_mean": -61.925205,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE",
+        "MODIS_DERIVED_FIRE_ATLAS",
+        "OFFICIAL_INCIDENT_REPORT"
+      ],
+      "evidence_class": "official_report_plus_satellite_corroboration",
+      "source_record_count": 3,
+      "source_records": [
+        {
+          "record_id": "SNMF:101726e5490a05b4",
+          "source": "SNMF_daily_reports",
+          "source_family": "OFFICIAL_INCIDENT_REPORT",
+          "route": "Cerro Ventana - Hueco de la Ventana",
+          "start_date": "2024-02-03",
+          "end_date": "2024-02-03",
+          "latitude": -38.07401388888889,
+          "longitude": -61.92494444444444,
+          "route_distance_km": 8.008,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "101726e5490a05b4:2024-02-05"
+          ],
+          "incident_names": [
+            "Parque Provincial Ernesto"
+          ],
+          "report_dates": [
+            "2024-02-05"
+          ],
+          "province": "Buenos Aires",
+          "status": "EXTINGUIDO",
+          "evidence_type": "officially_reported_fire_incident",
+          "time_precision": "reported_start_date_only"
+        },
+        {
+          "record_id": "GFA:240127639",
+          "source": "Global_Fire_Atlas",
+          "source_family": "MODIS_DERIVED_FIRE_ATLAS",
+          "route": "Cerro Ventana - Hueco de la Ventana",
+          "start_date": "2024-02-04",
+          "end_date": "2024-02-05",
+          "latitude": -38.0562,
+          "longitude": -61.936,
+          "route_distance_km": 6.693,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "240127639"
+          ],
+          "size_ha": 129.0,
+          "duration_days": "2",
+          "evidence_type": "atlas_ignition_point_and_fire_season",
+          "time_precision": "daily_inferred_start_date"
+        },
+        {
+          "record_id": "INPE:4bc089b310659fc2",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Cerro Ventana - Hueco de la Ventana",
+          "start_date": "2024-02-03",
+          "end_date": "2024-02-03",
+          "latitude": -38.07218,
+          "longitude": -61.91467,
+          "route_distance_km": 8.901,
+          "source_record_count": 2,
+          "source_record_ids": [
+            "59fec116-f652-3545-9b91-e0be549b7fae",
+            "6fb75f47-d715-3cc1-bc44-537a09707919"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:5c648b5cdddbd663adc3",
+      "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "start_date": "2024-03-07",
+      "end_date": "2024-03-07",
+      "latitude_mean": -42.0,
+      "longitude_mean": -71.53,
+      "source_families": [
+        "OFFICIAL_INCIDENT_REPORT"
+      ],
+      "evidence_class": "official_report_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "SNMF:7fce7a0f9be815da",
+          "source": "SNMF_daily_reports",
+          "source_family": "OFFICIAL_INCIDENT_REPORT",
+          "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "start_date": "2024-03-07",
+          "end_date": "2024-03-07",
+          "latitude": -42.0,
+          "longitude": -71.53,
+          "route_distance_km": 5.194,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "7fce7a0f9be815da:2024-03-07"
+          ],
+          "incident_names": [
+            "Lote 1 campo INTA"
+          ],
+          "report_dates": [
+            "2024-03-07"
+          ],
+          "province": "Chubut",
+          "status": "EXTINGUIDO",
+          "evidence_type": "officially_reported_fire_incident",
+          "time_precision": "reported_start_date_only"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:82511d8febbad9368232",
+      "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "start_date": "2024-04-16",
+      "end_date": "2024-04-16",
+      "latitude_mean": -42.0349,
+      "longitude_mean": -71.5494,
+      "source_families": [
+        "OFFICIAL_INCIDENT_REPORT"
+      ],
+      "evidence_class": "official_report_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "SNMF:2c30518c88e80aa7",
+          "source": "SNMF_daily_reports",
+          "source_family": "OFFICIAL_INCIDENT_REPORT",
+          "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "start_date": "2024-04-16",
+          "end_date": "2024-04-16",
+          "latitude": -42.0349,
+          "longitude": -71.54939999999999,
+          "route_distance_km": 9.042,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "2c30518c88e80aa7:2024-04-17"
+          ],
+          "incident_names": [
+            "Camping"
+          ],
+          "report_dates": [
+            "2024-04-17"
+          ],
+          "province": "Chubut",
+          "status": "EXTINGUIDO",
+          "evidence_type": "officially_reported_fire_incident",
+          "time_precision": "reported_start_date_only"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:2997cf7eb12e9ed4d347",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "start_date": "2024-07-21",
+      "end_date": "2024-07-28",
+      "latitude_mean": -28.0687,
+      "longitude_mean": -57.9704,
+      "source_families": [
+        "MODIS_DERIVED_FIRE_ATLAS"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "GFA:240100035",
+          "source": "Global_Fire_Atlas",
+          "source_family": "MODIS_DERIVED_FIRE_ATLAS",
+          "route": "Sendero Che Roga - Mburucuyá",
+          "start_date": "2024-07-21",
+          "end_date": "2024-07-28",
+          "latitude": -28.0687,
+          "longitude": -57.9704,
+          "route_distance_km": 8.035,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "240100035"
+          ],
+          "size_ha": 43.0,
+          "duration_days": "8",
+          "evidence_type": "atlas_ignition_point_and_fire_season",
+          "time_precision": "daily_inferred_start_date"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:8f135450945fcde15ad2",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "start_date": "2024-07-26",
+      "end_date": "2024-07-26",
+      "latitude_mean": -28.07238,
+      "longitude_mean": -57.975627,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "INPE:fd715de721ad6f39",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Sendero Che Roga - Mburucuyá",
+          "start_date": "2024-07-26",
+          "end_date": "2024-07-26",
+          "latitude": -28.07238,
+          "longitude": -57.975627,
+          "route_distance_km": 7.707,
+          "source_record_count": 3,
+          "source_record_ids": [
+            "2fe1d088-4e59-384f-a602-fe61e72afccd",
+            "48c9c4f1-09e3-33bc-858d-dffdaf3a8dd3",
+            "c0f7219b-f069-3b48-b610-5114c2524b99"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:18115993737387ad1710",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "start_date": "2024-09-03",
+      "end_date": "2024-09-03",
+      "latitude_mean": -28.09454,
+      "longitude_mean": -58.03225,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "INPE:8ca65f8092e731fe",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Sendero Che Roga - Mburucuyá",
+          "start_date": "2024-09-03",
+          "end_date": "2024-09-03",
+          "latitude": -28.09454,
+          "longitude": -58.03225,
+          "route_distance_km": 8.511,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "1339d935-d2c3-39ac-8cc5-7391e23cd2df"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:78b4a8b1e596fcbe50b2",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "start_date": "2024-09-03",
+      "end_date": "2024-09-03",
+      "latitude_mean": -28.00526,
+      "longitude_mean": -57.93207,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "INPE:3a2603055af0ea3b",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Sendero Che Roga - Mburucuyá",
+          "start_date": "2024-09-03",
+          "end_date": "2024-09-03",
+          "latitude": -28.00526,
+          "longitude": -57.93207,
+          "route_distance_km": 9.591,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "7549a453-5b5a-34d0-9263-866539d60511"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:337f73f97aeee679bda7",
+      "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "start_date": "2024-09-15",
+      "end_date": "2024-09-15",
+      "latitude_mean": -42.00075,
+      "longitude_mean": -71.532083,
+      "source_families": [
+        "OFFICIAL_INCIDENT_REPORT"
+      ],
+      "evidence_class": "official_report_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "SNMF:42b5c2d270baefa0",
+          "source": "SNMF_daily_reports",
+          "source_family": "OFFICIAL_INCIDENT_REPORT",
+          "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "start_date": "2024-09-15",
+          "end_date": "2024-09-15",
+          "latitude": -42.00075,
+          "longitude": -71.53208333333333,
+          "route_distance_km": 5.382,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "42b5c2d270baefa0:2024-09-15"
+          ],
+          "incident_names": [
+            "Golondrinas RN 40"
+          ],
+          "report_dates": [
+            "2024-09-15"
+          ],
+          "province": "Chubut",
+          "status": "EXTINGUIDO",
+          "evidence_type": "officially_reported_fire_incident",
+          "time_precision": "reported_start_date_only"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:aa442978fc21562336ee",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "start_date": "2024-09-29",
+      "end_date": "2024-09-29",
+      "latitude_mean": -27.99461,
+      "longitude_mean": -57.99193,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "INPE:0b9a471108820680",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Sendero Che Roga - Mburucuyá",
+          "start_date": "2024-09-29",
+          "end_date": "2024-09-29",
+          "latitude": -27.99461,
+          "longitude": -57.99193,
+          "route_distance_km": 4.453,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "2755aa31-a097-3b73-8b25-78547c57fd7e"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:027c7ec411d89ebc035e",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "start_date": "2024-10-02",
+      "end_date": "2024-10-02",
+      "latitude_mean": -28.07679,
+      "longitude_mean": -57.99636,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "INPE:f7994388208598b2",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Sendero Che Roga - Mburucuyá",
+          "start_date": "2024-10-02",
+          "end_date": "2024-10-02",
+          "latitude": -28.07679,
+          "longitude": -57.99636,
+          "route_distance_km": 7.26,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "c6875ecb-d13a-3e80-b12d-9db7577bfc59"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:2c247230a480cf24f1a3",
+      "route": "Refugio Frey desde Villa Catedral",
+      "start_date": "2024-10-16",
+      "end_date": "2024-10-16",
+      "latitude_mean": -41.178764,
+      "longitude_mean": -71.344056,
+      "source_families": [
+        "OFFICIAL_INCIDENT_REPORT"
+      ],
+      "evidence_class": "official_report_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "SNMF:af041ad0636d4943",
+          "source": "SNMF_daily_reports",
+          "source_family": "OFFICIAL_INCIDENT_REPORT",
+          "route": "Refugio Frey desde Villa Catedral",
+          "start_date": "2024-10-16",
+          "end_date": "2024-10-16",
+          "latitude": -41.17876388888889,
+          "longitude": -71.34405555555556,
+          "route_distance_km": 7.964,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "af041ad0636d4943:2024-10-16"
+          ],
+          "incident_names": [
+            "Dos Valles"
+          ],
+          "report_dates": [
+            "2024-10-16"
+          ],
+          "province": "Río Negro",
+          "status": "CONTROLADO",
+          "evidence_type": "officially_reported_fire_incident",
+          "time_precision": "reported_start_date_only"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:0a7ca53a027327a5554d",
+      "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "start_date": "2025-02-09",
+      "end_date": "2025-02-09",
+      "latitude_mean": -41.91394,
+      "longitude_mean": -71.56753,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "INPE:63f423f451071e16",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "start_date": "2025-02-09",
+          "end_date": "2025-02-09",
+          "latitude": -41.91394,
+          "longitude": -71.56753,
+          "route_distance_km": 9.833,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "6d7a2656-6569-3016-b8bb-451333207685"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:78d327b0312e5c4882eb",
+      "route": "Refugio Frey desde Villa Catedral",
+      "start_date": "2025-02-25",
+      "end_date": "2025-02-25",
+      "latitude_mean": -41.22366,
+      "longitude_mean": -71.39531,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "INPE:2c0cb310dac273ba",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Refugio Frey desde Villa Catedral",
+          "start_date": "2025-02-25",
+          "end_date": "2025-02-25",
+          "latitude": -41.22366,
+          "longitude": -71.39531,
+          "route_distance_km": 6.64,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "b4ccdc43-6ba3-3faf-853b-9f3569957fed"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:ff832b30f3f51948f7d8",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "start_date": "2025-03-20",
+      "end_date": "2025-03-20",
+      "latitude_mean": -27.96662,
+      "longitude_mean": -57.95044,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "INPE:48dc7a9bc93bdacf",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Sendero Che Roga - Mburucuyá",
+          "start_date": "2025-03-20",
+          "end_date": "2025-03-20",
+          "latitude": -27.96662,
+          "longitude": -57.95044,
+          "route_distance_km": 9.579,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "8d317b16-4e17-352e-881f-c9db4a9064fb"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:b532b6f8118481d0741f",
+      "route": "Cerro Ventana - Hueco de la Ventana",
+      "start_date": "2025-07-13",
+      "end_date": "2025-07-13",
+      "latitude_mean": -38.1437,
+      "longitude_mean": -61.9943,
+      "source_families": [
+        "MODIS_DERIVED_FIRE_ATLAS"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "GFA:260017722",
+          "source": "Global_Fire_Atlas",
+          "source_family": "MODIS_DERIVED_FIRE_ATLAS",
+          "route": "Cerro Ventana - Hueco de la Ventana",
+          "start_date": "2025-07-13",
+          "end_date": "2025-07-13",
+          "latitude": -38.1437,
+          "longitude": -61.9943,
+          "route_distance_km": 9.221,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "260017722"
+          ],
+          "size_ha": 43.0,
+          "duration_days": "1",
+          "evidence_type": "atlas_ignition_point_and_fire_season",
+          "time_precision": "daily_inferred_start_date"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:ede8131301ec20290e75",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "start_date": "2025-08-05",
+      "end_date": "2025-08-05",
+      "latitude_mean": -28.08798,
+      "longitude_mean": -58.00155,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "INPE:4781cd0d7c5f1226",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Sendero Che Roga - Mburucuyá",
+          "start_date": "2025-08-05",
+          "end_date": "2025-08-05",
+          "latitude": -28.08798,
+          "longitude": -58.00155,
+          "route_distance_km": 8.218,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "7519eea2-bc73-3dcb-a500-1dcb02e267be"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:4b08adf517be262cb01f",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "start_date": "2025-09-11",
+      "end_date": "2025-09-11",
+      "latitude_mean": -28.04261,
+      "longitude_mean": -58.108165,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "INPE:a7f556658e3ca4a5",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Sendero Che Roga - Mburucuyá",
+          "start_date": "2025-09-11",
+          "end_date": "2025-09-11",
+          "latitude": -28.04261,
+          "longitude": -58.108165,
+          "route_distance_km": 7.644,
+          "source_record_count": 2,
+          "source_record_ids": [
+            "53b4dacd-f807-3e1d-8bb1-3cffbeff56d6",
+            "5489bc00-0f60-3ce3-b405-8b6c9d90a8f6"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:31fd43a66ebc282fe642",
+      "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "start_date": "2025-10-08",
+      "end_date": "2025-10-08",
+      "latitude_mean": -41.992767,
+      "longitude_mean": -71.523872,
+      "source_families": [
+        "OFFICIAL_INCIDENT_REPORT"
+      ],
+      "evidence_class": "official_report_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "SNMF:c72a56e97f8cf58d",
+          "source": "SNMF_daily_reports",
+          "source_family": "OFFICIAL_INCIDENT_REPORT",
+          "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "start_date": "2025-10-08",
+          "end_date": "2025-10-08",
+          "latitude": -41.99276666666667,
+          "longitude": -71.52387222222222,
+          "route_distance_km": 4.326,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "c72a56e97f8cf58d:2025-10-08"
+          ],
+          "incident_names": [
+            "Ruta 40 Control Policial"
+          ],
+          "report_dates": [
+            "2025-10-08"
+          ],
+          "province": "Chubut",
+          "status": "EXTINGUIDO",
+          "evidence_type": "officially_reported_fire_incident",
+          "time_precision": "reported_start_date_only"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:c6af027e81725258fedf",
+      "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "start_date": "2025-10-08",
+      "end_date": "2025-10-08",
+      "latitude_mean": -42.034275,
+      "longitude_mean": -71.559075,
+      "source_families": [
+        "OFFICIAL_INCIDENT_REPORT"
+      ],
+      "evidence_class": "official_report_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "SNMF:b2e224eeaa2d7f96",
+          "source": "SNMF_daily_reports",
+          "source_family": "OFFICIAL_INCIDENT_REPORT",
+          "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "start_date": "2025-10-08",
+          "end_date": "2025-10-08",
+          "latitude": -42.034275,
+          "longitude": -71.55907499999999,
+          "route_distance_km": 9.525,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "b2e224eeaa2d7f96:2025-10-08"
+          ],
+          "incident_names": [
+            "Cerro Radal"
+          ],
+          "report_dates": [
+            "2025-10-08"
+          ],
+          "province": "Chubut",
+          "status": "EXTINGUIDO",
+          "evidence_type": "officially_reported_fire_incident",
+          "time_precision": "reported_start_date_only"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:13005d5a61cdd1884327",
+      "route": "Quebrada del Condorito - Balcon Norte",
+      "start_date": "2025-10-10",
+      "end_date": "2025-10-28",
+      "latitude_mean": -31.612481,
+      "longitude_mean": -64.719394,
+      "source_families": [
+        "MODIS_DERIVED_FIRE_ATLAS",
+        "OFFICIAL_INCIDENT_REPORT"
+      ],
+      "evidence_class": "official_report_plus_satellite_corroboration",
+      "source_record_count": 2,
+      "source_records": [
+        {
+          "record_id": "SNMF:4431903de8cdb77b",
+          "source": "SNMF_daily_reports",
+          "source_family": "OFFICIAL_INCIDENT_REPORT",
+          "route": "Quebrada del Condorito - Balcon Norte",
+          "start_date": "2025-10-10",
+          "end_date": "2025-10-10",
+          "latitude": -31.602061111111112,
+          "longitude": -64.72338888888889,
+          "route_distance_km": 3.537,
+          "source_record_count": 4,
+          "source_record_ids": [
+            "4431903de8cdb77b:2025-10-10",
+            "4431903de8cdb77b:2025-10-11",
+            "4431903de8cdb77b:2025-10-21",
+            "4431903de8cdb77b:2025-10-14"
+          ],
+          "incident_names": [
+            "Parque Nacional Quebrada del",
+            "Parque Nacional Quebrada del Condorito, ex",
+            "Parque Nacional Quebrada del Condorito, ex La",
+            "Parque Nacional Quebrada del Condorito, ex La Pampilla"
+          ],
+          "report_dates": [
+            "2025-10-10",
+            "2025-10-11",
+            "2025-10-21",
+            "2025-10-14"
+          ],
+          "province": "Córdoba",
+          "status": "ACTIVO",
+          "evidence_type": "officially_reported_fire_incident",
+          "time_precision": "reported_start_date_only"
+        },
+        {
+          "record_id": "GFA:260016603",
+          "source": "Global_Fire_Atlas",
+          "source_family": "MODIS_DERIVED_FIRE_ATLAS",
+          "route": "Quebrada del Condorito - Balcon Norte",
+          "start_date": "2025-10-10",
+          "end_date": "2025-10-28",
+          "latitude": -31.6229,
+          "longitude": -64.7154,
+          "route_distance_km": 1.12,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "260016603"
+          ],
+          "size_ha": 5981.0,
+          "duration_days": "19",
+          "evidence_type": "atlas_ignition_point_and_fire_season",
+          "time_precision": "daily_inferred_start_date"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:95b07a551160bc9e7ef1",
+      "route": "Quebrada del Condorito - Balcon Norte",
+      "start_date": "2025-10-10",
+      "end_date": "2025-10-15",
+      "latitude_mean": -31.661828,
+      "longitude_mean": -64.754512,
+      "source_families": [
+        "AQUA_MODIS_ACTIVE_FIRE"
+      ],
+      "evidence_class": "satellite_positive_candidate_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "INPE:7c656c7b174e0727",
+          "source": "INPE_AMS_AQUA_MODIS",
+          "source_family": "AQUA_MODIS_ACTIVE_FIRE",
+          "route": "Quebrada del Condorito - Balcon Norte",
+          "start_date": "2025-10-10",
+          "end_date": "2025-10-15",
+          "latitude": -31.661828,
+          "longitude": -64.754512,
+          "route_distance_km": 0.781,
+          "source_record_count": 44,
+          "source_record_ids": [
+            "0b1a0f9e-a0d3-3fcb-ba09-2a82a946636e",
+            "0e3b2fd0-86c8-352e-80fa-8326ff469658",
+            "103b8d50-4e7a-3445-be20-af45864d49da",
+            "1e2f05b4-81ac-3a12-85b3-f9768c2a3ae1",
+            "25a832f3-4bae-3351-bda0-5616ba5c902f",
+            "2b4bc70d-e2da-3b87-addd-0a8f357c0c12",
+            "32cb4562-83b1-3f6a-b704-05c5928a7196",
+            "355a4d11-e850-363f-925e-ea29db6f8f88",
+            "3689f144-3aaf-3d68-8b9f-e82748ad587a",
+            "39a9279b-7254-3ad4-8f99-f41a9c92bb08",
+            "3f3de118-55ee-3b04-bb53-04df764bbea6",
+            "3fa1bb80-d192-3d75-a5a9-2cac97e2d56b",
+            "4994bed6-d1e0-3d73-b36b-11f126a280dd",
+            "55e89597-fd94-36d6-9f2c-fd1497622bfa",
+            "58c7bdf5-1e31-39fe-b634-aebd2dc52df7",
+            "6d2c693b-dd43-32a7-9dda-eda99594d493",
+            "6e4c58f2-3d8a-34c3-a57f-23f5a7ed6f81",
+            "726270be-ea27-381c-b431-84d17f359c6b",
+            "75ec69a3-9703-3ad5-936a-c1069c348c58",
+            "7dc54891-bd4f-3a65-b8cd-af1200c79ee8",
+            "880f1dca-dd64-3902-8fd7-89a442ebf8fe",
+            "892dc431-a9fb-35df-9a0c-2a7d9b486845",
+            "8a49fa5b-0843-35b8-947c-6a584cfd99f9",
+            "8da62253-ff3e-3e64-8076-4b607bfa24d5",
+            "93c5ed46-53f2-39c2-82c8-38fe0e198f00",
+            "9677f269-ffbb-3f2f-88af-0b5ccad66766",
+            "990e1e6b-8670-32f8-80c7-0c11d30b6dce",
+            "99f5d57a-fd32-3cc1-9a68-f704a97df2a6",
+            "9acee344-1dae-3e24-b593-b6afca2550ba",
+            "a55422a3-fca8-3ec9-83d0-59eb7a582148",
+            "abbf76b9-2c3f-3c26-b520-b113776d9915",
+            "aece0842-7fa5-3f5e-ba75-0c6fb5ad3836",
+            "b57700df-9c11-3763-ba70-073b62f71f94",
+            "bb97138f-bfef-34fd-98ed-559ee55b2ef9",
+            "c7cd49ba-db22-3177-8c6a-8947c10520fd",
+            "c7d7cb4d-09ec-300f-995c-e2bf34d97651",
+            "ca0f01d4-1017-31f0-96bf-4ce9801709e5",
+            "cbefe12c-5a6d-313f-aec7-d897ec2b8774",
+            "d369cdd7-aacc-3e47-a603-75d192df0fd6",
+            "e0fb52c1-6ec6-3ca5-b430-8719acdb4a21",
+            "e32b9085-cbee-3bcb-b4eb-669d9e9e7f96",
+            "e7e0aa34-ac58-3dd0-88f9-26ad163aff2d",
+            "f6f5bb93-3c78-3479-8f77-f4482314cc95",
+            "fdf96611-8ee1-3059-bd26-b36a581c1df3"
+          ],
+          "evidence_type": "active_fire_satellite_detections",
+          "time_precision": "detection_timestamp_available_in_source_records"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:0b0192041c80bc360686",
+      "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "start_date": "2025-11-17",
+      "end_date": "2025-11-17",
+      "latitude_mean": -41.909956,
+      "longitude_mean": -71.514228,
+      "source_families": [
+        "OFFICIAL_INCIDENT_REPORT"
+      ],
+      "evidence_class": "official_report_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "SNMF:6fd6477a2bf2c36d",
+          "source": "SNMF_daily_reports",
+          "source_family": "OFFICIAL_INCIDENT_REPORT",
+          "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "start_date": "2025-11-17",
+          "end_date": "2025-11-17",
+          "latitude": -41.909955555555555,
+          "longitude": -71.51422777777778,
+          "route_distance_km": 7.208,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "6fd6477a2bf2c36d:2025-11-18"
+          ],
+          "incident_names": [
+            "Ternero Los fuegos"
+          ],
+          "report_dates": [
+            "2025-11-18"
+          ],
+          "province": "Río Negro",
+          "status": "EXTINGUIDO",
+          "evidence_type": "officially_reported_fire_incident",
+          "time_precision": "reported_start_date_only"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:7e27ac1b7847a0b54702",
+      "route": "Refugio Frey desde Villa Catedral",
+      "start_date": "2025-11-26",
+      "end_date": "2025-11-26",
+      "latitude_mean": -41.1387,
+      "longitude_mean": -71.357,
+      "source_families": [
+        "OFFICIAL_INCIDENT_REPORT"
+      ],
+      "evidence_class": "official_report_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "SNMF:ea102778fb56e164",
+          "source": "SNMF_daily_reports",
+          "source_family": "OFFICIAL_INCIDENT_REPORT",
+          "route": "Refugio Frey desde Villa Catedral",
+          "start_date": "2025-11-26",
+          "end_date": "2025-11-26",
+          "latitude": -41.1387,
+          "longitude": -71.357,
+          "route_distance_km": 8.086,
+          "source_record_count": 2,
+          "source_record_ids": [
+            "ea102778fb56e164:2025-12-01",
+            "ea102778fb56e164:2025-11-28"
+          ],
+          "incident_names": [
+            "Ladera Norte Cerro",
+            "Ladera Norte Cerro Otto"
+          ],
+          "report_dates": [
+            "2025-12-01",
+            "2025-11-28"
+          ],
+          "province": "Río Negro",
+          "status": "CONTROLADO",
+          "evidence_type": "officially_reported_fire_incident",
+          "time_precision": "reported_start_date_only"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:6e23b734d85305d21759",
+      "route": "Cerro Ventana - Hueco de la Ventana",
+      "start_date": "2025-12-11",
+      "end_date": "2025-12-11",
+      "latitude_mean": -38.132861,
+      "longitude_mean": -61.983306,
+      "source_families": [
+        "OFFICIAL_INCIDENT_REPORT"
+      ],
+      "evidence_class": "official_report_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "SNMF:1f4708abdd313950",
+          "source": "SNMF_daily_reports",
+          "source_family": "OFFICIAL_INCIDENT_REPORT",
+          "route": "Cerro Ventana - Hueco de la Ventana",
+          "start_date": "2025-12-11",
+          "end_date": "2025-12-11",
+          "latitude": -38.13286111111111,
+          "longitude": -61.98330555555556,
+          "route_distance_km": 8.379,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "1f4708abdd313950:2025-12-11"
+          ],
+          "incident_names": [
+            "CERRO NAPOSTA /CERRO"
+          ],
+          "report_dates": [
+            "2025-12-11"
+          ],
+          "province": "Buenos Aires",
+          "status": "CONTENIDO",
+          "evidence_type": "officially_reported_fire_incident",
+          "time_precision": "reported_start_date_only"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:9c5eca8dae984bf26456",
+      "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "start_date": "2026-01-01",
+      "end_date": "2026-01-01",
+      "latitude_mean": -42.0407,
+      "longitude_mean": -71.4041,
+      "source_families": [
+        "OFFICIAL_INCIDENT_REPORT"
+      ],
+      "evidence_class": "official_report_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "SNMF:f61e5329eeca70a0",
+          "source": "SNMF_daily_reports",
+          "source_family": "OFFICIAL_INCIDENT_REPORT",
+          "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "start_date": "2026-01-01",
+          "end_date": "2026-01-01",
+          "latitude": -42.0407,
+          "longitude": -71.4041,
+          "route_distance_km": 9.757,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "f61e5329eeca70a0:2026-01-01"
+          ],
+          "incident_names": [
+            "Basural"
+          ],
+          "report_dates": [
+            "2026-01-01"
+          ],
+          "province": "Chubut",
+          "status": "EXTINGUIDO",
+          "evidence_type": "officially_reported_fire_incident",
+          "time_precision": "reported_start_date_only"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:54642991ec0383b2331c",
+      "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "start_date": "2026-01-05",
+      "end_date": "2026-01-05",
+      "latitude_mean": -41.986233,
+      "longitude_mean": -71.548539,
+      "source_families": [
+        "OFFICIAL_INCIDENT_REPORT"
+      ],
+      "evidence_class": "official_report_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "SNMF:11ee3a8409bd4848",
+          "source": "SNMF_daily_reports",
+          "source_family": "OFFICIAL_INCIDENT_REPORT",
+          "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "start_date": "2026-01-05",
+          "end_date": "2026-01-05",
+          "latitude": -41.98623333333333,
+          "longitude": -71.54853888888888,
+          "route_distance_km": 5.94,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "11ee3a8409bd4848:2026-01-05"
+          ],
+          "incident_names": [
+            "Barda de La Loma"
+          ],
+          "report_dates": [
+            "2026-01-05"
+          ],
+          "province": "Río Negro",
+          "status": "CONTROLADO",
+          "evidence_type": "officially_reported_fire_incident",
+          "time_precision": "reported_start_date_only"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:b2eaa2db7d2d6b5d749a",
+      "route": "Refugio Frey desde Villa Catedral",
+      "start_date": "2026-01-05",
+      "end_date": "2026-01-05",
+      "latitude_mean": -41.171306,
+      "longitude_mean": -71.348111,
+      "source_families": [
+        "OFFICIAL_INCIDENT_REPORT"
+      ],
+      "evidence_class": "official_report_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "SNMF:cf1b7068704a063d",
+          "source": "SNMF_daily_reports",
+          "source_family": "OFFICIAL_INCIDENT_REPORT",
+          "route": "Refugio Frey desde Villa Catedral",
+          "start_date": "2026-01-05",
+          "end_date": "2026-01-05",
+          "latitude": -41.171305555555556,
+          "longitude": -71.34811111111111,
+          "route_distance_km": 7.825,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "cf1b7068704a063d:2026-01-05"
+          ],
+          "incident_names": [
+            "Cantera Eva Perón"
+          ],
+          "report_dates": [
+            "2026-01-05"
+          ],
+          "province": "Río Negro",
+          "status": "CONTENIDO",
+          "evidence_type": "officially_reported_fire_incident",
+          "time_precision": "reported_start_date_only"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:1ad2cbcd30385974687a",
+      "route": "Refugio Frey desde Villa Catedral",
+      "start_date": "2026-01-06",
+      "end_date": "2026-01-06",
+      "latitude_mean": -41.174631,
+      "longitude_mean": -71.3548,
+      "source_families": [
+        "OFFICIAL_INCIDENT_REPORT"
+      ],
+      "evidence_class": "official_report_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "SNMF:06a47f6b0bb6131b",
+          "source": "SNMF_daily_reports",
+          "source_family": "OFFICIAL_INCIDENT_REPORT",
+          "route": "Refugio Frey desde Villa Catedral",
+          "start_date": "2026-01-06",
+          "end_date": "2026-01-06",
+          "latitude": -41.17463055555555,
+          "longitude": -71.3548,
+          "route_distance_km": 7.212,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "06a47f6b0bb6131b:2026-01-06"
+          ],
+          "incident_names": [
+            "Vertedero Municipal"
+          ],
+          "report_dates": [
+            "2026-01-06"
+          ],
+          "province": "Río Negro",
+          "status": "ACTIVO",
+          "evidence_type": "officially_reported_fire_incident",
+          "time_precision": "reported_start_date_only"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:5260b03b6c781c9a4eb5",
+      "route": "Refugio Frey desde Villa Catedral",
+      "start_date": "2026-01-06",
+      "end_date": "2026-01-06",
+      "latitude_mean": -41.172414,
+      "longitude_mean": -71.352975,
+      "source_families": [
+        "OFFICIAL_INCIDENT_REPORT"
+      ],
+      "evidence_class": "official_report_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "SNMF:f91d8570a945c0c1",
+          "source": "SNMF_daily_reports",
+          "source_family": "OFFICIAL_INCIDENT_REPORT",
+          "route": "Refugio Frey desde Villa Catedral",
+          "start_date": "2026-01-06",
+          "end_date": "2026-01-06",
+          "latitude": -41.17241388888888,
+          "longitude": -71.352975,
+          "route_distance_km": 7.404,
+          "source_record_count": 2,
+          "source_record_ids": [
+            "f91d8570a945c0c1:2026-01-08",
+            "f91d8570a945c0c1:2026-01-27"
+          ],
+          "incident_names": [
+            "VERTEDERO MUNICIPAL",
+            "tres lagunas) VERTEDERO MUNICIPAL"
+          ],
+          "report_dates": [
+            "2026-01-08",
+            "2026-01-27"
+          ],
+          "province": "Río Negro",
+          "status": "CONTENIDO",
+          "evidence_type": "officially_reported_fire_incident",
+          "time_precision": "reported_start_date_only"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:114bdcd0dee6005fea79",
+      "route": "Sendero Namuncura",
+      "start_date": "2026-01-07",
+      "end_date": "2026-01-07",
+      "latitude_mean": -38.017303,
+      "longitude_mean": -65.585142,
+      "source_families": [
+        "OFFICIAL_INCIDENT_REPORT"
+      ],
+      "evidence_class": "official_report_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "SNMF:b06d1ea7eb01b147",
+          "source": "SNMF_daily_reports",
+          "source_family": "OFFICIAL_INCIDENT_REPORT",
+          "route": "Sendero Namuncura",
+          "start_date": "2026-01-07",
+          "end_date": "2026-01-07",
+          "latitude": -38.01730277777778,
+          "longitude": -65.58514166666666,
+          "route_distance_km": 1.598,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "b06d1ea7eb01b147:2026-01-07"
+          ],
+          "incident_names": [
+            "P.N. LIHUE CALEL"
+          ],
+          "report_dates": [
+            "2026-01-07"
+          ],
+          "province": "La Pampa",
+          "status": "CONTENIDO",
+          "evidence_type": "officially_reported_fire_incident",
+          "time_precision": "reported_start_date_only"
+        }
+      ]
+    },
+    {
+      "event_id": "EVT:c0dbb3770fb41799b9f4",
+      "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "start_date": "2026-01-10",
+      "end_date": "2026-01-10",
+      "latitude_mean": -41.935561,
+      "longitude_mean": -71.531389,
+      "source_families": [
+        "OFFICIAL_INCIDENT_REPORT"
+      ],
+      "evidence_class": "official_report_only",
+      "source_record_count": 1,
+      "source_records": [
+        {
+          "record_id": "SNMF:d23f2d007ca674d9",
+          "source": "SNMF_daily_reports",
+          "source_family": "OFFICIAL_INCIDENT_REPORT",
+          "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "start_date": "2026-01-10",
+          "end_date": "2026-01-10",
+          "latitude": -41.935561111111106,
+          "longitude": -71.53138888888888,
+          "route_distance_km": 5.873,
+          "source_record_count": 1,
+          "source_record_ids": [
+            "d23f2d007ca674d9:2026-01-11"
+          ],
+          "incident_names": [
+            "Aeródromo El Bolsón"
+          ],
+          "report_dates": [
+            "2026-01-11"
+          ],
+          "province": "Río Negro",
+          "status": "EXTINGUIDO",
+          "evidence_type": "officially_reported_fire_incident",
+          "time_precision": "reported_start_date_only"
+        }
+      ]
+    }
+  ],
+  "negative_evidence": {
+    "source": "SNMF explicit national no-fire reports only",
+    "report_days": 32,
+    "route_day_records": 256,
+    "meaning": "The official report explicitly said there were no nationally reported fires that day. It does not prove no unreported physical fire, and must not be treated as a verified satellite-clear route pixel.",
+    "input_audit": "docs/environmental-models-2026-10-22/fire-snmf-national-no-fire-report-audit.json"
+  },
+  "source_files_sha256": {
+    "training/data/environmental/private/fire-route-geometries.json": "d622e3bd3bae7c97df9152d5ae22fa9cf3136f2bbb0ee807703eaddc21d6610a",
+    "docs/environmental-models-2026-10-22/snmf-2022-daily-occurrence-events.json": "8ecb11f38419e5d75387db6379757be0ce853ee6a7a5303b89f717e3e0b9c797",
+    "docs/environmental-models-2026-10-22/snmf-2023-daily-occurrence-events.json": "b82ddcb2c848fe854be9e1002fed72318165d8b1818b952b61cc9467b1cc0900",
+    "docs/environmental-models-2026-10-22/snmf-2024-daily-occurrence-events.json": "10c44e0b77d99d771c3256978f3d5c976b3dd05262ab122108aff0d4861e0bad",
+    "docs/environmental-models-2026-10-22/snmf-2025-daily-occurrence-events.json": "d8e95391641ccb7d884d7bbe88e3df6fff82251352a50154656f88096f4a87f4",
+    "docs/environmental-models-2026-10-22/snmf-2026-jan-daily-occurrence-events.json": "ba18284a722410e225906de6ea1ba35e72d5670496c45793363e901beb6efcca",
+    "docs/environmental-models-2026-10-22/fire-inpe-reference-detections-route-coverage-2018-2025.json": "e42f88fa7bd15aa617dbc9dba54456ffd168a96feee05ace6fabc798325392a0",
+    "docs/environmental-models-2026-10-22/fire-global-fire-atlas-route-ignitions-2022-2026.json": "523b865076dd82383a55a8f89528f5cc33bb6581798655f615a504a6bce6f8e3",
+    "docs/environmental-models-2026-10-22/fire-snmf-national-no-fire-report-audit.json": "a57c45ee46b1bb97763432a9fa647fe9fc903b4550c427d4e46bb2be03a76396"
+  },
+  "synthetic_observations": 0,
+  "training_ready": false,
+  "deployment_approved": false,
+  "limitations": [
+    "INPE AMS reference detections and Global Fire Atlas both derive from MODIS-family observations; their agreement is not independent sensor confirmation.",
+    "SNMF report dates are incident start-date reports, often without an exact ignition time; satellite daily products have different temporal precision.",
+    "Only source observations within 10 km of the documented trail polylines are included; this does not mean the fire affected or threatened the trail.",
+    "Possible source matches beyond the strict unique-link rule are listed, not merged, to avoid combining nearby separate incidents.",
+    "Positive event evidence and explicit no-fire report evidence do not form a complete route-time panel. Unknown coverage remains unknown.",
+    "Weather forecast covariates have not been joined to these events in this catalog. Issue time and valid time must be aligned before creating forecast examples."
+  ]
+}

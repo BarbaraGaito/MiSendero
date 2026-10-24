@@ -1,0 +1,67 @@
+{
+  "experiment_id": "historical-gfs-source-audit-for-fire-forecasting",
+  "status": "source_identified_download_unavailable_in_session",
+  "candidate": {
+    "source": "NOAA Global Forecast System (GFS) 0.25 degree archive",
+    "google_earth_engine_collection": "NOAA/GFS0P25",
+    "archive_start": "2015-07-01",
+    "update_frequency_hours": 6,
+    "grid_spacing_km_approx": 27.83,
+    "forecast_properties": ["creation_time", "forecast_time"],
+    "variables_of_interest": [
+      "temperature_2m_above_ground",
+      "relative_humidity_2m_above_ground",
+      "u_component_of_wind_10m_above_ground",
+      "v_component_of_wind_10m_above_ground",
+      "total_precipitation_surface",
+      "haines_index"
+    ],
+    "haines_index_available_from": "2025-01-15",
+    "use_limit": "Weather covariates only; Haines and GFS fields are not calibrated wildfire occurrence probabilities."
+  },
+  "official_sources": [
+    "https://www.noaa.gov/nodd/datasets",
+    "https://www.ncei.noaa.gov/products/weather-climate-models/global-forecast",
+    "https://developers.google.com/earth-engine/datasets/catalog/NOAA_GFS0P25"
+  ],
+  "local_access_tests": [
+    {
+      "source": "Open-Meteo Previous Runs API",
+      "period_requested": "2024-02-01 through 2024-02-13",
+      "result": "connection_reset_winerror_10054",
+      "partial_data_written": false
+    },
+    {
+      "source": "SMN WRF public AWS bucket",
+      "valid_date_requested": "2025-10-11",
+      "forecast_issue_utc": "2025-10-10T12:00:00Z",
+      "lead_hours": 27,
+      "result": "connection_reset_winerror_10054_after_retries",
+      "partial_data_written": false
+    },
+    {
+      "source": "Google Cloud public NOAA GFS mirror",
+      "object": "gfs.20251010/12/atmos/gfs.t12z.pgrb2.0p25.f027",
+      "request": "HTTP Range bytes 0-99",
+      "result": "connection_reset_winerror_10054",
+      "partial_data_written": false
+    }
+  ],
+  "existing_local_weather_data": {
+    "smn_wrf_successful_dates": 591,
+    "smn_wrf_period": ["2022-04-02", "2023-12-31"],
+    "openmeteo_previous_runs_periods": [
+      ["2024-01-01", "2024-01-31"],
+      ["2025-01-01", "2026-01-31"]
+    ],
+    "new_rows_acquired": 0
+  },
+  "labels": {
+    "positive_event_source": "Official SNMF daily occurrence reports and official burned-area maps",
+    "negative_event_registry_complete": false,
+    "limitation": "Missing daily reports cannot be treated as fire-free negatives; event-level precision remains unidentifiable without a sufficiently complete independent alert/event registry."
+  },
+  "synthetic_observations": 0,
+  "deployment_approved": false,
+  "report": "docs/environmental-models-2026-10-22/fire-gfs-historical-forecast-source-audit.md"
+}

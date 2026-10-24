@@ -1,0 +1,248 @@
+{
+  "experiment_id": "modis-inpe-union-jma-2022-train-2023-validation-2024-2026-test",
+  "status": "exploratory_satellite_detection_proxy_not_physical_fire_probability",
+  "target": "At least one MOD14A1 corridor detection, INPE Aqua/MODIS reference hotspot, or SNMF/Global Fire Atlas source-preserved event on the route-day.",
+  "negative_definition": "MOD14A1 corridor sample has at least 80% clear-land QA coverage and no active-fire pixel, and no catalogued source event is present; this is only a negative for the defined evidence target.",
+  "sources": {
+    "modis_observations_sha256": "7f1458ad11b180a3ba9cae69eba626a1ec29986618db1340f0af4176b3c7e694",
+    "modis_label_quality": {
+      "route_dates_before_qa_rule": 44979,
+      "route_dates_after_qa_rule": 29024,
+      "insufficient_qa_coverage": 15955
+    },
+    "inpe": {
+      "annual_archives": {
+        "2018": {
+          "path": "training/data/environmental/private/inpe-ams-satellite-reference/focos_ams_ref_2018.zip",
+          "sha256": "5cd46751c6e68dc730e206ed92faef69c1e0851770a44a4e899f3078d7ad6af3"
+        },
+        "2019": {
+          "path": "training/data/environmental/private/inpe-ams-satellite-reference/focos_ams_ref_2019.zip",
+          "sha256": "f1ed473194672423cd1ed3424523a4e562c7cbce7e60af6e967720c4ec1c7e87"
+        },
+        "2020": {
+          "path": "training/data/environmental/private/inpe-ams-satellite-reference/focos_ams_ref_2020.zip",
+          "sha256": "1a477dcf2d09449e9850e3f64a7e6f04b6822b996c7039468a55eeafea1d6928"
+        },
+        "2021": {
+          "path": "training/data/environmental/private/inpe-ams-satellite-reference/focos_ams_ref_2021.zip",
+          "sha256": "461fd9f64fc97f7a30bb5cbaad79f076caf22d003457362af8bd2e370c02021c"
+        },
+        "2022": {
+          "path": "training/data/environmental/private/inpe-ams-satellite-reference/focos_ams_ref_2022.zip",
+          "sha256": "9a866617bc3889c19046fd3853e450a5ec4d2ad7539b805a71930422bce4b197"
+        },
+        "2023": {
+          "path": "training/data/environmental/private/inpe-ams-satellite-reference/focos_ams_ref_2023.zip",
+          "sha256": "822365b3166ecf9e26db9444a8c74a995cc45338d495a4986de4c1bc6cc000e7"
+        },
+        "2024": {
+          "path": "training/data/environmental/private/inpe-ams-satellite-reference/focos_ams_ref_2024.zip",
+          "sha256": "fad2c6e8d09876c67c0c41a83906a5f4c2bcdfb44d9acb7f1d75f50014e67df2"
+        },
+        "2025": {
+          "path": "training/data/environmental/private/inpe-ams-satellite-reference/focos_ams_ref_2025.zip",
+          "sha256": "36d8b7bae6e92200b4e385e3a78784f5417083291c8743afbd8957fae3985654"
+        }
+      },
+      "argentina_detection_rows_screened": 302680,
+      "route_date_detections_within_5km": 81,
+      "unique_route_count_with_detection": 17,
+      "unique_detection_coordinates": 234
+    },
+    "unified_dataset": "training/data/environmental/private/argentina-route-fire-evidence-jma-unified-2022-2026.csv.gz",
+    "unified_dataset_sha256": "b9473bde6222d6d4dc964d0b72392231193bf4b8f17905ecad07fcdff50535ae",
+    "unified_dataset_manifest": "training/data/environmental/private/argentina-route-fire-evidence-jma-unified-2022-2026-manifest.json",
+    "unified_dataset_manifest_sha256": "c19153e2abad663dfeb226c27068b3d0938510a593f1732146f0389d3aa6ccb3",
+    "unified_dataset_rows": 28620,
+    "unified_catalog_sha256": "f5d6cfac1588cb2483d84dfc047ebfef224854302b20a6a7296386258bc5589f",
+    "unmapped_catalog_routes": {},
+    "inpe_family_caveat": "INPE AMS reference archive uses Aqua/MODIS; it is the same sensor family as the Aqua MOD14A1 evidence and is not independent confirmation.",
+    "route_files_sha256": {
+      "backend/src/data/additionalTrailRoutes.json": "4b8e54ca243ca47bb342e46d7a4631632cfe4dd617fe32cbcd326176fc82044b",
+      "backend/src/data/catalogExpansionRoutes20261017.json": "237b358d0e61c8a0e1cde9b7e2c72cfb083bd1252e7a0ac7a51c6bc9385e14a3"
+    }
+  },
+  "method": {
+    "forecast": "JMA GSM Previous Runs, previous_day1 (24h lead), one route midpoint",
+    "partition": {
+      "train": [
+        "2022-01-01",
+        "2023-01-01"
+      ],
+      "validation": [
+        "2023-01-01",
+        "2024-01-01"
+      ],
+      "test": [
+        "2024-01-01",
+        "2027-01-01"
+      ]
+    },
+    "diagnostic_threshold": 0.5,
+    "validated_operating_threshold": null,
+    "validation_gate_passed": false,
+    "threshold_selection": "Validation threshold sought for >=90% precision and >=5 alerts. No candidate passed; 0.5 below is a fixed diagnostic only, no test tuning.",
+    "algorithm": "Class-balanced logistic regression, standardized weather, route effect, annual sine/cosine; batch gradient descent.",
+    "features": [
+      "temperature_mean",
+      "temperature_max",
+      "humidity_mean",
+      "humidity_min",
+      "wind_mean",
+      "wind_max",
+      "precipitation_sum",
+      "annual_sin",
+      "annual_cos"
+    ]
+  },
+  "cohort_by_year": {
+    "2022": {
+      "route_days": 9028,
+      "positive_route_days": 16,
+      "positive_dates": 14,
+      "route_fire_episodes_gap_gt_2_days": 11,
+      "inpe_added_route_days": 6
+    },
+    "2023": {
+      "route_days": 9292,
+      "positive_route_days": 34,
+      "positive_dates": 29,
+      "route_fire_episodes_gap_gt_2_days": 20,
+      "inpe_added_route_days": 5
+    },
+    "2024": {
+      "route_days": 2096,
+      "positive_route_days": 9,
+      "positive_dates": 8,
+      "route_fire_episodes_gap_gt_2_days": 9,
+      "inpe_added_route_days": 0
+    },
+    "2025": {
+      "route_days": 1333,
+      "positive_route_days": 2,
+      "positive_dates": 2,
+      "route_fire_episodes_gap_gt_2_days": 2,
+      "inpe_added_route_days": 0
+    },
+    "2026": {
+      "route_days": 6871,
+      "positive_route_days": 33,
+      "positive_dates": 20,
+      "route_fire_episodes_gap_gt_2_days": 13,
+      "inpe_added_route_days": 0
+    }
+  },
+  "aligned_route_days": 28620,
+  "train_route_days": 9028,
+  "validation_route_days": 9292,
+  "validation_metrics_at_fixed_0_5_diagnostic": {
+    "route_days": 9292,
+    "positive_route_days": 34,
+    "prevalence": 0.003659061558329746,
+    "threshold": 0.5,
+    "alerts": 2046,
+    "true_positives": 23,
+    "false_positives": 2023,
+    "false_negatives": 11,
+    "precision": 0.011241446725317693,
+    "precision_wilson_one_sided_95_lower_bound_independent_days": 0.00800163800766843,
+    "recall": 0.6764705882352942,
+    "average_precision": 0.04928147557431877,
+    "brier": 0.14388327294427336,
+    "confusion_matrix_tn_fp_fn_tp": [
+      7235,
+      2023,
+      11,
+      23
+    ]
+  },
+  "test_route_days": 10300,
+  "test_positive_dates": [
+    "2024-01-06",
+    "2024-01-20",
+    "2024-01-26",
+    "2024-01-30",
+    "2024-02-03",
+    "2024-02-05",
+    "2024-02-11",
+    "2024-03-07",
+    "2025-11-26",
+    "2025-12-11",
+    "2026-01-01",
+    "2026-01-05",
+    "2026-01-06",
+    "2026-01-07",
+    "2026-01-08",
+    "2026-01-09",
+    "2026-01-10",
+    "2026-01-11",
+    "2026-01-13",
+    "2026-01-14",
+    "2026-01-18",
+    "2026-01-19",
+    "2026-01-20",
+    "2026-01-21",
+    "2026-01-24",
+    "2026-01-25",
+    "2026-01-26",
+    "2026-01-29",
+    "2026-01-31",
+    "2026-02-01"
+  ],
+  "test_route_day_metrics_at_fixed_0_5_diagnostic": {
+    "route_days": 10300,
+    "positive_route_days": 44,
+    "prevalence": 0.004271844660194175,
+    "threshold": 0.5,
+    "alerts": 2111,
+    "true_positives": 6,
+    "false_positives": 2105,
+    "false_negatives": 38,
+    "precision": 0.0028422548555187117,
+    "precision_wilson_one_sided_95_lower_bound_independent_days": 0.00147045776625998,
+    "recall": 0.13636363636363635,
+    "average_precision": 0.004513474520866216,
+    "brier": 0.1395194967226668,
+    "confusion_matrix_tn_fp_fn_tp": [
+      8151,
+      2105,
+      38,
+      6
+    ]
+  },
+  "test_average_precision_baseline": "positive prevalence: 0.00427 route-day and 0.07538 calendar-date test cohorts; positives are event evidence, not all physical fires.",
+  "test_event_date_metrics_at_fixed_0_5_diagnostic": {
+    "prevalence": 0.07537688442211055,
+    "threshold": 0.5,
+    "alerts": 366,
+    "true_positives": 30,
+    "false_positives": 336,
+    "false_negatives": 0,
+    "precision": 0.08196721311475409,
+    "precision_wilson_one_sided_95_lower_bound_independent_days": 0.06133703633916178,
+    "recall": 1.0,
+    "average_precision": 0.2225188301875238,
+    "brier": 0.5314556959575872,
+    "confusion_matrix_tn_fp_fn_tp": [
+      32,
+      336,
+      0,
+      30
+    ],
+    "event_dates": 398,
+    "positive_event_dates": 30
+  },
+  "test_event_date_precision_wilson_one_sided_95_descriptive_lower_bound": 0.06133703633916178,
+  "limitations": [
+    "The target is satellite detection evidence, not confirmed ignition or fire probability.",
+    "INPE Aqua/MODIS and MOD14A1 are the same sensor family and some detections can overlap.",
+    "Route dates with insufficient MODIS QA are omitted, not negatives.",
+    "One daily route midpoint forecast may not represent weather along a long trail.",
+    "A 2024-2026 temporal holdout is used once; the Wilson interval is descriptive and does not correct for temporal autocorrelation, source incompleteness, or shared incident episodes.",
+    "This experiment does not authorize deployment or establish a reliable safety alert."
+  ],
+  "synthetic_observations": 0,
+  "model_artifact_written": false,
+  "deployment_approved": false
+}

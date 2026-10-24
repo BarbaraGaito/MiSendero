@@ -1,0 +1,429 @@
+{
+  "experiment_id": "mapbiomas-fire-2023-snmf-route-month-coincidence",
+  "status": "descriptive-label-source-audit",
+  "acquired_at_utc": "2026-10-23T05:18:22Z",
+  "source": {
+    "product": "MapBiomas Argentina Fuego Collection 1, monthly burned area, 2023",
+    "object_name": "initiatives/argentina/fire/collection_01/monthly_burned/monthly_burned-argentina_burned_monthly_2023.tif",
+    "url": "https://storage.googleapis.com/mapbiomas-public/initiatives/argentina/fire/collection_01/monthly_burned/monthly_burned-argentina_burned_monthly_2023.tif",
+    "bucket_metadata_url": "https://storage.googleapis.com/storage/v1/b/mapbiomas-public/o/initiatives%2Fargentina%2Ffire%2Fcollection_01%2Fmonthly_burned%2Fmonthly_burned-argentina_burned_monthly_2023.tif",
+    "generation": "1789731582742426",
+    "time_created_utc": "2026-09-18T11:39:42.748Z",
+    "size_bytes": 41059987,
+    "catalog_md5_base64": "HSrZFm3fRFbBOU+ax14zsg==",
+    "verified_catalog_md5": true,
+    "sha256": "ed385d1b6c8ec01ee1a4cfc25f2e6645dad8e8a8b4c65d1fd23ebeff94ef0160"
+  },
+  "raster": {
+    "crs": "EPSG:3857",
+    "bounds": [
+      -8189520.0,
+      -7410390.0,
+      -3859320.0,
+      -2479650.0
+    ],
+    "width": 144340,
+    "height": 164358,
+    "band_count": 1,
+    "dtype": "uint8",
+    "nodata": 0.0,
+    "block_shape": [
+      256,
+      256
+    ]
+  },
+  "geography": {
+    "file": "training/data/environmental/geography.json",
+    "sha256": "7e475b478db7bb678cc0a1539fdf484e0c8de0a9baa98916fb90f652f75ff834",
+    "route_geometry_limitation": "Catalog supplies route center points here, not full trail lines."
+  },
+  "protocol": {
+    "route_radius_km": 10,
+    "event_inventory": "All 2023 deduplicated SNMF events with coordinates, joined to a route center within 10 km.",
+    "month_match": "Any mapped burned pixel within 10 km of a route center in the event's reported calendar month.",
+    "interpretation": "Descriptive spatial/month coincidence only; not a forecast score or verified event identity."
+  },
+  "snmf_inventory_limitations": [
+    "65 of 184 dates had no PDF at the checked public archive paths for Jul-Dec 2023; these dates are unobserved, not negative.",
+    "A missing report is not a fire-free observation and is not encoded as a negative label.",
+    "A repeated event is deduplicated by province/name/start date and rounded coordinates; records without coordinates use province/name/start date only.",
+    "Automated extraction requires spot-checking against the original PDF; no row without parsed coordinates is used in spatial matching."
+  ],
+  "routes": [
+    {
+      "name": "Sendero Macuco - Salto Arrechea",
+      "location": "Parque Nacional Iguazu, Misiones",
+      "latitude": -25.66715775,
+      "longitude": -54.452823,
+      "geometry_sha256": "148e8cb09cd0d851b88a1875e60763f34efffe046a68c1cb886911fde629477b",
+      "center_month_value": 0,
+      "buffers": {
+        "5": {
+          "total_grid_pixels": 107373,
+          "burned_pixels": 0,
+          "burned_fraction_of_buffer": 0.0,
+          "estimated_burned_area_ha": 0.0,
+          "burned_pixels_by_month": {}
+        },
+        "10": {
+          "total_grid_pixels": 429649,
+          "burned_pixels": 0,
+          "burned_fraction_of_buffer": 0.0,
+          "estimated_burned_area_ha": 0.0,
+          "burned_pixels_by_month": {}
+        }
+      }
+    },
+    {
+      "name": "Refugio Frey desde Villa Catedral",
+      "location": "Parque Nacional Nahuel Huapi, Rio Negro",
+      "latitude": -41.1904696,
+      "longitude": -71.4612884,
+      "geometry_sha256": "9947df55746c5b8033b0955a9bdd8b2ddb61db1dad2621b1fc0d72fa1e21acdf",
+      "center_month_value": 0,
+      "buffers": {
+        "5": {
+          "total_grid_pixels": 154050,
+          "burned_pixels": 0,
+          "burned_fraction_of_buffer": 0.0,
+          "estimated_burned_area_ha": 0.0,
+          "burned_pixels_by_month": {}
+        },
+        "10": {
+          "total_grid_pixels": 616380,
+          "burned_pixels": 0,
+          "burned_fraction_of_buffer": 0.0,
+          "estimated_burned_area_ha": 0.0,
+          "burned_pixels_by_month": {}
+        }
+      }
+    },
+    {
+      "name": "Quebrada del Condorito - Balcon Norte",
+      "location": "Parque Nacional Quebrada del Condorito, Cordoba",
+      "latitude": -31.65000375,
+      "longitude": -64.70201284999999,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74",
+      "center_month_value": 0,
+      "buffers": {
+        "5": {
+          "total_grid_pixels": 120406,
+          "burned_pixels": 0,
+          "burned_fraction_of_buffer": 0.0,
+          "estimated_burned_area_ha": 0.0,
+          "burned_pixels_by_month": {}
+        },
+        "10": {
+          "total_grid_pixels": 481648,
+          "burned_pixels": 2436,
+          "burned_fraction_of_buffer": 0.00505764,
+          "estimated_burned_area_ha": 159.125,
+          "burned_pixels_by_month": {
+            "1": 162,
+            "2": 1,
+            "6": 4,
+            "7": 2,
+            "10": 2267
+          }
+        }
+      }
+    },
+    {
+      "name": "Sendero Namuncura",
+      "location": "Parque Nacional Lihue Calel, La Pampa",
+      "latitude": -38.0057717,
+      "longitude": -65.59634514999999,
+      "geometry_sha256": "9ffaf89538fec8fb40b3d760b8e8b8fbcc154794b28d438fa6b046429fc5d32c",
+      "center_month_value": 0,
+      "buffers": {
+        "5": {
+          "total_grid_pixels": 140512,
+          "burned_pixels": 1559,
+          "burned_fraction_of_buffer": 0.01109514,
+          "estimated_burned_area_ha": 87.131,
+          "burned_pixels_by_month": {
+            "1": 726,
+            "2": 4,
+            "9": 826,
+            "11": 3
+          }
+        },
+        "10": {
+          "total_grid_pixels": 562174,
+          "burned_pixels": 19380,
+          "burned_fraction_of_buffer": 0.03447331,
+          "estimated_burned_area_ha": 1084.927,
+          "burned_pixels_by_month": {
+            "1": 726,
+            "2": 4,
+            "4": 246,
+            "5": 2,
+            "7": 128,
+            "8": 4,
+            "9": 1879,
+            "10": 6,
+            "11": 6,
+            "12": 16379
+          }
+        }
+      }
+    },
+    {
+      "name": "Cerro Ventana - Hueco de la Ventana",
+      "location": "Parque Provincial Ernesto Tornquist, Buenos Aires",
+      "latitude": -38.055006000000006,
+      "longitude": -62.0162207,
+      "geometry_sha256": "61e1a9b62ae9b691b29c437aed7792b3723c7af54f03feb2311d4322fd3f5066",
+      "center_month_value": 0,
+      "buffers": {
+        "5": {
+          "total_grid_pixels": 140668,
+          "burned_pixels": 2240,
+          "burned_fraction_of_buffer": 0.01592402,
+          "estimated_burned_area_ha": 124.972,
+          "burned_pixels_by_month": {
+            "2": 1896,
+            "3": 2,
+            "4": 11,
+            "6": 1,
+            "7": 4,
+            "8": 11,
+            "9": 1,
+            "11": 261,
+            "12": 53
+          }
+        },
+        "10": {
+          "total_grid_pixels": 562968,
+          "burned_pixels": 2836,
+          "burned_fraction_of_buffer": 0.00503759,
+          "estimated_burned_area_ha": 158.286,
+          "burned_pixels_by_month": {
+            "2": 1896,
+            "3": 2,
+            "4": 101,
+            "5": 52,
+            "6": 4,
+            "7": 4,
+            "8": 11,
+            "9": 1,
+            "11": 353,
+            "12": 412
+          }
+        }
+      }
+    },
+    {
+      "name": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "location": "Cerro Piltriquitron, El Bolson, Rio Negro",
+      "latitude": -41.97003735,
+      "longitude": -71.4756338,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa",
+      "center_month_value": 0,
+      "buffers": {
+        "5": {
+          "total_grid_pixels": 157795,
+          "burned_pixels": 0,
+          "burned_fraction_of_buffer": 0.0,
+          "estimated_burned_area_ha": 0.0,
+          "burned_pixels_by_month": {}
+        },
+        "10": {
+          "total_grid_pixels": 631415,
+          "burned_pixels": 3200,
+          "burned_fraction_of_buffer": 0.00506798,
+          "estimated_burned_area_ha": 159.348,
+          "burned_pixels_by_month": {
+            "3": 2912,
+            "4": 163,
+            "7": 6,
+            "8": 22,
+            "9": 78,
+            "10": 19
+          }
+        }
+      }
+    },
+    {
+      "name": "Sendero Che Roga - Mburucuyá",
+      "location": "Parque Nacional Mburucuyá, Corrientes",
+      "latitude": -28.0180651,
+      "longitude": -58.0286895,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e",
+      "center_month_value": 0,
+      "buffers": {
+        "5": {
+          "total_grid_pixels": 111957,
+          "burned_pixels": 2984,
+          "burned_fraction_of_buffer": 0.02665309,
+          "estimated_burned_area_ha": 209.261,
+          "burned_pixels_by_month": {
+            "1": 238,
+            "2": 2722,
+            "3": 18,
+            "4": 6
+          }
+        },
+        "10": {
+          "total_grid_pixels": 447820,
+          "burned_pixels": 20175,
+          "burned_fraction_of_buffer": 0.04505158,
+          "estimated_burned_area_ha": 1414.97,
+          "burned_pixels_by_month": {
+            "1": 454,
+            "2": 2824,
+            "3": 18,
+            "4": 542,
+            "5": 439,
+            "6": 741,
+            "7": 1288,
+            "8": 13868,
+            "10": 1
+          }
+        }
+      }
+    },
+    {
+      "name": "Sendero La Chuña - El Rey",
+      "location": "Parque Nacional El Rey, Salta",
+      "latitude": -24.722283,
+      "longitude": -64.645613,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b",
+      "center_month_value": 0,
+      "buffers": {
+        "5": {
+          "total_grid_pixels": 105751,
+          "burned_pixels": 0,
+          "burned_fraction_of_buffer": 0.0,
+          "estimated_burned_area_ha": 0.0,
+          "burned_pixels_by_month": {}
+        },
+        "10": {
+          "total_grid_pixels": 422998,
+          "burned_pixels": 0,
+          "burned_fraction_of_buffer": 0.0,
+          "estimated_burned_area_ha": 0.0,
+          "burned_pixels_by_month": {}
+        }
+      }
+    }
+  ],
+  "snmf_event_route_month_checks": [
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "target_date": "2023-12-19",
+      "incident_names": [
+        "Quema golondrinas"
+      ],
+      "nearest_reported_incident_km": 5.601,
+      "target_calendar_month": 12,
+      "same_month_burn_in_10km_center_buffer": false
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "target_date": "2023-10-06",
+      "incident_names": [
+        "RIO DE LA SUELA"
+      ],
+      "nearest_reported_incident_km": 8.936,
+      "target_calendar_month": 10,
+      "same_month_burn_in_10km_center_buffer": true
+    }
+  ],
+  "snmf_incident_coordinate_checks": [
+    {
+      "incident_name": "Quema golondrinas",
+      "province": "Chubut",
+      "latitude": -42.01028055555555,
+      "longitude": -71.51638888888888,
+      "reported_start_date": "2023-12-19",
+      "route_center_distance_km": 5.601,
+      "status": "EXTINGUIDO",
+      "mapbiomas_month_neighborhood": {
+        "100": {
+          "target_month_pixels": 0,
+          "any_burned_month_pixels": 0,
+          "same_month_coincidence": false
+        },
+        "250": {
+          "target_month_pixels": 0,
+          "any_burned_month_pixels": 0,
+          "same_month_coincidence": false
+        },
+        "500": {
+          "target_month_pixels": 0,
+          "any_burned_month_pixels": 0,
+          "same_month_coincidence": false
+        },
+        "1000": {
+          "target_month_pixels": 0,
+          "any_burned_month_pixels": 0,
+          "same_month_coincidence": false
+        },
+        "2000": {
+          "target_month_pixels": 0,
+          "any_burned_month_pixels": 26,
+          "same_month_coincidence": false
+        }
+      }
+    },
+    {
+      "incident_name": "RIO DE LA SUELA",
+      "province": "CÓRDOBA",
+      "latitude": -31.577166666666667,
+      "longitude": -64.66213888888889,
+      "reported_start_date": "2023-10-06",
+      "route_center_distance_km": 8.936,
+      "status": "CONTENIDO",
+      "mapbiomas_month_neighborhood": {
+        "100": {
+          "target_month_pixels": 0,
+          "any_burned_month_pixels": 0,
+          "same_month_coincidence": false
+        },
+        "250": {
+          "target_month_pixels": 3,
+          "any_burned_month_pixels": 5,
+          "same_month_coincidence": true
+        },
+        "500": {
+          "target_month_pixels": 215,
+          "any_burned_month_pixels": 221,
+          "same_month_coincidence": true
+        },
+        "1000": {
+          "target_month_pixels": 976,
+          "any_burned_month_pixels": 982,
+          "same_month_coincidence": true
+        },
+        "2000": {
+          "target_month_pixels": 4358,
+          "any_burned_month_pixels": 4364,
+          "same_month_coincidence": true
+        }
+      }
+    }
+  ],
+  "summary": {
+    "snmf_route_days_with_event_within_10km": 2,
+    "same_month_route_buffer_coincidences": 1,
+    "deduplicated_incidents_with_coordinates": 2,
+    "same_month_incident_coordinate_coincidences_by_radius_m": {
+      "100": 0,
+      "250": 1,
+      "500": 1,
+      "1000": 1,
+      "2000": 1
+    }
+  },
+  "limitations": [
+    "This is not a forecast evaluation; MapBiomas burned area is retrospective.",
+    "The 2023 SNMF inventory notes that 65 of 184 archive dates were not observed; missing reports are not negatives.",
+    "A same-month scar within 10 km may be unrelated to a named SNMF incident.",
+    "A missing burned pixel is not a verified no-fire label; mapped scars, administrative dates, and reported coordinates can differ.",
+    "The buffer uses a route-sector center, not a trail line, and only two route-days had a nearby SNMF event.",
+    "These observations cannot support precision, recall, or a claim of reliable future prediction."
+  ],
+  "synthetic_observations": 0,
+  "deployment_approved": false
+}

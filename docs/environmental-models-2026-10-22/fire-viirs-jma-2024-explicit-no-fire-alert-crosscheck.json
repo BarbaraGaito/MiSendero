@@ -1,0 +1,501 @@
+{
+  "experiment_id": "frozen-jma-2024-alerts-vs-viirs-daily-l3-explicit-no-fire-report-days",
+  "status": "independent_crosscheck_complete_with_one_cmr_gap",
+  "created_at_utc": "2026-10-23T21:38:23Z",
+  "protocol": {
+    "frozen_model_test": "fire-jma-2023-train-2024-test-snmf-report-proxy.json",
+    "source_negative_label": "SNMF explicitly reported no fires nationally on date; administrative-report negative only.",
+    "independent_observation": "NASA Suomi-NPP VIIRS VNP14A1.002 daily L3 1 km FireMask and QA.",
+    "route_spatial_unit": "10 km buffer around full route polyline; frozen model-alert route-days only.",
+    "fire_observation": "FireMask classes 7-9; confidence class retained in per-pixel class counts.",
+    "clear_land_observation": "FireMask class 5 with QA bits 0-1 equal 10.",
+    "threshold": 0.1,
+    "threshold_selection": "Inherited fixed diagnostic threshold from the frozen JMA 2024 test; not tuned with VIIRS.",
+    "threshold_is_calibrated_probability": false
+  },
+  "acquisition": {
+    "requested_route_alerts": 11,
+    "observed_route_alerts": 10,
+    "unavailable_route_alerts": 1,
+    "verified_granules": 10,
+    "dates": [
+      "2024-05-16",
+      "2024-05-17",
+      "2024-05-18",
+      "2024-05-29",
+      "2024-06-04",
+      "2024-06-16",
+      "2024-06-30",
+      "2024-07-03",
+      "2024-11-18"
+    ],
+    "unique_tiles": [
+      "h12v11",
+      "h12v12",
+      "h12v13"
+    ],
+    "bytes": 1959229,
+    "size_mb_decimal": 1.959,
+    "granule_sha256_by_id": {
+      "VNP14A1.A2024137.h12v12.002.2024138095522": "30644381bc8a70566553c8e173a95a4d2ea386ffa4365163362844e3f62ec10e",
+      "VNP14A1.A2024138.h12v12.002.2024139093639": "11ac5530b66db093228588239f210f64f0e605c32db6b9ded22eb2ec73f36cd1",
+      "VNP14A1.A2024139.h12v13.002.2024141135544": "4a610fd4395a231b20a5550c974f1ecdc5825ffb888cc6383475c4cad981dd5f",
+      "VNP14A1.A2024150.h12v12.002.2024167040144": "6d66b5afde82bd79bd69acdcb685c38419e9d1ac4dc671e32e19bf13613d359a",
+      "VNP14A1.A2024156.h12v12.002.2024167094246": "e7561e5b0c8500a5f6c80a7f4753ade340f333b47b5dd16ba355d848983a46f8",
+      "VNP14A1.A2024168.h12v12.002.2024169084024": "c6b424dfd80d4efd8e9e7662ba8354e9ef0f80236396c3e34f9e3c735b133425",
+      "VNP14A1.A2024182.h12v11.002.2024183122340": "34fe4cf8b5843e852c2c39d6f38a3dbbbdd0ca5c260587d28a32266481130e2f",
+      "VNP14A1.A2024182.h12v12.002.2024183122537": "19edcd8a407887ded232ab19df81e1a2c147c12f2ca597c0546fc3ab28a6e0df",
+      "VNP14A1.A2024185.h12v12.002.2024186113239": "5a0a63eab5c7a771c4855e44022c80542434d10ec3f0cb998689d12c4a9580de",
+      "VNP14A1.A2024323.h12v12.002.2024324085809": "cf15c58c1019deb530d5f29879ea1853e9e0a52f62875fd2a0544c8ebfe38de4"
+    },
+    "unresolved_date_tile_pairs": [
+      {
+        "date": "2024-07-10",
+        "tile": "h12v12",
+        "product": "VNP14A1",
+        "routes": [
+          "Quebrada del Condorito - Balcon Norte"
+        ],
+        "reason": "NASA CMR returned no matching daily granule."
+      }
+    ]
+  },
+  "coverage": {
+    "route_alerts_with_any_viirs_fire_detection": 0,
+    "route_alerts_with_at_least_one_class5_qa_land_sample": 10,
+    "route_alerts_without_class5_qa_land_sample": 0,
+    "alert_rows_by_sensor_observation": [
+      {
+        "date": "2024-05-16",
+        "route": "Quebrada del Condorito - Balcon Norte",
+        "score": 0.16412650768496231,
+        "coverage_status": "observed"
+      },
+      {
+        "date": "2024-05-17",
+        "route": "Quebrada del Condorito - Balcon Norte",
+        "score": 0.10502458521459541,
+        "coverage_status": "observed"
+      },
+      {
+        "date": "2024-05-18",
+        "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "score": 0.15286807506074157,
+        "coverage_status": "observed"
+      },
+      {
+        "date": "2024-05-29",
+        "route": "Quebrada del Condorito - Balcon Norte",
+        "score": 0.27380158313408454,
+        "coverage_status": "observed"
+      },
+      {
+        "date": "2024-06-04",
+        "route": "Quebrada del Condorito - Balcon Norte",
+        "score": 0.41569371548181844,
+        "coverage_status": "observed"
+      },
+      {
+        "date": "2024-06-16",
+        "route": "Quebrada del Condorito - Balcon Norte",
+        "score": 0.21203771517555065,
+        "coverage_status": "observed"
+      },
+      {
+        "date": "2024-06-30",
+        "route": "Sendero La Chuña - El Rey",
+        "score": 0.17219532266237805,
+        "coverage_status": "observed"
+      },
+      {
+        "date": "2024-06-30",
+        "route": "Quebrada del Condorito - Balcon Norte",
+        "score": 0.8284147050339831,
+        "coverage_status": "observed"
+      },
+      {
+        "date": "2024-07-03",
+        "route": "Quebrada del Condorito - Balcon Norte",
+        "score": 0.2863843357572202,
+        "coverage_status": "observed"
+      },
+      {
+        "date": "2024-07-10",
+        "route": "Quebrada del Condorito - Balcon Norte",
+        "score": 0.1268389772805304,
+        "coverage_status": "unavailable_no_cmr_granule"
+      },
+      {
+        "date": "2024-11-18",
+        "route": "Sendero Namuncura",
+        "score": 0.16601745326884074,
+        "coverage_status": "observed"
+      }
+    ],
+    "full_sensor_observation_mask_available": false
+  },
+  "route_alert_results": [
+    {
+      "date": "2024-05-16",
+      "route": "Quebrada del Condorito - Balcon Norte",
+      "frozen_jma_alert_scores": [
+        {
+          "route": "Quebrada del Condorito - Balcon Norte",
+          "score": 0.16412650768496231,
+          "frozen_threshold": 0.1
+        }
+      ],
+      "granule_id": "VNP14A1.A2024137.h12v12.002.2024138095522",
+      "tile": "h12v12",
+      "within_10km_full_route_polyline": {
+        "grid_sample_count": 468,
+        "fire_mask_class_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 112,
+          "5": 356,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "fire_pixels_7_9": 0,
+        "clear_land_class5_pixels_with_qa_land": 356,
+        "non_clear_land_or_fire_samples": 112,
+        "any_viirs_fire_detection": false,
+        "interpretation": "Class 5 with QA land is a partially observed clear-land non-detection, not proof the whole buffer was fire-free."
+      },
+      "sha256": "30644381bc8a70566553c8e173a95a4d2ea386ffa4365163362844e3f62ec10e"
+    },
+    {
+      "date": "2024-05-17",
+      "route": "Quebrada del Condorito - Balcon Norte",
+      "frozen_jma_alert_scores": [
+        {
+          "route": "Quebrada del Condorito - Balcon Norte",
+          "score": 0.10502458521459541,
+          "frozen_threshold": 0.1
+        }
+      ],
+      "granule_id": "VNP14A1.A2024138.h12v12.002.2024139093639",
+      "tile": "h12v12",
+      "within_10km_full_route_polyline": {
+        "grid_sample_count": 468,
+        "fire_mask_class_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 468,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "fire_pixels_7_9": 0,
+        "clear_land_class5_pixels_with_qa_land": 468,
+        "non_clear_land_or_fire_samples": 0,
+        "any_viirs_fire_detection": false,
+        "interpretation": "Class 5 with QA land is a partially observed clear-land non-detection, not proof the whole buffer was fire-free."
+      },
+      "sha256": "11ac5530b66db093228588239f210f64f0e605c32db6b9ded22eb2ec73f36cd1"
+    },
+    {
+      "date": "2024-05-18",
+      "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "frozen_jma_alert_scores": [
+        {
+          "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "score": 0.15286807506074157,
+          "frozen_threshold": 0.1
+        }
+      ],
+      "granule_id": "VNP14A1.A2024139.h12v13.002.2024141135544",
+      "tile": "h12v13",
+      "within_10km_full_route_polyline": {
+        "grid_sample_count": 380,
+        "fire_mask_class_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 3,
+          "5": 377,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "fire_pixels_7_9": 0,
+        "clear_land_class5_pixels_with_qa_land": 377,
+        "non_clear_land_or_fire_samples": 3,
+        "any_viirs_fire_detection": false,
+        "interpretation": "Class 5 with QA land is a partially observed clear-land non-detection, not proof the whole buffer was fire-free."
+      },
+      "sha256": "4a610fd4395a231b20a5550c974f1ecdc5825ffb888cc6383475c4cad981dd5f"
+    },
+    {
+      "date": "2024-05-29",
+      "route": "Quebrada del Condorito - Balcon Norte",
+      "frozen_jma_alert_scores": [
+        {
+          "route": "Quebrada del Condorito - Balcon Norte",
+          "score": 0.27380158313408454,
+          "frozen_threshold": 0.1
+        }
+      ],
+      "granule_id": "VNP14A1.A2024150.h12v12.002.2024167040144",
+      "tile": "h12v12",
+      "within_10km_full_route_polyline": {
+        "grid_sample_count": 468,
+        "fire_mask_class_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 12,
+          "5": 456,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "fire_pixels_7_9": 0,
+        "clear_land_class5_pixels_with_qa_land": 456,
+        "non_clear_land_or_fire_samples": 12,
+        "any_viirs_fire_detection": false,
+        "interpretation": "Class 5 with QA land is a partially observed clear-land non-detection, not proof the whole buffer was fire-free."
+      },
+      "sha256": "6d66b5afde82bd79bd69acdcb685c38419e9d1ac4dc671e32e19bf13613d359a"
+    },
+    {
+      "date": "2024-06-04",
+      "route": "Quebrada del Condorito - Balcon Norte",
+      "frozen_jma_alert_scores": [
+        {
+          "route": "Quebrada del Condorito - Balcon Norte",
+          "score": 0.41569371548181844,
+          "frozen_threshold": 0.1
+        }
+      ],
+      "granule_id": "VNP14A1.A2024156.h12v12.002.2024167094246",
+      "tile": "h12v12",
+      "within_10km_full_route_polyline": {
+        "grid_sample_count": 468,
+        "fire_mask_class_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 285,
+          "5": 183,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "fire_pixels_7_9": 0,
+        "clear_land_class5_pixels_with_qa_land": 183,
+        "non_clear_land_or_fire_samples": 285,
+        "any_viirs_fire_detection": false,
+        "interpretation": "Class 5 with QA land is a partially observed clear-land non-detection, not proof the whole buffer was fire-free."
+      },
+      "sha256": "e7561e5b0c8500a5f6c80a7f4753ade340f333b47b5dd16ba355d848983a46f8"
+    },
+    {
+      "date": "2024-06-16",
+      "route": "Quebrada del Condorito - Balcon Norte",
+      "frozen_jma_alert_scores": [
+        {
+          "route": "Quebrada del Condorito - Balcon Norte",
+          "score": 0.21203771517555065,
+          "frozen_threshold": 0.1
+        }
+      ],
+      "granule_id": "VNP14A1.A2024168.h12v12.002.2024169084024",
+      "tile": "h12v12",
+      "within_10km_full_route_polyline": {
+        "grid_sample_count": 468,
+        "fire_mask_class_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 468,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "fire_pixels_7_9": 0,
+        "clear_land_class5_pixels_with_qa_land": 468,
+        "non_clear_land_or_fire_samples": 0,
+        "any_viirs_fire_detection": false,
+        "interpretation": "Class 5 with QA land is a partially observed clear-land non-detection, not proof the whole buffer was fire-free."
+      },
+      "sha256": "c6b424dfd80d4efd8e9e7662ba8354e9ef0f80236396c3e34f9e3c735b133425"
+    },
+    {
+      "date": "2024-06-30",
+      "route": "Sendero La Chuña - El Rey",
+      "frozen_jma_alert_scores": [
+        {
+          "route": "Sendero La Chuña - El Rey",
+          "score": 0.17219532266237805,
+          "frozen_threshold": 0.1
+        }
+      ],
+      "granule_id": "VNP14A1.A2024182.h12v11.002.2024183122340",
+      "tile": "h12v11",
+      "within_10km_full_route_polyline": {
+        "grid_sample_count": 406,
+        "fire_mask_class_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 406,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "fire_pixels_7_9": 0,
+        "clear_land_class5_pixels_with_qa_land": 406,
+        "non_clear_land_or_fire_samples": 0,
+        "any_viirs_fire_detection": false,
+        "interpretation": "Class 5 with QA land is a partially observed clear-land non-detection, not proof the whole buffer was fire-free."
+      },
+      "sha256": "34fe4cf8b5843e852c2c39d6f38a3dbbbdd0ca5c260587d28a32266481130e2f"
+    },
+    {
+      "date": "2024-06-30",
+      "route": "Quebrada del Condorito - Balcon Norte",
+      "frozen_jma_alert_scores": [
+        {
+          "route": "Quebrada del Condorito - Balcon Norte",
+          "score": 0.8284147050339831,
+          "frozen_threshold": 0.1
+        }
+      ],
+      "granule_id": "VNP14A1.A2024182.h12v12.002.2024183122537",
+      "tile": "h12v12",
+      "within_10km_full_route_polyline": {
+        "grid_sample_count": 468,
+        "fire_mask_class_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 468,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "fire_pixels_7_9": 0,
+        "clear_land_class5_pixels_with_qa_land": 468,
+        "non_clear_land_or_fire_samples": 0,
+        "any_viirs_fire_detection": false,
+        "interpretation": "Class 5 with QA land is a partially observed clear-land non-detection, not proof the whole buffer was fire-free."
+      },
+      "sha256": "19edcd8a407887ded232ab19df81e1a2c147c12f2ca597c0546fc3ab28a6e0df"
+    },
+    {
+      "date": "2024-07-03",
+      "route": "Quebrada del Condorito - Balcon Norte",
+      "frozen_jma_alert_scores": [
+        {
+          "route": "Quebrada del Condorito - Balcon Norte",
+          "score": 0.2863843357572202,
+          "frozen_threshold": 0.1
+        }
+      ],
+      "granule_id": "VNP14A1.A2024185.h12v12.002.2024186113239",
+      "tile": "h12v12",
+      "within_10km_full_route_polyline": {
+        "grid_sample_count": 468,
+        "fire_mask_class_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 468,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "fire_pixels_7_9": 0,
+        "clear_land_class5_pixels_with_qa_land": 468,
+        "non_clear_land_or_fire_samples": 0,
+        "any_viirs_fire_detection": false,
+        "interpretation": "Class 5 with QA land is a partially observed clear-land non-detection, not proof the whole buffer was fire-free."
+      },
+      "sha256": "5a0a63eab5c7a771c4855e44022c80542434d10ec3f0cb998689d12c4a9580de"
+    },
+    {
+      "date": "2024-11-18",
+      "route": "Sendero Namuncura",
+      "frozen_jma_alert_scores": [
+        {
+          "route": "Sendero Namuncura",
+          "score": 0.16601745326884074,
+          "frozen_threshold": 0.1
+        }
+      ],
+      "granule_id": "VNP14A1.A2024323.h12v12.002.2024324085809",
+      "tile": "h12v12",
+      "within_10km_full_route_polyline": {
+        "grid_sample_count": 375,
+        "fire_mask_class_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 375,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "fire_pixels_7_9": 0,
+        "clear_land_class5_pixels_with_qa_land": 375,
+        "non_clear_land_or_fire_samples": 0,
+        "any_viirs_fire_detection": false,
+        "interpretation": "Class 5 with QA land is a partially observed clear-land non-detection, not proof the whole buffer was fire-free."
+      },
+      "sha256": "cf15c58c1019deb530d5f29879ea1853e9e0a52f62875fd2a0544c8ebfe38de4"
+    }
+  ],
+  "sources": {
+    "docs/environmental-models-2026-10-22/fire-jma-2023-train-2024-test-snmf-report-proxy.json": "7cb87d51e85329ded9345dc61ce804a1d9db9f7e29a955c85f085add7e01bd0d",
+    "docs/environmental-models-2026-10-22/fire-snmf-national-no-fire-report-audit.json": "a57c45ee46b1bb97763432a9fa647fe9fc903b4550c427d4e46bb2be03a76396",
+    "docs/environmental-models-2026-10-22/fire-viirs-daily-l3-candidate-audit-2026-10-23.json": "0598401758ec20d500b3f6ac587958aa4aa12325a49653400901fe0c64150489",
+    "training/data/environmental/private/fire-route-geometries.json": "d622e3bd3bae7c97df9152d5ae22fa9cf3136f2bbb0ee807703eaddc21d6610a",
+    "training/data/environmental/private/viirs-daily-l3-jma-2024-no-fire-alerts/acquisition-manifest.json": "28df9f4544e760481651f374ca1425a76930c3156094c33d8b2f0d9d31df6e5f",
+    "docs/environmental-models-2026-10-22/fire-viirs-daily-l3-jma-2024-no-fire-alerts-manifest.json": "4bb371dae32d48fe6422e7f4c97d5fb4a951b08da49cdab7f86941ef4cfd806a"
+  },
+  "product_documentation": {
+    "nasa_viirs_active_fire_user_guide": "https://viirsland.gsfc.nasa.gov/PDF/VIIRS_activefire_User_Guide.pdf",
+    "nasa_laads_vnp14a1_file_specification": "https://ladsweb.modaps.eosdis.nasa.gov/filespec/VIIRS/1/VNP14A1"
+  },
+  "synthetic_observations": 0,
+  "deployment_approved": false,
+  "limitations": [
+    "SNMF explicit no-fire reports describe the administrative record and do not prove physical absence.",
+    "VIIRS classes 7-9 are independent thermal detections, not adjudicated wildfire truth.",
+    "A daily 1 km composite can miss small, obscured, or between-overpass fires; class 5 is partial observation only.",
+    "NASA CMR returned no VNP14A1.002 granule for one requested date/tile; that alert is unknown and excluded from observed counts.",
+    "The cohort contains only frozen model alerts on selected report dates; it cannot estimate precision, recall, calibration, or forecast reliability.",
+    "The 0.1 score threshold is diagnostic and the model scores are not calibrated probabilities."
+  ]
+}

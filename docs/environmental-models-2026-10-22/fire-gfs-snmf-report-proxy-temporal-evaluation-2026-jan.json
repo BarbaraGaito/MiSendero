@@ -1,0 +1,1788 @@
+{
+  "experiment_id": "gfs24h-logistic-snmf-reported-fire-route-day-temporal-test-2026-jan",
+  "candidate_status": "not_reliable_for_fire_prediction",
+  "target": "SNMF-reported incident proxy within 10 km; not physical fire absence or ignition probability.",
+  "protocol": {
+    "forecast_lead_hours": 24,
+    "daily_features": [
+      "temperature_mean",
+      "temperature_max",
+      "humidity_mean",
+      "humidity_min",
+      "wind_mean",
+      "wind_max",
+      "precipitation_sum"
+    ],
+    "feature_window_utc": "all 24 hourly GFS forecast values for the target date",
+    "train_period": "2024-01-20 through 2025-11-30",
+    "validation_period": "2025-12-01 through 2025-12-31",
+    "test_period": "2026-01-01 through 2026-01-31",
+    "algorithm": "StandardScaler + region one-hot + class-balanced logistic regression (C=1)",
+    "threshold_selection_rule": "Validation only: maximize recall subject to proxy precision >=0.80 and >=5 alerts.",
+    "test_diagnostic_threshold": 0.5
+  },
+  "sources": {
+    "weather_sha256": {
+      "openmeteo-gfs-previous-runs-argentina-trails-2024-01-01-2024-11-20.json.gz": "5242fa68ea6bdbf1b60a820998f9d8841631f83daf54249e8fcd3e9f74a7a60f",
+      "openmeteo-gfs-previous-runs-argentina-trails-2025-01-01-2026-02-01.json.gz": "832483042d55bed07e68bc9ccdd66dcbc1d0968c6f2e06317b61b9612e3f2ab7"
+    },
+    "proxy_sha256": {
+      "snmf-2024-route-day-report-proxy.json": "e4197585524b1b09c7185181cc0254cfe0193f032914216784f1f88b160c5645",
+      "snmf-2025-route-day-report-proxy.json": "a102ad57e98cf09436886adf9450783588d1a71e10914ebe443852ed487c3236",
+      "snmf-2026-jan-route-day-report-proxy.json": "db76fedfc003f34e4f41882e99dd20ce18c90f419a047e3de99e1e96a581c233"
+    },
+    "event_audit_sha256": "6cea72c3e9edc230aba572b3af74b0ef74d035b6e2167643abedac4690598ddc"
+  },
+  "data": {
+    "aligned_route_days": 3978,
+    "train_route_days": 3490,
+    "train_positive_route_days": 29,
+    "validation_route_days": 248,
+    "validation_positive_route_days": 4,
+    "test_route_days": 240,
+    "test_positive_route_days": 31,
+    "test_positive_route_sector_start_days_from_official_event_audit": 6
+  },
+  "validation_threshold": {
+    "selected": false,
+    "reason": "No validation threshold achieved >=80% proxy precision with at least 5 alerts."
+  },
+  "validation_at_0_5_diagnostic": {
+    "route_days": 248,
+    "positive_route_days": 4,
+    "observed_positive_fraction": 0.016129032258064516,
+    "average_precision": 0.025153619595888563,
+    "brier_score": 0.26545557902469347,
+    "accuracy_at_0_5_diagnostic": 0.6088709677419355,
+    "precision_at_0_5_diagnostic": 0.020618556701030927,
+    "recall_at_0_5_diagnostic": 0.5,
+    "confusion_matrix_labels_0_1": [
+      [
+        149,
+        95
+      ],
+      [
+        2,
+        2
+      ]
+    ],
+    "alerts_at_0_5_diagnostic": 97
+  },
+  "test_at_0_5_diagnostic": {
+    "route_days": 240,
+    "positive_route_days": 31,
+    "observed_positive_fraction": 0.12916666666666668,
+    "average_precision": 0.15991869184126903,
+    "brier_score": 0.2843176045119105,
+    "accuracy_at_0_5_diagnostic": 0.55,
+    "precision_at_0_5_diagnostic": 0.14678899082568808,
+    "recall_at_0_5_diagnostic": 0.5161290322580645,
+    "confusion_matrix_labels_0_1": [
+      [
+        116,
+        93
+      ],
+      [
+        15,
+        16
+      ]
+    ],
+    "alerts_at_0_5_diagnostic": 109
+  },
+  "test_route_day_predictions": [
+    {
+      "date": "2026-01-01",
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.02358123920735833,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-02",
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.02805740932098358,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-03",
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.044605609058677075,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-04",
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.02073204171398613,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-05",
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.008415986275828636,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-06",
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.021549649392818355,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-07",
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.02719303811687399,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-08",
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.03614592552315088,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-09",
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.05838947492890225,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-10",
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.0049701572231878035,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-11",
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.01868876303890095,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-12",
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.015339500273074283,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-13",
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.021580664472113008,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-14",
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.032996458983566054,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-15",
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.03373567191173323,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-16",
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.02555306896289908,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-17",
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.02025856041479919,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-18",
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.02365989756818831,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-19",
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.030390775966451632,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-20",
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.01602811162687486,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-21",
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.02198960671184598,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-22",
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.020549170493270003,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-23",
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.018038746449822892,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-24",
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.022029052016514315,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-25",
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.028411301996543206,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-26",
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.030671498997318997,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-27",
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.029668865811311035,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-28",
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.03805733497875805,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-30",
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.026442872905353583,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-31",
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.034264531197616334,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-01",
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.5535738776874586,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-02",
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.5214139538763134,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-03",
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.7447024073315858,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-04",
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.7997211429237521,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-05",
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_active_fire_proxy_label": 1,
+      "diagnostic_score": 0.882162829151755,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-06",
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_active_fire_proxy_label": 1,
+      "diagnostic_score": 0.7434635929915773,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-07",
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_active_fire_proxy_label": 1,
+      "diagnostic_score": 0.5205798338229033,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-08",
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_active_fire_proxy_label": 1,
+      "diagnostic_score": 0.6888816296703568,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-09",
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.5623870595742164,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-10",
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_active_fire_proxy_label": 1,
+      "diagnostic_score": 0.6332991836073426,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-11",
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_active_fire_proxy_label": 1,
+      "diagnostic_score": 0.36037542759197944,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-12",
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_active_fire_proxy_label": 1,
+      "diagnostic_score": 0.3775323808129808,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-13",
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_active_fire_proxy_label": 1,
+      "diagnostic_score": 0.2831389136757077,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-14",
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_active_fire_proxy_label": 1,
+      "diagnostic_score": 0.319388150229147,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-15",
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_active_fire_proxy_label": 1,
+      "diagnostic_score": 0.23963570896575057,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-16",
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_active_fire_proxy_label": 1,
+      "diagnostic_score": 0.40789340312623107,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-17",
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_active_fire_proxy_label": 1,
+      "diagnostic_score": 0.621327540745363,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-18",
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_active_fire_proxy_label": 1,
+      "diagnostic_score": 0.40523676368100164,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-19",
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_active_fire_proxy_label": 1,
+      "diagnostic_score": 0.47793014116680577,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-20",
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_active_fire_proxy_label": 1,
+      "diagnostic_score": 0.7263675222825474,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-21",
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_active_fire_proxy_label": 1,
+      "diagnostic_score": 0.6728533235538547,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-22",
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_active_fire_proxy_label": 1,
+      "diagnostic_score": 0.45516651794802787,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-23",
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_active_fire_proxy_label": 1,
+      "diagnostic_score": 0.5838471726832768,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-24",
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_active_fire_proxy_label": 1,
+      "diagnostic_score": 0.49635244987465216,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-25",
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_active_fire_proxy_label": 1,
+      "diagnostic_score": 0.6254384419734009,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-26",
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_active_fire_proxy_label": 1,
+      "diagnostic_score": 0.4776261597275936,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-27",
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_active_fire_proxy_label": 1,
+      "diagnostic_score": 0.39874933962243714,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-28",
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.4654082639276162,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-30",
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.7072478617980609,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-31",
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.6899361119906234,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-01",
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.9858741702689682,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-02",
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.9814147975228285,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-03",
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.9618332320979736,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-04",
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.910321691813349,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-05",
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.9511279462309714,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-06",
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.9456400096351647,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-07",
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.9502071900941574,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-08",
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.3781893382938351,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-09",
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.6528721969821518,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-10",
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.8550219014085606,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-11",
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.9201121226294413,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-12",
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.9722585753275594,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-13",
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.8995714567770295,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-14",
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.9511085703128805,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-15",
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.8952674247374868,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-16",
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.937440294501148,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-17",
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.9150080388558425,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-18",
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.9315461139885455,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-19",
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.8619608466283312,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-20",
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.8937686681598318,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-21",
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.950602674988797,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-22",
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.9565813843048245,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-23",
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.9521227237405445,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-24",
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.9683123398369777,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-25",
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.9700766856800968,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-26",
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.9338622286596594,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-27",
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.8369843546826264,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-28",
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.9115578926572199,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-30",
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.957068964731349,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-31",
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.945829992604403,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-01",
+      "route_sector": "Sendero Namuncura",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.8451522972024152,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-02",
+      "route_sector": "Sendero Namuncura",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.5724739667649816,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-03",
+      "route_sector": "Sendero Namuncura",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.506610555724657,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-04",
+      "route_sector": "Sendero Namuncura",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.2974806535318989,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-05",
+      "route_sector": "Sendero Namuncura",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.6172482417213502,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-06",
+      "route_sector": "Sendero Namuncura",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.8725023023065108,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-07",
+      "route_sector": "Sendero Namuncura",
+      "reported_active_fire_proxy_label": 1,
+      "diagnostic_score": 0.6696892896770265,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-08",
+      "route_sector": "Sendero Namuncura",
+      "reported_active_fire_proxy_label": 1,
+      "diagnostic_score": 0.4776011913286267,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-09",
+      "route_sector": "Sendero Namuncura",
+      "reported_active_fire_proxy_label": 1,
+      "diagnostic_score": 0.4269908604881478,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-10",
+      "route_sector": "Sendero Namuncura",
+      "reported_active_fire_proxy_label": 1,
+      "diagnostic_score": 0.45278196682503963,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-11",
+      "route_sector": "Sendero Namuncura",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.6870415627484675,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-12",
+      "route_sector": "Sendero Namuncura",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.6742783776354102,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-13",
+      "route_sector": "Sendero Namuncura",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.7071630334443355,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-14",
+      "route_sector": "Sendero Namuncura",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.7804450737575966,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-15",
+      "route_sector": "Sendero Namuncura",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.6112034414796867,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-16",
+      "route_sector": "Sendero Namuncura",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.5340497609008571,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-17",
+      "route_sector": "Sendero Namuncura",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.7404077309194073,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-18",
+      "route_sector": "Sendero Namuncura",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.6511960453280767,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-19",
+      "route_sector": "Sendero Namuncura",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.36948264409956505,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-20",
+      "route_sector": "Sendero Namuncura",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.5096280562204537,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-21",
+      "route_sector": "Sendero Namuncura",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.8212731307087886,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-22",
+      "route_sector": "Sendero Namuncura",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.7503229317833253,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-23",
+      "route_sector": "Sendero Namuncura",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.6074318198411462,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-24",
+      "route_sector": "Sendero Namuncura",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.7059958630756207,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-25",
+      "route_sector": "Sendero Namuncura",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.8474694278355279,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-26",
+      "route_sector": "Sendero Namuncura",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.35434443346649835,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-27",
+      "route_sector": "Sendero Namuncura",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.5707276314940806,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-28",
+      "route_sector": "Sendero Namuncura",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.6627729253765533,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-30",
+      "route_sector": "Sendero Namuncura",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.6532589485943534,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-31",
+      "route_sector": "Sendero Namuncura",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.6888940934938229,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-01",
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.4911433449476276,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-02",
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.4108203996143452,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-03",
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.23990151776680405,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-04",
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.09731785666635111,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-05",
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.2626050395883312,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-06",
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.5548321613964605,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-07",
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.355535797723704,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-08",
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.1491177938343426,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-09",
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.1879175159016885,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-10",
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.25927064732863553,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-11",
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.538098208923479,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-12",
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.5362264267467162,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-13",
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.11823446130677814,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-14",
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.5364154459485033,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-15",
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.6346279631757954,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-16",
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.16230028784642095,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-17",
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.6723289389450359,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-18",
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.20489683422696495,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-19",
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.061693167182552744,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-20",
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.13899322277764165,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-21",
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.3805902437756617,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-22",
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.4863760177415866,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-23",
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.5376399712244017,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-24",
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.4979923573072692,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-25",
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.199817747511955,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-26",
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.5140128588257532,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-27",
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.21012476685946901,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-28",
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.30072151950457077,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-30",
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.5346491204700335,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-31",
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.23194697787637703,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-01",
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_active_fire_proxy_label": 1,
+      "diagnostic_score": 0.8547214913825947,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-02",
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.8266538529365777,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-03",
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.9397941496528922,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-04",
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.931886858650041,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-05",
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_active_fire_proxy_label": 1,
+      "diagnostic_score": 0.9536529688421321,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-06",
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_active_fire_proxy_label": 1,
+      "diagnostic_score": 0.9025068953342913,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-07",
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_active_fire_proxy_label": 1,
+      "diagnostic_score": 0.882367379593222,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-08",
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.8972526434209698,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-09",
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.8788389242691269,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-10",
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_active_fire_proxy_label": 1,
+      "diagnostic_score": 0.9257300527066075,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-11",
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.8766731407235667,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-12",
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.7862292145050093,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-13",
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.7196729467029209,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-14",
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.6642489570388523,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-15",
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.641615351363591,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-16",
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.7372246151259393,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-17",
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.8138013702698141,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-18",
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.70983740441785,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-19",
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.8575640599287624,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-20",
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.8868138961942135,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-21",
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.8849266613340284,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-22",
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.8303193450242464,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-23",
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.8669553486750109,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-24",
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.8602715719228671,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-25",
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.8702531040753645,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-26",
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.8226020146040871,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-27",
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.7825451732526467,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-28",
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.7551023266781802,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-30",
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.9438298128274315,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-31",
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.9270879633459523,
+      "alert_at_diagnostic_threshold_0_5": true
+    },
+    {
+      "date": "2026-01-01",
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.029955525330738513,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-02",
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.036173477258969924,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-03",
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.07863171151306506,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-04",
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.010253391563630854,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-05",
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.008755955497153542,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-06",
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.008344598471015307,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-07",
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.040285324536363604,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-08",
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.0653112753964292,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-09",
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.002969087527279063,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-10",
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.010351174051722166,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-11",
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.020924424379584968,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-12",
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.012913254523866161,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-13",
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.01988124264348853,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-14",
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.025814704373027148,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-15",
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.0537744166431306,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-16",
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.033020742622472024,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-17",
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.037116288991093024,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-18",
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.038786379765488994,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-19",
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.05476070127688362,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-20",
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.014037721731497262,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-21",
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.01231428338447109,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-22",
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.014246147136102894,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-23",
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.030884952976858428,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-24",
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.025338337568535745,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-25",
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.031057044700962398,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-26",
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.03320599537530154,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-27",
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.04789403916434358,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-28",
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.0746860938894744,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-30",
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.038752519062337794,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-31",
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.03311489374826886,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-01",
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.02312930047675892,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-02",
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.03208679888402318,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-03",
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.03674646969890516,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-04",
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.014226581026019978,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-05",
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.021682069524432693,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-06",
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.02072474083366452,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-07",
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.027487346000049477,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-08",
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.045089533481701215,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-09",
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.007750645934642973,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-10",
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.022395435951486242,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-11",
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.02219771484538652,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-12",
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.037543375669945075,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-13",
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.03603533854656738,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-14",
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.04564370135783452,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-15",
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.06008884298643064,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-16",
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.017506596627832015,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-17",
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.008140777755343052,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-18",
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.013251215199329584,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-19",
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.0008845902093130483,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-20",
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.010778595154254127,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-21",
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.018333320991214774,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-22",
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.028808613118642783,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-23",
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.047336845020566995,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-24",
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.040958203689374216,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-25",
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.03935172788197063,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-26",
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.03517640378145457,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-27",
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.0179295198576288,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-28",
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.013294952557609159,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-30",
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.024637294164501524,
+      "alert_at_diagnostic_threshold_0_5": false
+    },
+    {
+      "date": "2026-01-31",
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_active_fire_proxy_label": 0,
+      "diagnostic_score": 0.020989113721538187,
+      "alert_at_diagnostic_threshold_0_5": false
+    }
+  ],
+  "test_training_prevalence_baseline": {
+    "predicted_probability": 0.00830945558739255,
+    "average_precision": 0.12916666666666668,
+    "brier_score": 0.1270891043587491
+  },
+  "limitations": [
+    "SNMF proxy negatives are absence of a nearby listed incident in an available report, not independently confirmed no-fire observations.",
+    "The classifier uses only GFS weather and route identity; it lacks fuel state, vegetation, human ignition likelihood and confirmed sensor coverage.",
+    "Route-day positives repeat episodes. The test has only a few independent route-sector incident starts, so day-level metrics exaggerate sample size.",
+    "If validation cannot select a threshold, the 0.5 test result is diagnostic only and must not be used as an operational alert threshold.",
+    "No model artifact is saved and no app or production file is modified."
+  ],
+  "synthetic_observations": 0,
+  "deployment_approved": false
+}

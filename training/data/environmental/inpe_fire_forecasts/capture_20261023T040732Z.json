@@ -1,0 +1,281 @@
+{
+  "schema_version": 1,
+  "captured_at_utc": "2026-10-23T04:07:32Z",
+  "source": "INPE Risco de Fogo previsto (public latest T0-T3 files)",
+  "geography_file": "training/data/environmental/geography.json",
+  "geography_sha256": "7e475b478db7bb678cc0a1539fdf484e0c8de0a9baa98916fb90f652f75ff834",
+  "extraction": {
+    "point": "pixel at route center coordinate",
+    "radius_km": [
+      5,
+      10
+    ],
+    "distance_approximation": "local equirectangular distance from pixel center",
+    "warning": "Route centers and radius buffers are proxies, not trail geometries."
+  },
+  "forecasts": [
+    {
+      "horizon_file": "RF.PREV.T1.tif",
+      "source_url": "https://dataserver-coids.inpe.br/queimadas/queimadas/riscofogo_meteorologia/previsto/risco_fogo/RF.PREV.T1.tif",
+      "http_last_modified": "Thu, 22 Oct 2026 09:27:37 GMT",
+      "sha256": "8a10ff44819c957f5776465747e6eb637b5997c0b7d0e5147cbe708e14f0ee5f",
+      "size_bytes": 19062007,
+      "forecast_run_utc": "2026-10-22T00:00:00Z",
+      "forecast_valid_utc": "2026-10-23T18:00:00Z",
+      "title": "Risco de fogo previsto para o dia 2026102318",
+      "creation_date": "qui 22 out 2026 09:23:30 UTC",
+      "raster": {
+        "crs": "EPSG:4326",
+        "bounds": [
+          -119.99480181,
+          -55.99,
+          -33.00480181,
+          33.0
+        ],
+        "resolution_degrees": [
+          0.01,
+          0.01
+        ],
+        "width": 8699,
+        "height": 8899,
+        "nodata": -999.0,
+        "band_variable": "rbf"
+      },
+      "routes": [
+        {
+          "name": "Sendero Macuco - Salto Arrechea",
+          "location": "Parque Nacional Iguazu, Misiones",
+          "latitude": -25.66715775,
+          "longitude": -54.452823,
+          "geometry_sha256": "148e8cb09cd0d851b88a1875e60763f34efffe046a68c1cb886911fde629477b",
+          "sample": {
+            "point": {
+              "n": 1,
+              "value": 0.0
+            },
+            "radius_5km": {
+              "n": 64,
+              "median": 0.0,
+              "p90": 0.0,
+              "max": 0.0,
+              "fraction_ge_0_7": 0.0,
+              "fraction_ge_0_95": 0.0
+            },
+            "radius_10km": {
+              "n": 257,
+              "median": 0.0,
+              "p90": 0.0,
+              "max": 0.0,
+              "fraction_ge_0_7": 0.0,
+              "fraction_ge_0_95": 0.0
+            }
+          }
+        },
+        {
+          "name": "Refugio Frey desde Villa Catedral",
+          "location": "Parque Nacional Nahuel Huapi, Rio Negro",
+          "latitude": -41.1904696,
+          "longitude": -71.4612884,
+          "geometry_sha256": "9947df55746c5b8033b0955a9bdd8b2ddb61db1dad2621b1fc0d72fa1e21acdf",
+          "sample": {
+            "point": {
+              "n": 1,
+              "value": 0.0
+            },
+            "radius_5km": {
+              "n": 60,
+              "median": 0.0,
+              "p90": 0.0,
+              "max": 0.0,
+              "fraction_ge_0_7": 0.0,
+              "fraction_ge_0_95": 0.0
+            },
+            "radius_10km": {
+              "n": 275,
+              "median": 0.0,
+              "p90": 0.0,
+              "max": 0.0,
+              "fraction_ge_0_7": 0.0,
+              "fraction_ge_0_95": 0.0
+            }
+          }
+        },
+        {
+          "name": "Quebrada del Condorito - Balcon Norte",
+          "location": "Parque Nacional Quebrada del Condorito, Cordoba",
+          "latitude": -31.65000375,
+          "longitude": -64.70201284999999,
+          "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74",
+          "sample": {
+            "point": {
+              "n": 1,
+              "value": 0.95
+            },
+            "radius_5km": {
+              "n": 75,
+              "median": 0.94,
+              "p90": 0.94,
+              "max": 0.95,
+              "fraction_ge_0_7": 1.0,
+              "fraction_ge_0_95": 0.066667
+            },
+            "radius_10km": {
+              "n": 296,
+              "median": 0.94,
+              "p90": 0.95,
+              "max": 0.97,
+              "fraction_ge_0_7": 1.0,
+              "fraction_ge_0_95": 0.192568
+            }
+          }
+        },
+        {
+          "name": "Sendero Namuncura",
+          "location": "Parque Nacional Lihue Calel, La Pampa",
+          "latitude": -38.0057717,
+          "longitude": -65.59634514999999,
+          "geometry_sha256": "9ffaf89538fec8fb40b3d760b8e8b8fbcc154794b28d438fa6b046429fc5d32c",
+          "sample": {
+            "point": {
+              "n": 1,
+              "value": 0.67
+            },
+            "radius_5km": {
+              "n": 81,
+              "median": 0.65,
+              "p90": 0.85,
+              "max": 0.91,
+              "fraction_ge_0_7": 0.395062,
+              "fraction_ge_0_95": 0.0
+            },
+            "radius_10km": {
+              "n": 316,
+              "median": 0.64,
+              "p90": 0.96,
+              "max": 0.98,
+              "fraction_ge_0_7": 0.43038,
+              "fraction_ge_0_95": 0.129747
+            }
+          }
+        },
+        {
+          "name": "Cerro Ventana - Hueco de la Ventana",
+          "location": "Parque Provincial Ernesto Tornquist, Buenos Aires",
+          "latitude": -38.055006000000006,
+          "longitude": -62.0162207,
+          "geometry_sha256": "61e1a9b62ae9b691b29c437aed7792b3723c7af54f03feb2311d4322fd3f5066",
+          "sample": {
+            "point": {
+              "n": 1,
+              "value": 0.84
+            },
+            "radius_5km": {
+              "n": 81,
+              "median": 0.85,
+              "p90": 0.86,
+              "max": 0.87,
+              "fraction_ge_0_7": 1.0,
+              "fraction_ge_0_95": 0.0
+            },
+            "radius_10km": {
+              "n": 317,
+              "median": 0.85,
+              "p90": 0.87,
+              "max": 0.88,
+              "fraction_ge_0_7": 0.873817,
+              "fraction_ge_0_95": 0.0
+            }
+          }
+        },
+        {
+          "name": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "location": "Cerro Piltriquitron, El Bolson, Rio Negro",
+          "latitude": -41.97003735,
+          "longitude": -71.4756338,
+          "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa",
+          "sample": {
+            "point": {
+              "n": 1,
+              "value": 0.0
+            },
+            "radius_5km": {
+              "n": 70,
+              "median": 0.0,
+              "p90": 0.0,
+              "max": 0.0,
+              "fraction_ge_0_7": 0.0,
+              "fraction_ge_0_95": 0.0
+            },
+            "radius_10km": {
+              "n": 308,
+              "median": 0.0,
+              "p90": 0.0,
+              "max": 0.0,
+              "fraction_ge_0_7": 0.0,
+              "fraction_ge_0_95": 0.0
+            }
+          }
+        },
+        {
+          "name": "Sendero Che Roga - Mburucuyá",
+          "location": "Parque Nacional Mburucuyá, Corrientes",
+          "latitude": -28.0180651,
+          "longitude": -58.0286895,
+          "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e",
+          "sample": {
+            "point": {
+              "n": 1,
+              "value": 0.57
+            },
+            "radius_5km": {
+              "n": 61,
+              "median": 0.44,
+              "p90": 0.75,
+              "max": 0.82,
+              "fraction_ge_0_7": 0.163934,
+              "fraction_ge_0_95": 0.0
+            },
+            "radius_10km": {
+              "n": 269,
+              "median": 0.6,
+              "p90": 0.902,
+              "max": 1.0,
+              "fraction_ge_0_7": 0.345725,
+              "fraction_ge_0_95": 0.055762
+            }
+          }
+        },
+        {
+          "name": "Sendero La Chuña - El Rey",
+          "location": "Parque Nacional El Rey, Salta",
+          "latitude": -24.722283,
+          "longitude": -64.645613,
+          "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b",
+          "sample": {
+            "point": {
+              "n": 1,
+              "value": 0.81
+            },
+            "radius_5km": {
+              "n": 67,
+              "median": 0.81,
+              "p90": 0.84,
+              "max": 0.85,
+              "fraction_ge_0_7": 1.0,
+              "fraction_ge_0_95": 0.0
+            },
+            "radius_10km": {
+              "n": 285,
+              "median": 0.82,
+              "p90": 0.89,
+              "max": 0.93,
+              "fraction_ge_0_7": 1.0,
+              "fraction_ge_0_95": 0.0
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "interpretation": "INPE fire-danger score; not a calibrated probability of ignition or route incident."
+}

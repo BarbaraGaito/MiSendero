@@ -1,0 +1,73 @@
+{
+  "experiment_id": "snmf-reported-fire-starts-full-trail-polyline-2022",
+  "meaning": "Positive event coverage using complete reviewed trail polylines; not an evaluation of prediction precision.",
+  "period": [
+    "2022-04-02",
+    "2023-01-01"
+  ],
+  "spatial_protocol": {
+    "distance": "Local equirectangular point-to-polyline segment distance, centered on each event",
+    "radii_km": [
+      10,
+      20
+    ],
+    "minimum_polyline_vertices_by_route": {
+      "Sendero Macuco - Salto Arrechea": 219,
+      "Refugio Frey desde Villa Catedral": 1057,
+      "Quebrada del Condorito - Balcon Norte": 379,
+      "Sendero Namuncura": 37,
+      "Cerro Ventana - Hueco de la Ventana": 221,
+      "Bosque Tallado desde la plataforma del Piltriquitron": 103,
+      "Sendero Che Roga - Mburucuyá": 234,
+      "Sendero La Chuña - El Rey": 93
+    },
+    "route_geometry_source_hashes": {
+      "Sendero Macuco - Salto Arrechea": "148e8cb09cd0d851b88a1875e60763f34efffe046a68c1cb886911fde629477b",
+      "Refugio Frey desde Villa Catedral": "9947df55746c5b8033b0955a9bdd8b2ddb61db1dad2621b1fc0d72fa1e21acdf",
+      "Quebrada del Condorito - Balcon Norte": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74",
+      "Sendero Namuncura": "9ffaf89538fec8fb40b3d760b8e8b8fbcc154794b28d438fa6b046429fc5d32c",
+      "Cerro Ventana - Hueco de la Ventana": "61e1a9b62ae9b691b29c437aed7792b3723c7af54f03feb2311d4322fd3f5066",
+      "Bosque Tallado desde la plataforma del Piltriquitron": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa",
+      "Sendero Che Roga - Mburucuyá": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e",
+      "Sendero La Chuña - El Rey": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    "routes_without_reviewed_polyline": [],
+    "center_distance_is_computed_against_existing_sector_coordinate": true
+  },
+  "report_coverage": {
+    "available_report_dates": 272,
+    "period_days": 274,
+    "dates_without_pdf_are_unknown": 2
+  },
+  "source_hashes": {
+    "reports": "8ecb11f38419e5d75387db6379757be0ce853ee6a7a5303b89f717e3e0b9c797",
+    "manifest": "5c03566ff367225f8cd95d74aeb4d965a5f314b0fb5fa99061f50402d38b5394",
+    "geometry": "d622e3bd3bae7c97df9152d5ae22fa9cf3136f2bbb0ee807703eaddc21d6610a",
+    "geography": "7e475b478db7bb678cc0a1539fdf484e0c8de0a9baa98916fb90f652f75ff834"
+  },
+  "results": {
+    "10": {
+      "incident_records_within_radius": 0,
+      "unique_route_sector_start_days": 0,
+      "route_sector_days_by_region": {},
+      "days_found_by_polyline_but_missed_by_center": []
+    },
+    "20": {
+      "incident_records_within_radius": 0,
+      "unique_route_sector_start_days": 0,
+      "route_sector_days_by_region": {},
+      "days_found_by_polyline_but_missed_by_center": []
+    }
+  },
+  "events_within_50km": [],
+  "limitations": [
+    "SNMF reports are jurisdiction-reported, not an exhaustive incident/no-incident registry.",
+    "A missing report or no listed nearby incident is not a verified physical no-fire window.",
+    "Dates are reported calendar dates; exact ignition time and lead time are unavailable.",
+    "Routes without a reviewed polyline are excluded; sector centers are not substituted into line-distance counts.",
+    "A mapped trail line does not imply that all adjacent land is equally exposed or that the trail was open.",
+    "Local equirectangular distance is an approximation; the 10/20 km results should be checked geodesically before threshold-sensitive use."
+  ],
+  "synthetic_observations": 0,
+  "deployment_approved": false
+}

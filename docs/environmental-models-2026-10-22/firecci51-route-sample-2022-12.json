@@ -1,0 +1,164 @@
+{
+  "experiment_id": "firecci51-route-month-label-coverage-audit",
+  "dataset": "ESA Fire_cci MODIS burned-area pixel product v5.1, South America tile AREA_2",
+  "source_url": "https://dap.ceda.ac.uk/neodc/esacci/fire/data/burned_area/MODIS/pixel/v5.1/compressed/2022/20221201-ESACCI-L3S_FIRE-BA-MODIS-AREA_2-fv5.1.tar.gz",
+  "period": "2022-12",
+  "archive_sha256": "1afba0752ce165a2c2a1510a7ac90889a588a168c5992184986e1229b90b0f8d",
+  "jd_sha256": "c0cc0be548a08f4ad54f154fe4b31b88addb59d0d927535e6f287c4c5e8d8957",
+  "cl_sha256": "b2be31c3c0ba0e3ced4dac4fefd5dd1a31b497f304006f1e3e79f4fe381bf9bb",
+  "product_note": "JD is the day of year of first burn detection; 0 means not burned in the month, -1 not observed, and -2 non-burnable. CL is the product's burned-pixel confidence score, not model probability.",
+  "spatial_rule": "Great-circle local approximation within a fixed radius of route-sector centers; not the full trail geometry.",
+  "routes": [
+    {
+      "route_center": "Sendero Macuco - Salto Arrechea",
+      "location": "Parque Nacional Iguazu, Misiones",
+      "radius_km": 10.0,
+      "sampled_pixel_count": 5617,
+      "jd_class_counts": {
+        "-2": 363,
+        "-1": 0,
+        "0": 5254,
+        "burned_pixel_count": 0
+      },
+      "burned_confidence_bins": {
+        "1_49": 0,
+        "50_79": 0,
+        "80_100": 0,
+        "outside_1_100": 0
+      }
+    },
+    {
+      "route_center": "Refugio Frey desde Villa Catedral",
+      "location": "Parque Nacional Nahuel Huapi, Rio Negro",
+      "radius_km": 10.0,
+      "sampled_pixel_count": 6727,
+      "jd_class_counts": {
+        "-2": 794,
+        "-1": 0,
+        "0": 5933,
+        "burned_pixel_count": 0
+      },
+      "burned_confidence_bins": {
+        "1_49": 0,
+        "50_79": 0,
+        "80_100": 0,
+        "outside_1_100": 0
+      }
+    },
+    {
+      "route_center": "Quebrada del Condorito - Balcon Norte",
+      "location": "Parque Nacional Quebrada del Condorito, Cordoba",
+      "radius_km": 10.0,
+      "sampled_pixel_count": 5952,
+      "jd_class_counts": {
+        "-2": 0,
+        "-1": 0,
+        "0": 5952,
+        "burned_pixel_count": 0
+      },
+      "burned_confidence_bins": {
+        "1_49": 0,
+        "50_79": 0,
+        "80_100": 0,
+        "outside_1_100": 0
+      }
+    },
+    {
+      "route_center": "Sendero Namuncura",
+      "location": "Parque Nacional Lihue Calel, La Pampa",
+      "radius_km": 10.0,
+      "sampled_pixel_count": 6422,
+      "jd_class_counts": {
+        "-2": 0,
+        "-1": 0,
+        "0": 6422,
+        "burned_pixel_count": 0
+      },
+      "burned_confidence_bins": {
+        "1_49": 0,
+        "50_79": 0,
+        "80_100": 0,
+        "outside_1_100": 0
+      }
+    },
+    {
+      "route_center": "Cerro Ventana - Hueco de la Ventana",
+      "location": "Parque Provincial Ernesto Tornquist, Buenos Aires",
+      "radius_km": 10.0,
+      "sampled_pixel_count": 6438,
+      "jd_class_counts": {
+        "-2": 0,
+        "-1": 0,
+        "0": 6438,
+        "burned_pixel_count": 0
+      },
+      "burned_confidence_bins": {
+        "1_49": 0,
+        "50_79": 0,
+        "80_100": 0,
+        "outside_1_100": 0
+      }
+    },
+    {
+      "route_center": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "location": "Cerro Piltriquitron, El Bolson, Rio Negro",
+      "radius_km": 10.0,
+      "sampled_pixel_count": 6805,
+      "jd_class_counts": {
+        "-2": 72,
+        "-1": 0,
+        "0": 6733,
+        "burned_pixel_count": 0
+      },
+      "burned_confidence_bins": {
+        "1_49": 0,
+        "50_79": 0,
+        "80_100": 0,
+        "outside_1_100": 0
+      }
+    },
+    {
+      "route_center": "Sendero Che Roga - Mburucuyá",
+      "location": "Parque Nacional Mburucuyá, Corrientes",
+      "radius_km": 10.0,
+      "sampled_pixel_count": 5731,
+      "jd_class_counts": {
+        "-2": 364,
+        "-1": 0,
+        "0": 5367,
+        "burned_pixel_count": 0
+      },
+      "burned_confidence_bins": {
+        "1_49": 0,
+        "50_79": 0,
+        "80_100": 0,
+        "outside_1_100": 0
+      }
+    },
+    {
+      "route_center": "Sendero La Chuña - El Rey",
+      "location": "Parque Nacional El Rey, Salta",
+      "radius_km": 10.0,
+      "sampled_pixel_count": 5582,
+      "jd_class_counts": {
+        "-2": 0,
+        "-1": 0,
+        "0": 5582,
+        "burned_pixel_count": 0
+      },
+      "burned_confidence_bins": {
+        "1_49": 0,
+        "50_79": 0,
+        "80_100": 0,
+        "outside_1_100": 0
+      }
+    }
+  ],
+  "limitations": [
+    "Single month is only a source usability/coverage audit, not a model evaluation.",
+    "Monthly burned-area mapping does not identify fire start time or prove that a fire was active at a particular hour.",
+    "A mapped unburned pixel is a negative only for mapped burned area within this month and product limitations; it is not a comprehensive fire-free observation.",
+    "FireCCI51 uses MODIS observations and includes MODIS active-fire information, so it is not fully sensor-independent from a MODIS-based predictor.",
+    "Route centers and radius are approximations; the next experiment must use trail geometries and a held-out year."
+  ]
+}

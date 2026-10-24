@@ -1,0 +1,890 @@
+{
+  "experiment_id": "viirs-efire-v1r3-snmf-route-line-event-pass-audit-2025",
+  "purpose": "Availability and active-fire-mask cross-check only; not a forecast evaluation.",
+  "target": "VIIRS E-FIRE fire-mask classes 7-9 at sampled points on reviewed trail polylines, on dates with an SNMF incident start within 20 km of the line.",
+  "results_summary": {
+    "snmf_route_start_days_within_20km_of_line": 15,
+    "days_with_complete_288_of_288_screen": 12,
+    "days_with_at_least_one_coarse_route_candidate": 8,
+    "fully_refined_candidate_passes": 9,
+    "days_with_viirs_fire_class_on_sampled_route_vertices": 0
+  },
+  "snmf_event_coordinate_cross_check": {
+    "granules_with_full_geolocation_audit": 9,
+    "event_coordinate_pass_records": 14,
+    "unique_route_date_incident_name_records": 13,
+    "unique_event_coordinates": 11,
+    "mask_status_counts": {
+      "observed_clear_land": 11,
+      "unknown_quality_or_nonland": 3
+    },
+    "observations": [
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "reported_start_date": "2025-07-17",
+        "incident_name": "CALLEJON INALEF",
+        "province": "Río Negro",
+        "line_distance_km": 17.415,
+        "center_distance_km": 17.706,
+        "reported_start_date_pdf_available": true,
+        "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa",
+        "event_latitude": -41.809999999999995,
+        "event_longitude": -71.48263888888889,
+        "nearest_coarse_swath_sample_km": 12.588570583764636,
+        "nearest_pixel_distance_km": 0.1780741915833708,
+        "mask_code": 5,
+        "mask_label": "clear_land",
+        "dqf_code": 1,
+        "mask_status": "observed_clear_land"
+      },
+      {
+        "route_sector": "Quebrada del Condorito - Balcon Norte",
+        "reported_start_date": "2025-08-01",
+        "incident_name": "Pampa Alta",
+        "province": "Córdoba",
+        "line_distance_km": 14.764,
+        "center_distance_km": 16.913,
+        "reported_start_date_pdf_available": true,
+        "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74",
+        "event_latitude": -31.790694444444448,
+        "event_longitude": -64.63188888888888,
+        "nearest_coarse_swath_sample_km": 10.951497682458333,
+        "nearest_pixel_distance_km": 0.21466943350591972,
+        "mask_code": 4,
+        "mask_label": "cloud",
+        "dqf_code": 2,
+        "mask_status": "unknown_quality_or_nonland"
+      },
+      {
+        "route_sector": "Quebrada del Condorito - Balcon Norte",
+        "reported_start_date": "2025-08-01",
+        "incident_name": "Pampa Alta",
+        "province": "Córdoba",
+        "line_distance_km": 14.764,
+        "center_distance_km": 16.913,
+        "reported_start_date_pdf_available": true,
+        "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74",
+        "event_latitude": -31.790694444444448,
+        "event_longitude": -64.63188888888888,
+        "nearest_coarse_swath_sample_km": 1.739556716076496,
+        "nearest_pixel_distance_km": 0.16742881455045872,
+        "mask_code": 5,
+        "mask_label": "clear_land",
+        "dqf_code": 1,
+        "mask_status": "observed_clear_land"
+      },
+      {
+        "route_sector": "Refugio Frey desde Villa Catedral",
+        "reported_start_date": "2025-10-06",
+        "incident_name": "CIRCUNVALACION",
+        "province": "Río Negro",
+        "line_distance_km": 12.148,
+        "center_distance_km": 14.057,
+        "reported_start_date_pdf_available": true,
+        "geometry_sha256": "9947df55746c5b8033b0955a9bdd8b2ddb61db1dad2621b1fc0d72fa1e21acdf",
+        "event_latitude": -41.16676111111111,
+        "event_longitude": -71.29649444444445,
+        "nearest_coarse_swath_sample_km": 16.447633072716627,
+        "nearest_pixel_distance_km": 0.12841802170260963,
+        "mask_code": 5,
+        "mask_label": "clear_land",
+        "dqf_code": 1,
+        "mask_status": "observed_clear_land"
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "reported_start_date": "2025-10-08",
+        "incident_name": "Ruta 40 Control Policial",
+        "province": "Chubut",
+        "line_distance_km": 4.319,
+        "center_distance_km": 4.716,
+        "reported_start_date_pdf_available": true,
+        "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa",
+        "event_latitude": -41.99276666666667,
+        "event_longitude": -71.52387222222222,
+        "nearest_coarse_swath_sample_km": 13.386810156559758,
+        "nearest_pixel_distance_km": 0.19423195652140018,
+        "mask_code": 4,
+        "mask_label": "cloud",
+        "dqf_code": 2,
+        "mask_status": "unknown_quality_or_nonland"
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "reported_start_date": "2025-10-08",
+        "incident_name": "Cerro Radal",
+        "province": "Chubut",
+        "line_distance_km": 9.492,
+        "center_distance_km": 9.902,
+        "reported_start_date_pdf_available": true,
+        "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa",
+        "event_latitude": -42.034275,
+        "event_longitude": -71.55907499999999,
+        "nearest_coarse_swath_sample_km": 11.338741667117734,
+        "nearest_pixel_distance_km": 0.19346708256421816,
+        "mask_code": 4,
+        "mask_label": "cloud",
+        "dqf_code": 2,
+        "mask_status": "unknown_quality_or_nonland"
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "reported_start_date": "2025-11-12",
+        "incident_name": "Aserradero Gonzalez",
+        "province": "Chubut",
+        "line_distance_km": 15.004,
+        "center_distance_km": 15.248,
+        "reported_start_date_pdf_available": true,
+        "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa",
+        "event_latitude": -42.10536666666667,
+        "event_longitude": -71.44019166666666,
+        "nearest_coarse_swath_sample_km": 10.151427260288962,
+        "nearest_pixel_distance_km": 0.22307242651255324,
+        "mask_code": 5,
+        "mask_label": "clear_land",
+        "dqf_code": 1,
+        "mask_status": "observed_clear_land"
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "reported_start_date": "2025-11-17",
+        "incident_name": "Ternero Los fuegos",
+        "province": "Río Negro",
+        "line_distance_km": 7.17,
+        "center_distance_km": 7.373,
+        "reported_start_date_pdf_available": true,
+        "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa",
+        "event_latitude": -41.909955555555555,
+        "event_longitude": -71.51422777777778,
+        "nearest_coarse_swath_sample_km": 8.535542327922297,
+        "nearest_pixel_distance_km": 0.25181939022049155,
+        "mask_code": 5,
+        "mask_label": "clear_land",
+        "dqf_code": 1,
+        "mask_status": "observed_clear_land"
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "reported_start_date": "2025-11-17",
+        "incident_name": "Laguna de los Ruiz - Cuesta del",
+        "province": "Río Negro",
+        "line_distance_km": 18.012,
+        "center_distance_km": 18.251,
+        "reported_start_date_pdf_available": true,
+        "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa",
+        "event_latitude": -41.8122,
+        "event_longitude": -71.53998333333332,
+        "nearest_coarse_swath_sample_km": 8.387035647152452,
+        "nearest_pixel_distance_km": 0.11838665348349157,
+        "mask_code": 5,
+        "mask_label": "clear_land",
+        "dqf_code": 1,
+        "mask_status": "observed_clear_land"
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "reported_start_date": "2025-11-17",
+        "incident_name": "Complejo",
+        "province": "Chubut",
+        "line_distance_km": 18.054,
+        "center_distance_km": 18.253,
+        "reported_start_date_pdf_available": true,
+        "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa",
+        "event_latitude": -42.126111111111115,
+        "event_longitude": -71.40361111111112,
+        "nearest_coarse_swath_sample_km": 10.040138396763764,
+        "nearest_pixel_distance_km": 0.1820624124943291,
+        "mask_code": 5,
+        "mask_label": "clear_land",
+        "dqf_code": 1,
+        "mask_status": "observed_clear_land"
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "reported_start_date": "2025-11-17",
+        "incident_name": "Complejo Cabañas",
+        "province": "Chubut",
+        "line_distance_km": 18.054,
+        "center_distance_km": 18.253,
+        "reported_start_date_pdf_available": true,
+        "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa",
+        "event_latitude": -42.126111111111115,
+        "event_longitude": -71.40361111111112,
+        "nearest_coarse_swath_sample_km": 10.040138396763764,
+        "nearest_pixel_distance_km": 0.1820624124943291,
+        "mask_code": 5,
+        "mask_label": "clear_land",
+        "dqf_code": 1,
+        "mask_status": "observed_clear_land"
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "reported_start_date": "2025-11-17",
+        "incident_name": "Complejo Cabañas KRITZ",
+        "province": "Chubut",
+        "line_distance_km": 18.054,
+        "center_distance_km": 18.253,
+        "reported_start_date_pdf_available": true,
+        "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa",
+        "event_latitude": -42.126111111111115,
+        "event_longitude": -71.40361111111112,
+        "nearest_coarse_swath_sample_km": 10.040138396763764,
+        "nearest_pixel_distance_km": 0.1820624124943291,
+        "mask_code": 5,
+        "mask_label": "clear_land",
+        "dqf_code": 1,
+        "mask_status": "observed_clear_land"
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "reported_start_date": "2025-12-04",
+        "incident_name": "Cabañas KRITZ La Cantera",
+        "province": "Chubut",
+        "line_distance_km": 14.063,
+        "center_distance_km": 14.327,
+        "reported_start_date_pdf_available": true,
+        "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa",
+        "event_latitude": -42.09861111111111,
+        "event_longitude": -71.45413055555557,
+        "nearest_coarse_swath_sample_km": 20.30206917185487,
+        "nearest_pixel_distance_km": 0.3122751265872178,
+        "mask_code": 5,
+        "mask_label": "clear_land",
+        "dqf_code": 1,
+        "mask_status": "observed_clear_land"
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "reported_start_date": "2025-12-09",
+        "incident_name": "Callejón de los maestros",
+        "province": "Chubut",
+        "line_distance_km": 14.511,
+        "center_distance_km": 14.92,
+        "reported_start_date_pdf_available": true,
+        "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa",
+        "event_latitude": -42.06535833333333,
+        "event_longitude": -71.60341944444444,
+        "nearest_coarse_swath_sample_km": 13.003909960657605,
+        "nearest_pixel_distance_km": 0.0575727934136133,
+        "mask_code": 5,
+        "mask_label": "clear_land",
+        "dqf_code": 1,
+        "mask_status": "observed_clear_land"
+      }
+    ],
+    "audits": [
+      {
+        "path": "docs\\environmental-models-2026-10-22\\fire-viirs-snmf-event-point-2025-07-17-n20.json",
+        "sha256": "4675f2400e98f15dfaa9f4313199be558a7c572bf6308ef0a54250208c1eb8b7"
+      },
+      {
+        "path": "docs\\environmental-models-2026-10-22\\fire-viirs-snmf-event-point-2025-08-01-n20.json",
+        "sha256": "37f68b8d1fabb3b5e4513698c6bf8537e55986d866f42737df093de13061dccd"
+      },
+      {
+        "path": "docs\\environmental-models-2026-10-22\\fire-viirs-snmf-event-point-2025-08-01-npp.json",
+        "sha256": "254c4efccd29bb82079f541705d711d74e367e73e11aecfa7ed7951b5cfe9fe8"
+      },
+      {
+        "path": "docs\\environmental-models-2026-10-22\\fire-viirs-snmf-event-point-2025-10-06-npp.json",
+        "sha256": "ad734e3a711e90a98199fcdafc0ab3992cf7b4e88411c4d8127e53c5400f7fc9"
+      },
+      {
+        "path": "docs\\environmental-models-2026-10-22\\fire-viirs-snmf-event-point-2025-10-08-n20.json",
+        "sha256": "8b6c13f96a68fe405043104c964b846f2fd02abf014fb8bc4ebde3eee676dd18"
+      },
+      {
+        "path": "docs\\environmental-models-2026-10-22\\fire-viirs-snmf-event-point-2025-11-12-n20.json",
+        "sha256": "ad786abbaba632a6f316d90fb8c5700168bc6963d17391b7cf005f8fd625bed5"
+      },
+      {
+        "path": "docs\\environmental-models-2026-10-22\\fire-viirs-snmf-event-point-2025-11-17-npp.json",
+        "sha256": "3372c9c523e50d39e1b0518c287379cc1065632fb8d329ed3c0e1c5989ab4503"
+      },
+      {
+        "path": "docs\\environmental-models-2026-10-22\\fire-viirs-snmf-event-point-2025-12-04-n21.json",
+        "sha256": "2e24600a10eef7bdd8a302314857498f132feeea9ff685df2486fd80106ea5c5"
+      },
+      {
+        "path": "docs\\environmental-models-2026-10-22\\fire-viirs-snmf-event-point-2025-12-09-n20.json",
+        "sha256": "264e4a057d589dca5d3b58cd2685c749bbf674470f470caa5a92bc0abe345e95"
+      }
+    ]
+  },
+  "event_route_days": [
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2025-07-17",
+      "minimum_snmf_incident_distance_to_route_km": 17.415,
+      "incident_names": [
+        "CALLEJON INALEF"
+      ],
+      "screen": {
+        "expected_granules": 288,
+        "successfully_inspected_granules": 288,
+        "failed_or_missing_granules": 0,
+        "candidate_granules_with_coarse_sample_within_40km_of_route": 1
+      },
+      "candidate_passes": [
+        {
+          "efire_filename": "EFIRE-VIIRSI_v1r3_n20_s202507170545163_e202507170546390_c202507170613087.nc",
+          "time_coverage_start_utc": "2025-07-17T05:45:16Z",
+          "minimum_distance_to_coarse_route_sample_km": 7.189848650502608,
+          "mask_audit_path": "docs\\environmental-models-2026-10-22\\fire-viirs-efire-route-mask-2025-07-17.json",
+          "sampled_vertices": 103,
+          "vertices_resolved_to_swath_pixels": 103,
+          "mask_and_dqf_counts": {
+            "5": 103,
+            "dqf_1": 103
+          },
+          "fire_class_vertices": 0,
+          "clear_land_vertices": 103,
+          "cloud_vertices": 0,
+          "median_distance_to_nearest_pixel_km": 0.12809594065057983
+        }
+      ],
+      "interpretation": "candidate_passes_but_no_viirs_fire_class_on_route"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2025-08-01",
+      "minimum_snmf_incident_distance_to_route_km": 14.764,
+      "incident_names": [
+        "Pampa Alta"
+      ],
+      "screen": {
+        "expected_granules": 288,
+        "successfully_inspected_granules": 288,
+        "failed_or_missing_granules": 0,
+        "candidate_granules_with_coarse_sample_within_40km_of_route": 2
+      },
+      "candidate_passes": [
+        {
+          "efire_filename": "EFIRE-VIIRSI_v1r3_npp_s202508011801208_e202508011802450_c202508011907317.nc",
+          "time_coverage_start_utc": "2025-08-01T18:01:20Z",
+          "minimum_distance_to_coarse_route_sample_km": 7.112755942889233,
+          "mask_audit_path": "docs\\environmental-models-2026-10-22\\fire-viirs-efire-route-mask-2025-08-01-snpp.json",
+          "sampled_vertices": 127,
+          "vertices_resolved_to_swath_pixels": 127,
+          "mask_and_dqf_counts": {
+            "5": 127,
+            "dqf_1": 127
+          },
+          "fire_class_vertices": 0,
+          "clear_land_vertices": 127,
+          "cloud_vertices": 0,
+          "median_distance_to_nearest_pixel_km": 0.17207254560224536
+        },
+        {
+          "efire_filename": "EFIRE-VIIRSI_v1r3_n20_s202508010600092_e202508010601338_c202508010633197.nc",
+          "time_coverage_start_utc": "2025-08-01T06:00:09Z",
+          "minimum_distance_to_coarse_route_sample_km": 8.578658901295388,
+          "mask_audit_path": "docs\\environmental-models-2026-10-22\\fire-viirs-efire-route-mask-2025-08-01.json",
+          "sampled_vertices": 127,
+          "vertices_resolved_to_swath_pixels": 127,
+          "mask_and_dqf_counts": {
+            "1": 33,
+            "4": 94,
+            "dqf_2": 94,
+            "dqf_3": 33
+          },
+          "fire_class_vertices": 0,
+          "clear_land_vertices": 0,
+          "cloud_vertices": 94,
+          "median_distance_to_nearest_pixel_km": 0.17616083667443383
+        }
+      ],
+      "interpretation": "candidate_passes_but_no_viirs_fire_class_on_route"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2025-08-11",
+      "minimum_snmf_incident_distance_to_route_km": 13.705,
+      "incident_names": [
+        "Bosque Alegre"
+      ],
+      "screen": {
+        "expected_granules": 288,
+        "successfully_inspected_granules": 288,
+        "failed_or_missing_granules": 0,
+        "candidate_granules_with_coarse_sample_within_40km_of_route": 0
+      },
+      "candidate_passes": [],
+      "interpretation": "no_coarse_route_candidate_or_incomplete_screen_unknown"
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_start_date": "2025-10-06",
+      "minimum_snmf_incident_distance_to_route_km": 12.148,
+      "incident_names": [
+        "CIRCUNVALACION"
+      ],
+      "screen": {
+        "expected_granules": 288,
+        "successfully_inspected_granules": 282,
+        "failed_or_missing_granules": 6,
+        "candidate_granules_with_coarse_sample_within_40km_of_route": 1
+      },
+      "candidate_passes": [
+        {
+          "efire_filename": "EFIRE-VIIRSI_v1r3_npp_s202510060645444_e202510060647086_c202510060807590.nc",
+          "time_coverage_start_utc": "2025-10-06T06:45:44Z",
+          "minimum_distance_to_coarse_route_sample_km": 8.190185085423574,
+          "mask_audit_path": "docs\\environmental-models-2026-10-22\\fire-viirs-efire-route-mask-2025-10-06.json",
+          "sampled_vertices": 106,
+          "vertices_resolved_to_swath_pixels": 106,
+          "mask_and_dqf_counts": {
+            "4": 79,
+            "5": 27,
+            "dqf_1": 27,
+            "dqf_2": 79
+          },
+          "fire_class_vertices": 0,
+          "clear_land_vertices": 27,
+          "cloud_vertices": 79,
+          "median_distance_to_nearest_pixel_km": 0.2581191348821147
+        }
+      ],
+      "interpretation": "candidate_passes_but_no_viirs_fire_class_on_route"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2025-10-08",
+      "minimum_snmf_incident_distance_to_route_km": 4.319,
+      "incident_names": [
+        "Cerro Radal",
+        "Ruta 40 Control Policial"
+      ],
+      "screen": {
+        "expected_granules": 288,
+        "successfully_inspected_granules": 288,
+        "failed_or_missing_granules": 0,
+        "candidate_granules_with_coarse_sample_within_40km_of_route": 1
+      },
+      "candidate_passes": [
+        {
+          "efire_filename": "EFIRE-VIIRSI_v1r3_n20_s202510081846050_e202510081847296_c202510081940066.nc",
+          "time_coverage_start_utc": "2025-10-08T18:46:05Z",
+          "minimum_distance_to_coarse_route_sample_km": 11.356397790939967,
+          "mask_audit_path": "docs\\environmental-models-2026-10-22\\fire-viirs-efire-route-mask-2025-10-08-bosque.json",
+          "sampled_vertices": 103,
+          "vertices_resolved_to_swath_pixels": 103,
+          "mask_and_dqf_counts": {
+            "4": 103,
+            "dqf_2": 103
+          },
+          "fire_class_vertices": 0,
+          "clear_land_vertices": 0,
+          "cloud_vertices": 103,
+          "median_distance_to_nearest_pixel_km": 0.11928928336330828
+        }
+      ],
+      "interpretation": "candidate_passes_but_no_viirs_fire_class_on_route"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2025-10-10",
+      "minimum_snmf_incident_distance_to_route_km": 3.517,
+      "incident_names": [
+        "Parque Nacional Quebrada del",
+        "Parque Nacional Quebrada del Condorito, ex",
+        "Parque Nacional Quebrada del Condorito, ex La",
+        "Parque Nacional Quebrada del Condorito, ex La Pampilla"
+      ],
+      "screen": {
+        "expected_granules": 288,
+        "successfully_inspected_granules": 288,
+        "failed_or_missing_granules": 0,
+        "candidate_granules_with_coarse_sample_within_40km_of_route": 0
+      },
+      "candidate_passes": [],
+      "interpretation": "no_coarse_route_candidate_or_incomplete_screen_unknown"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2025-11-12",
+      "minimum_snmf_incident_distance_to_route_km": 15.004,
+      "incident_names": [
+        "Aserradero Gonzalez"
+      ],
+      "screen": {
+        "expected_granules": 288,
+        "successfully_inspected_granules": 222,
+        "failed_or_missing_granules": 66,
+        "candidate_granules_with_coarse_sample_within_40km_of_route": 1
+      },
+      "candidate_passes": [
+        {
+          "efire_filename": "EFIRE-VIIRSI_v1r3_n20_s202511121930471_e202511121932116_c202511122022444.nc",
+          "time_coverage_start_utc": "2025-11-12T19:30:47Z",
+          "minimum_distance_to_coarse_route_sample_km": 8.559053866557216,
+          "mask_audit_path": "docs\\environmental-models-2026-10-22\\fire-viirs-efire-route-mask-2025-11-12.json",
+          "sampled_vertices": 103,
+          "vertices_resolved_to_swath_pixels": 103,
+          "mask_and_dqf_counts": {
+            "5": 103,
+            "dqf_1": 103
+          },
+          "fire_class_vertices": 0,
+          "clear_land_vertices": 103,
+          "cloud_vertices": 0,
+          "median_distance_to_nearest_pixel_km": 0.1279988513907752
+        }
+      ],
+      "interpretation": "candidate_passes_but_no_viirs_fire_class_on_route"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2025-11-17",
+      "minimum_snmf_incident_distance_to_route_km": 7.17,
+      "incident_names": [
+        "Complejo",
+        "Complejo Cabañas",
+        "Complejo Cabañas KRITZ",
+        "Laguna de los Ruiz - Cuesta del",
+        "Ternero Los fuegos"
+      ],
+      "screen": {
+        "expected_granules": 288,
+        "successfully_inspected_granules": 288,
+        "failed_or_missing_granules": 0,
+        "candidate_granules_with_coarse_sample_within_40km_of_route": 1
+      },
+      "candidate_passes": [
+        {
+          "efire_filename": "EFIRE-VIIRSI_v1r3_npp_s202511171915494_e202511171917136_c202511172009026.nc",
+          "time_coverage_start_utc": "2025-11-17T19:15:49Z",
+          "minimum_distance_to_coarse_route_sample_km": 10.872980252623476,
+          "mask_audit_path": "docs\\environmental-models-2026-10-22\\fire-viirs-efire-route-mask-2025-11-17-bosque.json",
+          "sampled_vertices": 103,
+          "vertices_resolved_to_swath_pixels": 103,
+          "mask_and_dqf_counts": {
+            "1": 16,
+            "5": 87,
+            "dqf_1": 87,
+            "dqf_3": 16
+          },
+          "fire_class_vertices": 0,
+          "clear_land_vertices": 87,
+          "cloud_vertices": 0,
+          "median_distance_to_nearest_pixel_km": 0.1612029156961838
+        }
+      ],
+      "interpretation": "candidate_passes_but_no_viirs_fire_class_on_route"
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_start_date": "2025-11-26",
+      "minimum_snmf_incident_distance_to_route_km": 8.076,
+      "incident_names": [
+        "Ladera Norte Cerro",
+        "Ladera Norte Cerro Otto"
+      ],
+      "screen": {
+        "expected_granules": 288,
+        "successfully_inspected_granules": 288,
+        "failed_or_missing_granules": 0,
+        "candidate_granules_with_coarse_sample_within_40km_of_route": 0
+      },
+      "candidate_passes": [],
+      "interpretation": "no_coarse_route_candidate_or_incomplete_screen_unknown"
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_start_date": "2025-12-03",
+      "minimum_snmf_incident_distance_to_route_km": 15.316,
+      "incident_names": [
+        "Terminal"
+      ],
+      "screen": {
+        "expected_granules": 288,
+        "successfully_inspected_granules": 288,
+        "failed_or_missing_granules": 0,
+        "candidate_granules_with_coarse_sample_within_40km_of_route": 0
+      },
+      "candidate_passes": [],
+      "interpretation": "no_coarse_route_candidate_or_incomplete_screen_unknown"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2025-12-04",
+      "minimum_snmf_incident_distance_to_route_km": 14.063,
+      "incident_names": [
+        "Cabañas KRITZ La Cantera"
+      ],
+      "screen": {
+        "expected_granules": 288,
+        "successfully_inspected_granules": 288,
+        "failed_or_missing_granules": 0,
+        "candidate_granules_with_coarse_sample_within_40km_of_route": 1
+      },
+      "candidate_passes": [
+        {
+          "efire_filename": "EFIRE-VIIRSI_v1r3_n21_s202512040430504_e202512040432150_c202512040458084.nc",
+          "time_coverage_start_utc": "2025-12-04T04:30:50Z",
+          "minimum_distance_to_coarse_route_sample_km": 8.829250996006817,
+          "mask_audit_path": "docs\\environmental-models-2026-10-22\\fire-viirs-efire-route-mask-2025-12-04.json",
+          "sampled_vertices": 103,
+          "vertices_resolved_to_swath_pixels": 103,
+          "mask_and_dqf_counts": {
+            "5": 103,
+            "dqf_1": 103
+          },
+          "fire_class_vertices": 0,
+          "clear_land_vertices": 103,
+          "cloud_vertices": 0,
+          "median_distance_to_nearest_pixel_km": 0.3966792317611965
+        }
+      ],
+      "interpretation": "candidate_passes_but_no_viirs_fire_class_on_route"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2025-12-09",
+      "minimum_snmf_incident_distance_to_route_km": 14.511,
+      "incident_names": [
+        "Callejón de los maestros"
+      ],
+      "screen": {
+        "expected_granules": 288,
+        "successfully_inspected_granules": 281,
+        "failed_or_missing_granules": 7,
+        "candidate_granules_with_coarse_sample_within_40km_of_route": 1
+      },
+      "candidate_passes": [
+        {
+          "efire_filename": "EFIRE-VIIRSI_v1r3_n20_s202512091745171_e202512091746417_c202512091835412.nc",
+          "time_coverage_start_utc": "2025-12-09T17:45:17Z",
+          "minimum_distance_to_coarse_route_sample_km": 7.374868338228499,
+          "mask_audit_path": "docs\\environmental-models-2026-10-22\\fire-viirs-efire-route-mask-2025-12-09.json",
+          "sampled_vertices": 103,
+          "vertices_resolved_to_swath_pixels": 103,
+          "mask_and_dqf_counts": {
+            "5": 103,
+            "dqf_1": 103
+          },
+          "fire_class_vertices": 0,
+          "clear_land_vertices": 103,
+          "cloud_vertices": 0,
+          "median_distance_to_nearest_pixel_km": 0.3128799566368743
+        }
+      ],
+      "interpretation": "candidate_passes_but_no_viirs_fire_class_on_route"
+    },
+    {
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "reported_start_date": "2025-12-11",
+      "minimum_snmf_incident_distance_to_route_km": 8.331,
+      "incident_names": [
+        "CERRO NAPOSTA /CERRO"
+      ],
+      "screen": {
+        "expected_granules": 288,
+        "successfully_inspected_granules": 288,
+        "failed_or_missing_granules": 0,
+        "candidate_granules_with_coarse_sample_within_40km_of_route": 0
+      },
+      "candidate_passes": [],
+      "interpretation": "no_coarse_route_candidate_or_incomplete_screen_unknown"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2025-12-12",
+      "minimum_snmf_incident_distance_to_route_km": 12.462,
+      "incident_names": [
+        "Cerro Saturnino"
+      ],
+      "screen": {
+        "expected_granules": 288,
+        "successfully_inspected_granules": 288,
+        "failed_or_missing_granules": 0,
+        "candidate_granules_with_coarse_sample_within_40km_of_route": 0
+      },
+      "candidate_passes": [],
+      "interpretation": "no_coarse_route_candidate_or_incomplete_screen_unknown"
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_start_date": "2025-12-18",
+      "minimum_snmf_incident_distance_to_route_km": 11.056,
+      "incident_names": [
+        "SN (Cerro Runge)"
+      ],
+      "screen": {
+        "expected_granules": 288,
+        "successfully_inspected_granules": 288,
+        "failed_or_missing_granules": 0,
+        "candidate_granules_with_coarse_sample_within_40km_of_route": 0
+      },
+      "candidate_passes": [],
+      "interpretation": "no_coarse_route_candidate_or_incomplete_screen_unknown"
+    }
+  ],
+  "sources": {
+    "snmf_route_polyline_event_audit": {
+      "path": "docs\\environmental-models-2026-10-22\\fire-snmf-polyline-event-coverage-2025.json",
+      "sha256": "05b775d3ae38d20e3e12a3fa7966cf219b8e4741c1a32730051f407ffdba8c10"
+    },
+    "overpass_screens": [
+      {
+        "path": "docs\\environmental-models-2026-10-22\\fire-viirs-efire-orbit-screen-2025-07-17-15min.json",
+        "sha256": "d3dc181a7b258163b99bdf60de26108e8f8a02c23275c74576e123cd340ff1c9"
+      },
+      {
+        "path": "docs\\environmental-models-2026-10-22\\fire-viirs-efire-orbit-screen-2025-08-01-15min.json",
+        "sha256": "8eb7824c0bcc3fbf01a9d1a75326647aec273ec9f9346966012860b21559d8e5"
+      },
+      {
+        "path": "docs\\environmental-models-2026-10-22\\fire-viirs-efire-orbit-screen-2025-08-11-15min.json",
+        "sha256": "605adacab778c1453f89797466b4f74e2f3bbb55066ba55320291aa0dbaeb496"
+      },
+      {
+        "path": "docs\\environmental-models-2026-10-22\\fire-viirs-efire-orbit-screen-2025-10-06-15min.json",
+        "sha256": "93d3c5158c4681f862cefa7e3e35602a0e8783c7c90acc09d5f9277e8aa1f02f"
+      },
+      {
+        "path": "docs\\environmental-models-2026-10-22\\fire-viirs-efire-orbit-screen-2025-10-08-15min.json",
+        "sha256": "ab75086beb4e02ccc2a263ce51aa8b492b6ea3228eab0c432742c749e5f2f6bf"
+      },
+      {
+        "path": "docs\\environmental-models-2026-10-22\\fire-viirs-efire-orbit-screen-2025-10-10-15min.json",
+        "sha256": "6b8fdffcafe941ec26f51534fd162655530bcb973bef7b83772fb19da4d7f359"
+      },
+      {
+        "path": "docs\\environmental-models-2026-10-22\\fire-viirs-efire-orbit-screen-2025-11-12-15min.json",
+        "sha256": "c1f831b06bee9d1d8dff32c4e2f76c9dee4dbe34f5a36d4be63d909b3c52f9b9"
+      },
+      {
+        "path": "docs\\environmental-models-2026-10-22\\fire-viirs-efire-orbit-screen-2025-11-17-15min.json",
+        "sha256": "be8ef22b6f23bdb224324715cd80617168270ea4b657a04cc886c65607123174"
+      },
+      {
+        "path": "docs\\environmental-models-2026-10-22\\fire-viirs-efire-orbit-screen-2025-11-26-15min.json",
+        "sha256": "c14d81835081a88ebea29cc157bf3f0da7f761bb4e4f119799eff9504fa3c33f"
+      },
+      {
+        "path": "docs\\environmental-models-2026-10-22\\fire-viirs-efire-orbit-screen-2025-12-03-15min.json",
+        "sha256": "f427e32e6909654fb4fb49cba1f61135d6d7f84ca2eab01ff81e42cf36626ddf"
+      },
+      {
+        "path": "docs\\environmental-models-2026-10-22\\fire-viirs-efire-orbit-screen-2025-12-04-15min.json",
+        "sha256": "55ea67cd7334b54e9c641da0bb48c320a4a4f6abf061330f3dc9f0ef7b5b3b64"
+      },
+      {
+        "path": "docs\\environmental-models-2026-10-22\\fire-viirs-efire-orbit-screen-2025-12-09-15min.json",
+        "sha256": "1cd8a838fef4b10755f06f781d22a8dd134e3f5bbb3c9ecff910c498428ecbe2"
+      },
+      {
+        "path": "docs\\environmental-models-2026-10-22\\fire-viirs-efire-orbit-screen-2025-12-11-15min.json",
+        "sha256": "4edb074ab28c9d6a9b55a09fd29e372f6674fe90d4d8620d1e7a6ea81d370883"
+      },
+      {
+        "path": "docs\\environmental-models-2026-10-22\\fire-viirs-efire-orbit-screen-2025-12-12-15min.json",
+        "sha256": "d9a49ed82f9c516d6d698b21d167141b20dea5dda762200dda01f93039173560"
+      },
+      {
+        "path": "docs\\environmental-models-2026-10-22\\fire-viirs-efire-orbit-screen-2025-12-18-15min.json",
+        "sha256": "8d3e97ce9e6613f9f68d0b61c83948e8d0b6deeb1b8b32bd083dbadcf603c115"
+      }
+    ],
+    "full_geolocation_mask_audits": [
+      {
+        "path": "docs\\environmental-models-2026-10-22\\fire-viirs-efire-route-mask-2025-07-17.json",
+        "sha256": "30298c801cb10b191b8804616af962ec2be440af66f8742b06bef64cff57440f"
+      },
+      {
+        "path": "docs\\environmental-models-2026-10-22\\fire-viirs-efire-route-mask-2025-08-01-snpp.json",
+        "sha256": "463b9b9e02d3794814b1dacc47eaf39db81a1742743df18eb14dc5a6d0ea8e1c"
+      },
+      {
+        "path": "docs\\environmental-models-2026-10-22\\fire-viirs-efire-route-mask-2025-08-01.json",
+        "sha256": "3ba25ba07999215a07c60d6044f6c70d5e32e20c6af4ad42b9c8b5880c4c748c"
+      },
+      {
+        "path": "docs\\environmental-models-2026-10-22\\fire-viirs-efire-route-mask-2025-10-06.json",
+        "sha256": "8b50e0790d9b91d99e0eeff86eed290f60120421693082f3e280e156d7ec9ee0"
+      },
+      {
+        "path": "docs\\environmental-models-2026-10-22\\fire-viirs-efire-route-mask-2025-10-08-bosque.json",
+        "sha256": "4170891b4a87b5c51fc26a943b896c40dbc7457092944b0dcdd8293706642975"
+      },
+      {
+        "path": "docs\\environmental-models-2026-10-22\\fire-viirs-efire-route-mask-2025-11-12.json",
+        "sha256": "0a50cd02426fb28de7e4b3bfd6d3dac85346193f0431abb4e994c902c7b3c9e4"
+      },
+      {
+        "path": "docs\\environmental-models-2026-10-22\\fire-viirs-efire-route-mask-2025-11-17-bosque.json",
+        "sha256": "be661ff1430cd2509f1444651ee78c2b1bb7df35735c6ee382fec1129c35ad45"
+      },
+      {
+        "path": "docs\\environmental-models-2026-10-22\\fire-viirs-efire-route-mask-2025-12-04.json",
+        "sha256": "47eb4fe0d07ec65b1f6d0dbbce0b7d1a88d45bb1b986cab049e3377d1ff5b7bf"
+      },
+      {
+        "path": "docs\\environmental-models-2026-10-22\\fire-viirs-efire-route-mask-2025-12-09.json",
+        "sha256": "a451d45272b01de719798dec6f87be22a47923935a7543965f4aa7183f2ce6ef"
+      },
+      {
+        "path": "docs\\environmental-models-2026-10-22\\fire-viirs-efire-route-mask-pilot-2025-01-05-n20-0601.json",
+        "sha256": "04e293767f80cbff1761dba60cf6f4f44c15e9b1903287f537253c2ff5680950"
+      },
+      {
+        "path": "docs\\environmental-models-2026-10-22\\fire-viirs-efire-route-mask-pilot-2025-01-05-npp-1801.json",
+        "sha256": "5eef870942f354d20de809c74725417f2cef966e1f28be7a72ce0f76d59447b3"
+      },
+      {
+        "path": "docs\\environmental-models-2026-10-22\\fire-viirs-efire-route-mask-pilot-2025-01-05.json",
+        "sha256": "d60ce9ab9f4f4cd585a9eac023b7b17ca66f99098fcbeea3c50a13550a7646de"
+      }
+    ],
+    "full_geolocation_snmf_event_point_audits": [
+      {
+        "path": "docs\\environmental-models-2026-10-22\\fire-viirs-snmf-event-point-2025-07-17-n20.json",
+        "sha256": "4675f2400e98f15dfaa9f4313199be558a7c572bf6308ef0a54250208c1eb8b7"
+      },
+      {
+        "path": "docs\\environmental-models-2026-10-22\\fire-viirs-snmf-event-point-2025-08-01-n20.json",
+        "sha256": "37f68b8d1fabb3b5e4513698c6bf8537e55986d866f42737df093de13061dccd"
+      },
+      {
+        "path": "docs\\environmental-models-2026-10-22\\fire-viirs-snmf-event-point-2025-08-01-npp.json",
+        "sha256": "254c4efccd29bb82079f541705d711d74e367e73e11aecfa7ed7951b5cfe9fe8"
+      },
+      {
+        "path": "docs\\environmental-models-2026-10-22\\fire-viirs-snmf-event-point-2025-10-06-npp.json",
+        "sha256": "ad734e3a711e90a98199fcdafc0ab3992cf7b4e88411c4d8127e53c5400f7fc9"
+      },
+      {
+        "path": "docs\\environmental-models-2026-10-22\\fire-viirs-snmf-event-point-2025-10-08-n20.json",
+        "sha256": "8b6c13f96a68fe405043104c964b846f2fd02abf014fb8bc4ebde3eee676dd18"
+      },
+      {
+        "path": "docs\\environmental-models-2026-10-22\\fire-viirs-snmf-event-point-2025-11-12-n20.json",
+        "sha256": "ad786abbaba632a6f316d90fb8c5700168bc6963d17391b7cf005f8fd625bed5"
+      },
+      {
+        "path": "docs\\environmental-models-2026-10-22\\fire-viirs-snmf-event-point-2025-11-17-npp.json",
+        "sha256": "3372c9c523e50d39e1b0518c287379cc1065632fb8d329ed3c0e1c5989ab4503"
+      },
+      {
+        "path": "docs\\environmental-models-2026-10-22\\fire-viirs-snmf-event-point-2025-12-04-n21.json",
+        "sha256": "2e24600a10eef7bdd8a302314857498f132feeea9ff685df2486fd80106ea5c5"
+      },
+      {
+        "path": "docs\\environmental-models-2026-10-22\\fire-viirs-snmf-event-point-2025-12-09-n20.json",
+        "sha256": "264e4a057d589dca5d3b58cd2685c749bbf674470f470caa5a92bc0abe345e95"
+      }
+    ]
+  },
+  "limitations": [
+    "SNMF incident start dates are not exact ignition times, and the event inventory is not exhaustive.",
+    "Events are selected at up to 20 km from a route line; many are not fires on the route itself.",
+    "No coarse route candidate is not proof of no swath coverage; incomplete screens remain unknown.",
+    "Clear land is an observed sensor classification, not proof that no fire occurred between satellite passes or below detection limits.",
+    "Cloud, bowtie, invalid, and unresolved pixels are unknown, never negative labels.",
+    "A VIIRS active-fire mask is a sensor detection target, not field-confirmed fire truth.",
+    "This audit does not measure model precision, recall, probability calibration, lead time, or operational reliability."
+  ],
+  "synthetic_observations": 0,
+  "deployment_approved": false
+}

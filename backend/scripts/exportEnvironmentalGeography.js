@@ -27,4 +27,22 @@ const fire_regions = definitions.flatMap(([source, trails]) => trails.filter((t)
 })));
 if (fire_regions.length !== 8 || fire_regions.some((r) => !r.sources.length)) throw new Error("Fire regions require existing documented catalog geography");
 fs.writeFileSync(target, JSON.stringify({ schema_version: 1, regions, fire_regions }, null, 2) + "\n");
-console.log(`Exported ${regions.length} reviewed locations`);
+const routeGeometryTarget = path.resolve(__dirname, "../../training/data/environmental/private/fire-route-geometries.json");
+const fire_route_geometries = definitions.flatMap(([source, trails]) => trails
+  .filter((t) => fireSelected.has(t.name) && Array.isArray(t.route_coordinates) && t.route_coordinates.length >= 2)
+  .map((trail) => ({
+    name: trail.name, definition: source,
+    geometry_sha256: createHash("sha256").update(geometryCanonical(trail)).digest("hex"),
+    coordinate_order: "latitude,longitude",
+    route_coordinates: trail.route_coordinates,
+    sources: trail.provenance?.sources || [],
+  })));
+if (fire_route_geometries.length < 6 || fire_route_geometries.some((r) => !r.sources.length)) {
+  throw new Error("Expected reviewed route geometries for the available fire sectors");
+}
+fs.mkdirSync(path.dirname(routeGeometryTarget), { recursive: true });
+fs.writeFileSync(routeGeometryTarget, JSON.stringify({
+  schema_version: 1, source_geography_sha256: createHash("sha256").update(fs.readFileSync(target)).digest("hex"),
+  fire_route_geometries,
+}, null, 2) + "\n");
+console.log(`Exported ${regions.length} reviewed locations and ${fire_route_geometries.length} full fire-route geometries`);

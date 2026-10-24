@@ -1,0 +1,47 @@
+{
+  "protocol_id": "snmf-reported-event-spatial-audit-v1",
+  "frozen_on": "2026-10-22",
+  "status": "exploratory_for_existing_2023_cases; prospective_for_newly_collected_events",
+  "purpose": "Compare frozen model alerts against independently reported SNMF fire events near sampled trekking areas.",
+  "prediction_unit": "pixel-day alert; pixel-days are not independent events",
+  "event_unit": "one reported incident, deduplicated by incident name, province, start date, and location",
+  "model": "Existing frozen MOD14A1 XGBoost predictions; no retraining or model/threshold selection in this audit.",
+  "threshold": 0.5,
+  "primary_spatial_rule": {
+    "radius_km": 10,
+    "distance_measure": "Haversine distance between the model pixel center and the SNMF-reported incident coordinates",
+    "interpretation": "An event is detected if at least one pixel-day alert reaches the threshold within this radius during its documented event window. The radius is an operational tolerance for this exploratory analysis, not a validated fire-safety distance."
+  },
+  "event_window": "From the SNMF-reported start date through the latest date on which the reviewed SNMF report documents the incident. No unreported date is treated as a negative.",
+  "source_rule": "Use SNMF daily reports and retain direct source URLs, incident name, province, department, start date, report date, reported status, and coordinates. Exclude records lacking usable coordinates from spatial matching and report the exclusion.",
+  "deduplication_rule": "Merge repeated daily mentions of the same named incident and coordinates into one event; preserve the earliest reported start date and the latest reviewed report date.",
+  "metrics": [
+    "event sensitivity/recall may be reported only when every event in the selected region and period has been collected and deduplicated",
+    "precision requires review of every model alert against a sufficiently complete independent incident reference; report silence alone is not a negative",
+    "report event counts and confidence intervals; do not treat pixel-days as independent samples"
+  ],
+  "current_cases": [
+    {
+      "name": "Límite Potrero 13",
+      "province": "Corrientes",
+      "start_date": "2023-08-06",
+      "report_date": "2023-08-07",
+      "source_url": "https://www.argentina.gob.ar/sites/default/files/2023/06/reportediario_07-08-2023.pdf",
+      "status": "extinguished"
+    },
+    {
+      "name": "Ea. San Bernardo",
+      "province": "Córdoba",
+      "start_date": "2023-10-29",
+      "report_date": "2023-10-31",
+      "source_url": "https://www.argentina.gob.ar/sites/default/files/2023/06/reportediario_31-10-2023.pdf",
+      "status": "guardia de cenizas"
+    }
+  ],
+  "prohibitions": [
+    "Do not tune the model or threshold using these events.",
+    "Do not call this partial event sample a precision estimate.",
+    "Do not interpret the absence of an event from a report as proof of no fire.",
+    "Do not use the two existing cases to claim a reliable Argentina-wide accuracy figure."
+  ]
+}

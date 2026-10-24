@@ -1,0 +1,13 @@
+# Evaluación temporal MODIS + INPE + SNMF + GFA
+
+Entrenamiento 2022, selección del umbral en 2023 y test temporal 2024-2026. Ningún umbral de validación alcanzó el criterio de 90% de precisión con al menos cinco alertas. Se informa también el máximo de precisión en validación con cinco alertas mínimas y su resultado en test; 0,5 es solo un diagnóstico fijo.
+
+Dataset unificado reproducible (archivo privado local): `training/data/environmental/private/argentina-route-fire-evidence-jma-unified-all-41-2022-2026.csv.gz`; SHA-256 `32771119c0f434054ebda31fa0bf195576885c276d6ac084ab27589f3a4f8893`. Manifiesto: `training/data/environmental/private/argentina-route-fire-evidence-jma-unified-all-41-2022-2026-manifest.json`.
+
+Mejor corte de validación por fecha: `{"threshold": 0.9422139846469213, "validation_precision": 0.38461538461538464, "validation_recall": 0.11363636363636363, "validation_true_positives": 5, "validation_alerts": 13, "minimum_alerts": 5}`; métricas de test en ese corte: `{"prevalence": 0.10552763819095477, "threshold": 0.9422139846469213, "alerts": 14, "true_positives": 1, "false_positives": 13, "false_negatives": 41, "precision": 0.07142857142857142, "precision_wilson_one_sided_95_lower_bound_independent_days": 0.016099895800737347, "recall": 0.023809523809523808, "average_precision": 0.1823757354008004, "brier": 0.5109187112409311, "confusion_matrix_tn_fp_fn_tp": [343, 13, 41, 1], "event_dates": 398, "positive_event_dates": 42}`.
+
+Métricas por ruta-día: {"route_days": 10300, "positive_route_days": 65, "prevalence": 0.006310679611650485, "threshold": 0.5, "alerts": 2509, "true_positives": 18, "false_positives": 2491, "false_negatives": 47, "precision": 0.007174172977281785, "precision_wilson_one_sided_95_lower_bound_independent_days": 0.004884712593131439, "recall": 0.27692307692307694, "average_precision": 0.007239109240081797, "brier": 0.16435441569269083, "confusion_matrix_tn_fp_fn_tp": [7744, 2491, 47, 18]}.
+
+Métricas agrupadas por fecha: {"prevalence": 0.10552763819095477, "threshold": 0.5, "alerts": 379, "true_positives": 42, "false_positives": 337, "false_negatives": 0, "precision": 0.11081794195250659, "precision_wilson_one_sided_95_lower_bound_independent_days": 0.08700495590585443, "recall": 1.0, "average_precision": 0.1823757354008004, "brier": 0.5109187112409311, "confusion_matrix_tn_fp_fn_tp": [19, 337, 0, 42], "event_dates": 398, "positive_event_dates": 42}; límite inferior Wilson unilateral 95% descriptivo de precisión: 0.08700495590585443.
+
+INPE AMS referencia Aqua/MODIS; por eso su coincidencia con MOD14A1 no cuenta como confirmación independiente. Son detecciones satelitales, no verdad exhaustiva de incendios físicos. No se generó dataset sintético ni artefacto para la app.

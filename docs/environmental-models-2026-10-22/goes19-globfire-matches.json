@@ -1,0 +1,201 @@
+{
+  "experiment_id": "fire-goes19-2025q4-2026jan-vs-gwis-globfire",
+  "sources": {
+    "globfire_urls": [
+      "https://gwis.jrc.ec.europa.eu/downloads/country.profile/globfire_2025.gpkg.gz"
+    ],
+    "globfire_gpkg_sha256": "74407a8d235766b4d51b86badc083852c890eb866fd99b0dfd8c7f76eeef1b1c",
+    "globfire_gpkg_bytes": 409690112,
+    "goes_observations_sha256": "07bdecf2b7d88ee94403ca97b4a7a9cbf67e4efeb5a9d5ad1b75151eaacad98b",
+    "goes_positive_rows": 218,
+    "goes_observation_period": [
+      "2025-10-01",
+      "2026-02-01"
+    ]
+  },
+  "protocol": {
+    "site_center_radius_km": 10,
+    "pixel_to_perimeter_thresholds_km": [
+      2.5,
+      5,
+      10
+    ],
+    "date_uncertainty_margin_days": 3,
+    "globfire_algorithm": "2026 product from MCD64A1 C6.1 burned pixels; final event perimeters, initial/final dates; event merging by ST-DBSCAN; minimum four pixels (~86ha).",
+    "purpose": "Retrospective spatial-temporal coincidence audit of active-fire detections, not ignition prediction."
+  },
+  "eligible_route_sector_events": 2,
+  "events": [
+    {
+      "id": 21576930,
+      "initialdate": "2025-10-10T00:00:00.000",
+      "finaldate": "2025-10-19T00:00:00.000",
+      "area_ha": 5770,
+      "nearest_region": "Quebrada del Condorito - Balcon Norte",
+      "center_distance_km": 0.0,
+      "goes_coincidences": [
+        {
+          "region": "Quebrada del Condorito - Balcon Norte",
+          "pixel_id": "G19:4322:3180",
+          "scan_start": "2025-10-11T02:00:21.100000+00:00",
+          "distance_km": 0.0,
+          "day_from_initial": 1
+        },
+        {
+          "region": "Quebrada del Condorito - Balcon Norte",
+          "pixel_id": "G19:4322:3180",
+          "scan_start": "2025-10-11T04:00:21.100000+00:00",
+          "distance_km": 0.0,
+          "day_from_initial": 1
+        },
+        {
+          "region": "Quebrada del Condorito - Balcon Norte",
+          "pixel_id": "G19:4322:3180",
+          "scan_start": "2025-10-11T08:00:21.300000+00:00",
+          "distance_km": 0.0,
+          "day_from_initial": 1
+        },
+        {
+          "region": "Quebrada del Condorito - Balcon Norte",
+          "pixel_id": "G19:4322:3180",
+          "scan_start": "2025-10-11T09:00:21.300000+00:00",
+          "distance_km": 0.0,
+          "day_from_initial": 1
+        },
+        {
+          "region": "Quebrada del Condorito - Balcon Norte",
+          "pixel_id": "G19:4322:3180",
+          "scan_start": "2025-10-11T15:00:21.300000+00:00",
+          "distance_km": 0.0,
+          "day_from_initial": 1
+        },
+        {
+          "region": "Quebrada del Condorito - Balcon Norte",
+          "pixel_id": "G19:4322:3180",
+          "scan_start": "2025-10-11T16:00:21.300000+00:00",
+          "distance_km": 0.0,
+          "day_from_initial": 1
+        },
+        {
+          "region": "Quebrada del Condorito - Balcon Norte",
+          "pixel_id": "G19:4322:3180",
+          "scan_start": "2025-10-11T17:00:21.100000+00:00",
+          "distance_km": 0.0,
+          "day_from_initial": 1
+        },
+        {
+          "region": "Quebrada del Condorito - Balcon Norte",
+          "pixel_id": "G19:4322:3180",
+          "scan_start": "2025-10-11T18:00:21.100000+00:00",
+          "distance_km": 0.0,
+          "day_from_initial": 1
+        },
+        {
+          "region": "Quebrada del Condorito - Balcon Norte",
+          "pixel_id": "G19:4322:3180",
+          "scan_start": "2025-10-11T19:00:21.100000+00:00",
+          "distance_km": 0.0,
+          "day_from_initial": 1
+        },
+        {
+          "region": "Quebrada del Condorito - Balcon Norte",
+          "pixel_id": "G19:4322:3180",
+          "scan_start": "2025-10-14T16:00:20.500000+00:00",
+          "distance_km": 0.0,
+          "day_from_initial": 4
+        },
+        {
+          "region": "Quebrada del Condorito - Balcon Norte",
+          "pixel_id": "G19:4322:3176",
+          "scan_start": "2025-10-14T17:00:20.300000+00:00",
+          "distance_km": 0.0,
+          "day_from_initial": 4
+        },
+        {
+          "region": "Quebrada del Condorito - Balcon Norte",
+          "pixel_id": "G19:4322:3180",
+          "scan_start": "2025-10-14T17:00:20.300000+00:00",
+          "distance_km": 0.0,
+          "day_from_initial": 4
+        },
+        {
+          "region": "Quebrada del Condorito - Balcon Norte",
+          "pixel_id": "G19:4322:3176",
+          "scan_start": "2025-10-14T18:00:20.300000+00:00",
+          "distance_km": 0.0,
+          "day_from_initial": 4
+        },
+        {
+          "region": "Quebrada del Condorito - Balcon Norte",
+          "pixel_id": "G19:4322:3176",
+          "scan_start": "2025-10-14T19:00:20.300000+00:00",
+          "distance_km": 0.0,
+          "day_from_initial": 4
+        },
+        {
+          "region": "Quebrada del Condorito - Balcon Norte",
+          "pixel_id": "G19:4322:3176",
+          "scan_start": "2025-10-14T20:00:20.300000+00:00",
+          "distance_km": 0.0,
+          "day_from_initial": 4
+        },
+        {
+          "region": "Quebrada del Condorito - Balcon Norte",
+          "pixel_id": "G19:4322:3178",
+          "scan_start": "2025-10-14T14:00:20.500000+00:00",
+          "distance_km": 0.758,
+          "day_from_initial": 4
+        },
+        {
+          "region": "Quebrada del Condorito - Balcon Norte",
+          "pixel_id": "G19:4322:3178",
+          "scan_start": "2025-10-14T15:00:20.500000+00:00",
+          "distance_km": 0.758,
+          "day_from_initial": 4
+        },
+        {
+          "region": "Quebrada del Condorito - Balcon Norte",
+          "pixel_id": "G19:4322:3178",
+          "scan_start": "2025-10-14T16:00:20.500000+00:00",
+          "distance_km": 0.758,
+          "day_from_initial": 4
+        },
+        {
+          "region": "Quebrada del Condorito - Balcon Norte",
+          "pixel_id": "G19:4322:3178",
+          "scan_start": "2025-10-14T17:00:20.300000+00:00",
+          "distance_km": 0.758,
+          "day_from_initial": 4
+        },
+        {
+          "region": "Quebrada del Condorito - Balcon Norte",
+          "pixel_id": "G19:4322:3178",
+          "scan_start": "2025-10-14T18:00:20.300000+00:00",
+          "distance_km": 0.758,
+          "day_from_initial": 4
+        }
+      ]
+    },
+    {
+      "id": 21608919,
+      "initialdate": "2025-10-19T00:00:00.000",
+      "finaldate": "2025-10-21T00:00:00.000",
+      "area_ha": 107,
+      "nearest_region": "Quebrada del Condorito - Balcon Norte",
+      "center_distance_km": 3.588,
+      "goes_coincidences": []
+    }
+  ],
+  "matched_events_by_distance_km": {
+    "2.5": 1,
+    "5": 1,
+    "10": 1
+  },
+  "limitations": [
+    "GlobFire is satellite-derived and is not independent ground truth.",
+    "Only GlobFire 2025 was available in this audit; no GlobFire 2026 validation is possible.",
+    "The route cohort is fixed sample centers, not complete trail geometries.",
+    "A coincidence measures detection of active fire, not advance warning or ignition prediction.",
+    "A handful of events cannot support a reliable precision estimate."
+  ]
+}

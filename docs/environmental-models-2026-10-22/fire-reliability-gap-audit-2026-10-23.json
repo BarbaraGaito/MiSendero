@@ -1,0 +1,1419 @@
+{
+  "experiment_id": "fire-reliability-gap-audit-2026-10-23",
+  "created_at_utc": "2026-10-23T22:43:32Z",
+  "status": "no_candidate_meets_independent_reliability_evidence",
+  "candidate": {
+    "name": "GOES-19 logistic forecast, 1-hour horizon",
+    "test_period": {
+      "validation_start": "2025-12-01",
+      "test_start": "2026-01-01",
+      "test_end_exclusive": "2026-02-01"
+    },
+    "test_pixel_label_metrics": {
+      "average_precision": 0.37487453887567723,
+      "persistence_average_precision": 0.370604535872294,
+      "precision_at_0_5": 0.7027027027027027,
+      "recall_at_0_5": 0.19117647058823528,
+      "persistence_precision_at_0_5": 0.6299212598425197,
+      "persistence_recall_at_0_5": 0.5882352941176471,
+      "positive_pixel_scans": 136,
+      "positive_region_days": 23,
+      "warning": "These are repeated pixel-scan labels, not independent physical fire events or trail-level precision."
+    },
+    "independent_snmf_event_check": {
+      "coverage_days": 31,
+      "active_or_controlled_incidents_with_coverage": 14,
+      "incidents_alerted": 1,
+      "event_coincidence_fraction_on_covered_subset": 0.07142857142857142,
+      "wilson_95pct_interval_reported": [
+        0.012722215247890939,
+        0.31468704424151117
+      ],
+      "persistence_alerted_incidents": 1,
+      "total_snmf_incidents_without_test_day_coverage": 120,
+      "warning": "This is event coincidence/sensitivity among covered official reports, not alert precision; the incident archive cannot label every alert as false or true."
+    },
+    "independent_wrf_snmf_check": {
+      "event_days": 4,
+      "alerts": 0,
+      "misses": 4,
+      "note": "Small selected cohort; diagnostic threshold and approximately 27-hour issue-to-valid interval do not establish reliability."
+    },
+    "short_lead_route_sector_test": {
+      "horizons_hours": [
+        "1",
+        "2",
+        "3",
+        "6",
+        "12"
+      ],
+      "threshold_selected_by_validation": {
+        "1": false,
+        "2": false,
+        "3": false,
+        "6": false,
+        "12": false
+      },
+      "one_hour_validation_best_with_minimum_alerts": {
+        "threshold": 1.0,
+        "alerts": 11,
+        "true_positive_alerts": 8,
+        "precision_proxy": 0.7272727272727273,
+        "recall_proxy": 0.5714285714285714
+      },
+      "one_hour_january_test_diagnostic": {
+        "route_sector_hours": 4288,
+        "positive_route_sector_hours": 120,
+        "prevalence": 0.027985074626865673,
+        "average_precision": 0.4910422089488982,
+        "brier_score_class_weighted_scores_not_calibrated": 0.02268625105658741,
+        "threshold": 0.5,
+        "alerts": 32,
+        "true_positive_alerts": 27,
+        "precision_proxy": 0.84375,
+        "precision_exact_95ci_descriptive": [
+          0.6721212343179582,
+          0.9472494355978659
+        ],
+        "recall_proxy": 0.225,
+        "alert_episodes": {
+          "alert_episodes": 8,
+          "positive_alert_episodes": 7,
+          "precision_proxy": 0.875,
+          "precision_exact_95ci_descriptive": [
+            0.47349032912479344,
+            0.9968402764687481
+          ],
+          "episode_details": [
+            {
+              "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+              "start_hour_utc": "2026-01-05T19",
+              "end_hour_utc": "2026-01-05T21",
+              "hours": 3,
+              "positive_goes_detection_hours": 3
+            },
+            {
+              "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+              "start_hour_utc": "2026-01-06T02",
+              "end_hour_utc": "2026-01-06T05",
+              "hours": 4,
+              "positive_goes_detection_hours": 4
+            },
+            {
+              "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+              "start_hour_utc": "2026-01-06T07",
+              "end_hour_utc": "2026-01-06T10",
+              "hours": 4,
+              "positive_goes_detection_hours": 3
+            },
+            {
+              "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+              "start_hour_utc": "2026-01-06T17",
+              "end_hour_utc": "2026-01-06T18",
+              "hours": 2,
+              "positive_goes_detection_hours": 1
+            },
+            {
+              "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+              "start_hour_utc": "2026-01-06T20",
+              "end_hour_utc": "2026-01-06T22",
+              "hours": 3,
+              "positive_goes_detection_hours": 3
+            },
+            {
+              "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+              "start_hour_utc": "2026-01-10T20",
+              "end_hour_utc": "2026-01-10T21",
+              "hours": 2,
+              "positive_goes_detection_hours": 1
+            },
+            {
+              "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+              "start_hour_utc": "2026-01-13T18",
+              "end_hour_utc": "2026-01-14T06",
+              "hours": 13,
+              "positive_goes_detection_hours": 12
+            },
+            {
+              "route_sector": "Cerro Ventana - Hueco de la Ventana",
+              "start_hour_utc": "2026-01-05T21",
+              "end_hour_utc": "2026-01-05T21",
+              "hours": 1,
+              "positive_goes_detection_hours": 0
+            }
+          ],
+          "independence_warning": "Consecutive alerts were grouped by route and hour; distinct routes may still share one physical fire and this remains a GOES-label proxy."
+        },
+        "persistence_baseline": {
+          "alerts": 97,
+          "true_positive_alerts": 72,
+          "precision_proxy": 0.7422680412371134,
+          "precision_exact_95ci_descriptive": [
+            0.6434683595764815,
+            0.8257517946569968
+          ],
+          "recall_proxy": 0.6,
+          "alert_episodes": {
+            "alert_episodes": 37,
+            "positive_alert_episodes": 24,
+            "precision_proxy": 0.6486486486486487,
+            "precision_exact_95ci_descriptive": [
+              0.4746112556260257,
+              0.7979001847159973
+            ],
+            "episode_details": null,
+            "independence_warning": "Consecutive alerts were grouped by route and hour; distinct routes may still share one physical fire and this remains a GOES-label proxy."
+          }
+        },
+        "prevalence_baseline_brier": 0.02798396974397005
+      },
+      "warning": "The unit is a GOES detection proxy in a fixed 20 km sampled sector; the model did not pass validation and January alerts cluster around one ongoing regional incident."
+    },
+    "firms_independent_satellite_crosscheck": {
+      "product": "NASA FIRMS VIIRS S-NPP, NOAA-20, and NOAA-21 Standard Processing.",
+      "raw_hotspot_rows": 1349,
+      "confidence_counts": {
+        "high": 104,
+        "nominal": 1209,
+        "low": 36
+      },
+      "sensor_breakdown": {
+        "VIIRS_NOAA20_SP": {
+          "detection_rows": 482,
+          "confidence_counts": {
+            "high": 39,
+            "nominal": 428,
+            "low": 15
+          },
+          "distinct_route_dates": 7,
+          "nearest_to_trail_km": 12.547
+        },
+        "VIIRS_NOAA21_SP": {
+          "detection_rows": 381,
+          "confidence_counts": {
+            "high": 34,
+            "nominal": 331,
+            "low": 16
+          },
+          "distinct_route_dates": 8,
+          "nearest_to_trail_km": 12.659
+        },
+        "VIIRS_SNPP_SP": {
+          "detection_rows": 486,
+          "confidence_counts": {
+            "high": 31,
+            "nominal": 450,
+            "low": 5
+          },
+          "distinct_route_dates": 8,
+          "nearest_to_trail_km": 12.595
+        }
+      },
+      "nearest_hotspot_to_trail_km": 12.547,
+      "episodes_with_detection_within_24h_at_10km": 0,
+      "episodes_with_detection_within_24h_at_20km": 7,
+      "SNMF_incident_point_crosscheck": [
+        {
+          "incident_name": "Primera Cantera Puerto Patriada",
+          "province": "Chubut",
+          "reported_start_date": "2026-01-05",
+          "snmf_snapshot_period": [
+            "2026-01-05",
+            "2026-01-31"
+          ],
+          "firms_query_overlap_period": [
+            "2026-01-04",
+            "2026-01-15"
+          ],
+          "firms_detections_in_snmf_window": 1349,
+          "nearest_firms_distance_to_reported_incident_km": 0.133,
+          "firms_rows_within_10km_of_reported_incident": 1348,
+          "high_confidence_rows_within_10km_of_reported_incident": 104
+        },
+        {
+          "incident_name": "Barda de La Loma",
+          "province": "Río Negro",
+          "reported_start_date": "2026-01-05",
+          "snmf_snapshot_period": [
+            "2026-01-05",
+            "2026-01-08"
+          ],
+          "firms_query_overlap_period": [
+            "2026-01-04",
+            "2026-01-09"
+          ],
+          "firms_detections_in_snmf_window": 1080,
+          "nearest_firms_distance_to_reported_incident_km": 11.309,
+          "firms_rows_within_10km_of_reported_incident": 0,
+          "high_confidence_rows_within_10km_of_reported_incident": 0
+        }
+      ],
+      "precision_estimable": false,
+      "warning": "The alert-selected FIRMS cohort is positive-only; its 20 km coincidences are regional and repeated rows refer to an ongoing event. No detection is not a verified no-fire label."
+    },
+    "full_trail_10km_frozen_GOES_sensitivity": {
+      "sampled_core_pixels_by_route": {
+        "Bosque Tallado desde la plataforma del Piltriquitron": 11,
+        "Cerro Ventana - Hueco de la Ventana": 14,
+        "Quebrada del Condorito - Balcon Norte": 18,
+        "Refugio Frey desde Villa Catedral": 18,
+        "Sendero Che Roga - Mburucuyá": 16,
+        "Sendero La Chuña - El Rey": 18,
+        "Sendero Macuco - Salto Arrechea": 9,
+        "Sendero Namuncura": 12
+      },
+      "one_hour_training_positive_route_hours": 15,
+      "one_hour_validation_positive_route_hours": 0,
+      "one_hour_test_positive_route_hours": 0,
+      "one_hour_test_alerts_at_diagnostic_0_5": 0,
+      "independent_near_route_event_check": {
+        "source": "Independent January SNMF event audit against frozen GOES model outputs.",
+        "incident_name": "Barda de La Loma",
+        "province": "Río Negro",
+        "reported_start_date": "2026-01-05",
+        "reported_status": "CONTROLADO",
+        "distance_to_trail_km": 5.939,
+        "valid_model_pixels_within_event_radius": 13,
+        "maximum_one_hour_model_score": 0.0,
+        "model_alert": false,
+        "interpretation": "SNMF reports a controlled incident near the route during the held-out January test; the frozen GOES model had valid pixel coverage but did not alert. The daily incident report does not establish ignition hour or GOES observational completeness."
+      },
+      "warning": "No GOES positives occurred in the 10 km validation or test labels, so precision cannot be estimated; a nearby official SNMF incident had valid pixels but no model alert."
+    },
+    "gfs_24h_snmf_daily_report_proxy_episode_check": {
+      "model": {
+        "alert_episodes": 22,
+        "episodes_containing_nearby_listed_active_incident": 4,
+        "descriptive_episode_coincidence_fraction": 0.18181818181818182,
+        "wilson_95pct_descriptive_interval": [
+          0.07306884583422052,
+          0.38516607437126543
+        ],
+        "reported_alert_route_days_within_episodes": 133,
+        "average_reported_alert_days_per_episode": 6.045454545454546
+      },
+      "persistence": {
+        "alert_episodes": 8,
+        "episodes_containing_nearby_listed_active_incident": 1,
+        "descriptive_episode_coincidence_fraction": 0.125,
+        "wilson_95pct_descriptive_interval": [
+          0.02241749145005667,
+          0.4708881822128535
+        ],
+        "reported_alert_route_days_within_episodes": 23,
+        "average_reported_alert_days_per_episode": 2.875
+      },
+      "warning": "Consecutive route-day alert streaks against an incomplete SNMF report proxy are not physical fire precision or independent fire-event counts."
+    },
+    "snmf_daily_negative_label_audit": {
+      "archive_dates_with_pdf": 30,
+      "dates_without_pdf": 1,
+      "reports_with_zero_parsed_events": 0,
+      "parsed_snapshot_rows": 512,
+      "interpretation": "No report in the acquired January archive was an empty national event report. This cohort cannot supply explicit nationwide no-fire days; no nearby event in a daily PDF remains a report-based proxy, not a verified physical negative.",
+      "limitations": [
+        "1 of 31 dates had no PDF at the checked public archive paths; these dates are unobserved, not negative.",
+        "A missing report is not a fire-free observation and is not encoded as a negative label.",
+        "A repeated event is deduplicated by province/name/start date and rounded coordinates; records without coordinates use province/name/start date only.",
+        "Automated extraction requires spot-checking against the original PDF; no row without parsed coordinates is used in spatial matching."
+      ]
+    },
+    "snmf_2022_route_cohort_readiness": {
+      "source_report_rows": 289,
+      "deduplicated_extracted_records": 269,
+      "records_with_numeric_coordinates": 0,
+      "rows_without_coordinates_in_source_snapshots": 289,
+      "reports_used": 272,
+      "reports_with_zero_parsed_events": 1,
+      "source_file_sha256": "8ecb11f38419e5d75387db6379757be0ce853ee6a7a5303b89f717e3e0b9c797",
+      "route_event_cohort_can_be_expanded": false,
+      "interpretation": "The archived 2022 extraction has no records with numeric latitude/longitude, so it cannot extend a route-specific event cohort. This is missing spatial information in the extraction, not evidence of no incidents or fire-free days. The original PDFs or a geocoded incident registry are needed to recover spatial labels.",
+      "limitations": [
+        "2 of 274 dates had no PDF at the checked public archive paths; these dates are unobserved, not negative.",
+        "A missing report is not a fire-free observation and is not encoded as a negative label.",
+        "A repeated event is deduplicated by province/name/start date and rounded coordinates; records without coordinates use province/name/start date only.",
+        "Automated extraction requires spot-checking against the original PDF; no row without parsed coordinates is used in spatial matching."
+      ]
+    }
+  },
+  "external_label_audit": {
+    "mapbiomas_2025_incident_coordinates": 5,
+    "same_month_scar_within_2km": 2,
+    "official_product_page": "https://argentina.mapbiomas.org/iniciativas-y-productos/fuego/",
+    "official_collection_launch": "https://argentina.mapbiomas.org/2026/10/05/argentina-tiene-mas-superficie-agropecuaria-que-bosques-los-nuevos-datos-de-mapbiomas-muestran-como-cambio-el-territorio-desde-1985/",
+    "monthly_year_coverage_verified_by_audit": "1999-2025; 27 annual and 27 monthly GeoTIFF objects listed in the public bucket; the 2025 raster checksum was verified.",
+    "limitations": [
+      "Monthly retrospective scar pixels do not establish ignition time or future prediction accuracy.",
+      "The product page text still summarizes monthly maps as 2013-2024, while MapBiomas's September 2026 collection launch states monthly and annual products for 1999-2025; the public-bucket inventory and verified 2025 raster support the extended coverage."
+    ]
+  },
+  "minimum_independent_alert_evidence_examples": {
+    "method": "One-sided 95% exact Clopper-Pearson lower bound. Alerts must be adjudicated against independent labels and be independent episodes; repeated pixels, scans, and adjacent days do not count separately.",
+    "targets": {
+      "precision_at_least_0_80_with_observed_at_least_0_90": {
+        "adjudicated_alerts": 37,
+        "true_alerts": 34,
+        "observed_precision": 0.918918918918919,
+        "one_sided_exact_95pct_lower_bound": 0.8035710601755338
+      },
+      "precision_at_least_0_90_with_observed_at_least_0_95": {
+        "adjudicated_alerts": 76,
+        "true_alerts": 73,
+        "observed_precision": 0.9605263157894737,
+        "one_sided_exact_95pct_lower_bound": 0.901129923160147
+      },
+      "precision_at_least_0_90_if_every_alert_is_correct": {
+        "adjudicated_alerts": 29,
+        "true_alerts": 29,
+        "observed_precision": 1.0,
+        "one_sided_exact_95pct_lower_bound": 0.9018553723227043
+      }
+    },
+    "warning": "These are precision-only sample-size examples. They do not provide power for recall, calibrate a probability, validate lead time, or account for event clustering beyond the unit definition."
+  },
+  "frozen_modis_model_independent_viirs_crosscheck_on_explicit_no_fire_reports_2023": {
+    "status": "independent_satellite_crosscheck_complete_administrative_negative_cohort",
+    "model_test_route_days": 22,
+    "same_day_route_buffers_with_viirs_fire_detections": 0,
+    "route_days_with_some_class5_land_observation": 20,
+    "route_days_without_class5_land_observation": 2,
+    "unique_logistic_or_xgboost_alert_route_days_at_0_5": 6,
+    "those_alert_route_days_with_class5_land_samples": 5,
+    "those_alert_route_days_with_viirs_detections": 0,
+    "crosscheck_by_model": {
+      "persistence": {
+        "route_days_alerted_at_diagnostic_0_5": 0,
+        "alerts_with_same_day_viirs_class7_9_in_10km_route_buffer": 0,
+        "alert_route_days_with_viirs_detections": [],
+        "all_covered_route_days_with_viirs_fire_detection": 0,
+        "report_cohort": "SNMF explicitly said no fires were reported nationally; not a physical-fire negative survey.",
+        "interpretation": "A VIIRS class 7-9 pixel is independent thermal-detection corroboration, not proof of wildfire or model correctness. No VIIRS detection is not proof of absence."
+      },
+      "logistic": {
+        "route_days_alerted_at_diagnostic_0_5": 5,
+        "alerts_with_same_day_viirs_class7_9_in_10km_route_buffer": 0,
+        "alert_route_days_with_viirs_detections": [],
+        "all_covered_route_days_with_viirs_fire_detection": 0,
+        "report_cohort": "SNMF explicitly said no fires were reported nationally; not a physical-fire negative survey.",
+        "interpretation": "A VIIRS class 7-9 pixel is independent thermal-detection corroboration, not proof of wildfire or model correctness. No VIIRS detection is not proof of absence."
+      },
+      "random_forest": {
+        "route_days_alerted_at_diagnostic_0_5": 0,
+        "alerts_with_same_day_viirs_class7_9_in_10km_route_buffer": 0,
+        "alert_route_days_with_viirs_detections": [],
+        "all_covered_route_days_with_viirs_fire_detection": 0,
+        "report_cohort": "SNMF explicitly said no fires were reported nationally; not a physical-fire negative survey.",
+        "interpretation": "A VIIRS class 7-9 pixel is independent thermal-detection corroboration, not proof of wildfire or model correctness. No VIIRS detection is not proof of absence."
+      },
+      "xgboost": {
+        "route_days_alerted_at_diagnostic_0_5": 4,
+        "alerts_with_same_day_viirs_class7_9_in_10km_route_buffer": 0,
+        "alert_route_days_with_viirs_detections": [],
+        "all_covered_route_days_with_viirs_fire_detection": 0,
+        "report_cohort": "SNMF explicitly said no fires were reported nationally; not a physical-fire negative survey.",
+        "interpretation": "A VIIRS class 7-9 pixel is independent thermal-detection corroboration, not proof of wildfire or model correctness. No VIIRS detection is not proof of absence."
+      }
+    },
+    "interpretation": "No VIIRS class 7-9 detections corroborated the logistic/XGBoost alerts in this small test. Two route buffers had no class-5 land sample; even class-5 samples are partial, so these are not verified physical-fire negatives and do not estimate model precision.",
+    "report": "fire-viirs-explicit-no-fire-model-crosscheck-2023.md"
+  },
+  "frozen_jma_2024_alert_independent_viirs_crosscheck_on_explicit_no_fire_reports": {
+    "status": "independent_crosscheck_complete_with_one_cmr_gap",
+    "diagnostic_threshold": 0.1,
+    "threshold_is_calibrated_probability": false,
+    "requested_route_alerts": 11,
+    "observed_route_alerts": 10,
+    "unavailable_route_alerts": 1,
+    "verified_viirs_granules": 10,
+    "alert_route_days_with_viirs_detections": 0,
+    "alert_route_days_with_some_class5_land_observation": 10,
+    "limitations": [
+      "SNMF explicit no-fire reports describe the administrative record and do not prove physical absence.",
+      "VIIRS classes 7-9 are independent thermal detections, not adjudicated wildfire truth.",
+      "A daily 1 km composite can miss small, obscured, or between-overpass fires; class 5 is partial observation only.",
+      "NASA CMR returned no VNP14A1.002 granule for one requested date/tile; that alert is unknown and excluded from observed counts.",
+      "The cohort contains only frozen model alerts on selected report dates; it cannot estimate precision, recall, calibration, or forecast reliability.",
+      "The 0.1 score threshold is diagnostic and the model scores are not calibrated probabilities."
+    ],
+    "report": "fire-viirs-jma-2024-explicit-no-fire-alert-crosscheck.md"
+  },
+  "viirs_observations_on_all_route_days_with_2024_explicit_no_fire_reports": {
+    "status": "independent_observation_audit_complete_with_cmr_gaps",
+    "explicit_no_fire_report_dates": 27,
+    "adjacent_date_clusters": 14,
+    "requested_route_days": 216,
+    "observed_route_days": 200,
+    "unobserved_route_days": 16,
+    "dates_without_any_matching_cmr_tile": [
+      "2024-05-31",
+      "2024-07-10"
+    ],
+    "route_days_with_viirs_classes_7_9": 0,
+    "route_days_with_some_class5_land_observation": 186,
+    "route_days_without_class5_land_observation": 14,
+    "fixed_0_1_alert_route_days_observed": 10,
+    "fixed_0_1_alerts_with_viirs_classes_7_9": 0,
+    "interpretation": "This is an observation-coverage and sensor-coincidence audit on selected administrative no-fire report dates. Missing detections are not verified physical negatives, and the selected cohort does not estimate predictive precision or recall.",
+    "report": "fire-viirs-jma-2024-explicit-no-fire-all-routes.md"
+  },
+  "viirs_noaa20_21_gap_fill_for_2024_s_npp_missing_dates": {
+    "status": "independent_sensor_gap_fill_complete",
+    "gap_dates": [
+      "2024-05-31",
+      "2024-07-10"
+    ],
+    "verified_granules": 20,
+    "sensor_route_day_observations": 32,
+    "missing_s_npp_route_days_supplemented": 16,
+    "noaa20_route_days_with_fire_mask_7_9": 0,
+    "noaa21_route_days_with_fire_mask_7_9": 0,
+    "combined_gap_route_days_with_class5_qa_land": 14,
+    "combined_gap_route_days_with_complete_clear_coverage": 0,
+    "full_2024_route_days_observed_after_gap_fill": 216,
+    "full_2024_route_days_with_any_viirs_fire_detection": 0,
+    "diagnostic_alert_routes_filled": 1,
+    "diagnostic_alerts_with_noaa_viirs_detections": 0,
+    "limitations": [
+      "The administrative SNMF no-fire wording does not prove that no physical fire existed.",
+      "VIIRS classes 7-9 are thermal detections, not adjudicated wildfire truth.",
+      "NOAA-20/21 class 5 with QA land is partial observed clear land, not complete sensor coverage of a route buffer.",
+      "Daily 1 km composites can miss small, obscured, or between-overpass fires.",
+      "The three VIIRS platforms share an instrument family and algorithm lineage; their detections do not replace independent field-confirmed labels.",
+      "This selected set of report dates cannot estimate model precision, recall, calibration, or forecast skill.",
+      "The 0.1 model score cutoff is diagnostic and is not a calibrated probability."
+    ],
+    "report": "fire-viirs-jma-2024-cmr-gap-fill-noaa20-21.md"
+  },
+  "daily_viirs_l3_label_candidate": {
+    "status": "observed_masks_audited_positive_event_only_cohort",
+    "preflight_metadata_status": "metadata_candidate_requires_pilot_download_and_scene_decode",
+    "products": {
+      "VNP14A1.002": {
+        "platform": "Suomi-NPP",
+        "doi": "https://doi.org/10.5067/VIIRS/VNP14A1.002"
+      },
+      "VJ114A1.002": {
+        "platform": "NOAA-20 / JPSS-1",
+        "doi": "https://doi.org/10.5067/VIIRS/VJ114A1.002"
+      },
+      "VJ214A1.002": {
+        "platform": "NOAA-21 / JPSS-2",
+        "doi": "https://doi.org/10.5067/VIIRS/VJ214A1.002"
+      }
+    },
+    "unique_route_buffer_tiles": [
+      "h12v11",
+      "h12v12",
+      "h12v13",
+      "h13v11",
+      "h13v12"
+    ],
+    "spatial_resolution_m": 1000,
+    "temporal_composite_hours": 24,
+    "local_acquisition_status": {
+      "granules_downloaded_and_hash_verified": 45,
+      "total_size_mb_decimal": 9.282,
+      "masks_decoded": 45,
+      "model_metrics_created": false,
+      "deployment_approved": false
+    },
+    "report": "fire-viirs-daily-l3-candidate-audit-2026-10-23.md",
+    "snmf_event_pilot_cohort": {
+      "status": "official_positive_event_cohort_granules_acquired_for_mask_audit",
+      "selected_route_event_clusters": 16,
+      "event_dates": [
+        "2023-10-06",
+        "2023-12-19",
+        "2024-01-06",
+        "2024-01-26",
+        "2024-01-30",
+        "2024-02-03",
+        "2024-03-07",
+        "2024-04-16",
+        "2024-09-15",
+        "2024-10-16",
+        "2025-10-08",
+        "2025-10-10",
+        "2025-11-17",
+        "2025-11-26",
+        "2025-12-11"
+      ],
+      "maximum_granules_before_deduplication": 45,
+      "downloaded_granules": 45,
+      "existing_375m_same_day_event_coordinate_check": {
+        "selected_2025_events": 6,
+        "status_counts": {
+          "clear_land_without_detection_at_overpass": 1,
+          "no_matched_overpass_in_downloaded_cohort": 3,
+          "unknown_quality_or_nonland": 2
+        },
+        "interpretation": "Exact-date I-band overpasses at the reported point do not establish whether a fire was active before or after the pass. Cloud/quality, no matching pass, and clear-land without detection are separate observation states, not fire/no-fire ground truth."
+      },
+      "daily_l3_download_and_independent_positive_event_check": {
+        "status": "observed_masks_audited_positive_event_only_cohort",
+        "verified_granules": 45,
+        "verified_size_mb": 9.282,
+        "unique_report_route_dates": 15,
+        "route_dates_with_same_day_viirs_detection_within_10km": 2,
+        "descriptive_event_coincidence_fraction": 0.13333333333333333,
+        "coverage_by_sensor": {
+          "Suomi-NPP": {
+            "granule_event_observations": 16,
+            "event_point_cells_class5_land": 16,
+            "event_point_cells_fire": 0,
+            "event_points_within_10km_fire_pixels": 2,
+            "route_buffers_with_fire_pixels": 2,
+            "route_buffers_with_class5_land_pixels": 16
+          },
+          "NOAA-20": {
+            "granule_event_observations": 16,
+            "event_point_cells_class5_land": 16,
+            "event_point_cells_fire": 0,
+            "event_points_within_10km_fire_pixels": 1,
+            "route_buffers_with_fire_pixels": 1,
+            "route_buffers_with_class5_land_pixels": 16
+          },
+          "NOAA-21": {
+            "granule_event_observations": 16,
+            "event_point_cells_class5_land": 16,
+            "event_point_cells_fire": 0,
+            "event_points_within_10km_fire_pixels": 1,
+            "route_buffers_with_fire_pixels": 1,
+            "route_buffers_with_class5_land_pixels": 16
+          }
+        },
+        "warning": "This is a selected positive-event corroboration fraction, not model precision, recall against all physical fires, or a rate of false negatives. Route-date observations are not guaranteed independent physical incidents.",
+        "report": "fire-viirs-daily-l3-snmf-event-audit-2023-2025.md"
+      },
+      "report": "fire-viirs-daily-l3-event-cohort-2023-2025.md"
+    },
+    "interpretation": "The daily L3 positive-event pilot is downloaded and decoded. It corroborates only 2 of 15 selected SNMF route-dates with a same-day VIIRS fire pixel within 10 km; report-point cells are clear-land samples, and the cohort has no verified negatives. This is independent event-coincidence evidence, not model precision or a physical-fire false-negative rate."
+  },
+  "full_swath_viirs_observation_candidate": {
+    "target_incident": {
+      "incident_name": "Barda de La Loma",
+      "province": "Río Negro",
+      "reported_start_date": "2026-01-05",
+      "reported_status": "CONTROLADO",
+      "snmf_point_latitude": -41.98623333333333,
+      "snmf_point_longitude": -71.54853888888888,
+      "distance_to_route_km": 5.939,
+      "goes_model_valid_pixels": 13,
+      "goes_model_maximum_score": 0.0,
+      "goes_model_alert": false
+    },
+    "products": {
+      "VNP14IMG": {
+        "unique_sensor_overpass_times": 22,
+        "reported_total_size_mb": 33.09,
+        "overpasses_by_utc_day": {
+          "2026-01-04": 4,
+          "2026-01-05": 3,
+          "2026-01-06": 2,
+          "2026-01-07": 4,
+          "2026-01-08": 3,
+          "2026-01-09": 3,
+          "2026-01-10": 3
+        }
+      },
+      "VJ114IMG": {
+        "unique_sensor_overpass_times": 21,
+        "reported_total_size_mb": 30.95,
+        "overpasses_by_utc_day": {
+          "2026-01-04": 3,
+          "2026-01-05": 3,
+          "2026-01-06": 3,
+          "2026-01-07": 3,
+          "2026-01-08": 3,
+          "2026-01-09": 3,
+          "2026-01-10": 3
+        }
+      },
+      "VJ214IMG": {
+        "unique_sensor_overpass_times": 18,
+        "reported_total_size_mb": 27.96,
+        "overpasses_by_utc_day": {
+          "2026-01-04": 3,
+          "2026-01-05": 3,
+          "2026-01-06": 3,
+          "2026-01-07": 3,
+          "2026-01-08": 3,
+          "2026-01-09": 3
+        }
+      }
+    },
+    "total_unique_overpasses": 61,
+    "reported_download_size_mb": 92.0,
+    "fire_mask_classes": {
+      "not_processed_or_poor_quality": 0,
+      "sun_glint": 2,
+      "water": 3,
+      "cloud": 4,
+      "clear_land_no_detected_fire": 5,
+      "unclassified": 6,
+      "fire_low_nominal_high_confidence": [
+        7,
+        8,
+        9
+      ],
+      "rule": "Only class 5 may serve as an observed no-detection label; classes 0, 1, 2, 3, 4, and 6 are not negative samples. Apply Algorithm QA and land/route checks before use."
+    },
+    "swath_data_downloaded": true,
+    "downloaded_and_hash_verified_overpasses": 61,
+    "download_size_mb": 96.47,
+    "positive_detection_screen": {
+      "all_fire_class_records_in_downloaded_swaths": 10070,
+      "all_fire_class_records_by_mask_class": {
+        "7": 827,
+        "8": 8483,
+        "9": 760
+      },
+      "records_within_10km_of_route_by_mask_class": {},
+      "qa_screened_records_within_10km_of_route_by_mask_class": {},
+      "records_within_10km_of_snmf_point_by_mask_class": {},
+      "qa_screened_records_within_10km_of_snmf_point_by_mask_class": {},
+      "nearest_qa_screened_fire_detection_to_route": {
+        "granule_id": "VJ114IMG.A2026010.0524.002.2026010113351",
+        "product": "VJ114IMG",
+        "sensor": "JPSS1",
+        "acquisition_start_utc": "2026-01-10T05:24:00.00000",
+        "latitude": -42.084511,
+        "longitude": -71.505226,
+        "mask_class": 8,
+        "distance_km": 12.615,
+        "algorithm_qa": 29952
+      },
+      "nearest_qa_screened_fire_detection_to_snmf_point": {
+        "granule_id": "VNP14IMG.A2026007.0424.002.2026013204154",
+        "product": "VNP14IMG",
+        "sensor": "NPP",
+        "acquisition_start_utc": "2026-01-07T04:24:00.00000",
+        "latitude": -42.086571,
+        "longitude": -71.526176,
+        "mask_class": 8,
+        "distance_km": 11.309,
+        "algorithm_qa": 29952
+      },
+      "overpasses_with_a_qa_screened_detection_within_10km_of_route": 0,
+      "overpasses_with_a_qa_screened_detection_within_10km_of_snmf_point": 0
+    },
+    "positive_screen_report": "fire-viirs-full-swath-barda-2026-jan-positive-screen.json",
+    "geolocation_pilot": {
+      "acquisition_utc": "2026-01-07T04:24:00Z",
+      "paired_geolocation_granules_downloaded": 1,
+      "downloaded_bytes": 149404450,
+      "downloaded_size_mb": 149.4,
+      "summary": {
+        "geolocated_land_pixels_within_10km_of_route": 676,
+        "clear_land_class5_pixels_within_10km_of_route": 637,
+        "fire_class7_8_9_pixels_within_10km_of_route": 0,
+        "mask_class_counts_within_10km_of_route": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 39,
+          "5": 637,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "qa_screened_fire_detections_within_20km_of_route": [
+          {
+            "latitude": -42.086571,
+            "longitude": -71.526176,
+            "mask_class": 8,
+            "algorithm_qa": 29952,
+            "land_water_mask": 1,
+            "distance_to_route_km": 13.245,
+            "line": 373,
+            "sample": 13
+          },
+          {
+            "latitude": -42.09013,
+            "longitude": -71.516304,
+            "mask_class": 8,
+            "algorithm_qa": 29952,
+            "land_water_mask": 1,
+            "distance_to_route_km": 13.412,
+            "line": 373,
+            "sample": 14
+          },
+          {
+            "latitude": -42.093369,
+            "longitude": -71.530449,
+            "mask_class": 8,
+            "algorithm_qa": 384,
+            "land_water_mask": 1,
+            "distance_to_route_km": 14.071,
+            "line": 374,
+            "sample": 13
+          },
+          {
+            "latitude": -42.10429,
+            "longitude": -71.499947,
+            "mask_class": 8,
+            "algorithm_qa": 384,
+            "land_water_mask": 1,
+            "distance_to_route_km": 14.728,
+            "line": 374,
+            "sample": 14
+          },
+          {
+            "latitude": -42.091049,
+            "longitude": -71.533531,
+            "mask_class": 8,
+            "algorithm_qa": 29952,
+            "land_water_mask": 1,
+            "distance_to_route_km": 13.907,
+            "line": 392,
+            "sample": 13
+          },
+          {
+            "latitude": -42.105621,
+            "longitude": -71.493614,
+            "mask_class": 8,
+            "algorithm_qa": 29952,
+            "land_water_mask": 1,
+            "distance_to_route_km": 14.823,
+            "line": 392,
+            "sample": 15
+          },
+          {
+            "latitude": -42.142464,
+            "longitude": -71.552902,
+            "mask_class": 8,
+            "algorithm_qa": 29952,
+            "land_water_mask": 1,
+            "distance_to_route_km": 19.837,
+            "line": 399,
+            "sample": 13
+          }
+        ]
+      },
+      "report": "fire-viirs-geolocation-pilot-barda-2026-jan.md",
+      "interpretation": "One exact-time mask/geolocation pair yielded quality-valid class-5 clear-land observations near the route. This validates a path to observed non-detection labels for individual overpasses, not physical no-fire labels or model precision."
+    },
+    "geolocation_companion_cohort_readiness": {
+      "matching_overpasses": 61,
+      "expected_overpasses": 61,
+      "estimated_total_download_mb": 8719.61,
+      "downloaded_and_hash_verified_overpasses": 61,
+      "actual_download_bytes": 9143169360,
+      "actual_download_size_gb_decimal": 9.143,
+      "status": "all_61_companions_downloaded_and_hash_verified",
+      "report": "fire-viirs-geolocation-companion-readiness-2026-jan.md",
+      "cmr_response_sha256_by_product": {
+        "VNP03IMG": "7e7708700f36628fbeb7ba331fc3af02c760f9ab323582c5d883663d7f8d925d",
+        "VJ103IMG": "5532e6280d2e9bfb0ac168fa1334a66a0a1be99d616107651ab817bd9c2dc44a",
+        "VJ203IMG": "ab3c5ecd385d66399980f8ed2538335e6a4325e2494ed72e17cb15a1501b02c3"
+      },
+      "interpretation": "All exact-time companions were downloaded and hash-verified; their actual local size is reported above. The evidence still covers only one seven-day corridor case."
+    },
+    "full_route_observation_screen": {
+      "period_utc": [
+        "2026-01-04T04:48:00.000Z",
+        "2026-01-10T19:24:00.000Z"
+      ],
+      "verified_exact_time_pairs": 61,
+      "summary": {
+        "route_mask_class_counts_across_passes": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 337,
+          "4": 1632,
+          "5": 95334,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "point_mask_class_counts_across_passes": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 253,
+          "4": 1368,
+          "5": 91488,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "by_mask_product": {
+          "VNP14IMG": {
+            "passes": 22,
+            "route_mask_class_counts": {
+              "0": 0,
+              "1": 0,
+              "2": 0,
+              "3": 84,
+              "4": 1197,
+              "5": 31110,
+              "6": 0,
+              "7": 0,
+              "8": 0,
+              "9": 0
+            },
+            "point_mask_class_counts": {
+              "0": 0,
+              "1": 0,
+              "2": 0,
+              "3": 56,
+              "4": 1067,
+              "5": 29931,
+              "6": 0,
+              "7": 0,
+              "8": 0,
+              "9": 0
+            },
+            "passes_with_class5_route": 21,
+            "passes_with_fire_route": 0,
+            "passes_with_class5_point": 21,
+            "passes_with_fire_point": 0
+          },
+          "VJ114IMG": {
+            "passes": 21,
+            "route_mask_class_counts": {
+              "0": 0,
+              "1": 0,
+              "2": 0,
+              "3": 65,
+              "4": 412,
+              "5": 34591,
+              "6": 0,
+              "7": 0,
+              "8": 0,
+              "9": 0
+            },
+            "point_mask_class_counts": {
+              "0": 0,
+              "1": 0,
+              "2": 0,
+              "3": 45,
+              "4": 290,
+              "5": 33008,
+              "6": 0,
+              "7": 0,
+              "8": 0,
+              "9": 0
+            },
+            "passes_with_class5_route": 21,
+            "passes_with_fire_route": 0,
+            "passes_with_class5_point": 21,
+            "passes_with_fire_point": 0
+          },
+          "VJ214IMG": {
+            "passes": 18,
+            "route_mask_class_counts": {
+              "0": 0,
+              "1": 0,
+              "2": 0,
+              "3": 188,
+              "4": 23,
+              "5": 29633,
+              "6": 0,
+              "7": 0,
+              "8": 0,
+              "9": 0
+            },
+            "point_mask_class_counts": {
+              "0": 0,
+              "1": 0,
+              "2": 0,
+              "3": 152,
+              "4": 11,
+              "5": 28549,
+              "6": 0,
+              "7": 0,
+              "8": 0,
+              "9": 0
+            },
+            "passes_with_class5_route": 18,
+            "passes_with_fire_route": 0,
+            "passes_with_class5_point": 18,
+            "passes_with_fire_point": 0
+          }
+        },
+        "route_passes_with_at_least_one_clear_land_pixel": 60,
+        "route_passes_with_at_least_one_fire_detection": 0,
+        "point_passes_with_at_least_one_clear_land_pixel": 60,
+        "point_passes_with_at_least_one_fire_detection": 0,
+        "unique_overpass_times_utc": 61,
+        "by_utc_day": {
+          "2026-01-04": {
+            "passes": 10,
+            "quality_valid_pixels": 15954,
+            "class5_clear_land_pixels": 15936,
+            "class4_cloud_pixels": 9,
+            "class3_water_pixels": 9,
+            "class7_9_fire_pixels": 0,
+            "passes_with_class5": 9,
+            "passes_with_valid_pixels": 9
+          },
+          "2026-01-05": {
+            "passes": 9,
+            "quality_valid_pixels": 13984,
+            "class5_clear_land_pixels": 13982,
+            "class4_cloud_pixels": 0,
+            "class3_water_pixels": 2,
+            "class7_9_fire_pixels": 0,
+            "passes_with_class5": 9,
+            "passes_with_valid_pixels": 9
+          },
+          "2026-01-06": {
+            "passes": 8,
+            "quality_valid_pixels": 13311,
+            "class5_clear_land_pixels": 13253,
+            "class4_cloud_pixels": 55,
+            "class3_water_pixels": 3,
+            "class7_9_fire_pixels": 0,
+            "passes_with_class5": 8,
+            "passes_with_valid_pixels": 8
+          },
+          "2026-01-07": {
+            "passes": 10,
+            "quality_valid_pixels": 16176,
+            "class5_clear_land_pixels": 15818,
+            "class4_cloud_pixels": 39,
+            "class3_water_pixels": 319,
+            "class7_9_fire_pixels": 0,
+            "passes_with_class5": 10,
+            "passes_with_valid_pixels": 10
+          },
+          "2026-01-08": {
+            "passes": 9,
+            "quality_valid_pixels": 14745,
+            "class5_clear_land_pixels": 14741,
+            "class4_cloud_pixels": 0,
+            "class3_water_pixels": 4,
+            "class7_9_fire_pixels": 0,
+            "passes_with_class5": 9,
+            "passes_with_valid_pixels": 9
+          },
+          "2026-01-09": {
+            "passes": 9,
+            "quality_valid_pixels": 14004,
+            "class5_clear_land_pixels": 14001,
+            "class4_cloud_pixels": 3,
+            "class3_water_pixels": 0,
+            "class7_9_fire_pixels": 0,
+            "passes_with_class5": 9,
+            "passes_with_valid_pixels": 9
+          },
+          "2026-01-10": {
+            "passes": 6,
+            "quality_valid_pixels": 9129,
+            "class5_clear_land_pixels": 7603,
+            "class4_cloud_pixels": 1526,
+            "class3_water_pixels": 0,
+            "class7_9_fire_pixels": 0,
+            "passes_with_class5": 6,
+            "passes_with_valid_pixels": 6
+          }
+        }
+      },
+      "report": "fire-viirs-full-swath-route-observations-barda-2026-jan.md",
+      "interpretation": "Across 61 same-week sensor passes, 60 contained quality-valid class-5 clear-land pixels within the 10 km route buffer, and none contained a quality-screened classes 7, 8 or 9 detection there. These repeated observations from one corridor and short event window are not 61 independent fire/no-fire cases; SNMF lacks an exact ignition time. This improves observation coverage labels but cannot estimate model precision."
+    },
+    "goes_alerts_same_time_viirs_observation_check": {
+      "episodes": [
+        {
+          "episode_index": 1,
+          "alert_start_hour_utc": "2026-01-05T19",
+          "alert_end_hour_utc": "2026-01-05T21",
+          "status": "matched_observation",
+          "matched_overpasses": [
+            {
+              "acquisition_start_utc": "2026-01-05T19:18:00.000Z",
+              "quality_valid_pixels": 1586,
+              "clear_land_class_5_pixels": 1586,
+              "active_fire_classes_7_to_9_pixels": 0
+            }
+          ]
+        },
+        {
+          "episode_index": 2,
+          "alert_start_hour_utc": "2026-01-06T02",
+          "alert_end_hour_utc": "2026-01-06T05",
+          "status": "matched_observation",
+          "matched_overpasses": [
+            {
+              "acquisition_start_utc": "2026-01-06T05:00:00.000Z",
+              "quality_valid_pixels": 1488,
+              "clear_land_class_5_pixels": 1488,
+              "active_fire_classes_7_to_9_pixels": 0
+            },
+            {
+              "acquisition_start_utc": "2026-01-06T05:48:00.000Z",
+              "quality_valid_pixels": 2075,
+              "clear_land_class_5_pixels": 2075,
+              "active_fire_classes_7_to_9_pixels": 0
+            }
+          ]
+        },
+        {
+          "episode_index": 3,
+          "alert_start_hour_utc": "2026-01-06T07",
+          "alert_end_hour_utc": "2026-01-06T10",
+          "status": "no_viirs_overpass_during_alert",
+          "matched_overpasses": []
+        },
+        {
+          "episode_index": 4,
+          "alert_start_hour_utc": "2026-01-06T17",
+          "alert_end_hour_utc": "2026-01-06T18",
+          "status": "matched_observation",
+          "matched_overpasses": [
+            {
+              "acquisition_start_utc": "2026-01-06T18:36:00.000Z",
+              "quality_valid_pixels": 2213,
+              "clear_land_class_5_pixels": 2182,
+              "active_fire_classes_7_to_9_pixels": 0
+            },
+            {
+              "acquisition_start_utc": "2026-01-06T18:06:00.000Z",
+              "quality_valid_pixels": 1671,
+              "clear_land_class_5_pixels": 1663,
+              "active_fire_classes_7_to_9_pixels": 0
+            }
+          ]
+        },
+        {
+          "episode_index": 5,
+          "alert_start_hour_utc": "2026-01-06T20",
+          "alert_end_hour_utc": "2026-01-06T22",
+          "status": "no_viirs_overpass_during_alert",
+          "matched_overpasses": []
+        },
+        {
+          "episode_index": 6,
+          "alert_start_hour_utc": "2026-01-10T20",
+          "alert_end_hour_utc": "2026-01-10T21",
+          "status": "no_viirs_overpass_during_alert",
+          "matched_overpasses": []
+        },
+        {
+          "episode_index": 7,
+          "alert_start_hour_utc": "2026-01-13T18",
+          "alert_end_hour_utc": "2026-01-14T06",
+          "status": "no_viirs_overpass_during_alert",
+          "matched_overpasses": []
+        },
+        {
+          "episode_index": 8,
+          "status": "outside_viirs_route_cohort",
+          "matched_overpasses": []
+        }
+      ],
+      "interpretation": "Only VIIRS passes acquired during a GOES alert interval are listed. Class 5 is a clear-land non-detection at that pass; it does not establish an alert as false because this is one corridor and the incident labels lack exact ignition time."
+    },
+    "interpretation": "All 61 full-swath fire-mask granules and their 61 exact-time geolocation companions were downloaded and hash-verified (9.143 GB actual companion size). Across the 10 km route buffer, 60 passes had quality-valid class-5 clear-land pixels; none had a quality-screened classes 7, 8 or 9 detection, and one pass had no eligible clear-land pixel. These repeated observations from one corridor do not establish event truth or estimate model precision."
+  },
+  "historical_viirs_snmf_event_route_screen_2025": {
+    "results_summary": {
+      "snmf_route_start_days_within_20km_of_line": 15,
+      "days_with_complete_288_of_288_screen": 12,
+      "days_with_at_least_one_coarse_route_candidate": 8,
+      "fully_refined_candidate_passes": 9,
+      "days_with_viirs_fire_class_on_sampled_route_vertices": 0
+    },
+    "event_coordinate_cross_check": {
+      "granules_with_full_geolocation_audit": 9,
+      "unique_event_coordinates": 11,
+      "mask_status_counts": {
+        "observed_clear_land": 11,
+        "unknown_quality_or_nonland": 3
+      }
+    },
+    "report": "fire-viirs-snmf-event-route-pass-audit-2025.json",
+    "interpretation": "The 2025 archive has clear-land observations at some reported incident coordinates, but dates are report start dates, not exact ignition or sensor times. No fire-class pixel was found on sampled route vertices in this screened cohort; it is a coverage and label feasibility check, not a prediction evaluation."
+  },
+  "noaa_efire_barda_case_study": {
+    "target_incident": {
+      "name": "Barda de La Loma",
+      "reported_start_date": "2026-01-05",
+      "reported_status": "CONTROLADO",
+      "latitude": -41.98623333333333,
+      "longitude": -71.54853888888888,
+      "distance_to_route_km": 5.939,
+      "exact_ignition_time_available": false
+    },
+    "verified_public_source_files": 4,
+    "source_size_mb": 193.52,
+    "passes": [
+      {
+        "sensor": "n21",
+        "start_utc": "2026-01-05T04:31:17Z",
+        "sampled_route_vertices": 103,
+        "clear_land_dqf1_route_vertices": 103,
+        "bowtie_route_vertices": 0,
+        "quality_valid_clear_land_at_snmf_point": true
+      },
+      {
+        "sensor": "npp",
+        "start_utc": "2026-01-05T05:01:10Z",
+        "sampled_route_vertices": 103,
+        "clear_land_dqf1_route_vertices": 44,
+        "bowtie_route_vertices": 59,
+        "quality_valid_clear_land_at_snmf_point": true
+      }
+    ],
+    "report": "fire-viirs-efire-barda-route-mask-2026-01-05.md",
+    "interpretation": "Two full-geolocation NOAA E-FIRE passes observed quality-valid clear land at the Barda coordinate; one pass had all 103 sampled trail vertices clear, the next had 44 clear and 59 bowtie. This is a useful pixel-level non-detection case, but one reported event and two passes without exact ignition time cannot validate model precision or establish physical absence."
+  },
+  "noaa_efire_route_overpasses_2024_07_10": {
+    "passes": [
+      {
+        "start_utc": "2024-07-10T04:30:30Z",
+        "route_observations": [
+          {
+            "route": "Refugio Frey desde Villa Catedral",
+            "sampled_vertices": 106,
+            "resolved_vertices": 106,
+            "mask_and_dqf_counts": {
+              "1": 46,
+              "4": 60,
+              "dqf_2": 60,
+              "dqf_3": 46
+            }
+          },
+          {
+            "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "sampled_vertices": 103,
+            "resolved_vertices": 103,
+            "mask_and_dqf_counts": {
+              "1": 30,
+              "4": 73,
+              "dqf_2": 73,
+              "dqf_3": 30
+            }
+          }
+        ]
+      },
+      {
+        "start_utc": "2024-07-10T18:31:12Z",
+        "route_observations": [
+          {
+            "route": "Quebrada del Condorito - Balcon Norte",
+            "sampled_vertices": 127,
+            "resolved_vertices": 127,
+            "mask_and_dqf_counts": {
+              "4": 127,
+              "dqf_2": 127
+            }
+          },
+          {
+            "route": "Sendero Che Roga - Mburucuyá",
+            "sampled_vertices": 117,
+            "resolved_vertices": 117,
+            "mask_and_dqf_counts": {
+              "5": 117,
+              "dqf_1": 117
+            }
+          }
+        ]
+      }
+    ],
+    "report": "fire-viirs-efire-route-mask-2024-07-10.md",
+    "interpretation": "The 18:31 UTC overpass had cloud-class pixels at all 127 sampled Condorito vertices, so the nearby JMA alert remains unverified by this pass. Che Roga had 117 clear-land samples with no fire class 7-9. Frey and Bosque Tallado had only cloud or bowtie samples. These are single-pass pixel observations, not independent fire/no-fire route-days and do not change model precision evidence."
+  },
+  "nasa_firms_nrt_prospective_crosscheck": {
+    "target_window_utc": [
+      "2026-10-22T18:00:00Z",
+      "2026-10-23T18:00:00Z"
+    ],
+    "sensors": [
+      "VIIRS_NOAA20_NRT",
+      "VIIRS_NOAA21_NRT",
+      "VIIRS_SNPP_NRT"
+    ],
+    "route_sensor_queries": 24,
+    "raw_responses_verified": 24,
+    "raw_csv_records_all_areas": 0,
+    "route_matches_in_exact_forecast_window": 0,
+    "negative_labels_created": 0,
+    "report": "fire-nasa-firms-nrt-route-crosscheck-2026-10-22-23.md",
+    "interpretation": "All 24 archived NOAA/NASA FIRMS NRT queries for the two date range returned valid empty CSVs, with no records within 10 km of the eight full route polylines. NRT is a provisional positive-only source; this empty snapshot is not a no-fire observation or a precision estimate. The period should be refreshed from standard processing after NASA's product lag."
+  },
+  "nasa_firms_standard_availability_for_prospective_window": {
+    "target_window_utc_dates": [
+      "2026-10-22",
+      "2026-10-23"
+    ],
+    "latest_standard_date_available_any_sensor": "2026-06-30",
+    "days_behind_target_end_date": 115,
+    "route_sensor_requests_outside_range": 24,
+    "detection_queries_made": 0,
+    "availability_response_sha256": "aab642dd0602b9ef80792e1fa9211946355bfc85e5f21e69d3e520a69b4fcfb6",
+    "report": "fire-firms-standard-availability-2026-10-23.md",
+    "interpretation": "At query time on 2026-10-23, NASA FIRMS VIIRS standard products were available only through 2026-06-30, 115 days before the target end date; no standard detections could be queried for the prospective window. This is missing product availability, not evidence of no fire."
+  },
+  "inpe_prospective_window_status": {
+    "partial_screen_as_of_utc": "2026-10-23T21:57:46Z",
+    "unique_forecast_windows": 8,
+    "windows_with_matured_csv_segments": 1,
+    "complete_24h_matured_csv_windows": 0,
+    "partial_route_detections": 0,
+    "full_window_status_counts": {
+      "pending_daily_file_not_mature": 3,
+      "pending_daily_csv_missing": 5
+    },
+    "negative_labels_created": 0,
+    "partial_report": "fire-inpe-prospective-partial-audit-2026-10-23.md",
+    "full_window_report": "fire-inpe-prospective-outcomes-2026-10-23.md",
+    "interpretation": "The refreshed daily INPE file has no listed detections within 10 km of the complete route polylines in the available partial intervals. The Oct 23 CSV remains immature and active-fire rows are not a sensor-coverage mask. Three forecast windows are waiting for an immature CSV and five for missing CSVs; no complete 24-hour outcome or precision estimate is available."
+  },
+  "route_geometry_for_prospective_join": {
+    "sha256": "d622e3bd3bae7c97df9152d5ae22fa9cf3136f2bbb0ee807703eaddc21d6610a",
+    "detection_spatial_rule": "within 10 km of the complete reviewed route polylines, using a local planar point-to-segment distance",
+    "forecast_index_spatial_rule": "INPE risk values remain sampled at route-sector centers.",
+    "interpretation": "The observation join now uses complete reviewed trail polylines; the forecast raster sampling is still center-based."
+  },
+  "viirs_clear_land_completeness_on_2024_explicit_no_fire_reports": {
+    "route_days": 216,
+    "report_date_clusters": 14,
+    "route_days_with_fire_class_7_9": 0,
+    "coverage_at_least_90pct": {
+      "eligible_route_days": 122,
+      "route_days_with_fire_detection": 0,
+      "route_days_without_fire_detection": 122,
+      "jma_alerts_on_observed_non_detection_days": 8,
+      "jma_alert_counts_by_diagnostic_score_cutoff": {
+        "0.1": 8,
+        "0.5": 1
+      },
+      "jma_non_alerts_on_observed_non_detection_days": 114,
+      "unique_snmf_date_clusters": 14
+    },
+    "coverage_at_least_100pct": {
+      "eligible_route_days": 79,
+      "route_days_with_fire_detection": 0,
+      "route_days_without_fire_detection": 79,
+      "jma_alerts_on_observed_non_detection_days": 6,
+      "jma_alert_counts_by_diagnostic_score_cutoff": {
+        "0.1": 6,
+        "0.5": 1
+      },
+      "jma_non_alerts_on_observed_non_detection_days": 73,
+      "unique_snmf_date_clusters": 14
+    },
+    "report": "fire-viirs-2024-no-fire-clear-land-completeness.md",
+    "interpretation": "High clear-land fraction supports a well-observed VIIRS non-detection for the sensor-detection target, not proof of physical fire absence. This selected negative-report cohort has no detected fire positives, is clustered in time, and cannot estimate fire-alert precision, recall, or prevalence. JMA alerts without VIIRS detections are disagreement cases, not confirmed false alarms.",
+    "separate_positive_snmf_event_cohort": {
+      "unique_snmf_event_records": 16,
+      "unique_reported_route_days": 15,
+      "route_days_with_fire_detection_within_10km_of_full_route": 2,
+      "route_days_with_event_point_cells_clear_land_all_sensors": 15,
+      "clear_land_coverage_thresholds": {
+        "0.9": {
+          "eligible_reported_route_days": 13,
+          "route_days_with_fire_detection": 2,
+          "route_days_without_fire_detection": 11
+        },
+        "0.95": {
+          "eligible_reported_route_days": 13,
+          "route_days_with_fire_detection": 2,
+          "route_days_without_fire_detection": 11
+        },
+        "1.0": {
+          "eligible_reported_route_days": 12,
+          "route_days_with_fire_detection": 2,
+          "route_days_without_fire_detection": 10
+        }
+      }
+    },
+    "positive_event_cohort_report": "fire-viirs-daily-l3-snmf-event-audit-2023-2025.md"
+  },
+  "global_fire_atlas_daily_ignition_route_crosscheck": {
+    "route_event_records_within_10km": 20,
+    "unique_route_fire_season_ids": 20,
+    "unique_start_dates": 17,
+    "inpe_positive_detection_matches_within_2days_and_10km": 16,
+    "snmf_report_matches_within_2days_and_10km": 2,
+    "report": "fire-global-fire-atlas-route-ignitions-2022-2026.md",
+    "interpretation": "GFA adds daily positive event candidates derived from burned-area progression. Its dates are inferred at daily resolution, it has no verified negative route-days, and it cannot validate hourly lead time or alert precision. INPE coincidences are positive-source corroboration and may share satellite platforms; SNMF corroborates only the small selected event subset."
+  },
+  "idecor_ohmc_fwi_prospective_capture": {
+    "route": "Quebrada del Condorito - Balcon Norte",
+    "retrieved_at_utc": "2026-10-23T22:43:17Z",
+    "forecast_valid_date": "2026-10-24",
+    "forecast_fwi_values": [
+      0.0015318546211346984,
+      0.0015318546211346984,
+      0.0071797240525484085,
+      0.0015318546211346984,
+      0.0015318546211346984
+    ],
+    "samples": 10,
+    "report": "fire-idecor-fwi-prospective-capture-2026-10-23.md",
+    "interpretation": "The official Córdoba map supplied one current-day and one next-day FWI layer at five route points. This starts prospective collection; it is one route-date, the points are spatially dependent, the map response has no WRF initialization timestamp, and FWI is fire-behaviour danger rather than calibrated ignition probability."
+  },
+  "data_needed_to_resume_a_defensible_test": [
+    "A complete timestamped incident/active-fire registry for the eight Argentina route corridors, with coordinates or perimeters, source observation time, confidence/quality, and explicit sensor-coverage gaps. The newer GFA screen adds 20 positive event-route records (16 with nearby INPE detections and 2 matched to the available SNMF event subset), but its inferred day-level starts do not provide observed ignition times or verified negatives.",
+    "More independently adjudicated no-fire windows for those corridors. The 2024 VIIRS cohort now provides 122 route-days with at least 90% clear-land coverage across 14 report-date clusters for the sensor-detection target, but its 27 dates were selected from SNMF no-fire reports and do not establish physical fire absence.",
+    "The daily 1-km VNP14A1/VJ114A1/VJ214A1 pilot now covers all 216 route-days on 27 selected 2024 dates; 122 have at least 90% clear-land coverage and 79 are fully clear by the sampled-grid criterion. This supports evaluation of the satellite-detection target, but the cohort has no positive fire detections and cannot establish physical no-fire labels. Extend it with independently timed positive events and broader prospective dates while retaining clouds, unprocessed classes, missing tiles and incomplete observations as unknown.",
+    "Historical or prospectively archived weather forecasts with issue time and valid time, paired to independent fire observations. The first official OHMC/IDECOR FWI snapshot is only one route-date and does not expose the WRF initialization timestamp; continue daily captures and adjudicate event and observed no-fire outcomes.",
+    "At least the required number of independent, adjudicated alert episodes for a chosen precision bound, plus a later untouched season for final evaluation."
+  ],
+  "next_external_candidate": {
+    "dataset": "NASA FIRMS standard-science active-fire archive (VIIRS S-NPP/NOAA-20/NOAA-21 and MODIS)",
+    "official_archive_url": "https://firms.modaps.eosdis.nasa.gov/download/",
+    "official_detection_limits_url": "https://firms.modaps.eosdis.nasa.gov/alerts/notes.php",
+    "coverage_as_reported_by_NASA": {
+      "MODIS_Terra": "2000-11 onward",
+      "MODIS_Aqua": "2002-07 onward",
+      "VIIRS_SNPP": "2012-01-20 onward",
+      "VIIRS_NOAA20": "2018-04-01 onward",
+      "VIIRS_NOAA21": "2023-03-01 onward"
+    },
+    "why_useful": "An independent active-fire sensor family could corroborate GOES alerts and add historical event detections.",
+    "access": "A NASA FIRMS MAP_KEY and NASA_EARTHDATA_TOKEN are configured in the ignored local .env. The 61 exact-time NASA VNP03IMG/VJ103IMG/VJ203IMG granules were downloaded, hash-verified, and paired with VNP14IMG/VJ114IMG/VJ214IMG masks for the Barda corridor.",
+    "data_limits": [
+      "FIRMS is an active-fire detection archive, not a complete fire/no-fire panel.",
+      "NASA notes that fires can be missed between satellite overpasses or under cloud, heavy smoke, or tree canopy; such absences cannot be labeled negative without valid observation/quality coverage.",
+      "NRT data are replaced by standard detections after roughly 2-5 months; NASA recommends standard science-quality data for research."
+    ],
+    "required_companion_data": "A per-pixel or per-route observation/quality mask for each overpass, plus independently archived forecast issue/valid times and official incident/perimeter records. A complete route-time cohort still requires valid fire-free periods or another independent source that can verify non-events."
+  },
+  "source_files_sha256": {
+    "docs/environmental-models-2026-10-22/fire-goes19-2025q4-2026jan-training-report.json": "3900c35b3b156482f2bd50417f48680615ebc43bd7346e7ca3b79fd195f926bb",
+    "docs/environmental-models-2026-10-22/goes19-snmf-2026-jan-event-audit.json": "279f0293f8b7a60a1b482634557591f9fb6882fc7c9c9dec4200eca21315a7d0",
+    "docs/environmental-models-2026-10-22/fire-smn-wrf-snmf-2025-event-test.json": "9c90a2f36cb329a457d964b3e44884fd32f7d9e89a5ba058b1b09b8b23b91be5",
+    "docs/environmental-models-2026-10-22/fire-mapbiomas-snmf-route-month-2025.json": "9a7875bf754b6325d207ec772f1735c7e21effa528ea6e44200cb05a4ae5d5eb",
+    "docs/environmental-models-2026-10-22/fire-gfs-24h-snmf-2026-jan-alert-episodes.json": "fd3fec10f3dff081b0dcdfb6c8a6652a1b49d987b8734d85b99e19e878212434",
+    "docs/environmental-models-2026-10-22/snmf-2026-jan-daily-occurrence-events.json": "ba18284a722410e225906de6ea1ba35e72d5670496c45793363e901beb6efcca",
+    "docs/environmental-models-2026-10-22/snmf-2022-daily-occurrence-events.json": "8ecb11f38419e5d75387db6379757be0ce853ee6a7a5303b89f717e3e0b9c797",
+    "docs/environmental-models-2026-10-22/fire-goes19-short-lead-route-sector-evaluation.json": "8e4d973fb6192a983828d8374da088103d86c101cfa48ae94fb56ad3da10b798",
+    "docs/environmental-models-2026-10-22/fire-goes19-alert-firms-crosscheck-2026-jan.json": "267885e2fa93b8e329ac73cde9489f8d13fa2b78e7d6e2f94f4e0b63ea27cedc",
+    "docs/environmental-models-2026-10-22/fire-goes19-full-trail-10km-evaluation.json": "34adb5a9a796c9a9d95ae9829307c7efa6b2979ca584575f3f94d5d3e1f1b54e",
+    "docs/environmental-models-2026-10-22/fire-viirs-full-swath-coverage-barda-2026-jan.json": "c41272374dae64831c0135990df7971628885c4915bc6e399959cecf46cb32e2",
+    "docs/environmental-models-2026-10-22/fire-viirs-full-swath-barda-2026-jan-positive-screen.json": "547e25dde5ccd74fd81c7b564c18d1c2b55a6016ccb9324d54972b27243c6d9c",
+    "docs/environmental-models-2026-10-22/fire-viirs-geolocation-pilot-barda-2026-jan.json": "ccc699e73f3f231afd9e6eba152683e6a7e1195405380f0345e00251f9e1b412",
+    "docs/environmental-models-2026-10-22/fire-viirs-geolocation-companion-readiness-2026-jan.json": "3140ec824f4da2a9667bce6b3c4c23fd8bb0da6956d6efdc9db54a02c7e18716",
+    "docs/environmental-models-2026-10-22/fire-viirs-full-swath-route-observations-barda-2026-jan.json": "feb42926f1e8e1bae2ab8d247f00e2426c973b37e2164e7f5a195815d8299aed",
+    "docs/environmental-models-2026-10-22/fire-viirs-daily-l3-candidate-audit-2026-10-23.json": "0598401758ec20d500b3f6ac587958aa4aa12325a49653400901fe0c64150489",
+    "docs/environmental-models-2026-10-22/fire-viirs-daily-l3-event-cohort-2023-2025.json": "270abe20744238c9bead77d3ef67aa70db470d552334303c50e201ff40573b48",
+    "docs/environmental-models-2026-10-22/fire-viirs-daily-l3-snmf-event-audit-2023-2025.json": "770ce6f84a9d77aabe7eb9b24c8f057166023c701afb8c80813d781484074dfd",
+    "docs/environmental-models-2026-10-22/fire-viirs-explicit-no-fire-model-crosscheck-2023.json": "5df553d273b9c3da51440fb02a42caacb8945a63e5d6a8dd92be6e1de7e6d8d7",
+    "docs/environmental-models-2026-10-22/fire-viirs-jma-2024-explicit-no-fire-alert-crosscheck.json": "dfc056a181732a41d7380d025fa629a6abdb927a964f2dc1cb59dd50ac6fe22c",
+    "docs/environmental-models-2026-10-22/fire-viirs-jma-2024-explicit-no-fire-all-routes.json": "a3fff92c1ded7bdb051f37b59cf712fc51d20dfd187654c3714be43ab552e835",
+    "docs/environmental-models-2026-10-22/fire-viirs-jma-2024-cmr-gap-fill-noaa20-21.json": "8f90b68c4b5d15bef24fc20ec1dbb093b147bfb52b1287567ff93f87ab5abfea",
+    "docs/environmental-models-2026-10-22/fire-viirs-efire-barda-route-mask-2026-01-05.json": "6db4454fa14bef666cd0f236612b5e6ec2637f798b25f4fdc44a291d31a56b11",
+    "docs/environmental-models-2026-10-22/fire-viirs-snmf-event-route-pass-audit-2025.json": "0b65cd3a7f4b47ab49f226ab94f20d7809c55bbb5e558b92bc0ca01050a2fea1",
+    "docs/environmental-models-2026-10-22/fire-nasa-firms-nrt-route-crosscheck-2026-10-22-23.json": "ffcf9a90c9964a78e08eceb8a1f4162cda798f2dae8de2d1d3079ef57a1dbfb8",
+    "docs/environmental-models-2026-10-22/fire-firms-standard-availability-2026-10-23.json": "ef2c70f0bda21008c73ba04358f9e0485b66a0b407dc916b02ec7a5a901cafb8",
+    "docs/environmental-models-2026-10-22/fire-inpe-prospective-partial-audit-2026-10-23.json": "836b81842eaf05e41548d7f8e0ecd6637e6b23ad34d98cc6cca1c17e21d043d2",
+    "docs/environmental-models-2026-10-22/fire-inpe-prospective-outcomes.json": "5653b768457b7fce18bc53430b835388e33b9c3312a214e3119c8bd8f2510a1a",
+    "docs/environmental-models-2026-10-22/fire-viirs-efire-route-mask-2024-07-10-0430-n21.json": "8c928c5dfb38192db59816b7cc9418bd6acdac1131ddf8872cabd537a6b23936",
+    "docs/environmental-models-2026-10-22/fire-viirs-efire-route-mask-2024-07-10-1831-n21.json": "207d8c364763d96e36317fb3642dc5ededb7834cdb2df632c6a72a69979c5a1b",
+    "docs/environmental-models-2026-10-22/fire-viirs-efire-route-mask-2024-07-10.md": "a917412385ce2f872fe12772f6a0b2589ecd36bc7c6e9895aca602f2dba388f5",
+    "docs/environmental-models-2026-10-22/fire-viirs-2024-no-fire-clear-land-completeness.json": "8b6c4bd6de5770dad90e6a6915223bd351a36b5adcd9560230f9da775a91317b",
+    "docs/environmental-models-2026-10-22/fire-global-fire-atlas-route-ignitions-2022-2026.json": "523b865076dd82383a55a8f89528f5cc33bb6581798655f615a504a6bce6f8e3",
+    "training/data/environmental/private/idecor-fwi-route-snapshots/condorito-2026-10-23.json": "fb5c8f81ea08b495c4927682e8ca70f27ee9e260e4bfb0830c8f1f52e02ef519"
+  },
+  "synthetic_observations": 0,
+  "deployment_approved": false
+}

@@ -60,7 +60,7 @@ Leave-one-participant-out (30 folds). **El umbral de decisión se elige solo con
 | Baseline por umbrales | 0,431 [0,39–0,48] | 0,942 [0,92–0,96] | 0,704 [0,66–0,75] | 0,591 | 0,705 | 0,417 |
 | Random Forest | 0,960 [0,94–0,98] | 0,989 [0,98–0,995] | 0,990 [0,98–0,996] | 0,974 | 0,984 | 0,990 |
 | **XGBoost (elegido)** | **0,963 [0,94–0,98]** | **0,992 [0,986–0,997]** | **0,991 [0,986–0,996]** | **0,978** | **0,986** | **0,993** |
-| CNN 1D | ver sección 8 | | | | | |
+| CNN 1D | 0,937 [0,91–0,96] | 0,987 [0,978–0,994] | 0,984 [0,977–0,991] | 0,961 | 0,976 | 0,996 |
 
 Matriz de confusión (filas real; columnas predicho no-caída/caída): baseline [[4231, 1778], [83, 1346]]; RF [[5950, 59], [16, 1413]]; **XGBoost [[5955, 54], [11, 1418]]**. Diferencias RF–XGBoost dentro del intervalo de confianza: **la elección de XGBoost se debe a menor tamaño y mejor PR-AUC/F2, no a una superioridad demostrada**.
 
@@ -85,7 +85,18 @@ Entrenado sobre ventanas alineadas al impacto, el clasificador es **muy sensible
 
 ## 8. Comparación con la CNN 1D
 
-Implementada en `fall_detection/cnn_eval.py` (2 canales: magnitud y coseno respecto de la gravedad previa; ~6 mil parámetros; mismo protocolo anidado). **Resultado: pendiente de completar al momento de escribir este documento** (la corrida en CPU lleva ~1,5 h y escribirá `training/data/public/fall_detection/metrics_cnn.json`). Hasta contar con él, la CNN **no** forma parte de la comparación ni se despliega; solo se desplegaría si superara claramente a los modelos de árboles, lo que además exigiría implementar su inferencia en TypeScript.
+Implementada en `fall_detection/cnn_eval.py`: 2 canales invariantes a la orientación (magnitud y coseno respecto de la gravedad previa al impacto), 3 convoluciones con pooling global, 5 905 parámetros, 40 épocas, Adam, pérdida con peso de clase (sin remuestreo). Mismo protocolo anidado leave-one-participant-out y **los mismos 7 438 candidatos** que los modelos de árboles. Resultados en `training/data/public/fall_detection/metrics_cnn.json` (84 min en CPU).
+
+| | CNN 1D | XGBoost |
+|---|---|---|
+| Matriz [[VN, FP], [FN, VP]] | [[5914, 95], [19, 1410]] | [[5955, 54], [11, 1418]] |
+| F1 caída [IC 95 %] | 0,961 [0,946–0,976] | 0,978 [0,966–0,988] |
+| PR-AUC | **0,996** | 0,993 |
+| FP al sentarse / acostarse / saltar | 9,8 % / **12,9 %** / 3,5 % | 9,2 % / 5,8 % / 2,1 % |
+| Recall por participante (media; mínimo) | 0,987; 0,917 | 0,992; 0,917 |
+| Especificidad por participante (media; mínimo) | 0,985; 0,922 | 0,991; 0,948 |
+
+La CNN ordena los candidatos levemente mejor (PR-AUC 0,996), pero en el punto de operación elegido sin ver al participante evaluado produce **más falsas alarmas (95 contra 54)**, sobre todo al acostarse, y algo menos de recall. Los intervalos de F1 se solapan apenas, así que **no es claramente mejor**. Además exigiría implementar convoluciones en TypeScript y validar su equivalencia. **Decisión: no se despliega; XGBoost queda como modelo de la app.**
 
 ## 9. Exportación del modelo
 
@@ -163,4 +174,4 @@ Conclusión: **no existe evidencia suficiente para un uso de seguridad real**; l
 Entrenamiento y evaluación: `training/python/fall_detection/` (`dataset.py`, `features.py`, `candidates.py`, `run_loso.py`, `cnn_eval.py`, `sanity_checks.py`, `export_contract.py`, `export_model.py`), `training/python/test_fall_detection.py`, `training/data/public/fall_detection/{metrics,metrics_cnn,sanity_checks,provenance}.json`.
 App: `services/fallDetection/` (`features.ts`, `detector.ts`, `model.ts`, `monitor.ts`, `fallEvents.ts`, `FallDetectionCoordinator.tsx`, `modelContract.json`, `fallModel.json`), `mobile/components/{FallDetectionCard,SosConnectivityNotice}.tsx`, `mobile/screens/FallAssistanceScreen.tsx`, `app/caida-detectada.tsx`, cambios mínimos en `app/_layout.tsx`, `TrailStart.tsx`, `RouteMap.tsx`, `ConfirmSosScreen.tsx`, `accountLifecycle.ts`, `app.json`, `package.json`.
 
-Comandos: `npm run train:fall-detection` (≈ 15 min, más la CNN opcional: ~1,5 h en CPU), `npm run test:fall-detection`.
+Comandos: `npm run train:fall-detection` (≈ 15 min); la CNN es opcional y aparte: `cd training/python && py -m fall_detection.cnn_eval` (≈ 1,5 h en CPU, requiere `torch`), `npm run test:fall-detection`.

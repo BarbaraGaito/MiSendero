@@ -1,0 +1,89 @@
+{
+  "experiment_id": "goes16-february-2024-official-event-crosscheck",
+  "status": "independent_event_corroboration_only",
+  "goes_acquisition": {
+    "source": "NOAA GOES-16 ABI-L2-FDCF Full Disk",
+    "period_start_utc": "2024-02-01T00:00:00Z",
+    "period_end_exclusive_utc": "2024-02-14T00:00:00Z",
+    "hourly_slots": 312,
+    "missing_scans": 0,
+    "positive_high_quality_observations_sampled": 2,
+    "sha256": "08e959aa27df5f3f855fa77909b2f173ffc57d6f7b43d328ec76f334828bbcc9"
+  },
+  "globfire_matches": [
+    {
+      "globfire_event_id": 20207456,
+      "event_label": "Brazo Tristeza / Arroyo Creton",
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "globfire_dates": ["2024-02-05", "2024-02-10"],
+      "globfire_area_ha": 473,
+      "route_sector_center_distance_km": 16.249,
+      "snmf_daily_report": {
+        "date": "2024-02-05",
+        "reported_start": "2024-02-05",
+        "status": "active",
+        "name": "Arroyo Creton",
+        "province": "Río Negro",
+        "coordinates_dms": "41° 8' 55.26'' S, 71° 41' 56.34'' O",
+        "url": "https://www.argentina.gob.ar/sites/default/files/2024/01/reporte_diario_05-02-2024.pdf"
+      },
+      "official_detail": {
+        "source": "Gobierno de Río Negro",
+        "url": "https://rionegro.gov.ar/articulo/48232/el-splif-se-sumara-para-combatir-el-incendio-en-bariloche",
+        "reported_start_window_local": "2024-02-05 02:00-04:00",
+        "note": "Brazo Tristeza, Parque Nacional Nahuel Huapi"
+      },
+      "goes_detection": {
+        "count": 1,
+        "time_utc": "2024-02-05T18:00:20.200000+00:00",
+        "distance_to_final_perimeter_km": 0.806,
+        "day_from_globfire_initial_date": 0,
+        "temporal_relation": "same calendar day as official reported start; after reported 02:00-04:00 local ignition/start window"
+      },
+      "interpretation": "Confirmed real event and same-day satellite detection after reported start; no advance warning shown. GlobFire's final area (473ha) and later reported area (~650ha on 2024-03-01) describe different products/times."
+    },
+    {
+      "globfire_event_id": 20202076,
+      "event_label": "Parque Provincial Ernesto Tornquist / Cerro Ventana vicinity",
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "globfire_dates": ["2024-02-04", "2024-02-05"],
+      "globfire_area_ha": 129,
+      "route_sector_center_distance_km": 6.658,
+      "snmf_daily_report": {
+        "date": "2024-02-05",
+        "reported_start": "2024-02-03",
+        "status": "extinguished on 2024-02-05",
+        "name": "Parque Provincial Ernesto Tornquist",
+        "province": "Buenos Aires",
+        "coordinates_dms": "38° 4' 26.45'' S, 61° 55' 29.80'' O",
+        "reported_area_ha": 300,
+        "url": "https://www.argentina.gob.ar/sites/default/files/2024/01/reporte_diario_05-02-2024.pdf"
+      },
+      "goes_detection": {
+        "count_within_frozen_date_and_spatial_rule": 0,
+        "date_margin_days_each_side": 3,
+        "perimeter_distance_thresholds_km": [2.5, 5, 10]
+      },
+      "interpretation": "An official fire was active at the nearby named park during the GlobFire interval; exact one-to-one event identity is a spatial-temporal association, not a verified perimeter match. No GOES detection was found under the fixed rule."
+    }
+  ],
+  "metrics": {
+    "eligible_events_within_10km_of_sector_centers": 1,
+    "matched_events_at_10km": 0,
+    "eligible_events_within_20km_of_sector_centers": 2,
+    "matched_events_at_20km": 1,
+    "precision_estimate": null,
+    "advance_warning_successes": 0
+  },
+  "limitations": [
+    "The event window was selected after inspecting perimeters; this is retrospective and not a preregistered test.",
+    "Only two events are included and they are not a basis for a reliable precision estimate.",
+    "GOES active-fire observations and GlobFire burned-area polygons are satellite-derived; SNMF corroborates the event but does not supply exhaustive negative labels.",
+    "The GOES coincidence for Brazo Tristeza was later than the start time reported by authorities, so it is detection, not advance prediction.",
+    "The route-sector sample points do not represent the full trail geometry.",
+    "Official reported area and GlobFire final burned area refer to different products and report dates."
+  ],
+  "deployment_approved": false,
+  "synthetic_observations": 0,
+  "report": "docs/environmental-models-2026-10-22/fire-goes16-2024-feb-official-event-validation.md"
+}

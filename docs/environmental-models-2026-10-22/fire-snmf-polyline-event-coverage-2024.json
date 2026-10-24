@@ -1,0 +1,1581 @@
+{
+  "experiment_id": "snmf-reported-fire-starts-full-trail-polyline-2024",
+  "meaning": "Positive event coverage using complete reviewed trail polylines; not an evaluation of prediction precision.",
+  "period": [
+    "2024-01-01",
+    "2024-11-20"
+  ],
+  "spatial_protocol": {
+    "distance": "Local equirectangular point-to-polyline segment distance, centered on each event",
+    "radii_km": [
+      10,
+      20
+    ],
+    "minimum_polyline_vertices_by_route": {
+      "Sendero Macuco - Salto Arrechea": 219,
+      "Refugio Frey desde Villa Catedral": 1057,
+      "Quebrada del Condorito - Balcon Norte": 379,
+      "Sendero Namuncura": 37,
+      "Cerro Ventana - Hueco de la Ventana": 221,
+      "Bosque Tallado desde la plataforma del Piltriquitron": 103,
+      "Sendero Che Roga - Mburucuyá": 234,
+      "Sendero La Chuña - El Rey": 93
+    },
+    "route_geometry_source_hashes": {
+      "Sendero Macuco - Salto Arrechea": "148e8cb09cd0d851b88a1875e60763f34efffe046a68c1cb886911fde629477b",
+      "Refugio Frey desde Villa Catedral": "9947df55746c5b8033b0955a9bdd8b2ddb61db1dad2621b1fc0d72fa1e21acdf",
+      "Quebrada del Condorito - Balcon Norte": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74",
+      "Sendero Namuncura": "9ffaf89538fec8fb40b3d760b8e8b8fbcc154794b28d438fa6b046429fc5d32c",
+      "Cerro Ventana - Hueco de la Ventana": "61e1a9b62ae9b691b29c437aed7792b3723c7af54f03feb2311d4322fd3f5066",
+      "Bosque Tallado desde la plataforma del Piltriquitron": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa",
+      "Sendero Che Roga - Mburucuyá": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e",
+      "Sendero La Chuña - El Rey": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    "routes_without_reviewed_polyline": [],
+    "center_distance_is_computed_against_existing_sector_coordinate": true
+  },
+  "report_coverage": {
+    "available_report_dates": 277,
+    "period_days": 324,
+    "dates_without_pdf_are_unknown": 47
+  },
+  "source_hashes": {
+    "reports": "10c44e0b77d99d771c3256978f3d5c976b3dd05262ab122108aff0d4861e0bad",
+    "manifest": "e382213264a4bd6d75de64c25131532112ee172581b0d1197740689b3a817465",
+    "geometry": "d622e3bd3bae7c97df9152d5ae22fa9cf3136f2bbb0ee807703eaddc21d6610a",
+    "geography": "7e475b478db7bb678cc0a1539fdf484e0c8de0a9baa98916fb90f652f75ff834"
+  },
+  "results": {
+    "10": {
+      "incident_records_within_radius": 8,
+      "unique_route_sector_start_days": 8,
+      "route_sector_days_by_region": {
+        "Bosque Tallado desde la plataforma del Piltriquitron": 5,
+        "Cerro Ventana - Hueco de la Ventana": 1,
+        "Refugio Frey desde Villa Catedral": 1,
+        "Sendero Namuncura": 1
+      },
+      "days_found_by_polyline_but_missed_by_center": []
+    },
+    "20": {
+      "incident_records_within_radius": 24,
+      "unique_route_sector_start_days": 20,
+      "route_sector_days_by_region": {
+        "Bosque Tallado desde la plataforma del Piltriquitron": 8,
+        "Cerro Ventana - Hueco de la Ventana": 1,
+        "Quebrada del Condorito - Balcon Norte": 1,
+        "Refugio Frey desde Villa Catedral": 5,
+        "Sendero Che Roga - Mburucuyá": 3,
+        "Sendero Namuncura": 2
+      },
+      "days_found_by_polyline_but_missed_by_center": [
+        {
+          "route_sector": "Refugio Frey desde Villa Catedral",
+          "reported_start_date": "2024-02-05"
+        }
+      ]
+    }
+  },
+  "events_within_50km": [
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2024-01-06",
+      "incident_name": "El Eden (Las Golondrinas)",
+      "province": "Chubut",
+      "line_distance_km": 7.21,
+      "center_distance_km": 7.62,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2024-01-17",
+      "incident_name": "Alto Chubut",
+      "province": "Río Negro",
+      "line_distance_km": 49.264,
+      "center_distance_km": 49.664,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2024-01-17",
+      "incident_name": "Hermoso Alto Chubut",
+      "province": "Río Negro",
+      "line_distance_km": 49.264,
+      "center_distance_km": 49.664,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2024-01-26",
+      "incident_name": "Callejon Los Lupinos",
+      "province": "Chubut",
+      "line_distance_km": 8.576,
+      "center_distance_km": 8.969,
+      "reported_start_date_pdf_available": false,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2024-01-29",
+      "incident_name": "Hospital Epuyen",
+      "province": "Chubut",
+      "line_distance_km": 29.822,
+      "center_distance_km": 30.035,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2024-01-30",
+      "incident_name": "Estancia El Maiten",
+      "province": "Chubut",
+      "line_distance_km": 30.074,
+      "center_distance_km": 30.342,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2024-02-01",
+      "incident_name": "Leleque",
+      "province": "Chubut",
+      "line_distance_km": 37.696,
+      "center_distance_km": 37.898,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2024-02-07",
+      "incident_name": "Maiten",
+      "province": "Chubut",
+      "line_distance_km": 26.708,
+      "center_distance_km": 26.885,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2024-02-18",
+      "incident_name": "Rincon",
+      "province": "Chubut",
+      "line_distance_km": 11.735,
+      "center_distance_km": 12.084,
+      "reported_start_date_pdf_available": false,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2024-02-18",
+      "incident_name": "Rincon de lobos",
+      "province": "Chubut",
+      "line_distance_km": 11.735,
+      "center_distance_km": 12.084,
+      "reported_start_date_pdf_available": false,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2024-02-19",
+      "incident_name": "Rincon de lobos 2",
+      "province": "Chubut",
+      "line_distance_km": 13.344,
+      "center_distance_km": 13.702,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2024-02-25",
+      "incident_name": "Antilef",
+      "province": "Río Negro",
+      "line_distance_km": 25.878,
+      "center_distance_km": 26.281,
+      "reported_start_date_pdf_available": false,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2024-03-07",
+      "incident_name": "Lote 1 campo INTA",
+      "province": "Chubut",
+      "line_distance_km": 5.182,
+      "center_distance_km": 5.586,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2024-04-16",
+      "incident_name": "Camping",
+      "province": "Chubut",
+      "line_distance_km": 9.006,
+      "center_distance_km": 9.415,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2024-09-13",
+      "incident_name": "Epuyen 1",
+      "province": "Chubut",
+      "line_distance_km": 31.638,
+      "center_distance_km": 31.847,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2024-09-13",
+      "incident_name": "Epuyen 2",
+      "province": "Chubut",
+      "line_distance_km": 31.848,
+      "center_distance_km": 32.057,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2024-09-15",
+      "incident_name": "Golondrinas RN 40",
+      "province": "Chubut",
+      "line_distance_km": 5.37,
+      "center_distance_km": 5.774,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2024-10-08",
+      "incident_name": "Paraje Arroyo Las",
+      "province": "Río Negro",
+      "line_distance_km": 32.251,
+      "center_distance_km": 32.655,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2024-10-08",
+      "incident_name": "Paraje Arroyo Las Minas",
+      "province": "Río Negro",
+      "line_distance_km": 32.251,
+      "center_distance_km": 32.655,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2024-10-31",
+      "incident_name": "Campo de Rosin",
+      "province": "Chubut",
+      "line_distance_km": 10.395,
+      "center_distance_km": 10.794,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa"
+    },
+    {
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "reported_start_date": "2024-02-03",
+      "incident_name": "Parque Provincial Ernesto",
+      "province": "Buenos Aires",
+      "line_distance_km": 8.005,
+      "center_distance_km": 8.27,
+      "reported_start_date_pdf_available": false,
+      "geometry_sha256": "61e1a9b62ae9b691b29c437aed7792b3723c7af54f03feb2311d4322fd3f5066"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2024-06-18",
+      "incident_name": "Loma Los Parapentes",
+      "province": "Córdoba",
+      "line_distance_km": 48.862,
+      "center_distance_km": 50.043,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2024-07-24",
+      "incident_name": "Rumi",
+      "province": "Córdoba",
+      "line_distance_km": 48.46,
+      "center_distance_km": 49.58,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2024-08-02",
+      "incident_name": "Autocity",
+      "province": "Córdoba",
+      "line_distance_km": 47.605,
+      "center_distance_km": 48.335,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2024-08-13",
+      "incident_name": "La Marianita",
+      "province": "Córdoba",
+      "line_distance_km": 25.733,
+      "center_distance_km": 26.562,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2024-08-13",
+      "incident_name": "El Chorrito",
+      "province": "Córdoba",
+      "line_distance_km": 46.758,
+      "center_distance_km": 47.887,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2024-08-28",
+      "incident_name": "Quebrada de la",
+      "province": "Córdoba",
+      "line_distance_km": 42.525,
+      "center_distance_km": 43.46,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2024-08-28",
+      "incident_name": "Quebrada de la Cancha",
+      "province": "Córdoba",
+      "line_distance_km": 42.525,
+      "center_distance_km": 43.46,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2024-08-28",
+      "incident_name": "Predio Hospital Colonia Santa María",
+      "province": "Córdoba",
+      "line_distance_km": 45.326,
+      "center_distance_km": 46.827,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2024-09-02",
+      "incident_name": "Frente a CONAE",
+      "province": "Córdoba",
+      "line_distance_km": 27.057,
+      "center_distance_km": 27.602,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2024-09-05",
+      "incident_name": "Mezquita",
+      "province": "Córdoba",
+      "line_distance_km": 44.698,
+      "center_distance_km": 46.394,
+      "reported_start_date_pdf_available": false,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2024-09-06",
+      "incident_name": "El Volcán",
+      "province": "Córdoba",
+      "line_distance_km": 28.732,
+      "center_distance_km": 30.486,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2024-09-11",
+      "incident_name": "Los Hornillos",
+      "province": "Córdoba",
+      "line_distance_km": 34.065,
+      "center_distance_km": 34.475,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2024-09-14",
+      "incident_name": "Bosque",
+      "province": "Córdoba",
+      "line_distance_km": 11.73,
+      "center_distance_km": 12.266,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2024-09-14",
+      "incident_name": "Bosque Alegre",
+      "province": "Córdoba",
+      "line_distance_km": 11.73,
+      "center_distance_km": 12.266,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2024-09-19",
+      "incident_name": "Cayetano) Villa Berna",
+      "province": "Córdoba",
+      "line_distance_km": 30.977,
+      "center_distance_km": 31.423,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2024-09-21",
+      "incident_name": "Piedra Bola",
+      "province": "Córdoba",
+      "line_distance_km": 28.99,
+      "center_distance_km": 30.984,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2024-10-14",
+      "incident_name": "El Manantial",
+      "province": "Córdoba",
+      "line_distance_km": 26.653,
+      "center_distance_km": 28.561,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_start_date": "2024-01-06",
+      "incident_name": "Puerto Manzano",
+      "province": "Neuquén",
+      "line_distance_km": 42.915,
+      "center_distance_km": 44.511,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "9947df55746c5b8033b0955a9bdd8b2ddb61db1dad2621b1fc0d72fa1e21acdf"
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_start_date": "2024-01-17",
+      "incident_name": "La Lomita",
+      "province": "Río Negro",
+      "line_distance_km": 11.282,
+      "center_distance_km": 13.262,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "9947df55746c5b8033b0955a9bdd8b2ddb61db1dad2621b1fc0d72fa1e21acdf"
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_start_date": "2024-01-17",
+      "incident_name": "Alto Chubut",
+      "province": "Río Negro",
+      "line_distance_km": 46.398,
+      "center_distance_km": 48.938,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "9947df55746c5b8033b0955a9bdd8b2ddb61db1dad2621b1fc0d72fa1e21acdf"
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_start_date": "2024-01-17",
+      "incident_name": "Hermoso Alto Chubut",
+      "province": "Río Negro",
+      "line_distance_km": 46.398,
+      "center_distance_km": 48.938,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "9947df55746c5b8033b0955a9bdd8b2ddb61db1dad2621b1fc0d72fa1e21acdf"
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_start_date": "2024-01-18",
+      "incident_name": "La Lomita 2",
+      "province": "Río Negro",
+      "line_distance_km": 11.467,
+      "center_distance_km": 13.457,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "9947df55746c5b8033b0955a9bdd8b2ddb61db1dad2621b1fc0d72fa1e21acdf"
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_start_date": "2024-01-18",
+      "incident_name": "Las Piedritas",
+      "province": "Neuquén",
+      "line_distance_km": 44.919,
+      "center_distance_km": 46.485,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "9947df55746c5b8033b0955a9bdd8b2ddb61db1dad2621b1fc0d72fa1e21acdf"
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_start_date": "2024-01-18",
+      "incident_name": "Puerto Manzano",
+      "province": "Neuquén",
+      "line_distance_km": 46.076,
+      "center_distance_km": 47.601,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "9947df55746c5b8033b0955a9bdd8b2ddb61db1dad2621b1fc0d72fa1e21acdf"
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_start_date": "2024-02-05",
+      "incident_name": "Arroyo Creton",
+      "province": "Río Negro",
+      "line_distance_km": 18.661,
+      "center_distance_km": 20.453,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "9947df55746c5b8033b0955a9bdd8b2ddb61db1dad2621b1fc0d72fa1e21acdf"
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_start_date": "2024-02-05",
+      "incident_name": "RAPE Arroyo Creton",
+      "province": "Río Negro",
+      "line_distance_km": 18.661,
+      "center_distance_km": 20.453,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "9947df55746c5b8033b0955a9bdd8b2ddb61db1dad2621b1fc0d72fa1e21acdf"
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_start_date": "2024-02-12",
+      "incident_name": "Pedro Radio Nacional",
+      "province": "Río Negro",
+      "line_distance_km": 14.772,
+      "center_distance_km": 16.902,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "9947df55746c5b8033b0955a9bdd8b2ddb61db1dad2621b1fc0d72fa1e21acdf"
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_start_date": "2024-02-12",
+      "incident_name": "Radio Nacional",
+      "province": "Río Negro",
+      "line_distance_km": 14.772,
+      "center_distance_km": 16.902,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "9947df55746c5b8033b0955a9bdd8b2ddb61db1dad2621b1fc0d72fa1e21acdf"
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_start_date": "2024-02-18",
+      "incident_name": "Ñirihuau",
+      "province": "Río Negro",
+      "line_distance_km": 26.864,
+      "center_distance_km": 29.068,
+      "reported_start_date_pdf_available": false,
+      "geometry_sha256": "9947df55746c5b8033b0955a9bdd8b2ddb61db1dad2621b1fc0d72fa1e21acdf"
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_start_date": "2024-02-18",
+      "incident_name": "Pedro Fortin Chacabuco",
+      "province": "Río Negro",
+      "line_distance_km": 31.069,
+      "center_distance_km": 33.435,
+      "reported_start_date_pdf_available": false,
+      "geometry_sha256": "9947df55746c5b8033b0955a9bdd8b2ddb61db1dad2621b1fc0d72fa1e21acdf"
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_start_date": "2024-10-16",
+      "incident_name": "Dos Valles",
+      "province": "Río Negro",
+      "line_distance_km": 7.961,
+      "center_distance_km": 9.907,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "9947df55746c5b8033b0955a9bdd8b2ddb61db1dad2621b1fc0d72fa1e21acdf"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2024-01-31",
+      "incident_name": "09 PAGO DE LOS DESEOS EVENTO N°",
+      "province": "Corrientes",
+      "line_distance_km": 48.958,
+      "center_distance_km": 49.417,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2024-02-01",
+      "incident_name": "EVENTO VIGECIMO SEXTO EVENTO",
+      "province": "Corrientes",
+      "line_distance_km": 47.152,
+      "center_distance_km": 48.886,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2024-02-01",
+      "incident_name": "EVENTO TRIGÉSIMO EVENTO",
+      "province": "Corrientes",
+      "line_distance_km": 48.547,
+      "center_distance_km": 49.901,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2024-02-03",
+      "incident_name": "Cuadragesimo noveno evento",
+      "province": "Corrientes",
+      "line_distance_km": 42.566,
+      "center_distance_km": 42.566,
+      "reported_start_date_pdf_available": false,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2024-02-12",
+      "incident_name": "160",
+      "province": "Corrientes",
+      "line_distance_km": 28.749,
+      "center_distance_km": 28.875,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2024-02-12",
+      "incident_name": "156",
+      "province": "Corrientes",
+      "line_distance_km": 46.493,
+      "center_distance_km": 48.047,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2024-02-14",
+      "incident_name": "168",
+      "province": "Corrientes",
+      "line_distance_km": 30.391,
+      "center_distance_km": 30.502,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2024-02-17",
+      "incident_name": "204",
+      "province": "Corrientes",
+      "line_distance_km": 49.38,
+      "center_distance_km": 50.744,
+      "reported_start_date_pdf_available": false,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2024-02-18",
+      "incident_name": "212",
+      "province": "Corrientes",
+      "line_distance_km": 49.287,
+      "center_distance_km": 50.698,
+      "reported_start_date_pdf_available": false,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2024-02-20",
+      "incident_name": "238",
+      "province": "Corrientes",
+      "line_distance_km": 42.533,
+      "center_distance_km": 44.292,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2024-02-21",
+      "incident_name": "256",
+      "province": "Corrientes",
+      "line_distance_km": 32.05,
+      "center_distance_km": 33.775,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2024-02-21",
+      "incident_name": "265",
+      "province": "Corrientes",
+      "line_distance_km": 43.291,
+      "center_distance_km": 44.765,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2024-03-01",
+      "incident_name": "333",
+      "province": "Corrientes",
+      "line_distance_km": 18.372,
+      "center_distance_km": 19.316,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2024-03-04",
+      "incident_name": "348",
+      "province": "Corrientes",
+      "line_distance_km": 40.533,
+      "center_distance_km": 40.746,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2024-03-04",
+      "incident_name": "351",
+      "province": "Corrientes",
+      "line_distance_km": 41.613,
+      "center_distance_km": 41.613,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2024-03-04",
+      "incident_name": "349",
+      "province": "Corrientes",
+      "line_distance_km": 42.63,
+      "center_distance_km": 42.63,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2024-03-04",
+      "incident_name": "347",
+      "province": "Corrientes",
+      "line_distance_km": 48.979,
+      "center_distance_km": 49.463,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2024-03-05",
+      "incident_name": "354",
+      "province": "Corrientes",
+      "line_distance_km": 42.122,
+      "center_distance_km": 42.122,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2024-03-05",
+      "incident_name": "353",
+      "province": "Corrientes",
+      "line_distance_km": 42.353,
+      "center_distance_km": 42.353,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2024-03-06",
+      "incident_name": "391",
+      "province": "Corrientes",
+      "line_distance_km": 28.956,
+      "center_distance_km": 29.078,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2024-03-06",
+      "incident_name": "390",
+      "province": "Corrientes",
+      "line_distance_km": 33.492,
+      "center_distance_km": 33.492,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2024-03-06",
+      "incident_name": "392",
+      "province": "Corrientes",
+      "line_distance_km": 49.08,
+      "center_distance_km": 50.539,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2024-03-07",
+      "incident_name": "405",
+      "province": "Corrientes",
+      "line_distance_km": 40.185,
+      "center_distance_km": 40.185,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2024-03-07",
+      "incident_name": "412",
+      "province": "Corrientes",
+      "line_distance_km": 43.057,
+      "center_distance_km": 43.297,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2024-03-08",
+      "incident_name": "427",
+      "province": "Corrientes",
+      "line_distance_km": 43.707,
+      "center_distance_km": 43.931,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2024-03-09",
+      "incident_name": "434",
+      "province": "Corrientes",
+      "line_distance_km": 36.107,
+      "center_distance_km": 37.827,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2024-03-11",
+      "incident_name": "447",
+      "province": "Corrientes",
+      "line_distance_km": 24.232,
+      "center_distance_km": 24.432,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2024-03-11",
+      "incident_name": "440",
+      "province": "Corrientes",
+      "line_distance_km": 35.799,
+      "center_distance_km": 35.799,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2024-03-11",
+      "incident_name": "448",
+      "province": "Corrientes",
+      "line_distance_km": 47.141,
+      "center_distance_km": 47.582,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2024-03-12",
+      "incident_name": "465",
+      "province": "Corrientes",
+      "line_distance_km": 24.531,
+      "center_distance_km": 24.733,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2024-03-12",
+      "incident_name": "463",
+      "province": "Corrientes",
+      "line_distance_km": 40.061,
+      "center_distance_km": 40.061,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2024-03-12",
+      "incident_name": "471",
+      "province": "Corrientes",
+      "line_distance_km": 42.435,
+      "center_distance_km": 44.166,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2024-03-12",
+      "incident_name": "470",
+      "province": "Corrientes",
+      "line_distance_km": 46.846,
+      "center_distance_km": 48.372,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2024-03-12",
+      "incident_name": "472",
+      "province": "Corrientes",
+      "line_distance_km": 49.373,
+      "center_distance_km": 50.751,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2024-03-13",
+      "incident_name": "506",
+      "province": "Corrientes",
+      "line_distance_km": 43.234,
+      "center_distance_km": 44.342,
+      "reported_start_date_pdf_available": false,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2024-03-13",
+      "incident_name": "505",
+      "province": "Corrientes",
+      "line_distance_km": 48.947,
+      "center_distance_km": 50.467,
+      "reported_start_date_pdf_available": false,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2024-03-19",
+      "incident_name": "558",
+      "province": "Corrientes",
+      "line_distance_km": 15.42,
+      "center_distance_km": 16.42,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2024-03-19",
+      "incident_name": "552",
+      "province": "Corrientes",
+      "line_distance_km": 42.179,
+      "center_distance_km": 42.179,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2024-03-20",
+      "incident_name": "562",
+      "province": "Corrientes",
+      "line_distance_km": 29.737,
+      "center_distance_km": 29.847,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2024-03-20",
+      "incident_name": "579",
+      "province": "Corrientes",
+      "line_distance_km": 38.277,
+      "center_distance_km": 38.416,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2024-03-20",
+      "incident_name": "580",
+      "province": "Corrientes",
+      "line_distance_km": 43.138,
+      "center_distance_km": 43.661,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2024-03-25",
+      "incident_name": "611",
+      "province": "Corrientes",
+      "line_distance_km": 28.278,
+      "center_distance_km": 28.37,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2024-03-25",
+      "incident_name": "608",
+      "province": "Corrientes",
+      "line_distance_km": 38.503,
+      "center_distance_km": 38.503,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2024-03-26",
+      "incident_name": "630",
+      "province": "Corrientes",
+      "line_distance_km": 46.261,
+      "center_distance_km": 48.008,
+      "reported_start_date_pdf_available": false,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2024-03-27",
+      "incident_name": "648",
+      "province": "Corrientes",
+      "line_distance_km": 27.746,
+      "center_distance_km": 27.807,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2024-03-27",
+      "incident_name": "670",
+      "province": "Corrientes",
+      "line_distance_km": 49.575,
+      "center_distance_km": 51.066,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2024-03-28",
+      "incident_name": "677",
+      "province": "Corrientes",
+      "line_distance_km": 49.441,
+      "center_distance_km": 49.711,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2024-03-29",
+      "incident_name": "680",
+      "province": "Corrientes",
+      "line_distance_km": 49.356,
+      "center_distance_km": 49.628,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2024-03-30",
+      "incident_name": "694",
+      "province": "Corrientes",
+      "line_distance_km": 25.968,
+      "center_distance_km": 27.573,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2024-03-30",
+      "incident_name": "702",
+      "province": "Corrientes",
+      "line_distance_km": 35.146,
+      "center_distance_km": 35.318,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2024-03-30",
+      "incident_name": "691",
+      "province": "Corrientes",
+      "line_distance_km": 37.257,
+      "center_distance_km": 37.9,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2024-04-01",
+      "incident_name": "711",
+      "province": "Corrientes",
+      "line_distance_km": 40.416,
+      "center_distance_km": 41.861,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2024-04-01",
+      "incident_name": "710",
+      "province": "Corrientes",
+      "line_distance_km": 48.809,
+      "center_distance_km": 50.55,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2024-04-08",
+      "incident_name": "774",
+      "province": "Corrientes",
+      "line_distance_km": 44.148,
+      "center_distance_km": 44.148,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2024-04-18",
+      "incident_name": "792",
+      "province": "Corrientes",
+      "line_distance_km": 42.814,
+      "center_distance_km": 43.853,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2024-04-19",
+      "incident_name": "810",
+      "province": "Corrientes",
+      "line_distance_km": 28.077,
+      "center_distance_km": 28.735,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2024-04-20",
+      "incident_name": "824",
+      "province": "Corrientes",
+      "line_distance_km": 35.532,
+      "center_distance_km": 35.638,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2024-04-20",
+      "incident_name": "825",
+      "province": "Corrientes",
+      "line_distance_km": 44.635,
+      "center_distance_km": 44.635,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2024-04-21",
+      "incident_name": "849",
+      "province": "Corrientes",
+      "line_distance_km": 18.107,
+      "center_distance_km": 18.107,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2024-04-21",
+      "incident_name": "848",
+      "province": "Corrientes",
+      "line_distance_km": 25.116,
+      "center_distance_km": 25.185,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2024-04-21",
+      "incident_name": "850",
+      "province": "Corrientes",
+      "line_distance_km": 42.893,
+      "center_distance_km": 42.893,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2024-04-21",
+      "incident_name": "851",
+      "province": "Corrientes",
+      "line_distance_km": 44.303,
+      "center_distance_km": 44.315,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2024-04-26",
+      "incident_name": "856",
+      "province": "Corrientes",
+      "line_distance_km": 39.078,
+      "center_distance_km": 39.078,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2024-04-30",
+      "incident_name": "882",
+      "province": "Corrientes",
+      "line_distance_km": 49.037,
+      "center_distance_km": 50.174,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2024-05-03",
+      "incident_name": "897",
+      "province": "Corrientes",
+      "line_distance_km": 42.214,
+      "center_distance_km": 42.214,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2024-05-06",
+      "incident_name": "913",
+      "province": "Corrientes",
+      "line_distance_km": 38.18,
+      "center_distance_km": 38.625,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2024-07-22",
+      "incident_name": "La Cañada",
+      "province": "Jujuy",
+      "line_distance_km": 49.479,
+      "center_distance_km": 50.754,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2024-07-24",
+      "incident_name": "Bañadito",
+      "province": "Jujuy",
+      "line_distance_km": 49.88,
+      "center_distance_km": 51.124,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2024-08-02",
+      "incident_name": "La mentirosa",
+      "province": "Jujuy",
+      "line_distance_km": 49.605,
+      "center_distance_km": 49.81,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2024-08-06",
+      "incident_name": "Campo Santo",
+      "province": "Salta",
+      "line_distance_km": 43.012,
+      "center_distance_km": 44.627,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2024-08-07",
+      "incident_name": "El Nochero",
+      "province": "Jujuy",
+      "line_distance_km": 48.717,
+      "center_distance_km": 50.041,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2024-08-14",
+      "incident_name": "La Perdida",
+      "province": "Jujuy",
+      "line_distance_km": 44.025,
+      "center_distance_km": 45.263,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2024-08-28",
+      "incident_name": "El Trestao",
+      "province": "Jujuy",
+      "line_distance_km": 46.592,
+      "center_distance_km": 47.915,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2024-09-02",
+      "incident_name": "De paso",
+      "province": "Jujuy",
+      "line_distance_km": 41.051,
+      "center_distance_km": 41.167,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2024-09-03",
+      "incident_name": "Medio El Desconocido",
+      "province": "Jujuy",
+      "line_distance_km": 40.247,
+      "center_distance_km": 40.37,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2024-09-06",
+      "incident_name": "El Muerto",
+      "province": "Jujuy",
+      "line_distance_km": 48.387,
+      "center_distance_km": 49.449,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2024-09-06",
+      "incident_name": "argentino Alfa2",
+      "province": "Jujuy",
+      "line_distance_km": 49.028,
+      "center_distance_km": 50.06,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2024-09-08",
+      "incident_name": "Lobaton",
+      "province": "Jujuy",
+      "line_distance_km": 42.618,
+      "center_distance_km": 43.276,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2024-09-09",
+      "incident_name": "La Lomada",
+      "province": "Jujuy",
+      "line_distance_km": 35.423,
+      "center_distance_km": 35.441,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2024-09-10",
+      "incident_name": "El Maiz",
+      "province": "Jujuy",
+      "line_distance_km": 44.564,
+      "center_distance_km": 45.082,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2024-09-13",
+      "incident_name": "Al Norte SA",
+      "province": "Jujuy",
+      "line_distance_km": 46.257,
+      "center_distance_km": 46.39,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2024-09-15",
+      "incident_name": "La Caja",
+      "province": "Jujuy",
+      "line_distance_km": 42.176,
+      "center_distance_km": 43.349,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2024-09-20",
+      "incident_name": "Manantiales",
+      "province": "Jujuy",
+      "line_distance_km": 40.98,
+      "center_distance_km": 42.298,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2024-09-23",
+      "incident_name": "El Viejo",
+      "province": "Jujuy",
+      "line_distance_km": 47.943,
+      "center_distance_km": 49.059,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2024-10-01",
+      "incident_name": "Malhoja",
+      "province": "Jujuy",
+      "line_distance_km": 45.065,
+      "center_distance_km": 45.214,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2024-10-04",
+      "incident_name": "DJ",
+      "province": "Jujuy",
+      "line_distance_km": 43.296,
+      "center_distance_km": 43.416,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2024-10-05",
+      "incident_name": "La Soñada",
+      "province": "Jujuy",
+      "line_distance_km": 42.85,
+      "center_distance_km": 42.967,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2024-10-06",
+      "incident_name": "Mosquito Negro",
+      "province": "Jujuy",
+      "line_distance_km": 37.102,
+      "center_distance_km": 37.653,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2024-10-15",
+      "incident_name": "El Pozo",
+      "province": "Jujuy",
+      "line_distance_km": 47.766,
+      "center_distance_km": 48.404,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2024-10-28",
+      "incident_name": "El Cachorro",
+      "province": "Jujuy",
+      "line_distance_km": 38.818,
+      "center_distance_km": 39.105,
+      "reported_start_date_pdf_available": false,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "reported_start_date": "2024-01-19",
+      "incident_name": "Puesto Otero",
+      "province": "La Pampa",
+      "line_distance_km": 34.843,
+      "center_distance_km": 34.962,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "9ffaf89538fec8fb40b3d760b8e8b8fbcc154794b28d438fa6b046429fc5d32c"
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "reported_start_date": "2024-01-30",
+      "incident_name": "Tranquerón",
+      "province": "La Pampa",
+      "line_distance_km": 4.595,
+      "center_distance_km": 4.768,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "9ffaf89538fec8fb40b3d760b8e8b8fbcc154794b28d438fa6b046429fc5d32c"
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "reported_start_date": "2024-01-30",
+      "incident_name": "La Casilla",
+      "province": "La Pampa",
+      "line_distance_km": 34.423,
+      "center_distance_km": 34.459,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "9ffaf89538fec8fb40b3d760b8e8b8fbcc154794b28d438fa6b046429fc5d32c"
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "reported_start_date": "2024-01-30",
+      "incident_name": "Meauco RP 107 RP 26",
+      "province": "La Pampa",
+      "line_distance_km": 45.078,
+      "center_distance_km": 45.153,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "9ffaf89538fec8fb40b3d760b8e8b8fbcc154794b28d438fa6b046429fc5d32c"
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "reported_start_date": "2024-01-30",
+      "incident_name": "RP 107 RP 26",
+      "province": "La Pampa",
+      "line_distance_km": 45.078,
+      "center_distance_km": 45.153,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "9ffaf89538fec8fb40b3d760b8e8b8fbcc154794b28d438fa6b046429fc5d32c"
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "reported_start_date": "2024-02-07",
+      "incident_name": "Doña Alba",
+      "province": "La Pampa",
+      "line_distance_km": 12.581,
+      "center_distance_km": 12.756,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "9ffaf89538fec8fb40b3d760b8e8b8fbcc154794b28d438fa6b046429fc5d32c"
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "reported_start_date": "2024-10-03",
+      "incident_name": "LA MARTINETA",
+      "province": "La Pampa",
+      "line_distance_km": 45.663,
+      "center_distance_km": 45.804,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "9ffaf89538fec8fb40b3d760b8e8b8fbcc154794b28d438fa6b046429fc5d32c"
+    }
+  ],
+  "limitations": [
+    "SNMF reports are jurisdiction-reported, not an exhaustive incident/no-incident registry.",
+    "A missing report or no listed nearby incident is not a verified physical no-fire window.",
+    "Dates are reported calendar dates; exact ignition time and lead time are unavailable.",
+    "Routes without a reviewed polyline are excluded; sector centers are not substituted into line-distance counts.",
+    "A mapped trail line does not imply that all adjacent land is equally exposed or that the trail was open.",
+    "Local equirectangular distance is an approximation; the 10/20 km results should be checked geodesically before threshold-sensitive use."
+  ],
+  "synthetic_observations": 0,
+  "deployment_approved": false
+}

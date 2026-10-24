@@ -172,3 +172,8 @@ y alcance de investigación. Ver `ai/datasets/README.md` para instalación y des
   pero no dispara un envio real de SMS/telefonia — el propio documento excluye la
   automatizacion de respuesta de emergencia por organismos externos del alcance del
   prototipo.
+
+
+La evaluacion temporal del modelo de fuego con polilineas completas no encontro un umbral fiable; ver [resultados 2023-2025](docs/environmental-models-2026-10-22/fire-jma-full-trail-polyline-2023-2025-transfer-test.md).
+
+El cruce FIRMS VIIRS 2025 corroboro algunos eventos SNMF, pero la muestra dirigida no permite medir precision: [resultados y limites](docs/environmental-models-2026-10-22/fire-firms-snmf-event-window-crosscheck-2025.md).

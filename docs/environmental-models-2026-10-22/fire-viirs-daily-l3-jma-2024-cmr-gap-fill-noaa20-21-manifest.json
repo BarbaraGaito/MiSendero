@@ -1,0 +1,385 @@
+{
+  "experiment_id": "viirs-daily-l3-jma-2024-no-fire-cmr-gap-fill",
+  "products": [
+    "VJ114A1",
+    "VJ214A1"
+  ],
+  "base_observation_audit_sha256": "a3fff92c1ded7bdb051f37b59cf712fc51d20dfd187654c3714be43ab552e835",
+  "model_test_sha256": "7cb87d51e85329ded9345dc61ce804a1d9db9f7e29a955c85f085add7e01bd0d",
+  "no_fire_report_audit_sha256": "a57c45ee46b1bb97763432a9fa647fe9fc903b4550c427d4e46bb2be03a76396",
+  "route_tile_audit_sha256": "0598401758ec20d500b3f6ac587958aa4aa12325a49653400901fe0c64150489",
+  "cmr_response_sha256_by_product_date": {
+    "VJ114A1:2024-05-31": "bbd50901e9615c04e6a5280698eb7de8cacab715bacb3b435b993cabf5c26eeb",
+    "VJ114A1:2024-07-10": "565e0a355817ec7760bdbc1724a19fce1a71297d8fd032ae506ec2dbdc6d730a",
+    "VJ214A1:2024-05-31": "2ae1c1ceda98d8601af69b1f6375b4fc8dc61863a4a36398023ebb55198a9249",
+    "VJ214A1:2024-07-10": "ef5eddfcd4b16f94cef76b704b7f3f420d3065a266ad652f123b94c5f59f53b5"
+  },
+  "requested_product_date_tile_pairs": 20,
+  "granules": [
+    {
+      "date": "2024-05-31",
+      "year": 2024,
+      "doy": 152,
+      "tile": "h12v11",
+      "product": "VJ114A1",
+      "granule_id": "VJ114A1.A2024152.h12v11.002.2024153075642",
+      "reported_size_mb": 0.148530006408691,
+      "cmr_updated": "2024-06-01T03:01:40.360Z",
+      "status": "downloaded",
+      "bytes": 155745,
+      "sha256": "8988c5af500e7d71ead1a0c8dfa2b2307d484b68b3422a6bda70cb25c9ce13a7",
+      "routes": [
+        "Sendero Che Roga - Mburucuyá",
+        "Sendero La Chuña - El Rey"
+      ],
+      "fixed_threshold_alerts": []
+    },
+    {
+      "date": "2024-05-31",
+      "year": 2024,
+      "doy": 152,
+      "tile": "h12v12",
+      "product": "VJ114A1",
+      "granule_id": "VJ114A1.A2024152.h12v12.002.2024153080009",
+      "reported_size_mb": 0.209959030151367,
+      "cmr_updated": "2024-06-01T03:05:21.439Z",
+      "status": "downloaded",
+      "bytes": 220158,
+      "sha256": "d6151fdd5d9a04eb14baaebb76ad90795cae959ea86ac4db297a06c433338bb8",
+      "routes": [
+        "Quebrada del Condorito - Balcon Norte",
+        "Sendero Namuncura"
+      ],
+      "fixed_threshold_alerts": []
+    },
+    {
+      "date": "2024-05-31",
+      "year": 2024,
+      "doy": 152,
+      "tile": "h12v13",
+      "product": "VJ114A1",
+      "granule_id": "VJ114A1.A2024152.h12v13.002.2024153075643",
+      "reported_size_mb": 0.193953514099121,
+      "cmr_updated": "2024-06-01T03:01:20.105Z",
+      "status": "downloaded",
+      "bytes": 203375,
+      "sha256": "8f6a2e131ba2638eeafbb0ead711fb5f90df90d13072e0ba1f5d6418ba576266",
+      "routes": [
+        "Bosque Tallado desde la plataforma del Piltriquitron",
+        "Refugio Frey desde Villa Catedral"
+      ],
+      "fixed_threshold_alerts": []
+    },
+    {
+      "date": "2024-05-31",
+      "year": 2024,
+      "doy": 152,
+      "tile": "h13v11",
+      "product": "VJ114A1",
+      "granule_id": "VJ114A1.A2024152.h13v11.002.2024153075643",
+      "reported_size_mb": 0.153730392456055,
+      "cmr_updated": "2024-06-01T03:01:38.279Z",
+      "status": "downloaded",
+      "bytes": 161198,
+      "sha256": "e3964440d3048a8852ea5bc51bb9d26f6f47215c63496c5b9b08cae536713c63",
+      "routes": [
+        "Sendero Macuco - Salto Arrechea"
+      ],
+      "fixed_threshold_alerts": []
+    },
+    {
+      "date": "2024-05-31",
+      "year": 2024,
+      "doy": 152,
+      "tile": "h13v12",
+      "product": "VJ114A1",
+      "granule_id": "VJ114A1.A2024152.h13v12.002.2024153075642",
+      "reported_size_mb": 0.174592971801758,
+      "cmr_updated": "2024-06-01T03:01:38.244Z",
+      "status": "downloaded",
+      "bytes": 183074,
+      "sha256": "1f25eb31f3aa9ab4527775b52243a0042d2b753f390a419c2a7bdc03a78c4450",
+      "routes": [
+        "Cerro Ventana - Hueco de la Ventana"
+      ],
+      "fixed_threshold_alerts": []
+    },
+    {
+      "date": "2024-05-31",
+      "year": 2024,
+      "doy": 152,
+      "tile": "h12v11",
+      "product": "VJ214A1",
+      "granule_id": "VJ214A1.A2024152.h12v11.002.2025303221230",
+      "reported_size_mb": 0.15534496307373047,
+      "cmr_updated": "2025-10-30T18:09:34.741Z",
+      "status": "downloaded",
+      "bytes": 162891,
+      "sha256": "3abe98eebbb737748b78e12db349b0b5a6d8a491905779528860ba8830f608eb",
+      "routes": [
+        "Sendero Che Roga - Mburucuyá",
+        "Sendero La Chuña - El Rey"
+      ],
+      "fixed_threshold_alerts": []
+    },
+    {
+      "date": "2024-05-31",
+      "year": 2024,
+      "doy": 152,
+      "tile": "h12v12",
+      "product": "VJ214A1",
+      "granule_id": "VJ214A1.A2024152.h12v12.002.2025303221232",
+      "reported_size_mb": 0.20072174072265625,
+      "cmr_updated": "2025-10-30T18:09:55.495Z",
+      "status": "downloaded",
+      "bytes": 210472,
+      "sha256": "6e4d223bf50972ab7815b0e2f3f0f9034245658225d105a8df4c552bfe56d6b0",
+      "routes": [
+        "Quebrada del Condorito - Balcon Norte",
+        "Sendero Namuncura"
+      ],
+      "fixed_threshold_alerts": []
+    },
+    {
+      "date": "2024-05-31",
+      "year": 2024,
+      "doy": 152,
+      "tile": "h12v13",
+      "product": "VJ214A1",
+      "granule_id": "VJ214A1.A2024152.h12v13.002.2025303221231",
+      "reported_size_mb": 0.19320106506347656,
+      "cmr_updated": "2025-10-30T18:09:43.861Z",
+      "status": "downloaded",
+      "bytes": 202586,
+      "sha256": "6bcff5dc25ac56ed8d844cdb901567497c2b1e94a526af7fdd59d2182ec386df",
+      "routes": [
+        "Bosque Tallado desde la plataforma del Piltriquitron",
+        "Refugio Frey desde Villa Catedral"
+      ],
+      "fixed_threshold_alerts": []
+    },
+    {
+      "date": "2024-05-31",
+      "year": 2024,
+      "doy": 152,
+      "tile": "h13v11",
+      "product": "VJ214A1",
+      "granule_id": "VJ214A1.A2024152.h13v11.002.2025303221228",
+      "reported_size_mb": 0.1525115966796875,
+      "cmr_updated": "2025-10-30T18:09:55.377Z",
+      "status": "downloaded",
+      "bytes": 159920,
+      "sha256": "49661e7a44e1a3818c4e02c7f6b6d9a442d1b73dfaf7c44a30aa535b01446c87",
+      "routes": [
+        "Sendero Macuco - Salto Arrechea"
+      ],
+      "fixed_threshold_alerts": []
+    },
+    {
+      "date": "2024-05-31",
+      "year": 2024,
+      "doy": 152,
+      "tile": "h13v12",
+      "product": "VJ214A1",
+      "granule_id": "VJ214A1.A2024152.h13v12.002.2025303221227",
+      "reported_size_mb": 0.19156265258789062,
+      "cmr_updated": "2025-10-30T18:09:23.522Z",
+      "status": "downloaded",
+      "bytes": 200868,
+      "sha256": "c97159798fa76a0589ffec1dfa8fcbf22d2bdf33125586238b51ca85d967e9d9",
+      "routes": [
+        "Cerro Ventana - Hueco de la Ventana"
+      ],
+      "fixed_threshold_alerts": []
+    },
+    {
+      "date": "2024-07-10",
+      "year": 2024,
+      "doy": 192,
+      "tile": "h12v11",
+      "product": "VJ114A1",
+      "granule_id": "VJ114A1.A2024192.h12v11.002.2024193080114",
+      "reported_size_mb": 0.196415901184082,
+      "cmr_updated": "2024-07-11T03:05:37.249Z",
+      "status": "downloaded",
+      "bytes": 205957,
+      "sha256": "c09e4b53a0160b78f601359dfb1fa958d614c91ef44386c7db8d842eefcd5841",
+      "routes": [
+        "Sendero Che Roga - Mburucuyá",
+        "Sendero La Chuña - El Rey"
+      ],
+      "fixed_threshold_alerts": []
+    },
+    {
+      "date": "2024-07-10",
+      "year": 2024,
+      "doy": 192,
+      "tile": "h12v12",
+      "product": "VJ114A1",
+      "granule_id": "VJ114A1.A2024192.h12v12.002.2024193075746",
+      "reported_size_mb": 0.179740905761719,
+      "cmr_updated": "2024-07-11T03:01:42.298Z",
+      "status": "downloaded",
+      "bytes": 188472,
+      "sha256": "47d7655d01260df6b0bf17989f3167efb84388402c68fa56764600c56fef7c75",
+      "routes": [
+        "Quebrada del Condorito - Balcon Norte",
+        "Sendero Namuncura"
+      ],
+      "fixed_threshold_alerts": [
+        {
+          "route": "Quebrada del Condorito - Balcon Norte",
+          "score": 0.1268389772805304,
+          "threshold": 0.1
+        }
+      ]
+    },
+    {
+      "date": "2024-07-10",
+      "year": 2024,
+      "doy": 192,
+      "tile": "h12v13",
+      "product": "VJ114A1",
+      "granule_id": "VJ114A1.A2024192.h12v13.002.2024193080753",
+      "reported_size_mb": 0.166855812072754,
+      "cmr_updated": "2024-07-11T03:13:42.498Z",
+      "status": "downloaded",
+      "bytes": 174961,
+      "sha256": "6a167505a9932e1807b5345f4dd9d630d7f34335caa1499230f2b1caeaf7b35b",
+      "routes": [
+        "Bosque Tallado desde la plataforma del Piltriquitron",
+        "Refugio Frey desde Villa Catedral"
+      ],
+      "fixed_threshold_alerts": []
+    },
+    {
+      "date": "2024-07-10",
+      "year": 2024,
+      "doy": 192,
+      "tile": "h13v11",
+      "product": "VJ114A1",
+      "granule_id": "VJ114A1.A2024192.h13v11.002.2024193075748",
+      "reported_size_mb": 0.246039390563965,
+      "cmr_updated": "2024-07-11T03:01:22.080Z",
+      "status": "downloaded",
+      "bytes": 257991,
+      "sha256": "32e2c0f9d2644c29ff833ea1f17da9a1625cb085b6862d0fbe2d91e849c38bd7",
+      "routes": [
+        "Sendero Macuco - Salto Arrechea"
+      ],
+      "fixed_threshold_alerts": []
+    },
+    {
+      "date": "2024-07-10",
+      "year": 2024,
+      "doy": 192,
+      "tile": "h13v12",
+      "product": "VJ114A1",
+      "granule_id": "VJ114A1.A2024192.h13v12.002.2024193075419",
+      "reported_size_mb": 0.197059631347656,
+      "cmr_updated": "2024-07-11T03:01:42.315Z",
+      "status": "downloaded",
+      "bytes": 206632,
+      "sha256": "d3c15e1397541816f5772fa1d4f86ea3dbbca73aad1ff88e621a15f8cba904fb",
+      "routes": [
+        "Cerro Ventana - Hueco de la Ventana"
+      ],
+      "fixed_threshold_alerts": []
+    },
+    {
+      "date": "2024-07-10",
+      "year": 2024,
+      "doy": 192,
+      "tile": "h12v11",
+      "product": "VJ214A1",
+      "granule_id": "VJ214A1.A2024192.h12v11.002.2025306141936",
+      "reported_size_mb": 0.19945907592773438,
+      "cmr_updated": "2025-11-02T13:37:43.567Z",
+      "status": "downloaded",
+      "bytes": 209148,
+      "sha256": "be1882cec2b9ae8685f7c21dbe6888a1e034308d34c912f37a1f720cd7ab323d",
+      "routes": [
+        "Sendero Che Roga - Mburucuyá",
+        "Sendero La Chuña - El Rey"
+      ],
+      "fixed_threshold_alerts": []
+    },
+    {
+      "date": "2024-07-10",
+      "year": 2024,
+      "doy": 192,
+      "tile": "h12v12",
+      "product": "VJ214A1",
+      "granule_id": "VJ214A1.A2024192.h12v12.002.2025306141936",
+      "reported_size_mb": 0.19124221801757812,
+      "cmr_updated": "2025-11-02T13:37:43.419Z",
+      "status": "downloaded",
+      "bytes": 200532,
+      "sha256": "532ad56f509c317d906f3ee0dc8821123ecc22b60976269d5c0919961dd2e373",
+      "routes": [
+        "Quebrada del Condorito - Balcon Norte",
+        "Sendero Namuncura"
+      ],
+      "fixed_threshold_alerts": [
+        {
+          "route": "Quebrada del Condorito - Balcon Norte",
+          "score": 0.1268389772805304,
+          "threshold": 0.1
+        }
+      ]
+    },
+    {
+      "date": "2024-07-10",
+      "year": 2024,
+      "doy": 192,
+      "tile": "h12v13",
+      "product": "VJ214A1",
+      "granule_id": "VJ214A1.A2024192.h12v13.002.2025306140340",
+      "reported_size_mb": 0.17352676391601562,
+      "cmr_updated": "2025-11-02T13:09:49.878Z",
+      "status": "downloaded",
+      "bytes": 181956,
+      "sha256": "5e467c08a834b9e2833e49513f94999d4c99300f8d75e88cb5cfb8e8e7c1211c",
+      "routes": [
+        "Bosque Tallado desde la plataforma del Piltriquitron",
+        "Refugio Frey desde Villa Catedral"
+      ],
+      "fixed_threshold_alerts": []
+    },
+    {
+      "date": "2024-07-10",
+      "year": 2024,
+      "doy": 192,
+      "tile": "h13v11",
+      "product": "VJ214A1",
+      "granule_id": "VJ214A1.A2024192.h13v11.002.2025306142010",
+      "reported_size_mb": 0.27297210693359375,
+      "cmr_updated": "2025-11-02T13:37:32.952Z",
+      "status": "downloaded",
+      "bytes": 286232,
+      "sha256": "bfb15275702a9e0b33dc968a665c650f706f44c6ab4067c4af4416f23a8efba0",
+      "routes": [
+        "Sendero Macuco - Salto Arrechea"
+      ],
+      "fixed_threshold_alerts": []
+    },
+    {
+      "date": "2024-07-10",
+      "year": 2024,
+      "doy": 192,
+      "tile": "h13v12",
+      "product": "VJ214A1",
+      "granule_id": "VJ214A1.A2024192.h13v12.002.2025306142009",
+      "reported_size_mb": 0.18944358825683594,
+      "cmr_updated": "2025-11-02T13:37:42.154Z",
+      "status": "downloaded",
+      "bytes": 198646,
+      "sha256": "19296561f49dd820eaec65b24c6673ea11487027367e0ae6bb7e40b42f0a20a8",
+      "routes": [
+        "Cerro Ventana - Hueco de la Ventana"
+      ],
+      "fixed_threshold_alerts": []
+    }
+  ],
+  "synthetic_observations": 0
+}

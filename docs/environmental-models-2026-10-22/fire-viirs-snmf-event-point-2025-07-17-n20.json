@@ -1,0 +1,45 @@
+{
+  "experiment_id": "noaa-viirs-efire-snmf-event-coordinate-pass-audit",
+  "purpose": "Same-date sensor cross-check at SNMF incident coordinates; not an hourly event verification or prediction evaluation.",
+  "source": {
+    "dataset": "NOAA VIIRS I-band Enterprise Fire EDR v1r3",
+    "efire_filename": "EFIRE-VIIRSI_v1r3_n20_s202507170545163_e202507170546390_c202507170613087.nc",
+    "efire_sha256": "170f8a5b723c9ed53cbaa65b812585bf515e4fd46241aeb164e5b582ba1a0f9a",
+    "geolocation_filename": "GITCO_j01_d20250717_t0545163_e0546390_b39695_c20250717060419631000_oeac_ops.h5",
+    "geolocation_sha256": "bfa4837417e31c06b3154833aa52375aa092f468b012d1072cbd9bb895f7810c",
+    "time_coverage_start_utc": "2025-07-17T05:45:16Z",
+    "time_coverage_end_utc": "2025-07-17T05:46:39Z",
+    "platform": "n20"
+  },
+  "snmf_route_event_source_sha256": "05b775d3ae38d20e3e12a3fa7966cf219b8e4741c1a32730051f407ffdba8c10",
+  "snmf_event_coordinate_source_sha256": "d8e95391641ccb7d884d7bbe88e3df6fff82251352a50154656f88096f4a87f4",
+  "observations": [
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2025-07-17",
+      "incident_name": "CALLEJON INALEF",
+      "province": "Río Negro",
+      "line_distance_km": 17.415,
+      "center_distance_km": 17.706,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa",
+      "event_latitude": -41.809999999999995,
+      "event_longitude": -71.48263888888889,
+      "nearest_coarse_swath_sample_km": 12.588570583764636,
+      "nearest_pixel_distance_km": 0.1780741915833708,
+      "mask_code": 5,
+      "mask_label": "clear_land",
+      "dqf_code": 1,
+      "mask_status": "observed_clear_land"
+    }
+  ],
+  "limitations": [
+    "The SNMF reported start date does not establish exact ignition time; a satellite pass on that date may be before or after the event.",
+    "A single nearest VIIRS pixel is not a complete fire perimeter or field-confirmed reference.",
+    "Cloud, bowtie, water, invalid, and unresolved pixels remain unknown, not negative.",
+    "Clear land means the sensor processed that pixel without detecting fire at the pass time; it does not prove no fire occurred.",
+    "This cross-check does not measure a forecast model or its precision."
+  ],
+  "synthetic_observations": 0,
+  "deployment_approved": false
+}

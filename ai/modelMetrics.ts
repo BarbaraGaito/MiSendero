@@ -90,9 +90,10 @@ export interface AiTrainingMetrics {
     warnings: string[];
   };
   hyperparameters: {
-    n_estimators: number;
-    max_depth: number;
-    min_samples_leaf: number;
+    algorithm?: "random_forest" | "extra_trees" | "logistic_regression" | "sgd" | "mlp";
+    n_estimators?: number;
+    max_depth?: number | null;
+    min_samples_leaf?: number;
     selection_method: "cross_validated" | "fallback_too_few_rows";
     cv_folds: number | null;
     cv_f1_macro_mean: number | null;

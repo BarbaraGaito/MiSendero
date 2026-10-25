@@ -159,6 +159,8 @@ npm run validate:ai-data
 npm run test:ai-data
 ```
 
+El ajuste compara 76 configuraciones por tarea, incluyendo SGD y redes MLP con backpropagation, y selecciona por validación cruzada de grupos dentro de entrenamiento. Ver [resultados y comparación del 25/10/2026](docs/ai-optimization-2026-10-25/README.md). Para guardar primero la selección sin evaluar el test: `npm run tune:ai`; para evaluar luego esa selección: `npm run train:ai-selected`.
+
 Estos resultados no aprueban uso en campo: la app no incluye ningún modelo aprobado y su
 motor de inferencia devuelve `sin_datos`. Los nuevos bosques mantienen sus etiquetas nativas
 y alcance de investigación. Ver `ai/datasets/README.md` para instalación y descarga, y

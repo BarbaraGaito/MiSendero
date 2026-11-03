@@ -1,0 +1,194 @@
+{
+  "mode": "schema_probe_only",
+  "original_rows": 17,
+  "features": 82,
+  "lineage": [
+    {
+      "row_key": "3e7b824fcb87a8b906fe32e0",
+      "prediction_time": "2025-06-03T18:44:00+00:00",
+      "latest_available_complete_bin_end": null,
+      "original_phone_files": [
+        {
+          "filename": "p0-flat_ground.csv",
+          "sha256": "3e51ed8d5d88f905af5fa0535570e094ceef8514b4faf01c76f8b1d21e9fb95e"
+        }
+      ]
+    },
+    {
+      "row_key": "1fb6ee53ca4cd0eda1cb40ef",
+      "prediction_time": "2025-06-03T18:48:00+00:00",
+      "latest_available_complete_bin_end": "2025-06-03T18:48:00+00:00",
+      "original_phone_files": [
+        {
+          "filename": "p0-flat_ground.csv",
+          "sha256": "3e51ed8d5d88f905af5fa0535570e094ceef8514b4faf01c76f8b1d21e9fb95e"
+        }
+      ]
+    },
+    {
+      "row_key": "de69af7f03e6342c4760475b",
+      "prediction_time": "2025-06-03T18:53:00+00:00",
+      "latest_available_complete_bin_end": "2025-06-03T18:53:00+00:00",
+      "original_phone_files": [
+        {
+          "filename": "p0-flat_ground.csv",
+          "sha256": "3e51ed8d5d88f905af5fa0535570e094ceef8514b4faf01c76f8b1d21e9fb95e"
+        }
+      ]
+    },
+    {
+      "row_key": "e33aaa59d05d5f19f18b33d9",
+      "prediction_time": "2025-06-03T18:57:00+00:00",
+      "latest_available_complete_bin_end": "2025-06-03T18:57:00+00:00",
+      "original_phone_files": [
+        {
+          "filename": "p0-flat_ground.csv",
+          "sha256": "3e51ed8d5d88f905af5fa0535570e094ceef8514b4faf01c76f8b1d21e9fb95e"
+        }
+      ]
+    },
+    {
+      "row_key": "8def1b66b252c10800fdb407",
+      "prediction_time": "2025-06-03T19:02:00+00:00",
+      "latest_available_complete_bin_end": "2025-06-03T19:02:00+00:00",
+      "original_phone_files": [
+        {
+          "filename": "p0-flat_ground.csv",
+          "sha256": "3e51ed8d5d88f905af5fa0535570e094ceef8514b4faf01c76f8b1d21e9fb95e"
+        }
+      ]
+    },
+    {
+      "row_key": "4848dc793d982c4298ea70e7",
+      "prediction_time": "2025-06-03T19:04:00+00:00",
+      "latest_available_complete_bin_end": "2025-06-03T19:03:32.400000+00:00",
+      "original_phone_files": [
+        {
+          "filename": "p0-flat_ground.csv",
+          "sha256": "3e51ed8d5d88f905af5fa0535570e094ceef8514b4faf01c76f8b1d21e9fb95e"
+        }
+      ]
+    },
+    {
+      "row_key": "959e7565d7d6cf54e902ec07",
+      "prediction_time": "2025-06-03T19:14:00+00:00",
+      "latest_available_complete_bin_end": "2025-06-03T19:14:00+00:00",
+      "original_phone_files": [
+        {
+          "filename": "p0-stairs.csv",
+          "sha256": "7fa36d4c8e2cfd6ad9f5548bbf2b72bbfafd6685c09851611a51b4ef19fe331c"
+        }
+      ]
+    },
+    {
+      "row_key": "f7eb0d17b9438b4da72baed2",
+      "prediction_time": "2025-06-03T19:17:00+00:00",
+      "latest_available_complete_bin_end": "2025-06-03T19:17:00+00:00",
+      "original_phone_files": [
+        {
+          "filename": "p0-stairs.csv",
+          "sha256": "7fa36d4c8e2cfd6ad9f5548bbf2b72bbfafd6685c09851611a51b4ef19fe331c"
+        }
+      ]
+    },
+    {
+      "row_key": "7395ffe9849e137739e74bc1",
+      "prediction_time": "2025-06-03T19:20:00+00:00",
+      "latest_available_complete_bin_end": "2025-06-03T19:20:00+00:00",
+      "original_phone_files": [
+        {
+          "filename": "p0-stairs.csv",
+          "sha256": "7fa36d4c8e2cfd6ad9f5548bbf2b72bbfafd6685c09851611a51b4ef19fe331c"
+        }
+      ]
+    },
+    {
+      "row_key": "d2e4745b9ce55ec495ffcf32",
+      "prediction_time": "2025-06-03T19:24:00+00:00",
+      "latest_available_complete_bin_end": "2025-06-03T19:24:00+00:00",
+      "original_phone_files": [
+        {
+          "filename": "p0-stairs.csv",
+          "sha256": "7fa36d4c8e2cfd6ad9f5548bbf2b72bbfafd6685c09851611a51b4ef19fe331c"
+        }
+      ]
+    },
+    {
+      "row_key": "615e22edc0263c12c9141b30",
+      "prediction_time": "2025-06-03T19:27:00+00:00",
+      "latest_available_complete_bin_end": "2025-06-03T19:27:00+00:00",
+      "original_phone_files": [
+        {
+          "filename": "p0-stairs.csv",
+          "sha256": "7fa36d4c8e2cfd6ad9f5548bbf2b72bbfafd6685c09851611a51b4ef19fe331c"
+        }
+      ]
+    },
+    {
+      "row_key": "0f0fd610251d98cf2e8b6741",
+      "prediction_time": "2025-06-03T19:30:00+00:00",
+      "latest_available_complete_bin_end": "2025-06-03T19:30:00+00:00",
+      "original_phone_files": [
+        {
+          "filename": "p0-stairs.csv",
+          "sha256": "7fa36d4c8e2cfd6ad9f5548bbf2b72bbfafd6685c09851611a51b4ef19fe331c"
+        }
+      ]
+    },
+    {
+      "row_key": "0058ccfc177b8c08d4cccb86",
+      "prediction_time": "2025-06-03T19:32:00+00:00",
+      "latest_available_complete_bin_end": "2025-06-03T19:32:00+00:00",
+      "original_phone_files": [
+        {
+          "filename": "p0-stairs.csv",
+          "sha256": "7fa36d4c8e2cfd6ad9f5548bbf2b72bbfafd6685c09851611a51b4ef19fe331c"
+        }
+      ]
+    },
+    {
+      "row_key": "11984666edb6677b1674174f",
+      "prediction_time": "2025-06-03T19:56:00+00:00",
+      "latest_available_complete_bin_end": "2025-06-03T19:56:00+00:00",
+      "original_phone_files": [
+        {
+          "filename": "p0-ramp.csv",
+          "sha256": "7ec1ca9e58cd517c67c5629494060fa3730d071438256a7a8c1fe641c39acef5"
+        }
+      ]
+    },
+    {
+      "row_key": "05e63a311467e203d6fffc27",
+      "prediction_time": "2025-06-03T20:01:00+00:00",
+      "latest_available_complete_bin_end": "2025-06-03T20:01:00+00:00",
+      "original_phone_files": [
+        {
+          "filename": "p0-ramp.csv",
+          "sha256": "7ec1ca9e58cd517c67c5629494060fa3730d071438256a7a8c1fe641c39acef5"
+        }
+      ]
+    },
+    {
+      "row_key": "54c2b6118ec23ae3374494b6",
+      "prediction_time": "2025-06-03T20:06:00+00:00",
+      "latest_available_complete_bin_end": "2025-06-03T20:06:00+00:00",
+      "original_phone_files": [
+        {
+          "filename": "p0-ramp.csv",
+          "sha256": "7ec1ca9e58cd517c67c5629494060fa3730d071438256a7a8c1fe641c39acef5"
+        }
+      ]
+    },
+    {
+      "row_key": "6ab9cfc59f5c609d35c54c89",
+      "prediction_time": "2025-06-03T20:11:00+00:00",
+      "latest_available_complete_bin_end": "2025-06-03T20:11:00+00:00",
+      "original_phone_files": [
+        {
+          "filename": "p0-ramp.csv",
+          "sha256": "7ec1ca9e58cd517c67c5629494060fa3730d071438256a7a8c1fe641c39acef5"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,92 @@
+{
+  "version": 1,
+  "verification": "passed",
+  "verified_at": "2026-10-27T13:43:51.679731+00:00",
+  "audit_code_sha256": "129e15db73ac3f1641577b4b0481c81b69219db204303f98d78d5de9cf7ab974",
+  "inventory_sha256": "6c9d87052861adc9f3200b8a2d1e9683908e68ed9bf4ed596f1229be0ca8b8be",
+  "receipt_sha256": "c5297519aad574f4fa024b34dd1186cbcb17264d094a50c2a1423b84f478c5c7",
+  "workbook_sha256": "50472eb3c212ce594aab62eea5af4cc71833082c6bbb7246822865bb02a5a80f",
+  "source": "https://data.mendeley.com/datasets/kcff3z6wjb/1",
+  "license": "CC BY4.0",
+  "formatted_sheet_rows_including_header": 40,
+  "actual_coded_participant_rows": 24,
+  "formatted_blank_rows_excluded_from_counts": 15,
+  "session_slots_per_coded_row": 48,
+  "potential_person_session_slots": 1152,
+  "field_cell_counts": {
+    "K1": {
+      "numeric": 1121,
+      "blank": 0,
+      "spreadsheet_error": 31,
+      "other_nonnumeric": 0
+    },
+    "E1": {
+      "numeric": 1121,
+      "blank": 0,
+      "spreadsheet_error": 31,
+      "other_nonnumeric": 0
+    },
+    "P1": {
+      "numeric": 1121,
+      "blank": 0,
+      "spreadsheet_error": 31,
+      "other_nonnumeric": 0
+    },
+    "K2": {
+      "numeric": 1121,
+      "blank": 0,
+      "spreadsheet_error": 31,
+      "other_nonnumeric": 0
+    },
+    "E2": {
+      "numeric": 1121,
+      "blank": 0,
+      "spreadsheet_error": 31,
+      "other_nonnumeric": 0
+    },
+    "P2": {
+      "numeric": 1121,
+      "blank": 0,
+      "spreadsheet_error": 31,
+      "other_nonnumeric": 0
+    },
+    "B": {
+      "numeric": 1121,
+      "blank": 0,
+      "spreadsheet_error": 31,
+      "other_nonnumeric": 0
+    }
+  },
+  "numeric_B_cells": 1121,
+  "B_observed_range": [
+    2,
+    7
+  ],
+  "B_observed_counts": {
+    "2": 1,
+    "3": 10,
+    "4": 176,
+    "5": 402,
+    "6": 492,
+    "7": 40
+  },
+  "original_spreadsheet_error_B_cells": 31,
+  "numeric_P1_and_P2_with_numeric_B": 1121,
+  "formula_cells_in_actual_rows": 0,
+  "independent_original_xml_counts_match": true,
+  "bundled_codebook_or_comments": [],
+  "source_related_links": [],
+  "training_approved": false,
+  "native_target_merge_approved": false,
+  "used_for_training": false,
+  "synthetic_rows": 0,
+  "limitations": [
+    "The repository describes pre/post exercise pulse, feeling/arousal and post-session Borg but supplies only abbreviated column names and no codebook or linked article.",
+    "B spans2-7. That observed range does not establish whether the instrument is CR10, a brief seven-category Borg or another coding. Do not relabel it as native0-10 or source6-20.",
+    "P1/P2 plausibly denote pre/post pulse from their repeated layout, but bpm units, measurement procedure and timing relative to B are not explicitly documented for these columns.",
+    "T1-T48 are session slots, not measured dates or one-minute histories. Do not invent timestamps or use these as a recent Borg prior in a walk.",
+    "Preserve31 original B spreadsheet errors as unavailable outcomes; never replace them by zero or imputed labels.",
+    "The sheet has15 formatted empty rows beyond24 actual coded rows. These are not additional participants or observations."
+  ],
+  "decision": "Retain original verified public data for review only. No fitting until instrument and predictor semantics/chronology are established by source documentation; no invented mappings or labels."
+}

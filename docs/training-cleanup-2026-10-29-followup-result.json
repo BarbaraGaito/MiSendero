@@ -1,0 +1,863 @@
+{
+  "completed_at": "2026-10-29T18:21:59.4366250Z",
+  "scope": "D:\\AppPFI\\MiSendero\\training\\",
+  "deleted_files": [
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\common\\__pycache__\\__init__.cpython-312.pyc",
+      "bytes": 151,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "469c6c6af25d5bd86e69dfc3f511f579368ed37048ca672655f1496dd732532c",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\common\\__pycache__\\calibrated_ensemble.cpython-312.pyc",
+      "bytes": 2750,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "790a9f96aabedaff14fd905b758f7a2a2cca0b4608ca6e31faba49888df362ba",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\common\\__pycache__\\calibrated_forest.cpython-312.pyc",
+      "bytes": 5342,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "a3990d0bdd4f3041e381faa041ccd6e11b505eb259bcc782f4b2a57027bffb7a",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\common\\__pycache__\\calibrated_network.cpython-312.pyc",
+      "bytes": 3037,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "f2d554d030f3530b7592d3e8fe916ada253b0934219b42a6c8ec9d95a65ed651",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\common\\__pycache__\\evaluation.cpython-312.pyc",
+      "bytes": 7674,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "d2d77f997725a428873403ea5674562db5c87ae1efb0c193022bd337c5b7a093",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\common\\__pycache__\\export_classifier.cpython-312.pyc",
+      "bytes": 6268,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "b2086e0e5fb40658be724e631d592babb13aee6b4a18da9957c3f40a042bffdd",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\common\\__pycache__\\export_forest.cpython-312.pyc",
+      "bytes": 3528,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "d06a101d36c9770fa5496363d44d0989acdd59268caf012ea14b205532bd6dac",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\common\\__pycache__\\grouped_fatigue_search.cpython-312.pyc",
+      "bytes": 5961,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "5cb4fbb99822ec036fa73e46e35882a3db52cae7e380a3de3c7269d15c95dfba",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\common\\__pycache__\\privacy.cpython-312.pyc",
+      "bytes": 1724,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "e1865ee2148f11d90d45d9dcf03c4ca403c4c5863b5f375ea8bee1f6d0f62e2a",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\audit_fatigue_causal_transition_memory.cpython-312.pyc",
+      "bytes": 25836,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "5d9643cfcb3aeab5fb7bf955d28df3286399944a2326c79aeb5729ab0f267812",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\audit_fatigue_domain_aligned_history.cpython-312.pyc",
+      "bytes": 35798,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "74d20a3e70c023614222d63b2a2713544b17a71846d49c40d114c317b79839bb",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\audit_fatigue_observed_change_factorization.cpython-312.pyc",
+      "bytes": 30760,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "dc19194c89750fc28fd9c59d29e396d5165a7792dfd4fc84ca84820565c74937",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\audit_fatigue_public_change_gate.cpython-312.pyc",
+      "bytes": 45367,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "11966c87b6ab311eac2bb8b168c6c399067ae1466ca691007d0dd6da556e0174",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\audit_fatigue_shoulder_history_joint.cpython-312.pyc",
+      "bytes": 19215,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "ff570dc29bd41dc0d2bbdbb4947aae38c7a2a169df23d55caa8d0baa7241c46c",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\audit_furukawa_original_rpe.cpython-312.pyc",
+      "bytes": 15429,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "181cdfd1a411d0e11c790d74f0f5fcc71fd6d8837994ffc10c136a9479b52dee",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\cadence_association_inputs.cpython-312.pyc",
+      "bytes": 17517,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "c838eaa095ea0c84422714066c7f284ec4314a10b45feb518eac81dbf3b7f978",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\cadence_binary_gate_inputs.cpython-312.pyc",
+      "bytes": 10010,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "da4563794b19b2c92465c1e921a9c52d6b1ad97b579977625fb96ebb516c81bb",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\cadence_lagged_rpe.cpython-312.pyc",
+      "bytes": 14224,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "e7a896c2a134d6df1d2c2a52daef8d6181f8d413658ba80a6d39d18051e778d9",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\check_cadence_binary_gate_checkpoint_integrity.cpython-312.pyc",
+      "bytes": 13889,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "e15e4f0e5898413e91505a4e62107ce9dbedc23708915477cf93eb90518f668b",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\check_causal_transition_memory_checkpoint_integrity.cpython-312.pyc",
+      "bytes": 11357,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "76e56234a5bd66ef94762f4dcd444f0eda31863b0e19f44ab920ecf82b059cdd",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\check_change_gate_regularization_checkpoint_integrity.cpython-312.pyc",
+      "bytes": 13836,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "9c3cbf87ae49a0f42013a1c0dd4bad4975b9754c5c37d0df63d472d99d8548bb",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\check_observed_change_factorization_checkpoint_integrity.cpython-312.pyc",
+      "bytes": 15016,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "85462997d517e3dd9373d79795ed485400dc5e73ab817cf8965c578dcf9c7e20",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\check_public_change_gate_checkpoint_integrity.cpython-312.pyc",
+      "bytes": 11960,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "b94bc15588b077e2020b094cc7988400fbbf613c065fe220f077d46d782f7ec5",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\declare_causal_transition_memory.cpython-312.pyc",
+      "bytes": 3373,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "29b211d35586ce4fbffa870a19d91c7024f7fdf4ab0dad3050b8c30ff91add61",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\declare_change_gate_regularization.cpython-312.pyc",
+      "bytes": 3965,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "2b1b797143538c6e1aeed3b359fb1a56f9abbec31f9075b9765b9f2d240c4bd6",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\declare_observed_change_factorization.cpython-312.pyc",
+      "bytes": 3738,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "e736fab1357efbb41741bd75afde09277dfd33928dc9be1a183b4e496acae882",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\declare_public_change_gate.cpython-312.pyc",
+      "bytes": 3992,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "f14c711786658fc946f412df61181f636819215067ade0dfef7b270e22651c77",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\diagnose_observed_change_stages.cpython-312.pyc",
+      "bytes": 7719,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "97d04f5272fb2127dc1e1a696d4b2b07c82e8d70cd61d5ac8fab997fe8b92807",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\document_cadence_binary_gate.cpython-312.pyc",
+      "bytes": 6072,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "aa3cc9909b62bed168176f27389a448181e275656765626fde802b34f0bc343e",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\document_causal_transition_memory.cpython-312.pyc",
+      "bytes": 4870,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "b76899329488d88bbf2c4cecc4f1fa1f04ae4df17c681e5231ea8463f7590628",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\document_change_gate_regularization.cpython-312.pyc",
+      "bytes": 6374,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "4a23f2917a0a0e15106c07b7698c7cf3e2c6f17bd084828e068b1b7505a12061",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\document_observed_change_factorization.cpython-312.pyc",
+      "bytes": 7172,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "afa8fafdbbf7fd9448ae3ea89d8cb8a87c2f3ab065e8040c1489f3580e3784ee",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\document_public_change_gate.cpython-312.pyc",
+      "bytes": 6762,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "b6cf9cdd696ac2efeb65533da784fbf331635525dec5da798dc188e6f3af20e4",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\evaluate_fatigue_causal_transition_memory.cpython-312.pyc",
+      "bytes": 6199,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "f2bb8e6982e4c00e4a478c64a49a26c3f77c866ddd2c4a4cf4a37c74766c2ed8",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\evaluate_fatigue_observed_change_factorization.cpython-312.pyc",
+      "bytes": 8192,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "f2810681beb623bfa69a75672c6946f42fb657d8094703d015bf3812eb649f6c",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\evaluate_fatigue_public_change_gate.cpython-312.pyc",
+      "bytes": 8566,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "41af19b014c43f84d1a596514161e30ac998b81819e7ddf99cde9de95028d189",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\fatigue_auxiliary_transfer.cpython-312.pyc",
+      "bytes": 16598,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "c1268a676003552c62c4eb684ddc898fe1317a47f53e553407eeaaf6aea6e166",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\fatigue_cadence_binary_gate.cpython-312.pyc",
+      "bytes": 34683,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "c3aa92090b2d328d3a8686480bd297647a488eb32fbd0d95d080e484e0368f5d",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\fatigue_cadence_native_inputs.cpython-312.pyc",
+      "bytes": 14703,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "5e660427f83e86fefcfc02bf2c34c564ddf3612754086a509aac6484d60cca7d",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\fatigue_calibrated_alternatives.cpython-312.pyc",
+      "bytes": 21159,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "bf62b27efd9ed44c0a027c3edd8f1bcdcac9b41c17b9c080680877e7b5ef9b59",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\fatigue_calibrated_ensemble.cpython-312.pyc",
+      "bytes": 20379,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "69cef351276a12ee26c97d44003f7525fb17580854280ba15fb449961951e210",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\fatigue_calibrated_experts.cpython-312.pyc",
+      "bytes": 13073,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "02b7c58b2e8d94dea6d37c5528fdbd6c46044aa329512bca4114c8d1a74334e0",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\fatigue_calibrated.cpython-312.pyc",
+      "bytes": 18528,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "b4027108ac85047bbcc9f1df463bc847e361539d162fa660c111b5ab7f70dd5f",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\fatigue_catboost_schedule.cpython-312.pyc",
+      "bytes": 29737,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "c75e3ce7588b270ae34ab84db75513a0438209d9aac3c90981dc853055ef6ec2",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\fatigue_catboost.cpython-312.pyc",
+      "bytes": 16960,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "5462affb25d00bc01aa61a98bfa4d5e86e740dd643c0a7e4e1558f01d17eee89",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\fatigue_causal_transition_memory.cpython-312.pyc",
+      "bytes": 27049,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "f70559fa57fd51a2f363813b913415ced5aecf0fafe0aef6044f7f83221c3eee",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\fatigue_change_gate_regularization.cpython-312.pyc",
+      "bytes": 16971,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "5110e8bf213675f343d8088d88cca329838867b6e9f7f180d10d0897d9888fd4",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\fatigue_domain_aligned_history.cpython-312.pyc",
+      "bytes": 20441,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "2f84359d06623fba787ec99a4dc81f2ccb1a262c8016cc359b0a01d55660158d",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\fatigue_dynamics_experiment.cpython-312.pyc",
+      "bytes": 14826,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "d5d930a48eef41793c13a537365ed2c2692b7c989dc25b37063a091d96cf6d84",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\fatigue_dynamics.cpython-312.pyc",
+      "bytes": 18749,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "8dbe65e3dd9195b6fee5a7891f2864e4c3f956c593ec2b8ddf629d95f153be14",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\fatigue_emap_history_inputs.cpython-312.pyc",
+      "bytes": 13838,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "9a719f8d42c58b7400b4bc73def00ec5d3e08a9c82c98ae4048bdb858b3f2ff8",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\fatigue_emap_history_transfer.cpython-312.pyc",
+      "bytes": 28302,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "927ef05accc463fe21f2159d82084568b942eb06142b094ecdc4a2124799ceb0",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\fatigue_emap_ordered_functions.cpython-312.pyc",
+      "bytes": 26040,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "939c41ed7249f89b009ac989faf89d9c346abb61b4d3c86a0d34d040d3f7fdfc",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\fatigue_experiment.cpython-312.pyc",
+      "bytes": 15650,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "9b0e34d92afd0582f9c217bcde10345320c69568eb348bc598d5dc1a49b92ee4",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\fatigue_extra_feedback.cpython-312.pyc",
+      "bytes": 13436,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "290239e7750aff0412eac82799f1e87c6df65d17b08c8bc600c8b1886561b6ab",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\fatigue_features.cpython-312.pyc",
+      "bytes": 15622,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "e6b973d77505fbfa42de919d0d325389191f2e70071f3a4fd8ddcb330f2e0a96",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\fatigue_furukawa_hr_inputs.cpython-312.pyc",
+      "bytes": 11696,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "954d29f4cec46fc59a990f18a71c65ea1fc78e53cdf0d453c7bee48704cf22d4",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\fatigue_furukawa_hr_transfer.cpython-312.pyc",
+      "bytes": 32434,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "663adba80ef76962593b945a1e17272fbc15d6497536e44e70b7f7a12cf9ae35",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\fatigue_joint_sources.cpython-312.pyc",
+      "bytes": 9715,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "0211cae39f0cdda149a6eb38916829a8f6022d544f687c88c2e0cd812497dc84",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\fatigue_joint_transfer.cpython-312.pyc",
+      "bytes": 24169,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "71750b1a37e521a232b24411c0290e4a949cf868028988e0f53c9fdd45938c0a",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\fatigue_meta_adaptation.cpython-312.pyc",
+      "bytes": 23812,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "43c67e4e495c0d5f924d1726052b8bd3a32e0858676054853ea67b89fc311802",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\fatigue_observed_change_factorization.cpython-312.pyc",
+      "bytes": 27492,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "223ecb8bea300b8e704c8e6a1f52d674346e95865648f50deaa0e93c7006268d",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\fatigue_online_calibration.cpython-312.pyc",
+      "bytes": 14613,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "babd7c6afda189c4077a141a333c6eaa993adf0a0bb269da4b5e7b9785e83ce3",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\fatigue_phone_context.cpython-312.pyc",
+      "bytes": 24104,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "4253195dd3a0335dd6f6b9f87968803bb49bc7a1730ba09bc56947e1e0d3b76c",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\fatigue_phone_experiment.cpython-312.pyc",
+      "bytes": 7235,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "6636f7fbaa2fc41c86161ddd8afacd81c80285c16c9f7327a1be84e892b950d1",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\fatigue_phone_spectral.cpython-312.pyc",
+      "bytes": 21387,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "57c5b80b914bd03189951ac130892a2d7d4a01f2f9e7fa6c52bb6736d94e50b5",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\fatigue_physiology_pairs.cpython-312.pyc",
+      "bytes": 20810,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "2d206042ae8aed06369b8f352651c67591a8067e8ae0a814ecc09bb0c9cc8021",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\fatigue_prior_view_training.cpython-312.pyc",
+      "bytes": 17047,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "94bff5764d98e8b6605b7b6aab288a9a6d785af99e99dbbad5e7ef6f44eaa769",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\fatigue_prior_views.cpython-312.pyc",
+      "bytes": 14536,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "9cc5cbda0390d47d2cb8b033562bd46c9d267dbefab21f6ab8f7942e5eaf947e",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\fatigue_probability.cpython-312.pyc",
+      "bytes": 26514,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "ab6e33cc9d94ac02256d91afd33c6275b5535027fe8be007c443dc98230e0425",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\fatigue_public_change_gate.cpython-312.pyc",
+      "bytes": 40635,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "465179247022315704ca8dde63de72922b076f5a04f76029ce003e23dd7625e0",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\fatigue_public_two_prior_histories_v2.cpython-312.pyc",
+      "bytes": 11373,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "4b00a4fa39473d758eb45c575e934b9ca333d6ab8159410043140b00d733596e",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\fatigue_public_two_prior_histories.cpython-312.pyc",
+      "bytes": 9664,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "25793a1a9c43015d21a76ba56b75edf63b781588b6524c61857392348dd49b87",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\fatigue_raw_features.cpython-312.pyc",
+      "bytes": 18389,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "daf30bafed886b5e1cf6e30eb3dd43159bd010d5f32481900e1c50eb1ac20111",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\fatigue_resistance_history_inputs.cpython-312.pyc",
+      "bytes": 12838,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "8d520f6257b31174b300a40df363995a2ae3ee059b1d82dbf456b39c049f659e",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\fatigue_resistance_history_joint.cpython-312.pyc",
+      "bytes": 36187,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "da39eb6e4536485067470bcb9bde6f8cb81f60812043fd62399c1be287f275ba",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\fatigue_runner_transfer.cpython-312.pyc",
+      "bytes": 28759,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "7a4c9c79c8c8c39eb6504a8274899a9763810cf3c2d7d5f659b2848832d28eea",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\fatigue_runner_windows.cpython-312.pyc",
+      "bytes": 19528,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "b404beec1121b8c9b17e153b3801dac4b5ed700f332ba137d1ae56628fe9d6d6",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\fatigue_shoulder_history_inputs.cpython-312.pyc",
+      "bytes": 8363,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "28cffbf6ba6bfbe4dc7d1d81c3caa26099e89d9400a8ab187544a5acdf3e2f1c",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\fatigue_shoulder_history_joint.cpython-312.pyc",
+      "bytes": 34330,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "036e42d61fd8f9c51b8055c430a5a29ea7d57f8c9c1fa78543b85695cd84e6f9",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\fatigue_source_teachers.cpython-312.pyc",
+      "bytes": 13843,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "682fdf3c310b04f4a8b3172a66a604fa14ffff97f6c36a634e306ef190beb5d3",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\fatigue_source_transitions.cpython-312.pyc",
+      "bytes": 24231,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "7c23b0dd287083aa78248d84a78f772756e9b80186beda5d7a7fa6f715501617",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\fatigue_spectral_experiment.cpython-312.pyc",
+      "bytes": 18657,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "44848bc7bb1a3f94ea8a2f48c7c167cff2321d9fb64c9d346e1db06ffb6262c4",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\fatigue_transfer.cpython-312.pyc",
+      "bytes": 12044,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "37db7d3c416a8985d400e3452e447fccaf948ea9cb9c6aaf7539f82dd192e666",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\fatigue_two_history_joint.cpython-312.pyc",
+      "bytes": 44555,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "68feb7e63c4629668c0a76542c35e8817eee6b0d8a80a38bfd19643dde8832ff",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\fatigue_view_ensemble.cpython-312.pyc",
+      "bytes": 27040,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "88d404e5992a9717e3c9371f7e018c4df239a602c3feb6de38241216c94ec8ac",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\fatigue_warm_sgd.cpython-312.pyc",
+      "bytes": 24634,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "6577b47fc84dd5197bff2e155179215245c622cf53b06a1ab8fe9165ca0f4f4a",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\fatigue_worker_survey_priors.cpython-312.pyc",
+      "bytes": 10951,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "21a1960df1d41167b60e7626ad9408caf2561956ffa76f38b1a5225e5061972b",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\fetch_cadence_cloud.cpython-312.pyc",
+      "bytes": 11671,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "0d26b091c904559395474c4771d6ca28e420b751e00d70d94e995ff881d5f773",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\fetch_exercise_rpe_candidates.cpython-312.pyc",
+      "bytes": 10526,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "3fb5bab3a04645c686ffd6d28f5fb4ca842e7371ae85e4d1da3817715bbe422f",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\fetch_fatigue_extra.cpython-312.pyc",
+      "bytes": 8203,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "45f50842bbd62cb35e0495c516e1a0208d04322dac118f153d15baaef1ddba37",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\fetch_gait_candidates.cpython-312.pyc",
+      "bytes": 6904,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "0426ff6f740ee3a328410d9deab5c1974b133a34992a061685df691fcef67731",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\fetch_geofatigue_context.cpython-312.pyc",
+      "bytes": 11238,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "03c202d52ee3c29485710e5f49b4f136a2a09b6398ad290786ea20a493b4d0d7",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\fetch_more_public_rpe_metadata.cpython-312.pyc",
+      "bytes": 6001,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "b61175591466684bc29e372e4cff4748b323fefa9ab0e804a737abb1d3f7133b",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\fetch_oxbioz.cpython-312.pyc",
+      "bytes": 3485,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "a32a71f6ca71a1b7d65869a6d736866ef6c70a41a82cbd4650da0055eb40f9b6",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\fetch_runner_fatigue_metadata.cpython-312.pyc",
+      "bytes": 5397,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "1cbdf052bb210a40bfa24352996859dca8935ff6734637c949cafaad42824bd4",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\fetch_runner_fatigue_signals.cpython-312.pyc",
+      "bytes": 8652,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "72fa177627d00674aaacd0ec14d95ef2e5a787a888f52e7db4c798006d79e87c",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\fetch_sixmwt.cpython-312.pyc",
+      "bytes": 3811,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "ba72f331ee0281ce33a7888e07f6af93ac011de206df8559c4f9eb14bc384a4c",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\integrate_cadence_binary_gate_checkpoint.cpython-312.pyc",
+      "bytes": 2780,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "ad54aac659a7e8f7722485716fcf68e21f86aac5aa862c601ff9d430d41ecb23",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\integrate_causal_transition_memory_checkpoint.cpython-312.pyc",
+      "bytes": 2822,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "9f2f418f48a8708931cb13a6f909fd4c07771ad2e0c1f29590ae3d1cfd8985d4",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\integrate_change_gate_regularization_checkpoint.cpython-312.pyc",
+      "bytes": 2831,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "cb60d70d0716ec955069648b37905983fc040fd005b44db3d2af5ae544b8576b",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\integrate_observed_change_factorization_checkpoint.cpython-312.pyc",
+      "bytes": 2867,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "4e7a504cdb7ee93aab0b2995c167f2bb888c8bfd62bc2acb40257d5e8ce80fc7",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\integrate_public_change_gate_checkpoint.cpython-312.pyc",
+      "bytes": 2775,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "f00a830bfa39499f88e2062a0c994c905baceeb771f490256e0ec514a85bcc2d",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\oxbioz_fatigue.cpython-312.pyc",
+      "bytes": 9829,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "7625fcd64de1be7058af8bac35f9d59a84524aba53a847c14c0f7a8d2298451d",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\public_sources.cpython-312.pyc",
+      "bytes": 26742,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "0202d7697af088702a24e5c9b38c7bb8730ab4c7ca86816ce90fa13056fc2eb5",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\record_cadence_binary_gate_checkpoint.cpython-312.pyc",
+      "bytes": 11998,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "7ca9bee053849c0704e21450597ba0123270dd5d9f0274d112d91c85d8d1d9f1",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\record_causal_transition_memory_checkpoint.cpython-312.pyc",
+      "bytes": 11310,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "0e29972e35256abc276aeafff18e2c3c2ada09ba94e35f2c9930e054117eb785",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\record_change_gate_regularization_checkpoint.cpython-312.pyc",
+      "bytes": 13355,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "cadaadf3cc6aa7cdb523b8e8adc1a5f665171264a5c2dcd4d06cfcb4baaec466",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\record_observed_change_factorization_checkpoint.cpython-312.pyc",
+      "bytes": 12418,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "082af4c872d5297e541328a8c501dd4ca828d05b78b1b7dcc17e9d1a86e28fe1",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\record_public_change_gate_checkpoint.cpython-312.pyc",
+      "bytes": 11191,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "7be6d9517339622f8045b51cd01649ae133fb6138582c0f54225eaa49906420e",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\sixmwt_fatigue.cpython-312.pyc",
+      "bytes": 13163,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "1e85f57e34ec86dccfe7cbbd9fcf4ef887b2fc0462c1d3e78bc4c6c2c41f906b",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\test_fatigue_cadence_binary_gate.cpython-312.pyc",
+      "bytes": 13718,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "5438d5b158a40e288dee36717f4268cea3cb279e9a36342331ccc181d32eb663",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\test_fatigue_causal_transition_memory.cpython-312.pyc",
+      "bytes": 14490,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "1c48c775978af27b795c112e6fc0c3b00da6ffeff2c21a986319c4c59de3141b",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\test_fatigue_change_gate_regularization.cpython-312.pyc",
+      "bytes": 12569,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "4d814d37ab71c21726f8d920154a4052b405f83803f5d039f11dceede4dfd7b4",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\test_fatigue_observed_change_factorization.cpython-312.pyc",
+      "bytes": 11965,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "23ea2aa2318121cda3c4381f1f2a4efbc40eb49510de6f6df43f27f686aab389",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\test_fatigue_public_change_gate.cpython-312.pyc",
+      "bytes": 16698,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "eb50e5a41a8c8e60bfb2eda8f28e22855dd1285d7b1a4c004de5fd0187272614",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\validate_fatigue_release.cpython-312.pyc",
+      "bytes": 23756,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "5802942ef83e8d5a3909b85bfd9f81ac38a647dc56ccc6d614835dc3e8263ea0",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\python\\__pycache__\\wsd4fedsrm_history_inputs.cpython-312.pyc",
+      "bytes": 6975,
+      "reason": "regenerable_python_bytecode",
+      "sha256": "7c498a16b524f19fafc69fa34d31065f7aa6aaa2da2250dbcc0e02acfb998d6e",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\public_audit\\runners-fatigue-v1\\signals-receipt.tmp",
+      "bytes": 13966,
+      "reason": "exact_temporary_receipt_copy",
+      "sha256": "ce056fab8cc7202cb62e090258755f41ad5f176fd08f397543012280276fb79d",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\public_audit\\runners-fatigue-v1\\signals-receipt.json"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\environmental\\private\\smn-wrf-sample\\python-libs\\scipy-1.18.1-cp313-cp313-win_amd64.whl",
+      "bytes": 0,
+      "reason": "empty_failed_installer_download",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\fatigue-research\\packages\\fastavro-1.13.1-cp312-cp312-win_amd64.whl",
+      "bytes": 463186,
+      "reason": "installer_verified_identical_to_installed_package_48_files",
+      "sha256": "0994c545a4e2038b6d0b3ca54214d9573024e659fc5e618c4577329c89b9e016",
+      "retained_copy": null
+    }
+  ],
+  "deleted_file_count": 121,
+  "bytes_freed": 2239264.0,
+  "deleted_paths_still_present": 0,
+  "prior_cleanup_report": "docs/training-cleanup-2026-10-29-result.json",
+  "combined_deleted_file_operations": 2632,
+  "combined_bytes_freed": 293715080,
+  "note": "Some bytecode regenerated after the initial cleanup. Combined count reports deletion operations, not unique paths.",
+  "datasets_models_and_final_results_deleted": false,
+  "installed_fastavro_intact": true,
+  "verified_installed_fastavro_files": 48
+}

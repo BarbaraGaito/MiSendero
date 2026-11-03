@@ -1,0 +1,72 @@
+{
+  "version": 1,
+  "verified_at": "2026-10-27T03:11:38.693893+00:00",
+  "verification_code_sha256": "dd0b846ec8dbab0ff410ddb1524d6d23ddf33f150e61d161187ec5f723e40940",
+  "public_dataset_metadata_sha256": "c11af681649cd4138cc49a4f61bb48b0308347736d1b9f9f27e0ddf387d32411",
+  "published_inventory_files": 146,
+  "published_image_files": [
+    {
+      "id": 1100808,
+      "filename": "1.jpeg",
+      "bytes": 6604799,
+      "directory": "Contextual Data/Experiment Layout/HQ Panorama Images",
+      "restricted": false
+    },
+    {
+      "id": 1100797,
+      "filename": "2.jpeg",
+      "bytes": 7268568,
+      "directory": "Contextual Data/Experiment Layout/HQ Panorama Images",
+      "restricted": false
+    },
+    {
+      "id": 1100798,
+      "filename": "3.jpeg",
+      "bytes": 8084685,
+      "directory": "Contextual Data/Experiment Layout/HQ Panorama Images",
+      "restricted": false
+    },
+    {
+      "id": 1100805,
+      "filename": "4.jpeg",
+      "bytes": 7579665,
+      "directory": "Contextual Data/Experiment Layout/HQ Panorama Images",
+      "restricted": false
+    },
+    {
+      "id": 1100802,
+      "filename": "5.jpeg",
+      "bytes": 7398167,
+      "directory": "Contextual Data/Experiment Layout/HQ Panorama Images",
+      "restricted": false
+    }
+  ],
+  "image_interpretation": "Five static experimental-site panorama images, not a per-participant or per-report image stream. The published inventory does not supply temporally paired individual frames for current Borg prediction.",
+  "individual_temporal_image_or_video_files_in_inventory": 0,
+  "images_downloaded_or_fitted_in_this_audit": 0,
+  "raw_sensor_feature_snapshot_sha256": "6e78dbff15d08b435f0480e741554b1acee25a334c509ff61bc5936a90494917",
+  "raw_60_second_coverage": {
+    "raw_bvp_60s_mean": {
+      "original_666_with_valid_60s_mean": 648,
+      "original_fitting_487_with_valid_60s_mean": 473
+    },
+    "raw_eda_60s_mean": {
+      "original_666_with_valid_60s_mean": 648,
+      "original_fitting_487_with_valid_60s_mean": 473
+    },
+    "raw_temperature_60s_mean": {
+      "original_666_with_valid_60s_mean": 648,
+      "original_fitting_487_with_valid_60s_mean": 473
+    },
+    "raw_acc_magnitude_60s_mean": {
+      "original_666_with_valid_60s_mean": 648,
+      "original_fitting_487_with_valid_60s_mean": 473
+    }
+  },
+  "proposed_next_representation": "Current/prior paired raw physiological waveform windows, using only actually observed samples and natural missingness masks. Requires independent timestamp and window reconstruction before model fitting.",
+  "proposed_sequence_windows_already_verified": false,
+  "new_native_borg_targets": 0,
+  "synthetic_observations_added": 0,
+  "current_native_test_response_values_inspected": false,
+  "scope": "Metadata and observed input coverage only. No image-to-Borg label assignment, fabricated images, waveform interpolation, row exclusion, model fitting or new accuracy claim. Valid 60-second feature means do not establish coverage of every future 16-second current/prior sequence."
+}

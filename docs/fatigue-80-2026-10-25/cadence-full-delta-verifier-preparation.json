@@ -1,0 +1,18 @@
+{
+  "preparation": "passed",
+  "preparation_code_sha256": "2d2dfb018adeeb1bfec5208dc9211cea41ae8103490f671742ffc916dc5fb6d2",
+  "frozen_sources_sha256": {
+    "audit_fatigue_cadence_recent_gate.py": "ad7ab2d23e12f56774b7d07bd14eee09a67015b4ca6904a860340ad724ddcc8c",
+    "evaluate_fatigue_cadence_recent_gate.py": "c316fd9a946e784b7eefd19cc56a9e5c5243995fa849074d9b12e3a6ce838e77",
+    "test_fatigue_cadence_recent_gate.py": "76a93b5fb7c55aa3669aba4cdf9699a0171e27ba33778a68d4b60fd8ecde7cab"
+  },
+  "derived_files_sha256": {
+    "audit_fatigue_cadence_full_delta.py": "de4ced6dbfcd55fb7121e7cf15829d6ddae03b66365c8ce9511d8f76e69e4ac5",
+    "evaluate_fatigue_cadence_full_delta.py": "8963571bf62a7aa60c8473dc41c82ad717b73ce1719e28aee303b5e992fc1fa9",
+    "test_fatigue_cadence_full_delta.py": "7fea00f48ced7e79ecdacaffa09ee998b77d6411bfa87666fc7506c49748065c"
+  },
+  "historical_sources_modified": false,
+  "new_predictive_estimator_fits": 0,
+  "new_test_predictions_computed": 0,
+  "changes": "Independent21class NLL/centered residual gradient;manual probability reconstruction;all40fold artifacts/14OOFmetrics and40network refits. Actual851source pairs/BCE/gradient,80real backward steps per refit,immutable native bases. Full qualified179case test path preserved."
+}

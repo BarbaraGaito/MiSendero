@@ -1,0 +1,96 @@
+{
+  "diagnostic": "passed",
+  "diagnostic_code_sha256": "6c8515f5c53cc320f959c1dbbc4ce97e73457cfc530d25c0fbbfdd1de936555a",
+  "selection_sha256": "a71108a8c67b2cd37202411627fe9e040ef914d2c5e682d1a1e78fff1fd711e1",
+  "fitting_queries": 487,
+  "fitting_people": 28,
+  "scope_support": {
+    "task": {
+      "queries": 487,
+      "queries_with_support": 391,
+      "queries_without_support": 96,
+      "supported_queries_with_no_matching_prior_delta": 174,
+      "supported_queries_with_matching_prior_delta": 217,
+      "supported_queries_with_latest_matching_delta": 135,
+      "supported_queries_with_multiple_distinct_prior_deltas": 282,
+      "mean_current_minus_unweighted_prior_support_delta": -1.27693947144075,
+      "interpretation": "True query deltas are consulted only for this fitting-only diagnostic. Presence of a matching earlier delta is an optimistic representability check, not an achieved prediction."
+    },
+    "session": {
+      "queries": 487,
+      "queries_with_support": 455,
+      "queries_without_support": 32,
+      "supported_queries_with_no_matching_prior_delta": 99,
+      "supported_queries_with_matching_prior_delta": 356,
+      "supported_queries_with_latest_matching_delta": 138,
+      "supported_queries_with_multiple_distinct_prior_deltas": 417,
+      "mean_current_minus_unweighted_prior_support_delta": -0.38380456697462445,
+      "interpretation": "True query deltas are consulted only for this fitting-only diagnostic. Presence of a matching earlier delta is an optimistic representability check, not an achieved prediction."
+    }
+  },
+  "best_recipe_comparisons": {
+    "core": {
+      "candidate": {
+        "id": "transition-memory-009",
+        "algorithm": "causal_transition_memory",
+        "member": "core",
+        "retrieval_features": "clock",
+        "bandwidth": 2.0,
+        "strength": 0.25,
+        "scope": "session",
+        "recency_minutes": 10.0,
+        "mass_shrinkage": 1.0
+      },
+      "cv_accuracy": 0.6081818386217364,
+      "matched_control_cv_accuracy": 0.6082057277760603,
+      "control_correct_queries": 296,
+      "memory_correct_queries": 296,
+      "correct_control_queries_displaced_by_memory": 6,
+      "incorrect_control_queries_corrected_by_memory": 6,
+      "displaced_queries_with_no_matching_prior_delta": 1,
+      "gained_queries_with_matching_prior_delta": 6,
+      "unsupported_predictions_equal_control": true,
+      "displaced_mean_prediction_delta_error": 0.6666666666666666
+    },
+    "cat": {
+      "candidate": {
+        "id": "transition-memory-028",
+        "algorithm": "causal_transition_memory",
+        "member": "cat",
+        "retrieval_features": "physiology",
+        "bandwidth": 0.5,
+        "strength": 0.25,
+        "scope": "task",
+        "recency_minutes": 10.0,
+        "mass_shrinkage": 1.0
+      },
+      "cv_accuracy": 0.6220335384990117,
+      "matched_control_cv_accuracy": 0.6379721574248428,
+      "control_correct_queries": 311,
+      "memory_correct_queries": 303,
+      "correct_control_queries_displaced_by_memory": 10,
+      "incorrect_control_queries_corrected_by_memory": 2,
+      "displaced_queries_with_no_matching_prior_delta": 6,
+      "gained_queries_with_matching_prior_delta": 2,
+      "unsupported_predictions_equal_control": true,
+      "displaced_mean_prediction_delta_error": 0.2
+    }
+  },
+  "original_query_delta_counts": {
+    "-1": 2,
+    "0": 229,
+    "1": 160,
+    "2": 31,
+    "3": 45,
+    "4": 18,
+    "5": 1,
+    "6": 1
+  },
+  "new_predictive_estimator_fits": 0,
+  "new_preprocessor_fits": 0,
+  "new_test_predictions_computed": 0,
+  "test_labels_inspected": false,
+  "synthetic_rows": 0,
+  "hyperparameters_selected_for_another_study": 0,
+  "limitation": "This is a post-selection diagnostic on fitting participants only. It neither establishes an attainable80percent nor justifies tuning on the original179test cases."
+}

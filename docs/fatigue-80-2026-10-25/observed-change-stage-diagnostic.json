@@ -1,0 +1,482 @@
+{
+  "diagnostic": "passed",
+  "diagnostic_code_sha256": "bb1faf4dfdae3e0c8207d052d25bad5417bfaf36683940fa2f5d877e8dcee44a",
+  "selection_sha256": "b1af180393176bf69f1a0851ff50d0e6258c853b2ff1834eafee138a71e4fab6",
+  "fold_model_hashes": {
+    "observed-change-003-fold-0.joblib": "28c4c3a77108abe934865feca9b7a2e52128a23e42a004dc056f638535025dc4",
+    "observed-change-003-fold-1.joblib": "5fb44dd4d3322e41377d1c3f7f183e6d86665213acce2b346141e389e0b2f9df",
+    "observed-change-003-fold-2.joblib": "4aa8a31d4e95207b226a72a593af0d568dcac313b43ac5d8c81d22b025b4439b",
+    "observed-change-003-fold-3.joblib": "835ccc7ee3f98048d353d8fe52b0746e96a325a2f06df95b2d34a0a3edec0be3",
+    "observed-change-003-fold-4.joblib": "cc22864c8c622c16c90598e457467214c7616ea32c3d8ff90407ac690f6bff13",
+    "observed-change-005-fold-0.joblib": "ac52351e3fffc37b518dfedd9224a58ba4f6dafc976975f105b8a3dec4e27012",
+    "observed-change-005-fold-1.joblib": "ae4e0dff9f9e96a2307232052b9ccf8f1d2e9ccba9123da3fa7e0c9e3c676d20",
+    "observed-change-005-fold-2.joblib": "479b03b41024009a152e51fd38e2be2d9a98214d1610f7e300d278a5b607e64a",
+    "observed-change-005-fold-3.joblib": "837d1118ccad89f2b376387f17333ea76a3b273367444846f4ce65b2217f5a41",
+    "observed-change-005-fold-4.joblib": "f423a24fa8c265eb5d8345099039e4a6d59776f82c3c85c0188f32259fea0a65",
+    "observed-change-007-fold-0.joblib": "32a38bb746e4735a669e97550a9ba605a7c3d9924b92027ef576da202ec391fe",
+    "observed-change-007-fold-1.joblib": "65dfba2a8e6b5c21f80919f94ddfd510c61896e18c375bb24cc5488b0b8fea99",
+    "observed-change-007-fold-2.joblib": "94b6f44cafe5c2c10681d034adea223012bf0c86397d429643ca9f420b949bef",
+    "observed-change-007-fold-3.joblib": "057d6962da5a8fa5fc85bfdf97319136e37a899bc44a08c5fc11a698ba9374f5",
+    "observed-change-007-fold-4.joblib": "15cdfa0d73c30ad6b7230d954e8ca83672e25a74f7d3a787264aebebc0b46610",
+    "observed-change-009-fold-0.joblib": "873ac22c913bd6a2610a6ad2d62176fdc2e446b304c45dfbb18904936f5ec044",
+    "observed-change-009-fold-1.joblib": "8914c18f4d6ce9d5a35781bd54dadd9831321f145b7d6845bdf3e787b26162aa",
+    "observed-change-009-fold-2.joblib": "e01a2a92e40d8e46c9b693253f768e1d0576a9c585a48182abe3fc28e9a0198c",
+    "observed-change-009-fold-3.joblib": "c83ed3dd41544ee6b8c680e9983b37b54f5b6951609df6196783c6d88414236e",
+    "observed-change-009-fold-4.joblib": "0fdfaf6d35e9b4ffbceddfdedd5cdd06a4e4bdc3a6309869f79718a1d8991956"
+  },
+  "original_fitting_queries": 487,
+  "original_fitting_people": 28,
+  "results": [
+    {
+      "candidate": {
+        "id": "observed-change-003",
+        "algorithm": "observed_change_distribution",
+        "member": "core",
+        "feature_set": "history",
+        "structure": "factorized",
+        "probability_floor": 0.0001,
+        "native_target": "actual_current_minus_actual_prior_integer",
+        "random_seed": 42,
+        "native_hyperparameters": "unchanged_original_member_specification"
+      },
+      "native_fitting_accuracy_mean": 0.6396407236501437,
+      "native_cv_accuracy_mean": 0.6082296169303842,
+      "binary_change_fitting_accuracy_mean": 0.7392159493925758,
+      "binary_change_cv_accuracy_mean": 0.7212033950704028,
+      "conditional_delta_fitting_accuracy_mean": 0.7819933239577677,
+      "conditional_delta_cv_accuracy_mean": 0.7827500239186912,
+      "folds": [
+        {
+          "fold": 0,
+          "fitting": {
+            "actual_rows": 387,
+            "actual_nonzero_rows": 211,
+            "native_exact_accuracy": 0.6330749354005168,
+            "binary_change_accuracy": 0.7312661498708011,
+            "conditional_nonzero_delta_accuracy": 0.7772511848341233
+          },
+          "validation": {
+            "actual_rows": 100,
+            "actual_nonzero_rows": 47,
+            "native_exact_accuracy": 0.64,
+            "binary_change_accuracy": 0.74,
+            "conditional_nonzero_delta_accuracy": 0.7872340425531915
+          },
+          "convergence_warnings": []
+        },
+        {
+          "fold": 1,
+          "fitting": {
+            "actual_rows": 395,
+            "actual_nonzero_rows": 202,
+            "native_exact_accuracy": 0.6481012658227848,
+            "binary_change_accuracy": 0.7518987341772152,
+            "conditional_nonzero_delta_accuracy": 0.7673267326732673
+          },
+          "validation": {
+            "actual_rows": 92,
+            "actual_nonzero_rows": 56,
+            "native_exact_accuracy": 0.5543478260869565,
+            "binary_change_accuracy": 0.6630434782608695,
+            "conditional_nonzero_delta_accuracy": 0.8392857142857143
+          },
+          "convergence_warnings": []
+        },
+        {
+          "fold": 2,
+          "fitting": {
+            "actual_rows": 385,
+            "actual_nonzero_rows": 211,
+            "native_exact_accuracy": 0.6233766233766234,
+            "binary_change_accuracy": 0.7428571428571429,
+            "conditional_nonzero_delta_accuracy": 0.7867298578199052
+          },
+          "validation": {
+            "actual_rows": 102,
+            "actual_nonzero_rows": 47,
+            "native_exact_accuracy": 0.5784313725490197,
+            "binary_change_accuracy": 0.6764705882352942,
+            "conditional_nonzero_delta_accuracy": 0.7659574468085106
+          },
+          "convergence_warnings": []
+        },
+        {
+          "fold": 3,
+          "fitting": {
+            "actual_rows": 385,
+            "actual_nonzero_rows": 199,
+            "native_exact_accuracy": 0.6623376623376623,
+            "binary_change_accuracy": 0.7402597402597403,
+            "conditional_nonzero_delta_accuracy": 0.7939698492462312
+          },
+          "validation": {
+            "actual_rows": 102,
+            "actual_nonzero_rows": 59,
+            "native_exact_accuracy": 0.5980392156862745,
+            "binary_change_accuracy": 0.7352941176470589,
+            "conditional_nonzero_delta_accuracy": 0.7457627118644068
+          },
+          "convergence_warnings": []
+        },
+        {
+          "fold": 4,
+          "fitting": {
+            "actual_rows": 396,
+            "actual_nonzero_rows": 209,
+            "native_exact_accuracy": 0.6313131313131313,
+            "binary_change_accuracy": 0.7297979797979798,
+            "conditional_nonzero_delta_accuracy": 0.784688995215311
+          },
+          "validation": {
+            "actual_rows": 91,
+            "actual_nonzero_rows": 49,
+            "native_exact_accuracy": 0.6703296703296703,
+            "binary_change_accuracy": 0.7912087912087912,
+            "conditional_nonzero_delta_accuracy": 0.7755102040816326
+          },
+          "convergence_warnings": []
+        }
+      ]
+    },
+    {
+      "candidate": {
+        "id": "observed-change-005",
+        "algorithm": "observed_change_distribution",
+        "member": "core",
+        "feature_set": "history_physiology",
+        "structure": "factorized",
+        "probability_floor": 0.0001,
+        "native_target": "actual_current_minus_actual_prior_integer",
+        "random_seed": 42,
+        "native_hyperparameters": "unchanged_original_member_specification"
+      },
+      "native_fitting_accuracy_mean": 0.6571414086191831,
+      "native_cv_accuracy_mean": 0.6115816681187526,
+      "binary_change_fitting_accuracy_mean": 0.7644701228186657,
+      "binary_change_cv_accuracy_mean": 0.719479628640754,
+      "conditional_delta_fitting_accuracy_mean": 0.7799981998222385,
+      "conditional_delta_cv_accuracy_mean": 0.7870053430676273,
+      "folds": [
+        {
+          "fold": 0,
+          "fitting": {
+            "actual_rows": 387,
+            "actual_nonzero_rows": 211,
+            "native_exact_accuracy": 0.6330749354005168,
+            "binary_change_accuracy": 0.7571059431524548,
+            "conditional_nonzero_delta_accuracy": 0.7772511848341233
+          },
+          "validation": {
+            "actual_rows": 100,
+            "actual_nonzero_rows": 47,
+            "native_exact_accuracy": 0.67,
+            "binary_change_accuracy": 0.74,
+            "conditional_nonzero_delta_accuracy": 0.8085106382978723
+          },
+          "convergence_warnings": []
+        },
+        {
+          "fold": 1,
+          "fitting": {
+            "actual_rows": 395,
+            "actual_nonzero_rows": 202,
+            "native_exact_accuracy": 0.6708860759493671,
+            "binary_change_accuracy": 0.779746835443038,
+            "conditional_nonzero_delta_accuracy": 0.7623762376237624
+          },
+          "validation": {
+            "actual_rows": 92,
+            "actual_nonzero_rows": 56,
+            "native_exact_accuracy": 0.5434782608695652,
+            "binary_change_accuracy": 0.6630434782608695,
+            "conditional_nonzero_delta_accuracy": 0.8392857142857143
+          },
+          "convergence_warnings": []
+        },
+        {
+          "fold": 2,
+          "fitting": {
+            "actual_rows": 385,
+            "actual_nonzero_rows": 211,
+            "native_exact_accuracy": 0.6649350649350649,
+            "binary_change_accuracy": 0.7766233766233767,
+            "conditional_nonzero_delta_accuracy": 0.7867298578199052
+          },
+          "validation": {
+            "actual_rows": 102,
+            "actual_nonzero_rows": 47,
+            "native_exact_accuracy": 0.6078431372549019,
+            "binary_change_accuracy": 0.6764705882352942,
+            "conditional_nonzero_delta_accuracy": 0.7659574468085106
+          },
+          "convergence_warnings": []
+        },
+        {
+          "fold": 3,
+          "fitting": {
+            "actual_rows": 385,
+            "actual_nonzero_rows": 199,
+            "native_exact_accuracy": 0.6779220779220779,
+            "binary_change_accuracy": 0.7740259740259741,
+            "conditional_nonzero_delta_accuracy": 0.7889447236180904
+          },
+          "validation": {
+            "actual_rows": 102,
+            "actual_nonzero_rows": 59,
+            "native_exact_accuracy": 0.5882352941176471,
+            "binary_change_accuracy": 0.7156862745098039,
+            "conditional_nonzero_delta_accuracy": 0.7457627118644068
+          },
+          "convergence_warnings": []
+        },
+        {
+          "fold": 4,
+          "fitting": {
+            "actual_rows": 396,
+            "actual_nonzero_rows": 209,
+            "native_exact_accuracy": 0.6388888888888888,
+            "binary_change_accuracy": 0.7348484848484849,
+            "conditional_nonzero_delta_accuracy": 0.784688995215311
+          },
+          "validation": {
+            "actual_rows": 91,
+            "actual_nonzero_rows": 49,
+            "native_exact_accuracy": 0.6483516483516484,
+            "binary_change_accuracy": 0.8021978021978022,
+            "conditional_nonzero_delta_accuracy": 0.7755102040816326
+          },
+          "convergence_warnings": []
+        }
+      ]
+    },
+    {
+      "candidate": {
+        "id": "observed-change-007",
+        "algorithm": "observed_change_distribution",
+        "member": "cat",
+        "feature_set": "history",
+        "structure": "factorized",
+        "probability_floor": 0.0001,
+        "native_target": "actual_current_minus_actual_prior_integer",
+        "random_seed": 42,
+        "native_hyperparameters": "unchanged_original_member_specification"
+      },
+      "native_fitting_accuracy_mean": 0.7377142211466616,
+      "native_cv_accuracy_mean": 0.5851366365944372,
+      "binary_change_fitting_accuracy_mean": 0.8326124443051143,
+      "binary_change_cv_accuracy_mean": 0.7083013780763141,
+      "conditional_delta_fitting_accuracy_mean": 0.7986187536527857,
+      "conditional_delta_cv_accuracy_mean": 0.7463943493012063,
+      "folds": [
+        {
+          "fold": 0,
+          "fitting": {
+            "actual_rows": 387,
+            "actual_nonzero_rows": 211,
+            "native_exact_accuracy": 0.7183462532299741,
+            "binary_change_accuracy": 0.8320413436692506,
+            "conditional_nonzero_delta_accuracy": 0.7819905213270142
+          },
+          "validation": {
+            "actual_rows": 100,
+            "actual_nonzero_rows": 47,
+            "native_exact_accuracy": 0.65,
+            "binary_change_accuracy": 0.74,
+            "conditional_nonzero_delta_accuracy": 0.8085106382978723
+          },
+          "convergence_warnings": []
+        },
+        {
+          "fold": 1,
+          "fitting": {
+            "actual_rows": 395,
+            "actual_nonzero_rows": 202,
+            "native_exact_accuracy": 0.7518987341772152,
+            "binary_change_accuracy": 0.8556962025316456,
+            "conditional_nonzero_delta_accuracy": 0.7673267326732673
+          },
+          "validation": {
+            "actual_rows": 92,
+            "actual_nonzero_rows": 56,
+            "native_exact_accuracy": 0.5108695652173914,
+            "binary_change_accuracy": 0.6413043478260869,
+            "conditional_nonzero_delta_accuracy": 0.7678571428571429
+          },
+          "convergence_warnings": []
+        },
+        {
+          "fold": 2,
+          "fitting": {
+            "actual_rows": 385,
+            "actual_nonzero_rows": 211,
+            "native_exact_accuracy": 0.7272727272727273,
+            "binary_change_accuracy": 0.8233766233766234,
+            "conditional_nonzero_delta_accuracy": 0.7962085308056872
+          },
+          "validation": {
+            "actual_rows": 102,
+            "actual_nonzero_rows": 47,
+            "native_exact_accuracy": 0.5784313725490197,
+            "binary_change_accuracy": 0.6862745098039216,
+            "conditional_nonzero_delta_accuracy": 0.7021276595744681
+          },
+          "convergence_warnings": []
+        },
+        {
+          "fold": 3,
+          "fitting": {
+            "actual_rows": 385,
+            "actual_nonzero_rows": 199,
+            "native_exact_accuracy": 0.7688311688311689,
+            "binary_change_accuracy": 0.8337662337662337,
+            "conditional_nonzero_delta_accuracy": 0.8341708542713567
+          },
+          "validation": {
+            "actual_rows": 102,
+            "actual_nonzero_rows": 59,
+            "native_exact_accuracy": 0.5490196078431373,
+            "binary_change_accuracy": 0.7156862745098039,
+            "conditional_nonzero_delta_accuracy": 0.6779661016949152
+          },
+          "convergence_warnings": []
+        },
+        {
+          "fold": 4,
+          "fitting": {
+            "actual_rows": 396,
+            "actual_nonzero_rows": 209,
+            "native_exact_accuracy": 0.7222222222222222,
+            "binary_change_accuracy": 0.8181818181818182,
+            "conditional_nonzero_delta_accuracy": 0.8133971291866029
+          },
+          "validation": {
+            "actual_rows": 91,
+            "actual_nonzero_rows": 49,
+            "native_exact_accuracy": 0.6373626373626373,
+            "binary_change_accuracy": 0.7582417582417582,
+            "conditional_nonzero_delta_accuracy": 0.7755102040816326
+          },
+          "convergence_warnings": []
+        }
+      ]
+    },
+    {
+      "candidate": {
+        "id": "observed-change-009",
+        "algorithm": "observed_change_distribution",
+        "member": "cat",
+        "feature_set": "history_physiology",
+        "structure": "factorized",
+        "probability_floor": 0.0001,
+        "native_target": "actual_current_minus_actual_prior_integer",
+        "random_seed": 42,
+        "native_hyperparameters": "unchanged_original_member_specification"
+      },
+      "native_fitting_accuracy_mean": 0.7833932750270696,
+      "native_cv_accuracy_mean": 0.5844716749576084,
+      "binary_change_fitting_accuracy_mean": 0.8784187941061654,
+      "binary_change_cv_accuracy_mean": 0.6934846687839015,
+      "conditional_delta_fitting_accuracy_mean": 0.8152872714968726,
+      "conditional_delta_cv_accuracy_mean": 0.7596329768835048,
+      "folds": [
+        {
+          "fold": 0,
+          "fitting": {
+            "actual_rows": 387,
+            "actual_nonzero_rows": 211,
+            "native_exact_accuracy": 0.7364341085271318,
+            "binary_change_accuracy": 0.8578811369509044,
+            "conditional_nonzero_delta_accuracy": 0.7819905213270142
+          },
+          "validation": {
+            "actual_rows": 100,
+            "actual_nonzero_rows": 47,
+            "native_exact_accuracy": 0.6,
+            "binary_change_accuracy": 0.69,
+            "conditional_nonzero_delta_accuracy": 0.8085106382978723
+          },
+          "convergence_warnings": []
+        },
+        {
+          "fold": 1,
+          "fitting": {
+            "actual_rows": 395,
+            "actual_nonzero_rows": 202,
+            "native_exact_accuracy": 0.8050632911392405,
+            "binary_change_accuracy": 0.8911392405063291,
+            "conditional_nonzero_delta_accuracy": 0.8168316831683168
+          },
+          "validation": {
+            "actual_rows": 92,
+            "actual_nonzero_rows": 56,
+            "native_exact_accuracy": 0.5869565217391305,
+            "binary_change_accuracy": 0.6956521739130435,
+            "conditional_nonzero_delta_accuracy": 0.8214285714285714
+          },
+          "convergence_warnings": []
+        },
+        {
+          "fold": 2,
+          "fitting": {
+            "actual_rows": 385,
+            "actual_nonzero_rows": 211,
+            "native_exact_accuracy": 0.7948051948051948,
+            "binary_change_accuracy": 0.8857142857142857,
+            "conditional_nonzero_delta_accuracy": 0.8104265402843602
+          },
+          "validation": {
+            "actual_rows": 102,
+            "actual_nonzero_rows": 47,
+            "native_exact_accuracy": 0.5294117647058824,
+            "binary_change_accuracy": 0.6274509803921569,
+            "conditional_nonzero_delta_accuracy": 0.6808510638297872
+          },
+          "convergence_warnings": []
+        },
+        {
+          "fold": 3,
+          "fitting": {
+            "actual_rows": 385,
+            "actual_nonzero_rows": 199,
+            "native_exact_accuracy": 0.812987012987013,
+            "binary_change_accuracy": 0.9012987012987013,
+            "conditional_nonzero_delta_accuracy": 0.8442211055276382
+          },
+          "validation": {
+            "actual_rows": 102,
+            "actual_nonzero_rows": 59,
+            "native_exact_accuracy": 0.5686274509803921,
+            "binary_change_accuracy": 0.696078431372549,
+            "conditional_nonzero_delta_accuracy": 0.711864406779661
+          },
+          "convergence_warnings": []
+        },
+        {
+          "fold": 4,
+          "fitting": {
+            "actual_rows": 396,
+            "actual_nonzero_rows": 209,
+            "native_exact_accuracy": 0.7676767676767676,
+            "binary_change_accuracy": 0.8560606060606061,
+            "conditional_nonzero_delta_accuracy": 0.8229665071770335
+          },
+          "validation": {
+            "actual_rows": 91,
+            "actual_nonzero_rows": 49,
+            "native_exact_accuracy": 0.6373626373626373,
+            "binary_change_accuracy": 0.7582417582417582,
+            "conditional_nonzero_delta_accuracy": 0.7755102040816326
+          },
+          "convergence_warnings": []
+        }
+      ]
+    }
+  ],
+  "new_predictive_estimator_fits": 0,
+  "new_preprocessor_fits": 0,
+  "new_test_predictions_computed": 0,
+  "test_labels_inspected": false,
+  "synthetic_rows": 0,
+  "hyperparameters_selected_for_another_study": 0,
+  "interpretation": "Only native exact Borg accuracy on all original179test cases can satisfy the goal. Binary change and conditional magnitude metrics here describe separate internal tasks on fitting participants; neither is an80percent result for the full native target. Training accuracies are optimistic diagnostics,not independent validation. Current labels select/score the actual nonzero evaluation subset only;they do not enter either stage as prediction features."
+}

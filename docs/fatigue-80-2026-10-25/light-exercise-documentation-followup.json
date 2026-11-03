@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "retrieval_receipt_sha256": "1a6bae5e7fb89e3d22521a4e3126e5b327f089fe497366283ccc441542a23d9e",
+  "retrieval_code_sha256": "eed549e3a928303d4d1eada3a2a26426813e5ad20284de885d9f9e9b5806d7c6",
+  "candidate_article_doi": "10.1016/j.ctcp.2024.101880",
+  "dataset_doi": "10.17632/kcff3z6wjb.1",
+  "url_attempted": "https://repositorio.uam.es/bitstreams/861e2496-6d06-4b2d-9d2f-a05e2970e103/download",
+  "status": "Article candidate could not be obtained as a public bounded PDF; no challenge page was treated as documentation.",
+  "dataset_to_article_link_confirmed": false,
+  "scale_and_column_codebook_resolved": false,
+  "new_training_rows": 0,
+  "used_for_training": false,
+  "existing_eligibility_sha256": "f14299083f4b8bafbd3824965a15b8cd1da0e56c0c5fed9f7e2a512a973ad022",
+  "decision": "The suspected author/protocol connection is insufficient to map the workbook. Keep this source excluded; no invented scale, pulse units or response clocks."
+}

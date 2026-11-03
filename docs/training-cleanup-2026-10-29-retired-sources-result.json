@@ -1,0 +1,1285 @@
+{
+  "completed_at": "2026-10-29T19:51:21.7805646Z",
+  "scope": "D:\\AppPFI\\MiSendero\\training",
+  "manifest": "D:\\AppPFI\\MiSendero\\docs\\training-cleanup-2026-10-29-retired-sources-plan.json",
+  "deleted_files": [
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\wesad\\WESAD\\S10\\S10.pkl",
+      "bytes": 867178991,
+      "sha256": "41da29c68366f33650f3d41a6be78107bf6942929c3bb0ef46238078ddddee9f",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\wesad\\WESAD\\S11\\S11.pkl",
+      "bytes": 831090213,
+      "sha256": "f39557a8d660b10154936f51debf2926aea7ebb9b26a168858f59502f914d8f7",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\wesad\\WESAD\\S13\\S13.pkl",
+      "bytes": 885309681,
+      "sha256": "772fb490f19b279e49367271e009fc10d3a3ca1e3456df0d68b9063a73992066",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\wesad\\WESAD\\S14\\S14.pkl",
+      "bytes": 881137147,
+      "sha256": "e7bd33c57538319a25c6d53e6a9fb6c1abd12800cfc64bb63275d89de8d2fd60",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\wesad\\WESAD\\S15\\S15.pkl",
+      "bytes": 827715045,
+      "sha256": "1ea573bc6b45ba79fb134f9460d691b86176f60dce23420dc514c28017d4049c",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\wesad\\WESAD\\S16\\S16.pkl",
+      "bytes": 898980304,
+      "sha256": "f65cf40cada75c3e9f5813276d7dcc90359c3b06dec41d68656c0a6e61dbc575",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\wesad\\WESAD\\S17\\S17.pkl",
+      "bytes": 946975319,
+      "sha256": "3315796a75227d54d7b0056736f671484fd2fb85afffa65818fd76aeff2920fa",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\wesad\\WESAD\\S2\\S2.pkl",
+      "bytes": 975117737,
+      "sha256": "36ef5e8afc0f91998eefba7c12fc9fa97b7b07198cbec0126917d7abb436ca23",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\wesad\\WESAD\\S3\\S3.pkl",
+      "bytes": 1031507132,
+      "sha256": "5c8bd4a82af029c082e610bca28a011fca2ae3b23e14a18458ebb5990be4015e",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\wesad\\WESAD\\S4\\S4.pkl",
+      "bytes": 1034344388,
+      "sha256": "0f0740a79388723360ff12b4f47c465665ea7827d1399b18ac43908daac17900",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\wesad\\WESAD\\S5\\S5.pkl",
+      "bytes": 993435543,
+      "sha256": "74bd187e3a9c1ca4259af52d04974c8e7ff7dc49ceea7e269f499ca98fe6d8ec",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\wesad\\WESAD\\S6\\S6.pkl",
+      "bytes": 1123292444,
+      "sha256": "8aa9bf57b69f4fe5bce06c550230857627c3f05befa2f787151646bb29ee8f62",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\wesad\\WESAD\\S7\\S7.pkl",
+      "bytes": 829424437,
+      "sha256": "9cb62705ae7f53dca327a9a00a6f9fdabf5128d449174ab37594658e912cb6d8",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\wesad\\WESAD\\S8\\S8.pkl",
+      "bytes": 869469022,
+      "sha256": "dac1141dac11d56b3641be982f45da63f05e9d74154f59e6ea0cdcf47fc72710",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\wesad\\WESAD\\S9\\S9.pkl",
+      "bytes": 832647582,
+      "sha256": "24dc004e201bd541f092989443f0a29ebf89e4a227a80bb6b6d1987255039544",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\pamap2\\PAMAP2_Dataset\\DataCollectionProtocol.pdf",
+      "bytes": 44308,
+      "sha256": "8160247da55b1b89880474015d63c0f4a2caa9e79184bf8951b9adb961c163ea",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\pamap2\\PAMAP2_Dataset\\DescriptionOfActivities.pdf",
+      "bytes": 26087,
+      "sha256": "ad3f4375b70f6e6e4b3217db9f616ff1fde0a25655c3a520fd0cd3dc1e19f9c5",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\pamap2\\PAMAP2_Dataset\\Optional\\subject101.dat",
+      "bytes": 121246257,
+      "sha256": "a8b71371406001ae563acad1d7d946ceacd0afeb51b97bfb9a9cbad95c78e52c",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\pamap2\\PAMAP2_Dataset\\Optional\\subject105.dat",
+      "bytes": 72521536,
+      "sha256": "a7c4ccd8d7e8fe21abad8c111229649ec10ca9b353cc29fcc4986c2243301adc",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\pamap2\\PAMAP2_Dataset\\Optional\\subject106.dat",
+      "bytes": 60905306,
+      "sha256": "50882fc519f01e8fe200a5a4373daff443e88624d7e8a2d31d759569823fb491",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\pamap2\\PAMAP2_Dataset\\Optional\\subject108.dat",
+      "bytes": 85403002,
+      "sha256": "e871b2e5692867f8655b69b769e866927739aa288b9da5cc9a15dc930f154336",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\pamap2\\PAMAP2_Dataset\\Optional\\subject109.dat",
+      "bytes": 90594049,
+      "sha256": "a6a8f7521d63fe80bd7f203c5ee1256a2bc8b3772f028ae767256ec1d6a93930",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\pamap2\\PAMAP2_Dataset\\PerformedActivitiesSummary.pdf",
+      "bytes": 19175,
+      "sha256": "e6404d197499a0b265126b4730258310031644fd066806efd3f73ec8d16d74a9",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\pamap2\\PAMAP2_Dataset\\Protocol\\subject101.dat",
+      "bytes": 141698539,
+      "sha256": "80b3fffd089c236ae88098df3b906b8d3c67a858023fe4f75045d78612147266",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\pamap2\\PAMAP2_Dataset\\Protocol\\subject102.dat",
+      "bytes": 207349310,
+      "sha256": "468f3c6ba3e6e961f383783665265afbcddbbd33a3a84bba0386b7d0d4e3c632",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\pamap2\\PAMAP2_Dataset\\Protocol\\subject103.dat",
+      "bytes": 117863364,
+      "sha256": "5be64631d085e3efc700728395516da3512ff9de17dab30d253508441a98d3f0",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\pamap2\\PAMAP2_Dataset\\Protocol\\subject104.dat",
+      "bytes": 153227482,
+      "sha256": "7eb272213cbfe11d9e466a2163b6c9c2ed8d2542fc6f08283fd1bf222cac8994",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\pamap2\\PAMAP2_Dataset\\Protocol\\subject105.dat",
+      "bytes": 173773599,
+      "sha256": "7837cfede57fe45ec20d553c6c2b0c498ab324daae23bfd202c0ffea9f71a7f6",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\pamap2\\PAMAP2_Dataset\\Protocol\\subject106.dat",
+      "bytes": 168263273,
+      "sha256": "0da1dda3fa56d75d6413fc9198949d3ebc2102d77574cb5fe0739674687609f2",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\pamap2\\PAMAP2_Dataset\\Protocol\\subject107.dat",
+      "bytes": 145823268,
+      "sha256": "a02195e9599eb249f79103912d27eb4f62d8a0f59e4763b0dd8250fee5f3f020",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\pamap2\\PAMAP2_Dataset\\Protocol\\subject108.dat",
+      "bytes": 190019653,
+      "sha256": "81ce6b21b9c1e01dc02099c4f9387699547b08b28b387d09a56e0cb0a8af22fc",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\pamap2\\PAMAP2_Dataset\\Protocol\\subject109.dat",
+      "bytes": 3891140,
+      "sha256": "5109d5cd8334769566b4ae602adf3e5f4bb7b9ee8ca678f0c481d333114b07c7",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\pamap2\\PAMAP2_Dataset\\readme.pdf",
+      "bytes": 59070,
+      "sha256": "99a0339f1d754089fc2f7f2c24f5a47888a51dc0646a8b210af60358c00da30d",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\pamap2\\PAMAP2_Dataset\\subjectInformation.pdf",
+      "bytes": 17851,
+      "sha256": "f26ee309f1496c615855f91a184f9a7a2a688a852e53e363a6d1a6f4db070031",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\bidmc\\bidmc_01_Numerics.csv",
+      "bytes": 7644,
+      "sha256": "27d43794cf2e7150db10e8bfe61d2bfdb26873a8f1629ffc5fbee5c9a4eb6ef5",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\bidmc\\bidmc_02_Numerics.csv",
+      "bytes": 8094,
+      "sha256": "99aef20b2846815d45ecde184da753de58c8a85b7dd7af74a2f4c5282013704d",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\bidmc\\bidmc_03_Numerics.csv",
+      "bytes": 7619,
+      "sha256": "6666475c072fe079f35f1fffe0890a97b56d1086985f8a5d76a23b88eb6c6036",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\bidmc\\bidmc_04_Numerics.csv",
+      "bytes": 7618,
+      "sha256": "2d3f34558f11ae5ff4170793942c86fd76ecc9c11a3868fd9dbaabf3249ee121",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\bidmc\\bidmc_05_Numerics.csv",
+      "bytes": 7836,
+      "sha256": "b26e17895c9961bf36c0172e0da2fd58120e30ab6df5c21a3cfc56665630c308",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\bidmc\\bidmc_06_Numerics.csv",
+      "bytes": 7619,
+      "sha256": "d7b221639fe1baa3360544ac6507af78871ec190ac79a44f122ddde119c22d05",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\bidmc\\bidmc_07_Numerics.csv",
+      "bytes": 7619,
+      "sha256": "ea43103b33f9cb4d5b99076d642f79819b971a5b177dae8e30718f32bd240d00",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\bidmc\\bidmc_08_Numerics.csv",
+      "bytes": 8304,
+      "sha256": "a2d66b1e07d2845a3a9e50329bdea1288fa98f7adaca5cd8077cb091104c96f2",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\bidmc\\bidmc_09_Numerics.csv",
+      "bytes": 7618,
+      "sha256": "f73d989891d2eed70868750aa9529c148bd90d771b4c8b199e815c68f00f7932",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\bidmc\\bidmc_10_Numerics.csv",
+      "bytes": 7638,
+      "sha256": "fc697ba7af8bb74eed871ab0eba10f4913ad14633e9e6b6337cdc19d03fb6df0",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\bidmc\\bidmc_11_Numerics.csv",
+      "bytes": 7760,
+      "sha256": "8adf747b0c52ea69cea47a8562149b68cb900b9b99215e6e17a33f88ad62f664",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\bidmc\\bidmc_12_Numerics.csv",
+      "bytes": 7618,
+      "sha256": "9add05d655e275b955bd8462be9c65433eb9c6433d0c567f25b6f984ccdbd8d4",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\bidmc\\bidmc_13_Numerics.csv",
+      "bytes": 7953,
+      "sha256": "62602513f381e50b3e7692ba3757995ea348f0896c5242b701cb105471addac1",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\bidmc\\bidmc_14_Numerics.csv",
+      "bytes": 7671,
+      "sha256": "773a11554b7e4f1038bb02d8c3587c762a5e6d7ff28a08c76462800681d2ec14",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\bidmc\\bidmc_15_Numerics.csv",
+      "bytes": 8578,
+      "sha256": "6091ee8d95ecdec37b150391a02bde9a60da56f76fb41f7ebbd5e15482b0fb4d",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\bidmc\\bidmc_16_Numerics.csv",
+      "bytes": 8600,
+      "sha256": "678d1272874fdb6bea78981556729589ac2a56d055d95b980e1972a2a0f1ca26",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\bidmc\\bidmc_17_Numerics.csv",
+      "bytes": 7618,
+      "sha256": "8dae48b1f0e48f105e0d838db6aff307ac24d2b403753e3f716b093190054b11",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\bidmc\\bidmc_18_Numerics.csv",
+      "bytes": 7618,
+      "sha256": "4febc6cb99d1552096a299b4b17a1c6f1691028b4a11f29f55a6b8947045694d",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\bidmc\\bidmc_19_Numerics.csv",
+      "bytes": 8165,
+      "sha256": "13175fb31a4aca05077f7bb322fd0cee4266e0f5a6354db3bb16a5c9606b3dbb",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\bidmc\\bidmc_20_Numerics.csv",
+      "bytes": 8015,
+      "sha256": "2ea4edae03abe216a3625ac94e668dd41691e39cc1fa543f3da08dbb50df0d1e",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\bidmc\\bidmc_21_Numerics.csv",
+      "bytes": 9061,
+      "sha256": "be4102f8b9aad57f2c286b0a3d7fbef55474234ea2c5ab769232dd6fd13e51f6",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\bidmc\\bidmc_22_Numerics.csv",
+      "bytes": 7618,
+      "sha256": "13237e200810c0738d1ab09d47a078cf5b410b5ba0f831257396ddd19fdc9e46",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\bidmc\\bidmc_23_Numerics.csv",
+      "bytes": 7640,
+      "sha256": "cd5f93648fc417c7bdf31c23e23d0fdfb08f06dce2dd0ae8d1111ed370eaeeca",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\bidmc\\bidmc_24_Numerics.csv",
+      "bytes": 7799,
+      "sha256": "48b2d49f3f22fc9a156590a4366e29654b79ca03be19bb17b8250c89b6ff113a",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\bidmc\\bidmc_25_Numerics.csv",
+      "bytes": 8581,
+      "sha256": "215ab08fc17791af1c0391d9ee7554d825518195c9dfb12f8e03135a06808c46",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\bidmc\\bidmc_26_Numerics.csv",
+      "bytes": 7618,
+      "sha256": "d7ff9690fc6662cfb7a1cb1f66c99d3af71984cc6a6c42d5c3e242bb23b2f314",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\bidmc\\bidmc_27_Numerics.csv",
+      "bytes": 7530,
+      "sha256": "5edb8cbfbc401f4a9ee67cd4e2933c4fdc0d3f83325cb8b51f1839f644e36a82",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\bidmc\\bidmc_28_Numerics.csv",
+      "bytes": 8070,
+      "sha256": "6a26b5947bb249b60570edf601a05d12d69282d131671ddb03d34c9ba79d051c",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\bidmc\\bidmc_29_Numerics.csv",
+      "bytes": 7619,
+      "sha256": "05d6eb6ad74bfde8af0bfffba3f0c81b5e5139589d376a693cb434fdc508250a",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\bidmc\\bidmc_30_Numerics.csv",
+      "bytes": 7618,
+      "sha256": "a4f6a00823b0053586f2deb91820a34bb06468efba74503b3d20574f2e495f79",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\bidmc\\bidmc_31_Numerics.csv",
+      "bytes": 8100,
+      "sha256": "179f04948e1be00583cf6d6c73427bbd05cd23cca9891eb60f72b333e58cd971",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\bidmc\\bidmc_32_Numerics.csv",
+      "bytes": 7619,
+      "sha256": "1a9bb8fdde296519c2a265a2e73fab2e6b74ad63080960cdf0afbbb5668fd232",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\bidmc\\bidmc_33_Numerics.csv",
+      "bytes": 7619,
+      "sha256": "eb99b7cb224b2dc21931a4dbd358f19adb0507dd263c1bd653c9e4d5a9a45817",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\bidmc\\bidmc_34_Numerics.csv",
+      "bytes": 8099,
+      "sha256": "3cb5d0c349a1f480069dee797c5f51421c00cbd64ef271a228ab76f368720258",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\bidmc\\bidmc_35_Numerics.csv",
+      "bytes": 8323,
+      "sha256": "8c468f327a2cdc44abdc12bdf8acbe3fc1cea9caeb30d43968e48b62760c7e7d",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\bidmc\\bidmc_36_Numerics.csv",
+      "bytes": 7619,
+      "sha256": "7c7b922e9d6067fc673e17625c31b5897aeeef93e993532c31f0006b62115219",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\bidmc\\bidmc_37_Numerics.csv",
+      "bytes": 7874,
+      "sha256": "300fd4400debdf1842adeb51d44d9a253214e5253cbadbf73babf7612d5634d4",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\bidmc\\bidmc_38_Numerics.csv",
+      "bytes": 7618,
+      "sha256": "7e339a0c54c768da500f34641a650c0124cb920d923f04fb424f9b80b2951078",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\bidmc\\bidmc_39_Numerics.csv",
+      "bytes": 7619,
+      "sha256": "52341da9b65964c09acc12fc7230497340aab7bf32564d91b890d48d9ee53b4d",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\bidmc\\bidmc_40_Numerics.csv",
+      "bytes": 8588,
+      "sha256": "1bb3ae4e61696c243f722def012b1ad89fdf65a19073b1a20611a5e5626cb136",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\bidmc\\bidmc_41_Numerics.csv",
+      "bytes": 8100,
+      "sha256": "2933b16b9804b9d021a730a11e197818ef066a4042c85f6f62a08dc7d8d00ad6",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\bidmc\\bidmc_42_Numerics.csv",
+      "bytes": 7619,
+      "sha256": "7b25f6bce576d13e358ab97adb9a074d9a6aec62f99cb8805b5b6458120a968c",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\bidmc\\bidmc_43_Numerics.csv",
+      "bytes": 7619,
+      "sha256": "60e50a2511efc98320e072489494cbdfd20f6f46dbf8322f64c1729d1ae645d6",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\bidmc\\bidmc_44_Numerics.csv",
+      "bytes": 7643,
+      "sha256": "4338af6b68c4aadb8a950d11fcb96553e14f4fcf8f7294472d0cda7317c2baaa",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\bidmc\\bidmc_45_Numerics.csv",
+      "bytes": 8099,
+      "sha256": "fadab2c4aba2b6b5bad3baafbfc8c4c0261eb51851d2a7df87964536436d5198",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\bidmc\\bidmc_46_Numerics.csv",
+      "bytes": 8580,
+      "sha256": "39cb0e82ce91802867654aaa5d78cf78a56038fd8c7f1824fdc01a79a2fdd633",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\bidmc\\bidmc_47_Numerics.csv",
+      "bytes": 7625,
+      "sha256": "5516d2582992039d501e080428138976b3187cf1ec6e71e3209d9d24df4f3e30",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\bidmc\\bidmc_48_Numerics.csv",
+      "bytes": 8239,
+      "sha256": "3f3adb58676f34650e16382f5041f5e965b8a7dae2ca7a34fcd74bc95a14aacf",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\bidmc\\bidmc_49_Numerics.csv",
+      "bytes": 7619,
+      "sha256": "ff8a9e10d1d5bd359575f84e7165684f8ac13b814d5d4f78c38d061b70ee35f4",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\bidmc\\bidmc_50_Numerics.csv",
+      "bytes": 7643,
+      "sha256": "e3e42604187f4450e1c230a0c9d9ac5fe0da5b4d8f14262352e166e435dea8cf",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\bidmc\\bidmc_51_Numerics.csv",
+      "bytes": 7619,
+      "sha256": "aa84390a77d24f848a50d25f6e5709b03db940ad81ffecf760251fdc33eec1e9",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\bidmc\\bidmc_52_Numerics.csv",
+      "bytes": 8580,
+      "sha256": "df0d8e8d99d06b9532f15883b15c0d5330352bb5b0998ec2544b82d9519f9ce6",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\bidmc\\bidmc_53_Numerics.csv",
+      "bytes": 8192,
+      "sha256": "a5b24a09b0deaf5f88d214b5e3d5dfe8624d6641e8d9deeba3fab45fbb9c8eb7",
+      "reason": "retired_source_excluded_from_current_pipeline",
+      "retained_copy": null
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\fatigue-research\\auxiliary-transfer-80-v1\\selection.tmp",
+      "bytes": 660197,
+      "sha256": "d6c162b515ef9b75e8389347253327c38b32aaedd4aa8f915c6609224d5f984e",
+      "reason": "completed_selection_temporary_copy_status_only_difference",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\fatigue-research\\auxiliary-transfer-80-v1\\selection.json"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\fatigue-research\\body-context-80-v1\\selection.tmp",
+      "bytes": 1600946,
+      "sha256": "08bb6b2377201d98f3c5f698a00d72013c9e3565e7c8236e496da61a2af65e15",
+      "reason": "completed_selection_temporary_copy_status_only_difference",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\fatigue-research\\body-context-80-v1\\selection.json"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\fatigue-research\\dynamics-regression-80-v1\\selection.tmp",
+      "bytes": 1619796,
+      "sha256": "1f92d7af8465056e505dd6e6301905a989f5e90ab6084d9af67b0c83ceee6cd0",
+      "reason": "completed_selection_temporary_copy_status_only_difference",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\fatigue-research\\dynamics-regression-80-v1\\selection.json"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\fatigue-research\\gait-source-transfer-80-v1\\selection.tmp",
+      "bytes": 429571,
+      "sha256": "cf929b4a2692932a24ae09356d0563b89264fe170bb6abb2c4ac5c660b5a7e2a",
+      "reason": "completed_selection_temporary_copy_status_only_difference",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\fatigue-research\\gait-source-transfer-80-v1\\selection.json"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\fatigue-research\\phone-context-80-v1\\selection.tmp",
+      "bytes": 1711920,
+      "sha256": "fefca135b58a42b31aab55d83b7854b0e04b8b64b210fd3f9c9f5d417afd89df",
+      "reason": "completed_selection_temporary_copy_status_only_difference",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\fatigue-research\\phone-context-80-v1\\selection.json"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\fatigue-research\\tabular-transfer-80-v1\\selection.tmp",
+      "bytes": 133763,
+      "sha256": "5df50a2155fbbd5d87a335a7d27814a334683242cf9656292e496c271ce545fc",
+      "reason": "completed_selection_temporary_copy_status_only_difference",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\fatigue-research\\tabular-transfer-80-v1\\selection.json"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\code\\eval_all.m",
+      "bytes": 1691,
+      "sha256": "9becbb451b11bd1a277166eb8d066e97b5af40b853dae8a712f52221cbb5031b",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\code\\eval_multiclass.m",
+      "bytes": 13185,
+      "sha256": "438ba5ea531f1e1950e82e37d97b58dfb864f4c8ca94700362340bb6059ef934",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\acc_data.mat",
+      "bytes": 33635158,
+      "sha256": "97d87aff9f84a8e6b3cbbffda274fe88d283be7f878725d72e926bc5c684dbea",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\acc_labels.mat",
+      "bytes": 2794,
+      "sha256": "e8a3203a390497b10319cffe2936690cee812266efdfe3bc4f108dd3ad7674df",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\acc_names.mat",
+      "bytes": 599,
+      "sha256": "541ffb657ff21739ec39c7573eca58efe8c550fec17f1d87cde523b64e470e12",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\adl_data.mat",
+      "bytes": 22139310,
+      "sha256": "ac32d570782bb85f64daf3e7081c494d3d59aec9bd099fb65143e3bb3bfc27a8",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\adl_labels.mat",
+      "bytes": 1471,
+      "sha256": "69b7d34709a99e864eab2325bcd609082a8c7efd09fe8ae61a882bc6d363f30a",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\adl_names.mat",
+      "bytes": 295,
+      "sha256": "8d68881042227b7cffc493902a9d6f9f5546f66efed3e3c60ecd2858f2a26212",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\fall_data.mat",
+      "bytes": 11486791,
+      "sha256": "ff75f7551db123f59f70274511b423e11dd3af565e552855031ca22e23796c71",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\fall_labels.mat",
+      "bytes": 1351,
+      "sha256": "5720f80804e20321d9734d699f55369b3cb499c4664b279edcb3d8ccdc91e565",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\fall_names.mat",
+      "bytes": 305,
+      "sha256": "036290d5982afe05e42541d9a910bf5513955c3172cc3c2c69bb9f9cbacadc69",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\full_data.mat",
+      "bytes": 29084022,
+      "sha256": "087035da94d6f77efd005d6d2bedd2f959e40f70a0524deb0edb0c463fce5aa8",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\results\\results151\\results_acc_knn_5_folds.mat",
+      "bytes": 1057,
+      "sha256": "b8a06851ee4dfcb97abceb07225de71380aa16e67dfb2fe86230ef8be3afd934",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\results\\results151\\results_acc_knn_subjective.mat",
+      "bytes": 3128,
+      "sha256": "44ccf441ea70c4b00839e3f0a8f23686ee35eaaee1e13a8a9a38578d733c50ba",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\results\\results151\\results_acc_svm_5_folds.mat",
+      "bytes": 1126,
+      "sha256": "f3836936c1cde357ff03711544228a08ebf8b77e038f9015abd79db9bf183a58",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\results\\results151\\results_acc_svm_subjective.mat",
+      "bytes": 3051,
+      "sha256": "d938c1f470f7c53991cd0ccf16fd8f571dda978e3219dc240c70462c63db7bd6",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\results\\results151\\results_adl_knn_5_folds.mat",
+      "bytes": 590,
+      "sha256": "b39eaf02c7da2084c509191dfc67a2f022dc9e9738b7e76beaf2b336b1b25648",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\results\\results151\\results_adl_knn_subjective.mat",
+      "bytes": 1720,
+      "sha256": "8cae270f7e1f5f63f5c9b4d50cd5f6126f2f8827f6d1c7d40656bd8d704e3c8e",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\results\\results151\\results_adl_svm_5_folds.mat",
+      "bytes": 632,
+      "sha256": "def3f0c3fd3ae2a17425bc513abf1c1888dcd5a38a468cdf0e636d51f52efab9",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\results\\results151\\results_adl_svm_subjective.mat",
+      "bytes": 1729,
+      "sha256": "5b7a96869b45df3bcbf12c04421941c3a02cda3b814e05fb35a4a4aae7846142",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\results\\results151\\results_fall_knn_5_folds.mat",
+      "bytes": 557,
+      "sha256": "608970f4b9293da649af801b31d28f1aca71df134983a20034e88425baff5cb2",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\results\\results151\\results_fall_knn_subjective.mat",
+      "bytes": 1755,
+      "sha256": "e5623a93f0603f93e2c689d2f9c2ac3ac2667a14646692e0ab7462b0ca229d04",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\results\\results151\\results_fall_svm_5_folds.mat",
+      "bytes": 566,
+      "sha256": "7aa263c8dd90bac1a4d01ceb1fbd0f5c91901005394375ff13d206052a331536",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\results\\results151\\results_fall_svm_subjective.mat",
+      "bytes": 1716,
+      "sha256": "b6209a87782374a56ac2319800f9f8092f16d2088d9c9dbcc3d8298e9c72d8fd",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\results\\results151\\results_two_classes_knn_5_folds.mat",
+      "bytes": 333,
+      "sha256": "a3c12e2322a51126e5a26ae44e231067077022a26e3c3d9c1b2a5090bdf4f523",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\results\\results151\\results_two_classes_knn_subjective.mat",
+      "bytes": 935,
+      "sha256": "0009a625ea5053d8a1d2a4cc0ab834ae7d12043f46f5fb77aab2501355fd9f33",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\results\\results151\\results_two_classes_svm_5_folds.mat",
+      "bytes": 337,
+      "sha256": "ace6333e226d46a5235b66db9ba5fcc13b39b37257f9558d2b85b5fd90ade17e",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\results\\results151\\results_two_classes_svm_subjective.mat",
+      "bytes": 926,
+      "sha256": "06d48c50846e53af828ea636e873261dfa285705ac46752a6b4aa83fbee08231",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\results\\results51\\results_acc_knn_5_folds.mat",
+      "bytes": 1181,
+      "sha256": "a2d40da8fa43ad4046c928e3e9eafb4ed0d1ec14259006a9d8d32a1815770db2",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\results\\results51\\results_acc_knn_subjective.mat",
+      "bytes": 3438,
+      "sha256": "facef27657572464d1b964366b527c4b3c6fccf3566357586e3da43fca796aba",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\results\\results51\\results_acc_svm_5_folds.mat",
+      "bytes": 1219,
+      "sha256": "8345b88f506d303494c4969334c221daf30fa24e8b9cd611f0c0e5a864c621d0",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\results\\results51\\results_acc_svm_subjective.mat",
+      "bytes": 3323,
+      "sha256": "3c9b70e2d6b61e29ec5b12b5d1cef28a56acd348d8ec5abd49c18dd42f972c98",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\results\\results51\\results_adl_knn_5_folds.mat",
+      "bytes": 611,
+      "sha256": "3160fbc586ed16181d49033e9692656ed8aaf1f54a70ea3a159c1ae63eb5146d",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\results\\results51\\results_adl_knn_subjective.mat",
+      "bytes": 1769,
+      "sha256": "9430874f756d73fc015d522bbf7df483d8f1c4ae9bc3aa0854d5797776cb10ac",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\results\\results51\\results_adl_svm_5_folds.mat",
+      "bytes": 654,
+      "sha256": "4c0cfa95f5382f85ba962073630d7e354d4d3204c46a9ae8ef4589b117779cac",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\results\\results51\\results_adl_svm_subjective.mat",
+      "bytes": 1740,
+      "sha256": "d6e0c149cc20ccf4c5f5718a34f1d685eea7c510cb4fc4016acc5674551c49ca",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\results\\results51\\results_fall_knn_5_folds.mat",
+      "bytes": 567,
+      "sha256": "95041bb182a05f3fd4806461a39c8fd79823052a08deceb34af697d25a2496aa",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\results\\results51\\results_fall_knn_subjective.mat",
+      "bytes": 1809,
+      "sha256": "eb173dae7875f5ac03d871ab33056cfab2b7640555b2428a02b259e168a3004e",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\results\\results51\\results_fall_svm_5_folds.mat",
+      "bytes": 574,
+      "sha256": "4836ae8cdcde97ec9ef220e51eb0ab30b891507d11dc7153c8b21e32614b53eb",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\results\\results51\\results_fall_svm_subjective.mat",
+      "bytes": 1771,
+      "sha256": "da030e2c3d696cd0f3e5b1a569bda54a1b4ba3bfb4acdf4e6e016ebed6a74ddf",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\results\\results51\\results_two_classes_knn_5_folds.mat",
+      "bytes": 341,
+      "sha256": "eb65590547303eb52962255068cfb34b53d5f1b7a58e4c73728f66b29f9ee9cd",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\results\\results51\\results_two_classes_knn_subjective.mat",
+      "bytes": 964,
+      "sha256": "61f7adc40170a9fb4df033c92c00cca1a447320a7831e574296d2a595a817321",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\results\\results51\\results_two_classes_svm_5_folds.mat",
+      "bytes": 335,
+      "sha256": "cb6437cd2311eac44db54e072818c6a6efc8da6053038e1be7507da87dbe8e2a",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\results\\results51\\results_two_classes_svm_subjective.mat",
+      "bytes": 946,
+      "sha256": "538482a9eaeb23f04d5f439dd08fd3af04ef07c3acffaffb98c3755703c71ba6",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\split\\split151\\acc_splitted_data5_folds.mat",
+      "bytes": 32961714,
+      "sha256": "838f320ac63c67b4e2ae6ead6f714c2e081596726f2657c2bdb1df3ff370284e",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\split\\split151\\acc_test_idxs5_folds.mat",
+      "bytes": 18501,
+      "sha256": "32f6d27928fafa6d98e6ee1cb07c1e8d3bc18dde8dd989cf01daddc30840019f",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\split\\split151\\acc_test_idxssubjective_folds.mat",
+      "bytes": 21325,
+      "sha256": "ffd9b80ba812d504622c079558dfafeb32c3abfdfdf0279ca68cc6259176b5d5",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\split\\split151\\acc_train_idxs5_folds.mat",
+      "bytes": 55362,
+      "sha256": "5ea0f6215342c265d074b412024108b5d282a0651506b9a19c5cbae14015abac",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\split\\split151\\acc_train_idxssubjective_folds.mat",
+      "bytes": 591087,
+      "sha256": "6c26b3b29fa0ee36f3da1e7e419affcf5fadd364ae4dffd36646cbd0990ce7eb",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\split\\split151\\adl_splitted_data5_folds.mat",
+      "bytes": 21655863,
+      "sha256": "fbdcc5d11aab7ccff652e4130917e0717b53f92a6ba3bac3fa42a127fd6ea1cb",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\split\\split151\\adl_test_idxs5_folds.mat",
+      "bytes": 12160,
+      "sha256": "7e42b79af95e9cb3d3b40f8474684d3f490afeac62a469046df4d2ebb1f5ef0a",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\split\\split151\\adl_test_idxssubjective_folds.mat",
+      "bytes": 13889,
+      "sha256": "2f3c1385eb5cd84789c3ae2d505c8fa442729dd657382ba28ac4301253af2f93",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\split\\split151\\adl_train_idxs5_folds.mat",
+      "bytes": 36379,
+      "sha256": "2e95862c3bfa5a19aad3975d72afc64be16328e65f6dfbe624db4374d1b07f2a",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\split\\split151\\adl_train_idxssubjective_folds.mat",
+      "bytes": 381303,
+      "sha256": "7c43cf213bde2e648475ad2a66272948ed495846bc40dbfc5307aba982787aea",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\split\\split151\\fall_splitted_data5_folds.mat",
+      "bytes": 11306273,
+      "sha256": "fc3310485780172a7d7b0800692ef1a9ae43461a2e6f52fdd2ea8903328b46fd",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\split\\split151\\fall_test_idxs5_folds.mat",
+      "bytes": 6462,
+      "sha256": "e17f7f59ed32292490203d0a06b0fa12c2bcb2d2075650ddc49a5537d7e671d2",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\split\\split151\\fall_test_idxssubjective_folds.mat",
+      "bytes": 7534,
+      "sha256": "496f1cdf8ee1d9d38aa07e2ea0f4ee299750f64ac24e9c0f732ccb6755846d15",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\split\\split151\\fall_train_idxs5_folds.mat",
+      "bytes": 19230,
+      "sha256": "9d0c1b0ba6c9cf4c7aeb65b9d72deb93999f4de4b466b067a591c3c4b72282b4",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\split\\split151\\fall_train_idxssubjective_folds.mat",
+      "bytes": 210455,
+      "sha256": "b60db1fc24c218f26d697e3396981d54a48087915ea7d66c2b8c69761ea23001",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\split\\split151\\two_classes_splitted_data5_folds.mat",
+      "bytes": 33606480,
+      "sha256": "78ccc0a4454cb6e2e5429127c70ed52241900cb705c1da7717cf0d55efb29d1b",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\split\\split151\\two_classes_test_idxs5_folds.mat",
+      "bytes": 21270,
+      "sha256": "338a3a8bf71cc13fdaad5b4fc78a649f4fdfad09cd34f7d60b22244521fe3756",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\split\\split151\\two_classes_test_idxssubjective_folds.mat",
+      "bytes": 21325,
+      "sha256": "0b350a7a528dd511f3f4745c2ce703d01e754d9d9f05b368ce177514ac3bbb7f",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\split\\split151\\two_classes_train_idxs5_folds.mat",
+      "bytes": 60428,
+      "sha256": "93b750dbb75c5e23f20c3bc44db49e94b03db1dc8f2c48ad4753a5e3fc4729d8",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\split\\split151\\two_classes_train_idxssubjective_folds.mat",
+      "bytes": 591087,
+      "sha256": "a845dec03fbe21c8ac56557b29acb86f6f6da440fd74734193549184a43303b5",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\split\\split51\\acc_splitted_data5_folds.mat",
+      "bytes": 11234486,
+      "sha256": "eaf785cef375d04a02ef89f36035c88a96216b711636ae6ce25ed187be4880a7",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\split\\split51\\acc_test_idxs5_folds.mat",
+      "bytes": 18500,
+      "sha256": "50a7bd02fa82d7043a398318d3e5830c031867f5703ef6ebc2ea46eaf63f0231",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\split\\split51\\acc_test_idxssubjective_folds.mat",
+      "bytes": 21325,
+      "sha256": "a47d08ccb035aa4c5a5e6459d13ae1ba610d55f7f00f5af0225e112f35848540",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\split\\split51\\acc_train_idxs5_folds.mat",
+      "bytes": 55289,
+      "sha256": "f7d3a2c282f82b67f63f034d7c843672999096de52a1aa4491e57e3e0fc44cbd",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\split\\split51\\acc_train_idxssubjective_folds.mat",
+      "bytes": 591087,
+      "sha256": "b4b08b40d477a6a43efe45d0fa83cc759235028a675c234717653ff1de41af5e",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\split\\split51\\adl_splitted_data5_folds.mat",
+      "bytes": 7320036,
+      "sha256": "2555da2425fbe88cfb321d5a7e6129b503c3890f4945545d7bb14054d36720d7",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\split\\split51\\adl_test_idxs5_folds.mat",
+      "bytes": 12166,
+      "sha256": "1952a0b66fd0f8120020f93e5be707e761b91046d9c8dfdb19b8fee427ae3a9f",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\split\\split51\\adl_test_idxssubjective_folds.mat",
+      "bytes": 13889,
+      "sha256": "c099e663a1f3271ae1637227cda1b21f417827aefd1a233733e69d54e7b9e610",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\split\\split51\\adl_train_idxs5_folds.mat",
+      "bytes": 36242,
+      "sha256": "1a83e66cd3d678d53e01dddaab5ce9e664a942cd1c43cbc4c3bf53f1ad5039ca",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\split\\split51\\adl_train_idxssubjective_folds.mat",
+      "bytes": 381303,
+      "sha256": "50553705573e70d11226dd3e3f07682a7d9522404d955a7c384b80ad3b7b6306",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\split\\split51\\fall_splitted_data5_folds.mat",
+      "bytes": 3914783,
+      "sha256": "22934c94fdea4cadb500934a31088fa2a60875292b499450800099eca084f569",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\split\\split51\\fall_test_idxs5_folds.mat",
+      "bytes": 6469,
+      "sha256": "34687016864a185b1044bce49a1c2fc545d722dc943cebfb303fedadf52e0c07",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\split\\split51\\fall_test_idxssubjective_folds.mat",
+      "bytes": 7534,
+      "sha256": "c3e64da374050d6726bfbfd74c6fbe52b58a46b83cf784da3c639af0ba8153db",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\split\\split51\\fall_train_idxs5_folds.mat",
+      "bytes": 19251,
+      "sha256": "06b0a7fbfc556b5dece8a655a42e84c5ae56e9770965b4edc52b2cba3778ecae",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\split\\split51\\fall_train_idxssubjective_folds.mat",
+      "bytes": 210455,
+      "sha256": "54f0a0f12309fe873e02ea908166283a432eae4190044500b27de8158d4d2c1a",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\split\\split51\\two_classes_splitted_data5_folds.mat",
+      "bytes": 11411213,
+      "sha256": "08af1177e83479f558117347710c4aca78cf30f5d7a66f2d67ae346b98efb61d",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\split\\split51\\two_classes_test_idxs5_folds.mat",
+      "bytes": 21271,
+      "sha256": "ebf5de0bfea06285d82886b8e562ec6f047fa2c0c7f2172490b6f9b3620aeef1",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\split\\split51\\two_classes_test_idxssubjective_folds.mat",
+      "bytes": 21325,
+      "sha256": "650a11438abe3f925b9e74260d737f1426ede7ac78efd56e1fa300de1f7105ec",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\split\\split51\\two_classes_train_idxs5_folds.mat",
+      "bytes": 60843,
+      "sha256": "b964ade829bd382318429619e813d692d050051fe7b9dc87cbb229f76bad684b",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\split\\split51\\two_classes_train_idxssubjective_folds.mat",
+      "bytes": 591087,
+      "sha256": "b97e549c5ab25a2eaacdd625b9278b0c3000c38e33cbfb4330af17e29e087dca",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\two_classes_data.mat",
+      "bytes": 33635150,
+      "sha256": "9e34b457576ebe282af9525fa1ef2e9eea2e030153785964fd33427f7d24fc99",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\two_classes_labels.mat",
+      "bytes": 2476,
+      "sha256": "a067f59919fea75a3a905b173899685fb063f0181340200dbd4c9a1f0dcf29d7",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\data\\two_classes_names.mat",
+      "bytes": 219,
+      "sha256": "584d73aedddba586b499aa38b088cafc9cf0272322c77b92981470eeeeb63811",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    },
+    {
+      "path": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\extracted\\UniMiB-SHAR\\readme.txt",
+      "bytes": 5158,
+      "sha256": "925409f96b24e390517fa268911700a06da788444016c52bc32c68655f1e74c2",
+      "reason": "redundant_extraction_identical_to_retained_archive_member",
+      "retained_copy": "D:\\AppPFI\\MiSendero\\training\\data\\raw\\unimib-shar\\UniMiB-SHAR.zip"
+    }
+  ],
+  "deleted_file_count": 181,
+  "bytes_freed": 15834544117.0,
+  "failures": [],
+  "deleted_paths_still_present": 0,
+  "protected_file_count": 35277,
+  "verified_protected_content_hashes": 3718,
+  "protected_files_missing_or_changed": [],
+  "preserved_datasets": "All current training originals, admitted public source datasets, fitted models and final results; original UniMiB ZIP retained",
+  "retired_source_evidence": "docs/ai-real-data-audit.md; no current code/source-lock dependencies on WESAD/PAMAP2/BIDMC",
+  "previous_cleanup_bytes": 293715080,
+  "combined_bytes_freed": 16128259197.0
+}

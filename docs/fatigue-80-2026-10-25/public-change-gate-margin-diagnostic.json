@@ -1,0 +1,306 @@
+{
+  "diagnostic": "passed",
+  "diagnostic_code_sha256": "a82d63f8d096e58f5d2d6bc0138149a3f062c7eef9420f868dc850f002fb33f2",
+  "selection_sha256": "6689ceac33d18dc935e898ee00d549c3953c9410bd25fe7d7f39efaa85fbb8e0",
+  "fold_model_hashes": {
+    "public-change-gate-004-fold-0.joblib": "82128d85f1ba6ddc6de6209e0aafa7c4209f96d69808295f7c66619b91b25915",
+    "public-change-gate-004-fold-1.joblib": "e0b504b91f0d9bf9c687208c4e7ae3a9a901d08d2e86b1c1410b1cf88ff602c5",
+    "public-change-gate-004-fold-2.joblib": "aad6504397a55d130eaddaf5d705c43017059b5817fff9aeebfface01e19ec43",
+    "public-change-gate-004-fold-3.joblib": "d6448053d45ae6bda583196f7c0780eaebebed8c195bbdf72e6b50c8dfaf35e3",
+    "public-change-gate-004-fold-4.joblib": "9c2258a4829f33841788474f102fb055f8244407cce28c2dfe875efde8bde2ea",
+    "public-change-gate-005-fold-0.joblib": "c876a2e7daa0f411a456036f0e87fa7f58157f3e13fa666378287a8194983251",
+    "public-change-gate-005-fold-1.joblib": "8d45a0465c2590ee7da74a25a7ad1119d4170bb9bbe24ff8d8779bd5c1b65f18",
+    "public-change-gate-005-fold-2.joblib": "5a60c75aa6d5975f3642b01ecdf6dcc136421b86a0b6d2c8781c8eccd8a55bc3",
+    "public-change-gate-005-fold-3.joblib": "c11150fac93d286f47d21a1f7c6ba9a7b0e73f9c3bb50bdd909946110252a13b",
+    "public-change-gate-005-fold-4.joblib": "61c529a59d93561495556800cc600c7da66318d64a26662da11d0554372e4ad2",
+    "public-change-gate-006-fold-0.joblib": "28575cd3d104402333280396705f6782e99684c95b00f46a021d89703bb2678e",
+    "public-change-gate-006-fold-1.joblib": "9529ca536023a59f5a0c6d4a0fe71b25f4f8e71911c890cfc9b36e1aa6331f3f",
+    "public-change-gate-006-fold-2.joblib": "3b63b224f73f238342303e83ab4936e7b9d3d232cb4005b786f63a42ebaf0326",
+    "public-change-gate-006-fold-3.joblib": "86ce6743b8005f273729f147f3a9e949d36f02316960d0aef4cdad0155692a36",
+    "public-change-gate-006-fold-4.joblib": "2463447ac415f17540e1e189d521992a25dbfca86ab21931bc302e4bcb567738",
+    "public-change-gate-007-fold-0.joblib": "3ef3be523001ca48cb1cbc27d99d404d254a1ce3d4f93434d8a05267dc0d525b",
+    "public-change-gate-007-fold-1.joblib": "6789c5dc0ea1370addb8b482e6f8a7c6a9e42e302cae1227edb8a40d59f81d27",
+    "public-change-gate-007-fold-2.joblib": "b707f21e6f52e4828d666fff2b315dca0b1a8348b1901568296ea01d80ec9ce2",
+    "public-change-gate-007-fold-3.joblib": "80b6a038892b41edfde50c423389128ebb22e21df1d9dc32145afae645d98aaa",
+    "public-change-gate-007-fold-4.joblib": "ed6067f508770bee062401c0d032df6c13ac272d8160d3b09e627759d797b39a",
+    "public-change-gate-008-fold-0.joblib": "23b227c5c892f384bcc9e7b3e60699e53a67a584b5e9b9ccee00e378c6a672a1",
+    "public-change-gate-008-fold-1.joblib": "5af2e88d1bb1c6503baea2281819c701e391238e955fcb20156ca32e1375f262",
+    "public-change-gate-008-fold-2.joblib": "ee4de1a1ae026fb6b89aebdf9c2070a83ddbc9cebffb59586f72f829947a5dd9",
+    "public-change-gate-008-fold-3.joblib": "56b41769f9b35055d9a71f16f7027008c7a8e8d9b071c653d3858822972df7f1",
+    "public-change-gate-008-fold-4.joblib": "197167431a490da43fd1b2aa24d1065e3a8112b618ee321aba15246b55806acd",
+    "public-change-gate-009-fold-0.joblib": "bc6c34382012328907d2df4c63ebc3042ee3cd041dfbbb5a9a5e849ff13ca43e",
+    "public-change-gate-009-fold-1.joblib": "4614a0c54f1317842cdedcb0501b0fdbedc34b44554f144e78c3db674d449c20",
+    "public-change-gate-009-fold-2.joblib": "c2b1d10122782502686868a533779481468693328fa5dc4c26552033bcac0cde",
+    "public-change-gate-009-fold-3.joblib": "70b8ac657d1ff74d836df8164efa0df0bf5b410a39e75b587436d6bea45b6564",
+    "public-change-gate-009-fold-4.joblib": "fb9b9225850a853a98c3c33aa2985bc6e61a93d1fb3d72316ad5077e54861fb7"
+  },
+  "original_fitting_queries": 487,
+  "original_fitting_people": 28,
+  "results": [
+    {
+      "candidate": {
+        "id": "public-change-gate-004",
+        "algorithm": "joint_public_binary_change_gate",
+        "member": "core",
+        "auxiliary_weight": 0.0,
+        "epochs": 80,
+        "learning_rate": 0.003,
+        "weight_decay": 0.1,
+        "correction_penalty": 10.0,
+        "random_seed": 42,
+        "source_target": "actual_current_unequal_actual_prior_on_original_instrument",
+        "native_target": "original_integer_delta_distribution_with_frozen_nonzero_conditional"
+      },
+      "native_cv_accuracy": 0.6082057277760603,
+      "absolute_logit_correction": {
+        "minimum": 1.770351082086563e-05,
+        "median": 0.0018491512164473534,
+        "p90": 0.005717285443097355,
+        "maximum": 0.03551565855741501,
+        "mean": 0.002685451132362016
+      },
+      "absolute_gate_boundary_margin": {
+        "minimum": 0.003622838807844253,
+        "median": 0.8060055688199954,
+        "p90": 4.035760220661931,
+        "maximum": 9.210296032320015,
+        "mean": 1.3234974242346929
+      },
+      "absolute_correction_over_required_margin": {
+        "minimum": 1.966140538896317e-05,
+        "median": 0.002545921834134445,
+        "p90": 0.018820422450324954,
+        "maximum": 1.4279707483272432,
+        "mean": 0.013921762551152395
+      },
+      "gate_boundaries_crossed": 0,
+      "final_native_borg_predictions_changed": 0,
+      "native_fitting_loss_end_minus_start_mean": -0.0005492353407974493,
+      "native_penalty_over_likelihood_output_derivative_norm_mean": 0.22168018786193483,
+      "optimistic_fitting_only_correct_if_oracle_chose_zero_or_top_nonzero": 431,
+      "optimistic_fitting_only_gate_choice_ceiling": 0.8850102669404517
+    },
+    {
+      "candidate": {
+        "id": "public-change-gate-005",
+        "algorithm": "joint_public_binary_change_gate",
+        "member": "core",
+        "auxiliary_weight": 0.1,
+        "epochs": 80,
+        "learning_rate": 0.003,
+        "weight_decay": 0.1,
+        "correction_penalty": 10.0,
+        "random_seed": 42,
+        "source_target": "actual_current_unequal_actual_prior_on_original_instrument",
+        "native_target": "original_integer_delta_distribution_with_frozen_nonzero_conditional"
+      },
+      "native_cv_accuracy": 0.6082057277760603,
+      "absolute_logit_correction": {
+        "minimum": 1.3311393558979034e-05,
+        "median": 0.0019268281757831573,
+        "p90": 0.0053689057938754595,
+        "maximum": 0.0310294758528471,
+        "mean": 0.0025335138365320357
+      },
+      "absolute_gate_boundary_margin": {
+        "minimum": 0.003622838807844253,
+        "median": 0.8060055688199954,
+        "p90": 4.035760220661931,
+        "maximum": 9.210296032320015,
+        "mean": 1.3234974242346929
+      },
+      "absolute_correction_over_required_margin": {
+        "minimum": 1.8708381386839788e-05,
+        "median": 0.002431541866028604,
+        "p90": 0.017150452818217345,
+        "maximum": 1.339772273027477,
+        "mean": 0.012321672703599875
+      },
+      "gate_boundaries_crossed": 0,
+      "final_native_borg_predictions_changed": 0,
+      "native_fitting_loss_end_minus_start_mean": -0.0005021966538536482,
+      "native_penalty_over_likelihood_output_derivative_norm_mean": 0.21331864575489928,
+      "optimistic_fitting_only_correct_if_oracle_chose_zero_or_top_nonzero": 431,
+      "optimistic_fitting_only_gate_choice_ceiling": 0.8850102669404517
+    },
+    {
+      "candidate": {
+        "id": "public-change-gate-006",
+        "algorithm": "joint_public_binary_change_gate",
+        "member": "core",
+        "auxiliary_weight": 1.0,
+        "epochs": 80,
+        "learning_rate": 0.003,
+        "weight_decay": 0.1,
+        "correction_penalty": 10.0,
+        "random_seed": 42,
+        "source_target": "actual_current_unequal_actual_prior_on_original_instrument",
+        "native_target": "original_integer_delta_distribution_with_frozen_nonzero_conditional"
+      },
+      "native_cv_accuracy": 0.6082057277760603,
+      "absolute_logit_correction": {
+        "minimum": 1.1642463505268097e-05,
+        "median": 0.0019199373200535774,
+        "p90": 0.005364864598959688,
+        "maximum": 0.03101925551891327,
+        "mean": 0.0025325272298270733
+      },
+      "absolute_gate_boundary_margin": {
+        "minimum": 0.003622838807844253,
+        "median": 0.8060055688199954,
+        "p90": 4.035760220661931,
+        "maximum": 9.210296032320015,
+        "mean": 1.3234974242346929
+      },
+      "absolute_correction_over_required_margin": {
+        "minimum": 1.870707351345684e-05,
+        "median": 0.0024323063910082505,
+        "p90": 0.017134499125099113,
+        "maximum": 1.3375491330942744,
+        "mean": 0.012308314317448936
+      },
+      "gate_boundaries_crossed": 0,
+      "final_native_borg_predictions_changed": 0,
+      "native_fitting_loss_end_minus_start_mean": -0.0005017151640273054,
+      "native_penalty_over_likelihood_output_derivative_norm_mean": 0.2132440684668849,
+      "optimistic_fitting_only_correct_if_oracle_chose_zero_or_top_nonzero": 431,
+      "optimistic_fitting_only_gate_choice_ceiling": 0.8850102669404517
+    },
+    {
+      "candidate": {
+        "id": "public-change-gate-007",
+        "algorithm": "joint_public_binary_change_gate",
+        "member": "cat",
+        "auxiliary_weight": 0.0,
+        "epochs": 80,
+        "learning_rate": 0.003,
+        "weight_decay": 0.1,
+        "correction_penalty": 10.0,
+        "random_seed": 42,
+        "source_target": "actual_current_unequal_actual_prior_on_original_instrument",
+        "native_target": "original_integer_delta_distribution_with_frozen_nonzero_conditional"
+      },
+      "native_cv_accuracy": 0.6379721574248428,
+      "absolute_logit_correction": {
+        "minimum": 2.3663975298404694e-05,
+        "median": 0.0019317744299769402,
+        "p90": 0.00546002089977265,
+        "maximum": 0.04713928699493408,
+        "mean": 0.0030496375046257366
+      },
+      "absolute_gate_boundary_margin": {
+        "minimum": 0.0019609770623491007,
+        "median": 1.0096615267702023,
+        "p90": 3.0512247281207734,
+        "maximum": 3.4399053609046675,
+        "mean": 1.2810682986791295
+      },
+      "absolute_correction_over_required_margin": {
+        "minimum": 1.812500667147762e-05,
+        "median": 0.0021355532745854916,
+        "p90": 0.0116199505638532,
+        "maximum": 0.5881216501049737,
+        "mean": 0.007498291046351005
+      },
+      "gate_boundaries_crossed": 0,
+      "final_native_borg_predictions_changed": 0,
+      "native_fitting_loss_end_minus_start_mean": -0.0006244936711601534,
+      "native_penalty_over_likelihood_output_derivative_norm_mean": 0.22034250702942396,
+      "optimistic_fitting_only_correct_if_oracle_chose_zero_or_top_nonzero": 430,
+      "optimistic_fitting_only_gate_choice_ceiling": 0.8829568788501027
+    },
+    {
+      "candidate": {
+        "id": "public-change-gate-008",
+        "algorithm": "joint_public_binary_change_gate",
+        "member": "cat",
+        "auxiliary_weight": 0.1,
+        "epochs": 80,
+        "learning_rate": 0.003,
+        "weight_decay": 0.1,
+        "correction_penalty": 10.0,
+        "random_seed": 42,
+        "source_target": "actual_current_unequal_actual_prior_on_original_instrument",
+        "native_target": "original_integer_delta_distribution_with_frozen_nonzero_conditional"
+      },
+      "native_cv_accuracy": 0.6379721574248428,
+      "absolute_logit_correction": {
+        "minimum": 1.0670628398656845e-05,
+        "median": 0.001759733073413372,
+        "p90": 0.005266841221600771,
+        "maximum": 0.04596482217311859,
+        "mean": 0.0028581690123874012
+      },
+      "absolute_gate_boundary_margin": {
+        "minimum": 0.0019609770623491007,
+        "median": 1.0096615267702023,
+        "p90": 3.0512247281207734,
+        "maximum": 3.4399053609046675,
+        "mean": 1.2810682986791295
+      },
+      "absolute_correction_over_required_margin": {
+        "minimum": 7.699122257776003e-06,
+        "median": 0.002048525733486707,
+        "p90": 0.011131438748770489,
+        "maximum": 0.5385837094713816,
+        "mean": 0.00713915501486962
+      },
+      "gate_boundaries_crossed": 0,
+      "final_native_borg_predictions_changed": 0,
+      "native_fitting_loss_end_minus_start_mean": -0.000555635568295787,
+      "native_penalty_over_likelihood_output_derivative_norm_mean": 0.20849540608152176,
+      "optimistic_fitting_only_correct_if_oracle_chose_zero_or_top_nonzero": 430,
+      "optimistic_fitting_only_gate_choice_ceiling": 0.8829568788501027
+    },
+    {
+      "candidate": {
+        "id": "public-change-gate-009",
+        "algorithm": "joint_public_binary_change_gate",
+        "member": "cat",
+        "auxiliary_weight": 1.0,
+        "epochs": 80,
+        "learning_rate": 0.003,
+        "weight_decay": 0.1,
+        "correction_penalty": 10.0,
+        "random_seed": 42,
+        "source_target": "actual_current_unequal_actual_prior_on_original_instrument",
+        "native_target": "original_integer_delta_distribution_with_frozen_nonzero_conditional"
+      },
+      "native_cv_accuracy": 0.6379721574248428,
+      "absolute_logit_correction": {
+        "minimum": 1.0547228157520294e-06,
+        "median": 0.0017508924938738346,
+        "p90": 0.00526525927707553,
+        "maximum": 0.04596830531954765,
+        "mean": 0.0028575594897082674
+      },
+      "absolute_gate_boundary_margin": {
+        "minimum": 0.0019609770623491007,
+        "median": 1.0096615267702023,
+        "p90": 3.0512247281207734,
+        "maximum": 3.4399053609046675,
+        "mean": 1.2810682986791295
+      },
+      "absolute_correction_over_required_margin": {
+        "minimum": 3.1702130179818385e-06,
+        "median": 0.002050273267971007,
+        "p90": 0.011130531780460895,
+        "maximum": 0.5391727387085635,
+        "mean": 0.007141934297212396
+      },
+      "gate_boundaries_crossed": 0,
+      "final_native_borg_predictions_changed": 0,
+      "native_fitting_loss_end_minus_start_mean": -0.0005552817656980569,
+      "native_penalty_over_likelihood_output_derivative_norm_mean": 0.20844396249071107,
+      "optimistic_fitting_only_correct_if_oracle_chose_zero_or_top_nonzero": 430,
+      "optimistic_fitting_only_gate_choice_ceiling": 0.8829568788501027
+    }
+  ],
+  "new_predictive_estimator_fits": 0,
+  "new_preprocessor_fits": 0,
+  "new_test_predictions_computed": 0,
+  "test_labels_inspected": false,
+  "synthetic_rows": 0,
+  "new_hyperparameters_selected": 0,
+  "interpretation": "Gate logit adjustments are compared with the exact mathematical boundary between the original zero delta and highest-probability nonzero delta. Each source-trained model still preserves relative nonzero probabilities. Small adjustment/margin ratios can explain unchanged decisions even with verified learning and nonzero source gradients. The output derivative ratio describes the saved fitting objective,not a proof that a different penalty will improve validation. Oracle gate-choice ceilings use actual fitting-participant labels for a hypothetical bound only;they are not achieved predictions or the179case test result."
+}

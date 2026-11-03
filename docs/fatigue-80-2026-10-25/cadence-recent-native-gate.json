@@ -1,0 +1,357 @@
+{
+  "version": 1,
+  "status": "complete",
+  "selection_sha256": "955584b56563bedfe3424bccd535f6d026aef401acc48c959368ee419a11cb9c",
+  "verification_sha256": "867a6742ea12fa8f8b4d3931c730edb82a0e27f1c0132a8f6bd0f3146eeac277",
+  "input_verification_sha256": "b78618b8c30c84126670db145c3d01410fca23eec55821f468ad5e5fc62ff5a8",
+  "configurations": 10,
+  "new_joint_network_fits": 20,
+  "independent_joint_refits": 20,
+  "new_native_base_fits_for_cv": 0,
+  "source_fitting_actual_pairs": 851,
+  "source_reserved_pairs": 206,
+  "native_private_features": 16,
+  "best_positive_by_member": {
+    "core": {
+      "candidate": {
+        "id": "recent-gate-007",
+        "algorithm": "cadence_recent_native_gate",
+        "member": "core",
+        "auxiliary_weight": 0.1,
+        "epochs": 80,
+        "learning_rate": 0.003,
+        "weight_decay": 0.1,
+        "correction_penalty": 1.0,
+        "random_seed": 42,
+        "source_target": "actual_current_unequal_prior_original6to20",
+        "native_target": "original_integer_delta_distribution_with_frozen_nonzero_conditional"
+      },
+      "accuracy_mean": 0.6097555811622308,
+      "fold_accuracy": [
+        0.65,
+        0.5543478260869565,
+        0.5980392156862745,
+        0.5980392156862745,
+        0.6483516483516484
+      ]
+    },
+    "cat": {
+      "candidate": {
+        "id": "recent-gate-009",
+        "algorithm": "cadence_recent_native_gate",
+        "member": "cat",
+        "auxiliary_weight": 0.1,
+        "epochs": 80,
+        "learning_rate": 0.003,
+        "weight_decay": 0.1,
+        "correction_penalty": 1.0,
+        "random_seed": 42,
+        "source_target": "actual_current_unequal_prior_original6to20",
+        "native_target": "original_integer_delta_distribution_with_frozen_nonzero_conditional"
+      },
+      "accuracy_mean": 0.6318766757539136,
+      "fold_accuracy": [
+        0.67,
+        0.5543478260869565,
+        0.6176470588235294,
+        0.6470588235294118,
+        0.6703296703296703
+      ]
+    }
+  },
+  "matched_zero_source_controls": {
+    "core": {
+      "candidate": {
+        "id": "recent-gate-006",
+        "algorithm": "cadence_recent_native_gate",
+        "member": "core",
+        "auxiliary_weight": 0.0,
+        "epochs": 80,
+        "learning_rate": 0.003,
+        "weight_decay": 0.1,
+        "correction_penalty": 1.0,
+        "random_seed": 42,
+        "source_target": "actual_current_unequal_prior_original6to20",
+        "native_target": "original_integer_delta_distribution_with_frozen_nonzero_conditional"
+      },
+      "accuracy_mean": 0.6099294942057091,
+      "fold_accuracy": [
+        0.64,
+        0.5652173913043478,
+        0.5980392156862745,
+        0.5980392156862745,
+        0.6483516483516484
+      ]
+    },
+    "cat": {
+      "candidate": {
+        "id": "recent-gate-008",
+        "algorithm": "cadence_recent_native_gate",
+        "member": "cat",
+        "auxiliary_weight": 0.0,
+        "epochs": 80,
+        "learning_rate": 0.003,
+        "weight_decay": 0.1,
+        "correction_penalty": 1.0,
+        "random_seed": 42,
+        "source_target": "actual_current_unequal_prior_original6to20",
+        "native_target": "original_integer_delta_distribution_with_frozen_nonzero_conditional"
+      },
+      "accuracy_mean": 0.6320898044836663,
+      "fold_accuracy": [
+        0.67,
+        0.5652173913043478,
+        0.6176470588235294,
+        0.6372549019607843,
+        0.6703296703296703
+      ]
+    }
+  },
+  "winner_id": "recent-gate-001",
+  "best_cv_accuracy": 0.6379721574248428,
+  "real_tests_code_sha256": "76a93b5fb7c55aa3669aba4cdf9699a0171e27ba33778a68d4b60fd8ecde7cab",
+  "real_tests_log_sha256": "99750dc58457135d458d9a9fe35b9ccec9fa27acbb42ec30d63bd3cc481f3347",
+  "error_diagnostic_sha256": "572751a4a331bef46ec07176e25e3f34e81ff0954347a7c4618e1748a3ba4a24",
+  "full_delta_residual_review_sha256": "34e9270d8074f64ad4490cbebae890ea384b254902b9214f043d295e4270f2f2",
+  "paired_oof_comparisons": {
+    "core": {
+      "correct_counts": {
+        "global": 296,
+        "old_zero": 297,
+        "old_source": 296,
+        "new_zero": 297,
+        "new_source": 297
+      },
+      "new_source_vs_new_zero": {
+        "corrected": 1,
+        "spoiled": 1
+      },
+      "new_zero_vs_old_zero": {
+        "corrected": 5,
+        "spoiled": 5
+      },
+      "new_source_vs_old_source": {
+        "corrected": 3,
+        "spoiled": 2
+      },
+      "new_source_vs_global": {
+        "corrected": 3,
+        "spoiled": 2
+      }
+    },
+    "cat": {
+      "correct_counts": {
+        "global": 311,
+        "old_zero": 307,
+        "old_source": 309,
+        "new_zero": 308,
+        "new_source": 308
+      },
+      "new_source_vs_new_zero": {
+        "corrected": 1,
+        "spoiled": 1
+      },
+      "new_zero_vs_old_zero": {
+        "corrected": 2,
+        "spoiled": 1
+      },
+      "new_source_vs_old_source": {
+        "corrected": 1,
+        "spoiled": 2
+      },
+      "new_source_vs_global": {
+        "corrected": 0,
+        "spoiled": 3
+      }
+    }
+  },
+  "new_test_evaluation": null,
+  "retained_test_correct": 108,
+  "retained_test_accuracy": 0.6033519553072626,
+  "target_accuracy": 0.8,
+  "achieved": false,
+  "results": [
+    {
+      "candidate": {
+        "id": "recent-gate-000",
+        "algorithm": "previous_real_control",
+        "parent_candidate_id": "cadence-binary-gate-000"
+      },
+      "accuracy_mean": 0.6082057277760603,
+      "fold_accuracy": [
+        0.64,
+        0.5652173913043478,
+        0.5882352941176471,
+        0.5882352941176471,
+        0.6593406593406593
+      ]
+    },
+    {
+      "candidate": {
+        "id": "recent-gate-001",
+        "algorithm": "previous_real_control",
+        "parent_candidate_id": "cadence-binary-gate-001"
+      },
+      "accuracy_mean": 0.6379721574248428,
+      "fold_accuracy": [
+        0.67,
+        0.5652173913043478,
+        0.6274509803921569,
+        0.6568627450980392,
+        0.6703296703296703
+      ]
+    },
+    {
+      "candidate": {
+        "id": "recent-gate-002",
+        "algorithm": "previous_real_control",
+        "parent_candidate_id": "cadence-binary-gate-002"
+      },
+      "accuracy_mean": 0.6101665120897858,
+      "fold_accuracy": [
+        0.64,
+        0.5652173913043478,
+        0.5882352941176471,
+        0.5980392156862745,
+        0.6593406593406593
+      ]
+    },
+    {
+      "candidate": {
+        "id": "recent-gate-003",
+        "algorithm": "previous_real_control",
+        "parent_candidate_id": "cadence-binary-gate-003"
+      },
+      "accuracy_mean": 0.6079687098919836,
+      "fold_accuracy": [
+        0.64,
+        0.5652173913043478,
+        0.5980392156862745,
+        0.5882352941176471,
+        0.6483516483516484
+      ]
+    },
+    {
+      "candidate": {
+        "id": "recent-gate-004",
+        "algorithm": "previous_real_control",
+        "parent_candidate_id": "cadence-binary-gate-004"
+      },
+      "accuracy_mean": 0.6301290201699408,
+      "fold_accuracy": [
+        0.67,
+        0.5652173913043478,
+        0.6176470588235294,
+        0.6274509803921569,
+        0.6703296703296703
+      ]
+    },
+    {
+      "candidate": {
+        "id": "recent-gate-005",
+        "algorithm": "previous_real_control",
+        "parent_candidate_id": "cadence-binary-gate-005"
+      },
+      "accuracy_mean": 0.6340505887973918,
+      "fold_accuracy": [
+        0.67,
+        0.5652173913043478,
+        0.6176470588235294,
+        0.6470588235294118,
+        0.6703296703296703
+      ]
+    },
+    {
+      "candidate": {
+        "id": "recent-gate-006",
+        "algorithm": "cadence_recent_native_gate",
+        "member": "core",
+        "auxiliary_weight": 0.0,
+        "epochs": 80,
+        "learning_rate": 0.003,
+        "weight_decay": 0.1,
+        "correction_penalty": 1.0,
+        "random_seed": 42,
+        "source_target": "actual_current_unequal_prior_original6to20",
+        "native_target": "original_integer_delta_distribution_with_frozen_nonzero_conditional"
+      },
+      "accuracy_mean": 0.6099294942057091,
+      "fold_accuracy": [
+        0.64,
+        0.5652173913043478,
+        0.5980392156862745,
+        0.5980392156862745,
+        0.6483516483516484
+      ]
+    },
+    {
+      "candidate": {
+        "id": "recent-gate-007",
+        "algorithm": "cadence_recent_native_gate",
+        "member": "core",
+        "auxiliary_weight": 0.1,
+        "epochs": 80,
+        "learning_rate": 0.003,
+        "weight_decay": 0.1,
+        "correction_penalty": 1.0,
+        "random_seed": 42,
+        "source_target": "actual_current_unequal_prior_original6to20",
+        "native_target": "original_integer_delta_distribution_with_frozen_nonzero_conditional"
+      },
+      "accuracy_mean": 0.6097555811622308,
+      "fold_accuracy": [
+        0.65,
+        0.5543478260869565,
+        0.5980392156862745,
+        0.5980392156862745,
+        0.6483516483516484
+      ]
+    },
+    {
+      "candidate": {
+        "id": "recent-gate-008",
+        "algorithm": "cadence_recent_native_gate",
+        "member": "cat",
+        "auxiliary_weight": 0.0,
+        "epochs": 80,
+        "learning_rate": 0.003,
+        "weight_decay": 0.1,
+        "correction_penalty": 1.0,
+        "random_seed": 42,
+        "source_target": "actual_current_unequal_prior_original6to20",
+        "native_target": "original_integer_delta_distribution_with_frozen_nonzero_conditional"
+      },
+      "accuracy_mean": 0.6320898044836663,
+      "fold_accuracy": [
+        0.67,
+        0.5652173913043478,
+        0.6176470588235294,
+        0.6372549019607843,
+        0.6703296703296703
+      ]
+    },
+    {
+      "candidate": {
+        "id": "recent-gate-009",
+        "algorithm": "cadence_recent_native_gate",
+        "member": "cat",
+        "auxiliary_weight": 0.1,
+        "epochs": 80,
+        "learning_rate": 0.003,
+        "weight_decay": 0.1,
+        "correction_penalty": 1.0,
+        "random_seed": 42,
+        "source_target": "actual_current_unequal_prior_original6to20",
+        "native_target": "original_integer_delta_distribution_with_frozen_nonzero_conditional"
+      },
+      "accuracy_mean": 0.6318766757539136,
+      "fold_accuracy": [
+        0.67,
+        0.5543478260869565,
+        0.6176470588235294,
+        0.6470588235294118,
+        0.6703296703296703
+      ]
+    }
+  ]
+}

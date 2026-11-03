@@ -1,0 +1,11 @@
+{
+  "evaluator_code_sha256": "8963571bf62a7aa60c8473dc41c82ad717b73ce1719e28aee303b5e992fc1fa9",
+  "selection_sha256": "9c666df728a6f6335dce6fbad136bae0f284515cea27c45e172fc3fc6171601a",
+  "winner_id": "cadence-full-delta-001",
+  "best_cv_accuracy": 0.6379721574248428,
+  "minimum_cv_for_new_test_evaluation": 0.65,
+  "gate_passed": false,
+  "new_test_evaluation": null,
+  "pretest_verifier_code_sha256": "de4ced6dbfcd55fb7121e7cf15829d6ddae03b66365c8ce9511d8f76e69e4ac5",
+  "pretest_winner_fold_artifacts_verified": 0
+}

@@ -1,0 +1,130 @@
+{
+  "version": 1,
+  "official_source": "https://zenodo.org/records/11114096",
+  "official_processed_source": "https://zenodo.org/records/7997851",
+  "metadata_sha256": "653d239afabea1297e4a6628c4b391fc35857a2610172f0fd3c6ce9765452747",
+  "inventory_sha256": "b5895495648fe32793b2b18715648065dd02d4bc2a6b150f6330fc0cf9d736ab",
+  "probe_receipt_sha256": "207787f44815f92fac241e3da36a2ae507e311cf89acac7ab059ddaa15f12e1f",
+  "probe_csv_sha256": "d2c954ab5a7cc462d328de6e1995ae5671f2ef05d23d434462838a49820fad7d",
+  "source_participants": 19,
+  "fitting_participants": [
+    "006",
+    "007",
+    "008",
+    "011",
+    "012",
+    "013",
+    "014",
+    "015",
+    "017",
+    "018",
+    "019",
+    "020",
+    "021",
+    "022",
+    "023"
+  ],
+  "reserved_participants": [
+    "004",
+    "005",
+    "009",
+    "016"
+  ],
+  "license": {
+    "id": "cc-by-4.0"
+  },
+  "source_files_in_inventory": 57,
+  "total_published_bytes": 655984163,
+  "verified_downloaded_waveform_files": 1,
+  "verified_waveform_bytes": 1478585,
+  "native_borg_column_found_in_probe": false,
+  "used_for_training": false,
+  "added_native_borg_targets": 0,
+  "probe_observed_rows": 6540,
+  "probe_columns": [
+    "System_Timestamp_Plot_Zeroed",
+    "Gyro_Z",
+    "Accel_WR_Z",
+    "Batt_Percentage",
+    "Packet_Reception_Rate_Current",
+    "Mag_Z",
+    "Accel_LN_X",
+    "Accel_WR_X",
+    "Accel_LN_Z",
+    "Accel_LN_Y",
+    "Gyro_Y",
+    "Accel_WR_Y",
+    "Mag_X",
+    "System_Timestamp_Plot",
+    "Packet_Reception_Rate_Trial",
+    "Gyro_X",
+    "Mag_Y",
+    "System_Timestamp",
+    "Timestamp"
+  ],
+  "clock_diagnostics": {
+    "System_Timestamp_Plot_Zeroed": {
+      "finite_rows": 6540,
+      "positive_steps": 6539,
+      "equal_adjacent_steps": 0,
+      "reverse_steps": 0,
+      "positive_step_median_native_units": 19.53130000003148,
+      "positive_step_min_native_units": 19.53119999996852,
+      "positive_step_max_native_units": 39.0625
+    },
+    "Timestamp": {
+      "finite_rows": 6540,
+      "positive_steps": 6539,
+      "equal_adjacent_steps": 0,
+      "reverse_steps": 0,
+      "positive_step_median_native_units": 19.530999999959022,
+      "positive_step_min_native_units": 19.530999999959022,
+      "positive_step_max_native_units": 39.063000000081956
+    },
+    "System_Timestamp_Plot": {
+      "finite_rows": 6540,
+      "positive_steps": 0,
+      "equal_adjacent_steps": 6539,
+      "reverse_steps": 0,
+      "positive_step_median_native_units": null,
+      "positive_step_min_native_units": null,
+      "positive_step_max_native_units": null
+    },
+    "System_Timestamp": {
+      "finite_rows": 6540,
+      "positive_steps": 0,
+      "equal_adjacent_steps": 6539,
+      "reverse_steps": 0,
+      "positive_step_median_native_units": null,
+      "positive_step_min_native_units": null,
+      "positive_step_max_native_units": null
+    }
+  },
+  "declared_record_sampling_rate_hz": 256,
+  "manufacturer_channel_documentation": [
+    {
+      "url": "https://github.com/ShimmerResearch/Shimmer-Java-Android-API/blob/ee43fbd931663829ab697a6fd913f80d2d745d21/ShimmerDriver/src/main/java/com/shimmerresearch/sensors/SensorSystemTimeStamp.java",
+      "blob_sha": "089140fc240a826f4e1cea6cdc23fff5a7d7c8d7",
+      "signal": "System_Timestamp_Plot_Zeroed",
+      "documented_unit": "milliseconds",
+      "declaration_line": 104
+    },
+    {
+      "url": "https://github.com/ShimmerResearch/Shimmer-Java-Android-API/blob/ee43fbd931663829ab697a6fd913f80d2d745d21/ShimmerDriver/src/main/java/com/shimmerresearch/sensors/kionix/SensorKionixKXRB52042.java",
+      "blob_sha": "9ee2ccd0d0dde977e46accb31f57a25254b40075",
+      "signal": "calibrated low-noise acceleration",
+      "documented_unit": "meters_per_second_squared"
+    },
+    {
+      "url": "https://github.com/ShimmerResearch/Shimmer-Java-Android-API/blob/ee43fbd931663829ab697a6fd913f80d2d745d21/ShimmerDriver/src/main/java/com/shimmerresearch/sensors/mpu9x50/SensorMPU9150.java",
+      "blob_sha": "099f0d20f6e095cce3c2a9d1365dc94724b4b0a4",
+      "signal": "calibrated gyroscope",
+      "documented_unit": "degrees_per_second"
+    }
+  ],
+  "export_rate_hz_if_standard_manufacturer_millisecond_units": 51.199868928253025,
+  "calibration_interpretation": "Manufacturer units describe calibrated API channels. This CSV removed CAL/UNCAL unit qualifiers; its export calibration is not proven by header names alone. Do not claim that these source values are already harmonized physical measurements.",
+  "clock_interpretation": "The relative clock is strictly increasing. Both large epoch-like columns are constant in this exported probe and cannot establish absolute UTC alignment. The positive relative increment is about 19.5313 native units. Using the manufacturer millisecond definition implies about 51.2 exported samples/second, not the metadata acquisition rate of 256 Hz; verify each file rather than imposing that rate.",
+  "label_interpretation": "F/NF designate protocol-defined fatigued/nonfatigued running segments, not native Borg scores. BeepTest is a separate induction segment. No numeric Borg values may be inferred from these filenames.",
+  "next_action": "Evaluate dimensionless, source-only signal representation learning with explicit protocol F/NF supervision after checking per-file clock quality. Native Borg labels and 487/179 denominators remain separate. No reserved runner waveform was downloaded."
+}

@@ -1,0 +1,18 @@
+{
+  "preparation": "passed",
+  "preparation_code_sha256": "eee920f827b343f3c19df492fe923c18fb0e9ed3ac8c39aa63d8ec85abe49ccf",
+  "frozen_sources_sha256": {
+    "audit_fatigue_public_change_gate.py": "ba8003db12b8287c1a2cc2175c0053c19cf8475e1f955badcedc7cb772372402",
+    "evaluate_fatigue_public_change_gate.py": "f80f17171d878b09e0cfe4ff0442b074a11fe54d8591bd3a39870f75fd583c46",
+    "diagnose_public_change_gate_margins.py": "a82d63f8d096e58f5d2d6bc0138149a3f062c7eef9420f868dc850f002fb33f2"
+  },
+  "derived_files_sha256": {
+    "audit_fatigue_change_gate_regularization.py": "8dd1fc646e3c43245484948e3122bdcafc4cf1f2dcfc3630a249189c545a5fc2",
+    "evaluate_fatigue_change_gate_regularization.py": "4458e9ad02c96640034a79708eaf7ac9560c37830e5b302bee79b82f171eda8e",
+    "diagnose_change_gate_regularization_margins.py": "69b837ebab8734dbc67c44608bb350a35c50d2343f084b65d2e072008d57b7a5"
+  },
+  "historical_sources_modified": false,
+  "new_predictive_estimator_fits": 0,
+  "new_test_predictions_computed": 0,
+  "change": "Verify actual candidate penalty,18recipes and60fold artifacts;refit best positive/matched zero/best native-only recipes in all5folds. Preserve full qualified179case test verification."
+}

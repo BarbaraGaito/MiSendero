@@ -1,0 +1,287 @@
+{
+  "version": 1,
+  "status": "complete",
+  "selection_sha256": "86431e480a7fd0eee8ba852758841d696ff21299b5b3b8f8e11fb35bbad0b3d2",
+  "verification_sha256": "ba4489332f3a19bbed0c635124c76b5fdb6e4c9046d3d322a96d1fcee7a00043",
+  "public_real_data_policy_sha256": "fdfb112d20b1f22bae08032ed7d9f3d27ee784879674c32f8f65cc21fe69c028",
+  "configurations": 11,
+  "winner_id": "supported-phys-001",
+  "best_cv_accuracy": 0.6379721574248428,
+  "best_new_id": "supported-phys-004",
+  "best_new_cv_accuracy": 0.6075338898101046,
+  "best_positive_floor_cv_accuracy": 0.604909830152797,
+  "matched_zero_floor_cv_accuracy": 0.6027120279549948,
+  "original_training_cases": 487,
+  "original_test_cases": 179,
+  "additional_actual_fitting_reports": 56,
+  "results": [
+    {
+      "candidate": {
+        "id": "supported-phys-000",
+        "algorithm": "previous_real_control",
+        "parent_candidate_id": "phys-pair-000"
+      },
+      "accuracy_mean": 0.6082057277760603,
+      "fold_accuracy": [
+        0.64,
+        0.5652173913043478,
+        0.5882352941176471,
+        0.5882352941176471,
+        0.6593406593406593
+      ]
+    },
+    {
+      "candidate": {
+        "id": "supported-phys-001",
+        "algorithm": "previous_real_control",
+        "parent_candidate_id": "phys-pair-001"
+      },
+      "accuracy_mean": 0.6379721574248428,
+      "fold_accuracy": [
+        0.67,
+        0.5652173913043478,
+        0.6274509803921569,
+        0.6568627450980392,
+        0.6703296703296703
+      ]
+    },
+    {
+      "candidate": {
+        "id": "supported-phys-002",
+        "algorithm": "previous_real_control",
+        "parent_candidate_id": "phys-pair-008"
+      },
+      "accuracy_mean": 0.5822277807444048,
+      "fold_accuracy": [
+        0.65,
+        0.5108695652173914,
+        0.6372549019607843,
+        0.5196078431372549,
+        0.5934065934065934
+      ]
+    },
+    {
+      "candidate": {
+        "id": "supported-phys-003",
+        "algorithm": "bounded_supported_waveform_residual",
+        "anchor_uniform_mass": 0.0,
+        "maximum_logit_correction": 3.0,
+        "correction_penalty": 1.0,
+        "extra_report_weight": 0.1,
+        "epochs": 40,
+        "learning_rate": 0.003,
+        "weight_decay": 0.1,
+        "random_seed": 42,
+        "waveform_view": "current_and_prior_waveforms",
+        "include_extra_actual_reports": true,
+        "prior_reference_scale_floor": 0.01,
+        "normalized_value_clip": 20.0,
+        "target_smoothing": false
+      },
+      "accuracy_mean": 0.5863385889472846,
+      "fold_accuracy": [
+        0.65,
+        0.532608695652174,
+        0.5784313725490197,
+        0.5882352941176471,
+        0.5824175824175825
+      ]
+    },
+    {
+      "candidate": {
+        "id": "supported-phys-004",
+        "algorithm": "bounded_supported_waveform_residual",
+        "anchor_uniform_mass": 0.0,
+        "maximum_logit_correction": 3.0,
+        "correction_penalty": 1.0,
+        "extra_report_weight": 1.0,
+        "epochs": 40,
+        "learning_rate": 0.003,
+        "weight_decay": 0.1,
+        "random_seed": 42,
+        "waveform_view": "current_and_prior_waveforms",
+        "include_extra_actual_reports": true,
+        "prior_reference_scale_floor": 0.01,
+        "normalized_value_clip": 20.0,
+        "target_smoothing": false
+      },
+      "accuracy_mean": 0.6075338898101046,
+      "fold_accuracy": [
+        0.65,
+        0.5652173913043478,
+        0.5882352941176471,
+        0.6078431372549019,
+        0.6263736263736264
+      ]
+    },
+    {
+      "candidate": {
+        "id": "supported-phys-005",
+        "algorithm": "bounded_supported_waveform_residual",
+        "anchor_uniform_mass": 0.0,
+        "maximum_logit_correction": 3.0,
+        "correction_penalty": 10.0,
+        "extra_report_weight": 0.1,
+        "epochs": 40,
+        "learning_rate": 0.003,
+        "weight_decay": 0.1,
+        "random_seed": 42,
+        "waveform_view": "current_and_prior_waveforms",
+        "include_extra_actual_reports": true,
+        "prior_reference_scale_floor": 0.01,
+        "normalized_value_clip": 20.0,
+        "target_smoothing": false
+      },
+      "accuracy_mean": 0.5930905820522189,
+      "fold_accuracy": [
+        0.63,
+        0.532608695652174,
+        0.5784313725490197,
+        0.5980392156862745,
+        0.6263736263736264
+      ]
+    },
+    {
+      "candidate": {
+        "id": "supported-phys-006",
+        "algorithm": "bounded_supported_waveform_residual",
+        "anchor_uniform_mass": 0.0,
+        "maximum_logit_correction": 3.0,
+        "correction_penalty": 10.0,
+        "extra_report_weight": 1.0,
+        "epochs": 40,
+        "learning_rate": 0.003,
+        "weight_decay": 0.1,
+        "random_seed": 42,
+        "waveform_view": "current_and_prior_waveforms",
+        "include_extra_actual_reports": true,
+        "prior_reference_scale_floor": 0.01,
+        "normalized_value_clip": 20.0,
+        "target_smoothing": false
+      },
+      "accuracy_mean": 0.6027120279549948,
+      "fold_accuracy": [
+        0.65,
+        0.5434782608695652,
+        0.6078431372549019,
+        0.6078431372549019,
+        0.6043956043956044
+      ]
+    },
+    {
+      "candidate": {
+        "id": "supported-phys-007",
+        "algorithm": "bounded_supported_waveform_residual",
+        "anchor_uniform_mass": 0.05,
+        "maximum_logit_correction": 3.0,
+        "correction_penalty": 1.0,
+        "extra_report_weight": 0.1,
+        "epochs": 40,
+        "learning_rate": 0.003,
+        "weight_decay": 0.1,
+        "random_seed": 42,
+        "waveform_view": "current_and_prior_waveforms",
+        "include_extra_actual_reports": true,
+        "prior_reference_scale_floor": 0.01,
+        "normalized_value_clip": 20.0,
+        "target_smoothing": false
+      },
+      "accuracy_mean": 0.5845363911450868,
+      "fold_accuracy": [
+        0.63,
+        0.532608695652174,
+        0.5784313725490197,
+        0.5882352941176471,
+        0.5934065934065934
+      ]
+    },
+    {
+      "candidate": {
+        "id": "supported-phys-008",
+        "algorithm": "bounded_supported_waveform_residual",
+        "anchor_uniform_mass": 0.05,
+        "maximum_logit_correction": 3.0,
+        "correction_penalty": 1.0,
+        "extra_report_weight": 1.0,
+        "epochs": 40,
+        "learning_rate": 0.003,
+        "weight_decay": 0.1,
+        "random_seed": 42,
+        "waveform_view": "current_and_prior_waveforms",
+        "include_extra_actual_reports": true,
+        "prior_reference_scale_floor": 0.01,
+        "normalized_value_clip": 20.0,
+        "target_smoothing": false
+      },
+      "accuracy_mean": 0.6014230816072248,
+      "fold_accuracy": [
+        0.64,
+        0.5434782608695652,
+        0.5686274509803921,
+        0.6176470588235294,
+        0.6373626373626373
+      ]
+    },
+    {
+      "candidate": {
+        "id": "supported-phys-009",
+        "algorithm": "bounded_supported_waveform_residual",
+        "anchor_uniform_mass": 0.05,
+        "maximum_logit_correction": 3.0,
+        "correction_penalty": 10.0,
+        "extra_report_weight": 0.1,
+        "epochs": 40,
+        "learning_rate": 0.003,
+        "weight_decay": 0.1,
+        "random_seed": 42,
+        "waveform_view": "current_and_prior_waveforms",
+        "include_extra_actual_reports": true,
+        "prior_reference_scale_floor": 0.01,
+        "normalized_value_clip": 20.0,
+        "target_smoothing": false
+      },
+      "accuracy_mean": 0.5992491685637467,
+      "fold_accuracy": [
+        0.64,
+        0.532608695652174,
+        0.5882352941176471,
+        0.5980392156862745,
+        0.6373626373626373
+      ]
+    },
+    {
+      "candidate": {
+        "id": "supported-phys-010",
+        "algorithm": "bounded_supported_waveform_residual",
+        "anchor_uniform_mass": 0.05,
+        "maximum_logit_correction": 3.0,
+        "correction_penalty": 10.0,
+        "extra_report_weight": 1.0,
+        "epochs": 40,
+        "learning_rate": 0.003,
+        "weight_decay": 0.1,
+        "random_seed": 42,
+        "waveform_view": "current_and_prior_waveforms",
+        "include_extra_actual_reports": true,
+        "prior_reference_scale_floor": 0.01,
+        "normalized_value_clip": 20.0,
+        "target_smoothing": false
+      },
+      "accuracy_mean": 0.604909830152797,
+      "fold_accuracy": [
+        0.65,
+        0.5434782608695652,
+        0.6078431372549019,
+        0.6078431372549019,
+        0.6153846153846154
+      ]
+    }
+  ],
+  "new_test_gate_passed": false,
+  "test_used_for_selection": false,
+  "retained_test_correct": 108,
+  "retained_test_accuracy": 0.6033519553072626,
+  "target_accuracy": 0.8,
+  "achieved": false,
+  "scope": "Probability anchors regularized, actual integer targets unchanged. Real public observations only, original participant holdout and exact Borg metric. No synthetic data or artificial extra examples."
+}

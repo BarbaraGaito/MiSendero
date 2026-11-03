@@ -1,0 +1,4653 @@
+{
+  "version": 1,
+  "inspected_at": "2026-10-27T19:01:20.598214+00:00",
+  "inspection_code_sha256": "3107688b726bcabd1871c1cacc33d48afac2b57288800c631025178c1e332f15",
+  "archive_receipt_sha256": "c6a1ec3321a684cab6e1d37cc0e536055a5a9101a7fe75a0b243e6e9b5d84d6c",
+  "fixed_public_record": 17259404,
+  "original_archive_sha256": "3df36377090723372becece9564f12e5772780062bcc428a83d6d71f81155eb7",
+  "archive_files": [
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Code/Datasets/imu_plus_pred_emg.csv",
+      "bytes": 1025845
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Code/Datasets/rep_dataset.csv",
+      "bytes": 1259042
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Code/EMG Models/README.md",
+      "bytes": 702
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Code/EMG Models/all_emg_models.py",
+      "bytes": 27767
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Code/EMG Models/best_emg_models.py",
+      "bytes": 6282
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Code/EMG Models/best_emg_parameters.txt",
+      "bytes": 4490
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Code/EMG Models/create_train_set.py",
+      "bytes": 1515
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Code/EMG Models/emg_model_grid_search.py",
+      "bytes": 24710
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Code/EMG Models/imu_plus_pred_emg.csv",
+      "bytes": 1025845
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Code/EMG Models/plot_results.py",
+      "bytes": 2457
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Code/EMG Models/rep_dataset.csv",
+      "bytes": 1259042
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Code/Preprocessing/preprocessing.py",
+      "bytes": 24840
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Code/Preprocessing/rep_indexes_corrected.txt",
+      "bytes": 14533
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Code/Preprocessing/rpes.csv",
+      "bytes": 4846
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Code/RPE Models/Classification/README.md",
+      "bytes": 587
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Code/RPE Models/Classification/all_models.py",
+      "bytes": 22653
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Code/RPE Models/Classification/best_lstm_parameters.txt",
+      "bytes": 725
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Code/RPE Models/Classification/best_parameters.txt",
+      "bytes": 2448
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Code/RPE Models/Classification/classification_grid_search.py",
+      "bytes": 11760
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Code/RPE Models/Classification/imu_plus_pred_emg.csv",
+      "bytes": 1025845
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Code/RPE Models/Classification/lstm_grid_search.py",
+      "bytes": 11096
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Code/RPE Models/Classification/plot_results.py",
+      "bytes": 3021
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Code/RPE Models/Regression/README.md",
+      "bytes": 578
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Code/RPE Models/Regression/all_models.py",
+      "bytes": 26954
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Code/RPE Models/Regression/best_lstm_parameters.txt",
+      "bytes": 722
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Code/RPE Models/Regression/best_parameters.txt",
+      "bytes": 2971
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Code/RPE Models/Regression/imu_plus_pred_emg.csv",
+      "bytes": 1025845
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Code/RPE Models/Regression/lstm_grid_search.py",
+      "bytes": 11147
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Code/RPE Models/Regression/plot_results.py",
+      "bytes": 2773
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Code/RPE Models/Regression/regression_grid_search.py",
+      "bytes": 13701
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/README.md",
+      "bytes": 747
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_10_1.csv",
+      "bytes": 2991420
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_10_10.csv",
+      "bytes": 2224166
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_10_11.csv",
+      "bytes": 2342215
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_10_2.csv",
+      "bytes": 2071182
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_10_3.csv",
+      "bytes": 2281807
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_10_4.csv",
+      "bytes": 2561810
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_10_5.csv",
+      "bytes": 3049455
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_10_6.csv",
+      "bytes": 2749059
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_10_7.csv",
+      "bytes": 2848893
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_10_8.csv",
+      "bytes": 2603650
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_10_9.csv",
+      "bytes": 2814372
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_15_1.csv",
+      "bytes": 3084048
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_15_10.csv",
+      "bytes": 2015134
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_15_11.csv",
+      "bytes": 1736775
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_15_12.csv",
+      "bytes": 2232896
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_15_13.csv",
+      "bytes": 2353132
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_15_14.csv",
+      "bytes": 2394696
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_15_15.csv",
+      "bytes": 2397193
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_15_16.csv",
+      "bytes": 2425152
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_15_17.csv",
+      "bytes": 2606083
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_15_18.csv",
+      "bytes": 1771878
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_15_2.csv",
+      "bytes": 2538246
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_15_3.csv",
+      "bytes": 2497274
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_15_4.csv",
+      "bytes": 2620419
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_15_5.csv",
+      "bytes": 2463008
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_15_6.csv",
+      "bytes": 2087177
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_15_7.csv",
+      "bytes": 2342695
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_15_8.csv",
+      "bytes": 2791226
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_15_9.csv",
+      "bytes": 2183580
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_5_1.csv",
+      "bytes": 3042987
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_5_2.csv",
+      "bytes": 2693647
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_5_3.csv",
+      "bytes": 3286110
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_5_4.csv",
+      "bytes": 4944190
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_5_5.csv",
+      "bytes": 2855399
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_5_6.csv",
+      "bytes": 4576755
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_5_7.csv",
+      "bytes": 2854693
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/G998_10_1.csv",
+      "bytes": 3277593
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/G998_10_2.csv",
+      "bytes": 2597163
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/G998_10_3.csv",
+      "bytes": 2358658
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/G998_15_1.csv",
+      "bytes": 2113301
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/G998_5_1.csv",
+      "bytes": 5375900
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/P714_10_1.csv",
+      "bytes": 3059326
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/P714_10_2.csv",
+      "bytes": 2880252
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/P714_10_3.csv",
+      "bytes": 2962558
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/P714_10_4.csv",
+      "bytes": 2724155
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/P714_10_5.csv",
+      "bytes": 2635472
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/P714_10_6.csv",
+      "bytes": 2
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/P714_10_7.csv",
+      "bytes": 2
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/P714_10_8.csv",
+      "bytes": 1959383
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/P714_10_9.csv",
+      "bytes": 1948741
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/P714_5_1.csv",
+      "bytes": 4599162
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/P714_5_2.csv",
+      "bytes": 4757574
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/P714_5_3.csv",
+      "bytes": 4034982
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/P714_5_4.csv",
+      "bytes": 2
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/P714_5_5.csv",
+      "bytes": 2
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/T417_10_1.csv",
+      "bytes": 4846277
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/T417_10_2.csv",
+      "bytes": 4799461
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/T417_10_3.csv",
+      "bytes": 6152944
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/T417_15_1.csv",
+      "bytes": 5828405
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/T417_15_2.csv",
+      "bytes": 3503357
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/T417_15_3.csv",
+      "bytes": 3523485
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/T417_5_1.csv",
+      "bytes": 7130415
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/T417_5_2.csv",
+      "bytes": 4692678
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/T417_5_3.csv",
+      "bytes": 3971924
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/T417_5_4.csv",
+      "bytes": 4384057
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/T456_10_1.csv",
+      "bytes": 3698634
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/T456_10_2.csv",
+      "bytes": 4620480
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/T456_10_3.csv",
+      "bytes": 2962990
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/T456_10_4.csv",
+      "bytes": 3279996
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/rep_dataset.csv",
+      "bytes": 1259042
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/README.md",
+      "bytes": 2575
+    }
+  ],
+  "readme_text": [
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Code/EMG Models/README.md",
+      "text": "# EMG Prediction Models\n\nThis directory contains all code used to develop models predicting EMG labels. \n\n* ```emg_model_grid_search.py``` performs hyperparameter searching across the range of models, for a range of EMG targets, storing the best parameters to ```best_emg_parameters.txt```\n* ```all_emg_models.py``` builds the best version of each model for each target and then evaluates it, storing the results to a csv file stored in the ```results``` directory \n* ```best_emg_models.py``` builds the best model for each target and stores it to the ```models``` directory\n* ```create_train_set.py``` uses the built models to create the final training data set, stored to ```imu_plus_pred_emg.csv```\n"
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Code/RPE Models/Classification/README.md",
+      "text": "# RPE Classification Models\n\nThis directory contains all code used to develop models predicting EMG labels. \n\n* ```classification_grid_search.py``` performs hyperparameter searching across the range of models, storing the best parameters to ```best_parameters.txt```\n* ```lstm_grid_search.py``` performs hyperparameter searching across LSTM and GRU, storing the best parameters to ```best_lstm_parameters.txt```\n* ```all_models.py``` builds the best version of each model for RPE prediction and then evaluates it, storing the results to a csv file stored in the ```results``` directory \n"
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Code/RPE Models/Regression/README.md",
+      "text": "# RPE Regression Models\n\nThis directory contains all code used to develop models predicting EMG labels. \n\n* ```regression_grid_search.py``` performs hyperparameter searching across the range of models, storing the best parameters to ```best_parameters.txt```\n* ```lstm_grid_search.py``` performs hyperparameter searching across LSTM and GRU, storing the best parameters to ```best_lstm_parameters.txt```\n* ```all_models.py``` builds the best version of each model for RPE prediction and then evaluates it, storing the results to a csv file stored in the ```results``` directory "
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/README.md",
+      "text": "# IMU & EMG Raw Data \n  \n### ./Raw Data/ contains:\n* 70 sets of collected bicep curl data\n\n### Each file contains:\n* A header\n    - Sensor name\n    - Date and Time of recording\n    - Length of collection\n    - Location of sensor\n    - Sensor Mode\n    - Column Titles\n    - Sample rate (Hz) of each column\n* Data with columns\n    - Accelerometer X axis: ACC X (G)\n    - Accelerometer Y axis: ACC Y (G)\n    - Accelerometer Z axis: ACC Z (G)\n    - Gyroscope X axis: GYRO X (deg/s)\n    - Gyroscope Y axis: GYRO Y (deg/s)\n    - Gyroscope Z axis: GYRO Z (deg/s)\n    - Electromyography bicep sensor: EMG 1 (mV)\n\n### Additional Information\n* IMU units (Acc & Gyro) were placed on the exterior of the wrist\n* EMG units were placed at the peak of the bicep\n"
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/README.md",
+      "text": "# RPE Prediction Project  \n\nThis repository contains the code and data for my final year Computer Science project: **Estimation of Resistance Training RPE Using Inertial Sensors, Electromyography, and Machine Learning**.  \n\n## Overview  \n\nThe project investigates whether **machine learning models** can accurately predict the **Rate of Perceived Exertion (RPE)** during resistance training.  \n- Data was collected using **Inertial Measurement Units (IMUs)** (accelerometer, gyroscope) and **surface Electromyography (EMG)** sensors.  \n- Repetition-level features were extracted from the raw sensor data.  \n- Models were developed to predict muscle stimulation (from EMG features) and RPE (from IMU + EMG-derived features).  \n- Both **classification and regression** approaches were tested, including Random Forests, XGBoost, Artificial Neural Networks, and RNNs (LSTM, GRU).  \n\nBest performing model:  \n- **Random Forest Classifier with EMG features**  \n- Achieved **\u00b11 RPE accuracy of 85.9%** and **F1 score of 0.442**.\n\n### Code  \n\nThe `code/` folder contains:  \n- **preprocessing/**: scripts for sample rate matching, smoothing, segmentation, and feature extraction.  \n- **emg models/**: scripts for training models to predict the classifiations of emg labels.\n- **rpe models/**: scripts for training models to predict the rpe of the rep, with and without emg input features.\n- **datasets/**: some of the repwise datasets required (these are produced by the preprocessing scripts)\n\n  \n### Data  \n\nThe `data/` folder includes:  \n- Raw **CSV recordings** of IMU and EMG signals.  \n- Processed datasets with extracted rep-level features.  \n- Label files containing RPE values provided by participants.\n\n\u26a0\ufe0f **Note**: Due to size/ethics restrictions, some raw participant data may be excluded.  \n\n## Requirements  \n\nThe project was developed using **Python 3.10+** with the following key libraries:  \n- `pandas`, `numpy`, `scipy`  \n- `scikit-learn`, `xgboost`, `imblearn`, `scikit-optimize`  \n- `tensorflow` / `keras`  \n- `umap-learn`  \n- `matplotlib`, `seaborn`\n\n## Results\n\n* EMG label prediction models achieved high accuracy (>0.8 F1 for UMAP/t-SNE embeddings).\n* RPE classification models outperformed regression and RNN models.\n* Incorporating EMG features slightly improved performance compared to IMU-only models.\n\n## Citation\n\nIf you use this work, please cite the project report:\n\n> James Thomas. *Estimation of Resistance Training RPE Using Inertial Sensors, Electromyography, and Machine Learning*. Final Year Project Report, University of Exeter, May 2025.\n\n"
+    }
+  ],
+  "annotation_candidates": [
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Code/Datasets/imu_plus_pred_emg.csv",
+      "bytes": 1025845,
+      "csv_rows": 1004,
+      "preview": [
+        [
+          "ID",
+          "rep_num",
+          "rep_length",
+          "up_length",
+          "down_length",
+          "up_down_ratio",
+          "acc_x_avg_up",
+          "acc_x_std_up",
+          "acc_x_max_up",
+          "acc_x_min_up",
+          "jerk_x_avg_up",
+          "jerk_x_std_up",
+          "acc_x_avg_down",
+          "acc_x_std_down",
+          "acc_x_max_down",
+          "acc_x_min_down",
+          "jerk_x_avg_down",
+          "jerk_x_std_down",
+          "acc_x_p2p",
+          "acc_x_r2",
+          "acc_y_avg_up",
+          "acc_y_std_up",
+          "acc_y_max_up",
+          "acc_y_min_up",
+          "jerk_y_avg_up",
+          "jerk_y_std_up",
+          "acc_y_avg_down",
+          "acc_y_std_down",
+          "acc_y_max_down",
+          "acc_y_min_down"
+        ],
+        [
+          "A321_15_11",
+          "0",
+          "3.2399997408000205",
+          "1.736099861112011",
+          "1.5038998796880096",
+          "1.1543985637342908",
+          "0.1945619121273291",
+          "0.6921450281564918",
+          "0.988437502",
+          "-0.845654302",
+          "-1.0501774320932151",
+          "0.9795547924451536",
+          "0.2690963994193547",
+          "0.6785697955748774",
+          "1.05664063",
+          "-0.8502539139999998",
+          "1.2179856855763551",
+          "1.6744717260118955",
+          "1.906894544",
+          "0.8242200238957117",
+          "-0.1747159900838509",
+          "0.095628524877769",
+          "0.042822266",
+          "-0.277822264",
+          "0.1055931839557774",
+          "0.5520097583973486",
+          "-0.1902971689641577",
+          "0.0858059366111942",
+          "0.039179684",
+          "-0.2910644559999999"
+        ],
+        [
+          "A321_15_11",
+          "1",
+          "2.7593997792480174",
+          "1.3202998943760085",
+          "1.4390998848720091",
+          "0.9174484052532834",
+          "0.2281125046979591",
+          "0.6851079155082789",
+          "1.036425782",
+          "-0.7859472719999999",
+          "-1.3423574988905236",
+          "1.2165839108230758",
+          "0.241698870318352",
+          "0.6656334510511298",
+          "1.013232426",
+          "-0.787001958",
+          "1.2356356585756716",
+          "1.3952317209147576",
+          "1.82342774",
+          "0.8383370893776059",
+          "-0.1773739053020408",
+          "0.0696452660285581",
+          "-0.03589844",
+          "-0.272089844",
+          "0.1457188422263157",
+          "0.5164017892544664",
+          "-0.1987858438014981",
+          "0.0769878663094904",
+          "-0.029414064",
+          "-0.291992186"
+        ],
+        [
+          "A321_15_11",
+          "2",
+          "3.023999758080019",
+          "1.6037998716960102",
+          "1.420199886384009",
+          "1.129277566539924",
+          "0.1644634006487395",
+          "0.6792481112841173",
+          "1.009853522",
+          "-0.8481640640000001",
+          "-1.1476102140185602",
+          "1.0049931250812305",
+          "0.2742953755597722",
+          "0.6756654473859878",
+          "0.999365234",
+          "-0.853720704",
+          "1.2805195729386785",
+          "1.4122326539598813",
+          "1.863574226",
+          "0.83722251723145",
+          "-0.1688753131294117",
+          "0.0853477596884631",
+          "0.0149414059999999",
+          "-0.275097656",
+          "0.1319254588642984",
+          "0.5912683044850167",
+          "-0.1873997880151802",
+          "0.0851057580898842",
+          "0.010810548",
+          "-0.299375"
+        ],
+        [
+          "A321_15_11",
+          "3",
+          "3.10499975160002",
+          "1.6145998708320102",
+          "1.4903998807680094",
+          "1.0833333333333333",
+          "0.1611204395125209",
+          "0.6811948123114421",
+          "1.010361328",
+          "-0.867597662",
+          "-1.1383794729606018",
+          "1.050421911802717",
+          "0.2501377431211573",
+          "0.6989678289976912",
+          "1.054296874",
+          "-0.868232428",
+          "1.253713974424864",
+          "1.4722222226259367",
+          "1.922529302",
+          "0.8564007231316256",
+          "-0.1701181177095158",
+          "0.0953137181609312",
+          "0.0398535139999999",
+          "-0.285146482",
+          "0.1502524931300693",
+          "0.5168222408550313",
+          "-0.1368244757793851",
+          "0.1003908022092533",
+          "0.055830078",
+          "-0.257402344"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Code/Datasets/rep_dataset.csv",
+      "bytes": 1259042,
+      "csv_rows": 1004,
+      "preview": [
+        [
+          "ID",
+          "rep_num",
+          "rep_length",
+          "up_length",
+          "down_length",
+          "up_down_ratio",
+          "acc_x_avg_up",
+          "acc_x_std_up",
+          "acc_x_max_up",
+          "acc_x_min_up",
+          "jerk_x_avg_up",
+          "jerk_x_std_up",
+          "acc_x_avg_down",
+          "acc_x_std_down",
+          "acc_x_max_down",
+          "acc_x_min_down",
+          "jerk_x_avg_down",
+          "jerk_x_std_down",
+          "acc_x_p2p",
+          "acc_x_r2",
+          "acc_y_avg_up",
+          "acc_y_std_up",
+          "acc_y_max_up",
+          "acc_y_min_up",
+          "jerk_y_avg_up",
+          "jerk_y_std_up",
+          "acc_y_avg_down",
+          "acc_y_std_down",
+          "acc_y_max_down",
+          "acc_y_min_down"
+        ],
+        [
+          "A321_15_11",
+          "0",
+          "3.2399997408000205",
+          "1.736099861112011",
+          "1.5038998796880096",
+          "1.1543985637342908",
+          "0.1945619121273291",
+          "0.6921450281564918",
+          "0.988437502",
+          "-0.845654302",
+          "-1.0501774320932151",
+          "0.9795547924451536",
+          "0.2690963994193547",
+          "0.6785697955748774",
+          "1.05664063",
+          "-0.8502539139999998",
+          "1.2179856855763551",
+          "1.6744717260118955",
+          "1.906894544",
+          "0.8242200238957117",
+          "-0.1747159900838509",
+          "0.095628524877769",
+          "0.042822266",
+          "-0.277822264",
+          "0.1055931839557774",
+          "0.5520097583973486",
+          "-0.1902971689641577",
+          "0.0858059366111942",
+          "0.039179684",
+          "-0.2910644559999999"
+        ],
+        [
+          "A321_15_11",
+          "1",
+          "2.7593997792480174",
+          "1.3202998943760085",
+          "1.4390998848720091",
+          "0.9174484052532834",
+          "0.2281125046979591",
+          "0.6851079155082789",
+          "1.036425782",
+          "-0.7859472719999999",
+          "-1.3423574988905236",
+          "1.2165839108230758",
+          "0.241698870318352",
+          "0.6656334510511298",
+          "1.013232426",
+          "-0.787001958",
+          "1.2356356585756716",
+          "1.3952317209147576",
+          "1.82342774",
+          "0.8383370893776059",
+          "-0.1773739053020408",
+          "0.0696452660285581",
+          "-0.03589844",
+          "-0.272089844",
+          "0.1457188422263157",
+          "0.5164017892544664",
+          "-0.1987858438014981",
+          "0.0769878663094904",
+          "-0.029414064",
+          "-0.291992186"
+        ],
+        [
+          "A321_15_11",
+          "2",
+          "3.023999758080019",
+          "1.6037998716960102",
+          "1.420199886384009",
+          "1.129277566539924",
+          "0.1644634006487395",
+          "0.6792481112841173",
+          "1.009853522",
+          "-0.8481640640000001",
+          "-1.1476102140185602",
+          "1.0049931250812305",
+          "0.2742953755597722",
+          "0.6756654473859878",
+          "0.999365234",
+          "-0.853720704",
+          "1.2805195729386785",
+          "1.4122326539598813",
+          "1.863574226",
+          "0.83722251723145",
+          "-0.1688753131294117",
+          "0.0853477596884631",
+          "0.0149414059999999",
+          "-0.275097656",
+          "0.1319254588642984",
+          "0.5912683044850167",
+          "-0.1873997880151802",
+          "0.0851057580898842",
+          "0.010810548",
+          "-0.299375"
+        ],
+        [
+          "A321_15_11",
+          "3",
+          "3.10499975160002",
+          "1.6145998708320102",
+          "1.4903998807680094",
+          "1.0833333333333333",
+          "0.1611204395125209",
+          "0.6811948123114421",
+          "1.010361328",
+          "-0.867597662",
+          "-1.1383794729606018",
+          "1.050421911802717",
+          "0.2501377431211573",
+          "0.6989678289976912",
+          "1.054296874",
+          "-0.868232428",
+          "1.253713974424864",
+          "1.4722222226259367",
+          "1.922529302",
+          "0.8564007231316256",
+          "-0.1701181177095158",
+          "0.0953137181609312",
+          "0.0398535139999999",
+          "-0.285146482",
+          "0.1502524931300693",
+          "0.5168222408550313",
+          "-0.1368244757793851",
+          "0.1003908022092533",
+          "0.055830078",
+          "-0.257402344"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Code/EMG Models/imu_plus_pred_emg.csv",
+      "bytes": 1025845,
+      "csv_rows": 1004,
+      "preview": [
+        [
+          "ID",
+          "rep_num",
+          "rep_length",
+          "up_length",
+          "down_length",
+          "up_down_ratio",
+          "acc_x_avg_up",
+          "acc_x_std_up",
+          "acc_x_max_up",
+          "acc_x_min_up",
+          "jerk_x_avg_up",
+          "jerk_x_std_up",
+          "acc_x_avg_down",
+          "acc_x_std_down",
+          "acc_x_max_down",
+          "acc_x_min_down",
+          "jerk_x_avg_down",
+          "jerk_x_std_down",
+          "acc_x_p2p",
+          "acc_x_r2",
+          "acc_y_avg_up",
+          "acc_y_std_up",
+          "acc_y_max_up",
+          "acc_y_min_up",
+          "jerk_y_avg_up",
+          "jerk_y_std_up",
+          "acc_y_avg_down",
+          "acc_y_std_down",
+          "acc_y_max_down",
+          "acc_y_min_down"
+        ],
+        [
+          "A321_15_11",
+          "0",
+          "3.2399997408000205",
+          "1.736099861112011",
+          "1.5038998796880096",
+          "1.1543985637342908",
+          "0.1945619121273291",
+          "0.6921450281564918",
+          "0.988437502",
+          "-0.845654302",
+          "-1.0501774320932151",
+          "0.9795547924451536",
+          "0.2690963994193547",
+          "0.6785697955748774",
+          "1.05664063",
+          "-0.8502539139999998",
+          "1.2179856855763551",
+          "1.6744717260118955",
+          "1.906894544",
+          "0.8242200238957117",
+          "-0.1747159900838509",
+          "0.095628524877769",
+          "0.042822266",
+          "-0.277822264",
+          "0.1055931839557774",
+          "0.5520097583973486",
+          "-0.1902971689641577",
+          "0.0858059366111942",
+          "0.039179684",
+          "-0.2910644559999999"
+        ],
+        [
+          "A321_15_11",
+          "1",
+          "2.7593997792480174",
+          "1.3202998943760085",
+          "1.4390998848720091",
+          "0.9174484052532834",
+          "0.2281125046979591",
+          "0.6851079155082789",
+          "1.036425782",
+          "-0.7859472719999999",
+          "-1.3423574988905236",
+          "1.2165839108230758",
+          "0.241698870318352",
+          "0.6656334510511298",
+          "1.013232426",
+          "-0.787001958",
+          "1.2356356585756716",
+          "1.3952317209147576",
+          "1.82342774",
+          "0.8383370893776059",
+          "-0.1773739053020408",
+          "0.0696452660285581",
+          "-0.03589844",
+          "-0.272089844",
+          "0.1457188422263157",
+          "0.5164017892544664",
+          "-0.1987858438014981",
+          "0.0769878663094904",
+          "-0.029414064",
+          "-0.291992186"
+        ],
+        [
+          "A321_15_11",
+          "2",
+          "3.023999758080019",
+          "1.6037998716960102",
+          "1.420199886384009",
+          "1.129277566539924",
+          "0.1644634006487395",
+          "0.6792481112841173",
+          "1.009853522",
+          "-0.8481640640000001",
+          "-1.1476102140185602",
+          "1.0049931250812305",
+          "0.2742953755597722",
+          "0.6756654473859878",
+          "0.999365234",
+          "-0.853720704",
+          "1.2805195729386785",
+          "1.4122326539598813",
+          "1.863574226",
+          "0.83722251723145",
+          "-0.1688753131294117",
+          "0.0853477596884631",
+          "0.0149414059999999",
+          "-0.275097656",
+          "0.1319254588642984",
+          "0.5912683044850167",
+          "-0.1873997880151802",
+          "0.0851057580898842",
+          "0.010810548",
+          "-0.299375"
+        ],
+        [
+          "A321_15_11",
+          "3",
+          "3.10499975160002",
+          "1.6145998708320102",
+          "1.4903998807680094",
+          "1.0833333333333333",
+          "0.1611204395125209",
+          "0.6811948123114421",
+          "1.010361328",
+          "-0.867597662",
+          "-1.1383794729606018",
+          "1.050421911802717",
+          "0.2501377431211573",
+          "0.6989678289976912",
+          "1.054296874",
+          "-0.868232428",
+          "1.253713974424864",
+          "1.4722222226259367",
+          "1.922529302",
+          "0.8564007231316256",
+          "-0.1701181177095158",
+          "0.0953137181609312",
+          "0.0398535139999999",
+          "-0.285146482",
+          "0.1502524931300693",
+          "0.5168222408550313",
+          "-0.1368244757793851",
+          "0.1003908022092533",
+          "0.055830078",
+          "-0.257402344"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Code/EMG Models/rep_dataset.csv",
+      "bytes": 1259042,
+      "csv_rows": 1004,
+      "preview": [
+        [
+          "ID",
+          "rep_num",
+          "rep_length",
+          "up_length",
+          "down_length",
+          "up_down_ratio",
+          "acc_x_avg_up",
+          "acc_x_std_up",
+          "acc_x_max_up",
+          "acc_x_min_up",
+          "jerk_x_avg_up",
+          "jerk_x_std_up",
+          "acc_x_avg_down",
+          "acc_x_std_down",
+          "acc_x_max_down",
+          "acc_x_min_down",
+          "jerk_x_avg_down",
+          "jerk_x_std_down",
+          "acc_x_p2p",
+          "acc_x_r2",
+          "acc_y_avg_up",
+          "acc_y_std_up",
+          "acc_y_max_up",
+          "acc_y_min_up",
+          "jerk_y_avg_up",
+          "jerk_y_std_up",
+          "acc_y_avg_down",
+          "acc_y_std_down",
+          "acc_y_max_down",
+          "acc_y_min_down"
+        ],
+        [
+          "A321_15_11",
+          "0",
+          "3.2399997408000205",
+          "1.736099861112011",
+          "1.5038998796880096",
+          "1.1543985637342908",
+          "0.1945619121273291",
+          "0.6921450281564918",
+          "0.988437502",
+          "-0.845654302",
+          "-1.0501774320932151",
+          "0.9795547924451536",
+          "0.2690963994193547",
+          "0.6785697955748774",
+          "1.05664063",
+          "-0.8502539139999998",
+          "1.2179856855763551",
+          "1.6744717260118955",
+          "1.906894544",
+          "0.8242200238957117",
+          "-0.1747159900838509",
+          "0.095628524877769",
+          "0.042822266",
+          "-0.277822264",
+          "0.1055931839557774",
+          "0.5520097583973486",
+          "-0.1902971689641577",
+          "0.0858059366111942",
+          "0.039179684",
+          "-0.2910644559999999"
+        ],
+        [
+          "A321_15_11",
+          "1",
+          "2.7593997792480174",
+          "1.3202998943760085",
+          "1.4390998848720091",
+          "0.9174484052532834",
+          "0.2281125046979591",
+          "0.6851079155082789",
+          "1.036425782",
+          "-0.7859472719999999",
+          "-1.3423574988905236",
+          "1.2165839108230758",
+          "0.241698870318352",
+          "0.6656334510511298",
+          "1.013232426",
+          "-0.787001958",
+          "1.2356356585756716",
+          "1.3952317209147576",
+          "1.82342774",
+          "0.8383370893776059",
+          "-0.1773739053020408",
+          "0.0696452660285581",
+          "-0.03589844",
+          "-0.272089844",
+          "0.1457188422263157",
+          "0.5164017892544664",
+          "-0.1987858438014981",
+          "0.0769878663094904",
+          "-0.029414064",
+          "-0.291992186"
+        ],
+        [
+          "A321_15_11",
+          "2",
+          "3.023999758080019",
+          "1.6037998716960102",
+          "1.420199886384009",
+          "1.129277566539924",
+          "0.1644634006487395",
+          "0.6792481112841173",
+          "1.009853522",
+          "-0.8481640640000001",
+          "-1.1476102140185602",
+          "1.0049931250812305",
+          "0.2742953755597722",
+          "0.6756654473859878",
+          "0.999365234",
+          "-0.853720704",
+          "1.2805195729386785",
+          "1.4122326539598813",
+          "1.863574226",
+          "0.83722251723145",
+          "-0.1688753131294117",
+          "0.0853477596884631",
+          "0.0149414059999999",
+          "-0.275097656",
+          "0.1319254588642984",
+          "0.5912683044850167",
+          "-0.1873997880151802",
+          "0.0851057580898842",
+          "0.010810548",
+          "-0.299375"
+        ],
+        [
+          "A321_15_11",
+          "3",
+          "3.10499975160002",
+          "1.6145998708320102",
+          "1.4903998807680094",
+          "1.0833333333333333",
+          "0.1611204395125209",
+          "0.6811948123114421",
+          "1.010361328",
+          "-0.867597662",
+          "-1.1383794729606018",
+          "1.050421911802717",
+          "0.2501377431211573",
+          "0.6989678289976912",
+          "1.054296874",
+          "-0.868232428",
+          "1.253713974424864",
+          "1.4722222226259367",
+          "1.922529302",
+          "0.8564007231316256",
+          "-0.1701181177095158",
+          "0.0953137181609312",
+          "0.0398535139999999",
+          "-0.285146482",
+          "0.1502524931300693",
+          "0.5168222408550313",
+          "-0.1368244757793851",
+          "0.1003908022092533",
+          "0.055830078",
+          "-0.257402344"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Code/Preprocessing/rpes.csv",
+      "bytes": 4846,
+      "csv_rows": 44,
+      "preview": [
+        [
+          "T417_15_1",
+          "T417_15_2",
+          "T417_15_3",
+          "T417_10_1",
+          "T417_10_2",
+          "T417_10_3",
+          "T417_5_1",
+          "T417_5_2",
+          "T417_5_3",
+          "T417_5_4",
+          "A321_15_1",
+          "A321_15_2",
+          "A321_15_3",
+          "A321_10_1",
+          "A321_10_2",
+          "P714_10_1",
+          "P714_10_2",
+          "P714_10_3",
+          "P714_10_4",
+          "P714_10_5",
+          "P714_5_1",
+          "P714_5_2",
+          "P714_5_3",
+          "G998_5_1",
+          "G998_10_1",
+          "G998_15_1",
+          "G998_10_2",
+          "G998_10_3",
+          "A321_15_4",
+          "A321_15_5"
+        ],
+        [
+          "11",
+          "10",
+          "8",
+          "17",
+          "16",
+          "15",
+          "42",
+          "28",
+          "19",
+          "21",
+          "11",
+          "9",
+          "9",
+          "14",
+          "9",
+          "14",
+          "14",
+          "14",
+          "13",
+          "11",
+          "27",
+          "31",
+          "25",
+          "26",
+          "13",
+          "10",
+          "12",
+          "12",
+          "11",
+          "10"
+        ],
+        [
+          "7",
+          "6",
+          "8",
+          "5",
+          "5",
+          "6",
+          "3",
+          "4",
+          "4",
+          "4",
+          "6",
+          "6",
+          "6",
+          "5",
+          "7",
+          "2",
+          "3",
+          "2",
+          "2",
+          "3",
+          "1",
+          "1",
+          "1",
+          "1",
+          "3",
+          "4",
+          "3",
+          "3",
+          "6",
+          "6"
+        ],
+        [
+          "7",
+          "7",
+          "8",
+          "5",
+          "5",
+          "6",
+          "3",
+          "4",
+          "4",
+          "4",
+          "6",
+          "6",
+          "6",
+          "5",
+          "7",
+          "2",
+          "3",
+          "2",
+          "2",
+          "4",
+          "1",
+          "1",
+          "2",
+          "1",
+          "3",
+          "4",
+          "3",
+          "3",
+          "6",
+          "6"
+        ],
+        [
+          "7",
+          "7",
+          "8",
+          "5",
+          "5",
+          "6",
+          "3",
+          "4",
+          "4",
+          "5",
+          "6",
+          "6",
+          "7",
+          "5",
+          "7",
+          "3",
+          "3",
+          "3",
+          "3",
+          "5",
+          "1",
+          "1",
+          "2",
+          "1",
+          "3",
+          "5",
+          "3",
+          "3",
+          "6",
+          "7"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Code/RPE Models/Classification/imu_plus_pred_emg.csv",
+      "bytes": 1025845,
+      "csv_rows": 1004,
+      "preview": [
+        [
+          "ID",
+          "rep_num",
+          "rep_length",
+          "up_length",
+          "down_length",
+          "up_down_ratio",
+          "acc_x_avg_up",
+          "acc_x_std_up",
+          "acc_x_max_up",
+          "acc_x_min_up",
+          "jerk_x_avg_up",
+          "jerk_x_std_up",
+          "acc_x_avg_down",
+          "acc_x_std_down",
+          "acc_x_max_down",
+          "acc_x_min_down",
+          "jerk_x_avg_down",
+          "jerk_x_std_down",
+          "acc_x_p2p",
+          "acc_x_r2",
+          "acc_y_avg_up",
+          "acc_y_std_up",
+          "acc_y_max_up",
+          "acc_y_min_up",
+          "jerk_y_avg_up",
+          "jerk_y_std_up",
+          "acc_y_avg_down",
+          "acc_y_std_down",
+          "acc_y_max_down",
+          "acc_y_min_down"
+        ],
+        [
+          "A321_15_11",
+          "0",
+          "3.2399997408000205",
+          "1.736099861112011",
+          "1.5038998796880096",
+          "1.1543985637342908",
+          "0.1945619121273291",
+          "0.6921450281564918",
+          "0.988437502",
+          "-0.845654302",
+          "-1.0501774320932151",
+          "0.9795547924451536",
+          "0.2690963994193547",
+          "0.6785697955748774",
+          "1.05664063",
+          "-0.8502539139999998",
+          "1.2179856855763551",
+          "1.6744717260118955",
+          "1.906894544",
+          "0.8242200238957117",
+          "-0.1747159900838509",
+          "0.095628524877769",
+          "0.042822266",
+          "-0.277822264",
+          "0.1055931839557774",
+          "0.5520097583973486",
+          "-0.1902971689641577",
+          "0.0858059366111942",
+          "0.039179684",
+          "-0.2910644559999999"
+        ],
+        [
+          "A321_15_11",
+          "1",
+          "2.7593997792480174",
+          "1.3202998943760085",
+          "1.4390998848720091",
+          "0.9174484052532834",
+          "0.2281125046979591",
+          "0.6851079155082789",
+          "1.036425782",
+          "-0.7859472719999999",
+          "-1.3423574988905236",
+          "1.2165839108230758",
+          "0.241698870318352",
+          "0.6656334510511298",
+          "1.013232426",
+          "-0.787001958",
+          "1.2356356585756716",
+          "1.3952317209147576",
+          "1.82342774",
+          "0.8383370893776059",
+          "-0.1773739053020408",
+          "0.0696452660285581",
+          "-0.03589844",
+          "-0.272089844",
+          "0.1457188422263157",
+          "0.5164017892544664",
+          "-0.1987858438014981",
+          "0.0769878663094904",
+          "-0.029414064",
+          "-0.291992186"
+        ],
+        [
+          "A321_15_11",
+          "2",
+          "3.023999758080019",
+          "1.6037998716960102",
+          "1.420199886384009",
+          "1.129277566539924",
+          "0.1644634006487395",
+          "0.6792481112841173",
+          "1.009853522",
+          "-0.8481640640000001",
+          "-1.1476102140185602",
+          "1.0049931250812305",
+          "0.2742953755597722",
+          "0.6756654473859878",
+          "0.999365234",
+          "-0.853720704",
+          "1.2805195729386785",
+          "1.4122326539598813",
+          "1.863574226",
+          "0.83722251723145",
+          "-0.1688753131294117",
+          "0.0853477596884631",
+          "0.0149414059999999",
+          "-0.275097656",
+          "0.1319254588642984",
+          "0.5912683044850167",
+          "-0.1873997880151802",
+          "0.0851057580898842",
+          "0.010810548",
+          "-0.299375"
+        ],
+        [
+          "A321_15_11",
+          "3",
+          "3.10499975160002",
+          "1.6145998708320102",
+          "1.4903998807680094",
+          "1.0833333333333333",
+          "0.1611204395125209",
+          "0.6811948123114421",
+          "1.010361328",
+          "-0.867597662",
+          "-1.1383794729606018",
+          "1.050421911802717",
+          "0.2501377431211573",
+          "0.6989678289976912",
+          "1.054296874",
+          "-0.868232428",
+          "1.253713974424864",
+          "1.4722222226259367",
+          "1.922529302",
+          "0.8564007231316256",
+          "-0.1701181177095158",
+          "0.0953137181609312",
+          "0.0398535139999999",
+          "-0.285146482",
+          "0.1502524931300693",
+          "0.5168222408550313",
+          "-0.1368244757793851",
+          "0.1003908022092533",
+          "0.055830078",
+          "-0.257402344"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Code/RPE Models/Regression/imu_plus_pred_emg.csv",
+      "bytes": 1025845,
+      "csv_rows": 1004,
+      "preview": [
+        [
+          "ID",
+          "rep_num",
+          "rep_length",
+          "up_length",
+          "down_length",
+          "up_down_ratio",
+          "acc_x_avg_up",
+          "acc_x_std_up",
+          "acc_x_max_up",
+          "acc_x_min_up",
+          "jerk_x_avg_up",
+          "jerk_x_std_up",
+          "acc_x_avg_down",
+          "acc_x_std_down",
+          "acc_x_max_down",
+          "acc_x_min_down",
+          "jerk_x_avg_down",
+          "jerk_x_std_down",
+          "acc_x_p2p",
+          "acc_x_r2",
+          "acc_y_avg_up",
+          "acc_y_std_up",
+          "acc_y_max_up",
+          "acc_y_min_up",
+          "jerk_y_avg_up",
+          "jerk_y_std_up",
+          "acc_y_avg_down",
+          "acc_y_std_down",
+          "acc_y_max_down",
+          "acc_y_min_down"
+        ],
+        [
+          "A321_15_11",
+          "0",
+          "3.2399997408000205",
+          "1.736099861112011",
+          "1.5038998796880096",
+          "1.1543985637342908",
+          "0.1945619121273291",
+          "0.6921450281564918",
+          "0.988437502",
+          "-0.845654302",
+          "-1.0501774320932151",
+          "0.9795547924451536",
+          "0.2690963994193547",
+          "0.6785697955748774",
+          "1.05664063",
+          "-0.8502539139999998",
+          "1.2179856855763551",
+          "1.6744717260118955",
+          "1.906894544",
+          "0.8242200238957117",
+          "-0.1747159900838509",
+          "0.095628524877769",
+          "0.042822266",
+          "-0.277822264",
+          "0.1055931839557774",
+          "0.5520097583973486",
+          "-0.1902971689641577",
+          "0.0858059366111942",
+          "0.039179684",
+          "-0.2910644559999999"
+        ],
+        [
+          "A321_15_11",
+          "1",
+          "2.7593997792480174",
+          "1.3202998943760085",
+          "1.4390998848720091",
+          "0.9174484052532834",
+          "0.2281125046979591",
+          "0.6851079155082789",
+          "1.036425782",
+          "-0.7859472719999999",
+          "-1.3423574988905236",
+          "1.2165839108230758",
+          "0.241698870318352",
+          "0.6656334510511298",
+          "1.013232426",
+          "-0.787001958",
+          "1.2356356585756716",
+          "1.3952317209147576",
+          "1.82342774",
+          "0.8383370893776059",
+          "-0.1773739053020408",
+          "0.0696452660285581",
+          "-0.03589844",
+          "-0.272089844",
+          "0.1457188422263157",
+          "0.5164017892544664",
+          "-0.1987858438014981",
+          "0.0769878663094904",
+          "-0.029414064",
+          "-0.291992186"
+        ],
+        [
+          "A321_15_11",
+          "2",
+          "3.023999758080019",
+          "1.6037998716960102",
+          "1.420199886384009",
+          "1.129277566539924",
+          "0.1644634006487395",
+          "0.6792481112841173",
+          "1.009853522",
+          "-0.8481640640000001",
+          "-1.1476102140185602",
+          "1.0049931250812305",
+          "0.2742953755597722",
+          "0.6756654473859878",
+          "0.999365234",
+          "-0.853720704",
+          "1.2805195729386785",
+          "1.4122326539598813",
+          "1.863574226",
+          "0.83722251723145",
+          "-0.1688753131294117",
+          "0.0853477596884631",
+          "0.0149414059999999",
+          "-0.275097656",
+          "0.1319254588642984",
+          "0.5912683044850167",
+          "-0.1873997880151802",
+          "0.0851057580898842",
+          "0.010810548",
+          "-0.299375"
+        ],
+        [
+          "A321_15_11",
+          "3",
+          "3.10499975160002",
+          "1.6145998708320102",
+          "1.4903998807680094",
+          "1.0833333333333333",
+          "0.1611204395125209",
+          "0.6811948123114421",
+          "1.010361328",
+          "-0.867597662",
+          "-1.1383794729606018",
+          "1.050421911802717",
+          "0.2501377431211573",
+          "0.6989678289976912",
+          "1.054296874",
+          "-0.868232428",
+          "1.253713974424864",
+          "1.4722222226259367",
+          "1.922529302",
+          "0.8564007231316256",
+          "-0.1701181177095158",
+          "0.0953137181609312",
+          "0.0398535139999999",
+          "-0.285146482",
+          "0.1502524931300693",
+          "0.5168222408550313",
+          "-0.1368244757793851",
+          "0.1003908022092533",
+          "0.055830078",
+          "-0.257402344"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_10_1.csv",
+      "bytes": 2991420,
+      "csv_rows": 88312,
+      "preview": [
+        [
+          "Application:",
+          " Trigno Discover (1.6.5)"
+        ],
+        [
+          "Date/Time:",
+          " 29/01/2025 10:22:21"
+        ],
+        [
+          "Collection Length (seconds):",
+          " 41.1075"
+        ],
+        [
+          "wrist (81457)",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " bicep (81139)"
+        ],
+        [
+          "sensor mode: 609",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " sensor mode: 40"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_10_10.csv",
+      "bytes": 2224166,
+      "csv_rows": 65953,
+      "preview": [
+        [
+          "Application:",
+          " Trigno Discover (1.6.5)"
+        ],
+        [
+          "Date/Time:",
+          " 18/02/2025 16:56:37"
+        ],
+        [
+          "Collection Length (seconds):",
+          " 30.699"
+        ],
+        [
+          "wrist (81457)",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " bicep (81139)"
+        ],
+        [
+          "sensor mode: 609",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " sensor mode: 40"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_10_11.csv",
+      "bytes": 2342215,
+      "csv_rows": 69578,
+      "preview": [
+        [
+          "Application:",
+          " Trigno Discover (1.6.5)"
+        ],
+        [
+          "Date/Time:",
+          " 18/02/2025 17:07:46"
+        ],
+        [
+          "Collection Length (seconds):",
+          " 32.3865"
+        ],
+        [
+          "wrist (81457)",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " bicep (81139)"
+        ],
+        [
+          "sensor mode: 609",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " sensor mode: 40"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_10_2.csv",
+      "bytes": 2071182,
+      "csv_rows": 61110,
+      "preview": [
+        [
+          "Application:",
+          " Trigno Discover (1.6.5)"
+        ],
+        [
+          "Date/Time:",
+          " 29/01/2025 10:27:49"
+        ],
+        [
+          "Collection Length (seconds):",
+          " 28.4445"
+        ],
+        [
+          "wrist (81457)",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " bicep (81139)"
+        ],
+        [
+          "sensor mode: 609",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " sensor mode: 40"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_10_3.csv",
+      "bytes": 2281807,
+      "csv_rows": 67577,
+      "preview": [
+        [
+          "Application:",
+          " Trigno Discover (1.6.5)"
+        ],
+        [
+          "Date/Time:",
+          " 05/02/2025 16:49:33"
+        ],
+        [
+          "Collection Length (seconds):",
+          " 31.455"
+        ],
+        [
+          "wrist (81457)",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " bicep (81139)"
+        ],
+        [
+          "sensor mode: 609",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " sensor mode: 40"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_10_4.csv",
+      "bytes": 2561810,
+      "csv_rows": 75929,
+      "preview": [
+        [
+          "Application:",
+          " Trigno Discover (1.6.5)"
+        ],
+        [
+          "Date/Time:",
+          " 05/02/2025 17:00:45"
+        ],
+        [
+          "Collection Length (seconds):",
+          " 35.343"
+        ],
+        [
+          "wrist (81457)",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " bicep (81139)"
+        ],
+        [
+          "sensor mode: 609",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " sensor mode: 40"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_10_5.csv",
+      "bytes": 3049455,
+      "csv_rows": 90400,
+      "preview": [
+        [
+          "Application:",
+          " Trigno Discover (1.6.5)"
+        ],
+        [
+          "Date/Time:",
+          " 05/02/2025 17:14:37"
+        ],
+        [
+          "Collection Length (seconds):",
+          " 42.0795"
+        ],
+        [
+          "wrist (81457)",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " bicep (81139)"
+        ],
+        [
+          "sensor mode: 609",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " sensor mode: 40"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_10_6.csv",
+      "bytes": 2749059,
+      "csv_rows": 81120,
+      "preview": [
+        [
+          "Application:",
+          " Trigno Discover (1.6.5)"
+        ],
+        [
+          "Date/Time:",
+          " 12/02/2025 16:42:53"
+        ],
+        [
+          "Collection Length (seconds):",
+          " 37.7595"
+        ],
+        [
+          "wrist (81457)",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " bicep (81139)"
+        ],
+        [
+          "sensor mode: 609",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " sensor mode: 40"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_10_7.csv",
+      "bytes": 2848893,
+      "csv_rows": 84107,
+      "preview": [
+        [
+          "Application:",
+          " Trigno Discover (1.6.5)"
+        ],
+        [
+          "Date/Time:",
+          " 12/02/2025 16:55:18"
+        ],
+        [
+          "Collection Length (seconds):",
+          " 39.15"
+        ],
+        [
+          "wrist (81457)",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " bicep (81139)"
+        ],
+        [
+          "sensor mode: 609",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " sensor mode: 40"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_10_8.csv",
+      "bytes": 2603650,
+      "csv_rows": 76857,
+      "preview": [
+        [
+          "Application:",
+          " Trigno Discover (1.6.5)"
+        ],
+        [
+          "Date/Time:",
+          " 12/02/2025 17:06:21"
+        ],
+        [
+          "Collection Length (seconds):",
+          " 35.775"
+        ],
+        [
+          "wrist (81457)",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " bicep (81139)"
+        ],
+        [
+          "sensor mode: 609",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " sensor mode: 40"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_10_9.csv",
+      "bytes": 2814372,
+      "csv_rows": 83614,
+      "preview": [
+        [
+          "Application:",
+          " Trigno Discover (1.6.5)"
+        ],
+        [
+          "Date/Time:",
+          " 18/02/2025 16:47:02"
+        ],
+        [
+          "Collection Length (seconds):",
+          " 38.9205"
+        ],
+        [
+          "wrist (81457)",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " bicep (81139)"
+        ],
+        [
+          "sensor mode: 609",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " sensor mode: 40"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_15_1.csv",
+      "bytes": 3084048,
+      "csv_rows": 91154,
+      "preview": [
+        [
+          "Application:",
+          " Trigno Discover (1.6.5)"
+        ],
+        [
+          "Date/Time:",
+          " 29/01/2025 10:02:53"
+        ],
+        [
+          "Collection Length (seconds):",
+          " 42.4305"
+        ],
+        [
+          "wrist (81457)",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " bicep (81139)"
+        ],
+        [
+          "sensor mode: 609",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " sensor mode: 40"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_15_10.csv",
+      "bytes": 2015134,
+      "csv_rows": 59805,
+      "preview": [
+        [
+          "Application:",
+          " Trigno Discover (1.6.5)"
+        ],
+        [
+          "Date/Time:",
+          " 05/02/2025 16:06:31"
+        ],
+        [
+          "Collection Length (seconds):",
+          " 27.837"
+        ],
+        [
+          "wrist (81457)",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " bicep (81139)"
+        ],
+        [
+          "sensor mode: 609",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " sensor mode: 40"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_15_11.csv",
+      "bytes": 1736775,
+      "csv_rows": 51453,
+      "preview": [
+        [
+          "Application:",
+          " Trigno Discover (1.6.5)"
+        ],
+        [
+          "Date/Time:",
+          " 05/02/2025 16:22:08"
+        ],
+        [
+          "Collection Length (seconds):",
+          " 23.949"
+        ],
+        [
+          "wrist (81457)",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " bicep (81139)"
+        ],
+        [
+          "sensor mode: 609",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " sensor mode: 40"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_15_12.csv",
+      "bytes": 2232896,
+      "csv_rows": 66185,
+      "preview": [
+        [
+          "Application:",
+          " Trigno Discover (1.6.5)"
+        ],
+        [
+          "Date/Time:",
+          " 05/02/2025 16:34:44"
+        ],
+        [
+          "Collection Length (seconds):",
+          " 30.807"
+        ],
+        [
+          "wrist (81457)",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " bicep (81139)"
+        ],
+        [
+          "sensor mode: 609",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " sensor mode: 40"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_15_13.csv",
+      "bytes": 2353132,
+      "csv_rows": 69549,
+      "preview": [
+        [
+          "Application:",
+          " Trigno Discover (1.6.5)"
+        ],
+        [
+          "Date/Time:",
+          " 12/02/2025 16:12:31"
+        ],
+        [
+          "Collection Length (seconds):",
+          " 32.373"
+        ],
+        [
+          "wrist (81457)",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " bicep (81139)"
+        ],
+        [
+          "sensor mode: 609",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " sensor mode: 40"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_15_14.csv",
+      "bytes": 2394696,
+      "csv_rows": 70738,
+      "preview": [
+        [
+          "Application:",
+          " Trigno Discover (1.6.5)"
+        ],
+        [
+          "Date/Time:",
+          " 12/02/2025 16:22:19"
+        ],
+        [
+          "Collection Length (seconds):",
+          " 32.9265"
+        ],
+        [
+          "wrist (81457)",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " bicep (81139)"
+        ],
+        [
+          "sensor mode: 609",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " sensor mode: 40"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_15_15.csv",
+      "bytes": 2397193,
+      "csv_rows": 70854,
+      "preview": [
+        [
+          "Application:",
+          " Trigno Discover (1.6.5)"
+        ],
+        [
+          "Date/Time:",
+          " 12/02/2025 16:33:35"
+        ],
+        [
+          "Collection Length (seconds):",
+          " 32.9805"
+        ],
+        [
+          "wrist (81457)",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " bicep (81139)"
+        ],
+        [
+          "sensor mode: 609",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " sensor mode: 40"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_15_16.csv",
+      "bytes": 2425152,
+      "csv_rows": 72014,
+      "preview": [
+        [
+          "Application:",
+          " Trigno Discover (1.6.5)"
+        ],
+        [
+          "Date/Time:",
+          " 18/02/2025 16:15:59"
+        ],
+        [
+          "Collection Length (seconds):",
+          " 33.5205"
+        ],
+        [
+          "wrist (81457)",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " bicep (81139)"
+        ],
+        [
+          "sensor mode: 609",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " sensor mode: 40"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_15_17.csv",
+      "bytes": 2606083,
+      "csv_rows": 77553,
+      "preview": [
+        [
+          "Application:",
+          " Trigno Discover (1.6.5)"
+        ],
+        [
+          "Date/Time:",
+          " 18/02/2025 16:24:33"
+        ],
+        [
+          "Collection Length (seconds):",
+          " 36.099"
+        ],
+        [
+          "wrist (81457)",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " bicep (81139)"
+        ],
+        [
+          "sensor mode: 609",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " sensor mode: 40"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_15_18.csv",
+      "bytes": 1771878,
+      "csv_rows": 52700,
+      "preview": [
+        [
+          "Application:",
+          " Trigno Discover (1.6.5)"
+        ],
+        [
+          "Date/Time:",
+          " 18/02/2025 16:34:29"
+        ],
+        [
+          "Collection Length (seconds):",
+          " 24.5295"
+        ],
+        [
+          "wrist (81457)",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " bicep (81139)"
+        ],
+        [
+          "sensor mode: 609",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " sensor mode: 40"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_15_2.csv",
+      "bytes": 2538246,
+      "csv_rows": 75030,
+      "preview": [
+        [
+          "Application:",
+          " Trigno Discover (1.6.5)"
+        ],
+        [
+          "Date/Time:",
+          " 29/01/2025 10:09:30"
+        ],
+        [
+          "Collection Length (seconds):",
+          " 34.9245"
+        ],
+        [
+          "wrist (81457)",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " bicep (81139)"
+        ],
+        [
+          "sensor mode: 609",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " sensor mode: 40"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_15_3.csv",
+      "bytes": 2497274,
+      "csv_rows": 73870,
+      "preview": [
+        [
+          "Application:",
+          " Trigno Discover (1.6.5)"
+        ],
+        [
+          "Date/Time:",
+          " 29/01/2025 10:16:36"
+        ],
+        [
+          "Collection Length (seconds):",
+          " 34.3845"
+        ],
+        [
+          "wrist (81457)",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " bicep (81139)"
+        ],
+        [
+          "sensor mode: 609",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " sensor mode: 40"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_15_4.csv",
+      "bytes": 2620419,
+      "csv_rows": 77901,
+      "preview": [
+        [
+          "Application:",
+          " Trigno Discover (1.6.5)"
+        ],
+        [
+          "Date/Time:",
+          " 03/02/2025 10:29:59"
+        ],
+        [
+          "Collection Length (seconds):",
+          " 36.261"
+        ],
+        [
+          "wrist (81457)",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " bicep (81139)"
+        ],
+        [
+          "sensor mode: 609",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " sensor mode: 40"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_15_5.csv",
+      "bytes": 2463008,
+      "csv_rows": 73087,
+      "preview": [
+        [
+          "Application:",
+          " Trigno Discover (1.6.5)"
+        ],
+        [
+          "Date/Time:",
+          " 03/02/2025 10:37:50"
+        ],
+        [
+          "Collection Length (seconds):",
+          " 34.02"
+        ],
+        [
+          "wrist (81457)",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " bicep (81139)"
+        ],
+        [
+          "sensor mode: 609",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " sensor mode: 40"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_15_6.csv",
+      "bytes": 2087177,
+      "csv_rows": 61893,
+      "preview": [
+        [
+          "Application:",
+          " Trigno Discover (1.6.5)"
+        ],
+        [
+          "Date/Time:",
+          " 05/02/2025 09:54:28"
+        ],
+        [
+          "Collection Length (seconds):",
+          " 28.809"
+        ],
+        [
+          "wrist (81457)",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " bicep (81139)"
+        ],
+        [
+          "sensor mode: 609",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " sensor mode: 40"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_15_7.csv",
+      "bytes": 2342695,
+      "csv_rows": 69433,
+      "preview": [
+        [
+          "Application:",
+          " Trigno Discover (1.6.5)"
+        ],
+        [
+          "Date/Time:",
+          " 05/02/2025 10:05:06"
+        ],
+        [
+          "Collection Length (seconds):",
+          " 32.319"
+        ],
+        [
+          "wrist (81457)",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " bicep (81139)"
+        ],
+        [
+          "sensor mode: 609",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " sensor mode: 40"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_15_8.csv",
+      "bytes": 2791226,
+      "csv_rows": 82744,
+      "preview": [
+        [
+          "Application:",
+          " Trigno Discover (1.6.5)"
+        ],
+        [
+          "Date/Time:",
+          " 05/02/2025 10:15:17"
+        ],
+        [
+          "Collection Length (seconds):",
+          " 38.5155"
+        ],
+        [
+          "wrist (81457)",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " bicep (81139)"
+        ],
+        [
+          "sensor mode: 609",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " sensor mode: 40"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_15_9.csv",
+      "bytes": 2183580,
+      "csv_rows": 64648,
+      "preview": [
+        [
+          "Application:",
+          " Trigno Discover (1.6.5)"
+        ],
+        [
+          "Date/Time:",
+          " 05/02/2025 10:22:47"
+        ],
+        [
+          "Collection Length (seconds):",
+          " 30.0915"
+        ],
+        [
+          "wrist (81457)",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " bicep (81139)"
+        ],
+        [
+          "sensor mode: 609",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " sensor mode: 40"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_5_1.csv",
+      "bytes": 3042987,
+      "csv_rows": 89791,
+      "preview": [
+        [
+          "Application:",
+          " Trigno Discover (1.6.5)"
+        ],
+        [
+          "Date/Time:",
+          " 05/02/2025 10:27:50"
+        ],
+        [
+          "Collection Length (seconds):",
+          " 41.796"
+        ],
+        [
+          "wrist (81457)",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " bicep (81139)"
+        ],
+        [
+          "sensor mode: 609",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " sensor mode: 40"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_5_2.csv",
+      "bytes": 2693647,
+      "csv_rows": 79467,
+      "preview": [
+        [
+          "Application:",
+          " Trigno Discover (1.6.5)"
+        ],
+        [
+          "Date/Time:",
+          " 05/02/2025 10:31:36"
+        ],
+        [
+          "Collection Length (seconds):",
+          " 36.99"
+        ],
+        [
+          "wrist (81457)",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " bicep (81139)"
+        ],
+        [
+          "sensor mode: 609",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " sensor mode: 40"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_5_3.csv",
+      "bytes": 3286110,
+      "csv_rows": 97157,
+      "preview": [
+        [
+          "Application:",
+          " Trigno Discover (1.6.5)"
+        ],
+        [
+          "Date/Time:",
+          " 05/02/2025 17:19:14"
+        ],
+        [
+          "Collection Length (seconds):",
+          " 45.225"
+        ],
+        [
+          "wrist (81457)",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " bicep (81139)"
+        ],
+        [
+          "sensor mode: 609",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " sensor mode: 40"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_5_4.csv",
+      "bytes": 4944190,
+      "csv_rows": 146225,
+      "preview": [
+        [
+          "Application:",
+          " Trigno Discover (1.6.5)"
+        ],
+        [
+          "Date/Time:",
+          " 05/02/2025 17:27:04"
+        ],
+        [
+          "Collection Length (seconds):",
+          " 68.067"
+        ],
+        [
+          "wrist (81457)",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " bicep (81139)"
+        ],
+        [
+          "sensor mode: 609",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " sensor mode: 40"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_5_5.csv",
+      "bytes": 2855399,
+      "csv_rows": 84049,
+      "preview": [
+        [
+          "Application:",
+          " Trigno Discover (1.6.5)"
+        ],
+        [
+          "Date/Time:",
+          " 12/02/2025 17:09:37"
+        ],
+        [
+          "Collection Length (seconds):",
+          " 39.123"
+        ],
+        [
+          "wrist (81457)",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " bicep (81139)"
+        ],
+        [
+          "sensor mode: 609",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " sensor mode: 40"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_5_6.csv",
+      "bytes": 4576755,
+      "csv_rows": 134770,
+      "preview": [
+        [
+          "Application:",
+          " Trigno Discover (1.6.5)"
+        ],
+        [
+          "Date/Time:",
+          " 12/02/2025 17:16:28"
+        ],
+        [
+          "Collection Length (seconds):",
+          " 62.7345"
+        ],
+        [
+          "wrist (81457)",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " bicep (81139)"
+        ],
+        [
+          "sensor mode: 609",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " sensor mode: 40"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/A321_5_7.csv",
+      "bytes": 2854693,
+      "csv_rows": 84252,
+      "preview": [
+        [
+          "Application:",
+          " Trigno Discover (1.6.5)"
+        ],
+        [
+          "Date/Time:",
+          " 18/02/2025 17:18:31"
+        ],
+        [
+          "Collection Length (seconds):",
+          " 39.2175"
+        ],
+        [
+          "wrist (81457)",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " bicep (81139)"
+        ],
+        [
+          "sensor mode: 609",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " sensor mode: 40"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/G998_10_1.csv",
+      "bytes": 3277593,
+      "csv_rows": 97041,
+      "preview": [
+        [
+          "Application:",
+          " Trigno Discover (1.6.5)"
+        ],
+        [
+          "Date/Time:",
+          " 30/01/2025 09:27:09"
+        ],
+        [
+          "Collection Length (seconds):",
+          " 45.171"
+        ],
+        [
+          "wrist (81457)",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " bicep (81139)"
+        ],
+        [
+          "sensor mode: 609",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " sensor mode: 40"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/G998_10_2.csv",
+      "bytes": 2597163,
+      "csv_rows": 76857,
+      "preview": [
+        [
+          "Application:",
+          " Trigno Discover (1.6.5)"
+        ],
+        [
+          "Date/Time:",
+          " 30/01/2025 09:36:12"
+        ],
+        [
+          "Collection Length (seconds):",
+          " 35.775"
+        ],
+        [
+          "wrist (81457)",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " bicep (81139)"
+        ],
+        [
+          "sensor mode: 609",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " sensor mode: 40"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/G998_10_3.csv",
+      "bytes": 2358658,
+      "csv_rows": 69839,
+      "preview": [
+        [
+          "Application:",
+          " Trigno Discover (1.6.5)"
+        ],
+        [
+          "Date/Time:",
+          " 30/01/2025 09:41:06"
+        ],
+        [
+          "Collection Length (seconds):",
+          " 32.508"
+        ],
+        [
+          "wrist (81457)",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " bicep (81139)"
+        ],
+        [
+          "sensor mode: 609",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " sensor mode: 40"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/G998_15_1.csv",
+      "bytes": 2113301,
+      "csv_rows": 62502,
+      "preview": [
+        [
+          "Application:",
+          " Trigno Discover (1.6.5)"
+        ],
+        [
+          "Date/Time:",
+          " 30/01/2025 09:32:17"
+        ],
+        [
+          "Collection Length (seconds):",
+          " 29.0925"
+        ],
+        [
+          "wrist (81457)",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " bicep (81139)"
+        ],
+        [
+          "sensor mode: 609",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " sensor mode: 40"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/P714_10_1.csv",
+      "bytes": 3059326,
+      "csv_rows": 90226,
+      "preview": [
+        [
+          "Application:",
+          " Trigno Discover (1.6.5)"
+        ],
+        [
+          "Date/Time:",
+          " 29/01/2025 16:08:04"
+        ],
+        [
+          "Collection Length (seconds):",
+          " 41.9985"
+        ],
+        [
+          "wrist (81457)",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " bicep (81139)"
+        ],
+        [
+          "sensor mode: 609",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " sensor mode: 40"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/P714_10_2.csv",
+      "bytes": 2880252,
+      "csv_rows": 84977,
+      "preview": [
+        [
+          "Application:",
+          " Trigno Discover (1.6.5)"
+        ],
+        [
+          "Date/Time:",
+          " 29/01/2025 16:14:55"
+        ],
+        [
+          "Collection Length (seconds):",
+          " 39.555"
+        ],
+        [
+          "wrist (81457)",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " bicep (81139)"
+        ],
+        [
+          "sensor mode: 609",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " sensor mode: 40"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/P714_10_3.csv",
+      "bytes": 2962558,
+      "csv_rows": 87384,
+      "preview": [
+        [
+          "Application:",
+          " Trigno Discover (1.6.5)"
+        ],
+        [
+          "Date/Time:",
+          " 29/01/2025 16:25:42"
+        ],
+        [
+          "Collection Length (seconds):",
+          " 40.6755"
+        ],
+        [
+          "wrist (81457)",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " bicep (81139)"
+        ],
+        [
+          "sensor mode: 609",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " sensor mode: 40"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/P714_10_4.csv",
+      "bytes": 2724155,
+      "csv_rows": 80453,
+      "preview": [
+        [
+          "Application:",
+          " Trigno Discover (1.6.5)"
+        ],
+        [
+          "Date/Time:",
+          " 29/01/2025 16:34:36"
+        ],
+        [
+          "Collection Length (seconds):",
+          " 37.449"
+        ],
+        [
+          "wrist (81457)",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " bicep (81139)"
+        ],
+        [
+          "sensor mode: 609",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " sensor mode: 40"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/P714_10_5.csv",
+      "bytes": 2635472,
+      "csv_rows": 77901,
+      "preview": [
+        [
+          "Application:",
+          " Trigno Discover (1.6.5)"
+        ],
+        [
+          "Date/Time:",
+          " 29/01/2025 16:42:24"
+        ],
+        [
+          "Collection Length (seconds):",
+          " 36.261"
+        ],
+        [
+          "wrist (81457)",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " bicep (81139)"
+        ],
+        [
+          "sensor mode: 609",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " sensor mode: 40"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/P714_10_6.csv",
+      "bytes": 2,
+      "csv_rows": 1,
+      "preview": [
+        []
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/P714_10_7.csv",
+      "bytes": 2,
+      "csv_rows": 1,
+      "preview": [
+        []
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/P714_10_8.csv",
+      "bytes": 1959383,
+      "csv_rows": 58268,
+      "preview": [
+        [
+          "Application:",
+          " Trigno Discover (1.6.5)"
+        ],
+        [
+          "Date/Time:",
+          " 04/02/2025 15:35:16"
+        ],
+        [
+          "Collection Length (seconds):",
+          " 27.1215"
+        ],
+        [
+          "wrist (81457)",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " bicep (81139)"
+        ],
+        [
+          "sensor mode: 609",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " sensor mode: 40"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/P714_10_9.csv",
+      "bytes": 1948741,
+      "csv_rows": 57978,
+      "preview": [
+        [
+          "Application:",
+          " Trigno Discover (1.6.5)"
+        ],
+        [
+          "Date/Time:",
+          " 04/02/2025 15:43:29"
+        ],
+        [
+          "Collection Length (seconds):",
+          " 26.9865"
+        ],
+        [
+          "wrist (81457)",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " bicep (81139)"
+        ],
+        [
+          "sensor mode: 609",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " sensor mode: 40"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/P714_5_1.csv",
+      "bytes": 4599162,
+      "csv_rows": 135727,
+      "preview": [
+        [
+          "Application:",
+          " Trigno Discover (1.6.5)"
+        ],
+        [
+          "Date/Time:",
+          " 29/01/2025 16:48:48"
+        ],
+        [
+          "Collection Length (seconds):",
+          " 63.18"
+        ],
+        [
+          "wrist (81457)",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " bicep (81139)"
+        ],
+        [
+          "sensor mode: 609",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " sensor mode: 40"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/P714_5_2.csv",
+      "bytes": 4757574,
+      "csv_rows": 140425,
+      "preview": [
+        [
+          "Application:",
+          " Trigno Discover (1.6.5)"
+        ],
+        [
+          "Date/Time:",
+          " 29/01/2025 17:02:25"
+        ],
+        [
+          "Collection Length (seconds):",
+          " 65.367"
+        ],
+        [
+          "wrist (81457)",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " bicep (81139)"
+        ],
+        [
+          "sensor mode: 609",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " sensor mode: 40"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/P714_5_3.csv",
+      "bytes": 4034982,
+      "csv_rows": 118878,
+      "preview": [
+        [
+          "Application:",
+          " Trigno Discover (1.6.5)"
+        ],
+        [
+          "Date/Time:",
+          " 29/01/2025 17:19:32"
+        ],
+        [
+          "Collection Length (seconds):",
+          " 55.3365"
+        ],
+        [
+          "wrist (81457)",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " bicep (81139)"
+        ],
+        [
+          "sensor mode: 609",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " sensor mode: 40"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/P714_5_4.csv",
+      "bytes": 2,
+      "csv_rows": 1,
+      "preview": [
+        []
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/P714_5_5.csv",
+      "bytes": 2,
+      "csv_rows": 1,
+      "preview": [
+        []
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/T417_10_1.csv",
+      "bytes": 4846277,
+      "csv_rows": 131058,
+      "preview": [
+        [
+          "",
+          "Application:",
+          " Trigno Discover (1.6.5)",
+          "Unnamed: 2",
+          "Unnamed: 3",
+          "Unnamed: 4",
+          "Unnamed: 5",
+          "Unnamed: 6"
+        ],
+        [
+          "0",
+          "Date/Time:",
+          " 28/01/2025 14:48:55",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        [
+          "1",
+          "Collection Length (seconds):",
+          "61.0065",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        [
+          "2",
+          "wrist (81457)",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " bicep (81139)"
+        ],
+        [
+          "3",
+          "sensor mode: 609",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " sensor mode: 40"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/T417_10_2.csv",
+      "bytes": 4799461,
+      "csv_rows": 129869,
+      "preview": [
+        [
+          "",
+          "Application:",
+          " Trigno Discover (1.6.5)",
+          "Unnamed: 2",
+          "Unnamed: 3",
+          "Unnamed: 4",
+          "Unnamed: 5",
+          "Unnamed: 6"
+        ],
+        [
+          "0",
+          "Date/Time:",
+          " 28/01/2025 14:56:33",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        [
+          "1",
+          "Collection Length (seconds):",
+          "60.453",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        [
+          "2",
+          "wrist (81457)",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " bicep (81139)"
+        ],
+        [
+          "3",
+          "sensor mode: 609",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " sensor mode: 40"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/T417_15_2.csv",
+      "bytes": 3503357,
+      "csv_rows": 95504,
+      "preview": [
+        [
+          "",
+          "Application:",
+          " Trigno Discover (1.6.5)",
+          "Unnamed: 2",
+          "Unnamed: 3",
+          "Unnamed: 4",
+          "Unnamed: 5",
+          "Unnamed: 6"
+        ],
+        [
+          "0",
+          "Date/Time:",
+          " 28/01/2025 14:37:21",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        [
+          "1",
+          "Collection Length (seconds):",
+          "44.4555",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        [
+          "2",
+          "wrist (81457)",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " bicep (81139)"
+        ],
+        [
+          "3",
+          "sensor mode: 609",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " sensor mode: 40"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/T417_15_3.csv",
+      "bytes": 3523485,
+      "csv_rows": 96026,
+      "preview": [
+        [
+          "",
+          "Application:",
+          " Trigno Discover (1.6.5)",
+          "Unnamed: 2",
+          "Unnamed: 3",
+          "Unnamed: 4",
+          "Unnamed: 5",
+          "Unnamed: 6"
+        ],
+        [
+          "0",
+          "Date/Time:",
+          " 28/01/2025 14:43:53",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        [
+          "1",
+          "Collection Length (seconds):",
+          "44.6985",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        [
+          "2",
+          "wrist (81457)",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " bicep (81139)"
+        ],
+        [
+          "3",
+          "sensor mode: 609",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " sensor mode: 40"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/T417_5_2.csv",
+      "bytes": 4692678,
+      "csv_rows": 126737,
+      "preview": [
+        [
+          "",
+          "Application:",
+          " Trigno Discover (1.6.5)",
+          "Unnamed: 2",
+          "Unnamed: 3",
+          "Unnamed: 4",
+          "Unnamed: 5",
+          "Unnamed: 6"
+        ],
+        [
+          "0",
+          "Date/Time:",
+          " 28/01/2025 15:21:35",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        [
+          "1",
+          "Collection Length (seconds):",
+          "58.995",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        [
+          "2",
+          "wrist (81457)",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " bicep (81139)"
+        ],
+        [
+          "3",
+          "sensor mode: 609",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " sensor mode: 40"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/T417_5_3.csv",
+      "bytes": 3971924,
+      "csv_rows": 107742,
+      "preview": [
+        [
+          "",
+          "Application:",
+          " Trigno Discover (1.6.5)",
+          "Unnamed: 2",
+          "Unnamed: 3",
+          "Unnamed: 4",
+          "Unnamed: 5",
+          "Unnamed: 6"
+        ],
+        [
+          "0",
+          "Date/Time:",
+          " 28/01/2025 15:25:03",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        [
+          "1",
+          "Collection Length (seconds):",
+          "50.1525",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        [
+          "2",
+          "wrist (81457)",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " bicep (81139)"
+        ],
+        [
+          "3",
+          "sensor mode: 609",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " sensor mode: 40"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/T417_5_4.csv",
+      "bytes": 4384057,
+      "csv_rows": 118588,
+      "preview": [
+        [
+          "",
+          "Application:",
+          " Trigno Discover (1.6.5)",
+          "Unnamed: 2",
+          "Unnamed: 3",
+          "Unnamed: 4",
+          "Unnamed: 5",
+          "Unnamed: 6"
+        ],
+        [
+          "0",
+          "Date/Time:",
+          " 28/01/2025 15:31:53",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        [
+          "1",
+          "Collection Length (seconds):",
+          "55.2015",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        [
+          "2",
+          "wrist (81457)",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " bicep (81139)"
+        ],
+        [
+          "3",
+          "sensor mode: 609",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " sensor mode: 40"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/T456_10_1.csv",
+      "bytes": 3698634,
+      "csv_rows": 109714,
+      "preview": [
+        [
+          "Application:",
+          " Trigno Discover (1.6.5)"
+        ],
+        [
+          "Date/Time:",
+          " 03/02/2025 10:48:19"
+        ],
+        [
+          "Collection Length (seconds):",
+          " 51.0705"
+        ],
+        [
+          "wrist (81457)",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " bicep (81139)"
+        ],
+        [
+          "sensor mode: 609",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " sensor mode: 40"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/T456_10_2.csv",
+      "bytes": 4620480,
+      "csv_rows": 136829,
+      "preview": [
+        [
+          "Application:",
+          " Trigno Discover (1.6.5)"
+        ],
+        [
+          "Date/Time:",
+          " 03/02/2025 10:57:49"
+        ],
+        [
+          "Collection Length (seconds):",
+          " 63.693"
+        ],
+        [
+          "wrist (81457)",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " bicep (81139)"
+        ],
+        [
+          "sensor mode: 609",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " sensor mode: 40"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/T456_10_3.csv",
+      "bytes": 2962990,
+      "csv_rows": 87616,
+      "preview": [
+        [
+          "Application:",
+          " Trigno Discover (1.6.5)"
+        ],
+        [
+          "Date/Time:",
+          " 03/02/2025 11:08:06"
+        ],
+        [
+          "Collection Length (seconds):",
+          " 40.7835"
+        ],
+        [
+          "wrist (81457)",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " bicep (81139)"
+        ],
+        [
+          "sensor mode: 609",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " sensor mode: 40"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/Raw Data/T456_10_4.csv",
+      "bytes": 3279996,
+      "csv_rows": 97012,
+      "preview": [
+        [
+          "Application:",
+          " Trigno Discover (1.6.5)"
+        ],
+        [
+          "Date/Time:",
+          " 03/02/2025 11:22:13"
+        ],
+        [
+          "Collection Length (seconds):",
+          " 45.1575"
+        ],
+        [
+          "wrist (81457)",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " bicep (81139)"
+        ],
+        [
+          "sensor mode: 609",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " sensor mode: 40"
+        ]
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Data/rep_dataset.csv",
+      "bytes": 1259042,
+      "csv_rows": 1004,
+      "preview": [
+        [
+          "ID",
+          "rep_num",
+          "rep_length",
+          "up_length",
+          "down_length",
+          "up_down_ratio",
+          "acc_x_avg_up",
+          "acc_x_std_up",
+          "acc_x_max_up",
+          "acc_x_min_up",
+          "jerk_x_avg_up",
+          "jerk_x_std_up",
+          "acc_x_avg_down",
+          "acc_x_std_down",
+          "acc_x_max_down",
+          "acc_x_min_down",
+          "jerk_x_avg_down",
+          "jerk_x_std_down",
+          "acc_x_p2p",
+          "acc_x_r2",
+          "acc_y_avg_up",
+          "acc_y_std_up",
+          "acc_y_max_up",
+          "acc_y_min_up",
+          "jerk_y_avg_up",
+          "jerk_y_std_up",
+          "acc_y_avg_down",
+          "acc_y_std_down",
+          "acc_y_max_down",
+          "acc_y_min_down"
+        ],
+        [
+          "A321_15_11",
+          "0",
+          "3.2399997408000205",
+          "1.736099861112011",
+          "1.5038998796880096",
+          "1.1543985637342908",
+          "0.1945619121273291",
+          "0.6921450281564918",
+          "0.988437502",
+          "-0.845654302",
+          "-1.0501774320932151",
+          "0.9795547924451536",
+          "0.2690963994193547",
+          "0.6785697955748774",
+          "1.05664063",
+          "-0.8502539139999998",
+          "1.2179856855763551",
+          "1.6744717260118955",
+          "1.906894544",
+          "0.8242200238957117",
+          "-0.1747159900838509",
+          "0.095628524877769",
+          "0.042822266",
+          "-0.277822264",
+          "0.1055931839557774",
+          "0.5520097583973486",
+          "-0.1902971689641577",
+          "0.0858059366111942",
+          "0.039179684",
+          "-0.2910644559999999"
+        ],
+        [
+          "A321_15_11",
+          "1",
+          "2.7593997792480174",
+          "1.3202998943760085",
+          "1.4390998848720091",
+          "0.9174484052532834",
+          "0.2281125046979591",
+          "0.6851079155082789",
+          "1.036425782",
+          "-0.7859472719999999",
+          "-1.3423574988905236",
+          "1.2165839108230758",
+          "0.241698870318352",
+          "0.6656334510511298",
+          "1.013232426",
+          "-0.787001958",
+          "1.2356356585756716",
+          "1.3952317209147576",
+          "1.82342774",
+          "0.8383370893776059",
+          "-0.1773739053020408",
+          "0.0696452660285581",
+          "-0.03589844",
+          "-0.272089844",
+          "0.1457188422263157",
+          "0.5164017892544664",
+          "-0.1987858438014981",
+          "0.0769878663094904",
+          "-0.029414064",
+          "-0.291992186"
+        ],
+        [
+          "A321_15_11",
+          "2",
+          "3.023999758080019",
+          "1.6037998716960102",
+          "1.420199886384009",
+          "1.129277566539924",
+          "0.1644634006487395",
+          "0.6792481112841173",
+          "1.009853522",
+          "-0.8481640640000001",
+          "-1.1476102140185602",
+          "1.0049931250812305",
+          "0.2742953755597722",
+          "0.6756654473859878",
+          "0.999365234",
+          "-0.853720704",
+          "1.2805195729386785",
+          "1.4122326539598813",
+          "1.863574226",
+          "0.83722251723145",
+          "-0.1688753131294117",
+          "0.0853477596884631",
+          "0.0149414059999999",
+          "-0.275097656",
+          "0.1319254588642984",
+          "0.5912683044850167",
+          "-0.1873997880151802",
+          "0.0851057580898842",
+          "0.010810548",
+          "-0.299375"
+        ],
+        [
+          "A321_15_11",
+          "3",
+          "3.10499975160002",
+          "1.6145998708320102",
+          "1.4903998807680094",
+          "1.0833333333333333",
+          "0.1611204395125209",
+          "0.6811948123114421",
+          "1.010361328",
+          "-0.867597662",
+          "-1.1383794729606018",
+          "1.050421911802717",
+          "0.2501377431211573",
+          "0.6989678289976912",
+          "1.054296874",
+          "-0.868232428",
+          "1.253713974424864",
+          "1.4722222226259367",
+          "1.922529302",
+          "0.8564007231316256",
+          "-0.1701181177095158",
+          "0.0953137181609312",
+          "0.0398535139999999",
+          "-0.285146482",
+          "0.1502524931300693",
+          "0.5168222408550313",
+          "-0.1368244757793851",
+          "0.1003908022092533",
+          "0.055830078",
+          "-0.257402344"
+        ]
+      ]
+    }
+  ],
+  "source_code_references_read_as_text_only": [
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Code/EMG Models/all_emg_models.py",
+      "references": [
+        {
+          "line": 13,
+          "text": "from imblearn.over_sampling import SMOTE"
+        },
+        {
+          "line": 49,
+          "text": "        f = open(f\"./results/{target}_model_eval.csv\", mode=\"w\")"
+        },
+        {
+          "line": 62,
+          "text": "    df.to_csv(f\"./results/{target}_model_eval.csv\", index=False, mode='a', header=False)"
+        },
+        {
+          "line": 109,
+          "text": "    smote = SMOTE(random_state=19)"
+        },
+        {
+          "line": 110,
+          "text": "    X, y = smote.fit_resample(X, y)"
+        },
+        {
+          "line": 164,
+          "text": "    # Applying SMOTE to prevent overfitting"
+        },
+        {
+          "line": 165,
+          "text": "    smote = SMOTE(random_state=19)"
+        },
+        {
+          "line": 166,
+          "text": "    X, y = smote.fit_resample(X, y)"
+        },
+        {
+          "line": 219,
+          "text": "    # Applying SMOTE to prevent overfitting"
+        },
+        {
+          "line": 220,
+          "text": "    smote = SMOTE(random_state=19)"
+        },
+        {
+          "line": 221,
+          "text": "    X, y = smote.fit_resample(X, y)"
+        },
+        {
+          "line": 312,
+          "text": "        smote = SMOTE(random_state=19)"
+        },
+        {
+          "line": 313,
+          "text": "        X, y = smote.fit_resample(X, y)"
+        },
+        {
+          "line": 401,
+          "text": "    # Applying SMOTE to prevent overfitting"
+        },
+        {
+          "line": 402,
+          "text": "    smote = SMOTE(random_state=19)"
+        },
+        {
+          "line": 403,
+          "text": "    X, y = smote.fit_resample(X, y)"
+        },
+        {
+          "line": 742,
+          "text": "            df = pd.read_csv(f\"./results/{target}_model_eval.csv\")"
+        },
+        {
+          "line": 750,
+          "text": "    rep_df = pd.read_csv(\"rep_dataset.csv\")"
+        }
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Code/EMG Models/best_emg_models.py",
+      "references": [
+        {
+          "line": 15,
+          "text": "from imblearn.over_sampling import SMOTE"
+        },
+        {
+          "line": 140,
+          "text": "    smote = SMOTE(random_state=19)"
+        },
+        {
+          "line": 141,
+          "text": "    X, y = smote.fit_resample(X, y)"
+        },
+        {
+          "line": 162,
+          "text": "    smote = SMOTE(random_state=19)"
+        },
+        {
+          "line": 163,
+          "text": "    X, y = smote.fit_resample(X, y)"
+        },
+        {
+          "line": 181,
+          "text": "    rep_df = pd.read_csv(\"rep_dataset.csv\")"
+        }
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Code/EMG Models/create_train_set.py",
+      "references": [
+        {
+          "line": 18,
+          "text": "    rep_df = pd.read_csv(\"rep_dataset.csv\")"
+        },
+        {
+          "line": 46,
+          "text": "    rep_df.to_csv(\"imu_plus_pred_emg.csv\", index=False)"
+        }
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Code/EMG Models/emg_model_grid_search.py",
+      "references": [
+        {
+          "line": 14,
+          "text": "from imblearn.over_sampling import SMOTE"
+        },
+        {
+          "line": 60,
+          "text": "    # Applying SMOTE to prevent poor minority class prediction"
+        },
+        {
+          "line": 61,
+          "text": "    smote = SMOTE(random_state=19)"
+        },
+        {
+          "line": 62,
+          "text": "    X, y = smote.fit_resample(X, y)"
+        },
+        {
+          "line": 102,
+          "text": "    smote = SMOTE(random_state=19)"
+        },
+        {
+          "line": 103,
+          "text": "    X, y = smote.fit_resample(X, y)"
+        },
+        {
+          "line": 139,
+          "text": "    smote = SMOTE(random_state=19)"
+        },
+        {
+          "line": 140,
+          "text": "    X, y = smote.fit_resample(X, y)"
+        },
+        {
+          "line": 238,
+          "text": "        smote = SMOTE(random_state=19)"
+        },
+        {
+          "line": 239,
+          "text": "        X, y = smote.fit_resample(X, y)"
+        },
+        {
+          "line": 344,
+          "text": "    smote = SMOTE(random_state=19)"
+        },
+        {
+          "line": 345,
+          "text": "    X, y = smote.fit_resample(X, y)"
+        },
+        {
+          "line": 594,
+          "text": "    rep_df = pd.read_csv(\"rep_dataset.csv\")"
+        }
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Code/Preprocessing/preprocessing.py",
+      "references": [
+        {
+          "line": 233,
+          "text": "def read_rpes(filename):"
+        },
+        {
+          "line": 532,
+          "text": "    downsampled_df.to_csv(down_dir+set_name+\"_down.csv\")"
+        },
+        {
+          "line": 533,
+          "text": "    downsampled_df = pd.read_csv(down_dir+set_name+\"_down.csv\")"
+        },
+        {
+          "line": 535,
+          "text": "    smoothed_df.to_csv(smooth_dir+set_name+\"_smooth.csv\")"
+        },
+        {
+          "line": 536,
+          "text": "    smoothed_df = pd.read_csv(smooth_dir+set_name+\".csv\")"
+        },
+        {
+          "line": 545,
+          "text": "    rep_df = get_rep_dataset(\"rep_dataset.csv\")"
+        },
+        {
+          "line": 547,
+          "text": "    save_rep_dataset(\"rep_dataset.csv\", df_merged)"
+        },
+        {
+          "line": 573,
+          "text": "    save_rep_dataset(\"rep_dataset.csv\", rep_df)"
+        },
+        {
+          "line": 587,
+          "text": "    save_rep_dataset(\"rep_dataset.csv\", rep_df)"
+        },
+        {
+          "line": 601,
+          "text": "    rpe_df, count_dict = read_rpes(\"rpes.csv\")"
+        },
+        {
+          "line": 603,
+          "text": "    set_up_rep_dataset(\"rep_dataset.csv\")"
+        },
+        {
+          "line": 610,
+          "text": "    rep_df = get_rep_dataset(\"rep_dataset.csv\")"
+        },
+        {
+          "line": 616,
+          "text": "    rep_df = get_rep_dataset(\"rep_dataset.csv\")"
+        }
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Code/RPE Models/Classification/all_models.py",
+      "references": [
+        {
+          "line": 7,
+          "text": "from lstm_grid_search import add_jitter, create_grouped_kfold_split, scale_3d_data "
+        },
+        {
+          "line": 15,
+          "text": "from imblearn.over_sampling import SMOTE"
+        },
+        {
+          "line": 51,
+          "text": "    f = open(f\"./results/rpe_class_eval.csv\", mode=\"w\")"
+        },
+        {
+          "line": 59,
+          "text": "    df.to_csv(f\"./results/rpe_class_eval.csv\", index=False, mode='a', header=False)"
+        },
+        {
+          "line": 140,
+          "text": "        # Applying SMOTE to prevent overfitting"
+        },
+        {
+          "line": 141,
+          "text": "        smote = SMOTE(random_state=19)"
+        },
+        {
+          "line": 142,
+          "text": "        X_train, y_train = smote.fit_resample(X_train, y_train)"
+        },
+        {
+          "line": 206,
+          "text": "        # Applying SMOTE to prevent overfitting"
+        },
+        {
+          "line": 207,
+          "text": "        smote = SMOTE(random_state=19)"
+        },
+        {
+          "line": 208,
+          "text": "        X_train, y_train = smote.fit_resample(X_train, y_train)"
+        },
+        {
+          "line": 272,
+          "text": "        # Applying SMOTE to prevent overfitting"
+        },
+        {
+          "line": 273,
+          "text": "        smote = SMOTE(random_state=19)"
+        },
+        {
+          "line": 274,
+          "text": "        X_train, y_train = smote.fit_resample(X_train, y_train)"
+        },
+        {
+          "line": 354,
+          "text": "        smote = SMOTE(random_state=19)"
+        },
+        {
+          "line": 355,
+          "text": "        X_train, y_train = smote.fit_resample(X_train, y_train)"
+        },
+        {
+          "line": 434,
+          "text": "        # Applying SMOTE to prevent overfitting"
+        },
+        {
+          "line": 435,
+          "text": "        smote = SMOTE(random_state=19)"
+        },
+        {
+          "line": 436,
+          "text": "        X_train, y_train = smote.fit_resample(X_train, y_train)"
+        },
+        {
+          "line": 547,
+          "text": "        X_train = add_jitter(X_train) #adding jitter to data to prevent data leakage"
+        },
+        {
+          "line": 593,
+          "text": "    rep_df = pd.read_csv(\"imu_plus_pred_emg.csv\")"
+        }
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Code/RPE Models/Classification/classification_grid_search.py",
+      "references": [
+        {
+          "line": 16,
+          "text": "from imblearn.over_sampling import SMOTE"
+        },
+        {
+          "line": 57,
+          "text": "    smote = SMOTE(random_state=19)"
+        },
+        {
+          "line": 58,
+          "text": "    X, y = smote.fit_resample(X, y)"
+        },
+        {
+          "line": 96,
+          "text": "    smote = SMOTE(random_state=19)"
+        },
+        {
+          "line": 97,
+          "text": "    X, y = smote.fit_resample(X, y)"
+        },
+        {
+          "line": 133,
+          "text": "    smote = SMOTE(random_state=19)"
+        },
+        {
+          "line": 134,
+          "text": "    X, y = smote.fit_resample(X, y)"
+        },
+        {
+          "line": 185,
+          "text": "    smote = SMOTE(random_state=19)"
+        },
+        {
+          "line": 186,
+          "text": "    X, y = smote.fit_resample(X, y)"
+        },
+        {
+          "line": 282,
+          "text": "    smote = SMOTE(random_state=19)"
+        },
+        {
+          "line": 283,
+          "text": "    X, y = smote.fit_resample(X, y)"
+        },
+        {
+          "line": 319,
+          "text": "    rep_df = pd.read_csv(\"imu_plus_pred_emg.csv\")"
+        }
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Code/RPE Models/Classification/lstm_grid_search.py",
+      "references": [
+        {
+          "line": 62,
+          "text": "def add_jitter(X, noise_level=0.02):"
+        },
+        {
+          "line": 263,
+          "text": "            X_train = add_jitter(X_train) #adding jitter to data to prevent data leakage"
+        },
+        {
+          "line": 306,
+          "text": "    rep_df = pd.read_csv(\"imu_plus_pred_emg.csv\")"
+        }
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Code/RPE Models/Regression/all_models.py",
+      "references": [
+        {
+          "line": 7,
+          "text": "from lstm_grid_search import add_jitter, create_grouped_kfold_split, scale_3d_data "
+        },
+        {
+          "line": 50,
+          "text": "    f = open(f\"./results/rpe_reg_eval.csv\", mode=\"w\")"
+        },
+        {
+          "line": 58,
+          "text": "    df.to_csv(f\"./results/rpe_reg_eval.csv\", index=False, mode='a', header=False)"
+        },
+        {
+          "line": 653,
+          "text": "        X_train = add_jitter(X_train) #adding jitter to data to prevent data leakage"
+        },
+        {
+          "line": 704,
+          "text": "    rep_df = pd.read_csv(\"imu_plus_pred_emg.csv\")"
+        }
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Code/RPE Models/Regression/lstm_grid_search.py",
+      "references": [
+        {
+          "line": 65,
+          "text": "def add_jitter(X, noise_level=0.02):"
+        },
+        {
+          "line": 266,
+          "text": "            X_train = add_jitter(X_train) #adding jitter to data to prevent data leakage"
+        },
+        {
+          "line": 307,
+          "text": "    rep_df = pd.read_csv(\"imu_plus_pred_emg.csv\")"
+        }
+      ]
+    },
+    {
+      "filename": "j-tom03-IMU-EMG-RPE-Estimation-e6c76f0/Code/RPE Models/Regression/regression_grid_search.py",
+      "references": [
+        {
+          "line": 347,
+          "text": "    rep_df = pd.read_csv(\"imu_plus_pred_emg.csv\")"
+        }
+      ]
+    }
+  ],
+  "downloaded_code_executed": false,
+  "pretrained_weights_loaded": false,
+  "training_approved": false,
+  "model_fitting_started": false,
+  "scope": "Inventory and original annotation review only. Published SMOTE/jitter methods and learned EMG labels are excluded from any actual-target claim. Only manually reported original RPE cells may enter a future independently verified adapter; no model weights or study scripts are executed."
+}

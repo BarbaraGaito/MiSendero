@@ -1,0 +1,153 @@
+{
+  "version": 1,
+  "code_sha256": "f40fa6daccaa7319560907d591fb6c350e36266e0c19b25754891e58d6ee8c5b",
+  "source_provenance_sha256": "1e6e850b60298e8ce19d6fb4ae36000e2da5d88548166d69c88446b13a4a628b",
+  "native_dataset_sha256": "e4de1c4ccaa8239610bd62e93bc888c1260f1f891de32b9677052d3a0e3e4d00",
+  "original_native_training_cases": 487,
+  "original_native_test_cases": 179,
+  "emap_fitting_ordered_changes": {
+    "2": {
+      "actual_pairs": 83,
+      "actual_second_priors": 0,
+      "current_rpe_mean": 2.6987951807228914,
+      "prior_rpe_mean": 1.7349397590361446,
+      "delta_mean": 0.963855421686747,
+      "delta_median": 1.0,
+      "delta_range": [
+        -3.0,
+        5.0
+      ],
+      "unchanged_pairs": 19,
+      "decreasing_pairs": 13,
+      "increasing_pairs": 51,
+      "actual_delta_counts": {
+        "-3.0": 3,
+        "-2.0": 6,
+        "-1.0": 4,
+        "0.0": 19,
+        "1.0": 18,
+        "2.0": 19,
+        "3.0": 9,
+        "4.0": 3,
+        "5.0": 2
+      }
+    },
+    "3": {
+      "actual_pairs": 83,
+      "actual_second_priors": 83,
+      "current_rpe_mean": 3.4457831325301207,
+      "prior_rpe_mean": 2.6987951807228914,
+      "delta_mean": 0.7469879518072289,
+      "delta_median": 1.0,
+      "delta_range": [
+        -3.0,
+        7.0
+      ],
+      "unchanged_pairs": 28,
+      "decreasing_pairs": 11,
+      "increasing_pairs": 44,
+      "actual_delta_counts": {
+        "-3.0": 1,
+        "-2.0": 4,
+        "-1.0": 6,
+        "0.0": 28,
+        "1.0": 24,
+        "2.0": 11,
+        "3.0": 6,
+        "4.0": 2,
+        "7.0": 1
+      }
+    },
+    "4": {
+      "actual_pairs": 82,
+      "actual_second_priors": 82,
+      "current_rpe_mean": 1.5,
+      "prior_rpe_mean": 3.4634146341463414,
+      "delta_mean": -1.9634146341463414,
+      "delta_median": -2.0,
+      "delta_range": [
+        -7.0,
+        3.0
+      ],
+      "unchanged_pairs": 17,
+      "decreasing_pairs": 58,
+      "increasing_pairs": 7,
+      "actual_delta_counts": {
+        "-7.0": 2,
+        "-6.0": 3,
+        "-5.0": 4,
+        "-4.0": 12,
+        "-3.0": 13,
+        "-2.0": 11,
+        "-1.0": 13,
+        "0.0": 17,
+        "1.0": 3,
+        "2.0": 2,
+        "3.0": 2
+      }
+    }
+  },
+  "emap_fitting_all_slots": {
+    "actual_pairs": 248,
+    "actual_second_priors": 165,
+    "current_rpe_mean": 2.5524193548387095,
+    "prior_rpe_mean": 2.629032258064516,
+    "delta_mean": -0.07661290322580645,
+    "delta_median": 0.0,
+    "delta_range": [
+      -7.0,
+      7.0
+    ],
+    "unchanged_pairs": 64,
+    "decreasing_pairs": 82,
+    "increasing_pairs": 102,
+    "actual_delta_counts": {
+      "-7.0": 2,
+      "-6.0": 3,
+      "-5.0": 4,
+      "-4.0": 12,
+      "-3.0": 17,
+      "-2.0": 21,
+      "-1.0": 23,
+      "0.0": 64,
+      "1.0": 45,
+      "2.0": 32,
+      "3.0": 17,
+      "4.0": 5,
+      "5.0": 2,
+      "7.0": 1
+    }
+  },
+  "native_fitting_changes": {
+    "actual_pairs": 487,
+    "actual_second_priors": 456,
+    "current_rpe_mean": 4.26694045174538,
+    "prior_rpe_mean": 3.3675564681724848,
+    "delta_mean": 0.8993839835728953,
+    "delta_median": 1.0,
+    "delta_range": [
+      -1.0,
+      6.0
+    ],
+    "unchanged_pairs": 229,
+    "decreasing_pairs": 2,
+    "increasing_pairs": 256,
+    "actual_delta_counts": {
+      "-1.0": 2,
+      "0.0": 229,
+      "1.0": 160,
+      "2.0": 31,
+      "3.0": 45,
+      "4.0": 18,
+      "5.0": 1,
+      "6.0": 1
+    }
+  },
+  "emap_reserved_targets_used": false,
+  "native_test_targets_used": false,
+  "source_model_fitting_started": false,
+  "slot_phase_equivalence_to_native_asserted": false,
+  "synthetic_rows": 0,
+  "invented_clocks": 0,
+  "scope": "Descriptive fitting-only current-minus-genuine-prior distributions. SourceT2/T3/T4 denote recorded questionnaire order without invented exact times or correspondence to native terrain/task phase. No reserved source/native targets used for these statistics and no estimator fitted."
+}

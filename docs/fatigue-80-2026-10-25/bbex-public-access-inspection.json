@@ -1,0 +1,65 @@
+{
+  "inspection": "metadata_verified_data_download_unavailable",
+  "record": "https://doi.org/10.5061/dryad.fbg79cp45",
+  "recording_code_sha256": "3a91842dac5b7666f8ed7fdce4eb0d2061529adaf5d915e7fbb0f9e1be58c0a3",
+  "public_license": "https://spdx.org/licenses/CC0-1.0.html",
+  "official_metadata_sha256": {
+    "dataset-metadata.json": "816c7c80d2c68525cf0bea60c2b441a56e2ed9ac8f8b30431fbffe61bd2f5d59",
+    "version-metadata.json": "0373fedf4afb399b6c867d7f17a62febd56cd5debf9d85208e7c6d8ad9e09021",
+    "file-metadata.json": "f5b4a0eb436a0869857bb55e1c61b0139a4b6443b640d861ac96b1e0eb561e33"
+  },
+  "official_archive_count": 6,
+  "official_archive_total_bytes": 2529756605,
+  "official_files": [
+    {
+      "path": "drive-download-20240624T053537Z-001.zip",
+      "size": 480655557,
+      "digest": "10fc7f0d6ca5fe77abac6265842a08afb19e6dfb2d5c30b9d2b3e92b6f46653c",
+      "digestType": "sha-256"
+    },
+    {
+      "path": "drive-download-20240624T053537Z-002.zip",
+      "size": 494128731,
+      "digest": "b6dfe02a22b22ca72581b02e6b35d6d11b36f23f32d4fedf2f56fad56056ad9b",
+      "digestType": "sha-256"
+    },
+    {
+      "path": "drive-download-20240624T053537Z-003.zip",
+      "size": 498524594,
+      "digest": "fbed364ade7c7f305943aafbdd2b08954e7b97153b9eda70bda1e8153a6817d5",
+      "digestType": "sha-256"
+    },
+    {
+      "path": "drive-download-20240624T053537Z-004.zip",
+      "size": 529118551,
+      "digest": "4f0310856c9cb43ad5d1f135d048eef2a71a8603e5cee1086068dd480c9282df",
+      "digestType": "sha-256"
+    },
+    {
+      "path": "drive-download-20240624T053537Z-005.zip",
+      "size": 486496486,
+      "digest": "e82658370a1a0497df93843e1ce211caf8b089c3b58a4f7627cda82fffad6e0f",
+      "digestType": "sha-256"
+    },
+    {
+      "path": "drive-download-20240624T053537Z-006.zip",
+      "size": 40832686,
+      "digest": "5bb6824a77eb6333f61facb45e12b349a6a28d31f2e929fc1b84e2bba406ae68",
+      "digestType": "sha-256"
+    },
+    {
+      "path": "README.md",
+      "size": 5352,
+      "digest": "c6d7d5bf8ed6e86d5e14a8424d9eee42a514f27fac22a4aacc5da06999350686",
+      "digestType": "sha-256"
+    }
+  ],
+  "api_download_http_status": 401,
+  "public_link_download_http_status": 403,
+  "api_attempt_log_sha256": "87fac1937319c24817bc93757e54530d7207d6e520a6185ceb27bff5a3436635",
+  "public_attempt_log_sha256": "031ac2f14d12cf572f960e4aa4f25529592c000a94115b8914a5ec8c422384a7",
+  "original_bundles_downloaded": 0,
+  "original_workbook_cells_verified": 0,
+  "model_fitting_started": false,
+  "decision": "Official public metadata/CC0license verified. Both documented API and public-site download attempts were denied; no credentials or access-control bypass attempted. Do not treat workbook cells as available or train from website summaries. Do not repeat unchanged download retries."
+}

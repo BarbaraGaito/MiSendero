@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "verified_at": "2026-10-26T21:05:29.735406+00:00",
+  "previous_full_checkpoint_sha256": "74d33a7f82c8876f14b945237fe51b286fac6eafe45b0dceb1edae2482066141",
+  "previous_gp_verification_sha256": "b6683c89b051bf75e1b1ce6169ea22285cff5b94655a2ee4c90547cb7a89259c",
+  "selection_sha256": "8283e9eac30b306eb86900fed9e989c846c11da11eb2cb56177980725aa6671d",
+  "verification": {
+    "publisher_verified_fitting_files": 30,
+    "publisher_verified_bytes": 238626573,
+    "source_people": 15,
+    "source_protocol_windows": 330,
+    "source_native_borg_targets_used": 0,
+    "native_original_queries": 666,
+    "native_training_queries": 487,
+    "native_test_queries": 179,
+    "native_queries_with_any_signal": 579,
+    "all_source_and_native_tensors_reconstructed_from_actual_observations": true,
+    "source_encoders_independently_refitted": 5,
+    "all_17_oof_recipes_recomputed": true,
+    "historical_point_control_decisions_reproduced": 2,
+    "native_recipes_independently_refitted": [
+      "runner-transfer-007"
+    ],
+    "best_source_trained_recipe": "runner-transfer-007",
+    "best_source_trained_cv_accuracy": 0.6361613970002716,
+    "matched_untrained_encoder_control": "runner-transfer-004",
+    "matched_untrained_encoder_cv_accuracy": 0.6093277123558454,
+    "winner_id": "runner-transfer-001",
+    "best_cv_accuracy": 0.6379721574248428,
+    "minimum_cv_for_new_test_evaluation": 0.65,
+    "new_test_gate_passed": false,
+    "verification_code_sha256": "3eeb7a631feeb33fc60f551ee7cfc01c1d619961a8b7556a99a14d4aa7184cd0"
+  },
+  "best_verified_test_correct": 108,
+  "best_verified_test_accuracy": 0.6033519553072626,
+  "target_accuracy": 0.8,
+  "achieved": false,
+  "scope": "New runner-source transfer independently verified; earlier verification reports remain historical references and their selection hashes are checked without refitting all old families. The original labels, holdout and retained best test model are revalidated. Source F/NF accuracy is never the native Borg goal score."
+}

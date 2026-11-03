@@ -1,0 +1,384 @@
+{
+  "version": 1,
+  "verified_at": "2026-10-26T19:17:57.922498+00:00",
+  "target_accuracy": 0.8,
+  "required_correct_of_179": 144,
+  "best_verified_test_accuracy": 0.6033519553072626,
+  "best_verified_test_correct": 108,
+  "achieved": false,
+  "native_labels_and_original_participant_holdout_unchanged": true,
+  "experiments": {
+    "conditional-native-borg-80-v1": {
+      "status": "complete",
+      "completed_candidates": 36,
+      "best_cv_accuracy": 0.6308554003541216,
+      "winner_id": "conditional-borg-018",
+      "selection_snapshot_sha256": "734061df908ff5556ef83e643ae0df0a009dfc0e83f842ec342c0c33d9b10981"
+    },
+    "view-probability-ensemble-80-v1": {
+      "status": "complete",
+      "completed_candidates": 54,
+      "best_cv_accuracy": 0.6379721574248428,
+      "winner_id": "view-ensemble-001",
+      "selection_snapshot_sha256": "ad935540c8a6ebf5924156c248214ea95e0df7e2e6fc145d5541e10d8707e118"
+    },
+    "prior-view-augmentation-80-v1": {
+      "status": "complete",
+      "completed_candidates": 31,
+      "best_cv_accuracy": 0.6308554003541216,
+      "winner_id": "prior-view-009",
+      "selection_snapshot_sha256": "e8a1239d3f85890691c4a3bcb046301b7adb55354b5e537e08155bcf6051312e"
+    },
+    "dynamics-80-v1": {
+      "status": "complete",
+      "completed_candidates": 127,
+      "best_cv_accuracy": 0.6227035777521711,
+      "winner_id": "dynamics-034",
+      "selection_snapshot_sha256": "757d6804bdc47753d11278d432ea816f2bcc0646f215f052060a77122fcd83d7"
+    },
+    "dynamics-regression-80-v1": {
+      "status": "complete",
+      "completed_candidates": 132,
+      "best_cv_accuracy": 0.6263660380540175,
+      "winner_id": "continuous-009",
+      "selection_snapshot_sha256": "176cfdfb8a882d80b6a8b290678dd859f4208d0959a7b40ccae909876a663a65"
+    },
+    "online-calibration-80-v1": {
+      "status": "complete",
+      "completed_candidates": 111,
+      "best_cv_accuracy": 0.6266251463796222,
+      "winner_id": "member-0-online-030",
+      "selection_snapshot_sha256": "ac5b95b1ef41784b580783ba40bae23a29a434021e80069a5487e0494dd853cb"
+    },
+    "body-context-80-v1": {
+      "status": "complete",
+      "completed_candidates": 126,
+      "best_cv_accuracy": 0.6082534311383416,
+      "winner_id": "body-003",
+      "selection_snapshot_sha256": "f3000d62943a72953a9597fd56d3d3a1ad98afb111ea1563ddf8f54256ebfe8e"
+    },
+    "auxiliary-transfer-80-v1": {
+      "status": "complete",
+      "completed_candidates": 54,
+      "best_cv_accuracy": 0.626492172788848,
+      "winner_id": "transfer-8-student-004",
+      "selection_snapshot_sha256": "e4c709cf3a1137576600f70946d7f293b3ff70dce7f71d567718d3c834f6a332"
+    },
+    "phone-context-80-v1": {
+      "status": "complete",
+      "completed_candidates": 109,
+      "best_cv_accuracy": 0.6082057277760603,
+      "winner_id": "phone-000",
+      "selection_snapshot_sha256": "7ff9b8ab011fa04b0f716ba220d5efbd62c4011e4babbf8c1e1b8f1868d76332"
+    },
+    "tabular-transfer-80-v1": {
+      "status": "complete",
+      "completed_candidates": 10,
+      "best_cv_accuracy": 0.6265075742671652,
+      "winner_id": "TabPFN-v2-007",
+      "selection_snapshot_sha256": "8b77a0e311fbcec2e3e76c520a9bef68f014f54fca9251c40156e93b55ab669c"
+    },
+    "trajectory-bank-80-v1": {
+      "status": "complete",
+      "completed_candidates": 72,
+      "best_cv_accuracy": 0.5745177294998267,
+      "winner_id": "trajectory-000",
+      "selection_snapshot_sha256": "98df23e260c59c55f4d799fdc7076809030ad400c7e9913700ea11d31b6055ac"
+    },
+    "recurrent-feedback-80-v1": {
+      "status": "complete",
+      "completed_candidates": 18,
+      "best_cv_accuracy": 0.6240488650309622,
+      "winner_id": "gru-000",
+      "selection_snapshot_sha256": "424b906eeed2050e3f0f6ea070476dc20cde3d179015932fb4c66998b56e550d"
+    },
+    "source-specific-transfer-80-v1": {
+      "status": "complete",
+      "completed_candidates": 30,
+      "best_cv_accuracy": 0.6124035299738624,
+      "winner_id": "source-teachers-025",
+      "selection_snapshot_sha256": "aae62c185c6d83155874762bc553beadb07508f880d6baa9c48486b30a9f0321"
+    },
+    "latent-curve-80-v1": {
+      "status": "complete",
+      "completed_candidates": 36,
+      "best_cv_accuracy": 0.48122331206730184,
+      "winner_id": "latent-curve-008",
+      "selection_snapshot_sha256": "00537cc866d12e4c4c2e4a327f9e90c4049b079b2b3e19098dba7b0f82b2f78d"
+    },
+    "catboost-80-v1": {
+      "status": "complete",
+      "completed_candidates": 48,
+      "best_cv_accuracy": 0.6379721574248428,
+      "winner_id": "catboost-023",
+      "selection_snapshot_sha256": "254d28707e034e4663ceca9e3017d97b32622d1e1379867ec489bd8bd28392d9"
+    },
+    "meta-adaptation-80-v1": {
+      "status": "complete",
+      "completed_candidates": 34,
+      "best_cv_accuracy": 0.6143489877556375,
+      "winner_id": "meta-016",
+      "selection_snapshot_sha256": "6c35fdf5b8bbf4fd9eff13cc9ded1d01f2d2912337d05de3c7cdd4ac41a85f52"
+    },
+    "participant-weighting-80-v1": {
+      "status": "complete",
+      "completed_candidates": 24,
+      "best_cv_accuracy": 0.6121034072491873,
+      "winner_id": "participant-weight-018",
+      "selection_snapshot_sha256": "7722fa23ee35946bdb03e78557fa104663e30df985f2fc2d324513b3513837f2"
+    },
+    "augmented-observed-feedback-80-v1": {
+      "status": "complete",
+      "completed_candidates": 39,
+      "best_cv_accuracy": 0.6379721574248428,
+      "winner_id": "observed-extra-036",
+      "selection_snapshot_sha256": "4577b7bf0d12814c2fafc71e2075e2bfcfe91fdb0c3f893b6625f728e527b85d"
+    },
+    "spectral-classification-80-v1": {
+      "status": "complete",
+      "completed_candidates": 50,
+      "best_cv_accuracy": 0.6379721574248428,
+      "winner_id": "spectra-001",
+      "selection_snapshot_sha256": "44f0041983cbde5804492b5cf2a7bf71a7299546e203b10e3988e57c48652ee3"
+    },
+    "gait-source-transfer-80-v1": {
+      "status": "complete",
+      "completed_candidates": 29,
+      "best_cv_accuracy": 0.6246030559380943,
+      "winner_id": "gait-transfer-005",
+      "selection_snapshot_sha256": "be50d87fc5c1590fad92bd1edc94247bf7941b2b76cf2c881ebd50f0aeef7740"
+    },
+    "spectral-residual-80-v1": {
+      "status": "complete",
+      "completed_candidates": 31,
+      "best_cv_accuracy": 0.612364314287588,
+      "winner_id": "spectral-residual-021",
+      "selection_snapshot_sha256": "fda134e9d146976b8f46ea98c09541812683254428960958be573dd22488c6e2"
+    },
+    "gradient-adaptation-80-v1": {
+      "status": "complete",
+      "completed_candidates": 24,
+      "best_cv_accuracy": 0.6195662666404355,
+      "winner_id": "gradient-adapt-014",
+      "selection_snapshot_sha256": "e06ad2a255a07a60e31287d45e341d2a0e96d2b3d58604d629f786fba9c7b522"
+    },
+    "warm-sgd-80-v1": {
+      "status": "complete",
+      "completed_candidates": 49,
+      "best_cv_accuracy": 0.6145774430173407,
+      "winner_id": "warm-sgd-025",
+      "selection_snapshot_sha256": "adbdbc6d52976ff2fae532001b01f325e23e58bae496d860ea2d8519d3d0a799"
+    },
+    "joint-neural-transfer-80-v1": {
+      "status": "complete",
+      "completed_candidates": 13,
+      "best_cv_accuracy": 0.6082210543080108,
+      "winner_id": "joint-source-001",
+      "selection_snapshot_sha256": "9d9d8af7f86ff9c6cab412a63661b27dc0a5cd356218bf35e45d00ff73b0af3a"
+    },
+    "frozen-source-transfer-80-v1": {
+      "status": "complete",
+      "completed_candidates": 73,
+      "best_cv_accuracy": 0.6163250986013133,
+      "winner_id": "frozen-transfer-052",
+      "selection_snapshot_sha256": "07ecacad83934e84e2197dd458cc6f0e729a2e30af35fb1f25684856b777c3c6"
+    },
+    "temporal-transfer-80-v1": {
+      "status": "complete",
+      "completed_candidates": 37,
+      "best_cv_accuracy": 0.6082057277760603,
+      "winner_id": "temporal-transfer-000",
+      "selection_snapshot_sha256": "1509e61663094ff31903178fd01d152614259a2252bea1950baab7ec6c1148ec"
+    }
+  },
+  "test_evaluations": {
+    "dynamics-80-v1": {
+      "correct": 101,
+      "rows": 179,
+      "accuracy": 0.5642458100558659,
+      "saved_artifact_and_csv_verified": true
+    },
+    "dynamics-regression-80-v1": {
+      "correct": 101,
+      "rows": 179,
+      "accuracy": 0.5642458100558659,
+      "saved_artifact_and_csv_verified": true
+    },
+    "tabular-transfer-80-v1": {
+      "correct": 102,
+      "rows": 179,
+      "accuracy": 0.5698324022346368,
+      "saved_artifact_and_csv_verified": true
+    },
+    "catboost-80-v1": {
+      "correct": 102,
+      "rows": 179,
+      "accuracy": 0.5698324022346368,
+      "saved_artifact_and_csv_verified": true
+    },
+    "gait-source-transfer-80-v1": {
+      "correct": 104,
+      "rows": 179,
+      "accuracy": 0.5810055865921788,
+      "saved_artifact_and_csv_verified": true
+    },
+    "gradient-adaptation-80-v1": {
+      "correct": 95,
+      "rows": 179,
+      "accuracy": 0.5307262569832403,
+      "saved_artifact_and_csv_verified": true
+    }
+  },
+  "conditional_native_borg": {
+    "warm_sources_refitted": 10,
+    "source_model_and_preprocessing_values_reproduced": true,
+    "original_point_controls_reproduced": 2,
+    "inference_condition_only_controls_reproduced": 2,
+    "native_training_cases": 487,
+    "native_test_cases": 179,
+    "extra_actual_report_pool": 56,
+    "all_fold_extra_person_filters_and_report_weights_verified": true,
+    "winner_grouped_folds_refitted": 5,
+    "winner_id": "conditional-borg-018",
+    "best_cv_accuracy": 0.6308554003541216,
+    "minimum_cv_for_new_test_evaluation": 0.65,
+    "new_test_gate_passed": false,
+    "verification_code_sha256": "2e277a853f65fdf453901a7ad01a761acd16ee28f23ab589c4e148eebe49b7c2"
+  },
+  "view_probability_ensemble": {
+    "native_member_models_per_fold": 3,
+    "member_fits_reconstructed": 15,
+    "probability_recipes_reproduced": 54,
+    "historical_point_controls_reproduced": 3,
+    "original_training_queries": 487,
+    "original_test_queries": 179,
+    "original_case_and_native_label_contract_preserved": true,
+    "new_measured_borg_targets": 0,
+    "winner_id": "view-ensemble-001",
+    "best_cv_accuracy": 0.6379721574248428,
+    "minimum_cv_for_new_test_evaluation": 0.65,
+    "new_test_gate_passed": false,
+    "verification_code_sha256": "bfc9d406890752d7fdf777ee1e39f656e8615bb08529981ea74c1c8ba1fd2204"
+  },
+  "observed_prior_view_augmentation": {
+    "alternative_input_views": 6672,
+    "unique_training_targets_with_views": 456,
+    "unique_training_targets_total": 487,
+    "new_observed_borg_targets": 0,
+    "heldout_people_used_for_augmentation": false,
+    "all_666_original_feature_rows_reconstructed": true,
+    "all_views_reconstructed_from_raw_reports": true,
+    "all_report_weight_totals_verified": true,
+    "winner_grouped_folds_refitted": 5,
+    "winner_id": "prior-view-009",
+    "best_cv_accuracy": 0.6308554003541216,
+    "minimum_cv_for_new_test_evaluation": 0.65,
+    "new_test_gate_passed": false,
+    "verification_code_sha256": "a91aa32b2c562936cd9bcfa634b3e32dc3f37eb87843e45984362decd28e0078"
+  },
+  "spectral_inputs": {
+    "original_responses": 666,
+    "new_features": 82,
+    "bins_ms": 100,
+    "interpolated_rows": 0,
+    "future_samples_used": false,
+    "current60_coverage": 581
+  },
+  "joint_source_comparison": {
+    "external_fitting_reports": 520,
+    "source_specific_auxiliary_heads": 4,
+    "winner_auxiliary_weight": 0.0,
+    "best_cv_with_auxiliary_supervision": 0.6078340125347799,
+    "direct_momentary_label_merge": false,
+    "external_reserved_people_used": false
+  },
+  "frozen_source_transfer": {
+    "external_fitting_reports": 520,
+    "source_only_encoders_verified": 8,
+    "source_and_normalization_weights_refitted_independently": true,
+    "minimum_cv_for_new_test_evaluation": 0.65,
+    "new_test_gate_passed": false,
+    "native_momentary_target_merge": false
+  },
+  "temporal_signal_transfer": {
+    "publisher_verified_fitting_traces": 32,
+    "raw_source_bytes": 718190042,
+    "source_people": 8,
+    "source_export_rows": 568074,
+    "identical_consecutive_export_rows": 455121,
+    "observed_100ms_bins": 113575,
+    "unlabelled_source_windows": 842,
+    "unchanged_native_queries": 666,
+    "native_queries_with_any_signal": 579,
+    "source_borg_targets_used": 0,
+    "f_level_used": false,
+    "reserved_people_used": false,
+    "raw_bin_and_window_values_independently_reconstructed": true,
+    "source_encoders_refitted_independently": 4,
+    "native_oof_variants_refitted": [
+      "temporal-transfer-000",
+      "temporal-transfer-004"
+    ],
+    "minimum_cv_for_new_test_evaluation": 0.65,
+    "new_test_gate_passed": false
+  },
+  "additional_sts_data": {
+    "real_sparse_reports": 235,
+    "participants": 60,
+    "interpolated_targets": 0,
+    "native_half_point_ratings_preserved": true,
+    "supervision_is_original_nonempty_Borg_cells": true
+  },
+  "additional_oxbioz_data": {
+    "original_post_trial_reports": 40,
+    "participants": 20,
+    "exact_report_timestamp_published": false,
+    "source_specific_auxiliary_use_only": true,
+    "new_momentary_geofatigue_targets": 0
+  },
+  "additional_original_active_feedback": {
+    "actual_extra_fitting_reports": 56,
+    "reserved_people_included": false,
+    "new_validation_or_test_cases": 0,
+    "assumed_onset_zeros": 0
+  },
+  "pmdata_eligibility": {
+    "actual_session_ratings": 772,
+    "missing_ratings": 11,
+    "participants_with_ratings": 15,
+    "used_for_training": false,
+    "reason": "Session outcomes differ from the current momentary Borg target. Fitbit timestamps lack an explicit timezone; no exact offset or report-to-exercise link was established from the inspected paper/metadata. Do not guess a timezone or count unlabelled rows as real ratings.",
+    "audit_sha256": "bc3cce12e3a68c64bdf8f1f50e6078d6d6de65cd7b7a5323d829f7347298bf16"
+  },
+  "additional_sixmwt_data": {
+    "actual_post_test_reports": 60,
+    "external_fitting_people": 48,
+    "external_reserved_people": 12,
+    "unaligned_sensor_reports_retained": 5,
+    "new_momentary_target_cases": 0,
+    "source_only_auxiliary_use": true,
+    "original_raw_cells_and_features_reconstructed": true
+  },
+  "combined_external_sources": {
+    "actual_fitting_reports": 520,
+    "source_participants": 143,
+    "source_report_counts": {
+      "worker": 253,
+      "sts": 187,
+      "oxbioz_post_trial": 32,
+      "sixmwt_post_test": 48
+    },
+    "native_fractional_reports": 3,
+    "reserved_external_reports_used": false,
+    "new_original_test_cases": 0,
+    "all_combined_targets_and_sensor_values_reconstructed_from_audited_parents": true
+  },
+  "additional_workbooks_eligibility": {
+    "audited_sources": 3,
+    "used_for_training": false,
+    "new_native_momentary_targets": 0,
+    "audit_sha256": "50f2356ae54d6586432d36b3cc87b9f316b7b8ae6634f6aa1be71784e9de439f"
+  },
+  "deployment_approved": false,
+  "scope": "Exact native Borg on all original 179 cases. Reused published benchmark, descriptive research; CV alone cannot satisfy the goal."
+}

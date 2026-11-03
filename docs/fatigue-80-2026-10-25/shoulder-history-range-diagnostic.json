@@ -1,0 +1,456 @@
+{
+  "diagnostic": "passed",
+  "diagnostic_code_sha256": "27d710a7076960e369841cc6bb88eb428c6f67bcf7c20201cef7e8e0b70a7b6e",
+  "study_code_sha256": "8d599b90646ea9ff215b7756e7745abb837260a1d0d63e839f09c62c3389e27a",
+  "selection_sha256": "56bb488f32203df5d423c3cda11d218f4f3550a5c728a0e931288522edc88c69",
+  "source_input_verification_sha256": "9f31d21dbb7c8360e6755da6adea91e87f122fbc02bd5ebd5a1b75897ebd9b01",
+  "original_native_fitting_rows": 487,
+  "actual_source_fitting_rows": 2336,
+  "source_reserved_rows_used": 0,
+  "native_test_predictions_computed": 0,
+  "current_native_labels_used_for_statistics": false,
+  "new_predictive_estimator_fits": 0,
+  "measured_prior_statistics_by_domain": {
+    "native": {
+      "public_ordered_actual_prior_rpe": {
+        "observed_values": 487,
+        "missing_values": 0,
+        "minimum": 0.0,
+        "maximum": 8.0,
+        "mean": 3.3675564681724848
+      },
+      "public_ordered_actual_second_prior_rpe": {
+        "observed_values": 456,
+        "missing_values": 31,
+        "minimum": 0.0,
+        "maximum": 8.0,
+        "mean": 2.6469298245614037
+      }
+    },
+    "emap": {
+      "public_ordered_actual_prior_rpe": {
+        "observed_values": 248,
+        "missing_values": 0,
+        "minimum": 0.0,
+        "maximum": 9.0,
+        "mean": 2.629032258064516
+      },
+      "public_ordered_actual_second_prior_rpe": {
+        "observed_values": 165,
+        "missing_values": 83,
+        "minimum": 0.0,
+        "maximum": 8.0,
+        "mean": 2.224242424242424
+      }
+    },
+    "resistance": {
+      "public_ordered_actual_prior_rpe": {
+        "observed_values": 866,
+        "missing_values": 0,
+        "minimum": 1.0,
+        "maximum": 10.0,
+        "mean": 5.789838337182448
+      },
+      "public_ordered_actual_second_prior_rpe": {
+        "observed_values": 802,
+        "missing_values": 64,
+        "minimum": 1.0,
+        "maximum": 9.0,
+        "mean": 5.576059850374065
+      }
+    },
+    "shoulder": {
+      "public_ordered_actual_prior_rpe": {
+        "observed_values": 920,
+        "missing_values": 0,
+        "minimum": 6.0,
+        "maximum": 19.0,
+        "mean": 13.928260869565218
+      },
+      "public_ordered_actual_second_prior_rpe": {
+        "observed_values": 758,
+        "missing_values": 162,
+        "minimum": 6.0,
+        "maximum": 19.0,
+        "mean": 13.281002638522427
+      }
+    },
+    "sts": {
+      "public_ordered_actual_prior_rpe": {
+        "observed_values": 49,
+        "missing_values": 0,
+        "minimum": 0.0,
+        "maximum": 6.0,
+        "mean": 2.193877551020408
+      },
+      "public_ordered_actual_second_prior_rpe": {
+        "observed_values": 0,
+        "missing_values": 49,
+        "minimum": null,
+        "maximum": null,
+        "mean": null
+      }
+    },
+    "worker": {
+      "public_ordered_actual_prior_rpe": {
+        "observed_values": 253,
+        "missing_values": 0,
+        "minimum": 0.0,
+        "maximum": 10.0,
+        "mean": 4.063241106719367
+      },
+      "public_ordered_actual_second_prior_rpe": {
+        "observed_values": 202,
+        "missing_values": 51,
+        "minimum": 0.0,
+        "maximum": 9.0,
+        "mean": 3.6930693069306932
+      }
+    }
+  },
+  "fold_only_preprocessing_support": [
+    {
+      "fold": 0,
+      "native_fit_rows": 387,
+      "native_validation_people_not_used_for_statistics": 2,
+      "normalizer_source_rows": 550,
+      "source_support": {
+        "emap": {
+          "public_ordered_actual_prior_rpe": {
+            "observed_values_outside_native_fitting_range": 1,
+            "observed_fraction_outside_native_fitting_range": 0.004032258064516129,
+            "observed_fraction_abs_z_greater_than_3": 0.0
+          },
+          "public_ordered_actual_second_prior_rpe": {
+            "observed_values_outside_native_fitting_range": 0,
+            "observed_fraction_outside_native_fitting_range": 0.0,
+            "observed_fraction_abs_z_greater_than_3": 0.0
+          }
+        },
+        "resistance": {
+          "public_ordered_actual_prior_rpe": {
+            "observed_values_outside_native_fitting_range": 64,
+            "observed_fraction_outside_native_fitting_range": 0.07390300230946882,
+            "observed_fraction_abs_z_greater_than_3": 0.0023094688221709007
+          },
+          "public_ordered_actual_second_prior_rpe": {
+            "observed_values_outside_native_fitting_range": 26,
+            "observed_fraction_outside_native_fitting_range": 0.032418952618453865,
+            "observed_fraction_abs_z_greater_than_3": 0.032418952618453865
+          }
+        },
+        "shoulder": {
+          "public_ordered_actual_prior_rpe": {
+            "observed_values_outside_native_fitting_range": 853,
+            "observed_fraction_outside_native_fitting_range": 0.9271739130434783,
+            "observed_fraction_abs_z_greater_than_3": 0.8739130434782608
+          },
+          "public_ordered_actual_second_prior_rpe": {
+            "observed_values_outside_native_fitting_range": 691,
+            "observed_fraction_outside_native_fitting_range": 0.9116094986807388,
+            "observed_fraction_abs_z_greater_than_3": 0.9116094986807388
+          }
+        },
+        "sts": {
+          "public_ordered_actual_prior_rpe": {
+            "observed_values_outside_native_fitting_range": 0,
+            "observed_fraction_outside_native_fitting_range": 0.0,
+            "observed_fraction_abs_z_greater_than_3": 0.0
+          },
+          "public_ordered_actual_second_prior_rpe": {
+            "observed_values_outside_native_fitting_range": 0,
+            "observed_fraction_outside_native_fitting_range": null,
+            "observed_fraction_abs_z_greater_than_3": null
+          }
+        },
+        "worker": {
+          "public_ordered_actual_prior_rpe": {
+            "observed_values_outside_native_fitting_range": 3,
+            "observed_fraction_outside_native_fitting_range": 0.011857707509881422,
+            "observed_fraction_abs_z_greater_than_3": 0.003952569169960474
+          },
+          "public_ordered_actual_second_prior_rpe": {
+            "observed_values_outside_native_fitting_range": 1,
+            "observed_fraction_outside_native_fitting_range": 0.0049504950495049506,
+            "observed_fraction_abs_z_greater_than_3": 0.0049504950495049506
+          }
+        }
+      }
+    },
+    {
+      "fold": 1,
+      "native_fit_rows": 395,
+      "native_validation_people_not_used_for_statistics": 6,
+      "normalizer_source_rows": 550,
+      "source_support": {
+        "emap": {
+          "public_ordered_actual_prior_rpe": {
+            "observed_values_outside_native_fitting_range": 1,
+            "observed_fraction_outside_native_fitting_range": 0.004032258064516129,
+            "observed_fraction_abs_z_greater_than_3": 0.0
+          },
+          "public_ordered_actual_second_prior_rpe": {
+            "observed_values_outside_native_fitting_range": 0,
+            "observed_fraction_outside_native_fitting_range": 0.0,
+            "observed_fraction_abs_z_greater_than_3": 0.0
+          }
+        },
+        "resistance": {
+          "public_ordered_actual_prior_rpe": {
+            "observed_values_outside_native_fitting_range": 64,
+            "observed_fraction_outside_native_fitting_range": 0.07390300230946882,
+            "observed_fraction_abs_z_greater_than_3": 0.0023094688221709007
+          },
+          "public_ordered_actual_second_prior_rpe": {
+            "observed_values_outside_native_fitting_range": 26,
+            "observed_fraction_outside_native_fitting_range": 0.032418952618453865,
+            "observed_fraction_abs_z_greater_than_3": 0.032418952618453865
+          }
+        },
+        "shoulder": {
+          "public_ordered_actual_prior_rpe": {
+            "observed_values_outside_native_fitting_range": 853,
+            "observed_fraction_outside_native_fitting_range": 0.9271739130434783,
+            "observed_fraction_abs_z_greater_than_3": 0.8739130434782608
+          },
+          "public_ordered_actual_second_prior_rpe": {
+            "observed_values_outside_native_fitting_range": 691,
+            "observed_fraction_outside_native_fitting_range": 0.9116094986807388,
+            "observed_fraction_abs_z_greater_than_3": 0.9116094986807388
+          }
+        },
+        "sts": {
+          "public_ordered_actual_prior_rpe": {
+            "observed_values_outside_native_fitting_range": 0,
+            "observed_fraction_outside_native_fitting_range": 0.0,
+            "observed_fraction_abs_z_greater_than_3": 0.0
+          },
+          "public_ordered_actual_second_prior_rpe": {
+            "observed_values_outside_native_fitting_range": 0,
+            "observed_fraction_outside_native_fitting_range": null,
+            "observed_fraction_abs_z_greater_than_3": null
+          }
+        },
+        "worker": {
+          "public_ordered_actual_prior_rpe": {
+            "observed_values_outside_native_fitting_range": 3,
+            "observed_fraction_outside_native_fitting_range": 0.011857707509881422,
+            "observed_fraction_abs_z_greater_than_3": 0.003952569169960474
+          },
+          "public_ordered_actual_second_prior_rpe": {
+            "observed_values_outside_native_fitting_range": 1,
+            "observed_fraction_outside_native_fitting_range": 0.0049504950495049506,
+            "observed_fraction_abs_z_greater_than_3": 0.0049504950495049506
+          }
+        }
+      }
+    },
+    {
+      "fold": 2,
+      "native_fit_rows": 385,
+      "native_validation_people_not_used_for_statistics": 7,
+      "normalizer_source_rows": 550,
+      "source_support": {
+        "emap": {
+          "public_ordered_actual_prior_rpe": {
+            "observed_values_outside_native_fitting_range": 1,
+            "observed_fraction_outside_native_fitting_range": 0.004032258064516129,
+            "observed_fraction_abs_z_greater_than_3": 0.0
+          },
+          "public_ordered_actual_second_prior_rpe": {
+            "observed_values_outside_native_fitting_range": 0,
+            "observed_fraction_outside_native_fitting_range": 0.0,
+            "observed_fraction_abs_z_greater_than_3": 0.0
+          }
+        },
+        "resistance": {
+          "public_ordered_actual_prior_rpe": {
+            "observed_values_outside_native_fitting_range": 64,
+            "observed_fraction_outside_native_fitting_range": 0.07390300230946882,
+            "observed_fraction_abs_z_greater_than_3": 0.0023094688221709007
+          },
+          "public_ordered_actual_second_prior_rpe": {
+            "observed_values_outside_native_fitting_range": 26,
+            "observed_fraction_outside_native_fitting_range": 0.032418952618453865,
+            "observed_fraction_abs_z_greater_than_3": 0.032418952618453865
+          }
+        },
+        "shoulder": {
+          "public_ordered_actual_prior_rpe": {
+            "observed_values_outside_native_fitting_range": 853,
+            "observed_fraction_outside_native_fitting_range": 0.9271739130434783,
+            "observed_fraction_abs_z_greater_than_3": 0.8739130434782608
+          },
+          "public_ordered_actual_second_prior_rpe": {
+            "observed_values_outside_native_fitting_range": 691,
+            "observed_fraction_outside_native_fitting_range": 0.9116094986807388,
+            "observed_fraction_abs_z_greater_than_3": 0.9116094986807388
+          }
+        },
+        "sts": {
+          "public_ordered_actual_prior_rpe": {
+            "observed_values_outside_native_fitting_range": 0,
+            "observed_fraction_outside_native_fitting_range": 0.0,
+            "observed_fraction_abs_z_greater_than_3": 0.0
+          },
+          "public_ordered_actual_second_prior_rpe": {
+            "observed_values_outside_native_fitting_range": 0,
+            "observed_fraction_outside_native_fitting_range": null,
+            "observed_fraction_abs_z_greater_than_3": null
+          }
+        },
+        "worker": {
+          "public_ordered_actual_prior_rpe": {
+            "observed_values_outside_native_fitting_range": 3,
+            "observed_fraction_outside_native_fitting_range": 0.011857707509881422,
+            "observed_fraction_abs_z_greater_than_3": 0.003952569169960474
+          },
+          "public_ordered_actual_second_prior_rpe": {
+            "observed_values_outside_native_fitting_range": 1,
+            "observed_fraction_outside_native_fitting_range": 0.0049504950495049506,
+            "observed_fraction_abs_z_greater_than_3": 0.0049504950495049506
+          }
+        }
+      }
+    },
+    {
+      "fold": 3,
+      "native_fit_rows": 385,
+      "native_validation_people_not_used_for_statistics": 7,
+      "normalizer_source_rows": 550,
+      "source_support": {
+        "emap": {
+          "public_ordered_actual_prior_rpe": {
+            "observed_values_outside_native_fitting_range": 1,
+            "observed_fraction_outside_native_fitting_range": 0.004032258064516129,
+            "observed_fraction_abs_z_greater_than_3": 0.0
+          },
+          "public_ordered_actual_second_prior_rpe": {
+            "observed_values_outside_native_fitting_range": 0,
+            "observed_fraction_outside_native_fitting_range": 0.0,
+            "observed_fraction_abs_z_greater_than_3": 0.0
+          }
+        },
+        "resistance": {
+          "public_ordered_actual_prior_rpe": {
+            "observed_values_outside_native_fitting_range": 64,
+            "observed_fraction_outside_native_fitting_range": 0.07390300230946882,
+            "observed_fraction_abs_z_greater_than_3": 0.0023094688221709007
+          },
+          "public_ordered_actual_second_prior_rpe": {
+            "observed_values_outside_native_fitting_range": 26,
+            "observed_fraction_outside_native_fitting_range": 0.032418952618453865,
+            "observed_fraction_abs_z_greater_than_3": 0.032418952618453865
+          }
+        },
+        "shoulder": {
+          "public_ordered_actual_prior_rpe": {
+            "observed_values_outside_native_fitting_range": 853,
+            "observed_fraction_outside_native_fitting_range": 0.9271739130434783,
+            "observed_fraction_abs_z_greater_than_3": 0.8739130434782608
+          },
+          "public_ordered_actual_second_prior_rpe": {
+            "observed_values_outside_native_fitting_range": 691,
+            "observed_fraction_outside_native_fitting_range": 0.9116094986807388,
+            "observed_fraction_abs_z_greater_than_3": 0.9116094986807388
+          }
+        },
+        "sts": {
+          "public_ordered_actual_prior_rpe": {
+            "observed_values_outside_native_fitting_range": 0,
+            "observed_fraction_outside_native_fitting_range": 0.0,
+            "observed_fraction_abs_z_greater_than_3": 0.0
+          },
+          "public_ordered_actual_second_prior_rpe": {
+            "observed_values_outside_native_fitting_range": 0,
+            "observed_fraction_outside_native_fitting_range": null,
+            "observed_fraction_abs_z_greater_than_3": null
+          }
+        },
+        "worker": {
+          "public_ordered_actual_prior_rpe": {
+            "observed_values_outside_native_fitting_range": 3,
+            "observed_fraction_outside_native_fitting_range": 0.011857707509881422,
+            "observed_fraction_abs_z_greater_than_3": 0.003952569169960474
+          },
+          "public_ordered_actual_second_prior_rpe": {
+            "observed_values_outside_native_fitting_range": 1,
+            "observed_fraction_outside_native_fitting_range": 0.0049504950495049506,
+            "observed_fraction_abs_z_greater_than_3": 0.0049504950495049506
+          }
+        }
+      }
+    },
+    {
+      "fold": 4,
+      "native_fit_rows": 396,
+      "native_validation_people_not_used_for_statistics": 6,
+      "normalizer_source_rows": 550,
+      "source_support": {
+        "emap": {
+          "public_ordered_actual_prior_rpe": {
+            "observed_values_outside_native_fitting_range": 1,
+            "observed_fraction_outside_native_fitting_range": 0.004032258064516129,
+            "observed_fraction_abs_z_greater_than_3": 0.0
+          },
+          "public_ordered_actual_second_prior_rpe": {
+            "observed_values_outside_native_fitting_range": 0,
+            "observed_fraction_outside_native_fitting_range": 0.0,
+            "observed_fraction_abs_z_greater_than_3": 0.0
+          }
+        },
+        "resistance": {
+          "public_ordered_actual_prior_rpe": {
+            "observed_values_outside_native_fitting_range": 64,
+            "observed_fraction_outside_native_fitting_range": 0.07390300230946882,
+            "observed_fraction_abs_z_greater_than_3": 0.0023094688221709007
+          },
+          "public_ordered_actual_second_prior_rpe": {
+            "observed_values_outside_native_fitting_range": 26,
+            "observed_fraction_outside_native_fitting_range": 0.032418952618453865,
+            "observed_fraction_abs_z_greater_than_3": 0.032418952618453865
+          }
+        },
+        "shoulder": {
+          "public_ordered_actual_prior_rpe": {
+            "observed_values_outside_native_fitting_range": 853,
+            "observed_fraction_outside_native_fitting_range": 0.9271739130434783,
+            "observed_fraction_abs_z_greater_than_3": 0.8739130434782608
+          },
+          "public_ordered_actual_second_prior_rpe": {
+            "observed_values_outside_native_fitting_range": 691,
+            "observed_fraction_outside_native_fitting_range": 0.9116094986807388,
+            "observed_fraction_abs_z_greater_than_3": 0.9116094986807388
+          }
+        },
+        "sts": {
+          "public_ordered_actual_prior_rpe": {
+            "observed_values_outside_native_fitting_range": 0,
+            "observed_fraction_outside_native_fitting_range": 0.0,
+            "observed_fraction_abs_z_greater_than_3": 0.0
+          },
+          "public_ordered_actual_second_prior_rpe": {
+            "observed_values_outside_native_fitting_range": 0,
+            "observed_fraction_outside_native_fitting_range": null,
+            "observed_fraction_abs_z_greater_than_3": null
+          }
+        },
+        "worker": {
+          "public_ordered_actual_prior_rpe": {
+            "observed_values_outside_native_fitting_range": 3,
+            "observed_fraction_outside_native_fitting_range": 0.011857707509881422,
+            "observed_fraction_abs_z_greater_than_3": 0.003952569169960474
+          },
+          "public_ordered_actual_second_prior_rpe": {
+            "observed_values_outside_native_fitting_range": 1,
+            "observed_fraction_outside_native_fitting_range": 0.0049504950495049506,
+            "observed_fraction_abs_z_greater_than_3": 0.0049504950495049506
+          }
+        }
+      }
+    }
+  ],
+  "source_labels_converted_or_pooled": false,
+  "synthetic_rows": 0,
+  "interpretation": "Different documented instruments occupy different measured-history ranges under the preserved pooled normalizer. This is fitting-only evidence for testing predictor representation alignment; it does not establish physiological scaleequivalence,encoder saturation or a native accuracy gain. Keep original source targets separate,derive any statistics only from fitting rows,and compare matched zero-source controls."
+}

@@ -1,0 +1,9 @@
+{
+  "evaluator_code_sha256": "9353bb12d98f52f4de3871bee5e825bb957f23599a7d344ee2325376b9b6859a",
+  "selection_sha256": "a71108a8c67b2cd37202411627fe9e040ef914d2c5e682d1a1e78fff1fd711e1",
+  "winner_id": "transition-memory-001",
+  "best_cv_accuracy": 0.6379721574248428,
+  "minimum_cv_for_new_test_evaluation": 0.65,
+  "gate_passed": false,
+  "new_test_evaluation": null
+}

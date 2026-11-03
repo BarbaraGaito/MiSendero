@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "review_date": "2026-10-26",
+  "scope": "Primary public metadata reviewed through the web tool, without downloading or training on participant files. These notes are not a checksum verification of the underlying datasets.",
+  "new_native_borg_targets": 0,
+  "sources": [
+    {
+      "title": "Investigating motor fatigue using force, EMG, and kinematic data",
+      "primary_url": "https://data.mrc.ox.ac.uk/data-set/investigating-motor-fatigue-using-force-emg-and-kinematic-data",
+      "doi": "10.60964/rnd-rtyw-9w81",
+      "reported_participants": 30,
+      "reported_scale": "BORG-CR10",
+      "reported_measurements": "Bilateral forearm EMG, hand dynamometer force, Kinarm robot kinematics; three force-intensity rounds.",
+      "access_observed": "The official page requires registration and login to download or request access.",
+      "used_for_training": false,
+      "reason": "No unrestricted participant files inspected. Published modalities do not directly provide the current HR/phone sensor input schema. No account was created and no access control bypass attempted."
+    },
+    {
+      "title": "Motion capture data of six jump-landings, fatigued and non-fatigued, after anterior cruciate ligament injury",
+      "primary_url": "https://www.nature.com/articles/s41597-025-05934-5",
+      "reported_participants": 43,
+      "reported_scale": "BORG CR10 before/after a fatiguing protocol",
+      "reported_measurements": "Optical motion capture, force plates and derived joint angles in six jump-landing tasks.",
+      "access_observed": "Article describes an open Figshare dataset under CC BY 4.0; participant files were not downloaded in this screening.",
+      "used_for_training": false,
+      "reason": "Borg is assessed before subsequent jump-landing trials. The 2199 motion trials are not 2199 separate Borg measurements. The described data do not establish a causal HR/phone-to-current-Borg alignment for the present teacher; repeated trials must not be relabeled as independent momentary walking responses. Unlabeled representation transfer could be researched separately."
+    }
+  ]
+}

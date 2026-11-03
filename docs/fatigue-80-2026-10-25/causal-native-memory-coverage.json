@@ -1,0 +1,41 @@
+{
+  "diagnostic": "passed",
+  "diagnostic_code_sha256": "4bcf68d9481cd1a929f6fbec94eb51aec08c7c31cd122a885096711497e86edb",
+  "original_catboost_selection_sha256": "254d28707e034e4663ceca9e3017d97b32622d1e1379867ec489bd8bd28392d9",
+  "original_fitting_rows": 487,
+  "original_fitting_people": 28,
+  "context_builder_code_sha256": "06ecd2dde8a41c4573b877a0a2cd1a4e31ceec3f446da1540efcf4b9dc871bad",
+  "temporal_metadata_code_sha256": "9b347d34feaf390765cf6e901f19a9ffeb743e07587e0264e3fde98101427fdb",
+  "session_metadata_sha256": "9140e771feb8468a42ea6164055e1cd5bfd083b888abf778bc81adbb4610becc",
+  "scope_coverage": {
+    "task": {
+      "queries": 487,
+      "queries_without_earlier_eligible_report": 96,
+      "queries_with_any_earlier_eligible_report": 391,
+      "queries_with_at_least_two_earlier_reports": 295,
+      "genuine_prior_query_links": 1082,
+      "maximum_prior_reports": 7,
+      "original_catboost_oof_errors_without_support": 48,
+      "optimistic_cv_upper_bound_if_all_supported_queries_were_correct": 0.9014373716632443,
+      "history_index_sha256": "0af64242ba1bb37ac99a087b90ad2fe5b5a2e89e2b47b09587038281fe8a1bb3"
+    },
+    "session": {
+      "queries": 487,
+      "queries_without_earlier_eligible_report": 32,
+      "queries_with_any_earlier_eligible_report": 455,
+      "queries_with_at_least_two_earlier_reports": 423,
+      "genuine_prior_query_links": 3505,
+      "maximum_prior_reports": 20,
+      "original_catboost_oof_errors_without_support": 16,
+      "optimistic_cv_upper_bound_if_all_supported_queries_were_correct": 0.9671457905544147,
+      "history_index_sha256": "5b6f99aec5220de6ba2e2dfc5c27938d4cfa57707026ae4bc54c54b694629823"
+    }
+  },
+  "native_test_labels_inspected": false,
+  "native_test_predictions_computed": 0,
+  "predictive_estimator_fits": 0,
+  "new_hyperparameters_selected": 0,
+  "synthetic_rows": 0,
+  "prior_implementation_review": "Existing KNeighborsClassifier appears only in fatigue_experiment.py as population sensor classification. Prior online ridge and SGD adaptations exist; this coverage check does not repeat those fits or prove a kernel-memory improvement.",
+  "interpretation": "Past same-person self-reports may be available at deployment as authorized by the user. Every indexed link is strictly earlier and in the same actual session; no present/future outcomes or persistent person IDmay be a predictor. The optimistic bound is a diagnostic on fitting-participant OOFerrors,not an achieved accuracy. Any kernel-memory mechanism needs a predeclared comparison,matched population-only controls and independent causal/runtime verification."
+}

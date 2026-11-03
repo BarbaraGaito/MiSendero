@@ -1,0 +1,11 @@
+{
+  "evaluator_code_sha256": "987527a42bc76351541459abd540cc5dec05779d8e4527aba29a7949b8efbf11",
+  "selection_sha256": "cc2d98bfb80aad5e87e1fd0e0637cde87c65b9780d86f93ebdeb413808b2f09f",
+  "winner_id": "ordered-residual-001",
+  "best_cv_accuracy": 0.6379721574248428,
+  "minimum_cv_for_new_test_evaluation": 0.65,
+  "gate_passed": false,
+  "new_test_evaluation": null,
+  "pretest_verifier_code_sha256": "4c0c3795bb531b6fc74f7020a9a7cbfdfbcd16e4c113852af8483fa14b25409d",
+  "pretest_winner_fold_artifacts_verified": 0
+}

@@ -1,0 +1,99 @@
+{
+  "version": 1,
+  "status": "complete",
+  "completed_recipes": 16,
+  "reused_real_controls": 10,
+  "new_expanded_source_recipes": 6,
+  "selection_sha256": "ed30b83c810a7d4f20b7ce7217441db181ef938d03eb8404aa3ae3f7a888033c",
+  "code_sha256": "9d52750abad6c9ced3701cd112d80771e043344043c862005469bf5d1bc83ac8",
+  "winner": {
+    "id": "survey-teacher-001",
+    "algorithm": "previous_real_control",
+    "parent_candidate_id": "transition-001"
+  },
+  "best_cv_accuracy": 0.6379721574248428,
+  "best_new_302_pair_id": "survey-teacher-014",
+  "best_new_302_pair_cv_accuracy": 0.6144341830377636,
+  "matching_old_249_pair_id": "transition-008",
+  "matching_old_249_pair_cv_accuracy": 0.6044580721920875,
+  "matching_cv_change": 0.009976110845676178,
+  "actual_public_source_pairs_used_for_fitting": 302,
+  "synthetic_training_rows": 0,
+  "new_native_borg_targets": 0,
+  "original_training_cases": 487,
+  "original_test_cases": 179,
+  "fresh_test_evaluation": false,
+  "best_verified_test_correct": 108,
+  "best_verified_test_accuracy": 0.6033519553072626,
+  "target_accuracy": 0.8,
+  "goal_achieved": false,
+  "independent_verification": {
+    "report_sha256": "a1d146f259dd6f7b8d122708184e08ef93e02a608b0d175884afa779e5b26f2a",
+    "result": {
+      "version": 1,
+      "verified_at": "2026-10-27T02:08:23.533997+00:00",
+      "verification_code_sha256": "6a7a75e7376022faf0e5259009b5e0f3d808866560d93ae4ce3630249d811c35",
+      "previous_model_verification_sha256": "1f57206ee6148b44531916e2d5a3540a895d135b7d349d85260fb503bc60b57f",
+      "source_expansion_verification_sha256": "23b4e7c60bd36d59733ed462da8cff4d33aff4f24f6aa07ddb80f9b42e152a5a",
+      "selection_sha256": "ed30b83c810a7d4f20b7ce7217441db181ef938d03eb8404aa3ae3f7a888033c",
+      "public_real_data_policy_sha256": "fdfb112d20b1f22bae08032ed7d9f3d27ee784879674c32f8f65cc21fe69c028",
+      "actual_source_pairs_used_for_fitting": 302,
+      "additional_existing_targets_with_real_prior": 53,
+      "nonzero_pre_experiment_priors_preserved": 39,
+      "source_fits_verified_against_actual_rows": {
+        "ridge": [
+          {
+            "domain": "worker",
+            "actual_reports": 253
+          },
+          {
+            "domain": "sts",
+            "actual_reports": 49
+          }
+        ],
+        "svr": [
+          {
+            "domain": "worker",
+            "actual_reports": 253
+          },
+          {
+            "domain": "sts",
+            "actual_reports": 49
+          }
+        ],
+        "random_forest": [
+          {
+            "domain": "worker",
+            "actual_reports": 253
+          },
+          {
+            "domain": "sts",
+            "actual_reports": 49
+          }
+        ]
+      },
+      "expanded_source_teachers_independently_refitted": 6,
+      "all_16_oof_recipes_recomputed": true,
+      "inherited_real_controls_reproduced": 10,
+      "best_new_302_pair_candidate_id": "survey-teacher-014",
+      "best_new_302_pair_cv_accuracy": 0.6144341830377636,
+      "matched_previous_249_pair_candidate_id": "transition-008",
+      "matched_previous_249_pair_cv_accuracy": 0.6044580721920875,
+      "matched_cv_difference": 0.009976110845676178,
+      "matched_native_recipes_independently_refitted": 2,
+      "grouped_folds_per_refit": 5,
+      "original_native_fitting_reports_and_labels_checked": true,
+      "artificial_history_fitting_disabled_during_native_refits": true,
+      "winner_id": "survey-teacher-001",
+      "best_cv_accuracy": 0.6379721574248428,
+      "new_test_gate_passed": false,
+      "original_training_cases": 487,
+      "original_test_cases": 179,
+      "best_verified_test_correct": 108,
+      "best_verified_test_accuracy": 0.6033519553072626,
+      "target_accuracy": 0.8,
+      "achieved": false,
+      "scope": "Actual public source responses and original native participant holdout only. The earlier data-preparation receipt describes its historical unfitted state; this study fits the verified 302-pair source table. No synthetic observations or source ages, source label conversion, native target additions or test tuning."
+    }
+  }
+}

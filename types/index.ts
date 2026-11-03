@@ -205,6 +205,10 @@ export interface TrailWeather {
   risk_level: "bajo" | "medio" | "alto";
   recommendation: string;
   source: string;
+  observed_at?: string | null;
+  wind_direction_degrees?: number | null;
+  cloud_cover_percent?: number | null;
+  is_day?: boolean | null;
 }
 
 export interface TrailReport {

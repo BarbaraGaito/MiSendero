@@ -5,7 +5,7 @@ export const OPEN_METEO_ELEVATION_URL =
 export const OPEN_METEO_ELEVATION_ATTRIBUTION =
   "Elevación: Open-Meteo · Copernicus DEM GLO-90 · © DLR e.V. (2010–2014), Airbus Defence and Space GmbH (2014–2018); COPERNICUS, Unión Europea y ESA. Derechos reservados.";
 export const TERRAIN_DEM_RESOLUTION_METERS = 90;
-export const TERRAIN_GRID_SIZE = 17;
+export const TERRAIN_GRID_SIZE = 33;
 export const TERRAIN_PROFILE_MIN_POINTS = 32;
 export const TERRAIN_PROFILE_MAX_POINTS = 96;
 export const TERRAIN_ELEVATION_BATCH_SIZE = 100;
@@ -13,7 +13,7 @@ export const TERRAIN_ELEVATION_BATCH_SIZE = 100;
 const EARTH_RADIUS_METERS = 6_371_000;
 const PROFILE_TARGET_SPACING_METERS = TERRAIN_DEM_RESOLUTION_METERS;
 const MIN_GRID_SIDE_METERS =
-  (TERRAIN_GRID_SIZE - 1) * TERRAIN_DEM_RESOLUTION_METERS;
+  16 * TERRAIN_DEM_RESOLUTION_METERS;
 const GRID_PADDING_METERS = TERRAIN_DEM_RESOLUTION_METERS * 2;
 const MIN_GRADE_BASELINE_METERS = TERRAIN_DEM_RESOLUTION_METERS;
 
@@ -338,10 +338,10 @@ const fromLocalMeters = (
 
 export const createTerrainGridCoordinates = (
   route: readonly Coordinate[],
-  size = TERRAIN_GRID_SIZE
+  size?: number
 ): TerrainGridGeometry | null => {
   const usableRoute = getUsableRoute(route);
-  if (usableRoute.length < 2 || size < 2 || !Number.isInteger(size)) return null;
+  if (usableRoute.length < 2 || (size !== undefined && (size < 2 || !Number.isInteger(size)))) return null;
 
   const origin = getRouteOrigin(usableRoute);
   if (Math.abs(origin[0]) > 89) return null;
@@ -363,13 +363,16 @@ export const createTerrainGridCoordinates = (
     y: (minY + maxY) / 2,
   };
   const halfSide = sideLengthMeters / 2;
-  const cellSizeMeters = sideLengthMeters / (size - 1);
+  // Do not oversample a 90 m source on short routes; spend the extra real
+  // samples on larger areas, with a bounded mesh and request budget.
+  const gridSize = size ?? Math.min(TERRAIN_GRID_SIZE, Math.max(17, Math.ceil(sideLengthMeters / TERRAIN_DEM_RESOLUTION_METERS / 2) * 2 + 1));
+  const cellSizeMeters = sideLengthMeters / (gridSize - 1);
   const coordinates: Coordinate[] = [];
 
-  for (let row = 0; row < size; row += 1) {
+  for (let row = 0; row < gridSize; row += 1) {
     const y = centerLocal.y + halfSide - row * cellSizeMeters;
 
-    for (let column = 0; column < size; column += 1) {
+    for (let column = 0; column < gridSize; column += 1) {
       const x = centerLocal.x - halfSide + column * cellSizeMeters;
       coordinates.push(fromLocalMeters({ x, y }, origin));
     }
@@ -379,7 +382,7 @@ export const createTerrainGridCoordinates = (
   const southEast = coordinates.at(-1)!;
 
   return {
-    size,
+    size: gridSize,
     center: fromLocalMeters(centerLocal, origin),
     bounds: {
       north: northWest[0],

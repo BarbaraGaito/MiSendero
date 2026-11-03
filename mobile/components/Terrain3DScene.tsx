@@ -1,7 +1,7 @@
 import { GLView, ExpoWebGLRenderingContext } from "expo-gl";
 import { createTerrainRenderer, loadTerrainTexture } from "./terrainGraphics";
-import { useCallback, useEffect, useMemo, useRef } from "react";
-import { StyleSheet } from "react-native";
+import { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from "react";
+import { StyleSheet, Text, View } from "react-native";
 import * as THREE from "three";
 import { Coordinate } from "../../services/geoUtils";
 import {
@@ -19,7 +19,26 @@ import {
   drapeRouteOnTerrain,
   getTerrainSceneHeight,
   getTerrainWeatherKind,
+  terrainScenePointToCoordinate,
 } from "./terrainSceneModel";
+import {
+  buildTerrainContours, buildTerrainRouteArrows, getTerrainContourInterval,
+  getTerrainRouteStations, getTerrainViewReadout, makeCloudTexture, getReportedGroundKind,
+} from "./terrainSceneDetails";
+
+export type TerrainMapMarker = {
+  id: string;
+  coordinate: Coordinate;
+  color: string;
+  precisionMeters: number;
+  selected?: boolean;
+  issueSummary?: string;
+};
+
+export type Terrain3DSceneHandle = {
+  pick: (x: number, y: number) => { coordinate: Coordinate | null; markerId?: string } | null;
+};
+const EMPTY_MARKERS: TerrainMapMarker[] = [];
 
 type Terrain3DSceneProps = {
   terrain: TerrainSceneModel;
@@ -29,6 +48,11 @@ type Terrain3DSceneProps = {
   weather?: TerrainSceneWeather | null;
   navigationMode?: boolean;
   satelliteTextureEnabled?: boolean;
+  markers?: TerrainMapMarker[];
+  focusCoordinate?: Coordinate | null;
+  showContours?: boolean;
+  overlayTopInset?: number;
+  overlayBottomInset?: number;
   onError?: (error: unknown) => void;
 };
 
@@ -55,6 +79,15 @@ type SceneHandles = {
   terrainRoute: THREE.Vector3[];
   trackedObject: THREE.Object3D | null;
   rebuildId: number;
+  markerGroup: THREE.Group;
+  groundMesh: THREE.Mesh | null;
+};
+
+type SceneReadout = {
+  scaleMeters: number;
+  scaleFraction: number;
+  northDegrees: number;
+  labels: { x: number; y: number; text: string }[];
 };
 
 const DEFAULT_CAMERA_TARGET_Y = 0.58;
@@ -94,9 +127,9 @@ const clearGroup = (group: THREE.Group) => {
 
 const buildTerrainMesh = (model: TerrainSceneModel) => {
   const mesh = buildTerrainMeshData(model);
-  const low = new THREE.Color("#5F7F5A");
-  const middle = new THREE.Color("#A39676");
-  const high = new THREE.Color("#D6D1C4");
+  const low = new THREE.Color("#87917E");
+  const middle = new THREE.Color("#B0A38C");
+  const high = new THREE.Color("#D7D4CD");
   const color = new THREE.Color();
   const colors: number[] = [];
 
@@ -118,23 +151,30 @@ const buildTerrainMesh = (model: TerrainSceneModel) => {
   geometry.computeVertexNormals();
 
   const material = new THREE.MeshStandardMaterial({
-    roughness: 0.88,
-    metalness: 0.02,
+    roughness: 1,
+    metalness: 0,
     vertexColors: true,
   });
   const terrain = new THREE.Mesh(geometry, material);
   terrain.receiveShadow = true;
+  terrain.castShadow = true;
+  terrain.name = "terrain-dem-surface";
 
   return terrain;
 };
 
 const getSatelliteTextureUrl = (model: TerrainSceneModel) => {
   const { north, south, east, west } = model.grid.bounds;
+  // Export Map adjusts its extent to the requested image aspect ratio. Matching
+  // the geographic rectangle keeps imagery registered with the DEM and route.
+  const span = Math.max(east - west, north - south);
+  const width = Math.max(1, Math.round(2048 * (east - west) / span));
+  const height = Math.max(1, Math.round(2048 * (north - south) / span));
   const params = new URLSearchParams({
     bbox: `${west},${south},${east},${north}`,
     bboxSR: "4326",
     imageSR: "4326",
-    size: "1024,1024",
+    size: `${width},${height}`,
     format: "jpg",
     transparent: "false",
     f: "image",
@@ -151,6 +191,9 @@ const applySatelliteTexture = (
   void loadTerrainTexture(getSatelliteTextureUrl(model)).then((texture) => {
       texture.colorSpace = THREE.SRGBColorSpace;
       texture.anisotropy = 4;
+      texture.generateMipmaps = true;
+      texture.minFilter = THREE.LinearMipmapLinearFilter;
+      texture.magFilter = THREE.LinearFilter;
       texture.needsUpdate = true;
       const material = terrain.material as THREE.MeshStandardMaterial;
       material.map = texture;
@@ -203,50 +246,6 @@ const buildTerrainSkirt = (model: TerrainSceneModel) => {
   return skirt;
 };
 
-const getSmoothedCrossSlopes = (
-  centerLine: THREE.Vector3[],
-  model: TerrainSceneModel
-) => {
-  const sampleDistance = 0.045;
-  const rawSlopes = centerLine.map((point, index) => {
-    const previous = centerLine[Math.max(0, index - 1)];
-    const next = centerLine[Math.min(centerLine.length - 1, index + 1)];
-    const dx = next.x - previous.x;
-    const dz = next.z - previous.z;
-    const length = Math.max(0.001, Math.hypot(dx, dz));
-    const normalX = -dz / length;
-    const normalZ = dx / length;
-    const leftHeight = getTerrainSceneHeight(
-      model,
-      point.x - normalX * sampleDistance,
-      point.z - normalZ * sampleDistance
-    );
-    const rightHeight = getTerrainSceneHeight(
-      model,
-      point.x + normalX * sampleDistance,
-      point.z + normalZ * sampleDistance
-    );
-
-    return clamp(
-      (rightHeight - leftHeight) / (sampleDistance * 2),
-      -1.25,
-      1.25
-    );
-  });
-
-  return rawSlopes.map((_, index) => {
-    const start = Math.max(0, index - 2);
-    const end = Math.min(rawSlopes.length - 1, index + 2);
-    let total = 0;
-
-    for (let sampleIndex = start; sampleIndex <= end; sampleIndex += 1) {
-      total += rawSlopes[sampleIndex];
-    }
-
-    return total / (end - start + 1);
-  });
-};
-
 const makeTerrainTrailRibbon = (
   centerLine: THREE.Vector3[],
   model: TerrainSceneModel,
@@ -259,7 +258,6 @@ const makeTerrainTrailRibbon = (
   const vertexColors: number[] = [];
   const indices: number[] = [];
   const baseColor = new THREE.Color(color);
-  const crossSlopes = getSmoothedCrossSlopes(centerLine, model);
 
   centerLine.forEach((point, index) => {
     const previous = centerLine[Math.max(0, index - 1)];
@@ -274,7 +272,7 @@ const makeTerrainTrailRibbon = (
       const offset = halfWidth * side;
       positions.push(
         point.x + normalX * offset,
-        point.y + crossSlopes[index] * offset + lift,
+        getTerrainSceneHeight(model, point.x + normalX * offset, point.z + normalZ * offset) + lift,
         point.z + normalZ * offset
       );
       vertexColors.push(baseColor.r, baseColor.g, baseColor.b);
@@ -398,6 +396,50 @@ const makeVerticalPin = (position: THREE.Vector3, color: string) => {
   return pin;
 };
 
+const makeMapMarker = (model: TerrainSceneModel, marker: TerrainMapMarker) => {
+  const position = coordinateToTerrainScenePoint(model, marker.coordinate);
+  if (!position) return null;
+  const group = new THREE.Group();
+  group.userData.markerId = marker.id;
+  group.position.copy(toVector3(position));
+  const material = new THREE.MeshBasicMaterial({ color: marker.color });
+  const stemHeight = marker.selected ? 0.97 : 0.65;
+  const stem = new THREE.Mesh(new THREE.CylinderGeometry(0.018, 0.025, stemHeight, 8), material);
+  stem.position.y = stemHeight / 2;
+  const head = new THREE.Group();
+  head.position.y = stemHeight + 0.15;
+  head.name = "map-marker-head";
+  const disc = new THREE.Mesh(new THREE.CircleGeometry(0.2, 24), material);
+  const white = new THREE.MeshBasicMaterial({ color: "#FFFFFF" });
+  if (marker.selected) {
+    const center = new THREE.Mesh(new THREE.CircleGeometry(0.08, 16), white);
+    center.position.z = 0.015;
+    head.add(disc, center);
+  } else {
+    const bar = new THREE.Mesh(new THREE.BoxGeometry(0.035, 0.15, 0.01), white);
+    bar.position.set(0, 0.04, 0.01);
+    const dot = new THREE.Mesh(new THREE.CircleGeometry(0.023, 10), white);
+    dot.position.set(0, -0.09, 0.015);
+    head.add(disc, bar, dot);
+  }
+  group.add(stem, head);
+  if (marker.precisionMeters > 0 &&
+      Math.abs(position.x) + marker.precisionMeters / model.metersPerUnit <= TERRAIN_HALF_SIZE &&
+      Math.abs(position.z) + marker.precisionMeters / model.metersPerUnit <= TERRAIN_HALF_SIZE) {
+    const radius = marker.precisionMeters / model.metersPerUnit;
+    const ring = new THREE.Mesh(new THREE.RingGeometry(radius * 0.94, radius, 48),
+      new THREE.MeshBasicMaterial({ color: marker.color, transparent: true, opacity: 0.35, side: THREE.DoubleSide }));
+    // Drape the uncertainty boundary onto the DEM, too.
+    const vertices = ring.geometry.getAttribute("position");
+    for (let index = 0; index < vertices.count; index += 1) {
+      const x = vertices.getX(index), z = vertices.getY(index);
+      vertices.setXYZ(index, x, getTerrainSceneHeight(model, position.x + x, position.z + z) - position.y + 0.025, z);
+    }
+    group.add(ring);
+  }
+  return group;
+};
+
 const updateTrackedPosition = (
   handles: SceneHandles,
   userCoordinate: Coordinate | null | undefined,
@@ -413,17 +455,27 @@ const updateTrackedPosition = (
 
   const model = handles.model;
   const terrainRoute = handles.terrainRoute;
+  const userScenePoint = userCoordinate ? coordinateToTerrainScenePoint(model, userCoordinate) : null;
   if (navigationMode) {
-    const startPoint = terrainRoute[0].clone();
+    const startPoint = userScenePoint ? toVector3(userScenePoint) : terrainRoute[0].clone();
+    let nearestIndex = 0;
+    if (userScenePoint) {
+      let nearestDistance = Infinity;
+      terrainRoute.forEach((point, index) => {
+        const distance = Math.hypot(point.x - startPoint.x, point.z - startPoint.z);
+        if (distance < nearestDistance) { nearestDistance = distance; nearestIndex = index; }
+      });
+    }
+    const ahead = terrainRoute.slice(nearestIndex);
     const nextPoint =
-      terrainRoute.find((point, index) => {
+      ahead.find((point, index) => {
         if (index === 0) return false;
         const deltaX = point.x - startPoint.x;
         const deltaZ = point.z - startPoint.z;
         return deltaX * deltaX + deltaZ * deltaZ > 0.0064;
-      }) || terrainRoute[1];
+      }) || startPoint.clone().add(startPoint.clone().sub(terrainRoute[Math.max(0, nearestIndex - 1)]));
     const sightPoint =
-      terrainRoute.find((point, index) => {
+      ahead.find((point, index) => {
         if (index === 0) return false;
         const deltaX = point.x - startPoint.x;
         const deltaZ = point.z - startPoint.z;
@@ -449,33 +501,33 @@ const updateTrackedPosition = (
       direction: localDirection.clone().applyAxisAngle(yAxis, handles.alignmentRotation),
       sightDirection: sightDirection.applyAxisAngle(yAxis, handles.alignmentRotation),
     };
-    return;
+  } else {
+    handles.navigationView = null;
   }
-
-  handles.navigationView = null;
-  if (!userCoordinate) return;
   // Fuera de la grilla real no hay altura conocida: no se dibuja el marcador.
-  const scenePoint = coordinateToTerrainScenePoint(model, userCoordinate);
-  if (!scenePoint) return;
+  const scenePoint = userScenePoint;
+  if (!scenePoint || navigationMode) return;
   const userPoint = toVector3(scenePoint);
   const markerGroup = new THREE.Group();
+  markerGroup.name = "user-gps-marker";
   markerGroup.add(makeUserMarker(userPoint), makeVerticalPin(userPoint, "#2376D9"));
   handles.routeGroup.add(markerGroup);
   handles.trackedObject = markerGroup;
 };
 
-const buildSkyDome = (kind: TerrainWeatherKind | null) => {
+const buildSkyDome = (kind: TerrainWeatherKind | null, isNight: boolean) => {
   const colorsByKind = {
-    clear: ["#418BC1", "#D9EFF5"],
-    "partly-cloudy": ["#648FAC", "#D8E5E9"],
-    cloudy: ["#667681", "#C4CDD0"],
-    rain: ["#405565", "#9BAAB1"],
+    clear: ["#5988AF", "#D7E3E8"],
+    "partly-cloudy": ["#7997AE", "#DAE2E5"],
+    cloudy: ["#89959D", "#CED4D5"],
+    rain: ["#596B78", "#A9B5BA"],
     storm: ["#273743", "#73838B"],
     snow: ["#839BAA", "#E8F0F1"],
+    fog: ["#A5ADB0", "#D1D6D5"],
   } as const;
   // Sin pronostico real se usa un degradado neutro.
-  const [topColor, bottomColor] = kind ? colorsByKind[kind] : ["#8EA4B2", "#E4EBEE"];
-  const geometry = new THREE.SphereGeometry(60, 24, 16);
+  const [topColor, bottomColor] = isNight ? ["#101C2F", "#3A4858"] : kind ? colorsByKind[kind] : ["#8EA4B2", "#E4EBEE"];
+  const geometry = new THREE.SphereGeometry(500, 24, 16);
   const material = new THREE.ShaderMaterial({
     uniforms: {
       topColor: { value: new THREE.Color(topColor) },
@@ -514,49 +566,33 @@ const buildSkyDome = (kind: TerrainWeatherKind | null) => {
 const addWeatherGraphics = (
   group: THREE.Group,
   kind: TerrainWeatherKind | null,
-  baseHeight: number
+  baseHeight: number,
+  weather: TerrainSceneWeather | null | undefined
 ) => {
   if (!kind) return;
   const cloudKinds = ["partly-cloudy", "cloudy", "rain", "storm", "snow"];
 
-  if (kind === "clear" || kind === "partly-cloudy") {
-    const sun = new THREE.Mesh(
-      new THREE.SphereGeometry(0.58, 24, 18),
-      new THREE.MeshBasicMaterial({ color: "#FFD466", fog: false })
-    );
-    sun.position.set(-4.8, 5.9 + baseHeight, -5.8);
-    group.add(sun);
-  }
-
   if (cloudKinds.includes(kind)) {
-    const cloudCount = kind === "partly-cloudy" ? 3 : kind === "cloudy" ? 6 : 8;
-    const cloudMaterial = new THREE.MeshStandardMaterial({
-      color: kind === "storm" ? "#65727A" : kind === "rain" ? "#86969D" : "#E8EEF0",
-      roughness: 1,
+    const cloudCount = weather?.cloudCoverPercent != null
+      ? Math.round(clamp(weather.cloudCoverPercent / 12, 1, 9)) : kind === "partly-cloudy" ? 3 : kind === "cloudy" ? 6 : 8;
+    const cloudMaterial = new THREE.SpriteMaterial({
+      map: makeCloudTexture(),
+      color: weather?.isDay === false ? "#637284" : kind === "storm" ? "#75818B" : kind === "rain" ? "#A0ABB1" : "#F1F3F1",
       transparent: true,
-      opacity: kind === "partly-cloudy" ? 0.84 : 0.94,
-      fog: false,
+      opacity: 0.72,
+      depthWrite: false,
+      fog: true,
     });
     for (let index = 0; index < cloudCount; index += 1) {
-      const cloud = new THREE.Group();
+      const cloud = new THREE.Sprite(cloudMaterial);
       const x = -5.8 + (index % 4) * 3.8;
       const y = 4.6 + Math.floor(index / 4) * 1.15 + baseHeight;
       const z = -5.5 + (index % 2) * 1.1;
-      [
-        [-0.52, 0, 0, 0.72],
-        [0, 0.17, 0, 0.92],
-        [0.58, 0, 0, 0.68],
-        [0.18, -0.1, 0.08, 0.78],
-      ].forEach(([cx, cy, cz, scale]) => {
-        const puff = new THREE.Mesh(new THREE.SphereGeometry(0.55, 12, 8), cloudMaterial);
-        puff.position.set(cx, cy, cz);
-        puff.scale.set(scale * 1.5, scale * 0.72, scale);
-        cloud.add(puff);
-      });
+      cloud.scale.set(5.5, 2.5, 1);
       cloud.position.set(x, y, z);
       cloud.name = "weather-cloud";
-      cloud.userData.speed = 0.024;
       cloud.userData.originX = x;
+      cloud.userData.originZ = z;
       group.add(cloud);
     }
   }
@@ -565,8 +601,8 @@ const addWeatherGraphics = (
     const precipitationCount = kind === "storm" ? 150 : 95;
     const isSnow = kind === "snow";
     const geometry = isSnow
-      ? new THREE.SphereGeometry(0.018, 5, 4)
-      : new THREE.CylinderGeometry(0.006, 0.006, 0.24, 4);
+      ? new THREE.SphereGeometry(0.008, 5, 4)
+      : new THREE.CylinderGeometry(0.003, 0.003, 0.08, 4);
     const material = new THREE.MeshBasicMaterial({
       color: isSnow ? "#FFFFFF" : "#9DD4E9",
       transparent: true,
@@ -588,11 +624,13 @@ const addWeatherGraphics = (
     }
     precipitation.instanceMatrix.needsUpdate = true;
     precipitation.name = "weather-precipitation";
+    precipitation.userData.baseHeight = baseHeight;
+    precipitation.frustumCulled = false;
     group.add(precipitation);
   }
 };
 
-export function Terrain3DScene({
+export const Terrain3DScene = forwardRef<Terrain3DSceneHandle, Terrain3DSceneProps>(function Terrain3DScene({
   terrain,
   userCoordinate,
   viewOffset,
@@ -600,9 +638,26 @@ export function Terrain3DScene({
   weather,
   navigationMode = false,
   satelliteTextureEnabled = true,
+  markers = EMPTY_MARKERS,
+  focusCoordinate = null,
+  showContours = false,
+  overlayTopInset = 150,
+  overlayBottomInset = 28,
   onError,
-}: Terrain3DSceneProps) {
+}, ref) {
   const handlesRef = useRef<SceneHandles | null>(null);
+  const [viewport, setViewport] = useState({ width: 0, height: 0 });
+  const viewportRef = useRef(viewport);
+  viewportRef.current = viewport;
+  const [readout, setReadout] = useState<SceneReadout | null>(null);
+  const [hasSatelliteImage, setHasSatelliteImage] = useState(false);
+  const lastReadoutRef = useRef(0);
+  const readoutSignatureRef = useRef("");
+  const stations = useMemo(() => getTerrainRouteStations(terrain), [terrain]);
+  const stationsRef = useRef(stations);
+  stationsRef.current = stations;
+  const overlayTopRef = useRef(overlayTopInset);
+  overlayTopRef.current = overlayTopInset;
   const renderedFrameRef = useRef(false);
   const onErrorRef = useRef(onError);
   onErrorRef.current = onError;
@@ -616,6 +671,7 @@ export function Terrain3DScene({
       clearGroup(handles.terrainGroup);
       clearGroup(handles.routeGroup);
       clearGroup(handles.weatherGroup);
+      clearGroup(handles.markerGroup);
       handles.scene.traverse((object) => {
         if (object instanceof THREE.Light) object.shadow?.dispose();
       });
@@ -633,6 +689,61 @@ export function Terrain3DScene({
     }, 12000);
     return () => clearTimeout(timer);
   }, [failScene]);
+  const markersRef = useRef(markers);
+  markersRef.current = markers;
+  const updateMarkers = useCallback(() => {
+    const handles = handlesRef.current;
+    if (!handles?.model) return;
+    clearGroup(handles.markerGroup);
+    handles.markerGroup.rotation.y = handles.alignmentRotation;
+    markersRef.current.forEach(marker => {
+      const object = makeMapMarker(handles.model!, marker);
+      if (object) handles.markerGroup.add(object);
+      const groundKind = getReportedGroundKind(marker.issueSummary ?? "");
+      const point = coordinateToTerrainScenePoint(handles.model!, marker.coordinate);
+      if (!groundKind || !point) return;
+      const radius = Math.max(marker.precisionMeters, 60) / handles.model!.metersPerUnit;
+      let section: THREE.Vector3[] = [];
+      const flush = () => {
+        if (section.length > 1) {
+          const ribbon = makeTerrainTrailRibbon(section, handles.model!, 0.028, groundKind.color, 0.022, true);
+          ribbon.name = "reported-ground-section";
+          ribbon.userData.isGroundSection = true;
+          handles.markerGroup.add(ribbon);
+        }
+        section = [];
+      };
+      handles.terrainRoute.forEach(routePoint => {
+        if (Math.hypot(routePoint.x - point.x, routePoint.z - point.z) <= radius) section.push(routePoint);
+        else flush();
+      });
+      flush();
+    });
+  }, []);
+  useEffect(() => { updateMarkers(); }, [markers, updateMarkers]);
+  useImperativeHandle(ref, () => ({
+    pick: (x, y) => {
+      const handles = handlesRef.current;
+      if (!handles?.model || !handles.groundMesh) return null;
+      handles.scene.updateMatrixWorld(true);
+      handles.camera.updateMatrixWorld(true);
+      const ray = new THREE.Raycaster();
+      ray.setFromCamera(new THREE.Vector2(x, y), handles.camera);
+      const ground = ray.intersectObject(handles.groundMesh, false)[0];
+      const hit = ray.intersectObject(handles.markerGroup, true).find(intersection => {
+        // Precision rings describe an area; only the pin itself opens a report.
+        return !intersection.object.userData.isGroundSection && !(intersection.object as THREE.Mesh).geometry?.type?.includes("Ring") &&
+          (!ground || intersection.distance <= ground.distance + 0.03);
+      });
+      if (hit) {
+        let object: THREE.Object3D | null = hit.object;
+        while (object && !object.userData.markerId) object = object.parent;
+        if (object) return { coordinate: terrainScenePointToCoordinate(handles.model, object.position), markerId: object.userData.markerId };
+      }
+      if (!ground) return null;
+      return { coordinate: terrainScenePointToCoordinate(handles.model, handles.terrainGroup.worldToLocal(ground.point.clone())) };
+    },
+  }), []);
   const propsRef = useRef({
     terrain,
     userCoordinate,
@@ -641,6 +752,8 @@ export function Terrain3DScene({
     weather,
     navigationMode,
     satelliteTextureEnabled,
+    focusCoordinate,
+    showContours,
   });
   const geometrySignature = useMemo(
     () =>
@@ -648,11 +761,13 @@ export function Terrain3DScene({
         weather,
         navigationMode,
         satelliteTextureEnabled,
+        showContours,
       }),
     [
       weather,
       navigationMode,
       satelliteTextureEnabled,
+      showContours,
     ]
   );
 
@@ -665,6 +780,8 @@ export function Terrain3DScene({
       weather,
       navigationMode,
       satelliteTextureEnabled,
+      focusCoordinate,
+      showContours,
     };
   }, [
     terrain,
@@ -674,6 +791,8 @@ export function Terrain3DScene({
     weather,
     navigationMode,
     satelliteTextureEnabled,
+    focusCoordinate,
+    showContours,
   ]);
 
   const rebuildScene = useCallback(() => {
@@ -689,30 +808,41 @@ export function Terrain3DScene({
     clearGroup(handles.weatherGroup);
     handles.trackedObject = null;
     const weatherKind = getTerrainWeatherKind(current.weather);
+    const isNight = current.weather?.isDay === false;
     const isDarkWeather = weatherKind === "storm" || weatherKind === "rain";
-    const fogColor = weatherKind === "storm"
+    const fogColor = isNight ? "#283747" : weatherKind === "fog" ? "#CBD0D0" : weatherKind === "storm"
       ? "#66747B"
       : weatherKind === "rain"
         ? "#899CA5"
         : weatherKind === "snow"
           ? "#DDE7E9"
           : "#CFE4E8";
-    handles.scene.fog = new THREE.FogExp2(fogColor, isDarkWeather ? 0.06 : 0.035);
+    const visibilityMeters = weatherKind === "fog" ? 2000 : isDarkWeather ? 8000 : weatherKind === "snow" ? 6000 : 50000;
+    handles.scene.fog = new THREE.FogExp2(fogColor, model.metersPerUnit / visibilityMeters);
     handles.renderer.setClearColor(fogColor);
-    handles.sunLight.intensity = weatherKind === "clear" ? 3.35 : isDarkWeather ? 1.25 : 2.25;
-    handles.hemiLight.intensity = isDarkWeather ? 0.72 : 1.05;
-    handles.weatherGroup.add(buildSkyDome(weatherKind));
-    addWeatherGraphics(handles.weatherGroup, weatherKind, model.maxHeight);
+    handles.sunLight.intensity = isNight ? 0.18 : weatherKind === "clear" ? 2.4 : isDarkWeather || weatherKind === "fog" ? 0.65 : 1.5;
+    handles.hemiLight.intensity = isNight ? 0.45 : isDarkWeather ? 1.05 : 1.35;
+    handles.sunLight.position.set(-8, model.maxHeight + 12, 6);
+    handles.sunLight.shadow.camera.far = 40 + model.maxHeight * 2;
+    handles.sunLight.shadow.camera.updateProjectionMatrix();
+    handles.weatherGroup.add(buildSkyDome(weatherKind, isNight));
+    addWeatherGraphics(handles.weatherGroup, weatherKind, model.maxHeight, current.weather);
     const terrain = buildTerrainMesh(model);
+    setHasSatelliteImage(false);
+    handles.groundMesh = terrain;
     handles.terrainGroup.add(terrain);
     if (current.satelliteTextureEnabled) {
       applySatelliteTexture(terrain, model, (texture) => {
         if (handlesRef.current !== handles || handles.rebuildId !== rebuildId) {
           texture.dispose();
+        } else {
+          texture.anisotropy = Math.min(8, handles.renderer.capabilities?.getMaxAnisotropy?.() ?? 4);
+          setHasSatelliteImage(true);
         }
       });
     }
     handles.terrainGroup.add(buildTerrainSkirt(model));
+    if (current.showContours) handles.terrainGroup.add(buildTerrainContours(model));
     handles.alignmentRotation = 0;
     handles.navigationView = null;
     handles.terrainGroup.rotation.y = 0;
@@ -725,6 +855,7 @@ export function Terrain3DScene({
       handles.terrainGroup.rotation.y = handles.alignmentRotation;
       handles.routeGroup.rotation.y = handles.alignmentRotation;
     }
+    handles.weatherGroup.rotation.y = handles.alignmentRotation;
 
     const terrainRoute = drapeRouteOnTerrain(model).map(toVector3);
     handles.model = model;
@@ -736,15 +867,15 @@ export function Terrain3DScene({
     });
 
     if (terrainRoute.length > 1) {
-      const trailOuterHalfWidth = current.navigationMode ? 0.042 : 0.135;
-      const trailInnerHalfWidth = current.navigationMode ? 0.023 : 0.092;
+      const trailOuterHalfWidth = current.navigationMode ? 0.026 : 0.045;
+      const trailInnerHalfWidth = current.navigationMode ? 0.014 : 0.025;
       handles.routeGroup.add(
         makeTerrainTrailRibbon(
           terrainRoute,
           model,
           trailOuterHalfWidth,
           "#F0643B",
-          0.052,
+          0.012,
           true
         )
       );
@@ -753,11 +884,12 @@ export function Terrain3DScene({
           terrainRoute,
           model,
           trailInnerHalfWidth,
-          "#D4A56F",
-          0.061,
+          "#E6BC89",
+          0.018,
           false
         )
       );
+      handles.routeGroup.add(buildTerrainRouteArrows(model, terrainRoute));
     }
 
     const endpointScale = current.navigationMode ? 0.74 : 1;
@@ -776,7 +908,8 @@ export function Terrain3DScene({
       current.userCoordinate,
       current.navigationMode
     );
-  }, []);
+    updateMarkers();
+  }, [updateMarkers]);
 
   useEffect(() => {
     try { rebuildScene(); } catch (error) { failScene(error); }
@@ -800,8 +933,9 @@ export function Terrain3DScene({
     const scale = clampTerrainScale(current.viewScale);
     const orbitAngle = current.viewOffset.x / 100;
     const tilt = clamp(current.viewOffset.y / 120, -1.65, 1.65);
+    const focusPoint = current.focusCoordinate ? coordinateToTerrainScenePoint(current.terrain, current.focusCoordinate) : null;
 
-    if (current.navigationMode && navigationView) {
+    if (current.navigationMode && navigationView && !focusPoint) {
       const anchor = navigationView.anchor.clone();
       const viewDirection = navigationView.direction
         .clone()
@@ -809,7 +943,7 @@ export function Terrain3DScene({
       const sightDirection = navigationView.sightDirection
         .clone()
         .applyAxisAngle(new THREE.Vector3(0, 1, 0), orbitAngle);
-      const eyeHeight = clamp(0.46 - tilt * 0.035, 0.4, 0.52);
+      const eyeHeight = clamp(12 / current.terrain.metersPerUnit - tilt * 0.01, 0.005, 0.3);
       const cameraPosition = anchor
         .clone()
         .addScaledVector(viewDirection, -0.045)
@@ -819,6 +953,7 @@ export function Terrain3DScene({
         .addScaledVector(sightDirection, 3.2)
         .add(new THREE.Vector3(0, -0.1 - tilt * 0.28, 0));
       camera.fov = getTerrainPerspectiveFov(scale);
+      camera.near = Math.max(0.0005, 0.5 / current.terrain.metersPerUnit);
       camera.zoom = 1;
       camera.position.copy(cameraPosition);
       camera.lookAt(lookTarget);
@@ -829,12 +964,19 @@ export function Terrain3DScene({
     // El relieve real puede ser mas alto que la vista por defecto: se eleva el
     // objetivo con el relieve y la camara nunca queda debajo del terreno.
     const model = current.terrain;
-    const targetY = Math.max(DEFAULT_CAMERA_TARGET_Y, model.maxHeight * 0.4);
-    const target = new THREE.Vector3(0, targetY, 0);
-    const radius = 8 + Math.max(0, tilt) * 0.28;
-    const height = clamp(3.78 - tilt * 1.12, 1.65, 5.7) + targetY - DEFAULT_CAMERA_TARGET_Y;
-    const cameraX = Math.sin(orbitAngle) * radius;
-    const cameraZ = Math.cos(orbitAngle) * radius;
+    const targetY = focusPoint ? focusPoint.y + DEFAULT_CAMERA_TARGET_Y : Math.max(DEFAULT_CAMERA_TARGET_Y, model.maxHeight * 0.4);
+    const target = focusPoint
+      ? new THREE.Vector3(focusPoint.x, targetY, focusPoint.z).applyAxisAngle(new THREE.Vector3(0, 1, 0), alignmentRotation)
+      : new THREE.Vector3(0, targetY, 0);
+    const limitingHalfAngle = Math.min(43 * Math.PI / 360, Math.atan(Math.tan(43 * Math.PI / 360) * camera.aspect));
+    let routeRadius = 0;
+    model.route.forEach(point => { routeRadius = Math.max(routeRadius, Math.hypot(point.x, point.y - targetY, point.z)); });
+    const distance = focusPoint ? 8 : Math.max(8, routeRadius / Math.sin(limitingHalfAngle) * 1.12);
+    const pitch = clamp(0.55 - tilt * 0.2, 0.22, 1.05);
+    const radius = distance * Math.cos(pitch);
+    const height = targetY + distance * Math.sin(pitch);
+    const cameraX = target.x + Math.sin(orbitAngle) * radius;
+    const cameraZ = target.z + Math.cos(orbitAngle) * radius;
     const groundY = getTerrainSceneHeight(
       model,
       cameraX * Math.cos(alignmentRotation) - cameraZ * Math.sin(alignmentRotation),
@@ -842,6 +984,7 @@ export function Terrain3DScene({
     );
 
     camera.fov = 43;
+    camera.near = 0.03;
     camera.zoom = scale;
     camera.position.set(
       cameraX,
@@ -869,30 +1012,33 @@ export function Terrain3DScene({
         const scene = new THREE.Scene();
         scene.fog = new THREE.FogExp2("#CFE9F2", 0.035);
 
-        const camera = new THREE.PerspectiveCamera(43, width / height, 0.1, 80);
+        const camera = new THREE.PerspectiveCamera(43, width / height, 0.03, 1500);
         updateCamera(camera, null);
 
         const terrainGroup = new THREE.Group();
         const routeGroup = new THREE.Group();
         const weatherGroup = new THREE.Group();
+        const markerGroup = new THREE.Group();
         scene.add(weatherGroup);
         scene.add(terrainGroup);
         scene.add(routeGroup);
+        scene.add(markerGroup);
 
         const hemiLight = new THREE.HemisphereLight("#DDF6FF", "#335C36", 1.5);
         const sunLight = new THREE.DirectionalLight("#FFF3D9", 2.7);
         const fillLight = new THREE.DirectionalLight("#A9CBE8", 0.6);
         sunLight.position.set(-6, 6.5, 4.5);
         sunLight.castShadow = true;
-        sunLight.shadow.mapSize.set(1024, 1024);
-        sunLight.shadow.camera.left = -6;
-        sunLight.shadow.camera.right = 6;
-        sunLight.shadow.camera.top = 6;
-        sunLight.shadow.camera.bottom = -6;
+        sunLight.shadow.mapSize.set(2048, 2048);
+        sunLight.shadow.camera.left = -11;
+        sunLight.shadow.camera.right = 11;
+        sunLight.shadow.camera.top = 11;
+        sunLight.shadow.camera.bottom = -11;
         sunLight.shadow.camera.near = 1;
-        sunLight.shadow.camera.far = 18;
-        sunLight.shadow.bias = -0.0025;
-        sunLight.shadow.radius = 2;
+        sunLight.shadow.camera.far = 40;
+        sunLight.shadow.normalBias = 0.025;
+        sunLight.shadow.bias = -0.0003;
+        sunLight.shadow.radius = 1.5;
         fillLight.position.set(5, 4, -4);
         scene.add(hemiLight);
         scene.add(sunLight);
@@ -915,8 +1061,12 @@ export function Terrain3DScene({
           terrainRoute: [],
           trackedObject: null,
           rebuildId: 0,
+          markerGroup,
+          groundMesh: null,
         };
         rebuildScene();
+        const precipitationDummy = new THREE.Object3D();
+        const animationStart = Date.now();
 
         const render = () => {
           const handles = handlesRef.current;
@@ -924,18 +1074,72 @@ export function Terrain3DScene({
           try {
             if (handles.gl.isContextLost?.()) throw new Error("Se perdió el contexto GL.");
             updateCamera(handles.camera, handles.navigationView, handles.alignmentRotation);
-            const elapsed = Date.now() / 1000;
+            handles.markerGroup.children.forEach(marker => {
+              const head = marker.getObjectByName("map-marker-head");
+              if (head) {
+                head.quaternion.copy(handles.markerGroup.quaternion).invert().multiply(handles.camera.quaternion);
+              }
+            });
+            const elapsed = (Date.now() - animationStart) / 1000;
+            const weather = propsRef.current.weather;
+            const windSpeed = Math.max(0, weather?.windKmh ?? 0) / 3.6 / (handles.model?.metersPerUnit ?? 1);
+            const direction = (weather?.windDirectionDegrees ?? 0) * Math.PI / 180;
+            const windX = weather?.windDirectionDegrees == null ? 0 : -Math.sin(direction) * windSpeed;
+            const windZ = weather?.windDirectionDegrees == null ? 0 : Math.cos(direction) * windSpeed;
+            const wrap = (value: number, length: number) => ((value % length) + length) % length;
             handles.weatherGroup.children.forEach((child) => {
               if (child.name === "weather-cloud") {
                 const originX = Number(child.userData.originX) || 0;
-                const speed = Number(child.userData.speed) || 0.02;
-                child.position.x = originX + Math.sin(elapsed * speed * 8 + originX) * 0.34;
-              } else if (child.name === "weather-precipitation") {
-                child.position.y = -((elapsed * 0.72) % 0.8);
+                const originZ = Number(child.userData.originZ) || 0;
+                child.position.x = wrap(originX + elapsed * windX + 8, 16) - 8;
+                child.position.z = wrap(originZ + elapsed * windZ + 8, 16) - 8;
+              } else if (child.name === "weather-precipitation" && handles.model) {
+                const particles = child as THREE.InstancedMesh;
+                const isSnow = getTerrainWeatherKind(weather) === "snow";
+                const fallSpeed = (isSnow ? 1.2 : 7) / handles.model.metersPerUnit;
+                const range = Math.max(2, handles.model.maxHeight + 3);
+                for (let index = 0; index < particles.count; index += 1) {
+                  const x = wrap(index * 0.6180339887 * 14 + elapsed * windX, 14) - 7;
+                  const z = wrap(index * 0.754877666 * 14 + elapsed * windZ, 14) - 7;
+                  const ground = getTerrainSceneHeight(handles.model, x, z);
+                  precipitationDummy.position.set(x, ground + 0.1 + wrap(index * 0.56984029 * range - elapsed * fallSpeed, range), z);
+                  precipitationDummy.rotation.set(isSnow ? 0 : Math.atan2(windZ, fallSpeed), 0, isSnow ? 0 : -Math.atan2(windX, fallSpeed));
+                  precipitationDummy.updateMatrix();
+                  particles.setMatrixAt(index, precipitationDummy.matrix);
+                }
+                particles.instanceMatrix.needsUpdate = true;
               }
             });
             handles.renderer.render(handles.scene, handles.camera);
             handles.gl.endFrameEXP?.();
+            const viewport = viewportRef.current;
+            if (viewport.width > 0 && handles.groundMesh && Date.now() - lastReadoutRef.current > 180) {
+              lastReadoutRef.current = Date.now();
+              const scale = getTerrainViewReadout(handles.camera, handles.groundMesh, propsRef.current.terrain.metersPerUnit, handles.alignmentRotation);
+              if (scale) {
+                handles.scene.updateMatrixWorld(true);
+                const labels: SceneReadout["labels"] = [];
+                if (!propsRef.current.navigationMode) stationsRef.current.forEach(station => {
+                  const world = toVector3(station.point).applyMatrix4(handles.routeGroup.matrixWorld);
+                  const point = world.clone().project(handles.camera);
+                  const x = (point.x + 1) * viewport.width / 2;
+                  const y = (1 - point.y) * viewport.height / 2;
+                  if (point.z < -1 || point.z > 1 || x < 36 || x > viewport.width - 65 || y < overlayTopRef.current || y > viewport.height - 120) return;
+                  if (labels.some(label => Math.hypot(label.x - x, label.y - y) < 72)) return;
+                  const direction = world.clone().sub(handles.camera.position);
+                  const distance = direction.length();
+                  const obstacle = new THREE.Raycaster(handles.camera.position, direction.normalize()).intersectObject(handles.groundMesh!, false)[0];
+                  if (obstacle && obstacle.distance < distance - 0.08) return;
+                  labels.push({ x: Math.round(x), y: Math.round(y), text: `${station.label} · ${station.elevationMeters} m` });
+                });
+                const next = { ...scale, scaleFraction: Math.round(scale.scaleFraction * 1000) / 1000, northDegrees: Math.round(scale.northDegrees), labels };
+                const signature = JSON.stringify(next);
+                if (signature !== readoutSignatureRef.current) { readoutSignatureRef.current = signature; setReadout(next); }
+              } else if (readoutSignatureRef.current) {
+                readoutSignatureRef.current = "";
+                setReadout(null);
+              }
+            }
             renderedFrameRef.current = true;
             handles.animationFrame = requestAnimationFrame(render);
           } catch (error) { failScene(error); }
@@ -952,11 +1156,40 @@ export function Terrain3DScene({
     [rebuildScene, updateCamera, disposeScene, failScene]
   );
 
-  return <GLView style={styles.canvas} onContextCreate={onContextCreate} />;
-}
+  const groundLabels = [...new Set(markers.map(marker => getReportedGroundKind(marker.issueSummary ?? "")?.label).filter(Boolean))];
+  return <View style={styles.canvas} testID="terrain-scene-viewport" onLayout={event => setViewport(event.nativeEvent.layout)}>
+    <GLView style={styles.canvas} onContextCreate={onContextCreate} />
+    <View pointerEvents="none" style={StyleSheet.absoluteFill}>
+      {readout?.labels.map(label => <View key={label.text} style={[styles.routeLabel, { left: label.x - 30, top: label.y - 28 }]}>
+        <Text style={styles.routeLabelText}>{label.text}</Text>
+      </View>)}
+      <View style={[styles.readout, { bottom: overlayBottomInset }]}>
+        <View style={styles.readoutRow}>
+          {readout ? <View>
+            <Text style={styles.readoutText}>{readout.scaleMeters >= 1000 ? `${readout.scaleMeters / 1000} km` : `${readout.scaleMeters} m`} · en el centro</Text>
+            <View style={[styles.scaleBar, { width: Math.max(1, viewport.width * readout.scaleFraction) }]} />
+          </View> : <Text style={styles.readoutText}>Relieve a escala real</Text>}
+          {readout && <View style={styles.readoutRow}><View style={{ transform: [{ rotate: `${readout.northDegrees}deg` }] }}><Text style={styles.northArrow}>↑</Text></View><Text style={styles.northArrow}> N</Text></View>}
+        </View>
+        <Text style={styles.readoutText}>Altura ×1 · {Math.round(terrain.minElevationMeters)}–{Math.round(terrain.maxElevationMeters)} m s. n. m.</Text>
+        {!navigationMode && <Text style={styles.readoutSubtle}>{hasSatelliteImage ? "Imagen satelital de referencia" : "Color por altitud"} · detalle ≈ {Math.round(Math.max(90, terrain.grid.cellSizeMeters))} m{showContours ? ` · curvas ${getTerrainContourInterval(terrain)} m` : ""}</Text>}
+        <Text numberOfLines={navigationMode ? 1 : 2} style={styles.readoutText}>{weather ? `Pronóstico: ${weather.condition} · ${weather.temperatureC} °C${weather.windKmh != null ? ` · viento ${weather.windKmh} km/h` : ""}${weather.observedAt ? ` · ${new Date(weather.observedAt).toLocaleTimeString("es-AR", { hour: "2-digit", minute: "2-digit" })}` : ""}` : "Clima sin datos"}</Text>
+        <Text numberOfLines={navigationMode ? 1 : 2} style={styles.readoutSubtle}>{groundLabels.length ? `Suelo reportado: ${groundLabels.join(" · ")} · ubicación aproximada` : "Suelo: sin reportes recientes"}</Text>
+      </View>
+    </View>
+  </View>;
+});
 
 const styles = StyleSheet.create({
   canvas: {
     flex: 1,
   },
+  readout: { position: "absolute", bottom: 28, left: 12, right: 12, backgroundColor: "rgba(255,255,255,0.91)", borderRadius: 14, padding: 10, gap: 4 },
+  readoutRow: { flexDirection: "row", alignItems: "center", justifyContent: "space-between" },
+  readoutText: { color: "#23372D", fontSize: 11, fontWeight: "700" },
+  readoutSubtle: { color: "#46554C", fontSize: 10, lineHeight: 14 },
+  scaleBar: { height: 6, borderBottomWidth: 2, borderLeftWidth: 2, borderRightWidth: 2, borderColor: "#23372D", marginTop: 2 },
+  northArrow: { color: "#23372D", fontWeight: "900", fontSize: 15 },
+  routeLabel: { position: "absolute", paddingHorizontal: 6, paddingVertical: 3, borderRadius: 6, backgroundColor: "rgba(255,255,255,0.9)" },
+  routeLabelText: { color: "#23372D", fontWeight: "800", fontSize: 10 },
 });

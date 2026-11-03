@@ -25,13 +25,22 @@ const weatherLabels = {
   61: "Lluvia leve",
   63: "Lluvia",
   65: "Lluvia intensa",
+  56: "Llovizna helada leve",
+  57: "Llovizna helada",
+  66: "Lluvia helada leve",
+  67: "Lluvia helada",
   71: "Nieve leve",
   73: "Nieve",
   75: "Nieve intensa",
+  77: "Nieve granulada",
   80: "Chaparrones leves",
   81: "Chaparrones",
   82: "Chaparrones intensos",
   95: "Tormenta",
+  85: "Nevadas leves",
+  86: "Nevadas intensas",
+  96: "Tormenta con granizo",
+  99: "Tormenta con granizo intenso",
 };
 
 const getRiskLevel = (windKmh, rainProbability, condition) => {
@@ -69,14 +78,23 @@ const getWeatherRecommendation = (riskLevel) => {
 const mapWeatherResponse = (trail, weatherData) => {
   const current = weatherData.current || {};
   const daily = weatherData.daily || {};
+  if (![current.temperature_2m, current.wind_speed_10m, current.weather_code,
+    daily.temperature_2m_min?.[0], daily.temperature_2m_max?.[0], daily.precipitation_probability_max?.[0]].every(value => typeof value === "number" && Number.isFinite(value))) {
+    throw new Error("Pronostico incompleto");
+  }
   const condition = weatherLabels[current.weather_code] || "Condicion a confirmar";
   const windKmh = Math.round(Number(current.wind_speed_10m || 0));
   const rainProbability = Math.round(Number((daily.precipitation_probability_max || [0])[0] || 0));
   const riskLevel = getRiskLevel(windKmh, rainProbability, condition);
+  const optionalNumber = value => typeof value === "number" && Number.isFinite(value) ? value : null;
+  const observedSeconds = typeof current.time === "number" ? current.time :
+    typeof current.time === "string" && /^\d{4}-\d{2}-\d{2}T/.test(current.time)
+      ? Date.parse(`${current.time}Z`) / 1000 - (weatherData.utc_offset_seconds || 0) : NaN;
+  const observedAt = Number.isFinite(observedSeconds) ? new Date(observedSeconds * 1000).toISOString() : null;
 
   return {
     trail_id: trail.id,
-    date: current.time ? String(current.time).slice(0, 10) : new Date().toISOString().slice(0, 10),
+    date: typeof current.time === "string" ? current.time.slice(0, 10) : observedAt?.slice(0, 10) || new Date().toISOString().slice(0, 10),
     temperature_c: Math.round(Number(current.temperature_2m || 0)),
     min_temperature_c: Math.round(Number((daily.temperature_2m_min || [0])[0] || 0)),
     max_temperature_c: Math.round(Number((daily.temperature_2m_max || [0])[0] || 0)),
@@ -86,6 +104,10 @@ const mapWeatherResponse = (trail, weatherData) => {
     risk_level: riskLevel,
     recommendation: getWeatherRecommendation(riskLevel),
     source: "Open-Meteo",
+    observed_at: observedAt,
+    wind_direction_degrees: optionalNumber(current.wind_direction_10m),
+    cloud_cover_percent: optionalNumber(current.cloud_cover),
+    is_day: current.is_day === 1 ? true : current.is_day === 0 ? false : null,
   };
 };
 
@@ -136,7 +158,7 @@ router.get("/:id/weather", async (req, res, next) => {
     const params = new URLSearchParams({
       latitude: String(trail.center_lat),
       longitude: String(trail.center_lng),
-      current: "temperature_2m,weather_code,wind_speed_10m",
+      current: "temperature_2m,weather_code,wind_speed_10m,wind_direction_10m,cloud_cover,is_day",
       daily: "temperature_2m_max,temperature_2m_min,precipitation_probability_max",
       forecast_days: "1",
       timezone: "auto",

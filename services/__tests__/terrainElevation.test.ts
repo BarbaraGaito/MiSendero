@@ -52,7 +52,7 @@ describe("terrainElevation", () => {
     expect(Math.max(...gaps) - Math.min(...gaps)).toBeLessThan(0.01);
   });
 
-  test("crea una grilla cuadrada 17x17 con margen alrededor de la ruta", () => {
+  test("usa hasta 33x33 muestras reales para cubrir rutas extensas", () => {
     const route: Coordinate[] = [
       [-41.01, -71.02],
       [-41, -71],
@@ -168,7 +168,7 @@ describe("terrainElevation", () => {
     expect(first).not.toBeNull();
     expect(second).toBe(first);
     expect(first?.profile).toHaveLength(TERRAIN_PROFILE_MIN_POINTS);
-    expect(first?.grid.elevationsMeters).toHaveLength(TERRAIN_GRID_SIZE ** 2);
+    expect(first?.grid.elevationsMeters).toHaveLength(createTerrainGridCoordinates(route)!.size ** 2);
     expect(first?.source).toMatchObject({
       provider: "Open-Meteo",
       dataset: "Copernicus DEM GLO-90",
@@ -181,21 +181,22 @@ describe("terrainElevation", () => {
       TERRAIN_ELEVATION_BATCH_SIZE
     );
     expect(batchSizes.reduce((total, size) => total + size, 0)).toBe(
-      TERRAIN_PROFILE_MIN_POINTS + TERRAIN_GRID_SIZE ** 2
+      TERRAIN_PROFILE_MIN_POINTS + createTerrainGridCoordinates(route)!.size ** 2
     );
   });
 
   test("interpola bilinealmente una elevacion dentro de la grilla", () => {
+    const size = 17; // Legacy downloaded grids remain supported.
     const elevationsMeters = Array.from(
-      { length: TERRAIN_GRID_SIZE ** 2 },
+      { length: size ** 2 },
       (_, index) => {
-        const row = Math.floor(index / TERRAIN_GRID_SIZE);
-        const column = index % TERRAIN_GRID_SIZE;
+        const row = Math.floor(index / size);
+        const column = index % size;
         return row * 10 + column;
       }
     );
     const grid: TerrainElevationGrid = {
-      size: TERRAIN_GRID_SIZE,
+      size,
       center: [0.5, 0.5],
       bounds: { north: 1, south: 0, west: 0, east: 1 },
       sideLengthMeters: 1_600,

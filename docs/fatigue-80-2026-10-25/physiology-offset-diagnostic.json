@@ -1,0 +1,159 @@
+{
+  "version": 1,
+  "diagnostic_code_sha256": "c8ed17d24b3647ca1532ede0eb4b92e3b8a9ffc7aac163aff81c7d6cee0ea4a3",
+  "selection_sha256": "3779bb3c5568b55637e71c56e3465344e57bac6512dbf6311b60728957ab16e1",
+  "new_fits": 0,
+  "test_responses_inspected": false,
+  "extra_actual_fitting_reports": 56,
+  "folds": [
+    {
+      "outer_fold": 0,
+      "offset_cache_sha256": "7d541fc2345a47657003674a59dace5f2ee1741786be7570186dd448fe72eb56",
+      "cohorts": {
+        "original": {
+          "actual_report_visits": 387,
+          "target_class_absent_from_inner_fit": 4,
+          "base_mean_nll": 1.1984882602875073,
+          "fraction_base_nll_from_absent_classes": 0.2895260767948634
+        },
+        "extra": {
+          "actual_report_visits": 48,
+          "target_class_absent_from_inner_fit": 42,
+          "base_mean_nll": 28.73133608512063,
+          "fraction_base_nll_from_absent_classes": 0.9949509109072152
+        }
+      }
+    },
+    {
+      "outer_fold": 1,
+      "offset_cache_sha256": "ef46a9ae4563d4d7499c95288f95809885729a4bea6b27cc5b99a3bced92410c",
+      "cohorts": {
+        "original": {
+          "actual_report_visits": 395,
+          "target_class_absent_from_inner_fit": 4,
+          "base_mean_nll": 1.1713703714615282,
+          "fraction_base_nll_from_absent_classes": 0.2928221655725728
+        },
+        "extra": {
+          "actual_report_visits": 46,
+          "target_class_absent_from_inner_fit": 35,
+          "base_mean_nll": 25.613116261888308,
+          "fraction_base_nll_from_absent_classes": 0.9730871898286693
+        }
+      }
+    },
+    {
+      "outer_fold": 2,
+      "offset_cache_sha256": "98196f91a158474165fe0910be923dec5f36266a8aefba18d3abc72e4e34fc57",
+      "cohorts": {
+        "original": {
+          "actual_report_visits": 385,
+          "target_class_absent_from_inner_fit": 3,
+          "base_mean_nll": 1.0952015761705818,
+          "fraction_base_nll_from_absent_classes": 0.2376548325248154
+        },
+        "extra": {
+          "actual_report_visits": 41,
+          "target_class_absent_from_inner_fit": 36,
+          "base_mean_nll": 30.89130956631661,
+          "fraction_base_nll_from_absent_classes": 0.928650044496698
+        }
+      }
+    },
+    {
+      "outer_fold": 3,
+      "offset_cache_sha256": "b409c24a714746063848cdc17fe66ef194e45ec935397c695d3253d614d8192e",
+      "cohorts": {
+        "original": {
+          "actual_report_visits": 385,
+          "target_class_absent_from_inner_fit": 1,
+          "base_mean_nll": 0.9284216514999872,
+          "fraction_base_nll_from_absent_classes": 0.09546373722242041
+        },
+        "extra": {
+          "actual_report_visits": 44,
+          "target_class_absent_from_inner_fit": 33,
+          "base_mean_nll": 25.00177669870245,
+          "fraction_base_nll_from_absent_classes": 0.9701756951335812
+        }
+      }
+    },
+    {
+      "outer_fold": 4,
+      "offset_cache_sha256": "7752db8d12aac25183ac326e0202a83d66c1f6f78c203316a1583939534a118c",
+      "cohorts": {
+        "original": {
+          "actual_report_visits": 396,
+          "target_class_absent_from_inner_fit": 4,
+          "base_mean_nll": 1.2153858526654995,
+          "fraction_base_nll_from_absent_classes": 0.28089924988989046
+        },
+        "extra": {
+          "actual_report_visits": 45,
+          "target_class_absent_from_inner_fit": 34,
+          "base_mean_nll": 25.253039204735103,
+          "fraction_base_nll_from_absent_classes": 0.9754116526825485
+        }
+      }
+    }
+  ],
+  "duration_comparisons": [
+    {
+      "waveform_view": "current_with_prior_reference",
+      "extra_actual_reports": false,
+      "short_candidate": "phys-pair-002",
+      "long_candidate": "phys-pair-003",
+      "cv_80_epochs": 0.5768910560879871,
+      "cv_200_epochs": 0.5291246264392044,
+      "mean_fitting_nll_80_epochs": 0.9762181411025936,
+      "mean_fitting_nll_200_epochs": 0.5446865126901366
+    },
+    {
+      "waveform_view": "current_with_prior_reference",
+      "extra_actual_reports": true,
+      "short_candidate": "phys-pair-004",
+      "long_candidate": "phys-pair-005",
+      "cv_80_epochs": 0.5811296853189436,
+      "cv_200_epochs": 0.5496718660708432,
+      "mean_fitting_nll_80_epochs": 3.3781395184098253,
+      "mean_fitting_nll_200_epochs": 2.6514242810308803
+    },
+    {
+      "waveform_view": "current_and_prior_waveforms",
+      "extra_actual_reports": false,
+      "short_candidate": "phys-pair-006",
+      "long_candidate": "phys-pair-007",
+      "cv_80_epochs": 0.5549286229541984,
+      "cv_200_epochs": 0.5415354449472096,
+      "mean_fitting_nll_80_epochs": 0.8984440441058258,
+      "mean_fitting_nll_200_epochs": 0.4463524247783462
+    },
+    {
+      "waveform_view": "current_and_prior_waveforms",
+      "extra_actual_reports": true,
+      "short_candidate": "phys-pair-008",
+      "long_candidate": "phys-pair-009",
+      "cv_80_epochs": 0.5822277807444048,
+      "cv_200_epochs": 0.568289086872207,
+      "mean_fitting_nll_80_epochs": 3.3636463804000507,
+      "mean_fitting_nll_200_epochs": 2.5896894053291724
+    }
+  ],
+  "all_longer_fits_lower_training_nll_and_lower_cv": true,
+  "interpretation": "Longer fitting lowers actual fitting likelihood loss while all matched held-person accuracies deteriorate, consistent with overfitting. Baseline delta classes absent from an inner original-only fit receive a fixed -30 logit; additional actual questionnaires may expose this limitation. This diagnostic changes no targets, folds, metric or model and does not prove that an alternative will improve accuracy.",
+  "visit_totals": {
+    "original": {
+      "actual_report_visits_across_outer_fits": 1948,
+      "unique_actual_reports": 487,
+      "visits_with_target_class_absent_from_inner_fit": 16,
+      "unique_reports_with_target_class_absent_at_least_once": 4
+    },
+    "extra": {
+      "actual_report_visits_across_outer_fits": 224,
+      "unique_actual_reports": 56,
+      "visits_with_target_class_absent_from_inner_fit": 180,
+      "unique_reports_with_target_class_absent_at_least_once": 45
+    }
+  },
+  "scope": "Fitting visits repeat because each real report belongs to four outer fitting partitions; these counts are not additional observations or augmented training cases. Only the original 487 and actual extra fitting-person reports are inspected; original179 test labels remain untouched."
+}

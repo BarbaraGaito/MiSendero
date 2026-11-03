@@ -1,0 +1,114 @@
+{
+  "signature": {
+    "code_sha256": "aa1b8e6b93a2645929cb6af3bf75f86a5757e8287a8350679f15526d0c75f8f8",
+    "source_provenance_sha256": "1e6e850b60298e8ce19d6fb4ae36000e2da5d88548166d69c88446b13a4a628b",
+    "source_dataset_sha256": "73a0cdce8f70e54adcb2f622817181060a2486e0b78e2f270141b554ea1a018d",
+    "source_input_verification_sha256": "b6a600708051308b1a06b9b46d780411ec16356a929454d1a389f7bb400da48b",
+    "previous_selection_sha256": "65246d068ccde9841c98183dffb7a651bf93128a1708191c9de3287fe9dc4bad",
+    "previous_verification_sha256": "de77dd7db01702f0a92b4f9eaaddff95a63933025502122b551632fc5f0610d4",
+    "native_dataset_sha256": "e4de1c4ccaa8239610bd62e93bc888c1260f1f891de32b9677052d3a0e3e4d00",
+    "native_specifications": {
+      "core": {
+        "features": [
+          "prior_borg",
+          "prior_age_minutes",
+          "prior2_borg",
+          "prior2_age_minutes",
+          "prior_borg_slope",
+          "prior_in_current_task",
+          "prior_count_current_task",
+          "elapsed_minutes",
+          "cumulative_active_minutes",
+          "task_order",
+          "terrain_stairs",
+          "terrain_ramp",
+          "terrain_flat_trail"
+        ],
+        "algorithm": "mlp",
+        "target_mode": "change_from_prior",
+        "params": {
+          "hidden_layer_sizes": [
+            16,
+            8
+          ],
+          "solver": "lbfgs",
+          "alpha": 10.0,
+          "max_iter": 1000
+        }
+      },
+      "cat": {
+        "id": "catboost-023",
+        "feature_set": "history_context",
+        "features": [
+          "prior_borg",
+          "prior_age_minutes",
+          "prior2_borg",
+          "prior2_age_minutes",
+          "prior_borg_slope",
+          "prior_in_current_task",
+          "prior_count_current_task",
+          "elapsed_minutes",
+          "cumulative_active_minutes",
+          "task_order",
+          "task_feedback_first",
+          "task_feedback_total_rise",
+          "task_feedback_count",
+          "task_feedback_rate_mean",
+          "task_feedback_rate_median",
+          "task_feedback_since_last_increase",
+          "task_feedback_zero_fraction",
+          "task_feedback_linear_extrapolation",
+          "task_feedback_delta_1",
+          "task_feedback_interval_1",
+          "task_feedback_delta_2",
+          "task_feedback_interval_2",
+          "all_feedback_rate_mean",
+          "all_feedback_positive_fraction",
+          "completed_task_rise_mean",
+          "completed_task_rate_mean",
+          "previous_task_at_similar_elapsed_mean",
+          "previous_task_at_similar_elapsed_last",
+          "current_terrain"
+        ],
+        "depth": 3,
+        "l2_leaf_reg": 30.0,
+        "iterations": 900,
+        "target_mode": "change_from_prior",
+        "algorithm": "CatBoost_Ordered",
+        "learning_rate": 0.03,
+        "random_seed": 42
+      }
+    },
+    "native_catboost_selection_sha256": "254d28707e034e4663ceca9e3017d97b32622d1e1379867ec489bd8bd28392d9",
+    "public_real_data_policy_sha256": "fdfb112d20b1f22bae08032ed7d9f3d27ee784879674c32f8f65cc21fe69c028",
+    "dependency_code_sha256": {
+      "fatigue_emap_history_inputs.py": "63d0f54e5b5a936ed34bf6c4d4ddc8982bf4d4586edb0f92cf73e542a9285c20",
+      "fatigue_catboost.py": "8dac77d01b7a1ed0ef3308b63a8bf16587c1f65e6e4294b1ea8bf863cb58a1fe",
+      "fatigue_dynamics_experiment.py": "5337f883c2d861a0255a399d78b6cb159b0526e43a0d2b4091b5043ee103f596",
+      "fatigue_warm_sgd.py": "cd480a0fe2c31cc62d446525386b5c9be0adfae568ecdd1399fe85b571dd05b3",
+      "fatigue_probability.py": "8321f0dc9313bd7207508ba417a90e9b2b80ec2fb45fe2591104e60fda66125c"
+    },
+    "software_versions": {
+      "numpy": "2.5.4",
+      "pandas": "3.0.6",
+      "scipy": "1.18.1",
+      "scikit-learn": "1.9.1",
+      "catboost": "1.2.10",
+      "joblib": "1.6.0"
+    },
+    "worker_processes": 2
+  },
+  "algorithm": "svr",
+  "model_sha256": "a924c663a29116d4b09280f5d46bb2700ba730155441688e2c590039c8c9f748",
+  "source_fitting_counts": {
+    "emap": 248,
+    "worker": 253,
+    "sts": 49
+  },
+  "emap_reserved_targets_not_fitted": 57,
+  "reserved_emap_mae_descriptive_only": 1.4959893391147698,
+  "reserved_emap_rmse_descriptive_only": 2.1687785716209254,
+  "source_reserved_scores_used_for_model_selection": false,
+  "native_targets_used_for_source_fitting": 0,
+  "synthetic_rows": 0
+}

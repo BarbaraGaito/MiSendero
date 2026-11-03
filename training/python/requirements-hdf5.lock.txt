@@ -1,0 +1,3 @@
+# Official PyPI CPython 3.12 Windows x64 wheel; existing NumPy stays unchanged.
+# Install with --no-deps --require-hashes --only-binary=:all:.
+h5py==3.16.0 --hash=sha256:96b422019a1c8975c2d5dadcf61d4ba6f01c31f92bbde6e4649607885fe502d6

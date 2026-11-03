@@ -1,0 +1,407 @@
+{
+  "diagnostic": "passed",
+  "diagnostic_code_sha256": "03e849777c34f2e7e68c3c0653d925aa7d7093badf88dd9bece9fff6ca268b30",
+  "selection_sha256": "955584b56563bedfe3424bccd535f6d026aef401acc48c959368ee419a11cb9c",
+  "verification_sha256": "867a6742ea12fa8f8b4d3931c730edb82a0e27f1c0132a8f6bd0f3146eeac277",
+  "original_fitting_queries": 487,
+  "original_fitting_people": 28,
+  "paired_oof_comparisons": {
+    "core": {
+      "correct_counts": {
+        "global": 296,
+        "old_zero": 297,
+        "old_source": 296,
+        "new_zero": 297,
+        "new_source": 297
+      },
+      "new_source_vs_new_zero": {
+        "corrected": 1,
+        "spoiled": 1
+      },
+      "new_zero_vs_old_zero": {
+        "corrected": 5,
+        "spoiled": 5
+      },
+      "new_source_vs_old_source": {
+        "corrected": 3,
+        "spoiled": 2
+      },
+      "new_source_vs_global": {
+        "corrected": 3,
+        "spoiled": 2
+      }
+    },
+    "cat": {
+      "correct_counts": {
+        "global": 311,
+        "old_zero": 307,
+        "old_source": 309,
+        "new_zero": 308,
+        "new_source": 308
+      },
+      "new_source_vs_new_zero": {
+        "corrected": 1,
+        "spoiled": 1
+      },
+      "new_zero_vs_old_zero": {
+        "corrected": 2,
+        "spoiled": 1
+      },
+      "new_source_vs_old_source": {
+        "corrected": 1,
+        "spoiled": 2
+      },
+      "new_source_vs_global": {
+        "corrected": 0,
+        "spoiled": 3
+      }
+    }
+  },
+  "gate_metrics": {
+    "recent-gate-006": {
+      "member": "core",
+      "source_weight": 0.0,
+      "exact_native_cv_accuracy": 0.6099294942057091,
+      "folds": [
+        {
+          "fold": 0,
+          "fitting_inner_offset_metrics": {
+            "gate_binary_accuracy": 0.7260981912144703,
+            "gate_bce": 0.5233046056816609,
+            "uncorrected_gate_bce": 0.5299233324477897,
+            "median_absolute_logit_correction": 0.02521364763379097
+          },
+          "validation_metrics": {
+            "gate_binary_accuracy": 0.75,
+            "gate_bce": 0.4989967338062941,
+            "uncorrected_gate_bce": 0.5002185631026429,
+            "median_absolute_logit_correction": 0.03303120099008083
+          }
+        },
+        {
+          "fold": 1,
+          "fitting_inner_offset_metrics": {
+            "gate_binary_accuracy": 0.7367088607594937,
+            "gate_bce": 0.5171272321398186,
+            "uncorrected_gate_bce": 0.5237004250453463,
+            "median_absolute_logit_correction": 0.023156587034463882
+          },
+          "validation_metrics": {
+            "gate_binary_accuracy": 0.6630434782608695,
+            "gate_bce": 0.5816324900674141,
+            "uncorrected_gate_bce": 0.582479614960264,
+            "median_absolute_logit_correction": 0.01974058523774147
+          }
+        },
+        {
+          "fold": 2,
+          "fitting_inner_offset_metrics": {
+            "gate_binary_accuracy": 0.7324675324675325,
+            "gate_bce": 0.5112307437878307,
+            "uncorrected_gate_bce": 0.5187879594512909,
+            "median_absolute_logit_correction": 0.026885949075222015
+          },
+          "validation_metrics": {
+            "gate_binary_accuracy": 0.6470588235294118,
+            "gate_bce": 0.6596963991239175,
+            "uncorrected_gate_bce": 0.6485816564938548,
+            "median_absolute_logit_correction": 0.0275107454508543
+          }
+        },
+        {
+          "fold": 3,
+          "fitting_inner_offset_metrics": {
+            "gate_binary_accuracy": 0.7298701298701299,
+            "gate_bce": 0.5377734100773913,
+            "uncorrected_gate_bce": 0.5468665309139774,
+            "median_absolute_logit_correction": 0.029197100549936295
+          },
+          "validation_metrics": {
+            "gate_binary_accuracy": 0.7352941176470589,
+            "gate_bce": 0.5359337612368799,
+            "uncorrected_gate_bce": 0.5354404985589963,
+            "median_absolute_logit_correction": 0.026630818843841553
+          }
+        },
+        {
+          "fold": 4,
+          "fitting_inner_offset_metrics": {
+            "gate_binary_accuracy": 0.7146464646464646,
+            "gate_bce": 0.5571659772093579,
+            "uncorrected_gate_bce": 0.5653198396219797,
+            "median_absolute_logit_correction": 0.024551525712013245
+          },
+          "validation_metrics": {
+            "gate_binary_accuracy": 0.8021978021978022,
+            "gate_bce": 0.473771867118667,
+            "uncorrected_gate_bce": 0.4751729678603261,
+            "median_absolute_logit_correction": 0.023876015096902847
+          }
+        }
+      ],
+      "mean_fitting_gate_bce": 0.5293203937792119,
+      "mean_validation_gate_bce": 0.5500062502706344,
+      "mean_uncorrected_validation_gate_bce": 0.5483786601952169
+    },
+    "recent-gate-007": {
+      "member": "core",
+      "source_weight": 0.1,
+      "exact_native_cv_accuracy": 0.6097555811622308,
+      "folds": [
+        {
+          "fold": 0,
+          "fitting_inner_offset_metrics": {
+            "gate_binary_accuracy": 0.7260981912144703,
+            "gate_bce": 0.5238304768073434,
+            "uncorrected_gate_bce": 0.5299233324477897,
+            "median_absolute_logit_correction": 0.021065810695290565
+          },
+          "validation_metrics": {
+            "gate_binary_accuracy": 0.75,
+            "gate_bce": 0.49861861511891503,
+            "uncorrected_gate_bce": 0.5002185631026429,
+            "median_absolute_logit_correction": 0.029967883601784706
+          }
+        },
+        {
+          "fold": 1,
+          "fitting_inner_offset_metrics": {
+            "gate_binary_accuracy": 0.7367088607594937,
+            "gate_bce": 0.517774887383807,
+            "uncorrected_gate_bce": 0.5237004250453463,
+            "median_absolute_logit_correction": 0.019342368468642235
+          },
+          "validation_metrics": {
+            "gate_binary_accuracy": 0.6630434782608695,
+            "gate_bce": 0.5812914492100975,
+            "uncorrected_gate_bce": 0.582479614960264,
+            "median_absolute_logit_correction": 0.018470173701643944
+          }
+        },
+        {
+          "fold": 2,
+          "fitting_inner_offset_metrics": {
+            "gate_binary_accuracy": 0.7324675324675325,
+            "gate_bce": 0.513053775066181,
+            "uncorrected_gate_bce": 0.5187879594512909,
+            "median_absolute_logit_correction": 0.023574624210596085
+          },
+          "validation_metrics": {
+            "gate_binary_accuracy": 0.6666666666666666,
+            "gate_bce": 0.6573361097333416,
+            "uncorrected_gate_bce": 0.6485816564938548,
+            "median_absolute_logit_correction": 0.025948232039809227
+          }
+        },
+        {
+          "fold": 3,
+          "fitting_inner_offset_metrics": {
+            "gate_binary_accuracy": 0.7220779220779221,
+            "gate_bce": 0.539408873411133,
+            "uncorrected_gate_bce": 0.5468665309139774,
+            "median_absolute_logit_correction": 0.02268790267407894
+          },
+          "validation_metrics": {
+            "gate_binary_accuracy": 0.7450980392156863,
+            "gate_bce": 0.5350382587331569,
+            "uncorrected_gate_bce": 0.5354404985589963,
+            "median_absolute_logit_correction": 0.02050619013607502
+          }
+        },
+        {
+          "fold": 4,
+          "fitting_inner_offset_metrics": {
+            "gate_binary_accuracy": 0.7171717171717171,
+            "gate_bce": 0.5576421094490721,
+            "uncorrected_gate_bce": 0.5653198396219797,
+            "median_absolute_logit_correction": 0.0214708112180233
+          },
+          "validation_metrics": {
+            "gate_binary_accuracy": 0.8241758241758241,
+            "gate_bce": 0.47362265783823876,
+            "uncorrected_gate_bce": 0.4751729678603261,
+            "median_absolute_logit_correction": 0.021230870857834816
+          }
+        }
+      ],
+      "mean_fitting_gate_bce": 0.5303420244235072,
+      "mean_validation_gate_bce": 0.5491814181267499,
+      "mean_uncorrected_validation_gate_bce": 0.5483786601952169
+    },
+    "recent-gate-008": {
+      "member": "cat",
+      "source_weight": 0.0,
+      "exact_native_cv_accuracy": 0.6320898044836663,
+      "folds": [
+        {
+          "fold": 0,
+          "fitting_inner_offset_metrics": {
+            "gate_binary_accuracy": 0.7131782945736435,
+            "gate_bce": 0.5291414379625105,
+            "uncorrected_gate_bce": 0.5347539526171553,
+            "median_absolute_logit_correction": 0.02249104529619217
+          },
+          "validation_metrics": {
+            "gate_binary_accuracy": 0.75,
+            "gate_bce": 0.4963742777457,
+            "uncorrected_gate_bce": 0.49796818480045685,
+            "median_absolute_logit_correction": 0.02450828067958355
+          }
+        },
+        {
+          "fold": 1,
+          "fitting_inner_offset_metrics": {
+            "gate_binary_accuracy": 0.7468354430379747,
+            "gate_bce": 0.5076283084533381,
+            "uncorrected_gate_bce": 0.5136314196595756,
+            "median_absolute_logit_correction": 0.02895171567797661
+          },
+          "validation_metrics": {
+            "gate_binary_accuracy": 0.6413043478260869,
+            "gate_bce": 0.6160783074513575,
+            "uncorrected_gate_bce": 0.619570165962191,
+            "median_absolute_logit_correction": 0.02466029766947031
+          }
+        },
+        {
+          "fold": 2,
+          "fitting_inner_offset_metrics": {
+            "gate_binary_accuracy": 0.7116883116883117,
+            "gate_bce": 0.5155325594088022,
+            "uncorrected_gate_bce": 0.5234749421700242,
+            "median_absolute_logit_correction": 0.02485949918627739
+          },
+          "validation_metrics": {
+            "gate_binary_accuracy": 0.7156862745098039,
+            "gate_bce": 0.5150222534115382,
+            "uncorrected_gate_bce": 0.5111324017423198,
+            "median_absolute_logit_correction": 0.027882525697350502
+          }
+        },
+        {
+          "fold": 3,
+          "fitting_inner_offset_metrics": {
+            "gate_binary_accuracy": 0.7324675324675325,
+            "gate_bce": 0.5324039156391226,
+            "uncorrected_gate_bce": 0.5395835489399733,
+            "median_absolute_logit_correction": 0.028011396527290344
+          },
+          "validation_metrics": {
+            "gate_binary_accuracy": 0.7450980392156863,
+            "gate_bce": 0.5074240454045634,
+            "uncorrected_gate_bce": 0.5070580991670164,
+            "median_absolute_logit_correction": 0.02729056216776371
+          }
+        },
+        {
+          "fold": 4,
+          "fitting_inner_offset_metrics": {
+            "gate_binary_accuracy": 0.696969696969697,
+            "gate_bce": 0.5762673936609989,
+            "uncorrected_gate_bce": 0.5850104374493124,
+            "median_absolute_logit_correction": 0.027829065918922424
+          },
+          "validation_metrics": {
+            "gate_binary_accuracy": 0.7692307692307693,
+            "gate_bce": 0.4741229235207527,
+            "uncorrected_gate_bce": 0.47594969858961866,
+            "median_absolute_logit_correction": 0.02712707780301571
+          }
+        }
+      ],
+      "mean_fitting_gate_bce": 0.5321947230249544,
+      "mean_validation_gate_bce": 0.5218043615067824,
+      "mean_uncorrected_validation_gate_bce": 0.5223357100523205
+    },
+    "recent-gate-009": {
+      "member": "cat",
+      "source_weight": 0.1,
+      "exact_native_cv_accuracy": 0.6318766757539136,
+      "folds": [
+        {
+          "fold": 0,
+          "fitting_inner_offset_metrics": {
+            "gate_binary_accuracy": 0.7131782945736435,
+            "gate_bce": 0.5295979465613724,
+            "uncorrected_gate_bce": 0.5347539526171553,
+            "median_absolute_logit_correction": 0.019879575818777084
+          },
+          "validation_metrics": {
+            "gate_binary_accuracy": 0.75,
+            "gate_bce": 0.4958954341389484,
+            "uncorrected_gate_bce": 0.49796818480045685,
+            "median_absolute_logit_correction": 0.024080820381641388
+          }
+        },
+        {
+          "fold": 1,
+          "fitting_inner_offset_metrics": {
+            "gate_binary_accuracy": 0.7443037974683544,
+            "gate_bce": 0.5080994816824712,
+            "uncorrected_gate_bce": 0.5136314196595756,
+            "median_absolute_logit_correction": 0.024417545646429062
+          },
+          "validation_metrics": {
+            "gate_binary_accuracy": 0.6413043478260869,
+            "gate_bce": 0.6162693461710592,
+            "uncorrected_gate_bce": 0.619570165962191,
+            "median_absolute_logit_correction": 0.023767758160829544
+          }
+        },
+        {
+          "fold": 2,
+          "fitting_inner_offset_metrics": {
+            "gate_binary_accuracy": 0.7142857142857143,
+            "gate_bce": 0.5166077338596123,
+            "uncorrected_gate_bce": 0.5234749421700242,
+            "median_absolute_logit_correction": 0.02357407845556736
+          },
+          "validation_metrics": {
+            "gate_binary_accuracy": 0.7156862745098039,
+            "gate_bce": 0.5146020640989754,
+            "uncorrected_gate_bce": 0.5111324017423198,
+            "median_absolute_logit_correction": 0.02686733566224575
+          }
+        },
+        {
+          "fold": 3,
+          "fitting_inner_offset_metrics": {
+            "gate_binary_accuracy": 0.7298701298701299,
+            "gate_bce": 0.5336318053747215,
+            "uncorrected_gate_bce": 0.5395835489399733,
+            "median_absolute_logit_correction": 0.02070707641541958
+          },
+          "validation_metrics": {
+            "gate_binary_accuracy": 0.7647058823529411,
+            "gate_bce": 0.5063865553742001,
+            "uncorrected_gate_bce": 0.5070580991670164,
+            "median_absolute_logit_correction": 0.0212777778506279
+          }
+        },
+        {
+          "fold": 4,
+          "fitting_inner_offset_metrics": {
+            "gate_binary_accuracy": 0.6919191919191919,
+            "gate_bce": 0.576984391536756,
+            "uncorrected_gate_bce": 0.5850104374493124,
+            "median_absolute_logit_correction": 0.024194566532969475
+          },
+          "validation_metrics": {
+            "gate_binary_accuracy": 0.7692307692307693,
+            "gate_bce": 0.47477419863516873,
+            "uncorrected_gate_bce": 0.47594969858961866,
+            "median_absolute_logit_correction": 0.02065148577094078
+          }
+        }
+      ],
+      "mean_fitting_gate_bce": 0.5329842718029867,
+      "mean_validation_gate_bce": 0.5215855196836704,
+      "mean_uncorrected_validation_gate_bce": 0.5223357100523205
+    }
+  },
+  "new_predictive_estimator_fits": 0,
+  "new_test_predictions_computed": 0,
+  "test_labels_inspected": false,
+  "synthetic_rows": 0,
+  "interpretation": "Recent private native physiology did not beat the global control. Exact Borg scores and change-gate component losses are separate quantities. Fit-side metrics use the actual inner-person OOF offsets used in training. A lower fitting BCE alone is not evidence of improved generalization."
+}

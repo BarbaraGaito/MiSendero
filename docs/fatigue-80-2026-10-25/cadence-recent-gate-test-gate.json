@@ -1,0 +1,11 @@
+{
+  "evaluator_code_sha256": "c316fd9a946e784b7eefd19cc56a9e5c5243995fa849074d9b12e3a6ce838e77",
+  "selection_sha256": "955584b56563bedfe3424bccd535f6d026aef401acc48c959368ee419a11cb9c",
+  "winner_id": "recent-gate-001",
+  "best_cv_accuracy": 0.6379721574248428,
+  "minimum_cv_for_new_test_evaluation": 0.65,
+  "gate_passed": false,
+  "new_test_evaluation": null,
+  "pretest_verifier_code_sha256": "ad7ab2d23e12f56774b7d07bd14eee09a67015b4ca6904a860340ad724ddcc8c",
+  "pretest_winner_fold_artifacts_verified": 0
+}

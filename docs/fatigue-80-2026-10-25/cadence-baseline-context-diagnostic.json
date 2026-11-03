@@ -1,0 +1,994 @@
+{
+  "version": 1,
+  "screened_at": "2026-10-27T14:41:34.095183+00:00",
+  "status": "actual_baseline_context_screen_completed",
+  "code_sha256": "3f494f3326642c7e4c7a1c1610bb6bdc2196bb8a956c7e7b8206b452606abaea",
+  "association_source_provenance_sha256": "bb9ff21b6e37c59b38cc656365ce7f75153d07bcfffdba66ae68bb8c6c90f214",
+  "association_native_provenance_sha256": "634530ad8d40f76e3957ccdcd6030455a647188faa72c9616562ec8792f73628",
+  "native_reader_code_sha256": "f0ad7348a8d556638872bb9ea065b9bfdaba7e454efba2e2c0d72f8bb517a254",
+  "session_metadata_sha256": "9140e771feb8468a42ea6164055e1cd5bfd083b888abf778bc81adbb4610becc",
+  "raw_archive_sha256": "e054b4d17ef0993de70a5b5840916f45383567e081d00859cb958ed1b0e86ff7",
+  "public_real_data_policy_sha256": "fdfb112d20b1f22bae08032ed7d9f3d27ee784879674c32f8f65cc21fe69c028",
+  "source_fitting_people_rest_hr_summary": {
+    "actual_values": 124,
+    "minimum": 37.0,
+    "median": 64.0,
+    "maximum": 95.0
+  },
+  "source_fitting_current_to_rest_hr_ratio_summary": {
+    "actual_values": 976,
+    "minimum": 0.9861111111111112,
+    "median": 1.4279695139488064,
+    "maximum": 3.497777777777778
+  },
+  "source_reserved_targets_used_for_diagnostic_selection": 0,
+  "native_current_borg_used_for_diagnostic": false,
+  "native_actual_sessions": 44,
+  "native_session_baseline_observed_minutes": 199,
+  "native_session_baseline_available_sessions": 42,
+  "native_original_cases_by_partition": {
+    "fitting": {
+      "original_native_cases": 487,
+      "quantities": {
+        "session_preexercise_mean_hr_bpm": {
+          "actual_values": 472,
+          "minimum": 46.8,
+          "median": 80.8,
+          "maximum": 112.4
+        },
+        "session_preexercise_lowest_minute_hr_bpm": {
+          "actual_values": 472,
+          "minimum": 39.0,
+          "median": 76.0,
+          "maximum": 111.0
+        },
+        "current_task_preexercise_mean_hr_bpm": {
+          "actual_values": 483,
+          "minimum": 46.8,
+          "median": 88.4,
+          "maximum": 144.2
+        },
+        "current_to_task_baseline_ratio": {
+          "actual_values": 483,
+          "minimum": 0.5120481927710844,
+          "median": 1.3664596273291927,
+          "maximum": 2.3387096774193545
+        },
+        "current_to_session_mean_ratio": {
+          "actual_values": 472,
+          "minimum": 0.6064356435643564,
+          "median": 1.4824989824989825,
+          "maximum": 2.606837606837607
+        },
+        "current_to_session_lowest_ratio": {
+          "actual_values": 472,
+          "minimum": 0.6621621621621622,
+          "median": 1.5657894736842106,
+          "maximum": 3.7435897435897436
+        }
+      }
+    },
+    "reserved": {
+      "original_native_cases": 179,
+      "quantities": {
+        "session_preexercise_mean_hr_bpm": {
+          "actual_values": 164,
+          "minimum": 56.0,
+          "median": 81.0,
+          "maximum": 99.4
+        },
+        "session_preexercise_lowest_minute_hr_bpm": {
+          "actual_values": 164,
+          "minimum": 54.0,
+          "median": 79.0,
+          "maximum": 97.0
+        },
+        "current_task_preexercise_mean_hr_bpm": {
+          "actual_values": 175,
+          "minimum": 56.0,
+          "median": 84.0,
+          "maximum": 123.2
+        },
+        "current_to_task_baseline_ratio": {
+          "actual_values": 175,
+          "minimum": 0.7272727272727273,
+          "median": 1.4200477326968974,
+          "maximum": 2.4193548387096775
+        },
+        "current_to_session_mean_ratio": {
+          "actual_values": 164,
+          "minimum": 0.75,
+          "median": 1.4726631393298062,
+          "maximum": 2.6785714285714284
+        },
+        "current_to_session_lowest_ratio": {
+          "actual_values": 164,
+          "minimum": 0.7721518987341772,
+          "median": 1.5312548835755586,
+          "maximum": 2.7777777777777777
+        }
+      }
+    }
+  },
+  "native_fitting_task_minus_session_mean_hr_bpm": {
+    "actual_values": 472,
+    "minimum": -14.799999999999997,
+    "median": 2.799999999999997,
+    "maximum": 58.599999999999994
+  },
+  "native_fitting_comparable_cases_task_baseline_above_session_by_more_than10bpm": 128,
+  "native_fitting_comparable_cases": 472,
+  "all_candidate_native_baseline_minutes_precede_first_task": true,
+  "original_native_cases_dropped": 0,
+  "original_native_inputs_overwritten": false,
+  "synthetic_values": 0,
+  "model_fitting_started": false,
+  "new_input_cache_and_independent_raw_window_audit_required": true,
+  "interpretation": "Source resting HR precedes the full treadmill protocol; existing native mean precedes each task and may reflect completed exercise. These actual session-before-first-task mean/minimum candidates investigate that context difference without using native Borg labels. Native pre-task posture remains undocumented, so no claim of identical seated-rest assays or guaranteed model improvement is made. All missing session baselines must remain unavailable and all487/179 native cases retained.",
+  "session_lineage": [
+    {
+      "group_key": "0ccf866370f0372be5d2cb3a",
+      "session_start": "2025-06-03T18:40:00+00:00",
+      "first_task_start": "2025-06-03T18:43:00+00:00",
+      "baseline_lower_bound": "2025-06-03T18:40:00+00:00",
+      "actual_complete_minutes": 3,
+      "actual_minute_starts": [
+        "2025-06-03T18:40:00+00:00",
+        "2025-06-03T18:41:00+00:00",
+        "2025-06-03T18:42:00+00:00"
+      ],
+      "session_preexercise_mean_hr_bpm": 71.0,
+      "session_preexercise_lowest_minute_hr_bpm": 70.0,
+      "source_members": [
+        "Physiological Data/2025-06-03/p0-3YK9R1L11Y/digital_biomarkers/aggregated_per_minute/1-1-p0_2025-06-03_pulse-rate.csv"
+      ],
+      "partition": "fitting"
+    },
+    {
+      "group_key": "25352dd62e1d024180eed59d",
+      "session_start": "2025-06-04T15:43:00+00:00",
+      "first_task_start": "2025-06-04T15:43:00+00:00",
+      "baseline_lower_bound": "2025-06-04T15:43:00+00:00",
+      "actual_complete_minutes": 0,
+      "actual_minute_starts": [],
+      "session_preexercise_mean_hr_bpm": null,
+      "session_preexercise_lowest_minute_hr_bpm": null,
+      "source_members": [
+        "Physiological Data/2025-06-04/p1-3YK9R1L11Y/digital_biomarkers/aggregated_per_minute/1-1-p1_2025-06-04_pulse-rate.csv"
+      ],
+      "partition": "fitting"
+    },
+    {
+      "group_key": "4c36adaeb8fbf28f72434109",
+      "session_start": "2025-06-04T20:00:00+00:00",
+      "first_task_start": "2025-06-04T20:00:00+00:00",
+      "baseline_lower_bound": "2025-06-04T20:00:00+00:00",
+      "actual_complete_minutes": 0,
+      "actual_minute_starts": [],
+      "session_preexercise_mean_hr_bpm": null,
+      "session_preexercise_lowest_minute_hr_bpm": null,
+      "source_members": [
+        "Physiological Data/2025-06-04/p2-3YK9R1L11Y/digital_biomarkers/aggregated_per_minute/1-1-p2_2025-06-04_pulse-rate.csv"
+      ],
+      "partition": "reserved"
+    },
+    {
+      "group_key": "dca18aa29c6cea11805a03bc",
+      "session_start": "2025-08-19T16:10:00+00:00",
+      "first_task_start": "2025-08-19T16:15:00+00:00",
+      "baseline_lower_bound": "2025-08-19T16:10:00+00:00",
+      "actual_complete_minutes": 5,
+      "actual_minute_starts": [
+        "2025-08-19T16:10:00+00:00",
+        "2025-08-19T16:11:00+00:00",
+        "2025-08-19T16:12:00+00:00",
+        "2025-08-19T16:13:00+00:00",
+        "2025-08-19T16:14:00+00:00"
+      ],
+      "session_preexercise_mean_hr_bpm": 96.6,
+      "session_preexercise_lowest_minute_hr_bpm": 87.0,
+      "source_members": [
+        "Physiological Data/2025-08-19/p3-3YK9T1L1JF/digital_biomarkers/aggregated_per_minute/1-1-p3_2025-08-19_pulse-rate.csv"
+      ],
+      "partition": "fitting"
+    },
+    {
+      "group_key": "e35b505ef7eb740ddcc87d98",
+      "session_start": "2025-08-20T21:15:00+00:00",
+      "first_task_start": "2025-08-20T21:25:00+00:00",
+      "baseline_lower_bound": "2025-08-20T21:20:00+00:00",
+      "actual_complete_minutes": 5,
+      "actual_minute_starts": [
+        "2025-08-20T21:20:00+00:00",
+        "2025-08-20T21:21:00+00:00",
+        "2025-08-20T21:22:00+00:00",
+        "2025-08-20T21:23:00+00:00",
+        "2025-08-20T21:24:00+00:00"
+      ],
+      "session_preexercise_mean_hr_bpm": 98.4,
+      "session_preexercise_lowest_minute_hr_bpm": 96.0,
+      "source_members": [
+        "Physiological Data/2025-08-20/p4-3YK9T1L1JF/digital_biomarkers/aggregated_per_minute/1-1-p4_2025-08-20_pulse-rate.csv"
+      ],
+      "partition": "fitting"
+    },
+    {
+      "group_key": "0a0ee34c6787105fe79acba7",
+      "session_start": "2025-08-20T23:05:00+00:00",
+      "first_task_start": "2025-08-20T23:10:00+00:00",
+      "baseline_lower_bound": "2025-08-20T23:05:00+00:00",
+      "actual_complete_minutes": 4,
+      "actual_minute_starts": [
+        "2025-08-20T23:06:00+00:00",
+        "2025-08-20T23:07:00+00:00",
+        "2025-08-20T23:08:00+00:00",
+        "2025-08-20T23:09:00+00:00"
+      ],
+      "session_preexercise_mean_hr_bpm": 70.0,
+      "session_preexercise_lowest_minute_hr_bpm": 68.0,
+      "source_members": [
+        "Physiological Data/2025-08-20/p5-3YK9T1L1JF/digital_biomarkers/aggregated_per_minute/1-1-p5_2025-08-20_pulse-rate.csv",
+        "Physiological Data/2025-08-21/p5-3YK9T1L1JF/digital_biomarkers/aggregated_per_minute/1-1-p5_2025-08-21_pulse-rate.csv"
+      ],
+      "partition": "fitting"
+    },
+    {
+      "group_key": "db7fc239f4a7453ddeb0247f",
+      "session_start": "2025-08-22T21:19:00+00:00",
+      "first_task_start": "2025-08-22T21:29:00+00:00",
+      "baseline_lower_bound": "2025-08-22T21:24:00+00:00",
+      "actual_complete_minutes": 5,
+      "actual_minute_starts": [
+        "2025-08-22T21:24:00+00:00",
+        "2025-08-22T21:25:00+00:00",
+        "2025-08-22T21:26:00+00:00",
+        "2025-08-22T21:27:00+00:00",
+        "2025-08-22T21:28:00+00:00"
+      ],
+      "session_preexercise_mean_hr_bpm": 88.6,
+      "session_preexercise_lowest_minute_hr_bpm": 86.0,
+      "source_members": [
+        "Physiological Data/2025-08-22/p6-3YK9R1L11Y/digital_biomarkers/aggregated_per_minute/1-1-p6_2025-08-22_pulse-rate.csv"
+      ],
+      "partition": "fitting"
+    },
+    {
+      "group_key": "4273a0210ad19a06d82b1d4f",
+      "session_start": "2025-08-25T16:54:00+00:00",
+      "first_task_start": "2025-08-25T17:05:00+00:00",
+      "baseline_lower_bound": "2025-08-25T17:00:00+00:00",
+      "actual_complete_minutes": 5,
+      "actual_minute_starts": [
+        "2025-08-25T17:00:00+00:00",
+        "2025-08-25T17:01:00+00:00",
+        "2025-08-25T17:02:00+00:00",
+        "2025-08-25T17:03:00+00:00",
+        "2025-08-25T17:04:00+00:00"
+      ],
+      "session_preexercise_mean_hr_bpm": 98.2,
+      "session_preexercise_lowest_minute_hr_bpm": 95.0,
+      "source_members": [
+        "Physiological Data/2025-08-25/p7-3YK9R1L11Y/digital_biomarkers/aggregated_per_minute/1-1-p7_2025-08-25_pulse-rate.csv"
+      ],
+      "partition": "fitting"
+    },
+    {
+      "group_key": "71d0357bce56370270979e77",
+      "session_start": "2025-08-25T21:32:00+00:00",
+      "first_task_start": "2025-08-25T21:44:00+00:00",
+      "baseline_lower_bound": "2025-08-25T21:39:00+00:00",
+      "actual_complete_minutes": 5,
+      "actual_minute_starts": [
+        "2025-08-25T21:39:00+00:00",
+        "2025-08-25T21:40:00+00:00",
+        "2025-08-25T21:41:00+00:00",
+        "2025-08-25T21:42:00+00:00",
+        "2025-08-25T21:43:00+00:00"
+      ],
+      "session_preexercise_mean_hr_bpm": 92.8,
+      "session_preexercise_lowest_minute_hr_bpm": 83.0,
+      "source_members": [
+        "Physiological Data/2025-08-25/p8-3YK9R1L11Y/digital_biomarkers/aggregated_per_minute/1-1-p8_2025-08-25_pulse-rate.csv"
+      ],
+      "partition": "fitting"
+    },
+    {
+      "group_key": "ce35e3b57b1434554447e8d8",
+      "session_start": "2025-08-26T21:00:00+00:00",
+      "first_task_start": "2025-08-26T21:10:00+00:00",
+      "baseline_lower_bound": "2025-08-26T21:05:00+00:00",
+      "actual_complete_minutes": 5,
+      "actual_minute_starts": [
+        "2025-08-26T21:05:00+00:00",
+        "2025-08-26T21:06:00+00:00",
+        "2025-08-26T21:07:00+00:00",
+        "2025-08-26T21:08:00+00:00",
+        "2025-08-26T21:09:00+00:00"
+      ],
+      "session_preexercise_mean_hr_bpm": 88.2,
+      "session_preexercise_lowest_minute_hr_bpm": 84.0,
+      "source_members": [
+        "Physiological Data/2025-08-26/p9-3YK9R1L11Y/digital_biomarkers/aggregated_per_minute/1-1-p9_2025-08-26_pulse-rate.csv"
+      ],
+      "partition": "fitting"
+    },
+    {
+      "group_key": "98287b3ebd8db6ca10315d4f",
+      "session_start": "2025-09-02T16:19:00+00:00",
+      "first_task_start": "2025-09-02T16:30:00+00:00",
+      "baseline_lower_bound": "2025-09-02T16:25:00+00:00",
+      "actual_complete_minutes": 5,
+      "actual_minute_starts": [
+        "2025-09-02T16:25:00+00:00",
+        "2025-09-02T16:26:00+00:00",
+        "2025-09-02T16:27:00+00:00",
+        "2025-09-02T16:28:00+00:00",
+        "2025-09-02T16:29:00+00:00"
+      ],
+      "session_preexercise_mean_hr_bpm": 56.0,
+      "session_preexercise_lowest_minute_hr_bpm": 54.0,
+      "source_members": [
+        "Physiological Data/2025-09-02/p10-3YK9R1L11Y/digital_biomarkers/aggregated_per_minute/1-1-p10_2025-09-02_pulse-rate.csv"
+      ],
+      "partition": "reserved"
+    },
+    {
+      "group_key": "e35b505ef7eb740ddcc87d98",
+      "session_start": "2025-09-02T00:11:00+00:00",
+      "first_task_start": "2025-09-02T00:21:00+00:00",
+      "baseline_lower_bound": "2025-09-02T00:16:00+00:00",
+      "actual_complete_minutes": 5,
+      "actual_minute_starts": [
+        "2025-09-02T00:16:00+00:00",
+        "2025-09-02T00:17:00+00:00",
+        "2025-09-02T00:18:00+00:00",
+        "2025-09-02T00:19:00+00:00",
+        "2025-09-02T00:20:00+00:00"
+      ],
+      "session_preexercise_mean_hr_bpm": 70.0,
+      "session_preexercise_lowest_minute_hr_bpm": 63.0,
+      "source_members": [
+        "Physiological Data/2025-09-02/p4-3YK9R1L11Y/digital_biomarkers/aggregated_per_minute/1-1-p4_2025-09-02_pulse-rate.csv"
+      ],
+      "partition": "fitting"
+    },
+    {
+      "group_key": "e35b505ef7eb740ddcc87d98",
+      "session_start": "2025-09-02T23:50:00+00:00",
+      "first_task_start": "2025-09-03T00:02:00+00:00",
+      "baseline_lower_bound": "2025-09-02T23:57:00+00:00",
+      "actual_complete_minutes": 2,
+      "actual_minute_starts": [
+        "2025-09-03T00:00:00+00:00",
+        "2025-09-03T00:01:00+00:00"
+      ],
+      "session_preexercise_mean_hr_bpm": 71.5,
+      "session_preexercise_lowest_minute_hr_bpm": 69.0,
+      "source_members": [
+        "Physiological Data/2025-09-03/p4-3YK9R1L11Y/digital_biomarkers/aggregated_per_minute/1-1-p4_2025-09-03_pulse-rate.csv"
+      ],
+      "partition": "fitting"
+    },
+    {
+      "group_key": "22fa7ef9f8fd626c3143e18e",
+      "session_start": "2025-09-04T14:30:00+00:00",
+      "first_task_start": "2025-09-04T14:40:00+00:00",
+      "baseline_lower_bound": "2025-09-04T14:35:00+00:00",
+      "actual_complete_minutes": 5,
+      "actual_minute_starts": [
+        "2025-09-04T14:35:00+00:00",
+        "2025-09-04T14:36:00+00:00",
+        "2025-09-04T14:37:00+00:00",
+        "2025-09-04T14:38:00+00:00",
+        "2025-09-04T14:39:00+00:00"
+      ],
+      "session_preexercise_mean_hr_bpm": 70.6,
+      "session_preexercise_lowest_minute_hr_bpm": 64.0,
+      "source_members": [
+        "Physiological Data/2025-09-04/p11-3YK9R1L11Y/digital_biomarkers/aggregated_per_minute/1-1-p11_2025-09-04_pulse-rate.csv"
+      ],
+      "partition": "reserved"
+    },
+    {
+      "group_key": "e35b505ef7eb740ddcc87d98",
+      "session_start": "2025-09-03T23:54:00+00:00",
+      "first_task_start": "2025-09-04T00:05:00+00:00",
+      "baseline_lower_bound": "2025-09-04T00:00:00+00:00",
+      "actual_complete_minutes": 5,
+      "actual_minute_starts": [
+        "2025-09-04T00:00:00+00:00",
+        "2025-09-04T00:01:00+00:00",
+        "2025-09-04T00:02:00+00:00",
+        "2025-09-04T00:03:00+00:00",
+        "2025-09-04T00:04:00+00:00"
+      ],
+      "session_preexercise_mean_hr_bpm": 78.6,
+      "session_preexercise_lowest_minute_hr_bpm": 65.0,
+      "source_members": [
+        "Physiological Data/2025-09-04/p4-3YK9R1L11Y/digital_biomarkers/aggregated_per_minute/1-1-p4_2025-09-04_pulse-rate.csv"
+      ],
+      "partition": "fitting"
+    },
+    {
+      "group_key": "9a1630301f5ad4d11cf16274",
+      "session_start": "2025-09-05T16:15:00+00:00",
+      "first_task_start": "2025-09-05T16:25:00+00:00",
+      "baseline_lower_bound": "2025-09-05T16:20:00+00:00",
+      "actual_complete_minutes": 5,
+      "actual_minute_starts": [
+        "2025-09-05T16:20:00+00:00",
+        "2025-09-05T16:21:00+00:00",
+        "2025-09-05T16:22:00+00:00",
+        "2025-09-05T16:23:00+00:00",
+        "2025-09-05T16:24:00+00:00"
+      ],
+      "session_preexercise_mean_hr_bpm": 89.6,
+      "session_preexercise_lowest_minute_hr_bpm": 87.0,
+      "source_members": [
+        "Physiological Data/2025-09-05/p12-3YK9R1L11Y/digital_biomarkers/aggregated_per_minute/1-1-p12_2025-09-05_pulse-rate.csv"
+      ],
+      "partition": "fitting"
+    },
+    {
+      "group_key": "231d97a8e6bfb511b0a3a934",
+      "session_start": "2025-09-05T22:00:00+00:00",
+      "first_task_start": "2025-09-05T22:10:00+00:00",
+      "baseline_lower_bound": "2025-09-05T22:05:00+00:00",
+      "actual_complete_minutes": 5,
+      "actual_minute_starts": [
+        "2025-09-05T22:05:00+00:00",
+        "2025-09-05T22:06:00+00:00",
+        "2025-09-05T22:07:00+00:00",
+        "2025-09-05T22:08:00+00:00",
+        "2025-09-05T22:09:00+00:00"
+      ],
+      "session_preexercise_mean_hr_bpm": 78.4,
+      "session_preexercise_lowest_minute_hr_bpm": 76.0,
+      "source_members": [
+        "Physiological Data/2025-09-05/p13-3YK9R1L11Y/digital_biomarkers/aggregated_per_minute/1-1-p13_2025-09-05_pulse-rate.csv"
+      ],
+      "partition": "fitting"
+    },
+    {
+      "group_key": "e35b505ef7eb740ddcc87d98",
+      "session_start": "2025-09-04T23:54:00+00:00",
+      "first_task_start": "2025-09-05T00:04:00+00:00",
+      "baseline_lower_bound": "2025-09-04T23:59:00+00:00",
+      "actual_complete_minutes": 4,
+      "actual_minute_starts": [
+        "2025-09-05T00:00:00+00:00",
+        "2025-09-05T00:01:00+00:00",
+        "2025-09-05T00:02:00+00:00",
+        "2025-09-05T00:03:00+00:00"
+      ],
+      "session_preexercise_mean_hr_bpm": 67.5,
+      "session_preexercise_lowest_minute_hr_bpm": 63.0,
+      "source_members": [
+        "Physiological Data/2025-09-05/p4-3YK9R1L11Y/digital_biomarkers/aggregated_per_minute/1-1-p4_2025-09-05_pulse-rate.csv"
+      ],
+      "partition": "fitting"
+    },
+    {
+      "group_key": "30c6e174b301c860b8784867",
+      "session_start": "2025-09-08T22:00:00+00:00",
+      "first_task_start": "2025-09-08T22:15:00+00:00",
+      "baseline_lower_bound": "2025-09-08T22:10:00+00:00",
+      "actual_complete_minutes": 4,
+      "actual_minute_starts": [
+        "2025-09-08T22:10:00+00:00",
+        "2025-09-08T22:11:00+00:00",
+        "2025-09-08T22:12:00+00:00",
+        "2025-09-08T22:14:00+00:00"
+      ],
+      "session_preexercise_mean_hr_bpm": 80.0,
+      "session_preexercise_lowest_minute_hr_bpm": 79.0,
+      "source_members": [
+        "Physiological Data/2025-09-08/p14-3YK9T1L1KP/digital_biomarkers/aggregated_per_minute/1-1-p14_2025-09-08_pulse-rate.csv"
+      ],
+      "partition": "reserved"
+    },
+    {
+      "group_key": "142b8c5d6cfbed3bfc00a53d",
+      "session_start": "2025-09-09T14:18:00+00:00",
+      "first_task_start": "2025-09-09T14:28:00+00:00",
+      "baseline_lower_bound": "2025-09-09T14:23:00+00:00",
+      "actual_complete_minutes": 5,
+      "actual_minute_starts": [
+        "2025-09-09T14:23:00+00:00",
+        "2025-09-09T14:24:00+00:00",
+        "2025-09-09T14:25:00+00:00",
+        "2025-09-09T14:26:00+00:00",
+        "2025-09-09T14:27:00+00:00"
+      ],
+      "session_preexercise_mean_hr_bpm": 77.4,
+      "session_preexercise_lowest_minute_hr_bpm": 70.0,
+      "source_members": [
+        "Physiological Data/2025-09-09/p15-3YK9T1L1KP/digital_biomarkers/aggregated_per_minute/1-1-p15_2025-09-09_pulse-rate.csv"
+      ],
+      "partition": "fitting"
+    },
+    {
+      "group_key": "20767fbc330d3ffc115b620f",
+      "session_start": "2025-09-09T17:20:00+00:00",
+      "first_task_start": "2025-09-09T17:30:00+00:00",
+      "baseline_lower_bound": "2025-09-09T17:25:00+00:00",
+      "actual_complete_minutes": 4,
+      "actual_minute_starts": [
+        "2025-09-09T17:25:00+00:00",
+        "2025-09-09T17:26:00+00:00",
+        "2025-09-09T17:27:00+00:00",
+        "2025-09-09T17:28:00+00:00"
+      ],
+      "session_preexercise_mean_hr_bpm": 91.0,
+      "session_preexercise_lowest_minute_hr_bpm": 88.0,
+      "source_members": [
+        "Physiological Data/2025-09-09/p16-3YK9T1L1KP/digital_biomarkers/aggregated_per_minute/1-1-p16_2025-09-09_pulse-rate.csv"
+      ],
+      "partition": "fitting"
+    },
+    {
+      "group_key": "d786838cdaac74e32dbc386c",
+      "session_start": "2025-09-09T20:19:00+00:00",
+      "first_task_start": "2025-09-09T20:29:00+00:00",
+      "baseline_lower_bound": "2025-09-09T20:24:00+00:00",
+      "actual_complete_minutes": 5,
+      "actual_minute_starts": [
+        "2025-09-09T20:24:00+00:00",
+        "2025-09-09T20:25:00+00:00",
+        "2025-09-09T20:26:00+00:00",
+        "2025-09-09T20:27:00+00:00",
+        "2025-09-09T20:28:00+00:00"
+      ],
+      "session_preexercise_mean_hr_bpm": 73.0,
+      "session_preexercise_lowest_minute_hr_bpm": 57.0,
+      "source_members": [
+        "Physiological Data/2025-09-09/p17-3YK9T1L1KP/digital_biomarkers/aggregated_per_minute/1-1-p17_2025-09-09_pulse-rate.csv"
+      ],
+      "partition": "fitting"
+    },
+    {
+      "group_key": "4ea53271d8843ade2eb75345",
+      "session_start": "2025-09-10T14:18:00+00:00",
+      "first_task_start": "2025-09-10T14:28:00+00:00",
+      "baseline_lower_bound": "2025-09-10T14:23:00+00:00",
+      "actual_complete_minutes": 5,
+      "actual_minute_starts": [
+        "2025-09-10T14:23:00+00:00",
+        "2025-09-10T14:24:00+00:00",
+        "2025-09-10T14:25:00+00:00",
+        "2025-09-10T14:26:00+00:00",
+        "2025-09-10T14:27:00+00:00"
+      ],
+      "session_preexercise_mean_hr_bpm": 46.8,
+      "session_preexercise_lowest_minute_hr_bpm": 45.0,
+      "source_members": [
+        "Physiological Data/2025-09-10/p18-3YK9T1L1KP/digital_biomarkers/aggregated_per_minute/1-1-p18_2025-09-10_pulse-rate.csv"
+      ],
+      "partition": "fitting"
+    },
+    {
+      "group_key": "62d474a529abadaa4b973fa1",
+      "session_start": "2025-09-10T14:18:00+00:00",
+      "first_task_start": "2025-09-10T14:28:00+00:00",
+      "baseline_lower_bound": "2025-09-10T14:23:00+00:00",
+      "actual_complete_minutes": 5,
+      "actual_minute_starts": [
+        "2025-09-10T14:23:00+00:00",
+        "2025-09-10T14:24:00+00:00",
+        "2025-09-10T14:25:00+00:00",
+        "2025-09-10T14:26:00+00:00",
+        "2025-09-10T14:27:00+00:00"
+      ],
+      "session_preexercise_mean_hr_bpm": 81.0,
+      "session_preexercise_lowest_minute_hr_bpm": 78.0,
+      "source_members": [
+        "Physiological Data/2025-09-10/p19-3YK9R1L11Y/digital_biomarkers/aggregated_per_minute/1-1-p19_2025-09-10_pulse-rate.csv"
+      ],
+      "partition": "reserved"
+    },
+    {
+      "group_key": "6fb57c0483be1235bb12fd53",
+      "session_start": "2025-09-10T16:12:00+00:00",
+      "first_task_start": "2025-09-10T16:24:00+00:00",
+      "baseline_lower_bound": "2025-09-10T16:19:00+00:00",
+      "actual_complete_minutes": 5,
+      "actual_minute_starts": [
+        "2025-09-10T16:19:00+00:00",
+        "2025-09-10T16:20:00+00:00",
+        "2025-09-10T16:21:00+00:00",
+        "2025-09-10T16:22:00+00:00",
+        "2025-09-10T16:23:00+00:00"
+      ],
+      "session_preexercise_mean_hr_bpm": 68.0,
+      "session_preexercise_lowest_minute_hr_bpm": 63.0,
+      "source_members": [
+        "Physiological Data/2025-09-10/p20-3YK9T1L1KP/digital_biomarkers/aggregated_per_minute/1-1-p20_2025-09-10_pulse-rate.csv"
+      ],
+      "partition": "fitting"
+    },
+    {
+      "group_key": "974234a91f6c403ca2a9f89b",
+      "session_start": "2025-09-11T23:03:00+00:00",
+      "first_task_start": "2025-09-11T23:14:00+00:00",
+      "baseline_lower_bound": "2025-09-11T23:09:00+00:00",
+      "actual_complete_minutes": 5,
+      "actual_minute_starts": [
+        "2025-09-11T23:09:00+00:00",
+        "2025-09-11T23:10:00+00:00",
+        "2025-09-11T23:11:00+00:00",
+        "2025-09-11T23:12:00+00:00",
+        "2025-09-11T23:13:00+00:00"
+      ],
+      "session_preexercise_mean_hr_bpm": 75.6,
+      "session_preexercise_lowest_minute_hr_bpm": 73.0,
+      "source_members": [
+        "Physiological Data/2025-09-11/p21-3YK9R1L11Y/digital_biomarkers/aggregated_per_minute/1-1-p21_2025-09-11_pulse-rate.csv",
+        "Physiological Data/2025-09-12/p21-3YK9R1L11Y/digital_biomarkers/aggregated_per_minute/1-1-p21_2025-09-12_pulse-rate.csv"
+      ],
+      "partition": "reserved"
+    },
+    {
+      "group_key": "ff4b7b1eb61e9fef8c4b9fe5",
+      "session_start": "2025-09-11T23:03:00+00:00",
+      "first_task_start": "2025-09-11T23:14:00+00:00",
+      "baseline_lower_bound": "2025-09-11T23:09:00+00:00",
+      "actual_complete_minutes": 5,
+      "actual_minute_starts": [
+        "2025-09-11T23:09:00+00:00",
+        "2025-09-11T23:10:00+00:00",
+        "2025-09-11T23:11:00+00:00",
+        "2025-09-11T23:12:00+00:00",
+        "2025-09-11T23:13:00+00:00"
+      ],
+      "session_preexercise_mean_hr_bpm": 96.0,
+      "session_preexercise_lowest_minute_hr_bpm": 93.0,
+      "source_members": [
+        "Physiological Data/2025-09-11/p22-3YK9T1L1KP/digital_biomarkers/aggregated_per_minute/1-1-p22_2025-09-11_pulse-rate.csv",
+        "Physiological Data/2025-09-12/p22-3YK9T1L1KP/digital_biomarkers/aggregated_per_minute/1-1-p22_2025-09-12_pulse-rate.csv"
+      ],
+      "partition": "reserved"
+    },
+    {
+      "group_key": "444a308f254ec7e6c71aec90",
+      "session_start": "2025-09-12T15:05:00+00:00",
+      "first_task_start": "2025-09-12T15:15:00+00:00",
+      "baseline_lower_bound": "2025-09-12T15:10:00+00:00",
+      "actual_complete_minutes": 5,
+      "actual_minute_starts": [
+        "2025-09-12T15:10:00+00:00",
+        "2025-09-12T15:11:00+00:00",
+        "2025-09-12T15:12:00+00:00",
+        "2025-09-12T15:13:00+00:00",
+        "2025-09-12T15:14:00+00:00"
+      ],
+      "session_preexercise_mean_hr_bpm": 87.8,
+      "session_preexercise_lowest_minute_hr_bpm": 83.0,
+      "source_members": [
+        "Physiological Data/2025-09-12/p23-3YK9R1L11Y/digital_biomarkers/aggregated_per_minute/1-1-p23_2025-09-12_pulse-rate.csv"
+      ],
+      "partition": "fitting"
+    },
+    {
+      "group_key": "7de23d95cd13b66d4e6ede0b",
+      "session_start": "2025-09-12T15:05:00+00:00",
+      "first_task_start": "2025-09-12T15:15:00+00:00",
+      "baseline_lower_bound": "2025-09-12T15:10:00+00:00",
+      "actual_complete_minutes": 5,
+      "actual_minute_starts": [
+        "2025-09-12T15:10:00+00:00",
+        "2025-09-12T15:11:00+00:00",
+        "2025-09-12T15:12:00+00:00",
+        "2025-09-12T15:13:00+00:00",
+        "2025-09-12T15:14:00+00:00"
+      ],
+      "session_preexercise_mean_hr_bpm": 82.4,
+      "session_preexercise_lowest_minute_hr_bpm": 79.0,
+      "source_members": [
+        "Physiological Data/2025-09-12/p24-3YK9T1L1KP/digital_biomarkers/aggregated_per_minute/1-1-p24_2025-09-12_pulse-rate.csv"
+      ],
+      "partition": "reserved"
+    },
+    {
+      "group_key": "e35d6551a0704c796b4c96c1",
+      "session_start": "2025-09-12T17:00:00+00:00",
+      "first_task_start": "2025-09-12T17:12:00+00:00",
+      "baseline_lower_bound": "2025-09-12T17:07:00+00:00",
+      "actual_complete_minutes": 4,
+      "actual_minute_starts": [
+        "2025-09-12T17:07:00+00:00",
+        "2025-09-12T17:09:00+00:00",
+        "2025-09-12T17:10:00+00:00",
+        "2025-09-12T17:11:00+00:00"
+      ],
+      "session_preexercise_mean_hr_bpm": 79.5,
+      "session_preexercise_lowest_minute_hr_bpm": 77.0,
+      "source_members": [
+        "Physiological Data/2025-09-12/p25-3YK9R1L11Y/digital_biomarkers/aggregated_per_minute/1-1-p25_2025-09-12_pulse-rate.csv"
+      ],
+      "partition": "reserved"
+    },
+    {
+      "group_key": "769cb9af2cbe7737fee8fe40",
+      "session_start": "2025-09-12T17:00:00+00:00",
+      "first_task_start": "2025-09-12T17:12:00+00:00",
+      "baseline_lower_bound": "2025-09-12T17:07:00+00:00",
+      "actual_complete_minutes": 5,
+      "actual_minute_starts": [
+        "2025-09-12T17:07:00+00:00",
+        "2025-09-12T17:08:00+00:00",
+        "2025-09-12T17:09:00+00:00",
+        "2025-09-12T17:10:00+00:00",
+        "2025-09-12T17:11:00+00:00"
+      ],
+      "session_preexercise_mean_hr_bpm": 90.6,
+      "session_preexercise_lowest_minute_hr_bpm": 88.0,
+      "source_members": [
+        "Physiological Data/2025-09-12/p26-3YK9T1L1KP/digital_biomarkers/aggregated_per_minute/1-1-p26_2025-09-12_pulse-rate.csv"
+      ],
+      "partition": "fitting"
+    },
+    {
+      "group_key": "c70691707725cc282d16f43c",
+      "session_start": "2025-09-12T20:07:00+00:00",
+      "first_task_start": "2025-09-12T20:17:00+00:00",
+      "baseline_lower_bound": "2025-09-12T20:12:00+00:00",
+      "actual_complete_minutes": 5,
+      "actual_minute_starts": [
+        "2025-09-12T20:12:00+00:00",
+        "2025-09-12T20:13:00+00:00",
+        "2025-09-12T20:14:00+00:00",
+        "2025-09-12T20:15:00+00:00",
+        "2025-09-12T20:16:00+00:00"
+      ],
+      "session_preexercise_mean_hr_bpm": 71.4,
+      "session_preexercise_lowest_minute_hr_bpm": 67.0,
+      "source_members": [
+        "Physiological Data/2025-09-12/p27-3YK9R1L11Y/digital_biomarkers/aggregated_per_minute/1-1-p27_2025-09-12_pulse-rate.csv"
+      ],
+      "partition": "fitting"
+    },
+    {
+      "group_key": "1aaba97325bd814ce9733ce9",
+      "session_start": "2025-09-12T20:07:00+00:00",
+      "first_task_start": "2025-09-12T20:17:00+00:00",
+      "baseline_lower_bound": "2025-09-12T20:12:00+00:00",
+      "actual_complete_minutes": 5,
+      "actual_minute_starts": [
+        "2025-09-12T20:12:00+00:00",
+        "2025-09-12T20:13:00+00:00",
+        "2025-09-12T20:14:00+00:00",
+        "2025-09-12T20:15:00+00:00",
+        "2025-09-12T20:16:00+00:00"
+      ],
+      "session_preexercise_mean_hr_bpm": 99.2,
+      "session_preexercise_lowest_minute_hr_bpm": 94.0,
+      "source_members": [
+        "Physiological Data/2025-09-12/p28-3YK9T1L1KP/digital_biomarkers/aggregated_per_minute/1-1-p28_2025-09-12_pulse-rate.csv"
+      ],
+      "partition": "reserved"
+    },
+    {
+      "group_key": "2048eb1b6ea42a84b275b927",
+      "session_start": "2025-09-15T20:12:00+00:00",
+      "first_task_start": "2025-09-15T20:22:00+00:00",
+      "baseline_lower_bound": "2025-09-15T20:17:00+00:00",
+      "actual_complete_minutes": 5,
+      "actual_minute_starts": [
+        "2025-09-15T20:17:00+00:00",
+        "2025-09-15T20:18:00+00:00",
+        "2025-09-15T20:19:00+00:00",
+        "2025-09-15T20:20:00+00:00",
+        "2025-09-15T20:21:00+00:00"
+      ],
+      "session_preexercise_mean_hr_bpm": 85.4,
+      "session_preexercise_lowest_minute_hr_bpm": 83.0,
+      "source_members": [
+        "Physiological Data/2025-09-15/p29-3YK9R1L11Y/digital_biomarkers/aggregated_per_minute/1-1-p29_2025-09-15_pulse-rate.csv"
+      ],
+      "partition": "fitting"
+    },
+    {
+      "group_key": "7aaada4080c918d268af5708",
+      "session_start": "2025-09-16T20:02:00+00:00",
+      "first_task_start": "2025-09-16T20:14:00+00:00",
+      "baseline_lower_bound": "2025-09-16T20:09:00+00:00",
+      "actual_complete_minutes": 5,
+      "actual_minute_starts": [
+        "2025-09-16T20:09:00+00:00",
+        "2025-09-16T20:10:00+00:00",
+        "2025-09-16T20:11:00+00:00",
+        "2025-09-16T20:12:00+00:00",
+        "2025-09-16T20:13:00+00:00"
+      ],
+      "session_preexercise_mean_hr_bpm": 80.4,
+      "session_preexercise_lowest_minute_hr_bpm": 76.0,
+      "source_members": [
+        "Physiological Data/2025-09-16/p30-3YK9T1L1KP/digital_biomarkers/aggregated_per_minute/1-1-p30_2025-09-16_pulse-rate.csv"
+      ],
+      "partition": "fitting"
+    },
+    {
+      "group_key": "b52c4ae6d0a111dea813157e",
+      "session_start": "2025-09-19T20:00:00+00:00",
+      "first_task_start": "2025-09-19T20:12:00+00:00",
+      "baseline_lower_bound": "2025-09-19T20:07:00+00:00",
+      "actual_complete_minutes": 4,
+      "actual_minute_starts": [
+        "2025-09-19T20:07:00+00:00",
+        "2025-09-19T20:09:00+00:00",
+        "2025-09-19T20:10:00+00:00",
+        "2025-09-19T20:11:00+00:00"
+      ],
+      "session_preexercise_mean_hr_bpm": 72.25,
+      "session_preexercise_lowest_minute_hr_bpm": 39.0,
+      "source_members": [
+        "Physiological Data/2025-09-19/p31-3YK9R1L11Y/digital_biomarkers/aggregated_per_minute/1-1-p31_2025-09-19_pulse-rate.csv"
+      ],
+      "partition": "fitting"
+    },
+    {
+      "group_key": "05b71ff6e04cfd5ef3d11f9a",
+      "session_start": "2025-09-20T22:50:00+00:00",
+      "first_task_start": "2025-09-20T23:00:00+00:00",
+      "baseline_lower_bound": "2025-09-20T22:55:00+00:00",
+      "actual_complete_minutes": 5,
+      "actual_minute_starts": [
+        "2025-09-20T22:55:00+00:00",
+        "2025-09-20T22:56:00+00:00",
+        "2025-09-20T22:57:00+00:00",
+        "2025-09-20T22:58:00+00:00",
+        "2025-09-20T22:59:00+00:00"
+      ],
+      "session_preexercise_mean_hr_bpm": 112.4,
+      "session_preexercise_lowest_minute_hr_bpm": 111.0,
+      "source_members": [
+        "Physiological Data/2025-09-20/p32-3YK9T1L1KP/digital_biomarkers/aggregated_per_minute/1-1-p32_2025-09-20_pulse-rate.csv",
+        "Physiological Data/2025-09-21/p32-3YK9T1L1KP/digital_biomarkers/aggregated_per_minute/1-1-p32_2025-09-21_pulse-rate.csv"
+      ],
+      "partition": "fitting"
+    },
+    {
+      "group_key": "4db974818c9e3bc72f99f7d5",
+      "session_start": "2025-09-20T22:50:00+00:00",
+      "first_task_start": "2025-09-20T23:00:00+00:00",
+      "baseline_lower_bound": "2025-09-20T22:55:00+00:00",
+      "actual_complete_minutes": 5,
+      "actual_minute_starts": [
+        "2025-09-20T22:55:00+00:00",
+        "2025-09-20T22:56:00+00:00",
+        "2025-09-20T22:57:00+00:00",
+        "2025-09-20T22:58:00+00:00",
+        "2025-09-20T22:59:00+00:00"
+      ],
+      "session_preexercise_mean_hr_bpm": 84.0,
+      "session_preexercise_lowest_minute_hr_bpm": 81.0,
+      "source_members": [
+        "Physiological Data/2025-09-20/p33-3YK9R1L11Y/digital_biomarkers/aggregated_per_minute/1-1-p33_2025-09-20_pulse-rate.csv",
+        "Physiological Data/2025-09-21/p33-3YK9R1L11Y/digital_biomarkers/aggregated_per_minute/1-1-p33_2025-09-21_pulse-rate.csv"
+      ],
+      "partition": "reserved"
+    },
+    {
+      "group_key": "09e8241663e24d88b3f0b2a0",
+      "session_start": "2025-09-22T19:02:00+00:00",
+      "first_task_start": "2025-09-22T19:12:00+00:00",
+      "baseline_lower_bound": "2025-09-22T19:07:00+00:00",
+      "actual_complete_minutes": 5,
+      "actual_minute_starts": [
+        "2025-09-22T19:07:00+00:00",
+        "2025-09-22T19:08:00+00:00",
+        "2025-09-22T19:09:00+00:00",
+        "2025-09-22T19:10:00+00:00",
+        "2025-09-22T19:11:00+00:00"
+      ],
+      "session_preexercise_mean_hr_bpm": 80.8,
+      "session_preexercise_lowest_minute_hr_bpm": 74.0,
+      "source_members": [
+        "Physiological Data/2025-09-22/p34-3YK9T1L1KP/digital_biomarkers/aggregated_per_minute/1-1-p34_2025-09-22_pulse-rate.csv"
+      ],
+      "partition": "fitting"
+    },
+    {
+      "group_key": "1121053348ffc27edb94f14e",
+      "session_start": "2025-09-22T19:02:00+00:00",
+      "first_task_start": "2025-09-22T19:12:00+00:00",
+      "baseline_lower_bound": "2025-09-22T19:07:00+00:00",
+      "actual_complete_minutes": 5,
+      "actual_minute_starts": [
+        "2025-09-22T19:07:00+00:00",
+        "2025-09-22T19:08:00+00:00",
+        "2025-09-22T19:09:00+00:00",
+        "2025-09-22T19:10:00+00:00",
+        "2025-09-22T19:11:00+00:00"
+      ],
+      "session_preexercise_mean_hr_bpm": 99.4,
+      "session_preexercise_lowest_minute_hr_bpm": 97.0,
+      "source_members": [
+        "Physiological Data/2025-09-22/p35-3YK9R1L11Y/digital_biomarkers/aggregated_per_minute/1-1-p35_2025-09-22_pulse-rate.csv"
+      ],
+      "partition": "reserved"
+    },
+    {
+      "group_key": "6b974e91f4e6613746b98567",
+      "session_start": "2025-09-23T16:45:00+00:00",
+      "first_task_start": "2025-09-23T16:57:00+00:00",
+      "baseline_lower_bound": "2025-09-23T16:52:00+00:00",
+      "actual_complete_minutes": 5,
+      "actual_minute_starts": [
+        "2025-09-23T16:52:00+00:00",
+        "2025-09-23T16:53:00+00:00",
+        "2025-09-23T16:54:00+00:00",
+        "2025-09-23T16:55:00+00:00",
+        "2025-09-23T16:56:00+00:00"
+      ],
+      "session_preexercise_mean_hr_bpm": 104.8,
+      "session_preexercise_lowest_minute_hr_bpm": 104.0,
+      "source_members": [
+        "Physiological Data/2025-09-23/p36-3YK9R1L11Y/digital_biomarkers/aggregated_per_minute/1-1-p36_2025-09-23_pulse-rate.csv"
+      ],
+      "partition": "fitting"
+    },
+    {
+      "group_key": "c47a9a1ed876a406d41782a0",
+      "session_start": "2025-09-23T22:42:00+00:00",
+      "first_task_start": "2025-09-23T22:52:00+00:00",
+      "baseline_lower_bound": "2025-09-23T22:47:00+00:00",
+      "actual_complete_minutes": 5,
+      "actual_minute_starts": [
+        "2025-09-23T22:47:00+00:00",
+        "2025-09-23T22:48:00+00:00",
+        "2025-09-23T22:49:00+00:00",
+        "2025-09-23T22:50:00+00:00",
+        "2025-09-23T22:51:00+00:00"
+      ],
+      "session_preexercise_mean_hr_bpm": 76.2,
+      "session_preexercise_lowest_minute_hr_bpm": 74.0,
+      "source_members": [
+        "Physiological Data/2025-09-23/p37-3YK9R1L11Y/digital_biomarkers/aggregated_per_minute/1-1-p37_2025-09-23_pulse-rate.csv",
+        "Physiological Data/2025-09-24/p37-3YK9R1L11Y/digital_biomarkers/aggregated_per_minute/1-1-p37_2025-09-24_pulse-rate.csv"
+      ],
+      "partition": "fitting"
+    },
+    {
+      "group_key": "59019c9230b05d045a06ae7f",
+      "session_start": "2025-09-23T22:42:00+00:00",
+      "first_task_start": "2025-09-23T22:52:00+00:00",
+      "baseline_lower_bound": "2025-09-23T22:47:00+00:00",
+      "actual_complete_minutes": 5,
+      "actual_minute_starts": [
+        "2025-09-23T22:47:00+00:00",
+        "2025-09-23T22:48:00+00:00",
+        "2025-09-23T22:49:00+00:00",
+        "2025-09-23T22:50:00+00:00",
+        "2025-09-23T22:51:00+00:00"
+      ],
+      "session_preexercise_mean_hr_bpm": 83.6,
+      "session_preexercise_lowest_minute_hr_bpm": 80.0,
+      "source_members": [
+        "Physiological Data/2025-09-23/p38-3YK9T1L1KP/digital_biomarkers/aggregated_per_minute/1-1-p38_2025-09-23_pulse-rate.csv",
+        "Physiological Data/2025-09-24/p38-3YK9T1L1KP/digital_biomarkers/aggregated_per_minute/1-1-p38_2025-09-24_pulse-rate.csv"
+      ],
+      "partition": "fitting"
+    },
+    {
+      "group_key": "e614007050fe35c8d4409f8e",
+      "session_start": "2025-09-24T21:14:00+00:00",
+      "first_task_start": "2025-09-24T21:24:00+00:00",
+      "baseline_lower_bound": "2025-09-24T21:19:00+00:00",
+      "actual_complete_minutes": 5,
+      "actual_minute_starts": [
+        "2025-09-24T21:19:00+00:00",
+        "2025-09-24T21:20:00+00:00",
+        "2025-09-24T21:21:00+00:00",
+        "2025-09-24T21:22:00+00:00",
+        "2025-09-24T21:23:00+00:00"
+      ],
+      "session_preexercise_mean_hr_bpm": 85.6,
+      "session_preexercise_lowest_minute_hr_bpm": 77.0,
+      "source_members": [
+        "Physiological Data/2025-09-24/p39-3YK9T1L1KP/digital_biomarkers/aggregated_per_minute/1-1-p39_2025-09-24_pulse-rate.csv"
+      ],
+      "partition": "fitting"
+    }
+  ]
+}

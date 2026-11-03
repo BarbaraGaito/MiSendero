@@ -1,0 +1,60 @@
+{
+  "signature": {
+    "code_sha256": "95cd892221ff1804dedf7004327a5ada2000d4de6e38048a62126abfba50441a",
+    "dataset_sha256": "e4de1c4ccaa8239610bd62e93bc888c1260f1f891de32b9677052d3a0e3e4d00",
+    "temporal_provenance_sha256": "876d0daa664fcbed431b701c91efdebee54927685ad40136aef6d0d1b874b290",
+    "dependency_code_sha256": {
+      "fatigue_temporal_windows.py": "351d2c6ce9434077a478dafa1c9d1ed2478228ad90e862bb3823bc14137f48fc",
+      "whamap_phone_bins.py": "ee5a46236fce91ec8bf7628efe9a0591a23329f5914748f21b7eb552c8f42053",
+      "fatigue_spectral_correction.py": "b1adf7a7328b6935508eb27d1da7a112962a76be0f32d9dd71cd3dd59dc06dcd",
+      "fatigue_spectral_experiment.py": "7c9403fa6340e903bed60d6374a1b66af9808f8f233169de3c29b89e9b4a8b55",
+      "fatigue_dynamics_experiment.py": "5337f883c2d861a0255a399d78b6cb159b0526e43a0d2b4091b5043ee103f596",
+      "fatigue_warm_sgd.py": "cd480a0fe2c31cc62d446525386b5c9be0adfae568ecdd1399fe85b571dd05b3"
+    },
+    "software_versions": {
+      "torch": "2.14.1+cpu",
+      "numpy": "2.5.4",
+      "pandas": "3.0.6",
+      "scikit-learn": "1.9.1",
+      "joblib": "1.6.0"
+    }
+  },
+  "candidate": {
+    "id": "temporal-encoder-003",
+    "epochs": 60,
+    "mask_probability": 0.35,
+    "mask_block_bins": 8,
+    "batch_size": 64,
+    "learning_rate": 0.003,
+    "weight_decay": 0.01,
+    "random_seed": 42,
+    "objective": "observed_masked_signal_MSE",
+    "input_channels": 6,
+    "encoder_channels": [
+      16,
+      32,
+      8
+    ],
+    "window_samples": 256
+  },
+  "model_sha256": "57d5c3ef8fdd93b95bbac85d2038c5320a91f318cf58d8fd1b4b90736b45a908",
+  "source_window_count": 842,
+  "source_participants": [
+    "subject_01",
+    "subject_03",
+    "subject_04",
+    "subject_05",
+    "subject_06",
+    "subject_07",
+    "subject_08",
+    "subject_10"
+  ],
+  "loss_endpoints": [
+    1.0034305126253613,
+    0.6878018406111385
+  ],
+  "all_parameters_frozen": true,
+  "decoder_stored": false,
+  "source_borg_labels_used": 0,
+  "f_level_used": false
+}

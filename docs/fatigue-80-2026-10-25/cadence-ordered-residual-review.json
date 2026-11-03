@@ -1,0 +1,156 @@
+{
+  "review": "passed",
+  "review_code_sha256": "428fb771e9e989b67127972861fadd81f656859db7d881fde7b4fc8c08413ae2",
+  "selection_sha256": "53055ac67196fbe3491523105fa96094420de524b7553a99a222a71e3a397153",
+  "verification_sha256": "93b0b815b0acb4113c4804f7405184a0fa5e760b1e9bc8bc4af50fa81def61a0",
+  "diagnostic_sha256": "2bbd76295f0a65aec4940eb7841606f6db1bdadd1fec5fe9f5cde56f0b97c1da",
+  "reviewed_implementation_sha256": {
+    "fatigue_emap_ordered_functions.py": "76f84c44b60ef2a2b9d858e911324bbc0b6321be852ce2e79be15fd4c648b189",
+    "fatigue_spectral_correction.py": "b1adf7a7328b6935508eb27d1da7a112962a76be0f32d9dd71cd3dd59dc06dcd",
+    "fatigue_cadence_binary_gate.py": "9ac66f249fc04b8f023eca674839478ff438a7280db8778dfa91c1082ab1ab3d",
+    "fatigue_cadence_full_delta.py": "6475ae3f4fa8cf4aefed93dd69184744c224977fbe52140462343e6e38032ac8",
+    "fatigue_cadence_delta_regularization.py": "07db6826dbde004ba0e59c8649cf476f20d5139bdfa69164cbd6635de1e075cd"
+  },
+  "original_fitting_queries": 487,
+  "original_fitting_people": 28,
+  "evidence": "Cat/source penalty100 recovered18/lost7vs penalty1,but corrected0/lost1vs global. Its validation NLL.891629568 is nearly identical to original.891629768. Core prefers10to100. Strong shrinkage mainly restores the old baseline.",
+  "existing_methods": {
+    "emap_ordered_functions": "separate observed source-order teacher regressors;no native delta-logit basis",
+    "spectral_residual": "nested residual-class classifier;no fixed smooth native delta-logit basis",
+    "cadence_binary_gate": "one scalar change/no-change gate with frozen nonzero ratios",
+    "cadence_full_delta": "free centered21-logit residual with189last-layer parameters"
+  },
+  "proposed_residual": {
+    "coefficient_outputs": 3,
+    "logit_outputs": 21,
+    "last_layer_parameters": 27,
+    "basis_span": [
+      "integer_delta",
+      "integer_delta_squared",
+      "zero_delta_indicator"
+    ],
+    "basis_convention": "center columns;reduced QR;scale Q by sqrt21 for uniform orthonormality",
+    "basis": [
+      [
+        -1.6514456476895412,
+        -1.937766939407949,
+        0.27116566340353254
+      ],
+      [
+        -1.4863010829205865,
+        -1.3564368575855648,
+        0.12051807262379209
+      ],
+      [
+        -1.3211565181516325,
+        -0.8362994159550098,
+        -0.014271877021238734
+      ],
+      [
+        -1.1560119533826785,
+        -0.3773546145162849,
+        -0.13320418553155977
+      ],
+      [
+        -0.9908673886137246,
+        0.020397546730610006,
+        -0.23627885290717157
+      ],
+      [
+        -0.8257228238447702,
+        0.35695706778567493,
+        -0.3234958791480738
+      ],
+      [
+        -0.6605782590758162,
+        0.6323239486489097,
+        -0.3948552642542665
+      ],
+      [
+        -0.4954336943068623,
+        0.8464981893203146,
+        -0.4503570082257498
+      ],
+      [
+        -0.3302891295379081,
+        0.9994797897998898,
+        -0.4900011110625236
+      ],
+      [
+        -0.16514456476895406,
+        1.0912687500876346,
+        -0.5137875727645879
+      ],
+      [
+        0.0,
+        1.1218650701835495,
+        4.329136029775694
+      ],
+      [
+        0.16514456476895406,
+        1.0912687500876346,
+        -0.5137875727645879
+      ],
+      [
+        0.3302891295379081,
+        0.9994797897998896,
+        -0.49000111106252353
+      ],
+      [
+        0.4954336943068623,
+        0.8464981893203146,
+        -0.45035700822574976
+      ],
+      [
+        0.6605782590758162,
+        0.6323239486489098,
+        -0.39485526425426665
+      ],
+      [
+        0.8257228238447702,
+        0.3569570677856748,
+        -0.32349587914807376
+      ],
+      [
+        0.9908673886137246,
+        0.02039754673060988,
+        -0.23627885290717157
+      ],
+      [
+        1.1560119533826785,
+        -0.377354614516285,
+        -0.13320418553155983
+      ],
+      [
+        1.3211565181516325,
+        -0.8362994159550099,
+        -0.014271877021238609
+      ],
+      [
+        1.4863010829205865,
+        -1.356436857585565,
+        0.12051807262379226
+      ],
+      [
+        1.6514456476895405,
+        -1.9377669394079502,
+        0.27116566340353254
+      ]
+    ],
+    "basis_rank": 3,
+    "expanded_l2_equals_coefficient_l2": true,
+    "shared_numeric_and_missing_inputs": 11,
+    "native_private_features": 16,
+    "source_actual_binary_pairs": 851,
+    "source_reserved_pairs_not_fitted": 206,
+    "base_weights_remain_frozen": true,
+    "nonzero_relative_probabilities_may_change": true
+  },
+  "basis_is_class_geometry_not_training_observations_or_targets": true,
+  "model_comparison_predeclared": false,
+  "new_predictive_estimator_fits": 0,
+  "new_test_predictions_computed": 0,
+  "test_labels_inspected": false,
+  "synthetic_rows": 0,
+  "interpretation": "A small smooth residual can alter magnitude and zero-change mass while reducing output degrees of freedom. This is an untrained design rationale,not evidence of improved accuracy. Preserve source-zero controls,exact native labels and unchanged public datasets; predeclare penalties and compare against scalar/full/native controls before fitting."
+}

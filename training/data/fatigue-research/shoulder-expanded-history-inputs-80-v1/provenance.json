@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "dependencies_sha256": {
+    "preparation_code": "fbd10806c3349ce7563d5ecc71dfcde4b9939d660efe22674938da9db2d60b8e",
+    "previous_preparation_code": "36dc5738926c061061d395c0cb005eb6e01aa2b682ff56dedb328113ae3412e9",
+    "previous_provenance": "6691dfe999a6304911ca394576f9e4fa7ac4bb26dc71328c01bb26a376bf3606",
+    "previous_source_audit": "52d59e00ac0ca31187840117d9800f684d8b457a947d055fcdb1f9cbb21c1b97",
+    "shoulder_preparation_code": "ffbf50bd447bef7a214a6d0894d134ffe7a526cb99491538a8cd3b3a63a9f715",
+    "shoulder_provenance": "9a16539f9e9dc30302aa54ae8462954da4b82d7533c811b57d7e365fe905b14a",
+    "shoulder_source_audit": "163f6e3b2f6a5693603749cfc451ed94a4310ced7f3626b738b65710618f6677",
+    "shoulder_source_audit_code": "72b9f1743bf3fb80c2c3eaf2293af6dd0a5dc01c268de25c7c9765079b10f6f1",
+    "public_real_data_policy": "fdfb112d20b1f22bae08032ed7d9f3d27ee784879674c32f8f65cc21fe69c028"
+  },
+  "dataset_sha256": "57707f3de43d56877f27c79ffde68f3fb2f4f8c8cb9eeb6a7050990d7a530627",
+  "actual_source_fitting_targets": 2336,
+  "stored_reserved_targets": 312,
+  "source_fitting_actual_second_priors": 1927,
+  "source_counts": {
+    "emap": 248,
+    "resistance": 866,
+    "shoulder": 920,
+    "sts": 49,
+    "worker": 253
+  },
+  "source_current_target_columns": {
+    "emap": "current_rpe",
+    "worker": "borg_native",
+    "sts": "borg_native",
+    "resistance": "original_resistance_rpe",
+    "shoulder": "original_shoulder_rpe"
+  },
+  "common_measured_history_features": [
+    "public_ordered_actual_prior_rpe",
+    "public_ordered_actual_second_prior_rpe"
+  ],
+  "additional_shoulder_fitting_targets": 920,
+  "additional_shoulder_reserved_targets": 187,
+  "additional_shoulder_fitting_people": 27,
+  "additional_shoulder_reserved_people": 7,
+  "source_outcomes_must_remain_separate": true,
+  "native_target_merge": false,
+  "new_native_borg_targets": 0,
+  "synthetic_rows": 0,
+  "imputed_targets": 0,
+  "invented_source_ages_or_phase_mapping": 0,
+  "new_sensor_joins": 0,
+  "model_fitting_started_at_preparation": false,
+  "scope": "Original1541public source pairs plus1107actual within-trial timed shoulder pairs. All1416previous fitting targets preserved;920newfitting/187reserved fixed by whole original person. Shoulder6-20points use a separate output; do not convert or pool them into native0-10labels. Preserve absent second histories; no terminal/before-task clocks,between-task order or sensor joins inferred."
+}

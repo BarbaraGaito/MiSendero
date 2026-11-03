@@ -1,0 +1,633 @@
+{
+  "version": 1,
+  "verified_at": "2026-10-27T14:14:38.196072+00:00",
+  "verification_code_sha256": "9a95f10de90089e49c36a13a313bf78be4766f4d8ec4d62c114f34ab1dc1fcb6",
+  "selection_sha256": "943e8a1655f38f3da1586f9afabbcbee29ec6c476fba9db91ba70244ce82529d",
+  "previous_verification_sha256": "4e1485c5348edbf079730ff65bf26fc2e5197f8a4d35d70a79b3b807e9fb9a85",
+  "public_real_data_policy_sha256": "fdfb112d20b1f22bae08032ed7d9f3d27ee784879674c32f8f65cc21fe69c028",
+  "all_32_oof_recipes_recomputed": true,
+  "source_artifact_hashes_verified": [
+    {
+      "algorithm": "ridge",
+      "feature_set": "absolute",
+      "model_sha256": "40d6663d717689167fe9e88c871ee32e6fef6dff800d75569fe306d9f5d57c28",
+      "metadata_sha256": "3d718baadcf8b2039f5afac9b1f0694a7274a0436ad228c0992cfc10518f9b6b",
+      "original_source_targets": 851,
+      "source_refitted_in_this_study": false
+    },
+    {
+      "algorithm": "ridge",
+      "feature_set": "relative",
+      "model_sha256": "ae36908516a54a53e61dc577fe408a2e9261609baf7f304d7cd8bf7d44a0cfbb",
+      "metadata_sha256": "0f075c913aad267e24d9e1535473b376dfc78c4e470df0b2d4dd60359378c8a0",
+      "original_source_targets": 851,
+      "source_refitted_in_this_study": false
+    },
+    {
+      "algorithm": "svr",
+      "feature_set": "absolute",
+      "model_sha256": "a6a9968d47845d03377c1476a7b2adaf4dd92577ec3a8f8ce944b486d8eb72b5",
+      "metadata_sha256": "c5d7ad82140553c18614083b27806ab97de2a73b34e3457ba5d54e97d757d137",
+      "original_source_targets": 851,
+      "source_refitted_in_this_study": false
+    },
+    {
+      "algorithm": "svr",
+      "feature_set": "relative",
+      "model_sha256": "e14a312e7bfd46eb659944f6159fae9ad039f18f2db04db351e685fdc21d4032",
+      "metadata_sha256": "376e80224b03bf33476583b4c32248e35d037a127cb3bdc1229879f98ecc9d3f",
+      "original_source_targets": 851,
+      "source_refitted_in_this_study": false
+    },
+    {
+      "algorithm": "random_forest",
+      "feature_set": "absolute",
+      "model_sha256": "deb55d2c531cd2301b3e3080539fba1b0d6e63f26eb016190b1e5ac5fd368d60",
+      "metadata_sha256": "21e1ca5168f07b35b0717e132cf26622563e060a50133e4d085dfd39d686a29c",
+      "original_source_targets": 851,
+      "source_refitted_in_this_study": false
+    },
+    {
+      "algorithm": "random_forest",
+      "feature_set": "relative",
+      "model_sha256": "8ca5dd4182ed478be0af08035656261de4ac476572ce833e1ab58f1675724be6",
+      "metadata_sha256": "5bd58933b8091804d9062af64b7cdef6d13989a9f5167553cfbe17da1792dc20",
+      "original_source_targets": 851,
+      "source_refitted_in_this_study": false
+    }
+  ],
+  "fresh_source_fitting_performed": false,
+  "source_fitting_targets": 851,
+  "source_fitting_people": 123,
+  "source_reserved_targets": 206,
+  "source_reserved_people": 32,
+  "source6to20_targets_remain_separate": true,
+  "compact_native_features_exclude_redundant_raw_fields": true,
+  "all_original_native_rows_and_labels_preserved": true,
+  "natural_missing_native_pairs": 11,
+  "native_missing_proxy_cells_verified_at_actual_fitter": true,
+  "native_delta_targets_verified_at_actual_estimator": true,
+  "native_preprocessing_fitting_people_only": true,
+  "artificial_history_fitting_disabled": true,
+  "source_functions_frozen_during_native_fitting": true,
+  "best_source_candidate_id": "cadence-compact-029",
+  "best_source_cv_accuracy": 0.6213224848467815,
+  "best_source_by_member": {
+    "core": {
+      "candidate": {
+        "id": "cadence-compact-012",
+        "algorithm": "compact_native_representation",
+        "input_mode": "source_proxy",
+        "member": "core",
+        "source_algorithm": "ridge",
+        "source_feature_set": "relative",
+        "params": {
+          "hidden_layer_sizes": [
+            16,
+            8
+          ],
+          "alpha": 10.0,
+          "solver": "lbfgs",
+          "activation": "relu",
+          "max_iter": 5000,
+          "max_fun": 100000,
+          "tol": 0.0001
+        }
+      },
+      "accuracy_mean": 0.6099209315833357
+    },
+    "cat": {
+      "candidate": {
+        "id": "cadence-compact-029",
+        "algorithm": "compact_native_representation",
+        "input_mode": "source_proxy",
+        "member": "cat",
+        "source_algorithm": "svr",
+        "source_feature_set": "relative"
+      },
+      "accuracy_mean": 0.6213224848467815
+    }
+  },
+  "measured_relative_controls": {
+    "core": {
+      "candidate_id": "cadence-compact-006",
+      "accuracy_mean": 0.6038254499124065
+    },
+    "cat": {
+      "candidate_id": "cadence-compact-007",
+      "accuracy_mean": 0.6099378694621661
+    }
+  },
+  "best_core_matching_16_8_alpha10_id": "cadence-compact-012",
+  "best_core_matching_16_8_alpha10_cv": 0.6099209315833357,
+  "native_recipes_independently_refitted": [
+    "cadence-compact-006",
+    "cadence-compact-007",
+    "cadence-compact-012",
+    "cadence-compact-029"
+  ],
+  "actual_native_refits": [
+    {
+      "candidate_id": "cadence-compact-006",
+      "fold": 0,
+      "actual_native_rows_observed": 387,
+      "actual_estimator_delta_targets_observed": 387,
+      "model_feature_count": 15,
+      "natural_missing_representation_rows": null,
+      "optimizer_summary": {
+        "convergence_warnings": [],
+        "actual_native_fit_rows": 387,
+        "model_feature_count": 15,
+        "natural_missing_representation_rows": null,
+        "actual_auxiliary_source_targets": 0,
+        "source_fitting_performed_here": false,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "iterations": 971,
+        "fitting_loss": 0.9387438299124004,
+        "maximum_iterations": 5000,
+        "maximum_function_evaluations": 100000,
+        "hidden_layer_sizes": [
+          16,
+          8
+        ],
+        "alpha": 10.0
+      },
+      "source_functions_frozen": true,
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "cadence-compact-006",
+      "fold": 1,
+      "actual_native_rows_observed": 395,
+      "actual_estimator_delta_targets_observed": 395,
+      "model_feature_count": 15,
+      "natural_missing_representation_rows": null,
+      "optimizer_summary": {
+        "convergence_warnings": [],
+        "actual_native_fit_rows": 395,
+        "model_feature_count": 15,
+        "natural_missing_representation_rows": null,
+        "actual_auxiliary_source_targets": 0,
+        "source_fitting_performed_here": false,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "iterations": 717,
+        "fitting_loss": 0.9102609447663053,
+        "maximum_iterations": 5000,
+        "maximum_function_evaluations": 100000,
+        "hidden_layer_sizes": [
+          16,
+          8
+        ],
+        "alpha": 10.0
+      },
+      "source_functions_frozen": true,
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "cadence-compact-006",
+      "fold": 2,
+      "actual_native_rows_observed": 385,
+      "actual_estimator_delta_targets_observed": 385,
+      "model_feature_count": 15,
+      "natural_missing_representation_rows": null,
+      "optimizer_summary": {
+        "convergence_warnings": [],
+        "actual_native_fit_rows": 385,
+        "model_feature_count": 15,
+        "natural_missing_representation_rows": null,
+        "actual_auxiliary_source_targets": 0,
+        "source_fitting_performed_here": false,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "iterations": 545,
+        "fitting_loss": 0.9135726005902034,
+        "maximum_iterations": 5000,
+        "maximum_function_evaluations": 100000,
+        "hidden_layer_sizes": [
+          16,
+          8
+        ],
+        "alpha": 10.0
+      },
+      "source_functions_frozen": true,
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "cadence-compact-006",
+      "fold": 3,
+      "actual_native_rows_observed": 385,
+      "actual_estimator_delta_targets_observed": 385,
+      "model_feature_count": 15,
+      "natural_missing_representation_rows": null,
+      "optimizer_summary": {
+        "convergence_warnings": [],
+        "actual_native_fit_rows": 385,
+        "model_feature_count": 15,
+        "natural_missing_representation_rows": null,
+        "actual_auxiliary_source_targets": 0,
+        "source_fitting_performed_here": false,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "iterations": 565,
+        "fitting_loss": 0.8701802169690789,
+        "maximum_iterations": 5000,
+        "maximum_function_evaluations": 100000,
+        "hidden_layer_sizes": [
+          16,
+          8
+        ],
+        "alpha": 10.0
+      },
+      "source_functions_frozen": true,
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "cadence-compact-006",
+      "fold": 4,
+      "actual_native_rows_observed": 396,
+      "actual_estimator_delta_targets_observed": 396,
+      "model_feature_count": 15,
+      "natural_missing_representation_rows": null,
+      "optimizer_summary": {
+        "convergence_warnings": [],
+        "actual_native_fit_rows": 396,
+        "model_feature_count": 15,
+        "natural_missing_representation_rows": null,
+        "actual_auxiliary_source_targets": 0,
+        "source_fitting_performed_here": false,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "iterations": 653,
+        "fitting_loss": 0.9276272596496821,
+        "maximum_iterations": 5000,
+        "maximum_function_evaluations": 100000,
+        "hidden_layer_sizes": [
+          16,
+          8
+        ],
+        "alpha": 10.0
+      },
+      "source_functions_frozen": true,
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "cadence-compact-007",
+      "fold": 0,
+      "actual_native_rows_observed": 387,
+      "actual_estimator_delta_targets_observed": 387,
+      "model_feature_count": 31,
+      "natural_missing_representation_rows": null,
+      "optimizer_summary": {
+        "convergence_warnings": [],
+        "actual_native_fit_rows": 387,
+        "model_feature_count": 31,
+        "natural_missing_representation_rows": null,
+        "actual_auxiliary_source_targets": 0,
+        "source_fitting_performed_here": false,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0
+      },
+      "source_functions_frozen": true,
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "cadence-compact-007",
+      "fold": 1,
+      "actual_native_rows_observed": 395,
+      "actual_estimator_delta_targets_observed": 395,
+      "model_feature_count": 31,
+      "natural_missing_representation_rows": null,
+      "optimizer_summary": {
+        "convergence_warnings": [],
+        "actual_native_fit_rows": 395,
+        "model_feature_count": 31,
+        "natural_missing_representation_rows": null,
+        "actual_auxiliary_source_targets": 0,
+        "source_fitting_performed_here": false,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0
+      },
+      "source_functions_frozen": true,
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "cadence-compact-007",
+      "fold": 2,
+      "actual_native_rows_observed": 385,
+      "actual_estimator_delta_targets_observed": 385,
+      "model_feature_count": 31,
+      "natural_missing_representation_rows": null,
+      "optimizer_summary": {
+        "convergence_warnings": [],
+        "actual_native_fit_rows": 385,
+        "model_feature_count": 31,
+        "natural_missing_representation_rows": null,
+        "actual_auxiliary_source_targets": 0,
+        "source_fitting_performed_here": false,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0
+      },
+      "source_functions_frozen": true,
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "cadence-compact-007",
+      "fold": 3,
+      "actual_native_rows_observed": 385,
+      "actual_estimator_delta_targets_observed": 385,
+      "model_feature_count": 31,
+      "natural_missing_representation_rows": null,
+      "optimizer_summary": {
+        "convergence_warnings": [],
+        "actual_native_fit_rows": 385,
+        "model_feature_count": 31,
+        "natural_missing_representation_rows": null,
+        "actual_auxiliary_source_targets": 0,
+        "source_fitting_performed_here": false,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0
+      },
+      "source_functions_frozen": true,
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "cadence-compact-007",
+      "fold": 4,
+      "actual_native_rows_observed": 396,
+      "actual_estimator_delta_targets_observed": 396,
+      "model_feature_count": 31,
+      "natural_missing_representation_rows": null,
+      "optimizer_summary": {
+        "convergence_warnings": [],
+        "actual_native_fit_rows": 396,
+        "model_feature_count": 31,
+        "natural_missing_representation_rows": null,
+        "actual_auxiliary_source_targets": 0,
+        "source_fitting_performed_here": false,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0
+      },
+      "source_functions_frozen": true,
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "cadence-compact-012",
+      "fold": 0,
+      "actual_native_rows_observed": 387,
+      "actual_estimator_delta_targets_observed": 387,
+      "model_feature_count": 14,
+      "natural_missing_representation_rows": 6,
+      "optimizer_summary": {
+        "convergence_warnings": [],
+        "actual_native_fit_rows": 387,
+        "model_feature_count": 14,
+        "natural_missing_representation_rows": 6,
+        "actual_auxiliary_source_targets": 851,
+        "source_fitting_performed_here": false,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "iterations": 279,
+        "fitting_loss": 0.939677618742169,
+        "maximum_iterations": 5000,
+        "maximum_function_evaluations": 100000,
+        "hidden_layer_sizes": [
+          16,
+          8
+        ],
+        "alpha": 10.0
+      },
+      "source_functions_frozen": true,
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "cadence-compact-012",
+      "fold": 1,
+      "actual_native_rows_observed": 395,
+      "actual_estimator_delta_targets_observed": 395,
+      "model_feature_count": 14,
+      "natural_missing_representation_rows": 6,
+      "optimizer_summary": {
+        "convergence_warnings": [],
+        "actual_native_fit_rows": 395,
+        "model_feature_count": 14,
+        "natural_missing_representation_rows": 6,
+        "actual_auxiliary_source_targets": 851,
+        "source_fitting_performed_here": false,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "iterations": 547,
+        "fitting_loss": 0.9109237441555681,
+        "maximum_iterations": 5000,
+        "maximum_function_evaluations": 100000,
+        "hidden_layer_sizes": [
+          16,
+          8
+        ],
+        "alpha": 10.0
+      },
+      "source_functions_frozen": true,
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "cadence-compact-012",
+      "fold": 2,
+      "actual_native_rows_observed": 385,
+      "actual_estimator_delta_targets_observed": 385,
+      "model_feature_count": 14,
+      "natural_missing_representation_rows": 4,
+      "optimizer_summary": {
+        "convergence_warnings": [],
+        "actual_native_fit_rows": 385,
+        "model_feature_count": 14,
+        "natural_missing_representation_rows": 4,
+        "actual_auxiliary_source_targets": 851,
+        "source_fitting_performed_here": false,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "iterations": 767,
+        "fitting_loss": 0.9138597687437136,
+        "maximum_iterations": 5000,
+        "maximum_function_evaluations": 100000,
+        "hidden_layer_sizes": [
+          16,
+          8
+        ],
+        "alpha": 10.0
+      },
+      "source_functions_frozen": true,
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "cadence-compact-012",
+      "fold": 3,
+      "actual_native_rows_observed": 385,
+      "actual_estimator_delta_targets_observed": 385,
+      "model_feature_count": 14,
+      "natural_missing_representation_rows": 6,
+      "optimizer_summary": {
+        "convergence_warnings": [],
+        "actual_native_fit_rows": 385,
+        "model_feature_count": 14,
+        "natural_missing_representation_rows": 6,
+        "actual_auxiliary_source_targets": 851,
+        "source_fitting_performed_here": false,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "iterations": 531,
+        "fitting_loss": 0.8701949099082801,
+        "maximum_iterations": 5000,
+        "maximum_function_evaluations": 100000,
+        "hidden_layer_sizes": [
+          16,
+          8
+        ],
+        "alpha": 10.0
+      },
+      "source_functions_frozen": true,
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "cadence-compact-012",
+      "fold": 4,
+      "actual_native_rows_observed": 396,
+      "actual_estimator_delta_targets_observed": 396,
+      "model_feature_count": 14,
+      "natural_missing_representation_rows": 2,
+      "optimizer_summary": {
+        "convergence_warnings": [],
+        "actual_native_fit_rows": 396,
+        "model_feature_count": 14,
+        "natural_missing_representation_rows": 2,
+        "actual_auxiliary_source_targets": 851,
+        "source_fitting_performed_here": false,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "iterations": 772,
+        "fitting_loss": 0.9282143226873854,
+        "maximum_iterations": 5000,
+        "maximum_function_evaluations": 100000,
+        "hidden_layer_sizes": [
+          16,
+          8
+        ],
+        "alpha": 10.0
+      },
+      "source_functions_frozen": true,
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "cadence-compact-029",
+      "fold": 0,
+      "actual_native_rows_observed": 387,
+      "actual_estimator_delta_targets_observed": 387,
+      "model_feature_count": 30,
+      "natural_missing_representation_rows": 6,
+      "optimizer_summary": {
+        "convergence_warnings": [],
+        "actual_native_fit_rows": 387,
+        "model_feature_count": 30,
+        "natural_missing_representation_rows": 6,
+        "actual_auxiliary_source_targets": 851,
+        "source_fitting_performed_here": false,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0
+      },
+      "source_functions_frozen": true,
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "cadence-compact-029",
+      "fold": 1,
+      "actual_native_rows_observed": 395,
+      "actual_estimator_delta_targets_observed": 395,
+      "model_feature_count": 30,
+      "natural_missing_representation_rows": 6,
+      "optimizer_summary": {
+        "convergence_warnings": [],
+        "actual_native_fit_rows": 395,
+        "model_feature_count": 30,
+        "natural_missing_representation_rows": 6,
+        "actual_auxiliary_source_targets": 851,
+        "source_fitting_performed_here": false,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0
+      },
+      "source_functions_frozen": true,
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "cadence-compact-029",
+      "fold": 2,
+      "actual_native_rows_observed": 385,
+      "actual_estimator_delta_targets_observed": 385,
+      "model_feature_count": 30,
+      "natural_missing_representation_rows": 4,
+      "optimizer_summary": {
+        "convergence_warnings": [],
+        "actual_native_fit_rows": 385,
+        "model_feature_count": 30,
+        "natural_missing_representation_rows": 4,
+        "actual_auxiliary_source_targets": 851,
+        "source_fitting_performed_here": false,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0
+      },
+      "source_functions_frozen": true,
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "cadence-compact-029",
+      "fold": 3,
+      "actual_native_rows_observed": 385,
+      "actual_estimator_delta_targets_observed": 385,
+      "model_feature_count": 30,
+      "natural_missing_representation_rows": 6,
+      "optimizer_summary": {
+        "convergence_warnings": [],
+        "actual_native_fit_rows": 385,
+        "model_feature_count": 30,
+        "natural_missing_representation_rows": 6,
+        "actual_auxiliary_source_targets": 851,
+        "source_fitting_performed_here": false,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0
+      },
+      "source_functions_frozen": true,
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "cadence-compact-029",
+      "fold": 4,
+      "actual_native_rows_observed": 396,
+      "actual_estimator_delta_targets_observed": 396,
+      "model_feature_count": 30,
+      "natural_missing_representation_rows": 2,
+      "optimizer_summary": {
+        "convergence_warnings": [],
+        "actual_native_fit_rows": 396,
+        "model_feature_count": 30,
+        "natural_missing_representation_rows": 2,
+        "actual_auxiliary_source_targets": 851,
+        "source_fitting_performed_here": false,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0
+      },
+      "source_functions_frozen": true,
+      "reload_without_current_truth_or_ids": true
+    }
+  ],
+  "actual_native_target_calls_observed": 20,
+  "convergence_warning_folds_in_grid": [],
+  "winner_id": "cadence-compact-001",
+  "best_cv_accuracy": 0.6379721574248428,
+  "new_test_gate_passed": false,
+  "original_training_cases": 487,
+  "original_test_cases": 179,
+  "best_verified_test_correct": 108,
+  "best_verified_test_accuracy": 0.6033519553072626,
+  "target_accuracy": 0.8,
+  "achieved": false,
+  "scope": "Actual public source851 targets and original native487/179 cohorts. Frozen source6-20 functions produce compact features; natural missing physiology propagates without artificial masks, generated examples or row filtering. Capacity/L2 selection uses fixed native person CV. No source target conversion, invented clocks, current truth/IDs at runtime, source-reserved fitting or native test tuning."
+}

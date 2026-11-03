@@ -1,0 +1,2628 @@
+{
+  "inspection": "complete",
+  "inspection_code_sha256": "7d2162f4822c99e0b4b8c2dd7409505487073c3915ad23e826f884f0b278a9f2",
+  "original_archive_sha256": "e718c1e928a4a12a68477ceef8bb216c2af3233b7755cab4fd6b82cdf6bd406c",
+  "original_report_partition_sha256": "ee015625def0793a033dac0ef73e9cffe8be42fa23124cf4d0ac4359c00a9730",
+  "original_description_sha256": "73ebaaef6af2e382064a87312954705f47293ae74041cf7856777dde81c16234",
+  "original_borg_annotation_sha256": "bfa9be3c910afb94bd483576a9c7fdc236b3c8d0f4ab739391e75814532882a2",
+  "primary_protocol": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11055894/",
+  "condition_mapping_from_original_description": {
+    "task1_35i": "30-40_ internal rotation",
+    "task2_45i": "40-50_ internal rotation",
+    "task3_55i": "50-60_ internal rotation",
+    "task4_35e": "30-40_ external rotation",
+    "task5_45e": "40-50_ external rotation",
+    "task6_55e": "50-60_ external rotation"
+  },
+  "source_fitting_people": 27,
+  "source_fitting_ppg_files": 162,
+  "reserved_person_signals_read": 0,
+  "schema_has_sample_timestamp_column": false,
+  "nominal_duration_error_seconds": {
+    "minimum": -5.710000000000001,
+    "median": 0.985000000000003,
+    "maximum": 5.75,
+    "absolute_error_over_one_second": 86,
+    "absolute_error_over_five_seconds": 2
+  },
+  "original_file_schema_and_lengths": [
+    {
+      "original_person": "subject_1",
+      "original_condition": "task1_35i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/30-40_ internal rotation/Subject 1/PPG data/ppg.csv",
+      "member_sha256": "9d7a32a64051a0b8d70e9f98cf4885f39a40cfe33643df85160e23ad63351c32",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 21146,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 105.73,
+      "recorded_trial_length_seconds": 105.0,
+      "nominal_duration_minus_recorded_length_seconds": 0.730000000000004,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_1",
+      "original_condition": "task2_45i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/40-50_ internal rotation/Subject 1/PPG data/ppg.csv",
+      "member_sha256": "ba80d8a78a0ef2ee01ff12fd25a8bdf3da951d46d379a83203201cbce4ac3714",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 15338,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 76.69,
+      "recorded_trial_length_seconds": 76.0,
+      "nominal_duration_minus_recorded_length_seconds": 0.6899999999999977,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_1",
+      "original_condition": "task3_55i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/50-60_ internal rotation/Subject 1/PPG data/ppg.csv",
+      "member_sha256": "06e117672dcf9afa8f209e02f7c7e4224b992cd3d62e96eabfc286d5edc40416",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 13898,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 69.49,
+      "recorded_trial_length_seconds": 70.0,
+      "nominal_duration_minus_recorded_length_seconds": -0.5100000000000051,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_1",
+      "original_condition": "task4_35e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/30-40_ external rotation/Subject 1/PPG data/ppg.csv",
+      "member_sha256": "895c10a93c07ff28857c69083f9c89d13133fe10013e0cf9f1e0cb2e0c204ed3",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 15150,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 75.75,
+      "recorded_trial_length_seconds": 70.0,
+      "nominal_duration_minus_recorded_length_seconds": 5.75,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_1",
+      "original_condition": "task5_45e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/40-50_ external rotation/Subject 1/PPG data/ppg.csv",
+      "member_sha256": "b07d034ec9373991a2369fe7fb1c0664dc5b57394acbe19fe96bdacc660f50d0",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 12898,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 64.49,
+      "recorded_trial_length_seconds": 64.0,
+      "nominal_duration_minus_recorded_length_seconds": 0.4899999999999949,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_1",
+      "original_condition": "task6_55e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/50-60_ external rotation/Subject 1/PPG data/ppg.csv",
+      "member_sha256": "1e238b555f5418e110a1db17a088d5bc1f5bed22c0c92d96bb170be37e789282",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 9804,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 49.02,
+      "recorded_trial_length_seconds": 48.0,
+      "nominal_duration_minus_recorded_length_seconds": 1.0200000000000031,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_2",
+      "original_condition": "task1_35i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/30-40_ internal rotation/Subject 2/PPG data/ppg.csv",
+      "member_sha256": "4a9b46f428c81932f753117c3703875079c2bdbbc9c55d8e184a96028ebab4cf",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 32784,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 163.92,
+      "recorded_trial_length_seconds": 163.0,
+      "nominal_duration_minus_recorded_length_seconds": 0.9199999999999875,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_2",
+      "original_condition": "task2_45i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/40-50_ internal rotation/Subject 2/PPG data/ppg.csv",
+      "member_sha256": "82a6bbbb5bbc5d1d029410e8955039b34b986457448226f67f97893c90916012",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 19728,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 98.64,
+      "recorded_trial_length_seconds": 98.0,
+      "nominal_duration_minus_recorded_length_seconds": 0.6400000000000006,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_2",
+      "original_condition": "task3_55i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/50-60_ internal rotation/Subject 2/PPG data/ppg.csv",
+      "member_sha256": "6a835be811c4b6c823e95e709e5ff783b21a99e7c3a41bde5aed22d49d38a0af",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 15338,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 76.69,
+      "recorded_trial_length_seconds": 76.0,
+      "nominal_duration_minus_recorded_length_seconds": 0.6899999999999977,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_2",
+      "original_condition": "task4_35e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/30-40_ external rotation/Subject 2/PPG data/ppg.csv",
+      "member_sha256": "7180a6a489096bfd199b04de7c6f7433e8921f26029e492231453b2246e34f76",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 21756,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 108.78,
+      "recorded_trial_length_seconds": 108.0,
+      "nominal_duration_minus_recorded_length_seconds": 0.7800000000000011,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_2",
+      "original_condition": "task5_45e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/40-50_ external rotation/Subject 2/PPG data/ppg.csv",
+      "member_sha256": "ba8d0a8f2acd4e28fd8e2285fd4a45fc397252e1f384bf2e5a6ae5afa6345ac2",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 15782,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 78.91,
+      "recorded_trial_length_seconds": 78.0,
+      "nominal_duration_minus_recorded_length_seconds": 0.9099999999999966,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_2",
+      "original_condition": "task6_55e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/50-60_ external rotation/Subject 2/PPG data/ppg.csv",
+      "member_sha256": "d9af7822a16e8767cfd01f0f927c8a756f15459e54d29f860a0eb2386746b68e",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 13998,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 69.99,
+      "recorded_trial_length_seconds": 70.0,
+      "nominal_duration_minus_recorded_length_seconds": -0.010000000000005116,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_3",
+      "original_condition": "task1_35i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/30-40_ internal rotation/Subject 3/PPG data/ppg.csv",
+      "member_sha256": "939746284366641e44b637183f4488116ddb0535bc1f656facb2e840576758ab",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 36198,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 180.99,
+      "recorded_trial_length_seconds": 180.0,
+      "nominal_duration_minus_recorded_length_seconds": 0.9900000000000091,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_3",
+      "original_condition": "task2_45i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/40-50_ internal rotation/Subject 3/PPG data/ppg.csv",
+      "member_sha256": "02aedc0fb3199a728a0a9558e9fbe456a9ddbef1d2d7ffa1eb20abdce3b0835b",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 24366,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 121.83,
+      "recorded_trial_length_seconds": 120.0,
+      "nominal_duration_minus_recorded_length_seconds": 1.8299999999999983,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_3",
+      "original_condition": "task3_55i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/50-60_ internal rotation/Subject 3/PPG data/ppg.csv",
+      "member_sha256": "1b85526f6163d55e89d0654d4a8d989786d08a0e2465cb64ec2056ec55dfdca0",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 18586,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 92.93,
+      "recorded_trial_length_seconds": 90.0,
+      "nominal_duration_minus_recorded_length_seconds": 2.930000000000007,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_3",
+      "original_condition": "task4_35e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/30-40_ external rotation/Subject 3/PPG data/ppg.csv",
+      "member_sha256": "742e7cbdebbc0c9b5ef35e99bb14a1e3cca9dcd8e12e8a80156ad3d7dcba7f8d",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 10668,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 53.34,
+      "recorded_trial_length_seconds": 54.0,
+      "nominal_duration_minus_recorded_length_seconds": -0.6599999999999966,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_3",
+      "original_condition": "task5_45e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/40-50_ external rotation/Subject 3/PPG data/ppg.csv",
+      "member_sha256": "02c1e7e91a7d932574119b2d95a9ec1a1919f53b2c887979d0ea39ea85efbbcd",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 10644,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 53.22,
+      "recorded_trial_length_seconds": 53.0,
+      "nominal_duration_minus_recorded_length_seconds": 0.21999999999999886,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_3",
+      "original_condition": "task6_55e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/50-60_ external rotation/Subject 3/PPG data/ppg.csv",
+      "member_sha256": "480c861395aa8b8584c8339269acd91af0320a6815314e3313e236621331df3e",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 10326,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 51.63,
+      "recorded_trial_length_seconds": 50.0,
+      "nominal_duration_minus_recorded_length_seconds": 1.6300000000000026,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_4",
+      "original_condition": "task1_35i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/30-40_ internal rotation/Subject 4/PPG data/ppg.csv",
+      "member_sha256": "69b9f1cfa37bdf209f0be8a6cc5b36b7e43d2a2573249f236cc61c69260f8da7",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 13518,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 67.59,
+      "recorded_trial_length_seconds": 67.0,
+      "nominal_duration_minus_recorded_length_seconds": 0.5900000000000034,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_4",
+      "original_condition": "task2_45i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/40-50_ internal rotation/Subject 4/PPG data/ppg.csv",
+      "member_sha256": "f451b39daef6ec97841bd92d45c44153c5011463bda8c935e88458566237a52d",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 12506,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 62.53,
+      "recorded_trial_length_seconds": 60.0,
+      "nominal_duration_minus_recorded_length_seconds": 2.530000000000001,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_4",
+      "original_condition": "task3_55i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/50-60_ internal rotation/Subject 4/PPG data/ppg.csv",
+      "member_sha256": "0ff623459893ef2eb0a56987dfd7dd32bd8d4aa9eba4f30992fea4e9faf15b29",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 10496,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 52.48,
+      "recorded_trial_length_seconds": 50.0,
+      "nominal_duration_minus_recorded_length_seconds": 2.479999999999997,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_4",
+      "original_condition": "task4_35e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/30-40_ external rotation/Subject 4/PPG data/ppg.csv",
+      "member_sha256": "14d0294b1a51b1953dc70943e81ddaaec833af6d3b6c1cc52ff7c1acd35d7e1a",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 8800,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 44.0,
+      "recorded_trial_length_seconds": 43.0,
+      "nominal_duration_minus_recorded_length_seconds": 1.0,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_4",
+      "original_condition": "task5_45e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/40-50_ external rotation/Subject 4/PPG data/ppg.csv",
+      "member_sha256": "6057c12156ae1ea11c44b7c657c186d1d892d2c4dbfa2aa51e1915c4c20d0d72",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 9668,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 48.34,
+      "recorded_trial_length_seconds": 48.0,
+      "nominal_duration_minus_recorded_length_seconds": 0.3400000000000034,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_4",
+      "original_condition": "task6_55e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/50-60_ external rotation/Subject 4/PPG data/ppg.csv",
+      "member_sha256": "0baeebe30a1540fde2df510168414144eafe1445d36fd48b68ec7518733e7463",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 7504,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 37.52,
+      "recorded_trial_length_seconds": 37.0,
+      "nominal_duration_minus_recorded_length_seconds": 0.5200000000000031,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_5",
+      "original_condition": "task1_35i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/30-40_ internal rotation/Subject 5/PPG data/ppg.csv",
+      "member_sha256": "6b7688564ccc28eb35a89de5f8491edcc11053cc7c531461eaad979c3e40bc41",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 21276,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 106.38,
+      "recorded_trial_length_seconds": 105.0,
+      "nominal_duration_minus_recorded_length_seconds": 1.3799999999999955,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_5",
+      "original_condition": "task2_45i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/40-50_ internal rotation/Subject 5/PPG data/ppg.csv",
+      "member_sha256": "1c7426a978880b78a67575f206c6f7eca82b4362944ba728a8855c1e10109a57",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 18984,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 94.92,
+      "recorded_trial_length_seconds": 94.0,
+      "nominal_duration_minus_recorded_length_seconds": 0.9200000000000017,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_5",
+      "original_condition": "task3_55i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/50-60_ internal rotation/Subject 5/PPG data/ppg.csv",
+      "member_sha256": "78177a61bacb8879abd9afc9a7d2035d95d526f89731dbbd9833d23e39252954",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 12366,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 61.83,
+      "recorded_trial_length_seconds": 60.0,
+      "nominal_duration_minus_recorded_length_seconds": 1.8299999999999983,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_5",
+      "original_condition": "task4_35e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/30-40_ external rotation/Subject 5/PPG data/ppg.csv",
+      "member_sha256": "9de4c3a81509634228c8759985dba88833bf951684b82a5833ac113a19eddb0e",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 18520,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 92.6,
+      "recorded_trial_length_seconds": 90.0,
+      "nominal_duration_minus_recorded_length_seconds": 2.5999999999999943,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_5",
+      "original_condition": "task5_45e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/40-50_ external rotation/Subject 5/PPG data/ppg.csv",
+      "member_sha256": "9faaa763399b218baba94b459304b6929a0609d88814cffff176795d3a3d6095",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 12680,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 63.4,
+      "recorded_trial_length_seconds": 62.0,
+      "nominal_duration_minus_recorded_length_seconds": 1.3999999999999986,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_5",
+      "original_condition": "task6_55e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/50-60_ external rotation/Subject 5/PPG data/ppg.csv",
+      "member_sha256": "8efcdb5d470f17d4dbf07fde151bdb28c62e60a211b73c5c2ed1ca369fd28ba3",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 12530,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 62.65,
+      "recorded_trial_length_seconds": 60.0,
+      "nominal_duration_minus_recorded_length_seconds": 2.6499999999999986,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_6",
+      "original_condition": "task1_35i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/30-40_ internal rotation/Subject 6/PPG data/ppg.csv",
+      "member_sha256": "d44a9c24e8c535adadd35616fcf0d8de4a7877d4cebcf1169bb594c0562735a0",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 28396,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 141.98,
+      "recorded_trial_length_seconds": 141.0,
+      "nominal_duration_minus_recorded_length_seconds": 0.9799999999999898,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_6",
+      "original_condition": "task2_45i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/40-50_ internal rotation/Subject 6/PPG data/ppg.csv",
+      "member_sha256": "ffe66fabdb6c69ddc57bae669537ef8c088fa411da4b4cf7ddfd5bb3e02d65b8",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 20876,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 104.38,
+      "recorded_trial_length_seconds": 102.0,
+      "nominal_duration_minus_recorded_length_seconds": 2.3799999999999955,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_6",
+      "original_condition": "task3_55i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/50-60_ internal rotation/Subject 6/PPG data/ppg.csv",
+      "member_sha256": "2ae37d071ebf94b0be2fcd4b1052cf22dba0d539c111155091968db4279dc921",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 21452,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 107.26,
+      "recorded_trial_length_seconds": 108.0,
+      "nominal_duration_minus_recorded_length_seconds": -0.7399999999999949,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_6",
+      "original_condition": "task4_35e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/30-40_ external rotation/Subject 6/PPG data/ppg.csv",
+      "member_sha256": "3251480a1cde5509d5e4dbb275f58f05c59b74990509a94dedc52b07bbd1b82a",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 16148,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 80.74,
+      "recorded_trial_length_seconds": 81.0,
+      "nominal_duration_minus_recorded_length_seconds": -0.2600000000000051,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_6",
+      "original_condition": "task5_45e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/40-50_ external rotation/Subject 6/PPG data/ppg.csv",
+      "member_sha256": "c734064eb8d3d1d8a68023a4aafe9914651c9afcc1ef9a6af062ef87ce43f896",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 11154,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 55.77,
+      "recorded_trial_length_seconds": 54.0,
+      "nominal_duration_minus_recorded_length_seconds": 1.7700000000000031,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_6",
+      "original_condition": "task6_55e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/50-60_ external rotation/Subject 6/PPG data/ppg.csv",
+      "member_sha256": "d98d3ff5a03792bbedafc53cfb45afb416783d14b9b96808d43f8abbad3d48ed",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 10264,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 51.32,
+      "recorded_trial_length_seconds": 50.0,
+      "nominal_duration_minus_recorded_length_seconds": 1.3200000000000003,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_7",
+      "original_condition": "task1_35i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/30-40_ internal rotation/Subject 7/PPG data/ppg.csv",
+      "member_sha256": "7d730accf6677d8badcbadbe219c65844175347443d74986d795be8afc4c0b7f",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 28722,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 143.61,
+      "recorded_trial_length_seconds": 142.0,
+      "nominal_duration_minus_recorded_length_seconds": 1.6100000000000136,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_7",
+      "original_condition": "task2_45i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/40-50_ internal rotation/Subject 7/PPG data/ppg.csv",
+      "member_sha256": "572e0c387c1e20f839cc3eaa802ab5e07d5fcdb44b371d971b171c1eabc9b9c5",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 12022,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 60.11,
+      "recorded_trial_length_seconds": 59.0,
+      "nominal_duration_minus_recorded_length_seconds": 1.1099999999999994,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_7",
+      "original_condition": "task3_55i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/50-60_ internal rotation/Subject 7/PPG data/ppg.csv",
+      "member_sha256": "9a36714a35c8625fd45d3d0d1aa8df2c85a2bd1abee3297448e0e8a7afb29483",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 10700,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 53.5,
+      "recorded_trial_length_seconds": 54.0,
+      "nominal_duration_minus_recorded_length_seconds": -0.5,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_7",
+      "original_condition": "task4_35e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/30-40_ external rotation/Subject 7/PPG data/ppg.csv",
+      "member_sha256": "cc1b7a37b246420e6689dae4791f47ba737b0707bc385b64555e0f8cb60f698f",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 8012,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 40.06,
+      "recorded_trial_length_seconds": 40.0,
+      "nominal_duration_minus_recorded_length_seconds": 0.060000000000002274,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_7",
+      "original_condition": "task5_45e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/40-50_ external rotation/Subject 7/PPG data/ppg.csv",
+      "member_sha256": "90a28560354ca2e2e12b9fea720b9d4d92f9adc9d9e8944d9fc54d19222115d6",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 9758,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 48.79,
+      "recorded_trial_length_seconds": 50.0,
+      "nominal_duration_minus_recorded_length_seconds": -1.2100000000000009,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_7",
+      "original_condition": "task6_55e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/50-60_ external rotation/Subject 7/PPG data/ppg.csv",
+      "member_sha256": "07394dba678fc7326eb925d0b1ecd7e51f0b281d6359ae076c7fe2b1c1a82287",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 7930,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 39.65,
+      "recorded_trial_length_seconds": 39.0,
+      "nominal_duration_minus_recorded_length_seconds": 0.6499999999999986,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_8",
+      "original_condition": "task1_35i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/30-40_ internal rotation/Subject 8/PPG data/ppg.csv",
+      "member_sha256": "c089c8f15c07b2b0b74a5d16ee2a7e4c2f45520d16ca286b9451c3bd0068e540",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 22742,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 113.71,
+      "recorded_trial_length_seconds": 113.0,
+      "nominal_duration_minus_recorded_length_seconds": 0.7099999999999937,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_8",
+      "original_condition": "task2_45i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/40-50_ internal rotation/Subject 8/PPG data/ppg.csv",
+      "member_sha256": "d8b5b1fd3ed54e36dcf45466ca9e2f82b6daa492816952408fab05576a54e8a2",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 17356,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 86.78,
+      "recorded_trial_length_seconds": 86.0,
+      "nominal_duration_minus_recorded_length_seconds": 0.7800000000000011,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_8",
+      "original_condition": "task3_55i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/50-60_ internal rotation/Subject 8/PPG data/ppg.csv",
+      "member_sha256": "b932ae6cc8c20b08286895bbe9156fa30dd2beb0736a09486bc2f2425dfb7d69",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 12574,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 62.87,
+      "recorded_trial_length_seconds": 62.0,
+      "nominal_duration_minus_recorded_length_seconds": 0.8699999999999974,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_8",
+      "original_condition": "task4_35e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/30-40_ external rotation/Subject 8/PPG data/ppg.csv",
+      "member_sha256": "3f18a6c34d55fcb073ee537223d41d0b2aeca70c9c4da12546ce02fc455c8da2",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 12678,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 63.39,
+      "recorded_trial_length_seconds": 63.0,
+      "nominal_duration_minus_recorded_length_seconds": 0.39000000000000057,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_8",
+      "original_condition": "task5_45e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/40-50_ external rotation/Subject 8/PPG data/ppg.csv",
+      "member_sha256": "c60009f4dfb5790756007f50d6a912f3a877234d4c96b7672863ad33990bc80c",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 13120,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 65.6,
+      "recorded_trial_length_seconds": 63.0,
+      "nominal_duration_minus_recorded_length_seconds": 2.5999999999999943,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_8",
+      "original_condition": "task6_55e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/50-60_ external rotation/Subject 8/PPG data/ppg.csv",
+      "member_sha256": "3b97ba279576c4055621c4791e66aab84dd7d1035a6714c9cdbdd8b5022a47e6",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 11438,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 57.19,
+      "recorded_trial_length_seconds": 55.0,
+      "nominal_duration_minus_recorded_length_seconds": 2.1899999999999977,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_9",
+      "original_condition": "task1_35i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/30-40_ internal rotation/Subject 9/PPG data/ppg.csv",
+      "member_sha256": "df1d74c498e381b07521b46bf6952b2243036fcfc1afeac4e856fbf84338aced",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 23030,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 115.15,
+      "recorded_trial_length_seconds": 115.0,
+      "nominal_duration_minus_recorded_length_seconds": 0.15000000000000568,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_9",
+      "original_condition": "task2_45i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/40-50_ internal rotation/Subject 9/PPG data/ppg.csv",
+      "member_sha256": "b444c721b99716eb586858886cd272f204b6786d1b2005ee82d1eec33084df59",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 17638,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 88.19,
+      "recorded_trial_length_seconds": 87.0,
+      "nominal_duration_minus_recorded_length_seconds": 1.1899999999999977,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_9",
+      "original_condition": "task3_55i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/50-60_ internal rotation/Subject 9/PPG data/ppg.csv",
+      "member_sha256": "161a65172015f9af4f43fd842a3148bfbe798099cee09da2c75b47c845a39b0d",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 14568,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 72.84,
+      "recorded_trial_length_seconds": 72.0,
+      "nominal_duration_minus_recorded_length_seconds": 0.8400000000000034,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_9",
+      "original_condition": "task4_35e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/30-40_ external rotation/Subject 9/PPG data/ppg.csv",
+      "member_sha256": "19063116e7e0fcc18099b1ec0598307900c7a7360a2fdd67aa6ea0f8ec6f88c7",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 13546,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 67.73,
+      "recorded_trial_length_seconds": 67.0,
+      "nominal_duration_minus_recorded_length_seconds": 0.730000000000004,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_9",
+      "original_condition": "task5_45e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/40-50_ external rotation/Subject 9/PPG data/ppg.csv",
+      "member_sha256": "821ad2f7d3cbab277899cb720062fd24dfd2c4d086eb66f2474b68f5303cc3bd",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 10188,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 50.94,
+      "recorded_trial_length_seconds": 50.0,
+      "nominal_duration_minus_recorded_length_seconds": 0.9399999999999977,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_9",
+      "original_condition": "task6_55e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/50-60_ external rotation/Subject 9/PPG data/ppg.csv",
+      "member_sha256": "bfd4230bd505a99bae7a8d2bcb005ea85f75e03013c97fe601a516e1d15fdf32",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 8844,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 44.22,
+      "recorded_trial_length_seconds": 43.0,
+      "nominal_duration_minus_recorded_length_seconds": 1.2199999999999989,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_10",
+      "original_condition": "task1_35i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/30-40_ internal rotation/Subject 10/PPG data/ppg.csv",
+      "member_sha256": "3fe5977ba139ef78c66fe14a3bdb07702c26b912cd4719a2b56edd7140fb55ac",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 31920,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 159.6,
+      "recorded_trial_length_seconds": 162.0,
+      "nominal_duration_minus_recorded_length_seconds": -2.4000000000000057,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_10",
+      "original_condition": "task2_45i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/40-50_ internal rotation/Subject 10/PPG data/ppg.csv",
+      "member_sha256": "90c51b7112cde6703dc248fce87b9c080fcf07bde31b15ced460cb0ac9351240",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 22926,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 114.63,
+      "recorded_trial_length_seconds": 114.0,
+      "nominal_duration_minus_recorded_length_seconds": 0.6299999999999955,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_10",
+      "original_condition": "task3_55i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/50-60_ internal rotation/Subject 10/PPG data/ppg.csv",
+      "member_sha256": "e0e5e0e62aeb287b1c48051788217830c76c34d257c28fc5026232cc3f7eb84f",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 25290,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 126.45,
+      "recorded_trial_length_seconds": 125.0,
+      "nominal_duration_minus_recorded_length_seconds": 1.4500000000000028,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_10",
+      "original_condition": "task4_35e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/30-40_ external rotation/Subject 10/PPG data/ppg.csv",
+      "member_sha256": "712a14fce2211385f9bf6bea80a4313b875f9493d875d3783392fe765c70dd7e",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 13798,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 68.99,
+      "recorded_trial_length_seconds": 70.0,
+      "nominal_duration_minus_recorded_length_seconds": -1.0100000000000051,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_10",
+      "original_condition": "task5_45e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/40-50_ external rotation/Subject 10/PPG data/ppg.csv",
+      "member_sha256": "6393a482697b55128387be740ef242d6dd15a601f4f6625323a8b7f00770b86f",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 11566,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 57.83,
+      "recorded_trial_length_seconds": 56.0,
+      "nominal_duration_minus_recorded_length_seconds": 1.8299999999999983,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_10",
+      "original_condition": "task6_55e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/50-60_ external rotation/Subject 10/PPG data/ppg.csv",
+      "member_sha256": "1735854194f534289ccf57e80a145aac5bf0d7dd057d4f02b7de667c07a6e52d",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 9880,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 49.4,
+      "recorded_trial_length_seconds": 48.0,
+      "nominal_duration_minus_recorded_length_seconds": 1.3999999999999986,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_11",
+      "original_condition": "task1_35i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/30-40_ internal rotation/Subject 11/PPG data/ppg.csv",
+      "member_sha256": "f2a49bfb559c1e9636e28c531d17fb9a94e65bb5df8be92cc6653b4b770a70b9",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 16052,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 80.26,
+      "recorded_trial_length_seconds": 79.0,
+      "nominal_duration_minus_recorded_length_seconds": 1.2600000000000051,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_11",
+      "original_condition": "task2_45i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/40-50_ internal rotation/Subject 11/PPG data/ppg.csv",
+      "member_sha256": "3470af2e0f14a638e2046857adaf357bc8c33ba6768ea724986bc2516323cb60",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 12692,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 63.46,
+      "recorded_trial_length_seconds": 62.0,
+      "nominal_duration_minus_recorded_length_seconds": 1.4600000000000009,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_11",
+      "original_condition": "task3_55i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/50-60_ internal rotation/Subject 11/PPG data/ppg.csv",
+      "member_sha256": "36d30b25d8026f5e8ccb94eafccac93f95494ecb6e98e4cae69da94c6a8aedbe",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 16068,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 80.34,
+      "recorded_trial_length_seconds": 78.0,
+      "nominal_duration_minus_recorded_length_seconds": 2.3400000000000034,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_11",
+      "original_condition": "task4_35e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/30-40_ external rotation/Subject 11/PPG data/ppg.csv",
+      "member_sha256": "161b0e9009b0df5afe82757b3038333ad96961861159ddb39ebc5e6dc61d5d0f",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 13586,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 67.93,
+      "recorded_trial_length_seconds": 64.0,
+      "nominal_duration_minus_recorded_length_seconds": 3.930000000000007,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_11",
+      "original_condition": "task5_45e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/40-50_ external rotation/Subject 11/PPG data/ppg.csv",
+      "member_sha256": "a6aaee0a3410a52052b904c5ceafed125d5d3354e604305446b5601d76e84f5a",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 8660,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 43.3,
+      "recorded_trial_length_seconds": 42.0,
+      "nominal_duration_minus_recorded_length_seconds": 1.2999999999999972,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_11",
+      "original_condition": "task6_55e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/50-60_ external rotation/Subject 11/PPG data/ppg.csv",
+      "member_sha256": "3d233d2979a0ea820b461e7ab8ea1e902f6bb6d60cee596998febdbb5f55b320",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 7522,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 37.61,
+      "recorded_trial_length_seconds": 37.0,
+      "nominal_duration_minus_recorded_length_seconds": 0.6099999999999994,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_12",
+      "original_condition": "task1_35i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/30-40_ internal rotation/Subject 12/PPG data/ppg.csv",
+      "member_sha256": "1464a76d9113f5c4e8e8d9d62bdb3d6b69f223d1a7eb95b241b1019c6d63b7fc",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 20432,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 102.16,
+      "recorded_trial_length_seconds": 100.0,
+      "nominal_duration_minus_recorded_length_seconds": 2.1599999999999966,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_12",
+      "original_condition": "task2_45i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/40-50_ internal rotation/Subject 12/PPG data/ppg.csv",
+      "member_sha256": "9eab6f14bf5a00b05f26a15a2b6fbce6d527f82025c552b6c1430dd4cae5a2e5",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 13644,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 68.22,
+      "recorded_trial_length_seconds": 66.0,
+      "nominal_duration_minus_recorded_length_seconds": 2.219999999999999,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_12",
+      "original_condition": "task3_55i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/50-60_ internal rotation/Subject 12/PPG data/ppg.csv",
+      "member_sha256": "bf394b2a75ad0e32258c29951715f8628751ecdcbf0d497b6619844de8d34484",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 12076,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 60.38,
+      "recorded_trial_length_seconds": 60.0,
+      "nominal_duration_minus_recorded_length_seconds": 0.38000000000000256,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_12",
+      "original_condition": "task4_35e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/30-40_ external rotation/Subject 12/PPG data/ppg.csv",
+      "member_sha256": "5029cdd61862e13f2db9c4b763660f547f1495041d7778e0a973de6e00f32fc9",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 11682,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 58.41,
+      "recorded_trial_length_seconds": 57.0,
+      "nominal_duration_minus_recorded_length_seconds": 1.4099999999999966,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_12",
+      "original_condition": "task5_45e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/40-50_ external rotation/Subject 12/PPG data/ppg.csv",
+      "member_sha256": "ed6a9a18681a41e4b1b66a5ce01a3fbadc58242e60f89b9e60aa6526de825023",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 10962,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 54.81,
+      "recorded_trial_length_seconds": 53.0,
+      "nominal_duration_minus_recorded_length_seconds": 1.8100000000000023,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_12",
+      "original_condition": "task6_55e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/50-60_ external rotation/Subject 12/PPG data/ppg.csv",
+      "member_sha256": "33e45ccbe26ba45d4a037b3d62295b67c6a35d0a78e4c624d3ece53acf61dd29",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 10236,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 51.18,
+      "recorded_trial_length_seconds": 50.0,
+      "nominal_duration_minus_recorded_length_seconds": 1.1799999999999997,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_13",
+      "original_condition": "task1_35i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/30-40_ internal rotation/Subject 13/PPG data/ppg.csv",
+      "member_sha256": "2bb6f4081b294df0e6756706e3ed3b98fdc52aba126c486e45df30ab24213c92",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 13824,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 69.12,
+      "recorded_trial_length_seconds": 67.0,
+      "nominal_duration_minus_recorded_length_seconds": 2.1200000000000045,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_13",
+      "original_condition": "task2_45i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/40-50_ internal rotation/Subject 13/PPG data/ppg.csv",
+      "member_sha256": "7b6923c17991f470654062f7670b59eb4f1a4f9d346a7d79667958b84283db42",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 14050,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 70.25,
+      "recorded_trial_length_seconds": 70.0,
+      "nominal_duration_minus_recorded_length_seconds": 0.25,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_13",
+      "original_condition": "task3_55i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/50-60_ internal rotation/Subject 13/PPG data/ppg.csv",
+      "member_sha256": "cdb3629e1540b7017327a3ef3813210d820aec7c0ed5b12ba42788d6542ee28f",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 12284,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 61.42,
+      "recorded_trial_length_seconds": 61.0,
+      "nominal_duration_minus_recorded_length_seconds": 0.4200000000000017,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_13",
+      "original_condition": "task4_35e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/30-40_ external rotation/Subject 13/PPG data/ppg.csv",
+      "member_sha256": "26ba8d76972cef376cead045fd749164d84a4af1009f402e6d9bc877d4bf3ca3",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 8376,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 41.88,
+      "recorded_trial_length_seconds": 40.0,
+      "nominal_duration_minus_recorded_length_seconds": 1.8800000000000026,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_13",
+      "original_condition": "task5_45e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/40-50_ external rotation/Subject 13/PPG data/ppg.csv",
+      "member_sha256": "b71fc0cef249cd91cd459e866104358bf40adc456d2236897f43413291d5f630",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 8610,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 43.05,
+      "recorded_trial_length_seconds": 42.0,
+      "nominal_duration_minus_recorded_length_seconds": 1.0499999999999972,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_13",
+      "original_condition": "task6_55e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/50-60_ external rotation/Subject 13/PPG data/ppg.csv",
+      "member_sha256": "30ab5722845107201e4d35d60c502c6b0a9445246679dea989418e27a3e33410",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 6778,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 33.89,
+      "recorded_trial_length_seconds": 33.0,
+      "nominal_duration_minus_recorded_length_seconds": 0.8900000000000006,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_14",
+      "original_condition": "task1_35i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/30-40_ internal rotation/Subject 14/PPG data/ppg.csv",
+      "member_sha256": "11fd70fbd83c3506b57194cb40140da0f5b3e44ab0977581548dbcf1646a943b",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 14760,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 73.8,
+      "recorded_trial_length_seconds": 73.0,
+      "nominal_duration_minus_recorded_length_seconds": 0.7999999999999972,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_14",
+      "original_condition": "task2_45i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/40-50_ internal rotation/Subject 14/PPG data/ppg.csv",
+      "member_sha256": "6d62a3d2da1f58fcc16b5b45715abcb2db909922d1573e954cb1cf1869e89db3",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 11344,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 56.72,
+      "recorded_trial_length_seconds": 55.0,
+      "nominal_duration_minus_recorded_length_seconds": 1.7199999999999989,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_14",
+      "original_condition": "task3_55i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/50-60_ internal rotation/Subject 14/PPG data/ppg.csv",
+      "member_sha256": "90f647e92e10d56051dacf83c56de04c5f7f6566ef81086238c5e93aaeeb68db",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 13944,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 69.72,
+      "recorded_trial_length_seconds": 69.0,
+      "nominal_duration_minus_recorded_length_seconds": 0.7199999999999989,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_14",
+      "original_condition": "task4_35e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/30-40_ external rotation/Subject 14/PPG data/ppg.csv",
+      "member_sha256": "b5313363e1bf9ff9d1daac05865e2a8cef14da684b5e54b58fbef9df0cfe5a9e",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 11714,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 58.57,
+      "recorded_trial_length_seconds": 57.0,
+      "nominal_duration_minus_recorded_length_seconds": 1.5700000000000003,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_14",
+      "original_condition": "task5_45e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/40-50_ external rotation/Subject 14/PPG data/ppg.csv",
+      "member_sha256": "4243358b655e6c04164c549995ad3c2869fa2c6ab1e8d09bd936946b60cd6f52",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 9114,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 45.57,
+      "recorded_trial_length_seconds": 44.0,
+      "nominal_duration_minus_recorded_length_seconds": 1.5700000000000003,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_14",
+      "original_condition": "task6_55e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/50-60_ external rotation/Subject 14/PPG data/ppg.csv",
+      "member_sha256": "248eef812dfc0b0889f8430ae1b1f356267241aaee3baa7f899b76a69680b1a9",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 8322,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 41.61,
+      "recorded_trial_length_seconds": 40.0,
+      "nominal_duration_minus_recorded_length_seconds": 1.6099999999999994,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_15",
+      "original_condition": "task1_35i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/30-40_ internal rotation/Subject 15/PPG data/ppg.csv",
+      "member_sha256": "5e41291910089c815ba28e817e4a90ad5b459b5f6d8d65d308fc659376fb9e05",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 32440,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 162.2,
+      "recorded_trial_length_seconds": 160.0,
+      "nominal_duration_minus_recorded_length_seconds": 2.1999999999999886,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_15",
+      "original_condition": "task2_45i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/40-50_ internal rotation/Subject 15/PPG data/ppg.csv",
+      "member_sha256": "cdea37d71a167d1e1e0d501c5617cda01ecd6fa578bf3fca08ea0cd304e50d9e",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 18816,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 94.08,
+      "recorded_trial_length_seconds": 93.0,
+      "nominal_duration_minus_recorded_length_seconds": 1.0799999999999983,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_15",
+      "original_condition": "task3_55i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/50-60_ internal rotation/Subject 15/PPG data/ppg.csv",
+      "member_sha256": "d82c151deaa57fc930841d2905653e76871bf44459731d0f848df9bb3fa361bc",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 17376,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 86.88,
+      "recorded_trial_length_seconds": 86.0,
+      "nominal_duration_minus_recorded_length_seconds": 0.8799999999999955,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_15",
+      "original_condition": "task4_35e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/30-40_ external rotation/Subject 15/PPG data/ppg.csv",
+      "member_sha256": "41419ceaf1791130fab1b01cb4a2851e7598e7e155cc6c2e148c1b3595db4d7d",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 12530,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 62.65,
+      "recorded_trial_length_seconds": 60.0,
+      "nominal_duration_minus_recorded_length_seconds": 2.6499999999999986,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_15",
+      "original_condition": "task5_45e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/40-50_ external rotation/Subject 15/PPG data/ppg.csv",
+      "member_sha256": "2d66e6d7140c0c144974910a4f5a5814661ad23e0d0b573895a77dc4dbdab9a4",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 12150,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 60.75,
+      "recorded_trial_length_seconds": 60.0,
+      "nominal_duration_minus_recorded_length_seconds": 0.75,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_15",
+      "original_condition": "task6_55e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/50-60_ external rotation/Subject 15/PPG data/ppg.csv",
+      "member_sha256": "b544a9142a14c8c71a8c5882b91b419add4abb73cd8f3326d10c02739c8b6e5f",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 9914,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 49.57,
+      "recorded_trial_length_seconds": 49.0,
+      "nominal_duration_minus_recorded_length_seconds": 0.5700000000000003,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_16",
+      "original_condition": "task1_35i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/30-40_ internal rotation/Subject 16/PPG data/ppg.csv",
+      "member_sha256": "7aaa2fb015796dec83b38e9486f8f4f759cfe47eab2219409ffda5d45606c92e",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 23732,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 118.66,
+      "recorded_trial_length_seconds": 117.0,
+      "nominal_duration_minus_recorded_length_seconds": 1.6599999999999966,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_16",
+      "original_condition": "task2_45i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/40-50_ internal rotation/Subject 16/PPG data/ppg.csv",
+      "member_sha256": "7bb49ff4b5797ddb5c4293b22686d385bd1656e5bf12634d456bc782ad4266ef",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 11884,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 59.42,
+      "recorded_trial_length_seconds": 58.0,
+      "nominal_duration_minus_recorded_length_seconds": 1.4200000000000017,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_16",
+      "original_condition": "task3_55i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/50-60_ internal rotation/Subject 16/PPG data/ppg.csv",
+      "member_sha256": "696624a674afb859f23096a63842702ea22b49d00ebe1aa6c73a3fa452196ec3",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 10648,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 53.24,
+      "recorded_trial_length_seconds": 52.0,
+      "nominal_duration_minus_recorded_length_seconds": 1.240000000000002,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_16",
+      "original_condition": "task4_35e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/30-40_ external rotation/Subject 16/PPG data/ppg.csv",
+      "member_sha256": "11062946703123cbd42ff0e53b5797f86164fbc574e27bfb6f45460b2d4d62ae",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 12304,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 61.52,
+      "recorded_trial_length_seconds": 60.0,
+      "nominal_duration_minus_recorded_length_seconds": 1.5200000000000031,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_16",
+      "original_condition": "task5_45e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/40-50_ external rotation/Subject 16/PPG data/ppg.csv",
+      "member_sha256": "adfeba79289fd46b7c0a456ff610d41e0b7cd8aa897260a97c989da32bb12ba1",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 10568,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 52.84,
+      "recorded_trial_length_seconds": 50.0,
+      "nominal_duration_minus_recorded_length_seconds": 2.8400000000000034,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_16",
+      "original_condition": "task6_55e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/50-60_ external rotation/Subject 16/PPG data/ppg.csv",
+      "member_sha256": "244ee005aa38e89cd185021b50b3aaa249168af167d128db3573833a6ce462ac",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 6392,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 31.96,
+      "recorded_trial_length_seconds": 31.0,
+      "nominal_duration_minus_recorded_length_seconds": 0.9600000000000009,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_18",
+      "original_condition": "task1_35i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/30-40_ internal rotation/Subject 18/PPG data/ppg.csv",
+      "member_sha256": "a0d524eb46f3915d5492badf9f85798f42237f18c61354bee2a5576ba71cd64e",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 21762,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 108.81,
+      "recorded_trial_length_seconds": 110.0,
+      "nominal_duration_minus_recorded_length_seconds": -1.1899999999999977,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_18",
+      "original_condition": "task2_45i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/40-50_ internal rotation/Subject 18/PPG data/ppg.csv",
+      "member_sha256": "c17ea7a371ddae31561e59d17ad01c6b7b332e701188b417e3d97dbd4faa5855",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 9514,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 47.57,
+      "recorded_trial_length_seconds": 46.0,
+      "nominal_duration_minus_recorded_length_seconds": 1.5700000000000003,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_18",
+      "original_condition": "task3_55i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/50-60_ internal rotation/Subject 18/PPG data/ppg.csv",
+      "member_sha256": "89c998d6fb5482ad1879d3496c7add5ba0381cec08bd4854a20ef58ddda47355",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 9494,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 47.47,
+      "recorded_trial_length_seconds": 46.0,
+      "nominal_duration_minus_recorded_length_seconds": 1.4699999999999989,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_18",
+      "original_condition": "task4_35e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/30-40_ external rotation/Subject 18/PPG data/ppg.csv",
+      "member_sha256": "0a6de2d7006254c363147ea2dca5ca5592d55effdafeb4d95260f2e451bfa155",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 9360,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 46.8,
+      "recorded_trial_length_seconds": 47.0,
+      "nominal_duration_minus_recorded_length_seconds": -0.20000000000000284,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_18",
+      "original_condition": "task5_45e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/40-50_ external rotation/Subject 18/PPG data/ppg.csv",
+      "member_sha256": "10ba8e80a4c0d88db0f2772eb5fa799b7c9d86e3f1e9c32600ef9c61b4851a27",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 6050,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 30.25,
+      "recorded_trial_length_seconds": 30.0,
+      "nominal_duration_minus_recorded_length_seconds": 0.25,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_18",
+      "original_condition": "task6_55e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/50-60_ external rotation/Subject 18/PPG data/ppg.csv",
+      "member_sha256": "b59c1cda29513bedf9a51ada2612299c587b6b97ed2faa6be773a403889c55f5",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 4518,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 22.59,
+      "recorded_trial_length_seconds": 24.0,
+      "nominal_duration_minus_recorded_length_seconds": -1.4100000000000001,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_19",
+      "original_condition": "task1_35i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/30-40_ internal rotation/Subject 19/PPG data/ppg.csv",
+      "member_sha256": "2e34b963650368b9c5f2f66288678c73d9cdd24a44fa0a7945b2037756822396",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 19600,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 98.0,
+      "recorded_trial_length_seconds": 97.0,
+      "nominal_duration_minus_recorded_length_seconds": 1.0,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_19",
+      "original_condition": "task2_45i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/40-50_ internal rotation/Subject 19/PPG data/ppg.csv",
+      "member_sha256": "2d5bf57babfb0c24829b167e0801d77bc59ae4c5b99dbe0a16dcef54cf6184e6",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 17434,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 87.17,
+      "recorded_trial_length_seconds": 86.0,
+      "nominal_duration_minus_recorded_length_seconds": 1.1700000000000017,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_19",
+      "original_condition": "task3_55i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/50-60_ internal rotation/Subject 19/PPG data/ppg.csv",
+      "member_sha256": "e4300ce76733cfbf9702b0c5c5412d398f18f88459d96b97ee601c0f4e4eb731",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 18444,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 92.22,
+      "recorded_trial_length_seconds": 92.0,
+      "nominal_duration_minus_recorded_length_seconds": 0.21999999999999886,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_19",
+      "original_condition": "task4_35e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/30-40_ external rotation/Subject 19/PPG data/ppg.csv",
+      "member_sha256": "5d54681435add32e37baa2b29f16dc2f451058d8e36140cde2bc13e20f164638",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 13652,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 68.26,
+      "recorded_trial_length_seconds": 68.0,
+      "nominal_duration_minus_recorded_length_seconds": 0.2600000000000051,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_19",
+      "original_condition": "task5_45e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/40-50_ external rotation/Subject 19/PPG data/ppg.csv",
+      "member_sha256": "405c289c14a90fd749399c88e5b6e6784b2659cd14748cfa5f2b223c9de4bec7",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 11666,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 58.33,
+      "recorded_trial_length_seconds": 58.0,
+      "nominal_duration_minus_recorded_length_seconds": 0.3299999999999983,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_19",
+      "original_condition": "task6_55e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/50-60_ external rotation/Subject 19/PPG data/ppg.csv",
+      "member_sha256": "fab01c0a77bd7de9af377fbea794e378dc779daaa1238a27dd26da30233eef58",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 10980,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 54.9,
+      "recorded_trial_length_seconds": 53.0,
+      "nominal_duration_minus_recorded_length_seconds": 1.8999999999999986,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_20",
+      "original_condition": "task1_35i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/30-40_ internal rotation/Subject 20/PPG data/ppg.csv",
+      "member_sha256": "0088757ce58ab47b08951e40791700b7f16d34d8f8de0fdcb30ffe20e58e6efc",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 22426,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 112.13,
+      "recorded_trial_length_seconds": 112.0,
+      "nominal_duration_minus_recorded_length_seconds": 0.12999999999999545,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_20",
+      "original_condition": "task2_45i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/40-50_ internal rotation/Subject 20/PPG data/ppg.csv",
+      "member_sha256": "7d6c31e363596c93293548d4faf0a6d263c9562a8af944ea88a6c735b4efcdca",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 14938,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 74.69,
+      "recorded_trial_length_seconds": 74.0,
+      "nominal_duration_minus_recorded_length_seconds": 0.6899999999999977,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_20",
+      "original_condition": "task3_55i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/50-60_ internal rotation/Subject 20/PPG data/ppg.csv",
+      "member_sha256": "67fe1debe5d0175ddc2b88917e45c11124a037e8c74633185d450ca392bb2200",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 12762,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 63.81,
+      "recorded_trial_length_seconds": 60.0,
+      "nominal_duration_minus_recorded_length_seconds": 3.8100000000000023,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_20",
+      "original_condition": "task4_35e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/30-40_ external rotation/Subject 20/PPG data/ppg.csv",
+      "member_sha256": "2451f614a0728e539b0409c4515681aec0c232009a75d361cdc8038ded4bfced",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 11298,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 56.49,
+      "recorded_trial_length_seconds": 56.0,
+      "nominal_duration_minus_recorded_length_seconds": 0.490000000000002,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_20",
+      "original_condition": "task5_45e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/40-50_ external rotation/Subject 20/PPG data/ppg.csv",
+      "member_sha256": "480e7c2136d7bd07cecdf9154c500f9119652aa4a336f3fb41730aa5fdbedec7",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 10164,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 50.82,
+      "recorded_trial_length_seconds": 50.0,
+      "nominal_duration_minus_recorded_length_seconds": 0.8200000000000003,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_20",
+      "original_condition": "task6_55e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/50-60_ external rotation/Subject 20/PPG data/ppg.csv",
+      "member_sha256": "3923e7fd2260e848948c4852fb288709628981385d0c121a0ddaa7ecfce35451",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 8514,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 42.57,
+      "recorded_trial_length_seconds": 42.0,
+      "nominal_duration_minus_recorded_length_seconds": 0.5700000000000003,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_21",
+      "original_condition": "task1_35i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/30-40_ internal rotation/Subject 21/PPG data/ppg.csv",
+      "member_sha256": "e4155d590fd2d1975d56972ebb4de66a24033c7c1b280a39a821739876c3aa6e",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 30374,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 151.87,
+      "recorded_trial_length_seconds": 152.0,
+      "nominal_duration_minus_recorded_length_seconds": -0.12999999999999545,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_21",
+      "original_condition": "task2_45i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/40-50_ internal rotation/Subject 21/PPG data/ppg.csv",
+      "member_sha256": "92990d27a7db3418ea23bb1c29ca0bfa1528ff94ecd8536c13b6a88598effdcc",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 34046,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 170.23,
+      "recorded_trial_length_seconds": 170.0,
+      "nominal_duration_minus_recorded_length_seconds": 0.22999999999998977,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_21",
+      "original_condition": "task3_55i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/50-60_ internal rotation/Subject 21/PPG data/ppg.csv",
+      "member_sha256": "f7095a88fdefc8b9c2d4f95ddb8ab2be921eb55d4b84b73cb71e8777561e4037",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 11858,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 59.29,
+      "recorded_trial_length_seconds": 65.0,
+      "nominal_duration_minus_recorded_length_seconds": -5.710000000000001,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_21",
+      "original_condition": "task4_35e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/30-40_ external rotation/Subject 21/PPG data/ppg.csv",
+      "member_sha256": "c38407a9cc3fbd2a99eea8fb3f1b509857a9eeeed6efea088419671e34efb583",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 13966,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 69.83,
+      "recorded_trial_length_seconds": 66.0,
+      "nominal_duration_minus_recorded_length_seconds": 3.8299999999999983,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_21",
+      "original_condition": "task5_45e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/40-50_ external rotation/Subject 21/PPG data/ppg.csv",
+      "member_sha256": "67ac4640d74993814f66a9527ac9d8386ce335f430a0a5de8363a118f45a6e44",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 11796,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 58.98,
+      "recorded_trial_length_seconds": 58.0,
+      "nominal_duration_minus_recorded_length_seconds": 0.9799999999999969,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_21",
+      "original_condition": "task6_55e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/50-60_ external rotation/Subject 21/PPG data/ppg.csv",
+      "member_sha256": "d16d192dfd5fb2d45cb2ccbb109af6e814ad06443fbc035decd195a1b5b3a077",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 7526,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 37.63,
+      "recorded_trial_length_seconds": 36.0,
+      "nominal_duration_minus_recorded_length_seconds": 1.6300000000000026,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_22",
+      "original_condition": "task1_35i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/30-40_ internal rotation/Subject 22/PPG data/ppg.csv",
+      "member_sha256": "ab9b5a363240551ef146c27c493457dd4548342f12193b9c16bb568d8f60a24e",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 19984,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 99.92,
+      "recorded_trial_length_seconds": 99.0,
+      "nominal_duration_minus_recorded_length_seconds": 0.9200000000000017,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_22",
+      "original_condition": "task2_45i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/40-50_ internal rotation/Subject 22/PPG data/ppg.csv",
+      "member_sha256": "3ea92d4e9d263fe09f3b49e19b8af5ac8743b09589b5dc75e10c08b2b0f4c59f",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 11546,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 57.73,
+      "recorded_trial_length_seconds": 57.0,
+      "nominal_duration_minus_recorded_length_seconds": 0.7299999999999969,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_22",
+      "original_condition": "task3_55i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/50-60_ internal rotation/Subject 22/PPG data/ppg.csv",
+      "member_sha256": "275c92383a00d7fee867ae43812b3476d5b8052bb67801e306351362d049b321",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 8328,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 41.64,
+      "recorded_trial_length_seconds": 40.0,
+      "nominal_duration_minus_recorded_length_seconds": 1.6400000000000006,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_22",
+      "original_condition": "task4_35e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/30-40_ external rotation/Subject 22/PPG data/ppg.csv",
+      "member_sha256": "b00a28ab84d0fe9d3b7235a5f16d3e3e0fa27cdad2d805242f8596f5954a61c5",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 12596,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 62.98,
+      "recorded_trial_length_seconds": 60.0,
+      "nominal_duration_minus_recorded_length_seconds": 2.979999999999997,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_22",
+      "original_condition": "task5_45e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/40-50_ external rotation/Subject 22/PPG data/ppg.csv",
+      "member_sha256": "d3c109dbef00d4d862f0662185e0dd8b8d8e4caa3f67ea46746d77d72c0cdcac",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 10292,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 51.46,
+      "recorded_trial_length_seconds": 50.0,
+      "nominal_duration_minus_recorded_length_seconds": 1.4600000000000009,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_22",
+      "original_condition": "task6_55e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/50-60_ external rotation/Subject 22/PPG data/ppg.csv",
+      "member_sha256": "15374398c762d8d45cd3ae7ec1119fb60a4e6df8a63fd2337ffe44c6b9eb05ab",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 7170,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 35.85,
+      "recorded_trial_length_seconds": 35.0,
+      "nominal_duration_minus_recorded_length_seconds": 0.8500000000000014,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_24",
+      "original_condition": "task1_35i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/30-40_ internal rotation/Subject 24/PPG data/ppg.csv",
+      "member_sha256": "6e504f6d9ae27d565c966dde3545e0d84fa4aae42a3f02c89234c566e6e7dd48",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 23012,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 115.06,
+      "recorded_trial_length_seconds": 114.0,
+      "nominal_duration_minus_recorded_length_seconds": 1.0600000000000023,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_24",
+      "original_condition": "task2_45i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/40-50_ internal rotation/Subject 24/PPG data/ppg.csv",
+      "member_sha256": "4f160692c398ea3475084b837bb89df39e2e38aa73c9a3bde259a574544a2764",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 15890,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 79.45,
+      "recorded_trial_length_seconds": 78.0,
+      "nominal_duration_minus_recorded_length_seconds": 1.4500000000000028,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_24",
+      "original_condition": "task3_55i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/50-60_ internal rotation/Subject 24/PPG data/ppg.csv",
+      "member_sha256": "ad8d066cfa7a8d6e58359d2265b88867002cc80ad32515b3199d9a457a92a94b",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 13564,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 67.82,
+      "recorded_trial_length_seconds": 67.0,
+      "nominal_duration_minus_recorded_length_seconds": 0.8199999999999932,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_24",
+      "original_condition": "task4_35e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/30-40_ external rotation/Subject 24/PPG data/ppg.csv",
+      "member_sha256": "ee9ae725e1b6f045102f6e016de1b99ded025fd485dbc437fd2ec199e86d50ce",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 14268,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 71.34,
+      "recorded_trial_length_seconds": 70.0,
+      "nominal_duration_minus_recorded_length_seconds": 1.3400000000000034,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_24",
+      "original_condition": "task5_45e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/40-50_ external rotation/Subject 24/PPG data/ppg.csv",
+      "member_sha256": "5edd8ee73b18476dfb02bea6d346fb947781c03438936757b9e0c33815ffdfac",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 10650,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 53.25,
+      "recorded_trial_length_seconds": 50.0,
+      "nominal_duration_minus_recorded_length_seconds": 3.25,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_24",
+      "original_condition": "task6_55e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/50-60_ external rotation/Subject 24/PPG data/ppg.csv",
+      "member_sha256": "ea6b6ffa87341e717b6fe7f8449b4cc7401f0377ee2d811ba959b718bf5a76d0",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 10112,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 50.56,
+      "recorded_trial_length_seconds": 50.0,
+      "nominal_duration_minus_recorded_length_seconds": 0.5600000000000023,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_25",
+      "original_condition": "task1_35i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/30-40_ internal rotation/Subject 25/PPG data/ppg.csv",
+      "member_sha256": "7d12031636d373e76b1bcc32d64dc432d7d79b496790be318ec8c2a53e9ec1bb",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 24120,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 120.6,
+      "recorded_trial_length_seconds": 120.0,
+      "nominal_duration_minus_recorded_length_seconds": 0.5999999999999943,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_25",
+      "original_condition": "task2_45i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/40-50_ internal rotation/Subject 25/PPG data/ppg.csv",
+      "member_sha256": "5e725a7b74ecfb483ad2a73b3be5b1a18fa0df863dd3ef7216f6c38582e21ec0",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 16616,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 83.08,
+      "recorded_trial_length_seconds": 80.0,
+      "nominal_duration_minus_recorded_length_seconds": 3.0799999999999983,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_25",
+      "original_condition": "task3_55i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/50-60_ internal rotation/Subject 25/PPG data/ppg.csv",
+      "member_sha256": "1bd2227dabdb934d0f28e19de211dca2878c5666035b6ebc53938601c220d97d",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 15968,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 79.84,
+      "recorded_trial_length_seconds": 78.0,
+      "nominal_duration_minus_recorded_length_seconds": 1.8400000000000034,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_25",
+      "original_condition": "task4_35e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/30-40_ external rotation/Subject 25/PPG data/ppg.csv",
+      "member_sha256": "fb955dfe5f783efac90f27196533278098411672cceed106e7f7476c632c081e",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 11588,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 57.94,
+      "recorded_trial_length_seconds": 57.0,
+      "nominal_duration_minus_recorded_length_seconds": 0.9399999999999977,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_25",
+      "original_condition": "task5_45e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/40-50_ external rotation/Subject 25/PPG data/ppg.csv",
+      "member_sha256": "ff04427c83850f0cc4c952da37498c16449ef9d936441121deca76f59294a626",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 11268,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 56.34,
+      "recorded_trial_length_seconds": 55.0,
+      "nominal_duration_minus_recorded_length_seconds": 1.3400000000000034,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_25",
+      "original_condition": "task6_55e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/50-60_ external rotation/Subject 25/PPG data/ppg.csv",
+      "member_sha256": "5295300e938b02900d9f119d9718582b38d54494f8ea051f6f002c183e879a9d",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 9922,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 49.61,
+      "recorded_trial_length_seconds": 47.0,
+      "nominal_duration_minus_recorded_length_seconds": 2.6099999999999994,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_26",
+      "original_condition": "task1_35i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/30-40_ internal rotation/Subject 26/PPG data/ppg.csv",
+      "member_sha256": "cf95e1ed48b86bb8ea6874b921287a2a0cea5b0cd2de7677ceca433dbb44d970",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 33066,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 165.33,
+      "recorded_trial_length_seconds": 165.0,
+      "nominal_duration_minus_recorded_length_seconds": 0.3300000000000125,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_26",
+      "original_condition": "task2_45i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/40-50_ internal rotation/Subject 26/PPG data/ppg.csv",
+      "member_sha256": "87f735911f4b539bdd5a1211fd6a8f1b2776c8baf26efca8c4feef7cfcf038d9",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 30600,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 153.0,
+      "recorded_trial_length_seconds": 152.0,
+      "nominal_duration_minus_recorded_length_seconds": 1.0,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_26",
+      "original_condition": "task3_55i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/50-60_ internal rotation/Subject 26/PPG data/ppg.csv",
+      "member_sha256": "7ce620dbafbd5bda84d473eb3943d123f9bc1a27a40e3f150dbba7649bb2c333",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 24992,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 124.96,
+      "recorded_trial_length_seconds": 122.0,
+      "nominal_duration_minus_recorded_length_seconds": 2.9599999999999937,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_26",
+      "original_condition": "task4_35e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/30-40_ external rotation/Subject 26/PPG data/ppg.csv",
+      "member_sha256": "69d1d06d55470f4fd01ae14f2e145f6e76185097700b9ee94493784eb6b809c8",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 11544,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 57.72,
+      "recorded_trial_length_seconds": 57.0,
+      "nominal_duration_minus_recorded_length_seconds": 0.7199999999999989,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_26",
+      "original_condition": "task5_45e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/40-50_ external rotation/Subject 26/PPG data/ppg.csv",
+      "member_sha256": "c393eaef6c29bff53e86014dce325c42b4ca3baa43d7e9b72e2ad177cf1123c7",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 9196,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 45.98,
+      "recorded_trial_length_seconds": 45.0,
+      "nominal_duration_minus_recorded_length_seconds": 0.9799999999999969,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_26",
+      "original_condition": "task6_55e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/50-60_ external rotation/Subject 26/PPG data/ppg.csv",
+      "member_sha256": "dbd152c4843874650f94bdb488162f00058b9c2c0735173f1b431e222ba94299",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 9036,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 45.18,
+      "recorded_trial_length_seconds": 47.0,
+      "nominal_duration_minus_recorded_length_seconds": -1.8200000000000003,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_28",
+      "original_condition": "task1_35i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/30-40_ internal rotation/Subject 28/PPG data/ppg.csv",
+      "member_sha256": "29e72c3e72519ad513b49b6abfb2e41336ba12854c7330451d9aa31a0a622d25",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 50386,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 251.93,
+      "recorded_trial_length_seconds": 250.0,
+      "nominal_duration_minus_recorded_length_seconds": 1.9300000000000068,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_28",
+      "original_condition": "task2_45i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/40-50_ internal rotation/Subject 28/PPG data/ppg.csv",
+      "member_sha256": "31847b7ae65d5780883dc2fd7f6b40079a5a6cc03498218e91c051944ab4d152",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 40754,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 203.77,
+      "recorded_trial_length_seconds": 202.0,
+      "nominal_duration_minus_recorded_length_seconds": 1.7700000000000102,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_28",
+      "original_condition": "task3_55i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/50-60_ internal rotation/Subject 28/PPG data/ppg.csv",
+      "member_sha256": "9271dd9f3ba58147c775cc364779a9c075724896a4ee33b54da03f7aa2bda2ca",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 41696,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 208.48,
+      "recorded_trial_length_seconds": 210.0,
+      "nominal_duration_minus_recorded_length_seconds": -1.5200000000000102,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_28",
+      "original_condition": "task4_35e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/30-40_ external rotation/Subject 28/PPG data/ppg.csv",
+      "member_sha256": "3fb9d7949090c7702717367eb1eb35cb0d3e52339b18b773662ce2bdbbfcacb4",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 13826,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 69.13,
+      "recorded_trial_length_seconds": 68.0,
+      "nominal_duration_minus_recorded_length_seconds": 1.1299999999999955,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_28",
+      "original_condition": "task5_45e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/40-50_ external rotation/Subject 28/PPG data/ppg.csv",
+      "member_sha256": "4d819f9ffce8a8373a1d41e676716020e02b83ac102d43561fb87eaa4dffb31d",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 13230,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 66.15,
+      "recorded_trial_length_seconds": 66.0,
+      "nominal_duration_minus_recorded_length_seconds": 0.15000000000000568,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_28",
+      "original_condition": "task6_55e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/50-60_ external rotation/Subject 28/PPG data/ppg.csv",
+      "member_sha256": "5e84a3e1223b3fce9c9fe188fce978aaa0ef77f3f74410484c620ac18aff24c3",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 11944,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 59.72,
+      "recorded_trial_length_seconds": 60.0,
+      "nominal_duration_minus_recorded_length_seconds": -0.28000000000000114,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_30",
+      "original_condition": "task1_35i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/30-40_ internal rotation/Subject 30/PPG data/ppg.csv",
+      "member_sha256": "c08add7faa4111c290e9bab59a9ffe1e71e949d9bac1938f430758c5c3d9b0e9",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 15160,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 75.8,
+      "recorded_trial_length_seconds": 73.0,
+      "nominal_duration_minus_recorded_length_seconds": 2.799999999999997,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_30",
+      "original_condition": "task2_45i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/40-50_ internal rotation/Subject 30/PPG data/ppg.csv",
+      "member_sha256": "90cd1c0875e700ec31e0ed361fdc392cdec933a9d75b3230e670a251c9aa1dbe",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 11512,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 57.56,
+      "recorded_trial_length_seconds": 53.0,
+      "nominal_duration_minus_recorded_length_seconds": 4.560000000000002,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_30",
+      "original_condition": "task3_55i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/50-60_ internal rotation/Subject 30/PPG data/ppg.csv",
+      "member_sha256": "fe8f8db66352a3953bebc25450cc69641ce21754b91b71a8588d9610dfee96ae",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 11588,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 57.94,
+      "recorded_trial_length_seconds": 58.0,
+      "nominal_duration_minus_recorded_length_seconds": -0.060000000000002274,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_30",
+      "original_condition": "task4_35e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/30-40_ external rotation/Subject 30/PPG data/ppg.csv",
+      "member_sha256": "2f67f95791ba22192bf5afaf82e8b15216dd78cae04c31a49a4bedc309c5b290",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 13538,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 67.69,
+      "recorded_trial_length_seconds": 66.0,
+      "nominal_duration_minus_recorded_length_seconds": 1.6899999999999977,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_30",
+      "original_condition": "task5_45e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/40-50_ external rotation/Subject 30/PPG data/ppg.csv",
+      "member_sha256": "93bcca4ac1ec76ccff411aad14dafcbb4f762886428a5e666e2f571eed0ed4d4",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 7870,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 39.35,
+      "recorded_trial_length_seconds": 40.0,
+      "nominal_duration_minus_recorded_length_seconds": -0.6499999999999986,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_30",
+      "original_condition": "task6_55e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/50-60_ external rotation/Subject 30/PPG data/ppg.csv",
+      "member_sha256": "3f5ed57d728704417dd958376e1df73a6977f0ab7acdbde978f5bbd883496cb4",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 6574,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 32.87,
+      "recorded_trial_length_seconds": 36.0,
+      "nominal_duration_minus_recorded_length_seconds": -3.1300000000000026,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_32",
+      "original_condition": "task1_35i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/30-40_ internal rotation/Subject 32/PPG data/ppg.csv",
+      "member_sha256": "8204c64d11d3852062c7087fa78f21f2955ae55bfc22062776ae15d8a1fa9a18",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 10948,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 54.74,
+      "recorded_trial_length_seconds": 53.0,
+      "nominal_duration_minus_recorded_length_seconds": 1.740000000000002,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_32",
+      "original_condition": "task2_45i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/40-50_ internal rotation/Subject 32/PPG data/ppg.csv",
+      "member_sha256": "7dc803fcea7a6fba2416ab3c588c5c31369767a37e0d225fb6855bc8ec713969",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 10112,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 50.56,
+      "recorded_trial_length_seconds": 50.0,
+      "nominal_duration_minus_recorded_length_seconds": 0.5600000000000023,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_32",
+      "original_condition": "task3_55i",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/50-60_ internal rotation/Subject 32/PPG data/ppg.csv",
+      "member_sha256": "8d22d953b37c7e212b487a10214fdb88abb13da8b1acb140a2b8b83ef9b44a3f",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 11924,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 59.62,
+      "recorded_trial_length_seconds": 60.0,
+      "nominal_duration_minus_recorded_length_seconds": -0.38000000000000256,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_32",
+      "original_condition": "task4_35e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/30-40_ external rotation/Subject 32/PPG data/ppg.csv",
+      "member_sha256": "6f7ea806d27f5ad8e2f99a93585046b683c2e5f14cbf55193abe15e8e299ced9",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 10038,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 50.19,
+      "recorded_trial_length_seconds": 48.0,
+      "nominal_duration_minus_recorded_length_seconds": 2.1899999999999977,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_32",
+      "original_condition": "task5_45e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/40-50_ external rotation/Subject 32/PPG data/ppg.csv",
+      "member_sha256": "45bf931093ca5191531f09cecdabe9e8d56c8044b1cf9f00d5c9240a1fbe6da3",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 8858,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 44.29,
+      "recorded_trial_length_seconds": 43.0,
+      "nominal_duration_minus_recorded_length_seconds": 1.2899999999999991,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    },
+    {
+      "original_person": "subject_32",
+      "original_condition": "task6_55e",
+      "member": "WSD4FEDSRM/EMG, IMU, and PPG data/50-60_ external rotation/Subject 32/PPG data/ppg.csv",
+      "member_sha256": "97c2e7c3236601b45e7b9c00e6e77f8c69db5cf0dbd11e83636a98d5e3464617",
+      "original_header": [
+        "PPG(Volt)"
+      ],
+      "samples": 7760,
+      "nominal_documented_sampling_hz": 200,
+      "duration_at_nominal_sampling_seconds": 38.8,
+      "recorded_trial_length_seconds": 38.0,
+      "nominal_duration_minus_recorded_length_seconds": 0.7999999999999972,
+      "sample_timestamps_released": false,
+      "report_signal_onset_offset_verified": false
+    }
+  ],
+  "ppg_to_report_temporal_join_verified": false,
+  "source_windows_created": 0,
+  "heart_rate_values_derived": 0,
+  "new_predictive_models_fitted": 0,
+  "synthetic_rows": 0,
+  "decision": "Preserve genuine source signals but do not join sample_index/200to Borgreport clocks as verified elapsedtime. Original CSVhas only voltage; nominal length agreement is not a measured onset marker. Description24-hourtime belongs to demographics,not individual PPGsamples. Need primary evidence for signal/task onset before creating pre-report labels/windows; do not rescale samples to trial length or invent offsets."
+}

@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "status": "superseded_by_direct_original_cells",
+  "chain_only_directory": "public-two-prior-histories-80-v1",
+  "chain_only_provenance_sha256": "14e3ef11c9fb901f81be6ca499c826db3d309c46da959365e663abb6dc85e6e4",
+  "initial_coverage_failure_log_sha256": "ca8ca2f21305be41cfd992932a717e7c12908188b2ceb4ec425bd4f601012f14",
+  "chain_observed_worker_second_priors_preserved_and_verified": 200,
+  "additional_original_available_second_priors": 2,
+  "extra_original_cell_lineage": [
+    {
+      "row_key": "6c3ee4886f87318652b3d839",
+      "worksheet_row": 16,
+      "current_repetition": 3,
+      "actual_second_prior": 5.0,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 1] ?",
+      "original_cell": "D16"
+    },
+    {
+      "row_key": "9674c83149c2596daa64a8b1",
+      "worksheet_row": 16,
+      "current_repetition": 5,
+      "actual_second_prior": 8.0,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 3] ?",
+      "original_cell": "L16"
+    }
+  ],
+  "all_previously_populated_second_priors_preserved_by_verified_v2": true,
+  "preferred_source_directory": "public-two-prior-histories-80-v2",
+  "preferred_verification_sha256": "a87ed7221b1cd2920cb23539d68a5ea1633eff9f403bb85ea039031be078df1b",
+  "chain_only_snapshot_used_for_model_fitting": false,
+  "preferred_snapshot_used_for_model_fitting": false,
+  "eligible_chain_snapshot_for_future_model_fitting": false,
+  "scope": "Original-cell audit found two actual earlier responses missing from the conservative pair-chain snapshot because the intermediate current pair was unavailable there. Preserve the chain snapshot and failed coverage log; use separately prepared and independently verified v2 with202Worker second priors. No incorrect populated value, generated response or new current target was introduced."
+}

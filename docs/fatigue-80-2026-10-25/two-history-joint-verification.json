@@ -1,0 +1,1045 @@
+{
+  "version": 1,
+  "verified_at": "2026-10-27T18:43:04.416882+00:00",
+  "verification_code_sha256": "066a7b66124aaebd99d00574c7e31d802d97654d23b4a9acf6ac56af4429b4d0",
+  "selection_sha256": "04b54a1898bf377a9956ad21eb5fab7c628ad3f9ef113e929d212de3e147ae7e",
+  "input_verification_sha256": "a87ed7221b1cd2920cb23539d68a5ea1633eff9f403bb85ea039031be078df1b",
+  "previous_verification_sha256": "884a6200bd067a337d4ee1f52d09a319d77eb95298cc8d09666e95a33bacafe8",
+  "public_real_data_policy_sha256": "fdfb112d20b1f22bae08032ed7d9f3d27ee784879674c32f8f65cc21fe69c028",
+  "all_16_oof_recipes_recomputed": true,
+  "native_base_caches_checked": 10,
+  "cached_native_base_fit_models_checked": 40,
+  "native_base_cache_checks": [
+    {
+      "member": "core",
+      "fold": 0,
+      "actual_native_models_checked": 4,
+      "inner_person_folds": 3,
+      "original_rows_and_scaling_checked": true,
+      "initial_floor_preserves_base_predictions": true
+    },
+    {
+      "member": "core",
+      "fold": 1,
+      "actual_native_models_checked": 4,
+      "inner_person_folds": 3,
+      "original_rows_and_scaling_checked": true,
+      "initial_floor_preserves_base_predictions": true
+    },
+    {
+      "member": "core",
+      "fold": 2,
+      "actual_native_models_checked": 4,
+      "inner_person_folds": 3,
+      "original_rows_and_scaling_checked": true,
+      "initial_floor_preserves_base_predictions": true
+    },
+    {
+      "member": "core",
+      "fold": 3,
+      "actual_native_models_checked": 4,
+      "inner_person_folds": 3,
+      "original_rows_and_scaling_checked": true,
+      "initial_floor_preserves_base_predictions": true
+    },
+    {
+      "member": "core",
+      "fold": 4,
+      "actual_native_models_checked": 4,
+      "inner_person_folds": 3,
+      "original_rows_and_scaling_checked": true,
+      "initial_floor_preserves_base_predictions": true
+    },
+    {
+      "member": "cat",
+      "fold": 0,
+      "actual_native_models_checked": 4,
+      "inner_person_folds": 3,
+      "original_rows_and_scaling_checked": true,
+      "initial_floor_preserves_base_predictions": true
+    },
+    {
+      "member": "cat",
+      "fold": 1,
+      "actual_native_models_checked": 4,
+      "inner_person_folds": 3,
+      "original_rows_and_scaling_checked": true,
+      "initial_floor_preserves_base_predictions": true
+    },
+    {
+      "member": "cat",
+      "fold": 2,
+      "actual_native_models_checked": 4,
+      "inner_person_folds": 3,
+      "original_rows_and_scaling_checked": true,
+      "initial_floor_preserves_base_predictions": true
+    },
+    {
+      "member": "cat",
+      "fold": 3,
+      "actual_native_models_checked": 4,
+      "inner_person_folds": 3,
+      "original_rows_and_scaling_checked": true,
+      "initial_floor_preserves_base_predictions": true
+    },
+    {
+      "member": "cat",
+      "fold": 4,
+      "actual_native_models_checked": 4,
+      "inner_person_folds": 3,
+      "original_rows_and_scaling_checked": true,
+      "initial_floor_preserves_base_predictions": true
+    }
+  ],
+  "native_base_artifact_hashes": {
+    "core-fold-0.joblib": "f47c103868bd65cf4a49b1488a45c636fe765617883c69eeea9989a3a86ebd3c",
+    "core-fold-0.json": "4f90288ccad3a77e94225d825f361965b0be243d82a5faf44bf59aa346db7cab",
+    "core-fold-1.joblib": "3a19555bf3ce4245e3f2f724839f679b2862b699324748e88734a72f5575e054",
+    "core-fold-1.json": "d2f60e3db8970fed57eddc26909337dff4cf5bba4208496481f9818e595db6e5",
+    "core-fold-2.joblib": "106a7d32cff24f762057afd92c4e63d5b6a785c125412ef895ef168c1c921635",
+    "core-fold-2.json": "c717b070bf74f0b667e42fe4cb13c1f82f1b92931fb904a2499ab61a4c455633",
+    "core-fold-3.joblib": "03691b1925fe0e6f364af93ee89af43c5ee1aec31f8356db7a5b338369f64b4b",
+    "core-fold-3.json": "c402ac0c52dbeab2732305f3c3bbdff858d1dc8a791568d76d984b3e742a43fe",
+    "core-fold-4.joblib": "fa26dcc1b37f38fcc0c9074ce335ba471bf2ca96bdeaa10f3f96efcb216f09fd",
+    "core-fold-4.json": "87e3c56d78208b498a7665d4b30183717aaf860d36694452394506e71a05cbc3",
+    "cat-fold-0.joblib": "d8fdf31aef5ec19c9604ea40720c0dc8ca60872f4a2d9ef0921beeda50281574",
+    "cat-fold-0.json": "82a44f1a01c720d24bf5dd3d5a3882e0142810d7d2ce73a933e32671b6bfee63",
+    "cat-fold-1.joblib": "eb66c0def793b4ba0db79a1408c808af39d1320408be5b7f48cebedfe0a0f064",
+    "cat-fold-1.json": "9bb1e8abd17984eec54f243e33bc52674534fa35c498b645afa583ce55af05d1",
+    "cat-fold-2.joblib": "efda14e81aa0851b5492b7f92afb63b4ab61cd567680848c84462e8a871b00e3",
+    "cat-fold-2.json": "843eff646683fb7172bbe360f3268007f26f8a3f9ffe2204f42eae24049eecf1",
+    "cat-fold-3.joblib": "ed0334609f6ee8579f5e7968b409aa00b31a81cdf229fa2acca818c9e9104dd5",
+    "cat-fold-3.json": "f54b0ad770b9e595525037047ac4c3bf83d722fc1a0ae44b4f320e06d9f53eae",
+    "cat-fold-4.joblib": "499b5d46048ae89eafab910bc0d8dca095769a7cc09553b2d1d648ae11f89778",
+    "cat-fold-4.json": "d0761547d2e1364c99c119faff535d8b4ac537aa93cd958d00f62720f7e00c6e"
+  },
+  "independent_native_base_fits": 8,
+  "independent_native_base_refits": [
+    {
+      "member": "core",
+      "outer_fold": 0,
+      "base_index": 0,
+      "actual_native_rows_observed": 254,
+      "actual_delta_targets_observed": 254
+    },
+    {
+      "member": "core",
+      "outer_fold": 0,
+      "base_index": 1,
+      "actual_native_rows_observed": 265,
+      "actual_delta_targets_observed": 265
+    },
+    {
+      "member": "core",
+      "outer_fold": 0,
+      "base_index": 2,
+      "actual_native_rows_observed": 255,
+      "actual_delta_targets_observed": 255
+    },
+    {
+      "member": "core",
+      "outer_fold": 0,
+      "base_index": 3,
+      "actual_native_rows_observed": 387,
+      "actual_delta_targets_observed": 387
+    },
+    {
+      "member": "cat",
+      "outer_fold": 0,
+      "base_index": 0,
+      "actual_native_rows_observed": 254,
+      "actual_delta_targets_observed": 254
+    },
+    {
+      "member": "cat",
+      "outer_fold": 0,
+      "base_index": 1,
+      "actual_native_rows_observed": 265,
+      "actual_delta_targets_observed": 265
+    },
+    {
+      "member": "cat",
+      "outer_fold": 0,
+      "base_index": 2,
+      "actual_native_rows_observed": 255,
+      "actual_delta_targets_observed": 255
+    },
+    {
+      "member": "cat",
+      "outer_fold": 0,
+      "base_index": 3,
+      "actual_native_rows_observed": 387,
+      "actual_delta_targets_observed": 387
+    }
+  ],
+  "actual_native_joint_refits": 20,
+  "joint_refits": [
+    {
+      "candidate_id": "two-history-joint-004",
+      "fold": 0,
+      "actual_native_target_calls": 80,
+      "actual_source_target_calls": 0,
+      "actual_native_targets_per_step": 387,
+      "actual_source_targets_per_positive_step": 0,
+      "encoder_input_batches_verified": {
+        "native": 81
+      },
+      "initial_encoder_gradient_l2": 0.0,
+      "native_base_weights_frozen": true,
+      "source_labels_excluded_when_zero": true,
+      "original_observation_targets_verified": true,
+      "training_summary": {
+        "actual_native_targets": 387,
+        "source_input_rows_for_shared_preprocessing": 550,
+        "actual_source_targets_in_objective": 0,
+        "source_targets_by_separate_head": {},
+        "source_fitting_actual_second_priors": 367,
+        "native_actual_second_priors": 362,
+        "gradient_steps": 80,
+        "initial_encoder_gradient_l2": 0.0,
+        "native_base_weights_frozen": true,
+        "native_context_features": 13,
+        "source_reserved_targets_not_fitted": 57,
+        "base_probability_floor": 0.0001,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "invented_source_times_or_sensor_joins": 0
+      },
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "two-history-joint-004",
+      "fold": 1,
+      "actual_native_target_calls": 80,
+      "actual_source_target_calls": 0,
+      "actual_native_targets_per_step": 395,
+      "actual_source_targets_per_positive_step": 0,
+      "encoder_input_batches_verified": {
+        "native": 81
+      },
+      "initial_encoder_gradient_l2": 0.0,
+      "native_base_weights_frozen": true,
+      "source_labels_excluded_when_zero": true,
+      "original_observation_targets_verified": true,
+      "training_summary": {
+        "actual_native_targets": 395,
+        "source_input_rows_for_shared_preprocessing": 550,
+        "actual_source_targets_in_objective": 0,
+        "source_targets_by_separate_head": {},
+        "source_fitting_actual_second_priors": 367,
+        "native_actual_second_priors": 370,
+        "gradient_steps": 80,
+        "initial_encoder_gradient_l2": 0.0,
+        "native_base_weights_frozen": true,
+        "native_context_features": 13,
+        "source_reserved_targets_not_fitted": 57,
+        "base_probability_floor": 0.0001,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "invented_source_times_or_sensor_joins": 0
+      },
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "two-history-joint-004",
+      "fold": 2,
+      "actual_native_target_calls": 80,
+      "actual_source_target_calls": 0,
+      "actual_native_targets_per_step": 385,
+      "actual_source_targets_per_positive_step": 0,
+      "encoder_input_batches_verified": {
+        "native": 81
+      },
+      "initial_encoder_gradient_l2": 0.0,
+      "native_base_weights_frozen": true,
+      "source_labels_excluded_when_zero": true,
+      "original_observation_targets_verified": true,
+      "training_summary": {
+        "actual_native_targets": 385,
+        "source_input_rows_for_shared_preprocessing": 550,
+        "actual_source_targets_in_objective": 0,
+        "source_targets_by_separate_head": {},
+        "source_fitting_actual_second_priors": 367,
+        "native_actual_second_priors": 360,
+        "gradient_steps": 80,
+        "initial_encoder_gradient_l2": 0.0,
+        "native_base_weights_frozen": true,
+        "native_context_features": 13,
+        "source_reserved_targets_not_fitted": 57,
+        "base_probability_floor": 0.0001,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "invented_source_times_or_sensor_joins": 0
+      },
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "two-history-joint-004",
+      "fold": 3,
+      "actual_native_target_calls": 80,
+      "actual_source_target_calls": 0,
+      "actual_native_targets_per_step": 385,
+      "actual_source_targets_per_positive_step": 0,
+      "encoder_input_batches_verified": {
+        "native": 81
+      },
+      "initial_encoder_gradient_l2": 0.0,
+      "native_base_weights_frozen": true,
+      "source_labels_excluded_when_zero": true,
+      "original_observation_targets_verified": true,
+      "training_summary": {
+        "actual_native_targets": 385,
+        "source_input_rows_for_shared_preprocessing": 550,
+        "actual_source_targets_in_objective": 0,
+        "source_targets_by_separate_head": {},
+        "source_fitting_actual_second_priors": 367,
+        "native_actual_second_priors": 361,
+        "gradient_steps": 80,
+        "initial_encoder_gradient_l2": 0.0,
+        "native_base_weights_frozen": true,
+        "native_context_features": 13,
+        "source_reserved_targets_not_fitted": 57,
+        "base_probability_floor": 0.0001,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "invented_source_times_or_sensor_joins": 0
+      },
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "two-history-joint-004",
+      "fold": 4,
+      "actual_native_target_calls": 80,
+      "actual_source_target_calls": 0,
+      "actual_native_targets_per_step": 396,
+      "actual_source_targets_per_positive_step": 0,
+      "encoder_input_batches_verified": {
+        "native": 81
+      },
+      "initial_encoder_gradient_l2": 0.0,
+      "native_base_weights_frozen": true,
+      "source_labels_excluded_when_zero": true,
+      "original_observation_targets_verified": true,
+      "training_summary": {
+        "actual_native_targets": 396,
+        "source_input_rows_for_shared_preprocessing": 550,
+        "actual_source_targets_in_objective": 0,
+        "source_targets_by_separate_head": {},
+        "source_fitting_actual_second_priors": 367,
+        "native_actual_second_priors": 371,
+        "gradient_steps": 80,
+        "initial_encoder_gradient_l2": 0.0,
+        "native_base_weights_frozen": true,
+        "native_context_features": 13,
+        "source_reserved_targets_not_fitted": 57,
+        "base_probability_floor": 0.0001,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "invented_source_times_or_sensor_joins": 0
+      },
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "two-history-joint-006",
+      "fold": 0,
+      "actual_native_target_calls": 80,
+      "actual_source_target_calls": 240,
+      "actual_native_targets_per_step": 387,
+      "actual_source_targets_per_positive_step": 550,
+      "encoder_input_batches_verified": {
+        "native": 81,
+        "emap": 80,
+        "sts": 80,
+        "worker": 80
+      },
+      "initial_encoder_gradient_l2": 0.03424343839287758,
+      "native_base_weights_frozen": true,
+      "source_labels_excluded_when_zero": false,
+      "original_observation_targets_verified": true,
+      "training_summary": {
+        "actual_native_targets": 387,
+        "source_input_rows_for_shared_preprocessing": 550,
+        "actual_source_targets_in_objective": 550,
+        "source_targets_by_separate_head": {
+          "emap": 248,
+          "worker": 253,
+          "sts": 49
+        },
+        "source_fitting_actual_second_priors": 367,
+        "native_actual_second_priors": 362,
+        "gradient_steps": 80,
+        "initial_encoder_gradient_l2": 0.03424343839287758,
+        "native_base_weights_frozen": true,
+        "native_context_features": 13,
+        "source_reserved_targets_not_fitted": 57,
+        "base_probability_floor": 0.0001,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "invented_source_times_or_sensor_joins": 0
+      },
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "two-history-joint-006",
+      "fold": 1,
+      "actual_native_target_calls": 80,
+      "actual_source_target_calls": 240,
+      "actual_native_targets_per_step": 395,
+      "actual_source_targets_per_positive_step": 550,
+      "encoder_input_batches_verified": {
+        "native": 81,
+        "emap": 80,
+        "sts": 80,
+        "worker": 80
+      },
+      "initial_encoder_gradient_l2": 0.03431006520986557,
+      "native_base_weights_frozen": true,
+      "source_labels_excluded_when_zero": false,
+      "original_observation_targets_verified": true,
+      "training_summary": {
+        "actual_native_targets": 395,
+        "source_input_rows_for_shared_preprocessing": 550,
+        "actual_source_targets_in_objective": 550,
+        "source_targets_by_separate_head": {
+          "emap": 248,
+          "worker": 253,
+          "sts": 49
+        },
+        "source_fitting_actual_second_priors": 367,
+        "native_actual_second_priors": 370,
+        "gradient_steps": 80,
+        "initial_encoder_gradient_l2": 0.03431006520986557,
+        "native_base_weights_frozen": true,
+        "native_context_features": 13,
+        "source_reserved_targets_not_fitted": 57,
+        "base_probability_floor": 0.0001,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "invented_source_times_or_sensor_joins": 0
+      },
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "two-history-joint-006",
+      "fold": 2,
+      "actual_native_target_calls": 80,
+      "actual_source_target_calls": 240,
+      "actual_native_targets_per_step": 385,
+      "actual_source_targets_per_positive_step": 550,
+      "encoder_input_batches_verified": {
+        "native": 81,
+        "emap": 80,
+        "sts": 80,
+        "worker": 80
+      },
+      "initial_encoder_gradient_l2": 0.03428138047456741,
+      "native_base_weights_frozen": true,
+      "source_labels_excluded_when_zero": false,
+      "original_observation_targets_verified": true,
+      "training_summary": {
+        "actual_native_targets": 385,
+        "source_input_rows_for_shared_preprocessing": 550,
+        "actual_source_targets_in_objective": 550,
+        "source_targets_by_separate_head": {
+          "emap": 248,
+          "worker": 253,
+          "sts": 49
+        },
+        "source_fitting_actual_second_priors": 367,
+        "native_actual_second_priors": 360,
+        "gradient_steps": 80,
+        "initial_encoder_gradient_l2": 0.03428138047456741,
+        "native_base_weights_frozen": true,
+        "native_context_features": 13,
+        "source_reserved_targets_not_fitted": 57,
+        "base_probability_floor": 0.0001,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "invented_source_times_or_sensor_joins": 0
+      },
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "two-history-joint-006",
+      "fold": 3,
+      "actual_native_target_calls": 80,
+      "actual_source_target_calls": 240,
+      "actual_native_targets_per_step": 385,
+      "actual_source_targets_per_positive_step": 550,
+      "encoder_input_batches_verified": {
+        "native": 81,
+        "emap": 80,
+        "sts": 80,
+        "worker": 80
+      },
+      "initial_encoder_gradient_l2": 0.03438557684421539,
+      "native_base_weights_frozen": true,
+      "source_labels_excluded_when_zero": false,
+      "original_observation_targets_verified": true,
+      "training_summary": {
+        "actual_native_targets": 385,
+        "source_input_rows_for_shared_preprocessing": 550,
+        "actual_source_targets_in_objective": 550,
+        "source_targets_by_separate_head": {
+          "emap": 248,
+          "worker": 253,
+          "sts": 49
+        },
+        "source_fitting_actual_second_priors": 367,
+        "native_actual_second_priors": 361,
+        "gradient_steps": 80,
+        "initial_encoder_gradient_l2": 0.03438557684421539,
+        "native_base_weights_frozen": true,
+        "native_context_features": 13,
+        "source_reserved_targets_not_fitted": 57,
+        "base_probability_floor": 0.0001,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "invented_source_times_or_sensor_joins": 0
+      },
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "two-history-joint-006",
+      "fold": 4,
+      "actual_native_target_calls": 80,
+      "actual_source_target_calls": 240,
+      "actual_native_targets_per_step": 396,
+      "actual_source_targets_per_positive_step": 550,
+      "encoder_input_batches_verified": {
+        "native": 81,
+        "emap": 80,
+        "sts": 80,
+        "worker": 80
+      },
+      "initial_encoder_gradient_l2": 0.034257836639881134,
+      "native_base_weights_frozen": true,
+      "source_labels_excluded_when_zero": false,
+      "original_observation_targets_verified": true,
+      "training_summary": {
+        "actual_native_targets": 396,
+        "source_input_rows_for_shared_preprocessing": 550,
+        "actual_source_targets_in_objective": 550,
+        "source_targets_by_separate_head": {
+          "emap": 248,
+          "worker": 253,
+          "sts": 49
+        },
+        "source_fitting_actual_second_priors": 367,
+        "native_actual_second_priors": 371,
+        "gradient_steps": 80,
+        "initial_encoder_gradient_l2": 0.034257836639881134,
+        "native_base_weights_frozen": true,
+        "native_context_features": 13,
+        "source_reserved_targets_not_fitted": 57,
+        "base_probability_floor": 0.0001,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "invented_source_times_or_sensor_joins": 0
+      },
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "two-history-joint-010",
+      "fold": 0,
+      "actual_native_target_calls": 80,
+      "actual_source_target_calls": 0,
+      "actual_native_targets_per_step": 387,
+      "actual_source_targets_per_positive_step": 0,
+      "encoder_input_batches_verified": {
+        "native": 81
+      },
+      "initial_encoder_gradient_l2": 0.0,
+      "native_base_weights_frozen": true,
+      "source_labels_excluded_when_zero": true,
+      "original_observation_targets_verified": true,
+      "training_summary": {
+        "actual_native_targets": 387,
+        "source_input_rows_for_shared_preprocessing": 550,
+        "actual_source_targets_in_objective": 0,
+        "source_targets_by_separate_head": {},
+        "source_fitting_actual_second_priors": 367,
+        "native_actual_second_priors": 362,
+        "gradient_steps": 80,
+        "initial_encoder_gradient_l2": 0.0,
+        "native_base_weights_frozen": true,
+        "native_context_features": 13,
+        "source_reserved_targets_not_fitted": 57,
+        "base_probability_floor": 0.0001,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "invented_source_times_or_sensor_joins": 0
+      },
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "two-history-joint-010",
+      "fold": 1,
+      "actual_native_target_calls": 80,
+      "actual_source_target_calls": 0,
+      "actual_native_targets_per_step": 395,
+      "actual_source_targets_per_positive_step": 0,
+      "encoder_input_batches_verified": {
+        "native": 81
+      },
+      "initial_encoder_gradient_l2": 0.0,
+      "native_base_weights_frozen": true,
+      "source_labels_excluded_when_zero": true,
+      "original_observation_targets_verified": true,
+      "training_summary": {
+        "actual_native_targets": 395,
+        "source_input_rows_for_shared_preprocessing": 550,
+        "actual_source_targets_in_objective": 0,
+        "source_targets_by_separate_head": {},
+        "source_fitting_actual_second_priors": 367,
+        "native_actual_second_priors": 370,
+        "gradient_steps": 80,
+        "initial_encoder_gradient_l2": 0.0,
+        "native_base_weights_frozen": true,
+        "native_context_features": 13,
+        "source_reserved_targets_not_fitted": 57,
+        "base_probability_floor": 0.0001,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "invented_source_times_or_sensor_joins": 0
+      },
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "two-history-joint-010",
+      "fold": 2,
+      "actual_native_target_calls": 80,
+      "actual_source_target_calls": 0,
+      "actual_native_targets_per_step": 385,
+      "actual_source_targets_per_positive_step": 0,
+      "encoder_input_batches_verified": {
+        "native": 81
+      },
+      "initial_encoder_gradient_l2": 0.0,
+      "native_base_weights_frozen": true,
+      "source_labels_excluded_when_zero": true,
+      "original_observation_targets_verified": true,
+      "training_summary": {
+        "actual_native_targets": 385,
+        "source_input_rows_for_shared_preprocessing": 550,
+        "actual_source_targets_in_objective": 0,
+        "source_targets_by_separate_head": {},
+        "source_fitting_actual_second_priors": 367,
+        "native_actual_second_priors": 360,
+        "gradient_steps": 80,
+        "initial_encoder_gradient_l2": 0.0,
+        "native_base_weights_frozen": true,
+        "native_context_features": 13,
+        "source_reserved_targets_not_fitted": 57,
+        "base_probability_floor": 0.0001,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "invented_source_times_or_sensor_joins": 0
+      },
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "two-history-joint-010",
+      "fold": 3,
+      "actual_native_target_calls": 80,
+      "actual_source_target_calls": 0,
+      "actual_native_targets_per_step": 385,
+      "actual_source_targets_per_positive_step": 0,
+      "encoder_input_batches_verified": {
+        "native": 81
+      },
+      "initial_encoder_gradient_l2": 0.0,
+      "native_base_weights_frozen": true,
+      "source_labels_excluded_when_zero": true,
+      "original_observation_targets_verified": true,
+      "training_summary": {
+        "actual_native_targets": 385,
+        "source_input_rows_for_shared_preprocessing": 550,
+        "actual_source_targets_in_objective": 0,
+        "source_targets_by_separate_head": {},
+        "source_fitting_actual_second_priors": 367,
+        "native_actual_second_priors": 361,
+        "gradient_steps": 80,
+        "initial_encoder_gradient_l2": 0.0,
+        "native_base_weights_frozen": true,
+        "native_context_features": 13,
+        "source_reserved_targets_not_fitted": 57,
+        "base_probability_floor": 0.0001,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "invented_source_times_or_sensor_joins": 0
+      },
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "two-history-joint-010",
+      "fold": 4,
+      "actual_native_target_calls": 80,
+      "actual_source_target_calls": 0,
+      "actual_native_targets_per_step": 396,
+      "actual_source_targets_per_positive_step": 0,
+      "encoder_input_batches_verified": {
+        "native": 81
+      },
+      "initial_encoder_gradient_l2": 0.0,
+      "native_base_weights_frozen": true,
+      "source_labels_excluded_when_zero": true,
+      "original_observation_targets_verified": true,
+      "training_summary": {
+        "actual_native_targets": 396,
+        "source_input_rows_for_shared_preprocessing": 550,
+        "actual_source_targets_in_objective": 0,
+        "source_targets_by_separate_head": {},
+        "source_fitting_actual_second_priors": 367,
+        "native_actual_second_priors": 371,
+        "gradient_steps": 80,
+        "initial_encoder_gradient_l2": 0.0,
+        "native_base_weights_frozen": true,
+        "native_context_features": 13,
+        "source_reserved_targets_not_fitted": 57,
+        "base_probability_floor": 0.0001,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "invented_source_times_or_sensor_joins": 0
+      },
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "two-history-joint-014",
+      "fold": 0,
+      "actual_native_target_calls": 80,
+      "actual_source_target_calls": 240,
+      "actual_native_targets_per_step": 387,
+      "actual_source_targets_per_positive_step": 550,
+      "encoder_input_batches_verified": {
+        "native": 81,
+        "emap": 80,
+        "sts": 80,
+        "worker": 80
+      },
+      "initial_encoder_gradient_l2": 0.3424343764781952,
+      "native_base_weights_frozen": true,
+      "source_labels_excluded_when_zero": false,
+      "original_observation_targets_verified": true,
+      "training_summary": {
+        "actual_native_targets": 387,
+        "source_input_rows_for_shared_preprocessing": 550,
+        "actual_source_targets_in_objective": 550,
+        "source_targets_by_separate_head": {
+          "emap": 248,
+          "worker": 253,
+          "sts": 49
+        },
+        "source_fitting_actual_second_priors": 367,
+        "native_actual_second_priors": 362,
+        "gradient_steps": 80,
+        "initial_encoder_gradient_l2": 0.3424343764781952,
+        "native_base_weights_frozen": true,
+        "native_context_features": 13,
+        "source_reserved_targets_not_fitted": 57,
+        "base_probability_floor": 0.0001,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "invented_source_times_or_sensor_joins": 0
+      },
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "two-history-joint-014",
+      "fold": 1,
+      "actual_native_target_calls": 80,
+      "actual_source_target_calls": 240,
+      "actual_native_targets_per_step": 395,
+      "actual_source_targets_per_positive_step": 550,
+      "encoder_input_batches_verified": {
+        "native": 81,
+        "emap": 80,
+        "sts": 80,
+        "worker": 80
+      },
+      "initial_encoder_gradient_l2": 0.3431006669998169,
+      "native_base_weights_frozen": true,
+      "source_labels_excluded_when_zero": false,
+      "original_observation_targets_verified": true,
+      "training_summary": {
+        "actual_native_targets": 395,
+        "source_input_rows_for_shared_preprocessing": 550,
+        "actual_source_targets_in_objective": 550,
+        "source_targets_by_separate_head": {
+          "emap": 248,
+          "worker": 253,
+          "sts": 49
+        },
+        "source_fitting_actual_second_priors": 367,
+        "native_actual_second_priors": 370,
+        "gradient_steps": 80,
+        "initial_encoder_gradient_l2": 0.3431006669998169,
+        "native_base_weights_frozen": true,
+        "native_context_features": 13,
+        "source_reserved_targets_not_fitted": 57,
+        "base_probability_floor": 0.0001,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "invented_source_times_or_sensor_joins": 0
+      },
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "two-history-joint-014",
+      "fold": 2,
+      "actual_native_target_calls": 80,
+      "actual_source_target_calls": 240,
+      "actual_native_targets_per_step": 385,
+      "actual_source_targets_per_positive_step": 550,
+      "encoder_input_batches_verified": {
+        "native": 81,
+        "emap": 80,
+        "sts": 80,
+        "worker": 80
+      },
+      "initial_encoder_gradient_l2": 0.3428138196468353,
+      "native_base_weights_frozen": true,
+      "source_labels_excluded_when_zero": false,
+      "original_observation_targets_verified": true,
+      "training_summary": {
+        "actual_native_targets": 385,
+        "source_input_rows_for_shared_preprocessing": 550,
+        "actual_source_targets_in_objective": 550,
+        "source_targets_by_separate_head": {
+          "emap": 248,
+          "worker": 253,
+          "sts": 49
+        },
+        "source_fitting_actual_second_priors": 367,
+        "native_actual_second_priors": 360,
+        "gradient_steps": 80,
+        "initial_encoder_gradient_l2": 0.3428138196468353,
+        "native_base_weights_frozen": true,
+        "native_context_features": 13,
+        "source_reserved_targets_not_fitted": 57,
+        "base_probability_floor": 0.0001,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "invented_source_times_or_sensor_joins": 0
+      },
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "two-history-joint-014",
+      "fold": 3,
+      "actual_native_target_calls": 80,
+      "actual_source_target_calls": 240,
+      "actual_native_targets_per_step": 385,
+      "actual_source_targets_per_positive_step": 550,
+      "encoder_input_batches_verified": {
+        "native": 81,
+        "emap": 80,
+        "sts": 80,
+        "worker": 80
+      },
+      "initial_encoder_gradient_l2": 0.34385576844215393,
+      "native_base_weights_frozen": true,
+      "source_labels_excluded_when_zero": false,
+      "original_observation_targets_verified": true,
+      "training_summary": {
+        "actual_native_targets": 385,
+        "source_input_rows_for_shared_preprocessing": 550,
+        "actual_source_targets_in_objective": 550,
+        "source_targets_by_separate_head": {
+          "emap": 248,
+          "worker": 253,
+          "sts": 49
+        },
+        "source_fitting_actual_second_priors": 367,
+        "native_actual_second_priors": 361,
+        "gradient_steps": 80,
+        "initial_encoder_gradient_l2": 0.34385576844215393,
+        "native_base_weights_frozen": true,
+        "native_context_features": 13,
+        "source_reserved_targets_not_fitted": 57,
+        "base_probability_floor": 0.0001,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "invented_source_times_or_sensor_joins": 0
+      },
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "two-history-joint-014",
+      "fold": 4,
+      "actual_native_target_calls": 80,
+      "actual_source_target_calls": 240,
+      "actual_native_targets_per_step": 396,
+      "actual_source_targets_per_positive_step": 550,
+      "encoder_input_batches_verified": {
+        "native": 81,
+        "emap": 80,
+        "sts": 80,
+        "worker": 80
+      },
+      "initial_encoder_gradient_l2": 0.34257835149765015,
+      "native_base_weights_frozen": true,
+      "source_labels_excluded_when_zero": false,
+      "original_observation_targets_verified": true,
+      "training_summary": {
+        "actual_native_targets": 396,
+        "source_input_rows_for_shared_preprocessing": 550,
+        "actual_source_targets_in_objective": 550,
+        "source_targets_by_separate_head": {
+          "emap": 248,
+          "worker": 253,
+          "sts": 49
+        },
+        "source_fitting_actual_second_priors": 367,
+        "native_actual_second_priors": 371,
+        "gradient_steps": 80,
+        "initial_encoder_gradient_l2": 0.34257835149765015,
+        "native_base_weights_frozen": true,
+        "native_context_features": 13,
+        "source_reserved_targets_not_fitted": 57,
+        "base_probability_floor": 0.0001,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "invented_source_times_or_sensor_joins": 0
+      },
+      "reload_without_current_truth_or_ids": true
+    }
+  ],
+  "native_recipes_independently_refitted": [
+    "two-history-joint-004",
+    "two-history-joint-006",
+    "two-history-joint-010",
+    "two-history-joint-014"
+  ],
+  "original_native_rows_and_targets_preserved": true,
+  "actual_source_and_native_loss_targets_observed": true,
+  "actual_source_encoder_gradients_verified": true,
+  "zero_auxiliary_control_excludes_source_labels": true,
+  "native_base_weights_frozen": true,
+  "shared_preprocessing_fitting_rows_only": true,
+  "native_context_preprocessing_fitting_people_only": true,
+  "source_outcomes_pooled": false,
+  "synthetic_rows": 0,
+  "invented_source_times_or_sensor_joins": 0,
+  "best_positive_by_member": {
+    "core": {
+      "candidate": {
+        "id": "two-history-joint-006",
+        "algorithm": "joint_actual_two_history_residual",
+        "member": "core",
+        "auxiliary_weight": 0.1,
+        "epochs": 80,
+        "base_probability_floor": 0.0001,
+        "learning_rate": 0.003,
+        "weight_decay": 0.1,
+        "correction_penalty": 0.1,
+        "random_seed": 42,
+        "source_target": "original_continuous_current_minus_actual_prior",
+        "native_target": "original_integer_delta_class"
+      },
+      "accuracy_mean": 0.5978715044546247
+    },
+    "cat": {
+      "candidate": {
+        "id": "two-history-joint-014",
+        "algorithm": "joint_actual_two_history_residual",
+        "member": "cat",
+        "auxiliary_weight": 1.0,
+        "epochs": 80,
+        "base_probability_floor": 0.0001,
+        "learning_rate": 0.003,
+        "weight_decay": 0.1,
+        "correction_penalty": 0.1,
+        "random_seed": 42,
+        "source_target": "original_continuous_current_minus_actual_prior",
+        "native_target": "original_integer_delta_class"
+      },
+      "accuracy_mean": 0.6222534311383416
+    }
+  },
+  "matched_zero_auxiliary_controls": {
+    "core": {
+      "candidate": {
+        "id": "two-history-joint-004",
+        "algorithm": "joint_actual_two_history_residual",
+        "member": "core",
+        "auxiliary_weight": 0.0,
+        "epochs": 80,
+        "base_probability_floor": 0.0001,
+        "learning_rate": 0.003,
+        "weight_decay": 0.1,
+        "correction_penalty": 0.1,
+        "random_seed": 42,
+        "source_target": "original_continuous_current_minus_actual_prior",
+        "native_target": "original_integer_delta_class"
+      },
+      "accuracy_mean": 0.6059908752798779
+    },
+    "cat": {
+      "candidate": {
+        "id": "two-history-joint-010",
+        "algorithm": "joint_actual_two_history_residual",
+        "member": "cat",
+        "auxiliary_weight": 0.0,
+        "epochs": 80,
+        "base_probability_floor": 0.0001,
+        "learning_rate": 0.003,
+        "weight_decay": 0.1,
+        "correction_penalty": 0.1,
+        "random_seed": 42,
+        "source_target": "original_continuous_current_minus_actual_prior",
+        "native_target": "original_integer_delta_class"
+      },
+      "accuracy_mean": 0.6163710781971651
+    }
+  },
+  "best_new_by_member": {
+    "core": {
+      "candidate": {
+        "id": "two-history-joint-004",
+        "algorithm": "joint_actual_two_history_residual",
+        "member": "core",
+        "auxiliary_weight": 0.0,
+        "epochs": 80,
+        "base_probability_floor": 0.0001,
+        "learning_rate": 0.003,
+        "weight_decay": 0.1,
+        "correction_penalty": 0.1,
+        "random_seed": 42,
+        "source_target": "original_continuous_current_minus_actual_prior",
+        "native_target": "original_integer_delta_class"
+      },
+      "accuracy_mean": 0.6059908752798779
+    },
+    "cat": {
+      "candidate": {
+        "id": "two-history-joint-014",
+        "algorithm": "joint_actual_two_history_residual",
+        "member": "cat",
+        "auxiliary_weight": 1.0,
+        "epochs": 80,
+        "base_probability_floor": 0.0001,
+        "learning_rate": 0.003,
+        "weight_decay": 0.1,
+        "correction_penalty": 0.1,
+        "random_seed": 42,
+        "source_target": "original_continuous_current_minus_actual_prior",
+        "native_target": "original_integer_delta_class"
+      },
+      "accuracy_mean": 0.6222534311383416
+    }
+  },
+  "best_positive_cv_accuracy": 0.6222534311383416,
+  "winner_id": "two-history-joint-001",
+  "best_cv_accuracy": 0.6379721574248428,
+  "new_test_gate_passed": false,
+  "new_test_evaluation": null,
+  "original_training_cases": 487,
+  "original_test_cases": 179,
+  "original_release_test_correct": 108,
+  "original_release_test_accuracy": 0.6033519553072626,
+  "best_verified_test_correct": 108,
+  "target_accuracy": 0.8,
+  "achieved": false,
+  "scope": "Actual public histories and unchanged native exact cases only. All40cached native bases inspected for person membership,parameters,scaling and inner offsets;8base fits independently reproduced in outer fold0,not all40refitted. Best positive/zero and overall new joint recipes reproduced across all5original person folds with actual encoder inputs,loss targets,source weights,gradient flow and reloading observed. Separate source outcomes preserve550original fitting targets and367measured second priors;57source targets reserved. No synthetic examples, invented missing histories, source clocks/phases/sensors or changed native487/179cases."
+}

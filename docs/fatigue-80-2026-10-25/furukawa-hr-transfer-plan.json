@@ -1,0 +1,119 @@
+{
+  "version": 1,
+  "implementation_code_sha256": "893d5a909a398b99649d85af55fe513c9f3bf5e64428bf07781211b81c1030a7",
+  "plan": [
+    {
+      "id": "furukawa-hr-000",
+      "algorithm": "previous_real_control",
+      "parent_candidate_id": "resistance-joint-000"
+    },
+    {
+      "id": "furukawa-hr-001",
+      "algorithm": "previous_real_control",
+      "parent_candidate_id": "resistance-joint-001"
+    },
+    {
+      "id": "furukawa-hr-002",
+      "algorithm": "previous_real_control",
+      "parent_candidate_id": "resistance-joint-002"
+    },
+    {
+      "id": "furukawa-hr-003",
+      "algorithm": "previous_real_control",
+      "parent_candidate_id": "resistance-joint-003"
+    },
+    {
+      "id": "furukawa-hr-004",
+      "algorithm": "native_measured_hr_control",
+      "member": "core"
+    },
+    {
+      "id": "furukawa-hr-005",
+      "algorithm": "native_measured_hr_control",
+      "member": "cat"
+    },
+    {
+      "id": "furukawa-hr-006",
+      "algorithm": "furukawa_source_function",
+      "source_algorithm": "ridge",
+      "source_task": "state",
+      "member": "core"
+    },
+    {
+      "id": "furukawa-hr-007",
+      "algorithm": "furukawa_source_function",
+      "source_algorithm": "ridge",
+      "source_task": "state",
+      "member": "cat"
+    },
+    {
+      "id": "furukawa-hr-008",
+      "algorithm": "furukawa_source_function",
+      "source_algorithm": "ridge",
+      "source_task": "delta",
+      "member": "core"
+    },
+    {
+      "id": "furukawa-hr-009",
+      "algorithm": "furukawa_source_function",
+      "source_algorithm": "ridge",
+      "source_task": "delta",
+      "member": "cat"
+    },
+    {
+      "id": "furukawa-hr-010",
+      "algorithm": "furukawa_source_function",
+      "source_algorithm": "svr",
+      "source_task": "state",
+      "member": "core"
+    },
+    {
+      "id": "furukawa-hr-011",
+      "algorithm": "furukawa_source_function",
+      "source_algorithm": "svr",
+      "source_task": "state",
+      "member": "cat"
+    },
+    {
+      "id": "furukawa-hr-012",
+      "algorithm": "furukawa_source_function",
+      "source_algorithm": "svr",
+      "source_task": "delta",
+      "member": "core"
+    },
+    {
+      "id": "furukawa-hr-013",
+      "algorithm": "furukawa_source_function",
+      "source_algorithm": "svr",
+      "source_task": "delta",
+      "member": "cat"
+    }
+  ],
+  "source_state_targets": 252,
+  "source_delta_targets": 168,
+  "source_fitting_people": 12,
+  "source_reserved_responses": 84,
+  "source_reserved_people": 4,
+  "original_native_fit_cases": 487,
+  "original_native_test_cases": 179,
+  "original_native_person_folds": 5,
+  "new_native_fits": 50,
+  "source_algorithms": {
+    "ridge": {
+      "alpha": 10.0
+    },
+    "svr": {
+      "C": 10.0,
+      "gamma": "scale",
+      "epsilon": 0.1
+    }
+  },
+  "source_source_person_mass_equal": true,
+  "source_input_audit_sha256": "2b34b86604c6a74b112c069387ac22bcdb8aacb9f8f10f2308c6af3ee805684b",
+  "preceding_verification_sha256": "0c5fd4e7c545c206613a9205b09ade3eba7748c28f2d8e3fd6a48b5adf5c4cb6",
+  "minimum_cv_for_new_test_evaluation": 0.65,
+  "test_used_for_selection": false,
+  "synthetic_rows": 0,
+  "native_target_scale_changed": false,
+  "rationale": "Fitting-only inspection found currentHR/current original-point correlation.3807versus paired HRchange/RPEchange.0692. Compare actual252response state functions against168real within-condition delta functions,not an epoch repeat. All source intervals equal2min,so do not claim learned interval dependence. SourceHR102.6-145.83bpmversus native49-184; computed scores can extrapolate. Measured native controls include both rawHRand their difference,same original native features/labels. Sourcepointoutputs remain separate representations,never native targets. No assumed rest,individualage,cross-condition ordering or cross-experiment person joins."
+}

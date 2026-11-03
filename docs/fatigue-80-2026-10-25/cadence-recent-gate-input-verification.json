@@ -1,0 +1,18 @@
+{
+  "verification": "passed",
+  "audit_code_sha256": "78f090627520a7a538e9d603e99ff80769a3d967bb15ab152648cee9221b2558",
+  "preparation_code_sha256": "9df206f145b2a5b44a3a3598baa535fbe23c469943ed6ea5bd18a461e8615ca8",
+  "provenance_sha256": "49436b591d744376eb037da274029fa6c14e4d6835e4e7d2746ad472d50d8e5c",
+  "native_dataset_sha256": "ebf02ec4dda2d8a3d5a40c834b102cf336a9551e9ed9eba396e1c14ce8ed99c5",
+  "existing_raw_input_verification_sha256": "639b4039658f9fb78688ffdad643153cc59746552426c0d48f1cd66aa5aff3b9",
+  "native_cells_independently_rebuilt": 666,
+  "native_clocks_verified": 666,
+  "native_inputs_only": true,
+  "current_hr_before_query": true,
+  "prior_hr_before_genuine_report": true,
+  "source_current_hr_used": false,
+  "source_context_fabricated": false,
+  "synthetic_values": 0,
+  "new_predictive_estimator_fits": 0,
+  "new_test_predictions_computed": 0
+}

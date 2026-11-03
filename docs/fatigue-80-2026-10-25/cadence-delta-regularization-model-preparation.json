@@ -1,0 +1,8 @@
+{
+  "preparation": "passed",
+  "preparation_code_sha256": "ea0b63186c2f2149f48191beb10197345964bd39601cda372c2dc9bc7678eee0",
+  "frozen_parent_code_sha256": "6475ae3f4fa8cf4aefed93dd69184744c224977fbe52140462343e6e38032ac8",
+  "model_code_sha256": "07db6826dbde004ba0e59c8649cf476f20d5139bdfa69164cbd6635de1e075cd",
+  "historical_sources_modified": false,
+  "new_predictive_estimator_fits": 0
+}

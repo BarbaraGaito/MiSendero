@@ -1,0 +1,134 @@
+{
+  "version": 1,
+  "verified_at": "2026-10-27T12:37:15.639384+00:00",
+  "verification_code_sha256": "e0d08b57f53da7dc3bdc181d70dfd038995e1f3a7e604d602d4cfb8bf61852f2",
+  "selection_sha256": "ad0dc6dc826aac49050530ae7edf8a892acf0e9fd76aa56ee673a2a42d8300a2",
+  "previous_verification_sha256": "ba4489332f3a19bbed0c635124c76b5fdb6e4c9046d3d322a96d1fcee7a00043",
+  "public_real_data_policy_sha256": "fdfb112d20b1f22bae08032ed7d9f3d27ee784879674c32f8f65cc21fe69c028",
+  "combined_actual_source_pairs_verified": 458,
+  "walking_current_prior_cells_independently_rebuilt": 156,
+  "walking_sensor_join_disabled": true,
+  "walking_no_invented_person_holdout": true,
+  "source_models_independently_refitted": 18,
+  "actual_source_estimator_target_calls_observed": 12,
+  "walking_heads_per_algorithm": 4,
+  "source_algorithms": 3,
+  "all_22_oof_recipes_recomputed": true,
+  "best_new_candidate_id": "walking-teacher-015",
+  "best_new_cv_accuracy": 0.6203728019635947,
+  "best_combined_source_candidate_id": "walking-teacher-017",
+  "best_combined_source_cv_accuracy": 0.6124751224904676,
+  "matching_previous_source_candidate_id": "survey-teacher-013",
+  "matching_previous_source_cv_accuracy": 0.6061818386217364,
+  "native_recipes_independently_refitted": [
+    "walking-teacher-015",
+    "walking-teacher-017",
+    "survey-teacher-013"
+  ],
+  "grouped_folds_per_refit": 5,
+  "actual_native_fitting_visits_observed": 5844,
+  "convergence_warnings_by_refit": [
+    {
+      "candidate_id": "walking-teacher-015",
+      "fold": 0,
+      "convergence_warning_count": 0,
+      "messages": []
+    },
+    {
+      "candidate_id": "walking-teacher-015",
+      "fold": 1,
+      "convergence_warning_count": 0,
+      "messages": []
+    },
+    {
+      "candidate_id": "walking-teacher-015",
+      "fold": 2,
+      "convergence_warning_count": 0,
+      "messages": []
+    },
+    {
+      "candidate_id": "walking-teacher-015",
+      "fold": 3,
+      "convergence_warning_count": 0,
+      "messages": []
+    },
+    {
+      "candidate_id": "walking-teacher-015",
+      "fold": 4,
+      "convergence_warning_count": 0,
+      "messages": []
+    },
+    {
+      "candidate_id": "walking-teacher-017",
+      "fold": 0,
+      "convergence_warning_count": 0,
+      "messages": []
+    },
+    {
+      "candidate_id": "walking-teacher-017",
+      "fold": 1,
+      "convergence_warning_count": 0,
+      "messages": []
+    },
+    {
+      "candidate_id": "walking-teacher-017",
+      "fold": 2,
+      "convergence_warning_count": 0,
+      "messages": []
+    },
+    {
+      "candidate_id": "walking-teacher-017",
+      "fold": 3,
+      "convergence_warning_count": 0,
+      "messages": []
+    },
+    {
+      "candidate_id": "walking-teacher-017",
+      "fold": 4,
+      "convergence_warning_count": 0,
+      "messages": []
+    },
+    {
+      "candidate_id": "survey-teacher-013",
+      "fold": 0,
+      "convergence_warning_count": 0,
+      "messages": []
+    },
+    {
+      "candidate_id": "survey-teacher-013",
+      "fold": 1,
+      "convergence_warning_count": 0,
+      "messages": []
+    },
+    {
+      "candidate_id": "survey-teacher-013",
+      "fold": 2,
+      "convergence_warning_count": 0,
+      "messages": []
+    },
+    {
+      "candidate_id": "survey-teacher-013",
+      "fold": 3,
+      "convergence_warning_count": 0,
+      "messages": []
+    },
+    {
+      "candidate_id": "survey-teacher-013",
+      "fold": 4,
+      "convergence_warning_count": 0,
+      "messages": []
+    }
+  ],
+  "native_labels_and_rows_verified_at_actual_fitter": true,
+  "artificial_history_fitting_disabled": true,
+  "winner_id": "walking-teacher-001",
+  "best_cv_accuracy": 0.6379721574248428,
+  "new_test_gate_passed": false,
+  "original_training_cases": 487,
+  "original_test_cases": 179,
+  "best_verified_test_correct": 108,
+  "best_verified_test_accuracy": 0.6033519553072626,
+  "target_accuracy": 0.8,
+  "achieved": false,
+  "scope": "Exact original native Borg on all original cases. Real public source-specific Borg and SPE heads remain distinct; no guessed walking HR/identities, target conversion, synthetic examples, artificial history views, native holdout changes or test tuning. Source predictions are computed representations, not measured native targets."
+}

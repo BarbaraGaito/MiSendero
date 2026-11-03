@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "verified_at": "2026-10-26T22:58:14.578287+00:00",
+  "parent_verification_sha256": "b9f38cf3369203ea4a060694714c69319743f40e3bd244af9169c8a33c47f29f",
+  "selection_sha256": "498f637c5a66f0573d35fe74a85c6b9bc0a51ed12fec1a53beea4ff7ed4ded73",
+  "verification_code_sha256": "b6973530748d9138e07655b580802da7ebf8921d16924b5fca5828fd8e54206c",
+  "all_10_recipes_recomputed": true,
+  "all_concurrent_fold_memberships_verified": true,
+  "compact_source_scores_checked_directly_against_three_network_heads": true,
+  "new_recipes_independently_refitted": [
+    "compact-002",
+    "compact-004"
+  ],
+  "grouped_folds_per_new_recipe": 5,
+  "best_new_recipe_id": "compact-002",
+  "best_new_cv_accuracy": 0.6168946160403961,
+  "best_gait_recipe_id": "compact-004",
+  "best_gait_cv_accuracy": 0.6168536765876921,
+  "winner_id": "compact-001",
+  "best_cv_accuracy": 0.6379721574248428,
+  "new_test_gate_passed": false,
+  "original_training_cases": 487,
+  "original_test_cases": 179,
+  "best_verified_test_correct": 108,
+  "best_verified_test_accuracy": 0.6033519553072626,
+  "target_accuracy": 0.8,
+  "achieved": false,
+  "scope": "Exact native Borg, original participant holdout and all cases retained. Earlier source fitting is referenced through unchanged verification; the new compact transformations and two new native recipes are independently reproduced. Source protocol performance is not the native goal score."
+}

@@ -868,6 +868,12 @@ function AiModelMetricBlock({ metrics }: { metrics: AiTrainingMetrics }) {
             value={formatBaselineAccuracy(metrics.baseline)}
           />
         )}
+        {metrics.previous_borg_baseline && (
+          <>
+            <AiMetric label="Accuracy de Borg previa" value={formatPercent(metrics.previous_borg_baseline.accuracy)} />
+            <AiMetric label="F1 de Borg previa" value={formatPercent(metrics.previous_borg_baseline.f1_macro)} />
+          </>
+        )}
         <AiMetric
           label="CV F1"
           value={cv ? `${formatPercent(cv.f1_macro_mean)} +/- ${formatPercent(cv.f1_macro_std)}` : "N/D"}
@@ -884,6 +890,11 @@ function AiModelMetricBlock({ metrics }: { metrics: AiTrainingMetrics }) {
         />
       </View>
 
+      {metrics.previous_borg_baseline && (
+        <Text style={styles.aiWarningText}>
+          Requiere Borg previa y contexto de actividad. Benchmark reutilizado; falta evaluación prospectiva independiente.
+        </Text>
+      )}
       <Text style={styles.aiWarningText}>
         {metrics.guardrails.warnings[0] || "Evaluación interna; falta validación independiente."}
       </Text>

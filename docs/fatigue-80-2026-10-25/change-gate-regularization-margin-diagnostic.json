@@ -1,0 +1,594 @@
+{
+  "diagnostic": "passed",
+  "diagnostic_code_sha256": "69b837ebab8734dbc67c44608bb350a35c50d2343f084b65d2e072008d57b7a5",
+  "selection_sha256": "8b750bcb3a78680c99c961117929e6b9ac709d15b99ce25f2ebec3f2f81fb5e7",
+  "fold_model_hashes": {
+    "gate-regularization-006-fold-0.joblib": "ba5218aaf79b7e143a632fe1c11aa273eccd153403dc4bd1af0c237a96c5571f",
+    "gate-regularization-006-fold-1.joblib": "1df35adda28b30bde575c65a66c7a082e3b312790ec7bfa5c1206b1114c16a81",
+    "gate-regularization-006-fold-2.joblib": "d5b9aa41a31132418e66e1a73c7bbf6528a45a3d87912d2e281debbea5ceaffc",
+    "gate-regularization-006-fold-3.joblib": "bb205034c450943a415516bf4b81f14772c98f25183ee3374490fee65f2b378c",
+    "gate-regularization-006-fold-4.joblib": "9bc545cf6022b2f71c9fd475567ca8d99abb4ad9f8cbc9f5a488ee58bafe4867",
+    "gate-regularization-007-fold-0.joblib": "9e71f1846ca5f4872aa6a8f3c8e176216001ffe7636813556b391913c167a264",
+    "gate-regularization-007-fold-1.joblib": "1041086db9bde9d21b793b1c89b2feb420fd849f805bfb02e2e61bff4e4588bd",
+    "gate-regularization-007-fold-2.joblib": "ddc2fc2de4dddf19b1a784ef6c7505a6959672f60e218bc734173f8d3dbfd8cb",
+    "gate-regularization-007-fold-3.joblib": "71fb5d53fd06022be715314da78b00361db655c0dc3d6451ce899484fff58685",
+    "gate-regularization-007-fold-4.joblib": "05ca03c3ed79028c74c8c2a222ee522a1036ac5c3f01a1b86c0c2fee1955083a",
+    "gate-regularization-008-fold-0.joblib": "558c38a6d3bc782c58b45e2de85828c123e32966a0fca19e5f5a9fcbd787b247",
+    "gate-regularization-008-fold-1.joblib": "348a62ab34004ab04063a0cdfbf1bf7e169bdf129e84bdccfeb75c34935c6b47",
+    "gate-regularization-008-fold-2.joblib": "0588f2c2834e4f64fd2144560353a1cd1767f0591fcbe131fd8151f8f278a457",
+    "gate-regularization-008-fold-3.joblib": "bdabe7eff6703f8f8ab79988e65bbd95e5f2494d2c15ed82bbaabc4e5d78bef8",
+    "gate-regularization-008-fold-4.joblib": "87d64be10deeb2cce43a0a597d90c8c115f6142507ffdb9c873b4fb5dbf2502a",
+    "gate-regularization-009-fold-0.joblib": "95afdc4913fa66f0fdb4c913b7c07eedb6c35892c0bd7bdec3d90d6155b66840",
+    "gate-regularization-009-fold-1.joblib": "b99cf331601add05b45f31056157fada3ae6b85deff37cb991a637b2352976cf",
+    "gate-regularization-009-fold-2.joblib": "23a456f82261499daa4a2696494b224d02dcf15d41fa84e2803c547659f7e455",
+    "gate-regularization-009-fold-3.joblib": "d5e56bfe7633ecd998e52b541df5d8ca251f227e487dfa71d883b4e8711d9828",
+    "gate-regularization-009-fold-4.joblib": "e717cef0b54a6195e86bf0e30eb8e90fd580a2934b6a4a314272ddf7c384958f",
+    "gate-regularization-010-fold-0.joblib": "d61bf1c79804d7321dd1318039f4bc4c1abc3495eb63a0489d632307386ca717",
+    "gate-regularization-010-fold-1.joblib": "2c0391f2d491f10766bbf8294217d8e494223b38bd9dda10efbdc7e8d836cd35",
+    "gate-regularization-010-fold-2.joblib": "6e7209862a3a4ac4cda390d5ee2527c080c2e265b1612a7b65553f59fdfd3dec",
+    "gate-regularization-010-fold-3.joblib": "266b3f5c10fcf538c11e0cc0b5d133e42161f78de9e3d7517232e713c2ed0504",
+    "gate-regularization-010-fold-4.joblib": "116f9d23a77548cfdf97c70a46154c0aa1b720ea3b8a87f804ce64f2e25b270d",
+    "gate-regularization-011-fold-0.joblib": "4b090db2d8d14885b200c2788a266f25ea8bc81068f4a1cef47070b86fa6f284",
+    "gate-regularization-011-fold-1.joblib": "7181e8b1a1f245809424516232aa96584ec07e16b2ec72d60e6673b1aab8d724",
+    "gate-regularization-011-fold-2.joblib": "4beafe5284bd74898dcee30b6d884dcce24c22ad38d92325d8c682606d3292f6",
+    "gate-regularization-011-fold-3.joblib": "05c064bbd29f9fb929134748d21c5e737e67dbf930606a1d0a3df6d87af8cc9d",
+    "gate-regularization-011-fold-4.joblib": "1bd4b7e8f397228c7e7c72437fbc7c16c5f99f420456a2a81654c0fab69ff289",
+    "gate-regularization-012-fold-0.joblib": "95feac2598b82cca0b78124449faef9d878c56737538686812f3c38f8283d6b1",
+    "gate-regularization-012-fold-1.joblib": "58394e5269daf9888d9337eb1b798a4d7f940bddc47349d6ae052a98f3be69b3",
+    "gate-regularization-012-fold-2.joblib": "e30395eabfc195f00fff195f77c4415e5c7863129852f9986318c7fd91dc1fd1",
+    "gate-regularization-012-fold-3.joblib": "65f0c680d3883ac94ff43abb9c707a084bbec5ab235a5e90598c3174d4d682b4",
+    "gate-regularization-012-fold-4.joblib": "e08ca32d2f1a5e5994ce5da83423f56e2d3d0a81072d1fba6ac532e4e85b1542",
+    "gate-regularization-013-fold-0.joblib": "6cceb1f85b6993894068401ec56c49f9335226479b465f61a475f089877d3c85",
+    "gate-regularization-013-fold-1.joblib": "1da8bad82684262a0c7e0989a2d90d9287980c1bd06f34b78dc5f57e4de8766c",
+    "gate-regularization-013-fold-2.joblib": "6396fbffa122a75e76021074f47fa0246cbcf693d4a108d3abad5f6a00f535d6",
+    "gate-regularization-013-fold-3.joblib": "b6e73a75079c38797e7cdc0f7da7bf675cf80fff4f69f87c0b0254d9eada031f",
+    "gate-regularization-013-fold-4.joblib": "9a0cb7a51e7adce68faea3f1e748faf224674c800df58f9b9a8a657ac6f2bd7b",
+    "gate-regularization-014-fold-0.joblib": "d16d2192e52ea6045c417b40f0f91ae5353bd40435a54cebba75fb894cbeb7f9",
+    "gate-regularization-014-fold-1.joblib": "436e2f71cda964d2a86c806ef5360154dd439ace19a4d7c3ff94a27e3767732f",
+    "gate-regularization-014-fold-2.joblib": "39cd50845fb495beafe064828362b3fe8299f27836f77ff65cfdd32c6e44c4c1",
+    "gate-regularization-014-fold-3.joblib": "57622923c86ddf3f582ae41b1cd2fa516913c7febd7c22283474b9f5fd293b49",
+    "gate-regularization-014-fold-4.joblib": "213ceecb6004592f46b4a1d045123042d8dfeaefe9e1482eb4ba8ee28f2462e6",
+    "gate-regularization-015-fold-0.joblib": "4076ba79d73d6c85f90ac8e1120e2e9997998b1b560a6b8be4677060fb950cfa",
+    "gate-regularization-015-fold-1.joblib": "898bc1f5bf98014bca047d8bbdbed585375e607ab042fd3f3630b3a80de7fa50",
+    "gate-regularization-015-fold-2.joblib": "5efd13c2040bc86e1f16a3aea7ff87733ed292b8e829e9a2c6fe7031c152a2a2",
+    "gate-regularization-015-fold-3.joblib": "ebf47bb5b8e37de27cabd2701a0f01112375e7b0aed51ebcfc32dda0ba0c9081",
+    "gate-regularization-015-fold-4.joblib": "b260c349326fa44ee60c018b120413f26c779efb7989f221650d607e80923d4d",
+    "gate-regularization-016-fold-0.joblib": "5ad34d0c423023dd228872185e5f32801257297f7107d88ff00246108042c1b4",
+    "gate-regularization-016-fold-1.joblib": "50557293fec055b554a0d9ecfda1f6f8702327ede5a8e7d83c0643c1590d4d7d",
+    "gate-regularization-016-fold-2.joblib": "a883c1a8d51a4e017e515f0d2fd5df3341b7f78718bbeda1fe06d2e943c5392b",
+    "gate-regularization-016-fold-3.joblib": "a99b1364d6462cfeac6ec9501bb73cc8aa0b35cbf870225df29b1ba81c1394ab",
+    "gate-regularization-016-fold-4.joblib": "38cd0fd4b578a731800c7591423dbc33537e103f23dce2d6bbc5a5a19faca392",
+    "gate-regularization-017-fold-0.joblib": "1640a3e483ae1e97c688a962f3ac5733ebbbbcd6818d7bf51f051d0c3429cc7b",
+    "gate-regularization-017-fold-1.joblib": "f053c5b3aaaa71f4b5e3bbe59a7f7221a6de97cd67c58560ce28fced66a345c0",
+    "gate-regularization-017-fold-2.joblib": "611baf76d1be2ec9397616ee182f8ea85b40444b082d9a454be5b02d4a1cf342",
+    "gate-regularization-017-fold-3.joblib": "5a6e302f7c788596f52b842e3b86a9ee0aa7b66562ff682f7958af5370f3b4d6",
+    "gate-regularization-017-fold-4.joblib": "9d018d29e829389be2b630ecdbe70ba84febf702f792a12dd057d6d71bb0e243"
+  },
+  "original_fitting_queries": 487,
+  "original_fitting_people": 28,
+  "results": [
+    {
+      "candidate": {
+        "id": "gate-regularization-006",
+        "algorithm": "regularized_public_binary_change_gate",
+        "member": "core",
+        "auxiliary_weight": 0.0,
+        "epochs": 80,
+        "learning_rate": 0.003,
+        "weight_decay": 0.1,
+        "correction_penalty": 0.0,
+        "random_seed": 42,
+        "source_target": "actual_current_unequal_actual_prior_on_original_instrument",
+        "native_target": "original_integer_delta_distribution_with_frozen_nonzero_conditional"
+      },
+      "native_cv_accuracy": 0.6051621745688243,
+      "absolute_logit_correction": {
+        "minimum": 0.0004785805940628052,
+        "median": 0.15713676810264587,
+        "p90": 0.3849217295646668,
+        "maximum": 1.1267670392990112,
+        "mean": 0.19071086717184318
+      },
+      "absolute_gate_boundary_margin": {
+        "minimum": 0.003622838807844253,
+        "median": 0.8060055688199954,
+        "p90": 4.035760220661931,
+        "maximum": 9.210296032320015,
+        "mean": 1.3234974242346929
+      },
+      "absolute_correction_over_required_margin": {
+        "minimum": 0.0013339733423598581,
+        "median": 0.18382558063478008,
+        "p90": 0.9046826199937816,
+        "maximum": 88.87999108281379,
+        "mean": 0.722986670981677
+      },
+      "gate_boundaries_crossed": 27,
+      "final_native_borg_predictions_changed": 27,
+      "native_fitting_loss_end_minus_start_mean": -0.01213646068450731,
+      "native_penalty_over_likelihood_output_derivative_norm_mean": 0.0,
+      "optimistic_fitting_only_correct_if_oracle_chose_zero_or_top_nonzero": 431,
+      "optimistic_fitting_only_gate_choice_ceiling": 0.8850102669404517
+    },
+    {
+      "candidate": {
+        "id": "gate-regularization-007",
+        "algorithm": "regularized_public_binary_change_gate",
+        "member": "core",
+        "auxiliary_weight": 0.0,
+        "epochs": 80,
+        "learning_rate": 0.003,
+        "weight_decay": 0.1,
+        "correction_penalty": 0.1,
+        "random_seed": 42,
+        "source_target": "actual_current_unequal_actual_prior_on_original_instrument",
+        "native_target": "original_integer_delta_distribution_with_frozen_nonzero_conditional"
+      },
+      "native_cv_accuracy": 0.6117163654759563,
+      "absolute_logit_correction": {
+        "minimum": 0.0007532276213169098,
+        "median": 0.07068751007318497,
+        "p90": 0.19012626409530647,
+        "maximum": 0.8346462845802307,
+        "mean": 0.09428688656592271
+      },
+      "absolute_gate_boundary_margin": {
+        "minimum": 0.003622838807844253,
+        "median": 0.8060055688199954,
+        "p90": 4.035760220661931,
+        "maximum": 9.210296032320015,
+        "mean": 1.3234974242346929
+      },
+      "absolute_correction_over_required_margin": {
+        "minimum": 0.0005442245040120267,
+        "median": 0.0972224336217412,
+        "p90": 0.5129911447960634,
+        "maximum": 47.44454551070539,
+        "mean": 0.4174299542775809
+      },
+      "gate_boundaries_crossed": 20,
+      "final_native_borg_predictions_changed": 20,
+      "native_fitting_loss_end_minus_start_mean": -0.010902199865821171,
+      "native_penalty_over_likelihood_output_derivative_norm_mean": 0.06335905194369415,
+      "optimistic_fitting_only_correct_if_oracle_chose_zero_or_top_nonzero": 431,
+      "optimistic_fitting_only_gate_choice_ceiling": 0.8850102669404517
+    },
+    {
+      "candidate": {
+        "id": "gate-regularization-008",
+        "algorithm": "regularized_public_binary_change_gate",
+        "member": "core",
+        "auxiliary_weight": 0.0,
+        "epochs": 80,
+        "learning_rate": 0.003,
+        "weight_decay": 0.1,
+        "correction_penalty": 1.0,
+        "random_seed": 42,
+        "source_target": "actual_current_unequal_actual_prior_on_original_instrument",
+        "native_target": "original_integer_delta_distribution_with_frozen_nonzero_conditional"
+      },
+      "native_cv_accuracy": 0.6119141676737585,
+      "absolute_logit_correction": {
+        "minimum": 0.00021388381719589233,
+        "median": 0.017869524657726288,
+        "p90": 0.05786877870559696,
+        "maximum": 0.2526417076587677,
+        "mean": 0.026353198009900734
+      },
+      "absolute_gate_boundary_margin": {
+        "minimum": 0.003622838807844253,
+        "median": 0.8060055688199954,
+        "p90": 4.035760220661931,
+        "maximum": 9.210296032320015,
+        "mean": 1.3234974242346929
+      },
+      "absolute_correction_over_required_margin": {
+        "minimum": 8.447598754822007e-05,
+        "median": 0.02204409167717681,
+        "p90": 0.1701211632242294,
+        "maximum": 7.453056060474914,
+        "mean": 0.12534832231067056
+      },
+      "gate_boundaries_crossed": 8,
+      "final_native_borg_predictions_changed": 8,
+      "native_fitting_loss_end_minus_start_mean": -0.0051110076642943095,
+      "native_penalty_over_likelihood_output_derivative_norm_mean": 0.20765969832471068,
+      "optimistic_fitting_only_correct_if_oracle_chose_zero_or_top_nonzero": 431,
+      "optimistic_fitting_only_gate_choice_ceiling": 0.8850102669404517
+    },
+    {
+      "candidate": {
+        "id": "gate-regularization-009",
+        "algorithm": "regularized_public_binary_change_gate",
+        "member": "core",
+        "auxiliary_weight": 0.1,
+        "epochs": 80,
+        "learning_rate": 0.003,
+        "weight_decay": 0.1,
+        "correction_penalty": 0.0,
+        "random_seed": 42,
+        "source_target": "actual_current_unequal_actual_prior_on_original_instrument",
+        "native_target": "original_integer_delta_distribution_with_frozen_nonzero_conditional"
+      },
+      "native_cv_accuracy": 0.5992013902550988,
+      "absolute_logit_correction": {
+        "minimum": 0.00021463632583618164,
+        "median": 0.15818598866462708,
+        "p90": 0.3319259583950044,
+        "maximum": 1.0353477001190186,
+        "mean": 0.17911157553568025
+      },
+      "absolute_gate_boundary_margin": {
+        "minimum": 0.003622838807844253,
+        "median": 0.8060055688199954,
+        "p90": 4.035760220661931,
+        "maximum": 9.210296032320015,
+        "mean": 1.3234974242346929
+      },
+      "absolute_correction_over_required_margin": {
+        "minimum": 0.00035697190074683057,
+        "median": 0.1695414986959399,
+        "p90": 0.8245639882448704,
+        "maximum": 88.73920730180794,
+        "mean": 0.6763826339831005
+      },
+      "gate_boundaries_crossed": 25,
+      "final_native_borg_predictions_changed": 25,
+      "native_fitting_loss_end_minus_start_mean": -0.010596348852224536,
+      "native_penalty_over_likelihood_output_derivative_norm_mean": 0.0,
+      "optimistic_fitting_only_correct_if_oracle_chose_zero_or_top_nonzero": 431,
+      "optimistic_fitting_only_gate_choice_ceiling": 0.8850102669404517
+    },
+    {
+      "candidate": {
+        "id": "gate-regularization-010",
+        "algorithm": "regularized_public_binary_change_gate",
+        "member": "core",
+        "auxiliary_weight": 0.1,
+        "epochs": 80,
+        "learning_rate": 0.003,
+        "weight_decay": 0.1,
+        "correction_penalty": 0.1,
+        "random_seed": 42,
+        "source_target": "actual_current_unequal_actual_prior_on_original_instrument",
+        "native_target": "original_integer_delta_distribution_with_frozen_nonzero_conditional"
+      },
+      "native_cv_accuracy": 0.6058340125347799,
+      "absolute_logit_correction": {
+        "minimum": 5.336105823516846e-05,
+        "median": 0.07071782648563385,
+        "p90": 0.16460511386394502,
+        "maximum": 0.8219231367111206,
+        "mean": 0.08747912784254282
+      },
+      "absolute_gate_boundary_margin": {
+        "minimum": 0.003622838807844253,
+        "median": 0.8060055688199954,
+        "p90": 4.035760220661931,
+        "maximum": 9.210296032320015,
+        "mean": 1.3234974242346929
+      },
+      "absolute_correction_over_required_margin": {
+        "minimum": 0.00010183758868252831,
+        "median": 0.08618201197590389,
+        "p90": 0.5563927556811159,
+        "maximum": 44.25665744819214,
+        "mean": 0.3825874855824976
+      },
+      "gate_boundaries_crossed": 17,
+      "final_native_borg_predictions_changed": 17,
+      "native_fitting_loss_end_minus_start_mean": -0.009516887723489464,
+      "native_penalty_over_likelihood_output_derivative_norm_mean": 0.05961126438581321,
+      "optimistic_fitting_only_correct_if_oracle_chose_zero_or_top_nonzero": 431,
+      "optimistic_fitting_only_gate_choice_ceiling": 0.8850102669404517
+    },
+    {
+      "candidate": {
+        "id": "gate-regularization-011",
+        "algorithm": "regularized_public_binary_change_gate",
+        "member": "core",
+        "auxiliary_weight": 0.1,
+        "epochs": 80,
+        "learning_rate": 0.003,
+        "weight_decay": 0.1,
+        "correction_penalty": 1.0,
+        "random_seed": 42,
+        "source_target": "actual_current_unequal_actual_prior_on_original_instrument",
+        "native_target": "original_integer_delta_distribution_with_frozen_nonzero_conditional"
+      },
+      "native_cv_accuracy": 0.6079925990463075,
+      "absolute_logit_correction": {
+        "minimum": 0.00010134279727935791,
+        "median": 0.016062263399362564,
+        "p90": 0.04695860296487809,
+        "maximum": 0.23461982607841492,
+        "mean": 0.0230787254380372
+      },
+      "absolute_gate_boundary_margin": {
+        "minimum": 0.003622838807844253,
+        "median": 0.8060055688199954,
+        "p90": 4.035760220661931,
+        "maximum": 9.210296032320015,
+        "mean": 1.3234974242346929
+      },
+      "absolute_correction_over_required_margin": {
+        "minimum": 0.00030142748810203535,
+        "median": 0.021968992836739604,
+        "p90": 0.15782049556218036,
+        "maximum": 6.445179839083613,
+        "mean": 0.09753385740286682
+      },
+      "gate_boundaries_crossed": 6,
+      "final_native_borg_predictions_changed": 6,
+      "native_fitting_loss_end_minus_start_mean": -0.004402381634594432,
+      "native_penalty_over_likelihood_output_derivative_norm_mean": 0.19228446380895642,
+      "optimistic_fitting_only_correct_if_oracle_chose_zero_or_top_nonzero": 431,
+      "optimistic_fitting_only_gate_choice_ceiling": 0.8850102669404517
+    },
+    {
+      "candidate": {
+        "id": "gate-regularization-012",
+        "algorithm": "regularized_public_binary_change_gate",
+        "member": "cat",
+        "auxiliary_weight": 0.0,
+        "epochs": 80,
+        "learning_rate": 0.003,
+        "weight_decay": 0.1,
+        "correction_penalty": 0.0,
+        "random_seed": 42,
+        "source_target": "actual_current_unequal_actual_prior_on_original_instrument",
+        "native_target": "original_integer_delta_distribution_with_frozen_nonzero_conditional"
+      },
+      "native_cv_accuracy": 0.628183562388166,
+      "absolute_logit_correction": {
+        "minimum": 0.0004736557602882385,
+        "median": 0.1764417439699173,
+        "p90": 0.4499354541301729,
+        "maximum": 1.1219767332077026,
+        "mean": 0.2222854460434686
+      },
+      "absolute_gate_boundary_margin": {
+        "minimum": 0.0019609770623491007,
+        "median": 1.0096615267702023,
+        "p90": 3.0512247281207734,
+        "maximum": 3.4399053609046675,
+        "mean": 1.2810682986791295
+      },
+      "absolute_correction_over_required_margin": {
+        "minimum": 0.0003750730261571606,
+        "median": 0.17597890130347965,
+        "p90": 0.6919515010906262,
+        "maximum": 50.23086318245244,
+        "mean": 0.5831670329745099
+      },
+      "gate_boundaries_crossed": 21,
+      "final_native_borg_predictions_changed": 21,
+      "native_fitting_loss_end_minus_start_mean": -0.01069619018117316,
+      "native_penalty_over_likelihood_output_derivative_norm_mean": 0.0,
+      "optimistic_fitting_only_correct_if_oracle_chose_zero_or_top_nonzero": 430,
+      "optimistic_fitting_only_gate_choice_ceiling": 0.8829568788501027
+    },
+    {
+      "candidate": {
+        "id": "gate-regularization-013",
+        "algorithm": "regularized_public_binary_change_gate",
+        "member": "cat",
+        "auxiliary_weight": 0.0,
+        "epochs": 80,
+        "learning_rate": 0.003,
+        "weight_decay": 0.1,
+        "correction_penalty": 0.1,
+        "random_seed": 42,
+        "source_target": "actual_current_unequal_actual_prior_on_original_instrument",
+        "native_target": "original_integer_delta_distribution_with_frozen_nonzero_conditional"
+      },
+      "native_cv_accuracy": 0.6259943228127371,
+      "absolute_logit_correction": {
+        "minimum": 0.00021921657025814056,
+        "median": 0.07201886922121048,
+        "p90": 0.18776252865791324,
+        "maximum": 1.0194544792175293,
+        "mean": 0.09718027744954738
+      },
+      "absolute_gate_boundary_margin": {
+        "minimum": 0.0019609770623491007,
+        "median": 1.0096615267702023,
+        "p90": 3.0512247281207734,
+        "maximum": 3.4399053609046675,
+        "mean": 1.2810682986791295
+      },
+      "absolute_correction_over_required_margin": {
+        "minimum": 0.0004379972267661659,
+        "median": 0.07504821251551701,
+        "p90": 0.3736942635278803,
+        "maximum": 48.36508451864294,
+        "mean": 0.3682538430349654
+      },
+      "gate_boundaries_crossed": 14,
+      "final_native_borg_predictions_changed": 14,
+      "native_fitting_loss_end_minus_start_mean": -0.009277281810094707,
+      "native_penalty_over_likelihood_output_derivative_norm_mean": 0.05999509803633672,
+      "optimistic_fitting_only_correct_if_oracle_chose_zero_or_top_nonzero": 430,
+      "optimistic_fitting_only_gate_choice_ceiling": 0.8829568788501027
+    },
+    {
+      "candidate": {
+        "id": "gate-regularization-014",
+        "algorithm": "regularized_public_binary_change_gate",
+        "member": "cat",
+        "auxiliary_weight": 0.0,
+        "epochs": 80,
+        "learning_rate": 0.003,
+        "weight_decay": 0.1,
+        "correction_penalty": 1.0,
+        "random_seed": 42,
+        "source_target": "actual_current_unequal_actual_prior_on_original_instrument",
+        "native_target": "original_integer_delta_distribution_with_frozen_nonzero_conditional"
+      },
+      "native_cv_accuracy": 0.6338374600676391,
+      "absolute_logit_correction": {
+        "minimum": 7.181055843830109e-05,
+        "median": 0.017115119844675064,
+        "p90": 0.04498476907610894,
+        "maximum": 0.6265665888786316,
+        "mean": 0.0259447533396327
+      },
+      "absolute_gate_boundary_margin": {
+        "minimum": 0.0019609770623491007,
+        "median": 1.0096615267702023,
+        "p90": 3.0512247281207734,
+        "maximum": 3.4399053609046675,
+        "mean": 1.2810682986791295
+      },
+      "absolute_correction_over_required_margin": {
+        "minimum": 5.951161491454584e-05,
+        "median": 0.01650581240510816,
+        "p90": 0.11887249809543625,
+        "maximum": 5.2269872720940915,
+        "mean": 0.0795786114186063
+      },
+      "gate_boundaries_crossed": 6,
+      "final_native_borg_predictions_changed": 6,
+      "native_fitting_loss_end_minus_start_mean": -0.004817066391996727,
+      "native_penalty_over_likelihood_output_derivative_norm_mean": 0.1834630597346156,
+      "optimistic_fitting_only_correct_if_oracle_chose_zero_or_top_nonzero": 430,
+      "optimistic_fitting_only_gate_choice_ceiling": 0.8829568788501027
+    },
+    {
+      "candidate": {
+        "id": "gate-regularization-015",
+        "algorithm": "regularized_public_binary_change_gate",
+        "member": "cat",
+        "auxiliary_weight": 0.1,
+        "epochs": 80,
+        "learning_rate": 0.003,
+        "weight_decay": 0.1,
+        "correction_penalty": 0.0,
+        "random_seed": 42,
+        "source_target": "actual_current_unequal_actual_prior_on_original_instrument",
+        "native_target": "original_integer_delta_distribution_with_frozen_nonzero_conditional"
+      },
+      "native_cv_accuracy": 0.6259704336584131,
+      "absolute_logit_correction": {
+        "minimum": 0.0005749911069869995,
+        "median": 0.16742652654647827,
+        "p90": 0.397017687559128,
+        "maximum": 1.133040428161621,
+        "mean": 0.19784749381902036
+      },
+      "absolute_gate_boundary_margin": {
+        "minimum": 0.0019609770623491007,
+        "median": 1.0096615267702023,
+        "p90": 3.0512247281207734,
+        "maximum": 3.4399053609046675,
+        "mean": 1.2810682986791295
+      },
+      "absolute_correction_over_required_margin": {
+        "minimum": 0.0009307453232468163,
+        "median": 0.15858411507143308,
+        "p90": 0.6753991302310532,
+        "maximum": 46.6062406043145,
+        "mean": 0.5398069641194023
+      },
+      "gate_boundaries_crossed": 20,
+      "final_native_borg_predictions_changed": 20,
+      "native_fitting_loss_end_minus_start_mean": -0.009533253229092176,
+      "native_penalty_over_likelihood_output_derivative_norm_mean": 0.0,
+      "optimistic_fitting_only_correct_if_oracle_chose_zero_or_top_nonzero": 430,
+      "optimistic_fitting_only_gate_choice_ceiling": 0.8829568788501027
+    },
+    {
+      "candidate": {
+        "id": "gate-regularization-016",
+        "algorithm": "regularized_public_binary_change_gate",
+        "member": "cat",
+        "auxiliary_weight": 0.1,
+        "epochs": 80,
+        "learning_rate": 0.003,
+        "weight_decay": 0.1,
+        "correction_penalty": 0.1,
+        "random_seed": 42,
+        "source_target": "actual_current_unequal_actual_prior_on_original_instrument",
+        "native_target": "original_integer_delta_distribution_with_frozen_nonzero_conditional"
+      },
+      "native_cv_accuracy": 0.6301290201699408,
+      "absolute_logit_correction": {
+        "minimum": 0.0006937198340892792,
+        "median": 0.06455671042203903,
+        "p90": 0.17449182271957409,
+        "maximum": 0.974098265171051,
+        "mean": 0.08706928186072706
+      },
+      "absolute_gate_boundary_margin": {
+        "minimum": 0.0019609770623491007,
+        "median": 1.0096615267702023,
+        "p90": 3.0512247281207734,
+        "maximum": 3.4399053609046675,
+        "mean": 1.2810682986791295
+      },
+      "absolute_correction_over_required_margin": {
+        "minimum": 0.00022108022353240368,
+        "median": 0.06700640810290005,
+        "p90": 0.3569778301471067,
+        "maximum": 30.036422864516563,
+        "mean": 0.30612325569740867
+      },
+      "gate_boundaries_crossed": 12,
+      "final_native_borg_predictions_changed": 12,
+      "native_fitting_loss_end_minus_start_mean": -0.008201988929804838,
+      "native_penalty_over_likelihood_output_derivative_norm_mean": 0.057031330853873664,
+      "optimistic_fitting_only_correct_if_oracle_chose_zero_or_top_nonzero": 430,
+      "optimistic_fitting_only_gate_choice_ceiling": 0.8829568788501027
+    },
+    {
+      "candidate": {
+        "id": "gate-regularization-017",
+        "algorithm": "regularized_public_binary_change_gate",
+        "member": "cat",
+        "auxiliary_weight": 0.1,
+        "epochs": 80,
+        "learning_rate": 0.003,
+        "weight_decay": 0.1,
+        "correction_penalty": 1.0,
+        "random_seed": 42,
+        "source_target": "actual_current_unequal_actual_prior_on_original_instrument",
+        "native_target": "original_integer_delta_distribution_with_frozen_nonzero_conditional"
+      },
+      "native_cv_accuracy": 0.6338374600676391,
+      "absolute_logit_correction": {
+        "minimum": 5.07645308971405e-05,
+        "median": 0.0155906081199646,
+        "p90": 0.038275936245918296,
+        "maximum": 0.5911781787872314,
+        "mean": 0.023903090646394835
+      },
+      "absolute_gate_boundary_margin": {
+        "minimum": 0.0019609770623491007,
+        "median": 1.0096615267702023,
+        "p90": 3.0512247281207734,
+        "maximum": 3.4399053609046675,
+        "mean": 1.2810682986791295
+      },
+      "absolute_correction_over_required_margin": {
+        "minimum": 1.754993132161519e-05,
+        "median": 0.016985358552023554,
+        "p90": 0.07756017693100739,
+        "maximum": 5.119658332516785,
+        "mean": 0.07043294313866826
+      },
+      "gate_boundaries_crossed": 6,
+      "final_native_borg_predictions_changed": 6,
+      "native_fitting_loss_end_minus_start_mean": -0.004221949700854388,
+      "native_penalty_over_likelihood_output_derivative_norm_mean": 0.17339001020180694,
+      "optimistic_fitting_only_correct_if_oracle_chose_zero_or_top_nonzero": 430,
+      "optimistic_fitting_only_gate_choice_ceiling": 0.8829568788501027
+    }
+  ],
+  "new_predictive_estimator_fits": 0,
+  "new_preprocessor_fits": 0,
+  "new_test_predictions_computed": 0,
+  "test_labels_inspected": false,
+  "synthetic_rows": 0,
+  "new_hyperparameters_selected": 0,
+  "interpretation": "Gate logit adjustments are compared with the exact mathematical boundary between the original zero delta and highest-probability nonzero delta. Each source-trained model still preserves relative nonzero probabilities. Small adjustment/margin ratios can explain unchanged decisions even with verified learning and nonzero source gradients. The output derivative ratio describes the saved fitting objective,not a proof that a different penalty will improve validation. Oracle gate-choice ceilings use actual fitting-participant labels for a hypothetical bound only;they are not achieved predictions or the179case test result."
+}

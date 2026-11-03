@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "source": "https://data.mendeley.com/datasets/8zt9g9g64c/1",
+  "readme_sha256": "5848ce67c2aec612995fc76dede71c5ede0eb454faf051e2b375e982bb916ab9",
+  "inventory_sha256": "a946a07933cf738afed80590b419eb62209ee5d86046e7e92b436158998e0dad",
+  "publisher_sha256_verified": true,
+  "native_f_level_range": [
+    0,
+    4
+  ],
+  "unmodified_CR10_mapping_established": false,
+  "training_merge_approved": false,
+  "used_for_training": false,
+  "sensor_traces_downloaded": 0,
+  "reason": "Original README defines f-level 0-4 annotated according to Borg, but does not specify the mapping to unmodified CR10. Thirty-second fatigue markings are described for squatting, not a precise per-response walking schedule. Do not turn repeated trace cells into independent native Borg responses."
+}

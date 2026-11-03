@@ -1,0 +1,2138 @@
+{
+  "review": "passed",
+  "review_code_sha256": "26ac88269dc4be37e62ad4790d752316c876cb4b54685e7aeafdd7a3718bb333",
+  "selection_sha256": "f0183101f32ecccdc52ccc0ed70fe0bdcb7188c774baceef57a0b69a7bdb30e4",
+  "verification_sha256": "16d25dbd2cf3f9e478def7e1c8d7c36ad1758efafdcf2f10a0743ee6d9f45d57",
+  "diagnostic_sha256": "46ba2458056ffa17895fb1364f5187b9fcd2c30109ae5674f63128436fdd4355",
+  "native_gate_implementation_sha256": "8f8d87a836f5dcf7e21090d6f2379cfdbffaa77059c7a942c6f3a79e3d91fbe6",
+  "frozen_network_implementation_sha256": "069614cca612f2a669836c436025a433aad9efe0cd5c458286f9869bf5c8e053",
+  "inspected_correction_method": "    def correction(self,history,context,offset):\n        joined = torch.cat([self.encoder(history),context,torch.sigmoid(offset).float()[:,None]],dim=1)\n        return self.corrector(joined).squeeze(1).to(offset.dtype)\n",
+  "current_correction_receives_only_total_nonzero_probability": true,
+  "conditional_geometry_not_passed_to_current_corrector": true,
+  "native_fitting_queries": 487,
+  "fitting_only": true,
+  "test_labels_inspected": false,
+  "new_predictive_estimator_fits": 0,
+  "new_test_predictions_computed": 0,
+  "source_histories_physiology_or_labels_fabricated": false,
+  "model_comparison_predeclared": false,
+  "proposed_native_private_geometry": [
+    "conditional_peak_probability",
+    "conditional_top_two_margin",
+    "conditional_normalized_entropy",
+    "conditional_expected_delta_over_10",
+    "conditional_expected_absolute_delta_over_10",
+    "native_argmax_change_log_margin"
+  ],
+  "geometry_profiles": {
+    "core": {
+      "fitting_inner_oof_rows_across_folds": 1948,
+      "outer_validation_rows": 487,
+      "fitting_inner_oof_profile": {
+        "conditional_peak_probability": {
+          "mean": 0.8241883476460501,
+          "standard_deviation": 0.18245805644603882,
+          "quantiles_0_25_50_75_100": [
+            0.2940008517004165,
+            0.7580331535417277,
+            0.9203431802865462,
+            0.9552673614006416,
+            0.9831566948586058
+          ]
+        },
+        "conditional_top_two_margin": {
+          "mean": 0.7303537599118535,
+          "standard_deviation": 0.2661286990558144,
+          "quantiles_0_25_50_75_100": [
+            0.011621167759426232,
+            0.6071855198625868,
+            0.8702138386424335,
+            0.9242356385134417,
+            0.9763466093908432
+          ]
+        },
+        "conditional_normalized_entropy": {
+          "mean": 0.19025230159113474,
+          "standard_deviation": 0.13736679778795052,
+          "quantiles_0_25_50_75_100": [
+            0.04008521145815819,
+            0.07950717557781856,
+            0.12820193324447038,
+            0.27844368250092577,
+            0.7103116154424719
+          ]
+        },
+        "conditional_expected_delta_over_10": {
+          "mean": 0.14014649225582568,
+          "standard_deviation": 0.06684019518027495,
+          "quantiles_0_25_50_75_100": [
+            0.04869634501570633,
+            0.10141833202449949,
+            0.10548773486727826,
+            0.13355768544390761,
+            0.31138938209637956
+          ]
+        },
+        "conditional_expected_absolute_delta_over_10": {
+          "mean": 0.1449254323587962,
+          "standard_deviation": 0.06542150209428517,
+          "quantiles_0_25_50_75_100": [
+            0.10341161218418686,
+            0.10677478056672082,
+            0.11057368293851697,
+            0.13724596578511053,
+            0.33086644742932164
+          ]
+        },
+        "native_argmax_change_log_margin": {
+          "mean": 0.29817134732268513,
+          "standard_deviation": 1.6979365272858125,
+          "quantiles_0_25_50_75_100": [
+            -6.213411555831449,
+            -0.7921154135950002,
+            -0.2451046242067973,
+            0.7343852001488507,
+            5.004607318831832
+          ]
+        }
+      },
+      "outer_validation_profile": {
+        "conditional_peak_probability": {
+          "mean": 0.8342077425651782,
+          "standard_deviation": 0.17929523724106214,
+          "quantiles_0_25_50_75_100": [
+            0.049999999999999996,
+            0.7960003274288738,
+            0.9227731692407578,
+            0.9597713237478901,
+            0.9743499143828755
+          ]
+        },
+        "conditional_top_two_margin": {
+          "mean": 0.7396666706513145,
+          "standard_deviation": 0.266369361770873,
+          "quantiles_0_25_50_75_100": [
+            0.0,
+            0.6566504108155657,
+            0.8711989370279765,
+            0.9363584388793321,
+            0.9626707081291535
+          ]
+        },
+        "conditional_normalized_entropy": {
+          "mean": 0.18056791473820089,
+          "standard_deviation": 0.13938847812341384,
+          "quantiles_0_25_50_75_100": [
+            0.052642137558074925,
+            0.07445579095943214,
+            0.12023247533583413,
+            0.24309430562838527,
+            1.0
+          ]
+        },
+        "conditional_expected_delta_over_10": {
+          "mean": 0.1386136447069881,
+          "standard_deviation": 0.06913316211997106,
+          "quantiles_0_25_50_75_100": [
+            -2.7755575615628914e-17,
+            0.10040580949226774,
+            0.10348083744541478,
+            0.12678324297071603,
+            0.30639375665838686
+          ]
+        },
+        "conditional_expected_absolute_delta_over_10": {
+          "mean": 0.14463508508718043,
+          "standard_deviation": 0.07007934649463772,
+          "quantiles_0_25_50_75_100": [
+            0.10337225653051631,
+            0.10570335123359403,
+            0.10948728133048771,
+            0.13091932096181713,
+            0.55
+          ]
+        },
+        "native_argmax_change_log_margin": {
+          "mean": 0.35350457686516007,
+          "standard_deviation": 1.9143888119262766,
+          "quantiles_0_25_50_75_100": [
+            -9.2102960323201,
+            -0.8045733580787977,
+            -0.3253392733827117,
+            0.8001217278467058,
+            5.444536932960851
+          ]
+        }
+      },
+      "actual_unchanged_oof_profile": {
+        "conditional_peak_probability": {
+          "mean": 0.9248512780795425,
+          "standard_deviation": 0.07635278247885184,
+          "quantiles_0_25_50_75_100": [
+            0.355099461474993,
+            0.9221593033124376,
+            0.9459388646725816,
+            0.9680505752181469,
+            0.9743499143828755
+          ]
+        },
+        "conditional_top_two_margin": {
+          "mean": 0.8759815217807707,
+          "standard_deviation": 0.12031499491667655,
+          "quantiles_0_25_50_75_100": [
+            0.04688697574036854,
+            0.8704939054605089,
+            0.9145158963013539,
+            0.9468067775736675,
+            0.9626707081291535
+          ]
+        },
+        "conditional_normalized_entropy": {
+          "mean": 0.10985967062816655,
+          "standard_deviation": 0.06639540023561646,
+          "quantiles_0_25_50_75_100": [
+            0.052642137558074925,
+            0.06354888144874131,
+            0.09366743534035088,
+            0.12328102709325697,
+            0.4946912060779944
+          ]
+        },
+        "conditional_expected_delta_over_10": {
+          "mean": 0.10517752990037331,
+          "standard_deviation": 0.01326772922576759,
+          "quantiles_0_25_50_75_100": [
+            0.09815291512756849,
+            0.09972951963524321,
+            0.10111348626357736,
+            0.10489787602613462,
+            0.22054348413881616
+          ]
+        },
+        "conditional_expected_absolute_delta_over_10": {
+          "mean": 0.11058048849578624,
+          "standard_deviation": 0.012760743325084228,
+          "quantiles_0_25_50_75_100": [
+            0.10337225653051631,
+            0.10498462179469256,
+            0.10735136124096945,
+            0.10978652731614699,
+            0.22318217067974647
+          ]
+        },
+        "native_argmax_change_log_margin": {
+          "mean": -0.5895072566111567,
+          "standard_deviation": 0.6842531617046058,
+          "quantiles_0_25_50_75_100": [
+            -1.807775507879236,
+            -1.1394495806734481,
+            -0.5770413280491442,
+            -0.2859399491116094,
+            1.8802312747841312
+          ]
+        }
+      },
+      "actual_changed_oof_profile": {
+        "conditional_peak_probability": {
+          "mean": 0.7537528215078547,
+          "standard_deviation": 0.20430366536563127,
+          "quantiles_0_25_50_75_100": [
+            0.049999999999999996,
+            0.5253700765981401,
+            0.8256387302562334,
+            0.9452777167318187,
+            0.9728491378649403
+          ]
+        },
+        "conditional_top_two_margin": {
+          "mean": 0.6186740314705182,
+          "standard_deviation": 0.29991512197898607,
+          "quantiles_0_25_50_75_100": [
+            0.0,
+            0.3044972502182974,
+            0.7107428367636627,
+            0.9087307403547442,
+            0.9595371633870297
+          ]
+        },
+        "conditional_normalized_entropy": {
+          "mean": 0.24332833295989797,
+          "standard_deviation": 0.15615701419281858,
+          "quantiles_0_25_50_75_100": [
+            0.054383117117984464,
+            0.09147349274838883,
+            0.21884664567102427,
+            0.40646532066403895,
+            1.0
+          ]
+        },
+        "conditional_expected_delta_over_10": {
+          "mean": 0.16829143653146403,
+          "standard_deviation": 0.08361962739465673,
+          "quantiles_0_25_50_75_100": [
+            -2.7755575615628914e-17,
+            0.10173708885164195,
+            0.11779037566922285,
+            0.2764705409010755,
+            0.30639375665838686
+          ]
+        },
+        "conditional_expected_absolute_delta_over_10": {
+          "mean": 0.17486183942605352,
+          "standard_deviation": 0.08475054713649542,
+          "quantiles_0_25_50_75_100": [
+            0.10358504982991505,
+            0.10757835434203446,
+            0.12350647862372285,
+            0.2789810077982184,
+            0.55
+          ]
+        },
+        "native_argmax_change_log_margin": {
+          "mean": 1.190518956191038,
+          "standard_deviation": 2.2388260623406886,
+          "quantiles_0_25_50_75_100": [
+            -9.2102960323201,
+            -0.4323842275399936,
+            0.42428904519986543,
+            3.657555192065939,
+            5.444536932960851
+          ]
+        }
+      },
+      "fold_profiles": [
+        {
+          "fold": 0,
+          "fitting_rows": 387,
+          "validation_rows": 100,
+          "normalization_proposal_uses_inner_oof_fitting_only": true,
+          "fitting_inner_oof_profile": {
+            "conditional_peak_probability": {
+              "mean": 0.8188134665592309,
+              "standard_deviation": 0.1787764067851306,
+              "quantiles_0_25_50_75_100": [
+                0.3094048539544329,
+                0.748488758227608,
+                0.9100507314668584,
+                0.9573294378506905,
+                0.9831566948586058
+              ]
+            },
+            "conditional_top_two_margin": {
+              "mean": 0.7208008749606578,
+              "standard_deviation": 0.2631007698431447,
+              "quantiles_0_25_50_75_100": [
+                0.024690665986792926,
+                0.5884264920013187,
+                0.8459081384306868,
+                0.9318592744977866,
+                0.9763466093908432
+              ]
+            },
+            "conditional_normalized_entropy": {
+              "mean": 0.1964959503396436,
+              "standard_deviation": 0.137289413930788,
+              "quantiles_0_25_50_75_100": [
+                0.04008521145815819,
+                0.07833146320574513,
+                0.13667820522840088,
+                0.29148962249997806,
+                0.5036044206089361
+              ]
+            },
+            "conditional_expected_delta_over_10": {
+              "mean": 0.14046808815091763,
+              "standard_deviation": 0.06585244604016545,
+              "quantiles_0_25_50_75_100": [
+                0.09535163922566338,
+                0.10081118249741268,
+                0.10637154974932496,
+                0.13455943520172062,
+                0.29707188198842865
+              ]
+            },
+            "conditional_expected_absolute_delta_over_10": {
+              "mean": 0.1452999392039257,
+              "standard_deviation": 0.06421861664965348,
+              "quantiles_0_25_50_75_100": [
+                0.10341161218418686,
+                0.10639299724097873,
+                0.11159784897394324,
+                0.1387665088233007,
+                0.29818490098194417
+              ]
+            },
+            "native_argmax_change_log_margin": {
+              "mean": 0.3411590090604413,
+              "standard_deviation": 1.6088218660095965,
+              "quantiles_0_25_50_75_100": [
+                -1.8774183501925832,
+                -0.623510509391153,
+                -0.23020802790351347,
+                0.7343852001488507,
+                4.246956717070368
+              ]
+            }
+          },
+          "outer_validation_profile": {
+            "conditional_peak_probability": {
+              "mean": 0.8269223776955917,
+              "standard_deviation": 0.17775859387054546,
+              "quantiles_0_25_50_75_100": [
+                0.3202551250450357,
+                0.7536857268373796,
+                0.9235077208258894,
+                0.9524832127739766,
+                0.9743499143828755
+              ]
+            },
+            "conditional_top_two_margin": {
+              "mean": 0.7290336631217389,
+              "standard_deviation": 0.2652328267709464,
+              "quantiles_0_25_50_75_100": [
+                0.009168593046908813,
+                0.602514012793756,
+                0.8737885126670617,
+                0.9285204352640679,
+                0.9626707081291535
+              ]
+            },
+            "conditional_normalized_entropy": {
+              "mean": 0.18814487232418226,
+              "standard_deviation": 0.13574757122681053,
+              "quantiles_0_25_50_75_100": [
+                0.052642137558074925,
+                0.08724446409795789,
+                0.12067073007620101,
+                0.27701454801399844,
+                0.48593819958444945
+              ]
+            },
+            "conditional_expected_delta_over_10": {
+              "mean": 0.13803367493645058,
+              "standard_deviation": 0.06647447216477177,
+              "quantiles_0_25_50_75_100": [
+                0.09815291512756849,
+                0.09910485298008398,
+                0.10329015983102856,
+                0.12950574548682706,
+                0.29031230145469084
+              ]
+            },
+            "conditional_expected_absolute_delta_over_10": {
+              "mean": 0.1430100136774783,
+              "standard_deviation": 0.06481339563556184,
+              "quantiles_0_25_50_75_100": [
+                0.10337225653051631,
+                0.10651590992916785,
+                0.1092853959530046,
+                0.13414809861969315,
+                0.2917531865919709
+              ]
+            },
+            "native_argmax_change_log_margin": {
+              "mean": 0.32935303690892126,
+              "standard_deviation": 1.6960614059797654,
+              "quantiles_0_25_50_75_100": [
+                -1.6681787279330704,
+                -0.786421029414832,
+                -0.2891611882794204,
+                0.8914292349225635,
+                4.241514265810353
+              ]
+            }
+          },
+          "validation_mean_in_fitting_standard_deviations": {
+            "conditional_peak_probability": 0.04535783710043033,
+            "conditional_top_two_margin": 0.03129138757742781,
+            "conditional_normalized_entropy": -0.06082827347250099,
+            "conditional_expected_delta_over_10": -0.03696769612752386,
+            "conditional_expected_absolute_delta_over_10": -0.03565828175558698,
+            "native_argmax_change_log_margin": -0.007338271813027228
+          }
+        },
+        {
+          "fold": 1,
+          "fitting_rows": 395,
+          "validation_rows": 92,
+          "normalization_proposal_uses_inner_oof_fitting_only": true,
+          "fitting_inner_oof_profile": {
+            "conditional_peak_probability": {
+              "mean": 0.8152643890721963,
+              "standard_deviation": 0.1878164678823151,
+              "quantiles_0_25_50_75_100": [
+                0.3084417690300191,
+                0.760590141703209,
+                0.9142284514292158,
+                0.9435750261285234,
+                0.9704805448301809
+              ]
+            },
+            "conditional_top_two_margin": {
+              "mean": 0.7199960892888452,
+              "standard_deviation": 0.26917006749713324,
+              "quantiles_0_25_50_75_100": [
+                0.02272185607839672,
+                0.5940921797150011,
+                0.8595273765687346,
+                0.9156469044087718,
+                0.9542547304733778
+              ]
+            },
+            "conditional_normalized_entropy": {
+              "mean": 0.19938651202148525,
+              "standard_deviation": 0.13895309795671199,
+              "quantiles_0_25_50_75_100": [
+                0.0592282672786287,
+                0.09448740844562888,
+                0.1334036789276443,
+                0.28661147457026315,
+                0.4972681053316254
+              ]
+            },
+            "conditional_expected_delta_over_10": {
+              "mean": 0.13903183761301335,
+              "standard_deviation": 0.06669316248552386,
+              "quantiles_0_25_50_75_100": [
+                0.08395264683844153,
+                0.10014882838756728,
+                0.10438906896442102,
+                0.13430495844903764,
+                0.3042835340355383
+              ]
+            },
+            "conditional_expected_absolute_delta_over_10": {
+              "mean": 0.14472032814873106,
+              "standard_deviation": 0.06463089586669979,
+              "quantiles_0_25_50_75_100": [
+                0.10437823615943727,
+                0.1069356848680032,
+                0.11085072874048309,
+                0.13785738213713952,
+                0.30564514308677593
+              ]
+            },
+            "native_argmax_change_log_margin": {
+              "mean": 0.18476840720232912,
+              "standard_deviation": 1.7348789288283246,
+              "quantiles_0_25_50_75_100": [
+                -4.539735064155333,
+                -1.0172940323666266,
+                -0.4040966836934665,
+                0.8945228185226688,
+                5.004607318831832
+              ]
+            }
+          },
+          "outer_validation_profile": {
+            "conditional_peak_probability": {
+              "mean": 0.8221499153659996,
+              "standard_deviation": 0.17840292479251024,
+              "quantiles_0_25_50_75_100": [
+                0.44844614814927,
+                0.7956642134538882,
+                0.9167728038885009,
+                0.945921044610532,
+                0.9609491215257058
+              ]
+            },
+            "conditional_top_two_margin": {
+              "mean": 0.7207780809557568,
+              "standard_deviation": 0.26806931348648416,
+              "quantiles_0_25_50_75_100": [
+                0.1367557411641092,
+                0.6573117228141849,
+                0.860368672373572,
+                0.9132866883045514,
+                0.938840407352864
+              ]
+            },
+            "conditional_normalized_entropy": {
+              "mean": 0.19337774978159142,
+              "standard_deviation": 0.13282071592441894,
+              "quantiles_0_25_50_75_100": [
+                0.07264075154425474,
+                0.09333745611235743,
+                0.12779550958879382,
+                0.25090083876210884,
+                0.446007844267625
+              ]
+            },
+            "conditional_expected_delta_over_10": {
+              "mean": 0.14193808295978852,
+              "standard_deviation": 0.07233561150178691,
+              "quantiles_0_25_50_75_100": [
+                0.09851150935599032,
+                0.0997025907094854,
+                0.10373100919362196,
+                0.12690532908642496,
+                0.3048563939571308
+              ]
+            },
+            "conditional_expected_absolute_delta_over_10": {
+              "mean": 0.14713978946060505,
+              "standard_deviation": 0.07041036596013403,
+              "quantiles_0_25_50_75_100": [
+                0.10497594292858636,
+                0.10685474387710421,
+                0.1103924558917516,
+                0.13069564665314262,
+                0.3061684118913018
+              ]
+            },
+            "native_argmax_change_log_margin": {
+              "mean": 0.4352107812843897,
+              "standard_deviation": 2.0567596923453473,
+              "quantiles_0_25_50_75_100": [
+                -1.807775507879236,
+                -0.954031949054948,
+                -0.3838853475842874,
+                1.1924642985317762,
+                5.444536932960851
+              ]
+            }
+          },
+          "validation_mean_in_fitting_standard_deviations": {
+            "conditional_peak_probability": 0.03666092953104877,
+            "conditional_top_two_margin": 0.0029051954928793976,
+            "conditional_normalized_entropy": -0.043243096614984766,
+            "conditional_expected_delta_over_10": 0.04357636133098177,
+            "conditional_expected_absolute_delta_over_10": 0.0374350576365821,
+            "native_argmax_change_log_margin": 0.14435726316141279
+          }
+        },
+        {
+          "fold": 2,
+          "fitting_rows": 385,
+          "validation_rows": 102,
+          "normalization_proposal_uses_inner_oof_fitting_only": true,
+          "fitting_inner_oof_profile": {
+            "conditional_peak_probability": {
+              "mean": 0.8317551532030762,
+              "standard_deviation": 0.1804570569757455,
+              "quantiles_0_25_50_75_100": [
+                0.2940008517004165,
+                0.7538276903603572,
+                0.9318392382767161,
+                0.9572915853795629,
+                0.9774533516848163
+              ]
+            },
+            "conditional_top_two_margin": {
+              "mean": 0.7414231766356252,
+              "standard_deviation": 0.2604443043794114,
+              "quantiles_0_25_50_75_100": [
+                0.011621167759426232,
+                0.6215805759356621,
+                0.8826807253469026,
+                0.9272026936447644,
+                0.9692456504853354
+              ]
+            },
+            "conditional_normalized_entropy": {
+              "mean": 0.18436433382709408,
+              "standard_deviation": 0.13945012663468323,
+              "quantiles_0_25_50_75_100": [
+                0.052720507895586376,
+                0.07724047105674156,
+                0.11014442697269408,
+                0.2841336717510948,
+                0.4968057845105605
+              ]
+            },
+            "conditional_expected_delta_over_10": {
+              "mean": 0.1415490941427446,
+              "standard_deviation": 0.0667842698374003,
+              "quantiles_0_25_50_75_100": [
+                0.09645128096640569,
+                0.10281535138089536,
+                0.10605042531818022,
+                0.1365177886357439,
+                0.2978825311648673
+              ]
+            },
+            "conditional_expected_absolute_delta_over_10": {
+              "mean": 0.14511063110545894,
+              "standard_deviation": 0.06579293603321523,
+              "quantiles_0_25_50_75_100": [
+                0.10524021487341323,
+                0.10679903565296085,
+                0.11002369852800686,
+                0.14023525577510337,
+                0.29898517807185215
+              ]
+            },
+            "native_argmax_change_log_margin": {
+              "mean": 0.4708536857628832,
+              "standard_deviation": 1.80149945784677,
+              "quantiles_0_25_50_75_100": [
+                -3.1918226124412308,
+                -0.7862192650172235,
+                -0.1558339437032107,
+                0.9569724013948326,
+                4.900215823546657
+              ]
+            }
+          },
+          "outer_validation_profile": {
+            "conditional_peak_probability": {
+              "mean": 0.8455709604924183,
+              "standard_deviation": 0.18159112219352694,
+              "quantiles_0_25_50_75_100": [
+                0.049999999999999996,
+                0.8066799489586753,
+                0.9220215949844548,
+                0.9680409520931744,
+                0.9694746181837948
+              ]
+            },
+            "conditional_top_two_margin": {
+              "mean": 0.7651233327704153,
+              "standard_deviation": 0.24362659837386857,
+              "quantiles_0_25_50_75_100": [
+                0.0,
+                0.665932809447197,
+                0.8631462256488887,
+                0.9454826870195036,
+                0.9499245108877509
+              ]
+            },
+            "conditional_normalized_entropy": {
+              "mean": 0.17593295668806688,
+              "standard_deviation": 0.1590811534341701,
+              "quantiles_0_25_50_75_100": [
+                0.05954998871608795,
+                0.06348944763985283,
+                0.11912666011079398,
+                0.23079079979183087,
+                1.0
+              ]
+            },
+            "conditional_expected_delta_over_10": {
+              "mean": 0.13254080231332852,
+              "standard_deviation": 0.06501203138254188,
+              "quantiles_0_25_50_75_100": [
+                -2.7755575615628914e-17,
+                0.1014187871262275,
+                0.10575631678841708,
+                0.12151777689589426,
+                0.29371528735970076
+              ]
+            },
+            "conditional_expected_absolute_delta_over_10": {
+              "mean": 0.14356690816065665,
+              "standard_deviation": 0.07570607666422513,
+              "quantiles_0_25_50_75_100": [
+                0.10489264384628619,
+                0.10564769124151152,
+                0.11067202978309973,
+                0.1270077159729737,
+                0.55
+              ]
+            },
+            "native_argmax_change_log_margin": {
+              "mean": 0.275180600913375,
+              "standard_deviation": 2.1161839358600427,
+              "quantiles_0_25_50_75_100": [
+                -9.2102960323201,
+                -0.6594166082920666,
+                -0.2863235570604852,
+                0.6768820610122781,
+                4.999137825973419
+              ]
+            }
+          },
+          "validation_mean_in_fitting_standard_deviations": {
+            "conditional_peak_probability": 0.07656008316260828,
+            "conditional_top_two_margin": 0.0909989419475425,
+            "conditional_normalized_entropy": -0.06046159542841283,
+            "conditional_expected_delta_over_10": -0.13488643136098571,
+            "conditional_expected_absolute_delta_over_10": -0.023463353938529972,
+            "native_argmax_change_log_margin": -0.10861678808573431
+          }
+        },
+        {
+          "fold": 3,
+          "fitting_rows": 385,
+          "validation_rows": 102,
+          "normalization_proposal_uses_inner_oof_fitting_only": true,
+          "fitting_inner_oof_profile": {
+            "conditional_peak_probability": {
+              "mean": 0.8340322017209875,
+              "standard_deviation": 0.18294616680713993,
+              "quantiles_0_25_50_75_100": [
+                0.32973257946252477,
+                0.7979641425894696,
+                0.9306076115871919,
+                0.9604739471122962,
+                0.9712180357928569
+              ]
+            },
+            "conditional_top_two_margin": {
+              "mean": 0.7406834131030663,
+              "standard_deviation": 0.27286050121798716,
+              "quantiles_0_25_50_75_100": [
+                0.045245311845113045,
+                0.6655587392096316,
+                0.8810398475940021,
+                0.9318470364859205,
+                0.9554520059735155
+              ]
+            },
+            "conditional_normalized_entropy": {
+              "mean": 0.17557117593037375,
+              "standard_deviation": 0.13205044404664076,
+              "quantiles_0_25_50_75_100": [
+                0.05839750760457625,
+                0.07545558177552118,
+                0.10640518586481577,
+                0.2414512106932828,
+                0.7103116154424719
+              ]
+            },
+            "conditional_expected_delta_over_10": {
+              "mean": 0.13742188453104529,
+              "standard_deviation": 0.06315669084863383,
+              "quantiles_0_25_50_75_100": [
+                0.04869634501570633,
+                0.10168519341013096,
+                0.10498611771982287,
+                0.12703528556039276,
+                0.3044031639250365
+              ]
+            },
+            "conditional_expected_absolute_delta_over_10": {
+              "mean": 0.14205755035757564,
+              "standard_deviation": 0.06259335631146255,
+              "quantiles_0_25_50_75_100": [
+                0.1043219174463971,
+                0.10670306347234135,
+                0.11015368605817387,
+                0.1320349026342741,
+                0.33086644742932164
+              ]
+            },
+            "native_argmax_change_log_margin": {
+              "mean": 0.22428255055787563,
+              "standard_deviation": 1.7089175187930192,
+              "quantiles_0_25_50_75_100": [
+                -6.213411555831449,
+                -0.9199291803501369,
+                -0.2738234035053763,
+                0.8598083604647941,
+                4.746505120046562
+              ]
+            }
+          },
+          "outer_validation_profile": {
+            "conditional_peak_probability": {
+              "mean": 0.8527507302678705,
+              "standard_deviation": 0.1778007164506063,
+              "quantiles_0_25_50_75_100": [
+                0.44014293903905427,
+                0.8061981572603971,
+                0.9507859710040277,
+                0.9694613361068918,
+                0.9730883307393327
+              ]
+            },
+            "conditional_top_two_margin": {
+              "mean": 0.762394840947511,
+              "standard_deviation": 0.27863290216532166,
+              "quantiles_0_25_50_75_100": [
+                0.1206620820965475,
+                0.6811859482345595,
+                0.9154408302124637,
+                0.9491314233022132,
+                0.9557450807549059
+              ]
+            },
+            "conditional_normalized_entropy": {
+              "mean": 0.15484833388847347,
+              "standard_deviation": 0.1269786698730027,
+              "quantiles_0_25_50_75_100": [
+                0.05404001482866995,
+                0.05902840996934508,
+                0.08559432801941669,
+                0.23114426359243823,
+                0.41772405014634895
+              ]
+            },
+            "conditional_expected_delta_over_10": {
+              "mean": 0.13868318496219398,
+              "standard_deviation": 0.0695352345320808,
+              "quantiles_0_25_50_75_100": [
+                0.09961905946839333,
+                0.10060035914588562,
+                0.10232061996495258,
+                0.1251206820679378,
+                0.29796196072187653
+              ]
+            },
+            "conditional_expected_absolute_delta_over_10": {
+              "mean": 0.14267775626581664,
+              "standard_deviation": 0.06826439986998008,
+              "quantiles_0_25_50_75_100": [
+                0.10417945783800697,
+                0.10461441030955218,
+                0.1079543556144083,
+                0.12822744349633872,
+                0.2993799992339662
+              ]
+            },
+            "native_argmax_change_log_margin": {
+              "mean": 0.3472144062886339,
+              "standard_deviation": 2.0177864877360983,
+              "quantiles_0_25_50_75_100": [
+                -1.8290890381361304,
+                -0.9985690597969676,
+                -0.3938160554875868,
+                0.8070799509904638,
+                4.991148321124541
+              ]
+            }
+          },
+          "validation_mean_in_fitting_standard_deviations": {
+            "conditional_peak_probability": 0.1023171399191779,
+            "conditional_top_two_margin": 0.07956969860983577,
+            "conditional_normalized_entropy": -0.15693125601744126,
+            "conditional_expected_delta_over_10": 0.01997097083777984,
+            "conditional_expected_absolute_delta_over_10": 0.009908494204316614,
+            "native_argmax_change_log_margin": 0.07193551144445116
+          }
+        },
+        {
+          "fold": 4,
+          "fitting_rows": 396,
+          "validation_rows": 91,
+          "normalization_proposal_uses_inner_oof_fitting_only": true,
+          "fitting_inner_oof_profile": {
+            "conditional_peak_probability": {
+              "mean": 0.8214154654717208,
+              "standard_deviation": 0.18132558169755275,
+              "quantiles_0_25_50_75_100": [
+                0.30468423821563967,
+                0.7533286935431034,
+                0.9147594103267853,
+                0.9446694325770352,
+                0.978471805640867
+              ]
+            },
+            "conditional_top_two_margin": {
+              "mean": 0.7292163974243074,
+              "standard_deviation": 0.26406206302523133,
+              "quantiles_0_25_50_75_100": [
+                0.014462462304978607,
+                0.6069404714147221,
+                0.8625747781803323,
+                0.9172533050787302,
+                0.9630181447076942
+              ]
+            },
+            "conditional_normalized_entropy": {
+              "mean": 0.19503713942670867,
+              "standard_deviation": 0.13746843170938924,
+              "quantiles_0_25_50_75_100": [
+                0.04481282513277339,
+                0.09419064867096683,
+                0.1357336679001031,
+                0.2858197710683994,
+                0.511478807781425
+              ]
+            },
+            "conditional_expected_delta_over_10": {
+              "mean": 0.14222932867018673,
+              "standard_deviation": 0.07122698844489198,
+              "quantiles_0_25_50_75_100": [
+                0.09242912769171618,
+                0.10109174780117747,
+                0.10533703071671108,
+                0.13560006422129398,
+                0.31138938209637956
+              ]
+            },
+            "conditional_expected_absolute_delta_over_10": {
+              "mean": 0.14737218757827952,
+              "standard_deviation": 0.06946467113877525,
+              "quantiles_0_25_50_75_100": [
+                0.10402022813516572,
+                0.10685112117422879,
+                0.1108813568443143,
+                0.13829080982010708,
+                0.3128579615178489
+              ]
+            },
+            "native_argmax_change_log_margin": {
+              "mean": 0.27322797032774676,
+              "standard_deviation": 1.6143743894651612,
+              "quantiles_0_25_50_75_100": [
+                -2.4099568175047326,
+                -0.777365818254369,
+                -0.2493745828916562,
+                0.566354299604287,
+                4.505773855263683
+              ]
+            }
+          },
+          "outer_validation_profile": {
+            "conditional_peak_probability": {
+              "mean": 0.820882727345727,
+              "standard_deviation": 0.17840649949076456,
+              "quantiles_0_25_50_75_100": [
+                0.355099461474993,
+                0.7373430693700769,
+                0.9045108357705917,
+                0.9510213147666765,
+                0.9727876977765556
+              ]
+            },
+            "conditional_top_two_margin": {
+              "mean": 0.716438078328112,
+              "standard_deviation": 0.2718039041569067,
+              "quantiles_0_25_50_75_100": [
+                0.06120979013657285,
+                0.5767144906477857,
+                0.8379501041137345,
+                0.9199350334550307,
+                0.9608289250883778
+              ]
+            },
+            "conditional_normalized_entropy": {
+              "mean": 0.19331475413595667,
+              "standard_deviation": 0.13526788708510082,
+              "quantiles_0_25_50_75_100": [
+                0.05575595128553245,
+                0.08688391232378999,
+                0.14151493682190525,
+                0.2881548212359297,
+                0.4946912060779944
+              ]
+            },
+            "conditional_expected_delta_over_10": {
+              "mean": 0.14261897960719028,
+              "standard_deviation": 0.07215121616060513,
+              "quantiles_0_25_50_75_100": [
+                0.09857739396188431,
+                0.09994734503754313,
+                0.1066224394065128,
+                0.1333288622236641,
+                0.30639375665838686
+              ]
+            },
+            "conditional_expected_absolute_delta_over_10": {
+              "mean": 0.1472798754706933,
+              "standard_deviation": 0.07060356908887,
+              "quantiles_0_25_50_75_100": [
+                0.10371715047256397,
+                0.10638673198049906,
+                0.11226795205818878,
+                0.13764898532363531,
+                0.3077775520455948
+              ]
+            },
+            "native_argmax_change_log_margin": {
+              "mean": 0.39228288604035233,
+              "standard_deviation": 1.6050886795111345,
+              "quantiles_0_25_50_75_100": [
+                -1.3230956771021196,
+                -0.642589687484779,
+                -0.163984706831233,
+                0.7345893578735381,
+                4.293140229843059
+              ]
+            }
+          },
+          "validation_mean_in_fitting_standard_deviations": {
+            "conditional_peak_probability": -0.0029380196716086546,
+            "conditional_top_two_margin": -0.048391347661988625,
+            "conditional_normalized_entropy": -0.012529315053169038,
+            "conditional_expected_delta_over_10": 0.0054705519004902715,
+            "conditional_expected_absolute_delta_over_10": -0.001328907285862534,
+            "native_argmax_change_log_margin": 0.07374678171898408
+          }
+        }
+      ]
+    },
+    "cat": {
+      "fitting_inner_oof_rows_across_folds": 1948,
+      "outer_validation_rows": 487,
+      "fitting_inner_oof_profile": {
+        "conditional_peak_probability": {
+          "mean": 0.7952109684371892,
+          "standard_deviation": 0.16716497718026152,
+          "quantiles_0_25_50_75_100": [
+            0.257412340888937,
+            0.7640961841053808,
+            0.8656308331157718,
+            0.9107516733086107,
+            0.9701562859453007
+          ]
+        },
+        "conditional_top_two_margin": {
+          "mean": 0.6997844075541458,
+          "standard_deviation": 0.24992476398953062,
+          "quantiles_0_25_50_75_100": [
+            0.00042560099642607874,
+            0.6660955430684679,
+            0.8053958908683739,
+            0.8721340458673148,
+            0.9565417608091071
+          ]
+        },
+        "conditional_normalized_entropy": {
+          "mean": 0.2385657463109809,
+          "standard_deviation": 0.11882251404630562,
+          "quantiles_0_25_50_75_100": [
+            0.06031008600386261,
+            0.14637449839291178,
+            0.20002017281292575,
+            0.31042102951143,
+            0.5610345443560688
+          ]
+        },
+        "conditional_expected_delta_over_10": {
+          "mean": 0.15001283717981417,
+          "standard_deviation": 0.06701182810952407,
+          "quantiles_0_25_50_75_100": [
+            0.10224350110182541,
+            0.11207658812411617,
+            0.1186655593982136,
+            0.13147382877141447,
+            0.32196895388480185
+          ]
+        },
+        "conditional_expected_absolute_delta_over_10": {
+          "mean": 0.15626685181091737,
+          "standard_deviation": 0.06613575230762495,
+          "quantiles_0_25_50_75_100": [
+            0.10550433001806894,
+            0.11701074269144937,
+            0.1250944093501341,
+            0.14473827968578964,
+            0.32621949517034543
+          ]
+        },
+        "native_argmax_change_log_margin": {
+          "mean": 0.07940403702961882,
+          "standard_deviation": 1.5612633512967349,
+          "quantiles_0_25_50_75_100": [
+            -3.412460490125966,
+            -1.0449929618256257,
+            -0.2136966668282577,
+            0.9084359013742188,
+            3.432154520138483
+          ]
+        }
+      },
+      "outer_validation_profile": {
+        "conditional_peak_probability": {
+          "mean": 0.8097889760377,
+          "standard_deviation": 0.16770969663221022,
+          "quantiles_0_25_50_75_100": [
+            0.28082251607608133,
+            0.8062702642285948,
+            0.8804136883960242,
+            0.9185520203529127,
+            0.9749488176409113
+          ]
+        },
+        "conditional_top_two_margin": {
+          "mean": 0.7147863827035921,
+          "standard_deviation": 0.2516052703222623,
+          "quantiles_0_25_50_75_100": [
+            0.0034411288565607823,
+            0.6994984577626944,
+            0.8208236100521935,
+            0.8820577916772158,
+            0.961836084474686
+          ]
+        },
+        "conditional_normalized_entropy": {
+          "mean": 0.2235526169150039,
+          "standard_deviation": 0.11924041606901203,
+          "quantiles_0_25_50_75_100": [
+            0.05198333175137316,
+            0.14170258008287712,
+            0.18403046823255156,
+            0.26575290659939443,
+            0.5553701115810512
+          ]
+        },
+        "conditional_expected_delta_over_10": {
+          "mean": 0.14735875224957545,
+          "standard_deviation": 0.06894583063742955,
+          "quantiles_0_25_50_75_100": [
+            0.10172507815453097,
+            0.10933958292394792,
+            0.1143376758978802,
+            0.12662876731999084,
+            0.3200521890948931
+          ]
+        },
+        "conditional_expected_absolute_delta_over_10": {
+          "mean": 0.15323195345686444,
+          "standard_deviation": 0.06802926744084702,
+          "quantiles_0_25_50_75_100": [
+            0.10389372728123722,
+            0.11504790519072747,
+            0.12093634494950313,
+            0.1356531352170915,
+            0.323185894166912
+          ]
+        },
+        "native_argmax_change_log_margin": {
+          "mean": 0.16006203674480804,
+          "standard_deviation": 1.6127921330811055,
+          "quantiles_0_25_50_75_100": [
+            -2.6858310929298153,
+            -1.037108019499825,
+            -0.22728849928738876,
+            0.9131844856942759,
+            3.4399053609046675
+          ]
+        }
+      },
+      "actual_unchanged_oof_profile": {
+        "conditional_peak_probability": {
+          "mean": 0.8755503727318292,
+          "standard_deviation": 0.08549308777951588,
+          "quantiles_0_25_50_75_100": [
+            0.3030654230250917,
+            0.8558540121488913,
+            0.8903947511234239,
+            0.9211864589594018,
+            0.9693978037524712
+          ]
+        },
+        "conditional_top_two_margin": {
+          "mean": 0.8174310516421596,
+          "standard_deviation": 0.12502136787374005,
+          "quantiles_0_25_50_75_100": [
+            0.047922208527206356,
+            0.7819325062543012,
+            0.8406031463342566,
+            0.885330295181809,
+            0.9585417891171564
+          ]
+        },
+        "conditional_normalized_entropy": {
+          "mean": 0.18419071462819395,
+          "standard_deviation": 0.0722723202337081,
+          "quantiles_0_25_50_75_100": [
+            0.06400942703031547,
+            0.13610607418949242,
+            0.17579581648998652,
+            0.2143896766518848,
+            0.5405016447575559
+          ]
+        },
+        "conditional_expected_delta_over_10": {
+          "mean": 0.11638185674951183,
+          "standard_deviation": 0.018190663121868404,
+          "quantiles_0_25_50_75_100": [
+            0.10207457442496502,
+            0.1092601530534386,
+            0.11273584945717752,
+            0.11815784228713543,
+            0.2593439223152758
+          ]
+        },
+        "conditional_expected_absolute_delta_over_10": {
+          "mean": 0.12363134367269457,
+          "standard_deviation": 0.018954314678630395,
+          "quantiles_0_25_50_75_100": [
+            0.10513492917788644,
+            0.1153236220472637,
+            0.1197501835056084,
+            0.12648833478324145,
+            0.2649149493676791
+          ]
+        },
+        "native_argmax_change_log_margin": {
+          "mean": -0.7538763806082454,
+          "standard_deviation": 0.9139501044093566,
+          "quantiles_0_25_50_75_100": [
+            -2.6858310929298153,
+            -1.3739832089749608,
+            -0.7688446570062477,
+            -0.16536920080188383,
+            1.9080177070055677
+          ]
+        }
+      },
+      "actual_changed_oof_profile": {
+        "conditional_peak_probability": {
+          "mean": 0.7514193642432982,
+          "standard_deviation": 0.19838999267513097,
+          "quantiles_0_25_50_75_100": [
+            0.28082251607608133,
+            0.5194738915221897,
+            0.855730004152323,
+            0.9131650978831928,
+            0.9749488176409113
+          ]
+        },
+        "conditional_top_two_margin": {
+          "mean": 0.6236792928317628,
+          "standard_deviation": 0.2965958860212817,
+          "quantiles_0_25_50_75_100": [
+            0.0034411288565607823,
+            0.2778695528350489,
+            0.7829294468105916,
+            0.8704659776474919,
+            0.961836084474686
+          ]
+        },
+        "conditional_normalized_entropy": {
+          "mean": 0.2584901193323662,
+          "standard_deviation": 0.14002273079924105,
+          "quantiles_0_25_50_75_100": [
+            0.05198333175137316,
+            0.1435754979480567,
+            0.20167447002409156,
+            0.42332215014134483,
+            0.5553701115810512
+          ]
+        },
+        "conditional_expected_delta_over_10": {
+          "mean": 0.17485374864304273,
+          "standard_deviation": 0.08409133972484992,
+          "quantiles_0_25_50_75_100": [
+            0.10172507815453097,
+            0.10947806935808409,
+            0.1159408236901899,
+            0.28361689664569173,
+            0.3200521890948931
+          ]
+        },
+        "conditional_expected_absolute_delta_over_10": {
+          "mean": 0.17950536291645705,
+          "standard_deviation": 0.08335993404167565,
+          "quantiles_0_25_50_75_100": [
+            0.10389372728123722,
+            0.11468015594882569,
+            0.12308197333012141,
+            0.2871893617453636,
+            0.323185894166912
+          ]
+        },
+        "native_argmax_change_log_margin": {
+          "mean": 0.9712709420698051,
+          "standard_deviation": 1.6640182032006297,
+          "quantiles_0_25_50_75_100": [
+            -2.560603699096449,
+            -0.36937941516235023,
+            0.6805886897966801,
+            2.955577101953163,
+            3.4399053609046675
+          ]
+        }
+      },
+      "fold_profiles": [
+        {
+          "fold": 0,
+          "fitting_rows": 387,
+          "validation_rows": 100,
+          "normalization_proposal_uses_inner_oof_fitting_only": true,
+          "fitting_inner_oof_profile": {
+            "conditional_peak_probability": {
+              "mean": 0.7938388799598951,
+              "standard_deviation": 0.1630843192692675,
+              "quantiles_0_25_50_75_100": [
+                0.2804422251264522,
+                0.7671533153402144,
+                0.8558137598082763,
+                0.9090491266988401,
+                0.9701562859453007
+              ]
+            },
+            "conditional_top_two_margin": {
+              "mean": 0.6962284660702421,
+              "standard_deviation": 0.24505421802581617,
+              "quantiles_0_25_50_75_100": [
+                0.013447502141128498,
+                0.6462067849954474,
+                0.7885632648689128,
+                0.8725748633151648,
+                0.955819442867281
+              ]
+            },
+            "conditional_normalized_entropy": {
+              "mean": 0.2410287945780825,
+              "standard_deviation": 0.11707723313642045,
+              "quantiles_0_25_50_75_100": [
+                0.06031008600386261,
+                0.14898953079272126,
+                0.21120721781906437,
+                0.30168042795252414,
+                0.548087498407803
+              ]
+            },
+            "conditional_expected_delta_over_10": {
+              "mean": 0.15087344530515942,
+              "standard_deviation": 0.06572865713416232,
+              "quantiles_0_25_50_75_100": [
+                0.1047554243993934,
+                0.11359334808197705,
+                0.11988954095585722,
+                0.13305548499869188,
+                0.31307024017076374
+              ]
+            },
+            "conditional_expected_absolute_delta_over_10": {
+              "mean": 0.15664505980036908,
+              "standard_deviation": 0.06482247634223513,
+              "quantiles_0_25_50_75_100": [
+                0.10653640510593108,
+                0.11777042159441344,
+                0.12659204625494236,
+                0.14399163200135104,
+                0.3141955111306587
+              ]
+            },
+            "native_argmax_change_log_margin": {
+              "mean": 0.21143242989745795,
+              "standard_deviation": 1.540667845629011,
+              "quantiles_0_25_50_75_100": [
+                -2.6720657706712134,
+                -0.8413218688942284,
+                -0.1782506722309008,
+                0.8959306771458065,
+                3.224509168339039
+              ]
+            }
+          },
+          "outer_validation_profile": {
+            "conditional_peak_probability": {
+              "mean": 0.8014834339160994,
+              "standard_deviation": 0.16560463342832205,
+              "quantiles_0_25_50_75_100": [
+                0.35080356058811174,
+                0.7828731865415643,
+                0.8758116057273657,
+                0.9070081025498655,
+                0.9585298953556669
+              ]
+            },
+            "conditional_top_two_margin": {
+              "mean": 0.7060495392689137,
+              "standard_deviation": 0.24286180727890355,
+              "quantiles_0_25_50_75_100": [
+                0.09042234093417961,
+                0.6465746338853148,
+                0.8218990752340611,
+                0.8729264386497234,
+                0.9411235667950189
+              ]
+            },
+            "conditional_normalized_entropy": {
+              "mean": 0.2353501798729228,
+              "standard_deviation": 0.11726251999805944,
+              "quantiles_0_25_50_75_100": [
+                0.08243199040798085,
+                0.15786723573851624,
+                0.19400105277191104,
+                0.2792154732971966,
+                0.5185272129766493
+              ]
+            },
+            "conditional_expected_delta_over_10": {
+              "mean": 0.14706606974063283,
+              "standard_deviation": 0.06538257379835685,
+              "quantiles_0_25_50_75_100": [
+                0.10542160226142172,
+                0.11157225922110524,
+                0.11571253733287884,
+                0.13005878173781704,
+                0.2981940410197827
+              ]
+            },
+            "conditional_expected_absolute_delta_over_10": {
+              "mean": 0.15315042948937369,
+              "standard_deviation": 0.06426628766113875,
+              "quantiles_0_25_50_75_100": [
+                0.10804796513616259,
+                0.11813908137575219,
+                0.12281036431735484,
+                0.13829130795215966,
+                0.3018211165834153
+              ]
+            },
+            "native_argmax_change_log_margin": {
+              "mean": 0.08684076846287873,
+              "standard_deviation": 1.6130261181158945,
+              "quantiles_0_25_50_75_100": [
+                -2.556799131271657,
+                -1.1321481796413981,
+                -0.3090911051252865,
+                0.6758126957462024,
+                3.3766017008458586
+              ]
+            }
+          },
+          "validation_mean_in_fitting_standard_deviations": {
+            "conditional_peak_probability": 0.046874855844248164,
+            "conditional_top_two_margin": 0.04007714406138884,
+            "conditional_normalized_entropy": -0.0485031508947854,
+            "conditional_expected_delta_over_10": -0.057925655726621984,
+            "conditional_expected_absolute_delta_over_10": -0.05391078076908485,
+            "native_argmax_change_log_margin": -0.08086860629178118
+          }
+        },
+        {
+          "fold": 1,
+          "fitting_rows": 395,
+          "validation_rows": 92,
+          "normalization_proposal_uses_inner_oof_fitting_only": true,
+          "fitting_inner_oof_profile": {
+            "conditional_peak_probability": {
+              "mean": 0.7763996449629531,
+              "standard_deviation": 0.17173031839862463,
+              "quantiles_0_25_50_75_100": [
+                0.257412340888937,
+                0.7376548272917439,
+                0.8502093097398488,
+                0.9004451820827744,
+                0.9676904471076508
+              ]
+            },
+            "conditional_top_two_margin": {
+              "mean": 0.6749150214587981,
+              "standard_deviation": 0.25506173660648196,
+              "quantiles_0_25_50_75_100": [
+                0.00042560099642607874,
+                0.6220487434832647,
+                0.78125662819296,
+                0.851462304992219,
+                0.9550011715676929
+              ]
+            },
+            "conditional_normalized_entropy": {
+              "mean": 0.2596213953628299,
+              "standard_deviation": 0.12106441364835623,
+              "quantiles_0_25_50_75_100": [
+                0.06640011795303673,
+                0.1630549563137062,
+                0.2224609134102558,
+                0.3471438826699231,
+                0.5340205861221711
+              ]
+            },
+            "conditional_expected_delta_over_10": {
+              "mean": 0.15247024379627921,
+              "standard_deviation": 0.06598257328588396,
+              "quantiles_0_25_50_75_100": [
+                0.10378109471690276,
+                0.11585040743003752,
+                0.12204866192265058,
+                0.13405681392764046,
+                0.3075036077832623
+              ]
+            },
+            "conditional_expected_absolute_delta_over_10": {
+              "mean": 0.15964247159960812,
+              "standard_deviation": 0.06487031136485392,
+              "quantiles_0_25_50_75_100": [
+                0.106219949214324,
+                0.12085266628792757,
+                0.12999397230923795,
+                0.15323216041634066,
+                0.31169715330820447
+              ]
+            },
+            "native_argmax_change_log_margin": {
+              "mean": -0.10764304012651527,
+              "standard_deviation": 1.6209930369661478,
+              "quantiles_0_25_50_75_100": [
+                -3.1481729439670714,
+                -1.3137657950743618,
+                -0.46002470884233815,
+                0.926310583716915,
+                2.895744906620917
+              ]
+            }
+          },
+          "outer_validation_profile": {
+            "conditional_peak_probability": {
+              "mean": 0.8039320158524749,
+              "standard_deviation": 0.16111692370128886,
+              "quantiles_0_25_50_75_100": [
+                0.45092266428348465,
+                0.7690310099832312,
+                0.8707635028288183,
+                0.9090362492176697,
+                0.9528684388117753
+              ]
+            },
+            "conditional_top_two_margin": {
+              "mean": 0.7090824416654165,
+              "standard_deviation": 0.23979957969179597,
+              "quantiles_0_25_50_75_100": [
+                0.19044113103304833,
+                0.66516667724923,
+                0.8109315954068654,
+                0.8659903308535652,
+                0.9322464512429042
+              ]
+            },
+            "conditional_normalized_entropy": {
+              "mean": 0.23512998353501718,
+              "standard_deviation": 0.1174267913165874,
+              "quantiles_0_25_50_75_100": [
+                0.08871022417399237,
+                0.1484109251498478,
+                0.19503817333225842,
+                0.2754238997725445,
+                0.4602369317218338
+              ]
+            },
+            "conditional_expected_delta_over_10": {
+              "mean": 0.15036414376859417,
+              "standard_deviation": 0.07147110730161534,
+              "quantiles_0_25_50_75_100": [
+                0.10581462433607067,
+                0.11114573690654282,
+                0.11613900645155421,
+                0.12816158841792466,
+                0.30312893526034435
+              ]
+            },
+            "conditional_expected_absolute_delta_over_10": {
+              "mean": 0.1568472030406777,
+              "standard_deviation": 0.07021001708635696,
+              "quantiles_0_25_50_75_100": [
+                0.1086407240057913,
+                0.11661026817279982,
+                0.12260864150673272,
+                0.13840979176182527,
+                0.30657487237424197
+              ]
+            },
+            "native_argmax_change_log_margin": {
+              "mean": 0.08398551425987538,
+              "standard_deviation": 1.7220840094907952,
+              "quantiles_0_25_50_75_100": [
+                -2.6858310929298153,
+                -1.2759575840604287,
+                -0.374851943319239,
+                1.1782129682341451,
+                3.260509436896528
+              ]
+            }
+          },
+          "validation_mean_in_fitting_standard_deviations": {
+            "conditional_peak_probability": 0.16032329728529937,
+            "conditional_top_two_margin": 0.13395745148294314,
+            "conditional_normalized_entropy": -0.20230066862546547,
+            "conditional_expected_delta_over_10": -0.03191903441776815,
+            "conditional_expected_absolute_delta_over_10": -0.043090105475350964,
+            "native_argmax_change_log_margin": 0.11821676590606633
+          }
+        },
+        {
+          "fold": 2,
+          "fitting_rows": 385,
+          "validation_rows": 102,
+          "normalization_proposal_uses_inner_oof_fitting_only": true,
+          "fitting_inner_oof_profile": {
+            "conditional_peak_probability": {
+              "mean": 0.8055417565399983,
+              "standard_deviation": 0.16621146309380644,
+              "quantiles_0_25_50_75_100": [
+                0.31416643281467366,
+                0.7965051019644064,
+                0.8762882431465217,
+                0.9150063292819017,
+                0.9675245966518876
+              ]
+            },
+            "conditional_top_two_margin": {
+              "mean": 0.7169124201714766,
+              "standard_deviation": 0.24324503979659132,
+              "quantiles_0_25_50_75_100": [
+                0.005732426991231665,
+                0.6937960978324572,
+                0.8173787956330487,
+                0.8812802612315345,
+                0.9565417608091071
+              ]
+            },
+            "conditional_normalized_entropy": {
+              "mean": 0.23111817800831208,
+              "standard_deviation": 0.1223196485740223,
+              "quantiles_0_25_50_75_100": [
+                0.0678024746120657,
+                0.13964245068450334,
+                0.18755345569772564,
+                0.28419309019110056,
+                0.532209115545987
+              ]
+            },
+            "conditional_expected_delta_over_10": {
+              "mean": 0.15179898317669335,
+              "standard_deviation": 0.06863051035676156,
+              "quantiles_0_25_50_75_100": [
+                0.1043151402836621,
+                0.1124429878923277,
+                0.11848542953245596,
+                0.13105864918089927,
+                0.30671130279404873
+              ]
+            },
+            "conditional_expected_absolute_delta_over_10": {
+              "mean": 0.1568188140993635,
+              "standard_deviation": 0.06817480137465687,
+              "quantiles_0_25_50_75_100": [
+                0.10696118186012721,
+                0.11631128286929102,
+                0.12418739086510727,
+                0.14288797786671517,
+                0.30784669519975577
+              ]
+            },
+            "native_argmax_change_log_margin": {
+              "mean": 0.28350529317049855,
+              "standard_deviation": 1.4783293527680919,
+              "quantiles_0_25_50_75_100": [
+                -2.4460646190758,
+                -0.8803254801211423,
+                0.08696274085078154,
+                1.0910726428815332,
+                3.2424230257000453
+              ]
+            }
+          },
+          "outer_validation_profile": {
+            "conditional_peak_probability": {
+              "mean": 0.8044410942279461,
+              "standard_deviation": 0.17287997698616106,
+              "quantiles_0_25_50_75_100": [
+                0.3345794368253594,
+                0.8109691407280154,
+                0.8605368409767428,
+                0.9228193169728212,
+                0.9588287645990082
+              ]
+            },
+            "conditional_top_two_margin": {
+              "mean": 0.7135030751816177,
+              "standard_deviation": 0.2516403670573767,
+              "quantiles_0_25_50_75_100": [
+                0.02341134348396051,
+                0.6994984577626944,
+                0.8091466129461532,
+                0.8868044620372993,
+                0.9404108566825861
+              ]
+            },
+            "conditional_normalized_entropy": {
+              "mean": 0.23364265000335063,
+              "standard_deviation": 0.12811412257029733,
+              "quantiles_0_25_50_75_100": [
+                0.07952826681784732,
+                0.13443699288842115,
+                0.19782038339370098,
+                0.27012983310672767,
+                0.5459931799204276
+              ]
+            },
+            "conditional_expected_delta_over_10": {
+              "mean": 0.14974014644701328,
+              "standard_deviation": 0.06668516925873813,
+              "quantiles_0_25_50_75_100": [
+                0.10574888204848892,
+                0.11079027305892146,
+                0.11931465647553072,
+                0.13037235268938188,
+                0.3008315069394236
+              ]
+            },
+            "conditional_expected_absolute_delta_over_10": {
+              "mean": 0.1553278088898391,
+              "standard_deviation": 0.0661476675372823,
+              "quantiles_0_25_50_75_100": [
+                0.10784438472179773,
+                0.1161011205340141,
+                0.12480673121452557,
+                0.14004191064680077,
+                0.3040103599217436
+              ]
+            },
+            "native_argmax_change_log_margin": {
+              "mean": 0.0906145227286165,
+              "standard_deviation": 1.5506034259823287,
+              "quantiles_0_25_50_75_100": [
+                -2.5563890589565954,
+                -0.9649720326380632,
+                -0.31136548006944653,
+                0.7521430728998201,
+                3.273475155231515
+              ]
+            }
+          },
+          "validation_mean_in_fitting_standard_deviations": {
+            "conditional_peak_probability": -0.00662206018504705,
+            "conditional_top_two_margin": -0.014016092548939277,
+            "conditional_normalized_entropy": 0.020638319554286674,
+            "conditional_expected_delta_over_10": -0.029998855013285232,
+            "conditional_expected_absolute_delta_over_10": -0.021870327151090274,
+            "native_argmax_change_log_margin": -0.13047888826715398
+          }
+        },
+        {
+          "fold": 3,
+          "fitting_rows": 385,
+          "validation_rows": 102,
+          "normalization_proposal_uses_inner_oof_fitting_only": true,
+          "fitting_inner_oof_profile": {
+            "conditional_peak_probability": {
+              "mean": 0.8110507145100341,
+              "standard_deviation": 0.16945453750178607,
+              "quantiles_0_25_50_75_100": [
+                0.272234758765419,
+                0.8041089929224916,
+                0.8832405865468861,
+                0.9216720638554795,
+                0.9641115196329411
+              ]
+            },
+            "conditional_top_two_margin": {
+              "mean": 0.7171337567290401,
+              "standard_deviation": 0.25975958804726756,
+              "quantiles_0_25_50_75_100": [
+                0.0009948868268040423,
+                0.719551558896736,
+                0.8230632689893222,
+                0.8836404631673945,
+                0.9497746052453329
+              ]
+            },
+            "conditional_normalized_entropy": {
+              "mean": 0.21273928896866204,
+              "standard_deviation": 0.10925021151264597,
+              "quantiles_0_25_50_75_100": [
+                0.06885820174468822,
+                0.1291527093167779,
+                0.1735807216986754,
+                0.26992326217604284,
+                0.4998216279883926
+              ]
+            },
+            "conditional_expected_delta_over_10": {
+              "mean": 0.14161843618579262,
+              "standard_deviation": 0.0637335892673365,
+              "quantiles_0_25_50_75_100": [
+                0.10224350110182541,
+                0.10762655003231754,
+                0.1119078568502835,
+                0.11806137583580342,
+                0.30673515284628455
+              ]
+            },
+            "conditional_expected_absolute_delta_over_10": {
+              "mean": 0.14794942952196194,
+              "standard_deviation": 0.0627083193255259,
+              "quantiles_0_25_50_75_100": [
+                0.10550433001806894,
+                0.11277803769558438,
+                0.11931679630506174,
+                0.13053679089787937,
+                0.31158646779279486
+              ]
+            },
+            "native_argmax_change_log_margin": {
+              "mean": 0.0031826498003616273,
+              "standard_deviation": 1.5259967843886173,
+              "quantiles_0_25_50_75_100": [
+                -2.7176978690952964,
+                -1.1856065612633073,
+                -0.29481016570850294,
+                0.9051858970190078,
+                3.432154520138483
+              ]
+            }
+          },
+          "outer_validation_profile": {
+            "conditional_peak_probability": {
+              "mean": 0.8236997897062607,
+              "standard_deviation": 0.16240734432430062,
+              "quantiles_0_25_50_75_100": [
+                0.35889303364134184,
+                0.8302418416667645,
+                0.893336841950693,
+                0.9250435278462992,
+                0.9749488176409113
+              ]
+            },
+            "conditional_top_two_margin": {
+              "mean": 0.7266417142304522,
+              "standard_deviation": 0.25575766604313843,
+              "quantiles_0_25_50_75_100": [
+                0.0034411288565607823,
+                0.7239556080244824,
+                0.8317304238488923,
+                0.8835731450804332,
+                0.961836084474686
+              ]
+            },
+            "conditional_normalized_entropy": {
+              "mean": 0.20009096806029553,
+              "standard_deviation": 0.10749953690313176,
+              "quantiles_0_25_50_75_100": [
+                0.05198333175137316,
+                0.12165145238445196,
+                0.16398457712587122,
+                0.23429383824988598,
+                0.4438689387406806
+              ]
+            },
+            "conditional_expected_delta_over_10": {
+              "mean": 0.1412667360657138,
+              "standard_deviation": 0.06819754774355583,
+              "quantiles_0_25_50_75_100": [
+                0.10172507815453097,
+                0.10559121933283334,
+                0.10872484124974624,
+                0.11445582149155364,
+                0.3003592172109561
+              ]
+            },
+            "conditional_expected_absolute_delta_over_10": {
+              "mean": 0.14734696719018991,
+              "standard_deviation": 0.06723387202525752,
+              "quantiles_0_25_50_75_100": [
+                0.10389372728123722,
+                0.11021510399099546,
+                0.1154752988096108,
+                0.12556009390376358,
+                0.30431060226659556
+              ]
+            },
+            "native_argmax_change_log_margin": {
+              "mean": 0.19201950930034534,
+              "standard_deviation": 1.596646034698829,
+              "quantiles_0_25_50_75_100": [
+                -2.3545669249919428,
+                -0.9864238438900481,
+                -0.1355465895089943,
+                0.9568838209971511,
+                3.331418039105168
+              ]
+            }
+          },
+          "validation_mean_in_fitting_standard_deviations": {
+            "conditional_peak_probability": 0.07464583352389263,
+            "conditional_top_two_margin": 0.036602912611955765,
+            "conditional_normalized_entropy": -0.11577388028125246,
+            "conditional_expected_delta_over_10": -0.0055182851636289935,
+            "conditional_expected_absolute_delta_over_10": -0.009607374878676305,
+            "native_argmax_change_log_margin": 0.12374656449596652
+          }
+        },
+        {
+          "fold": 4,
+          "fitting_rows": 396,
+          "validation_rows": 91,
+          "normalization_proposal_uses_inner_oof_fitting_only": true,
+          "fitting_inner_oof_profile": {
+            "conditional_peak_probability": {
+              "mean": 0.7898721183245867,
+              "standard_deviation": 0.1629313142496844,
+              "quantiles_0_25_50_75_100": [
+                0.29063182584227126,
+                0.7407797575319741,
+                0.8602902539581261,
+                0.9017935752670766,
+                0.9654055455846156
+              ]
+            },
+            "conditional_top_two_margin": {
+              "mean": 0.6945464595034555,
+              "standard_deviation": 0.24356847674720802,
+              "quantiles_0_25_50_75_100": [
+                0.018095478282201982,
+                0.6486210299868468,
+                0.8012998114228289,
+                0.8593275982996442,
+                0.9521057907578007
+              ]
+            },
+            "conditional_normalized_entropy": {
+              "mean": 0.2475059453475253,
+              "standard_deviation": 0.11856169441185645,
+              "quantiles_0_25_50_75_100": [
+                0.07045264903968378,
+                0.15683076884811942,
+                0.20002017281292575,
+                0.343605918555958,
+                0.5610345443560688
+              ]
+            },
+            "conditional_expected_delta_over_10": {
+              "mean": 0.15314527964417654,
+              "standard_deviation": 0.07006181662232093,
+              "quantiles_0_25_50_75_100": [
+                0.10431482521689373,
+                0.11453839885887357,
+                0.12051337661608892,
+                0.13251535177492074,
+                0.32196895388480185
+              ]
+            },
+            "conditional_expected_absolute_delta_over_10": {
+              "mean": 0.16007989673956746,
+              "standard_deviation": 0.06911479655106856,
+              "quantiles_0_25_50_75_100": [
+                0.10686467673457872,
+                0.11877224593610941,
+                0.126567204138252,
+                0.15137240607801253,
+                0.32621949517034543
+              ]
+            },
+            "native_argmax_change_log_margin": {
+              "mean": 0.012623375175690874,
+              "standard_deviation": 1.5996174928434652,
+              "quantiles_0_25_50_75_100": [
+                -3.412460490125966,
+                -1.0628662968180782,
+                -0.2470209434884284,
+                0.7312251999763201,
+                3.367959542704281
+              ]
+            }
+          },
+          "outer_validation_profile": {
+            "conditional_peak_probability": {
+              "mean": 0.8152392562531118,
+              "standard_deviation": 0.17518080280587459,
+              "quantiles_0_25_50_75_100": [
+                0.28082251607608133,
+                0.8188591926406157,
+                0.8906209778375006,
+                0.9245758272080813,
+                0.9693978037524712
+              ]
+            },
+            "conditional_top_two_margin": {
+              "mean": 0.7183039702913028,
+              "standard_deviation": 0.2669297858299127,
+              "quantiles_0_25_50_75_100": [
+                0.03025321036745654,
+                0.7210805744132007,
+                0.8223536769030688,
+                0.8945583483523082,
+                0.9585417891171564
+              ]
+            },
+            "conditional_normalized_entropy": {
+              "mean": 0.21387163651210023,
+              "standard_deviation": 0.12073370701553487,
+              "quantiles_0_25_50_75_100": [
+                0.06400942703031547,
+                0.13543533984031597,
+                0.1695869883406439,
+                0.24406651614144786,
+                0.5553701115810512
+              ]
+            },
+            "conditional_expected_delta_over_10": {
+              "mean": 0.14880112229089149,
+              "standard_deviation": 0.07294154626871928,
+              "quantiles_0_25_50_75_100": [
+                0.10381758797251504,
+                0.10978370529123695,
+                0.1141107261854761,
+                0.12239076116621692,
+                0.3200521890948931
+              ]
+            },
+            "conditional_expected_absolute_delta_over_10": {
+              "mean": 0.15391372027088243,
+              "standard_deviation": 0.0722247425170088,
+              "quantiles_0_25_50_75_100": [
+                0.1059438008089383,
+                0.11553261009573992,
+                0.11888288237327085,
+                0.13220049459315722,
+                0.323185894166912
+              ]
+            },
+            "native_argmax_change_log_margin": {
+              "mean": 0.3594593018634177,
+              "standard_deviation": 1.5659909696327687,
+              "quantiles_0_25_50_75_100": [
+                -2.1973323970291587,
+                -0.768633725388375,
+                0.16364768664787407,
+                0.8950536481760011,
+                3.4399053609046675
+              ]
+            }
+          },
+          "validation_mean_in_fitting_standard_deviations": {
+            "conditional_peak_probability": 0.1556922194198364,
+            "conditional_top_two_margin": 0.09753934952964051,
+            "conditional_normalized_entropy": -0.28368613490447603,
+            "conditional_expected_delta_over_10": -0.062004634802762526,
+            "conditional_expected_absolute_delta_over_10": -0.08921644534001945,
+            "native_argmax_change_log_margin": 0.21682428970640633
+          }
+        }
+      ]
+    }
+  },
+  "reviewed_fold_artifact_hashes": {
+    "expanded-gate-008-fold-0.joblib": "0646cb0e615f33ecca169edb64bec029bc1521a6ef43d85032b611ebe9403a97",
+    "expanded-gate-008-fold-1.joblib": "15286bc60e67fd66ee8ffbcdc65629d3baa088c09494917431082e611a448e63",
+    "expanded-gate-008-fold-2.joblib": "f54647e0e6d95d1164352a7100eb8b20f21896601e5fd5da4617b90c53f6edf3",
+    "expanded-gate-008-fold-3.joblib": "7480cc9842b31df6836f58fccb1f926d34687df424b5157efb8545824876e354",
+    "expanded-gate-008-fold-4.joblib": "9d35e505adba23187e9d125f8fcc8aaf1eafceb24a47e83b710dc6614dbe3419",
+    "expanded-gate-016-fold-0.joblib": "e101e00af84d49d33434af92c15e62ff6adbe0c7d944a53b837c274853f37d55",
+    "expanded-gate-016-fold-1.joblib": "e7e718938fdc9905eda886fb71f64c0f5ee191fe48d34891224414e76a822378",
+    "expanded-gate-016-fold-2.joblib": "4ef7e8a7224e811691794e6beb412f697cf68f9328551169e7655f7b9650832f",
+    "expanded-gate-016-fold-3.joblib": "d4f32839e38d7a8677fdc4494fa909e6238d036b1af33dc193cbd90316945fd3",
+    "expanded-gate-016-fold-4.joblib": "317299ccb77c631c00a5f91b839f8f6c0f0b70f539c48b2f63a0ff36b2fd0b46"
+  },
+  "frozen_nonzero_gate_optimistic_upper_bounds_not_achieved_accuracy": {
+    "core": {
+      "uses_current_truth_only_to_bound_model_family": true,
+      "oracle_predictions_not_used_for_selection_or_test": true,
+      "pooled_upper_accuracy": 0.8850102669404517,
+      "mean_fold_upper_accuracy": 0.8853177819622833,
+      "unreachable_cases": 56
+    },
+    "cat": {
+      "uses_current_truth_only_to_bound_model_family": true,
+      "oracle_predictions_not_used_for_selection_or_test": true,
+      "pooled_upper_accuracy": 0.8829568788501027,
+      "mean_fold_upper_accuracy": 0.8835940155326345,
+      "unreachable_cases": 57
+    }
+  },
+  "proposal": {
+    "new_trainable_recipes": 8,
+    "inherited_controls": 10,
+    "total_recipes": 18,
+    "members": [
+      "core",
+      "cat"
+    ],
+    "source_conditions": [
+      "native_only",
+      "expanded_sources"
+    ],
+    "correction_penalties": [
+      1.0,
+      10.0
+    ],
+    "new_joint_network_fits": 40,
+    "independent_joint_refits_required": 40,
+    "adapter": "zero_initialized6to8biasless_addition_to_existing_first_corrector_preactivation",
+    "initialization": "Construct original network first,retain all original weights,then add zero geometry adapter. Match inactive-geometry controls before any comparison.",
+    "normalization": "Fit native geometry statistics on inner-person OOF cached probabilities only. Query geometry comes from frozen native base prediction.",
+    "source_inputs": "No native conditional-probability vector or native private context is invented for any source.",
+    "unchanged": "3548real source fitting pairs,518reserved plus5gait people unreceived,shared3historyinputs/native20context,80epochs,seed42,AdamW.003/decay.1,original487/179,.65CVtestgate,exact Borg."
+  },
+  "interpretation": "The perfect-choice bound exceeds80% on fitting participants but uses actual current truth and is not achieved accuracy. Source data corrected one CatBoost OOF case at penalty1;the best penalty10 stayed at baseline. Inspect conditional uncertainty/margin information currently discarded by the scalar corrector as a distinct native-private representation. Nonzero relative probabilities remain frozen;this review alone proves no predictive gain."
+}

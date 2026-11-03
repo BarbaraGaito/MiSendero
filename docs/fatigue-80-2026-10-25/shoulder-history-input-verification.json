@@ -1,0 +1,27 @@
+{
+  "verification": "passed",
+  "audit_code_sha256": "f1bf210ea132503303e35fe141e2f514902b3b736515aba04dbb8bb3bacd9e29",
+  "source_preparation_code_sha256": "fbd10806c3349ce7563d5ecc71dfcde4b9939d660efe22674938da9db2d60b8e",
+  "source_provenance_sha256": "34a550f5342dba8ca70a5d5be90fb8e77a449ffa5f7b9bf27768f0d6cbe9f7e7",
+  "source_dataset_sha256": "57707f3de43d56877f27c79ffde68f3fb2f4f8c8cb9eeb6a7050990d7a530627",
+  "shoulder_input_verification_sha256": "163f6e3b2f6a5693603749cfc451ed94a4310ced7f3626b738b65710618f6677",
+  "previous_input_verification_sha256": "52d59e00ac0ca31187840117d9800f684d8b457a947d055fcdb1f9cbb21c1b97",
+  "old_original_rows_preserved": 1541,
+  "new_original_rows_preserved": 1107,
+  "actual_source_fitting_targets": 2336,
+  "source_fitting_actual_second_priors": 1927,
+  "source_reserved_targets": 312,
+  "source_counts": {
+    "emap": 248,
+    "resistance": 866,
+    "shoulder": 920,
+    "sts": 49,
+    "worker": 253
+  },
+  "source_outcomes_kept_separate": true,
+  "native_target_merge": false,
+  "synthetic_rows": 0,
+  "imputed_targets": 0,
+  "invented_source_times_or_sensor_joins": 0,
+  "model_fitting_started": false
+}

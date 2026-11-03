@@ -1,0 +1,155 @@
+{
+  "version": 1,
+  "source": "https://datasets.simula.no/pmdata/",
+  "osf": "https://osf.io/vx4bk/",
+  "paper": "https://doi.org/10.1145/3339825.3394926",
+  "inventory_sha256": "53a57211e4b4f85c92f689c1f32ce7f1ff500031439171d7e5807860ed1bb181",
+  "annotation_receipt_sha256": "7250d6dba673bbb17fd2e294004232bbf066d2cd1fd5b4dff1ecf08a53e1cfce",
+  "code_sha256": "bca8a5a453b0ae959b54bc9d13d2e0e8c4d1fb9a444b6c94d26a8feefbbcc1f6",
+  "participant_folders": 16,
+  "participants_with_actual_ratings": 15,
+  "annotation_rows": 783,
+  "actual_nonempty_effort_cells": 772,
+  "missing_effort_cells": 11,
+  "native_effort_value_counts": {
+    "1": 6,
+    "2": 12,
+    "3": 71,
+    "4": 106,
+    "5": 148,
+    "6": 167,
+    "7": 143,
+    "8": 80,
+    "9": 31,
+    "10": 8
+  },
+  "declared_session_duration_range_minutes": [
+    20.0,
+    180.0
+  ],
+  "fitbit_exercise_entries": 2440,
+  "exercise_start_times_without_zone": 2440,
+  "exercise_start_times_with_explicit_zone": 0,
+  "rating_definition": "Native PMSys session perceived exertion, not inferred or converted momentary Borg.",
+  "source_license_text_sha256": "5286eaa9817ddf25ad61158793c91ca2d4097220160d9f4be678d29d8db260ba",
+  "source_paper_text_sha256": "915b1b094e13957aaf110c908ae22eaffa512ab2f860c22b291f478bb6310142",
+  "training_merge_approved": false,
+  "used_for_training": false,
+  "synthetic_or_imputed_effort_labels": 0,
+  "timezone_offset_imputed": false,
+  "reason": "Session outcomes differ from the current momentary Borg target. Fitbit timestamps lack an explicit timezone; no exact offset or report-to-exercise link was established from the inspected paper/metadata. Do not guess a timezone or count unlabelled rows as real ratings.",
+  "participants": [
+    {
+      "source_participant": "p01",
+      "annotation_rows": 34,
+      "nonempty_effort_cells": 34,
+      "missing_effort_cells": 0,
+      "explicit_utc_effort_timestamps": 34
+    },
+    {
+      "source_participant": "p02",
+      "annotation_rows": 97,
+      "nonempty_effort_cells": 97,
+      "missing_effort_cells": 0,
+      "explicit_utc_effort_timestamps": 97
+    },
+    {
+      "source_participant": "p03",
+      "annotation_rows": 2,
+      "nonempty_effort_cells": 2,
+      "missing_effort_cells": 0,
+      "explicit_utc_effort_timestamps": 2
+    },
+    {
+      "source_participant": "p04",
+      "annotation_rows": 85,
+      "nonempty_effort_cells": 85,
+      "missing_effort_cells": 0,
+      "explicit_utc_effort_timestamps": 85
+    },
+    {
+      "source_participant": "p05",
+      "annotation_rows": 9,
+      "nonempty_effort_cells": 9,
+      "missing_effort_cells": 0,
+      "explicit_utc_effort_timestamps": 9
+    },
+    {
+      "source_participant": "p06",
+      "annotation_rows": 46,
+      "nonempty_effort_cells": 46,
+      "missing_effort_cells": 0,
+      "explicit_utc_effort_timestamps": 46
+    },
+    {
+      "source_participant": "p07",
+      "annotation_rows": 110,
+      "nonempty_effort_cells": 110,
+      "missing_effort_cells": 0,
+      "explicit_utc_effort_timestamps": 110
+    },
+    {
+      "source_participant": "p08",
+      "annotation_rows": 113,
+      "nonempty_effort_cells": 113,
+      "missing_effort_cells": 0,
+      "explicit_utc_effort_timestamps": 113
+    },
+    {
+      "source_participant": "p09",
+      "annotation_rows": 3,
+      "nonempty_effort_cells": 3,
+      "missing_effort_cells": 0,
+      "explicit_utc_effort_timestamps": 3
+    },
+    {
+      "source_participant": "p10",
+      "annotation_rows": 27,
+      "nonempty_effort_cells": 27,
+      "missing_effort_cells": 0,
+      "explicit_utc_effort_timestamps": 27
+    },
+    {
+      "source_participant": "p11",
+      "annotation_rows": 30,
+      "nonempty_effort_cells": 30,
+      "missing_effort_cells": 0,
+      "explicit_utc_effort_timestamps": 30
+    },
+    {
+      "source_participant": "p12",
+      "annotation_rows": 40,
+      "nonempty_effort_cells": 40,
+      "missing_effort_cells": 0,
+      "explicit_utc_effort_timestamps": 40
+    },
+    {
+      "source_participant": "p13",
+      "annotation_rows": 10,
+      "nonempty_effort_cells": 10,
+      "missing_effort_cells": 0,
+      "explicit_utc_effort_timestamps": 10
+    },
+    {
+      "source_participant": "p14",
+      "annotation_rows": 62,
+      "nonempty_effort_cells": 62,
+      "missing_effort_cells": 0,
+      "explicit_utc_effort_timestamps": 62
+    },
+    {
+      "source_participant": "p15",
+      "annotation_rows": 104,
+      "nonempty_effort_cells": 104,
+      "missing_effort_cells": 0,
+      "explicit_utc_effort_timestamps": 104
+    },
+    {
+      "source_participant": "p16",
+      "annotation_rows": 11,
+      "nonempty_effort_cells": 0,
+      "missing_effort_cells": 11,
+      "explicit_utc_effort_timestamps": 0
+    }
+  ]
+}

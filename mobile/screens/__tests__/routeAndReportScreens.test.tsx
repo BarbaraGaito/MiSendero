@@ -146,3 +146,44 @@ test("a distant GPS fix cannot submit; a validated map choice can and local pers
   (queue.isOnline as jest.Mock).mockResolvedValue(false); (queue.enqueue as jest.Mock).mockRejectedValueOnce(new Error("Almacenamiento lleno")); await press(tree, "Enviar reporte"); expect(text(tree)).toContain("Almacenamiento lleno"); expect(router.replace).not.toHaveBeenCalled();
   await press(tree, "Enviar reporte"); expect(queue.enqueue).toHaveBeenLastCalledWith("trail_report", expect.objectContaining({ latitude: -41.001, accuracy_meters: null, route_progress_meters: 110 }));
 });
+
+test("a point chosen on the 3D route opens the form with the same validated location", async () => {
+  active();
+  const route = await mount(Route);
+  await act(async () => route.root.findByType("TrailMap").props.onReportCoordinate({ coordinate: [-41.001, -71], perspective: true, routeProgressMeters: 111 }));
+  expect(router.push).toHaveBeenLastCalledWith({ pathname: "/reportar-terreno", params: {
+    id: "7", startedAt: String(startedAt), latitude: "-41.001", longitude: "-71", perspective: "1",
+  } });
+  (useLocalSearchParams as jest.Mock).mockReturnValue({ id: "7", latitude: "-41.001", longitude: "-71", perspective: "1" });
+  const form = await mount(Report);
+  expect(form.root.findByType("TrailMap").props).toMatchObject({ initialPerspective: true, selectedCoordinate: [-41.001, -71] });
+  await press(form, "Enviar reporte");
+  expect(queue.enqueue).toHaveBeenLastCalledWith("trail_report", expect.objectContaining({ latitude: -41.001, longitude: -71, accuracy_meters: null, route_progress_meters: expect.any(Number) }));
+});
+
+test("route warnings refresh while viewing the trail and are passed to the live map", async () => {
+  active();
+  const tree = await mount(Route);
+  const report = { id: 17, trail_id: 7, issue_summary: "Derrumbe", latitude: -41.001, longitude: -71, created_at: new Date().toISOString() };
+  (repository.getTrailReports as jest.Mock).mockResolvedValue([report]);
+  await act(async () => { jest.advanceTimersByTime(30000); await flush(); });
+  expect(tree.root.findByType("TrailMap").props.reports).toEqual([report]);
+});
+
+test("an invalid map location cannot silently submit using the GPS position instead", async () => {
+  (useLocalSearchParams as jest.Mock).mockReturnValue({ id: "7", latitude: "-42", longitude: "-72", perspective: "1" });
+  const tree = await mount(Report);
+  expect(text(tree)).toContain("No pudimos validar ese punto");
+  await expect(press(tree, "Enviar reporte")).rejects.toThrow("disabled");
+  expect(queue.enqueue).not.toHaveBeenCalled();
+});
+
+test("a cellular connection can load weather and keeps refreshing it while the trail is visible", async () => {
+  (Network.getNetworkStateAsync as jest.Mock).mockResolvedValue({ type: "CELLULAR", isConnected: true, isInternetReachable: true });
+  const tree = await mount(Route);
+  expect(repository.getTrailWeather).toHaveBeenCalledWith(7);
+  expect(tree.root.findByType("TrailMap").props.weather.condition).toBe("Nublado");
+  (repository.getTrailWeather as jest.Mock).mockResolvedValue({ condition: "Lluvia", temperature_c: 8 });
+  await act(async () => { jest.advanceTimersByTime(15 * 60 * 1000); await flush(); });
+  expect(tree.root.findByType("TrailMap").props.weather.condition).toBe("Lluvia");
+});

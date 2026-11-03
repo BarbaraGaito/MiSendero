@@ -14,8 +14,9 @@ import {
   View,
   ViewStyle,
 } from "react-native";
-import Svg, { Path } from "react-native-svg";
-import { Trail, TrailWeather } from "../../types";
+import Svg, { Circle, Path } from "react-native-svg";
+import { Trail, TrailReport, TrailWeather } from "../../types";
+import { getReportMapMarkers } from "../../services/reportMapMarkers";
 import {
   Coordinate,
   formatKilometers,
@@ -40,8 +41,8 @@ import {
   useTerrainElevation,
 } from "../hooks/useTerrainElevation";
 import { colors } from "./MiSenderoUI";
-import { Terrain3DScene } from "./Terrain3DScene";
-import { buildTerrainSceneModel } from "./terrainSceneModel";
+import { Terrain3DScene, Terrain3DSceneHandle, TerrainMapMarker } from "./Terrain3DScene";
+import { buildTerrainSceneModel, coordinateToTerrainScenePoint } from "./terrainSceneModel";
 import { BasicOfflineMap, containsMapCoordinate, readBasicOfflineMap } from "../../services/basicOfflineMap";
 import { BasicMapLayer } from "./BasicMapLayer";
 
@@ -86,6 +87,7 @@ type TerrainLabel = ScreenPoint & {
 
 type TrailMapProps = {
   trail: Trail | null;
+  reports?: TrailReport[];
   weather?: TrailWeather | null;
   fitRoute?: boolean;
   immersive?: boolean;
@@ -103,12 +105,19 @@ type TrailMapProps = {
     routeProgressMeters: number;
   }) => void;
   onSelectionRejected?: (distanceToRouteMeters: number | null) => void;
+  onReportCoordinate?: (selection: {
+    coordinate: Coordinate;
+    routeProgressMeters: number;
+    perspective: boolean;
+  }) => void;
   onInteractionChange?: (isInteracting: boolean) => void;
   navigationMode?: boolean;
   offlineOnly?: boolean;
+  bottomOverlayInset?: number;
 };
 
 const TILE_SIZE = 256;
+const EMPTY_REPORTS: TrailReport[] = [];
 const DEFAULT_ZOOM = 13;
 const DEFAULT_CENTER: Coordinate = [-41.1734, -71.4752];
 const MIN_ZOOM = 10;
@@ -405,6 +414,7 @@ const getMapDecorations = ({ points, trailName }: {
 
 export function TrailMap({
   trail,
+  reports = EMPTY_REPORTS,
   weather = null,
   fitRoute = false,
   immersive = false,
@@ -418,9 +428,11 @@ export function TrailMap({
   selectionToleranceMeters = 80,
   onSelectCoordinate,
   onSelectionRejected,
+  onReportCoordinate,
   onInteractionChange,
   navigationMode = false,
   offlineOnly = false,
+  bottomOverlayInset = 28,
 }: TrailMapProps) {
   const network = useNetworkState();
   const offline = offlineOnly || network.isConnected === false || network.isInternetReachable === false;
@@ -436,10 +448,16 @@ export function TrailMap({
   const [panOffset, setPanOffset] = useState({ x: 0, y: 0 });
   const [terrainOffset, setTerrainOffset] = useState({ x: 0, y: 0 });
   const [terrainScale, setTerrainScale] = useState(1);
+  const [terrainStyle, setTerrainStyle] = useState<"natural" | "relief">("natural");
   const [pinchPreviewScale, setPinchPreviewScale] = useState(1);
   const [cachedTiles, setCachedTiles] = useState<MapTile[]>([]);
   const [tileUriOverrides, setTileUriOverrides] = useState<Record<string, string>>({});
   const [isTileLoading, setIsTileLoading] = useState(false);
+  const [isChoosingReportLocation, setIsChoosingReportLocation] = useState(false);
+  const [activeReportId, setActiveReportId] = useState<number | null>(null);
+  const [selectionError, setSelectionError] = useState<string | null>(null);
+  const terrainSceneRef = useRef<Terrain3DSceneHandle | null>(null);
+  const isSelecting = Boolean(onSelectCoordinate || (isChoosingReportLocation && onReportCoordinate));
   const centerRef = useRef(activeCenter);
   const zoomRef = useRef(activeZoom);
   const maxZoomRef = useRef(MAX_ZOOM_BY_LAYER.terrain);
@@ -471,6 +489,13 @@ export function TrailMap({
     () => (route.length > 1 ? route : [trailCenter]),
     [route, trailCenter[0], trailCenter[1]]
   );
+  const reportMarkers = useMemo(() => getReportMapMarkers(reports, trail?.id ?? 0, route), [reports, trail?.id, route]);
+  const activeReport = reportMarkers.find(marker => marker.report.id === activeReportId);
+  const sceneMarkers = useMemo<TerrainMapMarker[]>(() => [
+    ...reportMarkers.map(marker => ({ id: String(marker.report.id), coordinate: marker.coordinate,
+      color: marker.color, precisionMeters: marker.precisionMeters, issueSummary: marker.report.issue_summary })),
+    ...(selectedCoordinate ? [{ id: "selected", coordinate: selectedCoordinate, color: "#087F4F", precisionMeters: 0, selected: true }] : []),
+  ], [reportMarkers, selectedCoordinate]);
   const simulatedStartLocation = useMemo(
     () => getRouteStart(route, trailCenter),
     [route, trailCenter[0], trailCenter[1]]
@@ -533,6 +558,12 @@ export function TrailMap({
   }, [trail?.id, trailCenter[0], trailCenter[1], layout.width, layout.height, fitRoute, layer, maxZoom, minZoom]);
 
   useEffect(() => {
+    setActiveReportId(null);
+    setIsChoosingReportLocation(false);
+    setSelectionError(null);
+  }, [trail?.id]);
+
+  useEffect(() => {
     centerRef.current = activeCenter;
     zoomRef.current = zoom;
     panOffsetRef.current = panOffset;
@@ -559,12 +590,12 @@ export function TrailMap({
   const panResponder = useMemo(
     () =>
       PanResponder.create({
-        onStartShouldSetPanResponder: (event) => event.nativeEvent.touches.length > 0,
+        onStartShouldSetPanResponder: (event) => event.nativeEvent.touches.length > 1,
         onMoveShouldSetPanResponder: (event, gesture) =>
-          event.nativeEvent.touches.length > 0 ||
+          event.nativeEvent.touches.length > 1 ||
           Math.abs(gesture.dx) > 5 ||
           Math.abs(gesture.dy) > 5,
-        onMoveShouldSetPanResponderCapture: () => true,
+        onMoveShouldSetPanResponderCapture: (event, gesture) => event.nativeEvent.touches.length > 1 || Math.abs(gesture.dx) > 8 || Math.abs(gesture.dy) > 8,
         onPanResponderTerminationRequest: () => false,
         onShouldBlockNativeResponder: () => true,
         onPanResponderGrant: (event) => {
@@ -573,6 +604,8 @@ export function TrailMap({
 
           if (!distance) return;
 
+          touchMovedRef.current = true;
+          touchStartRef.current = null;
           isPinchingRef.current = true;
           pinchStartDistanceRef.current = distance;
           pinchStartZoomRef.current = zoomRef.current;
@@ -585,6 +618,8 @@ export function TrailMap({
           const distance = getTouchDistance(event.nativeEvent.touches);
 
           if (distance && !pinchStartDistanceRef.current) {
+            touchMovedRef.current = true;
+            touchStartRef.current = null;
             isPinchingRef.current = true;
             pinchStartDistanceRef.current = distance;
             pinchStartZoomRef.current = zoomRef.current;
@@ -616,6 +651,7 @@ export function TrailMap({
 
           if (isPinchingRef.current) return;
 
+          if (Math.hypot(gesture.dx, gesture.dy) > 8) touchMovedRef.current = true;
           setPanOffset({ x: gesture.dx, y: gesture.dy });
         },
         onPanResponderRelease: (_, gesture) => {
@@ -641,6 +677,10 @@ export function TrailMap({
             return;
           }
 
+          if (Math.hypot(gesture.dx, gesture.dy) <= 8) {
+            setPanOffset({ x: 0, y: 0 });
+            return;
+          }
           if (isPerspectiveRef.current) {
             const currentOffset = terrainOffsetRef.current;
 
@@ -730,42 +770,84 @@ export function TrailMap({
     [activeCenter, isPerspective, layer, layout, location, routePoints, selectedCoordinate, zoom]
   );
 
-  const handleMapPress = (x: number, y: number) => {
-    if (!onSelectCoordinate || isPerspectiveRef.current) return;
+  const reportScreenPoints = useMemo(() => {
+    const center = project(activeCenter, zoom);
+    return reportMarkers.map(marker => {
+      const pixel = project(marker.coordinate, zoom);
+      return { ...marker, x: pixel.x - center.x + layout.width / 2, y: pixel.y - center.y + layout.height / 2,
+        radius: marker.precisionMeters / (156543.03392 * Math.cos(marker.coordinate[0] * Math.PI / 180) / 2 ** zoom) };
+    });
+  }, [reportMarkers, activeCenter, zoom, layout]);
 
-    const currentLayout = layoutRef.current;
-    if (!currentLayout.width || !currentLayout.height || route.length < 2) {
-      onSelectionRejected?.(null);
-      return;
+  const openReport = (reportId: number) => {
+    const marker = reportMarkers.find(item => item.report.id === reportId);
+    if (!marker) return;
+    setActiveReportId(reportId);
+    if (!isPerspectiveRef.current || !terrainModel || !coordinateToTerrainScenePoint(terrainModel, marker.coordinate)) {
+      if (isPerspectiveRef.current) setIsPerspective(false);
+      const nextZoom = clamp(Math.max(zoomRef.current, 15), minZoom, maxZoom);
+      const pixel = project(marker.coordinate, nextZoom);
+      // Leave room below the point for the embedded report card.
+      setActiveCenter(unproject({ x: pixel.x, y: pixel.y + (immersive ? 0 : layout.height * 0.18) }, nextZoom));
+      setActiveZoom(nextZoom);
     }
+  };
 
-    const currentZoom = zoomRef.current;
-    const centerPixel = project(centerRef.current, currentZoom);
-    const currentPanOffset = panOffsetRef.current;
-    const touchCoordinate = unproject(
-      {
+  const handleMapPress = (x: number, y: number) => {
+    const currentLayout = layoutRef.current;
+    if (!currentLayout.width || !currentLayout.height) return;
+    let touchCoordinate: Coordinate | null = null;
+    if (isPerspectiveRef.current) {
+      const hit = terrainSceneRef.current?.pick(x / currentLayout.width * 2 - 1, 1 - y / currentLayout.height * 2);
+      if (!isSelecting && hit?.markerId && hit.markerId !== "selected") {
+        openReport(Number(hit.markerId));
+        return;
+      }
+      touchCoordinate = hit?.coordinate ?? null;
+    } else {
+      if (!isSelecting) {
+        const nearby = reportScreenPoints.filter(marker => Math.hypot(marker.x - x, marker.y - y) <= 26)
+          .sort((a, b) => Math.hypot(a.x - x, a.y - y) - Math.hypot(b.x - x, b.y - y))[0];
+        if (nearby) openReport(nearby.report.id);
+        return;
+      }
+      const currentZoom = zoomRef.current;
+      const centerPixel = project(centerRef.current, currentZoom);
+      const currentPanOffset = panOffsetRef.current;
+      touchCoordinate = unproject({
         x: centerPixel.x - currentLayout.width / 2 + x - currentPanOffset.x,
         y: centerPixel.y - currentLayout.height / 2 + y - currentPanOffset.y,
-      },
-      currentZoom
-    );
+      }, currentZoom);
+    }
+    if (!isSelecting) return;
+    const reject = (distance: number | null) => {
+      setSelectionError("Tocá el sendero marcado para ubicar el reporte.");
+      onSelectionRejected?.(distance);
+    };
+    if (!touchCoordinate || route.length < 2) { reject(null); return; }
     const closest = getClosestPointOnRoute(touchCoordinate, route);
 
     if (!closest) {
-      onSelectionRejected?.(null);
+      reject(null);
       return;
     }
 
     if (closest.distanceMeters > selectionToleranceMeters) {
-      onSelectionRejected?.(closest.distanceMeters);
+      reject(closest.distanceMeters);
       return;
     }
 
-    onSelectCoordinate({
+    setSelectionError(null);
+    const selection = {
       coordinate: closest.coordinate,
       distanceToRouteMeters: closest.distanceMeters,
       routeProgressMeters: closest.progressMeters,
-    });
+    };
+    if (onSelectCoordinate) onSelectCoordinate(selection);
+    else {
+      onReportCoordinate?.({ ...selection, perspective: isPerspectiveRef.current });
+      setIsChoosingReportLocation(false);
+    }
   };
 
   const tileSignature = useMemo(
@@ -860,6 +942,7 @@ export function TrailMap({
   const selectionHintTop =
     floatingNoticeTop + locationNoticeOffset + testingNoticeOffset;
   const terrainOverlayTop = controlsTopOffset + 96;
+  const reportControlsOffset = offline && showMapNotices && onReportCoordinate ? 50 : 0;
 
   const onLayout = (event: LayoutChangeEvent) => {
     const { width, height } = event.nativeEvent.layout;
@@ -884,10 +967,18 @@ export function TrailMap({
         immersive && styles.immersiveMap,
         mapGestureSurfaceStyle,
       ]}
+    >
+    <View
+      testID="trail-map-surface"
+      style={StyleSheet.absoluteFill}
       onLayout={onLayout}
       onTouchStart={(event) => {
         onInteractionChangeRef.current?.(true);
-        if (!onSelectCoordinate || event.nativeEvent.touches.length !== 1) return;
+        if (event.nativeEvent.touches.length !== 1) {
+          touchStartRef.current = null;
+          touchMovedRef.current = true;
+          return;
+        }
 
         touchMovedRef.current = false;
         touchStartRef.current = {
@@ -910,7 +1001,7 @@ export function TrailMap({
           onInteractionChangeRef.current?.(false);
         }
         if (
-          !onSelectCoordinate ||
+          !touchStartRef.current ||
           event.nativeEvent.touches.length > 0 ||
           touchMovedRef.current
         ) {
@@ -923,13 +1014,24 @@ export function TrailMap({
         touchStartRef.current = null;
         touchMovedRef.current = false;
       }}
+      onTouchCancel={() => {
+        touchStartRef.current = null;
+        touchMovedRef.current = false;
+        onInteractionChangeRef.current?.(false);
+      }}
       {...panResponder.panHandlers}
     >
       {isPerspective ? (
-        <View style={styles.terrain3dScene}>
+        <View pointerEvents="none" style={styles.terrain3dScene}>
           {terrainModel ? (
             <>
               <Terrain3DScene
+                ref={terrainSceneRef}
+                markers={sceneMarkers}
+                focusCoordinate={activeReport?.coordinate ?? null}
+                showContours={terrainStyle === "relief"}
+                overlayTopInset={controlsTopOffset + 150}
+                overlayBottomInset={bottomOverlayInset}
                 onError={() => {
                   setTerrainRenderFailed(true);
                   setIsPerspective(false);
@@ -945,11 +1047,17 @@ export function TrailMap({
                   condition: weather.condition,
                   rainProbability: weather.rain_probability,
                   temperatureC: weather.temperature_c,
+                  windKmh: weather.wind_kmh,
+                  windDirectionDegrees: weather.wind_direction_degrees,
+                  cloudCoverPercent: weather.cloud_cover_percent,
+                  isDay: weather.is_day,
+                  observedAt: weather.observed_at,
+                  source: weather.source,
                 } : null}
                 navigationMode={navigationMode}
-                satelliteTextureEnabled={allowSatellite && !offline}
+                satelliteTextureEnabled={allowSatellite && !offline && terrainStyle === "natural"}
               />
-              <View
+              {!onReportCoordinate && reportMarkers.length === 0 && <View
                 pointerEvents="none"
                 style={[styles.terrain3dOverlay, { top: terrainOverlayTop }]}
               >
@@ -959,7 +1067,7 @@ export function TrailMap({
                     {shortenTrailName(trail?.name)}
                   </Text>
                 </View>
-              </View>
+              </View>}
             </>
           ) : (
             <View style={styles.terrainUnavailable}>
@@ -981,6 +1089,7 @@ export function TrailMap({
         </View>
       ) : (
         <View
+          pointerEvents="none"
           style={[
             styles.mapContent,
             {
@@ -1125,8 +1234,59 @@ export function TrailMap({
               <Ionicons name="pin" size={18} color={colors.white} />
             </View>
           ) : null}
+          <Svg pointerEvents="none" style={styles.mapVectorOverlay} width={layout.width} height={layout.height}>
+            {reportScreenPoints.map(marker => marker.radius > 0 ? (
+              <Circle key={marker.report.id} cx={marker.x} cy={marker.y} r={marker.radius}
+                fill={marker.color} fillOpacity={0.08} stroke={marker.color} strokeOpacity={0.5} strokeDasharray="4 4" />
+            ) : null)}
+          </Svg>
+          {reportScreenPoints.map(marker => (
+            <View key={marker.report.id} testID={`trail-report-${marker.report.id}`} pointerEvents="none" style={[styles.reportMarker,
+              { left: marker.x - 17, top: marker.y - 34, backgroundColor: marker.color }]}>
+              <Ionicons name={marker.report.blocks_path ? "close-circle" : "warning"} size={22} color={colors.white} />
+            </View>
+          ))}
         </View>
       )}
+    </View>
+
+      {reportMarkers.length > 0 && !activeReport && !isSelecting ? (
+        <Pressable accessibilityRole="button" accessibilityLabel="Ver advertencias del sendero"
+          onPress={() => openReport(reportMarkers[0].report.id)}
+          style={[styles.reportBadge, { top: controlsTopOffset + 100 + reportControlsOffset }]}>
+          <Ionicons name="warning" size={18} color={colors.danger} />
+          <Text style={styles.reportBadgeText}>{reportMarkers.length} {reportMarkers.length === 1 ? "advertencia" : "advertencias"}</Text>
+        </Pressable>
+      ) : null}
+      {onReportCoordinate && route.length > 1 ? (
+        <Pressable accessibilityRole="button" accessibilityState={{ selected: isChoosingReportLocation }}
+          onPress={() => { setIsChoosingReportLocation(value => !value); setActiveReportId(null); setSelectionError(null); }}
+          style={[styles.reportBadge, { top: controlsTopOffset + 50 + reportControlsOffset, left: offline ? 12 : 94 }]}>
+          <Ionicons name={isChoosingReportLocation ? "close" : "pin-outline"} size={18} color={colors.greenDark} />
+          <Text style={styles.reportBadgeText}>{isChoosingReportLocation ? "Cancelar" : "Reportar punto"}</Text>
+        </Pressable>
+      ) : null}
+      {activeReport && !isSelecting ? (
+        <View style={[styles.reportCard, immersive ? { top: controlsTopOffset + 100 + reportControlsOffset } : { bottom: 24 }]}>
+          <View style={styles.reportCardHeader}>
+            <Ionicons name="warning" size={20} color={activeReport.color} />
+            <Text style={styles.reportTitle} numberOfLines={2}>{activeReport.report.issue_summary}</Text>
+            <Pressable accessibilityRole="button" accessibilityLabel="Cerrar advertencia" hitSlop={8} onPress={() => setActiveReportId(null)}>
+              <Ionicons name="close" size={22} color={colors.ink} />
+            </Pressable>
+          </View>
+          <Text style={styles.reportDescription}>{activeReport.report.trail_state} · Riesgo {activeReport.report.severity}{activeReport.report.blocks_path ? " · Bloquea el paso" : ""}</Text>
+          <Text style={styles.reportDescription}>
+            {activeReport.precisionMeters > 0 ? `Ubicación aproximada · margen ${activeReport.precisionMeters} m` : "Ubicación del reporte"}
+            {activeReport.report.route_progress_meters != null ? ` · km ${(activeReport.report.route_progress_meters / 1000).toLocaleString("es-AR", { maximumFractionDigits: 1 })}` : ""}
+          </Text>
+          <Text style={styles.reportDescription}>Observado: {new Date(activeReport.report.observed_at || activeReport.report.created_at).toLocaleString("es-AR", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" })}{offline ? " · Guardado sin conexión" : ""}</Text>
+          {reportMarkers.length > 1 ? <Pressable accessibilityRole="button" accessibilityLabel="Ver siguiente advertencia"
+            onPress={() => openReport(reportMarkers[(reportMarkers.indexOf(activeReport) + 1) % reportMarkers.length].report.id)}>
+            <Text style={styles.reportBadgeText}>Siguiente advertencia ({reportMarkers.indexOf(activeReport) + 1}/{reportMarkers.length}) →</Text>
+          </Pressable> : null}
+        </View>
+      ) : null}
 
       {offline && showMapNotices ? <View pointerEvents="none" style={[styles.locationWarning, {top: controlsTopOffset+52}]}>
         <Ionicons name="cloud-offline-outline" size={16} color={colors.green} />
@@ -1187,6 +1347,14 @@ export function TrailMap({
         ) : null}
         </View>
       ) : null}
+      {isPerspective ? <View style={[styles.terrainStyleControl, { top: controlsTopOffset }]}>
+        {([ ["natural", "Imagen"], ["relief", "Relieve"] ] as const).map(([value, label]) => <Pressable key={value}
+          accessibilityRole="button" accessibilityLabel={value === "natural" ? "Ver imagen satelital 3D" : "Ver relieve con curvas de nivel"}
+          accessibilityState={{ selected: terrainStyle === value }} onPress={() => setTerrainStyle(value)}
+          style={[styles.terrainStyleButton, terrainStyle === value && styles.layerButtonActive]}>
+          <Text style={[styles.layerLabel, terrainStyle === value && styles.layerLabelActive]}>{label}</Text>
+        </Pressable>)}
+      </View> : null}
 
       {terrainRenderFailed && !isPerspective ? (
         <View pointerEvents="none" style={[styles.terrain3dOverlay, {top:terrainOverlayTop}]}>
@@ -1253,7 +1421,7 @@ export function TrailMap({
         </Pressable>
       </View>
 
-      {showDetailsCard && !isPerspective ? (
+      {showDetailsCard && !isPerspective && !activeReport ? (
         <View style={styles.mapCard}>
           <Text style={styles.mapLabel}>{trail?.name || "Mapa del recorrido"}</Text>
           <Text style={styles.mapMeta}>
@@ -1286,13 +1454,13 @@ export function TrailMap({
         </View>
       ) : null}
 
-      {onSelectCoordinate && !isPerspective ? (
+      {isSelecting ? (
         <View
           pointerEvents="none"
           style={[styles.selectionHint, { top: selectionHintTop }]}
         >
           <Ionicons name="pin-outline" size={14} color={colors.greenDark} />
-          <Text style={styles.selectionHintText}>Toca sobre el sendero</Text>
+          <Text style={styles.selectionHintText}>{selectionError || "Tocá sobre el sendero para ubicar el reporte"}</Text>
         </View>
       ) : null}
     </View>
@@ -1300,6 +1468,27 @@ export function TrailMap({
 }
 
 const styles = StyleSheet.create({
+  reportMarker: {
+    position: "absolute", width: 34, height: 34, borderRadius: 17,
+    borderBottomLeftRadius: 4, alignItems: "center", justifyContent: "center",
+    borderColor: "#FFFFFF", borderWidth: 2, zIndex: 6,
+  },
+  terrainStyleControl: { position: "absolute", left: 88, right: 64, backgroundColor: "rgba(255,255,255,0.94)", borderRadius: 14,
+    padding: 4, flexDirection: "row", justifyContent: "center", zIndex: 6 },
+  terrainStyleButton: { flex: 1, paddingHorizontal: 5, paddingVertical: 8, alignItems: "center", borderRadius: 12 },
+  reportBadge: {
+    position: "absolute", left: 12, right: 64, alignSelf: "flex-start", flexDirection: "row",
+    alignItems: "center", gap: 6, backgroundColor: "rgba(255,255,255,0.96)",
+    borderRadius: 14, paddingHorizontal: 10, minHeight: 44, zIndex: 7,
+  },
+  reportBadgeText: { color: colors.greenDark, fontWeight: "800", fontSize: 12 },
+  reportCard: {
+    position: "absolute", left: 12, right: 64, padding: 12, gap: 8,
+    backgroundColor: "rgba(255,255,255,0.98)", borderRadius: 16, zIndex: 8,
+  },
+  reportCardHeader: { flexDirection: "row", alignItems: "center", gap: 7 },
+  reportTitle: { flex: 1, color: colors.ink, fontWeight: "800", fontSize: 14 },
+  reportDescription: { color: colors.ink, fontSize: 12, lineHeight: 17 },
   map: {
     backgroundColor: "#DDE9E0",
     borderRadius: 24,
@@ -1582,7 +1771,7 @@ const styles = StyleSheet.create({
   },
   selectedMarker: {
     alignItems: "center",
-    backgroundColor: colors.danger,
+    backgroundColor: colors.green,
     borderColor: colors.white,
     borderRadius: 15,
     borderWidth: 2,
@@ -1590,7 +1779,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     position: "absolute",
     width: 30,
-    zIndex: 6,
+    zIndex: 7,
   },
   mapCard: {
     backgroundColor: "rgba(255,255,255,0.95)",
@@ -1671,6 +1860,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     gap: 5,
     left: 12,
+    right: 12,
     paddingHorizontal: 10,
     paddingVertical: 7,
     position: "absolute",
@@ -1680,5 +1870,6 @@ const styles = StyleSheet.create({
     color: colors.greenDark,
     fontSize: 12,
     fontWeight: "900",
+    flex: 1,
   },
 });

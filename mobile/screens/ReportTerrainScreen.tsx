@@ -4,16 +4,17 @@ import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useMemo, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 import { randomUUID } from "expo-crypto";
-import { getTrailById } from "../../services/trailRepository";
+import { getTrailById, getTrailReports } from "../../services/trailRepository";
 import {
   Coordinate,
   formatDistance,
   getDistanceToRouteMeters,
+  getClosestPointOnRoute,
   getRouteProgressMeters,
   parseRouteCoordinates,
 } from "../../services/geoUtils";
 import { enqueue, runSync } from "../../services/syncQueue";
-import { Trail } from "../../types";
+import { Trail, TrailReport } from "../../types";
 import {
   AppScreen,
   Card,
@@ -64,7 +65,9 @@ type SelectedReportLocation = {
 };
 
 export default function ReportTerrainScreen() {
-  const { id, startedAt } = useLocalSearchParams<{ id?: string; startedAt?: string }>();
+  const { id, startedAt, latitude, longitude, perspective } = useLocalSearchParams<{
+    id?: string; startedAt?: string; latitude?: string; longitude?: string; perspective?: string;
+  }>();
   const trailId = Number(id) || 1;
   const [selectedIssues, setSelectedIssues] = useState<string[]>(["Barro"]);
   const [severity, setSeverity] = useState("Media");
@@ -73,7 +76,9 @@ export default function ReportTerrainScreen() {
   const [blocksPath, setBlocksPath] = useState(false);
   const [details, setDetails] = useState("");
   const [trail, setTrail] = useState<Trail | null>(null);
-  const [locationMode, setLocationMode] = useState<LocationMode>("current");
+  const [reports, setReports] = useState<TrailReport[]>([]);
+  const [isMapInteracting, setIsMapInteracting] = useState(false);
+  const [locationMode, setLocationMode] = useState<LocationMode>(latitude != null || longitude != null ? "map" : "current");
   const [selectedMapLocation, setSelectedMapLocation] =
     useState<SelectedReportLocation | null>(null);
   const [locationMessage, setLocationMessage] = useState<string | null>(null);
@@ -83,13 +88,33 @@ export default function ReportTerrainScreen() {
     useDeviceLocation(true);
 
   useEffect(() => {
-    getTrailById(trailId).then(setTrail).catch(() => setTrail(null));
+    let active = true;
+    setTrail(null);
+    setReports([]);
+    setSelectedMapLocation(null);
+    getTrailById(trailId).then(value => { if (active) setTrail(value); }).catch(() => { if (active) setTrail(null); });
+    getTrailReports(trailId).then(value => { if (active) setReports(value); }).catch(() => undefined);
+    return () => { active = false; };
   }, [trailId]);
 
   const routePoints = useMemo(
     () => parseRouteCoordinates(trail?.route_coordinates),
     [trail?.route_coordinates]
   );
+  useEffect(() => {
+    if ((latitude == null && longitude == null) || routePoints.length < 2 || trail?.id !== trailId) return;
+    const coordinate: Coordinate = [Number(latitude), Number(longitude)];
+    const validCoordinate = latitude != null && longitude != null && coordinate.every(Number.isFinite) && Math.abs(coordinate[0]) <= 90 && Math.abs(coordinate[1]) <= 180;
+    const closest = validCoordinate ? getClosestPointOnRoute(coordinate, routePoints) : null;
+    setLocationMode("map");
+    if (!closest || closest.distanceMeters > REPORT_LOCATION_TOLERANCE_METERS) {
+      setSelectedMapLocation(null);
+      setLocationMessage("No pudimos validar ese punto. Elegí una ubicación sobre el sendero.");
+      return;
+    }
+    setSelectedMapLocation({ coordinate: closest.coordinate, accuracyMeters: null, routeProgressMeters: closest.progressMeters, source: "map" });
+    setLocationMessage("Punto elegido en el mapa. Podés ajustarlo antes de enviar.");
+  }, [latitude, longitude, routePoints, trail?.id, trailId]);
   const summary = useMemo(
     () => `${selectedIssues.join(", ")} - ${severity} - ${trailState}`,
     [selectedIssues, severity, trailState]
@@ -139,6 +164,7 @@ export default function ReportTerrainScreen() {
       ? selectedMapLocation
       : currentReportLocation;
   const canSubmit =
+    trail?.id === trailId &&
     selectedIssues.length > 0 &&
     Boolean(severity) &&
     Boolean(trailState) &&
@@ -196,6 +222,7 @@ export default function ReportTerrainScreen() {
       />
 
       <ScrollView
+        scrollEnabled={!isMapInteracting}
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
@@ -237,6 +264,9 @@ export default function ReportTerrainScreen() {
             <View style={styles.mapPicker}>
               <TrailMap
                 trail={trail}
+                reports={reports}
+                initialPerspective={perspective === "1"}
+                onInteractionChange={setIsMapInteracting}
                 fitRoute
                 showDetailsCard={false}
                 showUserLocation={false}

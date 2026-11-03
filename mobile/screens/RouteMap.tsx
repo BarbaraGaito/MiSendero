@@ -158,6 +158,7 @@ export default function Screen04RouteMap() {
   const [isContextLoading, setIsContextLoading] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [isMapInteracting, setIsMapInteracting] = useState(false);
+  const [mapFooterHeight, setMapFooterHeight] = useState(250);
   const [isDownloaded, setIsDownloaded] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [wearableRuntime, setWearableRuntime] =
@@ -192,7 +193,7 @@ export default function Screen04RouteMap() {
         setIsDownloaded(context.isDownloaded);
         setError(null);
 
-        if (!context.hasWifi) {
+        if (!context.hasInternet) {
           setWeather(null);
           return;
         }
@@ -230,6 +231,41 @@ export default function Screen04RouteMap() {
       isMounted = false;
     };
   }, [trailId, offline]);
+
+  // Refresh on return from a report and while the map is in the foreground.
+  useEffect(() => {
+    if (!isFocused || !trail || trail.id !== trailId || !hasInternetConnection || offline === "1" || isOffline) return;
+    let active = true;
+    let refreshing = false;
+    const refresh = async () => {
+      if (refreshing) return;
+      refreshing = true;
+      try {
+        const fresh = await getTrailReports(trailId);
+        if (active) setReports(fresh);
+      } catch { /* Keep the last reports when the connection drops. */ }
+      finally { refreshing = false; }
+    };
+    void refresh();
+    const timer = setInterval(() => { void refresh(); }, 30000);
+    return () => { active = false; clearInterval(timer); };
+  }, [isFocused, trail?.id, trailId, hasInternetConnection, offline, isOffline]);
+
+  useEffect(() => {
+    if (!isFocused || !trail || !hasInternetConnection || isOffline || offline === "1") return;
+    let active = true;
+    const timer = setInterval(() => {
+      void getTrailWeather(trailId).then(value => { if (active) setWeather(value); }).catch(() => { if (active) setWeather(null); });
+    }, 15 * 60 * 1000);
+    return () => { active = false; clearInterval(timer); };
+  }, [isFocused, trail?.id, trailId, hasInternetConnection, isOffline, offline]);
+
+  const reportAtCoordinate = ({ coordinate, perspective }: { coordinate: Coordinate; perspective: boolean }) => {
+    router.push({ pathname: "/reportar-terreno", params: {
+      id: String(trailId), ...(isActiveRoute ? { startedAt: String(startedAtMs) } : {}),
+      latitude: String(coordinate[0]), longitude: String(coordinate[1]), perspective: perspective ? "1" : "0",
+    } });
+  };
 
   const refreshWearableMetrics = useCallback(async () => {
     const state = await getRouteSession(trailId, startedAtMs);
@@ -399,11 +435,14 @@ export default function Screen04RouteMap() {
         <TrailMap
           offlineOnly={offline === "1"}
           trail={trail}
+          reports={reports}
+          onReportCoordinate={reportAtCoordinate}
           weather={weather}
           fitRoute
           immersive
           initialPerspective={false}
           navigationMode
+          bottomOverlayInset={mapFooterHeight + 8}
           showDetailsCard={false}
           showMapNotices={false}
           controlsTopOffset={mapControlsTop}
@@ -586,7 +625,7 @@ export default function Screen04RouteMap() {
           />
         ) : null}
 
-        <View style={[styles.activeFooter, { paddingBottom: Math.max(16, insets.bottom + 10) }]}>
+        <View onLayout={event => setMapFooterHeight(event.nativeEvent.layout.height)} style={[styles.activeFooter, { paddingBottom: Math.max(16, insets.bottom + 10) }]}>
           {wearableRuntime?.prediction && wearableRuntime.latestSample ? (
             <View
               style={[
@@ -794,6 +833,8 @@ export default function Screen04RouteMap() {
         <TrailMap
           offlineOnly={offline === "1"}
           trail={trail}
+          reports={reports}
+          onReportCoordinate={reportAtCoordinate}
           weather={weather}
           allowSatellite={hasInternetConnection}
           onInteractionChange={setIsMapInteracting}

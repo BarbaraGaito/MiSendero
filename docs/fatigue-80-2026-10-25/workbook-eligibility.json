@@ -1,0 +1,281 @@
+{
+  "version": 1,
+  "code_sha256": "f367a8153e2073d31181a495696afea71d6c463e71eabe031dbedbac1d4af7b0",
+  "receipt_sha256": "52d6f998f768e12469007f664d721acbb6412c1a8e6f8bd6cabf002356053dc7",
+  "training_merge_approved": false,
+  "original_geofatigue_targets_added": 0,
+  "sources": {
+    "biceps": {
+      "source": "https://zenodo.org/records/15377599",
+      "version": 2,
+      "sheets": [
+        {
+          "sheet": "Summary",
+          "header_names": [
+            "No. Participant",
+            "Age",
+            "Hight",
+            "Weight",
+            "No. Entries",
+            "bpm",
+            "Time(min.)",
+            "Reps"
+          ],
+          "explicit_native_borg_header": false
+        },
+        {
+          "sheet": "P0",
+          "header_names": [
+            "yaw",
+            "pitch",
+            "roll",
+            "ax",
+            "ay",
+            "az",
+            "gx",
+            "gy",
+            "gz",
+            "mx",
+            "my",
+            "mz",
+            "bpm",
+            "period"
+          ],
+          "explicit_native_borg_header": false
+        },
+        {
+          "sheet": "P1",
+          "header_names": [
+            "yaw",
+            "pitch",
+            "roll",
+            "ax",
+            "ay",
+            "az",
+            "gx",
+            "gy",
+            "gz",
+            "mx",
+            "my",
+            "mz",
+            "bpm",
+            "period"
+          ],
+          "explicit_native_borg_header": false
+        },
+        {
+          "sheet": "P2",
+          "header_names": [
+            "yaw",
+            "pitch",
+            "roll",
+            "ax",
+            "ay",
+            "az",
+            "gx",
+            "gy",
+            "gz",
+            "mx",
+            "my",
+            "mz",
+            "bpm",
+            "period",
+            "",
+            ""
+          ],
+          "explicit_native_borg_header": false
+        },
+        {
+          "sheet": "P3",
+          "header_names": [
+            "Timestamp(us)",
+            "yaw",
+            "pitch",
+            "roll",
+            "ax",
+            "ay",
+            "az",
+            "gx",
+            "gy",
+            "gz",
+            "mx",
+            "my",
+            "mz",
+            "bpm",
+            "period"
+          ],
+          "explicit_native_borg_header": false
+        },
+        {
+          "sheet": "P4",
+          "header_names": [
+            "Timestamp(us)",
+            "yaw",
+            "pitch",
+            "roll",
+            "ax",
+            "ay",
+            "az",
+            "gx",
+            "gy",
+            "gz",
+            "mx",
+            "my",
+            "mz",
+            "bpm",
+            "period"
+          ],
+          "explicit_native_borg_header": false
+        },
+        {
+          "sheet": "P5",
+          "header_names": [
+            "Timestamp(us)",
+            "yaw",
+            "pitch",
+            "roll",
+            "ax",
+            "ay",
+            "az",
+            "gx",
+            "gy",
+            "gz",
+            "mx",
+            "my",
+            "mz",
+            "bpm",
+            "period"
+          ],
+          "explicit_native_borg_header": false
+        },
+        {
+          "sheet": "P6",
+          "header_names": [
+            "Timestamp(us)",
+            "yaw",
+            "pitch",
+            "roll",
+            "ax",
+            "ay",
+            "az",
+            "gx",
+            "gy",
+            "gz",
+            "mx",
+            "my",
+            "mz",
+            "bpm",
+            "period"
+          ],
+          "explicit_native_borg_header": false
+        },
+        {
+          "sheet": "P7",
+          "header_names": [
+            "yaw",
+            "pitch",
+            "roll",
+            "ax",
+            "ay",
+            "az",
+            "gx",
+            "gy",
+            "gz",
+            "mx",
+            "my",
+            "mz",
+            "bpm",
+            "period"
+          ],
+          "explicit_native_borg_header": false
+        },
+        {
+          "sheet": "P8",
+          "header_names": [
+            "Timestamp(us)",
+            "yaw",
+            "pitch",
+            "roll",
+            "ax",
+            "ay",
+            "az",
+            "gx",
+            "gy",
+            "gz",
+            "mx",
+            "my",
+            "mz",
+            "bpm",
+            "period"
+          ],
+          "explicit_native_borg_header": false
+        },
+        {
+          "sheet": "P9",
+          "header_names": [
+            "Timestamp(us)",
+            "yaw",
+            "pitch",
+            "roll",
+            "ax",
+            "ay",
+            "az",
+            "gx",
+            "gy",
+            "gz",
+            "mx",
+            "my",
+            "mz",
+            "bpm",
+            "period"
+          ],
+          "explicit_native_borg_header": false
+        }
+      ],
+      "sample_bpm_column_range": [
+        0.5984999999999999,
+        0.829
+      ],
+      "used_for_training": false,
+      "reason": "Inspected sheets expose period categories but no explicit numeric Borg/RPE header. Sample values in the bpm column are below one; an original-unit conversion and native outcome definition were not established. Do not treat period categories as current Borg scores."
+    },
+    "pharmaceutical": {
+      "source": "https://zenodo.org/records/14891916",
+      "populated_numeric_borg_cells": 2305,
+      "native_value_range": [
+        6.0,
+        17.0
+      ],
+      "formula_outcome_cells": 0,
+      "used_for_training": false,
+      "independent_report_count_established": false,
+      "reason": "Borg cells include values above ten and repeat across sensor rows. No conversion to CR10 or counting of copied cells as independent reports is permitted; exact report timing was not established."
+    },
+    "exercise_ppt": {
+      "source": "https://zenodo.org/records/21724451",
+      "groups": {
+        "Control": {
+          "participants": 16,
+          "numeric_rpe_cv_cells": 125,
+          "zero_rpe_cv_cells": 125
+        },
+        "LE": {
+          "participants": 15,
+          "numeric_rpe_cv_cells": 375,
+          "zero_rpe_cv_cells": 0
+        },
+        "UE": {
+          "participants": 14,
+          "numeric_rpe_cv_cells": 350,
+          "zero_rpe_cv_cells": 0
+        }
+      },
+      "exercise_group_numeric_rpe_cv_cells": 725,
+      "used_for_training": false,
+      "independent_report_timing_and_instrument_established": false,
+      "protocol_sha256": "2ad927151ab92c1cfaeccc5411366a17ff6bdb375786099c30b490660864a444",
+      "protocol_text_sha256": "232ed365c1d9e07f1624e05211a55ebcaa44e9c8e08493e673d10d68350a8f83",
+      "reason": "The CERT supplement specifies minute-wise heart-rate monitoring but does not define the RPE-CV instrument or its collection cadence. RPE-CV and OMNI are distinct columns. Some control rows contain zeros and others missing values. Preserve cells without assuming they are independent momentary Borg reports or filling missing ratings."
+    }
+  }
+}

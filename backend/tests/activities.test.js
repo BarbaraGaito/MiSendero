@@ -2,7 +2,7 @@ const request = require("supertest");
 const runMigrations = require("../src/migrate");
 const seedDatabase = require("../src/seed");
 const app = require("../src/server");
-const { query } = require("../src/db");
+const { query, getPool } = require("../src/db");
 
 let token;
 let trailId;
@@ -26,6 +26,53 @@ beforeAll(async () => {
 
 beforeEach(() => query("DELETE FROM activities"));
 describe("activities", () => {
+  test.each(["not-a-date", "2026-02-30T12:00:00Z"])("rejects invalid activity timestamps: %s", async (invalid) => {
+    for (const field of ["started_at", "ended_at"]) {
+      const response = await request(app).post("/api/activities")
+        .set("Authorization", `Bearer ${token}`)
+        .send({ started_at: "2026-10-01T08:00:00Z", [field]: invalid });
+      expect(response.status).toBe(400);
+    }
+    expect((await query("SELECT * FROM activities")).rows).toHaveLength(0);
+  });
+
+  test("idempotent activity uploads tolerate PostgreSQL REAL precision without accepting different data", async () => {
+    // pg-mem retains JS doubles. Production REAL columns return float32 values.
+    const pool = await getPool();
+    const original = pool.query.bind(pool);
+    const read = jest.spyOn(pool, "query").mockImplementation(async (...args) => {
+      const result = await original(...args);
+      if (/SELECT \* FROM activities/i.test(args[0])) {
+        result.rows = result.rows.map((row) => {
+          const stored = { ...row };
+          for (const field of ["distance_km", "route_progress_meters", "route_total_meters", "ended_latitude", "ended_longitude"]) {
+            if (stored[field] != null) stored[field] = Math.fround(stored[field]);
+          }
+          return stored;
+        });
+      }
+      return result;
+    });
+    try {
+      const payload = {
+        client_session_id: "real-precision-retry", trail_id: trailId,
+        started_at: "2026-10-01T08:00:00Z", ended_at: "2026-10-01T09:00:00Z",
+        distance_km: 1.23, duration_minutes: 60, completion_status: "ended_early",
+        route_progress_meters: 1234.56789, route_total_meters: 5678.98765,
+        ended_latitude: -41.173412345, ended_longitude: -71.475212345,
+      };
+      const first = await request(app).post("/api/activities").set("Authorization", `Bearer ${token}`).send(payload);
+      const retry = await request(app).post("/api/activities").set("Authorization", `Bearer ${token}`).send(payload);
+      expect(first.status).toBe(201);
+      expect(retry.status).toBe(201);
+      expect(retry.body.id).toBe(first.body.id);
+      const conflict = await request(app).post("/api/activities").set("Authorization", `Bearer ${token}`)
+        .send({ ...payload, ended_latitude: -42 });
+      expect(conflict.status).toBe(409);
+      expect((await query("SELECT * FROM activities")).rows).toHaveLength(1);
+    } finally { read.mockRestore(); }
+  });
+
   test("rejects creation without authentication", async () => {
     const response = await request(app).post("/api/activities").send({
       trail_id: trailId,

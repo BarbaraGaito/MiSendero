@@ -18,6 +18,8 @@
     "validate:privacy": "py training/python/validate_datasets.py",
     "typecheck": "tsc --noEmit",
     "train:ai": "node scripts/train-ai.js",
+    "tune:ai": "node scripts/train-ai.js --tune-only",
+    "train:ai-selected": "node scripts/train-ai.js --use-selection",
     "fetch:environmental": "node scripts/environmental-ai.cjs audit",
     "fetch:environmental:fire": "node scripts/environmental-ai.cjs fire-fetch",
     "fetch:environmental:fire:recent": "node scripts/environmental-ai.cjs fire-fetch --recent",

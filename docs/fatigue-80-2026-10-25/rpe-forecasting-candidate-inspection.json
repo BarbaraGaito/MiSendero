@@ -1,0 +1,279 @@
+{
+  "inspection": "passed",
+  "inspection_code_sha256": "c7d2bfd2a406a90ca628f55eec5af87ebead83eb836515d04f2689568e855720",
+  "repository": "https://github.com/sahand-hajifar/RPE_Forecasting",
+  "revision": "2e2233a6a755b05dc4dc0404d580d401ff7d520e",
+  "snapshot_sha256": {
+    "repository.json": "53cab8a0eef7e23d3ad4f2837b080bd858aa69012de177cbb0ecbd466b48945b",
+    "branch.json": "5d73bd6b3d82afc6fb664a9fba016404b582fa4e6ec6386f113f769e72c022b2",
+    "tree.json": "41bc4095dca105ae0af915807309039a50ce1d1d55a5316f77bbe1c1f9eee4be",
+    "source-context.Rmd": "784e7330b1bf6593176b2676da9d4f45ad2d0f9087659136230a1a5cb635f5b8"
+  },
+  "source_context_git_blob_sha1": "4e7a0771d2d4d0455bcc5866194c274cd9cb14d9",
+  "source_context_original_bytes_verified": true,
+  "repository_public": true,
+  "repository_license_field": null,
+  "case1_use_for_fitting_approved": false,
+  "case1_exclusion_reason": "Author context states percentile rescaling and median-filter preprocessing;these values are not approved as untouched original self-reports.",
+  "case2_available_people": 24,
+  "case2_fitting_people": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    10,
+    11,
+    13,
+    14,
+    15,
+    16,
+    18,
+    20,
+    21,
+    22,
+    23,
+    24
+  ],
+  "case2_reserved_people": [
+    1,
+    9,
+    12,
+    17,
+    19
+  ],
+  "participant_split_frozen_before_original_target_review": true,
+  "partition_random_seed": 42,
+  "case2_file_inventory": [
+    {
+      "person": 1,
+      "group_key": "RPE_Forecasting_Case2:1",
+      "source_partition": "reserved",
+      "path": "Case 2 Data/ID1GaitFeatures.xlsx",
+      "bytes": 13905,
+      "git_blob_sha1": "1e78daf7499afd656566a77d66a146e836ff086b",
+      "raw_url": "https://raw.githubusercontent.com/sahand-hajifar/RPE_Forecasting/2e2233a6a755b05dc4dc0404d580d401ff7d520e/Case%202%20Data/ID1GaitFeatures.xlsx"
+    },
+    {
+      "person": 2,
+      "group_key": "RPE_Forecasting_Case2:2",
+      "source_partition": "fitting",
+      "path": "Case 2 Data/ID2GaitFeatures.xlsx",
+      "bytes": 11843,
+      "git_blob_sha1": "3a5ebb887d5c0cd5f46ee87b151fad58f32fb90c",
+      "raw_url": "https://raw.githubusercontent.com/sahand-hajifar/RPE_Forecasting/2e2233a6a755b05dc4dc0404d580d401ff7d520e/Case%202%20Data/ID2GaitFeatures.xlsx"
+    },
+    {
+      "person": 3,
+      "group_key": "RPE_Forecasting_Case2:3",
+      "source_partition": "fitting",
+      "path": "Case 2 Data/ID3GaitFeatures.xlsx",
+      "bytes": 7818,
+      "git_blob_sha1": "cd9e569019f4461c504ef259ba597edc921a6760",
+      "raw_url": "https://raw.githubusercontent.com/sahand-hajifar/RPE_Forecasting/2e2233a6a755b05dc4dc0404d580d401ff7d520e/Case%202%20Data/ID3GaitFeatures.xlsx"
+    },
+    {
+      "person": 4,
+      "group_key": "RPE_Forecasting_Case2:4",
+      "source_partition": "fitting",
+      "path": "Case 2 Data/ID4GaitFeatures.xlsx",
+      "bytes": 9028,
+      "git_blob_sha1": "eb7d371595bf1fbf2477afd7465fc3df068e635d",
+      "raw_url": "https://raw.githubusercontent.com/sahand-hajifar/RPE_Forecasting/2e2233a6a755b05dc4dc0404d580d401ff7d520e/Case%202%20Data/ID4GaitFeatures.xlsx"
+    },
+    {
+      "person": 5,
+      "group_key": "RPE_Forecasting_Case2:5",
+      "source_partition": "fitting",
+      "path": "Case 2 Data/ID5GaitFeatures.xlsx",
+      "bytes": 19213,
+      "git_blob_sha1": "3b84b9fb1581ade1fb2576b8d002e574f0dd9d67",
+      "raw_url": "https://raw.githubusercontent.com/sahand-hajifar/RPE_Forecasting/2e2233a6a755b05dc4dc0404d580d401ff7d520e/Case%202%20Data/ID5GaitFeatures.xlsx"
+    },
+    {
+      "person": 6,
+      "group_key": "RPE_Forecasting_Case2:6",
+      "source_partition": "fitting",
+      "path": "Case 2 Data/ID6GaitFeatures.xlsx",
+      "bytes": 11945,
+      "git_blob_sha1": "e809a42b43be54408019b18bae00c3bd000a0e54",
+      "raw_url": "https://raw.githubusercontent.com/sahand-hajifar/RPE_Forecasting/2e2233a6a755b05dc4dc0404d580d401ff7d520e/Case%202%20Data/ID6GaitFeatures.xlsx"
+    },
+    {
+      "person": 7,
+      "group_key": "RPE_Forecasting_Case2:7",
+      "source_partition": "fitting",
+      "path": "Case 2 Data/ID7GaitFeatures.xlsx",
+      "bytes": 18520,
+      "git_blob_sha1": "52630f0cbf7a9ef611d2e21530a19bab5ef424cb",
+      "raw_url": "https://raw.githubusercontent.com/sahand-hajifar/RPE_Forecasting/2e2233a6a755b05dc4dc0404d580d401ff7d520e/Case%202%20Data/ID7GaitFeatures.xlsx"
+    },
+    {
+      "person": 8,
+      "group_key": "RPE_Forecasting_Case2:8",
+      "source_partition": "fitting",
+      "path": "Case 2 Data/ID8GaitFeatures.xlsx",
+      "bytes": 12368,
+      "git_blob_sha1": "2083b897b087c9b78ada5555c96d8b86a11a0e26",
+      "raw_url": "https://raw.githubusercontent.com/sahand-hajifar/RPE_Forecasting/2e2233a6a755b05dc4dc0404d580d401ff7d520e/Case%202%20Data/ID8GaitFeatures.xlsx"
+    },
+    {
+      "person": 9,
+      "group_key": "RPE_Forecasting_Case2:9",
+      "source_partition": "reserved",
+      "path": "Case 2 Data/ID9GaitFeatures.xlsx",
+      "bytes": 12676,
+      "git_blob_sha1": "9fc1b67a5791ac2c4d7c85d855b92208e8664326",
+      "raw_url": "https://raw.githubusercontent.com/sahand-hajifar/RPE_Forecasting/2e2233a6a755b05dc4dc0404d580d401ff7d520e/Case%202%20Data/ID9GaitFeatures.xlsx"
+    },
+    {
+      "person": 10,
+      "group_key": "RPE_Forecasting_Case2:10",
+      "source_partition": "fitting",
+      "path": "Case 2 Data/ID10GaitFeatures.xlsx",
+      "bytes": 16670,
+      "git_blob_sha1": "fbcfba559d775a1f5bda32b0bea4006680a0129c",
+      "raw_url": "https://raw.githubusercontent.com/sahand-hajifar/RPE_Forecasting/2e2233a6a755b05dc4dc0404d580d401ff7d520e/Case%202%20Data/ID10GaitFeatures.xlsx"
+    },
+    {
+      "person": 11,
+      "group_key": "RPE_Forecasting_Case2:11",
+      "source_partition": "fitting",
+      "path": "Case 2 Data/ID11GaitFeatures.xlsx",
+      "bytes": 17036,
+      "git_blob_sha1": "b9e3a585be84555926991961ece59f05300e114e",
+      "raw_url": "https://raw.githubusercontent.com/sahand-hajifar/RPE_Forecasting/2e2233a6a755b05dc4dc0404d580d401ff7d520e/Case%202%20Data/ID11GaitFeatures.xlsx"
+    },
+    {
+      "person": 12,
+      "group_key": "RPE_Forecasting_Case2:12",
+      "source_partition": "reserved",
+      "path": "Case 2 Data/ID12GaitFeatures.xlsx",
+      "bytes": 12759,
+      "git_blob_sha1": "57f4018522a0b299047d57214ba6ec6a768b190a",
+      "raw_url": "https://raw.githubusercontent.com/sahand-hajifar/RPE_Forecasting/2e2233a6a755b05dc4dc0404d580d401ff7d520e/Case%202%20Data/ID12GaitFeatures.xlsx"
+    },
+    {
+      "person": 13,
+      "group_key": "RPE_Forecasting_Case2:13",
+      "source_partition": "fitting",
+      "path": "Case 2 Data/ID13GaitFeatures.xlsx",
+      "bytes": 20047,
+      "git_blob_sha1": "4f9ba603b1533cb9a82baa0872a5f1dd9d44540c",
+      "raw_url": "https://raw.githubusercontent.com/sahand-hajifar/RPE_Forecasting/2e2233a6a755b05dc4dc0404d580d401ff7d520e/Case%202%20Data/ID13GaitFeatures.xlsx"
+    },
+    {
+      "person": 14,
+      "group_key": "RPE_Forecasting_Case2:14",
+      "source_partition": "fitting",
+      "path": "Case 2 Data/ID14GaitFeatures.xlsx",
+      "bytes": 13615,
+      "git_blob_sha1": "9e9f33d990f3240763f2f7e2b8c53ebea63d39c8",
+      "raw_url": "https://raw.githubusercontent.com/sahand-hajifar/RPE_Forecasting/2e2233a6a755b05dc4dc0404d580d401ff7d520e/Case%202%20Data/ID14GaitFeatures.xlsx"
+    },
+    {
+      "person": 15,
+      "group_key": "RPE_Forecasting_Case2:15",
+      "source_partition": "fitting",
+      "path": "Case 2 Data/ID15GaitFeatures.xlsx",
+      "bytes": 17643,
+      "git_blob_sha1": "e13bb0bbbf1f20ccc9138ae9c277353893dd71de",
+      "raw_url": "https://raw.githubusercontent.com/sahand-hajifar/RPE_Forecasting/2e2233a6a755b05dc4dc0404d580d401ff7d520e/Case%202%20Data/ID15GaitFeatures.xlsx"
+    },
+    {
+      "person": 16,
+      "group_key": "RPE_Forecasting_Case2:16",
+      "source_partition": "fitting",
+      "path": "Case 2 Data/ID16GaitFeatures.xlsx",
+      "bytes": 18533,
+      "git_blob_sha1": "de86e3347f14814c3bead360098280a54bb74839",
+      "raw_url": "https://raw.githubusercontent.com/sahand-hajifar/RPE_Forecasting/2e2233a6a755b05dc4dc0404d580d401ff7d520e/Case%202%20Data/ID16GaitFeatures.xlsx"
+    },
+    {
+      "person": 17,
+      "group_key": "RPE_Forecasting_Case2:17",
+      "source_partition": "reserved",
+      "path": "Case 2 Data/ID17GaitFeatures.xlsx",
+      "bytes": 20105,
+      "git_blob_sha1": "72003a412746c98cef2077b6bf3b8604545cc606",
+      "raw_url": "https://raw.githubusercontent.com/sahand-hajifar/RPE_Forecasting/2e2233a6a755b05dc4dc0404d580d401ff7d520e/Case%202%20Data/ID17GaitFeatures.xlsx"
+    },
+    {
+      "person": 18,
+      "group_key": "RPE_Forecasting_Case2:18",
+      "source_partition": "fitting",
+      "path": "Case 2 Data/ID18GaitFeatures.xlsx",
+      "bytes": 14437,
+      "git_blob_sha1": "c1ddc83e88265de55d584bfd422e63308963396a",
+      "raw_url": "https://raw.githubusercontent.com/sahand-hajifar/RPE_Forecasting/2e2233a6a755b05dc4dc0404d580d401ff7d520e/Case%202%20Data/ID18GaitFeatures.xlsx"
+    },
+    {
+      "person": 19,
+      "group_key": "RPE_Forecasting_Case2:19",
+      "source_partition": "reserved",
+      "path": "Case 2 Data/ID19GaitFeatures.xlsx",
+      "bytes": 12830,
+      "git_blob_sha1": "9da2267f5ead6e3c1ed5e1247ed9a232d1325232",
+      "raw_url": "https://raw.githubusercontent.com/sahand-hajifar/RPE_Forecasting/2e2233a6a755b05dc4dc0404d580d401ff7d520e/Case%202%20Data/ID19GaitFeatures.xlsx"
+    },
+    {
+      "person": 20,
+      "group_key": "RPE_Forecasting_Case2:20",
+      "source_partition": "fitting",
+      "path": "Case 2 Data/ID20GaitFeatures.xlsx",
+      "bytes": 11019,
+      "git_blob_sha1": "c16bf40c24463bb3cb52ea968eaceb54756a5a41",
+      "raw_url": "https://raw.githubusercontent.com/sahand-hajifar/RPE_Forecasting/2e2233a6a755b05dc4dc0404d580d401ff7d520e/Case%202%20Data/ID20GaitFeatures.xlsx"
+    },
+    {
+      "person": 21,
+      "group_key": "RPE_Forecasting_Case2:21",
+      "source_partition": "fitting",
+      "path": "Case 2 Data/ID21GaitFeatures.xlsx",
+      "bytes": 13047,
+      "git_blob_sha1": "e96c24d926f99cbb33494db44cd7ca16237a117d",
+      "raw_url": "https://raw.githubusercontent.com/sahand-hajifar/RPE_Forecasting/2e2233a6a755b05dc4dc0404d580d401ff7d520e/Case%202%20Data/ID21GaitFeatures.xlsx"
+    },
+    {
+      "person": 22,
+      "group_key": "RPE_Forecasting_Case2:22",
+      "source_partition": "fitting",
+      "path": "Case 2 Data/ID22GaitFeatures.xlsx",
+      "bytes": 12185,
+      "git_blob_sha1": "095351d9bed8a9638381d649d686241adaf73d7b",
+      "raw_url": "https://raw.githubusercontent.com/sahand-hajifar/RPE_Forecasting/2e2233a6a755b05dc4dc0404d580d401ff7d520e/Case%202%20Data/ID22GaitFeatures.xlsx"
+    },
+    {
+      "person": 23,
+      "group_key": "RPE_Forecasting_Case2:23",
+      "source_partition": "fitting",
+      "path": "Case 2 Data/ID23GaitFeatures.xlsx",
+      "bytes": 13323,
+      "git_blob_sha1": "7e8df6b6a7acaa7f91e2766046252fd9b9a9c27a",
+      "raw_url": "https://raw.githubusercontent.com/sahand-hajifar/RPE_Forecasting/2e2233a6a755b05dc4dc0404d580d401ff7d520e/Case%202%20Data/ID23GaitFeatures.xlsx"
+    },
+    {
+      "person": 24,
+      "group_key": "RPE_Forecasting_Case2:24",
+      "source_partition": "fitting",
+      "path": "Case 2 Data/ID24GaitFeatures.xlsx",
+      "bytes": 13410,
+      "git_blob_sha1": "c216edf532f9ebb0f06346f530ef47136b33b834",
+      "raw_url": "https://raw.githubusercontent.com/sahand-hajifar/RPE_Forecasting/2e2233a6a755b05dc4dc0404d580d401ff7d520e/Case%202%20Data/ID24GaitFeatures.xlsx"
+    }
+  ],
+  "case2_total_workbook_bytes": 343975,
+  "case2_protocol_context": "One reported RPE per squatting period;authors select last stride per following walking period. Repeated stride rows are not independent RPE reports.",
+  "case2_instrument_scale_verified": false,
+  "case2_raw_target_cells_verified": false,
+  "case2_actual_report_order_verified": false,
+  "case2_original_workbooks_downloaded": 0,
+  "case2_training_merge_approved": false,
+  "new_native_borg_cases": 0,
+  "new_predictive_estimator_fits": 0,
+  "new_test_predictions_computed": 0,
+  "downloaded_author_code_executed": false,
+  "next_required_evidence": "Retrieve only the19fitting original workbooks from the pinned revision,verify Git blob hashes,inspect raw headers/cells and protocol scale/order. Do not create ratings from duplicated strides or apply Case1rescaling/filters. Reserved5people stay excluded from fitting. Keep this external instrument separate from native exact Borg until compatibility is established."
+}

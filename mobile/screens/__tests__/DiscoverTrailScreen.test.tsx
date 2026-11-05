@@ -100,6 +100,7 @@ test("a catalog-only result never invents a verification date or return-trip dur
   expect(text(tree)).not.toContain("Datos registrados en el catálogo de MiSendero");
   expect(text(tree)).not.toContain("Información de la ficha");
   expect(text(tree)).toContain("confirmar si incluye el regreso");
+  await press(tree, "Datos del recorrido");
   expect(text(tree)).not.toContain("Datos del catálogo revisados el");
   expect(text(tree)).not.toContain("(ida y vuelta)");
   expect(text(tree)).toContain("Desnivel de ascenso: no documentado");
@@ -109,10 +110,29 @@ test("the result card displays documented ascent, including a genuine zero", asy
   for (const ascentM of [123, 0]) {
     (findRecommendedTrail as jest.Mock).mockResolvedValue({ ...success, recommendation: { ...recommendation, ascentM } });
     const tree = await mount(Discover); await fill(tree); await press(tree, "Encontrar mi sendero");
+    expect(text(tree)).not.toContain("Desnivel de ascenso estimado:");
+    await press(tree, "Datos del recorrido");
     expect(text(tree)).toContain(`Desnivel de ascenso estimado: ${ascentM} m`);
     expect(text(tree)).toContain("no es una medición de campo");
     expect(text(tree)).not.toContain("Desnivel de ascenso: no documentado");
   }
+});
+
+test("the recommendation keeps long explanations available on demand and preserves the primary action", async () => {
+  const tree = await mount(Discover); await fill(tree); await press(tree, "Encontrar mi sendero");
+  expect(text(tree)).not.toContain(recommendation.explanation);
+  expect(text(tree)).not.toContain(recommendation.description);
+  const disclosure = () => tree.root.findAll((node: any) => node.props.accessibilityLabel === "¿Por qué este sendero?" && node.props.onPress)[0];
+  expect(disclosure().props.accessibilityState.expanded).toBe(false);
+  await press(tree, "¿Por qué este sendero?");
+  expect(disclosure().props.accessibilityState.expanded).toBe(true);
+  expect(text(tree)).toContain(recommendation.explanation);
+  await press(tree, "¿Por qué este sendero?");
+  expect(text(tree)).not.toContain(recommendation.explanation);
+  await press(tree, "Sobre el recorrido");
+  expect(text(tree)).toContain(recommendation.description);
+  await press(tree, "Ver sendero");
+  expect(router.push).toHaveBeenCalledWith({ pathname: "/trail-detail", params: { id: "22" } });
 });
 
 test("partial source verification and conflicting times remain visible on the result card", async () => {

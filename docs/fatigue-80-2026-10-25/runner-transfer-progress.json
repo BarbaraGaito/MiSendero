@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "reported_at": "2026-10-26T21:05:29.735406+00:00",
+  "status": "complete",
+  "selection_snapshot_sha256": "8283e9eac30b306eb86900fed9e989c846c11da11eb2cb56177980725aa6671d",
+  "planned_native_recipes": 17,
+  "completed_native_recipes_at_report": 17,
+  "source_receipt_sha256": "ce056fab8cc7202cb62e090258755f41ad5f176fd08f397543012280276fb79d",
+  "source_files": 30,
+  "source_verified_bytes": 238626573,
+  "source_fitting_people": 15,
+  "source_reserved_people_used": false,
+  "source_window_count": 330,
+  "source_condition_window_counts": {
+    "0": 190,
+    "1": 140
+  },
+  "native_borg_targets_added": 0,
+  "native_original_queries": 666,
+  "native_training_queries": 487,
+  "native_test_queries": 179,
+  "native_queries_with_any_signal": 579,
+  "native_empty_signal_queries_retained": 87,
+  "window_provenance_sha256": "4896cf8982169417980222abe8e94791a31ff7e7851ca7cfbcfc3083f2a5e7f0",
+  "source_encoder_models_pretrained": 4,
+  "source_encoder_epochs": [
+    0,
+    30,
+    30,
+    90,
+    90
+  ],
+  "independent_full_new_study_verification": "complete; runner-transfer-verification.json",
+  "python_tests_passed": 180,
+  "previously_verified_best_test_correct": 108,
+  "previously_verified_best_test_accuracy": 0.6033519553072626,
+  "target_accuracy": 0.8,
+  "goal_achieved": false,
+  "notes": "Completed source-transfer study, independently verified. The new source-trained recipes did not beat the historical point control. No fresh test evaluation was opened; the retained native test remains 108/179.",
+  "source_encoder_models_prepared": 5,
+  "source_encoder_untrained_controls": 1
+}

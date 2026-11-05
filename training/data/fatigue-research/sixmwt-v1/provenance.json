@@ -1,0 +1,1044 @@
+{
+  "version": 1,
+  "dataset_sha256": "1bdefff540d83455c551d8675df07c71ab0a23f3b353f42efd1f1884b5c14308",
+  "feature_code_sha256": "76da358a86143d2617e92ed6666824634d67dcd7b669d4611fc938d663997e8c",
+  "spectral_feature_code_sha256": "2d24102fc3e3c74333d0655b66c74d25b25069e4ef5108492e3f2da565621948",
+  "source_sha256": "15279e4474608f3c1749954b02fc7be8f0cedcad7812c5c13b356b98dc51fd4c",
+  "receipt_sha256": "5bf5e10faa041a3447ff9a698a0992d88ec99094773ff4d43ed04745e3f98223",
+  "metadata_sha256": "1aac4b7d19e035fbb8513e84f1ace6a4362e0f849e51175faf2cdcb944025e54",
+  "source": "https://doi.org/10.6084/m9.figshare.c.7954157",
+  "study": "https://doi.org/10.1038/s41597-025-06506-3",
+  "license": "CC BY 4.0",
+  "actual_reports": 60,
+  "participants": 60,
+  "source_report_field": "Data.BorgScale",
+  "features": [
+    "spectral60_acc_mag_std",
+    "spectral60_acc_mag_peak_hz",
+    "spectral60_acc_mag_peak_normalized_power",
+    "spectral60_acc_mag_entropy",
+    "spectral60_acc_mag_band_low_share",
+    "spectral60_acc_mag_band_mid_share",
+    "spectral60_acc_mag_band_gait_share",
+    "spectral60_acc_mag_band_high_share",
+    "spectral60_vertical_std",
+    "spectral60_vertical_peak_hz",
+    "spectral60_vertical_peak_normalized_power",
+    "spectral60_vertical_entropy",
+    "spectral60_vertical_band_low_share",
+    "spectral60_vertical_band_mid_share",
+    "spectral60_vertical_band_gait_share",
+    "spectral60_vertical_band_high_share",
+    "spectral120_acc_mag_std",
+    "spectral120_acc_mag_peak_hz",
+    "spectral120_acc_mag_peak_normalized_power",
+    "spectral120_acc_mag_entropy",
+    "spectral120_acc_mag_band_low_share",
+    "spectral120_acc_mag_band_mid_share",
+    "spectral120_acc_mag_band_gait_share",
+    "spectral120_acc_mag_band_high_share",
+    "spectral120_vertical_std",
+    "spectral120_vertical_peak_hz",
+    "spectral120_vertical_peak_normalized_power",
+    "spectral120_vertical_entropy",
+    "spectral120_vertical_band_low_share",
+    "spectral120_vertical_band_mid_share",
+    "spectral120_vertical_band_gait_share",
+    "spectral120_vertical_band_high_share",
+    "hr_last"
+  ],
+  "lineage": [
+    {
+      "row_key": "697891689efc8ed3d0bc6e01",
+      "member": "6MWT_IMU_Dataset/DATA/Subject 1/Data.mat",
+      "member_sha256": "0236221165dc49fe81293c2ee403eb89e134b41ced7cce3752f909e6a390f5da",
+      "actual_borg": 2.0,
+      "sensor_window_seconds": [
+        240,
+        360
+      ],
+      "post_test_outcome": true,
+      "raw_time_samples": 37200,
+      "raw_acc_samples": 37200,
+      "sensor_clock_alignment_valid": true
+    },
+    {
+      "row_key": "8324d5d7ddb5e86f7d37af34",
+      "member": "6MWT_IMU_Dataset/DATA/Subject 10/Data.mat",
+      "member_sha256": "92a534e359d08b913439b8008bb53f8e36871951cbd63a596c496484d57393b4",
+      "actual_borg": 1.0,
+      "sensor_window_seconds": [
+        240,
+        360
+      ],
+      "post_test_outcome": true,
+      "raw_time_samples": 37200,
+      "raw_acc_samples": 37200,
+      "sensor_clock_alignment_valid": true
+    },
+    {
+      "row_key": "6bcb945c1dcc36d878e3f2f7",
+      "member": "6MWT_IMU_Dataset/DATA/Subject 11/Data.mat",
+      "member_sha256": "5ab498b38b3f61c9e30b14f9e0fec32aa66dba75522fbf523bb126cce7257378",
+      "actual_borg": 1.0,
+      "sensor_window_seconds": [
+        240,
+        360
+      ],
+      "post_test_outcome": true,
+      "raw_time_samples": 37200,
+      "raw_acc_samples": 37200,
+      "sensor_clock_alignment_valid": true
+    },
+    {
+      "row_key": "c0d1373b5983e1295774779a",
+      "member": "6MWT_IMU_Dataset/DATA/Subject 12/Data.mat",
+      "member_sha256": "335b138204c563196d4077cd4579d9e26409df5bf4e6621657b262f67b1edf02",
+      "actual_borg": 3.0,
+      "sensor_window_seconds": [
+        240,
+        360
+      ],
+      "post_test_outcome": true,
+      "raw_time_samples": 37200,
+      "raw_acc_samples": 37200,
+      "sensor_clock_alignment_valid": true
+    },
+    {
+      "row_key": "08bba773b782db66f232c42a",
+      "member": "6MWT_IMU_Dataset/DATA/Subject 13/Data.mat",
+      "member_sha256": "9997b8f02ea29e4303c5a0d9fdaaee5de10a40efca6ab6400318b9837575a7a6",
+      "actual_borg": 5.0,
+      "sensor_window_seconds": [
+        240,
+        360
+      ],
+      "post_test_outcome": true,
+      "raw_time_samples": 37200,
+      "raw_acc_samples": 37200,
+      "sensor_clock_alignment_valid": true
+    },
+    {
+      "row_key": "c9b523219ae438f8d6b4c7c9",
+      "member": "6MWT_IMU_Dataset/DATA/Subject 14/Data.mat",
+      "member_sha256": "c175b5ab2440e153f0178dcc72a47afa38302338bf1160fca2d2720c83d9136d",
+      "actual_borg": 6.0,
+      "sensor_window_seconds": [
+        240,
+        360
+      ],
+      "post_test_outcome": true,
+      "raw_time_samples": 36300,
+      "raw_acc_samples": 36300,
+      "sensor_clock_alignment_valid": true
+    },
+    {
+      "row_key": "f73e76d7dfc4ed39ad41b181",
+      "member": "6MWT_IMU_Dataset/DATA/Subject 15/Data.mat",
+      "member_sha256": "a354c6187303ada3f8b12c4449fcc50c4bceabe967c792486a19f3882559448c",
+      "actual_borg": 5.0,
+      "sensor_window_seconds": [
+        240,
+        360
+      ],
+      "post_test_outcome": true,
+      "raw_time_samples": 37200,
+      "raw_acc_samples": 37200,
+      "sensor_clock_alignment_valid": true
+    },
+    {
+      "row_key": "d4e249af68b2b8c2dfe38746",
+      "member": "6MWT_IMU_Dataset/DATA/Subject 16/Data.mat",
+      "member_sha256": "4d916be7121f87b528608d51c88065afef2ce1f34d382de076d877fda6cfddcb",
+      "actual_borg": 5.0,
+      "sensor_window_seconds": [
+        240,
+        360
+      ],
+      "post_test_outcome": true,
+      "raw_time_samples": 37200,
+      "raw_acc_samples": 37200,
+      "sensor_clock_alignment_valid": true
+    },
+    {
+      "row_key": "0a495672bbd3448b731f93c9",
+      "member": "6MWT_IMU_Dataset/DATA/Subject 17/Data.mat",
+      "member_sha256": "baaa3dd81317bdc2a04eb908d9ac9cfeba406d27f8a39f032248d50c4248307e",
+      "actual_borg": 1.0,
+      "sensor_window_seconds": [
+        240,
+        360
+      ],
+      "post_test_outcome": true,
+      "raw_time_samples": 36700,
+      "raw_acc_samples": 36700,
+      "sensor_clock_alignment_valid": true
+    },
+    {
+      "row_key": "ba6e3b9620a4bf6bb8246fcc",
+      "member": "6MWT_IMU_Dataset/DATA/Subject 18/Data.mat",
+      "member_sha256": "b1bc6b25c918e5703ae72d7fe4279b0573a2d5aec1bcb2e32e0b5c0f44737f8b",
+      "actual_borg": 5.0,
+      "sensor_window_seconds": [
+        240,
+        360
+      ],
+      "post_test_outcome": true,
+      "raw_time_samples": 37004,
+      "raw_acc_samples": 37004,
+      "sensor_clock_alignment_valid": true
+    },
+    {
+      "row_key": "6534483265df34f91f9b18fa",
+      "member": "6MWT_IMU_Dataset/DATA/Subject 19/Data.mat",
+      "member_sha256": "771b72452204bddac444ba622568ee8a937cd0345a5ab94ace91151264ef9b60",
+      "actual_borg": 7.0,
+      "sensor_window_seconds": [
+        240,
+        360
+      ],
+      "post_test_outcome": true,
+      "raw_time_samples": 36700,
+      "raw_acc_samples": 36700,
+      "sensor_clock_alignment_valid": true
+    },
+    {
+      "row_key": "7928fc5b0cf1c3286d49414f",
+      "member": "6MWT_IMU_Dataset/DATA/Subject 2/Data.mat",
+      "member_sha256": "0b117a28cd146ad1929e3c07509fb8e8ebb6c471eed6915f1d3c87c65720cc95",
+      "actual_borg": 2.0,
+      "sensor_window_seconds": [
+        240,
+        360
+      ],
+      "post_test_outcome": true,
+      "raw_time_samples": 37200,
+      "raw_acc_samples": 37200,
+      "sensor_clock_alignment_valid": true
+    },
+    {
+      "row_key": "ea8c0322dae1eb8fc208a138",
+      "member": "6MWT_IMU_Dataset/DATA/Subject 20/Data.mat",
+      "member_sha256": "bb791d92c1e91994e061a0e7cb1b2160998f83845630cc4fe072747fb251c718",
+      "actual_borg": 3.0,
+      "sensor_window_seconds": [
+        240,
+        360
+      ],
+      "post_test_outcome": true,
+      "raw_time_samples": 37200,
+      "raw_acc_samples": 37200,
+      "sensor_clock_alignment_valid": true
+    },
+    {
+      "row_key": "dafb2fbccaf1687fcd0d7d99",
+      "member": "6MWT_IMU_Dataset/DATA/Subject 21/Data.mat",
+      "member_sha256": "4f21ac8ad10fd8bfe43e45629fafa503c623de943b1b0c0d8373b7cc8f76cf5f",
+      "actual_borg": 4.0,
+      "sensor_window_seconds": [
+        240,
+        360
+      ],
+      "post_test_outcome": true,
+      "raw_time_samples": 37200,
+      "raw_acc_samples": 37200,
+      "sensor_clock_alignment_valid": true
+    },
+    {
+      "row_key": "e87132c37b053b5cbe64bb7b",
+      "member": "6MWT_IMU_Dataset/DATA/Subject 22/Data.mat",
+      "member_sha256": "9cb769ce9eb219dcad3e55c07bb4863ea8e047f650c9b6371aa0d7398e4ddc91",
+      "actual_borg": 7.0,
+      "sensor_window_seconds": [
+        240,
+        360
+      ],
+      "post_test_outcome": true,
+      "raw_time_samples": 36500,
+      "raw_acc_samples": 36500,
+      "sensor_clock_alignment_valid": true
+    },
+    {
+      "row_key": "83ee27268c23e5876b029e28",
+      "member": "6MWT_IMU_Dataset/DATA/Subject 23/Data.mat",
+      "member_sha256": "7ea0e5bd3a41273f8e8a2118d9dcb95a52b17cc3ad086a384f594d380e400f20",
+      "actual_borg": 3.0,
+      "sensor_window_seconds": [
+        240,
+        360
+      ],
+      "post_test_outcome": true,
+      "raw_time_samples": 37200,
+      "raw_acc_samples": 37200,
+      "sensor_clock_alignment_valid": true
+    },
+    {
+      "row_key": "c5da8033c567c6959e2fd900",
+      "member": "6MWT_IMU_Dataset/DATA/Subject 24/Data.mat",
+      "member_sha256": "1871fbcd869001fc3ab8a04d2f549c1cafa05871736332cb1749d2d04a834468",
+      "actual_borg": 4.0,
+      "sensor_window_seconds": [
+        240,
+        360
+      ],
+      "post_test_outcome": true,
+      "raw_time_samples": 36300,
+      "raw_acc_samples": 36300,
+      "sensor_clock_alignment_valid": true
+    },
+    {
+      "row_key": "5c14b3186f23503ad198c182",
+      "member": "6MWT_IMU_Dataset/DATA/Subject 25/Data.mat",
+      "member_sha256": "5c58ebcc0d50c8b40e807b7b34854ef0396483dbae5749aedd34774c36472ed9",
+      "actual_borg": 4.0,
+      "sensor_window_seconds": [
+        240,
+        360
+      ],
+      "post_test_outcome": true,
+      "raw_time_samples": 37200,
+      "raw_acc_samples": 37200,
+      "sensor_clock_alignment_valid": true
+    },
+    {
+      "row_key": "52ea00ed0cc7d908dbb6115e",
+      "member": "6MWT_IMU_Dataset/DATA/Subject 26/Data.mat",
+      "member_sha256": "604cc783c84a3194b8c766c21d75c003733d8b720208eb8cfc9e83e69d65e112",
+      "actual_borg": 6.0,
+      "sensor_window_seconds": [
+        240,
+        360
+      ],
+      "post_test_outcome": true,
+      "raw_time_samples": 36800,
+      "raw_acc_samples": 36800,
+      "sensor_clock_alignment_valid": true
+    },
+    {
+      "row_key": "1fa0d0f07fc11f6abee790ad",
+      "member": "6MWT_IMU_Dataset/DATA/Subject 27/Data.mat",
+      "member_sha256": "399a6df3fb1d85ca631a0a4db0a4504eb50965250ba1357443ac2367e0b79e15",
+      "actual_borg": 6.0,
+      "sensor_window_seconds": [
+        240,
+        360
+      ],
+      "post_test_outcome": true,
+      "raw_time_samples": 37170,
+      "raw_acc_samples": 37170,
+      "sensor_clock_alignment_valid": true
+    },
+    {
+      "row_key": "5e3fc3f8d3a443fc300b403e",
+      "member": "6MWT_IMU_Dataset/DATA/Subject 28/Data.mat",
+      "member_sha256": "4970c221d00cfdc670124e9989cd830af653a01a4d20f63337285b33b1907a23",
+      "actual_borg": 2.0,
+      "sensor_window_seconds": [
+        240,
+        360
+      ],
+      "post_test_outcome": true,
+      "raw_time_samples": 37200,
+      "raw_acc_samples": 37200,
+      "sensor_clock_alignment_valid": true
+    },
+    {
+      "row_key": "7ed56ad7b6ec87b3a1304dd0",
+      "member": "6MWT_IMU_Dataset/DATA/Subject 29/Data.mat",
+      "member_sha256": "ff4cd96552015399a18b2daf8f17bec6401dd64f9ee0fb88c1d34d7b8f1a6bf1",
+      "actual_borg": 6.0,
+      "sensor_window_seconds": [
+        240,
+        360
+      ],
+      "post_test_outcome": true,
+      "raw_time_samples": 37200,
+      "raw_acc_samples": 37200,
+      "sensor_clock_alignment_valid": true
+    },
+    {
+      "row_key": "bbce36c4915dfff3079d18a8",
+      "member": "6MWT_IMU_Dataset/DATA/Subject 3/Data.mat",
+      "member_sha256": "7bb302b4d557a67d7824e68900357d8198207b901294b03a05afa8899ecb423a",
+      "actual_borg": 2.0,
+      "sensor_window_seconds": [
+        240,
+        360
+      ],
+      "post_test_outcome": true,
+      "raw_time_samples": 37200,
+      "raw_acc_samples": 37200,
+      "sensor_clock_alignment_valid": true
+    },
+    {
+      "row_key": "cd0586c483e32d76eccb20f3",
+      "member": "6MWT_IMU_Dataset/DATA/Subject 30/Data.mat",
+      "member_sha256": "663f87abc8dff24733354028c2c1683f3fae4ba275ad44237493e107f05d33a3",
+      "actual_borg": 4.0,
+      "sensor_window_seconds": [
+        240,
+        360
+      ],
+      "post_test_outcome": true,
+      "raw_time_samples": 37200,
+      "raw_acc_samples": 37200,
+      "sensor_clock_alignment_valid": true
+    },
+    {
+      "row_key": "35be9173f96afe9ea380b877",
+      "member": "6MWT_IMU_Dataset/DATA/Subject 31/Data.mat",
+      "member_sha256": "d5727353b52550f4abe1dc925b7bb194d479423ed77d11ab4a88ef215de55a1c",
+      "actual_borg": 5.0,
+      "sensor_window_seconds": [
+        240,
+        360
+      ],
+      "post_test_outcome": true,
+      "raw_time_samples": 37200,
+      "raw_acc_samples": 37200,
+      "sensor_clock_alignment_valid": true
+    },
+    {
+      "row_key": "a043b51203ae225912208704",
+      "member": "6MWT_IMU_Dataset/DATA/Subject 32/Data.mat",
+      "member_sha256": "2087802caaec4f6cdc71684bc9c869af97db7af2b32cb680dced59123c8307f8",
+      "actual_borg": 2.0,
+      "sensor_window_seconds": [
+        240,
+        360
+      ],
+      "post_test_outcome": true,
+      "raw_time_samples": 37200,
+      "raw_acc_samples": 37200,
+      "sensor_clock_alignment_valid": true
+    },
+    {
+      "row_key": "df97da8d80cca116678f8f2b",
+      "member": "6MWT_IMU_Dataset/DATA/Subject 33/Data.mat",
+      "member_sha256": "82a233c4e4cd1b5cd3ce1364ca8c51a85d81941217af450adc04a841a899c186",
+      "actual_borg": 1.0,
+      "sensor_window_seconds": [
+        240,
+        360
+      ],
+      "post_test_outcome": true,
+      "raw_time_samples": 37200,
+      "raw_acc_samples": 37200,
+      "sensor_clock_alignment_valid": true
+    },
+    {
+      "row_key": "645b41edec495fdd8f19ed8d",
+      "member": "6MWT_IMU_Dataset/DATA/Subject 34/Data.mat",
+      "member_sha256": "88c904f5a31216a25add947f23eab6391cd919e3cf519581afedd3b951c1e086",
+      "actual_borg": 2.0,
+      "sensor_window_seconds": [
+        240,
+        360
+      ],
+      "post_test_outcome": true,
+      "raw_time_samples": 37200,
+      "raw_acc_samples": 37200,
+      "sensor_clock_alignment_valid": true
+    },
+    {
+      "row_key": "8d3ed3c51dd653acfd28bab6",
+      "member": "6MWT_IMU_Dataset/DATA/Subject 35/Data.mat",
+      "member_sha256": "0a5f7c06b63adadea467b6b618f0c4360435ad2590be65d0109ce358ed221f94",
+      "actual_borg": 1.0,
+      "sensor_window_seconds": [
+        240,
+        360
+      ],
+      "post_test_outcome": true,
+      "raw_time_samples": 37200,
+      "raw_acc_samples": 37200,
+      "sensor_clock_alignment_valid": true
+    },
+    {
+      "row_key": "e74bf032dac73547f765718a",
+      "member": "6MWT_IMU_Dataset/DATA/Subject 36/Data.mat",
+      "member_sha256": "3cc3a9dfd0b7e28f0d721e449e46ab93e8639906940f35b8deb2cb651383158f",
+      "actual_borg": 3.0,
+      "sensor_window_seconds": [
+        240,
+        360
+      ],
+      "post_test_outcome": true,
+      "raw_time_samples": 37200,
+      "raw_acc_samples": 37200,
+      "sensor_clock_alignment_valid": true
+    },
+    {
+      "row_key": "ac307c32c52d7ef4add00c06",
+      "member": "6MWT_IMU_Dataset/DATA/Subject 37/Data.mat",
+      "member_sha256": "a3783917390300dd80b68b0b234f8f9fa550ff14b04a2d6299dce30856a7b92b",
+      "actual_borg": 4.0,
+      "sensor_window_seconds": [
+        240,
+        360
+      ],
+      "post_test_outcome": true,
+      "raw_time_samples": 37200,
+      "raw_acc_samples": 37200,
+      "sensor_clock_alignment_valid": true
+    },
+    {
+      "row_key": "d0619e9149d9d6f8bde6ea8c",
+      "member": "6MWT_IMU_Dataset/DATA/Subject 38/Data.mat",
+      "member_sha256": "c99936df4d2f3c46cd6389df4ea60b648751fb6abe04850aa47f0323dbca74d9",
+      "actual_borg": 6.0,
+      "sensor_window_seconds": [
+        240,
+        360
+      ],
+      "post_test_outcome": true,
+      "raw_time_samples": 36700,
+      "raw_acc_samples": 36700,
+      "sensor_clock_alignment_valid": true
+    },
+    {
+      "row_key": "98a2737de7ea5417de9768d0",
+      "member": "6MWT_IMU_Dataset/DATA/Subject 39/Data.mat",
+      "member_sha256": "f803a4080ecac5eeda376ff2a8919e28286ed2c5f3bd8e4b385c849dd8e02399",
+      "actual_borg": 1.0,
+      "sensor_window_seconds": [
+        240,
+        360
+      ],
+      "post_test_outcome": true,
+      "raw_time_samples": 36700,
+      "raw_acc_samples": 36700,
+      "sensor_clock_alignment_valid": true
+    },
+    {
+      "row_key": "86ce50d104efabce9cca9beb",
+      "member": "6MWT_IMU_Dataset/DATA/Subject 4/Data.mat",
+      "member_sha256": "47343c78eb591994b3446cc142a2f699d8f43e7407380dd0d7e9ebc30efe1732",
+      "actual_borg": 4.0,
+      "sensor_window_seconds": [
+        240,
+        360
+      ],
+      "post_test_outcome": true,
+      "raw_time_samples": 37200,
+      "raw_acc_samples": 37200,
+      "sensor_clock_alignment_valid": true
+    },
+    {
+      "row_key": "41e6949c9065a7dafb9c6127",
+      "member": "6MWT_IMU_Dataset/DATA/Subject 40/Data.mat",
+      "member_sha256": "23f01c6f5054e309e358851055b5c01d7466f2c3d3a56adcb4965bb638b849b2",
+      "actual_borg": 3.0,
+      "sensor_window_seconds": [
+        240,
+        360
+      ],
+      "post_test_outcome": true,
+      "raw_time_samples": 37200,
+      "raw_acc_samples": 37200,
+      "sensor_clock_alignment_valid": true
+    },
+    {
+      "row_key": "7a57528528c4b3d6cf45f5be",
+      "member": "6MWT_IMU_Dataset/DATA/Subject 41/Data.mat",
+      "member_sha256": "5b47b24b1c3649c32bbff250c4370d3a575e0f5786f7b28439dd5c4993980364",
+      "actual_borg": 3.0,
+      "sensor_window_seconds": [
+        240,
+        360
+      ],
+      "post_test_outcome": true,
+      "raw_time_samples": 37200,
+      "raw_acc_samples": 37200,
+      "sensor_clock_alignment_valid": true
+    },
+    {
+      "row_key": "57304a173fb12e3175f141d9",
+      "member": "6MWT_IMU_Dataset/DATA/Subject 42/Data.mat",
+      "member_sha256": "0c8ec48477e7ad5ffad5d66895b17886c4400a2f4a48f7b4669123e0452327d9",
+      "actual_borg": 2.0,
+      "sensor_window_seconds": [
+        240,
+        360
+      ],
+      "post_test_outcome": true,
+      "raw_time_samples": 37010,
+      "raw_acc_samples": 37010,
+      "sensor_clock_alignment_valid": true
+    },
+    {
+      "row_key": "81a65274a109ab27a1ae5af6",
+      "member": "6MWT_IMU_Dataset/DATA/Subject 43/Data.mat",
+      "member_sha256": "ff574515b12b6bf6155e80457d6745823b1ad1df54279a76ed5cedcea4a41b29",
+      "actual_borg": 4.0,
+      "sensor_window_seconds": [
+        240,
+        360
+      ],
+      "post_test_outcome": true,
+      "raw_time_samples": 37150,
+      "raw_acc_samples": 37150,
+      "sensor_clock_alignment_valid": true
+    },
+    {
+      "row_key": "54f098b8ceab7c83cd493721",
+      "member": "6MWT_IMU_Dataset/DATA/Subject 44/Data.mat",
+      "member_sha256": "09c37fcd5c8399196805f80143facbc366d2f673d374686eb59264864cf90749",
+      "actual_borg": 1.0,
+      "sensor_window_seconds": [
+        240,
+        360
+      ],
+      "post_test_outcome": true,
+      "raw_time_samples": 37200,
+      "raw_acc_samples": 37200,
+      "sensor_clock_alignment_valid": true
+    },
+    {
+      "row_key": "f42ab1805727df06942fb146",
+      "member": "6MWT_IMU_Dataset/DATA/Subject 45/Data.mat",
+      "member_sha256": "4e1452e0c1f821126e2d7b57f8478479da91df8735d83855ebfea3f304fee45e",
+      "actual_borg": 3.0,
+      "sensor_window_seconds": [
+        240,
+        360
+      ],
+      "post_test_outcome": true,
+      "raw_time_samples": 37200,
+      "raw_acc_samples": 37200,
+      "sensor_clock_alignment_valid": true
+    },
+    {
+      "row_key": "a151f9d47eafbf8202546926",
+      "member": "6MWT_IMU_Dataset/DATA/Subject 46/Data.mat",
+      "member_sha256": "68285e65a83374be015888e67212275c46c91edc277083a5029c9969156ebd8e",
+      "actual_borg": 2.0,
+      "sensor_window_seconds": [
+        240,
+        360
+      ],
+      "post_test_outcome": true,
+      "raw_time_samples": 37200,
+      "raw_acc_samples": 37200,
+      "sensor_clock_alignment_valid": true
+    },
+    {
+      "row_key": "05b5ecdacdb27c0e14932707",
+      "member": "6MWT_IMU_Dataset/DATA/Subject 47/Data.mat",
+      "member_sha256": "8e880fbd430a54828db9ab20819910e89d5b79ab567ab08523c372b5b673489d",
+      "actual_borg": 3.0,
+      "sensor_window_seconds": [
+        240,
+        360
+      ],
+      "post_test_outcome": true,
+      "raw_time_samples": 37200,
+      "raw_acc_samples": 37200,
+      "sensor_clock_alignment_valid": true
+    },
+    {
+      "row_key": "60c781f82590178f4dc4dc2a",
+      "member": "6MWT_IMU_Dataset/DATA/Subject 48/Data.mat",
+      "member_sha256": "7e77117d5f7df42b793faf9ac776c721254aca56c0a2e6cd27c687329318cc64",
+      "actual_borg": 2.0,
+      "sensor_window_seconds": [
+        240,
+        360
+      ],
+      "post_test_outcome": true,
+      "raw_time_samples": 37200,
+      "raw_acc_samples": 36700,
+      "sensor_clock_alignment_valid": false
+    },
+    {
+      "row_key": "e2c95091cc4dfdc51ea7f5de",
+      "member": "6MWT_IMU_Dataset/DATA/Subject 49/Data.mat",
+      "member_sha256": "f31fab9979ba1fafab9507db0e2d762f77e3a88e7cc65bf47d7b09889e811d0a",
+      "actual_borg": 5.0,
+      "sensor_window_seconds": [
+        240,
+        360
+      ],
+      "post_test_outcome": true,
+      "raw_time_samples": 36300,
+      "raw_acc_samples": 36300,
+      "sensor_clock_alignment_valid": true
+    },
+    {
+      "row_key": "4a27fad87598d9075b90fb80",
+      "member": "6MWT_IMU_Dataset/DATA/Subject 5/Data.mat",
+      "member_sha256": "2aa2202138e5960ec88994e65d3515b69dd7fb8a912132e8763277fe134aef50",
+      "actual_borg": 1.0,
+      "sensor_window_seconds": [
+        240,
+        360
+      ],
+      "post_test_outcome": true,
+      "raw_time_samples": 37200,
+      "raw_acc_samples": 37200,
+      "sensor_clock_alignment_valid": true
+    },
+    {
+      "row_key": "f0cfeb4ba50b27595f261996",
+      "member": "6MWT_IMU_Dataset/DATA/Subject 50/Data.mat",
+      "member_sha256": "a95e4b6912a688e2a94d67813a658f95e688112a7f68d59a93ba32ef3e7ece07",
+      "actual_borg": 2.0,
+      "sensor_window_seconds": [
+        240,
+        360
+      ],
+      "post_test_outcome": true,
+      "raw_time_samples": 36756,
+      "raw_acc_samples": 36756,
+      "sensor_clock_alignment_valid": true
+    },
+    {
+      "row_key": "f820e78bf153227a57207ed4",
+      "member": "6MWT_IMU_Dataset/DATA/Subject 51/Data.mat",
+      "member_sha256": "ef23a5740c8db52cbbda4e9fd3d678fb147b9b3b86aa5c2af0b7b65a211a37cd",
+      "actual_borg": 7.0,
+      "sensor_window_seconds": [
+        240,
+        360
+      ],
+      "post_test_outcome": true,
+      "raw_time_samples": 37200,
+      "raw_acc_samples": 37200,
+      "sensor_clock_alignment_valid": true
+    },
+    {
+      "row_key": "180295bf664400365a32e6b4",
+      "member": "6MWT_IMU_Dataset/DATA/Subject 52/Data.mat",
+      "member_sha256": "9e87acaf99349d620bb2537462cd59d4b59b4720eecb52f08e6d8f00b0303b69",
+      "actual_borg": 7.0,
+      "sensor_window_seconds": [
+        240,
+        360
+      ],
+      "post_test_outcome": true,
+      "raw_time_samples": 37200,
+      "raw_acc_samples": 36600,
+      "sensor_clock_alignment_valid": false
+    },
+    {
+      "row_key": "898dbda53590da7d25ae3637",
+      "member": "6MWT_IMU_Dataset/DATA/Subject 53/Data.mat",
+      "member_sha256": "4c3d267d2e3765235e766fa1dd7e897d87e02ebe5df476d6b572da254ccf60d9",
+      "actual_borg": 4.0,
+      "sensor_window_seconds": [
+        240,
+        360
+      ],
+      "post_test_outcome": true,
+      "raw_time_samples": 37200,
+      "raw_acc_samples": 36900,
+      "sensor_clock_alignment_valid": false
+    },
+    {
+      "row_key": "365a930f94e7708772bdd129",
+      "member": "6MWT_IMU_Dataset/DATA/Subject 54/Data.mat",
+      "member_sha256": "b668cc6c61f30b2233f63a2552f2d54cef0d067cc8991cc7324cca843e8e04f5",
+      "actual_borg": 2.0,
+      "sensor_window_seconds": [
+        240,
+        360
+      ],
+      "post_test_outcome": true,
+      "raw_time_samples": 37200,
+      "raw_acc_samples": 36800,
+      "sensor_clock_alignment_valid": false
+    },
+    {
+      "row_key": "064666a027dec1fccc27dfba",
+      "member": "6MWT_IMU_Dataset/DATA/Subject 55/Data.mat",
+      "member_sha256": "b1b39728f3e655ea73ae890497cb377c0da97df88a5eeecc9622201196932414",
+      "actual_borg": 4.0,
+      "sensor_window_seconds": [
+        240,
+        360
+      ],
+      "post_test_outcome": true,
+      "raw_time_samples": 37200,
+      "raw_acc_samples": 37200,
+      "sensor_clock_alignment_valid": true
+    },
+    {
+      "row_key": "4cbf911ffd05803a22f4430a",
+      "member": "6MWT_IMU_Dataset/DATA/Subject 56/Data.mat",
+      "member_sha256": "78e1c7444d0fb1e67e2dee9e704cc1c9346ad74a72fef4295b62df4412b04dc9",
+      "actual_borg": 5.0,
+      "sensor_window_seconds": [
+        240,
+        360
+      ],
+      "post_test_outcome": true,
+      "raw_time_samples": 36500,
+      "raw_acc_samples": 36500,
+      "sensor_clock_alignment_valid": true
+    },
+    {
+      "row_key": "361c57b670ca102c063fa15c",
+      "member": "6MWT_IMU_Dataset/DATA/Subject 57/Data.mat",
+      "member_sha256": "7e756188ae099bf46e16e78238df8cc50e829da0d06be15867162664a952fd2f",
+      "actual_borg": 3.0,
+      "sensor_window_seconds": [
+        240,
+        360
+      ],
+      "post_test_outcome": true,
+      "raw_time_samples": 37200,
+      "raw_acc_samples": 36700,
+      "sensor_clock_alignment_valid": false
+    },
+    {
+      "row_key": "7a85aaf9696914b4778fb240",
+      "member": "6MWT_IMU_Dataset/DATA/Subject 58/Data.mat",
+      "member_sha256": "a5b2c29f3e7dcbc744baf49844861382f853fd1eeabfb1bebb53d6eb9bab3c5e",
+      "actual_borg": 5.0,
+      "sensor_window_seconds": [
+        240,
+        360
+      ],
+      "post_test_outcome": true,
+      "raw_time_samples": 37200,
+      "raw_acc_samples": 37200,
+      "sensor_clock_alignment_valid": true
+    },
+    {
+      "row_key": "96a7b139a333167d7fbecb16",
+      "member": "6MWT_IMU_Dataset/DATA/Subject 59/Data.mat",
+      "member_sha256": "5b10d52ff565f2a77fb5f01459ca1d202ea6f32a8f7cf7fe61f58746ce1f00e6",
+      "actual_borg": 5.0,
+      "sensor_window_seconds": [
+        240,
+        360
+      ],
+      "post_test_outcome": true,
+      "raw_time_samples": 36800,
+      "raw_acc_samples": 36800,
+      "sensor_clock_alignment_valid": true
+    },
+    {
+      "row_key": "a0778320efa9a4aa97a273cd",
+      "member": "6MWT_IMU_Dataset/DATA/Subject 6/Data.mat",
+      "member_sha256": "a67158b997566206879c44767457fdad883aba1e68735bf04fdbb050dfb6e3c0",
+      "actual_borg": 3.0,
+      "sensor_window_seconds": [
+        240,
+        360
+      ],
+      "post_test_outcome": true,
+      "raw_time_samples": 36650,
+      "raw_acc_samples": 36650,
+      "sensor_clock_alignment_valid": true
+    },
+    {
+      "row_key": "2e62b2871ac0c35a163e2ec5",
+      "member": "6MWT_IMU_Dataset/DATA/Subject 60/Data.mat",
+      "member_sha256": "a4e8b37fb0369f195195942ebcf6cbd12df2e82c779e5967103ca0d4ae1cc40b",
+      "actual_borg": 4.0,
+      "sensor_window_seconds": [
+        240,
+        360
+      ],
+      "post_test_outcome": true,
+      "raw_time_samples": 37200,
+      "raw_acc_samples": 37200,
+      "sensor_clock_alignment_valid": true
+    },
+    {
+      "row_key": "f2ebc5ad8985bf6ee785affc",
+      "member": "6MWT_IMU_Dataset/DATA/Subject 7/Data.mat",
+      "member_sha256": "fbe58dcae75830b44b3e6ddd2ccaf3ea515c86f39c12728f593089f1fe0405f3",
+      "actual_borg": 3.0,
+      "sensor_window_seconds": [
+        240,
+        360
+      ],
+      "post_test_outcome": true,
+      "raw_time_samples": 37200,
+      "raw_acc_samples": 37200,
+      "sensor_clock_alignment_valid": true
+    },
+    {
+      "row_key": "77616193889a7e6d7e828fcc",
+      "member": "6MWT_IMU_Dataset/DATA/Subject 8/Data.mat",
+      "member_sha256": "0d49ccb13e5b14ecc827c2ff2c4c8421ed9ff762db52d2b3e02d2dd4ec584703",
+      "actual_borg": 2.0,
+      "sensor_window_seconds": [
+        240,
+        360
+      ],
+      "post_test_outcome": true,
+      "raw_time_samples": 37200,
+      "raw_acc_samples": 37200,
+      "sensor_clock_alignment_valid": true
+    },
+    {
+      "row_key": "e2dad2bd8a46285deb31a86a",
+      "member": "6MWT_IMU_Dataset/DATA/Subject 9/Data.mat",
+      "member_sha256": "e17f4e2315e1c5da70262b15fc3339aea980bb4fedf90c2a36d33310b99130d9",
+      "actual_borg": 2.0,
+      "sensor_window_seconds": [
+        240,
+        360
+      ],
+      "post_test_outcome": true,
+      "raw_time_samples": 37200,
+      "raw_acc_samples": 37200,
+      "sensor_clock_alignment_valid": true
+    }
+  ],
+  "split": {
+    "train_row_keys": [
+      "697891689efc8ed3d0bc6e01",
+      "6bcb945c1dcc36d878e3f2f7",
+      "c0d1373b5983e1295774779a",
+      "c9b523219ae438f8d6b4c7c9",
+      "f73e76d7dfc4ed39ad41b181",
+      "d4e249af68b2b8c2dfe38746",
+      "0a495672bbd3448b731f93c9",
+      "ba6e3b9620a4bf6bb8246fcc",
+      "6534483265df34f91f9b18fa",
+      "7928fc5b0cf1c3286d49414f",
+      "dafb2fbccaf1687fcd0d7d99",
+      "e87132c37b053b5cbe64bb7b",
+      "83ee27268c23e5876b029e28",
+      "c5da8033c567c6959e2fd900",
+      "5c14b3186f23503ad198c182",
+      "52ea00ed0cc7d908dbb6115e",
+      "7ed56ad7b6ec87b3a1304dd0",
+      "bbce36c4915dfff3079d18a8",
+      "cd0586c483e32d76eccb20f3",
+      "35be9173f96afe9ea380b877",
+      "8d3ed3c51dd653acfd28bab6",
+      "e74bf032dac73547f765718a",
+      "ac307c32c52d7ef4add00c06",
+      "d0619e9149d9d6f8bde6ea8c",
+      "98a2737de7ea5417de9768d0",
+      "86ce50d104efabce9cca9beb",
+      "41e6949c9065a7dafb9c6127",
+      "7a57528528c4b3d6cf45f5be",
+      "57304a173fb12e3175f141d9",
+      "54f098b8ceab7c83cd493721",
+      "f42ab1805727df06942fb146",
+      "05b5ecdacdb27c0e14932707",
+      "60c781f82590178f4dc4dc2a",
+      "4a27fad87598d9075b90fb80",
+      "f0cfeb4ba50b27595f261996",
+      "f820e78bf153227a57207ed4",
+      "180295bf664400365a32e6b4",
+      "898dbda53590da7d25ae3637",
+      "365a930f94e7708772bdd129",
+      "064666a027dec1fccc27dfba",
+      "4cbf911ffd05803a22f4430a",
+      "361c57b670ca102c063fa15c",
+      "96a7b139a333167d7fbecb16",
+      "a0778320efa9a4aa97a273cd",
+      "2e62b2871ac0c35a163e2ec5",
+      "f2ebc5ad8985bf6ee785affc",
+      "77616193889a7e6d7e828fcc",
+      "e2dad2bd8a46285deb31a86a"
+    ],
+    "test_row_keys": [
+      "8324d5d7ddb5e86f7d37af34",
+      "08bba773b782db66f232c42a",
+      "ea8c0322dae1eb8fc208a138",
+      "1fa0d0f07fc11f6abee790ad",
+      "5e3fc3f8d3a443fc300b403e",
+      "a043b51203ae225912208704",
+      "df97da8d80cca116678f8f2b",
+      "645b41edec495fdd8f19ed8d",
+      "81a65274a109ab27a1ae5af6",
+      "a151f9d47eafbf8202546926",
+      "e2c95091cc4dfdc51ea7f5de",
+      "7a85aaf9696914b4778fb240"
+    ],
+    "train_groups": [
+      "0e65a46ea6ed04c3ebd58d15",
+      "0ff0b0a2191ebd0b24bdab08",
+      "1008f6817ddefcc1f74ea56e",
+      "122ac71ced1a727f79cb51a4",
+      "16cf76b916dc3d0f57f1883f",
+      "1c5a9f5c815cd674aab5de3b",
+      "21e9d0370bf8d7c0b3965e27",
+      "28a201ecf00732221f488b2c",
+      "2ded23eb0e394306fe4bc517",
+      "3aab558745237ddbd8abc87d",
+      "469c52eabce18364233b7cde",
+      "49150df56702063f0d39c141",
+      "4aeb961bd5edea216b27f92f",
+      "597e6d6a7ddd322f9ee8222a",
+      "5bcb1e585626d60ae88c7b20",
+      "5f990d970cde13a73af2a33a",
+      "64b6016900902f1d4ac2ce4f",
+      "65478dc58c771109db75ed89",
+      "680f158cecd6a25e131037e0",
+      "6a131fd444205a861c50e1b9",
+      "6eec72d3183068ee8a02630d",
+      "742871a3a74b0ca4e83cdb6f",
+      "79ed780be9550cc159023396",
+      "80ca96b30cd381254ec9cbd9",
+      "86682ebf3a776c92a99fe2cc",
+      "8cab3ccd70575ce5b8752252",
+      "8e887446e13f53308f13bcc3",
+      "90a58bf0fdcdea07059c5471",
+      "9908f295d85076ee22e119eb",
+      "9b22cc4cbd2b48efefaa5fc8",
+      "9d5b3eaae812e64ad625a576",
+      "a1f8c6f7c1560200d797af6e",
+      "a45ec459ee3e7927a5a10e5a",
+      "ac2c48f899790b52e6216bec",
+      "ae2d49733c71f2e272d72f2e",
+      "afb5f648c679ee6752109487",
+      "bd25c972962532ca731989a5",
+      "c06fa15b8afe527ce9112049",
+      "c699ed96e0a41ab6ff18eb10",
+      "d3039d8a0c7592cb27ecaa04",
+      "dae224f5bb600667f07080a2",
+      "dc1530e516e4d2533bd85a1b",
+      "df681cf60d09d819fe58da1f",
+      "df8cc508914ee678399531a6",
+      "e0e2cfe4445fca90e4d15e1b",
+      "e6b06a5bfea16147b959ab90",
+      "f3edce7770be36466a962d27",
+      "fdb7352aded402e8f11d629d"
+    ],
+    "test_groups": [
+      "0325315e1389b4644fba1bbb",
+      "14a91cf107607d6579352d09",
+      "3d61ec718d05e7beaa3cebfa",
+      "441a733c4c6c8fa07fdaab9b",
+      "9af59ccbb887586a229d0bc8",
+      "9eaf8f6fca5a89a5a14ebd45",
+      "cf17355aa8813179c82ab3bc",
+      "d05b080cc3ca6ff04852054b",
+      "d447dd6f40da12b5eaa0b850",
+      "db563e840f3f34b5fe27e199",
+      "e0d053a8fa88ee567357499d",
+      "ec378c21da3b3a94df9ea3bb"
+    ]
+  },
+  "native_target_histogram": {
+    "1.0": 8,
+    "2.0": 13,
+    "3.0": 11,
+    "4.0": 10,
+    "5.0": 9,
+    "6.0": 5,
+    "7.0": 4
+  },
+  "sensor_clock_mismatch_reports_retained_with_missing_acceleration": 5,
+  "synthetic_rows": 0,
+  "interpolated_targets": 0,
+  "assumed_zero_targets": 0,
+  "momentary_target_merge": false,
+  "exact_report_timestamp_published": false,
+  "downloaded_code_executed": false,
+  "units": {
+    "acceleration": "m/s^2 (README intensity metrics and original 10.9 m/s^2 threshold)",
+    "heart_rate": "bpm",
+    "gyroscope_used": false
+  },
+  "policy": "One true post-test report per person. Recording starts before a 360-second walk; selected raw recording seconds 240-360 precede its completion. HR_post was measured before the Borg question. No assumed exact report timestamp, no backfilling a post-test label onto sensor rows. External fitting 48 people, reserved 12 people; source-only auxiliary regression, no GeoFatigue targets merged."
+}

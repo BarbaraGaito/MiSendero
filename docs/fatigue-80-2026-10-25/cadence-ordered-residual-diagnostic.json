@@ -1,0 +1,1595 @@
+{
+  "diagnostic": "passed",
+  "diagnostic_code_sha256": "5d63f5437fe63ecb4aa82b20e714bf662ba59b787162d950c68725a28ee99033",
+  "selection_sha256": "cc2d98bfb80aad5e87e1fd0e0637cde87c65b9780d86f93ebdeb413808b2f09f",
+  "verification_sha256": "2735f01c86d5b04a7b144a4bfaabe7e12e686d6313dc57a7d302c520dacc7d21",
+  "original_fitting_cases": 487,
+  "original_fitting_people": 28,
+  "metrics": {
+    "ordered-residual-018": {
+      "member": "core",
+      "source_weight": 0.0,
+      "penalty": 0.1,
+      "exact_native_cv_accuracy": 0.596510890643883,
+      "same_penalty_full_residual_cv": 0.5962040040096306,
+      "same_penalty_full_residual_corrected": 18,
+      "same_penalty_full_residual_spoiled": 18,
+      "folds": [
+        {
+          "fold": 0,
+          "fit_with_inner_person_offsets": {
+            "original_delta_nll": 0.9480942763523035,
+            "corrected_delta_nll": 0.9100859061916035,
+            "coefficient_mean": [
+              0.000863645140331922,
+              0.012617832405892145,
+              -0.022452282177847484
+            ],
+            "coefficient_std": [
+              0.07068370185138499,
+              0.07366685339740259,
+              0.11720427708632847
+            ],
+            "expanded_residual_rms": 0.15755600311242993,
+            "output_layer_parameters": 27
+          },
+          "validation": {
+            "original_delta_nll": 0.7861800085365496,
+            "corrected_delta_nll": 0.7829404853766299,
+            "coefficient_mean": [
+              0.006728013991378247,
+              0.010289884689264,
+              -0.007588727213442325
+            ],
+            "coefficient_std": [
+              0.06548356229647617,
+              0.06709965363681292,
+              0.10230118372544993
+            ],
+            "expanded_residual_rms": 0.1395160539893226,
+            "output_layer_parameters": 27
+          }
+        },
+        {
+          "fold": 1,
+          "fit_with_inner_person_offsets": {
+            "original_delta_nll": 0.9230389643548033,
+            "corrected_delta_nll": 0.871229376122687,
+            "coefficient_mean": [
+              -0.0022912047591201867,
+              0.01675129823763914,
+              -0.0057167580704900285
+            ],
+            "coefficient_std": [
+              0.05583487290249666,
+              0.057766191750959095,
+              0.13790490818287213
+            ],
+            "expanded_residual_rms": 0.16059503907999145,
+            "output_layer_parameters": 27
+          },
+          "validation": {
+            "original_delta_nll": 0.889600194522878,
+            "corrected_delta_nll": 0.8902304883575293,
+            "coefficient_mean": [
+              0.0017536674302233303,
+              0.01345960512433363,
+              0.002218866761287917
+            ],
+            "coefficient_std": [
+              0.054818064495904394,
+              0.05647881438993069,
+              0.09201627727272353
+            ],
+            "expanded_residual_rms": 0.12186480887591494,
+            "output_layer_parameters": 27
+          }
+        },
+        {
+          "fold": 2,
+          "fit_with_inner_person_offsets": {
+            "original_delta_nll": 0.90808812979108,
+            "corrected_delta_nll": 0.8612297457298634,
+            "coefficient_mean": [
+              -0.0023725201847491326,
+              0.014104319293680903,
+              -0.007157897107399903
+            ],
+            "coefficient_std": [
+              0.07933734402305732,
+              0.07319501615109007,
+              0.1365574712301231
+            ],
+            "expanded_residual_rms": 0.1748017839168767,
+            "output_layer_parameters": 27
+          },
+          "validation": {
+            "original_delta_nll": 1.0051695003646068,
+            "corrected_delta_nll": 1.178626324034448,
+            "coefficient_mean": [
+              -0.014325463076067321,
+              0.02823663348624227,
+              -0.002022408496807603
+            ],
+            "coefficient_std": [
+              0.09099141964479836,
+              0.07429227808437465,
+              0.1958876123800504
+            ],
+            "expanded_residual_rms": 0.2306021557032952,
+            "output_layer_parameters": 27
+          }
+        },
+        {
+          "fold": 3,
+          "fit_with_inner_person_offsets": {
+            "original_delta_nll": 0.8652488684252396,
+            "corrected_delta_nll": 0.8058549220164235,
+            "coefficient_mean": [
+              -0.0026232579481098557,
+              0.015341606703526401,
+              -0.009793128518315104
+            ],
+            "coefficient_std": [
+              0.04883909667369164,
+              0.052476049848654505,
+              0.15515172275923678
+            ],
+            "expanded_residual_rms": 0.17189881323460027,
+            "output_layer_parameters": 27
+          },
+          "validation": {
+            "original_delta_nll": 1.111619855842061,
+            "corrected_delta_nll": 1.1519767124838467,
+            "coefficient_mean": [
+              -0.017285907942363444,
+              0.03300484907630758,
+              -0.01664220589194812
+            ],
+            "coefficient_std": [
+              0.05229664889422555,
+              0.056798580423064245,
+              0.12564528237722156
+            ],
+            "expanded_residual_rms": 0.15301255144655496,
+            "output_layer_parameters": 27
+          }
+        },
+        {
+          "fold": 4,
+          "fit_with_inner_person_offsets": {
+            "original_delta_nll": 0.9684189473879149,
+            "corrected_delta_nll": 0.9173663170344653,
+            "coefficient_mean": [
+              -0.0034316252820626504,
+              0.013920452655057865,
+              -0.009689101182639298
+            ],
+            "coefficient_std": [
+              0.05417367992229404,
+              0.06104857418358278,
+              0.12956083638519092
+            ],
+            "expanded_residual_rms": 0.15410113583918647,
+            "output_layer_parameters": 27
+          },
+          "validation": {
+            "original_delta_nll": 0.8085296503824257,
+            "corrected_delta_nll": 0.8180643811154232,
+            "coefficient_mean": [
+              0.0005652881995007232,
+              0.009641281052768886,
+              -0.006108724747549046
+            ],
+            "coefficient_std": [
+              0.05305271559921344,
+              0.05922797017576316,
+              0.09881319718687614
+            ],
+            "expanded_residual_rms": 0.12734669760544587,
+            "output_layer_parameters": 27
+          }
+        }
+      ],
+      "mean_fit_original_nll": 0.9225778372622682,
+      "mean_fit_corrected_nll": 0.8731532534190084,
+      "mean_validation_original_nll": 0.9202198419297043,
+      "mean_validation_corrected_nll": 0.9643676782735755
+    },
+    "ordered-residual-019": {
+      "member": "core",
+      "source_weight": 0.0,
+      "penalty": 1.0,
+      "exact_native_cv_accuracy": 0.6041562257009828,
+      "same_penalty_full_residual_cv": 0.610473398724038,
+      "same_penalty_full_residual_corrected": 11,
+      "same_penalty_full_residual_spoiled": 14,
+      "folds": [
+        {
+          "fold": 0,
+          "fit_with_inner_person_offsets": {
+            "original_delta_nll": 0.9480942763523035,
+            "corrected_delta_nll": 0.9146425781310397,
+            "coefficient_mean": [
+              0.0004167395225155723,
+              0.0008862775832279862,
+              -0.0022229446526568684
+            ],
+            "coefficient_std": [
+              0.011952058076381823,
+              0.011169538402435892,
+              0.07479661085695337
+            ],
+            "expanded_residual_rms": 0.07660315867367443,
+            "output_layer_parameters": 27
+          },
+          "validation": {
+            "original_delta_nll": 0.7861800085365496,
+            "corrected_delta_nll": 0.7836129373621122,
+            "coefficient_mean": [
+              0.0009301459277048707,
+              0.0012224622839130462,
+              0.002949094846844673
+            ],
+            "coefficient_std": [
+              0.011709647000413267,
+              0.010475534498331211,
+              0.07123773365918354
+            ],
+            "expanded_residual_rms": 0.07302550307046769,
+            "output_layer_parameters": 27
+          }
+        },
+        {
+          "fold": 1,
+          "fit_with_inner_person_offsets": {
+            "original_delta_nll": 0.9230389643548033,
+            "corrected_delta_nll": 0.8773719810351099,
+            "coefficient_mean": [
+              -0.00026591453830935533,
+              0.0015610055461573072,
+              0.0018190659111059165
+            ],
+            "coefficient_std": [
+              0.010950986278552927,
+              0.008956706237279559,
+              0.09388104119215851
+            ],
+            "expanded_residual_rms": 0.09497164330505982,
+            "output_layer_parameters": 27
+          },
+          "validation": {
+            "original_delta_nll": 0.889600194522878,
+            "corrected_delta_nll": 0.8863258629003371,
+            "coefficient_mean": [
+              -0.00042150257428622115,
+              0.0008511024567744006,
+              0.004668427590766679
+            ],
+            "coefficient_std": [
+              0.009894684930349586,
+              0.008549816757499702,
+              0.06438529067605896
+            ],
+            "expanded_residual_rms": 0.06587234676160098,
+            "output_layer_parameters": 27
+          }
+        },
+        {
+          "fold": 2,
+          "fit_with_inner_person_offsets": {
+            "original_delta_nll": 0.90808812979108,
+            "corrected_delta_nll": 0.8686891976974696,
+            "coefficient_mean": [
+              1.2803853598314446e-05,
+              0.001138329262204178,
+              0.0015237629800647883
+            ],
+            "coefficient_std": [
+              0.011318354388706625,
+              0.009899317625519528,
+              0.09084831594196066
+            ],
+            "expanded_residual_rms": 0.09210394104530409,
+            "output_layer_parameters": 27
+          },
+          "validation": {
+            "original_delta_nll": 1.0051695003646068,
+            "corrected_delta_nll": 1.105042708047508,
+            "coefficient_mean": [
+              -0.0008045128779485822,
+              0.0028338941549151844,
+              0.0014736412421745412
+            ],
+            "coefficient_std": [
+              0.011600471785196229,
+              0.008603369430546,
+              0.11851015325221971
+            ],
+            "expanded_residual_rms": 0.1194323873604847,
+            "output_layer_parameters": 27
+          }
+        },
+        {
+          "fold": 3,
+          "fit_with_inner_person_offsets": {
+            "original_delta_nll": 0.8652488684252396,
+            "corrected_delta_nll": 0.8120228426379661,
+            "coefficient_mean": [
+              -0.00029146235690198164,
+              0.0014818712840667116,
+              0.0016515062517159945
+            ],
+            "coefficient_std": [
+              0.010890098468528385,
+              0.0057422625042783965,
+              0.10310297263661211
+            ],
+            "expanded_residual_rms": 0.1038595164418541,
+            "output_layer_parameters": 27
+          },
+          "validation": {
+            "original_delta_nll": 1.111619855842061,
+            "corrected_delta_nll": 1.1353937506799738,
+            "coefficient_mean": [
+              -0.00027763367603149484,
+              0.002153816857767821,
+              -0.0022396801003054076
+            ],
+            "coefficient_std": [
+              0.009022448667597781,
+              0.005798283923434815,
+              0.08203329049676152
+            ],
+            "expanded_residual_rms": 0.08279020232255047,
+            "output_layer_parameters": 27
+          }
+        },
+        {
+          "fold": 4,
+          "fit_with_inner_person_offsets": {
+            "original_delta_nll": 0.9684189473879149,
+            "corrected_delta_nll": 0.9247584861664996,
+            "coefficient_mean": [
+              -0.00021854028778357638,
+              0.0014998493386865265,
+              0.0003397536553404849
+            ],
+            "coefficient_std": [
+              0.011502156892971753,
+              0.00928281911160413,
+              0.08997485343446117
+            ],
+            "expanded_residual_rms": 0.09119406414259937,
+            "output_layer_parameters": 27
+          },
+          "validation": {
+            "original_delta_nll": 0.8085296503824257,
+            "corrected_delta_nll": 0.8119090628304677,
+            "coefficient_mean": [
+              0.001013753229527028,
+              0.0011387217027431988,
+              0.0006269725694597422
+            ],
+            "coefficient_std": [
+              0.01146433567104185,
+              0.009805916911637983,
+              0.06758141895649342
+            ],
+            "expanded_residual_rms": 0.06926436792723142,
+            "output_layer_parameters": 27
+          }
+        }
+      ],
+      "mean_fit_original_nll": 0.9225778372622682,
+      "mean_fit_corrected_nll": 0.8794970171336169,
+      "mean_validation_original_nll": 0.9202198419297043,
+      "mean_validation_corrected_nll": 0.9444568643640798
+    },
+    "ordered-residual-020": {
+      "member": "core",
+      "source_weight": 0.1,
+      "penalty": 0.1,
+      "exact_native_cv_accuracy": 0.6024324592713339,
+      "same_penalty_full_residual_cv": 0.5977385308638505,
+      "same_penalty_full_residual_corrected": 16,
+      "same_penalty_full_residual_spoiled": 14,
+      "folds": [
+        {
+          "fold": 0,
+          "fit_with_inner_person_offsets": {
+            "original_delta_nll": 0.9480942763523035,
+            "corrected_delta_nll": 0.9109593009137615,
+            "coefficient_mean": [
+              0.0009647987323310178,
+              0.01161013095030797,
+              -0.024705964600238998
+            ],
+            "coefficient_std": [
+              0.06981217078181479,
+              0.07309204800046451,
+              0.11851046448704797
+            ],
+            "expanded_residual_rms": 0.15813610443922294,
+            "output_layer_parameters": 27
+          },
+          "validation": {
+            "original_delta_nll": 0.7861800085365496,
+            "corrected_delta_nll": 0.780709098727985,
+            "coefficient_mean": [
+              0.0010051459353417158,
+              0.01850379674695432,
+              -0.008796085976064206
+            ],
+            "coefficient_std": [
+              0.06636527373894541,
+              0.06845857414710164,
+              0.10344909099302194
+            ],
+            "expanded_residual_rms": 0.1421738805156705,
+            "output_layer_parameters": 27
+          }
+        },
+        {
+          "fold": 1,
+          "fit_with_inner_person_offsets": {
+            "original_delta_nll": 0.9230389643548033,
+            "corrected_delta_nll": 0.8736128828302955,
+            "coefficient_mean": [
+              -0.002910004519633477,
+              0.01663923949191842,
+              -0.006381221209900288
+            ],
+            "coefficient_std": [
+              0.05799282311090917,
+              0.0591688681276314,
+              0.1381002161546266
+            ],
+            "expanded_residual_rms": 0.1620550665395445,
+            "output_layer_parameters": 27
+          },
+          "validation": {
+            "original_delta_nll": 0.889600194522878,
+            "corrected_delta_nll": 0.8919309236642696,
+            "coefficient_mean": [
+              0.00034352023984589005,
+              0.014529374185139719,
+              0.003539326681714991
+            ],
+            "coefficient_std": [
+              0.05707904457605695,
+              0.05852961694481286,
+              0.08861671076855937
+            ],
+            "expanded_residual_rms": 0.12149239634885556,
+            "output_layer_parameters": 27
+          }
+        },
+        {
+          "fold": 2,
+          "fit_with_inner_person_offsets": {
+            "original_delta_nll": 0.90808812979108,
+            "corrected_delta_nll": 0.8675385077506905,
+            "coefficient_mean": [
+              -0.0019009931714503796,
+              0.01433527110894392,
+              -0.005051963476391582
+            ],
+            "coefficient_std": [
+              0.07741099542341376,
+              0.07172461669736871,
+              0.12828283473364133
+            ],
+            "expanded_residual_rms": 0.1668172792246013,
+            "output_layer_parameters": 27
+          },
+          "validation": {
+            "original_delta_nll": 1.0051695003646068,
+            "corrected_delta_nll": 1.1572312087165684,
+            "coefficient_mean": [
+              -0.017837703940184677,
+              0.03126100261750467,
+              -0.002597442882902482
+            ],
+            "coefficient_std": [
+              0.08572506127422656,
+              0.07210985358969914,
+              0.18396362227736918
+            ],
+            "expanded_residual_rms": 0.21838821422560226,
+            "output_layer_parameters": 27
+          }
+        },
+        {
+          "fold": 3,
+          "fit_with_inner_person_offsets": {
+            "original_delta_nll": 0.8652488684252396,
+            "corrected_delta_nll": 0.8112814262598387,
+            "coefficient_mean": [
+              -0.0020795865758479414,
+              0.01532200352325068,
+              -0.007666856650408212
+            ],
+            "coefficient_std": [
+              0.048315133476990256,
+              0.05022847503571396,
+              0.1481101679870085
+            ],
+            "expanded_residual_rms": 0.1645956951188076,
+            "output_layer_parameters": 27
+          },
+          "validation": {
+            "original_delta_nll": 1.111619855842061,
+            "corrected_delta_nll": 1.1314831796753986,
+            "coefficient_mean": [
+              -0.018591580611160573,
+              0.03437535595331414,
+              -0.013780027591422493
+            ],
+            "coefficient_std": [
+              0.052900506087094894,
+              0.05588737910869701,
+              0.10875240852770808
+            ],
+            "expanded_residual_rms": 0.13952114597954746,
+            "output_layer_parameters": 27
+          }
+        },
+        {
+          "fold": 4,
+          "fit_with_inner_person_offsets": {
+            "original_delta_nll": 0.9684189473879149,
+            "corrected_delta_nll": 0.9181376642002301,
+            "coefficient_mean": [
+              -0.003045507932476925,
+              0.014531193889037829,
+              -0.00858151544628646
+            ],
+            "coefficient_std": [
+              0.05642491793650621,
+              0.06266969544179174,
+              0.13028370017471066
+            ],
+            "expanded_residual_rms": 0.15613832887502263,
+            "output_layer_parameters": 27
+          },
+          "validation": {
+            "original_delta_nll": 0.8085296503824257,
+            "corrected_delta_nll": 0.8195644153115782,
+            "coefficient_mean": [
+              0.0014011701773647424,
+              0.009966655398954402,
+              -0.004675238669573606
+            ],
+            "coefficient_std": [
+              0.055724504205599656,
+              0.061219340500122225,
+              0.09829541435853245
+            ],
+            "expanded_residual_rms": 0.12898903774534604,
+            "output_layer_parameters": 27
+          }
+        }
+      ],
+      "mean_fit_original_nll": 0.9225778372622682,
+      "mean_fit_corrected_nll": 0.8763059563909632,
+      "mean_validation_original_nll": 0.9202198419297043,
+      "mean_validation_corrected_nll": 0.9561837652191599
+    },
+    "ordered-residual-021": {
+      "member": "core",
+      "source_weight": 0.1,
+      "penalty": 1.0,
+      "exact_native_cv_accuracy": 0.6100471412645325,
+      "same_penalty_full_residual_cv": 0.606497287878362,
+      "same_penalty_full_residual_corrected": 8,
+      "same_penalty_full_residual_spoiled": 6,
+      "folds": [
+        {
+          "fold": 0,
+          "fit_with_inner_person_offsets": {
+            "original_delta_nll": 0.9480942763523035,
+            "corrected_delta_nll": 0.91667576174621,
+            "coefficient_mean": [
+              0.0003974345790641021,
+              0.0009205846924536912,
+              -0.0029597121798637916
+            ],
+            "coefficient_std": [
+              0.012079212458071366,
+              0.011284831621920732,
+              0.07238190894663232
+            ],
+            "expanded_residual_rms": 0.07431124321197398,
+            "output_layer_parameters": 27
+          },
+          "validation": {
+            "original_delta_nll": 0.7861800085365496,
+            "corrected_delta_nll": 0.7795705933101535,
+            "coefficient_mean": [
+              0.00035963202826678754,
+              0.002169848245102912,
+              0.003835453689098358
+            ],
+            "coefficient_std": [
+              0.012882730485398232,
+              0.011345154759163567,
+              0.0708543700318871
+            ],
+            "expanded_residual_rms": 0.07303812234366457,
+            "output_layer_parameters": 27
+          }
+        },
+        {
+          "fold": 1,
+          "fit_with_inner_person_offsets": {
+            "original_delta_nll": 0.9230389643548033,
+            "corrected_delta_nll": 0.880012371825843,
+            "coefficient_mean": [
+              -0.00031805303348582,
+              0.0015470151412241822,
+              0.0011506780934861943
+            ],
+            "coefficient_std": [
+              0.011061062352913861,
+              0.009485002537819521,
+              0.09280191216159828
+            ],
+            "expanded_residual_rms": 0.09395917064353328,
+            "output_layer_parameters": 27
+          },
+          "validation": {
+            "original_delta_nll": 0.889600194522878,
+            "corrected_delta_nll": 0.887673427237825,
+            "coefficient_mean": [
+              -0.0005222920039871141,
+              0.0009767080064984443,
+              0.005865308496615161
+            ],
+            "coefficient_std": [
+              0.010342164582439745,
+              0.009258995482128954,
+              0.060722021266589196
+            ],
+            "expanded_residual_rms": 0.0625738110036165,
+            "output_layer_parameters": 27
+          }
+        },
+        {
+          "fold": 2,
+          "fit_with_inner_person_offsets": {
+            "original_delta_nll": 0.90808812979108,
+            "corrected_delta_nll": 0.8747532296081799,
+            "coefficient_mean": [
+              8.317274101949358e-05,
+              0.0010874739769459157,
+              0.0015364694638879267
+            ],
+            "coefficient_std": [
+              0.010911397404361,
+              0.009544416528644017,
+              0.08456634030887358
+            ],
+            "expanded_residual_rms": 0.08582057241240712,
+            "output_layer_parameters": 27
+          },
+          "validation": {
+            "original_delta_nll": 1.0051695003646068,
+            "corrected_delta_nll": 1.0905214260973897,
+            "coefficient_mean": [
+              -0.0003030747312175877,
+              0.0012664826102920022,
+              0.0020082076719286396
+            ],
+            "coefficient_std": [
+              0.01003857686618333,
+              0.008124837122729978,
+              0.11041691195253427
+            ],
+            "expanded_residual_rms": 0.11119536491891797,
+            "output_layer_parameters": 27
+          }
+        },
+        {
+          "fold": 3,
+          "fit_with_inner_person_offsets": {
+            "original_delta_nll": 0.8652488684252396,
+            "corrected_delta_nll": 0.8175021148890135,
+            "coefficient_mean": [
+              -0.0002169647550379688,
+              0.0015189337167116305,
+              0.0016983833792921785
+            ],
+            "coefficient_std": [
+              0.011023949268878622,
+              0.005886484333854766,
+              0.09662329763701427
+            ],
+            "expanded_residual_rms": 0.09745500777789888,
+            "output_layer_parameters": 27
+          },
+          "validation": {
+            "original_delta_nll": 1.111619855842061,
+            "corrected_delta_nll": 1.1214277128948862,
+            "coefficient_mean": [
+              -0.00022956881644752095,
+              0.002563147022681055,
+              -0.00014260462393947675
+            ],
+            "coefficient_std": [
+              0.009423873744378254,
+              0.006146619816215619,
+              0.06600169993389503
+            ],
+            "expanded_residual_rms": 0.06700341398958062,
+            "output_layer_parameters": 27
+          }
+        },
+        {
+          "fold": 4,
+          "fit_with_inner_person_offsets": {
+            "original_delta_nll": 0.9684189473879149,
+            "corrected_delta_nll": 0.9248624270292826,
+            "coefficient_mean": [
+              -0.0002676230547197088,
+              0.0015224042205102366,
+              0.0006989985480998652
+            ],
+            "coefficient_std": [
+              0.012029182901657809,
+              0.010106196992606528,
+              0.08991419095400426
+            ],
+            "expanded_residual_rms": 0.09129225667891187,
+            "output_layer_parameters": 27
+          },
+          "validation": {
+            "original_delta_nll": 0.8085296503824257,
+            "corrected_delta_nll": 0.8118132931632386,
+            "coefficient_mean": [
+              0.0007911413283711606,
+              0.0012926294591155026,
+              0.0033938063380236807
+            ],
+            "coefficient_std": [
+              0.01225393403900328,
+              0.010605756537062255,
+              0.068036681731606
+            ],
+            "expanded_residual_rms": 0.07003888740680832,
+            "output_layer_parameters": 27
+          }
+        }
+      ],
+      "mean_fit_original_nll": 0.9225778372622682,
+      "mean_fit_corrected_nll": 0.8827611810197059,
+      "mean_validation_original_nll": 0.9202198419297043,
+      "mean_validation_corrected_nll": 0.9382012905406987
+    },
+    "ordered-residual-022": {
+      "member": "cat",
+      "source_weight": 0.0,
+      "penalty": 0.1,
+      "exact_native_cv_accuracy": 0.5996821899328293,
+      "same_penalty_full_residual_cv": 0.6030189145892471,
+      "same_penalty_full_residual_corrected": 14,
+      "same_penalty_full_residual_spoiled": 16,
+      "folds": [
+        {
+          "fold": 0,
+          "fit_with_inner_person_offsets": {
+            "original_delta_nll": 0.9681903949370854,
+            "corrected_delta_nll": 0.9348632559105267,
+            "coefficient_mean": [
+              -0.02586101709313941,
+              0.041119127363467095,
+              -0.031148012207691058
+            ],
+            "coefficient_std": [
+              0.08754789284576368,
+              0.08202969308905388,
+              0.10759730540253215
+            ],
+            "expanded_residual_rms": 0.1711737647089022,
+            "output_layer_parameters": 27
+          },
+          "validation": {
+            "original_delta_nll": 0.7704834761261838,
+            "corrected_delta_nll": 0.7603345009480758,
+            "coefficient_mean": [
+              -0.03474965784698725,
+              0.051044861394912,
+              -0.037641830407083035
+            ],
+            "coefficient_std": [
+              0.08889238164916285,
+              0.08545477909081033,
+              0.08562974531763233
+            ],
+            "expanded_residual_rms": 0.16663388628843254,
+            "output_layer_parameters": 27
+          }
+        },
+        {
+          "fold": 1,
+          "fit_with_inner_person_offsets": {
+            "original_delta_nll": 0.9293003953339898,
+            "corrected_delta_nll": 0.8894243631019837,
+            "coefficient_mean": [
+              -0.02874194043157976,
+              0.048352604939401904,
+              -0.0288753683879217
+            ],
+            "coefficient_std": [
+              0.07845881311519892,
+              0.07383276959464119,
+              0.11424611019132547
+            ],
+            "expanded_residual_rms": 0.16928407296330658,
+            "output_layer_parameters": 27
+          },
+          "validation": {
+            "original_delta_nll": 0.9206601347924519,
+            "corrected_delta_nll": 0.902180871784379,
+            "coefficient_mean": [
+              -0.02110547884164945,
+              0.042143122758716345,
+              -0.02550647346019421
+            ],
+            "coefficient_std": [
+              0.07478109621478107,
+              0.07004820368897297,
+              0.09587533684800158
+            ],
+            "expanded_residual_rms": 0.15021021146453759,
+            "output_layer_parameters": 27
+          }
+        },
+        {
+          "fold": 2,
+          "fit_with_inner_person_offsets": {
+            "original_delta_nll": 0.9190602085018514,
+            "corrected_delta_nll": 0.8672777372486962,
+            "coefficient_mean": [
+              -0.027002192719222662,
+              0.051535580016962894,
+              -0.020713547772014295
+            ],
+            "coefficient_std": [
+              0.09328255078481114,
+              0.06988791648577194,
+              0.15253117548377523
+            ],
+            "expanded_residual_rms": 0.2016576309658022,
+            "output_layer_parameters": 27
+          },
+          "validation": {
+            "original_delta_nll": 0.8671606242841545,
+            "corrected_delta_nll": 0.960213156037779,
+            "coefficient_mean": [
+              -0.03655876328839975,
+              0.057672643194011615,
+              -0.017323431960654025
+            ],
+            "coefficient_std": [
+              0.11564616623830928,
+              0.07835903487706004,
+              0.2077128812820241
+            ],
+            "expanded_residual_rms": 0.2600415224613554,
+            "output_layer_parameters": 27
+          }
+        },
+        {
+          "fold": 3,
+          "fit_with_inner_person_offsets": {
+            "original_delta_nll": 0.8583714054179177,
+            "corrected_delta_nll": 0.80690000551897,
+            "coefficient_mean": [
+              -0.006850094101452208,
+              0.02562630388450313,
+              -0.02728849325038783
+            ],
+            "coefficient_std": [
+              0.06821917298404717,
+              0.06138991164613327,
+              0.14229738898112906
+            ],
+            "expanded_residual_rms": 0.17354946507912453,
+            "output_layer_parameters": 27
+          },
+          "validation": {
+            "original_delta_nll": 1.0806629401510073,
+            "corrected_delta_nll": 1.115824872664199,
+            "coefficient_mean": [
+              -0.01316501842994316,
+              0.03307212491099741,
+              -0.020919026021717812
+            ],
+            "coefficient_std": [
+              0.06179237152972436,
+              0.05379475628067115,
+              0.12939654486043808
+            ],
+            "expanded_residual_rms": 0.1586200731637403,
+            "output_layer_parameters": 27
+          }
+        },
+        {
+          "fold": 4,
+          "fit_with_inner_person_offsets": {
+            "original_delta_nll": 0.9929996229844521,
+            "corrected_delta_nll": 0.9366607052051114,
+            "coefficient_mean": [
+              -0.023080239580436188,
+              0.043292629179742304,
+              -0.03393631544189923
+            ],
+            "coefficient_std": [
+              0.0778935973449862,
+              0.07431491217330455,
+              0.13147837445513114
+            ],
+            "expanded_residual_rms": 0.18009804089492365,
+            "output_layer_parameters": 27
+          },
+          "validation": {
+            "original_delta_nll": 0.8191816664038982,
+            "corrected_delta_nll": 0.820076915168869,
+            "coefficient_mean": [
+              -0.015160198650926679,
+              0.03646812323931154,
+              -0.03161739858870323
+            ],
+            "coefficient_std": [
+              0.07103118833537946,
+              0.06763504107014696,
+              0.09874481226069473
+            ],
+            "expanded_residual_rms": 0.14808741328872813,
+            "output_layer_parameters": 27
+          }
+        }
+      ],
+      "mean_fit_original_nll": 0.9335844054350592,
+      "mean_fit_corrected_nll": 0.8870252133970575,
+      "mean_validation_original_nll": 0.8916297683515392,
+      "mean_validation_corrected_nll": 0.9117260633206603
+    },
+    "ordered-residual-023": {
+      "member": "cat",
+      "source_weight": 0.0,
+      "penalty": 1.0,
+      "exact_native_cv_accuracy": 0.6078493390667303,
+      "same_penalty_full_residual_cv": 0.6078493390667303,
+      "same_penalty_full_residual_corrected": 8,
+      "same_penalty_full_residual_spoiled": 8,
+      "folds": [
+        {
+          "fold": 0,
+          "fit_with_inner_person_offsets": {
+            "original_delta_nll": 0.9681903949370854,
+            "corrected_delta_nll": 0.9404686302355388,
+            "coefficient_mean": [
+              -0.0026299882345070017,
+              0.004709513874204699,
+              -0.006288156754431106
+            ],
+            "coefficient_std": [
+              0.015353471015100558,
+              0.012373625989689456,
+              0.06695401913273705
+            ],
+            "expanded_residual_rms": 0.0702873647591403,
+            "output_layer_parameters": 27
+          },
+          "validation": {
+            "original_delta_nll": 0.7704834761261838,
+            "corrected_delta_nll": 0.76359483500387,
+            "coefficient_mean": [
+              -0.0014518133783712984,
+              0.004535164663102478,
+              -0.012930648275651038
+            ],
+            "coefficient_std": [
+              0.014629487033951746,
+              0.012748040671065601,
+              0.0529994571978499
+            ],
+            "expanded_residual_rms": 0.05809779720893124,
+            "output_layer_parameters": 27
+          }
+        },
+        {
+          "fold": 1,
+          "fit_with_inner_person_offsets": {
+            "original_delta_nll": 0.9293003953339898,
+            "corrected_delta_nll": 0.8960955272525957,
+            "coefficient_mean": [
+              -0.002734614419456147,
+              0.005136940628879621,
+              -0.0145374160324801
+            ],
+            "coefficient_std": [
+              0.012765158738529929,
+              0.011504234860887,
+              0.08304820656668806
+            ],
+            "expanded_residual_rms": 0.0862409650412537,
+            "output_layer_parameters": 27
+          },
+          "validation": {
+            "original_delta_nll": 0.9206601347924519,
+            "corrected_delta_nll": 0.9007485264284562,
+            "coefficient_mean": [
+              -0.0016951830652744873,
+              0.004189435197749053,
+              -0.014346976141931245
+            ],
+            "coefficient_std": [
+              0.011416169032665334,
+              0.010189240868576184,
+              0.06516305960429232
+            ],
+            "expanded_residual_rms": 0.06860491687314313,
+            "output_layer_parameters": 27
+          }
+        },
+        {
+          "fold": 2,
+          "fit_with_inner_person_offsets": {
+            "original_delta_nll": 0.9190602085018514,
+            "corrected_delta_nll": 0.8733315433411128,
+            "coefficient_mean": [
+              -0.002345310416232867,
+              0.0047309862241124755,
+              0.003947222097353501
+            ],
+            "coefficient_std": [
+              0.013587397940751063,
+              0.00996277844166538,
+              0.09578164711757121
+            ],
+            "expanded_residual_rms": 0.09747544067876812,
+            "output_layer_parameters": 27
+          },
+          "validation": {
+            "original_delta_nll": 0.8671606242841545,
+            "corrected_delta_nll": 0.9406812817924289,
+            "coefficient_mean": [
+              -0.0019227092236499576,
+              0.0042396799852962,
+              0.008601185043945032
+            ],
+            "coefficient_std": [
+              0.017346427061324676,
+              0.010785869150504054,
+              0.15374940615890345
+            ],
+            "expanded_residual_rms": 0.15540838291623046,
+            "output_layer_parameters": 27
+          }
+        },
+        {
+          "fold": 3,
+          "fit_with_inner_person_offsets": {
+            "original_delta_nll": 0.8583714054179177,
+            "corrected_delta_nll": 0.8140253471935132,
+            "coefficient_mean": [
+              -0.00022953370368325866,
+              0.002285293848919017,
+              -0.009492182018017613
+            ],
+            "coefficient_std": [
+              0.012166187371536562,
+              0.009320093292234226,
+              0.09171507051872765
+            ],
+            "expanded_residual_rms": 0.09349818815116516,
+            "output_layer_parameters": 27
+          },
+          "validation": {
+            "original_delta_nll": 1.0806629401510073,
+            "corrected_delta_nll": 1.1035789784014347,
+            "coefficient_mean": [
+              -0.0010615569064576253,
+              0.0033424181370612454,
+              -0.004590598473727119
+            ],
+            "coefficient_std": [
+              0.00949313998247029,
+              0.00779455436865611,
+              0.0780646889749272
+            ],
+            "expanded_residual_rms": 0.07923599375094893,
+            "output_layer_parameters": 27
+          }
+        },
+        {
+          "fold": 4,
+          "fit_with_inner_person_offsets": {
+            "original_delta_nll": 0.9929996229844521,
+            "corrected_delta_nll": 0.9435296569788441,
+            "coefficient_mean": [
+              -0.0022863859870480467,
+              0.004883789002302696,
+              -0.015506267156028613
+            ],
+            "coefficient_std": [
+              0.014867190720064937,
+              0.01132593513187133,
+              0.09537571432799025
+            ],
+            "expanded_residual_rms": 0.09856652741731066,
+            "output_layer_parameters": 27
+          },
+          "validation": {
+            "original_delta_nll": 0.8191816664038982,
+            "corrected_delta_nll": 0.8183237859440319,
+            "coefficient_mean": [
+              -0.0011072778296503391,
+              0.0038995535297135075,
+              -0.012073514307593252
+            ],
+            "coefficient_std": [
+              0.012302882621732255,
+              0.009578243452353016,
+              0.07099791686400188
+            ],
+            "expanded_residual_rms": 0.07379708799893926,
+            "output_layer_parameters": 27
+          }
+        }
+      ],
+      "mean_fit_original_nll": 0.9335844054350592,
+      "mean_fit_corrected_nll": 0.893490141000321,
+      "mean_validation_original_nll": 0.8916297683515392,
+      "mean_validation_corrected_nll": 0.9053854815140443
+    },
+    "ordered-residual-024": {
+      "member": "cat",
+      "source_weight": 0.1,
+      "penalty": 0.1,
+      "exact_native_cv_accuracy": 0.6056429742465549,
+      "same_penalty_full_residual_cv": 0.6093360876123024,
+      "same_penalty_full_residual_corrected": 11,
+      "same_penalty_full_residual_spoiled": 13,
+      "folds": [
+        {
+          "fold": 0,
+          "fit_with_inner_person_offsets": {
+            "original_delta_nll": 0.9681903949370854,
+            "corrected_delta_nll": 0.9336252518371562,
+            "coefficient_mean": [
+              -0.023487490387657507,
+              0.03906346681390622,
+              -0.03253962556790628
+            ],
+            "coefficient_std": [
+              0.08803538982695885,
+              0.08359714185284214,
+              0.10983681309555733
+            ],
+            "expanded_residual_rms": 0.17302971240589926,
+            "output_layer_parameters": 27
+          },
+          "validation": {
+            "original_delta_nll": 0.7704834761261838,
+            "corrected_delta_nll": 0.7569990762304228,
+            "coefficient_mean": [
+              -0.03636447560042143,
+              0.05350282577797771,
+              -0.03731973897665739
+            ],
+            "coefficient_std": [
+              0.08800804897095,
+              0.08442122023283322,
+              0.0929010671346164
+            ],
+            "expanded_residual_rms": 0.17053051853915266,
+            "output_layer_parameters": 27
+          }
+        },
+        {
+          "fold": 1,
+          "fit_with_inner_person_offsets": {
+            "original_delta_nll": 0.9293003953339898,
+            "corrected_delta_nll": 0.890047623287099,
+            "coefficient_mean": [
+              -0.028634700674233557,
+              0.0472589021194962,
+              -0.02878156639399785
+            ],
+            "coefficient_std": [
+              0.07926078475558344,
+              0.07430533844859634,
+              0.11398175207863179
+            ],
+            "expanded_residual_rms": 0.16934321245707262,
+            "output_layer_parameters": 27
+          },
+          "validation": {
+            "original_delta_nll": 0.9206601347924519,
+            "corrected_delta_nll": 0.9007736076905353,
+            "coefficient_mean": [
+              -0.021051789269499157,
+              0.04080879439235381,
+              -0.026669132219546515
+            ],
+            "coefficient_std": [
+              0.07535907231503676,
+              0.07030599137589484,
+              0.09533112931815786
+            ],
+            "expanded_residual_rms": 0.15009904918137937,
+            "output_layer_parameters": 27
+          }
+        },
+        {
+          "fold": 2,
+          "fit_with_inner_person_offsets": {
+            "original_delta_nll": 0.9190602085018514,
+            "corrected_delta_nll": 0.8691520753111628,
+            "coefficient_mean": [
+              -0.02761548167070398,
+              0.050516631105890525,
+              -0.020115066162467776
+            ],
+            "coefficient_std": [
+              0.09411612007203245,
+              0.07079031174735954,
+              0.15133959902979036
+            ],
+            "expanded_residual_rms": 0.20122610979222694,
+            "output_layer_parameters": 27
+          },
+          "validation": {
+            "original_delta_nll": 0.8671606242841545,
+            "corrected_delta_nll": 0.9587614656008374,
+            "coefficient_mean": [
+              -0.03879925915423561,
+              0.0579175213534458,
+              -0.012084913622660964
+            ],
+            "coefficient_std": [
+              0.11651148883935636,
+              0.08032584551339884,
+              0.2072511269538569
+            ],
+            "expanded_residual_rms": 0.26074137577408213,
+            "output_layer_parameters": 27
+          }
+        },
+        {
+          "fold": 3,
+          "fit_with_inner_person_offsets": {
+            "original_delta_nll": 0.8583714054179177,
+            "corrected_delta_nll": 0.8117635312635902,
+            "coefficient_mean": [
+              -0.007194527944961152,
+              0.026603076769063226,
+              -0.025785577727796195
+            ],
+            "coefficient_std": [
+              0.07122850796090265,
+              0.061739065142716446,
+              0.13557762913630714
+            ],
+            "expanded_residual_rms": 0.16938384509138615,
+            "output_layer_parameters": 27
+          },
+          "validation": {
+            "original_delta_nll": 1.0806629401510073,
+            "corrected_delta_nll": 1.0989607665863061,
+            "coefficient_mean": [
+              -0.016245504743054362,
+              0.03733721574512767,
+              -0.021068811745328063
+            ],
+            "coefficient_std": [
+              0.06532146350089468,
+              0.05580770446778965,
+              0.11785308379943862
+            ],
+            "expanded_residual_rms": 0.15288107065694972,
+            "output_layer_parameters": 27
+          }
+        },
+        {
+          "fold": 4,
+          "fit_with_inner_person_offsets": {
+            "original_delta_nll": 0.9929996229844521,
+            "corrected_delta_nll": 0.938715646116882,
+            "coefficient_mean": [
+              -0.023197345515581395,
+              0.04281709420334811,
+              -0.03361465793686232
+            ],
+            "coefficient_std": [
+              0.08442099172606961,
+              0.07907322855155269,
+              0.12957039393538156
+            ],
+            "expanded_residual_rms": 0.1834920486706415,
+            "output_layer_parameters": 27
+          },
+          "validation": {
+            "original_delta_nll": 0.8191816664038982,
+            "corrected_delta_nll": 0.8231713580393057,
+            "coefficient_mean": [
+              -0.012182448796191058,
+              0.032980791200975794,
+              -0.027396885105050527
+            ],
+            "coefficient_std": [
+              0.07702878621815665,
+              0.07195580109336021,
+              0.09625257602568728
+            ],
+            "expanded_residual_rms": 0.14954050812132452,
+            "output_layer_parameters": 27
+          }
+        }
+      ],
+      "mean_fit_original_nll": 0.9335844054350592,
+      "mean_fit_corrected_nll": 0.8886608255631779,
+      "mean_validation_original_nll": 0.8916297683515392,
+      "mean_validation_corrected_nll": 0.9077332548294816
+    },
+    "ordered-residual-025": {
+      "member": "cat",
+      "source_weight": 0.1,
+      "penalty": 1.0,
+      "exact_native_cv_accuracy": 0.6098101233804558,
+      "same_penalty_full_residual_cv": 0.6139294942057091,
+      "same_penalty_full_residual_corrected": 7,
+      "same_penalty_full_residual_spoiled": 9,
+      "folds": [
+        {
+          "fold": 0,
+          "fit_with_inner_person_offsets": {
+            "original_delta_nll": 0.9681903949370854,
+            "corrected_delta_nll": 0.9398016403384216,
+            "coefficient_mean": [
+              -0.0027091412644686527,
+              0.00478708342701986,
+              -0.0066740831350594835
+            ],
+            "coefficient_std": [
+              0.015979665519309703,
+              0.01339272806993321,
+              0.06557582709606984
+            ],
+            "expanded_residual_rms": 0.06935202213648582,
+            "output_layer_parameters": 27
+          },
+          "validation": {
+            "original_delta_nll": 0.7704834761261838,
+            "corrected_delta_nll": 0.7585676403231034,
+            "coefficient_mean": [
+              -0.0026526223006658254,
+              0.005917924663517624,
+              -0.013425307609140872
+            ],
+            "coefficient_std": [
+              0.014835952322656167,
+              0.013117517575031335,
+              0.05786852533344039
+            ],
+            "expanded_residual_rms": 0.06295425398423471,
+            "output_layer_parameters": 27
+          }
+        },
+        {
+          "fold": 1,
+          "fit_with_inner_person_offsets": {
+            "original_delta_nll": 0.9293003953339898,
+            "corrected_delta_nll": 0.8972796358365261,
+            "coefficient_mean": [
+              -0.0027495397419869147,
+              0.005215852497192689,
+              -0.014176069044425518
+            ],
+            "coefficient_std": [
+              0.013191972891654831,
+              0.011502877206520452,
+              0.08231591985103023
+            ],
+            "expanded_residual_rms": 0.0855451986574421,
+            "output_layer_parameters": 27
+          },
+          "validation": {
+            "original_delta_nll": 0.9206601347924519,
+            "corrected_delta_nll": 0.9007519265350915,
+            "coefficient_mean": [
+              -0.0014753928408026695,
+              0.003995534227452363,
+              -0.014448360276772924
+            ],
+            "coefficient_std": [
+              0.011618660943030924,
+              0.010160367018377888,
+              0.06448571604094558
+            ],
+            "expanded_residual_rms": 0.06799654480821495,
+            "output_layer_parameters": 27
+          }
+        },
+        {
+          "fold": 2,
+          "fit_with_inner_person_offsets": {
+            "original_delta_nll": 0.9190602085018514,
+            "corrected_delta_nll": 0.8756974469805251,
+            "coefficient_mean": [
+              -0.0025733249609709366,
+              0.0048025018157582585,
+              0.003526179492473602
+            ],
+            "coefficient_std": [
+              0.013225932542897015,
+              0.010247417029200932,
+              0.09527499054381255
+            ],
+            "expanded_residual_rms": 0.09695039266233764,
+            "output_layer_parameters": 27
+          },
+          "validation": {
+            "original_delta_nll": 0.8671606242841545,
+            "corrected_delta_nll": 0.9385924825920064,
+            "coefficient_mean": [
+              -0.00376559951680475,
+              0.005465328856599608,
+              0.010526484261979075
+            ],
+            "coefficient_std": [
+              0.01665813920314894,
+              0.011164331417277807,
+              0.15377397964230016
+            ],
+            "expanded_residual_rms": 0.15557451315329993,
+            "output_layer_parameters": 27
+          }
+        },
+        {
+          "fold": 3,
+          "fit_with_inner_person_offsets": {
+            "original_delta_nll": 0.8583714054179177,
+            "corrected_delta_nll": 0.8190040539952126,
+            "coefficient_mean": [
+              -0.00029268723053785115,
+              0.002273371786350844,
+              -0.009180182878944006
+            ],
+            "coefficient_std": [
+              0.012176730313546269,
+              0.009310705185110096,
+              0.08724868954549218
+            ],
+            "expanded_residual_rms": 0.0890888627290937,
+            "output_layer_parameters": 27
+          },
+          "validation": {
+            "original_delta_nll": 1.0806629401510073,
+            "corrected_delta_nll": 1.0903121436851815,
+            "coefficient_mean": [
+              -0.0015269611669959976,
+              0.003698147690681485,
+              -0.0056230256187857364
+            ],
+            "coefficient_std": [
+              0.009761851572434107,
+              0.007974688068995003,
+              0.06959956309069407
+            ],
+            "expanded_residual_rms": 0.0710676783227976,
+            "output_layer_parameters": 27
+          }
+        },
+        {
+          "fold": 4,
+          "fit_with_inner_person_offsets": {
+            "original_delta_nll": 0.9929996229844521,
+            "corrected_delta_nll": 0.9465723149281056,
+            "coefficient_mean": [
+              -0.0022681423644017843,
+              0.00488496563195091,
+              -0.015251073822840069
+            ],
+            "coefficient_std": [
+              0.014921426920595865,
+              0.011120207406665143,
+              0.09313772975807778
+            ],
+            "expanded_residual_rms": 0.09634597713637513,
+            "output_layer_parameters": 27
+          },
+          "validation": {
+            "original_delta_nll": 0.8191816664038982,
+            "corrected_delta_nll": 0.8209378250723119,
+            "coefficient_mean": [
+              -0.0009560606514032071,
+              0.0038509125575668865,
+              -0.008849635382520628
+            ],
+            "coefficient_std": [
+              0.011952959061019416,
+              0.009370868699551135,
+              0.06951124737497259
+            ],
+            "expanded_residual_rms": 0.07180918846514013,
+            "output_layer_parameters": 27
+          }
+        }
+      ],
+      "mean_fit_original_nll": 0.9335844054350592,
+      "mean_fit_corrected_nll": 0.8956710184157582,
+      "mean_validation_original_nll": 0.8916297683515392,
+      "mean_validation_corrected_nll": 0.9018324036415389
+    }
+  },
+  "paired_oof_comparisons": {
+    "core": {
+      "best_source_candidate": "ordered-residual-021",
+      "best_source_correct": 297,
+      "matched_zero_source": {
+        "other_correct": 294,
+        "corrected": 8,
+        "spoiled": 5
+      },
+      "same_penalty_full_source": {
+        "other_correct": 295,
+        "corrected": 8,
+        "spoiled": 6
+      },
+      "global": {
+        "other_correct": 296,
+        "corrected": 17,
+        "spoiled": 16
+      },
+      "previous_strong_source": {
+        "other_correct": 299,
+        "corrected": 9,
+        "spoiled": 11
+      },
+      "previous_scalar_source": {
+        "other_correct": 297,
+        "corrected": 14,
+        "spoiled": 14
+      }
+    },
+    "cat": {
+      "best_source_candidate": "ordered-residual-025",
+      "best_source_correct": 297,
+      "matched_zero_source": {
+        "other_correct": 296,
+        "corrected": 5,
+        "spoiled": 4
+      },
+      "same_penalty_full_source": {
+        "other_correct": 299,
+        "corrected": 7,
+        "spoiled": 9
+      },
+      "global": {
+        "other_correct": 311,
+        "corrected": 7,
+        "spoiled": 21
+      },
+      "previous_strong_source": {
+        "other_correct": 310,
+        "corrected": 7,
+        "spoiled": 20
+      },
+      "previous_scalar_source": {
+        "other_correct": 308,
+        "corrected": 7,
+        "spoiled": 18
+      }
+    }
+  },
+  "new_predictive_estimator_fits": 0,
+  "new_test_predictions_computed": 0,
+  "test_labels_inspected": false,
+  "synthetic_rows": 0,
+  "interpretation": "The smaller output basis and exact matching shared initialization were verified. A reduction in parameter count does not establish better generalization. All comparisons use original fitting-person OOF predictions;no native test observations are used to choose a model. Keep paired source effects separate from performance against the global control."
+}

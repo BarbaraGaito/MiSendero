@@ -12,7 +12,7 @@ export function ResumeRouteCard() {
     return () => { active = false; };
   }, []));
   if (!route) return null;
-  return <Card tone="orange">
+  return <Card tone="secondary">
     <Text style={{ color: colors.ink, fontSize: 17, fontWeight: "700" }}>Tenés un recorrido {route.state === "paused" ? "en pausa" : "abierto"}</Text>
     <Text style={{ color: colors.muted, marginVertical: 8 }}>Conservamos el inicio y los puntos GPS guardados. El registro requiere la app abierta.</Text>
     <PrimaryButton label="Volver a mi recorrido" onPress={() => router.push({

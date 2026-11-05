@@ -23,7 +23,7 @@ import { db } from "../../database/connection";
 import * as api from "../api";
 import * as tiles from "../mapTileCache";
 import * as auth from "../authSession";
-import { getOfflineMapByTrailId, getVerifiedOfflineMapByTrailId, refreshOfflineTrailElevation, saveOfflineTrailMap } from "../offlineMaps";
+import { deleteOfflineMap, getOfflineMapByTrailId, getVerifiedOfflineMapByTrailId, refreshOfflineTrailElevation, saveOfflineTrailMap } from "../offlineMaps";
 import { Trail } from "../../types";
 
 const trail: Trail = {
@@ -46,6 +46,20 @@ const elevated: Trail = {
   },
 };
 
+test("map deletion protects downloads from neighboring trails and other accounts", async () => {
+  const own = await saveOfflineTrailMap(elevated);
+  const neighbor = { ...elevated, id: 8 };
+  await saveOfflineTrailMap(neighbor);
+  (auth.getAuthSession as jest.Mock).mockResolvedValue({ user: { id: 4 } });
+  await saveOfflineTrailMap(elevated);
+  (auth.getAuthSession as jest.Mock).mockResolvedValue({ user: { id: 3 } });
+  expect(await deleteOfflineMap(own!.id)).toBe(true);
+  expect(tiles.deleteOfflineTilesForTrail).toHaveBeenCalledWith(elevated, expect.arrayContaining([elevated, neighbor]));
+  expect(await getOfflineMapByTrailId(elevated.id)).toBeNull();
+  (auth.getAuthSession as jest.Mock).mockResolvedValue({ user: { id: 4 } });
+  expect(await getVerifiedOfflineMapByTrailId(elevated.id)).not.toBeNull();
+});
+
 beforeEach(async () => {
   await db.execAsync("DROP TABLE IF EXISTS offline_maps");
   jest.clearAllMocks();
@@ -54,6 +68,7 @@ beforeEach(async () => {
   (auth.getAuthSession as jest.Mock).mockResolvedValue({ user: { id: 3 } });
   (api.getTrailById as jest.Mock).mockResolvedValue(elevated);
   (tiles.downloadOfflineTilesForTrail as jest.Mock).mockResolvedValue({ sizeMb: 1 });
+  (tiles.deleteOfflineTilesForTrail as jest.Mock).mockResolvedValue(0);
   (tiles.getOfflineTileCoverageForTrail as jest.Mock).mockResolvedValue({ isComplete: true, availableTiles: 2, totalTiles: 2 });
 });
 

@@ -529,7 +529,15 @@ export const deleteOfflineMap = async (mapId: number): Promise<boolean> => {
   const offlineMap = toOfflineMap(row);
 
   if (offlineMap.trail) {
-    await deleteOfflineTilesForTrail(offlineMap.trail).catch(() => undefined);
+    // Map files are shared across routes and accounts on this installation.
+    const retained = await db.getAllAsync<{ trail_json: string | null }>(
+      "SELECT trail_json FROM offline_maps WHERE id != ? AND trail_json IS NOT NULL", [mapId]
+    );
+    const retainedTrails = retained.flatMap((saved) => {
+      const trail = parseJson<Trail | null>(saved.trail_json, null);
+      return trail ? [trail] : [];
+    });
+    await deleteOfflineTilesForTrail(offlineMap.trail, retainedTrails).catch(() => undefined);
   }
 
   await db.runAsync(`DELETE FROM offline_maps WHERE id = ? AND user_id IS ?`, [

@@ -1,0 +1,82 @@
+{
+  "version": 1,
+  "implementation_code_sha256": "9ac66f249fc04b8f023eca674839478ff438a7280db8778dfa91c1082ab1ab3d",
+  "plan": [
+    {
+      "id": "cadence-binary-gate-000",
+      "algorithm": "previous_real_control",
+      "parent_candidate_id": "gate-regularization-000"
+    },
+    {
+      "id": "cadence-binary-gate-001",
+      "algorithm": "previous_real_control",
+      "parent_candidate_id": "gate-regularization-001"
+    },
+    {
+      "id": "cadence-binary-gate-002",
+      "algorithm": "cadence_physiology_binary_gate",
+      "member": "core",
+      "auxiliary_weight": 0.0,
+      "epochs": 80,
+      "learning_rate": 0.003,
+      "weight_decay": 0.1,
+      "correction_penalty": 1.0,
+      "random_seed": 42,
+      "source_target": "actual_current_unequal_prior_original6to20",
+      "native_target": "original_integer_delta_distribution_with_frozen_nonzero_conditional"
+    },
+    {
+      "id": "cadence-binary-gate-003",
+      "algorithm": "cadence_physiology_binary_gate",
+      "member": "core",
+      "auxiliary_weight": 0.1,
+      "epochs": 80,
+      "learning_rate": 0.003,
+      "weight_decay": 0.1,
+      "correction_penalty": 1.0,
+      "random_seed": 42,
+      "source_target": "actual_current_unequal_prior_original6to20",
+      "native_target": "original_integer_delta_distribution_with_frozen_nonzero_conditional"
+    },
+    {
+      "id": "cadence-binary-gate-004",
+      "algorithm": "cadence_physiology_binary_gate",
+      "member": "cat",
+      "auxiliary_weight": 0.0,
+      "epochs": 80,
+      "learning_rate": 0.003,
+      "weight_decay": 0.1,
+      "correction_penalty": 1.0,
+      "random_seed": 42,
+      "source_target": "actual_current_unequal_prior_original6to20",
+      "native_target": "original_integer_delta_distribution_with_frozen_nonzero_conditional"
+    },
+    {
+      "id": "cadence-binary-gate-005",
+      "algorithm": "cadence_physiology_binary_gate",
+      "member": "cat",
+      "auxiliary_weight": 0.1,
+      "epochs": 80,
+      "learning_rate": 0.003,
+      "weight_decay": 0.1,
+      "correction_penalty": 1.0,
+      "random_seed": 42,
+      "source_target": "actual_current_unequal_prior_original6to20",
+      "native_target": "original_integer_delta_distribution_with_frozen_nonzero_conditional"
+    }
+  ],
+  "input_verification_sha256": "c44e8bfb91b4356085aff7dfd62849f618776271f891a4d50bdaee7692cedc30",
+  "previous_verification_sha256": "91d9f01905618ad0fb5da1cd639ba8c2a2b6d8b353a5d509f09f3a8ab9aa01ee",
+  "source_fitting_actual_pairs": 851,
+  "source_reserved_pairs": 206,
+  "source_actual_second_priors": 727,
+  "original_native_fit_cases": 487,
+  "original_native_test_cases": 179,
+  "new_joint_network_fits": 20,
+  "new_native_base_fits": 0,
+  "minimum_cv_for_new_test_evaluation": 0.65,
+  "test_used_for_selection": false,
+  "synthetic_rows": 0,
+  "independent_refit_policy": "All4new recipes in all5native personfolds,all20fold artifacts and6OOFmetrics.",
+  "rationale": "Previous binary auxiliary histories and penalty tuning did not beat the native control. Test actual prior physiological state alongside actual first/second reports in a shared encoder. Six numerical inputs(prior2plus4HRsummaries) use separate fitting-only native/source normalization and five actual missing-value indicators. The source851pairs preserve original6-20outcomes in their own change predicate/head;native exact delta ratios/base weights remain frozen. Source physiology comes from the completed prior bout. Native prior HR/baseline have verified earlier clocks;different rest definitions remain explicit. No measured response ages,current-bout HR, source native-context rows or target-scale equivalence are fabricated. Fixed80epochs,penalty1 (best lower penalty in previous CV),source0/.1and optimizer.003/decay.1. Matched source-zero controls isolate auxiliary supervision from new measured inputs. Keep all original487/179cases."
+}

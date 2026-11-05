@@ -8,7 +8,7 @@ jest.mock("../../../services/offlineMaps", () => ({
 import type { Coordinate } from "../../../services/geoUtils";
 import {
   ElevationFetch,
-  TERRAIN_GRID_SIZE,
+  createTerrainGridCoordinates,
   clearTerrainElevationCache,
 } from "../../../services/terrainElevation";
 import * as terrainElevation from "../../../services/terrainElevation";
@@ -65,7 +65,7 @@ describe("loadTerrainElevationState", () => {
 
     expect(state.status).toBe("ready");
     if (state.status !== "ready") return;
-    expect(state.data.grid.elevationsMeters).toHaveLength(TERRAIN_GRID_SIZE ** 2);
+    expect(state.data.grid.elevationsMeters).toHaveLength(createTerrainGridCoordinates(route)!.size ** 2);
     expect(state.data.source.dataset).toBe("Copernicus DEM GLO-90");
   });
 

@@ -1,0 +1,16 @@
+{
+  "preparation": "passed",
+  "preparation_code_sha256": "2548abdae196a1bd31dcc40725968eec64687161f81f49fa5c03c9cfecb2fe19",
+  "frozen_sources_sha256": {
+    "audit_fatigue_public_change_gate.py": "ba8003db12b8287c1a2cc2175c0053c19cf8475e1f955badcedc7cb772372402",
+    "evaluate_fatigue_public_change_gate.py": "f80f17171d878b09e0cfe4ff0442b074a11fe54d8591bd3a39870f75fd583c46"
+  },
+  "derived_files_sha256": {
+    "audit_fatigue_cadence_binary_gate.py": "af1850199e2ca245d3c01498833f5b35c9a2c2cce848d944822d722066b6f745",
+    "evaluate_fatigue_cadence_binary_gate.py": "f66cc872998195b3e3dc764acfbd18960fc5d756fc65d332cc3ea933fd1c5263"
+  },
+  "historical_sources_modified": false,
+  "new_predictive_estimator_fits": 0,
+  "new_test_predictions_computed": 0,
+  "changes": "Independent six-numeric/five-availability input checks,two fitting domains,one actual851pair source head,penalty1,all20fold artifacts and6OOFrecipes;all20network refits preserve80loss/backward checks and full qualified179case test path."
+}

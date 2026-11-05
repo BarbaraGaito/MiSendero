@@ -1,0 +1,78 @@
+{
+  "apn_route_difficulty": {
+    "test_used_for_promotion": true,
+    "rule": "retain incumbent if fixed-holdout accuracy or macro F1 decreases",
+    "interpretation": "A one-shot publication decision uses the already published holdout; resulting metrics are descriptive, not a fresh independent estimate.",
+    "decision": "published_candidate",
+    "before": {
+      "accuracy": 0.7692307692307693,
+      "f1_macro": 0.5416666666666666
+    },
+    "after": {
+      "accuracy": 0.8461538461538461,
+      "f1_macro": 0.5416666666666666
+    },
+    "delta": {
+      "accuracy": 0.07692307692307687,
+      "f1_macro": 0.0
+    },
+    "candidate_directory": "training/data/public/apn_route_difficulty"
+  },
+  "fatigue": {
+    "test_used_for_promotion": true,
+    "rule": "retain incumbent if fixed-holdout accuracy or macro F1 decreases",
+    "interpretation": "A one-shot publication decision uses the already published holdout; resulting metrics are descriptive, not a fresh independent estimate.",
+    "decision": "published_candidate",
+    "before": {
+      "accuracy": 0.24022346368715083,
+      "f1_macro": 0.19037124516271817
+    },
+    "after": {
+      "accuracy": 0.31843575418994413,
+      "f1_macro": 0.1990222026892181
+    },
+    "delta": {
+      "accuracy": 0.0782122905027933,
+      "f1_macro": 0.008650957526499942
+    },
+    "candidate_directory": "training/data/public/fatigue"
+  },
+  "physio_risk": {
+    "test_used_for_promotion": true,
+    "rule": "retain incumbent if fixed-holdout accuracy or macro F1 decreases",
+    "interpretation": "A one-shot publication decision uses the already published holdout; resulting metrics are descriptive, not a fresh independent estimate.",
+    "decision": "retained_incumbent",
+    "before": {
+      "accuracy": 0.625,
+      "f1_macro": 0.6190476190476191
+    },
+    "after": {
+      "accuracy": 0.5,
+      "f1_macro": 0.5
+    },
+    "delta": {
+      "accuracy": -0.125,
+      "f1_macro": -0.11904761904761907
+    },
+    "candidate_directory": "training/data/public/physio_risk/rejected-candidates/20261025-selected"
+  },
+  "route_difficulty": {
+    "test_used_for_promotion": true,
+    "rule": "retain incumbent if fixed-holdout accuracy or macro F1 decreases",
+    "interpretation": "A one-shot publication decision uses the already published holdout; resulting metrics are descriptive, not a fresh independent estimate.",
+    "decision": "published_candidate",
+    "before": {
+      "accuracy": 0.9591836734693877,
+      "f1_macro": 0.27598566308243727
+    },
+    "after": {
+      "accuracy": 0.9591836734693877,
+      "f1_macro": 0.32978723404255317
+    },
+    "delta": {
+      "accuracy": 0.0,
+      "f1_macro": 0.053801570960115896
+    },
+    "candidate_directory": "training/data/public/route_difficulty"
+  }
+}

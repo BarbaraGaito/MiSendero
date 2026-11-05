@@ -36,7 +36,13 @@ export const loadTerrainElevationState = async (
   const saved = trailId === null
     ? null
     : await getOfflineTerrainGrid(trailId, route).catch(() => null);
-  if (saved) return { status: "ready", data: saved };
+  if (saved) {
+    const target = createTerrainGridCoordinates(route)!;
+    if (offline || saved.grid.size >= target.size) return { status: "ready", data: saved };
+    // Keep older downloads usable if the higher-detail online request fails.
+    const upgraded = await getTerrainElevation(trailKey, route, { fetchFn });
+    return { status: "ready", data: upgraded ?? saved };
+  }
   if (offline) return { status: "unavailable", reason: "offline" };
 
   const data = await getTerrainElevation(trailKey, route, { fetchFn });

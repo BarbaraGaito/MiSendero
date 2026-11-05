@@ -66,20 +66,27 @@ export function RouteTrackingCoordinator() {
           const elapsed = previous ? (location.timestamp - previous.timestamp) / 1000 : 0;
           if (previous && elapsed <= 0) return;
           const distance = previous && elapsed <= 30 ? getDistanceMeters(previous.coordinate, location.coordinate) : 0;
-          previous = location;
           if (elapsed > 0 && distance / elapsed > 7) return;
           const delta = distance >= 2 ? distance : 0;
           await saveRouteTrackingPoint({ trailId: route.trail_id, startedAt: route.started_at,
             latitude: location.coordinate[0], longitude: location.coordinate[1], accuracyMeters: location.accuracy,
             speedKmh: elapsed > 0 ? delta / elapsed * 3.6 : null, distanceDeltaMeters: delta,
             recordedAt: location.timestamp, simulated: false });
+          previous = location;
           const summary = await getRouteTrackingSummary(route.trail_id, route.started_at);
           await getOrCreatePausedSession({ trailId: route.trail_id, startedAt: route.started_at,
             duration: activeRouteSeconds(current), distance: summary.distanceMeters });
         };
-        const watcher = await watchDeviceLocation((location) => {
-          pending = pending.then(() => save(location)).catch(() => undefined);
-        });
+        let watcher: { remove(): void } | null;
+        try {
+          watcher = await watchDeviceLocation((location) => {
+            pending = pending.then(() => save(location)).catch(() => undefined);
+          });
+        } catch (error) {
+          // Retry on the next refresh after a transient native startup failure.
+          if (currentGeneration === generation) key = "";
+          throw error;
+        }
         if (disposed || currentGeneration !== generation) watcher?.remove();
         else { subscription = watcher; if (!watcher) key = ""; }
       } finally { refreshing = false; }

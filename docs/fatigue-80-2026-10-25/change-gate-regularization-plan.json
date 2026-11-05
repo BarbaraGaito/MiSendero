@@ -1,0 +1,207 @@
+{
+  "version": 1,
+  "implementation_code_sha256": "4018a1b347652ec1ffa11b4417635f6301a9d922c95d3bd02534ddb7eab874f0",
+  "plan": [
+    {
+      "id": "gate-regularization-000",
+      "algorithm": "previous_real_control",
+      "parent_candidate_id": "public-change-gate-000"
+    },
+    {
+      "id": "gate-regularization-001",
+      "algorithm": "previous_real_control",
+      "parent_candidate_id": "public-change-gate-001"
+    },
+    {
+      "id": "gate-regularization-002",
+      "algorithm": "previous_real_control",
+      "parent_candidate_id": "public-change-gate-004"
+    },
+    {
+      "id": "gate-regularization-003",
+      "algorithm": "previous_real_control",
+      "parent_candidate_id": "public-change-gate-005"
+    },
+    {
+      "id": "gate-regularization-004",
+      "algorithm": "previous_real_control",
+      "parent_candidate_id": "public-change-gate-007"
+    },
+    {
+      "id": "gate-regularization-005",
+      "algorithm": "previous_real_control",
+      "parent_candidate_id": "public-change-gate-008"
+    },
+    {
+      "id": "gate-regularization-006",
+      "algorithm": "regularized_public_binary_change_gate",
+      "member": "core",
+      "auxiliary_weight": 0.0,
+      "epochs": 80,
+      "learning_rate": 0.003,
+      "weight_decay": 0.1,
+      "correction_penalty": 0.0,
+      "random_seed": 42,
+      "source_target": "actual_current_unequal_actual_prior_on_original_instrument",
+      "native_target": "original_integer_delta_distribution_with_frozen_nonzero_conditional"
+    },
+    {
+      "id": "gate-regularization-007",
+      "algorithm": "regularized_public_binary_change_gate",
+      "member": "core",
+      "auxiliary_weight": 0.0,
+      "epochs": 80,
+      "learning_rate": 0.003,
+      "weight_decay": 0.1,
+      "correction_penalty": 0.1,
+      "random_seed": 42,
+      "source_target": "actual_current_unequal_actual_prior_on_original_instrument",
+      "native_target": "original_integer_delta_distribution_with_frozen_nonzero_conditional"
+    },
+    {
+      "id": "gate-regularization-008",
+      "algorithm": "regularized_public_binary_change_gate",
+      "member": "core",
+      "auxiliary_weight": 0.0,
+      "epochs": 80,
+      "learning_rate": 0.003,
+      "weight_decay": 0.1,
+      "correction_penalty": 1.0,
+      "random_seed": 42,
+      "source_target": "actual_current_unequal_actual_prior_on_original_instrument",
+      "native_target": "original_integer_delta_distribution_with_frozen_nonzero_conditional"
+    },
+    {
+      "id": "gate-regularization-009",
+      "algorithm": "regularized_public_binary_change_gate",
+      "member": "core",
+      "auxiliary_weight": 0.1,
+      "epochs": 80,
+      "learning_rate": 0.003,
+      "weight_decay": 0.1,
+      "correction_penalty": 0.0,
+      "random_seed": 42,
+      "source_target": "actual_current_unequal_actual_prior_on_original_instrument",
+      "native_target": "original_integer_delta_distribution_with_frozen_nonzero_conditional"
+    },
+    {
+      "id": "gate-regularization-010",
+      "algorithm": "regularized_public_binary_change_gate",
+      "member": "core",
+      "auxiliary_weight": 0.1,
+      "epochs": 80,
+      "learning_rate": 0.003,
+      "weight_decay": 0.1,
+      "correction_penalty": 0.1,
+      "random_seed": 42,
+      "source_target": "actual_current_unequal_actual_prior_on_original_instrument",
+      "native_target": "original_integer_delta_distribution_with_frozen_nonzero_conditional"
+    },
+    {
+      "id": "gate-regularization-011",
+      "algorithm": "regularized_public_binary_change_gate",
+      "member": "core",
+      "auxiliary_weight": 0.1,
+      "epochs": 80,
+      "learning_rate": 0.003,
+      "weight_decay": 0.1,
+      "correction_penalty": 1.0,
+      "random_seed": 42,
+      "source_target": "actual_current_unequal_actual_prior_on_original_instrument",
+      "native_target": "original_integer_delta_distribution_with_frozen_nonzero_conditional"
+    },
+    {
+      "id": "gate-regularization-012",
+      "algorithm": "regularized_public_binary_change_gate",
+      "member": "cat",
+      "auxiliary_weight": 0.0,
+      "epochs": 80,
+      "learning_rate": 0.003,
+      "weight_decay": 0.1,
+      "correction_penalty": 0.0,
+      "random_seed": 42,
+      "source_target": "actual_current_unequal_actual_prior_on_original_instrument",
+      "native_target": "original_integer_delta_distribution_with_frozen_nonzero_conditional"
+    },
+    {
+      "id": "gate-regularization-013",
+      "algorithm": "regularized_public_binary_change_gate",
+      "member": "cat",
+      "auxiliary_weight": 0.0,
+      "epochs": 80,
+      "learning_rate": 0.003,
+      "weight_decay": 0.1,
+      "correction_penalty": 0.1,
+      "random_seed": 42,
+      "source_target": "actual_current_unequal_actual_prior_on_original_instrument",
+      "native_target": "original_integer_delta_distribution_with_frozen_nonzero_conditional"
+    },
+    {
+      "id": "gate-regularization-014",
+      "algorithm": "regularized_public_binary_change_gate",
+      "member": "cat",
+      "auxiliary_weight": 0.0,
+      "epochs": 80,
+      "learning_rate": 0.003,
+      "weight_decay": 0.1,
+      "correction_penalty": 1.0,
+      "random_seed": 42,
+      "source_target": "actual_current_unequal_actual_prior_on_original_instrument",
+      "native_target": "original_integer_delta_distribution_with_frozen_nonzero_conditional"
+    },
+    {
+      "id": "gate-regularization-015",
+      "algorithm": "regularized_public_binary_change_gate",
+      "member": "cat",
+      "auxiliary_weight": 0.1,
+      "epochs": 80,
+      "learning_rate": 0.003,
+      "weight_decay": 0.1,
+      "correction_penalty": 0.0,
+      "random_seed": 42,
+      "source_target": "actual_current_unequal_actual_prior_on_original_instrument",
+      "native_target": "original_integer_delta_distribution_with_frozen_nonzero_conditional"
+    },
+    {
+      "id": "gate-regularization-016",
+      "algorithm": "regularized_public_binary_change_gate",
+      "member": "cat",
+      "auxiliary_weight": 0.1,
+      "epochs": 80,
+      "learning_rate": 0.003,
+      "weight_decay": 0.1,
+      "correction_penalty": 0.1,
+      "random_seed": 42,
+      "source_target": "actual_current_unequal_actual_prior_on_original_instrument",
+      "native_target": "original_integer_delta_distribution_with_frozen_nonzero_conditional"
+    },
+    {
+      "id": "gate-regularization-017",
+      "algorithm": "regularized_public_binary_change_gate",
+      "member": "cat",
+      "auxiliary_weight": 0.1,
+      "epochs": 80,
+      "learning_rate": 0.003,
+      "weight_decay": 0.1,
+      "correction_penalty": 1.0,
+      "random_seed": 42,
+      "source_target": "actual_current_unequal_actual_prior_on_original_instrument",
+      "native_target": "original_integer_delta_distribution_with_frozen_nonzero_conditional"
+    }
+  ],
+  "frozen_fitting_implementation_sha256": "069614cca612f2a669836c436025a433aad9efe0cd5c458286f9869bf5c8e053",
+  "previous_verification_sha256": "a232ddd5193f55f686a65489ca14772ff74d175c5296e4cc11ab7619652ad8d9",
+  "margin_diagnostic_sha256": "da185b315239ec233e5a71f3eeec4f5caf6db091c96f69bd6f7d7883b4f8639d",
+  "original_native_fit_cases": 487,
+  "original_native_test_cases": 179,
+  "source_fitting_pairs": 2287,
+  "source_reserved_pairs_not_fitted": 312,
+  "excluded_single_class_sts_pairs": 49,
+  "new_joint_network_fits": 60,
+  "new_native_base_fits": 0,
+  "minimum_cv_for_new_test_evaluation": 0.65,
+  "test_used_for_selection": false,
+  "synthetic_rows": 0,
+  "independent_refit_policy": "Best positive-source recipe per member and zero-source control at its penalty,plus best native-only recipe per member if different,in all5personfolds;all60saved artifacts/all18OOFmetrics verified.",
+  "rationale": "Study54verified real learning and source gradients,but none of six gate recipes changed a native OOFdecision. CatBoost source.1median logit adjustment was.00176versus median boundary distance1.00966. Test whether relaxing the existing penalty10permits useful changes without hurting participant CV. Predeclare new penalties0/.1/1,source weights0/.1and matched inherited penalty10controls. Source.1is the first CVtied positive-source control,not a test-chosen setting. Keep all80epoch implementation/initialization/optimizer/data/normalization/native weights and nonzero delta ratios fixed. This diagnosis does not prove improved CV;do not expand the grid after observing results or count hypothetical oracle bounds as achieved accuracy."
+}

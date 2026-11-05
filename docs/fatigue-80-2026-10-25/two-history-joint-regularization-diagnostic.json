@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "code_sha256": "3c83d8df8043ed4e589d66ff84c498aff38b869f1a5d4fe8dc9cf4a7b4b9d54c",
+  "selection_sha256": "04b54a1898bf377a9956ad21eb5fab7c628ad3f9ef113e929d212de3e147ae7e",
+  "paired_native_configurations": [
+    {
+      "member": "core",
+      "auxiliary_weight": 0.0,
+      "cv80": 0.6059908752798779,
+      "cv200": 0.5920368548757295,
+      "cv_change200_minus80": -0.013954020404148393,
+      "mean_native_fitting_loss_by_budget": {
+        "80": 0.8739892585176567,
+        "200": 0.7755255543852624
+      },
+      "native_fitting_loss_decreased_at200": true,
+      "cv_decreased_at200": true
+    },
+    {
+      "member": "core",
+      "auxiliary_weight": 0.1,
+      "cv80": 0.5978715044546247,
+      "cv200": 0.5894127952184218,
+      "cv_change200_minus80": -0.008458709236202844,
+      "mean_native_fitting_loss_by_budget": {
+        "80": 0.8794266502234519,
+        "200": 0.7929938085640986
+      },
+      "native_fitting_loss_decreased_at200": true,
+      "cv_decreased_at200": true
+    },
+    {
+      "member": "core",
+      "auxiliary_weight": 1.0,
+      "cv80": 0.5895151157452948,
+      "cv200": 0.5952951481595983,
+      "cv_change200_minus80": 0.005780032414303471,
+      "mean_native_fitting_loss_by_budget": {
+        "80": 0.8803872388524802,
+        "200": 0.802052844542516
+      },
+      "native_fitting_loss_decreased_at200": true,
+      "cv_decreased_at200": false
+    },
+    {
+      "member": "cat",
+      "auxiliary_weight": 0.0,
+      "cv80": 0.6163710781971651,
+      "cv200": 0.6025842818732844,
+      "cv_change200_minus80": -0.01378679632388069,
+      "mean_native_fitting_loss_by_budget": {
+        "80": 0.8835428442418497,
+        "200": 0.7893286948856343
+      },
+      "native_fitting_loss_decreased_at200": true,
+      "cv_decreased_at200": true
+    },
+    {
+      "member": "cat",
+      "auxiliary_weight": 0.1,
+      "cv80": 0.6202926468246162,
+      "cv200": 0.618466634814461,
+      "cv_change200_minus80": -0.001826012010155198,
+      "mean_native_fitting_loss_by_budget": {
+        "80": 0.8863650103456677,
+        "200": 0.8067572249204868
+      },
+      "native_fitting_loss_decreased_at200": true,
+      "cv_decreased_at200": true
+    },
+    {
+      "member": "cat",
+      "auxiliary_weight": 1.0,
+      "cv80": 0.6222534311383416,
+      "cv200": 0.6145058505007356,
+      "cv_change200_minus80": -0.007747580637606055,
+      "mean_native_fitting_loss_by_budget": {
+        "80": 0.8866244735923084,
+        "200": 0.8139720105840382
+      },
+      "native_fitting_loss_decreased_at200": true,
+      "cv_decreased_at200": true
+    }
+  ],
+  "pairs_with_lower_fitting_loss_and_lower_cv_at200": 5,
+  "source_reserved_targets_used": false,
+  "native_test_targets_used": false,
+  "new_model_fitting_started": false,
+  "scope": "Descriptive paired80/200epoch comparisons from the frozen original person CV and fitting loss endpoints. Lower fitting loss with lower CV is evidence consistent with overfitting,not proof of a future gain. Use an actually different regularization/data axis rather than repeat the same epoch grid; original source/native labels and case counts remain unchanged."
+}

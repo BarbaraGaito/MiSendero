@@ -1,0 +1,678 @@
+{
+  "version": 1,
+  "status": "complete",
+  "selection_sha256": "6ff009600ae258586d477c9ec19313dee2c66f1e965b51a0c2a704173f5ca7c1",
+  "verification_sha256": "edfed20d83c36118a0ce0f4b3c4bc6567a1f90514d0ad0f0febdf79414a3c0ff",
+  "input_verification_sha256": "639b4039658f9fb78688ffdad643153cc59746552426c0d48f1cd66aa5aff3b9",
+  "configurations": 30,
+  "inherited_controls": 4,
+  "new_measured_controls": 2,
+  "new_source_representation_configurations": 24,
+  "source_fitting_targets": 976,
+  "source_fitting_people": 124,
+  "source_reserved_targets": 238,
+  "source_reserved_people": 32,
+  "source_original_scale": "6-20",
+  "native_original_scale": "0-10",
+  "source_task": "Retrospective concurrent physiology/RPE association, not pre-RPE forecasting",
+  "native_queries_past_only": true,
+  "source_functions": [
+    {
+      "algorithm": "ridge",
+      "feature_set": "absolute",
+      "actual_source_targets_observed": 976,
+      "source_fitting_people": 124,
+      "reserved_source_mae": 1.267216872264332,
+      "reserved_source_r2": 0.4816193675117225,
+      "reserved_source_used_for_selection": false,
+      "task": "Retrospective concurrent source association, not pre-RPE forecasting"
+    },
+    {
+      "algorithm": "ridge",
+      "feature_set": "relative",
+      "actual_source_targets_observed": 976,
+      "source_fitting_people": 124,
+      "reserved_source_mae": 1.244220525305854,
+      "reserved_source_r2": 0.5035541522694847,
+      "reserved_source_used_for_selection": false,
+      "task": "Retrospective concurrent source association, not pre-RPE forecasting"
+    },
+    {
+      "algorithm": "svr",
+      "feature_set": "absolute",
+      "actual_source_targets_observed": 976,
+      "source_fitting_people": 124,
+      "reserved_source_mae": 1.2567621393263826,
+      "reserved_source_r2": 0.48985697117297167,
+      "reserved_source_used_for_selection": false,
+      "task": "Retrospective concurrent source association, not pre-RPE forecasting"
+    },
+    {
+      "algorithm": "svr",
+      "feature_set": "relative",
+      "actual_source_targets_observed": 976,
+      "source_fitting_people": 124,
+      "reserved_source_mae": 1.2685955453873463,
+      "reserved_source_r2": 0.48711580374022057,
+      "reserved_source_used_for_selection": false,
+      "task": "Retrospective concurrent source association, not pre-RPE forecasting"
+    },
+    {
+      "algorithm": "random_forest",
+      "feature_set": "absolute",
+      "actual_source_targets_observed": 976,
+      "source_fitting_people": 124,
+      "reserved_source_mae": 1.2804353360288305,
+      "reserved_source_r2": 0.47292530126945387,
+      "reserved_source_used_for_selection": false,
+      "task": "Retrospective concurrent source association, not pre-RPE forecasting"
+    },
+    {
+      "algorithm": "random_forest",
+      "feature_set": "relative",
+      "actual_source_targets_observed": 976,
+      "source_fitting_people": 124,
+      "reserved_source_mae": 1.2207005565647593,
+      "reserved_source_r2": 0.501015914667299,
+      "reserved_source_used_for_selection": false,
+      "task": "Retrospective concurrent source association, not pre-RPE forecasting"
+    }
+  ],
+  "public_real_data_policy_sha256": "fdfb112d20b1f22bae08032ed7d9f3d27ee784879674c32f8f65cc21fe69c028",
+  "winner_id": "cadence-assoc-001",
+  "best_cv_accuracy": 0.6379721574248428,
+  "best_source_id": "cadence-assoc-029",
+  "best_source_cv_accuracy": 0.6263421488996936,
+  "best_source_by_member": {
+    "core": {
+      "candidate": {
+        "id": "cadence-assoc-022",
+        "algorithm": "retrospective_source_association",
+        "source_algorithm": "random_forest",
+        "source_feature_set": "absolute",
+        "representation": "current_state",
+        "member": "core"
+      },
+      "accuracy_mean": 0.6141665120897858
+    },
+    "cat": {
+      "candidate": {
+        "id": "cadence-assoc-029",
+        "algorithm": "retrospective_source_association",
+        "source_algorithm": "random_forest",
+        "source_feature_set": "relative",
+        "representation": "current_and_change",
+        "member": "cat"
+      },
+      "accuracy_mean": 0.6263421488996936
+    }
+  },
+  "paired_current_change_comparison": {
+    "current_state": {
+      "candidate": {
+        "id": "cadence-assoc-027",
+        "algorithm": "retrospective_source_association",
+        "source_algorithm": "random_forest",
+        "source_feature_set": "relative",
+        "representation": "current_state",
+        "member": "cat"
+      },
+      "accuracy_mean": 0.6202227780744405
+    },
+    "current_and_change": {
+      "candidate": {
+        "id": "cadence-assoc-029",
+        "algorithm": "retrospective_source_association",
+        "source_algorithm": "random_forest",
+        "source_feature_set": "relative",
+        "representation": "current_and_change",
+        "member": "cat"
+      },
+      "accuracy_mean": 0.6263421488996936
+    }
+  },
+  "measured_physiology_controls": {
+    "core": {
+      "candidate_id": "cadence-assoc-004",
+      "accuracy_mean": 0.6022994856805599
+    },
+    "cat": {
+      "candidate_id": "cadence-assoc-005",
+      "accuracy_mean": 0.6139056050513851
+    }
+  },
+  "convergence_warning_folds": [],
+  "results": [
+    {
+      "candidate": {
+        "id": "cadence-assoc-000",
+        "algorithm": "previous_real_control",
+        "parent_candidate_id": "cadence-compact-000"
+      },
+      "accuracy_mean": 0.6082057277760603,
+      "fold_accuracy": [
+        0.64,
+        0.5652173913043478,
+        0.5882352941176471,
+        0.5882352941176471,
+        0.6593406593406593
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-assoc-001",
+        "algorithm": "previous_real_control",
+        "parent_candidate_id": "cadence-compact-001"
+      },
+      "accuracy_mean": 0.6379721574248428,
+      "fold_accuracy": [
+        0.67,
+        0.5652173913043478,
+        0.6274509803921569,
+        0.6568627450980392,
+        0.6703296703296703
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-assoc-002",
+        "algorithm": "previous_real_control",
+        "parent_candidate_id": "cadence-compact-012"
+      },
+      "accuracy_mean": 0.6099209315833357,
+      "fold_accuracy": [
+        0.65,
+        0.5869565217391305,
+        0.5980392156862745,
+        0.5882352941176471,
+        0.6263736263736264
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-assoc-003",
+        "algorithm": "previous_real_control",
+        "parent_candidate_id": "cadence-compact-029"
+      },
+      "accuracy_mean": 0.6213224848467815,
+      "fold_accuracy": [
+        0.66,
+        0.5543478260869565,
+        0.6176470588235294,
+        0.6372549019607843,
+        0.6373626373626373
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-assoc-004",
+        "algorithm": "native_measured_physiology_control",
+        "member": "core"
+      },
+      "accuracy_mean": 0.6022994856805599,
+      "fold_accuracy": [
+        0.64,
+        0.5760869565217391,
+        0.5588235294117647,
+        0.5882352941176471,
+        0.6483516483516484
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-assoc-005",
+        "algorithm": "native_measured_physiology_control",
+        "member": "cat"
+      },
+      "accuracy_mean": 0.6139056050513851,
+      "fold_accuracy": [
+        0.66,
+        0.5760869565217391,
+        0.6078431372549019,
+        0.5882352941176471,
+        0.6373626373626373
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-assoc-006",
+        "algorithm": "retrospective_source_association",
+        "source_algorithm": "ridge",
+        "source_feature_set": "absolute",
+        "representation": "current_state",
+        "member": "core"
+      },
+      "accuracy_mean": 0.6060079255782581,
+      "fold_accuracy": [
+        0.64,
+        0.5652173913043478,
+        0.5882352941176471,
+        0.5882352941176471,
+        0.6483516483516484
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-assoc-007",
+        "algorithm": "retrospective_source_association",
+        "source_algorithm": "ridge",
+        "source_feature_set": "absolute",
+        "representation": "current_state",
+        "member": "cat"
+      },
+      "accuracy_mean": 0.6121818386217364,
+      "fold_accuracy": [
+        0.66,
+        0.5760869565217391,
+        0.5980392156862745,
+        0.5784313725490197,
+        0.6483516483516484
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-assoc-008",
+        "algorithm": "retrospective_source_association",
+        "source_algorithm": "ridge",
+        "source_feature_set": "absolute",
+        "representation": "current_and_change",
+        "member": "core"
+      },
+      "accuracy_mean": 0.5914213578407952,
+      "fold_accuracy": [
+        0.65,
+        0.5434782608695652,
+        0.5588235294117647,
+        0.5784313725490197,
+        0.6263736263736264
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-assoc-009",
+        "algorithm": "retrospective_source_association",
+        "source_algorithm": "ridge",
+        "source_feature_set": "absolute",
+        "representation": "current_and_change",
+        "member": "cat"
+      },
+      "accuracy_mean": 0.605786234226132,
+      "fold_accuracy": [
+        0.65,
+        0.5760869565217391,
+        0.5882352941176471,
+        0.5882352941176471,
+        0.6263736263736264
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-assoc-010",
+        "algorithm": "retrospective_source_association",
+        "source_algorithm": "ridge",
+        "source_feature_set": "relative",
+        "representation": "current_state",
+        "member": "core"
+      },
+      "accuracy_mean": 0.6042449434623347,
+      "fold_accuracy": [
+        0.63,
+        0.5652173913043478,
+        0.5784313725490197,
+        0.5882352941176471,
+        0.6593406593406593
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-assoc-011",
+        "algorithm": "retrospective_source_association",
+        "source_algorithm": "ridge",
+        "source_feature_set": "relative",
+        "representation": "current_state",
+        "member": "cat"
+      },
+      "accuracy_mean": 0.624183562388166,
+      "fold_accuracy": [
+        0.66,
+        0.5760869565217391,
+        0.6078431372549019,
+        0.6176470588235294,
+        0.6593406593406593
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-assoc-012",
+        "algorithm": "retrospective_source_association",
+        "source_algorithm": "ridge",
+        "source_feature_set": "relative",
+        "representation": "current_and_change",
+        "member": "core"
+      },
+      "accuracy_mean": 0.5973037107819716,
+      "fold_accuracy": [
+        0.65,
+        0.5434782608695652,
+        0.5686274509803921,
+        0.5980392156862745,
+        0.6263736263736264
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-assoc-013",
+        "algorithm": "retrospective_source_association",
+        "source_algorithm": "ridge",
+        "source_feature_set": "relative",
+        "representation": "current_and_change",
+        "member": "cat"
+      },
+      "accuracy_mean": 0.6053514141442531,
+      "fold_accuracy": [
+        0.66,
+        0.5760869565217391,
+        0.5980392156862745,
+        0.5882352941176471,
+        0.6043956043956044
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-assoc-014",
+        "algorithm": "retrospective_source_association",
+        "source_algorithm": "svr",
+        "source_feature_set": "absolute",
+        "representation": "current_state",
+        "member": "core"
+      },
+      "accuracy_mean": 0.6062449434623348,
+      "fold_accuracy": [
+        0.64,
+        0.5652173913043478,
+        0.5784313725490197,
+        0.5882352941176471,
+        0.6593406593406593
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-assoc-015",
+        "algorithm": "retrospective_source_association",
+        "source_algorithm": "svr",
+        "source_feature_set": "absolute",
+        "representation": "current_state",
+        "member": "cat"
+      },
+      "accuracy_mean": 0.6202227780744405,
+      "fold_accuracy": [
+        0.65,
+        0.5760869565217391,
+        0.5588235294117647,
+        0.6568627450980392,
+        0.6593406593406593
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-assoc-016",
+        "algorithm": "retrospective_source_association",
+        "source_algorithm": "svr",
+        "source_feature_set": "absolute",
+        "representation": "current_and_change",
+        "member": "core"
+      },
+      "accuracy_mean": 0.5979277704392794,
+      "fold_accuracy": [
+        0.64,
+        0.5652173913043478,
+        0.5588235294117647,
+        0.5882352941176471,
+        0.6373626373626373
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-assoc-017",
+        "algorithm": "retrospective_source_association",
+        "source_algorithm": "svr",
+        "source_feature_set": "absolute",
+        "representation": "current_and_change",
+        "member": "cat"
+      },
+      "accuracy_mean": 0.6140641915629128,
+      "fold_accuracy": [
+        0.64,
+        0.5760869565217391,
+        0.5686274509803921,
+        0.6372549019607843,
+        0.6483516483516484
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-assoc-018",
+        "algorithm": "retrospective_source_association",
+        "source_algorithm": "svr",
+        "source_feature_set": "relative",
+        "representation": "current_state",
+        "member": "core"
+      },
+      "accuracy_mean": 0.6020710304188566,
+      "fold_accuracy": [
+        0.63,
+        0.5543478260869565,
+        0.5784313725490197,
+        0.5882352941176471,
+        0.6593406593406593
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-assoc-019",
+        "algorithm": "retrospective_source_association",
+        "source_algorithm": "svr",
+        "source_feature_set": "relative",
+        "representation": "current_state",
+        "member": "cat"
+      },
+      "accuracy_mean": 0.6161272964035113,
+      "fold_accuracy": [
+        0.66,
+        0.5652173913043478,
+        0.5882352941176471,
+        0.6078431372549019,
+        0.6593406593406593
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-assoc-020",
+        "algorithm": "retrospective_source_association",
+        "source_algorithm": "svr",
+        "source_feature_set": "relative",
+        "representation": "current_and_change",
+        "member": "core"
+      },
+      "accuracy_mean": 0.600909830152797,
+      "fold_accuracy": [
+        0.63,
+        0.5434782608695652,
+        0.6078431372549019,
+        0.6078431372549019,
+        0.6153846153846154
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-assoc-021",
+        "algorithm": "retrospective_source_association",
+        "source_algorithm": "svr",
+        "source_feature_set": "relative",
+        "representation": "current_and_change",
+        "member": "cat"
+      },
+      "accuracy_mean": 0.6113923535969572,
+      "fold_accuracy": [
+        0.64,
+        0.5760869565217391,
+        0.6176470588235294,
+        0.6078431372549019,
+        0.6153846153846154
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-assoc-022",
+        "algorithm": "retrospective_source_association",
+        "source_algorithm": "random_forest",
+        "source_feature_set": "absolute",
+        "representation": "current_state",
+        "member": "core"
+      },
+      "accuracy_mean": 0.6141665120897858,
+      "fold_accuracy": [
+        0.66,
+        0.5652173913043478,
+        0.5882352941176471,
+        0.5980392156862745,
+        0.6593406593406593
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-assoc-023",
+        "algorithm": "retrospective_source_association",
+        "source_algorithm": "random_forest",
+        "source_feature_set": "absolute",
+        "representation": "current_state",
+        "member": "cat"
+      },
+      "accuracy_mean": 0.6158988411418079,
+      "fold_accuracy": [
+        0.65,
+        0.5434782608695652,
+        0.5882352941176471,
+        0.6274509803921569,
+        0.6703296703296703
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-assoc-024",
+        "algorithm": "retrospective_source_association",
+        "source_algorithm": "random_forest",
+        "source_feature_set": "absolute",
+        "representation": "current_and_change",
+        "member": "core"
+      },
+      "accuracy_mean": 0.6014384081391755,
+      "fold_accuracy": [
+        0.65,
+        0.5543478260869565,
+        0.5882352941176471,
+        0.5882352941176471,
+        0.6263736263736264
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-assoc-025",
+        "algorithm": "retrospective_source_association",
+        "source_algorithm": "random_forest",
+        "source_feature_set": "absolute",
+        "representation": "current_and_change",
+        "member": "cat"
+      },
+      "accuracy_mean": 0.599429845516802,
+      "fold_accuracy": [
+        0.65,
+        0.5760869565217391,
+        0.5686274509803921,
+        0.5980392156862745,
+        0.6043956043956044
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-assoc-026",
+        "algorithm": "retrospective_source_association",
+        "source_algorithm": "random_forest",
+        "source_feature_set": "relative",
+        "representation": "current_state",
+        "member": "core"
+      },
+      "accuracy_mean": 0.6117555811622308,
+      "fold_accuracy": [
+        0.66,
+        0.5543478260869565,
+        0.5980392156862745,
+        0.5980392156862745,
+        0.6483516483516484
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-assoc-027",
+        "algorithm": "retrospective_source_association",
+        "source_algorithm": "random_forest",
+        "source_feature_set": "relative",
+        "representation": "current_state",
+        "member": "cat"
+      },
+      "accuracy_mean": 0.6202227780744405,
+      "fold_accuracy": [
+        0.65,
+        0.5760869565217391,
+        0.5882352941176471,
+        0.6274509803921569,
+        0.6593406593406593
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-assoc-028",
+        "algorithm": "retrospective_source_association",
+        "source_algorithm": "random_forest",
+        "source_feature_set": "relative",
+        "representation": "current_and_change",
+        "member": "core"
+      },
+      "accuracy_mean": 0.5953190373139222,
+      "fold_accuracy": [
+        0.65,
+        0.5543478260869565,
+        0.5588235294117647,
+        0.5980392156862745,
+        0.6153846153846154
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-assoc-029",
+        "algorithm": "retrospective_source_association",
+        "source_algorithm": "random_forest",
+        "source_feature_set": "relative",
+        "representation": "current_and_change",
+        "member": "cat"
+      },
+      "accuracy_mean": 0.6263421488996936,
+      "fold_accuracy": [
+        0.65,
+        0.5760869565217391,
+        0.6078431372549019,
+        0.6274509803921569,
+        0.6703296703296703
+      ]
+    }
+  ],
+  "original_training_cases": 487,
+  "original_test_cases": 179,
+  "new_test_gate_passed": false,
+  "test_used_for_selection": false,
+  "retained_test_correct": 108,
+  "retained_test_accuracy": 0.6033519553072626,
+  "target_accuracy": 0.8,
+  "achieved": false,
+  "scope": "Only actual public source association observations and original native targets. Computed source states/differences, genuine completed pre-query physiological inputs and fixed native person CV. No synthetic data, transformed native labels, invented source clocks, changed denominators or native test selection."
+}

@@ -54,8 +54,18 @@ ejecutarlo manualmente.
 3. **App movil** (en otra terminal, desde la raiz del repo):
    ```bash
    npm install
-   npm start
+   npx expo start --go
    ```
+
+   Escaneá el QR con el iPhone para abrir el proyecto en Expo Go. La computadora
+   y el teléfono deben estar en la misma red. Si Metro ya estaba abierto,
+   reinicialo con `npx expo start --go --clear`.
+
+   Expo Go usa una base temporal en memoria: los datos locales se reinician al
+   recargar o cerrar completamente el proyecto. Permite probar las pantallas y
+   la API sin SQLCipher. Las builds de desarrollo propias y de distribución
+   siguen usando la base cifrada persistente; Salud/HealthKit requiere una build
+   propia con su módulo nativo.
 
 ## Tests
 
@@ -148,6 +158,8 @@ npm run train:ai
 npm run validate:ai-data
 npm run test:ai-data
 ```
+
+El ajuste compara 76 configuraciones por tarea, incluyendo SGD y redes MLP con backpropagation, y selecciona por validación cruzada de grupos dentro de entrenamiento. Ver [resultados y comparación del 25/10/2026](docs/ai-optimization-2026-10-25/README.md). Para guardar primero la selección sin evaluar el test: `npm run tune:ai`; para evaluar luego esa selección: `npm run train:ai-selected`.
 
 Estos resultados no aprueban uso en campo: la app no incluye ningún modelo aprobado y su
 motor de inferencia devuelve `sin_datos`. Los nuevos bosques mantienen sus etiquetas nativas

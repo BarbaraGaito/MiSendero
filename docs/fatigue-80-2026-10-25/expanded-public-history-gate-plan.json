@@ -1,0 +1,336 @@
+{
+  "version": 1,
+  "implementation_code_sha256": "8f8d87a836f5dcf7e21090d6f2379cfdbffaa77059c7a942c6f3a79e3d91fbe6",
+  "plan": [
+    {
+      "id": "expanded-gate-000",
+      "algorithm": "previous_real_control",
+      "parent_candidate_id": "ordered-residual-000"
+    },
+    {
+      "id": "expanded-gate-001",
+      "algorithm": "previous_real_control",
+      "parent_candidate_id": "ordered-residual-001"
+    },
+    {
+      "id": "expanded-gate-002",
+      "algorithm": "previous_real_control",
+      "parent_candidate_id": "ordered-residual-004"
+    },
+    {
+      "id": "expanded-gate-003",
+      "algorithm": "previous_real_control",
+      "parent_candidate_id": "ordered-residual-005"
+    },
+    {
+      "id": "expanded-gate-004",
+      "algorithm": "previous_real_control",
+      "parent_candidate_id": "ordered-residual-014"
+    },
+    {
+      "id": "expanded-gate-005",
+      "algorithm": "previous_real_control",
+      "parent_candidate_id": "ordered-residual-015"
+    },
+    {
+      "id": "expanded-gate-006",
+      "algorithm": "previous_real_control",
+      "parent_candidate_id": "ordered-residual-016"
+    },
+    {
+      "id": "expanded-gate-007",
+      "algorithm": "previous_real_control",
+      "parent_candidate_id": "ordered-residual-017"
+    },
+    {
+      "id": "expanded-gate-008",
+      "algorithm": "expanded_public_history_gate",
+      "member": "core",
+      "source_mode": "native_only",
+      "auxiliary_weight": 0.0,
+      "gait_weight": 0.0,
+      "epochs": 80,
+      "learning_rate": 0.003,
+      "weight_decay": 0.1,
+      "correction_penalty": 1.0,
+      "random_seed": 42,
+      "source_target": "actual_original_current_unequal_prior_per_domain",
+      "native_target": "original_integer_delta_distribution_with_frozen_nonzero_conditional"
+    },
+    {
+      "id": "expanded-gate-009",
+      "algorithm": "expanded_public_history_gate",
+      "member": "core",
+      "source_mode": "native_only",
+      "auxiliary_weight": 0.0,
+      "gait_weight": 0.0,
+      "epochs": 80,
+      "learning_rate": 0.003,
+      "weight_decay": 0.1,
+      "correction_penalty": 10.0,
+      "random_seed": 42,
+      "source_target": "actual_original_current_unequal_prior_per_domain",
+      "native_target": "original_integer_delta_distribution_with_frozen_nonzero_conditional"
+    },
+    {
+      "id": "expanded-gate-010",
+      "algorithm": "expanded_public_history_gate",
+      "member": "core",
+      "source_mode": "legacy_sources",
+      "auxiliary_weight": 0.1,
+      "gait_weight": 0.0,
+      "epochs": 80,
+      "learning_rate": 0.003,
+      "weight_decay": 0.1,
+      "correction_penalty": 1.0,
+      "random_seed": 42,
+      "source_target": "actual_original_current_unequal_prior_per_domain",
+      "native_target": "original_integer_delta_distribution_with_frozen_nonzero_conditional"
+    },
+    {
+      "id": "expanded-gate-011",
+      "algorithm": "expanded_public_history_gate",
+      "member": "core",
+      "source_mode": "legacy_sources",
+      "auxiliary_weight": 0.1,
+      "gait_weight": 0.0,
+      "epochs": 80,
+      "learning_rate": 0.003,
+      "weight_decay": 0.1,
+      "correction_penalty": 10.0,
+      "random_seed": 42,
+      "source_target": "actual_original_current_unequal_prior_per_domain",
+      "native_target": "original_integer_delta_distribution_with_frozen_nonzero_conditional"
+    },
+    {
+      "id": "expanded-gate-012",
+      "algorithm": "expanded_public_history_gate",
+      "member": "core",
+      "source_mode": "expanded_sources",
+      "auxiliary_weight": 0.1,
+      "gait_weight": 0.02,
+      "epochs": 80,
+      "learning_rate": 0.003,
+      "weight_decay": 0.1,
+      "correction_penalty": 1.0,
+      "random_seed": 42,
+      "source_target": "actual_original_current_unequal_prior_per_domain",
+      "native_target": "original_integer_delta_distribution_with_frozen_nonzero_conditional"
+    },
+    {
+      "id": "expanded-gate-013",
+      "algorithm": "expanded_public_history_gate",
+      "member": "core",
+      "source_mode": "expanded_sources",
+      "auxiliary_weight": 0.1,
+      "gait_weight": 0.02,
+      "epochs": 80,
+      "learning_rate": 0.003,
+      "weight_decay": 0.1,
+      "correction_penalty": 10.0,
+      "random_seed": 42,
+      "source_target": "actual_original_current_unequal_prior_per_domain",
+      "native_target": "original_integer_delta_distribution_with_frozen_nonzero_conditional"
+    },
+    {
+      "id": "expanded-gate-014",
+      "algorithm": "expanded_public_history_gate",
+      "member": "core",
+      "source_mode": "matched_total_weight",
+      "auxiliary_weight": 0.12,
+      "gait_weight": 0.0,
+      "epochs": 80,
+      "learning_rate": 0.003,
+      "weight_decay": 0.1,
+      "correction_penalty": 1.0,
+      "random_seed": 42,
+      "source_target": "actual_original_current_unequal_prior_per_domain",
+      "native_target": "original_integer_delta_distribution_with_frozen_nonzero_conditional"
+    },
+    {
+      "id": "expanded-gate-015",
+      "algorithm": "expanded_public_history_gate",
+      "member": "core",
+      "source_mode": "matched_total_weight",
+      "auxiliary_weight": 0.12,
+      "gait_weight": 0.0,
+      "epochs": 80,
+      "learning_rate": 0.003,
+      "weight_decay": 0.1,
+      "correction_penalty": 10.0,
+      "random_seed": 42,
+      "source_target": "actual_original_current_unequal_prior_per_domain",
+      "native_target": "original_integer_delta_distribution_with_frozen_nonzero_conditional"
+    },
+    {
+      "id": "expanded-gate-016",
+      "algorithm": "expanded_public_history_gate",
+      "member": "cat",
+      "source_mode": "native_only",
+      "auxiliary_weight": 0.0,
+      "gait_weight": 0.0,
+      "epochs": 80,
+      "learning_rate": 0.003,
+      "weight_decay": 0.1,
+      "correction_penalty": 1.0,
+      "random_seed": 42,
+      "source_target": "actual_original_current_unequal_prior_per_domain",
+      "native_target": "original_integer_delta_distribution_with_frozen_nonzero_conditional"
+    },
+    {
+      "id": "expanded-gate-017",
+      "algorithm": "expanded_public_history_gate",
+      "member": "cat",
+      "source_mode": "native_only",
+      "auxiliary_weight": 0.0,
+      "gait_weight": 0.0,
+      "epochs": 80,
+      "learning_rate": 0.003,
+      "weight_decay": 0.1,
+      "correction_penalty": 10.0,
+      "random_seed": 42,
+      "source_target": "actual_original_current_unequal_prior_per_domain",
+      "native_target": "original_integer_delta_distribution_with_frozen_nonzero_conditional"
+    },
+    {
+      "id": "expanded-gate-018",
+      "algorithm": "expanded_public_history_gate",
+      "member": "cat",
+      "source_mode": "legacy_sources",
+      "auxiliary_weight": 0.1,
+      "gait_weight": 0.0,
+      "epochs": 80,
+      "learning_rate": 0.003,
+      "weight_decay": 0.1,
+      "correction_penalty": 1.0,
+      "random_seed": 42,
+      "source_target": "actual_original_current_unequal_prior_per_domain",
+      "native_target": "original_integer_delta_distribution_with_frozen_nonzero_conditional"
+    },
+    {
+      "id": "expanded-gate-019",
+      "algorithm": "expanded_public_history_gate",
+      "member": "cat",
+      "source_mode": "legacy_sources",
+      "auxiliary_weight": 0.1,
+      "gait_weight": 0.0,
+      "epochs": 80,
+      "learning_rate": 0.003,
+      "weight_decay": 0.1,
+      "correction_penalty": 10.0,
+      "random_seed": 42,
+      "source_target": "actual_original_current_unequal_prior_per_domain",
+      "native_target": "original_integer_delta_distribution_with_frozen_nonzero_conditional"
+    },
+    {
+      "id": "expanded-gate-020",
+      "algorithm": "expanded_public_history_gate",
+      "member": "cat",
+      "source_mode": "expanded_sources",
+      "auxiliary_weight": 0.1,
+      "gait_weight": 0.02,
+      "epochs": 80,
+      "learning_rate": 0.003,
+      "weight_decay": 0.1,
+      "correction_penalty": 1.0,
+      "random_seed": 42,
+      "source_target": "actual_original_current_unequal_prior_per_domain",
+      "native_target": "original_integer_delta_distribution_with_frozen_nonzero_conditional"
+    },
+    {
+      "id": "expanded-gate-021",
+      "algorithm": "expanded_public_history_gate",
+      "member": "cat",
+      "source_mode": "expanded_sources",
+      "auxiliary_weight": 0.1,
+      "gait_weight": 0.02,
+      "epochs": 80,
+      "learning_rate": 0.003,
+      "weight_decay": 0.1,
+      "correction_penalty": 10.0,
+      "random_seed": 42,
+      "source_target": "actual_original_current_unequal_prior_per_domain",
+      "native_target": "original_integer_delta_distribution_with_frozen_nonzero_conditional"
+    },
+    {
+      "id": "expanded-gate-022",
+      "algorithm": "expanded_public_history_gate",
+      "member": "cat",
+      "source_mode": "matched_total_weight",
+      "auxiliary_weight": 0.12,
+      "gait_weight": 0.0,
+      "epochs": 80,
+      "learning_rate": 0.003,
+      "weight_decay": 0.1,
+      "correction_penalty": 1.0,
+      "random_seed": 42,
+      "source_target": "actual_original_current_unequal_prior_per_domain",
+      "native_target": "original_integer_delta_distribution_with_frozen_nonzero_conditional"
+    },
+    {
+      "id": "expanded-gate-023",
+      "algorithm": "expanded_public_history_gate",
+      "member": "cat",
+      "source_mode": "matched_total_weight",
+      "auxiliary_weight": 0.12,
+      "gait_weight": 0.0,
+      "epochs": 80,
+      "learning_rate": 0.003,
+      "weight_decay": 0.1,
+      "correction_penalty": 10.0,
+      "random_seed": 42,
+      "source_target": "actual_original_current_unequal_prior_per_domain",
+      "native_target": "original_integer_delta_distribution_with_frozen_nonzero_conditional"
+    }
+  ],
+  "previous_verification_sha256": "2735f01c86d5b04a7b144a4bfaabe7e12e686d6313dc57a7d302c520dacc7d21",
+  "input_verification_sha256": "86f862d9d597841ce77f0065adfc45fe4bbe3b350ff70948a930324cc3fee4aa",
+  "original_native_fit_cases": 487,
+  "original_native_test_cases": 179,
+  "source_fitting_pairs": 3548,
+  "stored_reserved_source_pairs": 518,
+  "gait_reserved_people_not_received": 5,
+  "source_counts": {
+    "cadence": 851,
+    "emap": 248,
+    "gait_forecasting": 410,
+    "resistance": 866,
+    "shoulder": 920,
+    "worker": 253
+  },
+  "shared_inputs": 3,
+  "native_private_inputs": 20,
+  "source_specific_heads": 6,
+  "new_joint_network_fits": 80,
+  "new_native_base_fits_for_cv": 0,
+  "epochs": 80,
+  "learning_rate": 0.003,
+  "weight_decay": 0.1,
+  "penalties": [
+    1.0,
+    10.0
+  ],
+  "minimum_cv_for_new_test_evaluation": 0.65,
+  "test_used_for_selection": false,
+  "synthetic_rows": 0,
+  "source_weight_modes": {
+    "native_only": [
+      0.0,
+      0.0
+    ],
+    "legacy_sources": [
+      0.1,
+      0.0
+    ],
+    "expanded_sources": [
+      0.1,
+      0.02
+    ],
+    "matched_total_weight": [
+      0.12,
+      0.0
+    ]
+  },
+  "source_loss_convention": "legacy_weight/5 times sum of5person-balanced domain BCEs plus gait_weight times its original-report BCE",
+  "rationale": "The audited corpus adds410actual adjacent RPE pairs/19people and combines3548source pairs without equating instruments. Share only actually measured first/second histories and availability. Private native context includes actual prior/recent HR(20features total), so source physiology is not fabricated. Six source heads/normalizers stay separate. Matched new-weight-zero and matched total auxiliary weight controls isolate data contribution from simple loss-strength increase. Frozen native nonzero delta ratios and classifiers preserve the original exact-Borg control. Independent audit refits all16new recipes/all5personfolds and verifies actual source/gait encoder gradients,80backward steps and all24OOFmetrics."
+}

@@ -1,0 +1,277 @@
+{
+  "version": 1,
+  "selection_sha256": "734061df908ff5556ef83e643ae0df0a009dfc0e83f842ec342c0c33d9b10981",
+  "model_code_sha256": "6a801b331204ea57ff700b61d2e064ef393b44b922c6e3852c5f068a08a3cd84",
+  "dependency_code_sha256": {
+    "fatigue_warm_sgd.py": "cd480a0fe2c31cc62d446525386b5c9be0adfae568ecdd1399fe85b571dd05b3",
+    "fatigue_dynamics_experiment.py": "5337f883c2d861a0255a399d78b6cb159b0526e43a0d2b4091b5043ee103f596",
+    "fatigue_probability.py": "8321f0dc9313bd7207508ba417a90e9b2b80ec2fb45fe2591104e60fda66125c",
+    "fatigue_prior_view_training.py": "3d101e77234a4a659e07478a303f2eb8c74fd2d27cdd55d2e71d28e8102d68d3",
+    "fatigue_prior_views.py": "6613b15479bfde80dfc22fb4e9605ae76e5658c648b57c9931beabca374f6997",
+    "fatigue_extra_feedback.py": "5cbedf633338e74376dc8f39ebdd5a3e1fff57fe31b54ea3c42305f64e11df4b"
+  },
+  "software_versions": {
+    "torch": "2.14.1+cpu",
+    "numpy": "2.5.4",
+    "pandas": "3.0.6",
+    "scipy": "1.18.1",
+    "scikit-learn": "1.9.1",
+    "joblib": "1.6.0"
+  },
+  "completed_recipes": 36,
+  "winner": {
+    "id": "conditional-borg-018",
+    "initialization": "view",
+    "mode": "point_control",
+    "features": [
+      "prior_borg",
+      "prior_age_minutes",
+      "prior2_borg",
+      "prior2_age_minutes",
+      "prior_borg_slope",
+      "prior_in_current_task",
+      "prior_count_current_task",
+      "elapsed_minutes",
+      "cumulative_active_minutes",
+      "task_order",
+      "terrain_stairs",
+      "terrain_ramp",
+      "terrain_flat_trail"
+    ]
+  },
+  "cv_accuracy": 0.6308554003541216,
+  "pooled_oof_accuracy": 0.6303901437371663,
+  "pooled_oof_correct": 307,
+  "best_fine_tuned_by_initialization_and_objective": {
+    "core_delta": {
+      "candidate": {
+        "id": "conditional-borg-002",
+        "initialization": "core",
+        "mode": "fine_tune",
+        "objective": "delta",
+        "extra_weight": 0.0,
+        "optimizer": "lbfgs",
+        "budget": 200,
+        "features": [
+          "prior_borg",
+          "prior_age_minutes",
+          "prior2_borg",
+          "prior2_age_minutes",
+          "prior_borg_slope",
+          "prior_in_current_task",
+          "prior_count_current_task",
+          "elapsed_minutes",
+          "cumulative_active_minutes",
+          "task_order",
+          "terrain_stairs",
+          "terrain_ramp",
+          "terrain_flat_trail"
+        ]
+      },
+      "cv_accuracy": 0.6082057277760603,
+      "pooled_oof_accuracy": 0.6078028747433265
+    },
+    "core_conditional_native": {
+      "candidate": {
+        "id": "conditional-borg-014",
+        "initialization": "core",
+        "mode": "fine_tune",
+        "objective": "conditional_native",
+        "extra_weight": 0.5,
+        "optimizer": "lbfgs",
+        "budget": 200,
+        "features": [
+          "prior_borg",
+          "prior_age_minutes",
+          "prior2_borg",
+          "prior2_age_minutes",
+          "prior_borg_slope",
+          "prior_in_current_task",
+          "prior_count_current_task",
+          "elapsed_minutes",
+          "cumulative_active_minutes",
+          "task_order",
+          "terrain_stairs",
+          "terrain_ramp",
+          "terrain_flat_trail"
+        ]
+      },
+      "cv_accuracy": 0.6121272964035113,
+      "pooled_oof_accuracy": 0.6119096509240246
+    },
+    "view_delta": {
+      "candidate": {
+        "id": "conditional-borg-020",
+        "initialization": "view",
+        "mode": "fine_tune",
+        "objective": "delta",
+        "extra_weight": 0.0,
+        "optimizer": "lbfgs",
+        "budget": 200,
+        "features": [
+          "prior_borg",
+          "prior_age_minutes",
+          "prior2_borg",
+          "prior2_age_minutes",
+          "prior_borg_slope",
+          "prior_in_current_task",
+          "prior_count_current_task",
+          "elapsed_minutes",
+          "cumulative_active_minutes",
+          "task_order",
+          "terrain_stairs",
+          "terrain_ramp",
+          "terrain_flat_trail"
+        ]
+      },
+      "cv_accuracy": 0.6288946160403961,
+      "pooled_oof_accuracy": 0.6283367556468172
+    },
+    "view_conditional_native": {
+      "candidate": {
+        "id": "conditional-borg-030",
+        "initialization": "view",
+        "mode": "fine_tune",
+        "objective": "conditional_native",
+        "extra_weight": 0.0,
+        "optimizer": "adam",
+        "budget": 100,
+        "features": [
+          "prior_borg",
+          "prior_age_minutes",
+          "prior2_borg",
+          "prior2_age_minutes",
+          "prior_borg_slope",
+          "prior_in_current_task",
+          "prior_count_current_task",
+          "elapsed_minutes",
+          "cumulative_active_minutes",
+          "task_order",
+          "terrain_stairs",
+          "terrain_ramp",
+          "terrain_flat_trail"
+        ]
+      },
+      "cv_accuracy": 0.6206968138425939,
+      "pooled_oof_accuracy": 0.6201232032854209
+    }
+  },
+  "original_training_cases": 487,
+  "original_test_cases": 179,
+  "extra_actual_fitting_report_pool": 56,
+  "new_measured_or_synthetic_targets": 0,
+  "history_views_keep_total_weight_one_per_actual_report": true,
+  "source_preprocessing_frozen": true,
+  "optimizers": [
+    "lbfgs",
+    "adam"
+  ],
+  "warm_start_initializations": [
+    "original_mlp",
+    "observed_prior_view_mlp"
+  ],
+  "minimum_cv_for_new_test_evaluation": 0.65,
+  "new_test_evaluation": false,
+  "test_used_for_selection": false,
+  "best_verified_test_correct": 108,
+  "best_verified_test_denominator": 179,
+  "best_verified_test_accuracy": 0.6033519553072626,
+  "goal_achieved": false,
+  "support_diagnostic": {
+    "sha256": "522a057ab18b3a5f82abe416ccd70439dd0782ffe2f626b002978248a3a8bd6d",
+    "code_sha256": "fd93a285d01dcce914198eb920c2646e00434d17d0c96cdeef00a4b6f8a44bff",
+    "sources": {
+      "core": {
+        "original_training_queries": 487,
+        "source_model_sha256": [
+          "4a390d234e5b0273f476907b21f6218c261cbc9afcda11406d8068e92faea5b3",
+          "e9e1920abf6970a285a37fa740fcc922b81404616b33f9a0f5cdd67b0e99cf45",
+          "a528996eb2683ee69695ecb08be86e1fcd23ac0984578547d703a778e5e24817",
+          "b288d893a45dd17f8b07271a364402d4c01232aced6f607757915b847fb5b24f",
+          "dc24fce973d8f150b9ee1eebde886aa160c6fc7c4f45d735b8a220f1c86d5308"
+        ],
+        "invalid_destination_probability_mass_mean": 0.0004478618782832399,
+        "invalid_destination_probability_mass_p95": 0.0022053898408933522,
+        "invalid_destination_probability_mass_max": 0.006048271844966475,
+        "unclipped_delta_argmax_outside_native_range": 0,
+        "condition_only_changed_point_decisions": 0
+      },
+      "view": {
+        "original_training_queries": 487,
+        "source_model_sha256": [
+          "d4e3d8fc1e4627ef8c8b2838615e732664160865a3f2df1688ef6a5f2d675b2c",
+          "432c9dfdb8c8cc5b8c6543613cf6ab0997693c85fdf9ca2050093d7bef1631d8",
+          "430e176f9190084635eb86e5f4d9886f5f9cddb5a99b7d8a721024fa071f3b83",
+          "e5c8a9479bb10ced77f75dce77c71eb80f3af559b640e2bcece038c473d9fd90",
+          "fbbcd19b020cfe0efbc63c9984c928a8d865d1eb6f0f9126517c5f418b71f795"
+        ],
+        "invalid_destination_probability_mass_mean": 0.008048041383799867,
+        "invalid_destination_probability_mass_p95": 0.033133980019738725,
+        "invalid_destination_probability_mass_max": 0.03768332962802053,
+        "unclipped_delta_argmax_outside_native_range": 0,
+        "condition_only_changed_point_decisions": 0
+      }
+    },
+    "current_outcomes_used": false,
+    "model_accuracy": null,
+    "used_as_goal_score": false
+  },
+  "lineage": {
+    "dataset_sha256": "a9e346b1e8d0cf711406d1d0417d0db1afbf88757ab8c27efc70f4469dc39520",
+    "view_dataset_sha256": "29a45957c40cd4a2e3d595e32bcaec12d513d96e144e421648773bf0520bbb2a",
+    "view_provenance_sha256": "c3084c8e3dae9235045e68450cc6085dbfc4f5aba1f0937e2fb77ac4595c39f6",
+    "view_selection_sha256": "e8a1239d3f85890691c4a3bcb046301b7adb55354b5e537e08155bcf6051312e",
+    "extra_dataset_sha256": "be1d5ec24f62553cd320f6583251d72d82b6fc41c7a9245fe05b27c344f8b37e",
+    "extra_provenance_sha256": "b4300effc9cc434903f5dbb7c7192d5765fa0ec13fc520a9845b0a05ac710eda"
+  },
+  "independent_verification": {
+    "checkpoint_sha256": "74d33a7f82c8876f14b945237fe51b286fac6eafe45b0dceb1edae2482066141",
+    "checkpoint_verified_at": "2026-10-26T19:17:57.922498+00:00",
+    "result": {
+      "warm_sources_refitted": 10,
+      "source_model_and_preprocessing_values_reproduced": true,
+      "original_point_controls_reproduced": 2,
+      "inference_condition_only_controls_reproduced": 2,
+      "native_training_cases": 487,
+      "native_test_cases": 179,
+      "extra_actual_report_pool": 56,
+      "all_fold_extra_person_filters_and_report_weights_verified": true,
+      "winner_grouped_folds_refitted": 5,
+      "winner_id": "conditional-borg-018",
+      "best_cv_accuracy": 0.6308554003541216,
+      "minimum_cv_for_new_test_evaluation": 0.65,
+      "new_test_gate_passed": false,
+      "verification_code_sha256": "2e277a853f65fdf453901a7ad01a761acd16ee28f23ab589c4e148eebe49b7c2"
+    }
+  },
+  "optimization_loss_diagnostics": {
+    "delta_lbfgs": {
+      "fold_fits": 40,
+      "nonincreasing_final_loss": 40,
+      "minimum_loss_decrease": 0.0,
+      "maximum_loss_decrease": 0.2548917738427028,
+      "scope": "Optimization objective on fitting reports only; not held-out accuracy."
+    },
+    "delta_adam": {
+      "fold_fits": 40,
+      "nonincreasing_final_loss": 40,
+      "minimum_loss_decrease": 6.199862782274579e-06,
+      "maximum_loss_decrease": 0.21376719329312643,
+      "scope": "Optimization objective on fitting reports only; not held-out accuracy."
+    },
+    "conditional_native_lbfgs": {
+      "fold_fits": 40,
+      "nonincreasing_final_loss": 40,
+      "minimum_loss_decrease": 4.279576693022591e-12,
+      "maximum_loss_decrease": 0.34364613730147187,
+      "scope": "Optimization objective on fitting reports only; not held-out accuracy."
+    },
+    "conditional_native_adam": {
+      "fold_fits": 40,
+      "nonincreasing_final_loss": 40,
+      "minimum_loss_decrease": 8.334901706830156e-05,
+      "maximum_loss_decrease": 0.2837708072601288,
+      "scope": "Optimization objective on fitting reports only; not held-out accuracy."
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "verified_at": "2026-10-27T00:48:24.576154+00:00",
+  "verification_code_sha256": "623ce277381a250a28bcbf45017ff2bede265b855462da3bc5f252ba76b18aa2",
+  "source_dataset_sha256": "ff86974f65d53bdf351036c71ed53d99403a38cc7075ebe8efb42e35683b622a",
+  "source_provenance_sha256": "4369253ef0752ca81c27d27ebaf2d9fc347d0f5d2d85ebe61619f25c478b86ce",
+  "original_public_survey_sha256": "279a8cf186b7d6c3579557429cc99bc000ef267220ea6bddb44b7a2bb65093d7",
+  "actual_source_targets_with_real_prior": 302,
+  "source_counts": {
+    "worker": 253,
+    "sts": 49
+  },
+  "additional_usable_existing_targets": 53,
+  "actual_pre_experiment_priors_checked": 51,
+  "nonzero_pre_experiment_priors": 39,
+  "pre_experiment_prior_counts": {
+    "0.0": 12,
+    "1.0": 14,
+    "2.0": 13,
+    "3.0": 4,
+    "4.0": 4,
+    "5.0": 3,
+    "6.0": 1
+  },
+  "previous_real_survey_present_despite_missing_previous_sensor_case": 2,
+  "all_current_source_borg_values_unchanged": true,
+  "external_reserved_people_excluded": true,
+  "synthetic_rows": 0,
+  "assumed_zero_priors": 0,
+  "invented_survey_timestamps": 0,
+  "new_native_borg_targets": 0,
+  "new_independent_questionnaire_measurements": 0,
+  "used_for_new_model_fitting": false,
+  "scope": "Original observed public questionnaire cells only. Earlier pre-experiment and repetition reports are inputs, not assumed zeros or fabricated timestamps. This preparation extends source pair eligibility; no model improvement or new native test result is claimed."
+}

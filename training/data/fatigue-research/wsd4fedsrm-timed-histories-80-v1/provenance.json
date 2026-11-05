@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "preparation_code_sha256": "ffbf50bd447bef7a214a6d0894d134ffe7a526cb99491538a8cd3b3a63a9f715",
+  "input_audit_sha256": "ee015625def0793a033dac0ef73e9cffe8be42fa23124cf4d0ac4359c00a9730",
+  "dataset_sha256": "3a0751f263ff3e85de5fd855da492440ceda0727b018e81bb80253622e092c41",
+  "actual_source_pairs": 1107,
+  "fitting_pairs": 920,
+  "reserved_pairs": 187,
+  "fitting_people": 27,
+  "reserved_people": 7,
+  "fitting_actual_second_priors": 758,
+  "reserved_actual_second_priors": 146,
+  "original_outcome": "Borg6-20_points_separate_from_native0-10",
+  "synthetic_rows": 0,
+  "terminal_or_before_task_rows_added": 0,
+  "cross_task_histories_created": 0,
+  "sensor_join_created": false,
+  "native_target_merge": false,
+  "model_fitting_started": false,
+  "scope": "Actual timed reports only. Person partition frozen before pair eligibility; natural absent second priors remain absent. Recorded 10-second clocks retained without inventing between-task order or terminal report times. No source values converted into native labels."
+}

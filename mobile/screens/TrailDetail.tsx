@@ -8,10 +8,12 @@ import {
   PrimaryButton,
   ScreenShell,
   StatusNotice,
-  StatPill,
   TopBar,
   colors,
+  typography,
 } from "../components/MiSenderoUI";
+import { ExpandableSection } from "../components/ExpandableSection";
+import { TrailMetrics } from "../components/TrailMetrics";
 import { getTrailById, getTrailReports, getTrailWeather } from "../../services/trailRepository";
 import {
   getVerifiedOfflineMapByTrailId,
@@ -147,6 +149,7 @@ export default function Screen03TrailDetail() {
 
         {trail ? (
           <TrailDetailContent
+            key={trail.id}
             downloadMap={downloadMap}
             downloadMessage={downloadMessage}
             isDownloaded={isDownloaded}
@@ -190,13 +193,40 @@ function TrailDetailContent({
   return (
     <>
       <TrailCover ratingSummary={ratingSummary} trail={trail} />
-      <Text style={styles.title}>{trail.name}</Text>
+      <Text accessibilityRole="header" style={styles.title}>{trail.name}</Text>
       <Text style={styles.location}>{trail.location}</Text>
       <TrailStats trail={trail} />
+      {trail.provenance ? <Text style={styles.routeMetadata}>
+        {trail.provenance.route_type === "out_and_back" ? "Ida y vuelta" : trail.provenance.route_type === "loop" ? "Circuito completo" : "Solo ida; coordinar el regreso"}
+        {["planning_estimate", "round_trip_from_official_one_way"].includes(trail.provenance.duration_basis) ? ". Tiempo total orientativo calculado; no publicado como ida y vuelta." : "."}
+      </Text> : null}
       <FavoriteButton
         isFavorite={isFavorite}
         onPress={toggleFavorite}
       />
+      {weather?.risk_level === "alto" || weather?.risk_level === "medio" ? <StatusNotice
+        title={`Riesgo meteorológico ${weather.risk_level}`}
+        message={`${weather.condition}, viento ${weather.wind_kmh} km/h. Considerá postergar o elegir una ruta más corta.`}
+        tone="warning"
+      /> : null}
+      {trail.provenance?.precautions || trail.provenance?.source_notice ? <View style={styles.precautions}>
+        <Ionicons name="information-circle-outline" size={20} color={colors.greenDark} />
+        <View style={styles.precautionsText}>
+          {trail.provenance.source_notice ? <Text style={styles.checkText}>{trail.provenance.source_notice}</Text> : null}
+          {trail.provenance.precautions ? <Text style={styles.checkText}>{trail.provenance.precautions}</Text> : null}
+        </View>
+      </View> : null}
+      {hasGeometry ? <TrailDetailActions
+        downloadMap={downloadMap}
+        isDownloaded={isDownloaded}
+        isDownloading={isDownloading}
+        trail={trail}
+      /> : null}
+      <View style={styles.detailSections}>
+        <BeforeYouGoCard tips={beforeYouGoTips} />
+        <DescriptionCard trail={trail} />
+        <DifficultyCard trail={trail} weather={weather} />
+      </View>
       <DescriptionCard trail={trail} />
       <DifficultyCard trail={trail} weather={weather} />
       <EnvironmentalConditions trail={trail} />
@@ -211,12 +241,6 @@ function TrailDetailContent({
         <Text style={styles.cardTitle}>Consultá el recorrido</Text>
         <Text style={styles.body}>Podés ver la información del sendero y sus accesos en la fuente del recorrido.</Text>
       </InfoCard>}
-      {hasGeometry ? <TrailDetailActions
-        downloadMap={downloadMap}
-        isDownloaded={isDownloaded}
-        isDownloading={isDownloading}
-        trail={trail}
-      /> : null}
     </>
   );
 }
@@ -228,14 +252,17 @@ function TrailCover({
   ratingSummary: TrailRatingSummary | null;
   trail: Trail;
 }) {
+  const [imageFailed, setImageFailed] = useState(false);
+  const hasImage = Boolean(trail.image_url) && !imageFailed;
   return (
     <>
     <ImageBackground
-      source={trail.image_url ? { uri: trail.image_url } : undefined}
-      style={styles.cover}
+      source={hasImage ? { uri: trail.image_url! } : undefined}
+      onError={() => setImageFailed(true)}
+      style={[styles.cover, !hasImage && styles.coverFallback]}
       imageStyle={styles.coverImage}
     >
-      {!trail.image_url ? <Text style={styles.body}>Foto no disponible</Text> : null}
+      {!hasImage ? <Text style={styles.body}>Foto no disponible</Text> : null}
       {ratingSummary ? (
         <Pressable
           onPress={() =>
@@ -246,14 +273,14 @@ function TrailCover({
           }
           style={styles.coverBadge}
         >
-          <Ionicons name="star" size={15} color={colors.warning} />
+          <Ionicons name="star" size={15} color={colors.primary} />
           <Text style={styles.coverBadgeText}>
             {ratingSummary.averageRating.toFixed(1)}
           </Text>
           <Text style={styles.coverBadgeMeta}>({ratingSummary.reviewCount})</Text>
         </Pressable>
       ) : null}
-      {trail.provenance?.photo && (
+      {hasImage && trail.provenance?.photo && (
         <Pressable accessibilityLabel="Creditos de la foto" accessibilityRole="button" hitSlop={8}
           onPress={() => {
             const photo = trail.provenance!.photo;
@@ -273,12 +300,12 @@ function TrailCover({
 function TrailStats({ trail }: { trail: Trail }) {
 
   return (
-    <View style={styles.stats}>
-      <StatPill icon="walk-outline" label={getTrailDistanceLabel(trail)} />
-      <StatPill icon="time-outline" label={trail.duration || "Duracion a confirmar"} />
-      <StatPill icon="leaf-outline" label={trail.difficulty} />
-      <StatPill icon="trending-up-outline" label={trail.elevation ? `Desnivel: +${trail.elevation.ascent_m} m` : "Desnivel no disponible"} />
-    </View>
+    <TrailMetrics columns={2} items={[
+      { icon: "walk-outline", label: "Distancia", value: getTrailDistanceLabel(trail) },
+      { icon: "time-outline", label: "Duración estimada", value: trail.duration || "A confirmar" },
+      { icon: "trail-sign-outline", label: "Dificultad", value: trail.difficulty || "A confirmar" },
+      { icon: "trending-up-outline", label: "Desnivel de ascenso", value: trail.elevation ? `+${trail.elevation.ascent_m} m` : "Sin dato" },
+    ]} />
   );
 }
 
@@ -303,7 +330,7 @@ function FavoriteButton({
       <Ionicons
         name={isFavorite ? "star" : "star-outline"}
         size={18}
-        color={isFavorite ? colors.warning : colors.greenDark}
+        color={colors.greenDark}
       />
       <Text style={styles.favoriteText}>
         {isFavorite ? "Ruta favorita" : "Guardar como favorita"}
@@ -329,21 +356,12 @@ function AltimetrySection({ trail }: { trail: Trail }) {
 
 function DescriptionCard({ trail }: { trail: Trail }) {
   return (
-    <InfoCard style={styles.card}>
-      <Text style={styles.cardTitle}>Descripcion</Text>
+    <ExpandableSection title="Sobre el recorrido" summary="Descripción y punto de inicio" icon="leaf-outline">
       <Text style={styles.body}>
         {trail.description || "Pronto vas a encontrar mas informacion sobre este recorrido."}
       </Text>
-      {trail.provenance ? (
-        <>
-          <Text style={styles.routeMetadata}>Inicio: {trail.provenance.access}</Text>
-          <Text style={styles.routeMetadata}>
-            {trail.provenance.route_type === "out_and_back" ? "Ida y vuelta" : trail.provenance.route_type === "loop" ? "Circuito completo" : "Solo ida; coordinar el regreso"}
-            {["planning_estimate", "round_trip_from_official_one_way"].includes(trail.provenance.duration_basis) ? ". Tiempo total orientativo calculado; no publicado como ida y vuelta." : "."}
-          </Text>
-        </>
-      ) : null}
-    </InfoCard>
+      {trail.provenance ? <Text style={styles.routeMetadata}>Inicio: {trail.provenance.access}</Text> : null}
+    </ExpandableSection>
   );
 }
 
@@ -377,27 +395,22 @@ function DifficultyCard({
   if (!trail.difficulty) return null;
 
   return (
-    <InfoCard style={styles.aiCard}>
-      <View style={styles.aiHeader}>
-        <Ionicons name="sparkles-outline" size={20} color={colors.green} />
-        <Text style={styles.cardTitle}>Dificultad de la ruta</Text>
-      </View>
+    <ExpandableSection title="Dificultad de la ruta" summary="Qué esfuerzo requiere" icon="trail-sign-outline">
       <Text style={styles.body}>{getDifficultyInsight(trail, weather)}</Text>
-    </InfoCard>
+    </ExpandableSection>
   );
 }
 
 function BeforeYouGoCard({ tips }: { tips: string[] }) {
   return (
-    <InfoCard style={styles.card}>
-      <Text style={styles.cardTitle}>Antes de salir</Text>
+    <ExpandableSection title="Ver preparación y clima" summary={`Antes de salir · ${tips.length} recomendaciones`} icon="checkmark-circle-outline">
       {tips.map((tip) => (
         <View key={tip} style={styles.checkRow}>
           <Ionicons name="checkmark-circle" size={20} color={colors.green} />
           <Text style={styles.checkText}>{tip}</Text>
         </View>
       ))}
-    </InfoCard>
+    </ExpandableSection>
   );
 }
 
@@ -648,6 +661,7 @@ const styles = StyleSheet.create({
   coverImage: {
     borderRadius: 28,
   },
+  coverFallback: { height: 88, backgroundColor: colors.soft, borderRadius: 24, justifyContent: "center" },
   coverBadge: {
     alignItems: "center",
     alignSelf: "flex-end",
@@ -669,34 +683,27 @@ const styles = StyleSheet.create({
     fontWeight: "800",
   },
   title: {
+    fontFamily: typography.extraBold,
     color: colors.ink,
     fontSize: 30,
-    fontWeight: "900",
+    fontWeight: "800",
     lineHeight: 36,
   },
   location: {
+    fontFamily: typography.regular,
     color: colors.muted,
     fontSize: 15,
     marginTop: 6,
-  },
-  stats: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    gap: 9,
-    marginTop: 18,
   },
   card: {
     marginTop: 16,
   },
   cardTitle: {
+    fontFamily: typography.bold,
     color: colors.ink,
     fontSize: 18,
-    fontWeight: "900",
+    fontWeight: "700",
     marginBottom: 10,
-  },
-  aiCard: {
-    backgroundColor: colors.mint,
-    marginTop: 16,
   },
   offlineCard: {
     marginTop: 16,
@@ -725,23 +732,20 @@ const styles = StyleSheet.create({
     lineHeight: 18,
     marginBottom: 12,
   },
-  aiHeader: {
-    alignItems: "center",
-    flexDirection: "row",
-    gap: 8,
-  },
   body: {
+    fontFamily: typography.regular,
     color: colors.muted,
     fontSize: 15,
     lineHeight: 23,
   },
   checkRow: {
-    alignItems: "center",
+    alignItems: "flex-start",
     flexDirection: "row",
     gap: 9,
     marginTop: 9,
   },
   checkText: {
+    fontFamily: typography.regular,
     color: colors.muted,
     flex: 1,
     fontSize: 14,
@@ -751,6 +755,9 @@ const styles = StyleSheet.create({
     gap: 10,
     marginTop: 18,
   },
+  detailSections: { marginTop: 24 },
+  precautions: { flexDirection: "row", alignItems: "flex-start", gap: 10, marginTop: 18 },
+  precautionsText: { flex: 1, gap: 8 },
   pressed: {
     opacity: 0.72,
   },
@@ -768,8 +775,8 @@ const styles = StyleSheet.create({
     paddingVertical: 9,
   },
   favoriteButtonActive: {
-    backgroundColor: colors.orangeSoft,
-    borderColor: colors.warning,
+    backgroundColor: colors.mint,
+    borderColor: colors.primary,
   },
   favoriteText: {
     color: colors.greenDark,

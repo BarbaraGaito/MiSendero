@@ -1,0 +1,11 @@
+{
+  "evaluator_code_sha256": "086165a164cf63d1de2b7952349afd2e10a407882389774418e0520ef16bdde3",
+  "selection_sha256": "b1af180393176bf69f1a0851ff50d0e6258c853b2ff1834eafee138a71e4fab6",
+  "winner_id": "observed-change-001",
+  "best_cv_accuracy": 0.6379721574248428,
+  "minimum_cv_for_new_test_evaluation": 0.65,
+  "gate_passed": false,
+  "new_test_evaluation": null,
+  "pretest_verifier_code_sha256": "2066a8ad658b8a80f76a9a284ee16a79af6bc9f237fcac1d098f94992fb7fdcc",
+  "pretest_winner_fold_artifacts_verified": 0
+}

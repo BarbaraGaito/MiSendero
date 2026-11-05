@@ -146,26 +146,29 @@ export const calculateExperienceLevel = (
 
 export const getRecommendedTrailForProfile = (
   trails: Trail[],
-  profile: ExperienceProfile
+  profile: ExperienceProfile,
+  unavailableImageUrls: ReadonlySet<string> = new Set()
 ) => {
-  if (!profile.completed || !profile.level) return null;
+  if (!profile.completed || profile.skipped || !profile.level) return null;
 
   const preferredDifficulties: Record<ExperienceLevel, string[]> = {
     principiante: ["baja"],
     intermedio: ["media", "baja"],
     avanzado: ["alta", "media", "baja"],
   };
-  const difficulties = preferredDifficulties[profile.level];
-
-  return (
-    trails.find((trail) =>
-      difficulties.some((difficulty) =>
-        trail.difficulty.toLowerCase().includes(difficulty)
-      )
-    ) ||
-    trails[0] ||
-    null
-  );
+  // Try routes with a usable photo first, ranking difficulty by the assigned
+  // level within each group. Neither pass can exceed the user's level.
+  const withPhotos = trails.filter(trail => {
+    const url = trail.image_url?.trim();
+    return url && !unavailableImageUrls.has(url);
+  });
+  for (const candidates of [withPhotos, trails]) {
+    for (const difficulty of preferredDifficulties[profile.level]) {
+      const match = candidates.find((trail) => trail.difficulty.trim().toLowerCase() === difficulty);
+      if (match) return match;
+    }
+  }
+  return null;
 };
 
 export const getTrailRecommendationReasons = (

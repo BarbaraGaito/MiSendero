@@ -1,0 +1,854 @@
+{
+  "version": 1,
+  "status": "complete",
+  "selection_sha256": "a71108a8c67b2cd37202411627fe9e040ef914d2c5e682d1a1e78fff1fd711e1",
+  "verification_sha256": "bf0f22717b9382f079d6c3ae5261736db235f19e92308f7aa94e1f45beca56a4",
+  "configurations": 36,
+  "preprocessor_fits": 170,
+  "independent_preprocessor_refits": 170,
+  "memory_free_artifact_reloads": 20,
+  "new_native_base_fits": 0,
+  "best_positive_by_member": {
+    "core": {
+      "candidate": {
+        "id": "transition-memory-009",
+        "algorithm": "causal_transition_memory",
+        "member": "core",
+        "retrieval_features": "clock",
+        "bandwidth": 2.0,
+        "strength": 0.25,
+        "scope": "session",
+        "recency_minutes": 10.0,
+        "mass_shrinkage": 1.0
+      },
+      "accuracy_mean": 0.6081818386217364,
+      "fold_accuracy": [
+        0.64,
+        0.5760869565217391,
+        0.5980392156862745,
+        0.5784313725490197,
+        0.6483516483516484
+      ]
+    },
+    "cat": {
+      "candidate": {
+        "id": "transition-memory-028",
+        "algorithm": "causal_transition_memory",
+        "member": "cat",
+        "retrieval_features": "physiology",
+        "bandwidth": 0.5,
+        "strength": 0.25,
+        "scope": "task",
+        "recency_minutes": 10.0,
+        "mass_shrinkage": 1.0
+      },
+      "accuracy_mean": 0.6220335384990117,
+      "fold_accuracy": [
+        0.66,
+        0.5543478260869565,
+        0.6176470588235294,
+        0.6078431372549019,
+        0.6703296703296703
+      ]
+    }
+  },
+  "matched_zero_memory_controls": {
+    "core": {
+      "candidate": {
+        "id": "transition-memory-002",
+        "algorithm": "causal_transition_memory",
+        "member": "core",
+        "retrieval_features": "clock",
+        "bandwidth": 0.5,
+        "strength": 0.0,
+        "scope": "session",
+        "recency_minutes": 10.0,
+        "mass_shrinkage": 1.0
+      },
+      "accuracy_mean": 0.6082057277760603,
+      "fold_accuracy": [
+        0.64,
+        0.5652173913043478,
+        0.5882352941176471,
+        0.5882352941176471,
+        0.6593406593406593
+      ]
+    },
+    "cat": {
+      "candidate": {
+        "id": "transition-memory-003",
+        "algorithm": "causal_transition_memory",
+        "member": "cat",
+        "retrieval_features": "clock",
+        "bandwidth": 0.5,
+        "strength": 0.0,
+        "scope": "session",
+        "recency_minutes": 10.0,
+        "mass_shrinkage": 1.0
+      },
+      "accuracy_mean": 0.6379721574248428,
+      "fold_accuracy": [
+        0.67,
+        0.5652173913043478,
+        0.6274509803921569,
+        0.6568627450980392,
+        0.6703296703296703
+      ]
+    }
+  },
+  "winner_id": "transition-memory-001",
+  "best_cv_accuracy": 0.6379721574248428,
+  "real_tests_code_sha256": "3a77d8c6344b04c679f90198b4143a97a2e3002c86f3057f8b862db7649bea9c",
+  "real_tests_log_sha256": "2c1f3a2f16a5080b09c30c7d4b58356a89011644215244d06c153394e048e306",
+  "new_test_evaluation": null,
+  "retained_test_correct": 108,
+  "retained_test_accuracy": 0.6033519553072626,
+  "target_accuracy": 0.8,
+  "achieved": false,
+  "results": [
+    {
+      "candidate": {
+        "id": "transition-memory-000",
+        "algorithm": "previous_real_control",
+        "parent_candidate_id": "aligned-history-000"
+      },
+      "accuracy_mean": 0.6082057277760603,
+      "fold_accuracy": [
+        0.64,
+        0.5652173913043478,
+        0.5882352941176471,
+        0.5882352941176471,
+        0.6593406593406593
+      ]
+    },
+    {
+      "candidate": {
+        "id": "transition-memory-001",
+        "algorithm": "previous_real_control",
+        "parent_candidate_id": "aligned-history-001"
+      },
+      "accuracy_mean": 0.6379721574248428,
+      "fold_accuracy": [
+        0.67,
+        0.5652173913043478,
+        0.6274509803921569,
+        0.6568627450980392,
+        0.6703296703296703
+      ]
+    },
+    {
+      "candidate": {
+        "id": "transition-memory-002",
+        "algorithm": "causal_transition_memory",
+        "member": "core",
+        "retrieval_features": "clock",
+        "bandwidth": 0.5,
+        "strength": 0.0,
+        "scope": "session",
+        "recency_minutes": 10.0,
+        "mass_shrinkage": 1.0
+      },
+      "accuracy_mean": 0.6082057277760603,
+      "fold_accuracy": [
+        0.64,
+        0.5652173913043478,
+        0.5882352941176471,
+        0.5882352941176471,
+        0.6593406593406593
+      ]
+    },
+    {
+      "candidate": {
+        "id": "transition-memory-003",
+        "algorithm": "causal_transition_memory",
+        "member": "cat",
+        "retrieval_features": "clock",
+        "bandwidth": 0.5,
+        "strength": 0.0,
+        "scope": "session",
+        "recency_minutes": 10.0,
+        "mass_shrinkage": 1.0
+      },
+      "accuracy_mean": 0.6379721574248428,
+      "fold_accuracy": [
+        0.67,
+        0.5652173913043478,
+        0.6274509803921569,
+        0.6568627450980392,
+        0.6703296703296703
+      ]
+    },
+    {
+      "candidate": {
+        "id": "transition-memory-004",
+        "algorithm": "causal_transition_memory",
+        "member": "core",
+        "retrieval_features": "clock",
+        "bandwidth": 0.5,
+        "strength": 0.25,
+        "scope": "task",
+        "recency_minutes": 10.0,
+        "mass_shrinkage": 1.0
+      },
+      "accuracy_mean": 0.5998493390667303,
+      "fold_accuracy": [
+        0.63,
+        0.5652173913043478,
+        0.5980392156862745,
+        0.5686274509803921,
+        0.6373626373626373
+      ]
+    },
+    {
+      "candidate": {
+        "id": "transition-memory-005",
+        "algorithm": "causal_transition_memory",
+        "member": "core",
+        "retrieval_features": "clock",
+        "bandwidth": 0.5,
+        "strength": 0.25,
+        "scope": "session",
+        "recency_minutes": 10.0,
+        "mass_shrinkage": 1.0
+      },
+      "accuracy_mean": 0.5998493390667303,
+      "fold_accuracy": [
+        0.63,
+        0.5652173913043478,
+        0.5980392156862745,
+        0.5686274509803921,
+        0.6373626373626373
+      ]
+    },
+    {
+      "candidate": {
+        "id": "transition-memory-006",
+        "algorithm": "causal_transition_memory",
+        "member": "core",
+        "retrieval_features": "clock",
+        "bandwidth": 0.5,
+        "strength": 0.75,
+        "scope": "task",
+        "recency_minutes": 10.0,
+        "mass_shrinkage": 1.0
+      },
+      "accuracy_mean": 0.5722261693975249,
+      "fold_accuracy": [
+        0.58,
+        0.5543478260869565,
+        0.5588235294117647,
+        0.5196078431372549,
+        0.6483516483516484
+      ]
+    },
+    {
+      "candidate": {
+        "id": "transition-memory-007",
+        "algorithm": "causal_transition_memory",
+        "member": "core",
+        "retrieval_features": "clock",
+        "bandwidth": 0.5,
+        "strength": 0.75,
+        "scope": "session",
+        "recency_minutes": 10.0,
+        "mass_shrinkage": 1.0
+      },
+      "accuracy_mean": 0.5702261693975249,
+      "fold_accuracy": [
+        0.57,
+        0.5543478260869565,
+        0.5588235294117647,
+        0.5196078431372549,
+        0.6483516483516484
+      ]
+    },
+    {
+      "candidate": {
+        "id": "transition-memory-008",
+        "algorithm": "causal_transition_memory",
+        "member": "core",
+        "retrieval_features": "clock",
+        "bandwidth": 2.0,
+        "strength": 0.25,
+        "scope": "task",
+        "recency_minutes": 10.0,
+        "mass_shrinkage": 1.0
+      },
+      "accuracy_mean": 0.6018493390667303,
+      "fold_accuracy": [
+        0.64,
+        0.5652173913043478,
+        0.5980392156862745,
+        0.5686274509803921,
+        0.6373626373626373
+      ]
+    },
+    {
+      "candidate": {
+        "id": "transition-memory-009",
+        "algorithm": "causal_transition_memory",
+        "member": "core",
+        "retrieval_features": "clock",
+        "bandwidth": 2.0,
+        "strength": 0.25,
+        "scope": "session",
+        "recency_minutes": 10.0,
+        "mass_shrinkage": 1.0
+      },
+      "accuracy_mean": 0.6081818386217364,
+      "fold_accuracy": [
+        0.64,
+        0.5760869565217391,
+        0.5980392156862745,
+        0.5784313725490197,
+        0.6483516483516484
+      ]
+    },
+    {
+      "candidate": {
+        "id": "transition-memory-010",
+        "algorithm": "causal_transition_memory",
+        "member": "core",
+        "retrieval_features": "clock",
+        "bandwidth": 2.0,
+        "strength": 0.75,
+        "scope": "task",
+        "recency_minutes": 10.0,
+        "mass_shrinkage": 1.0
+      },
+      "accuracy_mean": 0.5490461950666554,
+      "fold_accuracy": [
+        0.58,
+        0.532608695652174,
+        0.5490196078431373,
+        0.49019607843137253,
+        0.5934065934065934
+      ]
+    },
+    {
+      "candidate": {
+        "id": "transition-memory-011",
+        "algorithm": "causal_transition_memory",
+        "member": "core",
+        "retrieval_features": "clock",
+        "bandwidth": 2.0,
+        "strength": 0.75,
+        "scope": "session",
+        "recency_minutes": 10.0,
+        "mass_shrinkage": 1.0
+      },
+      "accuracy_mean": 0.5595458437555624,
+      "fold_accuracy": [
+        0.57,
+        0.5217391304347826,
+        0.5588235294117647,
+        0.5098039215686274,
+        0.6373626373626373
+      ]
+    },
+    {
+      "candidate": {
+        "id": "transition-memory-012",
+        "algorithm": "causal_transition_memory",
+        "member": "core",
+        "retrieval_features": "physiology",
+        "bandwidth": 0.5,
+        "strength": 0.25,
+        "scope": "task",
+        "recency_minutes": 10.0,
+        "mass_shrinkage": 1.0
+      },
+      "accuracy_mean": 0.6018493390667304,
+      "fold_accuracy": [
+        0.64,
+        0.5652173913043478,
+        0.5882352941176471,
+        0.5784313725490197,
+        0.6373626373626373
+      ]
+    },
+    {
+      "candidate": {
+        "id": "transition-memory-013",
+        "algorithm": "causal_transition_memory",
+        "member": "core",
+        "retrieval_features": "physiology",
+        "bandwidth": 0.5,
+        "strength": 0.25,
+        "scope": "session",
+        "recency_minutes": 10.0,
+        "mass_shrinkage": 1.0
+      },
+      "accuracy_mean": 0.6018493390667304,
+      "fold_accuracy": [
+        0.64,
+        0.5652173913043478,
+        0.5882352941176471,
+        0.5784313725490197,
+        0.6373626373626373
+      ]
+    },
+    {
+      "candidate": {
+        "id": "transition-memory-014",
+        "algorithm": "causal_transition_memory",
+        "member": "core",
+        "retrieval_features": "physiology",
+        "bandwidth": 0.5,
+        "strength": 0.75,
+        "scope": "task",
+        "recency_minutes": 10.0,
+        "mass_shrinkage": 1.0
+      },
+      "accuracy_mean": 0.5839891515134482,
+      "fold_accuracy": [
+        0.64,
+        0.5543478260869565,
+        0.5490196078431373,
+        0.5392156862745098,
+        0.6373626373626373
+      ]
+    },
+    {
+      "candidate": {
+        "id": "transition-memory-015",
+        "algorithm": "causal_transition_memory",
+        "member": "core",
+        "retrieval_features": "physiology",
+        "bandwidth": 0.5,
+        "strength": 0.75,
+        "scope": "session",
+        "recency_minutes": 10.0,
+        "mass_shrinkage": 1.0
+      },
+      "accuracy_mean": 0.5819891515134482,
+      "fold_accuracy": [
+        0.63,
+        0.5543478260869565,
+        0.5490196078431373,
+        0.5392156862745098,
+        0.6373626373626373
+      ]
+    },
+    {
+      "candidate": {
+        "id": "transition-memory-016",
+        "algorithm": "causal_transition_memory",
+        "member": "core",
+        "retrieval_features": "physiology",
+        "bandwidth": 2.0,
+        "strength": 0.25,
+        "scope": "task",
+        "recency_minutes": 10.0,
+        "mass_shrinkage": 1.0
+      },
+      "accuracy_mean": 0.5998885547530048,
+      "fold_accuracy": [
+        0.64,
+        0.5652173913043478,
+        0.5882352941176471,
+        0.5686274509803921,
+        0.6373626373626373
+      ]
+    },
+    {
+      "candidate": {
+        "id": "transition-memory-017",
+        "algorithm": "causal_transition_memory",
+        "member": "core",
+        "retrieval_features": "physiology",
+        "bandwidth": 2.0,
+        "strength": 0.25,
+        "scope": "session",
+        "recency_minutes": 10.0,
+        "mass_shrinkage": 1.0
+      },
+      "accuracy_mean": 0.6081818386217364,
+      "fold_accuracy": [
+        0.64,
+        0.5760869565217391,
+        0.5882352941176471,
+        0.5882352941176471,
+        0.6483516483516484
+      ]
+    },
+    {
+      "candidate": {
+        "id": "transition-memory-018",
+        "algorithm": "causal_transition_memory",
+        "member": "core",
+        "retrieval_features": "physiology",
+        "bandwidth": 2.0,
+        "strength": 0.75,
+        "scope": "task",
+        "recency_minutes": 10.0,
+        "mass_shrinkage": 1.0
+      },
+      "accuracy_mean": 0.5470854107529299,
+      "fold_accuracy": [
+        0.58,
+        0.532608695652174,
+        0.5196078431372549,
+        0.5098039215686274,
+        0.5934065934065934
+      ]
+    },
+    {
+      "candidate": {
+        "id": "transition-memory-019",
+        "algorithm": "causal_transition_memory",
+        "member": "core",
+        "retrieval_features": "physiology",
+        "bandwidth": 2.0,
+        "strength": 0.75,
+        "scope": "session",
+        "recency_minutes": 10.0,
+        "mass_shrinkage": 1.0
+      },
+      "accuracy_mean": 0.5615219546012385,
+      "fold_accuracy": [
+        0.58,
+        0.532608695652174,
+        0.5490196078431373,
+        0.5196078431372549,
+        0.6263736263736264
+      ]
+    },
+    {
+      "candidate": {
+        "id": "transition-memory-020",
+        "algorithm": "causal_transition_memory",
+        "member": "cat",
+        "retrieval_features": "clock",
+        "bandwidth": 0.5,
+        "strength": 0.25,
+        "scope": "task",
+        "recency_minutes": 10.0,
+        "mass_shrinkage": 1.0
+      },
+      "accuracy_mean": 0.6218204097692588,
+      "fold_accuracy": [
+        0.66,
+        0.5434782608695652,
+        0.6274509803921569,
+        0.6078431372549019,
+        0.6703296703296703
+      ]
+    },
+    {
+      "candidate": {
+        "id": "transition-memory-021",
+        "algorithm": "causal_transition_memory",
+        "member": "cat",
+        "retrieval_features": "clock",
+        "bandwidth": 0.5,
+        "strength": 0.25,
+        "scope": "session",
+        "recency_minutes": 10.0,
+        "mass_shrinkage": 1.0
+      },
+      "accuracy_mean": 0.6218204097692588,
+      "fold_accuracy": [
+        0.66,
+        0.5434782608695652,
+        0.6274509803921569,
+        0.6078431372549019,
+        0.6703296703296703
+      ]
+    },
+    {
+      "candidate": {
+        "id": "transition-memory-022",
+        "algorithm": "causal_transition_memory",
+        "member": "cat",
+        "retrieval_features": "clock",
+        "bandwidth": 0.5,
+        "strength": 0.75,
+        "scope": "task",
+        "recency_minutes": 10.0,
+        "mass_shrinkage": 1.0
+      },
+      "accuracy_mean": 0.6060710304188566,
+      "fold_accuracy": [
+        0.65,
+        0.5543478260869565,
+        0.6078431372549019,
+        0.5588235294117647,
+        0.6593406593406593
+      ]
+    },
+    {
+      "candidate": {
+        "id": "transition-memory-023",
+        "algorithm": "causal_transition_memory",
+        "member": "cat",
+        "retrieval_features": "clock",
+        "bandwidth": 0.5,
+        "strength": 0.75,
+        "scope": "session",
+        "recency_minutes": 10.0,
+        "mass_shrinkage": 1.0
+      },
+      "accuracy_mean": 0.6060710304188566,
+      "fold_accuracy": [
+        0.65,
+        0.5543478260869565,
+        0.6078431372549019,
+        0.5588235294117647,
+        0.6593406593406593
+      ]
+    },
+    {
+      "candidate": {
+        "id": "transition-memory-024",
+        "algorithm": "causal_transition_memory",
+        "member": "cat",
+        "retrieval_features": "clock",
+        "bandwidth": 2.0,
+        "strength": 0.25,
+        "scope": "task",
+        "recency_minutes": 10.0,
+        "mass_shrinkage": 1.0
+      },
+      "accuracy_mean": 0.6176618232577311,
+      "fold_accuracy": [
+        0.66,
+        0.5434782608695652,
+        0.6176470588235294,
+        0.6078431372549019,
+        0.6593406593406593
+      ]
+    },
+    {
+      "candidate": {
+        "id": "transition-memory-025",
+        "algorithm": "causal_transition_memory",
+        "member": "cat",
+        "retrieval_features": "clock",
+        "bandwidth": 2.0,
+        "strength": 0.25,
+        "scope": "session",
+        "recency_minutes": 10.0,
+        "mass_shrinkage": 1.0
+      },
+      "accuracy_mean": 0.6193855896873799,
+      "fold_accuracy": [
+        0.66,
+        0.5434782608695652,
+        0.6372549019607843,
+        0.6078431372549019,
+        0.6483516483516484
+      ]
+    },
+    {
+      "candidate": {
+        "id": "transition-memory-026",
+        "algorithm": "causal_transition_memory",
+        "member": "cat",
+        "retrieval_features": "clock",
+        "bandwidth": 2.0,
+        "strength": 0.75,
+        "scope": "task",
+        "recency_minutes": 10.0,
+        "mass_shrinkage": 1.0
+      },
+      "accuracy_mean": 0.5998169622363996,
+      "fold_accuracy": [
+        0.67,
+        0.5434782608695652,
+        0.5686274509803921,
+        0.5686274509803921,
+        0.6483516483516484
+      ]
+    },
+    {
+      "candidate": {
+        "id": "transition-memory-027",
+        "algorithm": "causal_transition_memory",
+        "member": "cat",
+        "retrieval_features": "clock",
+        "bandwidth": 2.0,
+        "strength": 0.75,
+        "scope": "session",
+        "recency_minutes": 10.0,
+        "mass_shrinkage": 1.0
+      },
+      "accuracy_mean": 0.5971775760471413,
+      "fold_accuracy": [
+        0.66,
+        0.5108695652173914,
+        0.5882352941176471,
+        0.5784313725490197,
+        0.6483516483516484
+      ]
+    },
+    {
+      "candidate": {
+        "id": "transition-memory-028",
+        "algorithm": "causal_transition_memory",
+        "member": "cat",
+        "retrieval_features": "physiology",
+        "bandwidth": 0.5,
+        "strength": 0.25,
+        "scope": "task",
+        "recency_minutes": 10.0,
+        "mass_shrinkage": 1.0
+      },
+      "accuracy_mean": 0.6220335384990117,
+      "fold_accuracy": [
+        0.66,
+        0.5543478260869565,
+        0.6176470588235294,
+        0.6078431372549019,
+        0.6703296703296703
+      ]
+    },
+    {
+      "candidate": {
+        "id": "transition-memory-029",
+        "algorithm": "causal_transition_memory",
+        "member": "cat",
+        "retrieval_features": "physiology",
+        "bandwidth": 0.5,
+        "strength": 0.25,
+        "scope": "session",
+        "recency_minutes": 10.0,
+        "mass_shrinkage": 1.0
+      },
+      "accuracy_mean": 0.6220335384990117,
+      "fold_accuracy": [
+        0.66,
+        0.5543478260869565,
+        0.6176470588235294,
+        0.6078431372549019,
+        0.6703296703296703
+      ]
+    },
+    {
+      "candidate": {
+        "id": "transition-memory-030",
+        "algorithm": "causal_transition_memory",
+        "member": "cat",
+        "retrieval_features": "physiology",
+        "bandwidth": 0.5,
+        "strength": 0.75,
+        "scope": "task",
+        "recency_minutes": 10.0,
+        "mass_shrinkage": 1.0
+      },
+      "accuracy_mean": 0.6074230816072249,
+      "fold_accuracy": [
+        0.67,
+        0.5434782608695652,
+        0.5784313725490197,
+        0.6078431372549019,
+        0.6373626373626373
+      ]
+    },
+    {
+      "candidate": {
+        "id": "transition-memory-031",
+        "algorithm": "causal_transition_memory",
+        "member": "cat",
+        "retrieval_features": "physiology",
+        "bandwidth": 0.5,
+        "strength": 0.75,
+        "scope": "session",
+        "recency_minutes": 10.0,
+        "mass_shrinkage": 1.0
+      },
+      "accuracy_mean": 0.6074230816072249,
+      "fold_accuracy": [
+        0.67,
+        0.5434782608695652,
+        0.5784313725490197,
+        0.6078431372549019,
+        0.6373626373626373
+      ]
+    },
+    {
+      "candidate": {
+        "id": "transition-memory-032",
+        "algorithm": "causal_transition_memory",
+        "member": "cat",
+        "retrieval_features": "physiology",
+        "bandwidth": 2.0,
+        "strength": 0.25,
+        "scope": "task",
+        "recency_minutes": 10.0,
+        "mass_shrinkage": 1.0
+      },
+      "accuracy_mean": 0.6196226075714566,
+      "fold_accuracy": [
+        0.66,
+        0.5434782608695652,
+        0.6176470588235294,
+        0.6176470588235294,
+        0.6593406593406593
+      ]
+    },
+    {
+      "candidate": {
+        "id": "transition-memory-033",
+        "algorithm": "causal_transition_memory",
+        "member": "cat",
+        "retrieval_features": "physiology",
+        "bandwidth": 2.0,
+        "strength": 0.25,
+        "scope": "session",
+        "recency_minutes": 10.0,
+        "mass_shrinkage": 1.0
+      },
+      "accuracy_mean": 0.6193855896873799,
+      "fold_accuracy": [
+        0.66,
+        0.5434782608695652,
+        0.6274509803921569,
+        0.6176470588235294,
+        0.6483516483516484
+      ]
+    },
+    {
+      "candidate": {
+        "id": "transition-memory-034",
+        "algorithm": "causal_transition_memory",
+        "member": "cat",
+        "retrieval_features": "physiology",
+        "bandwidth": 2.0,
+        "strength": 0.75,
+        "scope": "task",
+        "recency_minutes": 10.0,
+        "mass_shrinkage": 1.0
+      },
+      "accuracy_mean": 0.5958561779226741,
+      "fold_accuracy": [
+        0.66,
+        0.5434782608695652,
+        0.5490196078431373,
+        0.5784313725490197,
+        0.6483516483516484
+      ]
+    },
+    {
+      "candidate": {
+        "id": "transition-memory-035",
+        "algorithm": "causal_transition_memory",
+        "member": "cat",
+        "retrieval_features": "physiology",
+        "bandwidth": 2.0,
+        "strength": 0.75,
+        "scope": "session",
+        "recency_minutes": 10.0,
+        "mass_shrinkage": 1.0
+      },
+      "accuracy_mean": 0.5957061540335198,
+      "fold_accuracy": [
+        0.67,
+        0.5217391304347826,
+        0.5588235294117647,
+        0.5686274509803921,
+        0.6593406593406593
+      ]
+    }
+  ]
+}

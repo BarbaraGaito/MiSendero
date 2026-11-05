@@ -1,0 +1,11 @@
+{
+  "evaluator_code_sha256": "4458e9ad02c96640034a79708eaf7ac9560c37830e5b302bee79b82f171eda8e",
+  "selection_sha256": "8b750bcb3a78680c99c961117929e6b9ac709d15b99ce25f2ebec3f2f81fb5e7",
+  "winner_id": "gate-regularization-001",
+  "best_cv_accuracy": 0.6379721574248428,
+  "minimum_cv_for_new_test_evaluation": 0.65,
+  "gate_passed": false,
+  "new_test_evaluation": null,
+  "pretest_verifier_code_sha256": "8dd1fc646e3c43245484948e3122bdcafc4cf1f2dcfc3630a249189c545a5fc2",
+  "pretest_winner_fold_artifacts_verified": 0
+}

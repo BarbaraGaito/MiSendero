@@ -21,7 +21,9 @@ GeoFatigue contiene respuestas subjetivas observadas, y OSM anotaciones comunita
 
 `training/python/train_public.py` reserva una sola partición por participante con semilla 42 para fatiga/AMS. Para las fuentes argentinas usa los parques/regiones declarados en el catálogo antes de entrenar: Tierra del Fuego para APN, Ushuaia/Mendoza para OSM. Las redes conectadas, nombres y relaciones compartidas permanecen juntas. No se prueban otras semillas ni particiones para mejorar los resultados. Los grupos del test no participan en tuning ni validación cruzada. La selección de parámetros usa GroupKFold solo en entrenamiento.
 
-No hay imputación aprendida ni escalado global. Los filtros, conversiones y uniones temporales son determinísticos y están documentados. En GeoFatigue se toma un minuto completo de pulso previo a cada respuesta, dentro de una ventana máxima de dos minutos. Las ventanas de todos los registros de una persona permanecen en el mismo grupo.
+No hay imputación aprendida ni escalado global. SGD, regresión logística y MLP ajustan `StandardScaler` únicamente dentro del entrenamiento de cada fold; los bosques no escalan entradas. Los filtros, conversiones y uniones temporales son determinísticos y están documentados. En GeoFatigue se toma un minuto completo de pulso previo a cada respuesta, dentro de una ventana máxima de dos minutos. Las ventanas de todos los registros de una persona permanecen en el mismo grupo.
+
+El ajuste del 25/10/2026 compara 76 configuraciones por tarea de Random Forest, Extra Trees, regresión logística, SGD y MLP con backpropagation. Incluye las cuatro configuraciones anteriores. Selecciona el mayor F1 macro medio en los mismos folds por grupos, con desempate por orden fijo. El test no elige algoritmos ni parámetros. `selection.json` conserva el plan, predicciones fuera de fold, resultados y advertencias de convergencia de todos los candidatos. La CV usada para seleccionar es optimista; no se presenta como estimación independiente de generalización. Ver [comparación con la corrida anterior](../../docs/ai-optimization-2026-10-25/README.md).
 
 Cada familia escribe:
 
@@ -29,7 +31,8 @@ Cada familia escribe:
 - `provenance.json`: hashes, transformaciones y correspondencia de filas con archivos/observaciones públicas; metadatos de auditoría separados de las variables.
 - `test_predictions.csv`: respuesta observada y predicha del test para recalcular las métricas.
 - `metrics.json`: resultados, baseline, grupos/folds y limitaciones.
-- `model.forest.json`: bosque experimental con `deployment_approved: false`.
+- `model.forest.json` o `model.classifier.json`: modelo experimental en JSON con `deployment_approved: false`. El segundo formato conserva escalado y coeficientes de modelos lineales/redes cuando corresponde; el validador reproduce sus predicciones sin cargar pickle.
+- `selection.json`: evidencia de selección exclusivamente dentro de entrenamiento, sin resultados de test por candidato.
 
 `npm run validate:ai-data` verifica hashes, etiquetas originales, particiones, que el modelo se ajustó solo con las filas observadas de entrenamiento y recalcula accuracy/F1 del test. `npm run test:ai-data` comprueba filtraciones por grupos, que la validación cruzada ajusta solo filas observadas y el rechazo de fuentes modificadas.
 
@@ -44,6 +47,17 @@ npm run train:ai
 npm run validate:ai-data
 npm run test:ai-data
 ```
+
+Para separar selección de evaluación final:
+
+```powershell
+npm run tune:ai
+npm run train:ai-selected
+```
+
+El segundo comando verifica los hashes, el plan y las predicciones fuera de fold del informe guardado; no vuelve a buscar candidatos. Cambiar datos o particiones invalida esa selección.
+
+La publicación conserva el anterior si el candidato pierde accuracy o F1 macro sobre el mismo test. Archiva todos los artefactos del intento en `rejected-candidates/<versión>/`; el validador también los comprueba. Esta decisión sí usa el test y limita la interpretación a una comparación descriptiva. En la corrida del 25/10 se conservó AMS; el informe distingue sus mejores resultados de CV de la caída observada en test.
 
 Las fichas APN aportan estimaciones publicadas, no tiempos individuales observados. Las respuestas dinámicas de APN, OSM y el índice IGN pueden cambiar. El downloader rechaza cambios de hash y exige auditar una nueva versión, sin actualizar el lock automáticamente. Conservar los snapshots locales para reproducir exactamente esta corrida.
 

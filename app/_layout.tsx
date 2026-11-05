@@ -1,6 +1,8 @@
 import { Stack } from "expo-router";
 import { useFonts } from "expo-font";
 import {
+  BricolageGrotesque_400Regular,
+  BricolageGrotesque_500Medium,
   BricolageGrotesque_700Bold,
   BricolageGrotesque_800ExtraBold,
 } from "@expo-google-fonts/bricolage-grotesque";
@@ -9,9 +11,12 @@ import { SyncCoordinator } from "../services/SyncCoordinator";
 import { RouteTrackingCoordinator } from "../services/RouteTrackingCoordinator";
 import { FallDetectionCoordinator } from "../services/fallDetection/FallDetectionCoordinator";
 import { StoragePrivacyGuard } from "../services/StoragePrivacyGuard";
+import { ConnectivityProvider } from "../services/ConnectivityProvider";
 
 export default function RootLayout() {
   const [fontsLoaded, fontError] = useFonts({
+    BricolageGrotesque_400Regular,
+    BricolageGrotesque_500Medium,
     BricolageGrotesque_700Bold,
     BricolageGrotesque_800ExtraBold,
   });
@@ -22,6 +27,7 @@ export default function RootLayout() {
 
   return (
     <SafeAreaProvider>
+      <ConnectivityProvider>
       <StoragePrivacyGuard>
       <SyncCoordinator />
       <RouteTrackingCoordinator />
@@ -68,6 +74,7 @@ export default function RootLayout() {
         <Stack.Screen name="perfil" />
       </Stack>
       </StoragePrivacyGuard>
+      </ConnectivityProvider>
     </SafeAreaProvider>
   );
 }

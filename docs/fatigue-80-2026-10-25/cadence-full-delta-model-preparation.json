@@ -1,0 +1,11 @@
+{
+  "preparation": "passed",
+  "preparation_code_sha256": "cb9a0160bc3899c033b2044b181554fa523762f6d2641c5f9239f0d026bbf02e",
+  "frozen_sources_sha256": {
+    "fatigue_cadence_binary_gate.py": "9ac66f249fc04b8f023eca674839478ff438a7280db8778dfa91c1082ab1ab3d",
+    "fatigue_cadence_recent_gate.py": "2db00f3cf805ef84234d7cc941ada487bcc024d18cd0d16c218f1cfc765de198"
+  },
+  "model_code_sha256": "6475ae3f4fa8cf4aefed93dd69184744c224977fbe52140462343e6e38032ac8",
+  "historical_sources_modified": false,
+  "new_predictive_estimator_fits": 0
+}

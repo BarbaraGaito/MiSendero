@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "verified_at": "2026-10-27T00:20:00.704814+00:00",
+  "parent_verification_sha256": "ab6bdd23ac678cc3d042c22d786fe02d2f80d5566b265037f470778edb5a35ce",
+  "selection_sha256": "5ecf2b48e40e1d4c0c6bfad0b486697070ddace95fa60bd61d60912d80709008",
+  "verification_code_sha256": "aaea44e1bffc0aa822369e39d8e4df8036092a8c9c32589b0717ebf9a16693d5",
+  "public_real_data_policy_sha256": "fdfb112d20b1f22bae08032ed7d9f3d27ee784879674c32f8f65cc21fe69c028",
+  "artificial_history_fitting_disabled_during_native_refits": true,
+  "actual_native_fitter_receives_only_original_reports_and_labels": true,
+  "source_transition_pairs_checked_against_original_lineage": 249,
+  "source_transition_counts": {
+    "worker": 200,
+    "sts": 49
+  },
+  "source_heads_independently_refitted": 6,
+  "all_10_oof_recipes_recomputed": true,
+  "inherited_controls_reproduced": 2,
+  "best_new_teacher_id": "transition-007",
+  "best_new_teacher_cv_accuracy": 0.6240488650309622,
+  "best_matched_sensor_control_id": "transition-002",
+  "best_matched_sensor_control_cv_accuracy": 0.6081818386217364,
+  "native_recipes_independently_refitted": [
+    "transition-007",
+    "transition-002"
+  ],
+  "grouped_folds_per_refit": 5,
+  "winner_id": "transition-001",
+  "best_cv_accuracy": 0.6379721574248428,
+  "new_test_gate_passed": false,
+  "original_training_cases": 487,
+  "original_test_cases": 179,
+  "best_verified_test_correct": 108,
+  "best_verified_test_accuracy": 0.6033519553072626,
+  "target_accuracy": 0.8,
+  "achieved": false,
+  "scope": "Exact native Borg on original participant-held cases. Combined source survey transitions remain auxiliary, with separate study-specific heads and no invented survey clock. Saved native test model is independently revalidated; source targets do not change the goal denominator."
+}

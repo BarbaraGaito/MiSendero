@@ -1,0 +1,122 @@
+{
+  "version": 1,
+  "implementation_code_sha256": "7b5e4e1fcdf49350dd0ba49763712737fe6d191469a90e04ebe9445497638055",
+  "plan": [
+    {
+      "id": "observed-change-000",
+      "algorithm": "previous_real_control",
+      "parent_candidate_id": "transition-memory-000"
+    },
+    {
+      "id": "observed-change-001",
+      "algorithm": "previous_real_control",
+      "parent_candidate_id": "transition-memory-001"
+    },
+    {
+      "id": "observed-change-002",
+      "algorithm": "observed_change_distribution",
+      "member": "core",
+      "feature_set": "history",
+      "structure": "flat",
+      "probability_floor": 0.0001,
+      "native_target": "actual_current_minus_actual_prior_integer",
+      "random_seed": 42,
+      "native_hyperparameters": "unchanged_original_member_specification"
+    },
+    {
+      "id": "observed-change-003",
+      "algorithm": "observed_change_distribution",
+      "member": "core",
+      "feature_set": "history",
+      "structure": "factorized",
+      "probability_floor": 0.0001,
+      "native_target": "actual_current_minus_actual_prior_integer",
+      "random_seed": 42,
+      "native_hyperparameters": "unchanged_original_member_specification"
+    },
+    {
+      "id": "observed-change-004",
+      "algorithm": "observed_change_distribution",
+      "member": "core",
+      "feature_set": "history_physiology",
+      "structure": "flat",
+      "probability_floor": 0.0001,
+      "native_target": "actual_current_minus_actual_prior_integer",
+      "random_seed": 42,
+      "native_hyperparameters": "unchanged_original_member_specification"
+    },
+    {
+      "id": "observed-change-005",
+      "algorithm": "observed_change_distribution",
+      "member": "core",
+      "feature_set": "history_physiology",
+      "structure": "factorized",
+      "probability_floor": 0.0001,
+      "native_target": "actual_current_minus_actual_prior_integer",
+      "random_seed": 42,
+      "native_hyperparameters": "unchanged_original_member_specification"
+    },
+    {
+      "id": "observed-change-006",
+      "algorithm": "observed_change_distribution",
+      "member": "cat",
+      "feature_set": "history",
+      "structure": "flat",
+      "probability_floor": 0.0001,
+      "native_target": "actual_current_minus_actual_prior_integer",
+      "random_seed": 42,
+      "native_hyperparameters": "unchanged_original_member_specification"
+    },
+    {
+      "id": "observed-change-007",
+      "algorithm": "observed_change_distribution",
+      "member": "cat",
+      "feature_set": "history",
+      "structure": "factorized",
+      "probability_floor": 0.0001,
+      "native_target": "actual_current_minus_actual_prior_integer",
+      "random_seed": 42,
+      "native_hyperparameters": "unchanged_original_member_specification"
+    },
+    {
+      "id": "observed-change-008",
+      "algorithm": "observed_change_distribution",
+      "member": "cat",
+      "feature_set": "history_physiology",
+      "structure": "flat",
+      "probability_floor": 0.0001,
+      "native_target": "actual_current_minus_actual_prior_integer",
+      "random_seed": 42,
+      "native_hyperparameters": "unchanged_original_member_specification"
+    },
+    {
+      "id": "observed-change-009",
+      "algorithm": "observed_change_distribution",
+      "member": "cat",
+      "feature_set": "history_physiology",
+      "structure": "factorized",
+      "probability_floor": 0.0001,
+      "native_target": "actual_current_minus_actual_prior_integer",
+      "random_seed": 42,
+      "native_hyperparameters": "unchanged_original_member_specification"
+    }
+  ],
+  "previous_verification_sha256": "bf0f22717b9382f079d6c3ae5261736db235f19e92308f7aa94e1f45beca56a4",
+  "factorization_review_sha256": "d202c3cf4881022c5ff5fc5a164d50bc93dc8f62154ad0a5e912d97506019a4c",
+  "original_native_fitting_cases": 487,
+  "original_native_test_cases": 179,
+  "new_candidate_fold_fits": 40,
+  "new_stage_estimator_fits": 60,
+  "workers": 2,
+  "synthetic_rows": 0,
+  "native_target_coarsening": false,
+  "physiology_features_added_in_matched_feature_set": [
+    "hr_last",
+    "hr_change_after_prior",
+    "hr_recent_slope"
+  ],
+  "minimum_cv_for_new_test_evaluation": 0.65,
+  "test_used_for_selection": false,
+  "independent_refit_policy": "Best factorized recipe per member and its matched flat control,plus sole CVwinner if new and not already included; all40fold artifacts and10OOFmetrics independently recomputed.",
+  "rationale": "The fitting-only review identified229actual unchanged transitions and258nonzero transitions, including2negative. Previous continuous regressors and residual-zero options did not separately fit observed-change probability and conditional exact nonzero magnitude. Compare that factorization with matched flat-class models,using the exact same family hyperparameters/history features, and one matched extension of3already causal HRfeatures. Both submodels see fitting people only; the conditional model sees only their actually observed nonzero transitions. Binary labels describe real pairs,not assumed zeros or extra observations. Final predictions remain exact Borg0-10 for every original case. No bandwidth,source-weight,epoch or rate/budget grid repetition."
+}

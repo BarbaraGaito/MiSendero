@@ -11,8 +11,8 @@ jest.mock("../../../services/routeSession", () => ({ getActiveRouteSession: jest
 jest.mock("../../../services/nationalParks", () => ({ ...jest.requireActual("../../../services/nationalParks"), getNationalParks: jest.fn(), getNationalPark: jest.fn() }));
 jest.mock("expo-network", () => ({ getNetworkStateAsync: jest.fn().mockResolvedValue({ isConnected: false, isInternetReachable: false }) }));
 import { router, useLocalSearchParams } from "expo-router";
-import { TextInput, Image, Linking } from "react-native";
-import { mount, text, press, act } from "../../../testing/mobileHarness";
+import { TextInput, Image, ImageBackground, FlatList, Linking } from "react-native";
+import { mount, text, press, act, flush } from "../../../testing/mobileHarness";
 import { trail, completed } from "../../../testing/fixtures";
 import * as trails from "../../../services/trailRepository";
 import * as maps from "../../../services/offlineMaps";
@@ -51,6 +51,48 @@ test("offline home uses the local account and recommendations, and opens the sel
   const tree = await mount(Home); expect(text(tree)).toContain("Ana"); expect(text(tree)).toContain(trail.name);
   await press(tree, `Ver detalle de ${trail.name}`); expect(router.push).toHaveBeenCalledWith({ pathname: "/trail-detail", params: { id: "7" } });
 });
+
+test("home refreshes its recommendation when the assigned experience changes and it regains focus", async () => {
+  const focusEffects = new Set<() => void | (() => void)>();
+  jest.spyOn(require("expo-router"), "useFocusEffect").mockImplementation((effect: any) => {
+    focusEffects.add(effect);
+    require("react").useEffect(effect, [effect]);
+  });
+  const medium = { ...trail, id: 9, name: "Ruta intermedia", difficulty: "Media" };
+  (trails.getTrails as jest.Mock).mockResolvedValue([trail, medium]);
+  const tree = await mount(Home);
+  expect(text(tree)).toContain("Tu nivel: principiante");
+  expect(text(tree)).toContain(trail.name);
+  (experience.getExperienceProfile as jest.Mock).mockResolvedValue({ completed: true, level: "intermedio", answers: {} });
+  await act(async () => { for (const effect of focusEffects) effect(); await flush(); });
+  expect(experience.getExperienceProfile).toHaveBeenLastCalledWith(31);
+  expect(text(tree)).toContain("Tu nivel: intermedio");
+  expect(text(tree)).toContain(medium.name);
+  expect(text(tree)).not.toContain(trail.name);
+});
+
+test("home explains when no route matches the assigned level instead of suggesting a harder one", async () => {
+  (trails.getTrails as jest.Mock).mockResolvedValue([{ ...trail, difficulty: "Alta" }]);
+  const tree = await mount(Home);
+  expect(text(tree)).toContain("No hay senderos acordes a tu nivel");
+  expect(text(tree)).not.toContain(trail.name);
+});
+
+test("home replaces a broken recommendation photo with another compatible trail and handles all photos failing", async () => {
+  const other = { ...trail, id: 8, name: "Alternativa con foto", image_url: "https://images.example.test/alternative.jpg" };
+  const hard = { ...trail, id: 9, name: "Ruta avanzada con foto", difficulty: "Alta", image_url: "https://images.example.test/hard.jpg" };
+  (trails.getTrails as jest.Mock).mockResolvedValue([hard, trail, other]);
+  const tree = await mount(Home);
+  expect(text(tree)).toContain(trail.name);
+  await act(async () => tree.root.findByType(ImageBackground).props.onError());
+  expect(text(tree)).toContain(other.name);
+  expect(text(tree)).not.toContain(hard.name);
+  expect(tree.root.findByType(ImageBackground).props.source).toEqual({ uri: other.image_url });
+  await act(async () => tree.root.findByType(ImageBackground).props.onError());
+  expect(text(tree)).toContain("Foto no disponible");
+  expect(tree.root.findByType(ImageBackground).props.source).toBeUndefined();
+  expect(text(tree)).not.toContain(hard.name);
+});
 test("home redirects a missing session and presents recoverable loading failures", async () => {
   (auth.getAuthSession as jest.Mock).mockResolvedValueOnce(null); await mount(Home); expect(router.replace).toHaveBeenCalledWith("/");
   (trails.getTrails as jest.Mock).mockRejectedValueOnce(new Error("cache unavailable")); const tree = await mount(Home);
@@ -61,6 +103,77 @@ test("exploration filters actual loaded routes by query and difficulty", async (
   const input = tree.root.findByType(TextInput);
   await act(async () => input.props.onChangeText("exigente")); expect(text(tree)).not.toContain(trail.name); expect(text(tree)).toContain("Ruta exigente");
   await act(async () => input.props.onChangeText("inexistente")); expect(text(tree)).toContain("Sin resultados");
+});
+
+test("advanced filters remain effective when collapsed and can be cleared", async () => {
+  const tree = await mount(Explore);
+  expect(text(tree)).not.toContain("0-5 km");
+  await press(tree, "Filtrar senderos");
+  await press(tree, "Alta");
+  expect(text(tree)).toContain("Ruta exigente");
+  expect(text(tree)).not.toContain(trail.name);
+  await press(tree, "Filtrar senderos");
+  expect(text(tree)).toContain("Alta");
+  expect(text(tree)).toContain("Ruta exigente");
+  await press(tree, "Filtrar senderos");
+  await press(tree, "Limpiar filtros");
+  expect(text(tree)).toContain(trail.name);
+});
+
+test("trail details disclose long content without hiding source precautions or weather risk", async () => {
+  const entry = require("../../../backend/src/data/catalogExpansion20261017").trails.find((item: any) => item.provenance.catalog_key === "moreno-belgrano-chico");
+  (trails.getTrailById as jest.Mock).mockResolvedValue({ ...trail, description: "Descripción extensa del paisaje y los accesos.",
+    provenance: { ...entry.provenance, precautions: "Requiere guía habilitado y registro previo.", source_notice: "Acceso sujeto a revisión del parque." } });
+  (trails.getTrailWeather as jest.Mock).mockResolvedValue({ condition: "Lluvia", temperature_c: 8, wind_kmh: 45, risk_level: "alto", rain_probability: 90 });
+  const tree = await mount(Detail);
+  expect(text(tree)).toContain("Riesgo meteorológico alto");
+  expect(text(tree)).toContain("Requiere guía habilitado y registro previo.");
+  expect(text(tree)).toContain("Acceso sujeto a revisión del parque.");
+  expect(text(tree)).not.toContain("Descripción extensa del paisaje");
+  await press(tree, "Sobre el recorrido");
+  expect(text(tree)).toContain("Descripción extensa del paisaje");
+  await press(tree, "Ver preparación y clima");
+  expect(text(tree)).toContain("90% de probabilidad de lluvia");
+});
+
+test("exploration puts loaded photos first and broken or missing photos last without losing routes", async () => {
+  const catalog = [
+    { ...trail, id: 1, name: "Sin foto", image_url: null },
+    { ...trail, id: 2, name: "Foto rota", image_url: "https://images.example.test/broken.jpg" },
+    { ...trail, id: 3, name: "Foto pendiente", image_url: "https://images.example.test/pending.jpg" },
+    { ...trail, id: 4, name: "Foto cargada", image_url: "https://images.example.test/loaded.jpg" },
+  ];
+  (trails.getTrails as jest.Mock).mockResolvedValue(catalog);
+  const tree = await mount(Explore);
+  const ids = () => tree.root.findByType(FlatList).props.data.map((item: any) => item.trail.id);
+  const photo = (url: string) => tree.root.findAllByType(ImageBackground).find((node: any) => node.props.source?.uri === url)!;
+  expect(ids()).toEqual([2, 3, 4, 1]);
+  await act(async () => { photo(catalog[3].image_url!).props.onLoad(); });
+  await act(async () => { photo(catalog[1].image_url!).props.onError(); });
+  expect(ids()).toEqual([4, 3, 1, 2]);
+  const input = tree.root.findByType(TextInput);
+  await act(async () => input.props.onChangeText("Foto rota"));
+  expect(ids()).toEqual([2]);
+  expect(text(tree)).toContain("Foto no disponible");
+  expect(tree.root.findByType(ImageBackground).props.source).toBeUndefined();
+  await act(async () => input.props.onChangeText(""));
+  expect(ids()).toEqual([4, 3, 1, 2]);
+  expect(catalog.map(item => item.id)).toEqual([1, 2, 3, 4]);
+});
+
+test("a broken first-page photo is demoted behind the entire catalog before pagination", async () => {
+  const catalog = Array.from({ length: 8 }, (_, index) => ({
+    ...trail, id: index + 1, name: `Sendero ${index + 1}`, image_url: `https://images.example.test/${index + 1}.jpg`,
+  }));
+  (trails.getTrails as jest.Mock).mockResolvedValue(catalog);
+  const tree = await mount(Explore);
+  const ids = () => tree.root.findByType(FlatList).props.data.map((item: any) => item.trail.id);
+  expect(ids()).toEqual([1, 2, 3, 4, 5, 6]);
+  const broken = tree.root.findAllByType(ImageBackground).find((node: any) => node.props.source?.uri === catalog[0].image_url)!;
+  await act(async () => broken.props.onError());
+  expect(ids()).toEqual([2, 3, 4, 5, 6, 7]);
+  await act(async () => tree.root.findByType(FlatList).props.onEndReached());
+  expect(ids()).toEqual([2, 3, 4, 5, 6, 7, 8, 1]);
 });
 test("activity cards distinguish pending, interrupted and completed outings and offer the local history", async () => {
   const tree = await mount(Activities); const content = text(tree);

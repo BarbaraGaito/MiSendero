@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "scope": "Read-only original training OOF point-decision complementarity, not a deployable selector or an achievable accuracy claim. No test responses were inspected. This is not a bound on other models or probabilistic aggregations.",
+  "original_training_cases": 487,
+  "candidate_ids": [
+    "transition-000",
+    "transition-001",
+    "transition-007"
+  ],
+  "either_original_control_correct": 332,
+  "any_of_three_point_decisions_correct": 348,
+  "new_teacher_correct_where_both_controls_wrong": 16,
+  "all_three_wrong": 139,
+  "synthetic_training_rows_added": 0,
+  "test_used": false
+}

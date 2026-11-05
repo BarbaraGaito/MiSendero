@@ -1,0 +1,350 @@
+{
+  "version": 1,
+  "status": "complete",
+  "selection_sha256": "f7edb25d7306d45b74d090a5dcc77c6a91cb44a6c9d50266b47fffb1c2458dbe",
+  "verification_sha256": "4e1485c5348edbf079730ff65bf26fc2e5197f8a4d35d70a79b3b807e9fb9a85",
+  "input_verification_sha256": "8f368ba54daf6e74f5cc445d2bef2bbdd89f189b053a2f796df93f2f8ed75eb5",
+  "configurations": 16,
+  "source_fitting_targets": 851,
+  "source_fitting_people": 123,
+  "source_reserved_targets": 206,
+  "source_reserved_people": 32,
+  "source_original_scale": "6-20",
+  "native_original_scale": "0-10",
+  "source_label_conversion": false,
+  "actual_source_regressors": [
+    {
+      "algorithm": "ridge",
+      "feature_set": "absolute",
+      "actual_source_targets_observed": 851,
+      "reserved_source_mae": 1.2538488507493388,
+      "reserved_source_r2": 0.4043687949989285,
+      "reserved_used_for_selection": false
+    },
+    {
+      "algorithm": "ridge",
+      "feature_set": "relative",
+      "actual_source_targets_observed": 851,
+      "reserved_source_mae": 1.2307684194167152,
+      "reserved_source_r2": 0.43449257186979884,
+      "reserved_used_for_selection": false
+    },
+    {
+      "algorithm": "svr",
+      "feature_set": "absolute",
+      "actual_source_targets_observed": 851,
+      "reserved_source_mae": 1.2735474163953093,
+      "reserved_source_r2": 0.38496913820297485,
+      "reserved_used_for_selection": false
+    },
+    {
+      "algorithm": "svr",
+      "feature_set": "relative",
+      "actual_source_targets_observed": 851,
+      "reserved_source_mae": 1.2757559740701179,
+      "reserved_source_r2": 0.39895701597731736,
+      "reserved_used_for_selection": false
+    },
+    {
+      "algorithm": "random_forest",
+      "feature_set": "absolute",
+      "actual_source_targets_observed": 851,
+      "reserved_source_mae": 1.3033609324560465,
+      "reserved_source_r2": 0.38807804844655647,
+      "reserved_used_for_selection": false
+    },
+    {
+      "algorithm": "random_forest",
+      "feature_set": "relative",
+      "actual_source_targets_observed": 851,
+      "reserved_source_mae": 1.280182358619342,
+      "reserved_source_r2": 0.40622350186586087,
+      "reserved_used_for_selection": false
+    }
+  ],
+  "public_real_data_policy_sha256": "fdfb112d20b1f22bae08032ed7d9f3d27ee784879674c32f8f65cc21fe69c028",
+  "winner_id": "cadence-transfer-001",
+  "best_cv_accuracy": 0.6379721574248428,
+  "best_source_id": "cadence-transfer-014",
+  "best_source_cv_accuracy": 0.6036037585602803,
+  "best_measured_control_id": "cadence-transfer-003",
+  "best_measured_control_cv": 0.5989012675304235,
+  "matching_measured_control_id": "cadence-transfer-002",
+  "matching_measured_control_cv": 0.5939192078169061,
+  "convergence_warning_folds": [],
+  "results": [
+    {
+      "candidate": {
+        "id": "cadence-transfer-000",
+        "algorithm": "previous_real_control",
+        "parent_candidate_id": "real-mlp-hp-000"
+      },
+      "accuracy_mean": 0.6082057277760603,
+      "fold_accuracy": [
+        0.64,
+        0.5652173913043478,
+        0.5882352941176471,
+        0.5882352941176471,
+        0.6593406593406593
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-transfer-001",
+        "algorithm": "previous_real_control",
+        "parent_candidate_id": "real-mlp-hp-001"
+      },
+      "accuracy_mean": 0.6379721574248428,
+      "fold_accuracy": [
+        0.67,
+        0.5652173913043478,
+        0.6274509803921569,
+        0.6568627450980392,
+        0.6703296703296703
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-transfer-002",
+        "algorithm": "measured_physiology_control",
+        "member": "core"
+      },
+      "accuracy_mean": 0.5939192078169061,
+      "fold_accuracy": [
+        0.63,
+        0.5869565217391305,
+        0.5588235294117647,
+        0.5784313725490197,
+        0.6153846153846154
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-transfer-003",
+        "algorithm": "measured_physiology_control",
+        "member": "cat"
+      },
+      "accuracy_mean": 0.5989012675304235,
+      "fold_accuracy": [
+        0.63,
+        0.5652173913043478,
+        0.6274509803921569,
+        0.5784313725490197,
+        0.5934065934065934
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-transfer-004",
+        "algorithm": "separate_source_rpe_transfer",
+        "source_algorithm": "ridge",
+        "source_feature_set": "absolute",
+        "member": "core"
+      },
+      "accuracy_mean": 0.5877998369916528,
+      "fold_accuracy": [
+        0.63,
+        0.5869565217391305,
+        0.5588235294117647,
+        0.5588235294117647,
+        0.6043956043956044
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-transfer-005",
+        "algorithm": "separate_source_rpe_transfer",
+        "source_algorithm": "ridge",
+        "source_feature_set": "absolute",
+        "member": "cat"
+      },
+      "accuracy_mean": 0.600940483216698,
+      "fold_accuracy": [
+        0.65,
+        0.5652173913043478,
+        0.6176470588235294,
+        0.5784313725490197,
+        0.5934065934065934
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-transfer-006",
+        "algorithm": "separate_source_rpe_transfer",
+        "source_algorithm": "ridge",
+        "source_feature_set": "relative",
+        "member": "core"
+      },
+      "accuracy_mean": 0.5870734568074722,
+      "fold_accuracy": [
+        0.62,
+        0.5760869565217391,
+        0.5686274509803921,
+        0.5882352941176471,
+        0.5824175824175825
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-transfer-007",
+        "algorithm": "separate_source_rpe_transfer",
+        "source_algorithm": "ridge",
+        "source_feature_set": "relative",
+        "member": "cat"
+      },
+      "accuracy_mean": 0.6004664474485446,
+      "fold_accuracy": [
+        0.65,
+        0.5652173913043478,
+        0.6274509803921569,
+        0.5882352941176471,
+        0.5714285714285714
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-transfer-008",
+        "algorithm": "separate_source_rpe_transfer",
+        "source_algorithm": "svr",
+        "source_feature_set": "absolute",
+        "member": "core"
+      },
+      "accuracy_mean": 0.5926471993479667,
+      "fold_accuracy": [
+        0.65,
+        0.5543478260869565,
+        0.5784313725490197,
+        0.5980392156862745,
+        0.5824175824175825
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-transfer-009",
+        "algorithm": "separate_source_rpe_transfer",
+        "source_algorithm": "svr",
+        "source_feature_set": "absolute",
+        "member": "cat"
+      },
+      "accuracy_mean": 0.5925602053530442,
+      "fold_accuracy": [
+        0.64,
+        0.5760869565217391,
+        0.6078431372549019,
+        0.5784313725490197,
+        0.5604395604395604
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-transfer-010",
+        "algorithm": "separate_source_rpe_transfer",
+        "source_algorithm": "svr",
+        "source_feature_set": "relative",
+        "member": "core"
+      },
+      "accuracy_mean": 0.6013906298305276,
+      "fold_accuracy": [
+        0.65,
+        0.5760869565217391,
+        0.5784313725490197,
+        0.5980392156862745,
+        0.6043956043956044
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-transfer-011",
+        "algorithm": "separate_source_rpe_transfer",
+        "source_algorithm": "svr",
+        "source_feature_set": "relative",
+        "member": "cat"
+      },
+      "accuracy_mean": 0.5930581302755216,
+      "fold_accuracy": [
+        0.64,
+        0.5652173913043478,
+        0.5980392156862745,
+        0.5686274509803921,
+        0.5934065934065934
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-transfer-012",
+        "algorithm": "separate_source_rpe_transfer",
+        "source_algorithm": "random_forest",
+        "source_feature_set": "absolute",
+        "member": "core"
+      },
+      "accuracy_mean": 0.595310474691549,
+      "fold_accuracy": [
+        0.66,
+        0.5760869565217391,
+        0.5686274509803921,
+        0.5784313725490197,
+        0.5934065934065934
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-transfer-013",
+        "algorithm": "separate_source_rpe_transfer",
+        "source_algorithm": "random_forest",
+        "source_feature_set": "absolute",
+        "member": "cat"
+      },
+      "accuracy_mean": 0.6009012675304236,
+      "fold_accuracy": [
+        0.64,
+        0.5652173913043478,
+        0.6176470588235294,
+        0.5882352941176471,
+        0.5934065934065934
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-transfer-014",
+        "algorithm": "separate_source_rpe_transfer",
+        "source_algorithm": "random_forest",
+        "source_feature_set": "relative",
+        "member": "core"
+      },
+      "accuracy_mean": 0.6036037585602803,
+      "fold_accuracy": [
+        0.66,
+        0.5869565217391305,
+        0.5686274509803921,
+        0.5980392156862745,
+        0.6043956043956044
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-transfer-015",
+        "algorithm": "separate_source_rpe_transfer",
+        "source_algorithm": "random_forest",
+        "source_feature_set": "relative",
+        "member": "cat"
+      },
+      "accuracy_mean": 0.5906233101936426,
+      "fold_accuracy": [
+        0.64,
+        0.5652173913043478,
+        0.6078431372549019,
+        0.5686274509803921,
+        0.5714285714285714
+      ]
+    }
+  ],
+  "original_training_cases": 487,
+  "original_test_cases": 179,
+  "new_test_gate_passed": false,
+  "test_used_for_selection": false,
+  "retained_test_correct": 108,
+  "retained_test_accuracy": 0.6033519553072626,
+  "target_accuracy": 0.8,
+  "achieved": false,
+  "scope": "Source-only original6-20 supervision and computed physiology representations, with matched measured-only controls. No synthetic examples, invented clocks, native label conversion, altered denominators or test tuning."
+}

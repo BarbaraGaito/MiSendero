@@ -1,0 +1,86 @@
+{
+  "version": 1,
+  "verification": "passed",
+  "audit_code_sha256": "3d8c5fd3c0786c7a83407340e3a03355e7c92959fab607e4d63f036cad1ecbda",
+  "prepared_provenance_sha256": "828771c3314ad53cc74344a5fb3058b43c686ddd8214a0f1c157ccf37fe5b2ad",
+  "prepared_dataset_sha256": "6b3a1d9ca411c21a93e5fa5e4ffa19545211d3579f527f89476eefca22422d3a",
+  "source_archive_sha256": "5ce7ef3c7a289cd5a59bb7ffb3858cfb38d6b2333ce95ee2609ac9f4cb24b977",
+  "source_inventory_sha256": "3f2b6fe1c0657690abf52a0865d212678813ee9099492c031e866f1f6381a5e9",
+  "source_receipt_sha256": "8bd385ed38e589205ccb3124b71cfd9f31d4d0ed9de8c431945b47a3cfd91142",
+  "source": "https://data.mendeley.com/datasets/mn3xyg2gh6/1",
+  "source_instrument_preserved": "Subjective perceived exertion,SPE0-10, kept separate from native Borg",
+  "conditions": {
+    "BW_00": {
+      "original_spe_rows": 13,
+      "original_hr_rows": 12,
+      "original_columns_each": 4,
+      "original_spe_cells": 52,
+      "actual_targets_with_prior": 39,
+      "spe_range": [
+        1.0,
+        7.0
+      ],
+      "hr_spe_positional_join_allowed": false
+    },
+    "BW_20": {
+      "original_spe_rows": 13,
+      "original_hr_rows": 12,
+      "original_columns_each": 4,
+      "original_spe_cells": 52,
+      "actual_targets_with_prior": 39,
+      "spe_range": [
+        1.0,
+        7.0
+      ],
+      "hr_spe_positional_join_allowed": false
+    },
+    "DW_00": {
+      "original_spe_rows": 13,
+      "original_hr_rows": 12,
+      "original_columns_each": 4,
+      "original_spe_cells": 52,
+      "actual_targets_with_prior": 39,
+      "spe_range": [
+        1.0,
+        7.0
+      ],
+      "hr_spe_positional_join_allowed": false
+    },
+    "DW_20": {
+      "original_spe_rows": 13,
+      "original_hr_rows": 12,
+      "original_columns_each": 4,
+      "original_spe_cells": 52,
+      "actual_targets_with_prior": 39,
+      "spe_range": [
+        2.0,
+        6.0
+      ],
+      "hr_spe_positional_join_allowed": false
+    }
+  },
+  "actual_source_targets_with_genuine_prior_verified": 156,
+  "anonymous_table_sequences": 52,
+  "source_unique_people_claimed": null,
+  "single_conservative_source_cohort": true,
+  "source_person_disjoint_holdout_claimed": false,
+  "source_nominal_clock_only": true,
+  "spe_only_auxiliary_task_eligible": true,
+  "hr_spe_positional_join_approved": false,
+  "native_borg_target_merge_approved": false,
+  "model_fitting_started": false,
+  "synthetic_rows": 0,
+  "original_native_cohort": {
+    "report_people": 40,
+    "session_metadata_people": 40,
+    "benchmark_people": 40,
+    "additional_people_outside_benchmark": 0,
+    "raw_reports_sha256": "ec8d8eed6999500e698975090dba7943dc3553669c59f8cec90ae8d671166e79",
+    "session_metadata_sha256": "9140e771feb8468a42ea6164055e1cd5bfd083b888abf778bc81adbb4610becc",
+    "native_dataset_sha256": "a9e346b1e8d0cf711406d1d0417d0db1afbf88757ab8c27efc70f4469dc39520",
+    "original_training_cases": 487,
+    "original_test_cases": 179,
+    "test_outcomes_analyzed": false
+  },
+  "limitation": "Published sample size15 differs from available HR12/SPE13 rows; no identity key links sensor and response rows or participant rows across conditions. Do not fill missing rows, join by position, infer people from numerical similarity or claim an independent source-person validation. Only within-original-SPE-row chronology is used."
+}

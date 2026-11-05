@@ -84,10 +84,11 @@ const loadMapTileCache = async ({
     downloadAsync,
   }));
   const saveBasicOfflineMap = jest.fn().mockResolvedValue({downloadedTiles:1,totalTiles:1,sizeMb:.1});
+  const deleteBasicOfflineMap = jest.fn();
   jest.doMock("../basicOfflineMap", () => ({
     readBasicOfflineMap: jest.fn().mockResolvedValue(null),
     saveBasicOfflineMap,
-    deleteBasicOfflineMap: jest.fn(),
+    deleteBasicOfflineMap,
   }));
 
   const module = require("../mapTileCache") as typeof import("../mapTileCache");
@@ -101,10 +102,32 @@ const loadMapTileCache = async ({
     makeDirectoryAsync,
     moveAsync,
     saveBasicOfflineMap,
+    deleteBasicOfflineMap,
   };
 };
 
 describe("mapTileCache", () => {
+  test("deleting one route preserves tiles shared by another downloaded route", async () => {
+    const cache = await loadMapTileCache();
+    const neighbor = { ...trail, id: 8, route_coordinates: "[[-41.1734,-71.2],[-41.1718,-71.19]]" };
+    await cache.downloadOfflineTilesForTrail(trail);
+    await cache.downloadOfflineTilesForTrail(neighbor);
+    const removed = await cache.deleteOfflineTilesForTrail(trail, [neighbor]);
+    expect(removed).toBeGreaterThan(0);
+    expect(removed).toBeLessThan(cache.getOfflineTilePlanForTrail(trail).length);
+    expect((await cache.getOfflineTileCoverageForTrail(neighbor)).isComplete).toBe(true);
+    await cache.deleteOfflineTilesForTrail(neighbor);
+    expect((await cache.getOfflineTileCoverageForTrail(neighbor)).isComplete).toBe(false);
+  });
+
+  test("a basic map used by another account survives until its last download is deleted", async () => {
+    const cache = await loadMapTileCache();
+    await cache.deleteOfflineTilesForTrail(trail, [trail]);
+    expect(cache.deleteBasicOfflineMap).not.toHaveBeenCalled();
+    await cache.deleteOfflineTilesForTrail(trail);
+    expect(cache.deleteBasicOfflineMap).toHaveBeenCalledWith(trail);
+  });
+
   test("covers the final route point with only the base layer within the 110-tile budget", async () => {
     const cache = await loadMapTileCache();
     const longTrail = { ...trail, map_zoom: 15, route_coordinates: JSON.stringify([[-41.17, -71.47], [-41.34, -71.7]]) };

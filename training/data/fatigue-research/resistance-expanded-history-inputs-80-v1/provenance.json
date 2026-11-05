@@ -1,0 +1,97 @@
+{
+  "version": 1,
+  "dependencies_sha256": {
+    "preparation_code": "36dc5738926c061061d395c0cb005eb6e01aa2b682ff56dedb328113ae3412e9",
+    "previous_preparation_code": "adf50ab03da68bd10a0fe29364eed88ad774481edbbad3c1f478dd5de2db2d6e",
+    "previous_provenance": "3d026144d8f41e7f617efffb45621ef7068cb84b46532930f71b9dce45c07550",
+    "previous_source_input_audit": "a87ed7221b1cd2920cb23539d68a5ea1633eff9f403bb85ea039031be078df1b",
+    "original_resistance_annotation_audit": "04f076fca8d21a11130d48907cea116f320387347e353495cd6854deb0bc2084",
+    "original_resistance_annotation_audit_code": "5b0d6bbbf9488779aa2bcb2c0f6e764730fd7317b2cea161af2aa1ba08ae656b",
+    "original_resistance_archive_receipt": "c6a1ec3321a684cab6e1d37cc0e536055a5a9101a7fe75a0b243e6e9b5d84d6c",
+    "public_real_data_policy": "fdfb112d20b1f22bae08032ed7d9f3d27ee784879674c32f8f65cc21fe69c028"
+  },
+  "dataset_sha256": "ed57cf5f3515b2b020ca51a4a7362f0c17e28c52150ca744ff2893691a3da9ac",
+  "actual_source_pairs_including_stored_reserved": 1541,
+  "actual_source_fitting_targets": 1416,
+  "existing_source_fitting_targets_preserved": 550,
+  "additional_resistance_fitting_targets": 866,
+  "additional_resistance_fitting_people": 4,
+  "additional_resistance_reserved_targets": 68,
+  "additional_resistance_reserved_people": 1,
+  "stored_reserved_targets": 125,
+  "source_counts": {
+    "emap": {
+      "fitting": {
+        "actual_pairs": 248,
+        "people": 83,
+        "actual_second_priors": 165
+      },
+      "reserved": {
+        "actual_pairs": 57,
+        "people": 19,
+        "actual_second_priors": 38
+      }
+    },
+    "resistance": {
+      "fitting": {
+        "actual_pairs": 866,
+        "people": 4,
+        "actual_second_priors": 802
+      },
+      "reserved": {
+        "actual_pairs": 68,
+        "people": 1,
+        "actual_second_priors": 63
+      }
+    },
+    "sts": {
+      "fitting": {
+        "actual_pairs": 49,
+        "people": 45,
+        "actual_second_priors": 0
+      }
+    },
+    "worker": {
+      "fitting": {
+        "actual_pairs": 253,
+        "people": 31,
+        "actual_second_priors": 202
+      }
+    }
+  },
+  "source_fitting_actual_second_priors": 1169,
+  "source_current_target_columns": {
+    "emap": "current_rpe",
+    "worker": "borg_native",
+    "sts": "borg_native",
+    "resistance": "original_resistance_rpe"
+  },
+  "common_measured_history_features": [
+    "public_ordered_actual_prior_rpe",
+    "public_ordered_actual_second_prior_rpe"
+  ],
+  "original_manual_resistance_reports": 1003,
+  "original_manual_resistance_sets": 69,
+  "original_resistance_report_verification_sha256": "04f076fca8d21a11130d48907cea116f320387347e353495cd6854deb0bc2084",
+  "resistance_source_split": {
+    "method": "GroupShuffleSplit20percent seed42 on all5original people before report/pair eligibility",
+    "fitting_original_people": [
+      "A321",
+      "P714",
+      "T417",
+      "T456"
+    ],
+    "reserved_original_people": [
+      "G998"
+    ]
+  },
+  "source_outcomes_must_remain_separate": true,
+  "native_target_merge": false,
+  "new_native_borg_targets": 0,
+  "synthetic_rows": 0,
+  "imputed_targets": 0,
+  "invented_source_ages_or_phase_mapping": 0,
+  "new_sensor_joins": 0,
+  "model_fitting_started_at_preparation": false,
+  "scope": "Union of607previous actual source pairs and934original resistance adjacent pairs. Existing550fitting/57EMAPreserved preserved; new866resistance fitting/68reserved fixed by whole original person before pair eligibility. Current labels are direct original manual cells,not supplied learned EMG labels or SMOTE/jitter rows. Resistance1-10 outcomes remain a separate source head; no native0-10 label conversion. Only actual within-set previous/second-previous reports,with natural missing second history. No inferred ages,rest times,sensor alignment or walking-phase equivalence; original native487/179cases unchanged."
+}

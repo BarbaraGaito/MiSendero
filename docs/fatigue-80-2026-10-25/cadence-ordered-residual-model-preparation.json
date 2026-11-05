@@ -1,0 +1,8 @@
+{
+  "preparation": "passed",
+  "preparation_code_sha256": "cfccf8a25218a573783e8bfda55aeb144b1348403b8809e4e8550b7744189f2e",
+  "frozen_full_delta_code_sha256": "6475ae3f4fa8cf4aefed93dd69184744c224977fbe52140462343e6e38032ac8",
+  "model_code_sha256": "835c00de8ae47cc46a903aa4d7e044e31943fd298b8719266f1eea4787cd7b5d",
+  "historical_sources_modified": false,
+  "new_predictive_estimator_fits": 0
+}

@@ -27,7 +27,7 @@ const coordinateAtProgress = (route: Coordinate[], progress: number): Coordinate
 // Apply the same public minimization to API data and older downloaded copies.
 export function getReportMapMarkers(reports: TrailReport[], trailId: number, route: Coordinate[], now = Date.now()): ReportMapMarker[] {
   return sanitizeReports(reports, now).flatMap((report) => {
-    if (report.trail_id !== trailId) return [];
+    if (report.trail_id !== trailId || report.community_status === "resolved") return [];
     const { latitude, longitude } = report;
     const hasCoordinate = typeof latitude === "number" && Number.isFinite(latitude) && Math.abs(latitude) <= 90 &&
       typeof longitude === "number" && Number.isFinite(longitude) && Math.abs(longitude) <= 180;

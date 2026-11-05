@@ -11,6 +11,7 @@ const { liveStatus } = require("./nationalParks.routes");
 const router = express.Router();
 const { publicReportColumns, publicReport } = require("../reportContract");
 const { validateReportPosition } = require("../reportPrivacy");
+const { withReportCommunity } = require("../reportCommunity");
 
 const weatherLabels = {
   0: "Despejado",
@@ -190,13 +191,15 @@ router.get("/:id/reports", (req, res, next) => req.headers.authorization ? requi
           AND moderation_status = 'visible'
           AND (reporter_user_id IS NULL OR reporter_user_id NOT IN
             (SELECT blocked_user_id FROM report_blocks WHERE user_id = $3))
-          AND COALESCE(observed_at, created_at) > now() - ($2 || ' days')::interval
+          AND (COALESCE(observed_at, created_at) > now() - ($2 || ' days')::interval
+            OR id IN (SELECT report_id FROM report_feedback WHERE last_seen_at > now() - ($2 || ' days')::interval))
         ORDER BY created_at DESC
-        LIMIT 6
+        LIMIT 100
       `,
       [req.params.id, REPORT_STALE_AFTER_DAYS, req.userId ?? null]
     );
-    res.set("Cache-Control", "no-store").json(rows.map((row) => ({ ...publicReport(row, row.reporter_user_id === req.userId), is_mine: row.reporter_user_id === req.userId })));
+    const reports = await withReportCommunity(rows, req.userId);
+    res.set("Cache-Control", "no-store").json(reports.map((row) => ({ ...publicReport(row, row.reporter_user_id === req.userId), is_mine: row.reporter_user_id === req.userId })));
   } catch (error) {
     next(error);
   }
@@ -226,21 +229,28 @@ router.post(
         accuracy_meters,
         route_progress_meters,
         observed_at,
+        end_latitude,
+        end_longitude,
+        route_end_progress_meters,
       } = req.body;
 
-      const payloadHash = createHash("sha256").update(JSON.stringify([
+      const hashFields = [
         trail.id, issue_summary, severity, trail_state, cause ?? null,
         Boolean(blocks_path), details ?? null, latitude ?? null, longitude ?? null,
         accuracy_meters ?? null, route_progress_meters ?? null, observed_at ?? null,
-      ])).digest("hex");
+      ];
+      // Preserve hashes for retries queued by earlier versions.
+      if (route_end_progress_meters != null) hashFields.push(end_latitude, end_longitude, route_end_progress_meters);
+      const payloadHash = createHash("sha256").update(JSON.stringify(hashFields)).digest("hex");
       let { rows } = await query(
         `
           INSERT INTO trail_reports (
             trail_id, reporter_user_id, issue_summary, severity, trail_state,
             cause, blocks_path, details, latitude, longitude, accuracy_meters,
-            route_progress_meters, observed_at, client_event_id, client_payload_hash
+            route_progress_meters, observed_at, client_event_id, client_payload_hash,
+            end_latitude, end_longitude, route_end_progress_meters
           )
-          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)
+          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18)
           ON CONFLICT (reporter_user_id, client_event_id) DO NOTHING
           RETURNING *
         `,
@@ -260,6 +270,9 @@ router.post(
           observed_at ?? new Date().toISOString(),
           client_event_id ?? null,
           payloadHash,
+          end_latitude ?? null,
+          end_longitude ?? null,
+          route_end_progress_meters ?? null,
         ]
       );
       if (client_event_id) {

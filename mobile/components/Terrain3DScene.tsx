@@ -15,6 +15,7 @@ import {
   TerrainSceneWeather,
   TerrainWeatherKind,
   buildTerrainMeshData,
+  buildTerrainSceneModel,
   coordinateToTerrainScenePoint,
   drapeRouteOnTerrain,
   getTerrainSceneHeight,
@@ -39,6 +40,8 @@ export type Terrain3DSceneHandle = {
   pick: (x: number, y: number) => { coordinate: Coordinate | null; markerId?: string } | null;
 };
 const EMPTY_MARKERS: TerrainMapMarker[] = [];
+type HighlightedSection = { id: string; coordinates: Coordinate[]; color: string };
+const EMPTY_SECTIONS: HighlightedSection[] = [];
 
 type Terrain3DSceneProps = {
   terrain: TerrainSceneModel;
@@ -49,6 +52,7 @@ type Terrain3DSceneProps = {
   navigationMode?: boolean;
   satelliteTextureEnabled?: boolean;
   markers?: TerrainMapMarker[];
+  highlightedSections?: HighlightedSection[];
   focusCoordinate?: Coordinate | null;
   showContours?: boolean;
   overlayTopInset?: number;
@@ -639,6 +643,7 @@ export const Terrain3DScene = forwardRef<Terrain3DSceneHandle, Terrain3DScenePro
   navigationMode = false,
   satelliteTextureEnabled = true,
   markers = EMPTY_MARKERS,
+  highlightedSections = EMPTY_SECTIONS,
   focusCoordinate = null,
   showContours = false,
   overlayTopInset = 150,
@@ -691,6 +696,8 @@ export const Terrain3DScene = forwardRef<Terrain3DSceneHandle, Terrain3DScenePro
   }, [failScene]);
   const markersRef = useRef(markers);
   markersRef.current = markers;
+  const sectionsRef = useRef(highlightedSections);
+  sectionsRef.current = highlightedSections;
   const updateMarkers = useCallback(() => {
     const handles = handlesRef.current;
     if (!handles?.model) return;
@@ -719,8 +726,16 @@ export const Terrain3DScene = forwardRef<Terrain3DSceneHandle, Terrain3DScenePro
       });
       flush();
     });
+    sectionsRef.current.forEach(section => {
+      const model = buildTerrainSceneModel(handles.model!.grid, section.coordinates);
+      if (!model) return;
+      const ribbon = makeTerrainTrailRibbon(drapeRouteOnTerrain(model).map(toVector3), model, 0.055, section.color, 0.027, true);
+      ribbon.name = `report-section-${section.id}`;
+      ribbon.userData.isGroundSection = true;
+      handles.markerGroup.add(ribbon);
+    });
   }, []);
-  useEffect(() => { updateMarkers(); }, [markers, updateMarkers]);
+  useEffect(() => { updateMarkers(); }, [markers, highlightedSections, updateMarkers]);
   useImperativeHandle(ref, () => ({
     pick: (x, y) => {
       const handles = handlesRef.current;

@@ -180,3 +180,14 @@ test("soil conditions tint only the reported section and the scene keeps an hone
   expect(text).toContain("detalle ≈");
   expect(scene.children[0].getObjectByName("weather-precipitation")).toBeUndefined();
 });
+
+test("changing an affected section updates its terrain overlay while retaining the DEM and report picking", async () => {
+  const { gpu } = await mount({ highlightedSections: [{ id: "test", coordinates: [[0.8, 0.2], [0.6, 0.4]], color: "#087F4F" }] });
+  const [scene] = gpu.render.mock.calls.at(-1), ground = scene.children[1].children[0];
+  expect(scene.children[3].getObjectByName("report-section-test")).toBeDefined();
+  await renderer.act(async () => screen.update(<Terrain3DScene terrain={terrain} viewOffset={{ x: 0, y: 0 }} viewScale={1} satelliteTextureEnabled={false}
+    highlightedSections={[{ id: "updated", coordinates: [[0.7, 0.3], [0.5, 0.5]], color: "#087F4F" }]} />));
+  expect(scene.children[3].getObjectByName("report-section-test")).toBeUndefined();
+  expect(scene.children[3].getObjectByName("report-section-updated")).toBeDefined();
+  expect(scene.children[1].children[0]).toBe(ground);
+});

@@ -182,3 +182,12 @@ test("3D imagery and contour views use the same actual route and forward detaile
   await press(tree, "Ver imagen satelital 3D");
   expect(tree.root.findByType("Terrain3DScene").props).toMatchObject({ showContours: false, satelliteTextureEnabled: true });
 });
+
+test("a selected affected section is visible on both map modes without replacing the actual route", async () => {
+  const tree = await mount(TrailMap, { trail, selectedCoordinate: route[0], selectedEndCoordinate: route[1], selectedRouteRange: { start: 0, end: 111 } });
+  await layout(tree);
+  expect(tree.root.findAll((node: any) => node.props.testID === "selected-section-end").length).toBeGreaterThan(0);
+  await press(tree, "Cambiar a perspectiva 3D");
+  expect(tree.root.findByType("Terrain3DScene").props.highlightedSections).toEqual([expect.objectContaining({ id: "selected-range", coordinates: expect.any(Array) })]);
+  expect(tree.root.findByType("Terrain3DScene").props.markers.map((marker: any) => marker.id)).toEqual(["selected", "selected-end"]);
+});

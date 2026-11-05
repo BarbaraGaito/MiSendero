@@ -4,12 +4,41 @@ const { query } = require("../db");
 const { requireAuth, requireAdmin } = require("../middleware/requireAuth");
 const { validateBody } = require("../middleware/validate");
 const { publicReport, publicReportColumns } = require("../reportContract");
+const { withReportCommunity } = require("../reportCommunity");
+const { REPORT_STALE_AFTER_DAYS } = require("../cleanupStaleReports");
 const router = express.Router();
 router.use(requireAuth);
 const reportId = (req, res, next) => {
   if (!/^\d+$/.test(req.params.reportId)) return res.status(400).json({ message: "Reporte inválido" });
   next();
 };
+router.post("/:reportId/feedback", reportId, validateBody(z.object({
+  feedback: z.enum(["still_there", "not_there", "unsure"]),
+  observed_at: z.iso.datetime().refine(value => Date.parse(value) <= Date.now() + 300000, "La observación no puede estar en el futuro"),
+})), async (req, res, next) => {
+  try {
+    const row = (await query(`SELECT * FROM trail_reports WHERE id = $1 AND moderation_status = 'visible'
+      AND (reporter_user_id IS NULL OR reporter_user_id NOT IN (SELECT blocked_user_id FROM report_blocks WHERE user_id = $2))`,
+    [req.params.reportId, req.userId])).rows[0];
+    if (!row) return res.status(404).json({ message: "Reporte no disponible" });
+    const current = (await withReportCommunity([row], req.userId))[0];
+    const expires = Date.parse(publicReport(current, true).expires_at);
+    if (expires <= Date.now()) return res.status(410).json({ message: "El reporte ya venció. Creá uno con una observación reciente." });
+    if (Date.parse(req.body.observed_at) < Date.now() - REPORT_STALE_AFTER_DAYS * 86400000) {
+      return res.status(400).json({ message: "La confirmación debe corresponder a una observación reciente." });
+    }
+    await query(`INSERT INTO report_feedback (report_id, user_id, feedback, observed_at, last_seen_at) VALUES ($1, $2, $3, $4, $5)
+      ON CONFLICT (report_id, user_id) DO UPDATE SET
+        feedback = CASE WHEN report_feedback.observed_at <= EXCLUDED.observed_at THEN EXCLUDED.feedback ELSE report_feedback.feedback END,
+        observed_at = CASE WHEN report_feedback.observed_at <= EXCLUDED.observed_at THEN EXCLUDED.observed_at ELSE report_feedback.observed_at END,
+        last_seen_at = CASE WHEN EXCLUDED.last_seen_at IS NOT NULL AND (report_feedback.last_seen_at IS NULL OR EXCLUDED.last_seen_at > report_feedback.last_seen_at)
+          THEN EXCLUDED.last_seen_at ELSE report_feedback.last_seen_at END,
+        received_at = now()`,
+    [row.id, req.userId, req.body.feedback, req.body.observed_at, req.body.feedback === "still_there" ? req.body.observed_at : null]);
+    const updated = (await withReportCommunity([row], req.userId))[0];
+    res.json({ ...publicReport(updated, row.reporter_user_id === req.userId), is_mine: row.reporter_user_id === req.userId });
+  } catch (error) { next(error); }
+});
 router.get("/moderation", requireAdmin, async (_req, res, next) => {
   try {
     const { rows } = await query(`SELECT f.id, f.report_id, f.reason, f.created_at, r.issue_summary, r.details, r.moderation_status

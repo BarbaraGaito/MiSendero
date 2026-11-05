@@ -10,6 +10,7 @@ jest.mock("../api", () => ({
   createActivity: jest.fn(),
   createEmergencyAlert: jest.fn(),
   getTrailReports: jest.fn().mockResolvedValue([]),
+  sendReportFeedback: jest.fn(),
 }));
 
 import * as Network from "expo-network";
@@ -176,5 +177,16 @@ describe("syncQueue", () => {
 
     const afterDiscard = await getPendingOperations();
     expect(afterDiscard.some((operation) => operation.id === id)).toBe(false);
+  });
+  test("community feedback survives offline and syncs with its original observation time", async () => {
+    await db.runAsync("DELETE FROM pending_operations");
+    offline();
+    const payload = { reportId: 73, trailId: 7, feedback: "still_there", observed_at: "2026-11-05T12:00:00.000Z" };
+    const id = await enqueue("report_feedback", payload);
+    expect((await runSync()).processed).toBe(0);
+    online(); (api.sendReportFeedback as jest.Mock).mockResolvedValue({ id: 73 });
+    await runSync();
+    expect(api.sendReportFeedback).toHaveBeenCalledWith(73, "still_there", payload.observed_at, testAuthToken);
+    expect((await getPendingOperations()).some(operation => operation.id === id)).toBe(false);
   });
 });

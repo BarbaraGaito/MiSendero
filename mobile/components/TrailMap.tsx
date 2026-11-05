@@ -21,6 +21,8 @@ import {
   Coordinate,
   formatKilometers,
   getClosestPointOnRoute,
+  getRouteLengthMeters,
+  getRouteSectionCoordinates,
   getRouteStart,
   parseRouteCoordinates,
 } from "../../services/geoUtils";
@@ -41,6 +43,7 @@ import {
   useTerrainElevation,
 } from "../hooks/useTerrainElevation";
 import { colors } from "./MiSenderoUI";
+import { ReportFeedbackControls } from "./ReportFeedbackControls";
 import { Terrain3DScene, Terrain3DSceneHandle, TerrainMapMarker } from "./Terrain3DScene";
 import { buildTerrainSceneModel, coordinateToTerrainScenePoint } from "./terrainSceneModel";
 import { BasicOfflineMap, containsMapCoordinate, readBasicOfflineMap } from "../../services/basicOfflineMap";
@@ -98,6 +101,11 @@ type TrailMapProps = {
   controlsTopOffset?: number;
   allowSatellite?: boolean;
   selectedCoordinate?: Coordinate | null;
+  selectedEndCoordinate?: Coordinate | null;
+  selectedRouteRange?: { start: number; end: number } | null;
+  onReportsChanged?: () => Promise<void>;
+  focusedReportId?: number | null;
+  onReportClosed?: () => void;
   selectionToleranceMeters?: number;
   onSelectCoordinate?: (selection: {
     coordinate: Coordinate;
@@ -425,6 +433,11 @@ export function TrailMap({
   controlsTopOffset = 12,
   allowSatellite = true,
   selectedCoordinate = null,
+  selectedEndCoordinate = null,
+  selectedRouteRange = null,
+  onReportsChanged,
+  focusedReportId = null,
+  onReportClosed,
   selectionToleranceMeters = 80,
   onSelectCoordinate,
   onSelectionRejected,
@@ -457,6 +470,7 @@ export function TrailMap({
   const [activeReportId, setActiveReportId] = useState<number | null>(null);
   const [selectionError, setSelectionError] = useState<string | null>(null);
   const terrainSceneRef = useRef<Terrain3DSceneHandle | null>(null);
+  const lastFocusedReportRef = useRef<number | null>(null);
   const isSelecting = Boolean(onSelectCoordinate || (isChoosingReportLocation && onReportCoordinate));
   const centerRef = useRef(activeCenter);
   const zoomRef = useRef(activeZoom);
@@ -495,7 +509,19 @@ export function TrailMap({
     ...reportMarkers.map(marker => ({ id: String(marker.report.id), coordinate: marker.coordinate,
       color: marker.color, precisionMeters: marker.precisionMeters, issueSummary: marker.report.issue_summary })),
     ...(selectedCoordinate ? [{ id: "selected", coordinate: selectedCoordinate, color: "#087F4F", precisionMeters: 0, selected: true }] : []),
-  ], [reportMarkers, selectedCoordinate]);
+    ...(selectedEndCoordinate ? [{ id: "selected-end", coordinate: selectedEndCoordinate, color: "#087F4F", precisionMeters: 0, selected: true }] : []),
+  ], [reportMarkers, selectedCoordinate, selectedEndCoordinate]);
+  const highlightedSections = useMemo(() => {
+    const total = getRouteLengthMeters(route);
+    const sections = reportMarkers.flatMap(marker => {
+      const start = marker.report.route_progress_meters, end = marker.report.route_end_progress_meters;
+      if (start == null || end == null || end <= start) return [];
+      return [{ id: String(marker.report.id), color: marker.color,
+        coordinates: getRouteSectionCoordinates(route, clamp(start, 0, total), clamp(end, 0, total)) }];
+    });
+    if (selectedRouteRange) sections.push({ id: "selected-range", color: "#087F4F", coordinates: getRouteSectionCoordinates(route, selectedRouteRange.start, selectedRouteRange.end) });
+    return sections.filter(section => section.coordinates.length > 1);
+  }, [route, reportMarkers, selectedRouteRange?.start, selectedRouteRange?.end]);
   const simulatedStartLocation = useMemo(
     () => getRouteStart(route, trailCenter),
     [route, trailCenter[0], trailCenter[1]]
@@ -778,6 +804,18 @@ export function TrailMap({
         radius: marker.precisionMeters / (156543.03392 * Math.cos(marker.coordinate[0] * Math.PI / 180) / 2 ** zoom) };
     });
   }, [reportMarkers, activeCenter, zoom, layout]);
+  const sectionScreenPaths = useMemo(() => {
+    const center = project(activeCenter, zoom);
+    return highlightedSections.map(section => ({ ...section, path: pointsToSvgPath(section.coordinates.map(coordinate => {
+      const pixel = project(coordinate, zoom);
+      return { x: pixel.x - center.x + layout.width / 2, y: pixel.y - center.y + layout.height / 2 };
+    })) }));
+  }, [highlightedSections, activeCenter, zoom, layout]);
+  const selectedEndPoint = useMemo(() => {
+    if (!selectedEndCoordinate) return null;
+    const pixel = project(selectedEndCoordinate, zoom), center = project(activeCenter, zoom);
+    return { x: pixel.x - center.x + layout.width / 2, y: pixel.y - center.y + layout.height / 2 };
+  }, [selectedEndCoordinate, activeCenter, zoom, layout]);
 
   const openReport = (reportId: number) => {
     const marker = reportMarkers.find(item => item.report.id === reportId);
@@ -792,6 +830,12 @@ export function TrailMap({
       setActiveZoom(nextZoom);
     }
   };
+  useEffect(() => {
+    if (focusedReportId == null) { lastFocusedReportRef.current = null; return; }
+    if (lastFocusedReportRef.current === focusedReportId || !reportMarkers.some(marker => marker.report.id === focusedReportId)) return;
+    lastFocusedReportRef.current = focusedReportId;
+    openReport(focusedReportId);
+  }, [focusedReportId, reportMarkers]);
 
   const handleMapPress = (x: number, y: number) => {
     const currentLayout = layoutRef.current;
@@ -799,7 +843,7 @@ export function TrailMap({
     let touchCoordinate: Coordinate | null = null;
     if (isPerspectiveRef.current) {
       const hit = terrainSceneRef.current?.pick(x / currentLayout.width * 2 - 1, 1 - y / currentLayout.height * 2);
-      if (!isSelecting && hit?.markerId && hit.markerId !== "selected") {
+      if (!isSelecting && hit?.markerId && Number.isInteger(Number(hit.markerId))) {
         openReport(Number(hit.markerId));
         return;
       }
@@ -1028,6 +1072,7 @@ export function TrailMap({
               <Terrain3DScene
                 ref={terrainSceneRef}
                 markers={sceneMarkers}
+                highlightedSections={highlightedSections}
                 focusCoordinate={activeReport?.coordinate ?? null}
                 showContours={terrainStyle === "relief"}
                 overlayTopInset={controlsTopOffset + 150}
@@ -1149,6 +1194,8 @@ export function TrailMap({
                 strokeLinejoin="round"
                 strokeWidth={7}
               />
+              {sectionScreenPaths.map(section => <Path key={section.id} d={section.path} fill="none" stroke={section.color}
+                strokeWidth={15} strokeOpacity={0.6} strokeLinecap="round" strokeLinejoin="round" />)}
             </Svg>
           ) : null}
 
@@ -1234,6 +1281,10 @@ export function TrailMap({
               <Ionicons name="pin" size={18} color={colors.white} />
             </View>
           ) : null}
+          {selectedEndPoint ? <View testID="selected-section-end" pointerEvents="none" style={[styles.selectedMarker,
+            { left: selectedEndPoint.x - 15, top: selectedEndPoint.y - 30 }]}>
+            <Ionicons name="flag" size={18} color={colors.white} />
+          </View> : null}
           <Svg pointerEvents="none" style={styles.mapVectorOverlay} width={layout.width} height={layout.height}>
             {reportScreenPoints.map(marker => marker.radius > 0 ? (
               <Circle key={marker.report.id} cx={marker.x} cy={marker.y} r={marker.radius}
@@ -1271,7 +1322,7 @@ export function TrailMap({
           <View style={styles.reportCardHeader}>
             <Ionicons name="warning" size={20} color={activeReport.color} />
             <Text style={styles.reportTitle} numberOfLines={2}>{activeReport.report.issue_summary}</Text>
-            <Pressable accessibilityRole="button" accessibilityLabel="Cerrar advertencia" hitSlop={8} onPress={() => setActiveReportId(null)}>
+            <Pressable accessibilityRole="button" accessibilityLabel="Cerrar advertencia" hitSlop={8} onPress={() => { setActiveReportId(null); onReportClosed?.(); }}>
               <Ionicons name="close" size={22} color={colors.ink} />
             </Pressable>
           </View>
@@ -1279,8 +1330,10 @@ export function TrailMap({
           <Text style={styles.reportDescription}>
             {activeReport.precisionMeters > 0 ? `Ubicación aproximada · margen ${activeReport.precisionMeters} m` : "Ubicación del reporte"}
             {activeReport.report.route_progress_meters != null ? ` · km ${(activeReport.report.route_progress_meters / 1000).toLocaleString("es-AR", { maximumFractionDigits: 1 })}` : ""}
+            {activeReport.report.route_end_progress_meters != null ? activeReport.report.route_end_progress_meters === activeReport.report.route_progress_meters ? " · tramo aproximado" : ` a km ${(activeReport.report.route_end_progress_meters / 1000).toLocaleString("es-AR", { maximumFractionDigits: 1 })}` : ""}
           </Text>
-          <Text style={styles.reportDescription}>Observado: {new Date(activeReport.report.observed_at || activeReport.report.created_at).toLocaleString("es-AR", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" })}{offline ? " · Guardado sin conexión" : ""}</Text>
+          {offline ? <Text style={styles.reportDescription}>Guardado sin conexión</Text> : null}
+          <ReportFeedbackControls report={activeReport.report} onChanged={onReportsChanged} />
           {reportMarkers.length > 1 ? <Pressable accessibilityRole="button" accessibilityLabel="Ver siguiente advertencia"
             onPress={() => openReport(reportMarkers[(reportMarkers.indexOf(activeReport) + 1) % reportMarkers.length].report.id)}>
             <Text style={styles.reportBadgeText}>Siguiente advertencia ({reportMarkers.indexOf(activeReport) + 1}/{reportMarkers.length}) →</Text>

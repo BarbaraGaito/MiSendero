@@ -189,6 +189,8 @@ export const blockReportAuthor = (id: number, token: string) => request<{ blocke
 export const revokeSession = (token: string) => request<{ revoked: boolean }>("/auth/logout", { method: "POST", token });
 export const withdrawReport = (id: number, token: string) => request(`/reports/${id}`, { method: "DELETE", token });
 export const correctReport = (id: number, issue_summary: string, details: string, token: string) => request(`/reports/${id}`, { method: "PATCH", body: { issue_summary, details }, token });
+export const sendReportFeedback = (id: number, feedback: "still_there" | "not_there" | "unsure", observed_at: string, token: string) =>
+  request<TrailReport>(`/reports/${id}/feedback`, { method: "POST", body: { feedback, observed_at }, token });
 
 export const createTrailReport = async (
   trailId: number,
@@ -205,6 +207,9 @@ export const createTrailReport = async (
     longitude?: number | null;
     accuracy_meters?: number | null;
     route_progress_meters?: number | null;
+    end_latitude?: number | null;
+    end_longitude?: number | null;
+    route_end_progress_meters?: number | null;
   },
   token: string
 ): Promise<TrailReport> => {

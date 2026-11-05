@@ -6,7 +6,7 @@ const definitions = [
   [/^\/trip-plans$/, 'trip-plans', 12, 'trip_plans', 'client_plan_id', 'user_id'],
   [/^\/emergency-alerts$/, 'emergency-alerts', 60, 'emergency_alerts', 'client_event_id', 'user_id'],
   [/^\/auth\/me\/privacy-decisions$/, 'privacy-decisions', 60, 'privacy_decisions', 'client_event_id', 'user_id'],
-  [/^\/reports\/\d+(?:\/(?:flag|block-author|moderate))?$/, 'report-actions', 60, null, null, null],
+  [/^\/reports\/\d+(?:\/(?:flag|block-author|moderate|feedback))?$/, 'report-actions', 60, null, null, null],
 ];
 const writeBudget = (req, res, next) => {
   const definition = ['POST','PATCH'].includes(req.method) && definitions.find(([pattern]) => pattern.test(req.path));

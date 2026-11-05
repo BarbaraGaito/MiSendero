@@ -124,7 +124,7 @@ function Stars({ rating }: { rating: number }) {
           key={value}
           name={value <= Math.round(rating) ? "star" : "star-outline"}
           size={18}
-          color={colors.warning}
+          color={colors.primary}
         />
       ))}
     </View>

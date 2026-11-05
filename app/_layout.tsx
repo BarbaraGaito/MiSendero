@@ -1,6 +1,8 @@
 import { Stack } from "expo-router";
 import { useFonts } from "expo-font";
 import {
+  BricolageGrotesque_400Regular,
+  BricolageGrotesque_500Medium,
   BricolageGrotesque_700Bold,
   BricolageGrotesque_800ExtraBold,
 } from "@expo-google-fonts/bricolage-grotesque";
@@ -12,6 +14,8 @@ import { ConnectivityProvider } from "../services/ConnectivityProvider";
 
 export default function RootLayout() {
   const [fontsLoaded, fontError] = useFonts({
+    BricolageGrotesque_400Regular,
+    BricolageGrotesque_500Medium,
     BricolageGrotesque_700Bold,
     BricolageGrotesque_800ExtraBold,
   });

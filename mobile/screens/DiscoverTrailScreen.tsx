@@ -3,7 +3,7 @@ import { userMessage } from "../../services/userMessages";
 import { ActivityIndicator, KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 import { router, useFocusEffect } from "expo-router";
 import { useNetworkState } from "expo-network";
-import { Card, PrimaryButton, ScreenShell, ScreenTitle, colors } from "../components/MiSenderoUI";
+import { Card, PrimaryButton, ScreenShell, ScreenTitle, colors, typography } from "../components/MiSenderoUI";
 import { TrailRecommendationCard } from "../components/TrailRecommendationCard";
 import { ExperienceProfileRequiredError, findRecommendedTrail, getRecommendationExperience } from "../../services/trailAssistant";
 import type { Difficulty, Duration, RecommendationResponse, TrailPreferences, TrailType } from "../../services/trailAssistant";
@@ -83,7 +83,7 @@ export default function DiscoverTrailScreen() {
         <Pressable accessibilityRole="button" accessibilityLabel="Volver" onPress={() => router.back()} style={styles.back}>
           <Text style={styles.backText}>‹ Volver</Text>
         </Pressable>
-        <ScreenTitle eyebrow="TU PRÓXIMA CAMINATA" title="Descubrí tu sendero" subtitle="Cuatro respuestas para encontrar un recorrido para vos." />
+        <ScreenTitle eyebrow={result ? "ELEGIDO PARA VOS" : "TU PRÓXIMA CAMINATA"} title={result ? "Tu próximo sendero" : "Descubrí tu sendero"} subtitle={result ? undefined : "Cuatro respuestas para encontrar un recorrido para vos."} />
         {offline ? <Text accessibilityLiveRegion="polite" style={styles.notice}>Necesitás Internet para generar recomendaciones nuevas. Los mapas descargados siguen disponibles sin conexión.</Text> : null}
         {!profileReady ? <Card>
           {profileError ? <>
@@ -94,7 +94,7 @@ export default function DiscoverTrailScreen() {
           <ActivityIndicator size="large" color={colors.green} accessibilityLabel="Buscando el sendero ideal para vos..." />
           <Text accessibilityLiveRegion="polite" style={styles.loading}>Buscando el sendero ideal para vos...</Text>
         </Card> : result ? <View accessibilityLiveRegion="polite">
-          <Text style={styles.resultTitle}>{result.message}</Text>
+          <Text accessibilityRole={result.recommendation ? undefined : "header"} style={result.recommendation ? styles.resultMessage : styles.resultTitle}>{result.message}</Text>
           {result.recommendation ? <TrailRecommendationCard key={result.recommendation.trailId} trail={result.recommendation} onRestart={edit} />
             : <PrimaryButton label="Modificar respuestas" onPress={edit} />}
         </View> : <>
@@ -109,13 +109,13 @@ export default function DiscoverTrailScreen() {
               onSubmitEditing={() => { if (canContinue) setStep(1); }} style={styles.input} />
             <Text style={styles.hint}>Escribí el lugar donde te gustaría hacer trekking.</Text>
           </Card> : <>
-            {step === 1 ? <Text style={styles.hint}>Podés elegir varias opciones. Primero consideramos tu experiencia, tiempo y dificultad; después estos paisajes. Si hay diferencias, te avisamos.</Text> : null}
-            {step === 2 ? <Text style={styles.hint}>Tiempo total de caminata, incluyendo ida y vuelta cuando corresponde. Si no hay coincidencia exacta, podemos sugerir una duración cercana y te avisamos.</Text> : null}
-            {step === 3 ? <Text style={styles.hint}>Priorizamos tu experiencia. Si la alternativa tiene otra dificultad, te lo avisamos.</Text> : null}
+            {step === 1 ? <Text style={styles.hint}>Podés elegir más de un paisaje.</Text> : null}
+            {step === 2 ? <Text style={styles.hint}>Contá el tiempo total, incluyendo el regreso.</Text> : null}
+            {step === 3 ? <Text style={styles.hint}>También tenemos en cuenta tu experiencia.</Text> : null}
             {options.map((option) => {
               const selected = step === 1 ? trailTypes.includes(option.value as TrailType) : step === 2 ? duration === option.value : difficulty === option.value;
               return <Pressable key={option.value} accessibilityRole={step === 1 ? "checkbox" : "radio"} accessibilityLabel={option.label}
-                accessibilityState={{ checked: selected }} onPress={() => step === 1 ? toggleType(option.value as TrailType) : step === 2 ? setDuration(option.value as Duration) : setDifficulty(option.value as Difficulty)}
+                accessibilityState={{ checked: selected }} aria-checked={selected} onPress={() => step === 1 ? toggleType(option.value as TrailType) : step === 2 ? setDuration(option.value as Duration) : setDifficulty(option.value as Difficulty)}
                 style={({ pressed }) => [styles.option, selected && styles.selected, pressed && styles.pressed]}>
                 <Text style={[styles.optionText, selected && styles.selectedText]}>{option.label}</Text>
                 <Text style={styles.check}>{selected ? "✓" : "○"}</Text>
@@ -135,17 +135,18 @@ export default function DiscoverTrailScreen() {
 }
 const styles = StyleSheet.create({
   flex: { flex: 1 }, content: { paddingBottom: 32 }, back: { paddingVertical: 10, alignSelf: "flex-start" },
-  backText: { fontSize: 16, color: colors.greenDark, fontWeight: "700" },
+  backText: { fontFamily: typography.medium, fontSize: 16, color: colors.greenDark },
   notice: { padding: 14, borderRadius: 14, backgroundColor: colors.mint, color: colors.greenDark, fontSize: 13, lineHeight: 20, marginBottom: 24 },
   step: { color: colors.greenDark, fontWeight: "700", marginBottom: 10 }, track: { height: 7, backgroundColor: colors.line, borderRadius: 8, overflow: "hidden", marginBottom: 24 },
   progress: { height: 7, backgroundColor: colors.green, borderRadius: 8 },
   question: { fontFamily: "BricolageGrotesque_700Bold", color: colors.ink, fontSize: 25, lineHeight: 31, marginBottom: 18 },
-  input: { borderWidth: 1, borderColor: colors.line, borderRadius: 14, padding: 14, color: colors.ink, fontSize: 16, backgroundColor: colors.white },
-  hint: { fontSize: 13, color: colors.muted, lineHeight: 21, marginVertical: 12 },
+  input: { fontFamily: typography.regular, borderWidth: 1, borderColor: colors.line, borderRadius: 14, padding: 14, color: colors.ink, fontSize: 16, backgroundColor: colors.white },
+  hint: { fontFamily: typography.regular, fontSize: 14, color: colors.muted, lineHeight: 21, marginVertical: 12 },
   option: { flexDirection: "row", alignItems: "center", gap: 12, padding: 18, borderRadius: 18, borderWidth: 1, borderColor: colors.line, backgroundColor: colors.white, marginBottom: 10 },
-  selected: { borderColor: colors.green, backgroundColor: colors.mint }, optionText: { flex: 1, fontSize: 16, color: colors.ink, fontWeight: "600" },
+  selected: { borderColor: colors.green, backgroundColor: colors.mint }, optionText: { fontFamily: typography.medium, flex: 1, fontSize: 16, color: colors.ink },
   selectedText: { color: colors.greenDark }, check: { color: colors.green, fontWeight: "800", fontSize: 20 }, pressed: { opacity: 0.75 },
   actions: { gap: 12, marginTop: 20 }, loading: { color: colors.greenDark, fontSize: 19, textAlign: "center", marginTop: 20, lineHeight: 27 },
   resultTitle: { fontFamily: "BricolageGrotesque_700Bold", fontSize: 24, color: colors.greenDark, lineHeight: 31, marginBottom: 18 },
+  resultMessage: { fontFamily: typography.regular, fontSize: 15, lineHeight: 22, color: colors.muted, marginTop: -10, marginBottom: 20 },
   error: { color: colors.danger, lineHeight: 22, marginTop: 16 },
 });

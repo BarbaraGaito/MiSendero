@@ -570,7 +570,7 @@ function ReviewCard({
             <Ionicons
               name={value <= rating ? "star" : "star-outline"}
               size={32}
-              color={value <= rating ? colors.warning : colors.border}
+              color={value <= rating ? colors.primary : colors.border}
             />
           </Pressable>
         ))}

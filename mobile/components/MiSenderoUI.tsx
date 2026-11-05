@@ -15,27 +15,33 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { OfflineConnectionBanner } from "./OfflineConnectionBanner";
 
-const fontFamily = {
+export const typography = {
+  regular: "BricolageGrotesque_400Regular",
+  medium: "BricolageGrotesque_500Medium",
   bold: "BricolageGrotesque_700Bold",
   extraBold: "BricolageGrotesque_800ExtraBold",
 } as const;
+const fontFamily = typography;
 
 export const colors = {
+  // Orange and red are reserved for warnings, errors, emergencies and destructive actions.
+  // Routine content, ratings, selections and progress use the brand palette.
   ink: "#14241C",
   muted: "#58685F",
   soft: "#EEF5F0",
   softer: "#F7FAF7",
   line: "#D7E3DA",
-  green: "#0B7040",
-  greenDark: "#075532",
-  mint: "#E0F1E6",
+  green: "#0F4331",
+  greenDark: "#0F4331",
+  mint: "#D8F0BD",
+  sky: "#D3DFFF",
   danger: "#A9362F",
   warning: "#A86400",
   white: "#FFFFFF",
-  primary: "#0B7040",
+  primary: "#0F4331",
   surface: "#FFFFFF",
-  primaryDark: "#075532",
-  primarySoft: "#E0F1E6",
+  primaryDark: "#0F4331",
+  primarySoft: "#D8F0BD",
   orange: "#A85D00",
   orangeSoft: "#FFF1D3",
   red: "#A9362F",
@@ -70,7 +76,7 @@ export function ScreenShell({
     <SafeAreaView edges={["top", "bottom"]} style={[styles.shell, style]}>
       <OfflineConnectionBanner />
       <View style={styles.content}>{children}</View>
-      {footer}
+      {footer ? <View style={styles.footerShell}>{footer}</View> : null}
     </SafeAreaView>
   );
 }
@@ -138,7 +144,7 @@ export function ScreenTitle({
         <Text style={styles.eyebrow}>{eyebrow}</Text>
       ) : null}
 
-      <Text style={styles.screenTitleText}>
+      <Text accessibilityRole="header" style={styles.screenTitleText}>
         {title}
       </Text>
 
@@ -541,11 +547,15 @@ export const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
+    width: "100%",
+    maxWidth: 760,
+    alignSelf: "center",
     minHeight: 0,
     paddingHorizontal: 20,
     paddingBottom: 10,
     paddingTop: 10,
   },
+  footerShell: { width: "100%", maxWidth: 760, alignSelf: "center" },
   topBar: {
     alignItems: "center",
     flexDirection: "row",
@@ -597,6 +607,7 @@ export const styles = StyleSheet.create({
     lineHeight: 27,
   },
   subtitle: {
+    fontFamily: typography.regular,
     color: colors.muted,
     fontSize: 13,
     lineHeight: 18,
@@ -638,9 +649,9 @@ export const styles = StyleSheet.create({
   },
   primaryLabel: {
     color: colors.white,
-    fontFamily: fontFamily.bold,
+    fontFamily: fontFamily.medium,
     fontSize: 15,
-    fontWeight: "700",
+    fontWeight: "500",
     letterSpacing: 0.1,
     lineHeight: 20,
   },
@@ -822,20 +833,24 @@ screenTitle: {
 },
 
 eyebrow: {
+  fontFamily: typography.medium,
   color: colors.green,
   fontSize: 13,
-  fontWeight: "800",
+  fontWeight: "500",
   marginBottom: 4,
   textTransform: "uppercase",
 },
 
 screenTitleText: {
+  fontFamily: typography.extraBold,
   color: colors.ink,
   fontSize: 28,
-  fontWeight: "900",
+  fontWeight: "800",
+  lineHeight: 35,
 },
 
 screenSubtitle: {
+  fontFamily: typography.regular,
   color: colors.muted,
   fontSize: 15,
   lineHeight: 22,

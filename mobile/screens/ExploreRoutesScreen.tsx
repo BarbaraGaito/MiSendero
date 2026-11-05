@@ -19,7 +19,9 @@ import {
   ScreenTitle,
   StatusNotice,
   colors,
+  typography,
 } from "../components/MiSenderoUI";
+import { ExpandableSection } from "../components/ExpandableSection";
 import { getTrails } from "../../services/trailRepository";
 import { formatKilometers } from "../../services/geoUtils";
 import { DistanceFilter, filterTrails, TrailAreaFilter } from "../../services/trailFilters";
@@ -239,14 +241,20 @@ function ExploreRoutesHeader({
     <View>
       <ScreenTitle
         eyebrow="Explorar rutas"
-        title="Encontra tu proxima ruta"
-        subtitle="Busca por nombre o zona y filtra por dificultad o distancia."
+        title="Encontrá tu próxima ruta"
+        subtitle="Buscá por nombre o lugar."
       />
       <RouteSearchBox searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
       <Pressable accessibilityRole="button" onPress={() => router.push("/descubri-tu-sendero")}
         style={{ padding: 18, borderRadius: 18, backgroundColor: colors.mint, marginBottom: 16 }}>
-        <Text style={{ color: colors.greenDark, fontSize: 19, fontWeight: "800" }}>🥾 Descubrí tu sendero</Text>
-        <Text style={{ color: colors.muted, fontSize: 14, marginTop: 6 }}>Respondé cuatro preguntas y encontrá una ruta con IA.</Text>
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+          <Ionicons name="compass-outline" size={24} color={colors.greenDark} />
+          <View style={{ flex: 1 }}>
+            <Text style={{ fontFamily: typography.bold, color: colors.greenDark, fontSize: 18 }}>Descubrí tu sendero</Text>
+            <Text style={{ fontFamily: typography.regular, color: colors.muted, fontSize: 14, lineHeight: 20, marginTop: 4 }}>Una recomendación según tus preferencias.</Text>
+          </View>
+          <Ionicons name="chevron-forward" size={18} color={colors.greenDark} />
+        </View>
       </Pressable>
       <Pressable accessibilityRole="button" onPress={() => router.push("/parques-nacionales")}
         style={{ flexDirection: "row", alignItems: "center", gap: 8, minHeight: 44, marginBottom: 14 }}>
@@ -254,16 +262,22 @@ function ExploreRoutesHeader({
         <Text style={{ flex: 1, fontSize: 15, fontWeight: "700", color: colors.greenDark }}>Parques Nacionales</Text>
         <Ionicons name="chevron-forward" size={18} color={colors.greenDark} />
       </Pressable>
-      <RouteFilters
-        activeAreaFilter={activeAreaFilter}
-        activeDistanceFilter={activeDistanceFilter}
-        activeFilter={activeFilter}
-        hasActiveFilters={hasActiveFilters}
-        onClearFilters={onClearFilters}
-        setActiveDistanceFilter={setActiveDistanceFilter}
-        setActiveAreaFilter={setActiveAreaFilter}
-        setActiveFilter={setActiveFilter}
-      />
+      <ExpandableSection title="Filtrar senderos" icon="options-outline" summary={[
+        activeAreaFilter !== "all" ? AREA_FILTERS.find(filter => filter.id === activeAreaFilter)?.label : null,
+        activeFilter !== "Todas" ? activeFilter : null,
+        activeDistanceFilter !== "Todas" ? DISTANCE_FILTERS.find(filter => filter.id === activeDistanceFilter)?.label : null,
+      ].filter(Boolean).join(" · ") || "Tipo de sendero, dificultad y distancia"}>
+        <RouteFilters
+          activeAreaFilter={activeAreaFilter}
+          activeDistanceFilter={activeDistanceFilter}
+          activeFilter={activeFilter}
+          hasActiveFilters={hasActiveFilters}
+          onClearFilters={onClearFilters}
+          setActiveDistanceFilter={setActiveDistanceFilter}
+          setActiveAreaFilter={setActiveAreaFilter}
+          setActiveFilter={setActiveFilter}
+        />
+      </ExpandableSection>
       <RoutesResultStatus
         error={error}
         filteredCount={filteredCount}
@@ -386,6 +400,7 @@ function FilterButton({
     <Pressable
       accessibilityRole="button"
       accessibilityState={{ selected: isActive }}
+      aria-pressed={isActive}
       onPress={onPress}
       style={({ pressed }) => pressed && styles.pressed}
     >
@@ -439,7 +454,7 @@ function RoutesResultStatus({
           message={emptyState.message}
           onAction={emptyState.hasAction ? onClearFilters : undefined}
           title={emptyState.title}
-          tone="warning"
+          tone="info"
         />
       ) : null}
     </>
@@ -534,7 +549,7 @@ function RouteCard({
         </View>
         {isFavorite ? (
           <View style={styles.favoriteBadge}>
-            <Ionicons name="star" size={15} color={colors.warning} />
+            <Ionicons name="star" size={15} color={colors.primary} />
           </View>
         ) : null}
       </ImageBackground>
@@ -612,10 +627,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
   },
   searchInput: {
+    fontFamily: typography.regular,
     color: colors.ink,
     flex: 1,
     fontSize: 14,
-    fontWeight: "700",
     minWidth: 0,
     paddingVertical: 8,
   },
@@ -628,9 +643,10 @@ const styles = StyleSheet.create({
     width: 28,
   },
   filterLabel: {
+    fontFamily: typography.medium,
     color: colors.ink,
     fontSize: 13,
-    fontWeight: "900",
+    fontWeight: "500",
     marginBottom: 8,
   },
   filterRow: {
@@ -640,24 +656,26 @@ const styles = StyleSheet.create({
     marginBottom: 14,
   },
   filter: {
+    fontFamily: typography.medium,
     backgroundColor: colors.surface,
     borderColor: colors.border,
     borderRadius: 999,
     borderWidth: 1,
     color: colors.muted,
     fontSize: 13,
-    fontWeight: "700",
+    fontWeight: "500",
     paddingHorizontal: 14,
     paddingVertical: 8,
   },
   filterActive: {
+    fontFamily: typography.medium,
     backgroundColor: colors.primary,
     borderColor: colors.primary,
     borderRadius: 999,
     borderWidth: 1,
     color: colors.surface,
     fontSize: 13,
-    fontWeight: "800",
+    fontWeight: "500",
     paddingHorizontal: 14,
     paddingVertical: 8,
   },

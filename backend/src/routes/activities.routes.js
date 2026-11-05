@@ -76,10 +76,12 @@ router.post("/", requireAuth, validateBody(createActivitySchema), async (req, re
       const row = rows[0];
       const date = (v) => v == null ? null : new Date(v).toISOString();
       const number = (v) => v == null ? null : Number(v);
+      // PostgreSQL REAL stores float32; compare both payloads at that precision.
+      const real = (v) => v == null ? null : Math.fround(Number(v));
       const canonical = (v) => JSON.stringify([
-        number(v.trail_id), date(v.started_at), date(v.ended_at), number(v.distance_km),
-        number(v.duration_minutes), v.completion_status, number(v.route_progress_meters),
-        number(v.route_total_meters), number(v.ended_latitude), number(v.ended_longitude),
+        number(v.trail_id), date(v.started_at), date(v.ended_at), real(v.distance_km),
+        number(v.duration_minutes), v.completion_status, real(v.route_progress_meters),
+        real(v.route_total_meters), real(v.ended_latitude), real(v.ended_longitude),
       ]);
       if (!row || canonical(row) !== canonical(req.body)) {
         return res.status(409).json({ code: "IDEMPOTENCY_CONFLICT", error: "La identidad de actividad ya pertenece a otros datos; no se sobrescribió." });

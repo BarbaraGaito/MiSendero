@@ -428,15 +428,20 @@ const throwTileDownloadError = (
   );
 };
 
-export const deleteOfflineTilesForTrail = async (trail: Trail): Promise<number> => {
+export const deleteOfflineTilesForTrail = async (trail: Trail, retainedTrails: Trail[] = []): Promise<number> => {
   if (!FileSystem.documentDirectory) return 0;
 
-  await deleteBasicOfflineMap(trail);
+  if (!retainedTrails.some((retained) => retained.id === trail.id)) {
+    await deleteBasicOfflineMap(trail);
+  }
 
+  const retainedUris = new Set(retainedTrails.flatMap((retained) =>
+    getOfflineTilePlanForTrail(retained).map((tile) => tile.localUri)));
   const tileList = getOfflineTilePlanForTrail(trail);
   let deletedTiles = 0;
 
   for (const tile of tileList) {
+    if (retainedUris.has(tile.localUri)) continue;
     const info = await FileSystem.getInfoAsync(tile.localUri);
 
     if (info.exists) {

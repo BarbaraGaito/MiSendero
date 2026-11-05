@@ -135,7 +135,7 @@ function ActivityCard({ session }: { session: SessionRow }) {
       : "";
 
   return (
-    <Card tone={pending ? "orange" : endedEarly ? "green" : "white"}>
+    <Card tone={endedEarly ? "green" : "white"}>
       <View style={styles.activityTop}>
         <View style={styles.activityText}>
           <Text style={styles.activityTitle}>
@@ -233,8 +233,8 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
   },
   statusPending: {
-    backgroundColor: colors.orangeSoft,
-    color: colors.orange,
+    backgroundColor: colors.sky,
+    color: colors.primary,
   },
   statusEndedEarly: {
     backgroundColor: colors.primarySoft,

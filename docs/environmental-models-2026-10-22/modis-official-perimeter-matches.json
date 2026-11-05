@@ -1,0 +1,907 @@
+{
+  "experiment_id": "modis-2022-2023-official-perimeter-comparison",
+  "protocol_sha256": "21c731c5266eb569e16936c77b3d1f4bc78088f97b3f35fa1b01ae9588f75555",
+  "observation_sha256": "f295457e48b4b40b7f6bc196a8e2ab3ec3905f9a4aa392216d73a93e174a0976",
+  "method": {
+    "layer_years": [
+      2022,
+      2023
+    ],
+    "official_date_window": "same date through 7 days afterward",
+    "maximum_pixel_to_perimeter_distance_km": 0.75,
+    "route_footprint_filter_km": 40,
+    "meaning": "Detection coincidence audit, not an ignition-time forecast test."
+  },
+  "qualified_positive_pixel_rows": 186,
+  "source_layers": {
+    "2022": {
+      "sha256": "e9419f2f9014ab8220d756640584ad91d0ee1e61dfacdc2c70118757987c5980",
+      "feature_count": 443
+    },
+    "2023": {
+      "sha256": "cde588dbdafb9dc787269f4220676909f8c9b6a495e7a8adf4ce13d8597bc4e2",
+      "feature_count": 446
+    }
+  },
+  "eligible_events": 84,
+  "matched_events": [
+    {
+      "layer_year": 2022,
+      "id": null,
+      "recorded_date": "2022-10-25",
+      "site": "CAÑADA LARGA",
+      "locality": "ARROYO DE LOS PATOS",
+      "area_ha": 905,
+      "nearest_route_center_distance_km": 28.225,
+      "first_matched_detection": {
+        "region": "Quebrada del Condorito - Balcon Norte",
+        "pixel_id": "h12v12:210:569",
+        "observed_date": "2022-10-25",
+        "lag_days": 0,
+        "distance_to_perimeter_km": 0.17,
+        "source_id": "MOD14A1.A2022297.h12v12.061.2022306220708"
+      },
+      "coincidences": [
+        {
+          "region": "Quebrada del Condorito - Balcon Norte",
+          "pixel_id": "h12v12:210:569",
+          "observed_date": "2022-10-25",
+          "lag_days": 0,
+          "distance_to_perimeter_km": 0.17,
+          "source_id": "MOD14A1.A2022297.h12v12.061.2022306220708"
+        }
+      ]
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-10-08",
+      "site": "San Clemente",
+      "locality": "SAN CLEMENTE",
+      "area_ha": 1537,
+      "nearest_route_center_distance_km": 10.358,
+      "first_matched_detection": {
+        "region": "Quebrada del Condorito - Balcon Norte",
+        "pixel_id": "h12v12:204:605",
+        "observed_date": "2023-10-10",
+        "lag_days": 2,
+        "distance_to_perimeter_km": 0.0,
+        "source_id": "MOD14A1.A2023281.h12v12.061.2023290135428"
+      },
+      "coincidences": [
+        {
+          "region": "Quebrada del Condorito - Balcon Norte",
+          "pixel_id": "h12v12:204:605",
+          "observed_date": "2023-10-10",
+          "lag_days": 2,
+          "distance_to_perimeter_km": 0.0,
+          "source_id": "MOD14A1.A2023281.h12v12.061.2023290135428"
+        }
+      ]
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-08-28",
+      "site": "Loma Alta",
+      "locality": "POTRERO DE GARAY",
+      "area_ha": 1227,
+      "nearest_route_center_distance_km": 17.414,
+      "first_matched_detection": {
+        "region": "Quebrada del Condorito - Balcon Norte",
+        "pixel_id": "h12v12:219:605",
+        "observed_date": "2023-08-29",
+        "lag_days": 1,
+        "distance_to_perimeter_km": 0.0,
+        "source_id": "MOD14A1.A2023241.h12v12.061.2023251180915"
+      },
+      "coincidences": [
+        {
+          "region": "Quebrada del Condorito - Balcon Norte",
+          "pixel_id": "h12v12:219:605",
+          "observed_date": "2023-08-29",
+          "lag_days": 1,
+          "distance_to_perimeter_km": 0.0,
+          "source_id": "MOD14A1.A2023241.h12v12.061.2023251180915"
+        },
+        {
+          "region": "Quebrada del Condorito - Balcon Norte",
+          "pixel_id": "h12v12:219:602",
+          "observed_date": "2023-08-29",
+          "lag_days": 1,
+          "distance_to_perimeter_km": 0.078,
+          "source_id": "MOD14A1.A2023241.h12v12.061.2023251180915"
+        },
+        {
+          "region": "Quebrada del Condorito - Balcon Norte",
+          "pixel_id": "h12v12:216:602",
+          "observed_date": "2023-08-29",
+          "lag_days": 1,
+          "distance_to_perimeter_km": 0.459,
+          "source_id": "MOD14A1.A2023241.h12v12.061.2023251180915"
+        }
+      ]
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-10-09",
+      "site": "Las Minitas",
+      "locality": "VILLA CARLOS PAZ",
+      "area_ha": 3714,
+      "nearest_route_center_distance_km": 22.577,
+      "first_matched_detection": {
+        "region": "Quebrada del Condorito - Balcon Norte",
+        "pixel_id": "h12v12:171:590",
+        "observed_date": "2023-10-10",
+        "lag_days": 1,
+        "distance_to_perimeter_km": 0.0,
+        "source_id": "MOD14A1.A2023281.h12v12.061.2023290135428"
+      },
+      "coincidences": [
+        {
+          "region": "Quebrada del Condorito - Balcon Norte",
+          "pixel_id": "h12v12:171:590",
+          "observed_date": "2023-10-10",
+          "lag_days": 1,
+          "distance_to_perimeter_km": 0.0,
+          "source_id": "MOD14A1.A2023281.h12v12.061.2023290135428"
+        },
+        {
+          "region": "Quebrada del Condorito - Balcon Norte",
+          "pixel_id": "h12v12:174:590",
+          "observed_date": "2023-10-10",
+          "lag_days": 1,
+          "distance_to_perimeter_km": 0.0,
+          "source_id": "MOD14A1.A2023281.h12v12.061.2023290135428"
+        },
+        {
+          "region": "Quebrada del Condorito - Balcon Norte",
+          "pixel_id": "h12v12:174:593",
+          "observed_date": "2023-10-10",
+          "lag_days": 1,
+          "distance_to_perimeter_km": 0.0,
+          "source_id": "MOD14A1.A2023281.h12v12.061.2023290135428"
+        },
+        {
+          "region": "Quebrada del Condorito - Balcon Norte",
+          "pixel_id": "h12v12:168:587",
+          "observed_date": "2023-10-11",
+          "lag_days": 2,
+          "distance_to_perimeter_km": 0.0,
+          "source_id": "MOD14A1.A2023281.h12v12.061.2023290135428"
+        }
+      ]
+    }
+  ],
+  "unmatched_events": [
+    {
+      "layer_year": 2022,
+      "id": null,
+      "recorded_date": "2022-11-16",
+      "site": "PROXIMO AL RIO HONDO",
+      "locality": "TALA CAÑADA",
+      "area_ha": 1912,
+      "nearest_route_center_distance_km": 39.828
+    },
+    {
+      "layer_year": 2022,
+      "id": null,
+      "recorded_date": "2022-11-25",
+      "site": null,
+      "locality": "AMBUL",
+      "area_ha": 7058,
+      "nearest_route_center_distance_km": 27.414
+    },
+    {
+      "layer_year": 2022,
+      "id": null,
+      "recorded_date": "2022-07-06",
+      "site": "MURALLON DEL DIQUE",
+      "locality": "VILLA CIUDAD DE AMERICA",
+      "area_ha": 72,
+      "nearest_route_center_distance_km": 26.366
+    },
+    {
+      "layer_year": 2022,
+      "id": null,
+      "recorded_date": "2022-09-07",
+      "site": null,
+      "locality": "DESPEÑADEROS",
+      "area_ha": 2721,
+      "nearest_route_center_distance_km": 37.297
+    },
+    {
+      "layer_year": 2022,
+      "id": null,
+      "recorded_date": "2022-09-10",
+      "site": null,
+      "locality": "ESTANCIA VIEJA",
+      "area_ha": 7,
+      "nearest_route_center_distance_km": 34.287
+    },
+    {
+      "layer_year": 2022,
+      "id": null,
+      "recorded_date": "2022-11-19",
+      "site": null,
+      "locality": "SAN ANTONIO DE ARREDONDO",
+      "area_ha": 5,
+      "nearest_route_center_distance_km": 13.523
+    },
+    {
+      "layer_year": 2022,
+      "id": null,
+      "recorded_date": "2022-09-15",
+      "site": "MIRADOR CUESTA DE SAN LUIS",
+      "locality": "MINA CLAVERO",
+      "area_ha": 3990,
+      "nearest_route_center_distance_km": 30.9
+    },
+    {
+      "layer_year": 2022,
+      "id": null,
+      "recorded_date": "2022-11-03",
+      "site": "LOMA DEL TIGRE",
+      "locality": "LOS REARTES",
+      "area_ha": 19,
+      "nearest_route_center_distance_km": 28.892
+    },
+    {
+      "layer_year": 2022,
+      "id": null,
+      "recorded_date": "2022-12-05",
+      "site": "FABRICA HOLCIM",
+      "locality": "MALAGUEÑO",
+      "area_ha": 5,
+      "nearest_route_center_distance_km": 38.375
+    },
+    {
+      "layer_year": 2022,
+      "id": null,
+      "recorded_date": "2022-09-06",
+      "site": "CAMINO A LAS JARILLAS",
+      "locality": "SAN ANTONIO DE ARREDONDO",
+      "area_ha": 63,
+      "nearest_route_center_distance_km": 22.354
+    },
+    {
+      "layer_year": 2022,
+      "id": null,
+      "recorded_date": "2022-11-19",
+      "site": "CAMINO A COPINA",
+      "locality": "ICHO CRUZ",
+      "area_ha": 21,
+      "nearest_route_center_distance_km": 13.744
+    },
+    {
+      "layer_year": 2022,
+      "id": null,
+      "recorded_date": "2022-09-09",
+      "site": null,
+      "locality": "TANTI",
+      "area_ha": 9,
+      "nearest_route_center_distance_km": 32.67
+    },
+    {
+      "layer_year": 2022,
+      "id": null,
+      "recorded_date": "2022-08-26",
+      "site": "CIENAGA DE ALLENDE",
+      "locality": "MINA CLAVERO",
+      "area_ha": 30,
+      "nearest_route_center_distance_km": 38.773
+    },
+    {
+      "layer_year": 2022,
+      "id": null,
+      "recorded_date": "2022-06-18",
+      "site": "VARIANTE COSTA AZUL",
+      "locality": "VILLA CARLOS PAZ",
+      "area_ha": 50,
+      "nearest_route_center_distance_km": 35.41
+    },
+    {
+      "layer_year": 2022,
+      "id": null,
+      "recorded_date": "2022-07-01",
+      "site": "BARRIO LAS CAÑITAS",
+      "locality": "MALAGUEÑO",
+      "area_ha": 17,
+      "nearest_route_center_distance_km": 33.363
+    },
+    {
+      "layer_year": 2022,
+      "id": null,
+      "recorded_date": "2022-08-16",
+      "site": "PARQUE SAN JUAN",
+      "locality": "ALTA GRACIA",
+      "area_ha": 201,
+      "nearest_route_center_distance_km": 27.783
+    },
+    {
+      "layer_year": 2022,
+      "id": null,
+      "recorded_date": "2022-09-23",
+      "site": "AL OESTE DE VILLA DEL PRADO",
+      "locality": "ALTA GRACIA",
+      "area_ha": 82,
+      "nearest_route_center_distance_km": 25.814
+    },
+    {
+      "layer_year": 2022,
+      "id": null,
+      "recorded_date": "2022-12-04",
+      "site": null,
+      "locality": "LOS MOLINOS",
+      "area_ha": 227,
+      "nearest_route_center_distance_km": 33.134
+    },
+    {
+      "layer_year": 2022,
+      "id": null,
+      "recorded_date": "2022-10-12",
+      "site": "PAMPA DE ACHALA",
+      "locality": "MINA CLAVERO",
+      "area_ha": 74,
+      "nearest_route_center_distance_km": 7.844
+    },
+    {
+      "layer_year": 2022,
+      "id": null,
+      "recorded_date": "2022-11-19",
+      "site": "PASO DE LAS PIEDRAS",
+      "locality": "MINA CLAVERO",
+      "area_ha": 47,
+      "nearest_route_center_distance_km": 10.849
+    },
+    {
+      "layer_year": 2022,
+      "id": null,
+      "recorded_date": "2022-09-18",
+      "site": null,
+      "locality": "MINA CLAVERO",
+      "area_ha": 13,
+      "nearest_route_center_distance_km": 13.779
+    },
+    {
+      "layer_year": 2022,
+      "id": null,
+      "recorded_date": "2022-10-23",
+      "site": null,
+      "locality": "ANISACATE",
+      "area_ha": 192,
+      "nearest_route_center_distance_km": 27.86
+    },
+    {
+      "layer_year": 2022,
+      "id": null,
+      "recorded_date": "2022-09-07",
+      "site": null,
+      "locality": "VILLA CARLOS PAZ",
+      "area_ha": 30,
+      "nearest_route_center_distance_km": 31.646
+    },
+    {
+      "layer_year": 2022,
+      "id": null,
+      "recorded_date": "2022-12-06",
+      "site": null,
+      "locality": "MALAGUEÑO",
+      "area_ha": 9,
+      "nearest_route_center_distance_km": 34.192
+    },
+    {
+      "layer_year": 2022,
+      "id": null,
+      "recorded_date": "2022-09-09",
+      "site": null,
+      "locality": "MALAGUEÑO",
+      "area_ha": 15,
+      "nearest_route_center_distance_km": 32.524
+    },
+    {
+      "layer_year": 2022,
+      "id": null,
+      "recorded_date": "2022-11-01",
+      "site": "COMUNIDAD TASHIGAR",
+      "locality": "TANTI",
+      "area_ha": 153,
+      "nearest_route_center_distance_km": 32.069
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-09-11",
+      "site": "La Quintana",
+      "locality": "ANISACATE",
+      "area_ha": 672,
+      "nearest_route_center_distance_km": 28.68
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-08-15",
+      "site": null,
+      "locality": "TALA HUASI",
+      "area_ha": 4,
+      "nearest_route_center_distance_km": 23.805
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-10-20",
+      "site": "Lago Azul",
+      "locality": "VILLA DEL LAGO (Est. Vieja)",
+      "area_ha": 20,
+      "nearest_route_center_distance_km": 36.167
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-10-29",
+      "site": "Puente Blanco",
+      "locality": "ATHOS PAMPA",
+      "area_ha": 11,
+      "nearest_route_center_distance_km": 39.795
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-11-13",
+      "site": "Los reartes",
+      "locality": "LOS REARTES",
+      "area_ha": 4,
+      "nearest_route_center_distance_km": 30.637
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-10-11",
+      "site": null,
+      "locality": "DESPEÑADEROS (EstaciOn Lucas A",
+      "area_ha": 7,
+      "nearest_route_center_distance_km": 39.853
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-07-04",
+      "site": null,
+      "locality": "MALAGUEÑO",
+      "area_ha": 3,
+      "nearest_route_center_distance_km": 26.125
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-12-07",
+      "site": null,
+      "locality": "LAS MARAVILLAS",
+      "area_ha": 43,
+      "nearest_route_center_distance_km": 28.804
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-10-11",
+      "site": "La Juanita",
+      "locality": "SIERRAS DE ORO",
+      "area_ha": 5,
+      "nearest_route_center_distance_km": 28.736
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-10-28",
+      "site": null,
+      "locality": "FALDA DEL CARMEN",
+      "area_ha": 57,
+      "nearest_route_center_distance_km": 21.858
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-10-29",
+      "site": "Estancia San Bernardo",
+      "locality": "COPINA",
+      "area_ha": 113,
+      "nearest_route_center_distance_km": 12.816
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-11-02",
+      "site": "El Volcan",
+      "locality": "AMBUL",
+      "area_ha": 36,
+      "nearest_route_center_distance_km": 29.945
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-08-21",
+      "site": null,
+      "locality": "VILLA CIUDAD PARQUE LOS REARTES",
+      "area_ha": 3,
+      "nearest_route_center_distance_km": 26.287
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-10-06",
+      "site": "Rio de la Suela",
+      "locality": "COPINA",
+      "area_ha": 1713,
+      "nearest_route_center_distance_km": 8.969
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-10-04",
+      "site": null,
+      "locality": "LOS GIGANTES",
+      "area_ha": 94,
+      "nearest_route_center_distance_km": 25.974
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-10-10",
+      "site": "Estancia Vieja",
+      "locality": "VILLA DEL LAGO (Est. Vieja)",
+      "area_ha": 16,
+      "nearest_route_center_distance_km": 32.255
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-10-17",
+      "site": "Monte Redondo",
+      "locality": "VILLA CURA BROCHERO",
+      "area_ha": 48,
+      "nearest_route_center_distance_km": 27.275
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-10-21",
+      "site": "San Lorenzo",
+      "locality": "VILLA CURA BROCHERO",
+      "area_ha": 25,
+      "nearest_route_center_distance_km": 29.429
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-11-06",
+      "site": "Falda del carmen",
+      "locality": "FALDA DEL CARMEN",
+      "area_ha": 14,
+      "nearest_route_center_distance_km": 21.545
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-11-16",
+      "site": "San Lorenzo",
+      "locality": "SAN LORENZO",
+      "area_ha": 21,
+      "nearest_route_center_distance_km": 28.761
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-11-08",
+      "site": null,
+      "locality": "LAS CALLES",
+      "area_ha": 4,
+      "nearest_route_center_distance_km": 22.5
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-11-14",
+      "site": "Loma del Tigre",
+      "locality": "ATHOS PAMPA",
+      "area_ha": 35,
+      "nearest_route_center_distance_km": 29.451
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-11-06",
+      "site": "Monte Redondo",
+      "locality": "MINA CLAVERO",
+      "area_ha": 10,
+      "nearest_route_center_distance_km": 28.748
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-11-18",
+      "site": "San Lorenzo",
+      "locality": "VILLA CURA BROCHERO",
+      "area_ha": 119,
+      "nearest_route_center_distance_km": 27.821
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-11-20",
+      "site": "San Jose",
+      "locality": "LOS REARTES",
+      "area_ha": 3,
+      "nearest_route_center_distance_km": 27.994
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-10-02",
+      "site": null,
+      "locality": "MINA CLAVERO",
+      "area_ha": 37,
+      "nearest_route_center_distance_km": 28.227
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-10-29",
+      "site": null,
+      "locality": "MINA CLAVERO",
+      "area_ha": 43,
+      "nearest_route_center_distance_km": 20.116
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-10-09",
+      "site": null,
+      "locality": "VILLA CIUDAD DE AMERICA",
+      "area_ha": 9,
+      "nearest_route_center_distance_km": 21.522
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-10-28",
+      "site": null,
+      "locality": "LA CUMBRECITA",
+      "area_ha": 22,
+      "nearest_route_center_distance_km": 35.101
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-10-04",
+      "site": null,
+      "locality": "LOS GIGANTES",
+      "area_ha": 35,
+      "nearest_route_center_distance_km": 25.278
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-10-01",
+      "site": null,
+      "locality": "LA CUMBRECITA",
+      "area_ha": 11,
+      "nearest_route_center_distance_km": 24.496
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-09-13",
+      "site": "Camino a 24 de septiembre",
+      "locality": "SAN CLEMENTE",
+      "area_ha": 14,
+      "nearest_route_center_distance_km": 12.651
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-09-14",
+      "site": "Athos Pampa",
+      "locality": "VILLA GENERAL BELGRANO",
+      "area_ha": 9,
+      "nearest_route_center_distance_km": 36.408
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-09-11",
+      "site": "Paso de la Pampa",
+      "locality": "SAN CLEMENTE",
+      "area_ha": 3,
+      "nearest_route_center_distance_km": 13.136
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-09-14",
+      "site": null,
+      "locality": "TALA CAÑADA",
+      "area_ha": 22,
+      "nearest_route_center_distance_km": 29.426
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-09-15",
+      "site": "Paraje Rio Hondo",
+      "locality": "MINA CLAVERO",
+      "area_ha": 42,
+      "nearest_route_center_distance_km": 21.62
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-09-09",
+      "site": null,
+      "locality": "ALTA GRACIA",
+      "area_ha": 15,
+      "nearest_route_center_distance_km": 26.169
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-09-18",
+      "site": "La Serranita",
+      "locality": "LA RANCHERITA Y LAS CASCADAS",
+      "area_ha": 9,
+      "nearest_route_center_distance_km": 23.927
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-08-17",
+      "site": "La Marianita",
+      "locality": "ANISACATE",
+      "area_ha": 13,
+      "nearest_route_center_distance_km": 27.192
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-08-30",
+      "site": null,
+      "locality": "AMBUL",
+      "area_ha": 28,
+      "nearest_route_center_distance_km": 31.372
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-08-27",
+      "site": "Los Chañaritos",
+      "locality": "LA RANCHERITA Y LAS CASCADAS",
+      "area_ha": 624,
+      "nearest_route_center_distance_km": 26.857
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-07-26",
+      "site": null,
+      "locality": "ALTA GRACIA",
+      "area_ha": 35,
+      "nearest_route_center_distance_km": 26.42
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-08-11",
+      "site": "Quebrada del Condorito",
+      "locality": "LA CUMBRECITA",
+      "area_ha": 65,
+      "nearest_route_center_distance_km": 21.191
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-08-16",
+      "site": "Loma Alta",
+      "locality": "POTRERO DE GARAY",
+      "area_ha": 42,
+      "nearest_route_center_distance_km": 19.734
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-08-26",
+      "site": "Quebrada del Condorito",
+      "locality": "MINA CLAVERO",
+      "area_ha": 2,
+      "nearest_route_center_distance_km": 12.211
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-07-31",
+      "site": "Las Maravillas",
+      "locality": "VILLA CURA BROCHERO",
+      "area_ha": 3,
+      "nearest_route_center_distance_km": 31.816
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-01-11",
+      "site": "Quebra del Condorito",
+      "locality": "MINA CLAVERO",
+      "area_ha": 15,
+      "nearest_route_center_distance_km": 8.669
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-09-15",
+      "site": null,
+      "locality": "SAN LORENZO",
+      "area_ha": 12,
+      "nearest_route_center_distance_km": 28.988
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-09-16",
+      "site": null,
+      "locality": "LOS CEDROS",
+      "area_ha": 4,
+      "nearest_route_center_distance_km": 39.313
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-09-15",
+      "site": null,
+      "locality": "LAS CALLES",
+      "area_ha": 69,
+      "nearest_route_center_distance_km": 31.528
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-08-28",
+      "site": "Potrerillo",
+      "locality": "ALTA GRACIA",
+      "area_ha": 9,
+      "nearest_route_center_distance_km": 19.011
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-08-31",
+      "site": "Taruca Pampa",
+      "locality": "MINA CLAVERO",
+      "area_ha": 104,
+      "nearest_route_center_distance_km": 27.81
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-08-21",
+      "site": "Los Morteritos",
+      "locality": "PANAHOLMA",
+      "area_ha": 528,
+      "nearest_route_center_distance_km": 28.964
+    },
+    {
+      "layer_year": 2023,
+      "id": null,
+      "recorded_date": "2023-09-04",
+      "site": null,
+      "locality": "PANAHOLMA",
+      "area_ha": 11,
+      "nearest_route_center_distance_km": 26.53
+    }
+  ],
+  "matched_event_count": 4,
+  "unmatched_event_count": 80,
+  "limitations": [
+    "Córdoba official perimeter layers are used only for years 2022 and 2023; other Argentine provinces are not represented.",
+    "The satellite sample is fixed and sparse around eight sector centers, not a full-area observation.",
+    "Several polygons or detections may be parts of the same physical incident; feature count is not an independent-event sample size.",
+    "Official recorded date, mapped burned perimeter, and MODIS active-fire detection are different measurements."
+  ]
+}

@@ -1,0 +1,355 @@
+{
+  "experiment_id": "idecor-cordoba-fire-perimeters-2022-2026",
+  "protocol_sha256": "24de67450e021e67316ff0246cbd31352ed30517c40d59182855f37d098fc30b",
+  "geography_sha256": "7e475b478db7bb678cc0a1539fdf484e0c8de0a9baa98916fb90f652f75ff834",
+  "source_layers": {
+    "2022": {
+      "url": "https://idecor-ws.mapascordoba.gob.ar/geoserver/idecor/wfs?service=WFS&version=2.0.0&request=GetFeature&typeNames=idecor%3Aarea_quemada_2022&outputFormat=application%2Fjson",
+      "sha256": "e9419f2f9014ab8220d756640584ad91d0ee1e61dfacdc2c70118757987c5980",
+      "bytes": 4655376,
+      "features": 443,
+      "min_recorded_fire_date": "2022-01-02",
+      "max_recorded_fire_date": "2022-12-24",
+      "record_dates_outside_layer_year": 0,
+      "properties": [
+        "altitud_mean",
+        "area_deteccion",
+        "cobertura1",
+        "cobertura2",
+        "cobertura3",
+        "cuenca_hidr",
+        "fecha_deteccion",
+        "id",
+        "localidad_proxima",
+        "orientacion",
+        "pend_mean",
+        "sitio_referencia",
+        "zona_riesgo"
+      ],
+      "cache_path": "training/data/raw/environmental/idecor-area-quemada-2022.geojson"
+    },
+    "2023": {
+      "url": "https://idecor-ws.mapascordoba.gob.ar/geoserver/idecor/wfs?service=WFS&version=2.0.0&request=GetFeature&typeNames=idecor%3Aarea_quemada_2023&outputFormat=application%2Fjson",
+      "sha256": "cde588dbdafb9dc787269f4220676909f8c9b6a495e7a8adf4ce13d8597bc4e2",
+      "bytes": 2395102,
+      "features": 446,
+      "min_recorded_fire_date": "2023-01-02",
+      "max_recorded_fire_date": "2024-12-08",
+      "record_dates_outside_layer_year": 1,
+      "properties": [
+        "altitud_mean",
+        "area_deteccion",
+        "cobertura1",
+        "cobertura2",
+        "cobertura3",
+        "cobertura4",
+        "cuenca_hidr",
+        "fecha_deteccion",
+        "id",
+        "localidad_proxima",
+        "orientacion",
+        "pend_median",
+        "reporte",
+        "sitio_referencia",
+        "zona_riesgo"
+      ],
+      "cache_path": "training/data/raw/environmental/idecor-area-quemada-2023.geojson"
+    },
+    "2024": {
+      "url": "https://idecor-ws.mapascordoba.gob.ar/geoserver/idecor/wfs?service=WFS&version=2.0.0&request=GetFeature&typeNames=idecor%3Aarea_quemada_2024&outputFormat=application%2Fjson",
+      "sha256": "c9e962d1d171d611df198a802a7313f4df78205995b0eaaa4238a3346c9cc3f6",
+      "bytes": 4012668,
+      "features": 586,
+      "min_recorded_fire_date": "2024-01-01",
+      "max_recorded_fire_date": "2024-12-24",
+      "record_dates_outside_layer_year": 0,
+      "properties": [
+        "altitud_mean",
+        "area_deteccion",
+        "cobertura1",
+        "cobertura2",
+        "cobertura3",
+        "cobertura4",
+        "cuenca_hidr",
+        "departamento",
+        "fecha_deteccion",
+        "fid",
+        "grilla",
+        "id_sicc",
+        "localidad_proxima",
+        "orientacion",
+        "pend_median",
+        "reporte",
+        "sitio_referencia"
+      ],
+      "cache_path": "training/data/raw/environmental/idecor-area-quemada-2024.geojson"
+    },
+    "2025": {
+      "url": "https://idecor-ws.mapascordoba.gob.ar/geoserver/idecor/wfs?service=WFS&version=2.0.0&request=GetFeature&typeNames=idecor%3Aarea_quemada_2025&outputFormat=application%2Fjson",
+      "sha256": "4042d351f91c24438a00e94e54728d3a6200b2bf7729655dce9b1be14c5364fa",
+      "bytes": 2251373,
+      "features": 675,
+      "min_recorded_fire_date": "2024-10-10",
+      "max_recorded_fire_date": "2025-12-27",
+      "record_dates_outside_layer_year": 1,
+      "properties": [
+        "altitud_mean",
+        "area_deteccion",
+        "cobertura1",
+        "cobertura2",
+        "cobertura3",
+        "cobertura4",
+        "cuenca_hidr",
+        "departamento",
+        "fecha_deteccion",
+        "fid",
+        "grilla",
+        "id_sicc",
+        "localidad_proxima",
+        "orientacion",
+        "pend_median",
+        "reporte",
+        "sitio_referencia"
+      ],
+      "cache_path": "training/data/raw/environmental/idecor-area-quemada-2025.geojson"
+    },
+    "2026": {
+      "url": "https://idecor-ws.mapascordoba.gob.ar/geoserver/idecor/wfs?service=WFS&version=2.0.0&request=GetFeature&typeNames=idecor%3Aarea_quemada_2026&outputFormat=application%2Fjson",
+      "sha256": "5713431fcb4877c098eafa13496a940dc449b1817a592b299b41ca961174c2a5",
+      "bytes": 395770,
+      "features": 165,
+      "min_recorded_fire_date": "2026-01-01",
+      "max_recorded_fire_date": "2026-06-30",
+      "record_dates_outside_layer_year": 0,
+      "properties": [
+        "altitud_mean",
+        "area_deteccion",
+        "cobertura1",
+        "cobertura2",
+        "cobertura3",
+        "cobertura4",
+        "cuenca_hidr",
+        "departamento",
+        "fecha_deteccion",
+        "fid",
+        "grilla",
+        "id_sicc",
+        "localidad_proxima",
+        "orientacion",
+        "pend_median",
+        "reporte",
+        "sitio_referencia"
+      ],
+      "cache_path": "training/data/raw/environmental/idecor-area-quemada-2026.geojson"
+    }
+  },
+  "comparison": {
+    "Sendero Macuco - Salto Arrechea": {
+      "coordinate": {
+        "latitude": -25.66715775,
+        "longitude": -54.452823
+      },
+      "perimeters_within_km": {
+        "5": 0,
+        "10": 0,
+        "25": 0
+      },
+      "nearest_events": [],
+      "interpretation": "Distance is from the catalog sector center, not the full trail geometry."
+    },
+    "Refugio Frey desde Villa Catedral": {
+      "coordinate": {
+        "latitude": -41.1904696,
+        "longitude": -71.4612884
+      },
+      "perimeters_within_km": {
+        "5": 0,
+        "10": 0,
+        "25": 0
+      },
+      "nearest_events": [],
+      "interpretation": "Distance is from the catalog sector center, not the full trail geometry."
+    },
+    "Quebrada del Condorito - Balcon Norte": {
+      "coordinate": {
+        "latitude": -31.65000375,
+        "longitude": -64.70201284999999
+      },
+      "perimeters_within_km": {
+        "5": 2,
+        "10": 6,
+        "25": 41
+      },
+      "nearest_events": [
+        {
+          "layer_year": 2025,
+          "fire_date": "2024-10-10Z",
+          "id": "11892",
+          "site": "Quebrada del Condorito",
+          "locality": "SAN CLEMENTE",
+          "department": "SAN ALBERTO",
+          "area_ha": 6350,
+          "distance_km": 0.0
+        },
+        {
+          "layer_year": 2024,
+          "fire_date": "2024-12-16Z",
+          "id": "6839",
+          "site": "Copina",
+          "locality": "COPINA",
+          "department": "PUNILLA",
+          "area_ha": 2,
+          "distance_km": 4.839
+        },
+        {
+          "layer_year": 2022,
+          "fire_date": "2022-10-12",
+          "id": null,
+          "site": "PAMPA DE ACHALA",
+          "locality": "MINA CLAVERO",
+          "department": null,
+          "area_ha": 74,
+          "distance_km": 7.844
+        },
+        {
+          "layer_year": 2023,
+          "fire_date": "2023-01-11",
+          "id": null,
+          "site": "Quebra del Condorito",
+          "locality": "MINA CLAVERO",
+          "department": null,
+          "area_ha": 15,
+          "distance_km": 8.669
+        },
+        {
+          "layer_year": 2023,
+          "fire_date": "2023-10-06",
+          "id": null,
+          "site": "Rio de la Suela",
+          "locality": "COPINA",
+          "department": null,
+          "area_ha": 1713,
+          "distance_km": 8.969
+        },
+        {
+          "layer_year": 2024,
+          "fire_date": "2024-09-14Z",
+          "id": "5342",
+          "site": "Bosque Alegre",
+          "locality": "SAN CLEMENTE",
+          "department": "PUNILLA",
+          "area_ha": 347,
+          "distance_km": 9.406
+        },
+        {
+          "layer_year": 2023,
+          "fire_date": "2023-10-08",
+          "id": null,
+          "site": "San Clemente",
+          "locality": "SAN CLEMENTE",
+          "department": null,
+          "area_ha": 1537,
+          "distance_km": 10.358
+        },
+        {
+          "layer_year": 2022,
+          "fire_date": "2022-11-19",
+          "id": null,
+          "site": "PASO DE LAS PIEDRAS",
+          "locality": "MINA CLAVERO",
+          "department": null,
+          "area_ha": 47,
+          "distance_km": 10.849
+        },
+        {
+          "layer_year": 2023,
+          "fire_date": "2023-08-26",
+          "id": null,
+          "site": "Quebrada del Condorito",
+          "locality": "MINA CLAVERO",
+          "department": null,
+          "area_ha": 2,
+          "distance_km": 12.211
+        },
+        {
+          "layer_year": 2024,
+          "fire_date": "2024-10-05Z",
+          "id": "24402",
+          "site": null,
+          "locality": "SAN CLEMENTE",
+          "department": "SANTA MARÍA",
+          "area_ha": 2,
+          "distance_km": 12.406
+        }
+      ],
+      "interpretation": "Distance is from the catalog sector center, not the full trail geometry."
+    },
+    "Sendero Namuncura": {
+      "coordinate": {
+        "latitude": -38.0057717,
+        "longitude": -65.59634514999999
+      },
+      "perimeters_within_km": {
+        "5": 0,
+        "10": 0,
+        "25": 0
+      },
+      "nearest_events": [],
+      "interpretation": "Distance is from the catalog sector center, not the full trail geometry."
+    },
+    "Cerro Ventana - Hueco de la Ventana": {
+      "coordinate": {
+        "latitude": -38.055006000000006,
+        "longitude": -62.0162207
+      },
+      "perimeters_within_km": {
+        "5": 0,
+        "10": 0,
+        "25": 0
+      },
+      "nearest_events": [],
+      "interpretation": "Distance is from the catalog sector center, not the full trail geometry."
+    },
+    "Bosque Tallado desde la plataforma del Piltriquitron": {
+      "coordinate": {
+        "latitude": -41.97003735,
+        "longitude": -71.4756338
+      },
+      "perimeters_within_km": {
+        "5": 0,
+        "10": 0,
+        "25": 0
+      },
+      "nearest_events": [],
+      "interpretation": "Distance is from the catalog sector center, not the full trail geometry."
+    },
+    "Sendero Che Roga - Mburucuyá": {
+      "coordinate": {
+        "latitude": -28.0180651,
+        "longitude": -58.0286895
+      },
+      "perimeters_within_km": {
+        "5": 0,
+        "10": 0,
+        "25": 0
+      },
+      "nearest_events": [],
+      "interpretation": "Distance is from the catalog sector center, not the full trail geometry."
+    },
+    "Sendero La Chuña - El Rey": {
+      "coordinate": {
+        "latitude": -24.722283,
+        "longitude": -64.645613
+      },
+      "perimeters_within_km": {
+        "5": 0,
+        "10": 0,
+        "25": 0
+      },
+      "nearest_events": [],
+      "interpretation": "Distance is from the catalog sector center, not the full trail geometry."
+    }
+  },
+  "synthetic_observations": 0,
+  "deployment_approved": false
+}

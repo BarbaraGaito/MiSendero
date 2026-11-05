@@ -1,0 +1,979 @@
+{
+  "experiment_id": "snmf-reported-fire-starts-full-trail-polyline-2025",
+  "meaning": "Positive event coverage using complete reviewed trail polylines; not an evaluation of prediction precision.",
+  "period": [
+    "2025-01-01",
+    "2026-01-01"
+  ],
+  "spatial_protocol": {
+    "distance": "Local equirectangular point-to-polyline segment distance, centered on each event",
+    "radii_km": [
+      10,
+      20
+    ],
+    "minimum_polyline_vertices_by_route": {
+      "Sendero Macuco - Salto Arrechea": 219,
+      "Refugio Frey desde Villa Catedral": 1057,
+      "Quebrada del Condorito - Balcon Norte": 379,
+      "Sendero Namuncura": 37,
+      "Cerro Ventana - Hueco de la Ventana": 221,
+      "Bosque Tallado desde la plataforma del Piltriquitron": 103,
+      "Sendero Che Roga - Mburucuyá": 234,
+      "Sendero La Chuña - El Rey": 93
+    },
+    "route_geometry_source_hashes": {
+      "Sendero Macuco - Salto Arrechea": "148e8cb09cd0d851b88a1875e60763f34efffe046a68c1cb886911fde629477b",
+      "Refugio Frey desde Villa Catedral": "9947df55746c5b8033b0955a9bdd8b2ddb61db1dad2621b1fc0d72fa1e21acdf",
+      "Quebrada del Condorito - Balcon Norte": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74",
+      "Sendero Namuncura": "9ffaf89538fec8fb40b3d760b8e8b8fbcc154794b28d438fa6b046429fc5d32c",
+      "Cerro Ventana - Hueco de la Ventana": "61e1a9b62ae9b691b29c437aed7792b3723c7af54f03feb2311d4322fd3f5066",
+      "Bosque Tallado desde la plataforma del Piltriquitron": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa",
+      "Sendero Che Roga - Mburucuyá": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e",
+      "Sendero La Chuña - El Rey": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    "routes_without_reviewed_polyline": [],
+    "center_distance_is_computed_against_existing_sector_coordinate": true
+  },
+  "report_coverage": {
+    "available_report_dates": 207,
+    "period_days": 365,
+    "dates_without_pdf_are_unknown": 158
+  },
+  "source_hashes": {
+    "reports": "d8e95391641ccb7d884d7bbe88e3df6fff82251352a50154656f88096f4a87f4",
+    "manifest": "0ca1d7673cde658412fad7f5b8b4d3db578c288d480388750ffc899281a82943",
+    "geometry": "d622e3bd3bae7c97df9152d5ae22fa9cf3136f2bbb0ee807703eaddc21d6610a",
+    "geography": "7e475b478db7bb678cc0a1539fdf484e0c8de0a9baa98916fb90f652f75ff834"
+  },
+  "results": {
+    "10": {
+      "incident_records_within_radius": 10,
+      "unique_route_sector_start_days": 5,
+      "route_sector_days_by_region": {
+        "Bosque Tallado desde la plataforma del Piltriquitron": 2,
+        "Cerro Ventana - Hueco de la Ventana": 1,
+        "Quebrada del Condorito - Balcon Norte": 1,
+        "Refugio Frey desde Villa Catedral": 1
+      },
+      "days_found_by_polyline_but_missed_by_center": [
+        {
+          "route_sector": "Refugio Frey desde Villa Catedral",
+          "reported_start_date": "2025-11-26"
+        }
+      ]
+    },
+    "20": {
+      "incident_records_within_radius": 24,
+      "unique_route_sector_start_days": 15,
+      "route_sector_days_by_region": {
+        "Bosque Tallado desde la plataforma del Piltriquitron": 7,
+        "Cerro Ventana - Hueco de la Ventana": 1,
+        "Quebrada del Condorito - Balcon Norte": 3,
+        "Refugio Frey desde Villa Catedral": 4
+      },
+      "days_found_by_polyline_but_missed_by_center": []
+    }
+  },
+  "events_within_50km": [
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2025-07-17",
+      "incident_name": "CALLEJON INALEF",
+      "province": "Río Negro",
+      "line_distance_km": 17.415,
+      "center_distance_km": 17.706,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2025-09-06",
+      "incident_name": "Cerro Montura",
+      "province": "Río Negro",
+      "line_distance_km": 38.872,
+      "center_distance_km": 39.13,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2025-10-08",
+      "incident_name": "Ruta 40 Control Policial",
+      "province": "Chubut",
+      "line_distance_km": 4.319,
+      "center_distance_km": 4.716,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2025-10-08",
+      "incident_name": "Cerro Radal",
+      "province": "Chubut",
+      "line_distance_km": 9.492,
+      "center_distance_km": 9.902,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2025-11-12",
+      "incident_name": "Aserradero Gonzalez",
+      "province": "Chubut",
+      "line_distance_km": 15.004,
+      "center_distance_km": 15.248,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2025-11-17",
+      "incident_name": "Ternero Los fuegos",
+      "province": "Río Negro",
+      "line_distance_km": 7.17,
+      "center_distance_km": 7.373,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2025-11-17",
+      "incident_name": "Laguna de los Ruiz - Cuesta del",
+      "province": "Río Negro",
+      "line_distance_km": 18.012,
+      "center_distance_km": 18.251,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2025-11-17",
+      "incident_name": "Complejo",
+      "province": "Chubut",
+      "line_distance_km": 18.054,
+      "center_distance_km": 18.253,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2025-11-17",
+      "incident_name": "Complejo Cabañas",
+      "province": "Chubut",
+      "line_distance_km": 18.054,
+      "center_distance_km": 18.253,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2025-11-17",
+      "incident_name": "Complejo Cabañas KRITZ",
+      "province": "Chubut",
+      "line_distance_km": 18.054,
+      "center_distance_km": 18.253,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2025-12-01",
+      "incident_name": "KRITZ Loma de la Chancha El",
+      "province": "Chubut",
+      "line_distance_km": 49.309,
+      "center_distance_km": 49.718,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2025-12-01",
+      "incident_name": "KRITZ Loma de la Chancha El Turbio",
+      "province": "Chubut",
+      "line_distance_km": 49.309,
+      "center_distance_km": 49.718,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2025-12-01",
+      "incident_name": "Loma de la",
+      "province": "Chubut",
+      "line_distance_km": 49.309,
+      "center_distance_km": 49.718,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2025-12-01",
+      "incident_name": "Loma de la Chancha El",
+      "province": "Chubut",
+      "line_distance_km": 49.309,
+      "center_distance_km": 49.718,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2025-12-01",
+      "incident_name": "Loma de la Chancha El Turbio",
+      "province": "Chubut",
+      "line_distance_km": 49.309,
+      "center_distance_km": 49.718,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2025-12-01",
+      "incident_name": "TRES PICOS Loma de la Chancha El Turbio",
+      "province": "Chubut",
+      "line_distance_km": 49.309,
+      "center_distance_km": 49.718,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2025-12-01",
+      "incident_name": "Turbio Loma de la Chancha El",
+      "province": "Chubut",
+      "line_distance_km": 49.309,
+      "center_distance_km": 49.718,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2025-12-01",
+      "incident_name": "y ruta 16 Loma de la Chancha El Turbio",
+      "province": "Chubut",
+      "line_distance_km": 49.309,
+      "center_distance_km": 49.718,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2025-12-04",
+      "incident_name": "Cabañas KRITZ La Cantera",
+      "province": "Chubut",
+      "line_distance_km": 14.063,
+      "center_distance_km": 14.327,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2025-12-07",
+      "incident_name": "Refugio Motoco",
+      "province": "Río Negro",
+      "line_distance_km": 42.691,
+      "center_distance_km": 43.019,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2025-12-09",
+      "incident_name": "Callejón de los maestros",
+      "province": "Chubut",
+      "line_distance_km": 14.511,
+      "center_distance_km": 14.92,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2025-12-12",
+      "incident_name": "Cerro Saturnino",
+      "province": "Río Negro",
+      "line_distance_km": 12.462,
+      "center_distance_km": 12.739,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2025-12-31",
+      "incident_name": "Rio Minas",
+      "province": "Chubut",
+      "line_distance_km": 27.526,
+      "center_distance_km": 27.669,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2025-12-31",
+      "incident_name": "Veranada de Carlos Cayunao",
+      "province": "Río Negro",
+      "line_distance_km": 32.675,
+      "center_distance_km": 33.084,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa"
+    },
+    {
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "reported_start_date": "2025-12-11",
+      "incident_name": "CERRO NAPOSTA /CERRO",
+      "province": "Buenos Aires",
+      "line_distance_km": 8.331,
+      "center_distance_km": 9.078,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "61e1a9b62ae9b691b29c437aed7792b3723c7af54f03feb2311d4322fd3f5066"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2025-06-03",
+      "incident_name": "Pro- Racing- VCPaz",
+      "province": "Córdoba",
+      "line_distance_km": 33.666,
+      "center_distance_km": 34.815,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2025-06-25",
+      "incident_name": "La Campana",
+      "province": "Córdoba",
+      "line_distance_km": 47.94,
+      "center_distance_km": 49.091,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2025-06-25",
+      "incident_name": "Variante Costa Azul. La Campana",
+      "province": "Córdoba",
+      "line_distance_km": 47.94,
+      "center_distance_km": 49.091,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2025-06-28",
+      "incident_name": "Tres gracias",
+      "province": "Córdoba",
+      "line_distance_km": 27.103,
+      "center_distance_km": 27.732,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2025-08-01",
+      "incident_name": "Pampa Alta",
+      "province": "Córdoba",
+      "line_distance_km": 14.764,
+      "center_distance_km": 16.913,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2025-08-11",
+      "incident_name": "Bosque Alegre",
+      "province": "Córdoba",
+      "line_distance_km": 13.705,
+      "center_distance_km": 14.155,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2025-08-19",
+      "incident_name": "Paraje La Posta",
+      "province": "Córdoba",
+      "line_distance_km": 43.074,
+      "center_distance_km": 44.946,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2025-08-28",
+      "incident_name": "Capilla Vieja, Los Reartes",
+      "province": "Córdoba",
+      "line_distance_km": 30.151,
+      "center_distance_km": 32.309,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2025-09-10",
+      "incident_name": "Las Carmelitas",
+      "province": "Córdoba",
+      "line_distance_km": 46.599,
+      "center_distance_km": 48.196,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2025-09-10",
+      "incident_name": "Monte Ralo",
+      "province": "Córdoba",
+      "line_distance_km": 46.786,
+      "center_distance_km": 48.421,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2025-09-21",
+      "incident_name": "Variante Costa Azul",
+      "province": "Córdoba",
+      "line_distance_km": 36.015,
+      "center_distance_km": 37.229,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2025-09-21",
+      "incident_name": "Variante Costa Azul N°11426",
+      "province": "Córdoba",
+      "line_distance_km": 36.015,
+      "center_distance_km": 37.229,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2025-10-10",
+      "incident_name": "Parque Nacional Quebrada del",
+      "province": "Córdoba",
+      "line_distance_km": 3.517,
+      "center_distance_km": 5.675,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2025-10-10",
+      "incident_name": "Parque Nacional Quebrada del Condorito, ex",
+      "province": "Córdoba",
+      "line_distance_km": 3.517,
+      "center_distance_km": 5.675,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2025-10-10",
+      "incident_name": "Parque Nacional Quebrada del Condorito, ex La",
+      "province": "Córdoba",
+      "line_distance_km": 3.517,
+      "center_distance_km": 5.675,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2025-10-10",
+      "incident_name": "Parque Nacional Quebrada del Condorito, ex La Pampilla",
+      "province": "Córdoba",
+      "line_distance_km": 3.517,
+      "center_distance_km": 5.675,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2025-11-27",
+      "incident_name": "Boca del Río",
+      "province": "Córdoba",
+      "line_distance_km": 46.509,
+      "center_distance_km": 47.215,
+      "reported_start_date_pdf_available": false,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_start_date": "2025-08-24",
+      "incident_name": "Anfiteatro",
+      "province": "Río Negro",
+      "line_distance_km": 44.144,
+      "center_distance_km": 46.604,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "9947df55746c5b8033b0955a9bdd8b2ddb61db1dad2621b1fc0d72fa1e21acdf"
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_start_date": "2025-09-06",
+      "incident_name": "Cerro Montura",
+      "province": "Río Negro",
+      "line_distance_km": 46.794,
+      "center_distance_km": 48.68,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "9947df55746c5b8033b0955a9bdd8b2ddb61db1dad2621b1fc0d72fa1e21acdf"
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_start_date": "2025-10-06",
+      "incident_name": "CIRCUNVALACION",
+      "province": "Río Negro",
+      "line_distance_km": 12.148,
+      "center_distance_km": 14.057,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "9947df55746c5b8033b0955a9bdd8b2ddb61db1dad2621b1fc0d72fa1e21acdf"
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_start_date": "2025-10-20",
+      "incident_name": "La Lipela",
+      "province": "Neuquén",
+      "line_distance_km": 47.917,
+      "center_distance_km": 50.528,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "9947df55746c5b8033b0955a9bdd8b2ddb61db1dad2621b1fc0d72fa1e21acdf"
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_start_date": "2025-11-26",
+      "incident_name": "Ladera Norte Cerro",
+      "province": "Río Negro",
+      "line_distance_km": 8.076,
+      "center_distance_km": 10.45,
+      "reported_start_date_pdf_available": false,
+      "geometry_sha256": "9947df55746c5b8033b0955a9bdd8b2ddb61db1dad2621b1fc0d72fa1e21acdf"
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_start_date": "2025-11-26",
+      "incident_name": "Ladera Norte Cerro Otto",
+      "province": "Río Negro",
+      "line_distance_km": 8.076,
+      "center_distance_km": 10.45,
+      "reported_start_date_pdf_available": false,
+      "geometry_sha256": "9947df55746c5b8033b0955a9bdd8b2ddb61db1dad2621b1fc0d72fa1e21acdf"
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_start_date": "2025-12-03",
+      "incident_name": "Terminal",
+      "province": "Río Negro",
+      "line_distance_km": 15.316,
+      "center_distance_km": 17.466,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "9947df55746c5b8033b0955a9bdd8b2ddb61db1dad2621b1fc0d72fa1e21acdf"
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_start_date": "2025-12-07",
+      "incident_name": "Refugio Motoco",
+      "province": "Río Negro",
+      "line_distance_km": 41.343,
+      "center_distance_km": 43.523,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "9947df55746c5b8033b0955a9bdd8b2ddb61db1dad2621b1fc0d72fa1e21acdf"
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_start_date": "2025-12-08",
+      "incident_name": "Matadero",
+      "province": "Río Negro",
+      "line_distance_km": 47.912,
+      "center_distance_km": 50.476,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "9947df55746c5b8033b0955a9bdd8b2ddb61db1dad2621b1fc0d72fa1e21acdf"
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_start_date": "2025-12-08",
+      "incident_name": "Quini Matadero",
+      "province": "Río Negro",
+      "line_distance_km": 47.912,
+      "center_distance_km": 50.476,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "9947df55746c5b8033b0955a9bdd8b2ddb61db1dad2621b1fc0d72fa1e21acdf"
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_start_date": "2025-12-18",
+      "incident_name": "SN (Cerro Runge)",
+      "province": "Río Negro",
+      "line_distance_km": 11.056,
+      "center_distance_km": 13.34,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "9947df55746c5b8033b0955a9bdd8b2ddb61db1dad2621b1fc0d72fa1e21acdf"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2025-06-16",
+      "incident_name": "Mandarina",
+      "province": "Jujuy",
+      "line_distance_km": 42.997,
+      "center_distance_km": 43.13,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2025-07-17",
+      "incident_name": "LOPEZ",
+      "province": "Salta",
+      "line_distance_km": 45.004,
+      "center_distance_km": 45.004,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2025-07-21",
+      "incident_name": "El Manchon",
+      "province": "Jujuy",
+      "line_distance_km": 47.053,
+      "center_distance_km": 47.228,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2025-07-28",
+      "incident_name": "JACINTA",
+      "province": "Salta",
+      "line_distance_km": 39.109,
+      "center_distance_km": 39.109,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2025-08-01",
+      "incident_name": "VIALIDAD",
+      "province": "Salta",
+      "line_distance_km": 38.367,
+      "center_distance_km": 39.985,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2025-08-01",
+      "incident_name": "RIO ANCHO",
+      "province": "Salta",
+      "line_distance_km": 40.375,
+      "center_distance_km": 41.932,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2025-08-01",
+      "incident_name": "BANQUINA S",
+      "province": "Salta",
+      "line_distance_km": 41.82,
+      "center_distance_km": 43.333,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2025-08-04",
+      "incident_name": "El Viej@",
+      "province": "Jujuy",
+      "line_distance_km": 42.858,
+      "center_distance_km": 44.027,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2025-08-12",
+      "incident_name": "El Bordo",
+      "province": "Jujuy",
+      "line_distance_km": 49.903,
+      "center_distance_km": 50.885,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2025-08-14",
+      "incident_name": "Coraje",
+      "province": "Jujuy",
+      "line_distance_km": 37.599,
+      "center_distance_km": 38.933,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2025-08-14",
+      "incident_name": "Mario Bross",
+      "province": "Jujuy",
+      "line_distance_km": 37.624,
+      "center_distance_km": 38.95,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2025-08-20",
+      "incident_name": "La Aveja",
+      "province": "Jujuy",
+      "line_distance_km": 46.272,
+      "center_distance_km": 47.72,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2025-08-24",
+      "incident_name": "El Chancho",
+      "province": "Jujuy",
+      "line_distance_km": 40.821,
+      "center_distance_km": 41.438,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2025-08-30",
+      "incident_name": "El Aguila",
+      "province": "Jujuy",
+      "line_distance_km": 41.428,
+      "center_distance_km": 41.989,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2025-08-30",
+      "incident_name": "El Condor",
+      "province": "Jujuy",
+      "line_distance_km": 42.124,
+      "center_distance_km": 42.611,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2025-09-12",
+      "incident_name": "Electro",
+      "province": "Jujuy",
+      "line_distance_km": 37.495,
+      "center_distance_km": 38.726,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2025-09-12",
+      "incident_name": "El Sereno",
+      "province": "Jujuy",
+      "line_distance_km": 43.318,
+      "center_distance_km": 44.557,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2025-09-15",
+      "incident_name": "El Camino",
+      "province": "Jujuy",
+      "line_distance_km": 45.445,
+      "center_distance_km": 46.861,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2025-09-19",
+      "incident_name": "El Escondido",
+      "province": "Jujuy",
+      "line_distance_km": 47.132,
+      "center_distance_km": 48.542,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2025-09-21",
+      "incident_name": "Finca Manatiales",
+      "province": "Jujuy",
+      "line_distance_km": 40.575,
+      "center_distance_km": 41.908,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2025-09-21",
+      "incident_name": "Sin 3",
+      "province": "Jujuy",
+      "line_distance_km": 47.35,
+      "center_distance_km": 48.695,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2025-09-21",
+      "incident_name": "Yo no Fui",
+      "province": "Jujuy",
+      "line_distance_km": 47.35,
+      "center_distance_km": 48.695,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2025-09-21",
+      "incident_name": "2) Sauce Gaucho",
+      "province": "Jujuy",
+      "line_distance_km": 49.668,
+      "center_distance_km": 49.791,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2025-09-22",
+      "incident_name": "El Cebollin",
+      "province": "Jujuy",
+      "line_distance_km": 42.649,
+      "center_distance_km": 43.909,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2025-09-26",
+      "incident_name": "PAMPA VIEJA",
+      "province": "Jujuy",
+      "line_distance_km": 45.178,
+      "center_distance_km": 46.518,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2025-10-10",
+      "incident_name": "Mealla",
+      "province": "Jujuy",
+      "line_distance_km": 24.456,
+      "center_distance_km": 24.773,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2025-10-10",
+      "incident_name": "Rio La Pavas",
+      "province": "Jujuy",
+      "line_distance_km": 44.149,
+      "center_distance_km": 45.597,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2025-10-17",
+      "incident_name": "Lejanía",
+      "province": "Jujuy",
+      "line_distance_km": 31.212,
+      "center_distance_km": 32.618,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2025-10-24",
+      "incident_name": "El Cafe",
+      "province": "Jujuy",
+      "line_distance_km": 45.01,
+      "center_distance_km": 45.137,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2025-11-01",
+      "incident_name": "Chanchero",
+      "province": "Jujuy",
+      "line_distance_km": 40.252,
+      "center_distance_km": 41.499,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2025-11-11",
+      "incident_name": "El Central",
+      "province": "Jujuy",
+      "line_distance_km": 39.784,
+      "center_distance_km": 40.428,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2025-11-19",
+      "incident_name": "La Corzuela",
+      "province": "Jujuy",
+      "line_distance_km": 43.693,
+      "center_distance_km": 45.145,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2025-11-27",
+      "incident_name": "Falso mollar",
+      "province": "Jujuy",
+      "line_distance_km": 44.825,
+      "center_distance_km": 45.482,
+      "reported_start_date_pdf_available": false,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2025-11-27",
+      "incident_name": "El Mollar",
+      "province": "Jujuy",
+      "line_distance_km": 45.972,
+      "center_distance_km": 46.613,
+      "reported_start_date_pdf_available": false,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2025-11-27",
+      "incident_name": "Rompe",
+      "province": "Jujuy",
+      "line_distance_km": 47.478,
+      "center_distance_km": 48.793,
+      "reported_start_date_pdf_available": false,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2025-12-12",
+      "incident_name": "El Asustado",
+      "province": "Jujuy",
+      "line_distance_km": 46.079,
+      "center_distance_km": 46.728,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    }
+  ],
+  "limitations": [
+    "SNMF reports are jurisdiction-reported, not an exhaustive incident/no-incident registry.",
+    "A missing report or no listed nearby incident is not a verified physical no-fire window.",
+    "Dates are reported calendar dates; exact ignition time and lead time are unavailable.",
+    "Routes without a reviewed polyline are excluded; sector centers are not substituted into line-distance counts.",
+    "A mapped trail line does not imply that all adjacent land is equally exposed or that the trail was open.",
+    "Local equirectangular distance is an approximation; the 10/20 km results should be checked geodesically before threshold-sensitive use."
+  ],
+  "synthetic_observations": 0,
+  "deployment_approved": false
+}

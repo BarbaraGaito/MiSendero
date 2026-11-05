@@ -1,0 +1,131 @@
+{
+  "experiment_id": "fire-xgboost-heldout-2023-idecor-coincidence-audit",
+  "meaning": "Coincidence of fixed-threshold held-out model alerts with official burned-area perimeters; not precision, recall, or an exhaustive fire/no-fire evaluation.",
+  "inputs": {
+    "model_prediction_file": "training/data/environmental/private/fire-temporal_test-predictions.csv.gz",
+    "model_prediction_sha256": "acaa8859016c9e69c9cbd5ea9e17f1d00aae111899de665275dfd271a99db17d",
+    "original_observations_sha256": "f295457e48b4b40b7f6bc196a8e2ab3ec3905f9a4aa392216d73a93e174a0976",
+    "official_perimeter_file": "training/data/raw/environmental/idecor-area-quemada-2023.geojson",
+    "official_perimeter_sha256": "cde588dbdafb9dc787269f4220676909f8c9b6a495e7a8adf4ce13d8597bc4e2"
+  },
+  "protocol": {
+    "model": "validation-selected XGBoost from frozen MOD14A1 protocol",
+    "test_partition": "July-December 2023 temporal holdout",
+    "threshold": 0.5,
+    "same_pixel_center_distance_km": 0.75,
+    "target_date_window": "same day as IDECOR recorded date through +7 days",
+    "prediction_unit": "thresholded pixel-day rows; correlated rows are retained and not treated as independent samples"
+  },
+  "counts": {
+    "thresholded_prediction_rows": 12881,
+    "unique_predicted_cells": 709,
+    "unique_region_days_with_at_least_one_alert": 267,
+    "regions_with_at_least_one_alert": 6,
+    "matched_prediction_rows": 6,
+    "unmatched_prediction_rows": 12875,
+    "prediction_rows_without_original_coordinate": 0,
+    "distinct_matched_official_perimeter_ids": 1,
+    "official_perimeter_features_with_dates": 446
+  },
+  "matches": [
+    {
+      "tile": "h12v12",
+      "region": "Quebrada del Condorito - Balcon Norte",
+      "pixel_id": "h12v12:204:563",
+      "target_at": "2023-10-17",
+      "model_score": 0.6734101,
+      "official_perimeter_match": {
+        "perimeter_id": 39,
+        "recorded_date": "2023-10-17",
+        "site": "Monte Redondo",
+        "locality": "VILLA CURA BROCHERO",
+        "lag_days": 0,
+        "distance_km": 0.2893
+      }
+    },
+    {
+      "tile": "h12v12",
+      "region": "Quebrada del Condorito - Balcon Norte",
+      "pixel_id": "h12v12:204:563",
+      "target_at": "2023-10-18",
+      "model_score": 0.6734101,
+      "official_perimeter_match": {
+        "perimeter_id": 39,
+        "recorded_date": "2023-10-17",
+        "site": "Monte Redondo",
+        "locality": "VILLA CURA BROCHERO",
+        "lag_days": 1,
+        "distance_km": 0.2893
+      }
+    },
+    {
+      "tile": "h12v12",
+      "region": "Quebrada del Condorito - Balcon Norte",
+      "pixel_id": "h12v12:204:563",
+      "target_at": "2023-10-20",
+      "model_score": 0.6734101,
+      "official_perimeter_match": {
+        "perimeter_id": 39,
+        "recorded_date": "2023-10-17",
+        "site": "Monte Redondo",
+        "locality": "VILLA CURA BROCHERO",
+        "lag_days": 3,
+        "distance_km": 0.2893
+      }
+    },
+    {
+      "tile": "h12v12",
+      "region": "Quebrada del Condorito - Balcon Norte",
+      "pixel_id": "h12v12:204:563",
+      "target_at": "2023-10-21",
+      "model_score": 0.6734101,
+      "official_perimeter_match": {
+        "perimeter_id": 39,
+        "recorded_date": "2023-10-17",
+        "site": "Monte Redondo",
+        "locality": "VILLA CURA BROCHERO",
+        "lag_days": 4,
+        "distance_km": 0.2893
+      }
+    },
+    {
+      "tile": "h12v12",
+      "region": "Quebrada del Condorito - Balcon Norte",
+      "pixel_id": "h12v12:204:563",
+      "target_at": "2023-10-22",
+      "model_score": 0.6734101,
+      "official_perimeter_match": {
+        "perimeter_id": 39,
+        "recorded_date": "2023-10-17",
+        "site": "Monte Redondo",
+        "locality": "VILLA CURA BROCHERO",
+        "lag_days": 5,
+        "distance_km": 0.2893
+      }
+    },
+    {
+      "tile": "h12v12",
+      "region": "Quebrada del Condorito - Balcon Norte",
+      "pixel_id": "h12v12:204:563",
+      "target_at": "2023-10-23",
+      "model_score": 0.6734101,
+      "official_perimeter_match": {
+        "perimeter_id": 39,
+        "recorded_date": "2023-10-17",
+        "site": "Monte Redondo",
+        "locality": "VILLA CURA BROCHERO",
+        "lag_days": 6,
+        "distance_km": 0.2893
+      }
+    }
+  ],
+  "limitations": [
+    "An unmatched prediction is not counted as a false positive: IDECOR maps burned area, not every active fire, and is not an exhaustive fire-occurrence register.",
+    "A matching perimeter supports an association with a mapped burned episode, not proof that the particular pixel was actively burning at that timestamp.",
+    "Multiple perimeter features and adjacent pixel-days can represent one physical fire; row counts are correlated.",
+    "The result covers only sampled route-sector pixels and the 2023 temporal test; it is not national or year-independent.",
+    "A reliable precision claim requires independently verified positive and negative event labels and a sufficient number of independent predicted fire episodes."
+  ],
+  "synthetic_observations": 0,
+  "deployment_approved": false
+}

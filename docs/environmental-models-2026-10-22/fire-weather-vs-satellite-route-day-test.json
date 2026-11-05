@@ -1,0 +1,69 @@
+{
+  "experiment_id": "paired-fire-weather-vs-satellite-route-day-test",
+  "meaning": "Paired comparison of frozen models on their common temporal test coverage against MODIS pixel detections; not physical-fire precision.",
+  "inputs": {
+    "temporal_test_predictions": {
+      "path": "training/data/environmental/private/fire-temporal_test-predictions.csv.gz",
+      "sha256": "acaa8859016c9e69c9cbd5ea9e17f1d00aae111899de665275dfd271a99db17d"
+    },
+    "wrf_test_predictions": {
+      "path": "training/data/environmental/private/smn-wrf-modis-test-predictions.csv.gz",
+      "sha256": "989b74ffa355892e2152646b741a34231406ac430f57a4c35bab43e498ed2ef0"
+    },
+    "protocol_sha256": "21c731c5266eb569e16936c77b3d1f4bc78088f97b3f35fa1b01ae9588f75555"
+  },
+  "protocol": {
+    "unit": "route-sector × UTC label date, max pixel score, positive if any matched pixel label is positive",
+    "test_period": "2023-07-01 through 2023-12-31",
+    "date_alignment": "MODIS observed_date equals target_at minus one day because target_at is the exclusive end of the next-24h prediction window",
+    "threshold": 0.5,
+    "threshold_note": "diagnostic frozen cutoff; no model or cutoff selection from the test"
+  },
+  "coverage": {
+    "base_pixel_days": 341975,
+    "wrf_pixel_days": 343573,
+    "paired_pixel_days": 341975,
+    "paired_valid_label_pixel_days": 341975,
+    "paired_positive_pixel_days": 31,
+    "label_disagreements_excluded": 0,
+    "common_route_days": 1013,
+    "positive_common_route_days": 16
+  },
+  "models": {
+    "satellite_history_xgboost": {
+      "route_days": 1013,
+      "positive_route_days": 16,
+      "alerts": 267,
+      "matched_positive_route_days": 12,
+      "unmatched_label_alerts": 255,
+      "missed_positive_route_days": 4,
+      "proxy_precision": 0.0449438202247191,
+      "proxy_recall": 0.75,
+      "average_precision": 0.1053136687881426,
+      "prevalence_baseline_ap": 0.01579466929911155,
+      "threshold": 0.5
+    },
+    "weather_only_wrf": {
+      "route_days": 1013,
+      "positive_route_days": 16,
+      "alerts": 528,
+      "matched_positive_route_days": 15,
+      "unmatched_label_alerts": 513,
+      "missed_positive_route_days": 1,
+      "proxy_precision": 0.028409090909090908,
+      "proxy_recall": 0.9375,
+      "average_precision": 0.05463159748824962,
+      "prevalence_baseline_ap": 0.01579466929911155,
+      "threshold": 0.5
+    }
+  },
+  "limitations": [
+    "The target is MODIS satellite detection in sampled pixels, not an exhaustive inventory of physical fires or ignition time.",
+    "Unmatched alert route-days mean no MODIS label in the sampled cells, not confirmed false fires.",
+    "The shared test covers one six-month period and the model sampling footprint; it cannot support a stable national accuracy claim.",
+    "The WRF cut was not selected on this test; 0.5 is diagnostic only, not a calibrated probability threshold.",
+    "Weather coverage is limited to model-valid pixel-days within the WRF grid-distance rule."
+  ],
+  "synthetic_observations": 0,
+  "deployment_approved": false
+}

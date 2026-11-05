@@ -1,0 +1,322 @@
+{
+  "experiment_id": "goes19-january-2026-alert-episodes-firms-viirs-crosscheck",
+  "status": "descriptive_independent_sensor_crosscheck_precision_not_estimable",
+  "cohort": "All one-hour GOES test alert episodes at diagnostic threshold 0.5; selected by frozen model outputs before FIRMS query.",
+  "firms_product": "NASA FIRMS VIIRS S-NPP, NOAA-20, and NOAA-21 Standard Processing.",
+  "firms_sensors": [
+    "VIIRS_NOAA20_SP",
+    "VIIRS_NOAA21_SP",
+    "VIIRS_SNPP_SP"
+  ],
+  "firms_acquisition_period": [
+    "2026-01-04",
+    "2026-01-15"
+  ],
+  "firms_by_sensor": {
+    "VIIRS_NOAA20_SP": {
+      "detection_rows": 482,
+      "confidence_counts": {
+        "high": 39,
+        "nominal": 428,
+        "low": 15
+      },
+      "distinct_route_dates": 7,
+      "nearest_to_trail_km": 12.547
+    },
+    "VIIRS_NOAA21_SP": {
+      "detection_rows": 381,
+      "confidence_counts": {
+        "high": 34,
+        "nominal": 331,
+        "low": 16
+      },
+      "distinct_route_dates": 8,
+      "nearest_to_trail_km": 12.659
+    },
+    "VIIRS_SNPP_SP": {
+      "detection_rows": 486,
+      "confidence_counts": {
+        "high": 31,
+        "nominal": 450,
+        "low": 5
+      },
+      "distinct_route_dates": 8,
+      "nearest_to_trail_km": 12.595
+    }
+  },
+  "matching_rule": "Same route sector and FIRMS acquisition time within 24 hours before/after each GOES alert episode; route distance measured to full trail polyline in the acquisition script. Radii 10 km and 20 km are both reported; 10 km is the prespecified SNMF event protocol radius.",
+  "model_alert_episodes": 8,
+  "raw_firms_route_detection_rows": 1349,
+  "raw_firms_confidence_counts": {
+    "high": 104,
+    "nominal": 1209,
+    "low": 36
+  },
+  "raw_firms_distinct_route_dates": 8,
+  "raw_firms_nearest_route_distance_km": 12.547,
+  "route_radius_summary": {
+    "10": {
+      "detection_rows_in_acquired_route_buffer": 0,
+      "episodes_with_at_least_one_detection_within_24h": 0
+    },
+    "20": {
+      "detection_rows_in_acquired_route_buffer": 1349,
+      "episodes_with_at_least_one_detection_within_24h": 7
+    }
+  },
+  "snmf_incident_point_crosscheck": [
+    {
+      "incident_name": "Primera Cantera Puerto Patriada",
+      "province": "Chubut",
+      "reported_start_date": "2026-01-05",
+      "snmf_snapshot_period": [
+        "2026-01-05",
+        "2026-01-31"
+      ],
+      "firms_query_overlap_period": [
+        "2026-01-04",
+        "2026-01-15"
+      ],
+      "firms_detections_in_snmf_window": 1349,
+      "nearest_firms_distance_to_reported_incident_km": 0.133,
+      "firms_rows_within_10km_of_reported_incident": 1348,
+      "high_confidence_rows_within_10km_of_reported_incident": 104
+    },
+    {
+      "incident_name": "Barda de La Loma",
+      "province": "Río Negro",
+      "reported_start_date": "2026-01-05",
+      "snmf_snapshot_period": [
+        "2026-01-05",
+        "2026-01-08"
+      ],
+      "firms_query_overlap_period": [
+        "2026-01-04",
+        "2026-01-09"
+      ],
+      "firms_detections_in_snmf_window": 1080,
+      "nearest_firms_distance_to_reported_incident_km": 11.309,
+      "firms_rows_within_10km_of_reported_incident": 0,
+      "high_confidence_rows_within_10km_of_reported_incident": 0
+    }
+  ],
+  "alert_episode_matches": [
+    {
+      "episode_index": 1,
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "alert_start_hour_utc": "2026-01-05T19",
+      "alert_end_hour_utc": "2026-01-05T21",
+      "goes_positive_target_hours": 3,
+      "firms_match_by_route_radius_km": {
+        "10": {
+          "detection_rows_within_24h": 0,
+          "high_confidence_rows_within_24h": 0,
+          "same_alert_calendar_day_rows": 0,
+          "nearest_detection_km": null,
+          "nearest_high_confidence_km": null
+        },
+        "20": {
+          "detection_rows_within_24h": 598,
+          "high_confidence_rows_within_24h": 49,
+          "same_alert_calendar_day_rows": 21,
+          "nearest_detection_km": 14.005,
+          "nearest_high_confidence_km": 14.974
+        }
+      }
+    },
+    {
+      "episode_index": 2,
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "alert_start_hour_utc": "2026-01-06T02",
+      "alert_end_hour_utc": "2026-01-06T05",
+      "goes_positive_target_hours": 4,
+      "firms_match_by_route_radius_km": {
+        "10": {
+          "detection_rows_within_24h": 0,
+          "high_confidence_rows_within_24h": 0,
+          "same_alert_calendar_day_rows": 0,
+          "nearest_detection_km": null,
+          "nearest_high_confidence_km": null
+        },
+        "20": {
+          "detection_rows_within_24h": 673,
+          "high_confidence_rows_within_24h": 53,
+          "same_alert_calendar_day_rows": 577,
+          "nearest_detection_km": 13.144,
+          "nearest_high_confidence_km": 13.758
+        }
+      }
+    },
+    {
+      "episode_index": 3,
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "alert_start_hour_utc": "2026-01-06T07",
+      "alert_end_hour_utc": "2026-01-06T10",
+      "goes_positive_target_hours": 3,
+      "firms_match_by_route_radius_km": {
+        "10": {
+          "detection_rows_within_24h": 0,
+          "high_confidence_rows_within_24h": 0,
+          "same_alert_calendar_day_rows": 0,
+          "nearest_detection_km": null,
+          "nearest_high_confidence_km": null
+        },
+        "20": {
+          "detection_rows_within_24h": 748,
+          "high_confidence_rows_within_24h": 56,
+          "same_alert_calendar_day_rows": 577,
+          "nearest_detection_km": 13.144,
+          "nearest_high_confidence_km": 13.727
+        }
+      }
+    },
+    {
+      "episode_index": 4,
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "alert_start_hour_utc": "2026-01-06T17",
+      "alert_end_hour_utc": "2026-01-06T18",
+      "goes_positive_target_hours": 1,
+      "firms_match_by_route_radius_km": {
+        "10": {
+          "detection_rows_within_24h": 0,
+          "high_confidence_rows_within_24h": 0,
+          "same_alert_calendar_day_rows": 0,
+          "nearest_detection_km": null,
+          "nearest_high_confidence_km": null
+        },
+        "20": {
+          "detection_rows_within_24h": 780,
+          "high_confidence_rows_within_24h": 58,
+          "same_alert_calendar_day_rows": 577,
+          "nearest_detection_km": 13.144,
+          "nearest_high_confidence_km": 13.727
+        }
+      }
+    },
+    {
+      "episode_index": 5,
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "alert_start_hour_utc": "2026-01-06T20",
+      "alert_end_hour_utc": "2026-01-06T22",
+      "goes_positive_target_hours": 3,
+      "firms_match_by_route_radius_km": {
+        "10": {
+          "detection_rows_within_24h": 0,
+          "high_confidence_rows_within_24h": 0,
+          "same_alert_calendar_day_rows": 0,
+          "nearest_detection_km": null,
+          "nearest_high_confidence_km": null
+        },
+        "20": {
+          "detection_rows_within_24h": 783,
+          "high_confidence_rows_within_24h": 53,
+          "same_alert_calendar_day_rows": 577,
+          "nearest_detection_km": 13.144,
+          "nearest_high_confidence_km": 13.727
+        }
+      }
+    },
+    {
+      "episode_index": 6,
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "alert_start_hour_utc": "2026-01-10T20",
+      "alert_end_hour_utc": "2026-01-10T21",
+      "goes_positive_target_hours": 1,
+      "firms_match_by_route_radius_km": {
+        "10": {
+          "detection_rows_within_24h": 0,
+          "high_confidence_rows_within_24h": 0,
+          "same_alert_calendar_day_rows": 0,
+          "nearest_detection_km": null,
+          "nearest_high_confidence_km": null
+        },
+        "20": {
+          "detection_rows_within_24h": 261,
+          "high_confidence_rows_within_24h": 31,
+          "same_alert_calendar_day_rows": 211,
+          "nearest_detection_km": 12.547,
+          "nearest_high_confidence_km": 15.601
+        }
+      }
+    },
+    {
+      "episode_index": 7,
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "alert_start_hour_utc": "2026-01-13T18",
+      "alert_end_hour_utc": "2026-01-14T06",
+      "goes_positive_target_hours": 12,
+      "firms_match_by_route_radius_km": {
+        "10": {
+          "detection_rows_within_24h": 0,
+          "high_confidence_rows_within_24h": 0,
+          "same_alert_calendar_day_rows": 0,
+          "nearest_detection_km": null,
+          "nearest_high_confidence_km": null
+        },
+        "20": {
+          "detection_rows_within_24h": 8,
+          "high_confidence_rows_within_24h": 0,
+          "same_alert_calendar_day_rows": 8,
+          "nearest_detection_km": 18.717,
+          "nearest_high_confidence_km": null
+        }
+      }
+    },
+    {
+      "episode_index": 8,
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "alert_start_hour_utc": "2026-01-05T21",
+      "alert_end_hour_utc": "2026-01-05T21",
+      "goes_positive_target_hours": 0,
+      "firms_match_by_route_radius_km": {
+        "10": {
+          "detection_rows_within_24h": 0,
+          "high_confidence_rows_within_24h": 0,
+          "same_alert_calendar_day_rows": 0,
+          "nearest_detection_km": null,
+          "nearest_high_confidence_km": null
+        },
+        "20": {
+          "detection_rows_within_24h": 0,
+          "high_confidence_rows_within_24h": 0,
+          "same_alert_calendar_day_rows": 0,
+          "nearest_detection_km": null,
+          "nearest_high_confidence_km": null
+        }
+      }
+    }
+  ],
+  "sources": {
+    "goes_evaluation_sha256": "8e4d973fb6192a983828d8374da088103d86c101cfa48ae94fb56ad3da10b798",
+    "firms_acquisition_sha256": {
+      "training/data/environmental/private/firms-goes19-alert-crosscheck-2026-jan/firms-viirs-route-detections-2026-01-04-2026-01-15.json": "a8f7603bca2bac9628b6c90081c736988c5b338182fc589f5cec6ff0695a4ab7",
+      "training/data/environmental/private/firms-goes19-alert-crosscheck-noaa20-21-2026-jan/firms-viirs-route-detections-2026-01-04-2026-01-15.json": "67ad2a092882e1a38aafbbd1ee41c41b8710be67f912f6974b2475b8da95b567"
+    },
+    "snmf_daily_events_sha256": "ba18284a722410e225906de6ea1ba35e72d5670496c45793363e901beb6efcca",
+    "goes_episode_snmf_crosscheck_sha256": "3075c97a0c6631ec1d255778160d275701e6da5a357b45584983830aa373d903",
+    "firms_response_hashes": [
+      "0f69d75174f32eba9032541855a20a88aa2481890f9d3f6cd6062e3933e7d7de",
+      "3505bc30679b4672e35048d886860827f74a34968ca654b30a18b6ab231990fd",
+      "6d99564b6a0721237484d71a1692e244aaca3335cd32bc467d028217bb0ceca0",
+      "76b5fca4c08bc20d8934224e23213f8f06b3786f956c05e4bfe681242bd3a2be",
+      "8ee61673ac9cdd8dc9ae2488c195f8a5a3e83fc72744910990d0f71ed79b2251",
+      "9bfa70d98798f8cdb1816afa4999b49febb216ef22db8fade39375adce14a49d",
+      "b00abff8227faf15eaa5a29188a34862862455d04ae04bc11fd2f9e6d2308c40",
+      "b9bade1e472789eb31dddb6b686192548fb2e380188334a5ec00b7bc4b6e038e",
+      "ea4007bed298a85616c65a586f8a5b7471207d68d226bd96665f1a95887b36f4",
+      "f3d476b2b811b4c016cdce7f3807e2b0d2056b4765a48845bcf9f4383e3f52e9"
+    ],
+    "route_geometry_sha256": "d622e3bd3bae7c97df9152d5ae22fa9cf3136f2bbb0ee807703eaddc21d6610a"
+  },
+  "precision_estimable": false,
+  "forecast_lead_verifiable": false,
+  "synthetic_observations": 0,
+  "deployment_approved": false,
+  "limitations": [
+    "The alert cohort was selected from GOES model output and is not a representative sample of all route-time periods.",
+    "FIRMS hotspot rows are not unique fire incidents; repeated pixels and adjacent detections can belong to one continuing fire.",
+    "No FIRMS detection is not a verified no-fire label because overpass, cloud, smoke, canopy, and sensor quality limit coverage.",
+    "The 24-hour matching window is descriptive and cannot establish that an alert preceded ignition.",
+    "The 10 km route rule finds no acquired detections; the broader 20 km matches are regional coincidences, not evidence of fire on a trail."
+  ]
+}

@@ -1,0 +1,238 @@
+{
+  "experiment_id": "smn-wrf-weather-only-vs-modis-next-day-fire-2022-2023",
+  "source": "SMN WRF-DET hourly and daily archives, joined to existing NASA MOD14A1.061 qualified target labels",
+  "protocol": {
+    "train_target_before": "2023-01-01",
+    "validation_target_period": "[2023-01-01,2023-07-01)",
+    "test_target_period": "[2023-07-01,2024-01-01)",
+    "geographic_holdout_tile": "h12v13 excluded",
+    "forecast_issue": "12 UTC on the previous calendar day",
+    "valid_time": "15 UTC on the MODIS target date",
+    "lead_hours": 27,
+    "target": "same MODIS pixel nominal/high-confidence active-fire label on target date",
+    "features": [
+      "latitude",
+      "longitude",
+      "day_sin",
+      "day_cos",
+      "Tmax",
+      "Tmin",
+      "T2",
+      "HR2",
+      "wind10_ms",
+      "precip_27h_mm"
+    ],
+    "model": "class-weighted L2 logistic regression; no feature or threshold tuning",
+    "threshold_selection": "validation precision >= 0.90 and at least 5 validation alerts; maximize recall",
+    "meaning": "ranking of satellite fire-mask labels, not ignition probability or trail safety"
+  },
+  "data_counts": {
+    "database_reused": true
+  },
+  "partitions": {
+    "train": {
+      "rows": 487565,
+      "positive_pixel_days": 22
+    },
+    "validation": {
+      "rows": 356609,
+      "positive_pixel_days": 13,
+      "positive_fraction": 3.645449217490305e-05,
+      "average_precision": 0.0001657122689309947,
+      "prevalence_baseline_ap": 3.645449217490305e-05,
+      "metrics_at_validation_threshold": null,
+      "metrics_at_score_0_5": {
+        "threshold": 0.5,
+        "tp": 11,
+        "fp": 67760,
+        "fn": 2,
+        "tn": 288836,
+        "precision": 0.00016231131309852296,
+        "recall": 0.8461538461538461,
+        "alerts": 67771,
+        "precision_exact_95pct": [
+          8.10279181934908e-05,
+          0.0002904011716231931
+        ]
+      },
+      "region_day_groups": 1018,
+      "positive_region_day_groups": 10,
+      "region_day_average_precision": 0.03230423656892066,
+      "region_day_prevalence_baseline_ap": 0.009823182711198428,
+      "region_day_metrics_at_validation_threshold": null,
+      "region_day_metrics_at_score_0_5": {
+        "threshold": 0.5,
+        "tp": 9,
+        "fp": 422,
+        "fn": 1,
+        "tn": 586,
+        "precision": 0.02088167053364269,
+        "recall": 0.9,
+        "alerts": 431,
+        "precision_exact_95pct": [
+          0.009591826966560637,
+          0.03926866313651343
+        ]
+      },
+      "best_region_day_precision_with_at_least_5_alerts": {
+        "threshold": 0.7245825147400184,
+        "tp": 5,
+        "fp": 113,
+        "fn": 5,
+        "tn": 895,
+        "precision": 0.0423728813559322,
+        "recall": 0.5,
+        "alerts": 118,
+        "precision_exact_95pct": [
+          0.013899393016309006,
+          0.09611576565369406
+        ]
+      }
+    },
+    "test": {
+      "rows": 343573,
+      "positive_pixel_days": 31,
+      "positive_fraction": 9.022827754218172e-05,
+      "average_precision": 0.0005323671182866575,
+      "prevalence_baseline_ap": 9.022827754218172e-05,
+      "metrics_at_validation_threshold": null,
+      "metrics_at_score_0_5": {
+        "threshold": 0.5,
+        "tp": 23,
+        "fp": 92321,
+        "fn": 8,
+        "tn": 251221,
+        "precision": 0.00024906869964480636,
+        "recall": 0.7419354838709677,
+        "alerts": 92344,
+        "precision_exact_95pct": [
+          0.0001578945340662575,
+          0.0003737020469883429
+        ]
+      },
+      "region_day_groups": 1018,
+      "positive_region_day_groups": 16,
+      "region_day_average_precision": 0.05462718441260068,
+      "region_day_prevalence_baseline_ap": 0.015717092337917484,
+      "region_day_metrics_at_validation_threshold": null,
+      "region_day_metrics_at_score_0_5": {
+        "threshold": 0.5,
+        "tp": 15,
+        "fp": 513,
+        "fn": 1,
+        "tn": 489,
+        "precision": 0.028409090909090908,
+        "recall": 0.9375,
+        "alerts": 528,
+        "precision_exact_95pct": [
+          0.01598568058138942,
+          0.04642406426743484
+        ]
+      },
+      "best_region_day_precision_with_at_least_5_alerts": {
+        "threshold": 0.9647529702055639,
+        "tp": 2,
+        "fp": 17,
+        "fn": 14,
+        "tn": 985,
+        "precision": 0.10526315789473684,
+        "recall": 0.125,
+        "alerts": 19,
+        "precision_exact_95pct": [
+          0.013012164371777464,
+          0.33137666445676595
+        ]
+      }
+    }
+  },
+  "validation_threshold_region_day": null,
+  "validation_best_precision_with_at_least_5_region_day_alerts": {
+    "threshold": 0.7245825147400184,
+    "tp": 5,
+    "fp": 113,
+    "fn": 5,
+    "tn": 895,
+    "precision": 0.0423728813559322,
+    "recall": 0.5,
+    "alerts": 118,
+    "precision_exact_95pct": [
+      0.013899393016309006,
+      0.09611576565369406
+    ]
+  },
+  "frozen_research_model_parameters": {
+    "features": [
+      "latitude",
+      "longitude",
+      "day_sin",
+      "day_cos",
+      "Tmax",
+      "Tmin",
+      "T2",
+      "HR2",
+      "wind10_ms",
+      "precip_27h_mm"
+    ],
+    "standardization_mean": [
+      -31.417555870061886,
+      -62.38882798175847,
+      -0.1652806572678271,
+      -0.3021670493553644,
+      21.17489432880554,
+      8.350218410819963,
+      18.080336466142956,
+      43.28314594417777,
+      4.259331234011171,
+      0.049482162498913254
+    ],
+    "standardization_scale": [
+      5.3759631831138535,
+      3.461208333927156,
+      0.6958808651901696,
+      0.630180291724935,
+      7.053149122680752,
+      5.9649773337358365,
+      6.842595225068503,
+      20.94474157115964,
+      2.094064656231994,
+      0.5557391259123647
+    ],
+    "intercept": -2.2033439021665604,
+    "standardized_coefficients": [
+      0.8255038851229599,
+      0.42791600331144103,
+      -0.02646288494246171,
+      -0.5443848684520671,
+      3.8561423759350353,
+      -0.3337712384522963,
+      -3.1382357821063973,
+      -0.8004435391452763,
+      0.48968612939188616,
+      -17.01691304435977
+    ],
+    "purpose": "Reproducible scoring of prespecified external event days; not an app artifact."
+  },
+  "standardized_coefficients": {
+    "latitude": 0.8255038851229599,
+    "longitude": 0.42791600331144103,
+    "day_sin": -0.02646288494246171,
+    "day_cos": -0.5443848684520671,
+    "Tmax": 3.8561423759350353,
+    "Tmin": -0.3337712384522963,
+    "T2": -3.1382357821063973,
+    "HR2": -0.8004435391452763,
+    "wind10_ms": 0.48968612939188616,
+    "precip_27h_mm": -17.01691304435977
+  },
+  "fit_converged": true,
+  "fit_message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+  "test_predictions": "training\\data\\environmental\\private\\smn-wrf-modis-test-predictions.csv.gz",
+  "synthetic_observations": 0,
+  "deployment_approved": false,
+  "limitations": [
+    "MODIS labels are satellite active-fire observations, not exact ignition times.",
+    "Pixel-day metrics are spatially and temporally correlated.",
+    "Only fixed sampled regions are represented; no calibrated probability is produced.",
+    "A small positive validation/test cohort cannot support a high-confidence accuracy claim."
+  ]
+}

@@ -1,0 +1,2734 @@
+{
+  "experiment_id": "unified-fire-evidence-jma-24h-temporal-test-2023-train-2024-2026-test",
+  "status": "exploratory_source_evidence_prediction_not_physical_fire_probability",
+  "target": "At least one source-preserved event record from SNMF, GFA or INPE in an in-app route sector on the target date.",
+  "negative_definition": "The SNMF national report explicitly said no fires were reported that day; this is a negative only for the defined source-evidence target, not proof of no physical fire.",
+  "forecast_protocol": "JMA GSM previous_day1 forecast variables are aggregated over the target UTC day at the matching in-app route midpoint and used as a fixed one-day-lead predictor.",
+  "source_evidence": {
+    "catalog_sha256": "f5d6cfac1588cb2483d84dfc047ebfef224854302b20a6a7296386258bc5589f",
+    "no_fire_audit_sha256": "a57c45ee46b1bb97763432a9fa647fe9fc903b4550c427d4e46bb2be03a76396",
+    "geometry_sha256": "d622e3bd3bae7c97df9152d5ae22fa9cf3136f2bbb0ee807703eaddc21d6610a",
+    "unified_event_count": 101,
+    "events_by_evidence_class": {
+      "multiple_products_same_satellite_family": 6,
+      "official_report_only": 21,
+      "official_report_plus_satellite_corroboration": 2,
+      "satellite_positive_candidate_only": 72
+    },
+    "route_date_conflicts": 0,
+    "unmapped_records": {},
+    "source_families_in_aligned_cohort": {
+      "AQUA_MODIS_ACTIVE_FIRE": 26,
+      "MODIS_DERIVED_FIRE_ATLAS": 13,
+      "OFFICIAL_INCIDENT_REPORT": 21
+    }
+  },
+  "weather_archives": [
+    {
+      "archive": "training/data/environmental/private/openmeteo-jma-gsm-trail-midpoints-2022-01-01-2024-01-01.json.gz",
+      "archive_sha256": "b9564c38bdb10b9d9154ec1dd0f6ebf12396c5ae09970d5ce61d6b25ba372fee",
+      "manifest_sha256": "097428cc2d400f4a82b9c432e8668986fc6a5a28c65e5cbec761417049ffd7c2",
+      "manifest_route_count": 41
+    },
+    {
+      "archive": "training/data/environmental/private/openmeteo-jma-gsm-trail-midpoints-2024-01-01-2026-10-16.json.gz",
+      "archive_sha256": "8c8acdc5d82cfa474f58fe7eac2ac85b6496ab6940a944be1db3683f635041b6",
+      "manifest_sha256": "d31cd6b350e65b9e812963cee5d3ede3966fc890a81af1449c1ee5cd44610120",
+      "manifest_route_count": 41
+    }
+  ],
+  "data": {
+    "rows_before_weather_join": 307,
+    "rows_without_complete_forecast": {},
+    "aligned_rows": 307,
+    "aligned_route_days": 307,
+    "train_period": {
+      "start": "2023-01-01",
+      "end_exclusive": "2024-01-01",
+      "route_days": 53,
+      "positive_route_days": 21,
+      "positive_dates": 21,
+      "negative_report_dates": 4
+    },
+    "temporal_test": {
+      "start": "2024-01-01",
+      "end_exclusive": "2027-01-01",
+      "route_days": 254,
+      "positive_route_days": 30,
+      "positive_dates": 29,
+      "negative_report_dates": 28,
+      "positive_date_list": [
+        "2024-01-06",
+        "2024-01-26",
+        "2024-01-30",
+        "2024-02-03",
+        "2024-03-07",
+        "2024-04-16",
+        "2024-07-21",
+        "2024-07-26",
+        "2024-09-03",
+        "2024-09-15",
+        "2024-09-29",
+        "2024-10-02",
+        "2024-10-16",
+        "2025-02-09",
+        "2025-02-25",
+        "2025-03-20",
+        "2025-07-13",
+        "2025-08-05",
+        "2025-09-11",
+        "2025-10-08",
+        "2025-10-10",
+        "2025-11-17",
+        "2025-11-26",
+        "2025-12-11",
+        "2026-01-01",
+        "2026-01-05",
+        "2026-01-06",
+        "2026-01-07",
+        "2026-01-10"
+      ],
+      "negative_report_date_list": [
+        "2024-04-13",
+        "2024-04-14",
+        "2024-04-15",
+        "2024-05-04",
+        "2024-05-05",
+        "2024-05-11",
+        "2024-05-12",
+        "2024-05-13",
+        "2024-05-14",
+        "2024-05-16",
+        "2024-05-17",
+        "2024-05-18",
+        "2024-05-19",
+        "2024-05-23",
+        "2024-05-25",
+        "2024-05-26",
+        "2024-05-27",
+        "2024-05-29",
+        "2024-05-31",
+        "2024-06-04",
+        "2024-06-05",
+        "2024-06-16",
+        "2024-06-30",
+        "2024-07-03",
+        "2024-07-09",
+        "2024-07-10",
+        "2024-11-18",
+        "2025-05-31"
+      ]
+    }
+  },
+  "model": {
+    "algorithm": "class-balanced logistic regression with standardized weather, route effect, and calendar season; batch gradient descent (180 epochs, L2=0.01)",
+    "features": [
+      "temperature_mean",
+      "temperature_max",
+      "humidity_mean",
+      "humidity_min",
+      "wind_mean",
+      "wind_max",
+      "precipitation_sum",
+      "annual_sin",
+      "annual_cos"
+    ],
+    "fixed_threshold": 0.5,
+    "threshold_selection": "Not tuned on the test; fixed at 0.5 as a diagnostic. No validation year is available that is both large and independent."
+  },
+  "test_route_day": {
+    "observations": 254,
+    "positive_observations": 30,
+    "threshold": 0.5,
+    "alerts": 73,
+    "true_positives": 17,
+    "false_positives": 56,
+    "false_negatives": 13,
+    "precision": 0.2328767123287671,
+    "recall": 0.5666666666666667,
+    "average_precision": 0.34740801492859136,
+    "confusion_matrix_tn_fp_fn_tp": [
+      168,
+      56,
+      13,
+      17
+    ]
+  },
+  "test_event_date": {
+    "observations": 57,
+    "positive_observations": 29,
+    "threshold": 0.5,
+    "alerts": 43,
+    "true_positives": 16,
+    "false_positives": 27,
+    "false_negatives": 13,
+    "precision": 0.37209302325581395,
+    "recall": 0.5517241379310345,
+    "average_precision": 0.49482247895784875,
+    "confusion_matrix_tn_fp_fn_tp": [
+      1,
+      27,
+      13,
+      16
+    ]
+  },
+  "event_date_precision_wilson_one_sided_95_lower_bound": 0.2618185930475275,
+  "minimum_independent_correct_event_dates_for_90pct_lower_bound": 29,
+  "predictions": [
+    {
+      "route": "bosqueTallado",
+      "date": "2024-01-06",
+      "label": 1,
+      "score": 0.08982535936136486,
+      "alert": false,
+      "evidence_ids": [
+        "EVT:28cd5e656e409b401d08"
+      ]
+    },
+    {
+      "route": "bosqueTallado",
+      "date": "2024-01-26",
+      "label": 1,
+      "score": 0.7156358109035869,
+      "alert": true,
+      "evidence_ids": [
+        "EVT:b1b2abe335beb7506548"
+      ]
+    },
+    {
+      "route": "namuncura",
+      "date": "2024-01-30",
+      "label": 1,
+      "score": 0.9875441734300412,
+      "alert": true,
+      "evidence_ids": [
+        "EVT:a6ec2610e8d568a02075"
+      ]
+    },
+    {
+      "route": "ventana",
+      "date": "2024-02-03",
+      "label": 1,
+      "score": 0.9128918546710396,
+      "alert": true,
+      "evidence_ids": [
+        "EVT:6514ce346205ad9674eb"
+      ]
+    },
+    {
+      "route": "bosqueTallado",
+      "date": "2024-03-07",
+      "label": 1,
+      "score": 0.42229054377835584,
+      "alert": false,
+      "evidence_ids": [
+        "EVT:5c648b5cdddbd663adc3"
+      ]
+    },
+    {
+      "route": "bosqueTallado",
+      "date": "2024-04-13",
+      "label": 0,
+      "score": 0.1362737978265546,
+      "alert": false,
+      "evidence_ids": [
+        "edce12b2330770e4d260215238a964b934d2b9006559d20f9c1c80c1813f9781"
+      ]
+    },
+    {
+      "route": "condorito",
+      "date": "2024-04-13",
+      "label": 0,
+      "score": 0.023910346415582033,
+      "alert": false,
+      "evidence_ids": [
+        "edce12b2330770e4d260215238a964b934d2b9006559d20f9c1c80c1813f9781"
+      ]
+    },
+    {
+      "route": "el-rey-la-chuna",
+      "date": "2024-04-13",
+      "label": 0,
+      "score": 0.10973186181268116,
+      "alert": false,
+      "evidence_ids": [
+        "edce12b2330770e4d260215238a964b934d2b9006559d20f9c1c80c1813f9781"
+      ]
+    },
+    {
+      "route": "frey",
+      "date": "2024-04-13",
+      "label": 0,
+      "score": 0.024367044383223256,
+      "alert": false,
+      "evidence_ids": [
+        "edce12b2330770e4d260215238a964b934d2b9006559d20f9c1c80c1813f9781"
+      ]
+    },
+    {
+      "route": "macuco",
+      "date": "2024-04-13",
+      "label": 0,
+      "score": 0.7202573185062778,
+      "alert": true,
+      "evidence_ids": [
+        "edce12b2330770e4d260215238a964b934d2b9006559d20f9c1c80c1813f9781"
+      ]
+    },
+    {
+      "route": "mburucuya-che-roga",
+      "date": "2024-04-13",
+      "label": 0,
+      "score": 0.6782916420773085,
+      "alert": true,
+      "evidence_ids": [
+        "edce12b2330770e4d260215238a964b934d2b9006559d20f9c1c80c1813f9781"
+      ]
+    },
+    {
+      "route": "namuncura",
+      "date": "2024-04-13",
+      "label": 0,
+      "score": 0.078556520464546,
+      "alert": false,
+      "evidence_ids": [
+        "edce12b2330770e4d260215238a964b934d2b9006559d20f9c1c80c1813f9781"
+      ]
+    },
+    {
+      "route": "ventana",
+      "date": "2024-04-13",
+      "label": 0,
+      "score": 0.059431206496155166,
+      "alert": false,
+      "evidence_ids": [
+        "edce12b2330770e4d260215238a964b934d2b9006559d20f9c1c80c1813f9781"
+      ]
+    },
+    {
+      "route": "bosqueTallado",
+      "date": "2024-04-14",
+      "label": 0,
+      "score": 0.1433713548680478,
+      "alert": false,
+      "evidence_ids": [
+        "1c304ece212ddd7b06977a444d52598844f3853bc4ad9055f4109e3c75fdda79"
+      ]
+    },
+    {
+      "route": "condorito",
+      "date": "2024-04-14",
+      "label": 0,
+      "score": 0.0662903159970107,
+      "alert": false,
+      "evidence_ids": [
+        "1c304ece212ddd7b06977a444d52598844f3853bc4ad9055f4109e3c75fdda79"
+      ]
+    },
+    {
+      "route": "el-rey-la-chuna",
+      "date": "2024-04-14",
+      "label": 0,
+      "score": 0.09538333528873354,
+      "alert": false,
+      "evidence_ids": [
+        "1c304ece212ddd7b06977a444d52598844f3853bc4ad9055f4109e3c75fdda79"
+      ]
+    },
+    {
+      "route": "frey",
+      "date": "2024-04-14",
+      "label": 0,
+      "score": 0.031240543309892815,
+      "alert": false,
+      "evidence_ids": [
+        "1c304ece212ddd7b06977a444d52598844f3853bc4ad9055f4109e3c75fdda79"
+      ]
+    },
+    {
+      "route": "macuco",
+      "date": "2024-04-14",
+      "label": 0,
+      "score": 0.4190235976331203,
+      "alert": false,
+      "evidence_ids": [
+        "1c304ece212ddd7b06977a444d52598844f3853bc4ad9055f4109e3c75fdda79"
+      ]
+    },
+    {
+      "route": "mburucuya-che-roga",
+      "date": "2024-04-14",
+      "label": 0,
+      "score": 0.6746005859568815,
+      "alert": true,
+      "evidence_ids": [
+        "1c304ece212ddd7b06977a444d52598844f3853bc4ad9055f4109e3c75fdda79"
+      ]
+    },
+    {
+      "route": "namuncura",
+      "date": "2024-04-14",
+      "label": 0,
+      "score": 0.030600712557719876,
+      "alert": false,
+      "evidence_ids": [
+        "1c304ece212ddd7b06977a444d52598844f3853bc4ad9055f4109e3c75fdda79"
+      ]
+    },
+    {
+      "route": "ventana",
+      "date": "2024-04-14",
+      "label": 0,
+      "score": 0.040838476442978305,
+      "alert": false,
+      "evidence_ids": [
+        "1c304ece212ddd7b06977a444d52598844f3853bc4ad9055f4109e3c75fdda79"
+      ]
+    },
+    {
+      "route": "bosqueTallado",
+      "date": "2024-04-15",
+      "label": 0,
+      "score": 0.10449404021255054,
+      "alert": false,
+      "evidence_ids": [
+        "a0959cc15a6c32e3094dc1a7a14c3f7e4f8848093188ef3b717eabe2e32a4950"
+      ]
+    },
+    {
+      "route": "condorito",
+      "date": "2024-04-15",
+      "label": 0,
+      "score": 0.0934916073711504,
+      "alert": false,
+      "evidence_ids": [
+        "a0959cc15a6c32e3094dc1a7a14c3f7e4f8848093188ef3b717eabe2e32a4950"
+      ]
+    },
+    {
+      "route": "el-rey-la-chuna",
+      "date": "2024-04-15",
+      "label": 0,
+      "score": 0.159250219510104,
+      "alert": false,
+      "evidence_ids": [
+        "a0959cc15a6c32e3094dc1a7a14c3f7e4f8848093188ef3b717eabe2e32a4950"
+      ]
+    },
+    {
+      "route": "frey",
+      "date": "2024-04-15",
+      "label": 0,
+      "score": 0.04377624812091289,
+      "alert": false,
+      "evidence_ids": [
+        "a0959cc15a6c32e3094dc1a7a14c3f7e4f8848093188ef3b717eabe2e32a4950"
+      ]
+    },
+    {
+      "route": "macuco",
+      "date": "2024-04-15",
+      "label": 0,
+      "score": 0.39504800141205937,
+      "alert": false,
+      "evidence_ids": [
+        "a0959cc15a6c32e3094dc1a7a14c3f7e4f8848093188ef3b717eabe2e32a4950"
+      ]
+    },
+    {
+      "route": "mburucuya-che-roga",
+      "date": "2024-04-15",
+      "label": 0,
+      "score": 0.3349512555835065,
+      "alert": false,
+      "evidence_ids": [
+        "a0959cc15a6c32e3094dc1a7a14c3f7e4f8848093188ef3b717eabe2e32a4950"
+      ]
+    },
+    {
+      "route": "namuncura",
+      "date": "2024-04-15",
+      "label": 0,
+      "score": 0.021139730014525137,
+      "alert": false,
+      "evidence_ids": [
+        "a0959cc15a6c32e3094dc1a7a14c3f7e4f8848093188ef3b717eabe2e32a4950"
+      ]
+    },
+    {
+      "route": "ventana",
+      "date": "2024-04-15",
+      "label": 0,
+      "score": 0.09608258809847188,
+      "alert": false,
+      "evidence_ids": [
+        "a0959cc15a6c32e3094dc1a7a14c3f7e4f8848093188ef3b717eabe2e32a4950"
+      ]
+    },
+    {
+      "route": "bosqueTallado",
+      "date": "2024-04-16",
+      "label": 1,
+      "score": 0.08729845358751069,
+      "alert": false,
+      "evidence_ids": [
+        "EVT:82511d8febbad9368232"
+      ]
+    },
+    {
+      "route": "bosqueTallado",
+      "date": "2024-05-04",
+      "label": 0,
+      "score": 0.010811061513845543,
+      "alert": false,
+      "evidence_ids": [
+        "f2e4d1fbf4671499e3975b4b9ed636b0143f1f2c8b224ce9b3329db8001b2b05"
+      ]
+    },
+    {
+      "route": "condorito",
+      "date": "2024-05-04",
+      "label": 0,
+      "score": 0.3857028022559266,
+      "alert": false,
+      "evidence_ids": [
+        "f2e4d1fbf4671499e3975b4b9ed636b0143f1f2c8b224ce9b3329db8001b2b05"
+      ]
+    },
+    {
+      "route": "el-rey-la-chuna",
+      "date": "2024-05-04",
+      "label": 0,
+      "score": 0.7394314378358335,
+      "alert": true,
+      "evidence_ids": [
+        "f2e4d1fbf4671499e3975b4b9ed636b0143f1f2c8b224ce9b3329db8001b2b05"
+      ]
+    },
+    {
+      "route": "frey",
+      "date": "2024-05-04",
+      "label": 0,
+      "score": 0.002602737731247224,
+      "alert": false,
+      "evidence_ids": [
+        "f2e4d1fbf4671499e3975b4b9ed636b0143f1f2c8b224ce9b3329db8001b2b05"
+      ]
+    },
+    {
+      "route": "macuco",
+      "date": "2024-05-04",
+      "label": 0,
+      "score": 0.5005294831422258,
+      "alert": true,
+      "evidence_ids": [
+        "f2e4d1fbf4671499e3975b4b9ed636b0143f1f2c8b224ce9b3329db8001b2b05"
+      ]
+    },
+    {
+      "route": "mburucuya-che-roga",
+      "date": "2024-05-04",
+      "label": 0,
+      "score": 0.5931050106642249,
+      "alert": true,
+      "evidence_ids": [
+        "f2e4d1fbf4671499e3975b4b9ed636b0143f1f2c8b224ce9b3329db8001b2b05"
+      ]
+    },
+    {
+      "route": "namuncura",
+      "date": "2024-05-04",
+      "label": 0,
+      "score": 0.8648823905676606,
+      "alert": true,
+      "evidence_ids": [
+        "f2e4d1fbf4671499e3975b4b9ed636b0143f1f2c8b224ce9b3329db8001b2b05"
+      ]
+    },
+    {
+      "route": "ventana",
+      "date": "2024-05-04",
+      "label": 0,
+      "score": 0.5532534300055277,
+      "alert": true,
+      "evidence_ids": [
+        "f2e4d1fbf4671499e3975b4b9ed636b0143f1f2c8b224ce9b3329db8001b2b05"
+      ]
+    },
+    {
+      "route": "bosqueTallado",
+      "date": "2024-05-05",
+      "label": 0,
+      "score": 0.012044315534572725,
+      "alert": false,
+      "evidence_ids": [
+        "007bafdf4898dfe6e0105ecd8e3674868f6a32fa1e3793d664676be0e5dde4e7"
+      ]
+    },
+    {
+      "route": "condorito",
+      "date": "2024-05-05",
+      "label": 0,
+      "score": 0.36375939834632826,
+      "alert": false,
+      "evidence_ids": [
+        "007bafdf4898dfe6e0105ecd8e3674868f6a32fa1e3793d664676be0e5dde4e7"
+      ]
+    },
+    {
+      "route": "el-rey-la-chuna",
+      "date": "2024-05-05",
+      "label": 0,
+      "score": 0.829161276817829,
+      "alert": true,
+      "evidence_ids": [
+        "007bafdf4898dfe6e0105ecd8e3674868f6a32fa1e3793d664676be0e5dde4e7"
+      ]
+    },
+    {
+      "route": "frey",
+      "date": "2024-05-05",
+      "label": 0,
+      "score": 0.0044424493780156,
+      "alert": false,
+      "evidence_ids": [
+        "007bafdf4898dfe6e0105ecd8e3674868f6a32fa1e3793d664676be0e5dde4e7"
+      ]
+    },
+    {
+      "route": "macuco",
+      "date": "2024-05-05",
+      "label": 0,
+      "score": 0.879731017803941,
+      "alert": true,
+      "evidence_ids": [
+        "007bafdf4898dfe6e0105ecd8e3674868f6a32fa1e3793d664676be0e5dde4e7"
+      ]
+    },
+    {
+      "route": "mburucuya-che-roga",
+      "date": "2024-05-05",
+      "label": 0,
+      "score": 0.7258697356529541,
+      "alert": true,
+      "evidence_ids": [
+        "007bafdf4898dfe6e0105ecd8e3674868f6a32fa1e3793d664676be0e5dde4e7"
+      ]
+    },
+    {
+      "route": "namuncura",
+      "date": "2024-05-05",
+      "label": 0,
+      "score": 0.8536163330881728,
+      "alert": true,
+      "evidence_ids": [
+        "007bafdf4898dfe6e0105ecd8e3674868f6a32fa1e3793d664676be0e5dde4e7"
+      ]
+    },
+    {
+      "route": "ventana",
+      "date": "2024-05-05",
+      "label": 0,
+      "score": 0.5544006153182748,
+      "alert": true,
+      "evidence_ids": [
+        "007bafdf4898dfe6e0105ecd8e3674868f6a32fa1e3793d664676be0e5dde4e7"
+      ]
+    },
+    {
+      "route": "bosqueTallado",
+      "date": "2024-05-11",
+      "label": 0,
+      "score": 0.011340892347768012,
+      "alert": false,
+      "evidence_ids": [
+        "d83e7f02e4899e587a797040ae654efda41b8e11a8ba70e4957710b8e43065fd"
+      ]
+    },
+    {
+      "route": "condorito",
+      "date": "2024-05-11",
+      "label": 0,
+      "score": 0.20955561828971314,
+      "alert": false,
+      "evidence_ids": [
+        "d83e7f02e4899e587a797040ae654efda41b8e11a8ba70e4957710b8e43065fd"
+      ]
+    },
+    {
+      "route": "el-rey-la-chuna",
+      "date": "2024-05-11",
+      "label": 0,
+      "score": 0.4330205465115752,
+      "alert": false,
+      "evidence_ids": [
+        "d83e7f02e4899e587a797040ae654efda41b8e11a8ba70e4957710b8e43065fd"
+      ]
+    },
+    {
+      "route": "frey",
+      "date": "2024-05-11",
+      "label": 0,
+      "score": 0.005923302732463108,
+      "alert": false,
+      "evidence_ids": [
+        "d83e7f02e4899e587a797040ae654efda41b8e11a8ba70e4957710b8e43065fd"
+      ]
+    },
+    {
+      "route": "macuco",
+      "date": "2024-05-11",
+      "label": 0,
+      "score": 0.7641424176077325,
+      "alert": true,
+      "evidence_ids": [
+        "d83e7f02e4899e587a797040ae654efda41b8e11a8ba70e4957710b8e43065fd"
+      ]
+    },
+    {
+      "route": "mburucuya-che-roga",
+      "date": "2024-05-11",
+      "label": 0,
+      "score": 0.3242533410916584,
+      "alert": false,
+      "evidence_ids": [
+        "d83e7f02e4899e587a797040ae654efda41b8e11a8ba70e4957710b8e43065fd"
+      ]
+    },
+    {
+      "route": "namuncura",
+      "date": "2024-05-11",
+      "label": 0,
+      "score": 0.25798960519929337,
+      "alert": false,
+      "evidence_ids": [
+        "d83e7f02e4899e587a797040ae654efda41b8e11a8ba70e4957710b8e43065fd"
+      ]
+    },
+    {
+      "route": "ventana",
+      "date": "2024-05-11",
+      "label": 0,
+      "score": 0.10980953015275552,
+      "alert": false,
+      "evidence_ids": [
+        "d83e7f02e4899e587a797040ae654efda41b8e11a8ba70e4957710b8e43065fd"
+      ]
+    },
+    {
+      "route": "bosqueTallado",
+      "date": "2024-05-12",
+      "label": 0,
+      "score": 0.011549234248308707,
+      "alert": false,
+      "evidence_ids": [
+        "1e44896f8478db5ccb72eb790b8e84ac0b6371ffbf706fdfd0d59efb074eeb0a"
+      ]
+    },
+    {
+      "route": "condorito",
+      "date": "2024-05-12",
+      "label": 0,
+      "score": 0.05718857595009298,
+      "alert": false,
+      "evidence_ids": [
+        "1e44896f8478db5ccb72eb790b8e84ac0b6371ffbf706fdfd0d59efb074eeb0a"
+      ]
+    },
+    {
+      "route": "el-rey-la-chuna",
+      "date": "2024-05-12",
+      "label": 0,
+      "score": 0.5928667656390353,
+      "alert": true,
+      "evidence_ids": [
+        "1e44896f8478db5ccb72eb790b8e84ac0b6371ffbf706fdfd0d59efb074eeb0a"
+      ]
+    },
+    {
+      "route": "frey",
+      "date": "2024-05-12",
+      "label": 0,
+      "score": 0.008284276579778862,
+      "alert": false,
+      "evidence_ids": [
+        "1e44896f8478db5ccb72eb790b8e84ac0b6371ffbf706fdfd0d59efb074eeb0a"
+      ]
+    },
+    {
+      "route": "macuco",
+      "date": "2024-05-12",
+      "label": 0,
+      "score": 0.8362711245775161,
+      "alert": true,
+      "evidence_ids": [
+        "1e44896f8478db5ccb72eb790b8e84ac0b6371ffbf706fdfd0d59efb074eeb0a"
+      ]
+    },
+    {
+      "route": "mburucuya-che-roga",
+      "date": "2024-05-12",
+      "label": 0,
+      "score": 0.35152611976391696,
+      "alert": false,
+      "evidence_ids": [
+        "1e44896f8478db5ccb72eb790b8e84ac0b6371ffbf706fdfd0d59efb074eeb0a"
+      ]
+    },
+    {
+      "route": "namuncura",
+      "date": "2024-05-12",
+      "label": 0,
+      "score": 0.06622365604052216,
+      "alert": false,
+      "evidence_ids": [
+        "1e44896f8478db5ccb72eb790b8e84ac0b6371ffbf706fdfd0d59efb074eeb0a"
+      ]
+    },
+    {
+      "route": "ventana",
+      "date": "2024-05-12",
+      "label": 0,
+      "score": 0.05373819643125234,
+      "alert": false,
+      "evidence_ids": [
+        "1e44896f8478db5ccb72eb790b8e84ac0b6371ffbf706fdfd0d59efb074eeb0a"
+      ]
+    },
+    {
+      "route": "bosqueTallado",
+      "date": "2024-05-13",
+      "label": 0,
+      "score": 0.006152890552511331,
+      "alert": false,
+      "evidence_ids": [
+        "d1942ddc2a64eb1c3f000c6c7791995466627802517b79f9929893180b248f29"
+      ]
+    },
+    {
+      "route": "condorito",
+      "date": "2024-05-13",
+      "label": 0,
+      "score": 0.07015697074121177,
+      "alert": false,
+      "evidence_ids": [
+        "d1942ddc2a64eb1c3f000c6c7791995466627802517b79f9929893180b248f29"
+      ]
+    },
+    {
+      "route": "el-rey-la-chuna",
+      "date": "2024-05-13",
+      "label": 0,
+      "score": 0.3299987850961638,
+      "alert": false,
+      "evidence_ids": [
+        "d1942ddc2a64eb1c3f000c6c7791995466627802517b79f9929893180b248f29"
+      ]
+    },
+    {
+      "route": "frey",
+      "date": "2024-05-13",
+      "label": 0,
+      "score": 0.004947560834463864,
+      "alert": false,
+      "evidence_ids": [
+        "d1942ddc2a64eb1c3f000c6c7791995466627802517b79f9929893180b248f29"
+      ]
+    },
+    {
+      "route": "macuco",
+      "date": "2024-05-13",
+      "label": 0,
+      "score": 0.17255944909009938,
+      "alert": false,
+      "evidence_ids": [
+        "d1942ddc2a64eb1c3f000c6c7791995466627802517b79f9929893180b248f29"
+      ]
+    },
+    {
+      "route": "mburucuya-che-roga",
+      "date": "2024-05-13",
+      "label": 0,
+      "score": 0.5971887474151976,
+      "alert": true,
+      "evidence_ids": [
+        "d1942ddc2a64eb1c3f000c6c7791995466627802517b79f9929893180b248f29"
+      ]
+    },
+    {
+      "route": "namuncura",
+      "date": "2024-05-13",
+      "label": 0,
+      "score": 0.18534256962127238,
+      "alert": false,
+      "evidence_ids": [
+        "d1942ddc2a64eb1c3f000c6c7791995466627802517b79f9929893180b248f29"
+      ]
+    },
+    {
+      "route": "ventana",
+      "date": "2024-05-13",
+      "label": 0,
+      "score": 0.050390953106648116,
+      "alert": false,
+      "evidence_ids": [
+        "d1942ddc2a64eb1c3f000c6c7791995466627802517b79f9929893180b248f29"
+      ]
+    },
+    {
+      "route": "bosqueTallado",
+      "date": "2024-05-14",
+      "label": 0,
+      "score": 0.011219913135609202,
+      "alert": false,
+      "evidence_ids": [
+        "3fdd8771bb6b62ec2cd2d49e80f30ac53ec100adadf60302b86a3cdd462bbcc5"
+      ]
+    },
+    {
+      "route": "condorito",
+      "date": "2024-05-14",
+      "label": 0,
+      "score": 0.09290212585078618,
+      "alert": false,
+      "evidence_ids": [
+        "3fdd8771bb6b62ec2cd2d49e80f30ac53ec100adadf60302b86a3cdd462bbcc5"
+      ]
+    },
+    {
+      "route": "el-rey-la-chuna",
+      "date": "2024-05-14",
+      "label": 0,
+      "score": 0.3589950339007272,
+      "alert": false,
+      "evidence_ids": [
+        "3fdd8771bb6b62ec2cd2d49e80f30ac53ec100adadf60302b86a3cdd462bbcc5"
+      ]
+    },
+    {
+      "route": "frey",
+      "date": "2024-05-14",
+      "label": 0,
+      "score": 0.005507586571552651,
+      "alert": false,
+      "evidence_ids": [
+        "3fdd8771bb6b62ec2cd2d49e80f30ac53ec100adadf60302b86a3cdd462bbcc5"
+      ]
+    },
+    {
+      "route": "macuco",
+      "date": "2024-05-14",
+      "label": 0,
+      "score": 0.3510539127172929,
+      "alert": false,
+      "evidence_ids": [
+        "3fdd8771bb6b62ec2cd2d49e80f30ac53ec100adadf60302b86a3cdd462bbcc5"
+      ]
+    },
+    {
+      "route": "mburucuya-che-roga",
+      "date": "2024-05-14",
+      "label": 0,
+      "score": 0.8294157108656315,
+      "alert": true,
+      "evidence_ids": [
+        "3fdd8771bb6b62ec2cd2d49e80f30ac53ec100adadf60302b86a3cdd462bbcc5"
+      ]
+    },
+    {
+      "route": "namuncura",
+      "date": "2024-05-14",
+      "label": 0,
+      "score": 0.18323886345083512,
+      "alert": false,
+      "evidence_ids": [
+        "3fdd8771bb6b62ec2cd2d49e80f30ac53ec100adadf60302b86a3cdd462bbcc5"
+      ]
+    },
+    {
+      "route": "ventana",
+      "date": "2024-05-14",
+      "label": 0,
+      "score": 0.0883491105527277,
+      "alert": false,
+      "evidence_ids": [
+        "3fdd8771bb6b62ec2cd2d49e80f30ac53ec100adadf60302b86a3cdd462bbcc5"
+      ]
+    },
+    {
+      "route": "bosqueTallado",
+      "date": "2024-05-16",
+      "label": 0,
+      "score": 0.021829743313927105,
+      "alert": false,
+      "evidence_ids": [
+        "dfac892f5ae7aa86edc6ffbe45765462e75acadf70a2e3b61b845b6a59168542"
+      ]
+    },
+    {
+      "route": "condorito",
+      "date": "2024-05-16",
+      "label": 0,
+      "score": 0.2948707914014883,
+      "alert": false,
+      "evidence_ids": [
+        "dfac892f5ae7aa86edc6ffbe45765462e75acadf70a2e3b61b845b6a59168542"
+      ]
+    },
+    {
+      "route": "el-rey-la-chuna",
+      "date": "2024-05-16",
+      "label": 0,
+      "score": 0.48559937022686045,
+      "alert": false,
+      "evidence_ids": [
+        "dfac892f5ae7aa86edc6ffbe45765462e75acadf70a2e3b61b845b6a59168542"
+      ]
+    },
+    {
+      "route": "frey",
+      "date": "2024-05-16",
+      "label": 0,
+      "score": 0.011902854552382195,
+      "alert": false,
+      "evidence_ids": [
+        "dfac892f5ae7aa86edc6ffbe45765462e75acadf70a2e3b61b845b6a59168542"
+      ]
+    },
+    {
+      "route": "macuco",
+      "date": "2024-05-16",
+      "label": 0,
+      "score": 0.5515152187430796,
+      "alert": true,
+      "evidence_ids": [
+        "dfac892f5ae7aa86edc6ffbe45765462e75acadf70a2e3b61b845b6a59168542"
+      ]
+    },
+    {
+      "route": "mburucuya-che-roga",
+      "date": "2024-05-16",
+      "label": 0,
+      "score": 0.6165606703274641,
+      "alert": true,
+      "evidence_ids": [
+        "dfac892f5ae7aa86edc6ffbe45765462e75acadf70a2e3b61b845b6a59168542"
+      ]
+    },
+    {
+      "route": "namuncura",
+      "date": "2024-05-16",
+      "label": 0,
+      "score": 0.15253453210251647,
+      "alert": false,
+      "evidence_ids": [
+        "dfac892f5ae7aa86edc6ffbe45765462e75acadf70a2e3b61b845b6a59168542"
+      ]
+    },
+    {
+      "route": "ventana",
+      "date": "2024-05-16",
+      "label": 0,
+      "score": 0.07091401570688322,
+      "alert": false,
+      "evidence_ids": [
+        "dfac892f5ae7aa86edc6ffbe45765462e75acadf70a2e3b61b845b6a59168542"
+      ]
+    },
+    {
+      "route": "bosqueTallado",
+      "date": "2024-05-17",
+      "label": 0,
+      "score": 0.017323582334310243,
+      "alert": false,
+      "evidence_ids": [
+        "5cee947c040de93ff9717c3209654fb071b6b436098c6cb118dc9d6a56de4c4b"
+      ]
+    },
+    {
+      "route": "condorito",
+      "date": "2024-05-17",
+      "label": 0,
+      "score": 0.24692778144555053,
+      "alert": false,
+      "evidence_ids": [
+        "5cee947c040de93ff9717c3209654fb071b6b436098c6cb118dc9d6a56de4c4b"
+      ]
+    },
+    {
+      "route": "el-rey-la-chuna",
+      "date": "2024-05-17",
+      "label": 0,
+      "score": 0.2164349686056749,
+      "alert": false,
+      "evidence_ids": [
+        "5cee947c040de93ff9717c3209654fb071b6b436098c6cb118dc9d6a56de4c4b"
+      ]
+    },
+    {
+      "route": "frey",
+      "date": "2024-05-17",
+      "label": 0,
+      "score": 0.014284567568133262,
+      "alert": false,
+      "evidence_ids": [
+        "5cee947c040de93ff9717c3209654fb071b6b436098c6cb118dc9d6a56de4c4b"
+      ]
+    },
+    {
+      "route": "macuco",
+      "date": "2024-05-17",
+      "label": 0,
+      "score": 0.16156165933516572,
+      "alert": false,
+      "evidence_ids": [
+        "5cee947c040de93ff9717c3209654fb071b6b436098c6cb118dc9d6a56de4c4b"
+      ]
+    },
+    {
+      "route": "mburucuya-che-roga",
+      "date": "2024-05-17",
+      "label": 0,
+      "score": 0.8880173561991505,
+      "alert": true,
+      "evidence_ids": [
+        "5cee947c040de93ff9717c3209654fb071b6b436098c6cb118dc9d6a56de4c4b"
+      ]
+    },
+    {
+      "route": "namuncura",
+      "date": "2024-05-17",
+      "label": 0,
+      "score": 0.11336281709612364,
+      "alert": false,
+      "evidence_ids": [
+        "5cee947c040de93ff9717c3209654fb071b6b436098c6cb118dc9d6a56de4c4b"
+      ]
+    },
+    {
+      "route": "ventana",
+      "date": "2024-05-17",
+      "label": 0,
+      "score": 0.02245356970851056,
+      "alert": false,
+      "evidence_ids": [
+        "5cee947c040de93ff9717c3209654fb071b6b436098c6cb118dc9d6a56de4c4b"
+      ]
+    },
+    {
+      "route": "bosqueTallado",
+      "date": "2024-05-18",
+      "label": 0,
+      "score": 0.07248146928534165,
+      "alert": false,
+      "evidence_ids": [
+        "eaa666b0ec5c5dfb8ed925a3b59b52c8ab7dfca742d0e7b3b0a95586ef646018"
+      ]
+    },
+    {
+      "route": "condorito",
+      "date": "2024-05-18",
+      "label": 0,
+      "score": 0.06056593740217299,
+      "alert": false,
+      "evidence_ids": [
+        "eaa666b0ec5c5dfb8ed925a3b59b52c8ab7dfca742d0e7b3b0a95586ef646018"
+      ]
+    },
+    {
+      "route": "el-rey-la-chuna",
+      "date": "2024-05-18",
+      "label": 0,
+      "score": 0.5354632207015937,
+      "alert": true,
+      "evidence_ids": [
+        "eaa666b0ec5c5dfb8ed925a3b59b52c8ab7dfca742d0e7b3b0a95586ef646018"
+      ]
+    },
+    {
+      "route": "frey",
+      "date": "2024-05-18",
+      "label": 0,
+      "score": 0.05269767923920496,
+      "alert": false,
+      "evidence_ids": [
+        "eaa666b0ec5c5dfb8ed925a3b59b52c8ab7dfca742d0e7b3b0a95586ef646018"
+      ]
+    },
+    {
+      "route": "macuco",
+      "date": "2024-05-18",
+      "label": 0,
+      "score": 0.0518863606890246,
+      "alert": false,
+      "evidence_ids": [
+        "eaa666b0ec5c5dfb8ed925a3b59b52c8ab7dfca742d0e7b3b0a95586ef646018"
+      ]
+    },
+    {
+      "route": "mburucuya-che-roga",
+      "date": "2024-05-18",
+      "label": 0,
+      "score": 0.8713750315668964,
+      "alert": true,
+      "evidence_ids": [
+        "eaa666b0ec5c5dfb8ed925a3b59b52c8ab7dfca742d0e7b3b0a95586ef646018"
+      ]
+    },
+    {
+      "route": "namuncura",
+      "date": "2024-05-18",
+      "label": 0,
+      "score": 0.21176943493078357,
+      "alert": false,
+      "evidence_ids": [
+        "eaa666b0ec5c5dfb8ed925a3b59b52c8ab7dfca742d0e7b3b0a95586ef646018"
+      ]
+    },
+    {
+      "route": "ventana",
+      "date": "2024-05-18",
+      "label": 0,
+      "score": 0.0714349442140526,
+      "alert": false,
+      "evidence_ids": [
+        "eaa666b0ec5c5dfb8ed925a3b59b52c8ab7dfca742d0e7b3b0a95586ef646018"
+      ]
+    },
+    {
+      "route": "bosqueTallado",
+      "date": "2024-05-19",
+      "label": 0,
+      "score": 0.006106192664419303,
+      "alert": false,
+      "evidence_ids": [
+        "e4dc0706b51255b06719776718c54d5790ada0c4752c5a5a6991bdef598eba71"
+      ]
+    },
+    {
+      "route": "condorito",
+      "date": "2024-05-19",
+      "label": 0,
+      "score": 0.08413705195341047,
+      "alert": false,
+      "evidence_ids": [
+        "e4dc0706b51255b06719776718c54d5790ada0c4752c5a5a6991bdef598eba71"
+      ]
+    },
+    {
+      "route": "el-rey-la-chuna",
+      "date": "2024-05-19",
+      "label": 0,
+      "score": 0.6398804894862098,
+      "alert": true,
+      "evidence_ids": [
+        "e4dc0706b51255b06719776718c54d5790ada0c4752c5a5a6991bdef598eba71"
+      ]
+    },
+    {
+      "route": "frey",
+      "date": "2024-05-19",
+      "label": 0,
+      "score": 0.0059070278522707215,
+      "alert": false,
+      "evidence_ids": [
+        "e4dc0706b51255b06719776718c54d5790ada0c4752c5a5a6991bdef598eba71"
+      ]
+    },
+    {
+      "route": "macuco",
+      "date": "2024-05-19",
+      "label": 0,
+      "score": 0.24243935770544364,
+      "alert": false,
+      "evidence_ids": [
+        "e4dc0706b51255b06719776718c54d5790ada0c4752c5a5a6991bdef598eba71"
+      ]
+    },
+    {
+      "route": "mburucuya-che-roga",
+      "date": "2024-05-19",
+      "label": 0,
+      "score": 0.8119149922198374,
+      "alert": true,
+      "evidence_ids": [
+        "e4dc0706b51255b06719776718c54d5790ada0c4752c5a5a6991bdef598eba71"
+      ]
+    },
+    {
+      "route": "namuncura",
+      "date": "2024-05-19",
+      "label": 0,
+      "score": 0.21830887159951132,
+      "alert": false,
+      "evidence_ids": [
+        "e4dc0706b51255b06719776718c54d5790ada0c4752c5a5a6991bdef598eba71"
+      ]
+    },
+    {
+      "route": "ventana",
+      "date": "2024-05-19",
+      "label": 0,
+      "score": 0.1173218633777273,
+      "alert": false,
+      "evidence_ids": [
+        "e4dc0706b51255b06719776718c54d5790ada0c4752c5a5a6991bdef598eba71"
+      ]
+    },
+    {
+      "route": "bosqueTallado",
+      "date": "2024-05-23",
+      "label": 0,
+      "score": 0.008462874444319956,
+      "alert": false,
+      "evidence_ids": [
+        "76f9d34bccbbfc495882899b2cbe345aa71c1a58c36673d3b255f4783eb8f675"
+      ]
+    },
+    {
+      "route": "condorito",
+      "date": "2024-05-23",
+      "label": 0,
+      "score": 0.020241074714745448,
+      "alert": false,
+      "evidence_ids": [
+        "76f9d34bccbbfc495882899b2cbe345aa71c1a58c36673d3b255f4783eb8f675"
+      ]
+    },
+    {
+      "route": "el-rey-la-chuna",
+      "date": "2024-05-23",
+      "label": 0,
+      "score": 0.32072520648378805,
+      "alert": false,
+      "evidence_ids": [
+        "76f9d34bccbbfc495882899b2cbe345aa71c1a58c36673d3b255f4783eb8f675"
+      ]
+    },
+    {
+      "route": "frey",
+      "date": "2024-05-23",
+      "label": 0,
+      "score": 0.005260798920153051,
+      "alert": false,
+      "evidence_ids": [
+        "76f9d34bccbbfc495882899b2cbe345aa71c1a58c36673d3b255f4783eb8f675"
+      ]
+    },
+    {
+      "route": "macuco",
+      "date": "2024-05-23",
+      "label": 0,
+      "score": 0.5953566823711445,
+      "alert": true,
+      "evidence_ids": [
+        "76f9d34bccbbfc495882899b2cbe345aa71c1a58c36673d3b255f4783eb8f675"
+      ]
+    },
+    {
+      "route": "mburucuya-che-roga",
+      "date": "2024-05-23",
+      "label": 0,
+      "score": 0.1422487772074711,
+      "alert": false,
+      "evidence_ids": [
+        "76f9d34bccbbfc495882899b2cbe345aa71c1a58c36673d3b255f4783eb8f675"
+      ]
+    },
+    {
+      "route": "namuncura",
+      "date": "2024-05-23",
+      "label": 0,
+      "score": 0.28793073676379194,
+      "alert": false,
+      "evidence_ids": [
+        "76f9d34bccbbfc495882899b2cbe345aa71c1a58c36673d3b255f4783eb8f675"
+      ]
+    },
+    {
+      "route": "ventana",
+      "date": "2024-05-23",
+      "label": 0,
+      "score": 0.06020101523406724,
+      "alert": false,
+      "evidence_ids": [
+        "76f9d34bccbbfc495882899b2cbe345aa71c1a58c36673d3b255f4783eb8f675"
+      ]
+    },
+    {
+      "route": "bosqueTallado",
+      "date": "2024-05-25",
+      "label": 0,
+      "score": 0.022256978713921235,
+      "alert": false,
+      "evidence_ids": [
+        "f0649e4bb6e22864519ec94ae85d5cbb09aa535e07580b5ba22fa17de99b0fb6"
+      ]
+    },
+    {
+      "route": "condorito",
+      "date": "2024-05-25",
+      "label": 0,
+      "score": 0.028848320084026022,
+      "alert": false,
+      "evidence_ids": [
+        "f0649e4bb6e22864519ec94ae85d5cbb09aa535e07580b5ba22fa17de99b0fb6"
+      ]
+    },
+    {
+      "route": "el-rey-la-chuna",
+      "date": "2024-05-25",
+      "label": 0,
+      "score": 0.15957738842983546,
+      "alert": false,
+      "evidence_ids": [
+        "f0649e4bb6e22864519ec94ae85d5cbb09aa535e07580b5ba22fa17de99b0fb6"
+      ]
+    },
+    {
+      "route": "frey",
+      "date": "2024-05-25",
+      "label": 0,
+      "score": 0.0038337789081282067,
+      "alert": false,
+      "evidence_ids": [
+        "f0649e4bb6e22864519ec94ae85d5cbb09aa535e07580b5ba22fa17de99b0fb6"
+      ]
+    },
+    {
+      "route": "macuco",
+      "date": "2024-05-25",
+      "label": 0,
+      "score": 0.3351889241033563,
+      "alert": false,
+      "evidence_ids": [
+        "f0649e4bb6e22864519ec94ae85d5cbb09aa535e07580b5ba22fa17de99b0fb6"
+      ]
+    },
+    {
+      "route": "mburucuya-che-roga",
+      "date": "2024-05-25",
+      "label": 0,
+      "score": 0.7192689698393333,
+      "alert": true,
+      "evidence_ids": [
+        "f0649e4bb6e22864519ec94ae85d5cbb09aa535e07580b5ba22fa17de99b0fb6"
+      ]
+    },
+    {
+      "route": "namuncura",
+      "date": "2024-05-25",
+      "label": 0,
+      "score": 0.3120674637223991,
+      "alert": false,
+      "evidence_ids": [
+        "f0649e4bb6e22864519ec94ae85d5cbb09aa535e07580b5ba22fa17de99b0fb6"
+      ]
+    },
+    {
+      "route": "ventana",
+      "date": "2024-05-25",
+      "label": 0,
+      "score": 0.08975800145325831,
+      "alert": false,
+      "evidence_ids": [
+        "f0649e4bb6e22864519ec94ae85d5cbb09aa535e07580b5ba22fa17de99b0fb6"
+      ]
+    },
+    {
+      "route": "bosqueTallado",
+      "date": "2024-05-26",
+      "label": 0,
+      "score": 0.01770041914380487,
+      "alert": false,
+      "evidence_ids": [
+        "d843aed332450815316339abfa29452b4ae4f3a913e7cb756e892c59a54d8e9d"
+      ]
+    },
+    {
+      "route": "condorito",
+      "date": "2024-05-26",
+      "label": 0,
+      "score": 0.03762734826001341,
+      "alert": false,
+      "evidence_ids": [
+        "d843aed332450815316339abfa29452b4ae4f3a913e7cb756e892c59a54d8e9d"
+      ]
+    },
+    {
+      "route": "el-rey-la-chuna",
+      "date": "2024-05-26",
+      "label": 0,
+      "score": 0.40734981060729486,
+      "alert": false,
+      "evidence_ids": [
+        "d843aed332450815316339abfa29452b4ae4f3a913e7cb756e892c59a54d8e9d"
+      ]
+    },
+    {
+      "route": "frey",
+      "date": "2024-05-26",
+      "label": 0,
+      "score": 0.004830771170178435,
+      "alert": false,
+      "evidence_ids": [
+        "d843aed332450815316339abfa29452b4ae4f3a913e7cb756e892c59a54d8e9d"
+      ]
+    },
+    {
+      "route": "macuco",
+      "date": "2024-05-26",
+      "label": 0,
+      "score": 0.29261693397452937,
+      "alert": false,
+      "evidence_ids": [
+        "d843aed332450815316339abfa29452b4ae4f3a913e7cb756e892c59a54d8e9d"
+      ]
+    },
+    {
+      "route": "mburucuya-che-roga",
+      "date": "2024-05-26",
+      "label": 0,
+      "score": 0.6486842841670399,
+      "alert": true,
+      "evidence_ids": [
+        "d843aed332450815316339abfa29452b4ae4f3a913e7cb756e892c59a54d8e9d"
+      ]
+    },
+    {
+      "route": "namuncura",
+      "date": "2024-05-26",
+      "label": 0,
+      "score": 0.30793182463323965,
+      "alert": false,
+      "evidence_ids": [
+        "d843aed332450815316339abfa29452b4ae4f3a913e7cb756e892c59a54d8e9d"
+      ]
+    },
+    {
+      "route": "ventana",
+      "date": "2024-05-26",
+      "label": 0,
+      "score": 0.09933881889628694,
+      "alert": false,
+      "evidence_ids": [
+        "d843aed332450815316339abfa29452b4ae4f3a913e7cb756e892c59a54d8e9d"
+      ]
+    },
+    {
+      "route": "bosqueTallado",
+      "date": "2024-05-27",
+      "label": 0,
+      "score": 0.020164787521079676,
+      "alert": false,
+      "evidence_ids": [
+        "41c5691aef2e60bdfcfe6a8b80c1c8dda32a4bb69a4168c4cbcac40e87eb85e2"
+      ]
+    },
+    {
+      "route": "condorito",
+      "date": "2024-05-27",
+      "label": 0,
+      "score": 0.1010796951441498,
+      "alert": false,
+      "evidence_ids": [
+        "41c5691aef2e60bdfcfe6a8b80c1c8dda32a4bb69a4168c4cbcac40e87eb85e2"
+      ]
+    },
+    {
+      "route": "el-rey-la-chuna",
+      "date": "2024-05-27",
+      "label": 0,
+      "score": 0.5344064155452245,
+      "alert": true,
+      "evidence_ids": [
+        "41c5691aef2e60bdfcfe6a8b80c1c8dda32a4bb69a4168c4cbcac40e87eb85e2"
+      ]
+    },
+    {
+      "route": "frey",
+      "date": "2024-05-27",
+      "label": 0,
+      "score": 0.018981743781790055,
+      "alert": false,
+      "evidence_ids": [
+        "41c5691aef2e60bdfcfe6a8b80c1c8dda32a4bb69a4168c4cbcac40e87eb85e2"
+      ]
+    },
+    {
+      "route": "macuco",
+      "date": "2024-05-27",
+      "label": 0,
+      "score": 0.2916391129445789,
+      "alert": false,
+      "evidence_ids": [
+        "41c5691aef2e60bdfcfe6a8b80c1c8dda32a4bb69a4168c4cbcac40e87eb85e2"
+      ]
+    },
+    {
+      "route": "mburucuya-che-roga",
+      "date": "2024-05-27",
+      "label": 0,
+      "score": 0.6157456690213006,
+      "alert": true,
+      "evidence_ids": [
+        "41c5691aef2e60bdfcfe6a8b80c1c8dda32a4bb69a4168c4cbcac40e87eb85e2"
+      ]
+    },
+    {
+      "route": "namuncura",
+      "date": "2024-05-27",
+      "label": 0,
+      "score": 0.2490569744955913,
+      "alert": false,
+      "evidence_ids": [
+        "41c5691aef2e60bdfcfe6a8b80c1c8dda32a4bb69a4168c4cbcac40e87eb85e2"
+      ]
+    },
+    {
+      "route": "ventana",
+      "date": "2024-05-27",
+      "label": 0,
+      "score": 0.09373471749760379,
+      "alert": false,
+      "evidence_ids": [
+        "41c5691aef2e60bdfcfe6a8b80c1c8dda32a4bb69a4168c4cbcac40e87eb85e2"
+      ]
+    },
+    {
+      "route": "bosqueTallado",
+      "date": "2024-05-29",
+      "label": 0,
+      "score": 0.029905723447615558,
+      "alert": false,
+      "evidence_ids": [
+        "f6f27b6c43370bc12a053fc833020549ff0f58b4446701acba78896aa524bbdd"
+      ]
+    },
+    {
+      "route": "condorito",
+      "date": "2024-05-29",
+      "label": 0,
+      "score": 0.4919660522891091,
+      "alert": false,
+      "evidence_ids": [
+        "f6f27b6c43370bc12a053fc833020549ff0f58b4446701acba78896aa524bbdd"
+      ]
+    },
+    {
+      "route": "el-rey-la-chuna",
+      "date": "2024-05-29",
+      "label": 0,
+      "score": 0.9108984902299563,
+      "alert": true,
+      "evidence_ids": [
+        "f6f27b6c43370bc12a053fc833020549ff0f58b4446701acba78896aa524bbdd"
+      ]
+    },
+    {
+      "route": "frey",
+      "date": "2024-05-29",
+      "label": 0,
+      "score": 0.009308264820332708,
+      "alert": false,
+      "evidence_ids": [
+        "f6f27b6c43370bc12a053fc833020549ff0f58b4446701acba78896aa524bbdd"
+      ]
+    },
+    {
+      "route": "macuco",
+      "date": "2024-05-29",
+      "label": 0,
+      "score": 0.26428395705369295,
+      "alert": false,
+      "evidence_ids": [
+        "f6f27b6c43370bc12a053fc833020549ff0f58b4446701acba78896aa524bbdd"
+      ]
+    },
+    {
+      "route": "mburucuya-che-roga",
+      "date": "2024-05-29",
+      "label": 0,
+      "score": 0.5367300307515029,
+      "alert": true,
+      "evidence_ids": [
+        "f6f27b6c43370bc12a053fc833020549ff0f58b4446701acba78896aa524bbdd"
+      ]
+    },
+    {
+      "route": "namuncura",
+      "date": "2024-05-29",
+      "label": 0,
+      "score": 0.4925012163745719,
+      "alert": false,
+      "evidence_ids": [
+        "f6f27b6c43370bc12a053fc833020549ff0f58b4446701acba78896aa524bbdd"
+      ]
+    },
+    {
+      "route": "ventana",
+      "date": "2024-05-29",
+      "label": 0,
+      "score": 0.0845573984077365,
+      "alert": false,
+      "evidence_ids": [
+        "f6f27b6c43370bc12a053fc833020549ff0f58b4446701acba78896aa524bbdd"
+      ]
+    },
+    {
+      "route": "bosqueTallado",
+      "date": "2024-05-31",
+      "label": 0,
+      "score": 0.003277062094367131,
+      "alert": false,
+      "evidence_ids": [
+        "1aa1e85017d74f3657efc721ff1b4bc71b9b646535dbcc3c97c2354d5f1eb018"
+      ]
+    },
+    {
+      "route": "condorito",
+      "date": "2024-05-31",
+      "label": 0,
+      "score": 0.1525609268037903,
+      "alert": false,
+      "evidence_ids": [
+        "1aa1e85017d74f3657efc721ff1b4bc71b9b646535dbcc3c97c2354d5f1eb018"
+      ]
+    },
+    {
+      "route": "el-rey-la-chuna",
+      "date": "2024-05-31",
+      "label": 0,
+      "score": 0.7924384251765375,
+      "alert": true,
+      "evidence_ids": [
+        "1aa1e85017d74f3657efc721ff1b4bc71b9b646535dbcc3c97c2354d5f1eb018"
+      ]
+    },
+    {
+      "route": "frey",
+      "date": "2024-05-31",
+      "label": 0,
+      "score": 0.008968067462921323,
+      "alert": false,
+      "evidence_ids": [
+        "1aa1e85017d74f3657efc721ff1b4bc71b9b646535dbcc3c97c2354d5f1eb018"
+      ]
+    },
+    {
+      "route": "macuco",
+      "date": "2024-05-31",
+      "label": 0,
+      "score": 0.49696383538048344,
+      "alert": false,
+      "evidence_ids": [
+        "1aa1e85017d74f3657efc721ff1b4bc71b9b646535dbcc3c97c2354d5f1eb018"
+      ]
+    },
+    {
+      "route": "mburucuya-che-roga",
+      "date": "2024-05-31",
+      "label": 0,
+      "score": 0.657916798838278,
+      "alert": true,
+      "evidence_ids": [
+        "1aa1e85017d74f3657efc721ff1b4bc71b9b646535dbcc3c97c2354d5f1eb018"
+      ]
+    },
+    {
+      "route": "namuncura",
+      "date": "2024-05-31",
+      "label": 0,
+      "score": 0.06641462792275009,
+      "alert": false,
+      "evidence_ids": [
+        "1aa1e85017d74f3657efc721ff1b4bc71b9b646535dbcc3c97c2354d5f1eb018"
+      ]
+    },
+    {
+      "route": "ventana",
+      "date": "2024-05-31",
+      "label": 0,
+      "score": 0.0437190849578558,
+      "alert": false,
+      "evidence_ids": [
+        "1aa1e85017d74f3657efc721ff1b4bc71b9b646535dbcc3c97c2354d5f1eb018"
+      ]
+    },
+    {
+      "route": "bosqueTallado",
+      "date": "2024-06-04",
+      "label": 0,
+      "score": 0.016114790995120146,
+      "alert": false,
+      "evidence_ids": [
+        "ea31570c59910d7aba1978aca264f95fed00b9f8da9e8e3942e0bb439651ff9f"
+      ]
+    },
+    {
+      "route": "condorito",
+      "date": "2024-06-04",
+      "label": 0,
+      "score": 0.3672417604130466,
+      "alert": false,
+      "evidence_ids": [
+        "ea31570c59910d7aba1978aca264f95fed00b9f8da9e8e3942e0bb439651ff9f"
+      ]
+    },
+    {
+      "route": "el-rey-la-chuna",
+      "date": "2024-06-04",
+      "label": 0,
+      "score": 0.6728622605223904,
+      "alert": true,
+      "evidence_ids": [
+        "ea31570c59910d7aba1978aca264f95fed00b9f8da9e8e3942e0bb439651ff9f"
+      ]
+    },
+    {
+      "route": "frey",
+      "date": "2024-06-04",
+      "label": 0,
+      "score": 0.037247357946831816,
+      "alert": false,
+      "evidence_ids": [
+        "ea31570c59910d7aba1978aca264f95fed00b9f8da9e8e3942e0bb439651ff9f"
+      ]
+    },
+    {
+      "route": "macuco",
+      "date": "2024-06-04",
+      "label": 0,
+      "score": 0.3740897833385419,
+      "alert": false,
+      "evidence_ids": [
+        "ea31570c59910d7aba1978aca264f95fed00b9f8da9e8e3942e0bb439651ff9f"
+      ]
+    },
+    {
+      "route": "mburucuya-che-roga",
+      "date": "2024-06-04",
+      "label": 0,
+      "score": 0.8536945773828919,
+      "alert": true,
+      "evidence_ids": [
+        "ea31570c59910d7aba1978aca264f95fed00b9f8da9e8e3942e0bb439651ff9f"
+      ]
+    },
+    {
+      "route": "namuncura",
+      "date": "2024-06-04",
+      "label": 0,
+      "score": 0.3596524027679176,
+      "alert": false,
+      "evidence_ids": [
+        "ea31570c59910d7aba1978aca264f95fed00b9f8da9e8e3942e0bb439651ff9f"
+      ]
+    },
+    {
+      "route": "ventana",
+      "date": "2024-06-04",
+      "label": 0,
+      "score": 0.10984379760684863,
+      "alert": false,
+      "evidence_ids": [
+        "ea31570c59910d7aba1978aca264f95fed00b9f8da9e8e3942e0bb439651ff9f"
+      ]
+    },
+    {
+      "route": "bosqueTallado",
+      "date": "2024-06-05",
+      "label": 0,
+      "score": 0.05075480312048348,
+      "alert": false,
+      "evidence_ids": [
+        "0219e7d708eaea6dfdbdf83100df2c2edb5e747fd609c9284a9c87d577121bc0"
+      ]
+    },
+    {
+      "route": "condorito",
+      "date": "2024-06-05",
+      "label": 0,
+      "score": 0.3782688378809987,
+      "alert": false,
+      "evidence_ids": [
+        "0219e7d708eaea6dfdbdf83100df2c2edb5e747fd609c9284a9c87d577121bc0"
+      ]
+    },
+    {
+      "route": "el-rey-la-chuna",
+      "date": "2024-06-05",
+      "label": 0,
+      "score": 0.5228001503752848,
+      "alert": true,
+      "evidence_ids": [
+        "0219e7d708eaea6dfdbdf83100df2c2edb5e747fd609c9284a9c87d577121bc0"
+      ]
+    },
+    {
+      "route": "frey",
+      "date": "2024-06-05",
+      "label": 0,
+      "score": 0.018602173196733764,
+      "alert": false,
+      "evidence_ids": [
+        "0219e7d708eaea6dfdbdf83100df2c2edb5e747fd609c9284a9c87d577121bc0"
+      ]
+    },
+    {
+      "route": "macuco",
+      "date": "2024-06-05",
+      "label": 0,
+      "score": 0.6732051900902539,
+      "alert": true,
+      "evidence_ids": [
+        "0219e7d708eaea6dfdbdf83100df2c2edb5e747fd609c9284a9c87d577121bc0"
+      ]
+    },
+    {
+      "route": "mburucuya-che-roga",
+      "date": "2024-06-05",
+      "label": 0,
+      "score": 0.770886098071696,
+      "alert": true,
+      "evidence_ids": [
+        "0219e7d708eaea6dfdbdf83100df2c2edb5e747fd609c9284a9c87d577121bc0"
+      ]
+    },
+    {
+      "route": "namuncura",
+      "date": "2024-06-05",
+      "label": 0,
+      "score": 0.4698363891488705,
+      "alert": false,
+      "evidence_ids": [
+        "0219e7d708eaea6dfdbdf83100df2c2edb5e747fd609c9284a9c87d577121bc0"
+      ]
+    },
+    {
+      "route": "ventana",
+      "date": "2024-06-05",
+      "label": 0,
+      "score": 0.2228164999829933,
+      "alert": false,
+      "evidence_ids": [
+        "0219e7d708eaea6dfdbdf83100df2c2edb5e747fd609c9284a9c87d577121bc0"
+      ]
+    },
+    {
+      "route": "bosqueTallado",
+      "date": "2024-06-16",
+      "label": 0,
+      "score": 0.019740203824397118,
+      "alert": false,
+      "evidence_ids": [
+        "7351bf8ac12b1154e3925efb4e149ddea919bd0294f96b7f6471951b09322629"
+      ]
+    },
+    {
+      "route": "condorito",
+      "date": "2024-06-16",
+      "label": 0,
+      "score": 0.4213202916199688,
+      "alert": false,
+      "evidence_ids": [
+        "7351bf8ac12b1154e3925efb4e149ddea919bd0294f96b7f6471951b09322629"
+      ]
+    },
+    {
+      "route": "el-rey-la-chuna",
+      "date": "2024-06-16",
+      "label": 0,
+      "score": 0.8359300302184185,
+      "alert": true,
+      "evidence_ids": [
+        "7351bf8ac12b1154e3925efb4e149ddea919bd0294f96b7f6471951b09322629"
+      ]
+    },
+    {
+      "route": "frey",
+      "date": "2024-06-16",
+      "label": 0,
+      "score": 0.015668685012311424,
+      "alert": false,
+      "evidence_ids": [
+        "7351bf8ac12b1154e3925efb4e149ddea919bd0294f96b7f6471951b09322629"
+      ]
+    },
+    {
+      "route": "macuco",
+      "date": "2024-06-16",
+      "label": 0,
+      "score": 0.07002608966000945,
+      "alert": false,
+      "evidence_ids": [
+        "7351bf8ac12b1154e3925efb4e149ddea919bd0294f96b7f6471951b09322629"
+      ]
+    },
+    {
+      "route": "mburucuya-che-roga",
+      "date": "2024-06-16",
+      "label": 0,
+      "score": 0.5363155572733728,
+      "alert": true,
+      "evidence_ids": [
+        "7351bf8ac12b1154e3925efb4e149ddea919bd0294f96b7f6471951b09322629"
+      ]
+    },
+    {
+      "route": "namuncura",
+      "date": "2024-06-16",
+      "label": 0,
+      "score": 0.4581750180286969,
+      "alert": false,
+      "evidence_ids": [
+        "7351bf8ac12b1154e3925efb4e149ddea919bd0294f96b7f6471951b09322629"
+      ]
+    },
+    {
+      "route": "ventana",
+      "date": "2024-06-16",
+      "label": 0,
+      "score": 0.43663087490784025,
+      "alert": false,
+      "evidence_ids": [
+        "7351bf8ac12b1154e3925efb4e149ddea919bd0294f96b7f6471951b09322629"
+      ]
+    },
+    {
+      "route": "bosqueTallado",
+      "date": "2024-06-30",
+      "label": 0,
+      "score": 0.011390929293821246,
+      "alert": false,
+      "evidence_ids": [
+        "61ead7256f9626f5e6a6fc7484bd464bb9ab64fad843651dfe443723df4523c0"
+      ]
+    },
+    {
+      "route": "condorito",
+      "date": "2024-06-30",
+      "label": 0,
+      "score": 0.6233775609899491,
+      "alert": true,
+      "evidence_ids": [
+        "61ead7256f9626f5e6a6fc7484bd464bb9ab64fad843651dfe443723df4523c0"
+      ]
+    },
+    {
+      "route": "el-rey-la-chuna",
+      "date": "2024-06-30",
+      "label": 0,
+      "score": 0.9323987607100506,
+      "alert": true,
+      "evidence_ids": [
+        "61ead7256f9626f5e6a6fc7484bd464bb9ab64fad843651dfe443723df4523c0"
+      ]
+    },
+    {
+      "route": "frey",
+      "date": "2024-06-30",
+      "label": 0,
+      "score": 0.005063311961449578,
+      "alert": false,
+      "evidence_ids": [
+        "61ead7256f9626f5e6a6fc7484bd464bb9ab64fad843651dfe443723df4523c0"
+      ]
+    },
+    {
+      "route": "macuco",
+      "date": "2024-06-30",
+      "label": 0,
+      "score": 0.5891583618667199,
+      "alert": true,
+      "evidence_ids": [
+        "61ead7256f9626f5e6a6fc7484bd464bb9ab64fad843651dfe443723df4523c0"
+      ]
+    },
+    {
+      "route": "mburucuya-che-roga",
+      "date": "2024-06-30",
+      "label": 0,
+      "score": 0.7242143442957122,
+      "alert": true,
+      "evidence_ids": [
+        "61ead7256f9626f5e6a6fc7484bd464bb9ab64fad843651dfe443723df4523c0"
+      ]
+    },
+    {
+      "route": "namuncura",
+      "date": "2024-06-30",
+      "label": 0,
+      "score": 0.6737507761032244,
+      "alert": true,
+      "evidence_ids": [
+        "61ead7256f9626f5e6a6fc7484bd464bb9ab64fad843651dfe443723df4523c0"
+      ]
+    },
+    {
+      "route": "ventana",
+      "date": "2024-06-30",
+      "label": 0,
+      "score": 0.3534209404771407,
+      "alert": false,
+      "evidence_ids": [
+        "61ead7256f9626f5e6a6fc7484bd464bb9ab64fad843651dfe443723df4523c0"
+      ]
+    },
+    {
+      "route": "bosqueTallado",
+      "date": "2024-07-03",
+      "label": 0,
+      "score": 0.00866472298788228,
+      "alert": false,
+      "evidence_ids": [
+        "b6ebcbffeaab35543aadbfa76cdd47c1c0b44b4aed6bb3b144ffa5dc79c2c0a1"
+      ]
+    },
+    {
+      "route": "condorito",
+      "date": "2024-07-03",
+      "label": 0,
+      "score": 0.29192327264297036,
+      "alert": false,
+      "evidence_ids": [
+        "b6ebcbffeaab35543aadbfa76cdd47c1c0b44b4aed6bb3b144ffa5dc79c2c0a1"
+      ]
+    },
+    {
+      "route": "el-rey-la-chuna",
+      "date": "2024-07-03",
+      "label": 0,
+      "score": 0.9580343669548881,
+      "alert": true,
+      "evidence_ids": [
+        "b6ebcbffeaab35543aadbfa76cdd47c1c0b44b4aed6bb3b144ffa5dc79c2c0a1"
+      ]
+    },
+    {
+      "route": "frey",
+      "date": "2024-07-03",
+      "label": 0,
+      "score": 0.0025722497053299845,
+      "alert": false,
+      "evidence_ids": [
+        "b6ebcbffeaab35543aadbfa76cdd47c1c0b44b4aed6bb3b144ffa5dc79c2c0a1"
+      ]
+    },
+    {
+      "route": "macuco",
+      "date": "2024-07-03",
+      "label": 0,
+      "score": 0.2759955972785749,
+      "alert": false,
+      "evidence_ids": [
+        "b6ebcbffeaab35543aadbfa76cdd47c1c0b44b4aed6bb3b144ffa5dc79c2c0a1"
+      ]
+    },
+    {
+      "route": "mburucuya-che-roga",
+      "date": "2024-07-03",
+      "label": 0,
+      "score": 0.7128392626220912,
+      "alert": true,
+      "evidence_ids": [
+        "b6ebcbffeaab35543aadbfa76cdd47c1c0b44b4aed6bb3b144ffa5dc79c2c0a1"
+      ]
+    },
+    {
+      "route": "namuncura",
+      "date": "2024-07-03",
+      "label": 0,
+      "score": 0.36667707682272416,
+      "alert": false,
+      "evidence_ids": [
+        "b6ebcbffeaab35543aadbfa76cdd47c1c0b44b4aed6bb3b144ffa5dc79c2c0a1"
+      ]
+    },
+    {
+      "route": "ventana",
+      "date": "2024-07-03",
+      "label": 0,
+      "score": 0.08821768715830197,
+      "alert": false,
+      "evidence_ids": [
+        "b6ebcbffeaab35543aadbfa76cdd47c1c0b44b4aed6bb3b144ffa5dc79c2c0a1"
+      ]
+    },
+    {
+      "route": "bosqueTallado",
+      "date": "2024-07-09",
+      "label": 0,
+      "score": 0.0033151443370045006,
+      "alert": false,
+      "evidence_ids": [
+        "240ee34b28fe4825c56ecf620e05bede95908ebbdaebd856c3ec2b3bee996d71"
+      ]
+    },
+    {
+      "route": "condorito",
+      "date": "2024-07-09",
+      "label": 0,
+      "score": 0.02788235284106373,
+      "alert": false,
+      "evidence_ids": [
+        "240ee34b28fe4825c56ecf620e05bede95908ebbdaebd856c3ec2b3bee996d71"
+      ]
+    },
+    {
+      "route": "el-rey-la-chuna",
+      "date": "2024-07-09",
+      "label": 0,
+      "score": 0.619055557128411,
+      "alert": true,
+      "evidence_ids": [
+        "240ee34b28fe4825c56ecf620e05bede95908ebbdaebd856c3ec2b3bee996d71"
+      ]
+    },
+    {
+      "route": "frey",
+      "date": "2024-07-09",
+      "label": 0,
+      "score": 0.0026644587211524626,
+      "alert": false,
+      "evidence_ids": [
+        "240ee34b28fe4825c56ecf620e05bede95908ebbdaebd856c3ec2b3bee996d71"
+      ]
+    },
+    {
+      "route": "macuco",
+      "date": "2024-07-09",
+      "label": 0,
+      "score": 0.06837168024962158,
+      "alert": false,
+      "evidence_ids": [
+        "240ee34b28fe4825c56ecf620e05bede95908ebbdaebd856c3ec2b3bee996d71"
+      ]
+    },
+    {
+      "route": "mburucuya-che-roga",
+      "date": "2024-07-09",
+      "label": 0,
+      "score": 0.71267058756534,
+      "alert": true,
+      "evidence_ids": [
+        "240ee34b28fe4825c56ecf620e05bede95908ebbdaebd856c3ec2b3bee996d71"
+      ]
+    },
+    {
+      "route": "namuncura",
+      "date": "2024-07-09",
+      "label": 0,
+      "score": 0.1721814052542402,
+      "alert": false,
+      "evidence_ids": [
+        "240ee34b28fe4825c56ecf620e05bede95908ebbdaebd856c3ec2b3bee996d71"
+      ]
+    },
+    {
+      "route": "ventana",
+      "date": "2024-07-09",
+      "label": 0,
+      "score": 0.0810199617660596,
+      "alert": false,
+      "evidence_ids": [
+        "240ee34b28fe4825c56ecf620e05bede95908ebbdaebd856c3ec2b3bee996d71"
+      ]
+    },
+    {
+      "route": "bosqueTallado",
+      "date": "2024-07-10",
+      "label": 0,
+      "score": 0.006575846043115891,
+      "alert": false,
+      "evidence_ids": [
+        "b4c0b9ffee37a258033cc4a8c3e944dd88558755ca969ffef4c359bee4b6f85a"
+      ]
+    },
+    {
+      "route": "condorito",
+      "date": "2024-07-10",
+      "label": 0,
+      "score": 0.052347416775333326,
+      "alert": false,
+      "evidence_ids": [
+        "b4c0b9ffee37a258033cc4a8c3e944dd88558755ca969ffef4c359bee4b6f85a"
+      ]
+    },
+    {
+      "route": "el-rey-la-chuna",
+      "date": "2024-07-10",
+      "label": 0,
+      "score": 0.29873992829096396,
+      "alert": false,
+      "evidence_ids": [
+        "b4c0b9ffee37a258033cc4a8c3e944dd88558755ca969ffef4c359bee4b6f85a"
+      ]
+    },
+    {
+      "route": "frey",
+      "date": "2024-07-10",
+      "label": 0,
+      "score": 0.009927604194836539,
+      "alert": false,
+      "evidence_ids": [
+        "b4c0b9ffee37a258033cc4a8c3e944dd88558755ca969ffef4c359bee4b6f85a"
+      ]
+    },
+    {
+      "route": "macuco",
+      "date": "2024-07-10",
+      "label": 0,
+      "score": 0.28817823616131455,
+      "alert": false,
+      "evidence_ids": [
+        "b4c0b9ffee37a258033cc4a8c3e944dd88558755ca969ffef4c359bee4b6f85a"
+      ]
+    },
+    {
+      "route": "mburucuya-che-roga",
+      "date": "2024-07-10",
+      "label": 0,
+      "score": 0.6261736069708608,
+      "alert": true,
+      "evidence_ids": [
+        "b4c0b9ffee37a258033cc4a8c3e944dd88558755ca969ffef4c359bee4b6f85a"
+      ]
+    },
+    {
+      "route": "namuncura",
+      "date": "2024-07-10",
+      "label": 0,
+      "score": 0.14949142906107896,
+      "alert": false,
+      "evidence_ids": [
+        "b4c0b9ffee37a258033cc4a8c3e944dd88558755ca969ffef4c359bee4b6f85a"
+      ]
+    },
+    {
+      "route": "ventana",
+      "date": "2024-07-10",
+      "label": 0,
+      "score": 0.0885681492330681,
+      "alert": false,
+      "evidence_ids": [
+        "b4c0b9ffee37a258033cc4a8c3e944dd88558755ca969ffef4c359bee4b6f85a"
+      ]
+    },
+    {
+      "route": "mburucuya-che-roga",
+      "date": "2024-07-21",
+      "label": 1,
+      "score": 0.8557911522197937,
+      "alert": true,
+      "evidence_ids": [
+        "EVT:2997cf7eb12e9ed4d347"
+      ]
+    },
+    {
+      "route": "mburucuya-che-roga",
+      "date": "2024-07-26",
+      "label": 1,
+      "score": 0.6669136888767638,
+      "alert": true,
+      "evidence_ids": [
+        "EVT:8f135450945fcde15ad2"
+      ]
+    },
+    {
+      "route": "mburucuya-che-roga",
+      "date": "2024-09-03",
+      "label": 1,
+      "score": 0.7639768689677982,
+      "alert": true,
+      "evidence_ids": [
+        "EVT:18115993737387ad1710",
+        "EVT:78b4a8b1e596fcbe50b2"
+      ]
+    },
+    {
+      "route": "bosqueTallado",
+      "date": "2024-09-15",
+      "label": 1,
+      "score": 0.009686727853949494,
+      "alert": false,
+      "evidence_ids": [
+        "EVT:337f73f97aeee679bda7"
+      ]
+    },
+    {
+      "route": "mburucuya-che-roga",
+      "date": "2024-09-29",
+      "label": 1,
+      "score": 0.8275880819370561,
+      "alert": true,
+      "evidence_ids": [
+        "EVT:aa442978fc21562336ee"
+      ]
+    },
+    {
+      "route": "mburucuya-che-roga",
+      "date": "2024-10-02",
+      "label": 1,
+      "score": 0.8324782538733367,
+      "alert": true,
+      "evidence_ids": [
+        "EVT:027c7ec411d89ebc035e"
+      ]
+    },
+    {
+      "route": "frey",
+      "date": "2024-10-16",
+      "label": 1,
+      "score": 0.07230088027670724,
+      "alert": false,
+      "evidence_ids": [
+        "EVT:2c247230a480cf24f1a3"
+      ]
+    },
+    {
+      "route": "bosqueTallado",
+      "date": "2024-11-18",
+      "label": 0,
+      "score": 0.21810691317483194,
+      "alert": false,
+      "evidence_ids": [
+        "023dd6cc541fae1683164eac9be5b62b895813ef180f52d6089a59206ab6aec5"
+      ]
+    },
+    {
+      "route": "condorito",
+      "date": "2024-11-18",
+      "label": 0,
+      "score": 0.03025186087084109,
+      "alert": false,
+      "evidence_ids": [
+        "023dd6cc541fae1683164eac9be5b62b895813ef180f52d6089a59206ab6aec5"
+      ]
+    },
+    {
+      "route": "el-rey-la-chuna",
+      "date": "2024-11-18",
+      "label": 0,
+      "score": 0.08554272900972633,
+      "alert": false,
+      "evidence_ids": [
+        "023dd6cc541fae1683164eac9be5b62b895813ef180f52d6089a59206ab6aec5"
+      ]
+    },
+    {
+      "route": "frey",
+      "date": "2024-11-18",
+      "label": 0,
+      "score": 0.20427068713099827,
+      "alert": false,
+      "evidence_ids": [
+        "023dd6cc541fae1683164eac9be5b62b895813ef180f52d6089a59206ab6aec5"
+      ]
+    },
+    {
+      "route": "macuco",
+      "date": "2024-11-18",
+      "label": 0,
+      "score": 0.646782737147798,
+      "alert": true,
+      "evidence_ids": [
+        "023dd6cc541fae1683164eac9be5b62b895813ef180f52d6089a59206ab6aec5"
+      ]
+    },
+    {
+      "route": "mburucuya-che-roga",
+      "date": "2024-11-18",
+      "label": 0,
+      "score": 0.3508251038994101,
+      "alert": false,
+      "evidence_ids": [
+        "023dd6cc541fae1683164eac9be5b62b895813ef180f52d6089a59206ab6aec5"
+      ]
+    },
+    {
+      "route": "namuncura",
+      "date": "2024-11-18",
+      "label": 0,
+      "score": 0.9520832971477603,
+      "alert": true,
+      "evidence_ids": [
+        "023dd6cc541fae1683164eac9be5b62b895813ef180f52d6089a59206ab6aec5"
+      ]
+    },
+    {
+      "route": "ventana",
+      "date": "2024-11-18",
+      "label": 0,
+      "score": 0.7748650027330787,
+      "alert": true,
+      "evidence_ids": [
+        "023dd6cc541fae1683164eac9be5b62b895813ef180f52d6089a59206ab6aec5"
+      ]
+    },
+    {
+      "route": "bosqueTallado",
+      "date": "2025-02-09",
+      "label": 1,
+      "score": 0.8379282201478817,
+      "alert": true,
+      "evidence_ids": [
+        "EVT:0a7ca53a027327a5554d"
+      ]
+    },
+    {
+      "route": "frey",
+      "date": "2025-02-25",
+      "label": 1,
+      "score": 0.11378460065993931,
+      "alert": false,
+      "evidence_ids": [
+        "EVT:78d327b0312e5c4882eb"
+      ]
+    },
+    {
+      "route": "mburucuya-che-roga",
+      "date": "2025-03-20",
+      "label": 1,
+      "score": 0.9979247278808618,
+      "alert": true,
+      "evidence_ids": [
+        "EVT:ff832b30f3f51948f7d8"
+      ]
+    },
+    {
+      "route": "bosqueTallado",
+      "date": "2025-05-31",
+      "label": 0,
+      "score": 0.013433524039719407,
+      "alert": false,
+      "evidence_ids": [
+        "3b9ccbf8b3e37fca2a63c52c7c94770957720c2312088aa4622f62e28bfbb77f"
+      ]
+    },
+    {
+      "route": "condorito",
+      "date": "2025-05-31",
+      "label": 0,
+      "score": 0.48629080106331574,
+      "alert": false,
+      "evidence_ids": [
+        "3b9ccbf8b3e37fca2a63c52c7c94770957720c2312088aa4622f62e28bfbb77f"
+      ]
+    },
+    {
+      "route": "el-rey-la-chuna",
+      "date": "2025-05-31",
+      "label": 0,
+      "score": 0.6536888716301434,
+      "alert": true,
+      "evidence_ids": [
+        "3b9ccbf8b3e37fca2a63c52c7c94770957720c2312088aa4622f62e28bfbb77f"
+      ]
+    },
+    {
+      "route": "frey",
+      "date": "2025-05-31",
+      "label": 0,
+      "score": 0.01302901196450608,
+      "alert": false,
+      "evidence_ids": [
+        "3b9ccbf8b3e37fca2a63c52c7c94770957720c2312088aa4622f62e28bfbb77f"
+      ]
+    },
+    {
+      "route": "macuco",
+      "date": "2025-05-31",
+      "label": 0,
+      "score": 0.24918513712766138,
+      "alert": false,
+      "evidence_ids": [
+        "3b9ccbf8b3e37fca2a63c52c7c94770957720c2312088aa4622f62e28bfbb77f"
+      ]
+    },
+    {
+      "route": "mburucuya-che-roga",
+      "date": "2025-05-31",
+      "label": 0,
+      "score": 0.5901174551097997,
+      "alert": true,
+      "evidence_ids": [
+        "3b9ccbf8b3e37fca2a63c52c7c94770957720c2312088aa4622f62e28bfbb77f"
+      ]
+    },
+    {
+      "route": "namuncura",
+      "date": "2025-05-31",
+      "label": 0,
+      "score": 0.457863617664125,
+      "alert": false,
+      "evidence_ids": [
+        "3b9ccbf8b3e37fca2a63c52c7c94770957720c2312088aa4622f62e28bfbb77f"
+      ]
+    },
+    {
+      "route": "ventana",
+      "date": "2025-05-31",
+      "label": 0,
+      "score": 0.26307895725790476,
+      "alert": false,
+      "evidence_ids": [
+        "3b9ccbf8b3e37fca2a63c52c7c94770957720c2312088aa4622f62e28bfbb77f"
+      ]
+    },
+    {
+      "route": "ventana",
+      "date": "2025-07-13",
+      "label": 1,
+      "score": 0.04054652841863376,
+      "alert": false,
+      "evidence_ids": [
+        "EVT:b532b6f8118481d0741f"
+      ]
+    },
+    {
+      "route": "mburucuya-che-roga",
+      "date": "2025-08-05",
+      "label": 1,
+      "score": 0.8107799047849076,
+      "alert": true,
+      "evidence_ids": [
+        "EVT:ede8131301ec20290e75"
+      ]
+    },
+    {
+      "route": "mburucuya-che-roga",
+      "date": "2025-09-11",
+      "label": 1,
+      "score": 0.6414808156437848,
+      "alert": true,
+      "evidence_ids": [
+        "EVT:4b08adf517be262cb01f"
+      ]
+    },
+    {
+      "route": "bosqueTallado",
+      "date": "2025-10-08",
+      "label": 1,
+      "score": 0.019704912173648514,
+      "alert": false,
+      "evidence_ids": [
+        "EVT:31fd43a66ebc282fe642",
+        "EVT:c6af027e81725258fedf"
+      ]
+    },
+    {
+      "route": "condorito",
+      "date": "2025-10-10",
+      "label": 1,
+      "score": 0.9532842203342397,
+      "alert": true,
+      "evidence_ids": [
+        "EVT:13005d5a61cdd1884327",
+        "EVT:95b07a551160bc9e7ef1"
+      ]
+    },
+    {
+      "route": "bosqueTallado",
+      "date": "2025-11-17",
+      "label": 1,
+      "score": 0.028719066130254815,
+      "alert": false,
+      "evidence_ids": [
+        "EVT:0b0192041c80bc360686"
+      ]
+    },
+    {
+      "route": "frey",
+      "date": "2025-11-26",
+      "label": 1,
+      "score": 0.051916864422681404,
+      "alert": false,
+      "evidence_ids": [
+        "EVT:7e27ac1b7847a0b54702"
+      ]
+    },
+    {
+      "route": "ventana",
+      "date": "2025-12-11",
+      "label": 1,
+      "score": 0.42509471781988706,
+      "alert": false,
+      "evidence_ids": [
+        "EVT:6e23b734d85305d21759"
+      ]
+    },
+    {
+      "route": "bosqueTallado",
+      "date": "2026-01-01",
+      "label": 1,
+      "score": 0.5771052797716604,
+      "alert": true,
+      "evidence_ids": [
+        "EVT:9c5eca8dae984bf26456"
+      ]
+    },
+    {
+      "route": "bosqueTallado",
+      "date": "2026-01-05",
+      "label": 1,
+      "score": 0.922507728329443,
+      "alert": true,
+      "evidence_ids": [
+        "EVT:54642991ec0383b2331c"
+      ]
+    },
+    {
+      "route": "frey",
+      "date": "2026-01-05",
+      "label": 1,
+      "score": 0.7704094770833683,
+      "alert": true,
+      "evidence_ids": [
+        "EVT:b2eaa2db7d2d6b5d749a"
+      ]
+    },
+    {
+      "route": "frey",
+      "date": "2026-01-06",
+      "label": 1,
+      "score": 0.089662382409172,
+      "alert": false,
+      "evidence_ids": [
+        "EVT:1ad2cbcd30385974687a",
+        "EVT:5260b03b6c781c9a4eb5"
+      ]
+    },
+    {
+      "route": "namuncura",
+      "date": "2026-01-07",
+      "label": 1,
+      "score": 0.6798679412375312,
+      "alert": true,
+      "evidence_ids": [
+        "EVT:114bdcd0dee6005fea79"
+      ]
+    },
+    {
+      "route": "bosqueTallado",
+      "date": "2026-01-10",
+      "label": 1,
+      "score": 0.45564360256758385,
+      "alert": false,
+      "evidence_ids": [
+        "EVT:c0dbb3770fb41799b9f4"
+      ]
+    }
+  ],
+  "limitations": [
+    "This prediction target is a union of heterogeneous source evidence, not a single sensor's fire detection and not verified physical-fire occurrence.",
+    "INPE and GFA evidence share MODIS-family sensors; their agreement is not independent sensor confirmation.",
+    "The event catalog intentionally leaves uncertain cross-source links separate; some resulting route-date events may still refer to the same physical fire.",
+    "The explicit no-fire negatives are concentrated in report dates and do not establish absence of unreported or undetected fires.",
+    "The temporal holdout has at most the listed number of distinct positive event dates; repeated route-days do not increase independent sample size.",
+    "No synthetic observations, oversampling, test-driven threshold tuning, deployment artifact, or app change is produced."
+  ],
+  "synthetic_observations": 0,
+  "model_artifact_written": false,
+  "deployment_approved": false
+}

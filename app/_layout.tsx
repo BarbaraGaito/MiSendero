@@ -9,6 +9,7 @@ import {
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { SyncCoordinator } from "../services/SyncCoordinator";
 import { RouteTrackingCoordinator } from "../services/RouteTrackingCoordinator";
+import { FallDetectionCoordinator } from "../services/fallDetection/FallDetectionCoordinator";
 import { StoragePrivacyGuard } from "../services/StoragePrivacyGuard";
 import { ConnectivityProvider } from "../services/ConnectivityProvider";
 
@@ -30,6 +31,7 @@ export default function RootLayout() {
       <StoragePrivacyGuard>
       <SyncCoordinator />
       <RouteTrackingCoordinator />
+      <FallDetectionCoordinator />
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="index" />
         <Stack.Screen name="explore" />
@@ -43,6 +45,7 @@ export default function RootLayout() {
         <Stack.Screen name="actualizacion-fallida" />
         <Stack.Screen name="buscar-mapas-offline" />
         <Stack.Screen name="confirmar-sos" />
+        <Stack.Screen name="caida-detectada" options={{ gestureEnabled: false }} />
         <Stack.Screen name="contacto-seguridad" />
         <Stack.Screen name="conexion-perdida" />
         <Stack.Screen name="cargando-ruta" />

@@ -1,0 +1,278 @@
+{
+  "experiment_id": "fire-goes16-2025-q1",
+  "source_sha256": "33960501bcc324c1e9440e7aeb5a80321b312fca386d828f606f3594f059116b",
+  "availability_sha256": "c06221f800ce4d7b316dc7d5615266d1d6c432e678896d2f52420f24392c906a",
+  "rows_by_horizon": {
+    "1": {
+      "status": "trained_exploratory_but_positive_test_count_below_20",
+      "matched_pairs": 2150,
+      "train": {
+        "rows": 836447,
+        "positives": 103
+      },
+      "validation": {
+        "average_precision": 0.2717882694958878,
+        "brier": 0.054886601865291595,
+        "precision_at_0_5": 0.0006496284442190991,
+        "recall_at_0_5": 0.7884615384615384,
+        "rows": 826370,
+        "positives": 52,
+        "persistence_baseline": {
+          "average_precision": 0.26453646508279866,
+          "brier": 6.41359197453925e-05,
+          "precision": 0.49122807017543857,
+          "recall": 0.5384615384615384
+        },
+        "training_prevalence_baseline": {
+          "average_precision": 0.00012313990007735098,
+          "brier": 6.292547413164261e-05
+        }
+      },
+      "test": {
+        "average_precision": 0.07478354329724667,
+        "brier": 0.006446995306760073,
+        "precision_at_0_5": 0.0005986828976252245,
+        "recall_at_0_5": 0.3333333333333333,
+        "rows": 766428,
+        "positives": 9,
+        "persistence_baseline": {
+          "average_precision": 0.2222287459922306,
+          "brier": 1.1742786015124709e-05,
+          "precision": 0.5,
+          "recall": 0.4444444444444444
+        },
+        "training_prevalence_baseline": {
+          "average_precision": 0.00012313990007735098,
+          "brier": 1.1755057439122706e-05
+        }
+      },
+      "model_sha256": "efe2bf22cde84cee9cf35f060bf269101f08458896fe5c89081a7bc4202fe947",
+      "model_path": "training/data/environmental/private/fire-goes16-2025-q1-models/logistic-1h.joblib",
+      "training_rows": 836447,
+      "training_positives": 103,
+      "note": "Class-weighted scores are not calibrated probabilities; repeated pixels and scenes are correlated."
+    },
+    "2": {
+      "status": "trained_exploratory_but_positive_test_count_below_20",
+      "matched_pairs": 2146,
+      "train": {
+        "rows": 804878,
+        "positives": 104
+      },
+      "validation": {
+        "average_precision": 0.17882726652598363,
+        "brier": 0.06552734971046448,
+        "precision_at_0_5": 0.000511643545251217,
+        "recall_at_0_5": 0.7142857142857143,
+        "rows": 802465,
+        "positives": 49,
+        "persistence_baseline": {
+          "average_precision": 0.14325131945695727,
+          "brier": 8.224657773236217e-05,
+          "precision": 0.3508771929824561,
+          "recall": 0.40816326530612246
+        },
+        "training_prevalence_baseline": {
+          "average_precision": 0.00012921212904315935,
+          "brier": 6.10627690751259e-05
+        }
+      },
+      "test": {
+        "average_precision": 0.013910985991717669,
+        "brier": 0.0032159488182514906,
+        "precision_at_0_5": 0.0005076142131979696,
+        "recall_at_0_5": 0.1111111111111111,
+        "rows": 736403,
+        "positives": 9,
+        "persistence_baseline": {
+          "average_precision": 0.05556506122025274,
+          "brier": 1.7653377294769305e-05,
+          "precision": 0.25,
+          "recall": 0.2222222222222222
+        },
+        "training_prevalence_baseline": {
+          "average_precision": 0.00012921212904315935,
+          "brier": 1.223510632079592e-05
+        }
+      },
+      "model_sha256": "5b736d229147208dbbd7307093d0f2acd541d4dd671fd5ad31c5fa715dc30ad0",
+      "model_path": "training/data/environmental/private/fire-goes16-2025-q1-models/logistic-2h.joblib",
+      "training_rows": 804878,
+      "training_positives": 104,
+      "note": "Class-weighted scores are not calibrated probabilities; repeated pixels and scenes are correlated."
+    },
+    "3": {
+      "status": "trained_exploratory_but_positive_test_count_below_20",
+      "matched_pairs": 2143,
+      "train": {
+        "rows": 784460,
+        "positives": 107
+      },
+      "validation": {
+        "average_precision": 0.19815691703211336,
+        "brier": 0.05068854242563248,
+        "precision_at_0_5": 0.0005695193256891184,
+        "recall_at_0_5": 0.6122448979591837,
+        "rows": 785286,
+        "positives": 49,
+        "persistence_baseline": {
+          "average_precision": 0.0806018355328631,
+          "brier": 9.678002663997575e-05,
+          "precision": 0.2631578947368421,
+          "recall": 0.30612244897959184
+        },
+        "training_prevalence_baseline": {
+          "average_precision": 0.00013639956148178364,
+          "brier": 6.239923157123834e-05
+        },
+        "validation_selected_threshold": 0.9999998807907104,
+        "at_validation_precision_floor_0_80": {
+          "precision": 0.8333333333333334,
+          "recall": 0.10204081632653061,
+          "predicted_positive_rows": 6
+        }
+      },
+      "test": {
+        "average_precision": 1.5904050643104865e-05,
+        "brier": 0.000362950871931389,
+        "precision_at_0_5": 0.0,
+        "recall_at_0_5": 0.0,
+        "rows": 713219,
+        "positives": 9,
+        "persistence_baseline": {
+          "average_precision": 1.2618844983097757e-05,
+          "brier": 2.3835596079184653e-05,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "training_prevalence_baseline": {
+          "average_precision": 0.00013639956148178364,
+          "brier": 1.2634007413625977e-05
+        },
+        "validation_selected_threshold": 0.9999998807907104,
+        "at_validation_precision_floor_0_80": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "predicted_positive_rows": 0
+        }
+      },
+      "model_sha256": "a7f5744dd8059a058d71214f544a0c99c58c4016e603f13e75af12ec2495e03a",
+      "model_path": "training/data/environmental/private/fire-goes16-2025-q1-models/logistic-3h.joblib",
+      "training_rows": 784460,
+      "training_positives": 107,
+      "note": "Class-weighted scores are not calibrated probabilities; repeated pixels and scenes are correlated."
+    },
+    "6": {
+      "status": "trained_exploratory_but_positive_test_count_below_20",
+      "matched_pairs": 2140,
+      "train": {
+        "rows": 741384,
+        "positives": 113
+      },
+      "validation": {
+        "average_precision": 0.05631382078710638,
+        "brier": 0.027573684230446815,
+        "precision_at_0_5": 0.00110136071339752,
+        "recall_at_0_5": 0.5344827586206896,
+        "rows": 754395,
+        "positives": 58,
+        "persistence_baseline": {
+          "average_precision": 0.008202981062312951,
+          "brier": 0.00013388211745836068,
+          "precision": 0.09433962264150944,
+          "recall": 0.08620689655172414
+        },
+        "training_prevalence_baseline": {
+          "average_precision": 0.0001524176405209716,
+          "brier": 7.688259467176187e-05
+        },
+        "validation_selected_threshold": 0.9999915361404419,
+        "at_validation_precision_floor_0_80": {
+          "precision": 1.0,
+          "recall": 0.034482758620689655,
+          "predicted_positive_rows": 2
+        }
+      },
+      "test": {
+        "average_precision": 2.6938780353678637e-05,
+        "brier": 1.469437665946316e-05,
+        "precision_at_0_5": 0.0,
+        "recall_at_0_5": 0.0,
+        "rows": 664328,
+        "positives": 9,
+        "persistence_baseline": {
+          "average_precision": 1.3547524716706206e-05,
+          "brier": 2.7095049433412412e-05,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "training_prevalence_baseline": {
+          "average_precision": 0.0001524176405209716,
+          "brier": 1.3566626090343747e-05
+        },
+        "validation_selected_threshold": 0.9999915361404419,
+        "at_validation_precision_floor_0_80": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "predicted_positive_rows": 0
+        }
+      },
+      "model_sha256": "cba0f57a61af902128c97c7b990555e6d784cf2b70b73fe84188bce38bcfd647",
+      "model_path": "training/data/environmental/private/fire-goes16-2025-q1-models/logistic-6h.joblib",
+      "training_rows": 741384,
+      "training_positives": 113,
+      "note": "Class-weighted scores are not calibrated probabilities; repeated pixels and scenes are correlated."
+    },
+    "12": {
+      "status": "trained_exploratory_but_positive_test_count_below_20",
+      "matched_pairs": 2134,
+      "train": {
+        "rows": 694769,
+        "positives": 91
+      },
+      "validation": {
+        "average_precision": 0.006472294690630507,
+        "brier": 0.04498884826898575,
+        "precision_at_0_5": 0.0007419655727974222,
+        "recall_at_0_5": 0.625,
+        "rows": 727502,
+        "positives": 56,
+        "persistence_baseline": {
+          "average_precision": 7.697573340004564e-05,
+          "brier": 0.0001429549334572276,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "training_prevalence_baseline": {
+          "average_precision": 0.00013097878575468969,
+          "brier": 7.697272446617675e-05
+        }
+      },
+      "test": {
+        "average_precision": 2.626078109679782e-05,
+        "brier": 1.884209632407874e-05,
+        "precision_at_0_5": 0.0,
+        "recall_at_0_5": 0.0,
+        "rows": 608508,
+        "positives": 6,
+        "persistence_baseline": {
+          "average_precision": 0.01852673533736067,
+          "brier": 2.136372898959422e-05,
+          "precision": 0.1111111111111111,
+          "recall": 0.16666666666666666
+        },
+        "training_prevalence_baseline": {
+          "average_precision": 0.00013097878575468969,
+          "brier": 9.874755103408417e-06
+        }
+      },
+      "model_sha256": "d61b1c3c5d4735f5387300a6726ec4942e45855eba1bd1a37a568391e6a5f8d4",
+      "model_path": "training/data/environmental/private/fire-goes16-2025-q1-models/logistic-12h.joblib",
+      "training_rows": 694769,
+      "training_positives": 91,
+      "note": "Class-weighted scores are not calibrated probabilities; repeated pixels and scenes are correlated."
+    }
+  },
+  "selection": "Exploratory only; no horizon authorized for app use.",
+  "deployment_approved": false
+}

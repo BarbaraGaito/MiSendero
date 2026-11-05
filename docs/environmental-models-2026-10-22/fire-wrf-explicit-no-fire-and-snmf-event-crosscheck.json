@@ -1,0 +1,186 @@
+{
+  "experiment_id": "frozen-wrf-fire-mask-model-explicit-national-no-fire-and-snmf-event-crosscheck",
+  "status": "candidate_not_supported_as_reliable_fire_prediction",
+  "target": "Cross-source screening of a frozen weather-only model trained against MODIS active-fire labels; SNMF outcomes are official-report proxies, not confirmed physical presence or absence.",
+  "model": {
+    "training_report": "docs/environmental-models-2026-10-22/fire-smn-wrf-modis-evaluation.json",
+    "training_report_sha256": "d655472f842b6ba38bea10b56ad448914bb28c1ed37017d6094478fa8a498dcb",
+    "training_target_before": "2023-01-01",
+    "model_test_period": [
+      "2023-07-01",
+      "2024-01-01"
+    ],
+    "forecast_lead_hours": 27,
+    "threshold_origin": "0.5 is diagnostic. The second threshold maximized validation precision among thresholds with at least five validation alerts; no threshold passed the 90% validation precision gate."
+  },
+  "sources": {
+    "frozen_prediction_file": "training/data/environmental/private/smn-wrf-modis-test-predictions.csv.gz",
+    "prediction_sha256": "47973e9dd63379c3443848635e6d889541af81735bf4cbbe04803070a64988f0",
+    "explicit_no_fire_audit": "docs/environmental-models-2026-10-22/fire-snmf-national-no-fire-report-audit.json",
+    "explicit_no_fire_audit_sha256": "a57c45ee46b1bb97763432a9fa647fe9fc903b4550c427d4e46bb2be03a76396",
+    "positive_event_test": "docs/environmental-models-2026-10-22/fire-smn-wrf-snmf-2025-event-test.json",
+    "positive_event_test_sha256": "9c90a2f36cb329a457d964b3e44884fd32f7d9e89a5ba058b1b09b8b23b91be5"
+  },
+  "test_design": {
+    "negative_cases": "Every model-covered route-sector day among the 2023 SNMF reports that explicitly state no fires were reported nationally; dates are selected by report wording and coverage.",
+    "positive_cases": "Four 2025 route-sector event days in the existing external SNMF event test, scored by the same frozen model.",
+    "independence": "Outcomes are from SNMF reports rather than the MODIS training labels, but both cohorts are small, selected, from different years, and do not provide a representative route-day sample."
+  },
+  "threshold_comparisons": {
+    "diagnostic_0_5": {
+      "threshold": 0.5,
+      "explicit_national_no_fire_reports_2023": {
+        "report_dates": 4,
+        "temporal_clusters_of_adjacent_dates": 3,
+        "covered_route_days": 23,
+        "possible_route_days": 32,
+        "route_days_missing_model_coverage": 9,
+        "false_alert_route_days": 5,
+        "report_dates_with_any_alert": 2,
+        "alerted_route_days": [
+          {
+            "date": "2023-07-14",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "max_score": 0.5871133604
+          },
+          {
+            "date": "2023-07-18",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "max_score": 0.5797434282
+          },
+          {
+            "date": "2023-07-18",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "max_score": 0.6934972417
+          },
+          {
+            "date": "2023-07-18",
+            "route_sector": "Sendero Macuco - Salto Arrechea",
+            "max_score": 0.5505660596
+          },
+          {
+            "date": "2023-07-18",
+            "route_sector": "Sendero Namuncura",
+            "max_score": 0.6566231632
+          }
+        ]
+      },
+      "independent_snmf_reported_route_events_2025": {
+        "scored_event_days": 4,
+        "alerted_event_days": 0,
+        "missed_event_days": 4,
+        "descriptive_sensitivity": 0.0,
+        "events": [
+          {
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "target_date": "2025-10-08",
+            "incident_names": [
+              "Cerro Radal",
+              "Ruta 40 Control Policial"
+            ],
+            "score": 0.04411112083386015,
+            "alert": false
+          },
+          {
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "target_date": "2025-11-17",
+            "incident_names": [
+              "Ternero Los fuegos"
+            ],
+            "score": 0.003376595315075392,
+            "alert": false
+          },
+          {
+            "route_sector": "Cerro Ventana - Hueco de la Ventana",
+            "target_date": "2025-12-11",
+            "incident_names": [
+              "CERRO NAPOSTA /CERRO"
+            ],
+            "score": 0.1212018180508702,
+            "alert": false
+          },
+          {
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "target_date": "2025-10-10",
+            "incident_names": [
+              "Parque Nacional Quebrada del",
+              "Parque Nacional Quebrada del Condorito, ex",
+              "Parque Nacional Quebrada del Condorito, ex La",
+              "Parque Nacional Quebrada del Condorito, ex La Pampilla"
+            ],
+            "score": 0.43672537136505946,
+            "alert": false
+          }
+        ]
+      }
+    },
+    "best_validation_precision_with_minimum_5_alerts": {
+      "threshold": 0.7245825147400184,
+      "explicit_national_no_fire_reports_2023": {
+        "report_dates": 4,
+        "temporal_clusters_of_adjacent_dates": 3,
+        "covered_route_days": 23,
+        "possible_route_days": 32,
+        "route_days_missing_model_coverage": 9,
+        "false_alert_route_days": 0,
+        "report_dates_with_any_alert": 0,
+        "alerted_route_days": []
+      },
+      "independent_snmf_reported_route_events_2025": {
+        "scored_event_days": 4,
+        "alerted_event_days": 0,
+        "missed_event_days": 4,
+        "descriptive_sensitivity": 0.0,
+        "events": [
+          {
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "target_date": "2025-10-08",
+            "incident_names": [
+              "Cerro Radal",
+              "Ruta 40 Control Policial"
+            ],
+            "score": 0.04411112083386015,
+            "alert": false
+          },
+          {
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "target_date": "2025-11-17",
+            "incident_names": [
+              "Ternero Los fuegos"
+            ],
+            "score": 0.003376595315075392,
+            "alert": false
+          },
+          {
+            "route_sector": "Cerro Ventana - Hueco de la Ventana",
+            "target_date": "2025-12-11",
+            "incident_names": [
+              "CERRO NAPOSTA /CERRO"
+            ],
+            "score": 0.1212018180508702,
+            "alert": false
+          },
+          {
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "target_date": "2025-10-10",
+            "incident_names": [
+              "Parque Nacional Quebrada del",
+              "Parque Nacional Quebrada del Condorito, ex",
+              "Parque Nacional Quebrada del Condorito, ex La",
+              "Parque Nacional Quebrada del Condorito, ex La Pampilla"
+            ],
+            "score": 0.43672537136505946,
+            "alert": false
+          }
+        ]
+      }
+    }
+  },
+  "interpretation": [
+    "At the diagnostic 0.5 threshold, the model alerted on some explicit national no-fire report dates and missed all four positive event days.",
+    "At the best validation-precision threshold, it emitted no alerts on either cohort, so the apparent reduction in false alerts came with no detected positive events.",
+    "These selected cohorts cannot estimate deployment precision or calibration, but they do not support an operational threshold for this candidate."
+  ],
+  "synthetic_observations": 0,
+  "deployment_approved": false
+}

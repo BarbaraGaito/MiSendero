@@ -1,0 +1,168 @@
+{
+  "status": "acquired",
+  "source": "NASA MOD14A1.061 / Microsoft Planetary Computer",
+  "purpose": "frozen_training_evaluation_cohort",
+  "effective_observation_period": [
+    "2022-01-01",
+    "2024-01-01"
+  ],
+  "source_documentation": "https://landweb.modaps.eosdis.nasa.gov/data/userguide/MODIS_C6_Fire_User_Guide_C.pdf",
+  "discovery": {
+    "collection": {
+      "url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/modis-14A1-061",
+      "retrieved_at": "2026-10-22T17:50:45.076014+00:00",
+      "sha256": "143896500331d3321f2b5d7d8ac189c4720b3df51b48e74e880e7fe48eefb628",
+      "bytes": 8131
+    },
+    "stac_license": "proprietary",
+    "searches": [
+      {
+        "url": "https://planetarycomputer.microsoft.com/api/stac/v1/search?collections=modis-14A1-061&query=%7B%22platform%22%3A+%7B%22eq%22%3A+%22terra%22%7D%2C+%22modis%3Ahorizontal-tile%22%3A+%7B%22eq%22%3A+12%7D%2C+%22modis%3Avertical-tile%22%3A+%7B%22eq%22%3A+11%7D%7D&datetime=2022-01-01T00%3A00%3A00Z%2F2023-12-31T23%3A59%3A59Z&limit=1000",
+        "retrieved_at": "2026-10-22T18:05:11.200035+00:00",
+        "sha256": "9625840854458930c6dce09c99eb1eebda3ba46d2886d5a569b5aadae9cc5649",
+        "bytes": 670632,
+        "tile": "h12v11",
+        "items": 88,
+        "earlier_revisions_not_used": [
+          "MOD14A1.A2022145.h12v11.061.2022154031537",
+          "MOD14A1.A2022097.h12v11.061.2022106002226",
+          "MOD14A1.A2022073.h12v11.061.2022082011429"
+        ]
+      },
+      {
+        "url": "https://planetarycomputer.microsoft.com/api/stac/v1/search?collections=modis-14A1-061&query=%7B%22platform%22%3A+%7B%22eq%22%3A+%22terra%22%7D%2C+%22modis%3Ahorizontal-tile%22%3A+%7B%22eq%22%3A+12%7D%2C+%22modis%3Avertical-tile%22%3A+%7B%22eq%22%3A+12%7D%7D&datetime=2022-01-01T00%3A00%3A00Z%2F2023-12-31T23%3A59%3A59Z&limit=1000",
+        "retrieved_at": "2026-10-22T18:05:13.654126+00:00",
+        "sha256": "b4c124601553ab11b405c44a13f8778fb0c453383678b4addb7d2e956b3b7c73",
+        "bytes": 670696,
+        "tile": "h12v12",
+        "items": 88,
+        "earlier_revisions_not_used": [
+          "MOD14A1.A2022145.h12v12.061.2022154031645",
+          "MOD14A1.A2022097.h12v12.061.2022106002328",
+          "MOD14A1.A2022073.h12v12.061.2022082010609"
+        ]
+      },
+      {
+        "url": "https://planetarycomputer.microsoft.com/api/stac/v1/search?collections=modis-14A1-061&query=%7B%22platform%22%3A+%7B%22eq%22%3A+%22terra%22%7D%2C+%22modis%3Ahorizontal-tile%22%3A+%7B%22eq%22%3A+12%7D%2C+%22modis%3Avertical-tile%22%3A+%7B%22eq%22%3A+13%7D%7D&datetime=2022-01-01T00%3A00%3A00Z%2F2023-12-31T23%3A59%3A59Z&limit=1000",
+        "retrieved_at": "2026-10-22T18:05:15.961231+00:00",
+        "sha256": "cf6c811e713e4dbf52f0ff7f3f3857fa31d303b095c97bbb6a962604a671868c",
+        "bytes": 672539,
+        "tile": "h12v13",
+        "items": 88,
+        "earlier_revisions_not_used": [
+          "MOD14A1.A2022145.h12v13.061.2022154031917",
+          "MOD14A1.A2022097.h12v13.061.2022106002909",
+          "MOD14A1.A2022073.h12v13.061.2022082012006"
+        ]
+      },
+      {
+        "url": "https://planetarycomputer.microsoft.com/api/stac/v1/search?collections=modis-14A1-061&query=%7B%22platform%22%3A+%7B%22eq%22%3A+%22terra%22%7D%2C+%22modis%3Ahorizontal-tile%22%3A+%7B%22eq%22%3A+13%7D%2C+%22modis%3Avertical-tile%22%3A+%7B%22eq%22%3A+11%7D%7D&datetime=2022-01-01T00%3A00%3A00Z%2F2023-12-31T23%3A59%3A59Z&limit=1000",
+        "retrieved_at": "2026-10-22T18:05:18.247636+00:00",
+        "sha256": "657e6eb088e9af5308ce7255b267e2c5c1d0ce122336ab683feff372fc0f8310",
+        "bytes": 671855,
+        "tile": "h13v11",
+        "items": 88,
+        "earlier_revisions_not_used": [
+          "MOD14A1.A2022145.h13v11.061.2022154031716",
+          "MOD14A1.A2022097.h13v11.061.2022106002305",
+          "MOD14A1.A2022073.h13v11.061.2022082011218"
+        ]
+      },
+      {
+        "url": "https://planetarycomputer.microsoft.com/api/stac/v1/search?collections=modis-14A1-061&query=%7B%22platform%22%3A+%7B%22eq%22%3A+%22terra%22%7D%2C+%22modis%3Ahorizontal-tile%22%3A+%7B%22eq%22%3A+13%7D%2C+%22modis%3Avertical-tile%22%3A+%7B%22eq%22%3A+12%7D%7D&datetime=2022-01-01T00%3A00%3A00Z%2F2023-12-31T23%3A59%3A59Z&limit=1000",
+        "retrieved_at": "2026-10-22T18:05:20.496218+00:00",
+        "sha256": "7fcd3649eaa12df7b0112bbf906ceb9ec9b5e601b73f297a0bc62f4095ce73d7",
+        "bytes": 671862,
+        "tile": "h13v12",
+        "items": 88,
+        "earlier_revisions_not_used": [
+          "MOD14A1.A2022145.h13v12.061.2022154031844",
+          "MOD14A1.A2022097.h13v12.061.2022106002359",
+          "MOD14A1.A2022073.h13v12.061.2022082011518"
+        ]
+      }
+    ]
+  },
+  "country": {
+    "url": "https://apis.datos.gob.ar/georef/api/v2.0/provincias.geojson",
+    "retrieved_at": "2026-10-22T17:46:40.598073+00:00",
+    "sha256": "b086852064c26813d9f607c82c91b4e74e18ea83fd21993ddedd473cf8495af5",
+    "bytes": 614706
+  },
+  "protocol_sha256": "21c731c5266eb569e16936c77b3d1f4bc78088f97b3f35fa1b01ae9588f75555",
+  "original_mask_qa_pairs": 440,
+  "original_bytes": 588014601,
+  "manifest_sha256": "70a7c934fc73e7d2ba70a0933e1a7b878a9d480e0b546f66fc3f84cbe2dad995",
+  "summary": {
+    "counts": {
+      "mask_5": 1770833,
+      "label_0": 1770833,
+      "mask_4": 338795,
+      "mask_3": 95155,
+      "mask_8": 111,
+      "label_1": 186,
+      "mask_9": 75,
+      "mask_7": 11,
+      "mask_6": 1
+    },
+    "exclusions": {
+      "invalid_cloud_water_low_confidence_or_missing_pixel_days": 433962,
+      "outside_argentina_or_border_buffer_pixel_days": 235563
+    },
+    "regions": {
+      "Sendero Che Roga - Mburucuyá": {
+        "sampled_pixel_days": 304731,
+        "label_0": 252973,
+        "label_1": 147
+      },
+      "Sendero La Chuña - El Rey": {
+        "sampled_pixel_days": 304731,
+        "label_0": 271359,
+        "label_1": 3
+      },
+      "Quebrada del Condorito - Balcon Norte": {
+        "sampled_pixel_days": 304731,
+        "label_0": 273224,
+        "label_1": 19
+      },
+      "Sendero Namuncura": {
+        "sampled_pixel_days": 304731,
+        "label_0": 240456,
+        "label_1": 8
+      },
+      "Refugio Frey desde Villa Catedral": {
+        "sampled_pixel_days": 283310,
+        "label_0": 174031
+      },
+      "Bosque Tallado desde la plataforma del Piltriquitron": {
+        "sampled_pixel_days": 270181,
+        "label_0": 197573,
+        "label_1": 4
+      },
+      "Sendero Macuco - Salto Arrechea": {
+        "sampled_pixel_days": 127835,
+        "label_0": 101226,
+        "label_1": 4
+      },
+      "Cerro Ventana - Hueco de la Ventana": {
+        "sampled_pixel_days": 304731,
+        "label_0": 259991,
+        "label_1": 1
+      }
+    },
+    "availability_delay_days": {
+      "median": 10.082627314814815,
+      "maximum": 354.4711805555556
+    },
+    "observations_file": "training\\data\\environmental\\private\\fire-observations.csv.gz",
+    "observations_sha256": "f295457e48b4b40b7f6bc196a8e2ab3ec3905f9a4aa392216d73a93e174a0976"
+  },
+  "synthetic_observations": 0,
+  "limitations": [
+    "Only nominal/high-confidence detected fire vs valid observed non-fire land; not proof of absence of physical fire.",
+    "Daily layers package eight dates; full COG availability can lag by weeks.",
+    "Last-Modified is a conservative proxy for final-version availability, not a logged first-publication time.",
+    "Raster sampling does not establish wildfire cause, trail transitability, propagation or evacuation safety.",
+    "Source STAC license is preserved as returned; original COGs are not redistributed in Git."
+  ]
+}

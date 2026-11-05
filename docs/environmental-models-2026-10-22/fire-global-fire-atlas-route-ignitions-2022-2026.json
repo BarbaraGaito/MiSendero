@@ -1,0 +1,1134 @@
+{
+  "experiment_id": "global-fire-atlas-2026-daily-ignition-points-near-argentina-trails",
+  "source": {
+    "dataset": "Global Fire Atlas, Zenodo record 17669692, updated 2026-04-08",
+    "archive_manifest": {
+      "source": "Zenodo record 17669692, updated 2026-04-08",
+      "url": "https://zenodo.org/records/17669692/files/SHP_ignitions.zip",
+      "archive": "training/data/environmental/private/global-fire-atlas-2026-04/SHP_ignitions.zip",
+      "bytes": 851919355,
+      "md5": "f80b45adbfd8ee1737d2a16cee8bc7ea",
+      "sha256": "77e6b56ae459678129a88d8c64fd93ccad3653c201bf36bc0136a6daabb414c0",
+      "synthetic_observations": 0,
+      "deployment_approved": false
+    },
+    "archive_sha256": "77e6b56ae459678129a88d8c64fd93ccad3653c201bf36bc0136a6daabb414c0",
+    "route_geometry_sha256": "d622e3bd3bae7c97df9152d5ae22fa9cf3136f2bbb0ee807703eaddc21d6610a",
+    "inpe_reference_detection_audit": "docs/environmental-models-2026-10-22/fire-inpe-reference-detections-route-coverage-2018-2025.json",
+    "inpe_reference_detection_audit_sha256": "e42f88fa7bd15aa617dbc9dba54456ffd168a96feee05ace6fabc798325392a0",
+    "snmf_event_audit": "docs/environmental-models-2026-10-22/fire-viirs-daily-l3-snmf-event-audit-2023-2025.json",
+    "snmf_event_audit_sha256": "770ce6f84a9d77aabe7eb9b24c8f057166023c701afb8c80813d781484074dfd",
+    "calendar_years_screened_from_local_fire_season_layers": [
+      2022,
+      2023,
+      2024,
+      2025,
+      2026
+    ],
+    "fire_season_record_counts": {
+      "2022": 786690,
+      "2023": 821379,
+      "2024": 858158,
+      "2025": 731200,
+      "2026": 84496
+    }
+  },
+  "protocol": {
+    "spatial_unit": "ignition point within 10 km of complete route polyline",
+    "distance_method": "local equirectangular projection per candidate point",
+    "routes": [
+      "Sendero Macuco - Salto Arrechea",
+      "Refugio Frey desde Villa Catedral",
+      "Quebrada del Condorito - Balcon Norte",
+      "Sendero Namuncura",
+      "Cerro Ventana - Hueco de la Ventana",
+      "Bosque Tallado desde la plataforma del Piltriquitron",
+      "Sendero Che Roga - Mburucuyá",
+      "Sendero La Chuña - El Rey"
+    ],
+    "date_field": "GFA start_date, daily inferred burn/ignition date",
+    "threshold_km": 10.0,
+    "synthetic_observations": 0
+  },
+  "summary": {
+    "fire_season_layers_screened": 5,
+    "global_ignition_records_screened": 3281923,
+    "route_event_records_within_10km": 20,
+    "unique_route_fire_season_ids": 20,
+    "unique_start_dates_with_route_event": 17,
+    "records_by_calendar_start_year": {
+      "2022": 5,
+      "2023": 11,
+      "2024": 2,
+      "2025": 2
+    },
+    "records_by_route": {
+      "Sendero Che Roga - Mburucuyá": 12,
+      "Cerro Ventana - Hueco de la Ventana": 4,
+      "Sendero Namuncura": 3,
+      "Quebrada del Condorito - Balcon Norte": 1
+    },
+    "route_hits_with_size_at_least_21ha": 20,
+    "gfa_events_with_nearby_inpe_detection_within_2days": 16,
+    "gfa_events_with_nearby_snmf_report_within_2days": 2,
+    "crosscheck_day_tolerance": 2,
+    "crosscheck_point_distance_km": 10.0,
+    "deployment_approved": false
+  },
+  "positive_source_crosschecks": {
+    "inpe_reference_detection_matches": [
+      {
+        "date": "2022-02-01",
+        "route": "Sendero Che Roga - Mburucuyá",
+        "fire_id": "220084724"
+      },
+      {
+        "date": "2022-02-16",
+        "route": "Sendero Che Roga - Mburucuyá",
+        "fire_id": "220084689"
+      },
+      {
+        "date": "2023-02-12",
+        "route": "Cerro Ventana - Hueco de la Ventana",
+        "fire_id": "230116859"
+      },
+      {
+        "date": "2023-02-12",
+        "route": "Cerro Ventana - Hueco de la Ventana",
+        "fire_id": "230116860"
+      },
+      {
+        "date": "2022-09-02",
+        "route": "Sendero Namuncura",
+        "fire_id": "230094742"
+      },
+      {
+        "date": "2022-09-02",
+        "route": "Sendero Namuncura",
+        "fire_id": "230094749"
+      },
+      {
+        "date": "2023-08-22",
+        "route": "Sendero Che Roga - Mburucuyá",
+        "fire_id": "230090691"
+      },
+      {
+        "date": "2023-08-23",
+        "route": "Sendero Che Roga - Mburucuyá",
+        "fire_id": "230090697"
+      },
+      {
+        "date": "2023-08-04",
+        "route": "Sendero Che Roga - Mburucuyá",
+        "fire_id": "230090726"
+      },
+      {
+        "date": "2023-08-01",
+        "route": "Sendero Che Roga - Mburucuyá",
+        "fire_id": "230090736"
+      },
+      {
+        "date": "2023-08-01",
+        "route": "Sendero Che Roga - Mburucuyá",
+        "fire_id": "230090750"
+      },
+      {
+        "date": "2023-02-27",
+        "route": "Sendero Che Roga - Mburucuyá",
+        "fire_id": "230090764"
+      },
+      {
+        "date": "2023-02-06",
+        "route": "Sendero Che Roga - Mburucuyá",
+        "fire_id": "230090808"
+      },
+      {
+        "date": "2024-02-04",
+        "route": "Cerro Ventana - Hueco de la Ventana",
+        "fire_id": "240127639"
+      },
+      {
+        "date": "2023-12-27",
+        "route": "Sendero Namuncura",
+        "fire_id": "240105183"
+      },
+      {
+        "date": "2025-10-10",
+        "route": "Quebrada del Condorito - Balcon Norte",
+        "fire_id": "260016603"
+      }
+    ],
+    "snmf_report_event_matches": [
+      {
+        "date": "2024-02-04",
+        "route": "Cerro Ventana - Hueco de la Ventana",
+        "fire_id": "240127639"
+      },
+      {
+        "date": "2025-10-10",
+        "route": "Quebrada del Condorito - Balcon Norte",
+        "fire_id": "260016603"
+      }
+    ],
+    "interpretation": "Positive-source corroboration only. The INPE archive is a separate active-fire detection product but may share satellite platforms with MODIS-derived GFA. SNMF report matches independently corroborate only those reported events; neither source supplies verified no-fire route-days."
+  },
+  "route_event_records": [
+    {
+      "fire_season": 2022,
+      "fire_id": "220084724",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "start_date": "2022-02-01",
+      "end_date": "2022-02-03",
+      "latitude": -27.9187,
+      "longitude": -58.0548,
+      "distance_to_full_route_km": 9.689,
+      "size_km2": 0.64,
+      "size_ha": 64.0,
+      "duration_days": "3",
+      "landcover": "Savannas",
+      "inpe_reference_detections_within_10km_and_2days": [
+        {
+          "date": "2022-02-01",
+          "day_gap": 0,
+          "distance_km": 0.638,
+          "detection_id": "1f377c20-d777-3511-a108-6e526f7ddc7c"
+        }
+      ],
+      "snmf_report_events_within_10km_and_2days": []
+    },
+    {
+      "fire_season": 2022,
+      "fire_id": "220084785",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "start_date": "2022-02-06",
+      "end_date": "2022-02-06",
+      "latitude": -27.9562,
+      "longitude": -57.9665,
+      "distance_to_full_route_km": 8.685,
+      "size_km2": 0.43,
+      "size_ha": 43.0,
+      "duration_days": "1",
+      "landcover": "Savannas",
+      "inpe_reference_detections_within_10km_and_2days": [],
+      "snmf_report_events_within_10km_and_2days": []
+    },
+    {
+      "fire_season": 2022,
+      "fire_id": "220084689",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "start_date": "2022-02-16",
+      "end_date": "2022-03-03",
+      "latitude": -28.0187,
+      "longitude": -57.9293,
+      "distance_to_full_route_km": 9.768,
+      "size_km2": 49.73,
+      "size_ha": 4973.0,
+      "duration_days": "16",
+      "landcover": "Savannas",
+      "inpe_reference_detections_within_10km_and_2days": [
+        {
+          "date": "2022-02-15",
+          "day_gap": 1,
+          "distance_km": 0.619,
+          "detection_id": "82125343-24ed-37a9-8f60-5488e21e839e"
+        },
+        {
+          "date": "2022-02-15",
+          "day_gap": 1,
+          "distance_km": 1.645,
+          "detection_id": "cd78f1e9-6300-3c62-86c7-1b245c242bcc"
+        },
+        {
+          "date": "2022-02-15",
+          "day_gap": 1,
+          "distance_km": 2.132,
+          "detection_id": "4a9f7c48-91c0-34ee-af41-82a93e3dc53c"
+        }
+      ],
+      "snmf_report_events_within_10km_and_2days": []
+    },
+    {
+      "fire_season": 2023,
+      "fire_id": "230094742",
+      "route": "Sendero Namuncura",
+      "start_date": "2022-09-02",
+      "end_date": "2022-09-04",
+      "latitude": -37.9354,
+      "longitude": -65.5532,
+      "distance_to_full_route_km": 8.535,
+      "size_km2": 0.43,
+      "size_ha": 43.0,
+      "duration_days": "3",
+      "landcover": "Grasslands",
+      "inpe_reference_detections_within_10km_and_2days": [
+        {
+          "date": "2022-09-02",
+          "day_gap": 0,
+          "distance_km": 4.456,
+          "detection_id": "5692e328-a779-3fd8-930a-52f3aaf2aa9b"
+        },
+        {
+          "date": "2022-09-02",
+          "day_gap": 0,
+          "distance_km": 4.604,
+          "detection_id": "7788e2e1-6c61-3da5-b161-db3cab5b0af8"
+        },
+        {
+          "date": "2022-09-02",
+          "day_gap": 0,
+          "distance_km": 5.958,
+          "detection_id": "15c38cfc-8a03-3e8a-86df-24e72c11658a"
+        },
+        {
+          "date": "2022-09-02",
+          "day_gap": 0,
+          "distance_km": 6.069,
+          "detection_id": "c00a5969-415a-3253-aad4-4946ebe3e33e"
+        },
+        {
+          "date": "2022-09-03",
+          "day_gap": 1,
+          "distance_km": 3.953,
+          "detection_id": "d3fcc13c-4cbc-3f85-98be-47471d60348c"
+        },
+        {
+          "date": "2022-09-03",
+          "day_gap": 1,
+          "distance_km": 6.177,
+          "detection_id": "e5dac90d-c053-3137-b177-1f198850dd60"
+        }
+      ],
+      "snmf_report_events_within_10km_and_2days": []
+    },
+    {
+      "fire_season": 2023,
+      "fire_id": "230094749",
+      "route": "Sendero Namuncura",
+      "start_date": "2022-09-02",
+      "end_date": "2022-09-02",
+      "latitude": -37.952,
+      "longitude": -65.5575,
+      "distance_to_full_route_km": 6.719,
+      "size_km2": 0.21,
+      "size_ha": 21.0,
+      "duration_days": "1",
+      "landcover": "Grasslands",
+      "inpe_reference_detections_within_10km_and_2days": [
+        {
+          "date": "2022-09-02",
+          "day_gap": 0,
+          "distance_km": 5.507,
+          "detection_id": "5692e328-a779-3fd8-930a-52f3aaf2aa9b"
+        },
+        {
+          "date": "2022-09-02",
+          "day_gap": 0,
+          "distance_km": 5.986,
+          "detection_id": "7788e2e1-6c61-3da5-b161-db3cab5b0af8"
+        },
+        {
+          "date": "2022-09-02",
+          "day_gap": 0,
+          "distance_km": 6.954,
+          "detection_id": "15c38cfc-8a03-3e8a-86df-24e72c11658a"
+        },
+        {
+          "date": "2022-09-02",
+          "day_gap": 0,
+          "distance_km": 7.34,
+          "detection_id": "c00a5969-415a-3253-aad4-4946ebe3e33e"
+        },
+        {
+          "date": "2022-09-03",
+          "day_gap": 1,
+          "distance_km": 5.451,
+          "detection_id": "d3fcc13c-4cbc-3f85-98be-47471d60348c"
+        },
+        {
+          "date": "2022-09-03",
+          "day_gap": 1,
+          "distance_km": 7.406,
+          "detection_id": "e5dac90d-c053-3137-b177-1f198850dd60"
+        }
+      ],
+      "snmf_report_events_within_10km_and_2days": []
+    },
+    {
+      "fire_season": 2023,
+      "fire_id": "230090808",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "start_date": "2023-02-06",
+      "end_date": "2023-02-06",
+      "latitude": -28.0604,
+      "longitude": -58.0273,
+      "distance_to_full_route_km": 4.715,
+      "size_km2": 0.21,
+      "size_ha": 21.0,
+      "duration_days": "1",
+      "landcover": "Savannas",
+      "inpe_reference_detections_within_10km_and_2days": [
+        {
+          "date": "2023-02-07",
+          "day_gap": 1,
+          "distance_km": 1.058,
+          "detection_id": "c5edb56f-dbdd-3087-a1c9-eb6af0130484"
+        }
+      ],
+      "snmf_report_events_within_10km_and_2days": []
+    },
+    {
+      "fire_season": 2023,
+      "fire_id": "230116859",
+      "route": "Cerro Ventana - Hueco de la Ventana",
+      "start_date": "2023-02-12",
+      "end_date": "2023-02-19",
+      "latitude": -38.0604,
+      "longitude": -62.0083,
+      "distance_to_full_route_km": 0.659,
+      "size_km2": 2.57,
+      "size_ha": 257.0,
+      "duration_days": "8",
+      "landcover": "Grasslands",
+      "inpe_reference_detections_within_10km_and_2days": [
+        {
+          "date": "2023-02-14",
+          "day_gap": 2,
+          "distance_km": 1.121,
+          "detection_id": "fdede01b-a105-3542-9f13-23fa40a697bc"
+        },
+        {
+          "date": "2023-02-14",
+          "day_gap": 2,
+          "distance_km": 1.271,
+          "detection_id": "87e15814-4351-3333-b3b0-fbe5b232ae4d"
+        },
+        {
+          "date": "2023-02-14",
+          "day_gap": 2,
+          "distance_km": 1.393,
+          "detection_id": "015f9118-a291-3dfc-8ba8-fe4f06e86faf"
+        },
+        {
+          "date": "2023-02-14",
+          "day_gap": 2,
+          "distance_km": 1.759,
+          "detection_id": "e76f3716-0f9e-3241-be5a-c419dff920fd"
+        }
+      ],
+      "snmf_report_events_within_10km_and_2days": []
+    },
+    {
+      "fire_season": 2023,
+      "fire_id": "230116860",
+      "route": "Cerro Ventana - Hueco de la Ventana",
+      "start_date": "2023-02-12",
+      "end_date": "2023-02-14",
+      "latitude": -38.0687,
+      "longitude": -61.9889,
+      "distance_to_full_route_km": 2.568,
+      "size_km2": 0.43,
+      "size_ha": 43.0,
+      "duration_days": "3",
+      "landcover": "Grasslands",
+      "inpe_reference_detections_within_10km_and_2days": [
+        {
+          "date": "2023-02-14",
+          "day_gap": 2,
+          "distance_km": 1.057,
+          "detection_id": "87e15814-4351-3333-b3b0-fbe5b232ae4d"
+        },
+        {
+          "date": "2023-02-14",
+          "day_gap": 2,
+          "distance_km": 1.66,
+          "detection_id": "fdede01b-a105-3542-9f13-23fa40a697bc"
+        },
+        {
+          "date": "2023-02-14",
+          "day_gap": 2,
+          "distance_km": 2.304,
+          "detection_id": "015f9118-a291-3dfc-8ba8-fe4f06e86faf"
+        },
+        {
+          "date": "2023-02-14",
+          "day_gap": 2,
+          "distance_km": 2.904,
+          "detection_id": "e76f3716-0f9e-3241-be5a-c419dff920fd"
+        }
+      ],
+      "snmf_report_events_within_10km_and_2days": []
+    },
+    {
+      "fire_season": 2023,
+      "fire_id": "230090809",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "start_date": "2023-02-13",
+      "end_date": "2023-02-13",
+      "latitude": -28.0604,
+      "longitude": -58.0225,
+      "distance_to_full_route_km": 4.752,
+      "size_km2": 0.21,
+      "size_ha": 21.0,
+      "duration_days": "1",
+      "landcover": "Savannas",
+      "inpe_reference_detections_within_10km_and_2days": [],
+      "snmf_report_events_within_10km_and_2days": []
+    },
+    {
+      "fire_season": 2023,
+      "fire_id": "230090764",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "start_date": "2023-02-27",
+      "end_date": "2023-02-28",
+      "latitude": -28.0104,
+      "longitude": -58.005,
+      "distance_to_full_route_km": 2.48,
+      "size_km2": 1.5,
+      "size_ha": 150.0,
+      "duration_days": "2",
+      "landcover": "Savannas",
+      "inpe_reference_detections_within_10km_and_2days": [
+        {
+          "date": "2023-02-25",
+          "day_gap": 2,
+          "distance_km": 2.015,
+          "detection_id": "af5f12d2-acd3-3112-922d-4f6c41bce7bd"
+        }
+      ],
+      "snmf_report_events_within_10km_and_2days": []
+    },
+    {
+      "fire_season": 2023,
+      "fire_id": "230090736",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "start_date": "2023-08-01",
+      "end_date": "2023-08-01",
+      "latitude": -27.977,
+      "longitude": -57.9729,
+      "distance_to_full_route_km": 6.887,
+      "size_km2": 0.21,
+      "size_ha": 21.0,
+      "duration_days": "1",
+      "landcover": "Savannas",
+      "inpe_reference_detections_within_10km_and_2days": [
+        {
+          "date": "2023-08-01",
+          "day_gap": 0,
+          "distance_km": 3.964,
+          "detection_id": "cf50d08a-1907-3512-84f2-0a6f3b4756de"
+        },
+        {
+          "date": "2023-08-01",
+          "day_gap": 0,
+          "distance_km": 4.575,
+          "detection_id": "7870392d-4ebf-3016-9a1b-6bb4abb9cb69"
+        },
+        {
+          "date": "2023-08-01",
+          "day_gap": 0,
+          "distance_km": 4.92,
+          "detection_id": "c119c292-eb44-3ce9-951a-c636fae586ff"
+        },
+        {
+          "date": "2023-08-01",
+          "day_gap": 0,
+          "distance_km": 5.423,
+          "detection_id": "88672cb5-429d-3419-be94-37571f756ecc"
+        },
+        {
+          "date": "2023-08-03",
+          "day_gap": 2,
+          "distance_km": 4.74,
+          "detection_id": "069ad126-168f-3cd6-a850-72c3e2a79d1b"
+        },
+        {
+          "date": "2023-08-03",
+          "day_gap": 2,
+          "distance_km": 5.14,
+          "detection_id": "b02fefd7-e26c-3329-a36c-85d2ec1df993"
+        },
+        {
+          "date": "2023-07-30",
+          "day_gap": 2,
+          "distance_km": 7.623,
+          "detection_id": "11b91ad6-a762-346d-a6ab-c40e47a84559"
+        },
+        {
+          "date": "2023-08-03",
+          "day_gap": 2,
+          "distance_km": 8.015,
+          "detection_id": "6916c571-1148-3383-bcd7-375ad992d362"
+        },
+        {
+          "date": "2023-08-03",
+          "day_gap": 2,
+          "distance_km": 8.7,
+          "detection_id": "1bc3232c-8b23-3469-a62c-e3040cb4abc6"
+        },
+        {
+          "date": "2023-08-03",
+          "day_gap": 2,
+          "distance_km": 8.797,
+          "detection_id": "3614a314-9361-313b-9529-91a5894db856"
+        },
+        {
+          "date": "2023-08-03",
+          "day_gap": 2,
+          "distance_km": 8.891,
+          "detection_id": "36959a32-9484-3da2-9b28-0d06d5d3f145"
+        },
+        {
+          "date": "2023-07-30",
+          "day_gap": 2,
+          "distance_km": 9.088,
+          "detection_id": "f1d676b2-8d12-3166-84e5-9e3ada9090a0"
+        }
+      ],
+      "snmf_report_events_within_10km_and_2days": []
+    },
+    {
+      "fire_season": 2023,
+      "fire_id": "230090750",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "start_date": "2023-08-01",
+      "end_date": "2023-08-08",
+      "latitude": -28.0104,
+      "longitude": -57.9531,
+      "distance_to_full_route_km": 7.478,
+      "size_km2": 4.93,
+      "size_ha": 493.0,
+      "duration_days": "8",
+      "landcover": "Savannas",
+      "inpe_reference_detections_within_10km_and_2days": [
+        {
+          "date": "2023-08-01",
+          "day_gap": 0,
+          "distance_km": 0.768,
+          "detection_id": "cf50d08a-1907-3512-84f2-0a6f3b4756de"
+        },
+        {
+          "date": "2023-08-01",
+          "day_gap": 0,
+          "distance_km": 0.815,
+          "detection_id": "c119c292-eb44-3ce9-951a-c636fae586ff"
+        },
+        {
+          "date": "2023-08-01",
+          "day_gap": 0,
+          "distance_km": 1.755,
+          "detection_id": "7870392d-4ebf-3016-9a1b-6bb4abb9cb69"
+        },
+        {
+          "date": "2023-08-01",
+          "day_gap": 0,
+          "distance_km": 1.776,
+          "detection_id": "88672cb5-429d-3419-be94-37571f756ecc"
+        },
+        {
+          "date": "2023-08-03",
+          "day_gap": 2,
+          "distance_km": 0.59,
+          "detection_id": "069ad126-168f-3cd6-a850-72c3e2a79d1b"
+        },
+        {
+          "date": "2023-08-03",
+          "day_gap": 2,
+          "distance_km": 1.178,
+          "detection_id": "b02fefd7-e26c-3329-a36c-85d2ec1df993"
+        },
+        {
+          "date": "2023-08-03",
+          "day_gap": 2,
+          "distance_km": 4.119,
+          "detection_id": "6916c571-1148-3383-bcd7-375ad992d362"
+        },
+        {
+          "date": "2023-08-03",
+          "day_gap": 2,
+          "distance_km": 4.734,
+          "detection_id": "3614a314-9361-313b-9529-91a5894db856"
+        },
+        {
+          "date": "2023-08-03",
+          "day_gap": 2,
+          "distance_km": 4.854,
+          "detection_id": "36959a32-9484-3da2-9b28-0d06d5d3f145"
+        },
+        {
+          "date": "2023-08-03",
+          "day_gap": 2,
+          "distance_km": 4.861,
+          "detection_id": "1bc3232c-8b23-3469-a62c-e3040cb4abc6"
+        },
+        {
+          "date": "2023-07-30",
+          "day_gap": 2,
+          "distance_km": 5.077,
+          "detection_id": "11b91ad6-a762-346d-a6ab-c40e47a84559"
+        },
+        {
+          "date": "2023-07-30",
+          "day_gap": 2,
+          "distance_km": 6.806,
+          "detection_id": "f1d676b2-8d12-3166-84e5-9e3ada9090a0"
+        }
+      ],
+      "snmf_report_events_within_10km_and_2days": []
+    },
+    {
+      "fire_season": 2023,
+      "fire_id": "230090726",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "start_date": "2023-08-04",
+      "end_date": "2023-08-04",
+      "latitude": -27.9729,
+      "longitude": -57.9613,
+      "distance_to_full_route_km": 8.111,
+      "size_km2": 0.21,
+      "size_ha": 21.0,
+      "duration_days": "1",
+      "landcover": "Savannas",
+      "inpe_reference_detections_within_10km_and_2days": [
+        {
+          "date": "2023-08-03",
+          "day_gap": 1,
+          "distance_km": 4.834,
+          "detection_id": "069ad126-168f-3cd6-a850-72c3e2a79d1b"
+        },
+        {
+          "date": "2023-08-03",
+          "day_gap": 1,
+          "distance_km": 4.978,
+          "detection_id": "b02fefd7-e26c-3329-a36c-85d2ec1df993"
+        },
+        {
+          "date": "2023-08-03",
+          "day_gap": 1,
+          "distance_km": 7.662,
+          "detection_id": "6916c571-1148-3383-bcd7-375ad992d362"
+        },
+        {
+          "date": "2023-08-03",
+          "day_gap": 1,
+          "distance_km": 8.607,
+          "detection_id": "36959a32-9484-3da2-9b28-0d06d5d3f145"
+        },
+        {
+          "date": "2023-08-05",
+          "day_gap": 1,
+          "distance_km": 8.838,
+          "detection_id": "78439803-944c-3f09-818c-5430294c144e"
+        },
+        {
+          "date": "2023-08-05",
+          "day_gap": 1,
+          "distance_km": 8.918,
+          "detection_id": "14faf75a-9793-34f4-b370-5f5db866eef4"
+        },
+        {
+          "date": "2023-08-03",
+          "day_gap": 1,
+          "distance_km": 8.978,
+          "detection_id": "3614a314-9361-313b-9529-91a5894db856"
+        },
+        {
+          "date": "2023-08-03",
+          "day_gap": 1,
+          "distance_km": 9.025,
+          "detection_id": "1bc3232c-8b23-3469-a62c-e3040cb4abc6"
+        },
+        {
+          "date": "2023-08-05",
+          "day_gap": 1,
+          "distance_km": 9.805,
+          "detection_id": "aba7caaf-3d3f-35d6-88cc-7dea5c54ce5b"
+        },
+        {
+          "date": "2023-08-06",
+          "day_gap": 2,
+          "distance_km": 9.011,
+          "detection_id": "35361103-4c88-3573-9fbf-34b2c3e78b54"
+        },
+        {
+          "date": "2023-08-06",
+          "day_gap": 2,
+          "distance_km": 9.069,
+          "detection_id": "0067931c-7d68-36a9-bca1-9a2ff0a8a33f"
+        },
+        {
+          "date": "2023-08-06",
+          "day_gap": 2,
+          "distance_km": 9.268,
+          "detection_id": "c5955333-cff3-3c2a-b766-83ffe8f28aba"
+        },
+        {
+          "date": "2023-08-06",
+          "day_gap": 2,
+          "distance_km": 9.921,
+          "detection_id": "f5c2d625-c4d2-3ae6-a328-efc06368ca3b"
+        }
+      ],
+      "snmf_report_events_within_10km_and_2days": []
+    },
+    {
+      "fire_season": 2023,
+      "fire_id": "230090691",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "start_date": "2023-08-22",
+      "end_date": "2023-08-22",
+      "latitude": -27.927,
+      "longitude": -58.0734,
+      "distance_to_full_route_km": 9.308,
+      "size_km2": 0.64,
+      "size_ha": 64.0,
+      "duration_days": "1",
+      "landcover": "Savannas",
+      "inpe_reference_detections_within_10km_and_2days": [
+        {
+          "date": "2023-08-24",
+          "day_gap": 2,
+          "distance_km": 0.261,
+          "detection_id": "fe3ed899-fd77-34e8-b552-c2ce3b72f376"
+        },
+        {
+          "date": "2023-08-24",
+          "day_gap": 2,
+          "distance_km": 1.466,
+          "detection_id": "f22c07db-33d1-3957-aea5-cc021757589b"
+        }
+      ],
+      "snmf_report_events_within_10km_and_2days": []
+    },
+    {
+      "fire_season": 2023,
+      "fire_id": "230090697",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "start_date": "2023-08-23",
+      "end_date": "2023-08-23",
+      "latitude": -27.9354,
+      "longitude": -58.0732,
+      "distance_to_full_route_km": 8.438,
+      "size_km2": 0.21,
+      "size_ha": 21.0,
+      "duration_days": "1",
+      "landcover": "Savannas",
+      "inpe_reference_detections_within_10km_and_2days": [
+        {
+          "date": "2023-08-24",
+          "day_gap": 1,
+          "distance_km": 0.888,
+          "detection_id": "fe3ed899-fd77-34e8-b552-c2ce3b72f376"
+        },
+        {
+          "date": "2023-08-24",
+          "day_gap": 1,
+          "distance_km": 1.77,
+          "detection_id": "f22c07db-33d1-3957-aea5-cc021757589b"
+        }
+      ],
+      "snmf_report_events_within_10km_and_2days": []
+    },
+    {
+      "fire_season": 2024,
+      "fire_id": "240105183",
+      "route": "Sendero Namuncura",
+      "start_date": "2023-12-27",
+      "end_date": "2023-12-29",
+      "latitude": -37.9437,
+      "longitude": -65.6452,
+      "distance_to_full_route_km": 8.09,
+      "size_km2": 0.43,
+      "size_ha": 43.0,
+      "duration_days": "3",
+      "landcover": "Grasslands",
+      "inpe_reference_detections_within_10km_and_2days": [
+        {
+          "date": "2023-12-27",
+          "day_gap": 0,
+          "distance_km": 0.943,
+          "detection_id": "dcba08f0-97e1-327e-a9c1-8ea82b9f55ae"
+        },
+        {
+          "date": "2023-12-27",
+          "day_gap": 0,
+          "distance_km": 1.037,
+          "detection_id": "03f0da6a-6387-387c-a8d5-abb10c83baca"
+        },
+        {
+          "date": "2023-12-27",
+          "day_gap": 0,
+          "distance_km": 1.225,
+          "detection_id": "56398eca-7be0-3f4f-bd66-a32a9bfec26d"
+        },
+        {
+          "date": "2023-12-27",
+          "day_gap": 0,
+          "distance_km": 2.909,
+          "detection_id": "b922cb22-c509-3792-9acc-a70cfc0400f3"
+        },
+        {
+          "date": "2023-12-28",
+          "day_gap": 1,
+          "distance_km": 2.254,
+          "detection_id": "5541149b-630f-3e3e-9a17-4e0a602a8b97"
+        },
+        {
+          "date": "2023-12-28",
+          "day_gap": 1,
+          "distance_km": 3.71,
+          "detection_id": "389645ab-c5e0-3f31-8bac-41d741a9aba9"
+        },
+        {
+          "date": "2023-12-29",
+          "day_gap": 2,
+          "distance_km": 5.571,
+          "detection_id": "98b17c8e-1cc2-3cfb-8208-8096542cbb65"
+        }
+      ],
+      "snmf_report_events_within_10km_and_2days": []
+    },
+    {
+      "fire_season": 2024,
+      "fire_id": "240127639",
+      "route": "Cerro Ventana - Hueco de la Ventana",
+      "start_date": "2024-02-04",
+      "end_date": "2024-02-05",
+      "latitude": -38.0562,
+      "longitude": -61.936,
+      "distance_to_full_route_km": 6.693,
+      "size_km2": 1.29,
+      "size_ha": 129.0,
+      "duration_days": "2",
+      "landcover": "Grasslands",
+      "inpe_reference_detections_within_10km_and_2days": [
+        {
+          "date": "2024-02-03",
+          "day_gap": 1,
+          "distance_km": 2.378,
+          "detection_id": "6fb75f47-d715-3cc1-bc44-537a09707919"
+        },
+        {
+          "date": "2024-02-03",
+          "day_gap": 1,
+          "distance_km": 2.778,
+          "detection_id": "59fec116-f652-3545-9b91-e0be549b7fae"
+        }
+      ],
+      "snmf_report_events_within_10km_and_2days": [
+        {
+          "reported_start_date": "2024-02-03",
+          "day_gap": 1,
+          "distance_km": 2.205,
+          "route": "Cerro Ventana - Hueco de la Ventana",
+          "incident_names": [
+            "Parque Provincial Ernesto"
+          ]
+        }
+      ]
+    },
+    {
+      "fire_season": 2024,
+      "fire_id": "240100035",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "start_date": "2024-07-21",
+      "end_date": "2024-07-28",
+      "latitude": -28.0687,
+      "longitude": -57.9704,
+      "distance_to_full_route_km": 8.035,
+      "size_km2": 0.43,
+      "size_ha": 43.0,
+      "duration_days": "8",
+      "landcover": "Savannas",
+      "inpe_reference_detections_within_10km_and_2days": [],
+      "snmf_report_events_within_10km_and_2days": []
+    },
+    {
+      "fire_season": 2026,
+      "fire_id": "260017722",
+      "route": "Cerro Ventana - Hueco de la Ventana",
+      "start_date": "2025-07-13",
+      "end_date": "2025-07-13",
+      "latitude": -38.1437,
+      "longitude": -61.9943,
+      "distance_to_full_route_km": 9.221,
+      "size_km2": 0.43,
+      "size_ha": 43.0,
+      "duration_days": "1",
+      "landcover": "Unclassified",
+      "inpe_reference_detections_within_10km_and_2days": [],
+      "snmf_report_events_within_10km_and_2days": []
+    },
+    {
+      "fire_season": 2026,
+      "fire_id": "260016603",
+      "route": "Quebrada del Condorito - Balcon Norte",
+      "start_date": "2025-10-10",
+      "end_date": "2025-10-28",
+      "latitude": -31.6229,
+      "longitude": -64.7154,
+      "distance_to_full_route_km": 1.12,
+      "size_km2": 59.81,
+      "size_ha": 5981.0,
+      "duration_days": "19",
+      "landcover": "Unclassified",
+      "inpe_reference_detections_within_10km_and_2days": [
+        {
+          "date": "2025-10-10",
+          "day_gap": 0,
+          "distance_km": 0.198,
+          "detection_id": "cbefe12c-5a6d-313f-aec7-d897ec2b8774"
+        },
+        {
+          "date": "2025-10-10",
+          "day_gap": 0,
+          "distance_km": 1.419,
+          "detection_id": "fdf96611-8ee1-3059-bd26-b36a581c1df3"
+        },
+        {
+          "date": "2025-10-10",
+          "day_gap": 0,
+          "distance_km": 1.596,
+          "detection_id": "3689f144-3aaf-3d68-8b9f-e82748ad587a"
+        },
+        {
+          "date": "2025-10-10",
+          "day_gap": 0,
+          "distance_km": 2.095,
+          "detection_id": "a55422a3-fca8-3ec9-83d0-59eb7a582148"
+        },
+        {
+          "date": "2025-10-10",
+          "day_gap": 0,
+          "distance_km": 2.639,
+          "detection_id": "58c7bdf5-1e31-39fe-b634-aebd2dc52df7"
+        },
+        {
+          "date": "2025-10-10",
+          "day_gap": 0,
+          "distance_km": 3.033,
+          "detection_id": "8a49fa5b-0843-35b8-947c-6a584cfd99f9"
+        },
+        {
+          "date": "2025-10-10",
+          "day_gap": 0,
+          "distance_km": 3.861,
+          "detection_id": "103b8d50-4e7a-3445-be20-af45864d49da"
+        },
+        {
+          "date": "2025-10-10",
+          "day_gap": 0,
+          "distance_km": 4.353,
+          "detection_id": "9acee344-1dae-3e24-b593-b6afca2550ba"
+        },
+        {
+          "date": "2025-10-10",
+          "day_gap": 0,
+          "distance_km": 4.387,
+          "detection_id": "726270be-ea27-381c-b431-84d17f359c6b"
+        },
+        {
+          "date": "2025-10-11",
+          "day_gap": 1,
+          "distance_km": 6.516,
+          "detection_id": "c7cd49ba-db22-3177-8c6a-8947c10520fd"
+        },
+        {
+          "date": "2025-10-11",
+          "day_gap": 1,
+          "distance_km": 6.709,
+          "detection_id": "2b4bc70d-e2da-3b87-addd-0a8f357c0c12"
+        },
+        {
+          "date": "2025-10-11",
+          "day_gap": 1,
+          "distance_km": 6.898,
+          "detection_id": "55e89597-fd94-36d6-9f2c-fd1497622bfa"
+        },
+        {
+          "date": "2025-10-11",
+          "day_gap": 1,
+          "distance_km": 7.144,
+          "detection_id": "880f1dca-dd64-3902-8fd7-89a442ebf8fe"
+        },
+        {
+          "date": "2025-10-11",
+          "day_gap": 1,
+          "distance_km": 7.47,
+          "detection_id": "aece0842-7fa5-3f5e-ba75-0c6fb5ad3836"
+        },
+        {
+          "date": "2025-10-11",
+          "day_gap": 1,
+          "distance_km": 7.935,
+          "detection_id": "93c5ed46-53f2-39c2-82c8-38fe0e198f00"
+        },
+        {
+          "date": "2025-10-12",
+          "day_gap": 2,
+          "distance_km": 4.667,
+          "detection_id": "e32b9085-cbee-3bcb-b4eb-669d9e9e7f96"
+        },
+        {
+          "date": "2025-10-12",
+          "day_gap": 2,
+          "distance_km": 6.679,
+          "detection_id": "9677f269-ffbb-3f2f-88af-0b5ccad66766"
+        },
+        {
+          "date": "2025-10-12",
+          "day_gap": 2,
+          "distance_km": 7.252,
+          "detection_id": "0b1a0f9e-a0d3-3fcb-ba09-2a82a946636e"
+        },
+        {
+          "date": "2025-10-12",
+          "day_gap": 2,
+          "distance_km": 7.538,
+          "detection_id": "6d2c693b-dd43-32a7-9dda-eda99594d493"
+        },
+        {
+          "date": "2025-10-12",
+          "day_gap": 2,
+          "distance_km": 8.05,
+          "detection_id": "4994bed6-d1e0-3d73-b36b-11f126a280dd"
+        },
+        {
+          "date": "2025-10-12",
+          "day_gap": 2,
+          "distance_km": 8.061,
+          "detection_id": "7dc54891-bd4f-3a65-b8cd-af1200c79ee8"
+        },
+        {
+          "date": "2025-10-12",
+          "day_gap": 2,
+          "distance_km": 8.426,
+          "detection_id": "bb97138f-bfef-34fd-98ed-559ee55b2ef9"
+        }
+      ],
+      "snmf_report_events_within_10km_and_2days": [
+        {
+          "reported_start_date": "2025-10-10",
+          "day_gap": 0,
+          "distance_km": 2.438,
+          "route": "Quebrada del Condorito - Balcon Norte",
+          "incident_names": [
+            "Parque Nacional Quebrada del",
+            "Parque Nacional Quebrada del Condorito, ex",
+            "Parque Nacional Quebrada del Condorito, ex La",
+            "Parque Nacional Quebrada del Condorito, ex La Pampilla"
+          ]
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "GFA ignitions and dates are inferred from MODIS MCD64A1 burned-area progression, not field-confirmed ignition times.",
+    "The date is daily, not hourly; it cannot validate 1-hour or exact 24-hour lead-time prediction.",
+    "The GFA source paper reports a minimum detectable burned area around one MODIS pixel (~21 ha); small fires may be absent.",
+    "An ignition-point list is positive-only and provides no verified fire-free route-days, so it cannot estimate alert precision or false-alarm rate.",
+    "The ±2-day and 10-km cross-source matching rule is exploratory and was not preregistered; match counts are descriptive, not confirmatory metrics.",
+    "The route buffer screen is a candidate event-coverage test; no model was evaluated or approved for production by this script.",
+    "The 2025 and 2026 local fire-season layers are incomplete in the latest product release; interpret recent-year counts as provisional."
+  ],
+  "source_archive_member_count": 50
+}

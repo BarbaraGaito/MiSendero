@@ -1,0 +1,931 @@
+{
+  "experiment_id": "snmf-reported-fire-starts-full-trail-polyline-2023",
+  "meaning": "Positive event coverage using complete reviewed trail polylines; not an evaluation of prediction precision.",
+  "period": [
+    "2023-07-01",
+    "2024-01-01"
+  ],
+  "spatial_protocol": {
+    "distance": "Local equirectangular point-to-polyline segment distance, centered on each event",
+    "radii_km": [
+      10,
+      20
+    ],
+    "minimum_polyline_vertices_by_route": {
+      "Sendero Macuco - Salto Arrechea": 219,
+      "Refugio Frey desde Villa Catedral": 1057,
+      "Quebrada del Condorito - Balcon Norte": 379,
+      "Sendero Namuncura": 37,
+      "Cerro Ventana - Hueco de la Ventana": 221,
+      "Bosque Tallado desde la plataforma del Piltriquitron": 103,
+      "Sendero Che Roga - Mburucuyá": 234,
+      "Sendero La Chuña - El Rey": 93
+    },
+    "route_geometry_source_hashes": {
+      "Sendero Macuco - Salto Arrechea": "148e8cb09cd0d851b88a1875e60763f34efffe046a68c1cb886911fde629477b",
+      "Refugio Frey desde Villa Catedral": "9947df55746c5b8033b0955a9bdd8b2ddb61db1dad2621b1fc0d72fa1e21acdf",
+      "Quebrada del Condorito - Balcon Norte": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74",
+      "Sendero Namuncura": "9ffaf89538fec8fb40b3d760b8e8b8fbcc154794b28d438fa6b046429fc5d32c",
+      "Cerro Ventana - Hueco de la Ventana": "61e1a9b62ae9b691b29c437aed7792b3723c7af54f03feb2311d4322fd3f5066",
+      "Bosque Tallado desde la plataforma del Piltriquitron": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa",
+      "Sendero Che Roga - Mburucuyá": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e",
+      "Sendero La Chuña - El Rey": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    "routes_without_reviewed_polyline": [],
+    "center_distance_is_computed_against_existing_sector_coordinate": true
+  },
+  "report_coverage": {
+    "available_report_dates": 119,
+    "period_days": 184,
+    "dates_without_pdf_are_unknown": 65
+  },
+  "source_hashes": {
+    "reports": "b82ddcb2c848fe854be9e1002fed72318165d8b1818b952b61cc9467b1cc0900",
+    "manifest": "71c14b6aafee792941c46319aa9c7ae2339d21ec8dbcc4a2d4f473c8c1fb2818",
+    "geometry": "d622e3bd3bae7c97df9152d5ae22fa9cf3136f2bbb0ee807703eaddc21d6610a",
+    "geography": "7e475b478db7bb678cc0a1539fdf484e0c8de0a9baa98916fb90f652f75ff834"
+  },
+  "results": {
+    "10": {
+      "incident_records_within_radius": 2,
+      "unique_route_sector_start_days": 2,
+      "route_sector_days_by_region": {
+        "Bosque Tallado desde la plataforma del Piltriquitron": 1,
+        "Quebrada del Condorito - Balcon Norte": 1
+      },
+      "days_found_by_polyline_but_missed_by_center": []
+    },
+    "20": {
+      "incident_records_within_radius": 21,
+      "unique_route_sector_start_days": 17,
+      "route_sector_days_by_region": {
+        "Bosque Tallado desde la plataforma del Piltriquitron": 6,
+        "Quebrada del Condorito - Balcon Norte": 8,
+        "Sendero Che Roga - Mburucuyá": 2,
+        "Sendero Namuncura": 1
+      },
+      "days_found_by_polyline_but_missed_by_center": [
+        {
+          "route_sector": "Quebrada del Condorito - Balcon Norte",
+          "reported_start_date": "2023-08-11"
+        },
+        {
+          "route_sector": "Quebrada del Condorito - Balcon Norte",
+          "reported_start_date": "2023-08-16"
+        }
+      ]
+    }
+  },
+  "events_within_50km": [
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2023-10-09",
+      "incident_name": "PEDREGOSO MARGEN ESTE",
+      "province": "CHUBUT",
+      "line_distance_km": 19.425,
+      "center_distance_km": 19.631,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2023-10-10",
+      "incident_name": "INCENDIO FAMILIA WOODMAN -",
+      "province": "CHUBUT",
+      "line_distance_km": 11.715,
+      "center_distance_km": 12.07,
+      "reported_start_date_pdf_available": false,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2023-10-10",
+      "incident_name": "RUTA 40 INCENDIO FAMILIA WOODMAN -",
+      "province": "CHUBUT",
+      "line_distance_km": 11.715,
+      "center_distance_km": 12.07,
+      "reported_start_date_pdf_available": false,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2023-10-12",
+      "incident_name": "EL VALLECITO",
+      "province": "CHUBUT",
+      "line_distance_km": 10.348,
+      "center_distance_km": 10.755,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2023-10-13",
+      "incident_name": "CURRUMAHUIDA",
+      "province": "CHUBUT",
+      "line_distance_km": 17.573,
+      "center_distance_km": 17.702,
+      "reported_start_date_pdf_available": false,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2023-12-19",
+      "incident_name": "Quema golondrinas",
+      "province": "Chubut",
+      "line_distance_km": 5.176,
+      "center_distance_km": 5.583,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2023-12-25",
+      "incident_name": "Las Mercedes",
+      "province": "Chubut",
+      "line_distance_km": 23.861,
+      "center_distance_km": 24.045,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2023-12-26",
+      "incident_name": "LOTEOS DEL EPUYÉN (La Rinconada)",
+      "province": "Chubut",
+      "line_distance_km": 42.774,
+      "center_distance_km": 43.031,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2023-12-27",
+      "incident_name": "Lago Puelo Apicultor",
+      "province": "Chubut",
+      "line_distance_km": 10.218,
+      "center_distance_km": 10.617,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2023-07-04",
+      "incident_name": "CONAE",
+      "province": "CÓRDOBA",
+      "line_distance_km": 25.522,
+      "center_distance_km": 26.237,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2023-07-22",
+      "incident_name": "VILLA GENERAL BELGRANO",
+      "province": "CÓRDOBA",
+      "line_distance_km": 26.956,
+      "center_distance_km": 29.021,
+      "reported_start_date_pdf_available": false,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2023-07-22",
+      "incident_name": "PAREDON DEL DIQUE SAN",
+      "province": "CÓRDOBA",
+      "line_distance_km": 38.959,
+      "center_distance_km": 40.211,
+      "reported_start_date_pdf_available": false,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2023-07-22",
+      "incident_name": "PAREDON DEL DIQUE SAN ROQUE",
+      "province": "CÓRDOBA",
+      "line_distance_km": 38.959,
+      "center_distance_km": 40.211,
+      "reported_start_date_pdf_available": false,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2023-08-06",
+      "incident_name": "LOS",
+      "province": "CÓRDOBA",
+      "line_distance_km": 47.173,
+      "center_distance_km": 48.305,
+      "reported_start_date_pdf_available": false,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2023-08-06",
+      "incident_name": "Los Parapentes",
+      "province": "CÓRDOBA",
+      "line_distance_km": 47.173,
+      "center_distance_km": 48.305,
+      "reported_start_date_pdf_available": false,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2023-08-11",
+      "incident_name": "ESTANCIA VIEJO DEL CARMÉN",
+      "province": "CORDOBA",
+      "line_distance_km": 18.912,
+      "center_distance_km": 20.178,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2023-08-14",
+      "incident_name": "LA CASCADA",
+      "province": "CORDOBA",
+      "line_distance_km": 46.959,
+      "center_distance_km": 48.105,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2023-08-15",
+      "incident_name": "MERCED TALA HUASI",
+      "province": "CORDOBA",
+      "line_distance_km": 22.25,
+      "center_distance_km": 23.7,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2023-08-15",
+      "incident_name": "TALA HUASI",
+      "province": "CÓRDOBA",
+      "line_distance_km": 22.25,
+      "center_distance_km": 23.7,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2023-08-16",
+      "incident_name": "LOMA ALTA",
+      "province": "CORDOBA",
+      "line_distance_km": 18.006,
+      "center_distance_km": 20.137,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2023-08-16",
+      "incident_name": "VALLE DEL SOL",
+      "province": "CÓRDOBA",
+      "line_distance_km": 45.047,
+      "center_distance_km": 46.142,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2023-08-27",
+      "incident_name": "LOS CHAÑARITOS",
+      "province": "CÓRDOBA",
+      "line_distance_km": 27.358,
+      "center_distance_km": 28.749,
+      "reported_start_date_pdf_available": false,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2023-08-28",
+      "incident_name": "CALERA\" LOMA ALTA",
+      "province": "CÓRDOBA",
+      "line_distance_km": 17.527,
+      "center_distance_km": 19.571,
+      "reported_start_date_pdf_available": false,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2023-08-28",
+      "incident_name": "LOMA ALTA",
+      "province": "CÓRDOBA",
+      "line_distance_km": 17.527,
+      "center_distance_km": 19.571,
+      "reported_start_date_pdf_available": false,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2023-08-29",
+      "incident_name": "TARUCA PAMPA LAGUNA VERDE",
+      "province": "CÓRDOBA",
+      "line_distance_km": 26.712,
+      "center_distance_km": 28.36,
+      "reported_start_date_pdf_available": false,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2023-08-29",
+      "incident_name": "RESERVA NATRAL DE LA DEFENSA \"LA",
+      "province": "CÓRDOBA",
+      "line_distance_km": 44.155,
+      "center_distance_km": 44.9,
+      "reported_start_date_pdf_available": false,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2023-08-29",
+      "incident_name": "RESERVA NATRAL DE LA DEFENSA \"LA CALERA\"",
+      "province": "CÓRDOBA",
+      "line_distance_km": 44.155,
+      "center_distance_km": 44.9,
+      "reported_start_date_pdf_available": false,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2023-09-11",
+      "incident_name": "TRES ARBOLES",
+      "province": "CÓRDOBA",
+      "line_distance_km": 10.581,
+      "center_distance_km": 12.658,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2023-09-11",
+      "incident_name": "LA QUINTANA",
+      "province": "CÓRDOBA",
+      "line_distance_km": 31.961,
+      "center_distance_km": 33.508,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2023-09-12",
+      "incident_name": "VILLA DEL LAGO",
+      "province": "CÓRDOBA",
+      "line_distance_km": 34.029,
+      "center_distance_km": 35.422,
+      "reported_start_date_pdf_available": false,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2023-09-14",
+      "incident_name": "ATHOS PAMPA",
+      "province": "CÓRDOBA",
+      "line_distance_km": 34.192,
+      "center_distance_km": 36.238,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2023-09-15",
+      "incident_name": "LAS CALLES",
+      "province": "CÓRDOBA",
+      "line_distance_km": 30.77,
+      "center_distance_km": 31.391,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2023-09-15",
+      "incident_name": "SAN LORENZO",
+      "province": "CÓRDOBA",
+      "line_distance_km": 31.73,
+      "center_distance_km": 32.303,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2023-09-15",
+      "incident_name": "LAS TAPIAS",
+      "province": "CÓRDOBA",
+      "line_distance_km": 49.189,
+      "center_distance_km": 50.087,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2023-09-18",
+      "incident_name": "LA SERRANITA",
+      "province": "CÓRDOBA",
+      "line_distance_km": 22.839,
+      "center_distance_km": 24.255,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2023-09-22",
+      "incident_name": "LAS ENSENADAS",
+      "province": "CÓRDOBA",
+      "line_distance_km": 48.524,
+      "center_distance_km": 50.508,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2023-09-23",
+      "incident_name": "ALTAUTINA",
+      "province": "CÓRDOBA",
+      "line_distance_km": 49.766,
+      "center_distance_km": 50.109,
+      "reported_start_date_pdf_available": false,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2023-09-27",
+      "incident_name": "DESPEÑADERO",
+      "province": "CÓRDOBA",
+      "line_distance_km": 41.078,
+      "center_distance_km": 42.653,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2023-10-01",
+      "incident_name": "LAS GEMELAS",
+      "province": "CÓRDOBA",
+      "line_distance_km": 36.117,
+      "center_distance_km": 37.556,
+      "reported_start_date_pdf_available": false,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2023-10-02",
+      "incident_name": "PISTA MINA CLAVERO",
+      "province": "CÓRDOBA",
+      "line_distance_km": 28.23,
+      "center_distance_km": 28.318,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2023-10-03",
+      "incident_name": "EL RAYO",
+      "province": "CÓRDOBA",
+      "line_distance_km": 10.943,
+      "center_distance_km": 11.741,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2023-10-04",
+      "incident_name": "TANT - LOS GALPONES",
+      "province": "CÓRDOBA",
+      "line_distance_km": 25.61,
+      "center_distance_km": 27.636,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2023-10-06",
+      "incident_name": "RIO DE LA SUELA",
+      "province": "CÓRDOBA",
+      "line_distance_km": 7.359,
+      "center_distance_km": 8.897,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2023-10-07",
+      "incident_name": "S271 (LA SUELA)",
+      "province": "CÓRDOBA",
+      "line_distance_km": 10.131,
+      "center_distance_km": 10.778,
+      "reported_start_date_pdf_available": false,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2023-10-09",
+      "incident_name": "LAS MINITAS / CABALANGO",
+      "province": "CÓRDOBA",
+      "line_distance_km": 24.058,
+      "center_distance_km": 25.57,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2023-10-11",
+      "incident_name": "LA JUANITA",
+      "province": "CÓRDOBA",
+      "line_distance_km": 27.54,
+      "center_distance_km": 28.319,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2023-10-17",
+      "incident_name": "MONTE REDONDO",
+      "province": "CÓRDOBA",
+      "line_distance_km": 28.28,
+      "center_distance_km": 28.398,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2023-10-22",
+      "incident_name": "SAN LORENZO XVII",
+      "province": "CÓRDOBA",
+      "line_distance_km": 29.828,
+      "center_distance_km": 30.062,
+      "reported_start_date_pdf_available": false,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2023-10-28",
+      "incident_name": "RUTA 34 KM 99",
+      "province": "CÓRDOBA",
+      "line_distance_km": 21.867,
+      "center_distance_km": 22.604,
+      "reported_start_date_pdf_available": false,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2023-10-29",
+      "incident_name": "EA SAN BERNARDO",
+      "province": "CÓRDOBA",
+      "line_distance_km": 12.133,
+      "center_distance_km": 13.89,
+      "reported_start_date_pdf_available": false,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2023-11-03",
+      "incident_name": "EL VOLCAN",
+      "province": "CÓRDOBA",
+      "line_distance_km": 46.374,
+      "center_distance_km": 47.502,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2023-11-06",
+      "incident_name": "OBSERVATORIO",
+      "province": "CÓRDOBA",
+      "line_distance_km": 21.447,
+      "center_distance_km": 21.9,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2023-11-06",
+      "incident_name": "MONTE REDONDO",
+      "province": "CÓRDOBA",
+      "line_distance_km": 28.872,
+      "center_distance_km": 28.913,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2023-11-06",
+      "incident_name": "ALTOS DE SAN LORENZO",
+      "province": "CÓRDOBA",
+      "line_distance_km": 29.196,
+      "center_distance_km": 29.523,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2023-11-07",
+      "incident_name": "LOS REARTES",
+      "province": "CÓRDOBA",
+      "line_distance_km": 29.886,
+      "center_distance_km": 32.041,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2023-11-11",
+      "incident_name": "EL CARRIZAL",
+      "province": "CÓRDOBA",
+      "line_distance_km": 28.817,
+      "center_distance_km": 29.09,
+      "reported_start_date_pdf_available": false,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2023-11-14",
+      "incident_name": "LOMA DEL TIGRE",
+      "province": "CÓRDOBA",
+      "line_distance_km": 27.444,
+      "center_distance_km": 29.525,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2023-11-15",
+      "incident_name": "CERRO PELADO",
+      "province": "CÓRDOBA",
+      "line_distance_km": 44.701,
+      "center_distance_km": 46.144,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2023-11-16",
+      "incident_name": "SAN LORENZO",
+      "province": "CÓRDOBA",
+      "line_distance_km": 28.377,
+      "center_distance_km": 28.743,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2023-11-17",
+      "incident_name": "SAN LORENZO 2",
+      "province": "CÓRDOBA",
+      "line_distance_km": 29.159,
+      "center_distance_km": 29.39,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2023-11-25",
+      "incident_name": "MATADERO VIEJO 3",
+      "province": "CÓRDOBA",
+      "line_distance_km": 28.623,
+      "center_distance_km": 29.161,
+      "reported_start_date_pdf_available": false,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2023-12-07",
+      "incident_name": "SAN LORENZO",
+      "province": "CÓRDOBA",
+      "line_distance_km": 28.936,
+      "center_distance_km": 29.448,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2023-07-22",
+      "incident_name": "MBOCAYA",
+      "province": "CORRIENTES",
+      "line_distance_km": 47.202,
+      "center_distance_km": 47.202,
+      "reported_start_date_pdf_available": false,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2023-08-02",
+      "incident_name": "CAÑADA FRAGOSA",
+      "province": "CORRIENTES",
+      "line_distance_km": 15.583,
+      "center_distance_km": 15.583,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2023-08-06",
+      "incident_name": "LÍMITE POTRERO 13",
+      "province": "CORRIENTES",
+      "line_distance_km": 11.129,
+      "center_distance_km": 11.397,
+      "reported_start_date_pdf_available": false,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "reported_start_date": "2023-08-07",
+      "incident_name": "ESTERO BATEL",
+      "province": "CORRIENTES",
+      "line_distance_km": 32.668,
+      "center_distance_km": 32.693,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2023-08-11",
+      "incident_name": "ALGO ASI",
+      "province": "JUJUY",
+      "line_distance_km": 48.864,
+      "center_distance_km": 50.19,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2023-08-17",
+      "incident_name": "El Can",
+      "province": "JUJUY",
+      "line_distance_km": 46.534,
+      "center_distance_km": 47.927,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2023-09-13",
+      "incident_name": "SIN",
+      "province": "JUJUY",
+      "line_distance_km": 37.701,
+      "center_distance_km": 39.109,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2023-09-13",
+      "incident_name": "LA PINCHADA",
+      "province": "JUJUY",
+      "line_distance_km": 37.897,
+      "center_distance_km": 39.303,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2023-09-14",
+      "incident_name": "MALOJA",
+      "province": "JUJUY",
+      "line_distance_km": 41.256,
+      "center_distance_km": 42.382,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2023-09-17",
+      "incident_name": "CAÑA",
+      "province": "JUJUY",
+      "line_distance_km": 42.887,
+      "center_distance_km": 43.014,
+      "reported_start_date_pdf_available": false,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2023-09-18",
+      "incident_name": "EL PASTOR",
+      "province": "JUJUY",
+      "line_distance_km": 37.859,
+      "center_distance_km": 37.918,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2023-10-11",
+      "incident_name": "TELAO",
+      "province": "JUJUY",
+      "line_distance_km": 46.312,
+      "center_distance_km": 46.312,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2023-10-11",
+      "incident_name": "EL MORRON",
+      "province": "JUJUY",
+      "line_distance_km": 49.775,
+      "center_distance_km": 49.864,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2023-10-21",
+      "incident_name": "GRAL. GUEMES",
+      "province": "SALTA",
+      "line_distance_km": 47.006,
+      "center_distance_km": 47.006,
+      "reported_start_date_pdf_available": false,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2023-10-23",
+      "incident_name": "EL ESCAPE",
+      "province": "JUJUY",
+      "line_distance_km": 48.674,
+      "center_distance_km": 49.739,
+      "reported_start_date_pdf_available": false,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2023-11-04",
+      "incident_name": "LOS LAPACHOS",
+      "province": "JUJUY",
+      "line_distance_km": 47.863,
+      "center_distance_km": 49.214,
+      "reported_start_date_pdf_available": false,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2023-11-04",
+      "incident_name": "PODA",
+      "province": "JUJUY",
+      "line_distance_km": 49.109,
+      "center_distance_km": 49.31,
+      "reported_start_date_pdf_available": false,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2023-11-06",
+      "incident_name": "EL CODITO",
+      "province": "SALTA",
+      "line_distance_km": 39.559,
+      "center_distance_km": 41.168,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "reported_start_date": "2023-11-18",
+      "incident_name": "FUTBOL",
+      "province": "JUJUY",
+      "line_distance_km": 37.999,
+      "center_distance_km": 38.571,
+      "reported_start_date_pdf_available": false,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "reported_start_date": "2023-12-27",
+      "incident_name": "La Trinidad",
+      "province": "La Pampa",
+      "line_distance_km": 10.005,
+      "center_distance_km": 10.036,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "9ffaf89538fec8fb40b3d760b8e8b8fbcc154794b28d438fa6b046429fc5d32c"
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "reported_start_date": "2023-12-27",
+      "incident_name": "Diamante Oeste",
+      "province": "La Pampa",
+      "line_distance_km": 11.705,
+      "center_distance_km": 11.766,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "9ffaf89538fec8fb40b3d760b8e8b8fbcc154794b28d438fa6b046429fc5d32c"
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "reported_start_date": "2023-12-27",
+      "incident_name": "Del Río",
+      "province": "La Pampa",
+      "line_distance_km": 13.257,
+      "center_distance_km": 13.421,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "9ffaf89538fec8fb40b3d760b8e8b8fbcc154794b28d438fa6b046429fc5d32c"
+    }
+  ],
+  "limitations": [
+    "SNMF reports are jurisdiction-reported, not an exhaustive incident/no-incident registry.",
+    "A missing report or no listed nearby incident is not a verified physical no-fire window.",
+    "Dates are reported calendar dates; exact ignition time and lead time are unavailable.",
+    "Routes without a reviewed polyline are excluded; sector centers are not substituted into line-distance counts.",
+    "A mapped trail line does not imply that all adjacent land is equally exposed or that the trail was open.",
+    "Local equirectangular distance is an approximation; the 10/20 km results should be checked geodesically before threshold-sensitive use."
+  ],
+  "synthetic_observations": 0,
+  "deployment_approved": false
+}

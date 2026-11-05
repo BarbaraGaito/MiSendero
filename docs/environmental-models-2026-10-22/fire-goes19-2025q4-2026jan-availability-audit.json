@@ -1,0 +1,20 @@
+{
+  "experiment_id": "fire-goes19-2025q4-2026jan",
+  "manifest_sha256": "dc1106672934cefc5f759da0793e33bb82430f0ae31bc3aabf2ad1883a3e5bec",
+  "availability_table_sha256": "d14059389e901c4003435fcb8e5a76a19fc1e6a08e98115e07faa72c5a5b24b6",
+  "product_created_minus_scan_end": {
+    "count": 2932,
+    "median_minutes": 0.22166666666666668,
+    "p95_minutes": 2.1853333333333285,
+    "maximum_minutes": 6.913333333333333,
+    "negative_count": 0
+  },
+  "s3_last_modified_minus_scan_end": {
+    "count": 2932,
+    "median_minutes": 0.5416666666666666,
+    "p95_minutes": 2.5811666666666646,
+    "maximum_minutes": 161.48833333333332,
+    "negative_count": 0
+  },
+  "interpretation": "date_created measures product generation, not proven first public availability; S3 LastModified can reflect later archival updates and is not a reliable first-publication timestamp."
+}

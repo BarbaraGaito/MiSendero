@@ -3,6 +3,7 @@
 El proyecto evalúa cuatro tareas distintas: Borg observado en GeoFatigue, resultado AMS del estudio nocturno, dificultad de tramos OSM y dificultad publicada por APN. Cada tarea conserva sus etiquetas originales. Sus métricas no son intercambiables ni validan las categorías de fatiga/riesgo de la app durante trekking.
 
 La [optimización del 25/10/2026](ai-optimization-2026-10-25/README.md) amplía la selección a 76 configuraciones por tarea y documenta el antes/después sobre las mismas observaciones reservadas. La tabla del 21/10 que sigue conserva los resultados históricos anteriores a ese ajuste.
+La [evaluación de fatiga orientada a trekking](fatigue-trekking-evaluation-2026-10-22/README.md) añade error ordinal, referencia e incertidumbre por participante sobre el test GeoFatigue ya reservado, y documenta qué datos harían falta para una prueba externa en senderos.
 
 ## Actualizar la evaluación sin volver a entrenar
 
@@ -48,3 +49,7 @@ Los JSON conservan las matrices de confusión, los soportes por clase y las pred
 Para fatiga, hacen falta observaciones independientes de las clases poco representadas y validación de la tarea final. Para AMS, deben distinguirse las medias nocturnas de las lecturas durante una caminata; la etiqueta del estudio no se transfiere automáticamente a alertas instantáneas. Para OSM/APN, ampliar la cobertura de clases y regiones/parques permite evaluar mejor la generalización geográfica. Toda incorporación debe conservar una etiqueta publicada u observada independientemente de los predictores, fuente y procedencia verificables.
 
 La comparación se muestra en las herramientas de administración del perfil. Los modelos siguen identificados como investigación mientras no exista una validación específica para el uso propuesto. El recomendador de senderos usa reglas sobre atributos del catálogo, sin valoraciones humanas ni etiquetas de relevancia. Estas reglas no constituyen un modelo aprendido o una validación científica de adecuación o seguridad.
+
+## Detección de caídas (experimental, 2026-10-22)
+
+Modelo independiente de los de dificultad, fatiga y mal agudo de montaña, entrenado con UniMiB SHAR (30 participantes, caídas experimentales, teléfono en el bolsillo). Evaluación por participante, resultados, limitaciones y estado de cada capacidad (entrenado / evaluado / integrado / monitoreo continuo **no** validado): `docs/fall-detection-2026-10-22/README.md`.

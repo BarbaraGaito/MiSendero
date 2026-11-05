@@ -1,0 +1,45 @@
+{
+  "experiment_id": "noaa-viirs-efire-snmf-event-coordinate-pass-audit",
+  "purpose": "Same-date sensor cross-check at SNMF incident coordinates; not an hourly event verification or prediction evaluation.",
+  "source": {
+    "dataset": "NOAA VIIRS I-band Enterprise Fire EDR v1r3",
+    "efire_filename": "EFIRE-VIIRSI_v1r3_n20_s202508010600092_e202508010601338_c202508010633197.nc",
+    "efire_sha256": "1858074d8b9fc2da13c21c7025299a5250085bb3f51effe064b23f69070c43f5",
+    "geolocation_filename": "GITCO_j01_d20250801_t0600092_e0601338_b39908_c20250801062333847000_oebc_ops.h5",
+    "geolocation_sha256": "865bc474170ec118c198fa86ffe8ca439bd04cad27e93e720e1bc1677474e80f",
+    "time_coverage_start_utc": "2025-08-01T06:00:09Z",
+    "time_coverage_end_utc": "2025-08-01T06:01:33Z",
+    "platform": "n20"
+  },
+  "snmf_route_event_source_sha256": "05b775d3ae38d20e3e12a3fa7966cf219b8e4741c1a32730051f407ffdba8c10",
+  "snmf_event_coordinate_source_sha256": "d8e95391641ccb7d884d7bbe88e3df6fff82251352a50154656f88096f4a87f4",
+  "observations": [
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "reported_start_date": "2025-08-01",
+      "incident_name": "Pampa Alta",
+      "province": "Córdoba",
+      "line_distance_km": 14.764,
+      "center_distance_km": 16.913,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74",
+      "event_latitude": -31.790694444444448,
+      "event_longitude": -64.63188888888888,
+      "nearest_coarse_swath_sample_km": 10.951497682458333,
+      "nearest_pixel_distance_km": 0.21466943350591972,
+      "mask_code": 4,
+      "mask_label": "cloud",
+      "dqf_code": 2,
+      "mask_status": "unknown_quality_or_nonland"
+    }
+  ],
+  "limitations": [
+    "The SNMF reported start date does not establish exact ignition time; a satellite pass on that date may be before or after the event.",
+    "A single nearest VIIRS pixel is not a complete fire perimeter or field-confirmed reference.",
+    "Cloud, bowtie, water, invalid, and unresolved pixels remain unknown, not negative.",
+    "Clear land means the sensor processed that pixel without detecting fire at the pass time; it does not prove no fire occurred.",
+    "This cross-check does not measure a forecast model or its precision."
+  ],
+  "synthetic_observations": 0,
+  "deployment_approved": false
+}

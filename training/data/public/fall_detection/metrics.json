@@ -1,0 +1,1497 @@
+{
+  "protocol": {
+    "validation": "leave-one-participant-out (30 folds); threshold/rule selected on the 29 training participants only",
+    "threshold_objective": "F2 (recall-weighted) on inner 5-fold GroupKFold out-of-fold scores",
+    "window": {
+      "samples": 61,
+      "pre": 40,
+      "post": 20,
+      "sample_rate_hz": 50
+    },
+    "gate_g": 1.5,
+    "neighbourhood_samples": 20,
+    "seed": 20261022,
+    "positives": "main impact (global magnitude maximum) of each fall segment that has a full window",
+    "negatives": "every impact candidate of every ADL segment that has a full window",
+    "excluded_from_candidate_metrics": "secondary peaks inside fall segments (ambiguous label) and candidates without a full real window; both are reported below",
+    "synthetic_data": "none",
+    "oversampling": "none (class weights only)"
+  },
+  "dataset": {
+    "source": "https://www.sal.disco.unimib.it/technologies/unimib-shar/",
+    "archive_url": "https://www.dropbox.com/s/x2fpfqj0bpf8ep6/UniMiB-SHAR.zip",
+    "archive_sha256": "365a396729c0755b4ba8ef8ee0ba52a0621aa535282470546d8a663ff2567160",
+    "archive_bytes": 266206080,
+    "participants": 30,
+    "age_range": [
+      18,
+      60
+    ],
+    "sex_counts": {
+      "F": 24,
+      "M": 6
+    },
+    "usable_segments": 2939,
+    "recording_gaps_split": 960,
+    "usable_trials": 1979,
+    "usable_fall_segments": 1440,
+    "usable_adl_segments": 1499,
+    "excluded_records": [
+      {
+        "participant": 9,
+        "activity": "Jumping",
+        "trial": 1,
+        "reason": "NaN accelerometer samples",
+        "samples": 3208,
+        "valid_prefix_samples": 85
+      }
+    ],
+    "segments_per_activity": {
+      "Walking": 60,
+      "Running": 60,
+      "GoingUpS": 60,
+      "GoingDownS": 60,
+      "Jumping": 59,
+      "SittingDown": 300,
+      "StandingUpFS": 300,
+      "LyingDownFS": 300,
+      "StandingUpFL": 300,
+      "FallingForw": 180,
+      "FallingBack": 180,
+      "FallingRight": 180,
+      "FallingLeft": 180,
+      "Syncope": 180,
+      "FallingBackSC": 180,
+      "FallingWithPS": 180,
+      "HittingObstacle": 180
+    },
+    "total_recorded_minutes": {
+      "fall": 90.4,
+      "adl": 156.88
+    },
+    "units": "m/s^2 in the original files (gravity included, Android device axes); converted to g by /9.80665",
+    "sampling": "uniform 50 Hz (20 ms) verified for every usable record",
+    "phone_position": "trouser pocket only: right pocket and left pocket trials; no backpack/hand/chest data"
+  },
+  "gate_table": [
+    {
+      "gate_g": 1.25,
+      "fall_segments_above_gate": 0.9993055555555556,
+      "adl_candidates": 8411
+    },
+    {
+      "gate_g": 1.5,
+      "fall_segments_above_gate": 0.9993055555555556,
+      "adl_candidates": 6273
+    },
+    {
+      "gate_g": 1.75,
+      "fall_segments_above_gate": 0.9979166666666667,
+      "adl_candidates": 4625
+    },
+    {
+      "gate_g": 2.0,
+      "fall_segments_above_gate": 0.9958333333333333,
+      "adl_candidates": 3278
+    },
+    {
+      "gate_g": 2.5,
+      "fall_segments_above_gate": 0.8041666666666667,
+      "adl_candidates": 780
+    }
+  ],
+  "candidate_counts": {
+    "total": 8590,
+    "labelled": 7438,
+    "fall_positive": 1429,
+    "adl_negative": 6009,
+    "fall_main_impact_without_window": 10,
+    "fall_segments_without_gate_candidate": 1,
+    "adl_candidates_without_window": 264,
+    "fall_secondary_candidates": 878
+  },
+  "models": {
+    "threshold_baseline": {
+      "hyperparameters": null,
+      "selected_threshold_per_participant": {
+        "0": [
+          2.25,
+          0.8,
+          null
+        ],
+        "1": [
+          2.25,
+          0.8,
+          null
+        ],
+        "2": [
+          2.25,
+          0.8,
+          null
+        ],
+        "3": [
+          2.25,
+          0.8,
+          null
+        ],
+        "4": [
+          2.25,
+          0.8,
+          null
+        ],
+        "5": [
+          2.25,
+          0.8,
+          null
+        ],
+        "6": [
+          2.25,
+          0.8,
+          null
+        ],
+        "7": [
+          2.25,
+          0.8,
+          null
+        ],
+        "8": [
+          2.25,
+          0.8,
+          null
+        ],
+        "9": [
+          2.25,
+          0.8,
+          null
+        ],
+        "10": [
+          2.25,
+          0.8,
+          null
+        ],
+        "11": [
+          2.25,
+          0.8,
+          null
+        ],
+        "12": [
+          2.25,
+          0.8,
+          null
+        ],
+        "13": [
+          2.25,
+          0.8,
+          null
+        ],
+        "14": [
+          2.25,
+          0.8,
+          null
+        ],
+        "15": [
+          2.25,
+          0.8,
+          null
+        ],
+        "16": [
+          2.25,
+          0.8,
+          null
+        ],
+        "17": [
+          2.25,
+          0.8,
+          null
+        ],
+        "18": [
+          2.25,
+          0.8,
+          null
+        ],
+        "19": [
+          2.25,
+          0.8,
+          null
+        ],
+        "20": [
+          2.25,
+          0.8,
+          null
+        ],
+        "21": [
+          2.25,
+          0.8,
+          null
+        ],
+        "22": [
+          2.25,
+          0.8,
+          null
+        ],
+        "23": [
+          2.25,
+          0.8,
+          null
+        ],
+        "24": [
+          2.25,
+          0.8,
+          null
+        ],
+        "25": [
+          2.25,
+          0.8,
+          null
+        ],
+        "26": [
+          2.25,
+          0.8,
+          null
+        ],
+        "27": [
+          2.25,
+          0.8,
+          null
+        ],
+        "28": [
+          2.25,
+          0.8,
+          null
+        ],
+        "29": [
+          2.25,
+          0.8,
+          null
+        ]
+      },
+      "nested_threshold": {
+        "precision": 0.43085787451984636,
+        "recall": 0.9419174247725682,
+        "specificity": 0.7041105009152937,
+        "f1": 0.5912585108719525,
+        "f2": 0.7613122171945701,
+        "f1_macro": 0.7054907298135795,
+        "confusion_matrix": [
+          [
+            4231,
+            1778
+          ],
+          [
+            83,
+            1346
+          ]
+        ],
+        "confusion_matrix_labels": [
+          "no_fall",
+          "fall"
+        ],
+        "tp": 1346,
+        "fp": 1778,
+        "fn": 83,
+        "tn": 4231,
+        "pr_auc": 0.4169914532971909,
+        "bootstrap_95ci_by_participant": {
+          "precision": [
+            0.3883422961612491,
+            0.4822924423435966
+          ],
+          "recall": [
+            0.9180657914882842,
+            0.9620806447485493
+          ],
+          "specificity": [
+            0.6576246150377475,
+            0.7517348381602852
+          ],
+          "f1": [
+            0.5486415168223133,
+            0.6374591479752835
+          ],
+          "f1_macro": [
+            0.6685670829039811,
+            0.743989064443282
+          ],
+          "draws": 1000
+        },
+        "per_participant": {
+          "recall_mean": 0.9419106965429817,
+          "recall_min": 0.7291666666666666,
+          "recall_std": 0.06141256749039171,
+          "specificity_mean": 0.712986671781707,
+          "specificity_min": 0.45652173913043476,
+          "specificity_std": 0.1375778593474709
+        },
+        "by_activity": {
+          "Walking": {
+            "windows": 1095,
+            "false_positive_rate": 0.06757990867579909,
+            "false_positives": 74
+          },
+          "Running": {
+            "windows": 2088,
+            "false_positive_rate": 0.49712643678160917,
+            "false_positives": 1038
+          },
+          "GoingUpS": {
+            "windows": 725,
+            "false_positive_rate": 0.1793103448275862,
+            "false_positives": 130
+          },
+          "GoingDownS": {
+            "windows": 834,
+            "false_positive_rate": 0.15467625899280577,
+            "false_positives": 129
+          },
+          "Jumping": {
+            "windows": 567,
+            "false_positive_rate": 0.6701940035273368,
+            "false_positives": 380
+          },
+          "SittingDown": {
+            "windows": 173,
+            "false_positive_rate": 0.06936416184971098,
+            "false_positives": 12
+          },
+          "StandingUpFS": {
+            "windows": 147,
+            "false_positive_rate": 0.013605442176870748,
+            "false_positives": 2
+          },
+          "LyingDownFS": {
+            "windows": 224,
+            "false_positive_rate": 0.044642857142857144,
+            "false_positives": 10
+          },
+          "StandingUpFL": {
+            "windows": 156,
+            "false_positive_rate": 0.019230769230769232,
+            "false_positives": 3
+          },
+          "FallingForw": {
+            "windows": 179,
+            "recall": 0.9050279329608939,
+            "missed": 17
+          },
+          "FallingBack": {
+            "windows": 180,
+            "recall": 0.9777777777777777,
+            "missed": 4
+          },
+          "FallingRight": {
+            "windows": 179,
+            "recall": 0.9720670391061452,
+            "missed": 5
+          },
+          "FallingLeft": {
+            "windows": 178,
+            "recall": 0.9887640449438202,
+            "missed": 2
+          },
+          "Syncope": {
+            "windows": 180,
+            "recall": 0.9277777777777778,
+            "missed": 13
+          },
+          "FallingBackSC": {
+            "windows": 176,
+            "recall": 0.9715909090909091,
+            "missed": 5
+          },
+          "FallingWithPS": {
+            "windows": 180,
+            "recall": 0.8833333333333333,
+            "missed": 21
+          },
+          "HittingObstacle": {
+            "windows": 177,
+            "recall": 0.9096045197740112,
+            "missed": 16
+          }
+        },
+        "by_pocket": {
+          "right": {
+            "windows": 3692,
+            "recall": 0.9426573426573427,
+            "specificity": 0.6899563318777293,
+            "precision": 0.42204132748904194,
+            "f1": 0.583044982698962
+          },
+          "left": {
+            "windows": 3746,
+            "recall": 0.9411764705882353,
+            "specificity": 0.7180079155672823,
+            "precision": 0.4400785854616896,
+            "f1": 0.5997322623828648
+          }
+        }
+      },
+      "event_level": {
+        "fall_segments": 1440,
+        "fall_segments_with_full_window": 1429,
+        "falls_detected": 1352,
+        "recall_all_fall_segments_lower_bound": 0.9388888888888889,
+        "recall_evaluable_fall_segments": 0.9419174247725682,
+        "adl_segments": 1499,
+        "adl_segments_with_alarm": 199,
+        "adl_alarm_candidates": 1778,
+        "scripted_adl_minutes": 156.9,
+        "note": "Scripted ADL segments only; this is NOT an hourly false-alarm rate for real hiking."
+      },
+      "continuous_windows_without_gate": {
+        "adl_fraction_flagged_by_activity": {
+          "Walking": {
+            "windows": 9266,
+            "flagged": 243,
+            "fraction": 0.026224908266781782,
+            "flagged_that_also_pass_gate": 243
+          },
+          "Running": {
+            "windows": 8658,
+            "flagged": 4150,
+            "fraction": 0.4793254793254793,
+            "flagged_that_also_pass_gate": 4150
+          },
+          "GoingUpS": {
+            "windows": 3217,
+            "flagged": 456,
+            "fraction": 0.14174696922598695,
+            "flagged_that_also_pass_gate": 456
+          },
+          "GoingDownS": {
+            "windows": 3275,
+            "flagged": 464,
+            "fraction": 0.1416793893129771,
+            "flagged_that_also_pass_gate": 464
+          },
+          "Jumping": {
+            "windows": 2883,
+            "flagged": 1622,
+            "fraction": 0.5626083940339923,
+            "flagged_that_also_pass_gate": 1622
+          },
+          "SittingDown": {
+            "windows": 2260,
+            "flagged": 62,
+            "fraction": 0.02743362831858407,
+            "flagged_that_also_pass_gate": 62
+          },
+          "StandingUpFS": {
+            "windows": 2262,
+            "flagged": 5,
+            "fraction": 0.0022104332449160036,
+            "flagged_that_also_pass_gate": 5
+          },
+          "LyingDownFS": {
+            "windows": 3510,
+            "flagged": 43,
+            "fraction": 0.01225071225071225,
+            "flagged_that_also_pass_gate": 43
+          },
+          "StandingUpFL": {
+            "windows": 3416,
+            "flagged": 10,
+            "fraction": 0.002927400468384075,
+            "flagged_that_also_pass_gate": 10
+          }
+        },
+        "fall_recall_by_peak_offset_samples": {
+          "-30": {
+            "windows": 1220,
+            "recall": 0.9352459016393443
+          },
+          "-20": {
+            "windows": 1353,
+            "recall": 0.9408721359940873
+          },
+          "-10": {
+            "windows": 1408,
+            "recall": 0.9396306818181818
+          },
+          "0": {
+            "windows": 1430,
+            "recall": 0.9412587412587412
+          },
+          "10": {
+            "windows": 1437,
+            "recall": 0.9380654140570633
+          },
+          "20": {
+            "windows": 1436,
+            "recall": 0.7047353760445683
+          }
+        }
+      }
+    },
+    "random_forest": {
+      "hyperparameters": {
+        "bootstrap": true,
+        "ccp_alpha": 0.0,
+        "class_weight": "balanced_subsample",
+        "criterion": "gini",
+        "max_depth": null,
+        "max_features": "sqrt",
+        "max_leaf_nodes": null,
+        "max_samples": null,
+        "min_impurity_decrease": 0.0,
+        "min_samples_leaf": 2,
+        "min_samples_split": 2,
+        "min_weight_fraction_leaf": 0.0,
+        "monotonic_cst": null,
+        "n_estimators": 300,
+        "n_jobs": -1,
+        "oob_score": false,
+        "random_state": 20261022,
+        "verbose": 0,
+        "warm_start": false
+      },
+      "selected_threshold_per_participant": {
+        "0": 0.31,
+        "1": 0.32,
+        "2": 0.38,
+        "3": 0.33,
+        "4": 0.32,
+        "5": 0.29,
+        "6": 0.33,
+        "7": 0.33,
+        "8": 0.28,
+        "9": 0.35,
+        "10": 0.27,
+        "11": 0.31,
+        "12": 0.36,
+        "13": 0.33,
+        "14": 0.27,
+        "15": 0.39,
+        "16": 0.32,
+        "17": 0.32,
+        "18": 0.35,
+        "19": 0.28,
+        "20": 0.34,
+        "21": 0.41,
+        "22": 0.3,
+        "23": 0.33,
+        "24": 0.4,
+        "25": 0.32,
+        "26": 0.29,
+        "27": 0.31,
+        "28": 0.36,
+        "29": 0.31
+      },
+      "nested_threshold": {
+        "precision": 0.9599184782608695,
+        "recall": 0.9888033589923023,
+        "specificity": 0.9901813945748045,
+        "f1": 0.9741468459152016,
+        "f2": 0.9828881469115192,
+        "f1_macro": 0.9839418989492501,
+        "confusion_matrix": [
+          [
+            5950,
+            59
+          ],
+          [
+            16,
+            1413
+          ]
+        ],
+        "confusion_matrix_labels": [
+          "no_fall",
+          "fall"
+        ],
+        "tp": 1413,
+        "fp": 59,
+        "fn": 16,
+        "tn": 5950,
+        "pr_auc": 0.9899188133159269,
+        "bootstrap_95ci_by_participant": {
+          "precision": [
+            0.9368742368742369,
+            0.9818315214449463
+          ],
+          "recall": [
+            0.9811056682995102,
+            0.9950912500945992
+          ],
+          "specificity": [
+            0.9840319857358023,
+            0.9956413500682187
+          ],
+          "f1": [
+            0.9621981453964151,
+            0.9853963838664812
+          ],
+          "f1_macro": [
+            0.9763661102136593,
+            0.9909359694433025
+          ],
+          "draws": 1000
+        },
+        "per_participant": {
+          "recall_mean": 0.9888130417651695,
+          "recall_min": 0.8958333333333334,
+          "recall_std": 0.020684733016765353,
+          "specificity_mean": 0.990489738898943,
+          "specificity_min": 0.93717277486911,
+          "specificity_std": 0.01646989564687514
+        },
+        "by_activity": {
+          "Walking": {
+            "windows": 1095,
+            "false_positive_rate": 0.0009132420091324201,
+            "false_positives": 1
+          },
+          "Running": {
+            "windows": 2088,
+            "false_positive_rate": 0.003352490421455939,
+            "false_positives": 7
+          },
+          "GoingUpS": {
+            "windows": 725,
+            "false_positive_rate": 0.0,
+            "false_positives": 0
+          },
+          "GoingDownS": {
+            "windows": 834,
+            "false_positive_rate": 0.001199040767386091,
+            "false_positives": 1
+          },
+          "Jumping": {
+            "windows": 567,
+            "false_positive_rate": 0.03350970017636684,
+            "false_positives": 19
+          },
+          "SittingDown": {
+            "windows": 173,
+            "false_positive_rate": 0.12716763005780346,
+            "false_positives": 22
+          },
+          "StandingUpFS": {
+            "windows": 147,
+            "false_positive_rate": 0.0,
+            "false_positives": 0
+          },
+          "LyingDownFS": {
+            "windows": 224,
+            "false_positive_rate": 0.04017857142857143,
+            "false_positives": 9
+          },
+          "StandingUpFL": {
+            "windows": 156,
+            "false_positive_rate": 0.0,
+            "false_positives": 0
+          },
+          "FallingForw": {
+            "windows": 179,
+            "recall": 0.994413407821229,
+            "missed": 1
+          },
+          "FallingBack": {
+            "windows": 180,
+            "recall": 0.9888888888888889,
+            "missed": 2
+          },
+          "FallingRight": {
+            "windows": 179,
+            "recall": 0.9832402234636871,
+            "missed": 3
+          },
+          "FallingLeft": {
+            "windows": 178,
+            "recall": 0.9943820224719101,
+            "missed": 1
+          },
+          "Syncope": {
+            "windows": 180,
+            "recall": 0.9777777777777777,
+            "missed": 4
+          },
+          "FallingBackSC": {
+            "windows": 176,
+            "recall": 0.9829545454545454,
+            "missed": 3
+          },
+          "FallingWithPS": {
+            "windows": 180,
+            "recall": 0.9888888888888889,
+            "missed": 2
+          },
+          "HittingObstacle": {
+            "windows": 177,
+            "recall": 1.0,
+            "missed": 0
+          }
+        },
+        "by_pocket": {
+          "right": {
+            "windows": 3692,
+            "recall": 0.9902097902097902,
+            "specificity": 0.9912663755458515,
+            "precision": 0.9645776566757494,
+            "f1": 0.9772256728778468
+          },
+          "left": {
+            "windows": 3746,
+            "recall": 0.9873949579831933,
+            "specificity": 0.9891160949868074,
+            "precision": 0.9552845528455285,
+            "f1": 0.9710743801652892
+          }
+        }
+      },
+      "fixed_threshold_0_5": {
+        "precision": 0.9802677942212826,
+        "recall": 0.9734079776067179,
+        "specificity": 0.9953403228490597,
+        "f1": 0.9768258426966292,
+        "f2": 0.9747722494744219,
+        "f1_macro": 0.9856693230776129,
+        "confusion_matrix": [
+          [
+            5981,
+            28
+          ],
+          [
+            38,
+            1391
+          ]
+        ],
+        "confusion_matrix_labels": [
+          "no_fall",
+          "fall"
+        ],
+        "tp": 1391,
+        "fp": 28,
+        "fn": 38,
+        "tn": 5981,
+        "pr_auc": 0.9899188133159269,
+        "bootstrap_95ci_by_participant": {
+          "precision": [
+            0.9634418235667442,
+            0.994972071980605
+          ],
+          "recall": [
+            0.9553688169185983,
+            0.986013986013986
+          ],
+          "specificity": [
+            0.991125285375505,
+            0.9988426102464423
+          ],
+          "f1": [
+            0.966522502009894,
+            0.9859948874654758
+          ],
+          "f1_macro": [
+            0.9793229648630976,
+            0.9913696537471078
+          ],
+          "draws": 1000
+        },
+        "per_participant": {
+          "recall_mean": 0.9734755199232535,
+          "recall_min": 0.7708333333333334,
+          "recall_std": 0.04334391884813842,
+          "specificity_mean": 0.9954839826348638,
+          "specificity_min": 0.9581151832460733,
+          "specificity_std": 0.010805431200279901
+        },
+        "by_activity": {
+          "Walking": {
+            "windows": 1095,
+            "false_positive_rate": 0.0,
+            "false_positives": 0
+          },
+          "Running": {
+            "windows": 2088,
+            "false_positive_rate": 0.0004789272030651341,
+            "false_positives": 1
+          },
+          "GoingUpS": {
+            "windows": 725,
+            "false_positive_rate": 0.0,
+            "false_positives": 0
+          },
+          "GoingDownS": {
+            "windows": 834,
+            "false_positive_rate": 0.0,
+            "false_positives": 0
+          },
+          "Jumping": {
+            "windows": 567,
+            "false_positive_rate": 0.012345679012345678,
+            "false_positives": 7
+          },
+          "SittingDown": {
+            "windows": 173,
+            "false_positive_rate": 0.08092485549132948,
+            "false_positives": 14
+          },
+          "StandingUpFS": {
+            "windows": 147,
+            "false_positive_rate": 0.0,
+            "false_positives": 0
+          },
+          "LyingDownFS": {
+            "windows": 224,
+            "false_positive_rate": 0.026785714285714284,
+            "false_positives": 6
+          },
+          "StandingUpFL": {
+            "windows": 156,
+            "false_positive_rate": 0.0,
+            "false_positives": 0
+          },
+          "FallingForw": {
+            "windows": 179,
+            "recall": 0.9832402234636871,
+            "missed": 3
+          },
+          "FallingBack": {
+            "windows": 180,
+            "recall": 0.9722222222222222,
+            "missed": 5
+          },
+          "FallingRight": {
+            "windows": 179,
+            "recall": 0.9720670391061452,
+            "missed": 5
+          },
+          "FallingLeft": {
+            "windows": 178,
+            "recall": 0.9943820224719101,
+            "missed": 1
+          },
+          "Syncope": {
+            "windows": 180,
+            "recall": 0.9666666666666667,
+            "missed": 6
+          },
+          "FallingBackSC": {
+            "windows": 176,
+            "recall": 0.9545454545454546,
+            "missed": 8
+          },
+          "FallingWithPS": {
+            "windows": 180,
+            "recall": 0.9666666666666667,
+            "missed": 6
+          },
+          "HittingObstacle": {
+            "windows": 177,
+            "recall": 0.9774011299435028,
+            "missed": 4
+          }
+        },
+        "by_pocket": {
+          "right": {
+            "windows": 3692,
+            "recall": 0.9692307692307692,
+            "specificity": 0.9956331877729258,
+            "precision": 0.9815864022662889,
+            "f1": 0.9753694581280787
+          },
+          "left": {
+            "windows": 3746,
+            "recall": 0.9775910364145658,
+            "specificity": 0.9950527704485488,
+            "precision": 0.9789621318373072,
+            "f1": 0.9782761037140855
+          }
+        }
+      },
+      "event_level": {
+        "fall_segments": 1440,
+        "fall_segments_with_full_window": 1429,
+        "falls_detected": 1427,
+        "recall_all_fall_segments_lower_bound": 0.9909722222222223,
+        "recall_evaluable_fall_segments": 0.9923023093072079,
+        "adl_segments": 1499,
+        "adl_segments_with_alarm": 45,
+        "adl_alarm_candidates": 59,
+        "scripted_adl_minutes": 156.9,
+        "note": "Scripted ADL segments only; this is NOT an hourly false-alarm rate for real hiking."
+      },
+      "continuous_windows_without_gate": {
+        "adl_fraction_flagged_by_activity": {
+          "Walking": {
+            "windows": 9266,
+            "flagged": 2,
+            "fraction": 0.0002158428663932657,
+            "flagged_that_also_pass_gate": 2
+          },
+          "Running": {
+            "windows": 8658,
+            "flagged": 15,
+            "fraction": 0.0017325017325017325,
+            "flagged_that_also_pass_gate": 15
+          },
+          "GoingUpS": {
+            "windows": 3217,
+            "flagged": 6,
+            "fraction": 0.0018650917003419335,
+            "flagged_that_also_pass_gate": 6
+          },
+          "GoingDownS": {
+            "windows": 3275,
+            "flagged": 1,
+            "fraction": 0.0003053435114503817,
+            "flagged_that_also_pass_gate": 1
+          },
+          "Jumping": {
+            "windows": 2883,
+            "flagged": 107,
+            "fraction": 0.037114117238987165,
+            "flagged_that_also_pass_gate": 107
+          },
+          "SittingDown": {
+            "windows": 2260,
+            "flagged": 66,
+            "fraction": 0.02920353982300885,
+            "flagged_that_also_pass_gate": 66
+          },
+          "StandingUpFS": {
+            "windows": 2262,
+            "flagged": 5,
+            "fraction": 0.0022104332449160036,
+            "flagged_that_also_pass_gate": 5
+          },
+          "LyingDownFS": {
+            "windows": 3510,
+            "flagged": 28,
+            "fraction": 0.007977207977207978,
+            "flagged_that_also_pass_gate": 28
+          },
+          "StandingUpFL": {
+            "windows": 3416,
+            "flagged": 2,
+            "fraction": 0.000585480093676815,
+            "flagged_that_also_pass_gate": 2
+          }
+        },
+        "fall_recall_by_peak_offset_samples": {
+          "-30": {
+            "windows": 1220,
+            "recall": 0.26885245901639343
+          },
+          "-20": {
+            "windows": 1353,
+            "recall": 0.4804138950480414
+          },
+          "-10": {
+            "windows": 1408,
+            "recall": 0.9758522727272727
+          },
+          "0": {
+            "windows": 1430,
+            "recall": 0.9881118881118881
+          },
+          "10": {
+            "windows": 1437,
+            "recall": 0.9457202505219207
+          },
+          "20": {
+            "windows": 1436,
+            "recall": 0.5877437325905293
+          }
+        },
+        "note": "Sliding 61-sample windows (hop 10) over ADL segments and impacts shifted inside the window; evaluates the candidate-trained classifier without the impact gate."
+      }
+    },
+    "xgboost": {
+      "hyperparameters": {
+        "objective": "binary:logistic",
+        "base_score": null,
+        "booster": null,
+        "callbacks": null,
+        "colsample_bylevel": null,
+        "colsample_bynode": null,
+        "colsample_bytree": 0.8,
+        "device": null,
+        "early_stopping_rounds": null,
+        "enable_categorical": true,
+        "eval_metric": "aucpr",
+        "feature_types": null,
+        "feature_weights": null,
+        "gamma": null,
+        "grow_policy": null,
+        "importance_type": null,
+        "interaction_constraints": null,
+        "learning_rate": 0.05,
+        "max_bin": null,
+        "max_cat_threshold": null,
+        "max_cat_to_onehot": null,
+        "max_delta_step": null,
+        "max_depth": 4,
+        "max_leaves": null,
+        "min_child_weight": 2,
+        "missing": NaN,
+        "monotone_constraints": null,
+        "multi_strategy": null,
+        "n_estimators": 300,
+        "n_jobs": -1,
+        "num_parallel_tree": null,
+        "random_state": 20261022,
+        "reg_alpha": null,
+        "reg_lambda": null,
+        "sampling_method": null,
+        "scale_pos_weight": 1.0,
+        "subsample": 0.8,
+        "tree_method": "hist",
+        "validate_parameters": null,
+        "verbosity": 0
+      },
+      "selected_threshold_per_participant": {
+        "0": 0.29,
+        "1": 0.1,
+        "2": 0.3,
+        "3": 0.11,
+        "4": 0.11,
+        "5": 0.3,
+        "6": 0.21,
+        "7": 0.19,
+        "8": 0.14,
+        "9": 0.36,
+        "10": 0.29,
+        "11": 0.18,
+        "12": 0.27,
+        "13": 0.29,
+        "14": 0.51,
+        "15": 0.15,
+        "16": 0.23,
+        "17": 0.31,
+        "18": 0.32,
+        "19": 0.37,
+        "20": 0.26,
+        "21": 0.55,
+        "22": 0.13,
+        "23": 0.28,
+        "24": 0.14,
+        "25": 0.16,
+        "26": 0.37,
+        "27": 0.11,
+        "28": 0.34,
+        "29": 0.13
+      },
+      "nested_threshold": {
+        "precision": 0.9633152173913043,
+        "recall": 0.9923023093072079,
+        "specificity": 0.9910134797803295,
+        "f1": 0.9775939331265082,
+        "f2": 0.9863661658319423,
+        "f1_macro": 0.9860829790893502,
+        "confusion_matrix": [
+          [
+            5955,
+            54
+          ],
+          [
+            11,
+            1418
+          ]
+        ],
+        "confusion_matrix_labels": [
+          "no_fall",
+          "fall"
+        ],
+        "tp": 1418,
+        "fp": 54,
+        "fn": 11,
+        "tn": 5955,
+        "pr_auc": 0.9931832900467475,
+        "bootstrap_95ci_by_participant": {
+          "precision": [
+            0.9419988126649076,
+            0.9826394908691631
+          ],
+          "recall": [
+            0.9859936606221437,
+            0.9972008397480756
+          ],
+          "specificity": [
+            0.985536913953834,
+            0.9958387183018708
+          ],
+          "f1": [
+            0.9663074342586593,
+            0.9877246784886703
+          ],
+          "f1_macro": [
+            0.9790483678940547,
+            0.9923149218617023
+          ],
+          "draws": 1000
+        },
+        "per_participant": {
+          "recall_mean": 0.9923463356973995,
+          "recall_min": 0.9166666666666666,
+          "recall_std": 0.016577039663227645,
+          "specificity_mean": 0.9911943422890123,
+          "specificity_min": 0.9476439790575916,
+          "specificity_std": 0.014781842234458923
+        },
+        "by_activity": {
+          "Walking": {
+            "windows": 1095,
+            "false_positive_rate": 0.0009132420091324201,
+            "false_positives": 1
+          },
+          "Running": {
+            "windows": 2088,
+            "false_positive_rate": 0.005747126436781609,
+            "false_positives": 12
+          },
+          "GoingUpS": {
+            "windows": 725,
+            "false_positive_rate": 0.0,
+            "false_positives": 0
+          },
+          "GoingDownS": {
+            "windows": 834,
+            "false_positive_rate": 0.0,
+            "false_positives": 0
+          },
+          "Jumping": {
+            "windows": 567,
+            "false_positive_rate": 0.021164021164021163,
+            "false_positives": 12
+          },
+          "SittingDown": {
+            "windows": 173,
+            "false_positive_rate": 0.09248554913294797,
+            "false_positives": 16
+          },
+          "StandingUpFS": {
+            "windows": 147,
+            "false_positive_rate": 0.0,
+            "false_positives": 0
+          },
+          "LyingDownFS": {
+            "windows": 224,
+            "false_positive_rate": 0.05803571428571429,
+            "false_positives": 13
+          },
+          "StandingUpFL": {
+            "windows": 156,
+            "false_positive_rate": 0.0,
+            "false_positives": 0
+          },
+          "FallingForw": {
+            "windows": 179,
+            "recall": 0.9888268156424581,
+            "missed": 2
+          },
+          "FallingBack": {
+            "windows": 180,
+            "recall": 0.9944444444444445,
+            "missed": 1
+          },
+          "FallingRight": {
+            "windows": 179,
+            "recall": 0.9888268156424581,
+            "missed": 2
+          },
+          "FallingLeft": {
+            "windows": 178,
+            "recall": 0.9943820224719101,
+            "missed": 1
+          },
+          "Syncope": {
+            "windows": 180,
+            "recall": 0.9944444444444445,
+            "missed": 1
+          },
+          "FallingBackSC": {
+            "windows": 176,
+            "recall": 0.9829545454545454,
+            "missed": 3
+          },
+          "FallingWithPS": {
+            "windows": 180,
+            "recall": 0.9944444444444445,
+            "missed": 1
+          },
+          "HittingObstacle": {
+            "windows": 177,
+            "recall": 1.0,
+            "missed": 0
+          }
+        },
+        "by_pocket": {
+          "right": {
+            "windows": 3692,
+            "recall": 0.9916083916083916,
+            "specificity": 0.9922741014444071,
+            "precision": 0.9685792349726776,
+            "f1": 0.9799585348997928
+          },
+          "left": {
+            "windows": 3746,
+            "recall": 0.9929971988795518,
+            "specificity": 0.9897757255936676,
+            "precision": 0.9581081081081081,
+            "f1": 0.9752407152682256
+          }
+        }
+      },
+      "fixed_threshold_0_5": {
+        "precision": 0.9731219848380427,
+        "recall": 0.9881035689293212,
+        "specificity": 0.9935097353969047,
+        "f1": 0.9805555555555555,
+        "f2": 0.9850704618389841,
+        "f1_macro": 0.9879436664073209,
+        "confusion_matrix": [
+          [
+            5970,
+            39
+          ],
+          [
+            17,
+            1412
+          ]
+        ],
+        "confusion_matrix_labels": [
+          "no_fall",
+          "fall"
+        ],
+        "tp": 1412,
+        "fp": 39,
+        "fn": 17,
+        "tn": 5970,
+        "pr_auc": 0.9931832900467475,
+        "bootstrap_95ci_by_participant": {
+          "precision": [
+            0.9570721773440103,
+            0.9881284916201117
+          ],
+          "recall": [
+            0.98035053222945,
+            0.9937106918238994
+          ],
+          "specificity": [
+            0.9895446741818608,
+            0.9971512014994306
+          ],
+          "f1": [
+            0.9720400414221609,
+            0.9888115794819705
+          ],
+          "f1_macro": [
+            0.9825923140524288,
+            0.993058417296614
+          ],
+          "draws": 1000
+        },
+        "per_participant": {
+          "recall_mean": 0.9881185973207249,
+          "recall_min": 0.8958333333333334,
+          "recall_std": 0.01993416394793196,
+          "specificity_mean": 0.9937307165660638,
+          "specificity_min": 0.9608695652173913,
+          "specificity_std": 0.010998768358256635
+        },
+        "by_activity": {
+          "Walking": {
+            "windows": 1095,
+            "false_positive_rate": 0.0009132420091324201,
+            "false_positives": 1
+          },
+          "Running": {
+            "windows": 2088,
+            "false_positive_rate": 0.0023946360153256703,
+            "false_positives": 5
+          },
+          "GoingUpS": {
+            "windows": 725,
+            "false_positive_rate": 0.0,
+            "false_positives": 0
+          },
+          "GoingDownS": {
+            "windows": 834,
+            "false_positive_rate": 0.0,
+            "false_positives": 0
+          },
+          "Jumping": {
+            "windows": 567,
+            "false_positive_rate": 0.015873015873015872,
+            "false_positives": 9
+          },
+          "SittingDown": {
+            "windows": 173,
+            "false_positive_rate": 0.08092485549132948,
+            "false_positives": 14
+          },
+          "StandingUpFS": {
+            "windows": 147,
+            "false_positive_rate": 0.0,
+            "false_positives": 0
+          },
+          "LyingDownFS": {
+            "windows": 224,
+            "false_positive_rate": 0.044642857142857144,
+            "false_positives": 10
+          },
+          "StandingUpFL": {
+            "windows": 156,
+            "false_positive_rate": 0.0,
+            "false_positives": 0
+          },
+          "FallingForw": {
+            "windows": 179,
+            "recall": 0.9888268156424581,
+            "missed": 2
+          },
+          "FallingBack": {
+            "windows": 180,
+            "recall": 0.9888888888888889,
+            "missed": 2
+          },
+          "FallingRight": {
+            "windows": 179,
+            "recall": 0.9888268156424581,
+            "missed": 2
+          },
+          "FallingLeft": {
+            "windows": 178,
+            "recall": 0.9943820224719101,
+            "missed": 1
+          },
+          "Syncope": {
+            "windows": 180,
+            "recall": 0.9833333333333333,
+            "missed": 3
+          },
+          "FallingBackSC": {
+            "windows": 176,
+            "recall": 0.9772727272727273,
+            "missed": 4
+          },
+          "FallingWithPS": {
+            "windows": 180,
+            "recall": 0.9833333333333333,
+            "missed": 3
+          },
+          "HittingObstacle": {
+            "windows": 177,
+            "recall": 1.0,
+            "missed": 0
+          }
+        },
+        "by_pocket": {
+          "right": {
+            "windows": 3692,
+            "recall": 0.9874125874125874,
+            "specificity": 0.9942895532415184,
+            "precision": 0.9764868603042877,
+            "f1": 0.9819193324061196
+          },
+          "left": {
+            "windows": 3746,
+            "recall": 0.988795518207283,
+            "specificity": 0.9927440633245382,
+            "precision": 0.9697802197802198,
+            "f1": 0.9791955617198336
+          }
+        }
+      },
+      "event_level": {
+        "fall_segments": 1440,
+        "fall_segments_with_full_window": 1429,
+        "falls_detected": 1431,
+        "recall_all_fall_segments_lower_bound": 0.99375,
+        "recall_evaluable_fall_segments": 0.9951014695591323,
+        "adl_segments": 1499,
+        "adl_segments_with_alarm": 41,
+        "adl_alarm_candidates": 54,
+        "scripted_adl_minutes": 156.9,
+        "note": "Scripted ADL segments only; this is NOT an hourly false-alarm rate for real hiking."
+      },
+      "continuous_windows_without_gate": {
+        "adl_fraction_flagged_by_activity": {
+          "Walking": {
+            "windows": 9266,
+            "flagged": 1,
+            "fraction": 0.00010792143319663285,
+            "flagged_that_also_pass_gate": 1
+          },
+          "Running": {
+            "windows": 8658,
+            "flagged": 21,
+            "fraction": 0.0024255024255024253,
+            "flagged_that_also_pass_gate": 21
+          },
+          "GoingUpS": {
+            "windows": 3217,
+            "flagged": 15,
+            "fraction": 0.0046627292508548334,
+            "flagged_that_also_pass_gate": 15
+          },
+          "GoingDownS": {
+            "windows": 3275,
+            "flagged": 1,
+            "fraction": 0.0003053435114503817,
+            "flagged_that_also_pass_gate": 1
+          },
+          "Jumping": {
+            "windows": 2883,
+            "flagged": 46,
+            "fraction": 0.015955601803676726,
+            "flagged_that_also_pass_gate": 46
+          },
+          "SittingDown": {
+            "windows": 2260,
+            "flagged": 65,
+            "fraction": 0.028761061946902654,
+            "flagged_that_also_pass_gate": 65
+          },
+          "StandingUpFS": {
+            "windows": 2262,
+            "flagged": 4,
+            "fraction": 0.0017683465959328027,
+            "flagged_that_also_pass_gate": 4
+          },
+          "LyingDownFS": {
+            "windows": 3510,
+            "flagged": 41,
+            "fraction": 0.011680911680911682,
+            "flagged_that_also_pass_gate": 40
+          },
+          "StandingUpFL": {
+            "windows": 3416,
+            "flagged": 3,
+            "fraction": 0.0008782201405152225,
+            "flagged_that_also_pass_gate": 3
+          }
+        },
+        "fall_recall_by_peak_offset_samples": {
+          "-30": {
+            "windows": 1220,
+            "recall": 0.2975409836065574
+          },
+          "-20": {
+            "windows": 1353,
+            "recall": 0.516629711751663
+          },
+          "-10": {
+            "windows": 1408,
+            "recall": 0.9765625
+          },
+          "0": {
+            "windows": 1430,
+            "recall": 0.9916083916083916
+          },
+          "10": {
+            "windows": 1437,
+            "recall": 0.940848990953375
+          },
+          "20": {
+            "windows": 1436,
+            "recall": 0.6093314763231198
+          }
+        },
+        "note": "Sliding 61-sample windows (hop 10) over ADL segments and impacts shifted inside the window; evaluates the candidate-trained classifier without the impact gate."
+      }
+    }
+  },
+  "elapsed_seconds": 481.7
+}

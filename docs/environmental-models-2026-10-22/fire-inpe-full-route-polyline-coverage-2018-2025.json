@@ -1,0 +1,2409 @@
+{
+  "experiment_id": "inpe-ams-reference-active-fire-full-route-polyline-coverage-2018-2025",
+  "purpose": "Positive-detection spatial coverage and temporal clustering only; not model evaluation or precision.",
+  "source": {
+    "publisher": "INPE Programa Queimadas",
+    "archive_directory": "https://dataserver-coids.inpe.br/queimadas/queimadas/focos/csv/anual/AMS_sat_ref/",
+    "geography_file": "training/data/environmental/private/fire-route-geometries.json",
+    "geography_sha256": "d622e3bd3bae7c97df9152d5ae22fa9cf3136f2bbb0ee807703eaddc21d6610a"
+  },
+  "method": {
+    "distance": "Approximate local planar point-to-full-polyline distance with longitude adjusted by route mean latitude.",
+    "radii_km": [
+      2,
+      5,
+      10,
+      20
+    ],
+    "temporal_clustering": "Per route, detections on consecutive calendar dates (date difference at most one day) are grouped as one sequence. This diagnoses temporal dependence and does not establish one physical fire.",
+    "label_policy": "Positive detections only. No detections, missing observations, or dates without a hotspot are unknown, never negative labels."
+  },
+  "years": [
+    {
+      "year": 2018,
+      "archive": "focos_ams_ref_2018.zip",
+      "archive_bytes": 10990054,
+      "archive_sha256": "5cd46751c6e68dc730e206ed92faef69c1e0851770a44a4e899f3078d7ad6af3",
+      "results_by_radius_km": {
+        "2": {
+          "unique_route_days_with_detection": 3,
+          "route_days_by_sector": {
+            "Sendero Namuncura": 1,
+            "Sendero Che Roga - Mburucuyá": 2
+          },
+          "temporal_sequences_gap_at_most_one_day": 2,
+          "longest_sequence_days": 2,
+          "sequences": [
+            {
+              "route_sector": "Sendero Namuncura",
+              "first_detection_day": "2018-01-08",
+              "last_detection_day": "2018-01-08",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2018-08-28",
+              "last_detection_day": "2018-08-29",
+              "detection_days": 2
+            }
+          ]
+        },
+        "5": {
+          "unique_route_days_with_detection": 6,
+          "route_days_by_sector": {
+            "Sendero Namuncura": 2,
+            "Cerro Ventana - Hueco de la Ventana": 1,
+            "Sendero Che Roga - Mburucuyá": 3
+          },
+          "temporal_sequences_gap_at_most_one_day": 5,
+          "longest_sequence_days": 2,
+          "sequences": [
+            {
+              "route_sector": "Sendero Namuncura",
+              "first_detection_day": "2018-01-08",
+              "last_detection_day": "2018-01-08",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Namuncura",
+              "first_detection_day": "2018-01-10",
+              "last_detection_day": "2018-01-10",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Cerro Ventana - Hueco de la Ventana",
+              "first_detection_day": "2018-02-15",
+              "last_detection_day": "2018-02-15",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2018-08-10",
+              "last_detection_day": "2018-08-10",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2018-08-28",
+              "last_detection_day": "2018-08-29",
+              "detection_days": 2
+            }
+          ]
+        },
+        "10": {
+          "unique_route_days_with_detection": 14,
+          "route_days_by_sector": {
+            "Sendero Macuco - Salto Arrechea": 3,
+            "Refugio Frey desde Villa Catedral": 1,
+            "Sendero Namuncura": 3,
+            "Cerro Ventana - Hueco de la Ventana": 1,
+            "Sendero Che Roga - Mburucuyá": 6
+          },
+          "temporal_sequences_gap_at_most_one_day": 11,
+          "longest_sequence_days": 3,
+          "sequences": [
+            {
+              "route_sector": "Sendero Macuco - Salto Arrechea",
+              "first_detection_day": "2018-02-04",
+              "last_detection_day": "2018-02-04",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Macuco - Salto Arrechea",
+              "first_detection_day": "2018-04-09",
+              "last_detection_day": "2018-04-09",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Macuco - Salto Arrechea",
+              "first_detection_day": "2018-12-30",
+              "last_detection_day": "2018-12-30",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Refugio Frey desde Villa Catedral",
+              "first_detection_day": "2018-01-16",
+              "last_detection_day": "2018-01-16",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Namuncura",
+              "first_detection_day": "2018-01-07",
+              "last_detection_day": "2018-01-08",
+              "detection_days": 2
+            },
+            {
+              "route_sector": "Sendero Namuncura",
+              "first_detection_day": "2018-01-10",
+              "last_detection_day": "2018-01-10",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Cerro Ventana - Hueco de la Ventana",
+              "first_detection_day": "2018-02-15",
+              "last_detection_day": "2018-02-15",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2018-08-10",
+              "last_detection_day": "2018-08-10",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2018-08-16",
+              "last_detection_day": "2018-08-16",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2018-08-22",
+              "last_detection_day": "2018-08-22",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2018-08-27",
+              "last_detection_day": "2018-08-29",
+              "detection_days": 3
+            }
+          ]
+        },
+        "20": {
+          "unique_route_days_with_detection": 35,
+          "route_days_by_sector": {
+            "Sendero Macuco - Salto Arrechea": 5,
+            "Refugio Frey desde Villa Catedral": 4,
+            "Quebrada del Condorito - Balcon Norte": 1,
+            "Sendero Namuncura": 6,
+            "Cerro Ventana - Hueco de la Ventana": 3,
+            "Sendero Che Roga - Mburucuyá": 16
+          },
+          "temporal_sequences_gap_at_most_one_day": 26,
+          "longest_sequence_days": 3,
+          "sequences": [
+            {
+              "route_sector": "Sendero Macuco - Salto Arrechea",
+              "first_detection_day": "2018-02-03",
+              "last_detection_day": "2018-02-04",
+              "detection_days": 2
+            },
+            {
+              "route_sector": "Sendero Macuco - Salto Arrechea",
+              "first_detection_day": "2018-04-09",
+              "last_detection_day": "2018-04-09",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Macuco - Salto Arrechea",
+              "first_detection_day": "2018-07-14",
+              "last_detection_day": "2018-07-14",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Macuco - Salto Arrechea",
+              "first_detection_day": "2018-12-30",
+              "last_detection_day": "2018-12-30",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Refugio Frey desde Villa Catedral",
+              "first_detection_day": "2018-01-16",
+              "last_detection_day": "2018-01-17",
+              "detection_days": 2
+            },
+            {
+              "route_sector": "Refugio Frey desde Villa Catedral",
+              "first_detection_day": "2018-02-03",
+              "last_detection_day": "2018-02-03",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Refugio Frey desde Villa Catedral",
+              "first_detection_day": "2018-02-19",
+              "last_detection_day": "2018-02-19",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Quebrada del Condorito - Balcon Norte",
+              "first_detection_day": "2018-09-22",
+              "last_detection_day": "2018-09-22",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Namuncura",
+              "first_detection_day": "2018-01-06",
+              "last_detection_day": "2018-01-08",
+              "detection_days": 3
+            },
+            {
+              "route_sector": "Sendero Namuncura",
+              "first_detection_day": "2018-01-10",
+              "last_detection_day": "2018-01-10",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Namuncura",
+              "first_detection_day": "2018-01-30",
+              "last_detection_day": "2018-01-30",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Namuncura",
+              "first_detection_day": "2018-08-30",
+              "last_detection_day": "2018-08-30",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Cerro Ventana - Hueco de la Ventana",
+              "first_detection_day": "2018-02-01",
+              "last_detection_day": "2018-02-02",
+              "detection_days": 2
+            },
+            {
+              "route_sector": "Cerro Ventana - Hueco de la Ventana",
+              "first_detection_day": "2018-02-15",
+              "last_detection_day": "2018-02-15",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2018-01-04",
+              "last_detection_day": "2018-01-04",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2018-07-14",
+              "last_detection_day": "2018-07-14",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2018-08-10",
+              "last_detection_day": "2018-08-10",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2018-08-13",
+              "last_detection_day": "2018-08-13",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2018-08-15",
+              "last_detection_day": "2018-08-16",
+              "detection_days": 2
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2018-08-22",
+              "last_detection_day": "2018-08-22",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2018-08-27",
+              "last_detection_day": "2018-08-29",
+              "detection_days": 3
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2018-09-09",
+              "last_detection_day": "2018-09-09",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2018-09-11",
+              "last_detection_day": "2018-09-12",
+              "detection_days": 2
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2018-09-23",
+              "last_detection_day": "2018-09-23",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2018-10-16",
+              "last_detection_day": "2018-10-16",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2018-10-20",
+              "last_detection_day": "2018-10-20",
+              "detection_days": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "year": 2019,
+      "archive": "focos_ams_ref_2019.zip",
+      "archive_bytes": 14443685,
+      "archive_sha256": "f1ed473194672423cd1ed3424523a4e562c7cbce7e60af6e967720c4ec1c7e87",
+      "results_by_radius_km": {
+        "2": {
+          "unique_route_days_with_detection": 0,
+          "route_days_by_sector": {},
+          "temporal_sequences_gap_at_most_one_day": 0,
+          "longest_sequence_days": 0,
+          "sequences": []
+        },
+        "5": {
+          "unique_route_days_with_detection": 0,
+          "route_days_by_sector": {},
+          "temporal_sequences_gap_at_most_one_day": 0,
+          "longest_sequence_days": 0,
+          "sequences": []
+        },
+        "10": {
+          "unique_route_days_with_detection": 5,
+          "route_days_by_sector": {
+            "Bosque Tallado desde la plataforma del Piltriquitron": 1,
+            "Sendero Che Roga - Mburucuyá": 4
+          },
+          "temporal_sequences_gap_at_most_one_day": 4,
+          "longest_sequence_days": 2,
+          "sequences": [
+            {
+              "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+              "first_detection_day": "2019-01-24",
+              "last_detection_day": "2019-01-24",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2019-08-13",
+              "last_detection_day": "2019-08-14",
+              "detection_days": 2
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2019-08-23",
+              "last_detection_day": "2019-08-23",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2019-08-29",
+              "last_detection_day": "2019-08-29",
+              "detection_days": 1
+            }
+          ]
+        },
+        "20": {
+          "unique_route_days_with_detection": 29,
+          "route_days_by_sector": {
+            "Sendero Macuco - Salto Arrechea": 1,
+            "Quebrada del Condorito - Balcon Norte": 4,
+            "Sendero Namuncura": 1,
+            "Bosque Tallado desde la plataforma del Piltriquitron": 3,
+            "Sendero Che Roga - Mburucuyá": 20
+          },
+          "temporal_sequences_gap_at_most_one_day": 26,
+          "longest_sequence_days": 2,
+          "sequences": [
+            {
+              "route_sector": "Sendero Macuco - Salto Arrechea",
+              "first_detection_day": "2019-01-21",
+              "last_detection_day": "2019-01-21",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Quebrada del Condorito - Balcon Norte",
+              "first_detection_day": "2019-08-15",
+              "last_detection_day": "2019-08-15",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Quebrada del Condorito - Balcon Norte",
+              "first_detection_day": "2019-08-17",
+              "last_detection_day": "2019-08-17",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Quebrada del Condorito - Balcon Norte",
+              "first_detection_day": "2019-09-25",
+              "last_detection_day": "2019-09-25",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Quebrada del Condorito - Balcon Norte",
+              "first_detection_day": "2019-10-02",
+              "last_detection_day": "2019-10-02",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Namuncura",
+              "first_detection_day": "2019-08-05",
+              "last_detection_day": "2019-08-05",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+              "first_detection_day": "2019-01-24",
+              "last_detection_day": "2019-01-24",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+              "first_detection_day": "2019-01-28",
+              "last_detection_day": "2019-01-28",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+              "first_detection_day": "2019-10-23",
+              "last_detection_day": "2019-10-23",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2019-04-10",
+              "last_detection_day": "2019-04-10",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2019-07-03",
+              "last_detection_day": "2019-07-03",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2019-07-10",
+              "last_detection_day": "2019-07-10",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2019-08-02",
+              "last_detection_day": "2019-08-02",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2019-08-05",
+              "last_detection_day": "2019-08-05",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2019-08-07",
+              "last_detection_day": "2019-08-07",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2019-08-13",
+              "last_detection_day": "2019-08-14",
+              "detection_days": 2
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2019-08-20",
+              "last_detection_day": "2019-08-21",
+              "detection_days": 2
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2019-08-23",
+              "last_detection_day": "2019-08-23",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2019-08-29",
+              "last_detection_day": "2019-08-29",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2019-09-01",
+              "last_detection_day": "2019-09-01",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2019-09-03",
+              "last_detection_day": "2019-09-04",
+              "detection_days": 2
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2019-09-16",
+              "last_detection_day": "2019-09-16",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2019-09-26",
+              "last_detection_day": "2019-09-26",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2019-09-28",
+              "last_detection_day": "2019-09-28",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2019-09-30",
+              "last_detection_day": "2019-09-30",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2019-10-08",
+              "last_detection_day": "2019-10-08",
+              "detection_days": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "year": 2020,
+      "archive": "focos_ams_ref_2020.zip",
+      "archive_bytes": 18372420,
+      "archive_sha256": "1a477dcf2d09449e9850e3f64a7e6f04b6822b996c7039468a55eeafea1d6928",
+      "results_by_radius_km": {
+        "2": {
+          "unique_route_days_with_detection": 0,
+          "route_days_by_sector": {},
+          "temporal_sequences_gap_at_most_one_day": 0,
+          "longest_sequence_days": 0,
+          "sequences": []
+        },
+        "5": {
+          "unique_route_days_with_detection": 4,
+          "route_days_by_sector": {
+            "Quebrada del Condorito - Balcon Norte": 1,
+            "Sendero Che Roga - Mburucuyá": 3
+          },
+          "temporal_sequences_gap_at_most_one_day": 4,
+          "longest_sequence_days": 1,
+          "sequences": [
+            {
+              "route_sector": "Quebrada del Condorito - Balcon Norte",
+              "first_detection_day": "2020-08-01",
+              "last_detection_day": "2020-08-01",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2020-04-28",
+              "last_detection_day": "2020-04-28",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2020-06-13",
+              "last_detection_day": "2020-06-13",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2020-06-24",
+              "last_detection_day": "2020-06-24",
+              "detection_days": 1
+            }
+          ]
+        },
+        "10": {
+          "unique_route_days_with_detection": 11,
+          "route_days_by_sector": {
+            "Quebrada del Condorito - Balcon Norte": 2,
+            "Sendero Che Roga - Mburucuyá": 9
+          },
+          "temporal_sequences_gap_at_most_one_day": 11,
+          "longest_sequence_days": 1,
+          "sequences": [
+            {
+              "route_sector": "Quebrada del Condorito - Balcon Norte",
+              "first_detection_day": "2020-08-01",
+              "last_detection_day": "2020-08-01",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Quebrada del Condorito - Balcon Norte",
+              "first_detection_day": "2020-09-24",
+              "last_detection_day": "2020-09-24",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2020-03-24",
+              "last_detection_day": "2020-03-24",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2020-04-23",
+              "last_detection_day": "2020-04-23",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2020-04-28",
+              "last_detection_day": "2020-04-28",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2020-06-13",
+              "last_detection_day": "2020-06-13",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2020-06-24",
+              "last_detection_day": "2020-06-24",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2020-08-06",
+              "last_detection_day": "2020-08-06",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2020-09-22",
+              "last_detection_day": "2020-09-22",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2020-09-30",
+              "last_detection_day": "2020-09-30",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2020-11-22",
+              "last_detection_day": "2020-11-22",
+              "detection_days": 1
+            }
+          ]
+        },
+        "20": {
+          "unique_route_days_with_detection": 57,
+          "route_days_by_sector": {
+            "Sendero Macuco - Salto Arrechea": 2,
+            "Refugio Frey desde Villa Catedral": 2,
+            "Quebrada del Condorito - Balcon Norte": 10,
+            "Sendero Namuncura": 1,
+            "Sendero Che Roga - Mburucuyá": 42
+          },
+          "temporal_sequences_gap_at_most_one_day": 45,
+          "longest_sequence_days": 4,
+          "sequences": [
+            {
+              "route_sector": "Sendero Macuco - Salto Arrechea",
+              "first_detection_day": "2020-01-06",
+              "last_detection_day": "2020-01-06",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Macuco - Salto Arrechea",
+              "first_detection_day": "2020-03-17",
+              "last_detection_day": "2020-03-17",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Refugio Frey desde Villa Catedral",
+              "first_detection_day": "2020-03-16",
+              "last_detection_day": "2020-03-16",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Refugio Frey desde Villa Catedral",
+              "first_detection_day": "2020-03-19",
+              "last_detection_day": "2020-03-19",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Quebrada del Condorito - Balcon Norte",
+              "first_detection_day": "2020-05-16",
+              "last_detection_day": "2020-05-16",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Quebrada del Condorito - Balcon Norte",
+              "first_detection_day": "2020-07-04",
+              "last_detection_day": "2020-07-04",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Quebrada del Condorito - Balcon Norte",
+              "first_detection_day": "2020-07-31",
+              "last_detection_day": "2020-08-01",
+              "detection_days": 2
+            },
+            {
+              "route_sector": "Quebrada del Condorito - Balcon Norte",
+              "first_detection_day": "2020-09-22",
+              "last_detection_day": "2020-09-22",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Quebrada del Condorito - Balcon Norte",
+              "first_detection_day": "2020-09-24",
+              "last_detection_day": "2020-09-24",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Quebrada del Condorito - Balcon Norte",
+              "first_detection_day": "2020-09-27",
+              "last_detection_day": "2020-09-30",
+              "detection_days": 4
+            },
+            {
+              "route_sector": "Sendero Namuncura",
+              "first_detection_day": "2020-12-13",
+              "last_detection_day": "2020-12-13",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2020-03-06",
+              "last_detection_day": "2020-03-06",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2020-03-24",
+              "last_detection_day": "2020-03-24",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2020-04-07",
+              "last_detection_day": "2020-04-07",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2020-04-16",
+              "last_detection_day": "2020-04-16",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2020-04-18",
+              "last_detection_day": "2020-04-18",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2020-04-21",
+              "last_detection_day": "2020-04-21",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2020-04-23",
+              "last_detection_day": "2020-04-24",
+              "detection_days": 2
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2020-04-28",
+              "last_detection_day": "2020-04-28",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2020-05-03",
+              "last_detection_day": "2020-05-03",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2020-05-07",
+              "last_detection_day": "2020-05-07",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2020-05-26",
+              "last_detection_day": "2020-05-26",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2020-06-13",
+              "last_detection_day": "2020-06-13",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2020-06-15",
+              "last_detection_day": "2020-06-15",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2020-06-17",
+              "last_detection_day": "2020-06-17",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2020-06-19",
+              "last_detection_day": "2020-06-19",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2020-06-24",
+              "last_detection_day": "2020-06-24",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2020-07-04",
+              "last_detection_day": "2020-07-04",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2020-07-21",
+              "last_detection_day": "2020-07-21",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2020-07-29",
+              "last_detection_day": "2020-07-29",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2020-08-02",
+              "last_detection_day": "2020-08-03",
+              "detection_days": 2
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2020-08-05",
+              "last_detection_day": "2020-08-06",
+              "detection_days": 2
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2020-08-09",
+              "last_detection_day": "2020-08-09",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2020-08-18",
+              "last_detection_day": "2020-08-18",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2020-08-23",
+              "last_detection_day": "2020-08-23",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2020-08-27",
+              "last_detection_day": "2020-08-27",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2020-09-10",
+              "last_detection_day": "2020-09-10",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2020-09-21",
+              "last_detection_day": "2020-09-22",
+              "detection_days": 2
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2020-09-24",
+              "last_detection_day": "2020-09-26",
+              "detection_days": 3
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2020-09-30",
+              "last_detection_day": "2020-09-30",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2020-10-09",
+              "last_detection_day": "2020-10-11",
+              "detection_days": 3
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2020-11-06",
+              "last_detection_day": "2020-11-06",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2020-11-20",
+              "last_detection_day": "2020-11-20",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2020-11-22",
+              "last_detection_day": "2020-11-22",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2020-11-24",
+              "last_detection_day": "2020-11-24",
+              "detection_days": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "year": 2021,
+      "archive": "focos_ams_ref_2021.zip",
+      "archive_bytes": 13619288,
+      "archive_sha256": "461fd9f64fc97f7a30bb5cbaad79f076caf22d003457362af8bd2e370c02021c",
+      "results_by_radius_km": {
+        "2": {
+          "unique_route_days_with_detection": 1,
+          "route_days_by_sector": {
+            "Bosque Tallado desde la plataforma del Piltriquitron": 1
+          },
+          "temporal_sequences_gap_at_most_one_day": 1,
+          "longest_sequence_days": 1,
+          "sequences": [
+            {
+              "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+              "first_detection_day": "2021-01-25",
+              "last_detection_day": "2021-01-25",
+              "detection_days": 1
+            }
+          ]
+        },
+        "5": {
+          "unique_route_days_with_detection": 6,
+          "route_days_by_sector": {
+            "Bosque Tallado desde la plataforma del Piltriquitron": 5,
+            "Sendero Che Roga - Mburucuyá": 1
+          },
+          "temporal_sequences_gap_at_most_one_day": 5,
+          "longest_sequence_days": 2,
+          "sequences": [
+            {
+              "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+              "first_detection_day": "2021-01-25",
+              "last_detection_day": "2021-01-25",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+              "first_detection_day": "2021-02-04",
+              "last_detection_day": "2021-02-04",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+              "first_detection_day": "2021-02-06",
+              "last_detection_day": "2021-02-07",
+              "detection_days": 2
+            },
+            {
+              "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+              "first_detection_day": "2021-02-10",
+              "last_detection_day": "2021-02-10",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2021-07-08",
+              "last_detection_day": "2021-07-08",
+              "detection_days": 1
+            }
+          ]
+        },
+        "10": {
+          "unique_route_days_with_detection": 17,
+          "route_days_by_sector": {
+            "Refugio Frey desde Villa Catedral": 1,
+            "Bosque Tallado desde la plataforma del Piltriquitron": 12,
+            "Sendero Che Roga - Mburucuyá": 4
+          },
+          "temporal_sequences_gap_at_most_one_day": 14,
+          "longest_sequence_days": 3,
+          "sequences": [
+            {
+              "route_sector": "Refugio Frey desde Villa Catedral",
+              "first_detection_day": "2021-11-08",
+              "last_detection_day": "2021-11-08",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+              "first_detection_day": "2021-01-25",
+              "last_detection_day": "2021-01-25",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+              "first_detection_day": "2021-02-02",
+              "last_detection_day": "2021-02-04",
+              "detection_days": 3
+            },
+            {
+              "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+              "first_detection_day": "2021-02-06",
+              "last_detection_day": "2021-02-07",
+              "detection_days": 2
+            },
+            {
+              "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+              "first_detection_day": "2021-02-10",
+              "last_detection_day": "2021-02-10",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+              "first_detection_day": "2021-03-09",
+              "last_detection_day": "2021-03-09",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+              "first_detection_day": "2021-03-20",
+              "last_detection_day": "2021-03-20",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+              "first_detection_day": "2021-03-25",
+              "last_detection_day": "2021-03-25",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+              "first_detection_day": "2021-03-27",
+              "last_detection_day": "2021-03-27",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+              "first_detection_day": "2021-03-29",
+              "last_detection_day": "2021-03-29",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2021-07-08",
+              "last_detection_day": "2021-07-08",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2021-08-13",
+              "last_detection_day": "2021-08-13",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2021-08-28",
+              "last_detection_day": "2021-08-28",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2021-10-20",
+              "last_detection_day": "2021-10-20",
+              "detection_days": 1
+            }
+          ]
+        },
+        "20": {
+          "unique_route_days_with_detection": 42,
+          "route_days_by_sector": {
+            "Refugio Frey desde Villa Catedral": 1,
+            "Quebrada del Condorito - Balcon Norte": 2,
+            "Sendero Namuncura": 1,
+            "Bosque Tallado desde la plataforma del Piltriquitron": 20,
+            "Sendero Che Roga - Mburucuyá": 18
+          },
+          "temporal_sequences_gap_at_most_one_day": 33,
+          "longest_sequence_days": 3,
+          "sequences": [
+            {
+              "route_sector": "Refugio Frey desde Villa Catedral",
+              "first_detection_day": "2021-11-08",
+              "last_detection_day": "2021-11-08",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Quebrada del Condorito - Balcon Norte",
+              "first_detection_day": "2021-07-09",
+              "last_detection_day": "2021-07-09",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Quebrada del Condorito - Balcon Norte",
+              "first_detection_day": "2021-08-18",
+              "last_detection_day": "2021-08-18",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Namuncura",
+              "first_detection_day": "2021-08-01",
+              "last_detection_day": "2021-08-01",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+              "first_detection_day": "2021-01-25",
+              "last_detection_day": "2021-01-26",
+              "detection_days": 2
+            },
+            {
+              "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+              "first_detection_day": "2021-01-29",
+              "last_detection_day": "2021-01-30",
+              "detection_days": 2
+            },
+            {
+              "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+              "first_detection_day": "2021-02-02",
+              "last_detection_day": "2021-02-04",
+              "detection_days": 3
+            },
+            {
+              "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+              "first_detection_day": "2021-02-06",
+              "last_detection_day": "2021-02-07",
+              "detection_days": 2
+            },
+            {
+              "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+              "first_detection_day": "2021-02-10",
+              "last_detection_day": "2021-02-10",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+              "first_detection_day": "2021-03-07",
+              "last_detection_day": "2021-03-09",
+              "detection_days": 3
+            },
+            {
+              "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+              "first_detection_day": "2021-03-14",
+              "last_detection_day": "2021-03-14",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+              "first_detection_day": "2021-03-19",
+              "last_detection_day": "2021-03-20",
+              "detection_days": 2
+            },
+            {
+              "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+              "first_detection_day": "2021-03-25",
+              "last_detection_day": "2021-03-25",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+              "first_detection_day": "2021-03-27",
+              "last_detection_day": "2021-03-27",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+              "first_detection_day": "2021-03-29",
+              "last_detection_day": "2021-03-29",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+              "first_detection_day": "2021-12-23",
+              "last_detection_day": "2021-12-23",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2021-07-06",
+              "last_detection_day": "2021-07-06",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2021-07-08",
+              "last_detection_day": "2021-07-08",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2021-07-12",
+              "last_detection_day": "2021-07-12",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2021-07-22",
+              "last_detection_day": "2021-07-22",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2021-07-31",
+              "last_detection_day": "2021-07-31",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2021-08-02",
+              "last_detection_day": "2021-08-03",
+              "detection_days": 2
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2021-08-13",
+              "last_detection_day": "2021-08-13",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2021-08-15",
+              "last_detection_day": "2021-08-15",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2021-08-19",
+              "last_detection_day": "2021-08-19",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2021-08-28",
+              "last_detection_day": "2021-08-28",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2021-09-01",
+              "last_detection_day": "2021-09-01",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2021-09-10",
+              "last_detection_day": "2021-09-10",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2021-09-27",
+              "last_detection_day": "2021-09-27",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2021-10-20",
+              "last_detection_day": "2021-10-20",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2021-11-18",
+              "last_detection_day": "2021-11-18",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2021-12-29",
+              "last_detection_day": "2021-12-29",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2021-12-31",
+              "last_detection_day": "2021-12-31",
+              "detection_days": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "year": 2022,
+      "archive": "focos_ams_ref_2022.zip",
+      "archive_bytes": 15128229,
+      "archive_sha256": "9a866617bc3889c19046fd3853e450a5ec4d2ad7539b805a71930422bce4b197",
+      "results_by_radius_km": {
+        "2": {
+          "unique_route_days_with_detection": 0,
+          "route_days_by_sector": {},
+          "temporal_sequences_gap_at_most_one_day": 0,
+          "longest_sequence_days": 0,
+          "sequences": []
+        },
+        "5": {
+          "unique_route_days_with_detection": 2,
+          "route_days_by_sector": {
+            "Sendero Che Roga - Mburucuyá": 2
+          },
+          "temporal_sequences_gap_at_most_one_day": 2,
+          "longest_sequence_days": 1,
+          "sequences": [
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2022-02-23",
+              "last_detection_day": "2022-02-23",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2022-02-25",
+              "last_detection_day": "2022-02-25",
+              "detection_days": 1
+            }
+          ]
+        },
+        "10": {
+          "unique_route_days_with_detection": 5,
+          "route_days_by_sector": {
+            "Sendero Che Roga - Mburucuyá": 5
+          },
+          "temporal_sequences_gap_at_most_one_day": 5,
+          "longest_sequence_days": 1,
+          "sequences": [
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2022-01-16",
+              "last_detection_day": "2022-01-16",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2022-02-01",
+              "last_detection_day": "2022-02-01",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2022-02-15",
+              "last_detection_day": "2022-02-15",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2022-02-23",
+              "last_detection_day": "2022-02-23",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2022-02-25",
+              "last_detection_day": "2022-02-25",
+              "detection_days": 1
+            }
+          ]
+        },
+        "20": {
+          "unique_route_days_with_detection": 42,
+          "route_days_by_sector": {
+            "Sendero Macuco - Salto Arrechea": 1,
+            "Quebrada del Condorito - Balcon Norte": 2,
+            "Sendero Namuncura": 3,
+            "Sendero Che Roga - Mburucuyá": 33,
+            "Sendero La Chuña - El Rey": 3
+          },
+          "temporal_sequences_gap_at_most_one_day": 23,
+          "longest_sequence_days": 6,
+          "sequences": [
+            {
+              "route_sector": "Sendero Macuco - Salto Arrechea",
+              "first_detection_day": "2022-01-23",
+              "last_detection_day": "2022-01-23",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Quebrada del Condorito - Balcon Norte",
+              "first_detection_day": "2022-08-12",
+              "last_detection_day": "2022-08-12",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Quebrada del Condorito - Balcon Norte",
+              "first_detection_day": "2022-09-18",
+              "last_detection_day": "2022-09-18",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Namuncura",
+              "first_detection_day": "2022-09-02",
+              "last_detection_day": "2022-09-03",
+              "detection_days": 2
+            },
+            {
+              "route_sector": "Sendero Namuncura",
+              "first_detection_day": "2022-12-06",
+              "last_detection_day": "2022-12-06",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2022-01-01",
+              "last_detection_day": "2022-01-01",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2022-01-04",
+              "last_detection_day": "2022-01-04",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2022-01-09",
+              "last_detection_day": "2022-01-13",
+              "detection_days": 5
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2022-01-16",
+              "last_detection_day": "2022-01-16",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2022-01-20",
+              "last_detection_day": "2022-01-21",
+              "detection_days": 2
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2022-01-24",
+              "last_detection_day": "2022-01-24",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2022-01-28",
+              "last_detection_day": "2022-01-29",
+              "detection_days": 2
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2022-01-31",
+              "last_detection_day": "2022-02-01",
+              "detection_days": 2
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2022-02-06",
+              "last_detection_day": "2022-02-06",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2022-02-08",
+              "last_detection_day": "2022-02-11",
+              "detection_days": 4
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2022-02-13",
+              "last_detection_day": "2022-02-13",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2022-02-15",
+              "last_detection_day": "2022-02-16",
+              "detection_days": 2
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2022-02-22",
+              "last_detection_day": "2022-02-27",
+              "detection_days": 6
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2022-05-22",
+              "last_detection_day": "2022-05-22",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2022-08-13",
+              "last_detection_day": "2022-08-13",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2022-11-02",
+              "last_detection_day": "2022-11-03",
+              "detection_days": 2
+            },
+            {
+              "route_sector": "Sendero La Chuña - El Rey",
+              "first_detection_day": "2022-11-27",
+              "last_detection_day": "2022-11-28",
+              "detection_days": 2
+            },
+            {
+              "route_sector": "Sendero La Chuña - El Rey",
+              "first_detection_day": "2022-12-07",
+              "last_detection_day": "2022-12-07",
+              "detection_days": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "year": 2023,
+      "archive": "focos_ams_ref_2023.zip",
+      "archive_bytes": 13746937,
+      "archive_sha256": "822365b3166ecf9e26db9444a8c74a995cc45338d495a4986de4c1bc6cc000e7",
+      "results_by_radius_km": {
+        "2": {
+          "unique_route_days_with_detection": 2,
+          "route_days_by_sector": {
+            "Cerro Ventana - Hueco de la Ventana": 1,
+            "Sendero Che Roga - Mburucuyá": 1
+          },
+          "temporal_sequences_gap_at_most_one_day": 2,
+          "longest_sequence_days": 1,
+          "sequences": [
+            {
+              "route_sector": "Cerro Ventana - Hueco de la Ventana",
+              "first_detection_day": "2023-02-14",
+              "last_detection_day": "2023-02-14",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2023-02-25",
+              "last_detection_day": "2023-02-25",
+              "detection_days": 1
+            }
+          ]
+        },
+        "5": {
+          "unique_route_days_with_detection": 2,
+          "route_days_by_sector": {
+            "Cerro Ventana - Hueco de la Ventana": 1,
+            "Sendero Che Roga - Mburucuyá": 1
+          },
+          "temporal_sequences_gap_at_most_one_day": 2,
+          "longest_sequence_days": 1,
+          "sequences": [
+            {
+              "route_sector": "Cerro Ventana - Hueco de la Ventana",
+              "first_detection_day": "2023-02-14",
+              "last_detection_day": "2023-02-14",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2023-02-25",
+              "last_detection_day": "2023-02-25",
+              "detection_days": 1
+            }
+          ]
+        },
+        "10": {
+          "unique_route_days_with_detection": 18,
+          "route_days_by_sector": {
+            "Refugio Frey desde Villa Catedral": 1,
+            "Sendero Namuncura": 3,
+            "Cerro Ventana - Hueco de la Ventana": 1,
+            "Bosque Tallado desde la plataforma del Piltriquitron": 1,
+            "Sendero Che Roga - Mburucuyá": 12
+          },
+          "temporal_sequences_gap_at_most_one_day": 15,
+          "longest_sequence_days": 3,
+          "sequences": [
+            {
+              "route_sector": "Refugio Frey desde Villa Catedral",
+              "first_detection_day": "2023-01-15",
+              "last_detection_day": "2023-01-15",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Namuncura",
+              "first_detection_day": "2023-12-27",
+              "last_detection_day": "2023-12-29",
+              "detection_days": 3
+            },
+            {
+              "route_sector": "Cerro Ventana - Hueco de la Ventana",
+              "first_detection_day": "2023-02-14",
+              "last_detection_day": "2023-02-14",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+              "first_detection_day": "2023-03-05",
+              "last_detection_day": "2023-03-05",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2023-02-07",
+              "last_detection_day": "2023-02-07",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2023-02-25",
+              "last_detection_day": "2023-02-25",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2023-06-08",
+              "last_detection_day": "2023-06-08",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2023-07-22",
+              "last_detection_day": "2023-07-22",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2023-07-29",
+              "last_detection_day": "2023-07-29",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2023-08-01",
+              "last_detection_day": "2023-08-01",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2023-08-03",
+              "last_detection_day": "2023-08-03",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2023-08-06",
+              "last_detection_day": "2023-08-06",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2023-08-17",
+              "last_detection_day": "2023-08-17",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2023-08-24",
+              "last_detection_day": "2023-08-25",
+              "detection_days": 2
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2023-08-27",
+              "last_detection_day": "2023-08-27",
+              "detection_days": 1
+            }
+          ]
+        },
+        "20": {
+          "unique_route_days_with_detection": 41,
+          "route_days_by_sector": {
+            "Sendero Macuco - Salto Arrechea": 1,
+            "Refugio Frey desde Villa Catedral": 1,
+            "Quebrada del Condorito - Balcon Norte": 3,
+            "Sendero Namuncura": 3,
+            "Cerro Ventana - Hueco de la Ventana": 1,
+            "Bosque Tallado desde la plataforma del Piltriquitron": 3,
+            "Sendero Che Roga - Mburucuyá": 29
+          },
+          "temporal_sequences_gap_at_most_one_day": 29,
+          "longest_sequence_days": 3,
+          "sequences": [
+            {
+              "route_sector": "Sendero Macuco - Salto Arrechea",
+              "first_detection_day": "2023-01-23",
+              "last_detection_day": "2023-01-23",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Refugio Frey desde Villa Catedral",
+              "first_detection_day": "2023-01-15",
+              "last_detection_day": "2023-01-15",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Quebrada del Condorito - Balcon Norte",
+              "first_detection_day": "2023-08-28",
+              "last_detection_day": "2023-08-29",
+              "detection_days": 2
+            },
+            {
+              "route_sector": "Quebrada del Condorito - Balcon Norte",
+              "first_detection_day": "2023-10-09",
+              "last_detection_day": "2023-10-09",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Namuncura",
+              "first_detection_day": "2023-12-27",
+              "last_detection_day": "2023-12-29",
+              "detection_days": 3
+            },
+            {
+              "route_sector": "Cerro Ventana - Hueco de la Ventana",
+              "first_detection_day": "2023-02-14",
+              "last_detection_day": "2023-02-14",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+              "first_detection_day": "2023-01-16",
+              "last_detection_day": "2023-01-16",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+              "first_detection_day": "2023-02-19",
+              "last_detection_day": "2023-02-19",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+              "first_detection_day": "2023-03-05",
+              "last_detection_day": "2023-03-05",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2023-01-19",
+              "last_detection_day": "2023-01-19",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2023-01-22",
+              "last_detection_day": "2023-01-23",
+              "detection_days": 2
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2023-01-31",
+              "last_detection_day": "2023-01-31",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2023-02-07",
+              "last_detection_day": "2023-02-07",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2023-02-12",
+              "last_detection_day": "2023-02-14",
+              "detection_days": 3
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2023-02-20",
+              "last_detection_day": "2023-02-20",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2023-02-25",
+              "last_detection_day": "2023-02-25",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2023-06-08",
+              "last_detection_day": "2023-06-08",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2023-06-20",
+              "last_detection_day": "2023-06-20",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2023-07-01",
+              "last_detection_day": "2023-07-02",
+              "detection_days": 2
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2023-07-20",
+              "last_detection_day": "2023-07-20",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2023-07-22",
+              "last_detection_day": "2023-07-23",
+              "detection_days": 2
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2023-07-28",
+              "last_detection_day": "2023-07-30",
+              "detection_days": 3
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2023-08-01",
+              "last_detection_day": "2023-08-01",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2023-08-03",
+              "last_detection_day": "2023-08-03",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2023-08-05",
+              "last_detection_day": "2023-08-06",
+              "detection_days": 2
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2023-08-17",
+              "last_detection_day": "2023-08-17",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2023-08-24",
+              "last_detection_day": "2023-08-25",
+              "detection_days": 2
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2023-08-27",
+              "last_detection_day": "2023-08-27",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2023-08-31",
+              "last_detection_day": "2023-08-31",
+              "detection_days": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "year": 2024,
+      "archive": "focos_ams_ref_2024.zip",
+      "archive_bytes": 19707409,
+      "archive_sha256": "fad2c6e8d09876c67c0c41a83906a5f4c2bcdfb44d9acb7f1d75f50014e67df2",
+      "results_by_radius_km": {
+        "2": {
+          "unique_route_days_with_detection": 0,
+          "route_days_by_sector": {},
+          "temporal_sequences_gap_at_most_one_day": 0,
+          "longest_sequence_days": 0,
+          "sequences": []
+        },
+        "5": {
+          "unique_route_days_with_detection": 1,
+          "route_days_by_sector": {
+            "Sendero Che Roga - Mburucuyá": 1
+          },
+          "temporal_sequences_gap_at_most_one_day": 1,
+          "longest_sequence_days": 1,
+          "sequences": [
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2024-09-29",
+              "last_detection_day": "2024-09-29",
+              "detection_days": 1
+            }
+          ]
+        },
+        "10": {
+          "unique_route_days_with_detection": 5,
+          "route_days_by_sector": {
+            "Cerro Ventana - Hueco de la Ventana": 1,
+            "Sendero Che Roga - Mburucuyá": 4
+          },
+          "temporal_sequences_gap_at_most_one_day": 5,
+          "longest_sequence_days": 1,
+          "sequences": [
+            {
+              "route_sector": "Cerro Ventana - Hueco de la Ventana",
+              "first_detection_day": "2024-02-03",
+              "last_detection_day": "2024-02-03",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2024-07-26",
+              "last_detection_day": "2024-07-26",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2024-09-03",
+              "last_detection_day": "2024-09-03",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2024-09-29",
+              "last_detection_day": "2024-09-29",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2024-10-02",
+              "last_detection_day": "2024-10-02",
+              "detection_days": 1
+            }
+          ]
+        },
+        "20": {
+          "unique_route_days_with_detection": 26,
+          "route_days_by_sector": {
+            "Sendero Macuco - Salto Arrechea": 2,
+            "Refugio Frey desde Villa Catedral": 1,
+            "Cerro Ventana - Hueco de la Ventana": 3,
+            "Sendero Che Roga - Mburucuyá": 19,
+            "Sendero La Chuña - El Rey": 1
+          },
+          "temporal_sequences_gap_at_most_one_day": 22,
+          "longest_sequence_days": 2,
+          "sequences": [
+            {
+              "route_sector": "Sendero Macuco - Salto Arrechea",
+              "first_detection_day": "2024-02-20",
+              "last_detection_day": "2024-02-20",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Macuco - Salto Arrechea",
+              "first_detection_day": "2024-11-24",
+              "last_detection_day": "2024-11-24",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Refugio Frey desde Villa Catedral",
+              "first_detection_day": "2024-02-05",
+              "last_detection_day": "2024-02-05",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Cerro Ventana - Hueco de la Ventana",
+              "first_detection_day": "2024-02-03",
+              "last_detection_day": "2024-02-03",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Cerro Ventana - Hueco de la Ventana",
+              "first_detection_day": "2024-09-01",
+              "last_detection_day": "2024-09-01",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Cerro Ventana - Hueco de la Ventana",
+              "first_detection_day": "2024-09-03",
+              "last_detection_day": "2024-09-03",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2024-04-03",
+              "last_detection_day": "2024-04-03",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2024-07-08",
+              "last_detection_day": "2024-07-08",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2024-07-18",
+              "last_detection_day": "2024-07-19",
+              "detection_days": 2
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2024-07-25",
+              "last_detection_day": "2024-07-26",
+              "detection_days": 2
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2024-07-30",
+              "last_detection_day": "2024-07-30",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2024-08-02",
+              "last_detection_day": "2024-08-02",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2024-08-15",
+              "last_detection_day": "2024-08-16",
+              "detection_days": 2
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2024-08-26",
+              "last_detection_day": "2024-08-26",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2024-09-03",
+              "last_detection_day": "2024-09-03",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2024-09-05",
+              "last_detection_day": "2024-09-05",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2024-09-16",
+              "last_detection_day": "2024-09-17",
+              "detection_days": 2
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2024-09-22",
+              "last_detection_day": "2024-09-22",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2024-09-29",
+              "last_detection_day": "2024-09-29",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2024-10-02",
+              "last_detection_day": "2024-10-02",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2024-10-06",
+              "last_detection_day": "2024-10-06",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero La Chuña - El Rey",
+              "first_detection_day": "2024-01-16",
+              "last_detection_day": "2024-01-16",
+              "detection_days": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "year": 2025,
+      "archive": "focos_ams_ref_2025.zip",
+      "archive_bytes": 10937287,
+      "archive_sha256": "36d8b7bae6e92200b4e385e3a78784f5417083291c8743afbd8957fae3985654",
+      "results_by_radius_km": {
+        "2": {
+          "unique_route_days_with_detection": 2,
+          "route_days_by_sector": {
+            "Quebrada del Condorito - Balcon Norte": 2
+          },
+          "temporal_sequences_gap_at_most_one_day": 1,
+          "longest_sequence_days": 2,
+          "sequences": [
+            {
+              "route_sector": "Quebrada del Condorito - Balcon Norte",
+              "first_detection_day": "2025-10-10",
+              "last_detection_day": "2025-10-11",
+              "detection_days": 2
+            }
+          ]
+        },
+        "5": {
+          "unique_route_days_with_detection": 6,
+          "route_days_by_sector": {
+            "Refugio Frey desde Villa Catedral": 1,
+            "Quebrada del Condorito - Balcon Norte": 5
+          },
+          "temporal_sequences_gap_at_most_one_day": 2,
+          "longest_sequence_days": 5,
+          "sequences": [
+            {
+              "route_sector": "Refugio Frey desde Villa Catedral",
+              "first_detection_day": "2025-02-25",
+              "last_detection_day": "2025-02-25",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Quebrada del Condorito - Balcon Norte",
+              "first_detection_day": "2025-10-10",
+              "last_detection_day": "2025-10-14",
+              "detection_days": 5
+            }
+          ]
+        },
+        "10": {
+          "unique_route_days_with_detection": 11,
+          "route_days_by_sector": {
+            "Refugio Frey desde Villa Catedral": 1,
+            "Quebrada del Condorito - Balcon Norte": 6,
+            "Bosque Tallado desde la plataforma del Piltriquitron": 1,
+            "Sendero Che Roga - Mburucuyá": 3
+          },
+          "temporal_sequences_gap_at_most_one_day": 6,
+          "longest_sequence_days": 6,
+          "sequences": [
+            {
+              "route_sector": "Refugio Frey desde Villa Catedral",
+              "first_detection_day": "2025-02-25",
+              "last_detection_day": "2025-02-25",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Quebrada del Condorito - Balcon Norte",
+              "first_detection_day": "2025-10-10",
+              "last_detection_day": "2025-10-15",
+              "detection_days": 6
+            },
+            {
+              "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+              "first_detection_day": "2025-02-09",
+              "last_detection_day": "2025-02-09",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2025-03-20",
+              "last_detection_day": "2025-03-20",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2025-08-05",
+              "last_detection_day": "2025-08-05",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2025-09-11",
+              "last_detection_day": "2025-09-11",
+              "detection_days": 1
+            }
+          ]
+        },
+        "20": {
+          "unique_route_days_with_detection": 38,
+          "route_days_by_sector": {
+            "Sendero Macuco - Salto Arrechea": 6,
+            "Refugio Frey desde Villa Catedral": 1,
+            "Quebrada del Condorito - Balcon Norte": 6,
+            "Bosque Tallado desde la plataforma del Piltriquitron": 9,
+            "Sendero Che Roga - Mburucuyá": 16
+          },
+          "temporal_sequences_gap_at_most_one_day": 24,
+          "longest_sequence_days": 6,
+          "sequences": [
+            {
+              "route_sector": "Sendero Macuco - Salto Arrechea",
+              "first_detection_day": "2025-01-10",
+              "last_detection_day": "2025-01-10",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Macuco - Salto Arrechea",
+              "first_detection_day": "2025-01-23",
+              "last_detection_day": "2025-01-23",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Macuco - Salto Arrechea",
+              "first_detection_day": "2025-02-05",
+              "last_detection_day": "2025-02-05",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Macuco - Salto Arrechea",
+              "first_detection_day": "2025-02-14",
+              "last_detection_day": "2025-02-15",
+              "detection_days": 2
+            },
+            {
+              "route_sector": "Sendero Macuco - Salto Arrechea",
+              "first_detection_day": "2025-02-17",
+              "last_detection_day": "2025-02-17",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Refugio Frey desde Villa Catedral",
+              "first_detection_day": "2025-02-25",
+              "last_detection_day": "2025-02-25",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Quebrada del Condorito - Balcon Norte",
+              "first_detection_day": "2025-10-10",
+              "last_detection_day": "2025-10-15",
+              "detection_days": 6
+            },
+            {
+              "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+              "first_detection_day": "2025-01-26",
+              "last_detection_day": "2025-01-26",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+              "first_detection_day": "2025-01-30",
+              "last_detection_day": "2025-02-02",
+              "detection_days": 4
+            },
+            {
+              "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+              "first_detection_day": "2025-02-06",
+              "last_detection_day": "2025-02-09",
+              "detection_days": 4
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2025-01-09",
+              "last_detection_day": "2025-01-09",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2025-01-14",
+              "last_detection_day": "2025-01-14",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2025-01-18",
+              "last_detection_day": "2025-01-18",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2025-01-21",
+              "last_detection_day": "2025-01-21",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2025-03-20",
+              "last_detection_day": "2025-03-20",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2025-08-05",
+              "last_detection_day": "2025-08-06",
+              "detection_days": 2
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2025-08-11",
+              "last_detection_day": "2025-08-11",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2025-08-13",
+              "last_detection_day": "2025-08-14",
+              "detection_days": 2
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2025-08-24",
+              "last_detection_day": "2025-08-24",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2025-08-26",
+              "last_detection_day": "2025-08-26",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2025-08-28",
+              "last_detection_day": "2025-08-28",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2025-09-11",
+              "last_detection_day": "2025-09-11",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2025-09-23",
+              "last_detection_day": "2025-09-23",
+              "detection_days": 1
+            },
+            {
+              "route_sector": "Sendero Che Roga - Mburucuyá",
+              "first_detection_day": "2025-11-11",
+              "last_detection_day": "2025-11-11",
+              "detection_days": 1
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "synthetic_observations": 0,
+  "deployment_approved": false
+}

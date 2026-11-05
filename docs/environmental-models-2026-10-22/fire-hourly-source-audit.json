@@ -1,0 +1,38 @@
+{
+  "status": "acquired",
+  "source": "https://noaa-goes16.s3.amazonaws.com/",
+  "protocol_sha256": "1aa491b7c6fba4218643c8261915bd410b64e9abd54090d108b2cf686e4030f4",
+  "generated_at": "2026-10-22T19:02:51.451741+00:00",
+  "expected_hourly_slots": 744,
+  "original_files": 736,
+  "missing_scans": [
+    "2024-01-04T15:00:00+00:00",
+    "2024-01-04T16:00:00+00:00",
+    "2024-01-04T17:00:00+00:00",
+    "2024-01-04T18:00:00+00:00",
+    "2024-01-22T18:00:00+00:00",
+    "2024-01-22T19:00:00+00:00",
+    "2024-01-26T19:00:00+00:00",
+    "2024-01-26T20:00:00+00:00"
+  ],
+  "original_bytes": 2228163720,
+  "manifest_sha256": "fa9a7fad9046387b290241ce635713916270d751370ab0c25ed0958299dac3e3",
+  "summary": {
+    "positive_rows": 7,
+    "negative_rows": 1011772,
+    "excluded_rows": 355709,
+    "sampled_native_pixels": 1858,
+    "positive_region_days": {
+      "Bosque Tallado desde la plataforma del Piltriquitron": [
+        "2024-01-30"
+      ]
+    },
+    "median_publication_lag_minutes": 0.5950000000000001,
+    "maximum_publication_lag_minutes": 64.24166666666666,
+    "observations_sha256": "f31c6470a4d74479eba3243ca97c30015959d74012b31fa85bc76f726fc666bb",
+    "geography_sha256": "7e475b478db7bb678cc0a1539fdf484e0c8de0a9baa98916fb90f652f75ff834",
+    "country_sha256": "b086852064c26813d9f607c82c91b4e74e18ea83fd21993ddedd473cf8495af5"
+  },
+  "synthetic_observations": 0,
+  "deployment_approved": false
+}

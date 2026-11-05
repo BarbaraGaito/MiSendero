@@ -2,6 +2,9 @@ import { db } from "../database/connection";
 import { Trail, TrailReport } from "../types";
 import { getAuthSession } from "./authSession";
 import { initDB } from "../database/database";
+import { getTrailEnvironmental as fetchEnvironmental } from "./api";
+import { verifiedEnvironmentalBatch } from "./environmentalGeometry";
+import type { EnvironmentalBatch } from "../backend/src/contracts/environmental";
 import { sanitizeReports } from "./reportPrivacy";
 import {
   deleteOfflineTilesForTrail,
@@ -41,6 +44,7 @@ export interface OfflineMap {
   trail: Trail | null;
   reports: TrailReport[];
   terrain: OfflineTerrainGrid | null;
+  environmental?: unknown;
 }
 
 export interface OfflineMapsSummary {
@@ -66,7 +70,8 @@ const initOfflineMapsTable = async () => {
       total_tiles INTEGER NOT NULL DEFAULT 0,
       verified_at INTEGER,
       last_error TEXT,
-      terrain_json TEXT
+      terrain_json TEXT,
+      environmental_json TEXT
     );
   `);
 
@@ -110,6 +115,10 @@ const initOfflineMapsTable = async () => {
   if (!columnNames.includes("terrain_json")) {
     await db.execAsync(`ALTER TABLE offline_maps ADD COLUMN terrain_json TEXT;`);
   }
+  if (!columnNames.includes("environmental_json")) {
+    try { await db.execAsync("ALTER TABLE offline_maps ADD COLUMN environmental_json TEXT;"); }
+    catch (error) { if (!(error instanceof Error) || !error.message.toLowerCase().includes("duplicate column")) throw error; }
+  }
   const cached = await db.getAllAsync<{ id: number; reports_json: string | null }>("SELECT id, reports_json FROM offline_maps WHERE reports_json IS NOT NULL");
   for (const row of cached) {
     const clean = JSON.stringify(sanitizeReports(parseJson<TrailReport[]>(row.reports_json, [])));
@@ -142,7 +151,8 @@ const offlineMapColumns = `
   last_error,
   trail_json,
   reports_json,
-  terrain_json
+  terrain_json,
+  environmental_json
 `;
 
 type OfflineMapRow = {
@@ -161,6 +171,7 @@ type OfflineMapRow = {
   trail_json: string | null;
   reports_json: string | null;
   terrain_json: string | null;
+  environmental_json: string | null;
 };
 
 const toOfflineMap = (row: OfflineMapRow): OfflineMap => ({
@@ -179,6 +190,7 @@ const toOfflineMap = (row: OfflineMapRow): OfflineMap => ({
   trail: parseJson<Trail | null>(row.trail_json, null),
   reports: sanitizeReports(parseJson<TrailReport[]>(row.reports_json, [])),
   terrain: parseJson<OfflineTerrainGrid | null>(row.terrain_json, null),
+  environmental: parseJson<unknown>(row.environmental_json, null),
 });
 
 const getCurrentUserId = async () => {
@@ -219,6 +231,14 @@ export const getOfflineMapByTrailId = async (
   if (!row) return null;
 
   return toOfflineMap(row);
+};
+
+export const refreshOfflineTrailEnvironmental = async (trail: Trail, value: EnvironmentalBatch): Promise<void> => {
+  const verified = await verifiedEnvironmentalBatch(value, trail);
+  await initOfflineMapsTable();
+  const userId = await getCurrentUserId();
+  await db.runAsync("UPDATE offline_maps SET environmental_json = ? WHERE user_id IS ? AND trail_id = ?",
+    [JSON.stringify(verified), userId, trail.id]);
 };
 
 export const getVerifiedOfflineMapByTrailId = async (
@@ -297,7 +317,14 @@ export const saveOfflineTrailMap = async (
       [JSON.stringify(trail), JSON.stringify(reports), now, geometry.id, userId]
     );
   }
+  // Environmental availability is independent of map completeness. A provider
+  // failure keeps the previous verified snapshot and never aborts map download.
+  const environmentalRequest = Promise.resolve().then(() => fetchEnvironmental(trail.id))
+    .then((value) => verifiedEnvironmentalBatch(value, trail))
+    .then((value) => value.snapshots.every((s) => s.status === "error") ? null : value).catch(() => null);
   const tileCache = await downloadOfflineTilesForTrail(trail, onTileProgress, options);
+  const environmental = await environmentalRequest;
+  if (environmental) await refreshOfflineTrailEnvironmental(trail, environmental).catch(() => undefined);
   const coverage = await getOfflineTileCoverageForTrail(trail);
 
   if (!coverage.isComplete) {

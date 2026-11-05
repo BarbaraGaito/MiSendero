@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "model": "fall_detection",
+  "source": {
+    "source": "UniMiB SHAR: a dataset for human activity recognition using acceleration data from smartphones (Micucci, Mobilio, Napoletano)",
+    "url": "https://www.sal.disco.unimib.it/technologies/unimib-shar/",
+    "download_url": "https://www.dropbox.com/s/x2fpfqj0bpf8ep6/UniMiB-SHAR.zip",
+    "license": "No explicit license on the dataset page; the authors ask to cite Micucci et al., Applied Sciences 7(10):1101, 2017 (arXiv:1611.07688). Redistribution terms not stated: only small excerpts are kept in testing/fixtures/fall-detection for equivalence tests.",
+    "scope": "Experimental falls and activities of daily living performed by 30 volunteers (18-60 years, 24 F / 6 M) with an Android phone in the trouser pocket at 50 Hz. Not real mountain accidents; no backpack, hand or chest positions.",
+    "units": "m/s^2 in the original files (gravity included, Android device axes); converted to g by /9.80665",
+    "sampling": "uniform 50 Hz (20 ms) verified for every usable record",
+    "archive_sha256": "365a396729c0755b4ba8ef8ee0ba52a0621aa535282470546d8a663ff2567160",
+    "archive_bytes": 266206080,
+    "label_definition": "fall = main impact (global magnitude maximum) of each fall segment; no_fall = every impact candidate (>1.5 g, first local maximum within +-0.4 s) of every ADL segment. Secondary peaks inside fall segments are excluded from candidate metrics because their label is ambiguous.",
+    "transformations": "Continuous records only (full_data.mat). Records with 4 s recording gaps split into contiguous segments (960 gaps). One trial with NaN samples excluded (participant 9, Jumping trial 2). Conversion m/s^2 -> g. No imputation, no resampling, no synthetic samples, no oversampling or augmentation.",
+    "excluded": [
+      {
+        "participant": 9,
+        "activity": "Jumping",
+        "trial": 1,
+        "reason": "NaN accelerometer samples",
+        "samples": 3208,
+        "valid_prefix_samples": 85
+      }
+    ],
+    "candidate_counts": {
+      "total": 8590,
+      "labelled": 7438,
+      "fall_positive": 1429,
+      "adl_negative": 6009,
+      "fall_main_impact_without_window": 10,
+      "fall_segments_without_gate_candidate": 1,
+      "adl_candidates_without_window": 264,
+      "fall_secondary_candidates": 878
+    }
+  },
+  "access_audit": {
+    "MobiAct": "Not used. Available only on request to bmi@hmu.gr after signing a database usage agreement limited to non-commercial research and education; no authorised access was obtained (checked 2026-10-22)."
+  }
+}

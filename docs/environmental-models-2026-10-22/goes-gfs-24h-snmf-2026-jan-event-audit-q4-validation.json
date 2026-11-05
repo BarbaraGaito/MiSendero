@@ -1,0 +1,1269 @@
+{
+  "experiment_id": "goes-gfs-24h-independent-snmf-start-date-audit-2026-01",
+  "interpretation": "Exploratory event sensitivity audit only. Official incident start dates have day precision and do not prove an exact 24-hour lead; no event precision is calculated because the archive is not an exhaustive fire/no-fire registry.",
+  "protocol": {
+    "event_period": "2026-01-01 through 2026-01-31 reported start dates",
+    "spatial_rule": "At least one sampled route-sector center within 10 km with a scored route-sector-day",
+    "duplicate_rule": "Merge records in the same province and reported start date when coordinates are within 1 km; this may merge distinct nearby incidents.",
+    "diagnostic_score_threshold": 0.5,
+    "model_horizon_hours": 24,
+    "active_statuses": [
+      "ACTIVO",
+      "CONTENIDO",
+      "CONTROLADO"
+    ]
+  },
+  "sources": {
+    "snmf_events_sha256": "ba18284a722410e225906de6ea1ba35e72d5670496c45793363e901beb6efcca",
+    "geography_sha256": "7e475b478db7bb678cc0a1539fdf484e0c8de0a9baa98916fb90f652f75ff834",
+    "evaluation_sha256": "b45a90d7646fff6ca6ad93c4f678c9da9b1e786257fcf22659beceb35f257f18"
+  },
+  "official_active_incidents_with_start_in_period": 91,
+  "events_with_route_sector_score_coverage": 4,
+  "covered_events_alerted_at_0_5": 4,
+  "covered_event_sensitivity_at_0_5": 1.0,
+  "covered_event_sensitivity_exact_95ci_descriptive": [
+    0.3976353643835253,
+    1.0
+  ],
+  "covered_events_with_persistence_alert": 0,
+  "events": [
+    {
+      "province": "Buenos Aires",
+      "reported_start_date": "2026-01-01",
+      "incident_names": [
+        "Medanos"
+      ],
+      "latitude": -38.723530555555556,
+      "longitude": -62.527633333333334,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "Catamarca",
+      "reported_start_date": "2026-01-01",
+      "incident_names": [
+        "Adil"
+      ],
+      "latitude": -28.458777777777776,
+      "longitude": -65.87450833333332,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "Catamarca",
+      "reported_start_date": "2026-01-02",
+      "incident_names": [
+        "El Desgraciao"
+      ],
+      "latitude": -28.61293888888889,
+      "longitude": -66.08084166666666,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "Catamarca",
+      "reported_start_date": "2026-01-02",
+      "incident_names": [
+        "SaraLuis"
+      ],
+      "latitude": -28.363086111111112,
+      "longitude": -65.89835833333333,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "Mendoza",
+      "reported_start_date": "2026-01-02",
+      "incident_names": [
+        "El Tunel"
+      ],
+      "latitude": -33.406055555555554,
+      "longitude": -69.12077777777777,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "Mendoza",
+      "reported_start_date": "2026-01-02",
+      "incident_names": [
+        "Hernandez"
+      ],
+      "latitude": -35.547444444444444,
+      "longitude": -69.48827777777778,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "Chubut",
+      "reported_start_date": "2026-01-03",
+      "incident_names": [
+        "El Engaño"
+      ],
+      "latitude": -43.86472222222223,
+      "longitude": -71.51444444444445,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "La Pampa",
+      "reported_start_date": "2026-01-03",
+      "incident_names": [
+        "San Ernesto"
+      ],
+      "latitude": -37.278999999999996,
+      "longitude": -64.66722222222222,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "Chubut",
+      "reported_start_date": "2026-01-04",
+      "incident_names": [
+        "Villa Lago Rivadavia"
+      ],
+      "latitude": -42.50336111111111,
+      "longitude": -71.47333333333333,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "La Pampa",
+      "reported_start_date": "2026-01-04",
+      "incident_names": [
+        "La Doce"
+      ],
+      "latitude": -36.69991666666667,
+      "longitude": -65.02916666666667,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "Neuquén",
+      "reported_start_date": "2026-01-04",
+      "incident_names": [
+        "Cerro Trelel"
+      ],
+      "latitude": -39.071130555555555,
+      "longitude": -71.3849888888889,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "Neuquén",
+      "reported_start_date": "2026-01-04",
+      "incident_names": [
+        "Lago Hermoso"
+      ],
+      "latitude": -40.365347222222226,
+      "longitude": -71.48699166666667,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "Santa Cruz",
+      "reported_start_date": "2026-01-04",
+      "incident_names": [
+        "Tunel Inferior"
+      ],
+      "latitude": -49.43067222222222,
+      "longitude": -72.88876666666667,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "Chubut",
+      "reported_start_date": "2026-01-05",
+      "incident_names": [
+        "Primera",
+        "Primera Cantera",
+        "Primera Cantera Puerto",
+        "Primera Cantera Puerto Patriada",
+        "Turbio Primera Cantera Puerto",
+        "Turbio Primera Cantera Puerto Patriada"
+      ],
+      "latitude": -42.132222222222225,
+      "longitude": -71.53188888888889,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "La Pampa",
+      "reported_start_date": "2026-01-05",
+      "incident_names": [
+        "Don Lazaro"
+      ],
+      "latitude": -36.805,
+      "longitude": -63.971900000000005,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "La Pampa",
+      "reported_start_date": "2026-01-05",
+      "incident_names": [
+        "Los Manantiales"
+      ],
+      "latitude": -36.94150833333333,
+      "longitude": -64.74252222222222,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "Río Negro",
+      "reported_start_date": "2026-01-05",
+      "incident_names": [
+        "Barda de La Loma"
+      ],
+      "latitude": -41.98623333333333,
+      "longitude": -71.54853888888888,
+      "nearby_covered_route_sectors_within_10km": [
+        {
+          "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "distance_km": 6.29,
+          "model_score": 0.7469592094421387,
+          "model_alert_at_0_5": true,
+          "persistence_alert": false
+        }
+      ],
+      "covered": true,
+      "alert_at_0_5": true,
+      "persistence_alert": false
+    },
+    {
+      "province": "Río Negro",
+      "reported_start_date": "2026-01-05",
+      "incident_names": [
+        "Cantera Eva Perón"
+      ],
+      "latitude": -41.171305555555556,
+      "longitude": -71.34811111111111,
+      "nearby_covered_route_sectors_within_10km": [
+        {
+          "route_sector": "Refugio Frey desde Villa Catedral",
+          "distance_km": 9.708,
+          "model_score": 0.6073436141014099,
+          "model_alert_at_0_5": true,
+          "persistence_alert": false
+        }
+      ],
+      "covered": true,
+      "alert_at_0_5": true,
+      "persistence_alert": false
+    },
+    {
+      "province": "Buenos Aires",
+      "reported_start_date": "2026-01-06",
+      "incident_names": [
+        "Dorrego"
+      ],
+      "latitude": -38.90408055555555,
+      "longitude": -60.8838,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "Catamarca",
+      "reported_start_date": "2026-01-06",
+      "incident_names": [
+        "Que Locura"
+      ],
+      "latitude": -28.26326111111111,
+      "longitude": -65.47511944444445,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "Córdoba",
+      "reported_start_date": "2026-01-06",
+      "incident_names": [
+        "Villa de Pocho"
+      ],
+      "latitude": -31.49243888888889,
+      "longitude": -65.353,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "La Pampa",
+      "reported_start_date": "2026-01-06",
+      "incident_names": [
+        "LOS OLIVOS"
+      ],
+      "latitude": -36.190599999999996,
+      "longitude": -66.2515,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "La Pampa",
+      "reported_start_date": "2026-01-06",
+      "incident_names": [
+        "SAN AGUSTIN"
+      ],
+      "latitude": -36.2804,
+      "longitude": -66.1799,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "Río Negro",
+      "reported_start_date": "2026-01-06",
+      "incident_names": [
+        "VERTEDERO MUNICIPAL",
+        "Vertedero Municipal",
+        "tres lagunas) VERTEDERO MUNICIPAL"
+      ],
+      "latitude": -41.17241388888888,
+      "longitude": -71.352975,
+      "nearby_covered_route_sectors_within_10km": [
+        {
+          "route_sector": "Refugio Frey desde Villa Catedral",
+          "distance_km": 9.284,
+          "model_score": 0.569487452507019,
+          "model_alert_at_0_5": true,
+          "persistence_alert": false
+        }
+      ],
+      "covered": true,
+      "alert_at_0_5": true,
+      "persistence_alert": false
+    },
+    {
+      "province": "La Pampa",
+      "reported_start_date": "2026-01-07",
+      "incident_names": [
+        "BECK"
+      ],
+      "latitude": -37.5059,
+      "longitude": -64.3637,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "La Pampa",
+      "reported_start_date": "2026-01-07",
+      "incident_names": [
+        "EL MIRADOR"
+      ],
+      "latitude": -37.706100000000006,
+      "longitude": -64.4497,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "La Pampa",
+      "reported_start_date": "2026-01-07",
+      "incident_names": [
+        "P.N. LIHUE CALEL"
+      ],
+      "latitude": -38.01730277777778,
+      "longitude": -65.58514166666666,
+      "nearby_covered_route_sectors_within_10km": [
+        {
+          "route_sector": "Sendero Namuncura",
+          "distance_km": 1.615,
+          "model_score": 0.624128520488739,
+          "model_alert_at_0_5": true,
+          "persistence_alert": false
+        }
+      ],
+      "covered": true,
+      "alert_at_0_5": true,
+      "persistence_alert": false
+    },
+    {
+      "province": "La Pampa",
+      "reported_start_date": "2026-01-07",
+      "incident_names": [
+        "SAN MARTIN"
+      ],
+      "latitude": -37.30625555555555,
+      "longitude": -64.8489,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "Mendoza",
+      "reported_start_date": "2026-01-07",
+      "incident_names": [
+        "EL CAMINITO"
+      ],
+      "latitude": -35.70908333333334,
+      "longitude": -68.20244444444445,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "Neuquén",
+      "reported_start_date": "2026-01-08",
+      "incident_names": [
+        "Cerro Chañy."
+      ],
+      "latitude": -38.96463888888889,
+      "longitude": -71.18358888888889,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "Neuquén",
+      "reported_start_date": "2026-01-08",
+      "incident_names": [
+        "Polcahue Norquinco (Pampa Inda)"
+      ],
+      "latitude": -39.11175,
+      "longitude": -71.15177777777778,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "Chubut",
+      "reported_start_date": "2026-01-09",
+      "incident_names": [
+        "Lago Rosario"
+      ],
+      "latitude": -43.213797222222226,
+      "longitude": -71.41271666666667,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "Neuquén",
+      "reported_start_date": "2026-01-09",
+      "incident_names": [
+        "El Cholar"
+      ],
+      "latitude": -37.4559,
+      "longitude": -70.5269,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "Neuquén",
+      "reported_start_date": "2026-01-09",
+      "incident_names": [
+        "La Gotera (KIKA)"
+      ],
+      "latitude": -39.0637,
+      "longitude": -70.8638,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "Neuquén",
+      "reported_start_date": "2026-01-09",
+      "incident_names": [
+        "Magdalena 2026"
+      ],
+      "latitude": -39.554111111111105,
+      "longitude": -71.26197222222223,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "Neuquén",
+      "reported_start_date": "2026-01-09",
+      "incident_names": [
+        "Ruca Quillen"
+      ],
+      "latitude": -39.265,
+      "longitude": -71.16388888888889,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "La Pampa",
+      "reported_start_date": "2026-01-10",
+      "incident_names": [
+        "RN 35 KM 177/176"
+      ],
+      "latitude": -37.826800000000006,
+      "longitude": -63.8659,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "La Pampa",
+      "reported_start_date": "2026-01-12",
+      "incident_names": [
+        "2 Los Ranqueles",
+        "Los Ranqueles"
+      ],
+      "latitude": -37.491822222222225,
+      "longitude": -64.12398888888889,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "La Pampa",
+      "reported_start_date": "2026-01-12",
+      "incident_names": [
+        "Allende y Caferri"
+      ],
+      "latitude": -37.18309722222222,
+      "longitude": -64.45313611111112,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "La Pampa",
+      "reported_start_date": "2026-01-12",
+      "incident_names": [
+        "Don Roberto"
+      ],
+      "latitude": -37.932694444444444,
+      "longitude": -64.29758888888888,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "La Pampa",
+      "reported_start_date": "2026-01-12",
+      "incident_names": [
+        "Dos Santos"
+      ],
+      "latitude": -37.144080555555554,
+      "longitude": -64.51501111111111,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "La Pampa",
+      "reported_start_date": "2026-01-12",
+      "incident_names": [
+        "El Retiro"
+      ],
+      "latitude": -36.8035,
+      "longitude": -64.82472222222222,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "La Pampa",
+      "reported_start_date": "2026-01-12",
+      "incident_names": [
+        "El mirador de Ruiz",
+        "El mirador de Ruiz Perez"
+      ],
+      "latitude": -37.433299999999996,
+      "longitude": -64.2822,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "La Pampa",
+      "reported_start_date": "2026-01-12",
+      "incident_names": [
+        "La Avanza",
+        "Perez La Avanza"
+      ],
+      "latitude": -36.54328888888889,
+      "longitude": -64.31139999999999,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "La Pampa",
+      "reported_start_date": "2026-01-12",
+      "incident_names": [
+        "La Gitana"
+      ],
+      "latitude": -36.921,
+      "longitude": -64.72166666666666,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "La Pampa",
+      "reported_start_date": "2026-01-12",
+      "incident_names": [
+        "La Paz"
+      ],
+      "latitude": -37.14304166666667,
+      "longitude": -65.0003,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "La Pampa",
+      "reported_start_date": "2026-01-12",
+      "incident_names": [
+        "La rueda"
+      ],
+      "latitude": -37.11240277777778,
+      "longitude": -65.10393333333333,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "La Pampa",
+      "reported_start_date": "2026-01-12",
+      "incident_names": [
+        "Las delicias",
+        "Las delicias 2"
+      ],
+      "latitude": -36.05129722222222,
+      "longitude": -66.27480277777778,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "La Pampa",
+      "reported_start_date": "2026-01-12",
+      "incident_names": [
+        "Los manantiales"
+      ],
+      "latitude": -37.01097222222222,
+      "longitude": -65.25369722222223,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "La Pampa",
+      "reported_start_date": "2026-01-12",
+      "incident_names": [
+        "Lote 19"
+      ],
+      "latitude": -37.02193333333333,
+      "longitude": -65.52336111111111,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "La Pampa",
+      "reported_start_date": "2026-01-12",
+      "incident_names": [
+        "Media legua"
+      ],
+      "latitude": -37.33545277777778,
+      "longitude": -64.30402222222222,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "La Pampa",
+      "reported_start_date": "2026-01-12",
+      "incident_names": [
+        "SAN PEDRO"
+      ],
+      "latitude": -36.78096388888889,
+      "longitude": -65.71055555555556,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "La Pampa",
+      "reported_start_date": "2026-01-12",
+      "incident_names": [
+        "San Eduardo"
+      ],
+      "latitude": -36.768299999999996,
+      "longitude": -65.6721,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "La Pampa",
+      "reported_start_date": "2026-01-12",
+      "incident_names": [
+        "San Martín -",
+        "San Martín - Gadea"
+      ],
+      "latitude": -37.171905555555554,
+      "longitude": -64.5032,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "Mendoza",
+      "reported_start_date": "2026-01-12",
+      "incident_names": [
+        "Cerro Mesa"
+      ],
+      "latitude": -35.220169444444444,
+      "longitude": -69.47271944444445,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "Mendoza",
+      "reported_start_date": "2026-01-12",
+      "incident_names": [
+        "La Costa"
+      ],
+      "latitude": -34.99966666666667,
+      "longitude": -67.71147222222223,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "La Pampa",
+      "reported_start_date": "2026-01-14",
+      "incident_names": [
+        "LA NUEVA UNION",
+        "Perez LA NUEVA UNION"
+      ],
+      "latitude": -37.7954,
+      "longitude": -63.78288888888889,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "La Pampa",
+      "reported_start_date": "2026-01-14",
+      "incident_names": [
+        "MONTE DE LOS PADRES"
+      ],
+      "latitude": -37.6267,
+      "longitude": -64.43386111111111,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "Río Negro",
+      "reported_start_date": "2026-01-15",
+      "incident_names": [
+        "Gadea Negro Muerto",
+        "Negro Muerto",
+        "PADRES 2 Negro Muerto"
+      ],
+      "latitude": -39.54322222222222,
+      "longitude": -65.47530555555555,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "Chubut",
+      "reported_start_date": "2026-01-16",
+      "incident_names": [
+        "Parque Industrial Trevelin"
+      ],
+      "latitude": -43.111361111111115,
+      "longitude": -71.46955555555556,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "La Pampa",
+      "reported_start_date": "2026-01-16",
+      "incident_names": [
+        "El Jaguel 2"
+      ],
+      "latitude": -37.337069444444445,
+      "longitude": -64.94605277777778,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "La Pampa",
+      "reported_start_date": "2026-01-17",
+      "incident_names": [
+        "MONTE DE LOS",
+        "MONTE DE LOS PADRES 2"
+      ],
+      "latitude": -37.26784722222222,
+      "longitude": -64.56091666666666,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "Neuquén",
+      "reported_start_date": "2026-01-20",
+      "incident_names": [
+        "Volcan Tromen"
+      ],
+      "latitude": -37.16761111111111,
+      "longitude": -69.97452777777778,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "Río Negro",
+      "reported_start_date": "2026-01-22",
+      "incident_names": [
+        "Circunvalación"
+      ],
+      "latitude": -41.1753,
+      "longitude": -71.3107,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "La Pampa",
+      "reported_start_date": "2026-01-23",
+      "incident_names": [
+        "El Dos"
+      ],
+      "latitude": -37.3031,
+      "longitude": -64.85849999999999,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "La Pampa",
+      "reported_start_date": "2026-01-23",
+      "incident_names": [
+        "La Floriana"
+      ],
+      "latitude": -36.24366111111111,
+      "longitude": -66.35118888888888,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "La Pampa",
+      "reported_start_date": "2026-01-23",
+      "incident_names": [
+        "La Lengua Norte"
+      ],
+      "latitude": -36.633449999999996,
+      "longitude": -64.59688888888888,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "La Pampa",
+      "reported_start_date": "2026-01-23",
+      "incident_names": [
+        "Las Delicias",
+        "Las Delicias Oeste"
+      ],
+      "latitude": -36.14425,
+      "longitude": -66.4306,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "La Pampa",
+      "reported_start_date": "2026-01-23",
+      "incident_names": [
+        "Las Delicias Este"
+      ],
+      "latitude": -36.1526,
+      "longitude": -66.212,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "La Pampa",
+      "reported_start_date": "2026-01-23",
+      "incident_names": [
+        "Molina",
+        "Oeste Molina"
+      ],
+      "latitude": -36.970730555555555,
+      "longitude": -65.14750000000001,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "Mendoza",
+      "reported_start_date": "2026-01-23",
+      "incident_names": [
+        "Alpataco"
+      ],
+      "latitude": -34.97506111111111,
+      "longitude": -67.57381944444444,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "Chubut",
+      "reported_start_date": "2026-01-24",
+      "incident_names": [
+        "Mediaciones RN3 -RP1"
+      ],
+      "latitude": -42.889805555555554,
+      "longitude": -65.06219444444444,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "Mendoza",
+      "reported_start_date": "2026-01-25",
+      "incident_names": [
+        "El Calden"
+      ],
+      "latitude": -34.964061111111114,
+      "longitude": -67.96061111111112,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "Mendoza",
+      "reported_start_date": "2026-01-25",
+      "incident_names": [
+        "El Estribo"
+      ],
+      "latitude": -35.57381111111111,
+      "longitude": -66.84921944444444,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "Mendoza",
+      "reported_start_date": "2026-01-25",
+      "incident_names": [
+        "El Tata"
+      ],
+      "latitude": -35.94231111111111,
+      "longitude": -66.93643888888889,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "Neuquén",
+      "reported_start_date": "2026-01-25",
+      "incident_names": [
+        "Las Chaquiras"
+      ],
+      "latitude": -38.38306111111111,
+      "longitude": -70.80693888888888,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "Buenos Aires",
+      "reported_start_date": "2026-01-26",
+      "incident_names": [
+        "Ezeiza"
+      ],
+      "latitude": -34.86211388888889,
+      "longitude": -58.603033333333336,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "Corrientes",
+      "reported_start_date": "2026-01-28",
+      "incident_names": [
+        "Aeroclub Alver"
+      ],
+      "latitude": -29.08689722222222,
+      "longitude": -56.876219444444445,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "Corrientes",
+      "reported_start_date": "2026-01-28",
+      "incident_names": [
+        "Bosques del plata"
+      ],
+      "latitude": -28.220119444444443,
+      "longitude": -56.20131944444445,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "Corrientes",
+      "reported_start_date": "2026-01-28",
+      "incident_names": [
+        "El trebol"
+      ],
+      "latitude": -29.521838888888887,
+      "longitude": -58.25228888888889,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "Neuquén",
+      "reported_start_date": "2026-01-28",
+      "incident_names": [
+        "Las Yeguadas"
+      ],
+      "latitude": -39.31391111111111,
+      "longitude": -71.193275,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "Neuquén",
+      "reported_start_date": "2026-01-30",
+      "incident_names": [
+        "CRUCE DE RUTA 237"
+      ],
+      "latitude": -42.316224999999996,
+      "longitude": -71.43086944444445,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "Neuquén",
+      "reported_start_date": "2026-01-30",
+      "incident_names": [
+        "Cerro Cantala (Huechulafquen)"
+      ],
+      "latitude": -39.83551388888889,
+      "longitude": -71.34752499999999,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "Neuquén",
+      "reported_start_date": "2026-01-30",
+      "incident_names": [
+        "Ea Cerro Los",
+        "Lonco Luan Ea Cerro Los Pinos"
+      ],
+      "latitude": -40.222141666666666,
+      "longitude": -71.44751944444445,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "Neuquén",
+      "reported_start_date": "2026-01-30",
+      "incident_names": [
+        "Ea La verde",
+        "Pinos Ea La verde"
+      ],
+      "latitude": -39.684549999999994,
+      "longitude": -70.56745,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "Neuquén",
+      "reported_start_date": "2026-01-30",
+      "incident_names": [
+        "LAGO TRAFUL"
+      ],
+      "latitude": -41.075858333333336,
+      "longitude": -71.64884722222223,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "Neuquén",
+      "reported_start_date": "2026-01-30",
+      "incident_names": [
+        "Población Ramón Hernandez"
+      ],
+      "latitude": -40.69990277777777,
+      "longitude": -71.27048888888889,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "Neuquén",
+      "reported_start_date": "2026-01-30",
+      "incident_names": [
+        "Seccional Las Coloradas",
+        "Seccional Las Coloradas (Huechulafquen)"
+      ],
+      "latitude": -39.89032777777778,
+      "longitude": -71.28978333333333,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "Chubut",
+      "reported_start_date": "2026-01-31",
+      "incident_names": [
+        "Puesto Antonio Fernandez (zona El Turbio)"
+      ],
+      "latitude": -42.16488611111111,
+      "longitude": -71.54711388888889,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "Entre Ríos",
+      "reported_start_date": "2026-01-31",
+      "incident_names": [
+        "Vuelta de San Lorenzo"
+      ],
+      "latitude": -32.59401944444445,
+      "longitude": -60.13337222222222,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    },
+    {
+      "province": "Formosa",
+      "reported_start_date": "2026-01-31",
+      "incident_names": [
+        "Rabano Cué"
+      ],
+      "latitude": -25.3521,
+      "longitude": -58.14447222222222,
+      "nearby_covered_route_sectors_within_10km": [],
+      "covered": false,
+      "alert_at_0_5": false,
+      "persistence_alert": false
+    }
+  ],
+  "deployment_approved": false
+}

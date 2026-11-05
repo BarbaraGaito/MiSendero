@@ -1,0 +1,97 @@
+{
+  "experiment_id": "goes-gfs-24h-snmf-report-proxy-threshold-2025-12-validation-2026-01-test",
+  "interpretation": "The positive and negative labels are agreement with official daily report listings; a negative proxy is not proof that no physical fire occurred.",
+  "protocol": {
+    "validation_period": "2025-12-01 through 2025-12-31",
+    "test_period": "2026-01-01 through 2026-01-31",
+    "spatial_radius_km": 10.0,
+    "validation_precision_floor": 0.9,
+    "validation_minimum_alerts": 5,
+    "selection_rule": "Maximize validation proxy recall among thresholds meeting the proxy precision floor and minimum alert count; then prefer precision, alert count, threshold.",
+    "test_threshold_selected_using_validation_only": true
+  },
+  "sources": {
+    "evaluation_sha256": "03e1c6617f65549b94f055cae5895502889b079e9c95f7341a15bdfeb3399b8d",
+    "geography_sha256": "7e475b478db7bb678cc0a1539fdf484e0c8de0a9baa98916fb90f652f75ff834",
+    "snmf_2025_sha256": "d8e95391641ccb7d884d7bbe88e3df6fff82251352a50154656f88096f4a87f4",
+    "snmf_2026_sha256": "ba18284a722410e225906de6ea1ba35e72d5670496c45793363e901beb6efcca",
+    "manifest_2025_sha256": "0ca1d7673cde658412fad7f5b8b4d3db578c288d480388750ffc899281a82943",
+    "manifest_2026_sha256": "c9c25df1611fb3a053de47caf117d3b885e079eed190ebe590e6eb1ee75ad59d"
+  },
+  "validation_report_coverage": {
+    "downloaded_report_dates": 31,
+    "parsed_report_dates_with_rows": 31,
+    "report_dates_with_unlocated_incident_rows": 2,
+    "report_dates_excluded_due_to_unlocated_incidents": [
+      "2025-12-17",
+      "2025-12-18"
+    ],
+    "missing_reports": 0,
+    "zero_parsed_or_unavailable_dates": [],
+    "period": [
+      "2025-12-01",
+      "2025-12-31"
+    ]
+  },
+  "test_report_coverage": {
+    "downloaded_report_dates": 30,
+    "parsed_report_dates_with_rows": 30,
+    "report_dates_with_unlocated_incident_rows": 0,
+    "report_dates_excluded_due_to_unlocated_incidents": [],
+    "missing_reports": 1,
+    "zero_parsed_or_unavailable_dates": [],
+    "period": [
+      "2026-01-01",
+      "2026-01-31"
+    ]
+  },
+  "validation_route_days_with_proxy_label": 209,
+  "validation_metrics_at_0_5_diagnostic": {
+    "threshold": 0.5,
+    "route_sector_days": 209,
+    "proxy_positive_route_sector_days": 3,
+    "alerts": 108,
+    "true_report_matches": 3,
+    "alerts_without_listed_active_incident": 105,
+    "missed_reported_active_incidents": 0,
+    "no_alert_no_listed_active_incident": 101,
+    "precision_vs_report_proxy": 0.027777777777777776,
+    "recall_vs_report_proxy": 1.0
+  },
+  "best_validation_proxy_precision_with_minimum_alerts": {
+    "threshold": 0.6326026916503906,
+    "route_sector_days": 209,
+    "proxy_positive_route_sector_days": 3,
+    "alerts": 80,
+    "true_report_matches": 3,
+    "alerts_without_listed_active_incident": 77,
+    "missed_reported_active_incidents": 0,
+    "no_alert_no_listed_active_incident": 129,
+    "precision_vs_report_proxy": 0.0375,
+    "recall_vs_report_proxy": 1.0
+  },
+  "selected_threshold": null,
+  "validation_at_selected_threshold": null,
+  "test_route_days_with_proxy_label": 232,
+  "test_metrics_at_0_5_diagnostic": {
+    "threshold": 0.5,
+    "route_sector_days": 232,
+    "proxy_positive_route_sector_days": 29,
+    "alerts": 133,
+    "true_report_matches": 27,
+    "alerts_without_listed_active_incident": 106,
+    "missed_reported_active_incidents": 2,
+    "no_alert_no_listed_active_incident": 97,
+    "precision_vs_report_proxy": 0.20300751879699247,
+    "recall_vs_report_proxy": 0.9310344827586207
+  },
+  "test_at_validation_selected_threshold": null,
+  "deployment_approved": false,
+  "limitations": [
+    "SNMF reports are not an exhaustive surveyed fire/no-fire registry; reported-clear negatives are proxy labels only.",
+    "The archive has missing/unparsed reports and records with missing coordinates; dates with unlocated incidents were excluded from threshold evaluation.",
+    "Route-days and adjacent-day fires are correlated; route-day metrics are descriptive and do not represent independent fire-event precision.",
+    "The 10 km rule uses route-sector centers rather than trail geometries and is not a safety-validated radius.",
+    "The predictor targets a GOES fire detection 24h later, not ignition or a safety outcome; SNMF dates are day-level only."
+  ]
+}

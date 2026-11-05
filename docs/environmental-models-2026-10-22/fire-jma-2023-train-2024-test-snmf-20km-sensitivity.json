@@ -1,0 +1,1852 @@
+{
+  "experiment_id": "jma-gsm-2023-train-2024-test-snmf-report-proxy-20km-sensitivity",
+  "status": "not_reliable_for_fire_prediction",
+  "target": "Same-day SNMF-reported incident near a route-sector center within 20 km; a regional report proxy, not physical fire presence or ignition probability.",
+  "protocol": {
+    "spatial_radius_km": 20.0,
+    "training_period": "2023-07-01 through 2023-12-31",
+    "test_period": "2024-01-01 through 2024-12-31",
+    "model": "StandardScaler + route one-hot + class-balanced logistic regression, C=1, random_state=42.",
+    "forecast_lead_hours": 24,
+    "thresholds": [
+      0.1,
+      0.2,
+      0.3,
+      0.5,
+      0.7,
+      0.8,
+      0.9
+    ],
+    "threshold_selection": "None; these are diagnostic comparisons on the held-out year.",
+    "label_reconstruction": "Archived SNMF report parser logic, including active/unresolved same-day listings and reported start dates; zeros only on dates with an archived daily report.",
+    "label_reconstruction_check": "Reconstructed 20 km route-day and positive counts must equal the pre-existing 2023/2024 route-proxy audits before training proceeds.",
+    "weather_features": [
+      "temperature_mean",
+      "temperature_max",
+      "humidity_mean",
+      "humidity_min",
+      "wind_mean",
+      "wind_max",
+      "precipitation_sum"
+    ]
+  },
+  "sources": {
+    "weather_sha256": {
+      "openmeteo-gfs-previous-runs-argentina-trails-jma_gsm-2023-07-01-2024-01-01.json.gz": "53a83da0d4479fd6de05199f21ca47d98f0047ee848ad4085d2d30a400944009",
+      "openmeteo-gfs-previous-runs-argentina-trails-jma_gsm-2024-01-01-2025-01-01.json.gz": "e3c8aea0aca987df527dbc6fd9037d7274efd2ebab2cfbe8a12880e7f297b20e"
+    },
+    "event_report_sha256": {
+      "snmf-2023-daily-occurrence-events.json": "b82ddcb2c848fe854be9e1002fed72318165d8b1818b952b61cc9467b1cc0900",
+      "snmf-2024-daily-occurrence-events.json": "10c44e0b77d99d771c3256978f3d5c976b3dd05262ab122108aff0d4861e0bad"
+    },
+    "report_manifest_sha256": {
+      "2023": "71c14b6aafee792941c46319aa9c7ae2339d21ec8dbcc4a2d4f473c8c1fb2818",
+      "2024": "e382213264a4bd6d75de64c25131532112ee172581b0d1197740689b3a817465"
+    },
+    "explicit_no_fire_audit_sha256": "a57c45ee46b1bb97763432a9fa647fe9fc903b4550c427d4e46bb2be03a76396"
+  },
+  "counts": {
+    "training_route_days": 958,
+    "training_positive_route_days": 36,
+    "training_positive_route_day_clusters": 16,
+    "test_route_days": 2219,
+    "test_positive_route_days": 52,
+    "test_positive_route_day_clusters": 22,
+    "explicit_national_no_fire_report_dates_2024": 27,
+    "explicit_national_no_fire_date_clusters": 14,
+    "covered_route_days_on_explicit_no_fire_dates": 216,
+    "possible_route_days_on_explicit_no_fire_dates": 216
+  },
+  "test_report_proxy_metrics": {
+    "positive_fraction": 0.023433979269941414,
+    "average_precision": 0.08799072867360265,
+    "prevalence_baseline_average_precision": 0.023433979269941414,
+    "brier_score": 0.15835785629568427,
+    "training_prevalence_baseline_brier_score": 0.02308488935780335,
+    "training_prevalence": 0.037578288100208766,
+    "threshold_metrics": {
+      "0.1": {
+        "threshold": 0.1,
+        "true_positives": 41,
+        "false_positives": 1061,
+        "false_negatives": 11,
+        "true_negatives": 1106,
+        "alerts": 1102,
+        "precision_on_report_proxy": 0.03720508166969147,
+        "recall_on_report_proxy": 0.7884615384615384,
+        "accuracy_on_report_proxy": 0.5168995042812078
+      },
+      "0.2": {
+        "threshold": 0.2,
+        "true_positives": 39,
+        "false_positives": 942,
+        "false_negatives": 13,
+        "true_negatives": 1225,
+        "alerts": 981,
+        "precision_on_report_proxy": 0.039755351681957186,
+        "recall_on_report_proxy": 0.75,
+        "accuracy_on_report_proxy": 0.5696259576385759
+      },
+      "0.3": {
+        "threshold": 0.3,
+        "true_positives": 38,
+        "false_positives": 842,
+        "false_negatives": 14,
+        "true_negatives": 1325,
+        "alerts": 880,
+        "precision_on_report_proxy": 0.04318181818181818,
+        "recall_on_report_proxy": 0.7307692307692307,
+        "accuracy_on_report_proxy": 0.6142406489409644
+      },
+      "0.5": {
+        "threshold": 0.5,
+        "true_positives": 35,
+        "false_positives": 566,
+        "false_negatives": 17,
+        "true_negatives": 1601,
+        "alerts": 601,
+        "precision_on_report_proxy": 0.05823627287853577,
+        "recall_on_report_proxy": 0.6730769230769231,
+        "accuracy_on_report_proxy": 0.7372690401081569
+      },
+      "0.7": {
+        "threshold": 0.7,
+        "true_positives": 18,
+        "false_positives": 260,
+        "false_negatives": 34,
+        "true_negatives": 1907,
+        "alerts": 278,
+        "precision_on_report_proxy": 0.06474820143884892,
+        "recall_on_report_proxy": 0.34615384615384615,
+        "accuracy_on_report_proxy": 0.8675078864353313
+      },
+      "0.8": {
+        "threshold": 0.8,
+        "true_positives": 12,
+        "false_positives": 121,
+        "false_negatives": 40,
+        "true_negatives": 2046,
+        "alerts": 133,
+        "precision_on_report_proxy": 0.09022556390977443,
+        "recall_on_report_proxy": 0.23076923076923078,
+        "accuracy_on_report_proxy": 0.9274447949526814
+      },
+      "0.9": {
+        "threshold": 0.9,
+        "true_positives": 2,
+        "false_positives": 17,
+        "false_negatives": 50,
+        "true_negatives": 2150,
+        "alerts": 19,
+        "precision_on_report_proxy": 0.10526315789473684,
+        "recall_on_report_proxy": 0.038461538461538464,
+        "accuracy_on_report_proxy": 0.9698062190175755
+      }
+    }
+  },
+  "explicit_no_fire_negative_challenge": {
+    "target": "SNMF explicitly states no fires were reported nationally on the report date; administrative proxy only.",
+    "threshold_metrics": {
+      "0.1": {
+        "covered_route_days": 216,
+        "possible_route_days": 216,
+        "alerted_route_days": 103,
+        "report_dates_with_alert": 27,
+        "alerts": [
+          {
+            "date": "2024-04-13",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.30784720339723176
+          },
+          {
+            "date": "2024-04-14",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.3664572262204853
+          },
+          {
+            "date": "2024-04-15",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.435956810855945
+          },
+          {
+            "date": "2024-05-04",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.5195566986474762
+          },
+          {
+            "date": "2024-05-05",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.6188392607706902
+          },
+          {
+            "date": "2024-05-11",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.5851232020556075
+          },
+          {
+            "date": "2024-05-12",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.445563442001796
+          },
+          {
+            "date": "2024-05-13",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.6944345706800392
+          },
+          {
+            "date": "2024-05-14",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.48585010169150655
+          },
+          {
+            "date": "2024-05-16",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.6814162477350214
+          },
+          {
+            "date": "2024-05-17",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.7641185093502957
+          },
+          {
+            "date": "2024-05-18",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.4280323815892545
+          },
+          {
+            "date": "2024-05-19",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.42854172438770494
+          },
+          {
+            "date": "2024-05-23",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.3446125503741958
+          },
+          {
+            "date": "2024-05-25",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.480764671657187
+          },
+          {
+            "date": "2024-05-26",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.47031380072547785
+          },
+          {
+            "date": "2024-05-27",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.5162013621913926
+          },
+          {
+            "date": "2024-05-29",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.7223825380136443
+          },
+          {
+            "date": "2024-05-31",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.4860618792649617
+          },
+          {
+            "date": "2024-06-04",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.7388357165068636
+          },
+          {
+            "date": "2024-06-05",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.5756222299444579
+          },
+          {
+            "date": "2024-06-16",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.7767364097216043
+          },
+          {
+            "date": "2024-06-30",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.7487018642344333
+          },
+          {
+            "date": "2024-07-03",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.7618443952265509
+          },
+          {
+            "date": "2024-07-09",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.48061536950564276
+          },
+          {
+            "date": "2024-07-10",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.5730359405183988
+          },
+          {
+            "date": "2024-11-18",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.6311613241729541
+          },
+          {
+            "date": "2024-04-13",
+            "route_sector": "Sendero Namuncura",
+            "score": 0.11516728857193037
+          },
+          {
+            "date": "2024-05-04",
+            "route_sector": "Sendero Namuncura",
+            "score": 0.5122659583130663
+          },
+          {
+            "date": "2024-05-05",
+            "route_sector": "Sendero Namuncura",
+            "score": 0.4110465799621481
+          },
+          {
+            "date": "2024-05-11",
+            "route_sector": "Sendero Namuncura",
+            "score": 0.3183421401073499
+          },
+          {
+            "date": "2024-05-12",
+            "route_sector": "Sendero Namuncura",
+            "score": 0.14114606535327082
+          },
+          {
+            "date": "2024-05-13",
+            "route_sector": "Sendero Namuncura",
+            "score": 0.1635824333788979
+          },
+          {
+            "date": "2024-05-14",
+            "route_sector": "Sendero Namuncura",
+            "score": 0.12291004157652344
+          },
+          {
+            "date": "2024-05-17",
+            "route_sector": "Sendero Namuncura",
+            "score": 0.15405142014040774
+          },
+          {
+            "date": "2024-05-18",
+            "route_sector": "Sendero Namuncura",
+            "score": 0.14500862898153274
+          },
+          {
+            "date": "2024-05-19",
+            "route_sector": "Sendero Namuncura",
+            "score": 0.18069575654591616
+          },
+          {
+            "date": "2024-05-23",
+            "route_sector": "Sendero Namuncura",
+            "score": 0.21765549785825994
+          },
+          {
+            "date": "2024-05-25",
+            "route_sector": "Sendero Namuncura",
+            "score": 0.330869372604773
+          },
+          {
+            "date": "2024-05-26",
+            "route_sector": "Sendero Namuncura",
+            "score": 0.37780635374248
+          },
+          {
+            "date": "2024-05-27",
+            "route_sector": "Sendero Namuncura",
+            "score": 0.2235827330240024
+          },
+          {
+            "date": "2024-05-29",
+            "route_sector": "Sendero Namuncura",
+            "score": 0.11358410234041842
+          },
+          {
+            "date": "2024-05-31",
+            "route_sector": "Sendero Namuncura",
+            "score": 0.1554216239206149
+          },
+          {
+            "date": "2024-06-04",
+            "route_sector": "Sendero Namuncura",
+            "score": 0.4376601229187584
+          },
+          {
+            "date": "2024-06-05",
+            "route_sector": "Sendero Namuncura",
+            "score": 0.3331671632007779
+          },
+          {
+            "date": "2024-06-16",
+            "route_sector": "Sendero Namuncura",
+            "score": 0.14923625706098043
+          },
+          {
+            "date": "2024-06-30",
+            "route_sector": "Sendero Namuncura",
+            "score": 0.46282417286631916
+          },
+          {
+            "date": "2024-07-03",
+            "route_sector": "Sendero Namuncura",
+            "score": 0.32230473232062123
+          },
+          {
+            "date": "2024-07-09",
+            "route_sector": "Sendero Namuncura",
+            "score": 0.284494378744333
+          },
+          {
+            "date": "2024-07-10",
+            "route_sector": "Sendero Namuncura",
+            "score": 0.2114532998529159
+          },
+          {
+            "date": "2024-11-18",
+            "route_sector": "Sendero Namuncura",
+            "score": 0.7040008454699517
+          },
+          {
+            "date": "2024-04-13",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.5288090023852736
+          },
+          {
+            "date": "2024-04-14",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.4221683016444116
+          },
+          {
+            "date": "2024-04-15",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.46932449067510185
+          },
+          {
+            "date": "2024-05-04",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.26267084621233694
+          },
+          {
+            "date": "2024-05-05",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.22409089327059245
+          },
+          {
+            "date": "2024-05-11",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.35021649515244785
+          },
+          {
+            "date": "2024-05-12",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.323992873795202
+          },
+          {
+            "date": "2024-05-13",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.3042264548319792
+          },
+          {
+            "date": "2024-05-14",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.3444595787858638
+          },
+          {
+            "date": "2024-05-16",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.34087939769800196
+          },
+          {
+            "date": "2024-05-17",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.36378215847247614
+          },
+          {
+            "date": "2024-05-18",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.44815145293542236
+          },
+          {
+            "date": "2024-05-19",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.1989413381425605
+          },
+          {
+            "date": "2024-05-23",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.28295850037512293
+          },
+          {
+            "date": "2024-05-25",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.40644487970154614
+          },
+          {
+            "date": "2024-05-26",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.3607043834178679
+          },
+          {
+            "date": "2024-05-27",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.2909242248945779
+          },
+          {
+            "date": "2024-05-29",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.5504748210257758
+          },
+          {
+            "date": "2024-05-31",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.13117446325438376
+          },
+          {
+            "date": "2024-06-04",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.17968849378975194
+          },
+          {
+            "date": "2024-06-05",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.4463934567199821
+          },
+          {
+            "date": "2024-06-16",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.48001398940289863
+          },
+          {
+            "date": "2024-06-30",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.355826657250093
+          },
+          {
+            "date": "2024-07-03",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.48289315603777394
+          },
+          {
+            "date": "2024-07-09",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.30387830697076473
+          },
+          {
+            "date": "2024-07-10",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.30994568848756615
+          },
+          {
+            "date": "2024-11-18",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.6747238737351557
+          },
+          {
+            "date": "2024-04-13",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.42200017400721446
+          },
+          {
+            "date": "2024-04-14",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.30384437818325516
+          },
+          {
+            "date": "2024-05-04",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.3392114758896644
+          },
+          {
+            "date": "2024-05-05",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.3978725182762268
+          },
+          {
+            "date": "2024-05-11",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.3290708276810949
+          },
+          {
+            "date": "2024-05-12",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.20856622848711598
+          },
+          {
+            "date": "2024-05-13",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.63088491503433
+          },
+          {
+            "date": "2024-05-14",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.7940852961342023
+          },
+          {
+            "date": "2024-05-16",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.5215264370896967
+          },
+          {
+            "date": "2024-05-17",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.7942537717887196
+          },
+          {
+            "date": "2024-05-18",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.7903941851255073
+          },
+          {
+            "date": "2024-05-19",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.7189945591483797
+          },
+          {
+            "date": "2024-05-25",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.785489114222133
+          },
+          {
+            "date": "2024-05-26",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.6323726458359187
+          },
+          {
+            "date": "2024-05-27",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.6434833261222372
+          },
+          {
+            "date": "2024-05-29",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.4379409276686502
+          },
+          {
+            "date": "2024-05-31",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.48474748939648804
+          },
+          {
+            "date": "2024-06-04",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.7282290226632544
+          },
+          {
+            "date": "2024-06-05",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.498881275876852
+          },
+          {
+            "date": "2024-06-16",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.39389108419366553
+          },
+          {
+            "date": "2024-06-30",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.7402671676193222
+          },
+          {
+            "date": "2024-07-03",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.551368919246806
+          },
+          {
+            "date": "2024-07-09",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.8605343559882407
+          },
+          {
+            "date": "2024-07-10",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.7233350832919966
+          },
+          {
+            "date": "2024-11-18",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.5405979926769714
+          }
+        ]
+      },
+      "0.2": {
+        "covered_route_days": 216,
+        "possible_route_days": 216,
+        "alerted_route_days": 90,
+        "report_dates_with_alert": 27,
+        "alerts": [
+          {
+            "date": "2024-04-13",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.30784720339723176
+          },
+          {
+            "date": "2024-04-14",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.3664572262204853
+          },
+          {
+            "date": "2024-04-15",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.435956810855945
+          },
+          {
+            "date": "2024-05-04",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.5195566986474762
+          },
+          {
+            "date": "2024-05-05",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.6188392607706902
+          },
+          {
+            "date": "2024-05-11",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.5851232020556075
+          },
+          {
+            "date": "2024-05-12",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.445563442001796
+          },
+          {
+            "date": "2024-05-13",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.6944345706800392
+          },
+          {
+            "date": "2024-05-14",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.48585010169150655
+          },
+          {
+            "date": "2024-05-16",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.6814162477350214
+          },
+          {
+            "date": "2024-05-17",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.7641185093502957
+          },
+          {
+            "date": "2024-05-18",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.4280323815892545
+          },
+          {
+            "date": "2024-05-19",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.42854172438770494
+          },
+          {
+            "date": "2024-05-23",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.3446125503741958
+          },
+          {
+            "date": "2024-05-25",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.480764671657187
+          },
+          {
+            "date": "2024-05-26",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.47031380072547785
+          },
+          {
+            "date": "2024-05-27",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.5162013621913926
+          },
+          {
+            "date": "2024-05-29",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.7223825380136443
+          },
+          {
+            "date": "2024-05-31",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.4860618792649617
+          },
+          {
+            "date": "2024-06-04",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.7388357165068636
+          },
+          {
+            "date": "2024-06-05",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.5756222299444579
+          },
+          {
+            "date": "2024-06-16",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.7767364097216043
+          },
+          {
+            "date": "2024-06-30",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.7487018642344333
+          },
+          {
+            "date": "2024-07-03",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.7618443952265509
+          },
+          {
+            "date": "2024-07-09",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.48061536950564276
+          },
+          {
+            "date": "2024-07-10",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.5730359405183988
+          },
+          {
+            "date": "2024-11-18",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.6311613241729541
+          },
+          {
+            "date": "2024-05-04",
+            "route_sector": "Sendero Namuncura",
+            "score": 0.5122659583130663
+          },
+          {
+            "date": "2024-05-05",
+            "route_sector": "Sendero Namuncura",
+            "score": 0.4110465799621481
+          },
+          {
+            "date": "2024-05-11",
+            "route_sector": "Sendero Namuncura",
+            "score": 0.3183421401073499
+          },
+          {
+            "date": "2024-05-23",
+            "route_sector": "Sendero Namuncura",
+            "score": 0.21765549785825994
+          },
+          {
+            "date": "2024-05-25",
+            "route_sector": "Sendero Namuncura",
+            "score": 0.330869372604773
+          },
+          {
+            "date": "2024-05-26",
+            "route_sector": "Sendero Namuncura",
+            "score": 0.37780635374248
+          },
+          {
+            "date": "2024-05-27",
+            "route_sector": "Sendero Namuncura",
+            "score": 0.2235827330240024
+          },
+          {
+            "date": "2024-06-04",
+            "route_sector": "Sendero Namuncura",
+            "score": 0.4376601229187584
+          },
+          {
+            "date": "2024-06-05",
+            "route_sector": "Sendero Namuncura",
+            "score": 0.3331671632007779
+          },
+          {
+            "date": "2024-06-30",
+            "route_sector": "Sendero Namuncura",
+            "score": 0.46282417286631916
+          },
+          {
+            "date": "2024-07-03",
+            "route_sector": "Sendero Namuncura",
+            "score": 0.32230473232062123
+          },
+          {
+            "date": "2024-07-09",
+            "route_sector": "Sendero Namuncura",
+            "score": 0.284494378744333
+          },
+          {
+            "date": "2024-07-10",
+            "route_sector": "Sendero Namuncura",
+            "score": 0.2114532998529159
+          },
+          {
+            "date": "2024-11-18",
+            "route_sector": "Sendero Namuncura",
+            "score": 0.7040008454699517
+          },
+          {
+            "date": "2024-04-13",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.5288090023852736
+          },
+          {
+            "date": "2024-04-14",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.4221683016444116
+          },
+          {
+            "date": "2024-04-15",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.46932449067510185
+          },
+          {
+            "date": "2024-05-04",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.26267084621233694
+          },
+          {
+            "date": "2024-05-05",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.22409089327059245
+          },
+          {
+            "date": "2024-05-11",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.35021649515244785
+          },
+          {
+            "date": "2024-05-12",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.323992873795202
+          },
+          {
+            "date": "2024-05-13",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.3042264548319792
+          },
+          {
+            "date": "2024-05-14",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.3444595787858638
+          },
+          {
+            "date": "2024-05-16",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.34087939769800196
+          },
+          {
+            "date": "2024-05-17",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.36378215847247614
+          },
+          {
+            "date": "2024-05-18",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.44815145293542236
+          },
+          {
+            "date": "2024-05-23",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.28295850037512293
+          },
+          {
+            "date": "2024-05-25",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.40644487970154614
+          },
+          {
+            "date": "2024-05-26",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.3607043834178679
+          },
+          {
+            "date": "2024-05-27",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.2909242248945779
+          },
+          {
+            "date": "2024-05-29",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.5504748210257758
+          },
+          {
+            "date": "2024-06-05",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.4463934567199821
+          },
+          {
+            "date": "2024-06-16",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.48001398940289863
+          },
+          {
+            "date": "2024-06-30",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.355826657250093
+          },
+          {
+            "date": "2024-07-03",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.48289315603777394
+          },
+          {
+            "date": "2024-07-09",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.30387830697076473
+          },
+          {
+            "date": "2024-07-10",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.30994568848756615
+          },
+          {
+            "date": "2024-11-18",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.6747238737351557
+          },
+          {
+            "date": "2024-04-13",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.42200017400721446
+          },
+          {
+            "date": "2024-04-14",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.30384437818325516
+          },
+          {
+            "date": "2024-05-04",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.3392114758896644
+          },
+          {
+            "date": "2024-05-05",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.3978725182762268
+          },
+          {
+            "date": "2024-05-11",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.3290708276810949
+          },
+          {
+            "date": "2024-05-12",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.20856622848711598
+          },
+          {
+            "date": "2024-05-13",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.63088491503433
+          },
+          {
+            "date": "2024-05-14",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.7940852961342023
+          },
+          {
+            "date": "2024-05-16",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.5215264370896967
+          },
+          {
+            "date": "2024-05-17",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.7942537717887196
+          },
+          {
+            "date": "2024-05-18",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.7903941851255073
+          },
+          {
+            "date": "2024-05-19",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.7189945591483797
+          },
+          {
+            "date": "2024-05-25",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.785489114222133
+          },
+          {
+            "date": "2024-05-26",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.6323726458359187
+          },
+          {
+            "date": "2024-05-27",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.6434833261222372
+          },
+          {
+            "date": "2024-05-29",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.4379409276686502
+          },
+          {
+            "date": "2024-05-31",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.48474748939648804
+          },
+          {
+            "date": "2024-06-04",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.7282290226632544
+          },
+          {
+            "date": "2024-06-05",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.498881275876852
+          },
+          {
+            "date": "2024-06-16",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.39389108419366553
+          },
+          {
+            "date": "2024-06-30",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.7402671676193222
+          },
+          {
+            "date": "2024-07-03",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.551368919246806
+          },
+          {
+            "date": "2024-07-09",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.8605343559882407
+          },
+          {
+            "date": "2024-07-10",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.7233350832919966
+          },
+          {
+            "date": "2024-11-18",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.5405979926769714
+          }
+        ]
+      },
+      "0.3": {
+        "covered_route_days": 216,
+        "possible_route_days": 216,
+        "alerted_route_days": 81,
+        "report_dates_with_alert": 27,
+        "alerts": [
+          {
+            "date": "2024-04-13",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.30784720339723176
+          },
+          {
+            "date": "2024-04-14",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.3664572262204853
+          },
+          {
+            "date": "2024-04-15",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.435956810855945
+          },
+          {
+            "date": "2024-05-04",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.5195566986474762
+          },
+          {
+            "date": "2024-05-05",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.6188392607706902
+          },
+          {
+            "date": "2024-05-11",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.5851232020556075
+          },
+          {
+            "date": "2024-05-12",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.445563442001796
+          },
+          {
+            "date": "2024-05-13",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.6944345706800392
+          },
+          {
+            "date": "2024-05-14",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.48585010169150655
+          },
+          {
+            "date": "2024-05-16",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.6814162477350214
+          },
+          {
+            "date": "2024-05-17",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.7641185093502957
+          },
+          {
+            "date": "2024-05-18",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.4280323815892545
+          },
+          {
+            "date": "2024-05-19",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.42854172438770494
+          },
+          {
+            "date": "2024-05-23",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.3446125503741958
+          },
+          {
+            "date": "2024-05-25",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.480764671657187
+          },
+          {
+            "date": "2024-05-26",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.47031380072547785
+          },
+          {
+            "date": "2024-05-27",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.5162013621913926
+          },
+          {
+            "date": "2024-05-29",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.7223825380136443
+          },
+          {
+            "date": "2024-05-31",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.4860618792649617
+          },
+          {
+            "date": "2024-06-04",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.7388357165068636
+          },
+          {
+            "date": "2024-06-05",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.5756222299444579
+          },
+          {
+            "date": "2024-06-16",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.7767364097216043
+          },
+          {
+            "date": "2024-06-30",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.7487018642344333
+          },
+          {
+            "date": "2024-07-03",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.7618443952265509
+          },
+          {
+            "date": "2024-07-09",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.48061536950564276
+          },
+          {
+            "date": "2024-07-10",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.5730359405183988
+          },
+          {
+            "date": "2024-11-18",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.6311613241729541
+          },
+          {
+            "date": "2024-05-04",
+            "route_sector": "Sendero Namuncura",
+            "score": 0.5122659583130663
+          },
+          {
+            "date": "2024-05-05",
+            "route_sector": "Sendero Namuncura",
+            "score": 0.4110465799621481
+          },
+          {
+            "date": "2024-05-11",
+            "route_sector": "Sendero Namuncura",
+            "score": 0.3183421401073499
+          },
+          {
+            "date": "2024-05-25",
+            "route_sector": "Sendero Namuncura",
+            "score": 0.330869372604773
+          },
+          {
+            "date": "2024-05-26",
+            "route_sector": "Sendero Namuncura",
+            "score": 0.37780635374248
+          },
+          {
+            "date": "2024-06-04",
+            "route_sector": "Sendero Namuncura",
+            "score": 0.4376601229187584
+          },
+          {
+            "date": "2024-06-05",
+            "route_sector": "Sendero Namuncura",
+            "score": 0.3331671632007779
+          },
+          {
+            "date": "2024-06-30",
+            "route_sector": "Sendero Namuncura",
+            "score": 0.46282417286631916
+          },
+          {
+            "date": "2024-07-03",
+            "route_sector": "Sendero Namuncura",
+            "score": 0.32230473232062123
+          },
+          {
+            "date": "2024-11-18",
+            "route_sector": "Sendero Namuncura",
+            "score": 0.7040008454699517
+          },
+          {
+            "date": "2024-04-13",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.5288090023852736
+          },
+          {
+            "date": "2024-04-14",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.4221683016444116
+          },
+          {
+            "date": "2024-04-15",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.46932449067510185
+          },
+          {
+            "date": "2024-05-11",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.35021649515244785
+          },
+          {
+            "date": "2024-05-12",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.323992873795202
+          },
+          {
+            "date": "2024-05-13",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.3042264548319792
+          },
+          {
+            "date": "2024-05-14",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.3444595787858638
+          },
+          {
+            "date": "2024-05-16",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.34087939769800196
+          },
+          {
+            "date": "2024-05-17",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.36378215847247614
+          },
+          {
+            "date": "2024-05-18",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.44815145293542236
+          },
+          {
+            "date": "2024-05-25",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.40644487970154614
+          },
+          {
+            "date": "2024-05-26",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.3607043834178679
+          },
+          {
+            "date": "2024-05-29",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.5504748210257758
+          },
+          {
+            "date": "2024-06-05",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.4463934567199821
+          },
+          {
+            "date": "2024-06-16",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.48001398940289863
+          },
+          {
+            "date": "2024-06-30",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.355826657250093
+          },
+          {
+            "date": "2024-07-03",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.48289315603777394
+          },
+          {
+            "date": "2024-07-09",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.30387830697076473
+          },
+          {
+            "date": "2024-07-10",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.30994568848756615
+          },
+          {
+            "date": "2024-11-18",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.6747238737351557
+          },
+          {
+            "date": "2024-04-13",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.42200017400721446
+          },
+          {
+            "date": "2024-04-14",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.30384437818325516
+          },
+          {
+            "date": "2024-05-04",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.3392114758896644
+          },
+          {
+            "date": "2024-05-05",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.3978725182762268
+          },
+          {
+            "date": "2024-05-11",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.3290708276810949
+          },
+          {
+            "date": "2024-05-13",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.63088491503433
+          },
+          {
+            "date": "2024-05-14",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.7940852961342023
+          },
+          {
+            "date": "2024-05-16",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.5215264370896967
+          },
+          {
+            "date": "2024-05-17",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.7942537717887196
+          },
+          {
+            "date": "2024-05-18",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.7903941851255073
+          },
+          {
+            "date": "2024-05-19",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.7189945591483797
+          },
+          {
+            "date": "2024-05-25",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.785489114222133
+          },
+          {
+            "date": "2024-05-26",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.6323726458359187
+          },
+          {
+            "date": "2024-05-27",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.6434833261222372
+          },
+          {
+            "date": "2024-05-29",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.4379409276686502
+          },
+          {
+            "date": "2024-05-31",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.48474748939648804
+          },
+          {
+            "date": "2024-06-04",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.7282290226632544
+          },
+          {
+            "date": "2024-06-05",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.498881275876852
+          },
+          {
+            "date": "2024-06-16",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.39389108419366553
+          },
+          {
+            "date": "2024-06-30",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.7402671676193222
+          },
+          {
+            "date": "2024-07-03",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.551368919246806
+          },
+          {
+            "date": "2024-07-09",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.8605343559882407
+          },
+          {
+            "date": "2024-07-10",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.7233350832919966
+          },
+          {
+            "date": "2024-11-18",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.5405979926769714
+          }
+        ]
+      },
+      "0.5": {
+        "covered_route_days": 216,
+        "possible_route_days": 216,
+        "alerted_route_days": 35,
+        "report_dates_with_alert": 22,
+        "alerts": [
+          {
+            "date": "2024-05-04",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.5195566986474762
+          },
+          {
+            "date": "2024-05-05",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.6188392607706902
+          },
+          {
+            "date": "2024-05-11",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.5851232020556075
+          },
+          {
+            "date": "2024-05-13",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.6944345706800392
+          },
+          {
+            "date": "2024-05-16",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.6814162477350214
+          },
+          {
+            "date": "2024-05-17",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.7641185093502957
+          },
+          {
+            "date": "2024-05-27",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.5162013621913926
+          },
+          {
+            "date": "2024-05-29",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.7223825380136443
+          },
+          {
+            "date": "2024-06-04",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.7388357165068636
+          },
+          {
+            "date": "2024-06-05",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.5756222299444579
+          },
+          {
+            "date": "2024-06-16",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.7767364097216043
+          },
+          {
+            "date": "2024-06-30",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.7487018642344333
+          },
+          {
+            "date": "2024-07-03",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.7618443952265509
+          },
+          {
+            "date": "2024-07-10",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.5730359405183988
+          },
+          {
+            "date": "2024-11-18",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.6311613241729541
+          },
+          {
+            "date": "2024-05-04",
+            "route_sector": "Sendero Namuncura",
+            "score": 0.5122659583130663
+          },
+          {
+            "date": "2024-11-18",
+            "route_sector": "Sendero Namuncura",
+            "score": 0.7040008454699517
+          },
+          {
+            "date": "2024-04-13",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.5288090023852736
+          },
+          {
+            "date": "2024-05-29",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.5504748210257758
+          },
+          {
+            "date": "2024-11-18",
+            "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+            "score": 0.6747238737351557
+          },
+          {
+            "date": "2024-05-13",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.63088491503433
+          },
+          {
+            "date": "2024-05-14",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.7940852961342023
+          },
+          {
+            "date": "2024-05-16",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.5215264370896967
+          },
+          {
+            "date": "2024-05-17",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.7942537717887196
+          },
+          {
+            "date": "2024-05-18",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.7903941851255073
+          },
+          {
+            "date": "2024-05-19",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.7189945591483797
+          },
+          {
+            "date": "2024-05-25",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.785489114222133
+          },
+          {
+            "date": "2024-05-26",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.6323726458359187
+          },
+          {
+            "date": "2024-05-27",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.6434833261222372
+          },
+          {
+            "date": "2024-06-04",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.7282290226632544
+          },
+          {
+            "date": "2024-06-30",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.7402671676193222
+          },
+          {
+            "date": "2024-07-03",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.551368919246806
+          },
+          {
+            "date": "2024-07-09",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.8605343559882407
+          },
+          {
+            "date": "2024-07-10",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.7233350832919966
+          },
+          {
+            "date": "2024-11-18",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.5405979926769714
+          }
+        ]
+      },
+      "0.7": {
+        "covered_route_days": 216,
+        "possible_route_days": 216,
+        "alerted_route_days": 16,
+        "report_dates_with_alert": 13,
+        "alerts": [
+          {
+            "date": "2024-05-17",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.7641185093502957
+          },
+          {
+            "date": "2024-05-29",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.7223825380136443
+          },
+          {
+            "date": "2024-06-04",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.7388357165068636
+          },
+          {
+            "date": "2024-06-16",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.7767364097216043
+          },
+          {
+            "date": "2024-06-30",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.7487018642344333
+          },
+          {
+            "date": "2024-07-03",
+            "route_sector": "Quebrada del Condorito - Balcon Norte",
+            "score": 0.7618443952265509
+          },
+          {
+            "date": "2024-11-18",
+            "route_sector": "Sendero Namuncura",
+            "score": 0.7040008454699517
+          },
+          {
+            "date": "2024-05-14",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.7940852961342023
+          },
+          {
+            "date": "2024-05-17",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.7942537717887196
+          },
+          {
+            "date": "2024-05-18",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.7903941851255073
+          },
+          {
+            "date": "2024-05-19",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.7189945591483797
+          },
+          {
+            "date": "2024-05-25",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.785489114222133
+          },
+          {
+            "date": "2024-06-04",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.7282290226632544
+          },
+          {
+            "date": "2024-06-30",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.7402671676193222
+          },
+          {
+            "date": "2024-07-09",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.8605343559882407
+          },
+          {
+            "date": "2024-07-10",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.7233350832919966
+          }
+        ]
+      },
+      "0.8": {
+        "covered_route_days": 216,
+        "possible_route_days": 216,
+        "alerted_route_days": 1,
+        "report_dates_with_alert": 1,
+        "alerts": [
+          {
+            "date": "2024-07-09",
+            "route_sector": "Sendero Che Roga - Mburucuyá",
+            "score": 0.8605343559882407
+          }
+        ]
+      },
+      "0.9": {
+        "covered_route_days": 216,
+        "possible_route_days": 216,
+        "alerted_route_days": 0,
+        "report_dates_with_alert": 0,
+        "alerts": []
+      }
+    }
+  },
+  "interpretation": [
+    "At 20 km, ranking improves over the route-day prevalence baseline, but raw scores are poorly calibrated: the Brier score is much worse than the constant-prevalence baseline.",
+    "At threshold 0.5 the model detects 35/52 positive report-proxy route-days but emits 566 alerts on route-days without a nearby listed incident.",
+    "At threshold 0.9 only 2/52 positive route-days are detected; this remains an exploratory test on a broad, report-derived regional target.",
+    "The 20 km sensitivity radius expands beyond immediate route exposure and still does not yield a dependable operating threshold."
+  ],
+  "limitations": [
+    "No nearby reported incident is not verified physical absence; only the explicit no-fire challenge dates provide the stronger administrative negative proxy.",
+    "Route-sector centers are used instead of complete trail polylines; 20 km describes regional proximity rather than on-trail exposure.",
+    "The full 2024 test contains only 52 positive route-days, many repeated across event episodes.",
+    "Diagnostic thresholds were not selected on a separate validation period.",
+    "Weather forecasts omit fuels, ignition likelihood, satellite observability, and local operational closures."
+  ],
+  "synthetic_observations": 0,
+  "deployment_approved": false
+}

@@ -1,0 +1,305 @@
+{
+  "source": "https://doi.org/10.26255/heal.mjhj-gsm4",
+  "source_article": "https://doi.org/10.3390/app16031593",
+  "source_license": "CC-BY-SA-4.0 (HARDMIN public catalog)",
+  "source_file_sha256": "4f4d4139a8e6da30d5e071317b9afc000f2234f73714add69e885ef2f3bc828e",
+  "task": "End-of-hike Borg RPE 6-20 predicted from heart rate at trailhead and three earlier checkpoints",
+  "design": "Same 6.4 km uphill trail, each of 17 people with/without poles; leave-one-person-out, both visits held out together",
+  "features": [
+    "HR at 1060 m",
+    "HR checkpoint 1",
+    "HR checkpoint 2",
+    "HR checkpoint 3"
+  ],
+  "model": "StandardScaler + Ridge(alpha=10), fixed before evaluation, rounded to original scale",
+  "limitations": "Endpoint exertion, not fatigue; no label during the hike; one route; small group; does not evaluate existing GeoFatigue model",
+  "people": 17,
+  "visits": 34,
+  "label_counts": {
+    "7": 2,
+    "8": 4,
+    "9": 5,
+    "10": 2,
+    "11": 12,
+    "12": 4,
+    "13": 4,
+    "14": 1
+  },
+  "model_scores": {
+    "observations": 34,
+    "exact_accuracy": 0.20588235294117646,
+    "within_one_accuracy": 0.6176470588235294,
+    "mae_borg_6_20_points": 1.5294117647058822,
+    "errors_three_or_more": 9
+  },
+  "training_mode_baseline": {
+    "observations": 34,
+    "exact_accuracy": 0.35294117647058826,
+    "within_one_accuracy": 0.5294117647058824,
+    "mae_borg_6_20_points": 1.3823529411764706,
+    "errors_three_or_more": 7
+  },
+  "uncertainty": {
+    "unit": "participant",
+    "resamples": 10000,
+    "seed": 42,
+    "mae_model_minus_baseline_95pct": [
+      -0.08823529411764706,
+      0.38235294117647056
+    ]
+  },
+  "predictions": [
+    {
+      "person": "1",
+      "condition": "np",
+      "observed": 8,
+      "predicted": 11,
+      "baseline": 11
+    },
+    {
+      "person": "1",
+      "condition": "wp",
+      "observed": 8,
+      "predicted": 11,
+      "baseline": 11
+    },
+    {
+      "person": "2",
+      "condition": "np",
+      "observed": 8,
+      "predicted": 11,
+      "baseline": 11
+    },
+    {
+      "person": "2",
+      "condition": "wp",
+      "observed": 9,
+      "predicted": 10,
+      "baseline": 11
+    },
+    {
+      "person": "3",
+      "condition": "np",
+      "observed": 9,
+      "predicted": 10,
+      "baseline": 11
+    },
+    {
+      "person": "3",
+      "condition": "wp",
+      "observed": 13,
+      "predicted": 10,
+      "baseline": 11
+    },
+    {
+      "person": "4",
+      "condition": "np",
+      "observed": 14,
+      "predicted": 10,
+      "baseline": 11
+    },
+    {
+      "person": "4",
+      "condition": "wp",
+      "observed": 11,
+      "predicted": 11,
+      "baseline": 11
+    },
+    {
+      "person": "5",
+      "condition": "np",
+      "observed": 10,
+      "predicted": 11,
+      "baseline": 11
+    },
+    {
+      "person": "5",
+      "condition": "wp",
+      "observed": 13,
+      "predicted": 11,
+      "baseline": 11
+    },
+    {
+      "person": "6",
+      "condition": "np",
+      "observed": 11,
+      "predicted": 11,
+      "baseline": 11
+    },
+    {
+      "person": "6",
+      "condition": "wp",
+      "observed": 11,
+      "predicted": 11,
+      "baseline": 11
+    },
+    {
+      "person": "7",
+      "condition": "np",
+      "observed": 12,
+      "predicted": 10,
+      "baseline": 11
+    },
+    {
+      "person": "7",
+      "condition": "wp",
+      "observed": 11,
+      "predicted": 11,
+      "baseline": 11
+    },
+    {
+      "person": "8",
+      "condition": "np",
+      "observed": 11,
+      "predicted": 11,
+      "baseline": 11
+    },
+    {
+      "person": "8",
+      "condition": "wp",
+      "observed": 9,
+      "predicted": 11,
+      "baseline": 11
+    },
+    {
+      "person": "9",
+      "condition": "np",
+      "observed": 11,
+      "predicted": 10,
+      "baseline": 11
+    },
+    {
+      "person": "9",
+      "condition": "wp",
+      "observed": 8,
+      "predicted": 11,
+      "baseline": 11
+    },
+    {
+      "person": "10",
+      "condition": "np",
+      "observed": 11,
+      "predicted": 10,
+      "baseline": 11
+    },
+    {
+      "person": "10",
+      "condition": "wp",
+      "observed": 11,
+      "predicted": 10,
+      "baseline": 11
+    },
+    {
+      "person": "11",
+      "condition": "np",
+      "observed": 11,
+      "predicted": 10,
+      "baseline": 11
+    },
+    {
+      "person": "11",
+      "condition": "wp",
+      "observed": 11,
+      "predicted": 11,
+      "baseline": 11
+    },
+    {
+      "person": "12",
+      "condition": "np",
+      "observed": 9,
+      "predicted": 10,
+      "baseline": 11
+    },
+    {
+      "person": "12",
+      "condition": "wp",
+      "observed": 9,
+      "predicted": 10,
+      "baseline": 11
+    },
+    {
+      "person": "13",
+      "condition": "np",
+      "observed": 13,
+      "predicted": 11,
+      "baseline": 11
+    },
+    {
+      "person": "13",
+      "condition": "wp",
+      "observed": 12,
+      "predicted": 11,
+      "baseline": 11
+    },
+    {
+      "person": "14",
+      "condition": "np",
+      "observed": 11,
+      "predicted": 11,
+      "baseline": 11
+    },
+    {
+      "person": "14",
+      "condition": "wp",
+      "observed": 10,
+      "predicted": 11,
+      "baseline": 11
+    },
+    {
+      "person": "15",
+      "condition": "np",
+      "observed": 7,
+      "predicted": 11,
+      "baseline": 11
+    },
+    {
+      "person": "15",
+      "condition": "wp",
+      "observed": 7,
+      "predicted": 11,
+      "baseline": 11
+    },
+    {
+      "person": "16",
+      "condition": "np",
+      "observed": 12,
+      "predicted": 11,
+      "baseline": 11
+    },
+    {
+      "person": "16",
+      "condition": "wp",
+      "observed": 12,
+      "predicted": 11,
+      "baseline": 11
+    },
+    {
+      "person": "17",
+      "condition": "np",
+      "observed": 13,
+      "predicted": 10,
+      "baseline": 11
+    },
+    {
+      "person": "17",
+      "condition": "wp",
+      "observed": 11,
+      "predicted": 10,
+      "baseline": 11
+    }
+  ],
+  "respiratory_measure_audit": {
+    "measure": "MVV12 percentage change from measured 1060 m baseline to post-hike 2070 m; not a fatigue diagnosis",
+    "visits": 34,
+    "median_change_percent": 6.488653678572694,
+    "range_change_percent": [
+      -11.932162325863107,
+      21.377912867274564
+    ],
+    "observed_declines": 8,
+    "observed_increases": 26,
+    "exploratory_model_mae_percentage_points": 7.0609566638126555,
+    "training_mean_baseline_mae_percentage_points": 7.1588143254308,
+    "interpretation": "No prespecified validated threshold or sufficient confirmed fatigue cases; cannot score fatigue detection."
+  }
+}

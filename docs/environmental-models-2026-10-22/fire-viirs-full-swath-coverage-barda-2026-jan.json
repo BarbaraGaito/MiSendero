@@ -1,0 +1,799 @@
+{
+  "experiment_id": "viirs-full-swath-fire-mask-metadata-coverage-near-barda-2026-jan",
+  "status": "metadata_coverage_confirmed_data_not_downloaded",
+  "target_incident": {
+    "incident_name": "Barda de La Loma",
+    "province": "Río Negro",
+    "reported_start_date": "2026-01-05",
+    "reported_status": "CONTROLADO",
+    "snmf_point_latitude": -41.98623333333333,
+    "snmf_point_longitude": -71.54853888888888,
+    "distance_to_route_km": 5.939,
+    "goes_model_valid_pixels": 13,
+    "goes_model_maximum_score": 0.0,
+    "goes_model_alert": false
+  },
+  "cmr_query": {
+    "endpoint": "https://cmr.earthdata.nasa.gov/search/granules.json",
+    "spatial_query": "point in product granule footprint at the reported SNMF incident coordinate; this is archive metadata, not pixel-level observation validity.",
+    "temporal_query_utc": [
+      "2026-01-04T00:00:00Z",
+      "2026-01-10T23:59:59Z"
+    ],
+    "products": [
+      "VNP14IMG",
+      "VJ114IMG",
+      "VJ214IMG"
+    ],
+    "collection": "Collection 2 version 002 as identified by the returned granule names."
+  },
+  "granules_by_product": {
+    "VNP14IMG": {
+      "raw_cmr_entries_including_reprocessed_variants": 26,
+      "unique_sensor_overpass_times": 22,
+      "reprocessed_duplicate_entries": 4,
+      "reported_total_size_mb": 33.09,
+      "overpasses_by_utc_day": {
+        "2026-01-04": 4,
+        "2026-01-05": 3,
+        "2026-01-06": 2,
+        "2026-01-07": 4,
+        "2026-01-08": 3,
+        "2026-01-09": 3,
+        "2026-01-10": 3
+      },
+      "overpasses": [
+        {
+          "acquisition_start_utc": "2026-01-04T05:18:00.000Z",
+          "acquisition_end_utc": "2026-01-04T05:24:00.000Z",
+          "producer_granule_id": "VNP14IMG.A2026004.0518.002.2026004145858",
+          "latest_metadata_update": "2026-01-04T09:05:38.134Z",
+          "reported_granule_size_mb": 1.003530502319336,
+          "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VNP14IMG.002/VNP14IMG.A2026004.0518.002.2026004145858/VNP14IMG.A2026004.0518.002.2026004145858.nc",
+          "granule_variants_for_this_acquisition": 1,
+          "online_access_flag": true,
+          "download_link_is_protected": true
+        },
+        {
+          "acquisition_start_utc": "2026-01-04T07:00:00.000Z",
+          "acquisition_end_utc": "2026-01-04T07:06:00.000Z",
+          "producer_granule_id": "VNP14IMG.A2026004.0700.002.2026004154144",
+          "latest_metadata_update": "2026-01-04T09:45:49.361Z",
+          "reported_granule_size_mb": 0.9328880310058594,
+          "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VNP14IMG.002/VNP14IMG.A2026004.0700.002.2026004154144/VNP14IMG.A2026004.0700.002.2026004154144.nc",
+          "granule_variants_for_this_acquisition": 1,
+          "online_access_flag": true,
+          "download_link_is_protected": true
+        },
+        {
+          "acquisition_start_utc": "2026-01-04T17:36:00.000Z",
+          "acquisition_end_utc": "2026-01-04T17:42:00.000Z",
+          "producer_granule_id": "VNP14IMG.A2026004.1736.002.2026005013843",
+          "latest_metadata_update": "2026-01-04T19:45:48.910Z",
+          "reported_granule_size_mb": 2.1345481872558594,
+          "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VNP14IMG.002/VNP14IMG.A2026004.1736.002.2026005013843/VNP14IMG.A2026004.1736.002.2026005013843.nc",
+          "granule_variants_for_this_acquisition": 1,
+          "online_access_flag": true,
+          "download_link_is_protected": true
+        },
+        {
+          "acquisition_start_utc": "2026-01-04T19:18:00.000Z",
+          "acquisition_end_utc": "2026-01-04T19:24:00.000Z",
+          "producer_granule_id": "VNP14IMG.A2026004.1918.002.2026005030705",
+          "latest_metadata_update": "2026-01-04T21:13:32.408Z",
+          "reported_granule_size_mb": 2.3764190673828125,
+          "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VNP14IMG.002/VNP14IMG.A2026004.1918.002.2026005030705/VNP14IMG.A2026004.1918.002.2026005030705.nc",
+          "granule_variants_for_this_acquisition": 1,
+          "online_access_flag": true,
+          "download_link_is_protected": true
+        },
+        {
+          "acquisition_start_utc": "2026-01-05T05:00:00.000Z",
+          "acquisition_end_utc": "2026-01-05T05:06:00.000Z",
+          "producer_granule_id": "VNP14IMG.A2026005.0500.002.2026005153524",
+          "latest_metadata_update": "2026-01-05T09:41:31.175Z",
+          "reported_granule_size_mb": 0.8481216430664062,
+          "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VNP14IMG.002/VNP14IMG.A2026005.0500.002.2026005153524/VNP14IMG.A2026005.0500.002.2026005153524.nc",
+          "granule_variants_for_this_acquisition": 1,
+          "online_access_flag": true,
+          "download_link_is_protected": true
+        },
+        {
+          "acquisition_start_utc": "2026-01-05T06:42:00.000Z",
+          "acquisition_end_utc": "2026-01-05T06:48:00.000Z",
+          "producer_granule_id": "VNP14IMG.A2026005.0642.002.2026005164616",
+          "latest_metadata_update": "2026-01-05T10:49:32.148Z",
+          "reported_granule_size_mb": 0.8628110885620117,
+          "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VNP14IMG.002/VNP14IMG.A2026005.0642.002.2026005164616/VNP14IMG.A2026005.0642.002.2026005164616.nc",
+          "granule_variants_for_this_acquisition": 1,
+          "online_access_flag": true,
+          "download_link_is_protected": true
+        },
+        {
+          "acquisition_start_utc": "2026-01-05T18:54:00.000Z",
+          "acquisition_end_utc": "2026-01-05T19:00:00.000Z",
+          "producer_granule_id": "VNP14IMG.A2026005.1854.002.2026006031745",
+          "latest_metadata_update": "2026-01-05T21:21:49.832Z",
+          "reported_granule_size_mb": 1.9813232421875,
+          "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VNP14IMG.002/VNP14IMG.A2026005.1854.002.2026006031745/VNP14IMG.A2026005.1854.002.2026006031745.nc",
+          "granule_variants_for_this_acquisition": 1,
+          "online_access_flag": true,
+          "download_link_is_protected": true
+        },
+        {
+          "acquisition_start_utc": "2026-01-06T06:18:00.000Z",
+          "acquisition_end_utc": "2026-01-06T06:24:00.000Z",
+          "producer_granule_id": "VNP14IMG.A2026006.0618.002.2026006150149",
+          "latest_metadata_update": "2026-01-06T09:04:38.081Z",
+          "reported_granule_size_mb": 0.5399456024169922,
+          "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VNP14IMG.002/VNP14IMG.A2026006.0618.002.2026006150149/VNP14IMG.A2026006.0618.002.2026006150149.nc",
+          "granule_variants_for_this_acquisition": 1,
+          "online_access_flag": true,
+          "download_link_is_protected": true
+        },
+        {
+          "acquisition_start_utc": "2026-01-06T18:36:00.000Z",
+          "acquisition_end_utc": "2026-01-06T18:42:00.000Z",
+          "producer_granule_id": "VNP14IMG.A2026006.1836.002.2026007021437",
+          "latest_metadata_update": "2026-01-06T20:20:44.557Z",
+          "reported_granule_size_mb": 2.054180145263672,
+          "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VNP14IMG.002/VNP14IMG.A2026006.1836.002.2026007021437/VNP14IMG.A2026006.1836.002.2026007021437.nc",
+          "granule_variants_for_this_acquisition": 1,
+          "online_access_flag": true,
+          "download_link_is_protected": true
+        },
+        {
+          "acquisition_start_utc": "2026-01-07T04:24:00.000Z",
+          "acquisition_end_utc": "2026-01-07T04:30:00.000Z",
+          "producer_granule_id": "VNP14IMG.A2026007.0424.002.2026013204154",
+          "latest_metadata_update": "2026-01-13T14:49:27.109Z",
+          "reported_granule_size_mb": 1.2488727569580078,
+          "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VNP14IMG.002/VNP14IMG.A2026007.0424.002.2026013204154/VNP14IMG.A2026007.0424.002.2026013204154.nc",
+          "granule_variants_for_this_acquisition": 2,
+          "online_access_flag": true,
+          "download_link_is_protected": true
+        },
+        {
+          "acquisition_start_utc": "2026-01-07T06:00:00.000Z",
+          "acquisition_end_utc": "2026-01-07T06:06:00.000Z",
+          "producer_granule_id": "VNP14IMG.A2026007.0600.002.2026013204146",
+          "latest_metadata_update": "2026-01-13T14:49:06.837Z",
+          "reported_granule_size_mb": 0.8450803756713867,
+          "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VNP14IMG.002/VNP14IMG.A2026007.0600.002.2026013204146/VNP14IMG.A2026007.0600.002.2026013204146.nc",
+          "granule_variants_for_this_acquisition": 2,
+          "online_access_flag": true,
+          "download_link_is_protected": true
+        },
+        {
+          "acquisition_start_utc": "2026-01-07T18:18:00.000Z",
+          "acquisition_end_utc": "2026-01-07T18:24:00.000Z",
+          "producer_granule_id": "VNP14IMG.A2026007.1818.002.2026013204147",
+          "latest_metadata_update": "2026-01-13T14:49:06.966Z",
+          "reported_granule_size_mb": 2.176070213317871,
+          "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VNP14IMG.002/VNP14IMG.A2026007.1818.002.2026013204147/VNP14IMG.A2026007.1818.002.2026013204147.nc",
+          "granule_variants_for_this_acquisition": 2,
+          "online_access_flag": true,
+          "download_link_is_protected": true
+        },
+        {
+          "acquisition_start_utc": "2026-01-07T20:00:00.000Z",
+          "acquisition_end_utc": "2026-01-07T20:06:00.000Z",
+          "producer_granule_id": "VNP14IMG.A2026007.2000.002.2026013204157",
+          "latest_metadata_update": "2026-01-13T14:49:07.040Z",
+          "reported_granule_size_mb": 1.7200756072998047,
+          "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VNP14IMG.002/VNP14IMG.A2026007.2000.002.2026013204157/VNP14IMG.A2026007.2000.002.2026013204157.nc",
+          "granule_variants_for_this_acquisition": 2,
+          "online_access_flag": true,
+          "download_link_is_protected": true
+        },
+        {
+          "acquisition_start_utc": "2026-01-08T05:42:00.000Z",
+          "acquisition_end_utc": "2026-01-08T05:48:00.000Z",
+          "producer_granule_id": "VNP14IMG.A2026008.0542.002.2026013211126",
+          "latest_metadata_update": "2026-01-13T15:17:07.859Z",
+          "reported_granule_size_mb": 0.9127397537231445,
+          "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VNP14IMG.002/VNP14IMG.A2026008.0542.002.2026013211126/VNP14IMG.A2026008.0542.002.2026013211126.nc",
+          "granule_variants_for_this_acquisition": 1,
+          "online_access_flag": true,
+          "download_link_is_protected": true
+        },
+        {
+          "acquisition_start_utc": "2026-01-08T18:00:00.000Z",
+          "acquisition_end_utc": "2026-01-08T18:06:00.000Z",
+          "producer_granule_id": "VNP14IMG.A2026008.1800.002.2026013211120",
+          "latest_metadata_update": "2026-01-13T15:21:06.242Z",
+          "reported_granule_size_mb": 1.7091007232666016,
+          "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VNP14IMG.002/VNP14IMG.A2026008.1800.002.2026013211120/VNP14IMG.A2026008.1800.002.2026013211120.nc",
+          "granule_variants_for_this_acquisition": 1,
+          "online_access_flag": true,
+          "download_link_is_protected": true
+        },
+        {
+          "acquisition_start_utc": "2026-01-08T19:42:00.000Z",
+          "acquisition_end_utc": "2026-01-08T19:48:00.000Z",
+          "producer_granule_id": "VNP14IMG.A2026008.1942.002.2026013211123",
+          "latest_metadata_update": "2026-01-13T15:21:08.375Z",
+          "reported_granule_size_mb": 1.7684412002563477,
+          "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VNP14IMG.002/VNP14IMG.A2026008.1942.002.2026013211123/VNP14IMG.A2026008.1942.002.2026013211123.nc",
+          "granule_variants_for_this_acquisition": 1,
+          "online_access_flag": true,
+          "download_link_is_protected": true
+        },
+        {
+          "acquisition_start_utc": "2026-01-09T05:24:00.000Z",
+          "acquisition_end_utc": "2026-01-09T05:30:00.000Z",
+          "producer_granule_id": "VNP14IMG.A2026009.0524.002.2026013221427",
+          "latest_metadata_update": "2026-01-13T16:21:07.611Z",
+          "reported_granule_size_mb": 1.2304344177246094,
+          "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VNP14IMG.002/VNP14IMG.A2026009.0524.002.2026013221427/VNP14IMG.A2026009.0524.002.2026013221427.nc",
+          "granule_variants_for_this_acquisition": 1,
+          "online_access_flag": true,
+          "download_link_is_protected": true
+        },
+        {
+          "acquisition_start_utc": "2026-01-09T17:42:00.000Z",
+          "acquisition_end_utc": "2026-01-09T17:48:00.000Z",
+          "producer_granule_id": "VNP14IMG.A2026009.1742.002.2026013221428",
+          "latest_metadata_update": "2026-01-13T16:21:17.953Z",
+          "reported_granule_size_mb": 1.7282018661499023,
+          "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VNP14IMG.002/VNP14IMG.A2026009.1742.002.2026013221428/VNP14IMG.A2026009.1742.002.2026013221428.nc",
+          "granule_variants_for_this_acquisition": 1,
+          "online_access_flag": true,
+          "download_link_is_protected": true
+        },
+        {
+          "acquisition_start_utc": "2026-01-09T19:24:00.000Z",
+          "acquisition_end_utc": "2026-01-09T19:30:00.000Z",
+          "producer_granule_id": "VNP14IMG.A2026009.1924.002.2026013221352",
+          "latest_metadata_update": "2026-01-13T16:21:17.770Z",
+          "reported_granule_size_mb": 2.2371864318847656,
+          "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VNP14IMG.002/VNP14IMG.A2026009.1924.002.2026013221352/VNP14IMG.A2026009.1924.002.2026013221352.nc",
+          "granule_variants_for_this_acquisition": 1,
+          "online_access_flag": true,
+          "download_link_is_protected": true
+        },
+        {
+          "acquisition_start_utc": "2026-01-10T05:06:00.000Z",
+          "acquisition_end_utc": "2026-01-10T05:12:00.000Z",
+          "producer_granule_id": "VNP14IMG.A2026010.0506.002.2026013234521",
+          "latest_metadata_update": "2026-01-13T17:49:19.410Z",
+          "reported_granule_size_mb": 1.137359619140625,
+          "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VNP14IMG.002/VNP14IMG.A2026010.0506.002.2026013234521/VNP14IMG.A2026010.0506.002.2026013234521.nc",
+          "granule_variants_for_this_acquisition": 1,
+          "online_access_flag": true,
+          "download_link_is_protected": true
+        },
+        {
+          "acquisition_start_utc": "2026-01-10T06:48:00.000Z",
+          "acquisition_end_utc": "2026-01-10T06:54:00.000Z",
+          "producer_granule_id": "VNP14IMG.A2026010.0648.002.2026013234526",
+          "latest_metadata_update": "2026-01-13T17:49:09.333Z",
+          "reported_granule_size_mb": 1.0206899642944336,
+          "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VNP14IMG.002/VNP14IMG.A2026010.0648.002.2026013234526/VNP14IMG.A2026010.0648.002.2026013234526.nc",
+          "granule_variants_for_this_acquisition": 1,
+          "online_access_flag": true,
+          "download_link_is_protected": true
+        },
+        {
+          "acquisition_start_utc": "2026-01-10T19:06:00.000Z",
+          "acquisition_end_utc": "2026-01-10T19:12:00.000Z",
+          "producer_granule_id": "VNP14IMG.A2026010.1906.002.2026013234650",
+          "latest_metadata_update": "2026-01-13T17:53:13.940Z",
+          "reported_granule_size_mb": 2.6226577758789062,
+          "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VNP14IMG.002/VNP14IMG.A2026010.1906.002.2026013234650/VNP14IMG.A2026010.1906.002.2026013234650.nc",
+          "granule_variants_for_this_acquisition": 1,
+          "online_access_flag": true,
+          "download_link_is_protected": true
+        }
+      ]
+    },
+    "VJ114IMG": {
+      "raw_cmr_entries_including_reprocessed_variants": 21,
+      "unique_sensor_overpass_times": 21,
+      "reprocessed_duplicate_entries": 0,
+      "reported_total_size_mb": 30.95,
+      "overpasses_by_utc_day": {
+        "2026-01-04": 3,
+        "2026-01-05": 3,
+        "2026-01-06": 3,
+        "2026-01-07": 3,
+        "2026-01-08": 3,
+        "2026-01-09": 3,
+        "2026-01-10": 3
+      },
+      "overpasses": [
+        {
+          "acquisition_start_utc": "2026-01-04T05:36:00.000Z",
+          "acquisition_end_utc": "2026-01-04T05:42:00.000Z",
+          "producer_granule_id": "VJ114IMG.A2026004.0536.002.2026004135339",
+          "latest_metadata_update": "2026-01-04T07:57:34.922Z",
+          "reported_granule_size_mb": 0.7081680297851562,
+          "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VJ114IMG.002/VJ114IMG.A2026004.0536.002.2026004135339/VJ114IMG.A2026004.0536.002.2026004135339.nc",
+          "granule_variants_for_this_acquisition": 1,
+          "online_access_flag": true,
+          "download_link_is_protected": true
+        },
+        {
+          "acquisition_start_utc": "2026-01-04T17:54:00.000Z",
+          "acquisition_end_utc": "2026-01-04T18:00:00.000Z",
+          "producer_granule_id": "VJ114IMG.A2026004.1754.002.2026005010628",
+          "latest_metadata_update": "2026-01-04T19:13:50.672Z",
+          "reported_granule_size_mb": 1.5167722702026367,
+          "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VJ114IMG.002/VJ114IMG.A2026004.1754.002.2026005010628/VJ114IMG.A2026004.1754.002.2026005010628.nc",
+          "granule_variants_for_this_acquisition": 1,
+          "online_access_flag": true,
+          "download_link_is_protected": true
+        },
+        {
+          "acquisition_start_utc": "2026-01-04T19:36:00.000Z",
+          "acquisition_end_utc": "2026-01-04T19:42:00.000Z",
+          "producer_granule_id": "VJ114IMG.A2026004.1936.002.2026005010629",
+          "latest_metadata_update": "2026-01-04T19:13:44.630Z",
+          "reported_granule_size_mb": 1.9311351776123047,
+          "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VJ114IMG.002/VJ114IMG.A2026004.1936.002.2026005010629/VJ114IMG.A2026004.1936.002.2026005010629.nc",
+          "granule_variants_for_this_acquisition": 1,
+          "online_access_flag": true,
+          "download_link_is_protected": true
+        },
+        {
+          "acquisition_start_utc": "2026-01-05T05:18:00.000Z",
+          "acquisition_end_utc": "2026-01-05T05:24:00.000Z",
+          "producer_granule_id": "VJ114IMG.A2026005.0518.002.2026005155435",
+          "latest_metadata_update": "2026-01-05T09:57:32.149Z",
+          "reported_granule_size_mb": 0.6094188690185547,
+          "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VJ114IMG.002/VJ114IMG.A2026005.0518.002.2026005155435/VJ114IMG.A2026005.0518.002.2026005155435.nc",
+          "granule_variants_for_this_acquisition": 1,
+          "online_access_flag": true,
+          "download_link_is_protected": true
+        },
+        {
+          "acquisition_start_utc": "2026-01-05T17:36:00.000Z",
+          "acquisition_end_utc": "2026-01-05T17:42:00.000Z",
+          "producer_granule_id": "VJ114IMG.A2026005.1736.002.2026005225310",
+          "latest_metadata_update": "2026-01-05T16:57:45.349Z",
+          "reported_granule_size_mb": 1.6300249099731445,
+          "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VJ114IMG.002/VJ114IMG.A2026005.1736.002.2026005225310/VJ114IMG.A2026005.1736.002.2026005225310.nc",
+          "granule_variants_for_this_acquisition": 1,
+          "online_access_flag": true,
+          "download_link_is_protected": true
+        },
+        {
+          "acquisition_start_utc": "2026-01-05T19:18:00.000Z",
+          "acquisition_end_utc": "2026-01-05T19:24:00.000Z",
+          "producer_granule_id": "VJ114IMG.A2026005.1918.002.2026006003038",
+          "latest_metadata_update": "2026-01-05T18:37:36.033Z",
+          "reported_granule_size_mb": 2.07266902923584,
+          "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VJ114IMG.002/VJ114IMG.A2026005.1918.002.2026006003038/VJ114IMG.A2026005.1918.002.2026006003038.nc",
+          "granule_variants_for_this_acquisition": 1,
+          "online_access_flag": true,
+          "download_link_is_protected": true
+        },
+        {
+          "acquisition_start_utc": "2026-01-06T05:00:00.000Z",
+          "acquisition_end_utc": "2026-01-06T05:06:00.000Z",
+          "producer_granule_id": "VJ114IMG.A2026006.0500.002.2026006131510",
+          "latest_metadata_update": "2026-01-06T07:20:44.697Z",
+          "reported_granule_size_mb": 0.8859500885009766,
+          "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VJ114IMG.002/VJ114IMG.A2026006.0500.002.2026006131510/VJ114IMG.A2026006.0500.002.2026006131510.nc",
+          "granule_variants_for_this_acquisition": 1,
+          "online_access_flag": true,
+          "download_link_is_protected": true
+        },
+        {
+          "acquisition_start_utc": "2026-01-06T06:42:00.000Z",
+          "acquisition_end_utc": "2026-01-06T06:48:00.000Z",
+          "producer_granule_id": "VJ114IMG.A2026006.0642.002.2026006141251",
+          "latest_metadata_update": "2026-01-06T08:16:46.797Z",
+          "reported_granule_size_mb": 0.8169841766357422,
+          "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VJ114IMG.002/VJ114IMG.A2026006.0642.002.2026006141251/VJ114IMG.A2026006.0642.002.2026006141251.nc",
+          "granule_variants_for_this_acquisition": 1,
+          "online_access_flag": true,
+          "download_link_is_protected": true
+        },
+        {
+          "acquisition_start_utc": "2026-01-06T19:00:00.000Z",
+          "acquisition_end_utc": "2026-01-06T19:06:00.000Z",
+          "producer_granule_id": "VJ114IMG.A2026006.1900.002.2026007005540",
+          "latest_metadata_update": "2026-01-06T19:00:45.911Z",
+          "reported_granule_size_mb": 2.112484931945801,
+          "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VJ114IMG.002/VJ114IMG.A2026006.1900.002.2026007005540/VJ114IMG.A2026006.1900.002.2026007005540.nc",
+          "granule_variants_for_this_acquisition": 1,
+          "online_access_flag": true,
+          "download_link_is_protected": true
+        },
+        {
+          "acquisition_start_utc": "2026-01-07T04:42:00.000Z",
+          "acquisition_end_utc": "2026-01-07T04:48:00.000Z",
+          "producer_granule_id": "VJ114IMG.A2026007.0442.002.2026007132732",
+          "latest_metadata_update": "2026-01-07T10:29:17.201Z",
+          "reported_granule_size_mb": 1.203866958618164,
+          "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VJ114IMG.002/VJ114IMG.A2026007.0442.002.2026007132732/VJ114IMG.A2026007.0442.002.2026007132732.nc",
+          "granule_variants_for_this_acquisition": 1,
+          "online_access_flag": true,
+          "download_link_is_protected": true
+        },
+        {
+          "acquisition_start_utc": "2026-01-07T06:24:00.000Z",
+          "acquisition_end_utc": "2026-01-07T06:30:00.000Z",
+          "producer_granule_id": "VJ114IMG.A2026007.0624.002.2026007142414",
+          "latest_metadata_update": "2026-01-07T10:45:16.767Z",
+          "reported_granule_size_mb": 0.9925117492675781,
+          "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VJ114IMG.002/VJ114IMG.A2026007.0624.002.2026007142414/VJ114IMG.A2026007.0624.002.2026007142414.nc",
+          "granule_variants_for_this_acquisition": 1,
+          "online_access_flag": true,
+          "download_link_is_protected": true
+        },
+        {
+          "acquisition_start_utc": "2026-01-07T18:42:00.000Z",
+          "acquisition_end_utc": "2026-01-07T18:48:00.000Z",
+          "producer_granule_id": "VJ114IMG.A2026007.1842.002.2026008010245",
+          "latest_metadata_update": "2026-01-07T19:08:49.463Z",
+          "reported_granule_size_mb": 2.3842315673828125,
+          "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VJ114IMG.002/VJ114IMG.A2026007.1842.002.2026008010245/VJ114IMG.A2026007.1842.002.2026008010245.nc",
+          "granule_variants_for_this_acquisition": 1,
+          "online_access_flag": true,
+          "download_link_is_protected": true
+        },
+        {
+          "acquisition_start_utc": "2026-01-08T04:24:00.000Z",
+          "acquisition_end_utc": "2026-01-08T04:30:00.000Z",
+          "producer_granule_id": "VJ114IMG.A2026008.0424.002.2026008110442",
+          "latest_metadata_update": "2026-01-08T05:08:51.401Z",
+          "reported_granule_size_mb": 1.208174705505371,
+          "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VJ114IMG.002/VJ114IMG.A2026008.0424.002.2026008110442/VJ114IMG.A2026008.0424.002.2026008110442.nc",
+          "granule_variants_for_this_acquisition": 1,
+          "online_access_flag": true,
+          "download_link_is_protected": true
+        },
+        {
+          "acquisition_start_utc": "2026-01-08T06:06:00.000Z",
+          "acquisition_end_utc": "2026-01-08T06:12:00.000Z",
+          "producer_granule_id": "VJ114IMG.A2026008.0606.002.2026008124019",
+          "latest_metadata_update": "2026-01-08T06:44:51.893Z",
+          "reported_granule_size_mb": 1.0301456451416016,
+          "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VJ114IMG.002/VJ114IMG.A2026008.0606.002.2026008124019/VJ114IMG.A2026008.0606.002.2026008124019.nc",
+          "granule_variants_for_this_acquisition": 1,
+          "online_access_flag": true,
+          "download_link_is_protected": true
+        },
+        {
+          "acquisition_start_utc": "2026-01-08T18:24:00.000Z",
+          "acquisition_end_utc": "2026-01-08T18:30:00.000Z",
+          "producer_granule_id": "VJ114IMG.A2026008.1824.002.2026009014024",
+          "latest_metadata_update": "2026-01-08T19:44:52.064Z",
+          "reported_granule_size_mb": 2.0288286209106445,
+          "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VJ114IMG.002/VJ114IMG.A2026008.1824.002.2026009014024/VJ114IMG.A2026008.1824.002.2026009014024.nc",
+          "granule_variants_for_this_acquisition": 1,
+          "online_access_flag": true,
+          "download_link_is_protected": true
+        },
+        {
+          "acquisition_start_utc": "2026-01-09T05:42:00.000Z",
+          "acquisition_end_utc": "2026-01-09T05:48:00.000Z",
+          "producer_granule_id": "VJ114IMG.A2026009.0542.002.2026009111146",
+          "latest_metadata_update": "2026-01-09T05:16:52.396Z",
+          "reported_granule_size_mb": 1.4190711975097656,
+          "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VJ114IMG.002/VJ114IMG.A2026009.0542.002.2026009111146/VJ114IMG.A2026009.0542.002.2026009111146.nc",
+          "granule_variants_for_this_acquisition": 1,
+          "online_access_flag": true,
+          "download_link_is_protected": true
+        },
+        {
+          "acquisition_start_utc": "2026-01-09T18:00:00.000Z",
+          "acquisition_end_utc": "2026-01-09T18:06:00.000Z",
+          "producer_granule_id": "VJ114IMG.A2026009.1800.002.2026010012326",
+          "latest_metadata_update": "2026-01-09T19:29:00.078Z",
+          "reported_granule_size_mb": 1.8551597595214844,
+          "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VJ114IMG.002/VJ114IMG.A2026009.1800.002.2026010012326/VJ114IMG.A2026009.1800.002.2026010012326.nc",
+          "granule_variants_for_this_acquisition": 1,
+          "online_access_flag": true,
+          "download_link_is_protected": true
+        },
+        {
+          "acquisition_start_utc": "2026-01-09T19:42:00.000Z",
+          "acquisition_end_utc": "2026-01-09T19:48:00.000Z",
+          "producer_granule_id": "VJ114IMG.A2026009.1942.002.2026010012322",
+          "latest_metadata_update": "2026-01-09T19:29:00.116Z",
+          "reported_granule_size_mb": 1.9319467544555664,
+          "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VJ114IMG.002/VJ114IMG.A2026009.1942.002.2026010012322/VJ114IMG.A2026009.1942.002.2026010012322.nc",
+          "granule_variants_for_this_acquisition": 1,
+          "online_access_flag": true,
+          "download_link_is_protected": true
+        },
+        {
+          "acquisition_start_utc": "2026-01-10T05:24:00.000Z",
+          "acquisition_end_utc": "2026-01-10T05:30:00.000Z",
+          "producer_granule_id": "VJ114IMG.A2026010.0524.002.2026010113351",
+          "latest_metadata_update": "2026-01-10T05:37:02.978Z",
+          "reported_granule_size_mb": 1.0082521438598633,
+          "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VJ114IMG.002/VJ114IMG.A2026010.0524.002.2026010113351/VJ114IMG.A2026010.0524.002.2026010113351.nc",
+          "granule_variants_for_this_acquisition": 1,
+          "online_access_flag": true,
+          "download_link_is_protected": true
+        },
+        {
+          "acquisition_start_utc": "2026-01-10T17:42:00.000Z",
+          "acquisition_end_utc": "2026-01-10T17:48:00.000Z",
+          "producer_granule_id": "VJ114IMG.A2026010.1742.002.2026010231444",
+          "latest_metadata_update": "2026-01-10T17:21:04.006Z",
+          "reported_granule_size_mb": 1.7371749877929688,
+          "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VJ114IMG.002/VJ114IMG.A2026010.1742.002.2026010231444/VJ114IMG.A2026010.1742.002.2026010231444.nc",
+          "granule_variants_for_this_acquisition": 1,
+          "online_access_flag": true,
+          "download_link_is_protected": true
+        },
+        {
+          "acquisition_start_utc": "2026-01-10T19:24:00.000Z",
+          "acquisition_end_utc": "2026-01-10T19:30:00.000Z",
+          "producer_granule_id": "VJ114IMG.A2026010.1924.002.2026011005714",
+          "latest_metadata_update": "2026-01-10T19:01:14.038Z",
+          "reported_granule_size_mb": 1.8709783554077148,
+          "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VJ114IMG.002/VJ114IMG.A2026010.1924.002.2026011005714/VJ114IMG.A2026010.1924.002.2026011005714.nc",
+          "granule_variants_for_this_acquisition": 1,
+          "online_access_flag": true,
+          "download_link_is_protected": true
+        }
+      ]
+    },
+    "VJ214IMG": {
+      "raw_cmr_entries_including_reprocessed_variants": 18,
+      "unique_sensor_overpass_times": 18,
+      "reprocessed_duplicate_entries": 0,
+      "reported_total_size_mb": 27.96,
+      "overpasses_by_utc_day": {
+        "2026-01-04": 3,
+        "2026-01-05": 3,
+        "2026-01-06": 3,
+        "2026-01-07": 3,
+        "2026-01-08": 3,
+        "2026-01-09": 3
+      },
+      "overpasses": [
+        {
+          "acquisition_start_utc": "2026-01-04T04:48:00.000Z",
+          "acquisition_end_utc": "2026-01-04T04:54:00.000Z",
+          "producer_granule_id": "VJ214IMG.A2026004.0448.002.2026012172827",
+          "latest_metadata_update": "2026-01-12T11:33:11.943Z",
+          "reported_granule_size_mb": 1.0910272598266602,
+          "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VJ214IMG.002/VJ214IMG.A2026004.0448.002.2026012172827/VJ214IMG.A2026004.0448.002.2026012172827.nc",
+          "granule_variants_for_this_acquisition": 1,
+          "online_access_flag": true,
+          "download_link_is_protected": true
+        },
+        {
+          "acquisition_start_utc": "2026-01-04T06:30:00.000Z",
+          "acquisition_end_utc": "2026-01-04T06:36:00.000Z",
+          "producer_granule_id": "VJ214IMG.A2026004.0630.002.2026012172829",
+          "latest_metadata_update": "2026-01-12T11:33:11.802Z",
+          "reported_granule_size_mb": 0.855560302734375,
+          "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VJ214IMG.002/VJ214IMG.A2026004.0630.002.2026012172829/VJ214IMG.A2026004.0630.002.2026012172829.nc",
+          "granule_variants_for_this_acquisition": 1,
+          "online_access_flag": true,
+          "download_link_is_protected": true
+        },
+        {
+          "acquisition_start_utc": "2026-01-04T18:48:00.000Z",
+          "acquisition_end_utc": "2026-01-04T18:54:00.000Z",
+          "producer_granule_id": "VJ214IMG.A2026004.1848.002.2026012172830",
+          "latest_metadata_update": "2026-01-12T11:33:21.977Z",
+          "reported_granule_size_mb": 2.841348648071289,
+          "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VJ214IMG.002/VJ214IMG.A2026004.1848.002.2026012172830/VJ214IMG.A2026004.1848.002.2026012172830.nc",
+          "granule_variants_for_this_acquisition": 1,
+          "online_access_flag": true,
+          "download_link_is_protected": true
+        },
+        {
+          "acquisition_start_utc": "2026-01-05T04:30:00.000Z",
+          "acquisition_end_utc": "2026-01-05T04:36:00.000Z",
+          "producer_granule_id": "VJ214IMG.A2026005.0430.002.2026012174641",
+          "latest_metadata_update": "2026-01-12T11:53:30.357Z",
+          "reported_granule_size_mb": 0.871220588684082,
+          "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VJ214IMG.002/VJ214IMG.A2026005.0430.002.2026012174641/VJ214IMG.A2026005.0430.002.2026012174641.nc",
+          "granule_variants_for_this_acquisition": 1,
+          "online_access_flag": true,
+          "download_link_is_protected": true
+        },
+        {
+          "acquisition_start_utc": "2026-01-05T06:12:00.000Z",
+          "acquisition_end_utc": "2026-01-05T06:18:00.000Z",
+          "producer_granule_id": "VJ214IMG.A2026005.0612.002.2026012174643",
+          "latest_metadata_update": "2026-01-12T11:53:28.362Z",
+          "reported_granule_size_mb": 0.8362350463867188,
+          "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VJ214IMG.002/VJ214IMG.A2026005.0612.002.2026012174643/VJ214IMG.A2026005.0612.002.2026012174643.nc",
+          "granule_variants_for_this_acquisition": 1,
+          "online_access_flag": true,
+          "download_link_is_protected": true
+        },
+        {
+          "acquisition_start_utc": "2026-01-05T18:30:00.000Z",
+          "acquisition_end_utc": "2026-01-05T18:36:00.000Z",
+          "producer_granule_id": "VJ214IMG.A2026005.1830.002.2026012174641",
+          "latest_metadata_update": "2026-01-12T11:53:20.598Z",
+          "reported_granule_size_mb": 2.836048126220703,
+          "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VJ214IMG.002/VJ214IMG.A2026005.1830.002.2026012174641/VJ214IMG.A2026005.1830.002.2026012174641.nc",
+          "granule_variants_for_this_acquisition": 1,
+          "online_access_flag": true,
+          "download_link_is_protected": true
+        },
+        {
+          "acquisition_start_utc": "2026-01-06T05:48:00.000Z",
+          "acquisition_end_utc": "2026-01-06T05:54:00.000Z",
+          "producer_granule_id": "VJ214IMG.A2026006.0548.002.2026012180616",
+          "latest_metadata_update": "2026-01-12T12:13:10.893Z",
+          "reported_granule_size_mb": 0.6232481002807617,
+          "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VJ214IMG.002/VJ214IMG.A2026006.0548.002.2026012180616/VJ214IMG.A2026006.0548.002.2026012180616.nc",
+          "granule_variants_for_this_acquisition": 1,
+          "online_access_flag": true,
+          "download_link_is_protected": true
+        },
+        {
+          "acquisition_start_utc": "2026-01-06T18:06:00.000Z",
+          "acquisition_end_utc": "2026-01-06T18:12:00.000Z",
+          "producer_granule_id": "VJ214IMG.A2026006.1806.002.2026012180612",
+          "latest_metadata_update": "2026-01-12T12:13:10.909Z",
+          "reported_granule_size_mb": 1.838897705078125,
+          "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VJ214IMG.002/VJ214IMG.A2026006.1806.002.2026012180612/VJ214IMG.A2026006.1806.002.2026012180612.nc",
+          "granule_variants_for_this_acquisition": 1,
+          "online_access_flag": true,
+          "download_link_is_protected": true
+        },
+        {
+          "acquisition_start_utc": "2026-01-06T19:48:00.000Z",
+          "acquisition_end_utc": "2026-01-06T19:54:00.000Z",
+          "producer_granule_id": "VJ214IMG.A2026006.1948.002.2026012180615",
+          "latest_metadata_update": "2026-01-12T12:13:20.925Z",
+          "reported_granule_size_mb": 1.8984832763671875,
+          "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VJ214IMG.002/VJ214IMG.A2026006.1948.002.2026012180615/VJ214IMG.A2026006.1948.002.2026012180615.nc",
+          "granule_variants_for_this_acquisition": 1,
+          "online_access_flag": true,
+          "download_link_is_protected": true
+        },
+        {
+          "acquisition_start_utc": "2026-01-07T05:30:00.000Z",
+          "acquisition_end_utc": "2026-01-07T05:36:00.000Z",
+          "producer_granule_id": "VJ214IMG.A2026007.0530.002.2026014151406",
+          "latest_metadata_update": "2026-01-14T10:26:36.256Z",
+          "reported_granule_size_mb": 0.8984165191650391,
+          "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VJ214IMG.002/VJ214IMG.A2026007.0530.002.2026014151406/VJ214IMG.A2026007.0530.002.2026014151406.nc",
+          "granule_variants_for_this_acquisition": 1,
+          "online_access_flag": true,
+          "download_link_is_protected": true
+        },
+        {
+          "acquisition_start_utc": "2026-01-07T17:48:00.000Z",
+          "acquisition_end_utc": "2026-01-07T17:54:00.000Z",
+          "producer_granule_id": "VJ214IMG.A2026007.1748.002.2026014151434",
+          "latest_metadata_update": "2026-01-14T10:34:14.005Z",
+          "reported_granule_size_mb": 1.973093032836914,
+          "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VJ214IMG.002/VJ214IMG.A2026007.1748.002.2026014151434/VJ214IMG.A2026007.1748.002.2026014151434.nc",
+          "granule_variants_for_this_acquisition": 1,
+          "online_access_flag": true,
+          "download_link_is_protected": true
+        },
+        {
+          "acquisition_start_utc": "2026-01-07T19:30:00.000Z",
+          "acquisition_end_utc": "2026-01-07T19:36:00.000Z",
+          "producer_granule_id": "VJ214IMG.A2026007.1930.002.2026014151437",
+          "latest_metadata_update": "2026-01-14T10:35:06.682Z",
+          "reported_granule_size_mb": 1.7784147262573242,
+          "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VJ214IMG.002/VJ214IMG.A2026007.1930.002.2026014151437/VJ214IMG.A2026007.1930.002.2026014151437.nc",
+          "granule_variants_for_this_acquisition": 1,
+          "online_access_flag": true,
+          "download_link_is_protected": true
+        },
+        {
+          "acquisition_start_utc": "2026-01-08T05:12:00.000Z",
+          "acquisition_end_utc": "2026-01-08T05:18:00.000Z",
+          "producer_granule_id": "VJ214IMG.A2026008.0512.002.2026014152915",
+          "latest_metadata_update": "2026-01-14T10:34:44.357Z",
+          "reported_granule_size_mb": 0.9366426467895508,
+          "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VJ214IMG.002/VJ214IMG.A2026008.0512.002.2026014152915/VJ214IMG.A2026008.0512.002.2026014152915.nc",
+          "granule_variants_for_this_acquisition": 1,
+          "online_access_flag": true,
+          "download_link_is_protected": true
+        },
+        {
+          "acquisition_start_utc": "2026-01-08T17:30:00.000Z",
+          "acquisition_end_utc": "2026-01-08T17:36:00.000Z",
+          "producer_granule_id": "VJ214IMG.A2026008.1730.002.2026014152840",
+          "latest_metadata_update": "2026-01-14T10:35:06.751Z",
+          "reported_granule_size_mb": 1.7678346633911133,
+          "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VJ214IMG.002/VJ214IMG.A2026008.1730.002.2026014152840/VJ214IMG.A2026008.1730.002.2026014152840.nc",
+          "granule_variants_for_this_acquisition": 1,
+          "online_access_flag": true,
+          "download_link_is_protected": true
+        },
+        {
+          "acquisition_start_utc": "2026-01-08T19:12:00.000Z",
+          "acquisition_end_utc": "2026-01-08T19:18:00.000Z",
+          "producer_granule_id": "VJ214IMG.A2026008.1912.002.2026014152915",
+          "latest_metadata_update": "2026-01-14T10:34:38.247Z",
+          "reported_granule_size_mb": 1.9698925018310547,
+          "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VJ214IMG.002/VJ214IMG.A2026008.1912.002.2026014152915/VJ214IMG.A2026008.1912.002.2026014152915.nc",
+          "granule_variants_for_this_acquisition": 1,
+          "online_access_flag": true,
+          "download_link_is_protected": true
+        },
+        {
+          "acquisition_start_utc": "2026-01-09T04:54:00.000Z",
+          "acquisition_end_utc": "2026-01-09T05:00:00.000Z",
+          "producer_granule_id": "VJ214IMG.A2026009.0454.002.2026014154307",
+          "latest_metadata_update": "2026-01-14T10:42:43.945Z",
+          "reported_granule_size_mb": 1.201913833618164,
+          "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VJ214IMG.002/VJ214IMG.A2026009.0454.002.2026014154307/VJ214IMG.A2026009.0454.002.2026014154307.nc",
+          "granule_variants_for_this_acquisition": 1,
+          "online_access_flag": true,
+          "download_link_is_protected": true
+        },
+        {
+          "acquisition_start_utc": "2026-01-09T06:36:00.000Z",
+          "acquisition_end_utc": "2026-01-09T06:42:00.000Z",
+          "producer_granule_id": "VJ214IMG.A2026009.0636.002.2026014154307",
+          "latest_metadata_update": "2026-01-14T10:42:41.882Z",
+          "reported_granule_size_mb": 1.116215705871582,
+          "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VJ214IMG.002/VJ214IMG.A2026009.0636.002.2026014154307/VJ214IMG.A2026009.0636.002.2026014154307.nc",
+          "granule_variants_for_this_acquisition": 1,
+          "online_access_flag": true,
+          "download_link_is_protected": true
+        },
+        {
+          "acquisition_start_utc": "2026-01-09T18:54:00.000Z",
+          "acquisition_end_utc": "2026-01-09T19:00:00.000Z",
+          "producer_granule_id": "VJ214IMG.A2026009.1854.002.2026014154306",
+          "latest_metadata_update": "2026-01-14T10:42:43.829Z",
+          "reported_granule_size_mb": 2.621415138244629,
+          "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VJ214IMG.002/VJ214IMG.A2026009.1854.002.2026014154306/VJ214IMG.A2026009.1854.002.2026014154306.nc",
+          "granule_variants_for_this_acquisition": 1,
+          "online_access_flag": true,
+          "download_link_is_protected": true
+        }
+      ]
+    }
+  },
+  "total_unique_sensor_overpass_times": 61,
+  "reported_total_granule_size_mb": 92.0,
+  "unique_sensor_overpasses_by_utc_day": {
+    "2026-01-04": 10,
+    "2026-01-05": 9,
+    "2026-01-06": 8,
+    "2026-01-07": 10,
+    "2026-01-08": 9,
+    "2026-01-09": 9,
+    "2026-01-10": 6
+  },
+  "observation_mask_semantics": {
+    "not_processed_or_poor_quality": 0,
+    "sun_glint": 2,
+    "water": 3,
+    "cloud": 4,
+    "clear_land_no_detected_fire": 5,
+    "unclassified": 6,
+    "fire_low_nominal_high_confidence": [
+      7,
+      8,
+      9
+    ],
+    "rule": "Only class 5 may serve as an observed no-detection label; classes 0, 1, 2, 3, 4, and 6 are not negative samples. Apply Algorithm QA and land/route checks before use."
+  },
+  "access": {
+    "cmr_metadata_accessible_without_earthdata_login": true,
+    "swath_files_downloaded": false,
+    "local_earthdata_token_configured": false,
+    "firms_map_key_is_sufficient_for_swath_download": false,
+    "credential_required_for_download": "NASA Earthdata Login / LAADS data access token."
+  },
+  "source_response_sha256": {
+    "VNP14IMG": "ecbac19883771b4995ea8537e62ffd184d70139da7b58feee951d16d54b779c5",
+    "VJ114IMG": "21ce4d542353f871b4aeaf86ff73cab5a2657c16cd725cbf074312dd98f6a949",
+    "VJ214IMG": "afbdd7961ac384018e0505e2ca6e8dd8025181797141f2937e467fb47e73d955"
+  },
+  "external_event_precision_estimable": false,
+  "synthetic_observations": 0,
+  "deployment_approved": false,
+  "limitations": [
+    "Granule-footprint coverage does not prove the specific route pixel was cloud-free, valid, or processed; the swath fire mask and QA layers must be downloaded and inspected.",
+    "A class-5 clear-land observation without a detected fire is an observed non-detection at that overpass, not proof that no small or obscured physical fire existed between overpasses.",
+    "The event report gives a day and administrative status, not an exact ignition timestamp.",
+    "These few incident-day swaths are case-study coverage, not a representative precision cohort or verified negative-window panel."
+  ]
+}

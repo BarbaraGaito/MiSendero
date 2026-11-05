@@ -1,0 +1,32 @@
+{
+  "status": "acquired",
+  "source": "https://noaa-goes16.s3.amazonaws.com/",
+  "protocol_sha256": "40ff9282f3ec99db9ee0b8ef6fcd3cd6d61ab359404773af27c3115a3ada223a",
+  "generated_at": "2026-10-23T02:22:48.221424+00:00",
+  "expected_hourly_slots": 312,
+  "original_files": 312,
+  "missing_scans": [],
+  "original_bytes": 737767837,
+  "manifest_sha256": "66f8f0cbbd07425781560d27b6e5c159a77035a60c6c18e7b6b508abe3a169a9",
+  "summary": {
+    "positive_rows": 2,
+    "negative_rows": 347962,
+    "excluded_rows": 231732,
+    "sampled_native_pixels": 1858,
+    "positive_region_days": {
+      "Refugio Frey desde Villa Catedral": [
+        "2024-02-05"
+      ],
+      "Sendero Che Roga - Mburucuy\u00e1": [
+        "2024-02-08"
+      ]
+    },
+    "median_publication_lag_minutes": 0.6391666666666667,
+    "maximum_publication_lag_minutes": 6.411666666666666,
+    "observations_sha256": "08e959aa27df5f3f855fa77909b2f173ffc57d6f7b43d328ec76f334828bbcc9",
+    "geography_sha256": "7e475b478db7bb678cc0a1539fdf484e0c8de0a9baa98916fb90f652f75ff834",
+    "country_sha256": "b086852064c26813d9f607c82c91b4e74e18ea83fd21993ddedd473cf8495af5"
+  },
+  "synthetic_observations": 0,
+  "deployment_approved": false
+}

@@ -1,0 +1,108 @@
+{
+  "schema_version": 1,
+  "defined_before_label_inspection": "No. This retrospective acquisition window was selected after reviewing 2024 perimeters; results are exploratory and not a preregistered model test.",
+  "revision_reason": "The first available Full Disk scan can start 10-12 minutes after the UTC hour (observed 11:10:22 UTC on 2024-01-08). Sampling window widened uniformly to 12 minutes before label extraction; no fire labels or model results were used.",
+  "purpose": "Retrospective event-coincidence audit against GlobFire burned perimeters; not ignition prediction or route-safety validation.",
+  "source": "NOAA GOES-16 ABI-L2-FDCF Full Disk, original public NetCDF, one scan per UTC hour",
+  "start": "2024-02-01T00:00:00Z",
+  "end_exclusive": "2024-02-14T00:00:00Z",
+  "sampling": "First scan starting within the first twelve minutes of every UTC hour; fixed raster offsets at the eight existing Argentine catalog sectors; no selection using labels",
+  "pixel_offsets": [
+    -15,
+    -13,
+    -11,
+    -9,
+    -7,
+    -5,
+    -3,
+    -1,
+    1,
+    3,
+    5,
+    7,
+    9,
+    11,
+    13,
+    15
+  ],
+  "country": "IGN/Georef province polygons; exclude one native raster pixel at international borders",
+  "positive_mask": [
+    10,
+    11,
+    30,
+    31
+  ],
+  "positive_dqf": 0,
+  "negative_mask": 100,
+  "negative_dqf": 1,
+  "other_classes": "Excluded, never imputed as fire-free",
+  "availability": "Maximum of NetCDF date_created, S3 listing LastModified and original HTTP Last-Modified; conservative proxy, not proof of first publication",
+  "target": "GOES-16 high-quality active-fire detections sampled near fixed Argentine trekking-sector centers; compare with separate-sensor GlobFire perimeters using the frozen spatial/date rule.",
+  "horizons_hours": [
+    0.5,
+    1,
+    2,
+    3,
+    6,
+    12
+  ],
+  "history_count": 4,
+  "maximum_latest_age_hours": 3,
+  "maximum_history_age_hours": 8,
+  "fit_before": "2024-01-11T00:00:00Z",
+  "calibration_before": "2024-01-15T00:00:00Z",
+  "validation_before": "2024-01-22T00:00:00Z",
+  "geographic_holdout_regions": [
+    "Refugio Frey desde Villa Catedral",
+    "Bosque Tallado desde la plataforma del Piltriquitron"
+  ],
+  "geographic_test_period": "Same dates as temporal test; all prior observations from these regions excluded from fitting, calibration and selection",
+  "minimum_positive_rows_per_partition": 20,
+  "minimum_positive_region_days_validation_and_test": 10,
+  "minimum_positive_region_days_without_previous_detection": 10,
+  "models": [
+    "prevalence",
+    "persistence",
+    "logistic",
+    "hist_gradient_boosting"
+  ],
+  "calibration": "Unweighted sigmoid calibration on a separate chronological block, before model/horizon selection",
+  "selection": "On validation only: threshold maximizes recall subject to precision >= 0.80. Eligible candidates must satisfy project targets, beat prevalence Brier and baseline AP. Choose longest eligible horizon, then highest AP. Confirm this single selection on temporal and geographic tests; never back off to a shorter horizon after viewing test scores",
+  "project_targets": {
+    "precision": 0.8,
+    "recall": 0.6,
+    "confidence": 0.95,
+    "bootstrap_region_day_repetitions": 1000,
+    "require_lower_confidence_bounds": true,
+    "status": "Exploratory project criteria, not a scientific consensus or a guarantee; operational use requires additional review"
+  },
+  "uncertainty": "Cluster bootstrap by region and UTC target day; repeated pixel/scans are not independent fires; inter-day correlation and shared satellite-label errors remain limitations",
+  "unseen_detection_subset": "All four available historical labels are zero; evaluate separately. Does not prove physical ignition: gaps, sensor limits and older undetected fire remain possible",
+  "synthetic_observations": 0,
+  "deployment_approved": false,
+  "experiment_id": "fire-goes16-2024-feb-perimeter-test",
+  "satellite_id": "G16",
+  "event_selection": {
+    "source": "GWIS GlobFire 2024 local cached GeoPackage",
+    "events": [
+      {
+        "globfire_id": 20202076,
+        "fire_start": "2024-02-04",
+        "fire_end": "2024-02-05",
+        "area_ha": 129,
+        "nearest_route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "distance_km": 6.658
+      },
+      {
+        "globfire_id": 20207456,
+        "fire_start": "2024-02-05",
+        "fire_end": "2024-02-10",
+        "area_ha": 473,
+        "nearest_route_sector": "Refugio Frey desde Villa Catedral",
+        "distance_km": 16.25
+      }
+    ],
+    "date_margin_days_each_side": 3,
+    "intent": "Acquire only periods covering the selected perimeter episodes and their date uncertainty margins."
+  }
+}

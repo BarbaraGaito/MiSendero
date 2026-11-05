@@ -1,0 +1,136 @@
+{
+  "experiment_id": "mapbiomas-curated-object-training-label-route-coverage",
+  "created_at_utc": "2026-10-23T05:17:21.818037+00:00",
+  "dataset": "MapBiomas Argentina Fire Collection 1 merged object-label training table",
+  "source_url": "https://drive.google.com/drive/folders/1hmWZWkX1iHcGAGvqtv-5JSynvLnPx7wX",
+  "source_file": "training/data/environmental/private/mapbiomas-polygons-data-merged.csv",
+  "source_sha256": "9ae402a37eafe91ee8030d10eba63289fac6f2b88447dbc5a73195bac0461083",
+  "geography_sha256": "7e475b478db7bb678cc0a1539fdf484e0c8de0a9baa98916fb90f652f75ff834",
+  "spatial_rule": "Representative lon/lat from each labeled feature within 10 km of the catalog route center; local equirectangular approximation, not full route geometry.",
+  "coverage": {
+    "rows": 6831,
+    "classes": {
+      "0": 3349,
+      "1": 3482
+    },
+    "object_class_conflicts": {
+      "FALSE": 6571,
+      "NA": 234,
+      "TRUE": 26
+    },
+    "geometry_types": {
+      "Point": 4632,
+      "Polygon": 2199
+    },
+    "fire_year_min": 1998,
+    "fire_year_max": 2024,
+    "route_centers_with_any_labeled_sample_within_10km": 4,
+    "route_centers_with_both_classes_within_10km": 0
+  },
+  "routes": [
+    {
+      "route_center": "Sendero Macuco - Salto Arrechea",
+      "radius_km": 10.0,
+      "matched_rows": 0,
+      "distinct_oids": 0,
+      "ambiguous_conflict_rows": 0,
+      "unambiguous_class_counts": {},
+      "distinct_fire_years": [],
+      "nearest_sample_distance_km": null
+    },
+    {
+      "route_center": "Refugio Frey desde Villa Catedral",
+      "radius_km": 10.0,
+      "matched_rows": 4,
+      "distinct_oids": 4,
+      "ambiguous_conflict_rows": 0,
+      "unambiguous_class_counts": {
+        "1": 4
+      },
+      "distinct_fire_years": [
+        1998
+      ],
+      "nearest_sample_distance_km": 7.441
+    },
+    {
+      "route_center": "Quebrada del Condorito - Balcon Norte",
+      "radius_km": 10.0,
+      "matched_rows": 4,
+      "distinct_oids": 1,
+      "ambiguous_conflict_rows": 0,
+      "unambiguous_class_counts": {
+        "1": 4
+      },
+      "distinct_fire_years": [
+        2006
+      ],
+      "nearest_sample_distance_km": 8.033
+    },
+    {
+      "route_center": "Sendero Namuncura",
+      "radius_km": 10.0,
+      "matched_rows": 1,
+      "distinct_oids": 1,
+      "ambiguous_conflict_rows": 0,
+      "unambiguous_class_counts": {
+        "1": 1
+      },
+      "distinct_fire_years": [
+        2017
+      ],
+      "nearest_sample_distance_km": 8.876
+    },
+    {
+      "route_center": "Cerro Ventana - Hueco de la Ventana",
+      "radius_km": 10.0,
+      "matched_rows": 7,
+      "distinct_oids": 1,
+      "ambiguous_conflict_rows": 0,
+      "unambiguous_class_counts": {
+        "1": 7
+      },
+      "distinct_fire_years": [
+        2017
+      ],
+      "nearest_sample_distance_km": 2.357
+    },
+    {
+      "route_center": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "radius_km": 10.0,
+      "matched_rows": 0,
+      "distinct_oids": 0,
+      "ambiguous_conflict_rows": 0,
+      "unambiguous_class_counts": {},
+      "distinct_fire_years": [],
+      "nearest_sample_distance_km": null
+    },
+    {
+      "route_center": "Sendero Che Roga - Mburucuyá",
+      "radius_km": 10.0,
+      "matched_rows": 0,
+      "distinct_oids": 0,
+      "ambiguous_conflict_rows": 0,
+      "unambiguous_class_counts": {},
+      "distinct_fire_years": [],
+      "nearest_sample_distance_km": null
+    },
+    {
+      "route_center": "Sendero La Chuña - El Rey",
+      "radius_km": 10.0,
+      "matched_rows": 0,
+      "distinct_oids": 0,
+      "ambiguous_conflict_rows": 0,
+      "unambiguous_class_counts": {},
+      "distinct_fire_years": [],
+      "nearest_sample_distance_km": null
+    }
+  ],
+  "limitations": [
+    "Curated objects are selected to train or review the MapBiomas burned-area product; they are not a census of fires or a random sample of route-days.",
+    "Class 0 is a labeled object, not evidence that the surrounding route and date had no fire.",
+    "The source product is based on Landsat and its own classification workflow; labels are not field-confirmed event reports.",
+    "No model probabilities or performance metrics are calculated by this coverage audit.",
+    "The 10 km center buffer is an approximate association and can include events outside the trail itself."
+  ],
+  "synthetic_observations": 0
+}

@@ -1,0 +1,189 @@
+{
+  "experiment_id": "snmf-reported-fire-starts-near-argentina-trail-centers-2026",
+  "meaning": "Inventory of reported positive event starts only; not a model evaluation.",
+  "sources": {
+    "official_source": "Sistema Nacional de Manejo del Fuego daily occurrence reports",
+    "event_extraction_sha256": "ba18284a722410e225906de6ea1ba35e72d5670496c45793363e901beb6efcca",
+    "report_manifest_sha256": "c9c25df1611fb3a053de47caf117d3b885e079eed190ebe590e6eb1ee75ad59d",
+    "geography_sha256": "7e475b478db7bb678cc0a1539fdf484e0c8de0a9baa98916fb90f652f75ff834"
+  },
+  "report_coverage": {
+    "period": [
+      "2026-01-01",
+      "2026-02-01"
+    ],
+    "calendar_days": 31,
+    "downloaded_report_days": 30,
+    "dates_without_a_report_at_checked_paths": 1,
+    "downloaded_days_by_month": {
+      "2026-01": 30
+    },
+    "reports_with_zero_extracted_event_rows": 0,
+    "interpretation": "No report is an unknown observation. A PDF with zero extracted rows may reflect report content or parser failure and was not called an official fire-free day."
+  },
+  "spatial_protocol": {
+    "regions": [
+      "Sendero Macuco - Salto Arrechea",
+      "Refugio Frey desde Villa Catedral",
+      "Quebrada del Condorito - Balcon Norte",
+      "Sendero Namuncura",
+      "Cerro Ventana - Hueco de la Ventana",
+      "Bosque Tallado desde la plataforma del Piltriquitron",
+      "Sendero Che Roga - Mburucuyá",
+      "Sendero La Chuña - El Rey"
+    ],
+    "distance_measure": "Haversine between incident coordinates and fixed route-sector center",
+    "radii_km": [
+      10,
+      20
+    ],
+    "unit": "route-sector start day; multiple incident records on the same route/date are grouped"
+  },
+  "results": {
+    "10": {
+      "incident_records_within_radius": 8,
+      "unique_route_sector_start_days": 6,
+      "unique_route_sector_days_by_region": {
+        "Bosque Tallado desde la plataforma del Piltriquitron": 3,
+        "Refugio Frey desde Villa Catedral": 2,
+        "Sendero Namuncura": 1
+      },
+      "route_sector_start_days": [
+        {
+          "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "target_date": "2026-01-01",
+          "source_incident_names": [
+            "Basural"
+          ],
+          "nearest_reported_incident_km": 9.832
+        },
+        {
+          "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "target_date": "2026-01-05",
+          "source_incident_names": [
+            "Barda de La Loma"
+          ],
+          "nearest_reported_incident_km": 6.29
+        },
+        {
+          "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "target_date": "2026-01-10",
+          "source_incident_names": [
+            "Aeródromo El Bolsón"
+          ],
+          "nearest_reported_incident_km": 5.996
+        },
+        {
+          "route_sector": "Refugio Frey desde Villa Catedral",
+          "target_date": "2026-01-05",
+          "source_incident_names": [
+            "Cantera Eva Perón"
+          ],
+          "nearest_reported_incident_km": 9.708
+        },
+        {
+          "route_sector": "Refugio Frey desde Villa Catedral",
+          "target_date": "2026-01-06",
+          "source_incident_names": [
+            "VERTEDERO MUNICIPAL",
+            "Vertedero Municipal",
+            "tres lagunas) VERTEDERO MUNICIPAL"
+          ],
+          "nearest_reported_incident_km": 9.084
+        },
+        {
+          "route_sector": "Sendero Namuncura",
+          "target_date": "2026-01-07",
+          "source_incident_names": [
+            "P.N. LIHUE CALEL"
+          ],
+          "nearest_reported_incident_km": 1.615
+        }
+      ]
+    },
+    "20": {
+      "incident_records_within_radius": 15,
+      "unique_route_sector_start_days": 7,
+      "unique_route_sector_days_by_region": {
+        "Bosque Tallado desde la plataforma del Piltriquitron": 3,
+        "Refugio Frey desde Villa Catedral": 3,
+        "Sendero Namuncura": 1
+      },
+      "route_sector_start_days": [
+        {
+          "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "target_date": "2026-01-01",
+          "source_incident_names": [
+            "Basural"
+          ],
+          "nearest_reported_incident_km": 9.832
+        },
+        {
+          "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "target_date": "2026-01-05",
+          "source_incident_names": [
+            "Barda de La Loma",
+            "Primera",
+            "Primera Cantera",
+            "Primera Cantera Puerto",
+            "Primera Cantera Puerto Patriada",
+            "Turbio Primera Cantera Puerto",
+            "Turbio Primera Cantera Puerto Patriada"
+          ],
+          "nearest_reported_incident_km": 6.29
+        },
+        {
+          "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "target_date": "2026-01-10",
+          "source_incident_names": [
+            "Aeródromo El Bolsón"
+          ],
+          "nearest_reported_incident_km": 5.996
+        },
+        {
+          "route_sector": "Refugio Frey desde Villa Catedral",
+          "target_date": "2026-01-05",
+          "source_incident_names": [
+            "Cantera Eva Perón"
+          ],
+          "nearest_reported_incident_km": 9.708
+        },
+        {
+          "route_sector": "Refugio Frey desde Villa Catedral",
+          "target_date": "2026-01-06",
+          "source_incident_names": [
+            "VERTEDERO MUNICIPAL",
+            "Vertedero Municipal",
+            "tres lagunas) VERTEDERO MUNICIPAL"
+          ],
+          "nearest_reported_incident_km": 9.084
+        },
+        {
+          "route_sector": "Refugio Frey desde Villa Catedral",
+          "target_date": "2026-01-22",
+          "source_incident_names": [
+            "Circunvalación"
+          ],
+          "nearest_reported_incident_km": 12.715
+        },
+        {
+          "route_sector": "Sendero Namuncura",
+          "target_date": "2026-01-07",
+          "source_incident_names": [
+            "P.N. LIHUE CALEL"
+          ],
+          "nearest_reported_incident_km": 1.615
+        }
+      ]
+    }
+  },
+  "limitations": [
+    "Daily SNMF reports are jurisdiction-reported and not an exhaustive national event/no-event registry.",
+    "1 of 31 dates have no PDF at the checked paths; these are unknown, never negative.",
+    "The automated extraction has 0 report snapshot rows without coordinates and 0 reports with zero parsed event rows; original PDFs require review for those cases.",
+    "Event starts may be approximate and duplicate naming may remain; route-day aggregation avoids treating duplicate records at the same route/date as separate positives.",
+    "Route-sector centers do not represent the complete trail geometry."
+  ],
+  "synthetic_observations": 0,
+  "deployment_approved": false
+}

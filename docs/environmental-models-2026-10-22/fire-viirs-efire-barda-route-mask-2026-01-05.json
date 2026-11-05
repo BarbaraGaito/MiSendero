@@ -1,0 +1,126 @@
+{
+  "experiment_id": "noaa-viirs-efire-barda-route-mask-pilot-2026-01-05",
+  "status": "two_passes_have_quality_valid_clear_land_at_snmf_point; route_sample_is_mixed_clear_and_bowtie",
+  "target_incident": {
+    "name": "Barda de La Loma",
+    "reported_start_date": "2026-01-05",
+    "reported_status": "CONTROLADO",
+    "latitude": -41.98623333333333,
+    "longitude": -71.54853888888888,
+    "distance_to_route_km": 5.939,
+    "exact_ignition_time_available": false
+  },
+  "source": {
+    "dataset": "NOAA VIIRS Enterprise Fire I-band EDR v1r3",
+    "public_access": "NOAA NODD S3; no Earthdata token required for these pilot objects.",
+    "download_manifest": "training/data/environmental/private/viirs-efire-barda-pilot-2026-01-05/download-manifest.json",
+    "download_manifest_sha256": "67c297f8fc9280f36e3ea90d32175ef6667061b6096b51f7beda79a0b7e3fecc",
+    "files_hash_verified": 4,
+    "total_bytes": 193518487,
+    "mask_classes": {
+      "1": "bowtie deletion",
+      "4": "cloud",
+      "5": "clear land",
+      "7": "low-confidence fire",
+      "8": "nominal-confidence fire",
+      "9": "high-confidence fire"
+    },
+    "dqf_semantics": {
+      "1": "good-quality fire-free land",
+      "2": "opaque cloud",
+      "3": "invalid surface/glint/view/input",
+      "4": "bad input data",
+      "5": "algorithm failure"
+    },
+    "dqf_semantics_source": "NOAA Enterprise Fire EDR v1.3 Algorithm Theoretical Basis Document, section 5.2."
+  },
+  "spatial_method": {
+    "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+    "route_geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa",
+    "route_sampling": "About 100 reviewed polyline vertices; nearest valid geolocated pixel searched locally around the exact 64-pixel coarse geolocation sample.",
+    "point_method": "The reported SNMF coordinate was mapped to its nearest valid pixel in the same full geolocation grid.",
+    "pixel_resolution": "375 m nominal at nadir; actual pixels enlarge away from nadir."
+  },
+  "passes": [
+    {
+      "platform": "n21",
+      "acquisition_start_utc": "2026-01-05T04:31:17Z",
+      "acquisition_end_utc": "2026-01-05T04:32:42Z",
+      "efire_file": "EFIRE-VIIRSI_v1r3_n21_s202601050431179_e202601050432426_c202601050458169.nc",
+      "efire_sha256": "d28cf0706bf6c9b5e86cd6ac44fb052d0bb5c0de0d2083d49e4d3aecaadc8ff0",
+      "geolocation_file": "GITCO_j02_d20260105_t0431179_e0432426_b16342_c20260105045019794000_oebc_ops.h5",
+      "geolocation_sha256": "40d32f63d3102148d882c5cf779c7535cd0a88e9b90f9f581a4c517da53ad2d3",
+      "route_observation": {
+        "sampled_vertices": 103,
+        "vertices_resolved_to_swath_pixels": 103,
+        "median_nearest_pixel_distance_km": 0.5457796194243735,
+        "maximum_nearest_pixel_distance_km": 0.7653227790516137,
+        "nearest_pixel_mask_and_dqf_counts": {
+          "5": 103,
+          "dqf_1": 103
+        },
+        "clear_land_dqf1_vertices": 103,
+        "fire_class_7_to_9_vertices": 0,
+        "bowtie_vertices": 0
+      },
+      "snmf_point_observation": {
+        "sampled_points": 1,
+        "resolved_points": 1,
+        "nearest_pixel_distance_km": 0.1926772349685377,
+        "nearest_pixel_mask_and_dqf_counts": {
+          "5": 1,
+          "dqf_1": 1
+        },
+        "clear_land_dqf1": true,
+        "fire_class_7_to_9": 0
+      },
+      "route_audit_json_sha256": "39c4dc012c084adb29d876d03a6a547c74a42345173cf962dce47f5fd7dc1b7f",
+      "point_audit_json_sha256": "68939768238143eb1d5c80cc7faee5fb43bb086f9847bb2eed2e0b3e6011d713"
+    },
+    {
+      "platform": "npp",
+      "acquisition_start_utc": "2026-01-05T05:01:10Z",
+      "acquisition_end_utc": "2026-01-05T05:02:35Z",
+      "efire_file": "EFIRE-VIIRSI_v1r3_npp_s202601050501108_e202601050502350_c202601050616493.nc",
+      "efire_sha256": "77fe4c27552c5ce70a66b4061179199f4177cd482be00a794e54b493094a1e34",
+      "geolocation_file": "GITCO_npp_d20260105_t0501108_e0502350_b73531_c20260105060737767000_oebc_ops.h5",
+      "geolocation_sha256": "1c423bb518adff4af384b677b76630cd0bb05d35f84fb7623cbc614bc563e5b6",
+      "route_observation": {
+        "sampled_vertices": 103,
+        "vertices_resolved_to_swath_pixels": 103,
+        "median_nearest_pixel_distance_km": 0.4235318010097427,
+        "maximum_nearest_pixel_distance_km": 0.5069280215531212,
+        "nearest_pixel_mask_and_dqf_counts": {
+          "1": 59,
+          "5": 44,
+          "dqf_1": 44,
+          "dqf_3": 59
+        },
+        "clear_land_dqf1_vertices": 44,
+        "fire_class_7_to_9_vertices": 0,
+        "bowtie_vertices": 59
+      },
+      "snmf_point_observation": {
+        "sampled_points": 1,
+        "resolved_points": 1,
+        "nearest_pixel_distance_km": 0.10344919976651265,
+        "nearest_pixel_mask_and_dqf_counts": {
+          "5": 1,
+          "dqf_1": 1
+        },
+        "clear_land_dqf1": true,
+        "fire_class_7_to_9": 0
+      },
+      "route_audit_json_sha256": "e432add29dbe919513ff25a8cb77561d9031a050c8d360d26597874d55daf703",
+      "point_audit_json_sha256": "1b8854d4f8f3f8938cc07bdb90a41bc448616b48f13e383a79bf60ec90f872dc"
+    }
+  ],
+  "interpretation": [
+    "Both passes classified the nearest pixel to the reported SNMF incident coordinate as class 5 with DQF 1, meaning a quality-valid clear-land pixel without a fire detection at those exact overpass times.",
+    "For the sampled trail line, NOAA-21 resolved every sampled vertex to clear land (103/103); S-NPP resolved 44/103 to clear land and 59/103 to bowtie-deleted pixels. The sampled vertices showed no class 7-9 fire detections.",
+    "These are observed satellite non-detections at two overpasses, not evidence that the reported fire did not exist. The incident has no exact ignition time, and a satellite may miss small or obscured fire.",
+    "This one incident and two overpasses cannot estimate forecast precision, recall, lead time, or calibration."
+  ],
+  "synthetic_observations": 0,
+  "deployment_approved": false
+}

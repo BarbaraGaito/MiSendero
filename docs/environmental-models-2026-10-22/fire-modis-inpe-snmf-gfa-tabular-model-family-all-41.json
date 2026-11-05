@@ -1,0 +1,308 @@
+{
+  "experiment_id": "unified-all-41-tabular-model-family-validation-selected-2022-train-2023-val-2024-2026-test",
+  "status": "exploratory_model_comparison_not_deployable_fire_probability",
+  "target": "Unified source-evidence label for MOD14A1/INPE/SNMF/GFA on clear-QA observed route-days; not physical-fire truth.",
+  "dataset": {
+    "path": "training/data/environmental/private/argentina-route-fire-evidence-jma-unified-all-41-2022-2026.csv.gz",
+    "sha256": "32771119c0f434054ebda31fa0bf195576885c276d6ac084ab27589f3a4f8893",
+    "manifest_sha256": "e86eae792bfe2f48895313a94cb929a95616fb3862d60cabc51f5e0d6868a8dc",
+    "rows": 28620,
+    "train_rows": 9028,
+    "validation_rows": 9292,
+    "test_rows": 10300,
+    "train_positives": 28,
+    "validation_positives": 56,
+    "test_positives": 65
+  },
+  "model_selection": {
+    "criterion": "Maximize validation precision with at least five alerts; tie-break with validation recall then average precision. Never select by test.",
+    "selected_model": "random_forest_leaf_30",
+    "validation_threshold": 0.7085803863035262,
+    "validation_precision": 0.5714285714285714,
+    "validation_recall": 0.07142857142857142,
+    "90pct_precision_gate_passed": false,
+    "minimum_validation_alerts": 5,
+    "candidate_models": [
+      {
+        "model": "logistic_c_0_01_balanced",
+        "validation_average_precision": 0.04133370259487695,
+        "validation_brier": 0.13855610405157515,
+        "validation_at_0_5": {
+          "threshold": 0.5,
+          "observations": 9292,
+          "positives": 56,
+          "alerts": 1724,
+          "true_positives": 30,
+          "false_positives": 1694,
+          "false_negatives": 26,
+          "precision": 0.01740139211136891,
+          "precision_wilson_lower_95_descriptive": 0.01292657675256997,
+          "recall": 0.5357142857142857,
+          "average_precision": 0.04133370259487695,
+          "brier": 0.13855610405157515
+        },
+        "validation_max_precision_cutoff_min_5": {
+          "threshold": 0.899568915239181,
+          "validation_precision": 0.08947368421052632,
+          "validation_recall": 0.30357142857142855,
+          "validation_true_positives": 17,
+          "validation_alerts": 190,
+          "minimum_alerts": 5
+        }
+      },
+      {
+        "model": "logistic_c_0_1_balanced",
+        "validation_average_precision": 0.04670581215723435,
+        "validation_brier": 0.10793841726682425,
+        "validation_at_0_5": {
+          "threshold": 0.5,
+          "observations": 9292,
+          "positives": 56,
+          "alerts": 1374,
+          "true_positives": 27,
+          "false_positives": 1347,
+          "false_negatives": 29,
+          "precision": 0.019650655021834062,
+          "precision_wilson_lower_95_descriptive": 0.014369676366352018,
+          "recall": 0.48214285714285715,
+          "average_precision": 0.04670581215723435,
+          "brier": 0.10793841726682425
+        },
+        "validation_max_precision_cutoff_min_5": {
+          "threshold": 0.9858113164970999,
+          "validation_precision": 0.2,
+          "validation_recall": 0.05357142857142857,
+          "validation_true_positives": 3,
+          "validation_alerts": 15,
+          "minimum_alerts": 5
+        }
+      },
+      {
+        "model": "logistic_c_1_balanced",
+        "validation_average_precision": 0.05696774828157153,
+        "validation_brier": 0.10678567620127989,
+        "validation_at_0_5": {
+          "threshold": 0.5,
+          "observations": 9292,
+          "positives": 56,
+          "alerts": 1314,
+          "true_positives": 27,
+          "false_positives": 1287,
+          "false_negatives": 29,
+          "precision": 0.02054794520547945,
+          "precision_wilson_lower_95_descriptive": 0.01502738275822029,
+          "recall": 0.48214285714285715,
+          "average_precision": 0.05696774828157153,
+          "brier": 0.10678567620127989
+        },
+        "validation_max_precision_cutoff_min_5": {
+          "threshold": 0.9964470449149356,
+          "validation_precision": 0.3333333333333333,
+          "validation_recall": 0.03571428571428571,
+          "validation_true_positives": 2,
+          "validation_alerts": 6,
+          "minimum_alerts": 5
+        }
+      },
+      {
+        "model": "random_forest_leaf_10",
+        "validation_average_precision": 0.08443420447624997,
+        "validation_brier": 0.050897168101390146,
+        "validation_at_0_5": {
+          "threshold": 0.5,
+          "observations": 9292,
+          "positives": 56,
+          "alerts": 145,
+          "true_positives": 12,
+          "false_positives": 133,
+          "false_negatives": 44,
+          "precision": 0.08275862068965517,
+          "precision_wilson_lower_95_descriptive": 0.05233742408778177,
+          "recall": 0.21428571428571427,
+          "average_precision": 0.08443420447624997,
+          "brier": 0.050897168101390146
+        },
+        "validation_max_precision_cutoff_min_5": {
+          "threshold": 0.6916165098859346,
+          "validation_precision": 0.4,
+          "validation_recall": 0.03571428571428571,
+          "validation_true_positives": 2,
+          "validation_alerts": 5,
+          "minimum_alerts": 5
+        }
+      },
+      {
+        "model": "random_forest_leaf_30",
+        "validation_average_precision": 0.10645840004230152,
+        "validation_brier": 0.09460575313307253,
+        "validation_at_0_5": {
+          "threshold": 0.5,
+          "observations": 9292,
+          "positives": 56,
+          "alerts": 821,
+          "true_positives": 24,
+          "false_positives": 797,
+          "false_negatives": 32,
+          "precision": 0.029232643118148598,
+          "precision_wilson_lower_95_descriptive": 0.021001313997669375,
+          "recall": 0.42857142857142855,
+          "average_precision": 0.10645840004230152,
+          "brier": 0.09460575313307253
+        },
+        "validation_max_precision_cutoff_min_5": {
+          "threshold": 0.7085803863035262,
+          "validation_precision": 0.5714285714285714,
+          "validation_recall": 0.07142857142857142,
+          "validation_true_positives": 4,
+          "validation_alerts": 7,
+          "minimum_alerts": 5
+        }
+      },
+      {
+        "model": "extra_trees_leaf_10",
+        "validation_average_precision": 0.08367661659371115,
+        "validation_brier": 0.1101557535400572,
+        "validation_at_0_5": {
+          "threshold": 0.5,
+          "observations": 9292,
+          "positives": 56,
+          "alerts": 504,
+          "true_positives": 24,
+          "false_positives": 480,
+          "false_negatives": 32,
+          "precision": 0.047619047619047616,
+          "precision_wilson_lower_95_descriptive": 0.0342868987951042,
+          "recall": 0.42857142857142855,
+          "average_precision": 0.08367661659371115,
+          "brier": 0.1101557535400572
+        },
+        "validation_max_precision_cutoff_min_5": {
+          "threshold": 0.8167055622400387,
+          "validation_precision": 0.4,
+          "validation_recall": 0.03571428571428571,
+          "validation_true_positives": 2,
+          "validation_alerts": 5,
+          "minimum_alerts": 5
+        }
+      },
+      {
+        "model": "extra_trees_leaf_30",
+        "validation_average_precision": 0.05443527359810129,
+        "validation_brier": 0.15242064912569056,
+        "validation_at_0_5": {
+          "threshold": 0.5,
+          "observations": 9292,
+          "positives": 56,
+          "alerts": 717,
+          "true_positives": 27,
+          "false_positives": 690,
+          "false_negatives": 29,
+          "precision": 0.03765690376569038,
+          "precision_wilson_lower_95_descriptive": 0.02759448214850017,
+          "recall": 0.48214285714285715,
+          "average_precision": 0.05443527359810129,
+          "brier": 0.15242064912569056
+        },
+        "validation_max_precision_cutoff_min_5": {
+          "threshold": 0.7373837738631843,
+          "validation_precision": 0.4,
+          "validation_recall": 0.03571428571428571,
+          "validation_true_positives": 2,
+          "validation_alerts": 5,
+          "minimum_alerts": 5
+        }
+      },
+      {
+        "model": "xgboost_depth_2",
+        "validation_average_precision": 0.08643897017082539,
+        "validation_brier": 0.05907553100202379,
+        "validation_at_0_5": {
+          "threshold": 0.5,
+          "observations": 9292,
+          "positives": 56,
+          "alerts": 667,
+          "true_positives": 17,
+          "false_positives": 650,
+          "false_negatives": 39,
+          "precision": 0.025487256371814093,
+          "precision_wilson_lower_95_descriptive": 0.0172053936298976,
+          "recall": 0.30357142857142855,
+          "average_precision": 0.08643897017082539,
+          "brier": 0.05907553100202379
+        },
+        "validation_max_precision_cutoff_min_5": {
+          "threshold": 0.8843151926994324,
+          "validation_precision": 0.46153846153846156,
+          "validation_recall": 0.10714285714285714,
+          "validation_true_positives": 6,
+          "validation_alerts": 13,
+          "minimum_alerts": 5
+        }
+      },
+      {
+        "model": "xgboost_depth_3",
+        "validation_average_precision": 0.09044276101229441,
+        "validation_brier": 0.03254398342253921,
+        "validation_at_0_5": {
+          "threshold": 0.5,
+          "observations": 9292,
+          "positives": 56,
+          "alerts": 268,
+          "true_positives": 15,
+          "false_positives": 253,
+          "false_negatives": 41,
+          "precision": 0.055970149253731345,
+          "precision_wilson_lower_95_descriptive": 0.03700339477484194,
+          "recall": 0.26785714285714285,
+          "average_precision": 0.09044276101229441,
+          "brier": 0.03254398342253921
+        },
+        "validation_max_precision_cutoff_min_5": {
+          "threshold": 0.8728625774383545,
+          "validation_precision": 0.4,
+          "validation_recall": 0.10714285714285714,
+          "validation_true_positives": 6,
+          "validation_alerts": 15,
+          "minimum_alerts": 5
+        }
+      }
+    ]
+  },
+  "temporal_test_at_validation_selected_threshold": {
+    "threshold": 0.7085803863035262,
+    "observations": 10300,
+    "positives": 65,
+    "alerts": 10,
+    "true_positives": 0,
+    "false_positives": 10,
+    "false_negatives": 65,
+    "precision": 0.0,
+    "precision_wilson_lower_95_descriptive": 0.0,
+    "recall": 0.0,
+    "average_precision": 0.009158333831476871,
+    "brier": 0.09448128767664611
+  },
+  "temporal_test_at_fixed_0_5_diagnostic": {
+    "threshold": 0.5,
+    "observations": 10300,
+    "positives": 65,
+    "alerts": 808,
+    "true_positives": 3,
+    "false_positives": 805,
+    "false_negatives": 62,
+    "precision": 0.0037128712871287127,
+    "precision_wilson_lower_95_descriptive": 0.001484788813441436,
+    "recall": 0.046153846153846156,
+    "average_precision": 0.009158333831476871,
+    "brier": 0.09448128767664611
+  },
+  "limitations": [
+    "Only 28 positive route-days are available for training in 2022; tree models can overfit despite regularization.",
+    "Model-family selection uses one temporal validation year and is not geographic model selection.",
+    "The 2024-2026 test was inspected during prior logistic experiments; this family comparison is exploratory even though this script selects models only by validation.",
+    "Scores are not calibrated physical-fire probabilities; source-label coverage is incomplete and satellite families overlap.",
+    "VGG19 and YOLO are image models and do not fit this tabular weather plus route-day dataset."
+  ],
+  "synthetic_observations": 0,
+  "deployment_approved": false
+}

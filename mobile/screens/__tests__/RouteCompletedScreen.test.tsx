@@ -88,3 +88,17 @@ test("rapid taps prepare only one SMS", async () => {
   expect(sendRouteCompletionSms).toHaveBeenCalledTimes(1);
   await act(async () => { finish({ result: "sent" }); await flush(); });
 });
+
+test("a failed save leaves loading, explains the failure and can retry the same activity", async () => {
+  (getOrCreateCompletedSession as jest.Mock).mockRejectedValueOnce(new Error("disk full"));
+  const tree = await mount(RouteCompleted);
+  expect(text(tree)).not.toContain("Cargando resumen...");
+  expect(text(tree)).not.toContain("Guardamos tu actividad");
+  expect(text(tree)).not.toContain(label);
+  expect(text(tree)).toContain("No pudimos guardar el recorrido");
+  await press(tree, "Reintentar guardado");
+  expect(getOrCreateCompletedSession).toHaveBeenCalledTimes(2);
+  expect((getOrCreateCompletedSession as jest.Mock).mock.calls[1][0].startedAt).toBe(completed.started_at);
+  expect(text(tree)).toContain("Sendero completado");
+  expect(text(tree)).toContain(label);
+});

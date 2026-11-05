@@ -215,6 +215,8 @@ export default function RouteCompletedScreen() {
   }>();
   const [session, setSession] = useState<SessionRow | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [saveError, setSaveError] = useState<string | null>(null);
+  const [saveAttempt, setSaveAttempt] = useState(0);
   const [rating, setRating] = useState(0);
   const [reviewText, setReviewText] = useState("");
   const [reviewStatus, setReviewStatus] = useState<string | null>(null);
@@ -228,6 +230,10 @@ export default function RouteCompletedScreen() {
   const smsBusy = useRef(false);
 
   useEffect(() => {
+    let mounted = true;
+    setIsLoading(true);
+    setSaveError(null);
+    setSession(null);
     const loadSession = async () => {
       await initDB();
       const completion = await createCompletionSession({
@@ -239,6 +245,7 @@ export default function RouteCompletedScreen() {
         endedLatitude,
         endedLongitude,
       });
+      if (!mounted) return;
       const completedSession = completion.session;
 
       setTrackingPointCount(completion.trackingPointCount);
@@ -247,11 +254,13 @@ export default function RouteCompletedScreen() {
       setSession(completedSession);
       setRating(completedSession?.rating ?? 0);
       setReviewText(completedSession?.review_text ?? "");
-      setIsLoading(false);
     };
 
-    loadSession();
-  }, [endedLatitude, endedLongitude, id, routeProgressMeters, startedAt, totalMeters, traveledMeters]);
+    void loadSession().catch(() => {
+      if (mounted) setSaveError("No pudimos guardar el recorrido. Reintentá para confirmar que tu actividad quedó guardada.");
+    }).finally(() => { if (mounted) setIsLoading(false); });
+    return () => { mounted = false; };
+  }, [endedLatitude, endedLongitude, id, routeProgressMeters, startedAt, totalMeters, traveledMeters, saveAttempt]);
 
   const trailId = session?.trail_id ?? (Number(id) || null);
   const isPausedWithoutProgress = completionStatus === "paused";
@@ -321,12 +330,14 @@ export default function RouteCompletedScreen() {
           showsVerticalScrollIndicator={false}
         >
       <View style={styles.successIcon}>
-        <Text style={styles.successCheck}>{completionCopy.icon}</Text>
+        <Text style={styles.successCheck}>{saveError ? "!" : isLoading ? "..." : completionCopy.icon}</Text>
       </View>
       <ScreenTitle
-        eyebrow={isSimulated ? "Modo prueba" : isPausedWithoutProgress ? "Ruta pausada" : "Recorrido finalizado"}
+        eyebrow={saveError ? "Guardado pendiente" : isLoading ? "Resumen del recorrido" : isSimulated ? "Modo prueba" : isPausedWithoutProgress ? "Ruta pausada" : "Recorrido finalizado"}
         title={
-          isSimulated
+          saveError ? "No se pudo guardar el recorrido"
+            : isLoading ? "Cargando resumen"
+            : isSimulated
             ? "Recorrido simulado"
             : isPausedWithoutProgress
             ? "Ruta en pausa"
@@ -335,7 +346,9 @@ export default function RouteCompletedScreen() {
               : "Sendero completado"
         }
         subtitle={
-          isSimulated
+          saveError ? "Volvé a intentar el guardado antes de continuar."
+            : isLoading ? "Estamos preparando tu actividad."
+            : isSimulated
             ? "Usaste ubicacion simulada: este recorrido no se guarda como actividad ni se sincroniza."
             : isPausedWithoutProgress
             ? "No registramos distancia recorrida, asi que no la marcamos como terminada."
@@ -346,6 +359,10 @@ export default function RouteCompletedScreen() {
       />
 
       {isLoading ? <Text style={styles.statusText}>Cargando resumen...</Text> : null}
+      {saveError && <Card tone="orange">
+        <Text accessibilityLiveRegion="polite" style={styles.cardText}>{saveError}</Text>
+        <PrimaryButton label="Reintentar guardado" onPress={() => setSaveAttempt((attempt) => attempt + 1)} />
+      </Card>}
 
       {!isLoading && session && !!trailId && !isSimulated && !isPausedWithoutProgress && <Card tone="green">
         <Text style={styles.cardTitle}>Informá que terminaste</Text>
@@ -354,7 +371,7 @@ export default function RouteCompletedScreen() {
         {!!smsStatus && <Text accessibilityLiveRegion="polite" style={styles.cardText}>{smsStatus}</Text>}
       </Card>}
 
-      <CompletionSessionContent
+      {!isLoading && !saveError && <CompletionSessionContent
         canReview={canReview}
         hasReview={hasReview}
         isEndedEarly={isEndedEarly}
@@ -371,13 +388,13 @@ export default function RouteCompletedScreen() {
         setReviewText={setReviewText}
         trackingPointCount={trackingPointCount}
         trailId={trailId}
-      />
+      />}
 
-      <PrimaryButton
+      {!isLoading && !saveError && <PrimaryButton
         label={completionCopy.finalActionLabel}
         tone={completionCopy.finalActionTone}
         onPress={() => router.push(completionCopy.finalActionRoute)}
-      />
+      />}
         </ScrollView>
       </KeyboardAvoidingView>
     </AppScreen>

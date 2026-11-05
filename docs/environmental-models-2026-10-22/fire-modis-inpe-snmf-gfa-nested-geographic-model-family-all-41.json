@@ -1,0 +1,1499 @@
+{
+  "experiment_id": "all-41-nested-spatial-temporal-tabular-model-family-v1",
+  "status": "exploratory_not_reliable_fire_prediction",
+  "target": "Unified source-evidence detection, not verified physical fire occurrence.",
+  "method": {
+    "train": [
+      "2022-01-01",
+      "2023-01-01"
+    ],
+    "validation": [
+      "2023-01-01",
+      "2024-01-01"
+    ],
+    "test": [
+      "2024-01-01",
+      "2027-01-01"
+    ],
+    "geographic_grouping": "Full route polylines sampled every 10 km, connected if within 100 km.",
+    "model_selection": "Within each held-out geographic fold, select model and cutoff on 2023 data from non-held-out routes only. Maximize validation precision with at least five alerts, then recall and AP.",
+    "candidate_families": [
+      "regularized class-balanced logistic regression",
+      "regularized Random Forest",
+      "regularized Extra Trees",
+      "regularized XGBoost"
+    ],
+    "precision_gate": ">=90% validation precision and at least five alerts."
+  },
+  "source_provenance": {
+    "route_count": 41,
+    "modis_qa": {
+      "route_dates_before_qa_rule": 44979,
+      "route_dates_after_qa_rule": 29024,
+      "insufficient_qa_coverage": 15955
+    },
+    "inpe": {
+      "annual_archives": {
+        "2018": {
+          "path": "training/data/environmental/private/inpe-ams-satellite-reference/focos_ams_ref_2018.zip",
+          "sha256": "5cd46751c6e68dc730e206ed92faef69c1e0851770a44a4e899f3078d7ad6af3"
+        },
+        "2019": {
+          "path": "training/data/environmental/private/inpe-ams-satellite-reference/focos_ams_ref_2019.zip",
+          "sha256": "f1ed473194672423cd1ed3424523a4e562c7cbce7e60af6e967720c4ec1c7e87"
+        },
+        "2020": {
+          "path": "training/data/environmental/private/inpe-ams-satellite-reference/focos_ams_ref_2020.zip",
+          "sha256": "1a477dcf2d09449e9850e3f64a7e6f04b6822b996c7039468a55eeafea1d6928"
+        },
+        "2021": {
+          "path": "training/data/environmental/private/inpe-ams-satellite-reference/focos_ams_ref_2021.zip",
+          "sha256": "461fd9f64fc97f7a30bb5cbaad79f076caf22d003457362af8bd2e370c02021c"
+        },
+        "2022": {
+          "path": "training/data/environmental/private/inpe-ams-satellite-reference/focos_ams_ref_2022.zip",
+          "sha256": "9a866617bc3889c19046fd3853e450a5ec4d2ad7539b805a71930422bce4b197"
+        },
+        "2023": {
+          "path": "training/data/environmental/private/inpe-ams-satellite-reference/focos_ams_ref_2023.zip",
+          "sha256": "822365b3166ecf9e26db9444a8c74a995cc45338d495a4986de4c1bc6cc000e7"
+        },
+        "2024": {
+          "path": "training/data/environmental/private/inpe-ams-satellite-reference/focos_ams_ref_2024.zip",
+          "sha256": "fad2c6e8d09876c67c0c41a83906a5f4c2bcdfb44d9acb7f1d75f50014e67df2"
+        },
+        "2025": {
+          "path": "training/data/environmental/private/inpe-ams-satellite-reference/focos_ams_ref_2025.zip",
+          "sha256": "36d8b7bae6e92200b4e385e3a78784f5417083291c8743afbd8957fae3985654"
+        }
+      },
+      "argentina_detection_rows_screened": 302680,
+      "route_date_detections_within_5km": 81,
+      "unique_route_count_with_detection": 17,
+      "unique_detection_coordinates": 234
+    },
+    "unmapped_catalog_routes": {},
+    "label_sha256": "7f1458ad11b180a3ba9cae69eba626a1ec29986618db1340f0af4176b3c7e694",
+    "catalog_sha256": "cee4a40a94de7ee279851cb6fa6cd7c5ccfc44145c8bebc54cec9b8aa5d5ea46"
+  },
+  "geographic_fold_count": 15,
+  "scored_folds": 15,
+  "folds_passing_90pct_precision_gate": 0,
+  "folds": [
+    {
+      "fold": 1,
+      "heldout_routes": [
+        "aconquija-el-pozon",
+        "aconquija-puesto-chorizos",
+        "puertaCielo"
+      ],
+      "counts": {
+        "train_rows": 8152,
+        "train_positives": 23,
+        "validation_rows": 8385,
+        "validation_positives": 49,
+        "test_rows": 884,
+        "test_positives": 1
+      },
+      "status": "scored",
+      "selected_model": "xgboost_depth2_regularized",
+      "selected_validation_cutoff": {
+        "threshold": 0.886336088180542,
+        "validation_precision": 0.5,
+        "validation_recall": 0.10204081632653061,
+        "validation_average_precision": 0.08832266941623573,
+        "validation_true_positives": 5,
+        "validation_alerts": 10
+      },
+      "candidate_validation_results": [
+        {
+          "model": "logistic_c0.1_balanced",
+          "threshold": 0.9827899061996923,
+          "validation_precision": 0.2222222222222222,
+          "validation_recall": 0.04081632653061224,
+          "validation_average_precision": 0.042671490266671,
+          "validation_true_positives": 2,
+          "validation_alerts": 9
+        },
+        {
+          "model": "random_forest_regularized",
+          "threshold": 0.7439332314185542,
+          "validation_precision": 0.4444444444444444,
+          "validation_recall": 0.08163265306122448,
+          "validation_average_precision": 0.08668178161162542,
+          "validation_true_positives": 4,
+          "validation_alerts": 9
+        },
+        {
+          "model": "extra_trees_regularized",
+          "threshold": 0.7733402328240495,
+          "validation_precision": 0.4,
+          "validation_recall": 0.04081632653061224,
+          "validation_average_precision": 0.053467043800795394,
+          "validation_true_positives": 2,
+          "validation_alerts": 5
+        },
+        {
+          "model": "xgboost_depth2_regularized",
+          "threshold": 0.886336088180542,
+          "validation_precision": 0.5,
+          "validation_recall": 0.10204081632653061,
+          "validation_average_precision": 0.08832266941623573,
+          "validation_true_positives": 5,
+          "validation_alerts": 10
+        }
+      ],
+      "heldout_test_route_day_metrics_at_validation_selected_threshold": {
+        "route_days": 884,
+        "positive_route_days": 1,
+        "prevalence": 0.0011312217194570137,
+        "threshold": 0.886336088180542,
+        "alerts": 0,
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 1,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": null,
+        "recall": 0.0,
+        "average_precision": 0.005154639175257732,
+        "brier": 0.09764710567016269,
+        "confusion_matrix_tn_fp_fn_tp": [
+          883,
+          0,
+          1,
+          0
+        ]
+      },
+      "heldout_test_event_date_metrics_at_validation_selected_threshold": {
+        "event_dates": 323,
+        "positive_event_dates": 1,
+        "alerts": 0,
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 1
+      }
+    },
+    {
+      "fold": 2,
+      "heldout_routes": [
+        "aguilas",
+        "condores"
+      ],
+      "counts": {
+        "train_rows": 8612,
+        "train_positives": 28,
+        "validation_rows": 8886,
+        "validation_positives": 54,
+        "test_rows": 477,
+        "test_positives": 4
+      },
+      "status": "scored",
+      "selected_model": "random_forest_regularized",
+      "selected_validation_cutoff": {
+        "threshold": 0.6697963731896915,
+        "validation_precision": 0.5,
+        "validation_recall": 0.1111111111111111,
+        "validation_average_precision": 0.09245293065721764,
+        "validation_true_positives": 6,
+        "validation_alerts": 12
+      },
+      "candidate_validation_results": [
+        {
+          "model": "logistic_c0.1_balanced",
+          "threshold": 0.9841494507002763,
+          "validation_precision": 0.2,
+          "validation_recall": 0.05555555555555555,
+          "validation_average_precision": 0.047503131403646835,
+          "validation_true_positives": 3,
+          "validation_alerts": 15
+        },
+        {
+          "model": "random_forest_regularized",
+          "threshold": 0.6697963731896915,
+          "validation_precision": 0.5,
+          "validation_recall": 0.1111111111111111,
+          "validation_average_precision": 0.09245293065721764,
+          "validation_true_positives": 6,
+          "validation_alerts": 12
+        },
+        {
+          "model": "extra_trees_regularized",
+          "threshold": 0.7324260410213022,
+          "validation_precision": 0.4,
+          "validation_recall": 0.037037037037037035,
+          "validation_average_precision": 0.059328993034443486,
+          "validation_true_positives": 2,
+          "validation_alerts": 5
+        },
+        {
+          "model": "xgboost_depth2_regularized",
+          "threshold": 0.8721411824226379,
+          "validation_precision": 0.5,
+          "validation_recall": 0.07407407407407407,
+          "validation_average_precision": 0.09396443000047884,
+          "validation_true_positives": 4,
+          "validation_alerts": 8
+        }
+      ],
+      "heldout_test_route_day_metrics_at_validation_selected_threshold": {
+        "route_days": 477,
+        "positive_route_days": 4,
+        "prevalence": 0.008385744234800839,
+        "threshold": 0.6697963731896915,
+        "alerts": 0,
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 4,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": null,
+        "recall": 0.0,
+        "average_precision": 0.023457861405431737,
+        "brier": 0.048138229515585315,
+        "confusion_matrix_tn_fp_fn_tp": [
+          473,
+          0,
+          4,
+          0
+        ]
+      },
+      "heldout_test_event_date_metrics_at_validation_selected_threshold": {
+        "event_dates": 240,
+        "positive_event_dates": 2,
+        "alerts": 0,
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 2
+      }
+    },
+    {
+      "fold": 3,
+      "heldout_routes": [
+        "alerces-alto-petiso",
+        "alerces-arroyo-hacha",
+        "alerces-cerro-cocinero",
+        "alerces-laguna-escondida",
+        "bosqueTallado",
+        "esquelCruz",
+        "frey"
+      ],
+      "counts": {
+        "train_rows": 7920,
+        "train_positives": 28,
+        "validation_rows": 8109,
+        "validation_positives": 47,
+        "test_rows": 1423,
+        "test_positives": 47
+      },
+      "status": "scored",
+      "selected_model": "random_forest_regularized",
+      "selected_validation_cutoff": {
+        "threshold": 0.7391253947956146,
+        "validation_precision": 0.6,
+        "validation_recall": 0.06382978723404255,
+        "validation_average_precision": 0.1405721713460413,
+        "validation_true_positives": 3,
+        "validation_alerts": 5
+      },
+      "candidate_validation_results": [
+        {
+          "model": "logistic_c0.1_balanced",
+          "threshold": 0.9812885545218047,
+          "validation_precision": 0.16666666666666666,
+          "validation_recall": 0.06382978723404255,
+          "validation_average_precision": 0.05074447019693329,
+          "validation_true_positives": 3,
+          "validation_alerts": 18
+        },
+        {
+          "model": "random_forest_regularized",
+          "threshold": 0.7391253947956146,
+          "validation_precision": 0.6,
+          "validation_recall": 0.06382978723404255,
+          "validation_average_precision": 0.1405721713460413,
+          "validation_true_positives": 3,
+          "validation_alerts": 5
+        },
+        {
+          "model": "extra_trees_regularized",
+          "threshold": 0.7415902699816549,
+          "validation_precision": 0.3333333333333333,
+          "validation_recall": 0.06382978723404255,
+          "validation_average_precision": 0.06150338187695652,
+          "validation_true_positives": 3,
+          "validation_alerts": 9
+        },
+        {
+          "model": "xgboost_depth2_regularized",
+          "threshold": 0.8548766374588013,
+          "validation_precision": 0.4444444444444444,
+          "validation_recall": 0.0851063829787234,
+          "validation_average_precision": 0.0945179331421279,
+          "validation_true_positives": 4,
+          "validation_alerts": 9
+        }
+      ],
+      "heldout_test_route_day_metrics_at_validation_selected_threshold": {
+        "route_days": 1423,
+        "positive_route_days": 47,
+        "prevalence": 0.03302881236823612,
+        "threshold": 0.7391253947956146,
+        "alerts": 0,
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 47,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": null,
+        "recall": 0.0,
+        "average_precision": 0.06389998921444869,
+        "brier": 0.07451899476066098,
+        "confusion_matrix_tn_fp_fn_tp": [
+          1376,
+          0,
+          47,
+          0
+        ]
+      },
+      "heldout_test_event_date_metrics_at_validation_selected_threshold": {
+        "event_dates": 350,
+        "positive_event_dates": 32,
+        "alerts": 0,
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 32
+      }
+    },
+    {
+      "fold": 4,
+      "heldout_routes": [
+        "bateaMirador",
+        "lanin-cara-sur-puerto-canoa",
+        "lanin-rosales-san-martin"
+      ],
+      "counts": {
+        "train_rows": 8437,
+        "train_positives": 25,
+        "validation_rows": 8698,
+        "validation_positives": 52,
+        "test_rows": 741,
+        "test_positives": 4
+      },
+      "status": "scored",
+      "selected_model": "random_forest_regularized",
+      "selected_validation_cutoff": {
+        "threshold": 0.697289879138495,
+        "validation_precision": 0.5,
+        "validation_recall": 0.09615384615384616,
+        "validation_average_precision": 0.09651776170283626,
+        "validation_true_positives": 5,
+        "validation_alerts": 10
+      },
+      "candidate_validation_results": [
+        {
+          "model": "logistic_c0.1_balanced",
+          "threshold": 0.9900302148464893,
+          "validation_precision": 0.2,
+          "validation_recall": 0.019230769230769232,
+          "validation_average_precision": 0.055186295246414205,
+          "validation_true_positives": 1,
+          "validation_alerts": 5
+        },
+        {
+          "model": "random_forest_regularized",
+          "threshold": 0.697289879138495,
+          "validation_precision": 0.5,
+          "validation_recall": 0.09615384615384616,
+          "validation_average_precision": 0.09651776170283626,
+          "validation_true_positives": 5,
+          "validation_alerts": 10
+        },
+        {
+          "model": "extra_trees_regularized",
+          "threshold": 0.7311160721998483,
+          "validation_precision": 0.3333333333333333,
+          "validation_recall": 0.057692307692307696,
+          "validation_average_precision": 0.06392401547324972,
+          "validation_true_positives": 3,
+          "validation_alerts": 9
+        },
+        {
+          "model": "xgboost_depth2_regularized",
+          "threshold": 0.907802402973175,
+          "validation_precision": 0.5,
+          "validation_recall": 0.057692307692307696,
+          "validation_average_precision": 0.10383664388404212,
+          "validation_true_positives": 3,
+          "validation_alerts": 6
+        }
+      ],
+      "heldout_test_route_day_metrics_at_validation_selected_threshold": {
+        "route_days": 741,
+        "positive_route_days": 4,
+        "prevalence": 0.005398110661268556,
+        "threshold": 0.697289879138495,
+        "alerts": 0,
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 4,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": null,
+        "recall": 0.0,
+        "average_precision": 0.02609312982608068,
+        "brier": 0.07003397241158293,
+        "confusion_matrix_tn_fp_fn_tp": [
+          737,
+          0,
+          4,
+          0
+        ]
+      },
+      "heldout_test_event_date_metrics_at_validation_selected_threshold": {
+        "event_dates": 311,
+        "positive_event_dates": 4,
+        "alerts": 0,
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 4
+      }
+    },
+    {
+      "fold": 5,
+      "heldout_routes": [
+        "cerroAlto",
+        "namuncura"
+      ],
+      "counts": {
+        "train_rows": 8449,
+        "train_positives": 26,
+        "validation_rows": 8704,
+        "validation_positives": 54,
+        "test_rows": 653,
+        "test_positives": 6
+      },
+      "status": "scored",
+      "selected_model": "xgboost_depth2_regularized",
+      "selected_validation_cutoff": {
+        "threshold": 0.9011179804801941,
+        "validation_precision": 0.5,
+        "validation_recall": 0.07407407407407407,
+        "validation_average_precision": 0.10996453389223694,
+        "validation_true_positives": 4,
+        "validation_alerts": 8
+      },
+      "candidate_validation_results": [
+        {
+          "model": "logistic_c0.1_balanced",
+          "threshold": 0.9877309801654964,
+          "validation_precision": 0.2,
+          "validation_recall": 0.018518518518518517,
+          "validation_average_precision": 0.055839043302478145,
+          "validation_true_positives": 1,
+          "validation_alerts": 5
+        },
+        {
+          "model": "random_forest_regularized",
+          "threshold": 0.7156704922797579,
+          "validation_precision": 0.45454545454545453,
+          "validation_recall": 0.09259259259259259,
+          "validation_average_precision": 0.0993763612668161,
+          "validation_true_positives": 5,
+          "validation_alerts": 11
+        },
+        {
+          "model": "extra_trees_regularized",
+          "threshold": 0.749410462218281,
+          "validation_precision": 0.4,
+          "validation_recall": 0.037037037037037035,
+          "validation_average_precision": 0.07198436448338905,
+          "validation_true_positives": 2,
+          "validation_alerts": 5
+        },
+        {
+          "model": "xgboost_depth2_regularized",
+          "threshold": 0.9011179804801941,
+          "validation_precision": 0.5,
+          "validation_recall": 0.07407407407407407,
+          "validation_average_precision": 0.10996453389223694,
+          "validation_true_positives": 4,
+          "validation_alerts": 8
+        }
+      ],
+      "heldout_test_route_day_metrics_at_validation_selected_threshold": {
+        "route_days": 653,
+        "positive_route_days": 6,
+        "prevalence": 0.009188361408882083,
+        "threshold": 0.9011179804801941,
+        "alerts": 0,
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 6,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": null,
+        "recall": 0.0,
+        "average_precision": 0.010006469023824837,
+        "brier": 0.023813878799004592,
+        "confusion_matrix_tn_fp_fn_tp": [
+          647,
+          0,
+          6,
+          0
+        ]
+      },
+      "heldout_test_event_date_metrics_at_validation_selected_threshold": {
+        "event_dates": 327,
+        "positive_event_dates": 3,
+        "alerts": 0,
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 3
+      }
+    },
+    {
+      "fold": 6,
+      "heldout_routes": [
+        "condorito",
+        "condorito-secretos-pies",
+        "tabaquillo",
+        "uritorco"
+      ],
+      "counts": {
+        "train_rows": 7847,
+        "train_positives": 28,
+        "validation_rows": 8054,
+        "validation_positives": 47,
+        "test_rows": 1310,
+        "test_positives": 0
+      },
+      "status": "scored",
+      "selected_model": "xgboost_depth2_regularized",
+      "selected_validation_cutoff": {
+        "threshold": 0.8884533643722534,
+        "validation_precision": 0.5,
+        "validation_recall": 0.0851063829787234,
+        "validation_average_precision": 0.10260217274474694,
+        "validation_true_positives": 4,
+        "validation_alerts": 8
+      },
+      "candidate_validation_results": [
+        {
+          "model": "logistic_c0.1_balanced",
+          "threshold": 0.9821288215684534,
+          "validation_precision": 0.2,
+          "validation_recall": 0.06382978723404255,
+          "validation_average_precision": 0.05242403775099842,
+          "validation_true_positives": 3,
+          "validation_alerts": 15
+        },
+        {
+          "model": "random_forest_regularized",
+          "threshold": 0.6922182793132461,
+          "validation_precision": 0.4,
+          "validation_recall": 0.0425531914893617,
+          "validation_average_precision": 0.09606086843572306,
+          "validation_true_positives": 2,
+          "validation_alerts": 5
+        },
+        {
+          "model": "extra_trees_regularized",
+          "threshold": 0.7299598220870576,
+          "validation_precision": 0.2857142857142857,
+          "validation_recall": 0.0425531914893617,
+          "validation_average_precision": 0.0843778641864468,
+          "validation_true_positives": 2,
+          "validation_alerts": 7
+        },
+        {
+          "model": "xgboost_depth2_regularized",
+          "threshold": 0.8884533643722534,
+          "validation_precision": 0.5,
+          "validation_recall": 0.0851063829787234,
+          "validation_average_precision": 0.10260217274474694,
+          "validation_true_positives": 4,
+          "validation_alerts": 8
+        }
+      ],
+      "heldout_test_route_day_metrics_at_validation_selected_threshold": {
+        "route_days": 1310,
+        "positive_route_days": 0,
+        "prevalence": 0.0,
+        "threshold": 0.8884533643722534,
+        "alerts": 0,
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 0,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": null,
+        "recall": 0.0,
+        "average_precision": null,
+        "brier": 0.05052060668744378,
+        "confusion_matrix_tn_fp_fn_tp": [
+          1310,
+          0,
+          0,
+          0
+        ]
+      },
+      "heldout_test_event_date_metrics_at_validation_selected_threshold": {
+        "event_dates": 370,
+        "positive_event_dates": 0,
+        "alerts": 0,
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 0
+      }
+    },
+    {
+      "fold": 7,
+      "heldout_routes": [
+        "costera",
+        "esmeralda",
+        "fuego-pampa-alta",
+        "hito"
+      ],
+      "counts": {
+        "train_rows": 8374,
+        "train_positives": 28,
+        "validation_rows": 8642,
+        "validation_positives": 56,
+        "test_rows": 769,
+        "test_positives": 0
+      },
+      "status": "scored",
+      "selected_model": "xgboost_depth2_regularized",
+      "selected_validation_cutoff": {
+        "threshold": 0.888964831829071,
+        "validation_precision": 0.6,
+        "validation_recall": 0.05357142857142857,
+        "validation_average_precision": 0.09422901852366783,
+        "validation_true_positives": 3,
+        "validation_alerts": 5
+      },
+      "candidate_validation_results": [
+        {
+          "model": "logistic_c0.1_balanced",
+          "threshold": 0.983766735420351,
+          "validation_precision": 0.2,
+          "validation_recall": 0.05357142857142857,
+          "validation_average_precision": 0.04608556799586997,
+          "validation_true_positives": 3,
+          "validation_alerts": 15
+        },
+        {
+          "model": "random_forest_regularized",
+          "threshold": 0.6848087568466231,
+          "validation_precision": 0.4,
+          "validation_recall": 0.07142857142857142,
+          "validation_average_precision": 0.10334529301951563,
+          "validation_true_positives": 4,
+          "validation_alerts": 10
+        },
+        {
+          "model": "extra_trees_regularized",
+          "threshold": 0.7579260961654285,
+          "validation_precision": 0.4,
+          "validation_recall": 0.03571428571428571,
+          "validation_average_precision": 0.06224993702805532,
+          "validation_true_positives": 2,
+          "validation_alerts": 5
+        },
+        {
+          "model": "xgboost_depth2_regularized",
+          "threshold": 0.888964831829071,
+          "validation_precision": 0.6,
+          "validation_recall": 0.05357142857142857,
+          "validation_average_precision": 0.09422901852366783,
+          "validation_true_positives": 3,
+          "validation_alerts": 5
+        }
+      ],
+      "heldout_test_route_day_metrics_at_validation_selected_threshold": {
+        "route_days": 769,
+        "positive_route_days": 0,
+        "prevalence": 0.0,
+        "threshold": 0.888964831829071,
+        "alerts": 0,
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 0,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": null,
+        "recall": 0.0,
+        "average_precision": null,
+        "brier": 0.004421855092623765,
+        "confusion_matrix_tn_fp_fn_tp": [
+          769,
+          0,
+          0,
+          0
+        ]
+      },
+      "heldout_test_event_date_metrics_at_validation_selected_threshold": {
+        "event_dates": 231,
+        "positive_event_dates": 0,
+        "alerts": 0,
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 0
+      }
+    },
+    {
+      "fold": 8,
+      "heldout_routes": [
+        "el-rey-la-chuna",
+        "el-rey-laguna-patitos",
+        "sanBernardo"
+      ],
+      "counts": {
+        "train_rows": 8136,
+        "train_positives": 24,
+        "validation_rows": 8409,
+        "validation_positives": 51,
+        "test_rows": 957,
+        "test_positives": 1
+      },
+      "status": "scored",
+      "selected_model": "xgboost_depth2_regularized",
+      "selected_validation_cutoff": {
+        "threshold": 0.8995435833930969,
+        "validation_precision": 0.5454545454545454,
+        "validation_recall": 0.11764705882352941,
+        "validation_average_precision": 0.09285483493364981,
+        "validation_true_positives": 6,
+        "validation_alerts": 11
+      },
+      "candidate_validation_results": [
+        {
+          "model": "logistic_c0.1_balanced",
+          "threshold": 0.9858323054443814,
+          "validation_precision": 0.2,
+          "validation_recall": 0.0196078431372549,
+          "validation_average_precision": 0.06281187631944571,
+          "validation_true_positives": 1,
+          "validation_alerts": 5
+        },
+        {
+          "model": "random_forest_regularized",
+          "threshold": 0.7674722988042197,
+          "validation_precision": 0.5,
+          "validation_recall": 0.058823529411764705,
+          "validation_average_precision": 0.10178200090539762,
+          "validation_true_positives": 3,
+          "validation_alerts": 6
+        },
+        {
+          "model": "extra_trees_regularized",
+          "threshold": 0.774764967976681,
+          "validation_precision": 0.42857142857142855,
+          "validation_recall": 0.058823529411764705,
+          "validation_average_precision": 0.05932363245515239,
+          "validation_true_positives": 3,
+          "validation_alerts": 7
+        },
+        {
+          "model": "xgboost_depth2_regularized",
+          "threshold": 0.8995435833930969,
+          "validation_precision": 0.5454545454545454,
+          "validation_recall": 0.11764705882352941,
+          "validation_average_precision": 0.09285483493364981,
+          "validation_true_positives": 6,
+          "validation_alerts": 11
+        }
+      ],
+      "heldout_test_route_day_metrics_at_validation_selected_threshold": {
+        "route_days": 957,
+        "positive_route_days": 1,
+        "prevalence": 0.0010449320794148381,
+        "threshold": 0.8995435833930969,
+        "alerts": 0,
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 1,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": null,
+        "recall": 0.0,
+        "average_precision": 0.0015290519877675841,
+        "brier": 0.15359971385216967,
+        "confusion_matrix_tn_fp_fn_tp": [
+          956,
+          0,
+          1,
+          0
+        ]
+      },
+      "heldout_test_event_date_metrics_at_validation_selected_threshold": {
+        "event_dates": 343,
+        "positive_event_dates": 1,
+        "alerts": 0,
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 1
+      }
+    },
+    {
+      "fold": 9,
+      "heldout_routes": [
+        "encantadoMirador"
+      ],
+      "counts": {
+        "train_rows": 8745,
+        "train_positives": 26,
+        "validation_rows": 9010,
+        "validation_positives": 56,
+        "test_rows": 316,
+        "test_positives": 0
+      },
+      "status": "scored",
+      "selected_model": "xgboost_depth2_regularized",
+      "selected_validation_cutoff": {
+        "threshold": 0.8621870875358582,
+        "validation_precision": 0.45454545454545453,
+        "validation_recall": 0.08928571428571429,
+        "validation_average_precision": 0.0740254433671458,
+        "validation_true_positives": 5,
+        "validation_alerts": 11
+      },
+      "candidate_validation_results": [
+        {
+          "model": "logistic_c0.1_balanced",
+          "threshold": 0.9858687881729654,
+          "validation_precision": 0.125,
+          "validation_recall": 0.05357142857142857,
+          "validation_average_precision": 0.04149287776128231,
+          "validation_true_positives": 3,
+          "validation_alerts": 24
+        },
+        {
+          "model": "random_forest_regularized",
+          "threshold": 0.7041852807105041,
+          "validation_precision": 0.4,
+          "validation_recall": 0.03571428571428571,
+          "validation_average_precision": 0.10325214430376882,
+          "validation_true_positives": 2,
+          "validation_alerts": 5
+        },
+        {
+          "model": "extra_trees_regularized",
+          "threshold": 0.7535354526836525,
+          "validation_precision": 0.4,
+          "validation_recall": 0.03571428571428571,
+          "validation_average_precision": 0.06098321716135589,
+          "validation_true_positives": 2,
+          "validation_alerts": 5
+        },
+        {
+          "model": "xgboost_depth2_regularized",
+          "threshold": 0.8621870875358582,
+          "validation_precision": 0.45454545454545453,
+          "validation_recall": 0.08928571428571429,
+          "validation_average_precision": 0.0740254433671458,
+          "validation_true_positives": 5,
+          "validation_alerts": 11
+        }
+      ],
+      "heldout_test_route_day_metrics_at_validation_selected_threshold": {
+        "route_days": 316,
+        "positive_route_days": 0,
+        "prevalence": 0.0,
+        "threshold": 0.8621870875358582,
+        "alerts": 0,
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 0,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": null,
+        "recall": 0.0,
+        "average_precision": null,
+        "brier": 0.09499268208608481,
+        "confusion_matrix_tn_fp_fn_tp": [
+          316,
+          0,
+          0,
+          0
+        ]
+      },
+      "heldout_test_event_date_metrics_at_validation_selected_threshold": {
+        "event_dates": 316,
+        "positive_event_dates": 0,
+        "alerts": 0,
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 0
+      }
+    },
+    {
+      "fold": 10,
+      "heldout_routes": [
+        "guanacos",
+        "miradoresQuijadas",
+        "quijadas-farallones"
+      ],
+      "counts": {
+        "train_rows": 8126,
+        "train_positives": 28,
+        "validation_rows": 8331,
+        "validation_positives": 56,
+        "test_rows": 1046,
+        "test_positives": 0
+      },
+      "status": "scored",
+      "selected_model": "random_forest_regularized",
+      "selected_validation_cutoff": {
+        "threshold": 0.699894786503311,
+        "validation_precision": 0.7142857142857143,
+        "validation_recall": 0.08928571428571429,
+        "validation_average_precision": 0.12806981116350943,
+        "validation_true_positives": 5,
+        "validation_alerts": 7
+      },
+      "candidate_validation_results": [
+        {
+          "model": "logistic_c0.1_balanced",
+          "threshold": 0.9840937445025044,
+          "validation_precision": 0.2,
+          "validation_recall": 0.05357142857142857,
+          "validation_average_precision": 0.04821310129091937,
+          "validation_true_positives": 3,
+          "validation_alerts": 15
+        },
+        {
+          "model": "random_forest_regularized",
+          "threshold": 0.699894786503311,
+          "validation_precision": 0.7142857142857143,
+          "validation_recall": 0.08928571428571429,
+          "validation_average_precision": 0.12806981116350943,
+          "validation_true_positives": 5,
+          "validation_alerts": 7
+        },
+        {
+          "model": "extra_trees_regularized",
+          "threshold": 0.7243358519012947,
+          "validation_precision": 0.3,
+          "validation_recall": 0.05357142857142857,
+          "validation_average_precision": 0.05529707371592479,
+          "validation_true_positives": 3,
+          "validation_alerts": 10
+        },
+        {
+          "model": "xgboost_depth2_regularized",
+          "threshold": 0.8724727034568787,
+          "validation_precision": 0.5,
+          "validation_recall": 0.08928571428571429,
+          "validation_average_precision": 0.08915840000071631,
+          "validation_true_positives": 5,
+          "validation_alerts": 10
+        }
+      ],
+      "heldout_test_route_day_metrics_at_validation_selected_threshold": {
+        "route_days": 1046,
+        "positive_route_days": 0,
+        "prevalence": 0.0,
+        "threshold": 0.699894786503311,
+        "alerts": 0,
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 0,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": null,
+        "recall": 0.0,
+        "average_precision": null,
+        "brier": 0.06132893528558331,
+        "confusion_matrix_tn_fp_fn_tp": [
+          1046,
+          0,
+          0,
+          0
+        ]
+      },
+      "heldout_test_event_date_metrics_at_validation_selected_threshold": {
+        "event_dates": 349,
+        "positive_event_dates": 0,
+        "alerts": 0,
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 0
+      }
+    },
+    {
+      "fold": 11,
+      "heldout_routes": [
+        "leoncito-cerro"
+      ],
+      "counts": {
+        "train_rows": 8718,
+        "train_positives": 28,
+        "validation_rows": 8964,
+        "validation_positives": 56,
+        "test_rows": 365,
+        "test_positives": 0
+      },
+      "status": "scored",
+      "selected_model": "xgboost_depth2_regularized",
+      "selected_validation_cutoff": {
+        "threshold": 0.8591611385345459,
+        "validation_precision": 0.5,
+        "validation_recall": 0.08928571428571429,
+        "validation_average_precision": 0.09960747141481174,
+        "validation_true_positives": 5,
+        "validation_alerts": 10
+      },
+      "candidate_validation_results": [
+        {
+          "model": "logistic_c0.1_balanced",
+          "threshold": 0.984779676893754,
+          "validation_precision": 0.21428571428571427,
+          "validation_recall": 0.05357142857142857,
+          "validation_average_precision": 0.04668912984390976,
+          "validation_true_positives": 3,
+          "validation_alerts": 14
+        },
+        {
+          "model": "random_forest_regularized",
+          "threshold": 0.6859398366594271,
+          "validation_precision": 0.42857142857142855,
+          "validation_recall": 0.05357142857142857,
+          "validation_average_precision": 0.10822416683652332,
+          "validation_true_positives": 3,
+          "validation_alerts": 7
+        },
+        {
+          "model": "extra_trees_regularized",
+          "threshold": 0.7551286345759146,
+          "validation_precision": 0.4,
+          "validation_recall": 0.03571428571428571,
+          "validation_average_precision": 0.058354934440469644,
+          "validation_true_positives": 2,
+          "validation_alerts": 5
+        },
+        {
+          "model": "xgboost_depth2_regularized",
+          "threshold": 0.8591611385345459,
+          "validation_precision": 0.5,
+          "validation_recall": 0.08928571428571429,
+          "validation_average_precision": 0.09960747141481174,
+          "validation_true_positives": 5,
+          "validation_alerts": 10
+        }
+      ],
+      "heldout_test_route_day_metrics_at_validation_selected_threshold": {
+        "route_days": 365,
+        "positive_route_days": 0,
+        "prevalence": 0.0,
+        "threshold": 0.8591611385345459,
+        "alerts": 0,
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 0,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": null,
+        "recall": 0.0,
+        "average_precision": null,
+        "brier": 0.030373038170034547,
+        "confusion_matrix_tn_fp_fn_tp": [
+          365,
+          0,
+          0,
+          0
+        ]
+      },
+      "heldout_test_event_date_metrics_at_validation_selected_threshold": {
+        "event_dates": 365,
+        "positive_event_dates": 0,
+        "alerts": 0,
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 0
+      }
+    },
+    {
+      "fold": 12,
+      "heldout_routes": [
+        "macuco"
+      ],
+      "counts": {
+        "train_rows": 8754,
+        "train_positives": 28,
+        "validation_rows": 9008,
+        "validation_positives": 56,
+        "test_rows": 304,
+        "test_positives": 0
+      },
+      "status": "scored",
+      "selected_model": "xgboost_depth2_regularized",
+      "selected_validation_cutoff": {
+        "threshold": 0.8925709128379822,
+        "validation_precision": 0.6666666666666666,
+        "validation_recall": 0.07142857142857142,
+        "validation_average_precision": 0.11908176517085531,
+        "validation_true_positives": 4,
+        "validation_alerts": 6
+      },
+      "candidate_validation_results": [
+        {
+          "model": "logistic_c0.1_balanced",
+          "threshold": 0.9879076583206056,
+          "validation_precision": 0.2857142857142857,
+          "validation_recall": 0.03571428571428571,
+          "validation_average_precision": 0.050198828732935234,
+          "validation_true_positives": 2,
+          "validation_alerts": 7
+        },
+        {
+          "model": "random_forest_regularized",
+          "threshold": 0.6996370165043111,
+          "validation_precision": 0.6666666666666666,
+          "validation_recall": 0.07142857142857142,
+          "validation_average_precision": 0.10823771156947251,
+          "validation_true_positives": 4,
+          "validation_alerts": 6
+        },
+        {
+          "model": "extra_trees_regularized",
+          "threshold": 0.7540056866460257,
+          "validation_precision": 0.4,
+          "validation_recall": 0.03571428571428571,
+          "validation_average_precision": 0.05846807274327474,
+          "validation_true_positives": 2,
+          "validation_alerts": 5
+        },
+        {
+          "model": "xgboost_depth2_regularized",
+          "threshold": 0.8925709128379822,
+          "validation_precision": 0.6666666666666666,
+          "validation_recall": 0.07142857142857142,
+          "validation_average_precision": 0.11908176517085531,
+          "validation_true_positives": 4,
+          "validation_alerts": 6
+        }
+      ],
+      "heldout_test_route_day_metrics_at_validation_selected_threshold": {
+        "route_days": 304,
+        "positive_route_days": 0,
+        "prevalence": 0.0,
+        "threshold": 0.8925709128379822,
+        "alerts": 3,
+        "true_positives": 0,
+        "false_positives": 3,
+        "false_negatives": 0,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": 0.0,
+        "recall": 0.0,
+        "average_precision": null,
+        "brier": 0.27466515002193664,
+        "confusion_matrix_tn_fp_fn_tp": [
+          301,
+          3,
+          0,
+          0
+        ]
+      },
+      "heldout_test_event_date_metrics_at_validation_selected_threshold": {
+        "event_dates": 304,
+        "positive_event_dates": 0,
+        "alerts": 3,
+        "true_positives": 0,
+        "false_positives": 3,
+        "false_negatives": 0
+      }
+    },
+    {
+      "fold": 13,
+      "heldout_routes": [
+        "mburucuya-che-roga",
+        "mburucuya-tape-pora"
+      ],
+      "counts": {
+        "train_rows": 8664,
+        "train_positives": 16,
+        "validation_rows": 8911,
+        "validation_positives": 41,
+        "test_rows": 406,
+        "test_positives": 0
+      },
+      "status": "scored",
+      "selected_model": "extra_trees_regularized",
+      "selected_validation_cutoff": {
+        "threshold": 0.7493630686188472,
+        "validation_precision": 0.2,
+        "validation_recall": 0.024390243902439025,
+        "validation_average_precision": 0.04466905463795997,
+        "validation_true_positives": 1,
+        "validation_alerts": 5
+      },
+      "candidate_validation_results": [
+        {
+          "model": "logistic_c0.1_balanced",
+          "threshold": 0.9716328137433367,
+          "validation_precision": 0.0603448275862069,
+          "validation_recall": 0.17073170731707318,
+          "validation_average_precision": 0.01927290429760378,
+          "validation_true_positives": 7,
+          "validation_alerts": 116
+        },
+        {
+          "model": "random_forest_regularized",
+          "threshold": 0.5708906792287091,
+          "validation_precision": 0.08139534883720931,
+          "validation_recall": 0.17073170731707318,
+          "validation_average_precision": 0.023163628248093277,
+          "validation_true_positives": 7,
+          "validation_alerts": 86
+        },
+        {
+          "model": "extra_trees_regularized",
+          "threshold": 0.7493630686188472,
+          "validation_precision": 0.2,
+          "validation_recall": 0.024390243902439025,
+          "validation_average_precision": 0.04466905463795997,
+          "validation_true_positives": 1,
+          "validation_alerts": 5
+        },
+        {
+          "model": "xgboost_depth2_regularized",
+          "threshold": 0.5868858098983765,
+          "validation_precision": 0.02826086956521739,
+          "validation_recall": 0.3170731707317073,
+          "validation_average_precision": 0.014081113328410607,
+          "validation_true_positives": 13,
+          "validation_alerts": 460
+        }
+      ],
+      "heldout_test_route_day_metrics_at_validation_selected_threshold": {
+        "route_days": 406,
+        "positive_route_days": 0,
+        "prevalence": 0.0,
+        "threshold": 0.7493630686188472,
+        "alerts": 0,
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 0,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": null,
+        "recall": 0.0,
+        "average_precision": null,
+        "brier": 0.120616037409817,
+        "confusion_matrix_tn_fp_fn_tp": [
+          406,
+          0,
+          0,
+          0
+        ]
+      },
+      "heldout_test_event_date_metrics_at_validation_selected_threshold": {
+        "event_dates": 270,
+        "positive_event_dates": 0,
+        "alerts": 0,
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 0
+      }
+    },
+    {
+      "fold": 14,
+      "heldout_routes": [
+        "porito"
+      ],
+      "counts": {
+        "train_rows": 8712,
+        "train_positives": 28,
+        "validation_rows": 8972,
+        "validation_positives": 56,
+        "test_rows": 346,
+        "test_positives": 0
+      },
+      "status": "scored",
+      "selected_model": "random_forest_regularized",
+      "selected_validation_cutoff": {
+        "threshold": 0.7178666887739947,
+        "validation_precision": 0.5714285714285714,
+        "validation_recall": 0.07142857142857142,
+        "validation_average_precision": 0.11017987321768541,
+        "validation_true_positives": 4,
+        "validation_alerts": 7
+      },
+      "candidate_validation_results": [
+        {
+          "model": "logistic_c0.1_balanced",
+          "threshold": 0.9848101696437186,
+          "validation_precision": 0.2,
+          "validation_recall": 0.05357142857142857,
+          "validation_average_precision": 0.04737913194947844,
+          "validation_true_positives": 3,
+          "validation_alerts": 15
+        },
+        {
+          "model": "random_forest_regularized",
+          "threshold": 0.7178666887739947,
+          "validation_precision": 0.5714285714285714,
+          "validation_recall": 0.07142857142857142,
+          "validation_average_precision": 0.11017987321768541,
+          "validation_true_positives": 4,
+          "validation_alerts": 7
+        },
+        {
+          "model": "extra_trees_regularized",
+          "threshold": 0.7567458570624603,
+          "validation_precision": 0.4,
+          "validation_recall": 0.03571428571428571,
+          "validation_average_precision": 0.05450301342717132,
+          "validation_true_positives": 2,
+          "validation_alerts": 5
+        },
+        {
+          "model": "xgboost_depth2_regularized",
+          "threshold": 0.873970091342926,
+          "validation_precision": 0.42857142857142855,
+          "validation_recall": 0.05357142857142857,
+          "validation_average_precision": 0.07701373879401648,
+          "validation_true_positives": 3,
+          "validation_alerts": 7
+        }
+      ],
+      "heldout_test_route_day_metrics_at_validation_selected_threshold": {
+        "route_days": 346,
+        "positive_route_days": 0,
+        "prevalence": 0.0,
+        "threshold": 0.7178666887739947,
+        "alerts": 0,
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 0,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": null,
+        "recall": 0.0,
+        "average_precision": null,
+        "brier": 0.09315227052077119,
+        "confusion_matrix_tn_fp_fn_tp": [
+          346,
+          0,
+          0,
+          0
+        ]
+      },
+      "heldout_test_event_date_metrics_at_validation_selected_threshold": {
+        "event_dates": 346,
+        "positive_event_dates": 0,
+        "alerts": 0,
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 0
+      }
+    },
+    {
+      "fold": 15,
+      "heldout_routes": [
+        "ventana"
+      ],
+      "counts": {
+        "train_rows": 8746,
+        "train_positives": 28,
+        "validation_rows": 9005,
+        "validation_positives": 53,
+        "test_rows": 303,
+        "test_positives": 2
+      },
+      "status": "scored",
+      "selected_model": "xgboost_depth2_regularized",
+      "selected_validation_cutoff": {
+        "threshold": 0.8746909499168396,
+        "validation_precision": 0.5454545454545454,
+        "validation_recall": 0.11320754716981132,
+        "validation_average_precision": 0.08321677769179801,
+        "validation_true_positives": 6,
+        "validation_alerts": 11
+      },
+      "candidate_validation_results": [
+        {
+          "model": "logistic_c0.1_balanced",
+          "threshold": 0.9849321528065854,
+          "validation_precision": 0.2,
+          "validation_recall": 0.05660377358490566,
+          "validation_average_precision": 0.04880700138168089,
+          "validation_true_positives": 3,
+          "validation_alerts": 15
+        },
+        {
+          "model": "random_forest_regularized",
+          "threshold": 0.7059586478579637,
+          "validation_precision": 0.5,
+          "validation_recall": 0.07547169811320754,
+          "validation_average_precision": 0.11482582807571408,
+          "validation_true_positives": 4,
+          "validation_alerts": 8
+        },
+        {
+          "model": "extra_trees_regularized",
+          "threshold": 0.7578998153566938,
+          "validation_precision": 0.4,
+          "validation_recall": 0.03773584905660377,
+          "validation_average_precision": 0.05626113436632732,
+          "validation_true_positives": 2,
+          "validation_alerts": 5
+        },
+        {
+          "model": "xgboost_depth2_regularized",
+          "threshold": 0.8746909499168396,
+          "validation_precision": 0.5454545454545454,
+          "validation_recall": 0.11320754716981132,
+          "validation_average_precision": 0.08321677769179801,
+          "validation_true_positives": 6,
+          "validation_alerts": 11
+        }
+      ],
+      "heldout_test_route_day_metrics_at_validation_selected_threshold": {
+        "route_days": 303,
+        "positive_route_days": 2,
+        "prevalence": 0.006600660066006601,
+        "threshold": 0.8746909499168396,
+        "alerts": 0,
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 2,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": null,
+        "recall": 0.0,
+        "average_precision": 0.020718816067653276,
+        "brier": 0.035757002431243246,
+        "confusion_matrix_tn_fp_fn_tp": [
+          301,
+          0,
+          2,
+          0
+        ]
+      },
+      "heldout_test_event_date_metrics_at_validation_selected_threshold": {
+        "event_dates": 303,
+        "positive_event_dates": 2,
+        "alerts": 0,
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 2
+      }
+    }
+  ],
+  "pooled_heldout_event_date_metrics_at_validation_selected_models_and_cutoffs": {
+    "event_dates": 398,
+    "positive_event_dates": 42,
+    "alerts": 3,
+    "true_positives": 0,
+    "false_positives": 3,
+    "false_negatives": 42,
+    "precision": 0.0,
+    "wilson_lower_95_descriptive": 0.0,
+    "recall": 0.0
+  },
+  "limitations": [
+    "The 2022 training set contains very few positive route-days and the validation period has sparse event records.",
+    "INPE and GFA detections share the MODIS family; route labels are mixed sensor/report evidence.",
+    "A source-evidence negative uses clear MODIS QA in sampled corridor pixels and is not proof of no physical fire.",
+    "Model and threshold choices can overfit one validation season; a new prospective fire season remains necessary.",
+    "Historical test results were previously inspected with logistic regression; these model-family results are exploratory.",
+    "VGG19/YOLO are not applicable because there are no training images in this tabular cohort."
+  ],
+  "synthetic_observations": 0,
+  "deployment_approved": false,
+  "dataset": {
+    "path": "training/data/environmental/private/argentina-route-fire-evidence-jma-unified-all-41-2022-2026.csv.gz",
+    "sha256": "32771119c0f434054ebda31fa0bf195576885c276d6ac084ab27589f3a4f8893",
+    "manifest_sha256": "e86eae792bfe2f48895313a94cb929a95616fb3862d60cabc51f5e0d6868a8dc",
+    "rows": 28620
+  }
+}

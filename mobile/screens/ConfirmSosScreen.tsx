@@ -13,9 +13,10 @@ import { getTrailForMessage } from "../../services/trailMessages";
 import { getEmergencyOperation, PendingOperation, runSync } from "../../services/syncQueue";
 import { EmergencyContact } from "../../types";
 import { AppScreen, Card, PrimaryButton, ScreenTitle, colors } from "../components/MiSenderoUI";
+import { SosConnectivityNotice } from "../components/SosConnectivityNotice";
 
 export default function ConfirmSosScreen() {
-  const { id, startedAt, operationId: savedOperationId, simulated, sendSms } = useLocalSearchParams<{ id?: string; startedAt?: string; operationId?: string; simulated?: string; sendSms?: string }>();
+  const { id, startedAt, operationId: savedOperationId, simulated, sendSms, origen } = useLocalSearchParams<{ id?: string; startedAt?: string; operationId?: string; simulated?: string; sendSms?: string; origen?: string }>();
   const trailId = Number(id) || null;
   const startedAtMs = Number(startedAt) || null;
   const simulatedSource = simulated === "1";
@@ -182,6 +183,10 @@ export default function ConfirmSosScreen() {
               : "El pedido se guardó en este teléfono. Se enviará a MiSendero cuando tengas internet y la app esté abierta. Para avisar a tu contacto, usá SMS o llamada."
             : "Abriremos Mensajes con el SOS preparado. Confirmá el envío desde allí. Si no hay GPS, podés enviar el pedido igualmente."}</Text>
       </Card>}
+      {origen === "caida" && <Card tone="orange">
+        <Text style={styles.title}>Abierto desde la detección de caídas (IA experimental)</Text>
+        <Text style={styles.body}>MiSendero no envió ni llamó a nadie. Elegí cómo avisar: SMS o llamada a tu contacto. La última ubicación disponible y su fecha figuran en el mensaje.</Text>
+      </Card>}
       <Card>
         <Text style={styles.title}>{contact ? `${contact.name} · ${contact.phone}` : "Sin contacto configurado"}</Text>
         <Text style={styles.body}>Podés guardar o cambiar el contacto en este dispositivo sin internet.</Text>
@@ -207,6 +212,7 @@ export default function ConfirmSosScreen() {
         <PrimaryButton label={testing ? "Probar pedido SOS (no se envía)" : busy ? "Guardando pedido…" : operationId ? "Reintentar registro" : "Guardar pedido SOS"} onPress={handleSos} tone="secondary" disabled={!contextReady || busy} />
         {!!smsStatus && <Text accessibilityLiveRegion="polite" style={styles.body}>{smsStatus}</Text>}
       </View>
+      <SosConnectivityNotice />
       <Card tone="orange">
         <Text style={styles.title}>Qué ocurre sin señal</Text>
         <Text style={styles.body}>Sin internet pero con servicio celular, el SMS o la llamada pueden funcionar. Sin cobertura celular ni Wi-Fi, el teléfono no puede avisar por estos medios. Si tu contacto está sin señal, puede recibir el aviso más tarde: necesitás una respuesta suya para confirmar que lo vio.</Text>

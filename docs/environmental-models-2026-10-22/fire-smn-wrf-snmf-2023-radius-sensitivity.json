@@ -1,0 +1,889 @@
+{
+  "experiment_id": "smn-wrf-snmf-2023-event-radius-sensitivity",
+  "meaning": "Secondary spatial sensitivity audit of reported positive event days only; not precision.",
+  "inputs": {
+    "snmf_events_sha256": "b82ddcb2c848fe854be9e1002fed72318165d8b1818b952b61cc9467b1cc0900",
+    "wrf_test_predictions_sha256": "47973e9dd63379c3443848635e6d889541af81735bf4cbbe04803070a64988f0",
+    "modis_coordinate_source_sha256": "f295457e48b4b40b7f6bc196a8e2ab3ec3905f9a4aa392216d73a93e174a0976",
+    "geography_sha256": "7e475b478db7bb678cc0a1539fdf484e0c8de0a9baa98916fb90f652f75ff834"
+  },
+  "protocol": {
+    "test_period": [
+      "2023-07-01",
+      "2024-01-01"
+    ],
+    "route_center_radii_km": [
+      10.0,
+      20.0
+    ],
+    "event_local_pixel_match_radius_km": 10.0,
+    "threshold": 0.5,
+    "threshold_status": "Fixed diagnostic; validation selected no threshold meeting the precision gate.",
+    "valid_time": "15 UTC on reported start date; 27 hours after WRF issue at 12 UTC the previous day."
+  },
+  "results_by_route_radius": {
+    "10": {
+      "unique_route_days_with_reported_event": 2,
+      "route_days_with_model_rows": 1,
+      "route_days_with_event_local_model_coverage": 1,
+      "alerted_route_days_at_diagnostic_threshold": 1,
+      "alerted_among_event_local_coverage": 1,
+      "descriptive_event_coincidence_sensitivity_among_covered": 1.0,
+      "route_days": [
+        {
+          "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "target_date": "2023-12-19",
+          "incidents": [
+            {
+              "name": "Quema golondrinas",
+              "province": "Chubut",
+              "route_center_distance_km": 5.601,
+              "report_date": "2023-12-19"
+            }
+          ],
+          "route_model_prediction_rows": 0,
+          "event_local_prediction_rows_within_10km": 0,
+          "maximum_event_local_score": null,
+          "alert_at_unselected_0_5": false
+        },
+        {
+          "route_sector": "Quebrada del Condorito - Balcon Norte",
+          "target_date": "2023-10-06",
+          "incidents": [
+            {
+              "name": "RIO DE LA SUELA",
+              "province": "CÓRDOBA",
+              "route_center_distance_km": 8.936,
+              "report_date": "2023-10-09"
+            }
+          ],
+          "route_model_prediction_rows": 434,
+          "event_local_prediction_rows_within_10km": 42,
+          "maximum_event_local_score": 0.5028380199,
+          "alert_at_unselected_0_5": true
+        }
+      ]
+    },
+    "20": {
+      "unique_route_days_with_reported_event": 15,
+      "route_days_with_model_rows": 9,
+      "route_days_with_event_local_model_coverage": 9,
+      "alerted_route_days_at_diagnostic_threshold": 6,
+      "alerted_among_event_local_coverage": 6,
+      "descriptive_event_coincidence_sensitivity_among_covered": 0.6666666666666666,
+      "route_days": [
+        {
+          "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "target_date": "2023-10-09",
+          "incidents": [
+            {
+              "name": "PEDREGOSO MARGEN ESTE",
+              "province": "CHUBUT",
+              "route_center_distance_km": 19.731,
+              "report_date": "2023-10-11"
+            }
+          ],
+          "route_model_prediction_rows": 0,
+          "event_local_prediction_rows_within_10km": 0,
+          "maximum_event_local_score": null,
+          "alert_at_unselected_0_5": false
+        },
+        {
+          "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "target_date": "2023-10-10",
+          "incidents": [
+            {
+              "name": "INCENDIO FAMILIA WOODMAN -",
+              "province": "CHUBUT",
+              "route_center_distance_km": 12.134,
+              "report_date": "2023-10-12"
+            },
+            {
+              "name": "RUTA 40 INCENDIO FAMILIA WOODMAN -",
+              "province": "CHUBUT",
+              "route_center_distance_km": 12.134,
+              "report_date": "2023-10-11"
+            }
+          ],
+          "route_model_prediction_rows": 0,
+          "event_local_prediction_rows_within_10km": 0,
+          "maximum_event_local_score": null,
+          "alert_at_unselected_0_5": false
+        },
+        {
+          "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "target_date": "2023-10-12",
+          "incidents": [
+            {
+              "name": "EL VALLECITO",
+              "province": "CHUBUT",
+              "route_center_distance_km": 10.776,
+              "report_date": "2023-10-17"
+            }
+          ],
+          "route_model_prediction_rows": 0,
+          "event_local_prediction_rows_within_10km": 0,
+          "maximum_event_local_score": null,
+          "alert_at_unselected_0_5": false
+        },
+        {
+          "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "target_date": "2023-10-13",
+          "incidents": [
+            {
+              "name": "CURRUMAHUIDA",
+              "province": "CHUBUT",
+              "route_center_distance_km": 17.728,
+              "report_date": "2023-10-17"
+            }
+          ],
+          "route_model_prediction_rows": 0,
+          "event_local_prediction_rows_within_10km": 0,
+          "maximum_event_local_score": null,
+          "alert_at_unselected_0_5": false
+        },
+        {
+          "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "target_date": "2023-12-19",
+          "incidents": [
+            {
+              "name": "Quema golondrinas",
+              "province": "Chubut",
+              "route_center_distance_km": 5.601,
+              "report_date": "2023-12-19"
+            }
+          ],
+          "route_model_prediction_rows": 0,
+          "event_local_prediction_rows_within_10km": 0,
+          "maximum_event_local_score": null,
+          "alert_at_unselected_0_5": false
+        },
+        {
+          "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "target_date": "2023-12-27",
+          "incidents": [
+            {
+              "name": "Lago Puelo Apicultor",
+              "province": "Chubut",
+              "route_center_distance_km": 10.628,
+              "report_date": "2023-12-28"
+            }
+          ],
+          "route_model_prediction_rows": 0,
+          "event_local_prediction_rows_within_10km": 0,
+          "maximum_event_local_score": null,
+          "alert_at_unselected_0_5": false
+        },
+        {
+          "route_sector": "Quebrada del Condorito - Balcon Norte",
+          "target_date": "2023-08-28",
+          "incidents": [
+            {
+              "name": "CALERA\" LOMA ALTA",
+              "province": "CÓRDOBA",
+              "route_center_distance_km": 19.681,
+              "report_date": "2023-08-31"
+            },
+            {
+              "name": "LOMA ALTA",
+              "province": "CÓRDOBA",
+              "route_center_distance_km": 19.681,
+              "report_date": "2023-09-04"
+            }
+          ],
+          "route_model_prediction_rows": 437,
+          "event_local_prediction_rows_within_10km": 40,
+          "maximum_event_local_score": 0.8630055175,
+          "alert_at_unselected_0_5": true
+        },
+        {
+          "route_sector": "Quebrada del Condorito - Balcon Norte",
+          "target_date": "2023-09-11",
+          "incidents": [
+            {
+              "name": "TRES ARBOLES",
+              "province": "CÓRDOBA",
+              "route_center_distance_km": 12.707,
+              "report_date": "2023-09-13"
+            }
+          ],
+          "route_model_prediction_rows": 433,
+          "event_local_prediction_rows_within_10km": 39,
+          "maximum_event_local_score": 0.4153231229,
+          "alert_at_unselected_0_5": false
+        },
+        {
+          "route_sector": "Quebrada del Condorito - Balcon Norte",
+          "target_date": "2023-10-03",
+          "incidents": [
+            {
+              "name": "EL RAYO",
+              "province": "CÓRDOBA",
+              "route_center_distance_km": 11.729,
+              "report_date": "2023-10-04"
+            }
+          ],
+          "route_model_prediction_rows": 432,
+          "event_local_prediction_rows_within_10km": 42,
+          "maximum_event_local_score": 0.1557175393,
+          "alert_at_unselected_0_5": false
+        },
+        {
+          "route_sector": "Quebrada del Condorito - Balcon Norte",
+          "target_date": "2023-10-06",
+          "incidents": [
+            {
+              "name": "RIO DE LA SUELA",
+              "province": "CÓRDOBA",
+              "route_center_distance_km": 8.936,
+              "report_date": "2023-10-09"
+            }
+          ],
+          "route_model_prediction_rows": 434,
+          "event_local_prediction_rows_within_10km": 42,
+          "maximum_event_local_score": 0.5028380199,
+          "alert_at_unselected_0_5": true
+        },
+        {
+          "route_sector": "Quebrada del Condorito - Balcon Norte",
+          "target_date": "2023-10-07",
+          "incidents": [
+            {
+              "name": "S271 (LA SUELA)",
+              "province": "CÓRDOBA",
+              "route_center_distance_km": 10.766,
+              "report_date": "2023-10-09"
+            }
+          ],
+          "route_model_prediction_rows": 432,
+          "event_local_prediction_rows_within_10km": 40,
+          "maximum_event_local_score": 0.2671805801,
+          "alert_at_unselected_0_5": false
+        },
+        {
+          "route_sector": "Quebrada del Condorito - Balcon Norte",
+          "target_date": "2023-10-29",
+          "incidents": [
+            {
+              "name": "EA SAN BERNARDO",
+              "province": "CÓRDOBA",
+              "route_center_distance_km": 13.959,
+              "report_date": "2023-10-30"
+            }
+          ],
+          "route_model_prediction_rows": 434,
+          "event_local_prediction_rows_within_10km": 42,
+          "maximum_event_local_score": 0.5546734217,
+          "alert_at_unselected_0_5": true
+        },
+        {
+          "route_sector": "Sendero Che Roga - Mburucuyá",
+          "target_date": "2023-08-02",
+          "incidents": [
+            {
+              "name": "CAÑADA FRAGOSA",
+              "province": "CORRIENTES",
+              "route_center_distance_km": 15.57,
+              "report_date": "2023-08-07"
+            }
+          ],
+          "route_model_prediction_rows": 416,
+          "event_local_prediction_rows_within_10km": 36,
+          "maximum_event_local_score": 0.9457708088,
+          "alert_at_unselected_0_5": true
+        },
+        {
+          "route_sector": "Sendero Che Roga - Mburucuyá",
+          "target_date": "2023-08-06",
+          "incidents": [
+            {
+              "name": "LÍMITE POTRERO 13",
+              "province": "CORRIENTES",
+              "route_center_distance_km": 11.427,
+              "report_date": "2023-08-07"
+            }
+          ],
+          "route_model_prediction_rows": 415,
+          "event_local_prediction_rows_within_10km": 34,
+          "maximum_event_local_score": 0.9664942857,
+          "alert_at_unselected_0_5": true
+        },
+        {
+          "route_sector": "Sendero Namuncura",
+          "target_date": "2023-12-27",
+          "incidents": [
+            {
+              "name": "Del Río",
+              "province": "La Pampa",
+              "route_center_distance_km": 13.481,
+              "report_date": "2023-12-29"
+            },
+            {
+              "name": "Diamante Oeste",
+              "province": "La Pampa",
+              "route_center_distance_km": 11.816,
+              "report_date": "2023-12-27"
+            },
+            {
+              "name": "La Trinidad",
+              "province": "La Pampa",
+              "route_center_distance_km": 10.065,
+              "report_date": "2023-12-29"
+            }
+          ],
+          "route_model_prediction_rows": 402,
+          "event_local_prediction_rows_within_10km": 70,
+          "maximum_event_local_score": 0.5276912912,
+          "alert_at_unselected_0_5": true
+        }
+      ]
+    }
+  },
+  "official_negative_proxy_checks": {
+    "single_national_no_report_day": {
+      "date": "2023-12-20",
+      "source_url": "https://www.argentina.gob.ar/sites/default/files/2024/01/reporte_diario_20-12-2023.pdf",
+      "route_days_with_model_coverage": 5,
+      "route_days_alerted": 0,
+      "positive_modis_route_days": 0,
+      "route_days": [
+        {
+          "route_sector": "Quebrada del Condorito - Balcon Norte",
+          "target_date": "2023-12-20",
+          "prediction_rows": 433,
+          "maximum_score": 0.2757352935,
+          "modis_positive_pixels": 0,
+          "alert_at_unselected_0_5": false
+        },
+        {
+          "route_sector": "Sendero Che Roga - Mburucuyá",
+          "target_date": "2023-12-20",
+          "prediction_rows": 381,
+          "maximum_score": 0.4395342362,
+          "modis_positive_pixels": 0,
+          "alert_at_unselected_0_5": false
+        },
+        {
+          "route_sector": "Sendero La Chuña - El Rey",
+          "target_date": "2023-12-20",
+          "prediction_rows": 441,
+          "maximum_score": 0.2077443489,
+          "modis_positive_pixels": 0,
+          "alert_at_unselected_0_5": false
+        },
+        {
+          "route_sector": "Sendero Macuco - Salto Arrechea",
+          "target_date": "2023-12-20",
+          "prediction_rows": 2,
+          "maximum_score": 0.1209129652,
+          "modis_positive_pixels": 0,
+          "alert_at_unselected_0_5": false
+        },
+        {
+          "route_sector": "Sendero Namuncura",
+          "target_date": "2023-12-20",
+          "prediction_rows": 302,
+          "maximum_score": 0.07871462421,
+          "modis_positive_pixels": 0,
+          "alert_at_unselected_0_5": false
+        }
+      ],
+      "meaning": "No fire was listed in the national report; not a verified physical-fire negative."
+    },
+    "zero_reported_fire_provinces_for_month": {
+      "month": "2023-12",
+      "source_url": "https://www.argentina.gob.ar/sites/default/files/2024/01/informe_ocurrencia_diciembre2023.pdf",
+      "routes": [
+        "Sendero Che Roga - Mburucuyá",
+        "Cerro Ventana - Hueco de la Ventana"
+      ],
+      "route_days_with_model_coverage": 59,
+      "route_days_alerted": 9,
+      "positive_modis_route_days": 0,
+      "route_days": [
+        {
+          "route_sector": "Sendero Che Roga - Mburucuyá",
+          "target_date": "2023-12-01",
+          "prediction_rows": 405,
+          "maximum_score": 0.4860293613,
+          "modis_positive_pixels": 0,
+          "alert_at_unselected_0_5": false
+        },
+        {
+          "route_sector": "Sendero Che Roga - Mburucuyá",
+          "target_date": "2023-12-02",
+          "prediction_rows": 403,
+          "maximum_score": 0.6426684606,
+          "modis_positive_pixels": 0,
+          "alert_at_unselected_0_5": true
+        },
+        {
+          "route_sector": "Sendero Che Roga - Mburucuyá",
+          "target_date": "2023-12-03",
+          "prediction_rows": 318,
+          "maximum_score": 0.1771200982,
+          "modis_positive_pixels": 0,
+          "alert_at_unselected_0_5": false
+        },
+        {
+          "route_sector": "Sendero Che Roga - Mburucuyá",
+          "target_date": "2023-12-04",
+          "prediction_rows": 374,
+          "maximum_score": 0.0598089436,
+          "modis_positive_pixels": 0,
+          "alert_at_unselected_0_5": false
+        },
+        {
+          "route_sector": "Sendero Che Roga - Mburucuyá",
+          "target_date": "2023-12-05",
+          "prediction_rows": 411,
+          "maximum_score": 0.2302963398,
+          "modis_positive_pixels": 0,
+          "alert_at_unselected_0_5": false
+        },
+        {
+          "route_sector": "Sendero Che Roga - Mburucuyá",
+          "target_date": "2023-12-06",
+          "prediction_rows": 393,
+          "maximum_score": 0.181478292,
+          "modis_positive_pixels": 0,
+          "alert_at_unselected_0_5": false
+        },
+        {
+          "route_sector": "Sendero Che Roga - Mburucuyá",
+          "target_date": "2023-12-07",
+          "prediction_rows": 396,
+          "maximum_score": 0.06618870061,
+          "modis_positive_pixels": 0,
+          "alert_at_unselected_0_5": false
+        },
+        {
+          "route_sector": "Sendero Che Roga - Mburucuyá",
+          "target_date": "2023-12-08",
+          "prediction_rows": 418,
+          "maximum_score": 0.1402005716,
+          "modis_positive_pixels": 0,
+          "alert_at_unselected_0_5": false
+        },
+        {
+          "route_sector": "Sendero Che Roga - Mburucuyá",
+          "target_date": "2023-12-09",
+          "prediction_rows": 412,
+          "maximum_score": 0.2270547102,
+          "modis_positive_pixels": 0,
+          "alert_at_unselected_0_5": false
+        },
+        {
+          "route_sector": "Sendero Che Roga - Mburucuyá",
+          "target_date": "2023-12-10",
+          "prediction_rows": 416,
+          "maximum_score": 0.2850874071,
+          "modis_positive_pixels": 0,
+          "alert_at_unselected_0_5": false
+        },
+        {
+          "route_sector": "Sendero Che Roga - Mburucuyá",
+          "target_date": "2023-12-11",
+          "prediction_rows": 423,
+          "maximum_score": 0.4369935897,
+          "modis_positive_pixels": 0,
+          "alert_at_unselected_0_5": false
+        },
+        {
+          "route_sector": "Sendero Che Roga - Mburucuyá",
+          "target_date": "2023-12-12",
+          "prediction_rows": 414,
+          "maximum_score": 0.3500906689,
+          "modis_positive_pixels": 0,
+          "alert_at_unselected_0_5": false
+        },
+        {
+          "route_sector": "Sendero Che Roga - Mburucuyá",
+          "target_date": "2023-12-13",
+          "prediction_rows": 179,
+          "maximum_score": 0.5478566305,
+          "modis_positive_pixels": 0,
+          "alert_at_unselected_0_5": true
+        },
+        {
+          "route_sector": "Sendero Che Roga - Mburucuyá",
+          "target_date": "2023-12-15",
+          "prediction_rows": 390,
+          "maximum_score": 0.6515781095,
+          "modis_positive_pixels": 0,
+          "alert_at_unselected_0_5": true
+        },
+        {
+          "route_sector": "Sendero Che Roga - Mburucuyá",
+          "target_date": "2023-12-16",
+          "prediction_rows": 349,
+          "maximum_score": 0.6254292702,
+          "modis_positive_pixels": 0,
+          "alert_at_unselected_0_5": true
+        },
+        {
+          "route_sector": "Sendero Che Roga - Mburucuyá",
+          "target_date": "2023-12-17",
+          "prediction_rows": 417,
+          "maximum_score": 0.6331174336,
+          "modis_positive_pixels": 0,
+          "alert_at_unselected_0_5": true
+        },
+        {
+          "route_sector": "Sendero Che Roga - Mburucuyá",
+          "target_date": "2023-12-18",
+          "prediction_rows": 373,
+          "maximum_score": 0.6371403246,
+          "modis_positive_pixels": 0,
+          "alert_at_unselected_0_5": true
+        },
+        {
+          "route_sector": "Sendero Che Roga - Mburucuyá",
+          "target_date": "2023-12-19",
+          "prediction_rows": 383,
+          "maximum_score": 0.2142471421,
+          "modis_positive_pixels": 0,
+          "alert_at_unselected_0_5": false
+        },
+        {
+          "route_sector": "Sendero Che Roga - Mburucuyá",
+          "target_date": "2023-12-20",
+          "prediction_rows": 381,
+          "maximum_score": 0.4395342362,
+          "modis_positive_pixels": 0,
+          "alert_at_unselected_0_5": false
+        },
+        {
+          "route_sector": "Sendero Che Roga - Mburucuyá",
+          "target_date": "2023-12-21",
+          "prediction_rows": 291,
+          "maximum_score": 0.2516244539,
+          "modis_positive_pixels": 0,
+          "alert_at_unselected_0_5": false
+        },
+        {
+          "route_sector": "Sendero Che Roga - Mburucuyá",
+          "target_date": "2023-12-22",
+          "prediction_rows": 397,
+          "maximum_score": 0.1092744657,
+          "modis_positive_pixels": 0,
+          "alert_at_unselected_0_5": false
+        },
+        {
+          "route_sector": "Sendero Che Roga - Mburucuyá",
+          "target_date": "2023-12-23",
+          "prediction_rows": 390,
+          "maximum_score": 0.1236005291,
+          "modis_positive_pixels": 0,
+          "alert_at_unselected_0_5": false
+        },
+        {
+          "route_sector": "Sendero Che Roga - Mburucuyá",
+          "target_date": "2023-12-24",
+          "prediction_rows": 390,
+          "maximum_score": 0.08497679271,
+          "modis_positive_pixels": 0,
+          "alert_at_unselected_0_5": false
+        },
+        {
+          "route_sector": "Sendero Che Roga - Mburucuyá",
+          "target_date": "2023-12-25",
+          "prediction_rows": 306,
+          "maximum_score": 0.07736899897,
+          "modis_positive_pixels": 0,
+          "alert_at_unselected_0_5": false
+        },
+        {
+          "route_sector": "Sendero Che Roga - Mburucuyá",
+          "target_date": "2023-12-26",
+          "prediction_rows": 415,
+          "maximum_score": 0.2932725118,
+          "modis_positive_pixels": 0,
+          "alert_at_unselected_0_5": false
+        },
+        {
+          "route_sector": "Sendero Che Roga - Mburucuyá",
+          "target_date": "2023-12-27",
+          "prediction_rows": 425,
+          "maximum_score": 0.6366248926,
+          "modis_positive_pixels": 0,
+          "alert_at_unselected_0_5": true
+        },
+        {
+          "route_sector": "Sendero Che Roga - Mburucuyá",
+          "target_date": "2023-12-28",
+          "prediction_rows": 414,
+          "maximum_score": 0.5906755376,
+          "modis_positive_pixels": 0,
+          "alert_at_unselected_0_5": true
+        },
+        {
+          "route_sector": "Sendero Che Roga - Mburucuyá",
+          "target_date": "2023-12-29",
+          "prediction_rows": 310,
+          "maximum_score": 0.0753304503,
+          "modis_positive_pixels": 0,
+          "alert_at_unselected_0_5": false
+        },
+        {
+          "route_sector": "Sendero Che Roga - Mburucuyá",
+          "target_date": "2023-12-30",
+          "prediction_rows": 403,
+          "maximum_score": 0.1437705917,
+          "modis_positive_pixels": 0,
+          "alert_at_unselected_0_5": false
+        },
+        {
+          "route_sector": "Sendero Che Roga - Mburucuyá",
+          "target_date": "2023-12-31",
+          "prediction_rows": 402,
+          "maximum_score": 0.2528987442,
+          "modis_positive_pixels": 0,
+          "alert_at_unselected_0_5": false
+        },
+        {
+          "route_sector": "Cerro Ventana - Hueco de la Ventana",
+          "target_date": "2023-12-01",
+          "prediction_rows": 286,
+          "maximum_score": 0.2866717551,
+          "modis_positive_pixels": 0,
+          "alert_at_unselected_0_5": false
+        },
+        {
+          "route_sector": "Cerro Ventana - Hueco de la Ventana",
+          "target_date": "2023-12-02",
+          "prediction_rows": 441,
+          "maximum_score": 0.1959290472,
+          "modis_positive_pixels": 0,
+          "alert_at_unselected_0_5": false
+        },
+        {
+          "route_sector": "Cerro Ventana - Hueco de la Ventana",
+          "target_date": "2023-12-03",
+          "prediction_rows": 441,
+          "maximum_score": 0.2126657082,
+          "modis_positive_pixels": 0,
+          "alert_at_unselected_0_5": false
+        },
+        {
+          "route_sector": "Cerro Ventana - Hueco de la Ventana",
+          "target_date": "2023-12-04",
+          "prediction_rows": 441,
+          "maximum_score": 0.3498339831,
+          "modis_positive_pixels": 0,
+          "alert_at_unselected_0_5": false
+        },
+        {
+          "route_sector": "Cerro Ventana - Hueco de la Ventana",
+          "target_date": "2023-12-05",
+          "prediction_rows": 441,
+          "maximum_score": 0.09129926193,
+          "modis_positive_pixels": 0,
+          "alert_at_unselected_0_5": false
+        },
+        {
+          "route_sector": "Cerro Ventana - Hueco de la Ventana",
+          "target_date": "2023-12-06",
+          "prediction_rows": 405,
+          "maximum_score": 0.04946688353,
+          "modis_positive_pixels": 0,
+          "alert_at_unselected_0_5": false
+        },
+        {
+          "route_sector": "Cerro Ventana - Hueco de la Ventana",
+          "target_date": "2023-12-07",
+          "prediction_rows": 441,
+          "maximum_score": 0.2170087748,
+          "modis_positive_pixels": 0,
+          "alert_at_unselected_0_5": false
+        },
+        {
+          "route_sector": "Cerro Ventana - Hueco de la Ventana",
+          "target_date": "2023-12-08",
+          "prediction_rows": 441,
+          "maximum_score": 0.2834298358,
+          "modis_positive_pixels": 0,
+          "alert_at_unselected_0_5": false
+        },
+        {
+          "route_sector": "Cerro Ventana - Hueco de la Ventana",
+          "target_date": "2023-12-10",
+          "prediction_rows": 441,
+          "maximum_score": 0.4056466351,
+          "modis_positive_pixels": 0,
+          "alert_at_unselected_0_5": false
+        },
+        {
+          "route_sector": "Cerro Ventana - Hueco de la Ventana",
+          "target_date": "2023-12-11",
+          "prediction_rows": 441,
+          "maximum_score": 0.4674089147,
+          "modis_positive_pixels": 0,
+          "alert_at_unselected_0_5": false
+        },
+        {
+          "route_sector": "Cerro Ventana - Hueco de la Ventana",
+          "target_date": "2023-12-12",
+          "prediction_rows": 441,
+          "maximum_score": 0.4214429387,
+          "modis_positive_pixels": 0,
+          "alert_at_unselected_0_5": false
+        },
+        {
+          "route_sector": "Cerro Ventana - Hueco de la Ventana",
+          "target_date": "2023-12-13",
+          "prediction_rows": 441,
+          "maximum_score": 0.2428927474,
+          "modis_positive_pixels": 0,
+          "alert_at_unselected_0_5": false
+        },
+        {
+          "route_sector": "Cerro Ventana - Hueco de la Ventana",
+          "target_date": "2023-12-14",
+          "prediction_rows": 441,
+          "maximum_score": 0.3661160393,
+          "modis_positive_pixels": 0,
+          "alert_at_unselected_0_5": false
+        },
+        {
+          "route_sector": "Cerro Ventana - Hueco de la Ventana",
+          "target_date": "2023-12-15",
+          "prediction_rows": 441,
+          "maximum_score": 0.6817084522,
+          "modis_positive_pixels": 0,
+          "alert_at_unselected_0_5": true
+        },
+        {
+          "route_sector": "Cerro Ventana - Hueco de la Ventana",
+          "target_date": "2023-12-16",
+          "prediction_rows": 441,
+          "maximum_score": 0.06596496779,
+          "modis_positive_pixels": 0,
+          "alert_at_unselected_0_5": false
+        },
+        {
+          "route_sector": "Cerro Ventana - Hueco de la Ventana",
+          "target_date": "2023-12-17",
+          "prediction_rows": 439,
+          "maximum_score": 0.1202811954,
+          "modis_positive_pixels": 0,
+          "alert_at_unselected_0_5": false
+        },
+        {
+          "route_sector": "Cerro Ventana - Hueco de la Ventana",
+          "target_date": "2023-12-18",
+          "prediction_rows": 441,
+          "maximum_score": 0.04608318947,
+          "modis_positive_pixels": 0,
+          "alert_at_unselected_0_5": false
+        },
+        {
+          "route_sector": "Cerro Ventana - Hueco de la Ventana",
+          "target_date": "2023-12-19",
+          "prediction_rows": 441,
+          "maximum_score": 0.1485037387,
+          "modis_positive_pixels": 0,
+          "alert_at_unselected_0_5": false
+        },
+        {
+          "route_sector": "Cerro Ventana - Hueco de la Ventana",
+          "target_date": "2023-12-21",
+          "prediction_rows": 440,
+          "maximum_score": 0.1431083819,
+          "modis_positive_pixels": 0,
+          "alert_at_unselected_0_5": false
+        },
+        {
+          "route_sector": "Cerro Ventana - Hueco de la Ventana",
+          "target_date": "2023-12-22",
+          "prediction_rows": 440,
+          "maximum_score": 0.1322139427,
+          "modis_positive_pixels": 0,
+          "alert_at_unselected_0_5": false
+        },
+        {
+          "route_sector": "Cerro Ventana - Hueco de la Ventana",
+          "target_date": "2023-12-23",
+          "prediction_rows": 441,
+          "maximum_score": 0.08849605261,
+          "modis_positive_pixels": 0,
+          "alert_at_unselected_0_5": false
+        },
+        {
+          "route_sector": "Cerro Ventana - Hueco de la Ventana",
+          "target_date": "2023-12-24",
+          "prediction_rows": 441,
+          "maximum_score": 0.2310929715,
+          "modis_positive_pixels": 0,
+          "alert_at_unselected_0_5": false
+        },
+        {
+          "route_sector": "Cerro Ventana - Hueco de la Ventana",
+          "target_date": "2023-12-25",
+          "prediction_rows": 441,
+          "maximum_score": 0.1647697105,
+          "modis_positive_pixels": 0,
+          "alert_at_unselected_0_5": false
+        },
+        {
+          "route_sector": "Cerro Ventana - Hueco de la Ventana",
+          "target_date": "2023-12-26",
+          "prediction_rows": 441,
+          "maximum_score": 0.2476561641,
+          "modis_positive_pixels": 0,
+          "alert_at_unselected_0_5": false
+        },
+        {
+          "route_sector": "Cerro Ventana - Hueco de la Ventana",
+          "target_date": "2023-12-27",
+          "prediction_rows": 441,
+          "maximum_score": 0.4544084061,
+          "modis_positive_pixels": 0,
+          "alert_at_unselected_0_5": false
+        },
+        {
+          "route_sector": "Cerro Ventana - Hueco de la Ventana",
+          "target_date": "2023-12-28",
+          "prediction_rows": 243,
+          "maximum_score": 0.09470893549,
+          "modis_positive_pixels": 0,
+          "alert_at_unselected_0_5": false
+        },
+        {
+          "route_sector": "Cerro Ventana - Hueco de la Ventana",
+          "target_date": "2023-12-29",
+          "prediction_rows": 441,
+          "maximum_score": 0.03595709096,
+          "modis_positive_pixels": 0,
+          "alert_at_unselected_0_5": false
+        },
+        {
+          "route_sector": "Cerro Ventana - Hueco de la Ventana",
+          "target_date": "2023-12-30",
+          "prediction_rows": 441,
+          "maximum_score": 0.3261559404,
+          "modis_positive_pixels": 0,
+          "alert_at_unselected_0_5": false
+        },
+        {
+          "route_sector": "Cerro Ventana - Hueco de la Ventana",
+          "target_date": "2023-12-31",
+          "prediction_rows": 440,
+          "maximum_score": 0.2813533276,
+          "modis_positive_pixels": 0,
+          "alert_at_unselected_0_5": false
+        }
+      ],
+      "meaning": "The monthly report lists zero incidents in those provinces; not a verified physical-fire negative."
+    }
+  },
+  "limitations": [
+    "SNMF reports contain reported incidents but do not provide an exhaustive fire-free route-day cohort.",
+    "The 20 km route-center result is secondary and exploratory; the primary predefined radius remains 10 km.",
+    "A date-only start cannot verify that a +27 h forecast preceded ignition; it may be after the fire started.",
+    "The 0.5 score is unselected and uncalibrated; detections near events are coincidence/sensitivity only.",
+    "No true-negative universe is present, so precision and specificity cannot be calculated."
+  ],
+  "synthetic_observations": 0,
+  "deployment_approved": false
+}

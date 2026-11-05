@@ -1,0 +1,110 @@
+{
+  "experiment_id": "smn-wrf-frozen-model-independent-snmf-2025-event-test",
+  "status": "independent_positive_event_crosscheck_only",
+  "meaning": "Sensitivity/coincidence on reported start-date route events; not precision, calibration, or verified advance warning.",
+  "sources": {
+    "official_report_event_inventory": {
+      "path": "docs/environmental-models-2026-10-22/fire-snmf-route-event-coverage-2025.json",
+      "sha256": "7ff402b0cf53e4988ec503d76430bcc0593087d74ed5e11b1e51d94cbbb6f8d4"
+    },
+    "frozen_model_report": {
+      "path": "docs/environmental-models-2026-10-22/fire-smn-wrf-modis-evaluation.json",
+      "sha256": "d655472f842b6ba38bea10b56ad448914bb28c1ed37017d6094478fa8a498dcb"
+    },
+    "forecast_manifest_sha256": "9a3631330cf9fc2887aa6abc03ef6d10be4064ac02f226a9f691fad7b88637b8",
+    "transport": "HTTP fallback because HTTPS connections are reset in this session; payload CRC64NVME is checked but not authenticated over HTTP."
+  },
+  "protocol": {
+    "model_train_period": "MODIS target dates before 2023-01-01",
+    "validation_period": "2023-01-01 through 2023-06-30",
+    "independent_event_test_dates": "SNMF-reported route-sector event starts in 2025",
+    "event_radius_km": 10,
+    "forecast_issue": "12:00 UTC previous day",
+    "forecast_valid": "15:00 UTC event date; 27-hour lead",
+    "diagnostic_threshold": 0.5,
+    "threshold_selection": "None; validation selected no threshold at >=90% proxy precision and >=5 alerts."
+  },
+  "coverage": {
+    "official_route_event_days": 4,
+    "scored_event_days": 4,
+    "missing_forecast_route_event_days": [],
+    "all_four_event_days_forecast_available": true
+  },
+  "result": {
+    "alerts_on_scored_event_days": 0,
+    "misses_on_scored_event_days": 4,
+    "descriptive_sensitivity": 0.0,
+    "exact_binomial_95pct_interval_naive": [
+      0.0,
+      0.6023646356164746
+    ],
+    "per_event_scores": [
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "target_date": "2025-10-08",
+        "incident_names": [
+          "Cerro Radal",
+          "Ruta 40 Control Policial"
+        ],
+        "nearest_reported_incident_km": 4.721,
+        "forecast_issue_time_utc": "2025-10-07T12:00:00Z",
+        "forecast_valid_time_utc": "2025-10-08T15:00:00Z",
+        "lead_hours": 27,
+        "model_score_diagnostic": 0.04411112083386015,
+        "alert_at_unselected_0_5": false
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "target_date": "2025-11-17",
+        "incident_names": [
+          "Ternero Los fuegos"
+        ],
+        "nearest_reported_incident_km": 7.404,
+        "forecast_issue_time_utc": "2025-11-16T12:00:00Z",
+        "forecast_valid_time_utc": "2025-11-17T15:00:00Z",
+        "lead_hours": 27,
+        "model_score_diagnostic": 0.003376595315075392,
+        "alert_at_unselected_0_5": false
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "target_date": "2025-12-11",
+        "incident_names": [
+          "CERRO NAPOSTA /CERRO"
+        ],
+        "nearest_reported_incident_km": 9.124,
+        "forecast_issue_time_utc": "2025-12-10T12:00:00Z",
+        "forecast_valid_time_utc": "2025-12-11T15:00:00Z",
+        "lead_hours": 27,
+        "model_score_diagnostic": 0.1212018180508702,
+        "alert_at_unselected_0_5": false
+      },
+      {
+        "route_sector": "Quebrada del Condorito - Balcon Norte",
+        "target_date": "2025-10-10",
+        "incident_names": [
+          "Parque Nacional Quebrada del",
+          "Parque Nacional Quebrada del Condorito, ex",
+          "Parque Nacional Quebrada del Condorito, ex La",
+          "Parque Nacional Quebrada del Condorito, ex La Pampilla"
+        ],
+        "nearest_reported_incident_km": 5.702,
+        "forecast_issue_time_utc": "2025-10-09T12:00:00Z",
+        "forecast_valid_time_utc": "2025-10-10T15:00:00Z",
+        "lead_hours": 27,
+        "model_score_diagnostic": 0.43672537136505946,
+        "alert_at_unselected_0_5": false
+      }
+    ]
+  },
+  "limitations": [
+    "Only four official positive route-sector start days were available; the events are not independent samples for a stable estimate.",
+    "There are no verified negative route-days in this event-only cohort; precision and specificity cannot be computed.",
+    "SNMF gives start dates but not ignition times, so an event-date forecast cannot prove the alert preceded ignition.",
+    "The 0.5 cutoff was not selected by validation and is diagnostic only; scores are not calibrated fire probabilities.",
+    "Forecast bytes were retrieved over HTTP because TLS was reset in this session. S3 CRC64NVME was checked, but that checksum was not authenticated over HTTP; reacquire over HTTPS before a final thesis claim.",
+    "The model predicts MODIS satellite detection labels and was not trained to predict ignition."
+  ],
+  "synthetic_observations": 0,
+  "deployment_approved": false
+}

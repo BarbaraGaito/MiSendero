@@ -1,0 +1,120 @@
+{
+  "experiment_id": "firecomp-heldout-south-america-mi-sendero-route-coverage-audit",
+  "status": "coverage_screen_only",
+  "dataset": "FireComp next-day VIIRS fire-spread benchmark, public test split",
+  "test_split_rows": 32665,
+  "south_america_test_rows": 3738,
+  "south_america_rows_inside_argentina_bounding_box": 139,
+  "route_geometry_count": 51,
+  "route_vertex_distance_screen_km": 70,
+  "patch_half_diagonal_km": 67.88225099390857,
+  "candidate_test_rows_near_argentine_routes": 3,
+  "candidate_unique_fire_ids": 3,
+  "per_route": [
+    {
+      "route": "aconquija-el-pozon",
+      "test_sample_rows": 1,
+      "unique_fire_ids": 1,
+      "unique_target_dates": 1,
+      "nearest_route_vertex_km": 41.322664679681615,
+      "events": [
+        {
+          "fire_id": 18842351,
+          "dates": [
+            "2024-09-06"
+          ],
+          "test_indices": [
+            1968
+          ],
+          "shard_metadata": [
+            {
+              "shard": "dataset_7.json",
+              "idx": 1968,
+              "date": "2024-09-06",
+              "region_id": 9,
+              "lat": -27.23162953647144,
+              "lon": -65.42153251886454
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "route": "lagunaTesoro",
+      "test_sample_rows": 1,
+      "unique_fire_ids": 1,
+      "unique_target_dates": 1,
+      "nearest_route_vertex_km": 55.029540833827674,
+      "events": [
+        {
+          "fire_id": 12849450,
+          "dates": [
+            "2024-08-09"
+          ],
+          "test_indices": [
+            14354
+          ],
+          "shard_metadata": [
+            {
+              "shard": "dataset_6.json",
+              "idx": 14354,
+              "date": "2024-08-09",
+              "region_id": 9,
+              "lat": -27.71671757096659,
+              "lon": -65.55291052820698
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "route": "tabaquillo",
+      "test_sample_rows": 1,
+      "unique_fire_ids": 1,
+      "unique_target_dates": 1,
+      "nearest_route_vertex_km": 62.31915271198357,
+      "events": [
+        {
+          "fire_id": 3463382,
+          "dates": [
+            "2024-10-04"
+          ],
+          "test_indices": [
+            5041
+          ],
+          "shard_metadata": [
+            {
+              "shard": "dataset_7.json",
+              "idx": 5041,
+              "date": "2024-10-04",
+              "region_id": 9,
+              "lat": -32.523805246137265,
+              "lon": -64.2963977721883
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "sources_sha256": {
+    "test_split": "38f960fcdc3ed7beb6da2b1b7b22ca445bc7f5df7f7c8c45a1576bcfdb498baa",
+    "route_geometry": "2a501f90ecdfa1d151445f367bfe98a53ffb5d37293d6b9b04728a81b6a7e8f4",
+    "dataset_0.json": "7a2ca2957d17f1548292f8d06774a34619c811982af785d295acd830d24d8691",
+    "dataset_1.json": "915048359c1b608e57b5649e7c48ef6841f9c5093862d149f8a0d6282f724bc7",
+    "dataset_2.json": "c03e49ea947cb14144ea4755b2ade3c3db6be2c2c4f95730921aef4b2fda0fb5",
+    "dataset_3.json": "0793d8ce765f8f4ca8b29e4ea9ba75318724d0f2e398f6c115507cbd15a7d046",
+    "dataset_4.json": "21099385bb28ecdc4ebddb480927a75a264c1550ccac68f68928448c03bab77f",
+    "dataset_5.json": "8bfb137075d0a7deb17620b6ad14c90aaa76b134e3e4fd7d745367392e3344af",
+    "dataset_6.json": "6bcac35dc91bfa065ffed3877ef9318b6b568b13c5743c5bff3a6144da2e8751",
+    "dataset_7.json": "ea39ca48aef1970bb17ed1fba862dfca929aaec7423b044dc2cc3c88269ca508"
+  },
+  "limitations": [
+    "A sample center within 70 km is only a conservative patch-intersection candidate, not proof that its pixel grid overlaps the trail.",
+    "The South America region is not synonymous with Argentina; the bounding box is only a preliminary filter.",
+    "No HDF5 pixels were read and no FireComp model or baseline was evaluated.",
+    "FireComp predicts next-day spread from an already active fire; it does not predict ignition.",
+    "One or a few nearby independent fires cannot support a reliable precision estimate."
+  ],
+  "synthetic_observations": 0,
+  "prediction_evaluated": false
+}

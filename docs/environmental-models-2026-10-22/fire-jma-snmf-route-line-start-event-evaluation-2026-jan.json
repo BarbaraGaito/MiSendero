@@ -1,0 +1,375 @@
+{
+  "experiment_id": "jma_gsm-24h-active-report-model-vs-snmf-route-line-starts-2026-jan",
+  "weather_model": "jma_gsm",
+  "candidate_status": "not_reliable_for_ignition_prediction",
+  "model_target": "SNMF-reported incident proxy within 10 km; not physical fire absence or ignition probability.",
+  "independent_event_target": "SNMF-reported incident start date within a buffer of the reviewed trail polyline; reported date, not exact ignition time.",
+  "threshold": 0.5,
+  "results": {
+    "10": {
+      "unique_route_sector_start_days_on_trail_buffer": 6,
+      "route_sector_start_days_with_model_coverage": 6,
+      "start_days_with_score_at_least_0_5": 5,
+      "descriptive_event_start_sensitivity": 0.8333333333333334,
+      "exact_95pct_interval": [
+        0.35876542100232517,
+        0.9957892554855106
+      ],
+      "test_alert_route_days_at_0_5": 96,
+      "all_test_route_days": 240,
+      "threshold_sensitivity_diagnostic_only": [
+        {
+          "diagnostic_threshold": 0.5,
+          "test_alert_route_days": 96,
+          "all_test_route_days": 240,
+          "covered_start_days_alerted": 5,
+          "covered_start_days": 6,
+          "descriptive_event_start_sensitivity": 0.8333333333333334,
+          "exact_95pct_interval": [
+            0.35876542100232517,
+            0.9957892554855106
+          ]
+        },
+        {
+          "diagnostic_threshold": 0.7,
+          "test_alert_route_days": 73,
+          "all_test_route_days": 240,
+          "covered_start_days_alerted": 4,
+          "covered_start_days": 6,
+          "descriptive_event_start_sensitivity": 0.6666666666666666,
+          "exact_95pct_interval": [
+            0.22277809550351213,
+            0.9567281317072583
+          ]
+        },
+        {
+          "diagnostic_threshold": 0.8,
+          "test_alert_route_days": 60,
+          "all_test_route_days": 240,
+          "covered_start_days_alerted": 4,
+          "covered_start_days": 6,
+          "descriptive_event_start_sensitivity": 0.6666666666666666,
+          "exact_95pct_interval": [
+            0.22277809550351213,
+            0.9567281317072583
+          ]
+        },
+        {
+          "diagnostic_threshold": 0.9,
+          "test_alert_route_days": 43,
+          "all_test_route_days": 240,
+          "covered_start_days_alerted": 3,
+          "covered_start_days": 6,
+          "descriptive_event_start_sensitivity": 0.5,
+          "exact_95pct_interval": [
+            0.11811724875702521,
+            0.8818827512429748
+          ]
+        },
+        {
+          "diagnostic_threshold": 0.95,
+          "test_alert_route_days": 29,
+          "all_test_route_days": 240,
+          "covered_start_days_alerted": 3,
+          "covered_start_days": 6,
+          "descriptive_event_start_sensitivity": 0.5,
+          "exact_95pct_interval": [
+            0.11811724875702521,
+            0.8818827512429748
+          ]
+        }
+      ],
+      "positive_start_days": [
+        {
+          "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "reported_start_date": "2026-01-01",
+          "minimum_line_distance_km": 9.718,
+          "minimum_center_distance_km": 9.799,
+          "supporting_incident_records": 1,
+          "incident_names": [
+            "Basural"
+          ],
+          "has_model_coverage": true,
+          "model_alert_at_0_5": true,
+          "model_score_not_calibrated_probability": 0.9711807721858975
+        },
+        {
+          "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "reported_start_date": "2026-01-05",
+          "minimum_line_distance_km": 5.937,
+          "minimum_center_distance_km": 6.293,
+          "supporting_incident_records": 1,
+          "incident_names": [
+            "Barda de La Loma"
+          ],
+          "has_model_coverage": true,
+          "model_alert_at_0_5": true,
+          "model_score_not_calibrated_probability": 0.9906206599096943
+        },
+        {
+          "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "reported_start_date": "2026-01-10",
+          "minimum_line_distance_km": 5.857,
+          "minimum_center_distance_km": 5.988,
+          "supporting_incident_records": 1,
+          "incident_names": [
+            "Aeródromo El Bolsón"
+          ],
+          "has_model_coverage": true,
+          "model_alert_at_0_5": true,
+          "model_score_not_calibrated_probability": 0.9875053226384094
+        },
+        {
+          "route_sector": "Refugio Frey desde Villa Catedral",
+          "reported_start_date": "2026-01-05",
+          "minimum_line_distance_km": 7.824,
+          "minimum_center_distance_km": 9.718,
+          "supporting_incident_records": 1,
+          "incident_names": [
+            "Cantera Eva Perón"
+          ],
+          "has_model_coverage": true,
+          "model_alert_at_0_5": true,
+          "model_score_not_calibrated_probability": 0.8189256773704596
+        },
+        {
+          "route_sector": "Refugio Frey desde Villa Catedral",
+          "reported_start_date": "2026-01-06",
+          "minimum_line_distance_km": 7.208,
+          "minimum_center_distance_km": 9.093,
+          "supporting_incident_records": 3,
+          "incident_names": [
+            "VERTEDERO MUNICIPAL",
+            "Vertedero Municipal",
+            "tres lagunas) VERTEDERO MUNICIPAL"
+          ],
+          "has_model_coverage": true,
+          "model_alert_at_0_5": false,
+          "model_score_not_calibrated_probability": 0.3587401559109576
+        },
+        {
+          "route_sector": "Sendero Namuncura",
+          "reported_start_date": "2026-01-07",
+          "minimum_line_distance_km": 1.593,
+          "minimum_center_distance_km": 1.61,
+          "supporting_incident_records": 1,
+          "incident_names": [
+            "P.N. LIHUE CALEL"
+          ],
+          "has_model_coverage": true,
+          "model_alert_at_0_5": true,
+          "model_score_not_calibrated_probability": 0.5435137499997883
+        }
+      ]
+    },
+    "20": {
+      "unique_route_sector_start_days_on_trail_buffer": 8,
+      "route_sector_start_days_with_model_coverage": 8,
+      "start_days_with_score_at_least_0_5": 6,
+      "descriptive_event_start_sensitivity": 0.75,
+      "exact_95pct_interval": [
+        0.3491442055871758,
+        0.9681459737500557
+      ],
+      "test_alert_route_days_at_0_5": 96,
+      "all_test_route_days": 240,
+      "threshold_sensitivity_diagnostic_only": [
+        {
+          "diagnostic_threshold": 0.5,
+          "test_alert_route_days": 96,
+          "all_test_route_days": 240,
+          "covered_start_days_alerted": 6,
+          "covered_start_days": 8,
+          "descriptive_event_start_sensitivity": 0.75,
+          "exact_95pct_interval": [
+            0.3491442055871758,
+            0.9681459737500557
+          ]
+        },
+        {
+          "diagnostic_threshold": 0.7,
+          "test_alert_route_days": 73,
+          "all_test_route_days": 240,
+          "covered_start_days_alerted": 5,
+          "covered_start_days": 8,
+          "descriptive_event_start_sensitivity": 0.625,
+          "exact_95pct_interval": [
+            0.2448632163665516,
+            0.9147665858627465
+          ]
+        },
+        {
+          "diagnostic_threshold": 0.8,
+          "test_alert_route_days": 60,
+          "all_test_route_days": 240,
+          "covered_start_days_alerted": 4,
+          "covered_start_days": 8,
+          "descriptive_event_start_sensitivity": 0.5,
+          "exact_95pct_interval": [
+            0.15701277048705795,
+            0.842987229512942
+          ]
+        },
+        {
+          "diagnostic_threshold": 0.9,
+          "test_alert_route_days": 43,
+          "all_test_route_days": 240,
+          "covered_start_days_alerted": 3,
+          "covered_start_days": 8,
+          "descriptive_event_start_sensitivity": 0.375,
+          "exact_95pct_interval": [
+            0.08523341413725354,
+            0.7551367836334484
+          ]
+        },
+        {
+          "diagnostic_threshold": 0.95,
+          "test_alert_route_days": 29,
+          "all_test_route_days": 240,
+          "covered_start_days_alerted": 3,
+          "covered_start_days": 8,
+          "descriptive_event_start_sensitivity": 0.375,
+          "exact_95pct_interval": [
+            0.08523341413725354,
+            0.7551367836334484
+          ]
+        }
+      ],
+      "positive_start_days": [
+        {
+          "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "reported_start_date": "2026-01-01",
+          "minimum_line_distance_km": 9.718,
+          "minimum_center_distance_km": 9.799,
+          "supporting_incident_records": 1,
+          "incident_names": [
+            "Basural"
+          ],
+          "has_model_coverage": true,
+          "model_alert_at_0_5": true,
+          "model_score_not_calibrated_probability": 0.9711807721858975
+        },
+        {
+          "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "reported_start_date": "2026-01-05",
+          "minimum_line_distance_km": 5.937,
+          "minimum_center_distance_km": 6.293,
+          "supporting_incident_records": 7,
+          "incident_names": [
+            "Barda de La Loma",
+            "Primera",
+            "Primera Cantera",
+            "Primera Cantera Puerto",
+            "Primera Cantera Puerto Patriada",
+            "Turbio Primera Cantera Puerto",
+            "Turbio Primera Cantera Puerto Patriada"
+          ],
+          "has_model_coverage": true,
+          "model_alert_at_0_5": true,
+          "model_score_not_calibrated_probability": 0.9906206599096943
+        },
+        {
+          "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "reported_start_date": "2026-01-10",
+          "minimum_line_distance_km": 5.857,
+          "minimum_center_distance_km": 5.988,
+          "supporting_incident_records": 1,
+          "incident_names": [
+            "Aeródromo El Bolsón"
+          ],
+          "has_model_coverage": true,
+          "model_alert_at_0_5": true,
+          "model_score_not_calibrated_probability": 0.9875053226384094
+        },
+        {
+          "route_sector": "Refugio Frey desde Villa Catedral",
+          "reported_start_date": "2026-01-05",
+          "minimum_line_distance_km": 7.824,
+          "minimum_center_distance_km": 9.718,
+          "supporting_incident_records": 1,
+          "incident_names": [
+            "Cantera Eva Perón"
+          ],
+          "has_model_coverage": true,
+          "model_alert_at_0_5": true,
+          "model_score_not_calibrated_probability": 0.8189256773704596
+        },
+        {
+          "route_sector": "Refugio Frey desde Villa Catedral",
+          "reported_start_date": "2026-01-06",
+          "minimum_line_distance_km": 7.208,
+          "minimum_center_distance_km": 9.093,
+          "supporting_incident_records": 3,
+          "incident_names": [
+            "VERTEDERO MUNICIPAL",
+            "Vertedero Municipal",
+            "tres lagunas) VERTEDERO MUNICIPAL"
+          ],
+          "has_model_coverage": true,
+          "model_alert_at_0_5": false,
+          "model_score_not_calibrated_probability": 0.3587401559109576
+        },
+        {
+          "route_sector": "Refugio Frey desde Villa Catedral",
+          "reported_start_date": "2026-01-22",
+          "minimum_line_distance_km": 10.776,
+          "minimum_center_distance_km": 12.729,
+          "supporting_incident_records": 1,
+          "incident_names": [
+            "Circunvalación"
+          ],
+          "has_model_coverage": true,
+          "model_alert_at_0_5": false,
+          "model_score_not_calibrated_probability": 0.3622700868533555
+        },
+        {
+          "route_sector": "Refugio Frey desde Villa Catedral",
+          "reported_start_date": "2026-01-30",
+          "minimum_line_distance_km": 19.226,
+          "minimum_center_distance_km": 20.207,
+          "supporting_incident_records": 1,
+          "incident_names": [
+            "LAGO TRAFUL"
+          ],
+          "has_model_coverage": true,
+          "model_alert_at_0_5": true,
+          "model_score_not_calibrated_probability": 0.7529724729714621
+        },
+        {
+          "route_sector": "Sendero Namuncura",
+          "reported_start_date": "2026-01-07",
+          "minimum_line_distance_km": 1.593,
+          "minimum_center_distance_km": 1.61,
+          "supporting_incident_records": 1,
+          "incident_names": [
+            "P.N. LIHUE CALEL"
+          ],
+          "has_model_coverage": true,
+          "model_alert_at_0_5": true,
+          "model_score_not_calibrated_probability": 0.5435137499997883
+        }
+      ]
+    }
+  },
+  "source_files": {
+    "model_evaluation": {
+      "path": "docs\\environmental-models-2026-10-22\\fire-jma-snmf-report-proxy-temporal-evaluation-2026-jan.json",
+      "sha256": "1bea5ada50087c8a87b9e1c85dec1045607b2e92e2c2cce058fb29a042472888"
+    },
+    "route_polyline_event_audit": {
+      "path": "D:\\AppPFI\\MiSendero\\docs\\environmental-models-2026-10-22\\fire-snmf-polyline-event-coverage-2026-jan.json",
+      "sha256": "88d12faad7d78119d1242aa644dc83b1813f163cade5469cb694785989ec48bd"
+    }
+  },
+  "limitations": [
+    "The model was trained to reproduce an active-incident report proxy, not the new-start target assessed here.",
+    "The SNMF archive is not an exhaustive registry of physical fire starts or no-fire periods.",
+    "The test covers one month and only a few independent route-sector start days.",
+    "Other model alerts cannot be counted as false new ignitions without exhaustive observed negatives.",
+    "The 0.5 score cutoff is diagnostic and was not selected or validated for this event-start target.",
+    "The threshold sensitivity table is an exploratory description of the frozen test set; it must not be used to select or claim an operational threshold.",
+    "Route lines and buffers approximate exposure; alerts should not be interpreted as operational safety decisions."
+  ],
+  "synthetic_observations": 0,
+  "deployment_approved": false
+}

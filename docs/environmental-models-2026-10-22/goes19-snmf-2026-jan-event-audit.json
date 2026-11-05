@@ -1,0 +1,324 @@
+{
+  "experiment_id": "frozen-goes19-1h-vs-independent-snmf-reports-2026-01",
+  "interpretation": "Retrospective event coincidence on the frozen test period; not an estimate of precision or a validated warning lead time.",
+  "protocol": {
+    "threshold": 0.5,
+    "radius_km": 10.0,
+    "day_aggregation": "maximum 1h forecast score among all test scans for each pixel-day",
+    "active_statuses": [
+      "ACTIVO",
+      "CONTENIDO",
+      "CONTROLADO"
+    ],
+    "official_date_rule": "first archived snapshot date per extracted incident; report date and start date are not exact ignition times"
+  },
+  "sources": {
+    "snmf_events_sha256": "ba18284a722410e225906de6ea1ba35e72d5670496c45793363e901beb6efcca",
+    "training_report_sha256": "3900c35b3b156482f2bd50417f48680615ebc43bd7346e7ca3b79fd195f926bb",
+    "goes_observations_sha256": "07bdecf2b7d88ee94403ca97b4a7a9cbf67e4efeb5a9d5ad1b75151eaacad98b",
+    "goes_availability_sha256": "d14059389e901c4003435fcb8e5a76a19fc1e6a08e98115e07faa72c5a5b24b6",
+    "model_sha256": "1b12a5796112f68d46ba415faf21279c08ad33c1121ca53212371490ad3758df"
+  },
+  "covered_test_pixel_days": 894307,
+  "test_days_with_predictions": 31,
+  "snmf_incidents_with_test_day_pixel_coverage": 19,
+  "snmf_incidents_without_test_day_pixel_coverage": 120,
+  "active_or_controlled_incidents_with_coverage": 14,
+  "active_or_controlled_incidents_with_model_alert": 1,
+  "active_or_controlled_incidents_with_persistence_alert": 1,
+  "event_coincidence_sensitivity_on_covered_subset": 0.07142857142857142,
+  "event_coincidence_sensitivity_wilson_95pct": [
+    0.012722215247890939,
+    0.31468704424151117
+  ],
+  "persistence_event_coincidence_sensitivity_on_covered_subset": 0.07142857142857142,
+  "persistence_event_coincidence_sensitivity_wilson_95pct": [
+    0.012722215247890939,
+    0.31468704424151117
+  ],
+  "satellite_label_test_metrics": {
+    "average_precision": 0.37487453887567723,
+    "brier": 0.0001342344330623746,
+    "precision_at_0_5": 0.7027027027027027,
+    "recall_at_0_5": 0.19117647058823528,
+    "rows": 894307,
+    "positives": 136,
+    "persistence_baseline": {
+      "average_precision": 0.370604535872294,
+      "brier": 0.0001151729775121966,
+      "precision": 0.6299212598425197,
+      "recall": 0.5882352941176471
+    },
+    "training_prevalence_baseline": {
+      "average_precision": 1.9747541783682607e-05,
+      "brier": 0.00015206744151329197
+    }
+  },
+  "incidents_with_model_alert": [
+    {
+      "incident_name": "Primera Cantera Puerto Patriada",
+      "province": "Chubut",
+      "name_aliases_in_archive": [
+        "Primera",
+        "Primera Cantera",
+        "Primera Cantera Puerto",
+        "Primera Cantera Puerto Patriada",
+        "Turbio Primera Cantera Puerto",
+        "Turbio Primera Cantera Puerto Patriada"
+      ],
+      "reported_start_date": "2026-01-05",
+      "first_archived_snapshot_date": "2026-01-05",
+      "reported_status": "ACTIVO",
+      "latitude": -42.132222222222225,
+      "longitude": -71.53188888888889,
+      "valid_model_pixels_within_radius": 10,
+      "maximum_one_hour_score_within_radius": 0.9999996423721313,
+      "model_alert": true,
+      "persistence_alert": true
+    }
+  ],
+  "incidents_with_persistence_alert": [
+    {
+      "incident_name": "Primera Cantera Puerto Patriada",
+      "province": "Chubut",
+      "name_aliases_in_archive": [
+        "Primera",
+        "Primera Cantera",
+        "Primera Cantera Puerto",
+        "Primera Cantera Puerto Patriada",
+        "Turbio Primera Cantera Puerto",
+        "Turbio Primera Cantera Puerto Patriada"
+      ],
+      "reported_start_date": "2026-01-05",
+      "first_archived_snapshot_date": "2026-01-05",
+      "reported_status": "ACTIVO",
+      "latitude": -42.132222222222225,
+      "longitude": -71.53188888888889,
+      "valid_model_pixels_within_radius": 10,
+      "maximum_one_hour_score_within_radius": 0.9999996423721313,
+      "model_alert": true,
+      "persistence_alert": true
+    }
+  ],
+  "incidents_with_coverage_without_alert": [
+    {
+      "incident_name": "Loma de la Chancha El",
+      "province": "Chubut",
+      "name_aliases_in_archive": [
+        "Loma de la Chancha El",
+        "Loma de la Chancha El Turbio"
+      ],
+      "reported_start_date": "2025-12-01",
+      "first_archived_snapshot_date": "2026-01-01",
+      "reported_status": "CONTROLADO",
+      "latitude": -42.285694444444445,
+      "longitude": -71.90555555555557,
+      "valid_model_pixels_within_radius": 4,
+      "maximum_one_hour_score_within_radius": 0.0,
+      "model_alert": false,
+      "persistence_alert": false
+    },
+    {
+      "incident_name": "Veranada de Carlos Cayunao",
+      "province": "Río Negro",
+      "name_aliases_in_archive": [
+        "Veranada de Carlos Cayunao"
+      ],
+      "reported_start_date": "2025-12-31",
+      "first_archived_snapshot_date": "2026-01-01",
+      "reported_status": "CONTENIDO",
+      "latitude": -41.766,
+      "longitude": -71.1842,
+      "valid_model_pixels_within_radius": 10,
+      "maximum_one_hour_score_within_radius": 0.0,
+      "model_alert": false,
+      "persistence_alert": false
+    },
+    {
+      "incident_name": "Villa Lago Rivadavia",
+      "province": "Chubut",
+      "name_aliases_in_archive": [
+        "Villa Lago Rivadavia"
+      ],
+      "reported_start_date": "2026-01-04",
+      "first_archived_snapshot_date": "2026-01-04",
+      "reported_status": "CONTENIDO",
+      "latitude": -42.50336111111111,
+      "longitude": -71.47333333333333,
+      "valid_model_pixels_within_radius": 1,
+      "maximum_one_hour_score_within_radius": 0.0,
+      "model_alert": false,
+      "persistence_alert": false
+    },
+    {
+      "incident_name": "Barda de La Loma",
+      "province": "Río Negro",
+      "name_aliases_in_archive": [
+        "Barda de La Loma"
+      ],
+      "reported_start_date": "2026-01-05",
+      "first_archived_snapshot_date": "2026-01-05",
+      "reported_status": "CONTROLADO",
+      "latitude": -41.98623333333333,
+      "longitude": -71.54853888888888,
+      "valid_model_pixels_within_radius": 13,
+      "maximum_one_hour_score_within_radius": 0.0,
+      "model_alert": false,
+      "persistence_alert": false
+    },
+    {
+      "incident_name": "Cantera Eva Perón",
+      "province": "Río Negro",
+      "name_aliases_in_archive": [
+        "Cantera Eva Perón"
+      ],
+      "reported_start_date": "2026-01-05",
+      "first_archived_snapshot_date": "2026-01-05",
+      "reported_status": "CONTENIDO",
+      "latitude": -41.171305555555556,
+      "longitude": -71.34811111111111,
+      "valid_model_pixels_within_radius": 8,
+      "maximum_one_hour_score_within_radius": 0.0,
+      "model_alert": false,
+      "persistence_alert": false
+    },
+    {
+      "incident_name": "VERTEDERO MUNICIPAL",
+      "province": "Río Negro",
+      "name_aliases_in_archive": [
+        "VERTEDERO MUNICIPAL",
+        "tres lagunas) VERTEDERO MUNICIPAL"
+      ],
+      "reported_start_date": "2026-01-06",
+      "first_archived_snapshot_date": "2026-01-08",
+      "reported_status": "CONTENIDO",
+      "latitude": -41.17241388888888,
+      "longitude": -71.352975,
+      "valid_model_pixels_within_radius": 8,
+      "maximum_one_hour_score_within_radius": 0.0,
+      "model_alert": false,
+      "persistence_alert": false
+    },
+    {
+      "incident_name": "Vertedero Municipal",
+      "province": "Río Negro",
+      "name_aliases_in_archive": [
+        "Vertedero Municipal"
+      ],
+      "reported_start_date": "2026-01-06",
+      "first_archived_snapshot_date": "2026-01-06",
+      "reported_status": "ACTIVO",
+      "latitude": -41.17463055555555,
+      "longitude": -71.3548,
+      "valid_model_pixels_within_radius": 8,
+      "maximum_one_hour_score_within_radius": 0.0,
+      "model_alert": false,
+      "persistence_alert": false
+    },
+    {
+      "incident_name": "P.N. LIHUE CALEL",
+      "province": "La Pampa",
+      "name_aliases_in_archive": [
+        "P.N. LIHUE CALEL"
+      ],
+      "reported_start_date": "2026-01-07",
+      "first_archived_snapshot_date": "2026-01-07",
+      "reported_status": "CONTENIDO",
+      "latitude": -38.01730277777778,
+      "longitude": -65.58514166666666,
+      "valid_model_pixels_within_radius": 14,
+      "maximum_one_hour_score_within_radius": 0.0,
+      "model_alert": false,
+      "persistence_alert": false
+    },
+    {
+      "incident_name": "Circunvalación",
+      "province": "Río Negro",
+      "name_aliases_in_archive": [
+        "Circunvalación"
+      ],
+      "reported_start_date": "2026-01-22",
+      "first_archived_snapshot_date": "2026-01-22",
+      "reported_status": "CONTENIDO",
+      "latitude": -41.1753,
+      "longitude": -71.3107,
+      "valid_model_pixels_within_radius": 9,
+      "maximum_one_hour_score_within_radius": 0.0,
+      "model_alert": false,
+      "persistence_alert": false
+    },
+    {
+      "incident_name": "CRUCE DE RUTA 237",
+      "province": "Neuquén",
+      "name_aliases_in_archive": [
+        "CRUCE DE RUTA 237"
+      ],
+      "reported_start_date": "2026-01-30",
+      "first_archived_snapshot_date": "2026-01-30",
+      "reported_status": "CONTENIDO",
+      "latitude": -42.316224999999996,
+      "longitude": -71.43086944444445,
+      "valid_model_pixels_within_radius": 12,
+      "maximum_one_hour_score_within_radius": 0.0,
+      "model_alert": false,
+      "persistence_alert": false
+    },
+    {
+      "incident_name": "LAGO TRAFUL",
+      "province": "Neuquén",
+      "name_aliases_in_archive": [
+        "LAGO TRAFUL"
+      ],
+      "reported_start_date": "2026-01-30",
+      "first_archived_snapshot_date": "2026-01-30",
+      "reported_status": "CONTENIDO",
+      "latitude": -41.075858333333336,
+      "longitude": -71.64884722222223,
+      "valid_model_pixels_within_radius": 10,
+      "maximum_one_hour_score_within_radius": 0.0,
+      "model_alert": false,
+      "persistence_alert": false
+    },
+    {
+      "incident_name": "Población Ramón Hernandez",
+      "province": "Neuquén",
+      "name_aliases_in_archive": [
+        "Población Ramón Hernandez"
+      ],
+      "reported_start_date": "2026-01-30",
+      "first_archived_snapshot_date": "2026-01-30",
+      "reported_status": "CONTROLADO",
+      "latitude": -40.69990277777777,
+      "longitude": -71.27048888888889,
+      "valid_model_pixels_within_radius": 3,
+      "maximum_one_hour_score_within_radius": 0.0,
+      "model_alert": false,
+      "persistence_alert": false
+    },
+    {
+      "incident_name": "Puesto Antonio Fernandez (zona El Turbio)",
+      "province": "Chubut",
+      "name_aliases_in_archive": [
+        "Puesto Antonio Fernandez (zona El Turbio)"
+      ],
+      "reported_start_date": "2026-01-31",
+      "first_archived_snapshot_date": "2026-01-31",
+      "reported_status": "CONTENIDO",
+      "latitude": -42.16488611111111,
+      "longitude": -71.54711388888889,
+      "valid_model_pixels_within_radius": 9,
+      "maximum_one_hour_score_within_radius": 0.0,
+      "model_alert": false,
+      "persistence_alert": false
+    }
+  ],
+  "limitations": [
+    "The SNMF daily archive is jurisdiction-reported and not an exhaustive fire/no-fire registry; unmatched alerts cannot be counted as false positives, so event precision is not calculable.",
+    "This comparison uses same-day report snapshots and cannot establish how many minutes before ignition the model warned.",
+    "A 10 km circle around one reported coordinate is an exploratory association rule, not a validated trail-safety distance.",
+    "Daily scores are maxima over correlated satellite scans and nearby pixels; event-level counts are the unit for this comparison.",
+    "At 0.5 the frozen model was trained on 28 positive pixel-scan labels and evaluated on 136 positive test labels across 23 region-days; the small number of independent fire episodes limits precision claims."
+  ],
+  "synthetic_observations": 0,
+  "deployment_approved": false
+}

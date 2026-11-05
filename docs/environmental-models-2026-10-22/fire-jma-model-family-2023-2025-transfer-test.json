@@ -1,0 +1,454 @@
+{
+  "experiment_id": "jma-gsm-report-proxy-model-family-2023-train-2024-validation-2025-test",
+  "status": "no_model_passed_validation_gate_or_generalized_reliably",
+  "target": "Same-day SNMF-listed active/start-date fire event within 20 km of a fixed route-sector center; administrative report proxy only.",
+  "protocol": {
+    "spatial_radius_km": 20,
+    "chronological_splits": {
+      "train": "2023-07-01 through 2023-12-31",
+      "validation": "2024-01-01 through 2024-12-31",
+      "final_test": "2025-01-01 through 2025-12-31"
+    },
+    "forecast_lead_hours": 24,
+    "features": [
+      "temperature_mean",
+      "temperature_max",
+      "humidity_mean",
+      "humidity_min",
+      "wind_mean",
+      "wind_max",
+      "precipitation_sum"
+    ],
+    "threshold_rule": "Maximize validation precision among thresholds with at least 5 alerts; require at least 80% validation precision to pass the candidate gate. If no threshold passes, validation-best threshold is diagnostic only.",
+    "fixed_diagnostic_test_thresholds": [
+      0.5,
+      0.8,
+      0.9
+    ],
+    "model_families": {
+      "logistic_regression": "Class-balanced logistic regression, C=1, max_iter=3000, lbfgs, seed 42.",
+      "random_forest": "500 trees, min leaf 5, max features 0.8, balanced_subsample, seed 42.",
+      "xgboost": "200 trees, depth 3, learning rate 0.05, subsample/colsample 0.8, min child weight 3, class-ratio scale_pos_weight, L2=2, seed 42."
+    },
+    "threshold_selection": "Only 2024 validation labels. No model or threshold changes based on 2025 final-test outcomes.",
+    "label_method": "Reconstructs existing SNMF route-proxy labels; asserts exact match to audited known/positive route-day totals for each year before fitting."
+  },
+  "sources": {
+    "weather_sha256": {
+      "openmeteo-gfs-previous-runs-argentina-trails-jma_gsm-2023-07-01-2024-01-01.json.gz": "53a83da0d4479fd6de05199f21ca47d98f0047ee848ad4085d2d30a400944009",
+      "openmeteo-gfs-previous-runs-argentina-trails-jma_gsm-2024-01-01-2025-01-01.json.gz": "e3c8aea0aca987df527dbc6fd9037d7274efd2ebab2cfbe8a12880e7f297b20e",
+      "openmeteo-gfs-previous-runs-argentina-trails-jma_gsm-2025-01-01-2026-02-01.json.gz": "9fbfb9954678882c15644d78b9483ed53dc3f0fbcd36385a6d94a8bee4a8d8ae"
+    },
+    "event_report_sha256": {
+      "snmf-2023-daily-occurrence-events.json": "b82ddcb2c848fe854be9e1002fed72318165d8b1818b952b61cc9467b1cc0900",
+      "snmf-2024-daily-occurrence-events.json": "10c44e0b77d99d771c3256978f3d5c976b3dd05262ab122108aff0d4861e0bad",
+      "snmf-2025-daily-occurrence-events.json": "d8e95391641ccb7d884d7bbe88e3df6fff82251352a50154656f88096f4a87f4"
+    },
+    "route_proxy_audit_sha256": {
+      "snmf-2023-route-day-report-proxy.json": "930e2f33514705428d4b40aeb787119ce031e28e58992e90d3acab02002c7278",
+      "snmf-2024-route-day-report-proxy.json": "e4197585524b1b09c7185181cc0254cfe0193f032914216784f1f88b160c5645",
+      "snmf-2025-route-day-report-proxy.json": "a102ad57e98cf09436886adf9450783588d1a71e10914ebe443852ed487c3236"
+    },
+    "report_manifest_sha256": {
+      "2023": "71c14b6aafee792941c46319aa9c7ae2339d21ec8dbcc4a2d4f473c8c1fb2818",
+      "2024": "e382213264a4bd6d75de64c25131532112ee172581b0d1197740689b3a817465",
+      "2025": "0ca1d7673cde658412fad7f5b8b4d3db578c288d480388750ffc899281a82943"
+    },
+    "geography_sha256": "7e475b478db7bb678cc0a1539fdf484e0c8de0a9baa98916fb90f652f75ff834",
+    "no_fire_report_audit_sha256": "a57c45ee46b1bb97763432a9fa647fe9fc903b4550c427d4e46bb2be03a76396"
+  },
+  "counts": {
+    "train_route_days": 958,
+    "train_positive_route_days": 36,
+    "train_positive_route_day_clusters": 16,
+    "validation_route_days": 2219,
+    "validation_positive_route_days": 52,
+    "validation_positive_route_day_clusters": 22,
+    "test_route_days": 1657,
+    "test_positive_route_days": 60,
+    "test_positive_route_day_clusters": 17,
+    "explicit_national_no_fire_report_dates_in_2025": [
+      "2025-05-31"
+    ],
+    "test_route_days_covered_on_explicit_no_fire_dates": 8
+  },
+  "models": {
+    "logistic_regression": {
+      "validation": {
+        "route_days": 2219,
+        "positive_route_days": 52,
+        "positive_route_day_clusters": 22,
+        "average_precision": 0.08799072867360265,
+        "prevalence_baseline_average_precision": 0.023433979269941414,
+        "threshold_selection": {
+          "best_precision_threshold_with_minimum_5_alerts": {
+            "threshold": 0.9328288777508635,
+            "validation_precision": 0.4,
+            "validation_recall": 0.038461538461538464,
+            "validation_alerts": 5,
+            "minimum_alert_requirement": 5,
+            "precision_gate": 0.8,
+            "eligible": false
+          }
+        }
+      },
+      "test_2025": {
+        "route_days": 1657,
+        "positive_route_days": 60,
+        "positive_route_day_clusters": 17,
+        "average_precision": 0.07994807846016931,
+        "prevalence_baseline_average_precision": 0.036210018105009054,
+        "brier_score": 0.18647683670121398,
+        "training_prevalence_baseline_brier_score": 0.03490072485662373,
+        "threshold_metrics": {
+          "diagnostic_0_5": {
+            "threshold": 0.5,
+            "alerts": 505,
+            "true_positives": 36,
+            "false_positives": 469,
+            "false_negatives": 24,
+            "true_negatives": 1128,
+            "precision_on_report_proxy": 0.07128712871287128,
+            "recall_on_report_proxy": 0.6,
+            "accuracy_on_report_proxy": 0.7024743512371756
+          },
+          "diagnostic_0_8": {
+            "threshold": 0.8,
+            "alerts": 168,
+            "true_positives": 16,
+            "false_positives": 152,
+            "false_negatives": 44,
+            "true_negatives": 1445,
+            "precision_on_report_proxy": 0.09523809523809523,
+            "recall_on_report_proxy": 0.26666666666666666,
+            "accuracy_on_report_proxy": 0.8817139408569704
+          },
+          "diagnostic_0_9": {
+            "threshold": 0.9,
+            "alerts": 47,
+            "true_positives": 7,
+            "false_positives": 40,
+            "false_negatives": 53,
+            "true_negatives": 1557,
+            "precision_on_report_proxy": 0.14893617021276595,
+            "recall_on_report_proxy": 0.11666666666666667,
+            "accuracy_on_report_proxy": 0.943874471937236
+          },
+          "best_validation_precision_with_minimum_5_alerts": {
+            "threshold": 0.9328288777508635,
+            "alerts": 8,
+            "true_positives": 0,
+            "false_positives": 8,
+            "false_negatives": 60,
+            "true_negatives": 1589,
+            "precision_on_report_proxy": 0.0,
+            "recall_on_report_proxy": 0.0,
+            "accuracy_on_report_proxy": 0.9589619794809897
+          }
+        },
+        "explicit_national_no_fire_challenge": {
+          "diagnostic_0_5": {
+            "explicit_no_fire_report_dates": [
+              "2025-05-31"
+            ],
+            "covered_route_days": 8,
+            "possible_route_days": 8,
+            "false_alert_route_days": 2,
+            "alerted_dates": 1,
+            "alerts": [
+              {
+                "date": "2025-05-31",
+                "route_sector": "Quebrada del Condorito - Balcon Norte",
+                "score": 0.7721007051273014
+              },
+              {
+                "date": "2025-05-31",
+                "route_sector": "Sendero Che Roga - Mburucuyá",
+                "score": 0.5631709276487985
+              }
+            ]
+          },
+          "diagnostic_0_8": {
+            "explicit_no_fire_report_dates": [
+              "2025-05-31"
+            ],
+            "covered_route_days": 8,
+            "possible_route_days": 8,
+            "false_alert_route_days": 0,
+            "alerted_dates": 0,
+            "alerts": []
+          },
+          "diagnostic_0_9": {
+            "explicit_no_fire_report_dates": [
+              "2025-05-31"
+            ],
+            "covered_route_days": 8,
+            "possible_route_days": 8,
+            "false_alert_route_days": 0,
+            "alerted_dates": 0,
+            "alerts": []
+          },
+          "best_validation_precision_with_minimum_5_alerts": {
+            "explicit_no_fire_report_dates": [
+              "2025-05-31"
+            ],
+            "covered_route_days": 8,
+            "possible_route_days": 8,
+            "false_alert_route_days": 0,
+            "alerted_dates": 0,
+            "alerts": []
+          }
+        }
+      }
+    },
+    "random_forest": {
+      "validation": {
+        "route_days": 2219,
+        "positive_route_days": 52,
+        "positive_route_day_clusters": 22,
+        "average_precision": 0.11806823155287742,
+        "prevalence_baseline_average_precision": 0.023433979269941414,
+        "threshold_selection": {
+          "best_precision_threshold_with_minimum_5_alerts": {
+            "threshold": 0.691883035186226,
+            "validation_precision": 0.6,
+            "validation_recall": 0.057692307692307696,
+            "validation_alerts": 5,
+            "minimum_alert_requirement": 5,
+            "precision_gate": 0.8,
+            "eligible": false
+          }
+        }
+      },
+      "test_2025": {
+        "route_days": 1657,
+        "positive_route_days": 60,
+        "positive_route_day_clusters": 17,
+        "average_precision": 0.07343304996393496,
+        "prevalence_baseline_average_precision": 0.036210018105009054,
+        "brier_score": 0.05303319175526754,
+        "training_prevalence_baseline_brier_score": 0.03490072485662373,
+        "threshold_metrics": {
+          "diagnostic_0_5": {
+            "threshold": 0.5,
+            "alerts": 32,
+            "true_positives": 1,
+            "false_positives": 31,
+            "false_negatives": 59,
+            "true_negatives": 1566,
+            "precision_on_report_proxy": 0.03125,
+            "recall_on_report_proxy": 0.016666666666666666,
+            "accuracy_on_report_proxy": 0.9456849728424864
+          },
+          "diagnostic_0_8": {
+            "threshold": 0.8,
+            "alerts": 0,
+            "true_positives": 0,
+            "false_positives": 0,
+            "false_negatives": 60,
+            "true_negatives": 1597,
+            "precision_on_report_proxy": 0.0,
+            "recall_on_report_proxy": 0.0,
+            "accuracy_on_report_proxy": 0.963789981894991
+          },
+          "diagnostic_0_9": {
+            "threshold": 0.9,
+            "alerts": 0,
+            "true_positives": 0,
+            "false_positives": 0,
+            "false_negatives": 60,
+            "true_negatives": 1597,
+            "precision_on_report_proxy": 0.0,
+            "recall_on_report_proxy": 0.0,
+            "accuracy_on_report_proxy": 0.963789981894991
+          },
+          "best_validation_precision_with_minimum_5_alerts": {
+            "threshold": 0.691883035186226,
+            "alerts": 3,
+            "true_positives": 1,
+            "false_positives": 2,
+            "false_negatives": 59,
+            "true_negatives": 1595,
+            "precision_on_report_proxy": 0.3333333333333333,
+            "recall_on_report_proxy": 0.016666666666666666,
+            "accuracy_on_report_proxy": 0.9631864815932408
+          }
+        },
+        "explicit_national_no_fire_challenge": {
+          "diagnostic_0_5": {
+            "explicit_no_fire_report_dates": [
+              "2025-05-31"
+            ],
+            "covered_route_days": 8,
+            "possible_route_days": 8,
+            "false_alert_route_days": 0,
+            "alerted_dates": 0,
+            "alerts": []
+          },
+          "diagnostic_0_8": {
+            "explicit_no_fire_report_dates": [
+              "2025-05-31"
+            ],
+            "covered_route_days": 8,
+            "possible_route_days": 8,
+            "false_alert_route_days": 0,
+            "alerted_dates": 0,
+            "alerts": []
+          },
+          "diagnostic_0_9": {
+            "explicit_no_fire_report_dates": [
+              "2025-05-31"
+            ],
+            "covered_route_days": 8,
+            "possible_route_days": 8,
+            "false_alert_route_days": 0,
+            "alerted_dates": 0,
+            "alerts": []
+          },
+          "best_validation_precision_with_minimum_5_alerts": {
+            "explicit_no_fire_report_dates": [
+              "2025-05-31"
+            ],
+            "covered_route_days": 8,
+            "possible_route_days": 8,
+            "false_alert_route_days": 0,
+            "alerted_dates": 0,
+            "alerts": []
+          }
+        }
+      }
+    },
+    "xgboost": {
+      "validation": {
+        "route_days": 2219,
+        "positive_route_days": 52,
+        "positive_route_day_clusters": 22,
+        "average_precision": 0.12649389656968432,
+        "prevalence_baseline_average_precision": 0.023433979269941414,
+        "threshold_selection": {
+          "best_precision_threshold_with_minimum_5_alerts": {
+            "threshold": 0.8843648433685303,
+            "validation_precision": 0.6,
+            "validation_recall": 0.057692307692307696,
+            "validation_alerts": 5,
+            "minimum_alert_requirement": 5,
+            "precision_gate": 0.8,
+            "eligible": false
+          }
+        }
+      },
+      "test_2025": {
+        "route_days": 1657,
+        "positive_route_days": 60,
+        "positive_route_day_clusters": 17,
+        "average_precision": 0.06480655676161991,
+        "prevalence_baseline_average_precision": 0.036210018105009054,
+        "brier_score": 0.07999644428491592,
+        "training_prevalence_baseline_brier_score": 0.03490072485662373,
+        "threshold_metrics": {
+          "diagnostic_0_5": {
+            "threshold": 0.5,
+            "alerts": 147,
+            "true_positives": 12,
+            "false_positives": 135,
+            "false_negatives": 48,
+            "true_negatives": 1462,
+            "precision_on_report_proxy": 0.08163265306122448,
+            "recall_on_report_proxy": 0.2,
+            "accuracy_on_report_proxy": 0.8895594447797224
+          },
+          "diagnostic_0_8": {
+            "threshold": 0.8,
+            "alerts": 29,
+            "true_positives": 2,
+            "false_positives": 27,
+            "false_negatives": 58,
+            "true_negatives": 1570,
+            "precision_on_report_proxy": 0.06896551724137931,
+            "recall_on_report_proxy": 0.03333333333333333,
+            "accuracy_on_report_proxy": 0.9487024743512372
+          },
+          "diagnostic_0_9": {
+            "threshold": 0.9,
+            "alerts": 2,
+            "true_positives": 0,
+            "false_positives": 2,
+            "false_negatives": 60,
+            "true_negatives": 1595,
+            "precision_on_report_proxy": 0.0,
+            "recall_on_report_proxy": 0.0,
+            "accuracy_on_report_proxy": 0.9625829812914907
+          },
+          "best_validation_precision_with_minimum_5_alerts": {
+            "threshold": 0.8843648433685303,
+            "alerts": 6,
+            "true_positives": 0,
+            "false_positives": 6,
+            "false_negatives": 60,
+            "true_negatives": 1591,
+            "precision_on_report_proxy": 0.0,
+            "recall_on_report_proxy": 0.0,
+            "accuracy_on_report_proxy": 0.96016898008449
+          }
+        },
+        "explicit_national_no_fire_challenge": {
+          "diagnostic_0_5": {
+            "explicit_no_fire_report_dates": [
+              "2025-05-31"
+            ],
+            "covered_route_days": 8,
+            "possible_route_days": 8,
+            "false_alert_route_days": 1,
+            "alerted_dates": 1,
+            "alerts": [
+              {
+                "date": "2025-05-31",
+                "route_sector": "Quebrada del Condorito - Balcon Norte",
+                "score": 0.7623865008354187
+              }
+            ]
+          },
+          "diagnostic_0_8": {
+            "explicit_no_fire_report_dates": [
+              "2025-05-31"
+            ],
+            "covered_route_days": 8,
+            "possible_route_days": 8,
+            "false_alert_route_days": 0,
+            "alerted_dates": 0,
+            "alerts": []
+          },
+          "diagnostic_0_9": {
+            "explicit_no_fire_report_dates": [
+              "2025-05-31"
+            ],
+            "covered_route_days": 8,
+            "possible_route_days": 8,
+            "false_alert_route_days": 0,
+            "alerted_dates": 0,
+            "alerts": []
+          },
+          "best_validation_precision_with_minimum_5_alerts": {
+            "explicit_no_fire_report_dates": [
+              "2025-05-31"
+            ],
+            "covered_route_days": 8,
+            "possible_route_days": 8,
+            "false_alert_route_days": 0,
+            "alerted_dates": 0,
+            "alerts": []
+          }
+        }
+      }
+    }
+  },
+  "limitations": [
+    "SNMF report-proxy negatives are not proof of physical absence; only explicitly no-fire national reports are a stronger administrative negative challenge.",
+    "The 20 km center-radius target is regional and may not reflect exposure along the full trail geometry.",
+    "Adjacent route-days from one incident are correlated; clusters are reported, but confidence bounds are not calculated from these labels.",
+    "The 2025 national-no-fire negative challenge includes only one explicit report date and cannot establish a low false-alert rate.",
+    "The feature set uses weather forecasts and sector identity only; it lacks validated fuel state, ignition likelihood, and consistent independent sensor coverage."
+  ],
+  "synthetic_observations": 0,
+  "deployment_approved": false
+}

@@ -1,0 +1,546 @@
+{
+  "experiment_id": "mapbiomas-fire-2025-route-month-snmf-coincidence",
+  "status": "descriptive-label-source-audit",
+  "acquired_at_utc": "2026-10-23T04:20:38Z",
+  "source": {
+    "product": "MapBiomas Argentina Fuego Collection 1, monthly burned area, 2025",
+    "object_name": "initiatives/argentina/fire/collection_01/monthly_burned/monthly_burned-argentina_burned_monthly_2025.tif",
+    "url": "https://storage.googleapis.com/mapbiomas-public/initiatives/argentina/fire/collection_01/monthly_burned/monthly_burned-argentina_burned_monthly_2025.tif",
+    "bucket_metadata_url": "https://storage.googleapis.com/storage/v1/b/mapbiomas-public/o/initiatives%2Fargentina%2Ffire%2Fcollection_01%2Fmonthly_burned%2Fmonthly_burned-argentina_burned_monthly_2025.tif",
+    "generation": "1789731583852347",
+    "time_created_utc": "2026-09-18T11:39:43.856Z",
+    "size_bytes": 41442604,
+    "catalog_md5_base64": "yL9y8omzeqeKDn/wBPTBsg==",
+    "verified_catalog_md5": true,
+    "sha256": "06a4957371810f70aa52f73a58a34b2dff54785b4a9f06d8f391d16af98119cf",
+    "license_statement": "MapBiomas fire product page states public/open use with attribution; verify current terms before redistribution.",
+    "official_period_documentation_note": "The product page text currently summarizes monthly maps as 2013-2024, but MapBiomas?s September 2026 collection launch announcement states that the first Fire collection has annual and monthly burned-area maps for 1999-2025. The public bucket audit lists 27 annual and 27 monthly GeoTIFFs through 2025, and this 2025 object checksum was verified. The discrepancy is stale/summary page text, not an unverified 2025 release."
+  },
+  "raster": {
+    "crs": "EPSG:3857",
+    "bounds": [
+      -8189520.0,
+      -7410390.0,
+      -3859320.0,
+      -2479650.0
+    ],
+    "width": 144340,
+    "height": 164358,
+    "band_count": 1,
+    "dtype": "uint8",
+    "nodata": 0.0,
+    "block_shape": [
+      256,
+      256
+    ]
+  },
+  "geography": {
+    "file": "training/data/environmental/geography.json",
+    "sha256": "7e475b478db7bb678cc0a1539fdf484e0c8de0a9baa98916fb90f652f75ff834",
+    "route_geometry_limitation": "Catalog supplies route center points here, not full trail lines."
+  },
+  "protocol": {
+    "route_radius_km": [
+      5,
+      10
+    ],
+    "event_inventory": "SNMF 2025 event test selected four route-start-days within 10 km of a route-sector center with a WRF forecast available.",
+    "month_match": "Any mapped burned pixel within 10 km of the route center in the SNMF event's calendar month.",
+    "distance": "Approximate local ground distance from EPSG:3857 pixel centers, scaled by cos(route latitude).",
+    "area": "Approximate 30 m Web-Mercator ground-pixel area, adjusted by cos(pixel latitude)^2."
+  },
+  "routes": [
+    {
+      "name": "Sendero Macuco - Salto Arrechea",
+      "location": "Parque Nacional Iguazu, Misiones",
+      "latitude": -25.66715775,
+      "longitude": -54.452823,
+      "geometry_sha256": "148e8cb09cd0d851b88a1875e60763f34efffe046a68c1cb886911fde629477b",
+      "center_month_value": 0,
+      "buffers": {
+        "5": {
+          "total_grid_pixels": 107373,
+          "burned_pixels": 0,
+          "burned_fraction_of_buffer": 0.0,
+          "estimated_burned_area_ha": 0.0,
+          "burned_pixels_by_month": {}
+        },
+        "10": {
+          "total_grid_pixels": 429649,
+          "burned_pixels": 0,
+          "burned_fraction_of_buffer": 0.0,
+          "estimated_burned_area_ha": 0.0,
+          "burned_pixels_by_month": {}
+        }
+      }
+    },
+    {
+      "name": "Refugio Frey desde Villa Catedral",
+      "location": "Parque Nacional Nahuel Huapi, Rio Negro",
+      "latitude": -41.1904696,
+      "longitude": -71.4612884,
+      "geometry_sha256": "9947df55746c5b8033b0955a9bdd8b2ddb61db1dad2621b1fc0d72fa1e21acdf",
+      "center_month_value": 0,
+      "buffers": {
+        "5": {
+          "total_grid_pixels": 154050,
+          "burned_pixels": 0,
+          "burned_fraction_of_buffer": 0.0,
+          "estimated_burned_area_ha": 0.0,
+          "burned_pixels_by_month": {}
+        },
+        "10": {
+          "total_grid_pixels": 616380,
+          "burned_pixels": 520,
+          "burned_fraction_of_buffer": 0.00084364,
+          "estimated_burned_area_ha": 26.492,
+          "burned_pixels_by_month": {
+            "2": 386,
+            "3": 72,
+            "8": 1,
+            "10": 61
+          }
+        }
+      }
+    },
+    {
+      "name": "Quebrada del Condorito - Balcon Norte",
+      "location": "Parque Nacional Quebrada del Condorito, Cordoba",
+      "latitude": -31.65000375,
+      "longitude": -64.70201284999999,
+      "geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74",
+      "center_month_value": 10,
+      "buffers": {
+        "5": {
+          "total_grid_pixels": 120406,
+          "burned_pixels": 54265,
+          "burned_fraction_of_buffer": 0.45068352,
+          "estimated_burned_area_ha": 3538.792,
+          "burned_pixels_by_month": {
+            "5": 34,
+            "6": 16,
+            "7": 118,
+            "8": 36,
+            "9": 15,
+            "10": 53892,
+            "11": 151,
+            "12": 3
+          }
+        },
+        "10": {
+          "total_grid_pixels": 481648,
+          "burned_pixels": 84652,
+          "burned_fraction_of_buffer": 0.17575491,
+          "estimated_burned_area_ha": 5520.338,
+          "burned_pixels_by_month": {
+            "5": 46,
+            "6": 32,
+            "7": 160,
+            "8": 56,
+            "9": 26,
+            "10": 84109,
+            "11": 220,
+            "12": 3
+          }
+        }
+      }
+    },
+    {
+      "name": "Sendero Namuncura",
+      "location": "Parque Nacional Lihue Calel, La Pampa",
+      "latitude": -38.0057717,
+      "longitude": -65.59634514999999,
+      "geometry_sha256": "9ffaf89538fec8fb40b3d760b8e8b8fbcc154794b28d438fa6b046429fc5d32c",
+      "center_month_value": 0,
+      "buffers": {
+        "5": {
+          "total_grid_pixels": 140512,
+          "burned_pixels": 0,
+          "burned_fraction_of_buffer": 0.0,
+          "estimated_burned_area_ha": 0.0,
+          "burned_pixels_by_month": {}
+        },
+        "10": {
+          "total_grid_pixels": 562174,
+          "burned_pixels": 0,
+          "burned_fraction_of_buffer": 0.0,
+          "estimated_burned_area_ha": 0.0,
+          "burned_pixels_by_month": {}
+        }
+      }
+    },
+    {
+      "name": "Cerro Ventana - Hueco de la Ventana",
+      "location": "Parque Provincial Ernesto Tornquist, Buenos Aires",
+      "latitude": -38.055006000000006,
+      "longitude": -62.0162207,
+      "geometry_sha256": "61e1a9b62ae9b691b29c437aed7792b3723c7af54f03feb2311d4322fd3f5066",
+      "center_month_value": 0,
+      "buffers": {
+        "5": {
+          "total_grid_pixels": 140668,
+          "burned_pixels": 44,
+          "burned_fraction_of_buffer": 0.00031279,
+          "estimated_burned_area_ha": 2.455,
+          "burned_pixels_by_month": {
+            "3": 44
+          }
+        },
+        "10": {
+          "total_grid_pixels": 562968,
+          "burned_pixels": 1226,
+          "burned_fraction_of_buffer": 0.00217774,
+          "estimated_burned_area_ha": 68.476,
+          "burned_pixels_by_month": {
+            "2": 4,
+            "3": 44,
+            "5": 1037,
+            "6": 81,
+            "12": 60
+          }
+        }
+      }
+    },
+    {
+      "name": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "location": "Cerro Piltriquitron, El Bolson, Rio Negro",
+      "latitude": -41.97003735,
+      "longitude": -71.4756338,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa",
+      "center_month_value": 0,
+      "buffers": {
+        "5": {
+          "total_grid_pixels": 157795,
+          "burned_pixels": 0,
+          "burned_fraction_of_buffer": 0.0,
+          "estimated_burned_area_ha": 0.0,
+          "burned_pixels_by_month": {}
+        },
+        "10": {
+          "total_grid_pixels": 631415,
+          "burned_pixels": 5449,
+          "burned_fraction_of_buffer": 0.00862982,
+          "estimated_burned_area_ha": 271.585,
+          "burned_pixels_by_month": {
+            "1": 4,
+            "2": 5198,
+            "3": 9,
+            "4": 183,
+            "7": 4,
+            "8": 2,
+            "12": 49
+          }
+        }
+      }
+    },
+    {
+      "name": "Sendero Che Roga - Mburucuyá",
+      "location": "Parque Nacional Mburucuyá, Corrientes",
+      "latitude": -28.0180651,
+      "longitude": -58.0286895,
+      "geometry_sha256": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e",
+      "center_month_value": 0,
+      "buffers": {
+        "5": {
+          "total_grid_pixels": 111957,
+          "burned_pixels": 0,
+          "burned_fraction_of_buffer": 0.0,
+          "estimated_burned_area_ha": 0.0,
+          "burned_pixels_by_month": {}
+        },
+        "10": {
+          "total_grid_pixels": 447820,
+          "burned_pixels": 161,
+          "burned_fraction_of_buffer": 0.00035952,
+          "estimated_burned_area_ha": 11.294,
+          "burned_pixels_by_month": {
+            "1": 14,
+            "3": 77,
+            "8": 70
+          }
+        }
+      }
+    },
+    {
+      "name": "Sendero La Chuña - El Rey",
+      "location": "Parque Nacional El Rey, Salta",
+      "latitude": -24.722283,
+      "longitude": -64.645613,
+      "geometry_sha256": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b",
+      "center_month_value": 0,
+      "buffers": {
+        "5": {
+          "total_grid_pixels": 105751,
+          "burned_pixels": 0,
+          "burned_fraction_of_buffer": 0.0,
+          "estimated_burned_area_ha": 0.0,
+          "burned_pixels_by_month": {}
+        },
+        "10": {
+          "total_grid_pixels": 422998,
+          "burned_pixels": 77,
+          "burned_fraction_of_buffer": 0.00018203,
+          "estimated_burned_area_ha": 5.711,
+          "burned_pixels_by_month": {
+            "11": 77
+          }
+        }
+      }
+    }
+  ],
+  "snmf_event_route_month_checks": [
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "target_date": "2025-10-08",
+      "incident_names": [
+        "Cerro Radal",
+        "Ruta 40 Control Policial"
+      ],
+      "reported_incident_distance_from_center_km": 4.721,
+      "target_calendar_month": 10,
+      "same_month_burn_in_10km_center_buffer": false,
+      "interpretation": "route-month spatial coincidence only; not an incident-to-polygon match"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "target_date": "2025-11-17",
+      "incident_names": [
+        "Ternero Los fuegos"
+      ],
+      "reported_incident_distance_from_center_km": 7.404,
+      "target_calendar_month": 11,
+      "same_month_burn_in_10km_center_buffer": false,
+      "interpretation": "route-month spatial coincidence only; not an incident-to-polygon match"
+    },
+    {
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "target_date": "2025-12-11",
+      "incident_names": [
+        "CERRO NAPOSTA /CERRO"
+      ],
+      "reported_incident_distance_from_center_km": 9.124,
+      "target_calendar_month": 12,
+      "same_month_burn_in_10km_center_buffer": true,
+      "interpretation": "route-month spatial coincidence only; not an incident-to-polygon match"
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "target_date": "2025-10-10",
+      "incident_names": [
+        "Parque Nacional Quebrada del",
+        "Parque Nacional Quebrada del Condorito, ex",
+        "Parque Nacional Quebrada del Condorito, ex La",
+        "Parque Nacional Quebrada del Condorito, ex La Pampilla"
+      ],
+      "reported_incident_distance_from_center_km": 5.702,
+      "target_calendar_month": 10,
+      "same_month_burn_in_10km_center_buffer": true,
+      "interpretation": "route-month spatial coincidence only; not an incident-to-polygon match"
+    }
+  ],
+  "snmf_incident_coordinate_checks": [
+    {
+      "incident_name": "Cerro Radal",
+      "province": "Chubut",
+      "latitude": -42.034275,
+      "longitude": -71.55907499999999,
+      "reported_start_date": "2025-10-08",
+      "route_center_distance_km": 9.928,
+      "status": "EXTINGUIDO",
+      "mapbiomas_month_neighborhood": {
+        "100": {
+          "target_month_pixels": 0,
+          "any_burned_month_pixels": 0,
+          "same_month_coincidence": false
+        },
+        "250": {
+          "target_month_pixels": 0,
+          "any_burned_month_pixels": 0,
+          "same_month_coincidence": false
+        },
+        "500": {
+          "target_month_pixels": 0,
+          "any_burned_month_pixels": 0,
+          "same_month_coincidence": false
+        },
+        "1000": {
+          "target_month_pixels": 0,
+          "any_burned_month_pixels": 0,
+          "same_month_coincidence": false
+        },
+        "2000": {
+          "target_month_pixels": 0,
+          "any_burned_month_pixels": 0,
+          "same_month_coincidence": false
+        }
+      }
+    },
+    {
+      "incident_name": "Ruta 40 Control Policial",
+      "province": "Chubut",
+      "latitude": -41.99276666666667,
+      "longitude": -71.52387222222222,
+      "reported_start_date": "2025-10-08",
+      "route_center_distance_km": 4.721,
+      "status": "EXTINGUIDO",
+      "mapbiomas_month_neighborhood": {
+        "100": {
+          "target_month_pixels": 0,
+          "any_burned_month_pixels": 0,
+          "same_month_coincidence": false
+        },
+        "250": {
+          "target_month_pixels": 0,
+          "any_burned_month_pixels": 0,
+          "same_month_coincidence": false
+        },
+        "500": {
+          "target_month_pixels": 0,
+          "any_burned_month_pixels": 0,
+          "same_month_coincidence": false
+        },
+        "1000": {
+          "target_month_pixels": 0,
+          "any_burned_month_pixels": 0,
+          "same_month_coincidence": false
+        },
+        "2000": {
+          "target_month_pixels": 0,
+          "any_burned_month_pixels": 0,
+          "same_month_coincidence": false
+        }
+      }
+    },
+    {
+      "incident_name": "Ternero Los fuegos",
+      "province": "Río Negro",
+      "latitude": -41.909955555555555,
+      "longitude": -71.51422777777778,
+      "reported_start_date": "2025-11-17",
+      "route_center_distance_km": 7.404,
+      "status": "EXTINGUIDO",
+      "mapbiomas_month_neighborhood": {
+        "100": {
+          "target_month_pixels": 0,
+          "any_burned_month_pixels": 0,
+          "same_month_coincidence": false
+        },
+        "250": {
+          "target_month_pixels": 0,
+          "any_burned_month_pixels": 0,
+          "same_month_coincidence": false
+        },
+        "500": {
+          "target_month_pixels": 0,
+          "any_burned_month_pixels": 0,
+          "same_month_coincidence": false
+        },
+        "1000": {
+          "target_month_pixels": 0,
+          "any_burned_month_pixels": 0,
+          "same_month_coincidence": false
+        },
+        "2000": {
+          "target_month_pixels": 0,
+          "any_burned_month_pixels": 65,
+          "same_month_coincidence": false
+        }
+      }
+    },
+    {
+      "incident_name": "CERRO NAPOSTA /CERRO",
+      "province": "Buenos Aires",
+      "latitude": -38.13286111111111,
+      "longitude": -61.98330555555556,
+      "reported_start_date": "2025-12-11",
+      "route_center_distance_km": 9.124,
+      "status": "CONTENIDO",
+      "mapbiomas_month_neighborhood": {
+        "100": {
+          "target_month_pixels": 0,
+          "any_burned_month_pixels": 0,
+          "same_month_coincidence": false
+        },
+        "250": {
+          "target_month_pixels": 21,
+          "any_burned_month_pixels": 21,
+          "same_month_coincidence": true
+        },
+        "500": {
+          "target_month_pixels": 60,
+          "any_burned_month_pixels": 60,
+          "same_month_coincidence": true
+        },
+        "1000": {
+          "target_month_pixels": 60,
+          "any_burned_month_pixels": 60,
+          "same_month_coincidence": true
+        },
+        "2000": {
+          "target_month_pixels": 60,
+          "any_burned_month_pixels": 60,
+          "same_month_coincidence": true
+        }
+      }
+    },
+    {
+      "incident_name": "Parque Nacional Quebrada del",
+      "province": "Córdoba",
+      "latitude": -31.602061111111112,
+      "longitude": -64.72338888888889,
+      "reported_start_date": "2025-10-10",
+      "route_center_distance_km": 5.702,
+      "status": "ACTIVO",
+      "mapbiomas_month_neighborhood": {
+        "100": {
+          "target_month_pixels": 0,
+          "any_burned_month_pixels": 0,
+          "same_month_coincidence": false
+        },
+        "250": {
+          "target_month_pixels": 0,
+          "any_burned_month_pixels": 0,
+          "same_month_coincidence": false
+        },
+        "500": {
+          "target_month_pixels": 0,
+          "any_burned_month_pixels": 0,
+          "same_month_coincidence": false
+        },
+        "1000": {
+          "target_month_pixels": 0,
+          "any_burned_month_pixels": 0,
+          "same_month_coincidence": false
+        },
+        "2000": {
+          "target_month_pixels": 411,
+          "any_burned_month_pixels": 412,
+          "same_month_coincidence": true
+        }
+      }
+    }
+  ],
+  "summary": {
+    "snmf_event_route_days": 4,
+    "same_month_burned_area_route_month_coincidences": 2,
+    "coincidence_fraction_descriptive_only": 0.5,
+    "deduplicated_incident_coordinates": 5,
+    "same_month_pixel_coincidences_by_incident_radius_m": {
+      "100": 0,
+      "250": 1,
+      "500": 1,
+      "1000": 1,
+      "2000": 2
+    }
+  },
+  "limitations": [
+    "This is not a forecast evaluation; the burned-area layer is retrospective.",
+    "Same-month presence in a 10 km center buffer can be an unrelated nearby fire, not the named SNMF incident.",
+    "The four events are a small, selected subset, not a random or exhaustive incident cohort.",
+    "A missing burned pixel is not a verified no-fire label; Landsat mapping can omit small scars or shift date/location.",
+    "A 10 km buffer around a catalog center is a proxy, not a trail-line intersection.",
+    "The local area correction is approximate and should not be cited as a survey-grade burned area measurement."
+  ],
+  "synthetic_observations": 0,
+  "deployment_approved": false
+}

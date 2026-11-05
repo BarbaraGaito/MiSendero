@@ -1,0 +1,263 @@
+{
+  "experiment_id": "goes19-one-hour-alert-episode-snmf-snapshot-crosscheck",
+  "status": "descriptive_positive_event_crosscheck_precision_not_estimable",
+  "selection": "The one-hour GOES model and 0.5 diagnostic threshold were frozen before this report cross-check; the episode cohort is selected by model alerts, not a random route-time sample.",
+  "matching_rule": "For each route alert episode, match active/controlled/contained SNMF snapshots from one calendar day before through one calendar day after the alert interval, using full trail polyline distance. A match does not prove event identity or alert lead time.",
+  "threshold": 0.5,
+  "route_buffer_km": [
+    10,
+    20
+  ],
+  "model_alert_episodes": 8,
+  "episodes_with_any_snmf_snapshot_within_10km": 5,
+  "episodes_with_any_snmf_snapshot_within_20km": 7,
+  "unique_matched_snmf_incidents_within_10km": 1,
+  "unique_matched_snmf_incidents_within_20km": 2,
+  "episodes_without_nearby_snmf_snapshot": [
+    8
+  ],
+  "alert_episode_matches": [
+    {
+      "episode_index": 1,
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "alert_start_hour_utc": "2026-01-05T19",
+      "alert_end_hour_utc": "2026-01-05T21",
+      "hours": 3,
+      "goes_positive_target_hours": 3,
+      "nearby_active_snmf_incidents_within_10km": [
+        {
+          "incident_name": "Barda de La Loma",
+          "province": "Río Negro",
+          "reported_start_date": "2026-01-05",
+          "nearest_report_date": "2026-01-06",
+          "reported_status": "CONTROLADO",
+          "distance_km": 5.939
+        }
+      ],
+      "nearby_active_snmf_incidents_within_20km": [
+        {
+          "incident_name": "Barda de La Loma",
+          "province": "Río Negro",
+          "reported_start_date": "2026-01-05",
+          "nearest_report_date": "2026-01-06",
+          "reported_status": "CONTROLADO",
+          "distance_km": 5.939
+        },
+        {
+          "incident_name": "Primera Cantera Puerto Patriada",
+          "province": "Chubut",
+          "reported_start_date": "2026-01-05",
+          "nearest_report_date": "2026-01-05",
+          "reported_status": "ACTIVO",
+          "distance_km": 18.169
+        }
+      ]
+    },
+    {
+      "episode_index": 2,
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "alert_start_hour_utc": "2026-01-06T02",
+      "alert_end_hour_utc": "2026-01-06T05",
+      "hours": 4,
+      "goes_positive_target_hours": 4,
+      "nearby_active_snmf_incidents_within_10km": [
+        {
+          "incident_name": "Barda de La Loma",
+          "province": "Río Negro",
+          "reported_start_date": "2026-01-05",
+          "nearest_report_date": "2026-01-07",
+          "reported_status": "CONTROLADO",
+          "distance_km": 5.939
+        }
+      ],
+      "nearby_active_snmf_incidents_within_20km": [
+        {
+          "incident_name": "Barda de La Loma",
+          "province": "Río Negro",
+          "reported_start_date": "2026-01-05",
+          "nearest_report_date": "2026-01-07",
+          "reported_status": "CONTROLADO",
+          "distance_km": 5.939
+        },
+        {
+          "incident_name": "Primera Cantera Puerto Patriada",
+          "province": "Chubut",
+          "reported_start_date": "2026-01-05",
+          "nearest_report_date": "2026-01-05",
+          "reported_status": "ACTIVO",
+          "distance_km": 18.169
+        }
+      ]
+    },
+    {
+      "episode_index": 3,
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "alert_start_hour_utc": "2026-01-06T07",
+      "alert_end_hour_utc": "2026-01-06T10",
+      "hours": 4,
+      "goes_positive_target_hours": 3,
+      "nearby_active_snmf_incidents_within_10km": [
+        {
+          "incident_name": "Barda de La Loma",
+          "province": "Río Negro",
+          "reported_start_date": "2026-01-05",
+          "nearest_report_date": "2026-01-07",
+          "reported_status": "CONTROLADO",
+          "distance_km": 5.939
+        }
+      ],
+      "nearby_active_snmf_incidents_within_20km": [
+        {
+          "incident_name": "Barda de La Loma",
+          "province": "Río Negro",
+          "reported_start_date": "2026-01-05",
+          "nearest_report_date": "2026-01-07",
+          "reported_status": "CONTROLADO",
+          "distance_km": 5.939
+        },
+        {
+          "incident_name": "Primera Cantera Puerto Patriada",
+          "province": "Chubut",
+          "reported_start_date": "2026-01-05",
+          "nearest_report_date": "2026-01-05",
+          "reported_status": "ACTIVO",
+          "distance_km": 18.169
+        }
+      ]
+    },
+    {
+      "episode_index": 4,
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "alert_start_hour_utc": "2026-01-06T17",
+      "alert_end_hour_utc": "2026-01-06T18",
+      "hours": 2,
+      "goes_positive_target_hours": 1,
+      "nearby_active_snmf_incidents_within_10km": [
+        {
+          "incident_name": "Barda de La Loma",
+          "province": "Río Negro",
+          "reported_start_date": "2026-01-05",
+          "nearest_report_date": "2026-01-07",
+          "reported_status": "CONTROLADO",
+          "distance_km": 5.939
+        }
+      ],
+      "nearby_active_snmf_incidents_within_20km": [
+        {
+          "incident_name": "Barda de La Loma",
+          "province": "Río Negro",
+          "reported_start_date": "2026-01-05",
+          "nearest_report_date": "2026-01-07",
+          "reported_status": "CONTROLADO",
+          "distance_km": 5.939
+        },
+        {
+          "incident_name": "Primera Cantera Puerto Patriada",
+          "province": "Chubut",
+          "reported_start_date": "2026-01-05",
+          "nearest_report_date": "2026-01-05",
+          "reported_status": "ACTIVO",
+          "distance_km": 18.169
+        }
+      ]
+    },
+    {
+      "episode_index": 5,
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "alert_start_hour_utc": "2026-01-06T20",
+      "alert_end_hour_utc": "2026-01-06T22",
+      "hours": 3,
+      "goes_positive_target_hours": 3,
+      "nearby_active_snmf_incidents_within_10km": [
+        {
+          "incident_name": "Barda de La Loma",
+          "province": "Río Negro",
+          "reported_start_date": "2026-01-05",
+          "nearest_report_date": "2026-01-07",
+          "reported_status": "CONTROLADO",
+          "distance_km": 5.939
+        }
+      ],
+      "nearby_active_snmf_incidents_within_20km": [
+        {
+          "incident_name": "Barda de La Loma",
+          "province": "Río Negro",
+          "reported_start_date": "2026-01-05",
+          "nearest_report_date": "2026-01-07",
+          "reported_status": "CONTROLADO",
+          "distance_km": 5.939
+        },
+        {
+          "incident_name": "Primera Cantera Puerto Patriada",
+          "province": "Chubut",
+          "reported_start_date": "2026-01-05",
+          "nearest_report_date": "2026-01-05",
+          "reported_status": "ACTIVO",
+          "distance_km": 18.169
+        }
+      ]
+    },
+    {
+      "episode_index": 6,
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "alert_start_hour_utc": "2026-01-10T20",
+      "alert_end_hour_utc": "2026-01-10T21",
+      "hours": 2,
+      "goes_positive_target_hours": 1,
+      "nearby_active_snmf_incidents_within_10km": [],
+      "nearby_active_snmf_incidents_within_20km": [
+        {
+          "incident_name": "Primera Cantera Puerto Patriada",
+          "province": "Chubut",
+          "reported_start_date": "2026-01-05",
+          "nearest_report_date": "2026-01-09",
+          "reported_status": "ACTIVO",
+          "distance_km": 18.169
+        }
+      ]
+    },
+    {
+      "episode_index": 7,
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "alert_start_hour_utc": "2026-01-13T18",
+      "alert_end_hour_utc": "2026-01-14T06",
+      "hours": 13,
+      "goes_positive_target_hours": 12,
+      "nearby_active_snmf_incidents_within_10km": [],
+      "nearby_active_snmf_incidents_within_20km": [
+        {
+          "incident_name": "Primera Cantera Puerto Patriada",
+          "province": "Chubut",
+          "reported_start_date": "2026-01-05",
+          "nearest_report_date": "2026-01-12",
+          "reported_status": "ACTIVO",
+          "distance_km": 18.169
+        }
+      ]
+    },
+    {
+      "episode_index": 8,
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "alert_start_hour_utc": "2026-01-05T21",
+      "alert_end_hour_utc": "2026-01-05T21",
+      "hours": 1,
+      "goes_positive_target_hours": 0,
+      "nearby_active_snmf_incidents_within_10km": [],
+      "nearby_active_snmf_incidents_within_20km": []
+    }
+  ],
+  "sources": {
+    "short_lead_model_evaluation_sha256": "8e4d973fb6192a983828d8374da088103d86c101cfa48ae94fb56ad3da10b798",
+    "snmf_daily_occurrence_events_sha256": "ba18284a722410e225906de6ea1ba35e72d5670496c45793363e901beb6efcca",
+    "route_geometry_sha256": "d622e3bd3bae7c97df9152d5ae22fa9cf3136f2bbb0ee807703eaddc21d6610a"
+  },
+  "precision_estimable": false,
+  "synthetic_observations": 0,
+  "deployment_approved": false,
+  "limitations": [
+    "The 2026 January SNMF reports are daily administrative status snapshots, not timestamps of ignition.",
+    "SNMF reporting is not an exhaustive list of every fire or every fire-free route-period.",
+    "Repeated alert episodes can match the same continuing incident; these are not independent events.",
+    "An episode without a nearby SNMF report is unmatched, not a confirmed false physical-fire alert."
+  ]
+}

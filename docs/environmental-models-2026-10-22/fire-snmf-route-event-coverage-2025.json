@@ -1,0 +1,248 @@
+{
+  "experiment_id": "snmf-reported-fire-starts-near-argentina-trail-centers-2025",
+  "meaning": "Inventory of reported positive event starts only; not a model evaluation.",
+  "sources": {
+    "official_source": "Sistema Nacional de Manejo del Fuego daily occurrence reports",
+    "event_extraction_sha256": "d8e95391641ccb7d884d7bbe88e3df6fff82251352a50154656f88096f4a87f4",
+    "report_manifest_sha256": "0ca1d7673cde658412fad7f5b8b4d3db578c288d480388750ffc899281a82943",
+    "geography_sha256": "7e475b478db7bb678cc0a1539fdf484e0c8de0a9baa98916fb90f652f75ff834"
+  },
+  "report_coverage": {
+    "period": [
+      "2025-01-01",
+      "2026-01-01"
+    ],
+    "calendar_days": 365,
+    "downloaded_report_days": 207,
+    "dates_without_a_report_at_checked_paths": 158,
+    "downloaded_days_by_month": {
+      "2025-05": 10,
+      "2025-06": 22,
+      "2025-07": 31,
+      "2025-08": 30,
+      "2025-09": 29,
+      "2025-10": 31,
+      "2025-11": 23,
+      "2025-12": 31
+    },
+    "reports_with_zero_extracted_event_rows": 6,
+    "interpretation": "No report is an unknown observation. A PDF with zero extracted rows may reflect report content or parser failure and was not called an official fire-free day."
+  },
+  "spatial_protocol": {
+    "regions": [
+      "Sendero Macuco - Salto Arrechea",
+      "Refugio Frey desde Villa Catedral",
+      "Quebrada del Condorito - Balcon Norte",
+      "Sendero Namuncura",
+      "Cerro Ventana - Hueco de la Ventana",
+      "Bosque Tallado desde la plataforma del Piltriquitron",
+      "Sendero Che Roga - Mburucuyá",
+      "Sendero La Chuña - El Rey"
+    ],
+    "distance_measure": "Haversine between incident coordinates and fixed route-sector center",
+    "radii_km": [
+      10,
+      20
+    ],
+    "unit": "route-sector start day; multiple incident records on the same route/date are grouped"
+  },
+  "results": {
+    "10": {
+      "incident_records_within_radius": 8,
+      "unique_route_sector_start_days": 4,
+      "unique_route_sector_days_by_region": {
+        "Bosque Tallado desde la plataforma del Piltriquitron": 2,
+        "Quebrada del Condorito - Balcon Norte": 1,
+        "Cerro Ventana - Hueco de la Ventana": 1
+      },
+      "route_sector_start_days": [
+        {
+          "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "target_date": "2025-10-08",
+          "source_incident_names": [
+            "Cerro Radal",
+            "Ruta 40 Control Policial"
+          ],
+          "nearest_reported_incident_km": 4.721
+        },
+        {
+          "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "target_date": "2025-11-17",
+          "source_incident_names": [
+            "Ternero Los fuegos"
+          ],
+          "nearest_reported_incident_km": 7.404
+        },
+        {
+          "route_sector": "Cerro Ventana - Hueco de la Ventana",
+          "target_date": "2025-12-11",
+          "source_incident_names": [
+            "CERRO NAPOSTA /CERRO"
+          ],
+          "nearest_reported_incident_km": 9.124
+        },
+        {
+          "route_sector": "Quebrada del Condorito - Balcon Norte",
+          "target_date": "2025-10-10",
+          "source_incident_names": [
+            "Parque Nacional Quebrada del",
+            "Parque Nacional Quebrada del Condorito, ex",
+            "Parque Nacional Quebrada del Condorito, ex La",
+            "Parque Nacional Quebrada del Condorito, ex La Pampilla"
+          ],
+          "nearest_reported_incident_km": 5.702
+        }
+      ]
+    },
+    "20": {
+      "incident_records_within_radius": 24,
+      "unique_route_sector_start_days": 15,
+      "unique_route_sector_days_by_region": {
+        "Bosque Tallado desde la plataforma del Piltriquitron": 7,
+        "Quebrada del Condorito - Balcon Norte": 3,
+        "Refugio Frey desde Villa Catedral": 4,
+        "Cerro Ventana - Hueco de la Ventana": 1
+      },
+      "route_sector_start_days": [
+        {
+          "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "target_date": "2025-07-17",
+          "source_incident_names": [
+            "CALLEJON INALEF"
+          ],
+          "nearest_reported_incident_km": 17.805
+        },
+        {
+          "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "target_date": "2025-10-08",
+          "source_incident_names": [
+            "Cerro Radal",
+            "Ruta 40 Control Policial"
+          ],
+          "nearest_reported_incident_km": 4.721
+        },
+        {
+          "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "target_date": "2025-11-12",
+          "source_incident_names": [
+            "Aserradero Gonzalez"
+          ],
+          "nearest_reported_incident_km": 15.33
+        },
+        {
+          "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "target_date": "2025-11-17",
+          "source_incident_names": [
+            "Complejo",
+            "Complejo Cabañas",
+            "Complejo Cabañas KRITZ",
+            "Laguna de los Ruiz - Cuesta del",
+            "Ternero Los fuegos"
+          ],
+          "nearest_reported_incident_km": 7.404
+        },
+        {
+          "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "target_date": "2025-12-04",
+          "source_incident_names": [
+            "Cabañas KRITZ La Cantera"
+          ],
+          "nearest_reported_incident_km": 14.407
+        },
+        {
+          "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "target_date": "2025-12-09",
+          "source_incident_names": [
+            "Callejón de los maestros"
+          ],
+          "nearest_reported_incident_km": 14.959
+        },
+        {
+          "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "target_date": "2025-12-12",
+          "source_incident_names": [
+            "Cerro Saturnino"
+          ],
+          "nearest_reported_incident_km": 12.809
+        },
+        {
+          "route_sector": "Cerro Ventana - Hueco de la Ventana",
+          "target_date": "2025-12-11",
+          "source_incident_names": [
+            "CERRO NAPOSTA /CERRO"
+          ],
+          "nearest_reported_incident_km": 9.124
+        },
+        {
+          "route_sector": "Quebrada del Condorito - Balcon Norte",
+          "target_date": "2025-08-01",
+          "source_incident_names": [
+            "Pampa Alta"
+          ],
+          "nearest_reported_incident_km": 16.992
+        },
+        {
+          "route_sector": "Quebrada del Condorito - Balcon Norte",
+          "target_date": "2025-08-11",
+          "source_incident_names": [
+            "Bosque Alegre"
+          ],
+          "nearest_reported_incident_km": 14.147
+        },
+        {
+          "route_sector": "Quebrada del Condorito - Balcon Norte",
+          "target_date": "2025-10-10",
+          "source_incident_names": [
+            "Parque Nacional Quebrada del",
+            "Parque Nacional Quebrada del Condorito, ex",
+            "Parque Nacional Quebrada del Condorito, ex La",
+            "Parque Nacional Quebrada del Condorito, ex La Pampilla"
+          ],
+          "nearest_reported_incident_km": 5.702
+        },
+        {
+          "route_sector": "Refugio Frey desde Villa Catedral",
+          "target_date": "2025-10-06",
+          "source_incident_names": [
+            "CIRCUNVALACION"
+          ],
+          "nearest_reported_incident_km": 14.042
+        },
+        {
+          "route_sector": "Refugio Frey desde Villa Catedral",
+          "target_date": "2025-11-26",
+          "source_incident_names": [
+            "Ladera Norte Cerro",
+            "Ladera Norte Cerro Otto"
+          ],
+          "nearest_reported_incident_km": 10.457
+        },
+        {
+          "route_sector": "Refugio Frey desde Villa Catedral",
+          "target_date": "2025-12-03",
+          "source_incident_names": [
+            "Terminal"
+          ],
+          "nearest_reported_incident_km": 17.457
+        },
+        {
+          "route_sector": "Refugio Frey desde Villa Catedral",
+          "target_date": "2025-12-18",
+          "source_incident_names": [
+            "SN (Cerro Runge)"
+          ],
+          "nearest_reported_incident_km": 13.341
+        }
+      ]
+    }
+  },
+  "limitations": [
+    "Daily SNMF reports are jurisdiction-reported and not an exhaustive national event/no-event registry.",
+    "158 of 365 dates have no PDF at the checked paths; these are unknown, never negative.",
+    "The automated extraction has 171 report snapshot rows without coordinates and 6 reports with zero parsed event rows; original PDFs require review for those cases.",
+    "Event starts may be approximate and duplicate naming may remain; route-day aggregation avoids treating duplicate records at the same route/date as separate positives.",
+    "Route-sector centers do not represent the complete trail geometry."
+  ],
+  "synthetic_observations": 0,
+  "deployment_approved": false
+}

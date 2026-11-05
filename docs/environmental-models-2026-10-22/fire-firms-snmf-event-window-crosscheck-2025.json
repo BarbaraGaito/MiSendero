@@ -1,0 +1,54 @@
+{
+  "experiment_id": "firms-viirs-snmf-positive-event-window-crosscheck-2025",
+  "status": "corroboration_only_precision_not_estimable",
+  "period": [
+    "2025-01-01",
+    "2025-12-31"
+  ],
+  "sensor": "VIIRS_SNPP_SP",
+  "buffer_km": 20.0,
+  "cohort_selection": "Only route-days labeled positive by same-day SNMF report proxy at 20 km were selected; queried date windows extend one day before and after and are merged into spans no longer than five days.",
+  "results": {
+    "snmf_positive_route_days_in_cohort": 60,
+    "targeted_api_query_blocks": 28,
+    "firm_detection_rows": 488,
+    "unique_route_detection_days_in_queried_windows": 11,
+    "same_day_snmf_positive_route_days_with_detection": 10,
+    "same_day_cohort_detection_fraction_descriptive_only": 0.16666666666666666,
+    "snmf_positive_route_days_with_detection_within_plus_minus_one_day": 11,
+    "confidence": {
+      "h": {
+        "detection_rows": 45,
+        "route_detection_days": 4,
+        "same_day_snmf_positive_route_days": 4
+      },
+      "n": {
+        "detection_rows": 414,
+        "route_detection_days": 10,
+        "same_day_snmf_positive_route_days": 9
+      },
+      "l": {
+        "detection_rows": 29,
+        "route_detection_days": 4,
+        "same_day_snmf_positive_route_days": 4
+      }
+    },
+    "negative_examples_created": 0,
+    "precision_estimable": false
+  },
+  "limitations": [
+    "Query windows were selected from SNMF-positive days, so the sample is event-enriched and cannot estimate alert precision.",
+    "FIRMS detects satellite-observed thermal anomalies; a missing point does not prove no fire because of overpass timing, cloud, smoke, or sensor coverage.",
+    "SNMF report dates have daily rather than ignition-time precision; the plus/minus one-day figure is descriptive only.",
+    "A hotspot within the same route buffer and day is not necessarily the same incident as the SNMF report."
+  ],
+  "sources": {
+    "firms_event_window_archive_sha256": "fb2fe7b56b75247f4531595b7860983643ba9bf8458ee151305fc47692d8ebe8",
+    "snmf_event_report_sha256": "d8e95391641ccb7d884d7bbe88e3df6fff82251352a50154656f88096f4a87f4",
+    "snmf_source_manifest_sha256": "0ca1d7673cde658412fad7f5b8b4d3db578c288d480388750ffc899281a82943",
+    "route_geometry_sha256": "d622e3bd3bae7c97df9152d5ae22fa9cf3136f2bbb0ee807703eaddc21d6610a",
+    "event_window_plan_sha256": "0af3b90104f36f15a1f8236851e3c539f2b16267f5e1e82659ecd34673075b45"
+  },
+  "synthetic_observations": 0,
+  "deployment_approved": false
+}

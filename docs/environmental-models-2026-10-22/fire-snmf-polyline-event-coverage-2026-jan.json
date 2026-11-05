@@ -1,0 +1,287 @@
+{
+  "experiment_id": "snmf-reported-fire-starts-full-trail-polyline-2026",
+  "meaning": "Positive event coverage using complete reviewed trail polylines; not an evaluation of prediction precision.",
+  "period": [
+    "2026-01-01",
+    "2026-02-01"
+  ],
+  "spatial_protocol": {
+    "distance": "Local equirectangular point-to-polyline segment distance, centered on each event",
+    "radii_km": [
+      10,
+      20
+    ],
+    "minimum_polyline_vertices_by_route": {
+      "Sendero Macuco - Salto Arrechea": 219,
+      "Refugio Frey desde Villa Catedral": 1057,
+      "Quebrada del Condorito - Balcon Norte": 379,
+      "Sendero Namuncura": 37,
+      "Cerro Ventana - Hueco de la Ventana": 221,
+      "Bosque Tallado desde la plataforma del Piltriquitron": 103,
+      "Sendero Che Roga - Mburucuyá": 234,
+      "Sendero La Chuña - El Rey": 93
+    },
+    "route_geometry_source_hashes": {
+      "Sendero Macuco - Salto Arrechea": "148e8cb09cd0d851b88a1875e60763f34efffe046a68c1cb886911fde629477b",
+      "Refugio Frey desde Villa Catedral": "9947df55746c5b8033b0955a9bdd8b2ddb61db1dad2621b1fc0d72fa1e21acdf",
+      "Quebrada del Condorito - Balcon Norte": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74",
+      "Sendero Namuncura": "9ffaf89538fec8fb40b3d760b8e8b8fbcc154794b28d438fa6b046429fc5d32c",
+      "Cerro Ventana - Hueco de la Ventana": "61e1a9b62ae9b691b29c437aed7792b3723c7af54f03feb2311d4322fd3f5066",
+      "Bosque Tallado desde la plataforma del Piltriquitron": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa",
+      "Sendero Che Roga - Mburucuyá": "2237dea63aa6181caa98c84399ebb5331111c210f07c709c78ff0d7f2cd5453e",
+      "Sendero La Chuña - El Rey": "8144c640b68175397512d2feb778c7471d1c703e42d0c9f81d830ab95fdcf35b"
+    },
+    "routes_without_reviewed_polyline": [],
+    "center_distance_is_computed_against_existing_sector_coordinate": true
+  },
+  "report_coverage": {
+    "available_report_dates": 30,
+    "period_days": 31,
+    "dates_without_pdf_are_unknown": 1
+  },
+  "source_hashes": {
+    "reports": "ba18284a722410e225906de6ea1ba35e72d5670496c45793363e901beb6efcca",
+    "manifest": "c9c25df1611fb3a053de47caf117d3b885e079eed190ebe590e6eb1ee75ad59d",
+    "geometry": "d622e3bd3bae7c97df9152d5ae22fa9cf3136f2bbb0ee807703eaddc21d6610a",
+    "geography": "7e475b478db7bb678cc0a1539fdf484e0c8de0a9baa98916fb90f652f75ff834"
+  },
+  "results": {
+    "10": {
+      "incident_records_within_radius": 8,
+      "unique_route_sector_start_days": 6,
+      "route_sector_days_by_region": {
+        "Bosque Tallado desde la plataforma del Piltriquitron": 3,
+        "Refugio Frey desde Villa Catedral": 2,
+        "Sendero Namuncura": 1
+      },
+      "days_found_by_polyline_but_missed_by_center": []
+    },
+    "20": {
+      "incident_records_within_radius": 16,
+      "unique_route_sector_start_days": 8,
+      "route_sector_days_by_region": {
+        "Bosque Tallado desde la plataforma del Piltriquitron": 3,
+        "Refugio Frey desde Villa Catedral": 4,
+        "Sendero Namuncura": 1
+      },
+      "days_found_by_polyline_but_missed_by_center": [
+        {
+          "route_sector": "Refugio Frey desde Villa Catedral",
+          "reported_start_date": "2026-01-30"
+        }
+      ]
+    }
+  },
+  "events_within_50km": [
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2026-01-01",
+      "incident_name": "Basural",
+      "province": "Chubut",
+      "line_distance_km": 9.718,
+      "center_distance_km": 9.799,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2026-01-05",
+      "incident_name": "Barda de La Loma",
+      "province": "Río Negro",
+      "line_distance_km": 5.937,
+      "center_distance_km": 6.293,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2026-01-05",
+      "incident_name": "Primera",
+      "province": "Chubut",
+      "line_distance_km": 18.166,
+      "center_distance_km": 18.525,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2026-01-05",
+      "incident_name": "Primera Cantera",
+      "province": "Chubut",
+      "line_distance_km": 18.166,
+      "center_distance_km": 18.525,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2026-01-05",
+      "incident_name": "Primera Cantera Puerto",
+      "province": "Chubut",
+      "line_distance_km": 18.166,
+      "center_distance_km": 18.525,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2026-01-05",
+      "incident_name": "Primera Cantera Puerto Patriada",
+      "province": "Chubut",
+      "line_distance_km": 18.166,
+      "center_distance_km": 18.525,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2026-01-05",
+      "incident_name": "Turbio Primera Cantera Puerto",
+      "province": "Chubut",
+      "line_distance_km": 18.166,
+      "center_distance_km": 18.525,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2026-01-05",
+      "incident_name": "Turbio Primera Cantera Puerto Patriada",
+      "province": "Chubut",
+      "line_distance_km": 18.166,
+      "center_distance_km": 18.525,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2026-01-10",
+      "incident_name": "Aeródromo El Bolsón",
+      "province": "Río Negro",
+      "line_distance_km": 5.857,
+      "center_distance_km": 5.988,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2026-01-30",
+      "incident_name": "CRUCE DE RUTA 237",
+      "province": "Neuquén",
+      "line_distance_km": 38.181,
+      "center_distance_km": 38.456,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa"
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "reported_start_date": "2026-01-31",
+      "incident_name": "Puesto Antonio Fernandez (zona El Turbio)",
+      "province": "Chubut",
+      "line_distance_km": 21.977,
+      "center_distance_km": 22.338,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa"
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_start_date": "2026-01-01",
+      "incident_name": "Barda Ñireco",
+      "province": "Río Negro",
+      "line_distance_km": 24.85,
+      "center_distance_km": 27.11,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "9947df55746c5b8033b0955a9bdd8b2ddb61db1dad2621b1fc0d72fa1e21acdf"
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_start_date": "2026-01-05",
+      "incident_name": "Cantera Eva Perón",
+      "province": "Río Negro",
+      "line_distance_km": 7.824,
+      "center_distance_km": 9.718,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "9947df55746c5b8033b0955a9bdd8b2ddb61db1dad2621b1fc0d72fa1e21acdf"
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_start_date": "2026-01-06",
+      "incident_name": "Vertedero Municipal",
+      "province": "Río Negro",
+      "line_distance_km": 7.208,
+      "center_distance_km": 9.093,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "9947df55746c5b8033b0955a9bdd8b2ddb61db1dad2621b1fc0d72fa1e21acdf"
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_start_date": "2026-01-06",
+      "incident_name": "VERTEDERO MUNICIPAL",
+      "province": "Río Negro",
+      "line_distance_km": 7.404,
+      "center_distance_km": 9.293,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "9947df55746c5b8033b0955a9bdd8b2ddb61db1dad2621b1fc0d72fa1e21acdf"
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_start_date": "2026-01-06",
+      "incident_name": "tres lagunas) VERTEDERO MUNICIPAL",
+      "province": "Río Negro",
+      "line_distance_km": 7.404,
+      "center_distance_km": 9.293,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "9947df55746c5b8033b0955a9bdd8b2ddb61db1dad2621b1fc0d72fa1e21acdf"
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_start_date": "2026-01-22",
+      "incident_name": "Circunvalación",
+      "province": "Río Negro",
+      "line_distance_km": 10.776,
+      "center_distance_km": 12.729,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "9947df55746c5b8033b0955a9bdd8b2ddb61db1dad2621b1fc0d72fa1e21acdf"
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_start_date": "2026-01-22",
+      "incident_name": "Bajada del Viejo Molino - Ñirihuau",
+      "province": "Río Negro",
+      "line_distance_km": 26.98,
+      "center_distance_km": 29.155,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "9947df55746c5b8033b0955a9bdd8b2ddb61db1dad2621b1fc0d72fa1e21acdf"
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "reported_start_date": "2026-01-30",
+      "incident_name": "LAGO TRAFUL",
+      "province": "Neuquén",
+      "line_distance_km": 19.226,
+      "center_distance_km": 20.207,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "9947df55746c5b8033b0955a9bdd8b2ddb61db1dad2621b1fc0d72fa1e21acdf"
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "reported_start_date": "2026-01-07",
+      "incident_name": "P.N. LIHUE CALEL",
+      "province": "La Pampa",
+      "line_distance_km": 1.593,
+      "center_distance_km": 1.61,
+      "reported_start_date_pdf_available": true,
+      "geometry_sha256": "9ffaf89538fec8fb40b3d760b8e8b8fbcc154794b28d438fa6b046429fc5d32c"
+    }
+  ],
+  "limitations": [
+    "SNMF reports are jurisdiction-reported, not an exhaustive incident/no-incident registry.",
+    "A missing report or no listed nearby incident is not a verified physical no-fire window.",
+    "Dates are reported calendar dates; exact ignition time and lead time are unavailable.",
+    "Routes without a reviewed polyline are excluded; sector centers are not substituted into line-distance counts.",
+    "A mapped trail line does not imply that all adjacent land is equally exposed or that the trail was open.",
+    "Local equirectangular distance is an approximation; the 10/20 km results should be checked geodesically before threshold-sensitive use."
+  ],
+  "synthetic_observations": 0,
+  "deployment_approved": false
+}

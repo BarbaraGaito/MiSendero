@@ -1,0 +1,3858 @@
+{
+  "experiment_id": "goes-gfs-24h-new-sector-detection-after-no-recent-fire",
+  "candidate_status": "insufficient_positive_route_sector_days",
+  "protocol": {
+    "weather_model": "NCEP GFS Seamless via Open-Meteo Previous Runs API",
+    "weather_lead_hours": 24,
+    "weather_features": [
+      "temperature_2m_previous_day1",
+      "relative_humidity_2m_previous_day1",
+      "wind_speed_10m_previous_day1",
+      "precipitation_previous_day1"
+    ],
+    "fire_target": "Any nominal/high-quality GOES FDCF detection in the fixed sector at the target scan, conditional on no valid recent GOES fire detection in that sector at issue time; this is new detection after a clear recent-history condition, not confirmed ignition.",
+    "evaluation_unit": "Sector-hour for fitting; route-sector-day (maximum score) for threshold selection and test reporting.",
+    "label_coverage_rule": "Count a positive if any sampled pixel has a nominal/high-quality GOES fire label; count a negative only when at least 50% of the sector's fixed pixels have valid target labels. Require valid recent GOES history for at least 25% of fixed pixels.",
+    "training_period": "2024-01-01 through 2025-11-30 (only dates with GOES coverage and archived 24h weather)",
+    "validation_period": "2025-12-01 through 2025-12-31",
+    "test_period": "2026-01-01 through 2026-01-31",
+    "target_split_uses_valid_scan_time": true,
+    "threshold_rule": "On validation only, maximize recall with route-sector-day precision >= 0.80 and at least 5 alerts; otherwise select no threshold.",
+    "ongoing_fire_exclusion": "Exclude a sector-time row if any usable fixed pixel is marked active fire in the latest satellite-history feature at issue time."
+  },
+  "sources": {
+    "weather": {
+      "openmeteo-gfs-previous-runs-argentina-trails-2024-01-01-2024-02-01.json.gz": {
+        "response_sha256": "b6a78597c859614a1e2dcf327fd42dbcac997026a6d63aef96a0f7b5bca71024",
+        "manifest_sha256": "f251ead0d34ae2507a761cb6d695bc04c4c0ea82ae55c7ac737921fa07e9d6ee"
+      },
+      "openmeteo-gfs-previous-runs-argentina-trails-2025-01-01-2026-02-01.json.gz": {
+        "response_sha256": "832483042d55bed07e68bc9ccdd66dcbc1d0968c6f2e06317b61b9612e3f2ab7",
+        "manifest_sha256": "d475406dfbe1841fdbdcb4c0b5cc0d492d3599c2096044206af668ad0f6af56d"
+      }
+    },
+    "goes": {
+      "fire-hourly": {
+        "observations": "f31c6470a4d74479eba3243ca97c30015959d74012b31fa85bc76f726fc666bb",
+        "availability_or_manifest": "fa9a7fad9046387b290241ce635713916270d751370ab0c25ed0958299dac3e3"
+      },
+      "fire-goes16-2025-q1": {
+        "observations": "33960501bcc324c1e9440e7aeb5a80321b312fca386d828f606f3594f059116b",
+        "availability_or_manifest": "c06221f800ce4d7b316dc7d5615266d1d6c432e678896d2f52420f24392c906a"
+      },
+      "fire-goes19-2025q4-2026jan": {
+        "observations": "07bdecf2b7d88ee94403ca97b4a7a9cbf67e4efeb5a9d5ad1b75151eaacad98b",
+        "availability_or_manifest": "d14059389e901c4003435fcb8e5a76a19fc1e6a08e98115e07faa72c5a5b24b6"
+      }
+    }
+  },
+  "data_coverage": {
+    "aligned_24h_scan_pairs": 5712,
+    "pairs_without_valid_sector_inputs": 511,
+    "ongoing_fire_sector_time_rows_excluded": 269,
+    "eligible_no_recent_fire_sector_time_rows": 23841,
+    "positive_route_sector_days": {
+      "validation": 5,
+      "test": 25
+    }
+  },
+  "partitions": {
+    "train": {
+      "sector_hour_rows": 17091,
+      "positive_sector_hours": 134
+    },
+    "validation": {
+      "sector_hour_rows": 2915,
+      "positive_sector_hours": 11
+    },
+    "test": {
+      "sector_hour_rows": 3835,
+      "positive_sector_hours": 80
+    }
+  },
+  "deployment_approved": false,
+  "validation": {
+    "sector_hour_average_precision": 0.05740938383121148,
+    "route_sector_day_average_precision": 0.44691166321601106,
+    "threshold_at_precision_floor_0_80": null,
+    "precision_at_0_5_route_sector_day": {
+      "threshold": 0.5,
+      "alerts_route_sector_days": 130,
+      "true_positive_route_sector_days": 5,
+      "precision": 0.038461538461538464,
+      "precision_exact_95ci_descriptive": [
+        0.012604362344755161,
+        0.08747357306980717
+      ],
+      "recall": 1.0,
+      "positive_route_sector_days": 5,
+      "caution": "Nearby sectors and adjacent days can belong to one fire; this is not event-level precision."
+    },
+    "persistence_baseline_precision_recall": {
+      "precision": 0.0,
+      "recall": 0.0
+    },
+    "route_sector_day_predictions": [
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "target_date": "2025-12-01",
+        "label_goes_fire": 0,
+        "score": 0.6251991987228394,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "target_date": "2025-12-02",
+        "label_goes_fire": 0,
+        "score": 0.03692135587334633,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "target_date": "2025-12-03",
+        "label_goes_fire": 0,
+        "score": 0.6247896552085876,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "target_date": "2025-12-04",
+        "label_goes_fire": 0,
+        "score": 0.7969875335693359,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "target_date": "2025-12-05",
+        "label_goes_fire": 1,
+        "score": 0.7211284637451172,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "target_date": "2025-12-06",
+        "label_goes_fire": 0,
+        "score": 0.8561621308326721,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "target_date": "2025-12-07",
+        "label_goes_fire": 1,
+        "score": 0.8105323910713196,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "target_date": "2025-12-08",
+        "label_goes_fire": 1,
+        "score": 0.9611526727676392,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "target_date": "2025-12-09",
+        "label_goes_fire": 1,
+        "score": 0.7243925929069519,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "target_date": "2025-12-10",
+        "label_goes_fire": 0,
+        "score": 0.5365806221961975,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "target_date": "2025-12-11",
+        "label_goes_fire": 1,
+        "score": 0.9999765157699585,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "target_date": "2025-12-12",
+        "label_goes_fire": 0,
+        "score": 0.5957083106040955,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "target_date": "2025-12-13",
+        "label_goes_fire": 0,
+        "score": 0.09244805574417114,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "target_date": "2025-12-15",
+        "label_goes_fire": 0,
+        "score": 0.047215938568115234,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "target_date": "2025-12-16",
+        "label_goes_fire": 0,
+        "score": 0.4595453143119812,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "target_date": "2025-12-17",
+        "label_goes_fire": 0,
+        "score": 0.7034305930137634,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "target_date": "2025-12-18",
+        "label_goes_fire": 0,
+        "score": 0.7857356667518616,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "target_date": "2025-12-19",
+        "label_goes_fire": 0,
+        "score": 0.26085060834884644,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "target_date": "2025-12-22",
+        "label_goes_fire": 0,
+        "score": 0.00949960295110941,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "target_date": "2025-12-23",
+        "label_goes_fire": 0,
+        "score": 0.677399754524231,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "target_date": "2025-12-24",
+        "label_goes_fire": 0,
+        "score": 0.6007717251777649,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "target_date": "2025-12-25",
+        "label_goes_fire": 0,
+        "score": 0.6516181230545044,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "target_date": "2025-12-26",
+        "label_goes_fire": 0,
+        "score": 0.18789121508598328,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "target_date": "2025-12-27",
+        "label_goes_fire": 0,
+        "score": 0.7005902528762817,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "target_date": "2025-12-28",
+        "label_goes_fire": 0,
+        "score": 0.8123025894165039,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "target_date": "2025-12-29",
+        "label_goes_fire": 0,
+        "score": 0.7576560974121094,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "target_date": "2025-12-30",
+        "label_goes_fire": 0,
+        "score": 0.6384103894233704,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "target_date": "2025-12-31",
+        "label_goes_fire": 0,
+        "score": 0.7766016125679016,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "target_date": "2025-12-01",
+        "label_goes_fire": 0,
+        "score": 0.06006162241101265,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "target_date": "2025-12-02",
+        "label_goes_fire": 0,
+        "score": 0.7075473666191101,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "target_date": "2025-12-03",
+        "label_goes_fire": 0,
+        "score": 0.6718279719352722,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "target_date": "2025-12-04",
+        "label_goes_fire": 0,
+        "score": 0.6360851526260376,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "target_date": "2025-12-05",
+        "label_goes_fire": 0,
+        "score": 0.7024039626121521,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "target_date": "2025-12-06",
+        "label_goes_fire": 0,
+        "score": 0.6405705213546753,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "target_date": "2025-12-07",
+        "label_goes_fire": 0,
+        "score": 0.6168944239616394,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "target_date": "2025-12-08",
+        "label_goes_fire": 0,
+        "score": 0.5948737263679504,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "target_date": "2025-12-09",
+        "label_goes_fire": 0,
+        "score": 0.5482479333877563,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "target_date": "2025-12-10",
+        "label_goes_fire": 0,
+        "score": 0.5578093528747559,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "target_date": "2025-12-11",
+        "label_goes_fire": 0,
+        "score": 0.7399263978004456,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "target_date": "2025-12-12",
+        "label_goes_fire": 0,
+        "score": 0.7800939083099365,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "target_date": "2025-12-13",
+        "label_goes_fire": 0,
+        "score": 0.6871073246002197,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "target_date": "2025-12-15",
+        "label_goes_fire": 0,
+        "score": 0.12133876234292984,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "target_date": "2025-12-16",
+        "label_goes_fire": 0,
+        "score": 0.664071798324585,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "target_date": "2025-12-17",
+        "label_goes_fire": 0,
+        "score": 0.6946764588356018,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "target_date": "2025-12-18",
+        "label_goes_fire": 0,
+        "score": 0.8069365620613098,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "target_date": "2025-12-19",
+        "label_goes_fire": 0,
+        "score": 0.7231260538101196,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "target_date": "2025-12-20",
+        "label_goes_fire": 0,
+        "score": 0.5282546281814575,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "target_date": "2025-12-21",
+        "label_goes_fire": 0,
+        "score": 0.6156517267227173,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "target_date": "2025-12-22",
+        "label_goes_fire": 0,
+        "score": 0.7733162045478821,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "target_date": "2025-12-23",
+        "label_goes_fire": 0,
+        "score": 0.7052028179168701,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "target_date": "2025-12-24",
+        "label_goes_fire": 0,
+        "score": 0.7583848237991333,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "target_date": "2025-12-25",
+        "label_goes_fire": 0,
+        "score": 0.821336030960083,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "target_date": "2025-12-26",
+        "label_goes_fire": 0,
+        "score": 0.8067969083786011,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "target_date": "2025-12-27",
+        "label_goes_fire": 0,
+        "score": 0.7094011902809143,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "target_date": "2025-12-28",
+        "label_goes_fire": 0,
+        "score": 0.7849382758140564,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "target_date": "2025-12-29",
+        "label_goes_fire": 0,
+        "score": 0.7686437368392944,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "target_date": "2025-12-30",
+        "label_goes_fire": 0,
+        "score": 0.8299591541290283,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "target_date": "2025-12-31",
+        "label_goes_fire": 0,
+        "score": 0.6510328650474548,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Quebrada del Condorito - Balcon Norte",
+        "target_date": "2025-12-01",
+        "label_goes_fire": 0,
+        "score": 0.017976155504584312,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Quebrada del Condorito - Balcon Norte",
+        "target_date": "2025-12-02",
+        "label_goes_fire": 0,
+        "score": 0.5447754859924316,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Quebrada del Condorito - Balcon Norte",
+        "target_date": "2025-12-03",
+        "label_goes_fire": 0,
+        "score": 0.5301128625869751,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Quebrada del Condorito - Balcon Norte",
+        "target_date": "2025-12-04",
+        "label_goes_fire": 0,
+        "score": 0.6454069018363953,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Quebrada del Condorito - Balcon Norte",
+        "target_date": "2025-12-05",
+        "label_goes_fire": 0,
+        "score": 0.6847907900810242,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Quebrada del Condorito - Balcon Norte",
+        "target_date": "2025-12-08",
+        "label_goes_fire": 0,
+        "score": 0.003933650441467762,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Quebrada del Condorito - Balcon Norte",
+        "target_date": "2025-12-09",
+        "label_goes_fire": 0,
+        "score": 0.6713806986808777,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Quebrada del Condorito - Balcon Norte",
+        "target_date": "2025-12-10",
+        "label_goes_fire": 0,
+        "score": 0.6731798052787781,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Quebrada del Condorito - Balcon Norte",
+        "target_date": "2025-12-11",
+        "label_goes_fire": 0,
+        "score": 0.2963835299015045,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Quebrada del Condorito - Balcon Norte",
+        "target_date": "2025-12-12",
+        "label_goes_fire": 0,
+        "score": 0.7162438035011292,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Quebrada del Condorito - Balcon Norte",
+        "target_date": "2025-12-13",
+        "label_goes_fire": 0,
+        "score": 0.7265430092811584,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Quebrada del Condorito - Balcon Norte",
+        "target_date": "2025-12-14",
+        "label_goes_fire": 0,
+        "score": 0.04669279232621193,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Quebrada del Condorito - Balcon Norte",
+        "target_date": "2025-12-15",
+        "label_goes_fire": 0,
+        "score": 0.01709519512951374,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Quebrada del Condorito - Balcon Norte",
+        "target_date": "2025-12-16",
+        "label_goes_fire": 0,
+        "score": 0.6070983409881592,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Quebrada del Condorito - Balcon Norte",
+        "target_date": "2025-12-17",
+        "label_goes_fire": 0,
+        "score": 0.7328085899353027,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Quebrada del Condorito - Balcon Norte",
+        "target_date": "2025-12-18",
+        "label_goes_fire": 0,
+        "score": 0.6999940276145935,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Quebrada del Condorito - Balcon Norte",
+        "target_date": "2025-12-19",
+        "label_goes_fire": 0,
+        "score": 0.7052959203720093,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Quebrada del Condorito - Balcon Norte",
+        "target_date": "2025-12-20",
+        "label_goes_fire": 0,
+        "score": 0.2014603614807129,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Quebrada del Condorito - Balcon Norte",
+        "target_date": "2025-12-21",
+        "label_goes_fire": 0,
+        "score": 0.2596516013145447,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Quebrada del Condorito - Balcon Norte",
+        "target_date": "2025-12-22",
+        "label_goes_fire": 0,
+        "score": 0.30747535824775696,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Quebrada del Condorito - Balcon Norte",
+        "target_date": "2025-12-23",
+        "label_goes_fire": 0,
+        "score": 0.16255883872509003,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Quebrada del Condorito - Balcon Norte",
+        "target_date": "2025-12-24",
+        "label_goes_fire": 0,
+        "score": 0.5526695847511292,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Quebrada del Condorito - Balcon Norte",
+        "target_date": "2025-12-25",
+        "label_goes_fire": 0,
+        "score": 0.5788310170173645,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Quebrada del Condorito - Balcon Norte",
+        "target_date": "2025-12-26",
+        "label_goes_fire": 0,
+        "score": 0.5735698938369751,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Quebrada del Condorito - Balcon Norte",
+        "target_date": "2025-12-27",
+        "label_goes_fire": 0,
+        "score": 0.6192892789840698,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Quebrada del Condorito - Balcon Norte",
+        "target_date": "2025-12-28",
+        "label_goes_fire": 0,
+        "score": 0.4003348648548126,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Quebrada del Condorito - Balcon Norte",
+        "target_date": "2025-12-29",
+        "label_goes_fire": 0,
+        "score": 0.5543308854103088,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Quebrada del Condorito - Balcon Norte",
+        "target_date": "2025-12-30",
+        "label_goes_fire": 0,
+        "score": 0.524847686290741,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Quebrada del Condorito - Balcon Norte",
+        "target_date": "2025-12-31",
+        "label_goes_fire": 0,
+        "score": 0.7500594854354858,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Refugio Frey desde Villa Catedral",
+        "target_date": "2025-12-02",
+        "label_goes_fire": 0,
+        "score": 0.02869243733584881,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Refugio Frey desde Villa Catedral",
+        "target_date": "2025-12-03",
+        "label_goes_fire": 0,
+        "score": 0.6881939172744751,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Refugio Frey desde Villa Catedral",
+        "target_date": "2025-12-04",
+        "label_goes_fire": 0,
+        "score": 0.8006124496459961,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Refugio Frey desde Villa Catedral",
+        "target_date": "2025-12-05",
+        "label_goes_fire": 0,
+        "score": 0.7390674352645874,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Refugio Frey desde Villa Catedral",
+        "target_date": "2025-12-06",
+        "label_goes_fire": 0,
+        "score": 0.7781708836555481,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Refugio Frey desde Villa Catedral",
+        "target_date": "2025-12-07",
+        "label_goes_fire": 0,
+        "score": 0.8251063823699951,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Refugio Frey desde Villa Catedral",
+        "target_date": "2025-12-08",
+        "label_goes_fire": 0,
+        "score": 0.7344587445259094,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Refugio Frey desde Villa Catedral",
+        "target_date": "2025-12-09",
+        "label_goes_fire": 0,
+        "score": 0.8638448119163513,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Refugio Frey desde Villa Catedral",
+        "target_date": "2025-12-10",
+        "label_goes_fire": 0,
+        "score": 0.7956759929656982,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Refugio Frey desde Villa Catedral",
+        "target_date": "2025-12-11",
+        "label_goes_fire": 0,
+        "score": 0.7653424739837646,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Refugio Frey desde Villa Catedral",
+        "target_date": "2025-12-12",
+        "label_goes_fire": 0,
+        "score": 0.07196573168039322,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Refugio Frey desde Villa Catedral",
+        "target_date": "2025-12-16",
+        "label_goes_fire": 0,
+        "score": 0.684693455696106,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Refugio Frey desde Villa Catedral",
+        "target_date": "2025-12-17",
+        "label_goes_fire": 0,
+        "score": 0.7061103582382202,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Refugio Frey desde Villa Catedral",
+        "target_date": "2025-12-18",
+        "label_goes_fire": 0,
+        "score": 0.7688988447189331,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Refugio Frey desde Villa Catedral",
+        "target_date": "2025-12-19",
+        "label_goes_fire": 0,
+        "score": 0.23761597275733948,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Refugio Frey desde Villa Catedral",
+        "target_date": "2025-12-22",
+        "label_goes_fire": 0,
+        "score": 0.018369026482105255,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Refugio Frey desde Villa Catedral",
+        "target_date": "2025-12-23",
+        "label_goes_fire": 0,
+        "score": 0.5802202820777893,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Refugio Frey desde Villa Catedral",
+        "target_date": "2025-12-24",
+        "label_goes_fire": 0,
+        "score": 0.6626238226890564,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Refugio Frey desde Villa Catedral",
+        "target_date": "2025-12-25",
+        "label_goes_fire": 0,
+        "score": 0.7286391258239746,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Refugio Frey desde Villa Catedral",
+        "target_date": "2025-12-26",
+        "label_goes_fire": 0,
+        "score": 0.45213261246681213,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Refugio Frey desde Villa Catedral",
+        "target_date": "2025-12-27",
+        "label_goes_fire": 0,
+        "score": 0.7588290572166443,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Refugio Frey desde Villa Catedral",
+        "target_date": "2025-12-28",
+        "label_goes_fire": 0,
+        "score": 0.8390816450119019,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Refugio Frey desde Villa Catedral",
+        "target_date": "2025-12-29",
+        "label_goes_fire": 0,
+        "score": 0.7922211289405823,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Refugio Frey desde Villa Catedral",
+        "target_date": "2025-12-30",
+        "label_goes_fire": 0,
+        "score": 0.7070449590682983,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Refugio Frey desde Villa Catedral",
+        "target_date": "2025-12-31",
+        "label_goes_fire": 0,
+        "score": 0.8144112229347229,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Che Roga - Mburucuy\u00e1",
+        "target_date": "2025-12-01",
+        "label_goes_fire": 0,
+        "score": 0.013044440187513828,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Che Roga - Mburucuy\u00e1",
+        "target_date": "2025-12-02",
+        "label_goes_fire": 0,
+        "score": 0.027957238256931305,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Che Roga - Mburucuy\u00e1",
+        "target_date": "2025-12-03",
+        "label_goes_fire": 0,
+        "score": 0.3882019519805908,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Che Roga - Mburucuy\u00e1",
+        "target_date": "2025-12-04",
+        "label_goes_fire": 0,
+        "score": 0.45879411697387695,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Che Roga - Mburucuy\u00e1",
+        "target_date": "2025-12-05",
+        "label_goes_fire": 0,
+        "score": 0.39191752672195435,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Che Roga - Mburucuy\u00e1",
+        "target_date": "2025-12-06",
+        "label_goes_fire": 0,
+        "score": 0.368696391582489,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Che Roga - Mburucuy\u00e1",
+        "target_date": "2025-12-07",
+        "label_goes_fire": 0,
+        "score": 0.4077230393886566,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Che Roga - Mburucuy\u00e1",
+        "target_date": "2025-12-09",
+        "label_goes_fire": 0,
+        "score": 0.055962562561035156,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Che Roga - Mburucuy\u00e1",
+        "target_date": "2025-12-10",
+        "label_goes_fire": 0,
+        "score": 0.23946897685527802,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Che Roga - Mburucuy\u00e1",
+        "target_date": "2025-12-11",
+        "label_goes_fire": 0,
+        "score": 0.30882519483566284,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Che Roga - Mburucuy\u00e1",
+        "target_date": "2025-12-12",
+        "label_goes_fire": 0,
+        "score": 0.25862008333206177,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Che Roga - Mburucuy\u00e1",
+        "target_date": "2025-12-13",
+        "label_goes_fire": 0,
+        "score": 0.29765281081199646,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Che Roga - Mburucuy\u00e1",
+        "target_date": "2025-12-14",
+        "label_goes_fire": 0,
+        "score": 0.28416475653648376,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Che Roga - Mburucuy\u00e1",
+        "target_date": "2025-12-15",
+        "label_goes_fire": 0,
+        "score": 0.07362829893827438,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Che Roga - Mburucuy\u00e1",
+        "target_date": "2025-12-16",
+        "label_goes_fire": 0,
+        "score": 0.07896309345960617,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Che Roga - Mburucuy\u00e1",
+        "target_date": "2025-12-17",
+        "label_goes_fire": 0,
+        "score": 0.4367171823978424,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Che Roga - Mburucuy\u00e1",
+        "target_date": "2025-12-18",
+        "label_goes_fire": 0,
+        "score": 0.34036779403686523,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Che Roga - Mburucuy\u00e1",
+        "target_date": "2025-12-19",
+        "label_goes_fire": 0,
+        "score": 0.4339908957481384,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Che Roga - Mburucuy\u00e1",
+        "target_date": "2025-12-20",
+        "label_goes_fire": 0,
+        "score": 0.3728565573692322,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Che Roga - Mburucuy\u00e1",
+        "target_date": "2025-12-23",
+        "label_goes_fire": 0,
+        "score": 2.9469820219674148e-06,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Che Roga - Mburucuy\u00e1",
+        "target_date": "2025-12-24",
+        "label_goes_fire": 0,
+        "score": 0.14779549837112427,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Che Roga - Mburucuy\u00e1",
+        "target_date": "2025-12-25",
+        "label_goes_fire": 0,
+        "score": 0.02456449344754219,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Che Roga - Mburucuy\u00e1",
+        "target_date": "2025-12-27",
+        "label_goes_fire": 0,
+        "score": 0.16320307552814484,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Che Roga - Mburucuy\u00e1",
+        "target_date": "2025-12-28",
+        "label_goes_fire": 0,
+        "score": 0.07090319693088531,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Che Roga - Mburucuy\u00e1",
+        "target_date": "2025-12-29",
+        "label_goes_fire": 0,
+        "score": 0.00018227742111776024,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Che Roga - Mburucuy\u00e1",
+        "target_date": "2025-12-30",
+        "label_goes_fire": 0,
+        "score": 0.005654712673276663,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Che Roga - Mburucuy\u00e1",
+        "target_date": "2025-12-31",
+        "label_goes_fire": 0,
+        "score": 0.10912195593118668,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero La Chu\u00f1a - El Rey",
+        "target_date": "2025-12-01",
+        "label_goes_fire": 0,
+        "score": 0.03771433234214783,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero La Chu\u00f1a - El Rey",
+        "target_date": "2025-12-03",
+        "label_goes_fire": 0,
+        "score": 0.000872655538842082,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero La Chu\u00f1a - El Rey",
+        "target_date": "2025-12-04",
+        "label_goes_fire": 0,
+        "score": 0.10842780023813248,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero La Chu\u00f1a - El Rey",
+        "target_date": "2025-12-05",
+        "label_goes_fire": 0,
+        "score": 0.40550941228866577,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero La Chu\u00f1a - El Rey",
+        "target_date": "2025-12-06",
+        "label_goes_fire": 0,
+        "score": 0.6383974552154541,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero La Chu\u00f1a - El Rey",
+        "target_date": "2025-12-07",
+        "label_goes_fire": 0,
+        "score": 0.5279113054275513,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero La Chu\u00f1a - El Rey",
+        "target_date": "2025-12-08",
+        "label_goes_fire": 0,
+        "score": 0.37210023403167725,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero La Chu\u00f1a - El Rey",
+        "target_date": "2025-12-09",
+        "label_goes_fire": 0,
+        "score": 0.6845598816871643,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero La Chu\u00f1a - El Rey",
+        "target_date": "2025-12-10",
+        "label_goes_fire": 0,
+        "score": 0.6924908757209778,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero La Chu\u00f1a - El Rey",
+        "target_date": "2025-12-11",
+        "label_goes_fire": 0,
+        "score": 0.7212108373641968,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero La Chu\u00f1a - El Rey",
+        "target_date": "2025-12-12",
+        "label_goes_fire": 0,
+        "score": 0.4597437083721161,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero La Chu\u00f1a - El Rey",
+        "target_date": "2025-12-13",
+        "label_goes_fire": 0,
+        "score": 0.6893858313560486,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero La Chu\u00f1a - El Rey",
+        "target_date": "2025-12-14",
+        "label_goes_fire": 0,
+        "score": 0.7287670373916626,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero La Chu\u00f1a - El Rey",
+        "target_date": "2025-12-15",
+        "label_goes_fire": 0,
+        "score": 0.2669944167137146,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero La Chu\u00f1a - El Rey",
+        "target_date": "2025-12-16",
+        "label_goes_fire": 0,
+        "score": 0.03666993975639343,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero La Chu\u00f1a - El Rey",
+        "target_date": "2025-12-17",
+        "label_goes_fire": 0,
+        "score": 0.7931377291679382,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero La Chu\u00f1a - El Rey",
+        "target_date": "2025-12-18",
+        "label_goes_fire": 0,
+        "score": 0.7838187217712402,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero La Chu\u00f1a - El Rey",
+        "target_date": "2025-12-19",
+        "label_goes_fire": 0,
+        "score": 0.5303500294685364,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero La Chu\u00f1a - El Rey",
+        "target_date": "2025-12-20",
+        "label_goes_fire": 0,
+        "score": 0.587428867816925,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero La Chu\u00f1a - El Rey",
+        "target_date": "2025-12-21",
+        "label_goes_fire": 0,
+        "score": 0.4207621216773987,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero La Chu\u00f1a - El Rey",
+        "target_date": "2025-12-23",
+        "label_goes_fire": 0,
+        "score": 0.15861473977565765,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero La Chu\u00f1a - El Rey",
+        "target_date": "2025-12-24",
+        "label_goes_fire": 0,
+        "score": 0.1389251947402954,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero La Chu\u00f1a - El Rey",
+        "target_date": "2025-12-25",
+        "label_goes_fire": 0,
+        "score": 0.008127398788928986,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero La Chu\u00f1a - El Rey",
+        "target_date": "2025-12-26",
+        "label_goes_fire": 0,
+        "score": 0.10802920907735825,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero La Chu\u00f1a - El Rey",
+        "target_date": "2025-12-30",
+        "label_goes_fire": 0,
+        "score": 0.5481696724891663,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero La Chu\u00f1a - El Rey",
+        "target_date": "2025-12-31",
+        "label_goes_fire": 0,
+        "score": 0.09200592339038849,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Macuco - Salto Arrechea",
+        "target_date": "2025-12-01",
+        "label_goes_fire": 0,
+        "score": 0.005740410648286343,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Macuco - Salto Arrechea",
+        "target_date": "2025-12-02",
+        "label_goes_fire": 0,
+        "score": 0.0043259612284600735,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Macuco - Salto Arrechea",
+        "target_date": "2025-12-03",
+        "label_goes_fire": 0,
+        "score": 0.48424023389816284,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Macuco - Salto Arrechea",
+        "target_date": "2025-12-04",
+        "label_goes_fire": 0,
+        "score": 0.3905566930770874,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Macuco - Salto Arrechea",
+        "target_date": "2025-12-05",
+        "label_goes_fire": 0,
+        "score": 0.3596072196960449,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Macuco - Salto Arrechea",
+        "target_date": "2025-12-06",
+        "label_goes_fire": 0,
+        "score": 0.39573729038238525,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Macuco - Salto Arrechea",
+        "target_date": "2025-12-07",
+        "label_goes_fire": 0,
+        "score": 0.3678111135959625,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Macuco - Salto Arrechea",
+        "target_date": "2025-12-10",
+        "label_goes_fire": 0,
+        "score": 0.024993428960442543,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Macuco - Salto Arrechea",
+        "target_date": "2025-12-11",
+        "label_goes_fire": 0,
+        "score": 0.22564861178398132,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Macuco - Salto Arrechea",
+        "target_date": "2025-12-12",
+        "label_goes_fire": 0,
+        "score": 0.04410109296441078,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Macuco - Salto Arrechea",
+        "target_date": "2025-12-13",
+        "label_goes_fire": 0,
+        "score": 0.006912307348102331,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Macuco - Salto Arrechea",
+        "target_date": "2025-12-14",
+        "label_goes_fire": 0,
+        "score": 0.1579573005437851,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Macuco - Salto Arrechea",
+        "target_date": "2025-12-15",
+        "label_goes_fire": 0,
+        "score": 0.19750460982322693,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Macuco - Salto Arrechea",
+        "target_date": "2025-12-16",
+        "label_goes_fire": 0,
+        "score": 0.4975038170814514,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Macuco - Salto Arrechea",
+        "target_date": "2025-12-17",
+        "label_goes_fire": 0,
+        "score": 0.31774258613586426,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Macuco - Salto Arrechea",
+        "target_date": "2025-12-18",
+        "label_goes_fire": 0,
+        "score": 0.26673346757888794,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Macuco - Salto Arrechea",
+        "target_date": "2025-12-19",
+        "label_goes_fire": 0,
+        "score": 0.2955436110496521,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Macuco - Salto Arrechea",
+        "target_date": "2025-12-20",
+        "label_goes_fire": 0,
+        "score": 0.2137570083141327,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Macuco - Salto Arrechea",
+        "target_date": "2025-12-21",
+        "label_goes_fire": 0,
+        "score": 0.02014896273612976,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Macuco - Salto Arrechea",
+        "target_date": "2025-12-22",
+        "label_goes_fire": 0,
+        "score": 0.012788351625204086,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Macuco - Salto Arrechea",
+        "target_date": "2025-12-23",
+        "label_goes_fire": 0,
+        "score": 0.1387157440185547,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Macuco - Salto Arrechea",
+        "target_date": "2025-12-24",
+        "label_goes_fire": 0,
+        "score": 0.09465400129556656,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Macuco - Salto Arrechea",
+        "target_date": "2025-12-25",
+        "label_goes_fire": 0,
+        "score": 0.1668243408203125,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Macuco - Salto Arrechea",
+        "target_date": "2025-12-26",
+        "label_goes_fire": 0,
+        "score": 0.20736178755760193,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Macuco - Salto Arrechea",
+        "target_date": "2025-12-27",
+        "label_goes_fire": 0,
+        "score": 0.2596575617790222,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Macuco - Salto Arrechea",
+        "target_date": "2025-12-28",
+        "label_goes_fire": 0,
+        "score": 0.3005731701850891,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Macuco - Salto Arrechea",
+        "target_date": "2025-12-29",
+        "label_goes_fire": 0,
+        "score": 0.17617683112621307,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Macuco - Salto Arrechea",
+        "target_date": "2025-12-30",
+        "label_goes_fire": 0,
+        "score": 0.07692808657884598,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Macuco - Salto Arrechea",
+        "target_date": "2025-12-31",
+        "label_goes_fire": 0,
+        "score": 0.18414859473705292,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "target_date": "2025-12-01",
+        "label_goes_fire": 0,
+        "score": 0.6708679795265198,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "target_date": "2025-12-02",
+        "label_goes_fire": 0,
+        "score": 0.7963610887527466,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "target_date": "2025-12-03",
+        "label_goes_fire": 0,
+        "score": 0.7424704432487488,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "target_date": "2025-12-04",
+        "label_goes_fire": 0,
+        "score": 0.7892727851867676,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "target_date": "2025-12-05",
+        "label_goes_fire": 0,
+        "score": 0.8235130906105042,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "target_date": "2025-12-06",
+        "label_goes_fire": 0,
+        "score": 0.741288423538208,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "target_date": "2025-12-07",
+        "label_goes_fire": 0,
+        "score": 0.7994274497032166,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "target_date": "2025-12-08",
+        "label_goes_fire": 0,
+        "score": 0.8326866626739502,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "target_date": "2025-12-09",
+        "label_goes_fire": 0,
+        "score": 0.8317985534667969,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "target_date": "2025-12-10",
+        "label_goes_fire": 0,
+        "score": 0.7549957633018494,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "target_date": "2025-12-11",
+        "label_goes_fire": 0,
+        "score": 0.8459970951080322,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "target_date": "2025-12-12",
+        "label_goes_fire": 0,
+        "score": 0.8642042875289917,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "target_date": "2025-12-13",
+        "label_goes_fire": 0,
+        "score": 0.7891062498092651,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "target_date": "2025-12-14",
+        "label_goes_fire": 0,
+        "score": 0.33000293374061584,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "target_date": "2025-12-15",
+        "label_goes_fire": 0,
+        "score": 0.7900680303573608,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "target_date": "2025-12-16",
+        "label_goes_fire": 0,
+        "score": 0.806178629398346,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "target_date": "2025-12-17",
+        "label_goes_fire": 0,
+        "score": 0.8923017978668213,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "target_date": "2025-12-18",
+        "label_goes_fire": 0,
+        "score": 0.7472342848777771,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "target_date": "2025-12-19",
+        "label_goes_fire": 0,
+        "score": 0.8498006463050842,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "target_date": "2025-12-20",
+        "label_goes_fire": 0,
+        "score": 0.7785922288894653,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "target_date": "2025-12-21",
+        "label_goes_fire": 0,
+        "score": 0.84247225522995,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "target_date": "2025-12-22",
+        "label_goes_fire": 0,
+        "score": 0.8105589151382446,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "target_date": "2025-12-23",
+        "label_goes_fire": 0,
+        "score": 0.821567714214325,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "target_date": "2025-12-24",
+        "label_goes_fire": 0,
+        "score": 0.8490987420082092,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "target_date": "2025-12-25",
+        "label_goes_fire": 0,
+        "score": 0.8777117729187012,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "target_date": "2025-12-26",
+        "label_goes_fire": 0,
+        "score": 0.9194126725196838,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "target_date": "2025-12-27",
+        "label_goes_fire": 0,
+        "score": 0.8342986702919006,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "target_date": "2025-12-28",
+        "label_goes_fire": 0,
+        "score": 0.8154887557029724,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "target_date": "2025-12-29",
+        "label_goes_fire": 0,
+        "score": 0.8793256878852844,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "target_date": "2025-12-30",
+        "label_goes_fire": 0,
+        "score": 0.8593145608901978,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "target_date": "2025-12-31",
+        "label_goes_fire": 0,
+        "score": 0.8031319379806519,
+        "alert_at_0_5": true,
+        "persistence": false
+      }
+    ]
+  },
+  "test": {
+    "sector_hour_average_precision": 0.0991649153349773,
+    "route_sector_day_average_precision": 0.44496085606513014,
+    "precision_at_0_5_route_sector_day": {
+      "threshold": 0.5,
+      "alerts_route_sector_days": 146,
+      "true_positive_route_sector_days": 23,
+      "precision": 0.15753424657534246,
+      "precision_exact_95ci_descriptive": [
+        0.10256137531316815,
+        0.22694326066630818
+      ],
+      "recall": 0.92,
+      "positive_route_sector_days": 25,
+      "caution": "Nearby sectors and adjacent days can belong to one fire; this is not event-level precision."
+    },
+    "persistence_baseline_precision_recall": {
+      "precision": 0.0,
+      "recall": 0.0
+    },
+    "route_sector_day_predictions": [
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "target_date": "2026-01-01",
+        "label_goes_fire": 0,
+        "score": 0.8411270380020142,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "target_date": "2026-01-02",
+        "label_goes_fire": 0,
+        "score": 0.7899575233459473,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "target_date": "2026-01-03",
+        "label_goes_fire": 0,
+        "score": 0.826740026473999,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "target_date": "2026-01-04",
+        "label_goes_fire": 0,
+        "score": 0.8407319188117981,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "target_date": "2026-01-05",
+        "label_goes_fire": 1,
+        "score": 0.8548566102981567,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "target_date": "2026-01-06",
+        "label_goes_fire": 1,
+        "score": 0.7588453888893127,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "target_date": "2026-01-07",
+        "label_goes_fire": 1,
+        "score": 0.9929212927818298,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "target_date": "2026-01-08",
+        "label_goes_fire": 1,
+        "score": 0.9263116717338562,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "target_date": "2026-01-09",
+        "label_goes_fire": 1,
+        "score": 0.9580970406532288,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "target_date": "2026-01-10",
+        "label_goes_fire": 1,
+        "score": 0.9258984923362732,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "target_date": "2026-01-11",
+        "label_goes_fire": 1,
+        "score": 0.9987990856170654,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "target_date": "2026-01-12",
+        "label_goes_fire": 1,
+        "score": 0.9614371061325073,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "target_date": "2026-01-13",
+        "label_goes_fire": 1,
+        "score": 0.7483276128768921,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "target_date": "2026-01-14",
+        "label_goes_fire": 1,
+        "score": 0.6565706729888916,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "target_date": "2026-01-15",
+        "label_goes_fire": 0,
+        "score": 0.983805775642395,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "target_date": "2026-01-16",
+        "label_goes_fire": 0,
+        "score": 0.7942463755607605,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "target_date": "2026-01-17",
+        "label_goes_fire": 0,
+        "score": 0.8719467520713806,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "target_date": "2026-01-18",
+        "label_goes_fire": 0,
+        "score": 0.8422310948371887,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "target_date": "2026-01-19",
+        "label_goes_fire": 1,
+        "score": 0.8562346696853638,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "target_date": "2026-01-20",
+        "label_goes_fire": 1,
+        "score": 0.9990857839584351,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "target_date": "2026-01-21",
+        "label_goes_fire": 1,
+        "score": 0.9417198896408081,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "target_date": "2026-01-22",
+        "label_goes_fire": 1,
+        "score": 0.8742274045944214,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "target_date": "2026-01-23",
+        "label_goes_fire": 0,
+        "score": 0.9997627139091492,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "target_date": "2026-01-24",
+        "label_goes_fire": 1,
+        "score": 0.8265518546104431,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "target_date": "2026-01-25",
+        "label_goes_fire": 1,
+        "score": 0.9521545171737671,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "target_date": "2026-01-26",
+        "label_goes_fire": 1,
+        "score": 0.9840673208236694,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "target_date": "2026-01-27",
+        "label_goes_fire": 1,
+        "score": 0.4372345805168152,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "target_date": "2026-01-29",
+        "label_goes_fire": 0,
+        "score": 0.3610474765300751,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "target_date": "2026-01-30",
+        "label_goes_fire": 0,
+        "score": 0.6325759291648865,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "target_date": "2026-01-31",
+        "label_goes_fire": 0,
+        "score": 0.7983450889587402,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "target_date": "2026-01-01",
+        "label_goes_fire": 0,
+        "score": 0.7410906553268433,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "target_date": "2026-01-02",
+        "label_goes_fire": 0,
+        "score": 0.7851592302322388,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "target_date": "2026-01-03",
+        "label_goes_fire": 1,
+        "score": 0.5911281704902649,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "target_date": "2026-01-04",
+        "label_goes_fire": 0,
+        "score": 0.6880408525466919,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "target_date": "2026-01-05",
+        "label_goes_fire": 1,
+        "score": 0.7259706854820251,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "target_date": "2026-01-06",
+        "label_goes_fire": 0,
+        "score": 0.4002193212509155,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "target_date": "2026-01-07",
+        "label_goes_fire": 0,
+        "score": 0.0509827695786953,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "target_date": "2026-01-08",
+        "label_goes_fire": 0,
+        "score": 0.6342875957489014,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "target_date": "2026-01-09",
+        "label_goes_fire": 0,
+        "score": 0.6504600048065186,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "target_date": "2026-01-10",
+        "label_goes_fire": 0,
+        "score": 0.6547078490257263,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "target_date": "2026-01-11",
+        "label_goes_fire": 0,
+        "score": 0.8038246631622314,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "target_date": "2026-01-12",
+        "label_goes_fire": 0,
+        "score": 0.5900422930717468,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "target_date": "2026-01-13",
+        "label_goes_fire": 0,
+        "score": 0.5752890706062317,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "target_date": "2026-01-14",
+        "label_goes_fire": 0,
+        "score": 0.7506722807884216,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "target_date": "2026-01-15",
+        "label_goes_fire": 0,
+        "score": 0.7729613184928894,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "target_date": "2026-01-16",
+        "label_goes_fire": 0,
+        "score": 0.6834031343460083,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "target_date": "2026-01-17",
+        "label_goes_fire": 0,
+        "score": 0.6398952603340149,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "target_date": "2026-01-18",
+        "label_goes_fire": 0,
+        "score": 0.6503880023956299,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "target_date": "2026-01-19",
+        "label_goes_fire": 1,
+        "score": 0.7061997652053833,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "target_date": "2026-01-20",
+        "label_goes_fire": 1,
+        "score": 0.6412702798843384,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "target_date": "2026-01-21",
+        "label_goes_fire": 0,
+        "score": 0.9621308445930481,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "target_date": "2026-01-22",
+        "label_goes_fire": 0,
+        "score": 0.6582634449005127,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "target_date": "2026-01-23",
+        "label_goes_fire": 0,
+        "score": 0.3077927529811859,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "target_date": "2026-01-24",
+        "label_goes_fire": 0,
+        "score": 0.5830579996109009,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "target_date": "2026-01-25",
+        "label_goes_fire": 0,
+        "score": 0.5935090184211731,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "target_date": "2026-01-26",
+        "label_goes_fire": 0,
+        "score": 0.39139121770858765,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "target_date": "2026-01-27",
+        "label_goes_fire": 0,
+        "score": 0.6586387157440186,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "target_date": "2026-01-28",
+        "label_goes_fire": 0,
+        "score": 0.6861764192581177,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "target_date": "2026-01-29",
+        "label_goes_fire": 0,
+        "score": 0.6915296912193298,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "target_date": "2026-01-30",
+        "label_goes_fire": 0,
+        "score": 0.7347725629806519,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "target_date": "2026-01-31",
+        "label_goes_fire": 0,
+        "score": 0.6892053484916687,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Quebrada del Condorito - Balcon Norte",
+        "target_date": "2026-01-01",
+        "label_goes_fire": 0,
+        "score": 0.6418412327766418,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Quebrada del Condorito - Balcon Norte",
+        "target_date": "2026-01-02",
+        "label_goes_fire": 0,
+        "score": 0.731360137462616,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Quebrada del Condorito - Balcon Norte",
+        "target_date": "2026-01-03",
+        "label_goes_fire": 0,
+        "score": 0.6454111933708191,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Quebrada del Condorito - Balcon Norte",
+        "target_date": "2026-01-04",
+        "label_goes_fire": 0,
+        "score": 0.5777097344398499,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Quebrada del Condorito - Balcon Norte",
+        "target_date": "2026-01-05",
+        "label_goes_fire": 0,
+        "score": 0.7030667662620544,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Quebrada del Condorito - Balcon Norte",
+        "target_date": "2026-01-06",
+        "label_goes_fire": 0,
+        "score": 0.6291582584381104,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Quebrada del Condorito - Balcon Norte",
+        "target_date": "2026-01-07",
+        "label_goes_fire": 0,
+        "score": 0.6973551511764526,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Quebrada del Condorito - Balcon Norte",
+        "target_date": "2026-01-08",
+        "label_goes_fire": 0,
+        "score": 0.28990888595581055,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Quebrada del Condorito - Balcon Norte",
+        "target_date": "2026-01-10",
+        "label_goes_fire": 0,
+        "score": 0.15227042138576508,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Quebrada del Condorito - Balcon Norte",
+        "target_date": "2026-01-11",
+        "label_goes_fire": 0,
+        "score": 0.6240149736404419,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Quebrada del Condorito - Balcon Norte",
+        "target_date": "2026-01-12",
+        "label_goes_fire": 0,
+        "score": 0.664413571357727,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Quebrada del Condorito - Balcon Norte",
+        "target_date": "2026-01-13",
+        "label_goes_fire": 0,
+        "score": 0.29100772738456726,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Quebrada del Condorito - Balcon Norte",
+        "target_date": "2026-01-14",
+        "label_goes_fire": 0,
+        "score": 0.3997465670108795,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Quebrada del Condorito - Balcon Norte",
+        "target_date": "2026-01-15",
+        "label_goes_fire": 0,
+        "score": 0.06348513811826706,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Quebrada del Condorito - Balcon Norte",
+        "target_date": "2026-01-16",
+        "label_goes_fire": 0,
+        "score": 0.5402390360832214,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Quebrada del Condorito - Balcon Norte",
+        "target_date": "2026-01-17",
+        "label_goes_fire": 0,
+        "score": 0.4076074957847595,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Quebrada del Condorito - Balcon Norte",
+        "target_date": "2026-01-18",
+        "label_goes_fire": 0,
+        "score": 0.1211714893579483,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Quebrada del Condorito - Balcon Norte",
+        "target_date": "2026-01-19",
+        "label_goes_fire": 0,
+        "score": 0.11251083761453629,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Quebrada del Condorito - Balcon Norte",
+        "target_date": "2026-01-20",
+        "label_goes_fire": 0,
+        "score": 0.39547035098075867,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Quebrada del Condorito - Balcon Norte",
+        "target_date": "2026-01-21",
+        "label_goes_fire": 0,
+        "score": 0.5505037307739258,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Quebrada del Condorito - Balcon Norte",
+        "target_date": "2026-01-22",
+        "label_goes_fire": 0,
+        "score": 0.5484949350357056,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Quebrada del Condorito - Balcon Norte",
+        "target_date": "2026-01-23",
+        "label_goes_fire": 0,
+        "score": 0.615820050239563,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Quebrada del Condorito - Balcon Norte",
+        "target_date": "2026-01-24",
+        "label_goes_fire": 0,
+        "score": 0.3031158447265625,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Quebrada del Condorito - Balcon Norte",
+        "target_date": "2026-01-25",
+        "label_goes_fire": 0,
+        "score": 0.41196805238723755,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Quebrada del Condorito - Balcon Norte",
+        "target_date": "2026-01-26",
+        "label_goes_fire": 0,
+        "score": 0.029862161725759506,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Quebrada del Condorito - Balcon Norte",
+        "target_date": "2026-01-27",
+        "label_goes_fire": 0,
+        "score": 0.3657014071941376,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Quebrada del Condorito - Balcon Norte",
+        "target_date": "2026-01-28",
+        "label_goes_fire": 0,
+        "score": 0.323103129863739,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Quebrada del Condorito - Balcon Norte",
+        "target_date": "2026-01-29",
+        "label_goes_fire": 0,
+        "score": 0.5400457382202148,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Quebrada del Condorito - Balcon Norte",
+        "target_date": "2026-01-30",
+        "label_goes_fire": 0,
+        "score": 0.7281992435455322,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Quebrada del Condorito - Balcon Norte",
+        "target_date": "2026-01-31",
+        "label_goes_fire": 0,
+        "score": 0.6806219220161438,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Refugio Frey desde Villa Catedral",
+        "target_date": "2026-01-01",
+        "label_goes_fire": 0,
+        "score": 0.8526752591133118,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Refugio Frey desde Villa Catedral",
+        "target_date": "2026-01-02",
+        "label_goes_fire": 0,
+        "score": 0.81367027759552,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Refugio Frey desde Villa Catedral",
+        "target_date": "2026-01-03",
+        "label_goes_fire": 0,
+        "score": 0.8163993954658508,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Refugio Frey desde Villa Catedral",
+        "target_date": "2026-01-04",
+        "label_goes_fire": 0,
+        "score": 0.8480556011199951,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Refugio Frey desde Villa Catedral",
+        "target_date": "2026-01-05",
+        "label_goes_fire": 0,
+        "score": 0.8681071400642395,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Refugio Frey desde Villa Catedral",
+        "target_date": "2026-01-06",
+        "label_goes_fire": 0,
+        "score": 0.8342074155807495,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Refugio Frey desde Villa Catedral",
+        "target_date": "2026-01-07",
+        "label_goes_fire": 0,
+        "score": 0.8266928791999817,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Refugio Frey desde Villa Catedral",
+        "target_date": "2026-01-08",
+        "label_goes_fire": 0,
+        "score": 0.8579661846160889,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Refugio Frey desde Villa Catedral",
+        "target_date": "2026-01-09",
+        "label_goes_fire": 0,
+        "score": 0.8428565859794617,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Refugio Frey desde Villa Catedral",
+        "target_date": "2026-01-10",
+        "label_goes_fire": 0,
+        "score": 0.8258157968521118,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Refugio Frey desde Villa Catedral",
+        "target_date": "2026-01-11",
+        "label_goes_fire": 0,
+        "score": 0.35186174511909485,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Refugio Frey desde Villa Catedral",
+        "target_date": "2026-01-12",
+        "label_goes_fire": 0,
+        "score": 0.05999690666794777,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Refugio Frey desde Villa Catedral",
+        "target_date": "2026-01-13",
+        "label_goes_fire": 0,
+        "score": 0.6243547201156616,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Refugio Frey desde Villa Catedral",
+        "target_date": "2026-01-14",
+        "label_goes_fire": 0,
+        "score": 0.7377743721008301,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Refugio Frey desde Villa Catedral",
+        "target_date": "2026-01-15",
+        "label_goes_fire": 0,
+        "score": 0.7539495825767517,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Refugio Frey desde Villa Catedral",
+        "target_date": "2026-01-16",
+        "label_goes_fire": 0,
+        "score": 0.8227255344390869,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Refugio Frey desde Villa Catedral",
+        "target_date": "2026-01-17",
+        "label_goes_fire": 0,
+        "score": 0.8901227712631226,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Refugio Frey desde Villa Catedral",
+        "target_date": "2026-01-18",
+        "label_goes_fire": 0,
+        "score": 0.8806294202804565,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Refugio Frey desde Villa Catedral",
+        "target_date": "2026-01-19",
+        "label_goes_fire": 0,
+        "score": 0.8619021773338318,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Refugio Frey desde Villa Catedral",
+        "target_date": "2026-01-20",
+        "label_goes_fire": 0,
+        "score": 0.8707282543182373,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Refugio Frey desde Villa Catedral",
+        "target_date": "2026-01-21",
+        "label_goes_fire": 0,
+        "score": 0.8612427115440369,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Refugio Frey desde Villa Catedral",
+        "target_date": "2026-01-22",
+        "label_goes_fire": 0,
+        "score": 0.7807460427284241,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Refugio Frey desde Villa Catedral",
+        "target_date": "2026-01-23",
+        "label_goes_fire": 0,
+        "score": 0.8609622120857239,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Refugio Frey desde Villa Catedral",
+        "target_date": "2026-01-24",
+        "label_goes_fire": 0,
+        "score": 0.8497563004493713,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Refugio Frey desde Villa Catedral",
+        "target_date": "2026-01-25",
+        "label_goes_fire": 0,
+        "score": 0.8856240510940552,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Refugio Frey desde Villa Catedral",
+        "target_date": "2026-01-26",
+        "label_goes_fire": 0,
+        "score": 0.818345844745636,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Refugio Frey desde Villa Catedral",
+        "target_date": "2026-01-27",
+        "label_goes_fire": 0,
+        "score": 0.6524403691291809,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Refugio Frey desde Villa Catedral",
+        "target_date": "2026-01-28",
+        "label_goes_fire": 0,
+        "score": 0.2912237346172333,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Refugio Frey desde Villa Catedral",
+        "target_date": "2026-01-29",
+        "label_goes_fire": 0,
+        "score": 0.8225539922714233,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Refugio Frey desde Villa Catedral",
+        "target_date": "2026-01-30",
+        "label_goes_fire": 0,
+        "score": 0.4329935908317566,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Refugio Frey desde Villa Catedral",
+        "target_date": "2026-01-31",
+        "label_goes_fire": 0,
+        "score": 0.276897668838501,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Che Roga - Mburucuy\u00e1",
+        "target_date": "2026-01-01",
+        "label_goes_fire": 0,
+        "score": 0.2255154252052307,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Che Roga - Mburucuy\u00e1",
+        "target_date": "2026-01-02",
+        "label_goes_fire": 0,
+        "score": 0.3390568494796753,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Che Roga - Mburucuy\u00e1",
+        "target_date": "2026-01-03",
+        "label_goes_fire": 0,
+        "score": 0.41995659470558167,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Che Roga - Mburucuy\u00e1",
+        "target_date": "2026-01-04",
+        "label_goes_fire": 0,
+        "score": 0.3123539388179779,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Che Roga - Mburucuy\u00e1",
+        "target_date": "2026-01-05",
+        "label_goes_fire": 0,
+        "score": 0.324505090713501,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Che Roga - Mburucuy\u00e1",
+        "target_date": "2026-01-06",
+        "label_goes_fire": 0,
+        "score": 0.3002733290195465,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Che Roga - Mburucuy\u00e1",
+        "target_date": "2026-01-07",
+        "label_goes_fire": 0,
+        "score": 0.3913968503475189,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Che Roga - Mburucuy\u00e1",
+        "target_date": "2026-01-08",
+        "label_goes_fire": 0,
+        "score": 0.1875082105398178,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Che Roga - Mburucuy\u00e1",
+        "target_date": "2026-01-09",
+        "label_goes_fire": 0,
+        "score": 0.03278885409235954,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Che Roga - Mburucuy\u00e1",
+        "target_date": "2026-01-10",
+        "label_goes_fire": 0,
+        "score": 0.00762708717957139,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Che Roga - Mburucuy\u00e1",
+        "target_date": "2026-01-11",
+        "label_goes_fire": 0,
+        "score": 0.2855626344680786,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Che Roga - Mburucuy\u00e1",
+        "target_date": "2026-01-12",
+        "label_goes_fire": 0,
+        "score": 0.3337782621383667,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Che Roga - Mburucuy\u00e1",
+        "target_date": "2026-01-13",
+        "label_goes_fire": 0,
+        "score": 0.27792927622795105,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Che Roga - Mburucuy\u00e1",
+        "target_date": "2026-01-14",
+        "label_goes_fire": 0,
+        "score": 0.3000563085079193,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Che Roga - Mburucuy\u00e1",
+        "target_date": "2026-01-15",
+        "label_goes_fire": 0,
+        "score": 0.1980099081993103,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Che Roga - Mburucuy\u00e1",
+        "target_date": "2026-01-16",
+        "label_goes_fire": 0,
+        "score": 0.10311871767044067,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Che Roga - Mburucuy\u00e1",
+        "target_date": "2026-01-17",
+        "label_goes_fire": 0,
+        "score": 0.0006777833914384246,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Che Roga - Mburucuy\u00e1",
+        "target_date": "2026-01-18",
+        "label_goes_fire": 0,
+        "score": 0.3956766724586487,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Che Roga - Mburucuy\u00e1",
+        "target_date": "2026-01-19",
+        "label_goes_fire": 0,
+        "score": 0.33267053961753845,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Che Roga - Mburucuy\u00e1",
+        "target_date": "2026-01-20",
+        "label_goes_fire": 0,
+        "score": 0.4199133813381195,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Che Roga - Mburucuy\u00e1",
+        "target_date": "2026-01-21",
+        "label_goes_fire": 0,
+        "score": 0.3556903898715973,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Che Roga - Mburucuy\u00e1",
+        "target_date": "2026-01-22",
+        "label_goes_fire": 0,
+        "score": 0.3672725558280945,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Che Roga - Mburucuy\u00e1",
+        "target_date": "2026-01-23",
+        "label_goes_fire": 0,
+        "score": 0.40853190422058105,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Che Roga - Mburucuy\u00e1",
+        "target_date": "2026-01-24",
+        "label_goes_fire": 1,
+        "score": 0.44821226596832275,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Che Roga - Mburucuy\u00e1",
+        "target_date": "2026-01-25",
+        "label_goes_fire": 0,
+        "score": 0.5453728437423706,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Che Roga - Mburucuy\u00e1",
+        "target_date": "2026-01-26",
+        "label_goes_fire": 0,
+        "score": 0.45097002387046814,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Che Roga - Mburucuy\u00e1",
+        "target_date": "2026-01-27",
+        "label_goes_fire": 0,
+        "score": 0.3805758059024811,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Che Roga - Mburucuy\u00e1",
+        "target_date": "2026-01-28",
+        "label_goes_fire": 0,
+        "score": 0.5395788550376892,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Che Roga - Mburucuy\u00e1",
+        "target_date": "2026-01-29",
+        "label_goes_fire": 0,
+        "score": 0.546825647354126,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Che Roga - Mburucuy\u00e1",
+        "target_date": "2026-01-30",
+        "label_goes_fire": 0,
+        "score": 0.4404129981994629,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Che Roga - Mburucuy\u00e1",
+        "target_date": "2026-01-31",
+        "label_goes_fire": 0,
+        "score": 0.4553799629211426,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero La Chu\u00f1a - El Rey",
+        "target_date": "2026-01-01",
+        "label_goes_fire": 0,
+        "score": 0.26679742336273193,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero La Chu\u00f1a - El Rey",
+        "target_date": "2026-01-02",
+        "label_goes_fire": 0,
+        "score": 0.5204994678497314,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero La Chu\u00f1a - El Rey",
+        "target_date": "2026-01-03",
+        "label_goes_fire": 0,
+        "score": 0.5839460492134094,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero La Chu\u00f1a - El Rey",
+        "target_date": "2026-01-05",
+        "label_goes_fire": 0,
+        "score": 0.2718242108821869,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero La Chu\u00f1a - El Rey",
+        "target_date": "2026-01-06",
+        "label_goes_fire": 0,
+        "score": 0.7708624601364136,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero La Chu\u00f1a - El Rey",
+        "target_date": "2026-01-07",
+        "label_goes_fire": 0,
+        "score": 0.6440858244895935,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero La Chu\u00f1a - El Rey",
+        "target_date": "2026-01-08",
+        "label_goes_fire": 0,
+        "score": 0.47710126638412476,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero La Chu\u00f1a - El Rey",
+        "target_date": "2026-01-09",
+        "label_goes_fire": 0,
+        "score": 0.016124079003930092,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero La Chu\u00f1a - El Rey",
+        "target_date": "2026-01-10",
+        "label_goes_fire": 0,
+        "score": 0.026794860139489174,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero La Chu\u00f1a - El Rey",
+        "target_date": "2026-01-11",
+        "label_goes_fire": 0,
+        "score": 0.6450129747390747,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero La Chu\u00f1a - El Rey",
+        "target_date": "2026-01-12",
+        "label_goes_fire": 0,
+        "score": 0.7965387105941772,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero La Chu\u00f1a - El Rey",
+        "target_date": "2026-01-13",
+        "label_goes_fire": 0,
+        "score": 0.7487249970436096,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero La Chu\u00f1a - El Rey",
+        "target_date": "2026-01-14",
+        "label_goes_fire": 0,
+        "score": 0.6655044555664062,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero La Chu\u00f1a - El Rey",
+        "target_date": "2026-01-15",
+        "label_goes_fire": 0,
+        "score": 0.5996164083480835,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero La Chu\u00f1a - El Rey",
+        "target_date": "2026-01-16",
+        "label_goes_fire": 0,
+        "score": 0.28504255414009094,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero La Chu\u00f1a - El Rey",
+        "target_date": "2026-01-18",
+        "label_goes_fire": 0,
+        "score": 0.0012087540235370398,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero La Chu\u00f1a - El Rey",
+        "target_date": "2026-01-20",
+        "label_goes_fire": 0,
+        "score": 0.0006237220368348062,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero La Chu\u00f1a - El Rey",
+        "target_date": "2026-01-21",
+        "label_goes_fire": 0,
+        "score": 0.0393201969563961,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero La Chu\u00f1a - El Rey",
+        "target_date": "2026-01-22",
+        "label_goes_fire": 0,
+        "score": 0.510050892829895,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero La Chu\u00f1a - El Rey",
+        "target_date": "2026-01-23",
+        "label_goes_fire": 0,
+        "score": 0.7350752353668213,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero La Chu\u00f1a - El Rey",
+        "target_date": "2026-01-24",
+        "label_goes_fire": 0,
+        "score": 0.6886854767799377,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero La Chu\u00f1a - El Rey",
+        "target_date": "2026-01-25",
+        "label_goes_fire": 0,
+        "score": 0.6434758305549622,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero La Chu\u00f1a - El Rey",
+        "target_date": "2026-01-26",
+        "label_goes_fire": 0,
+        "score": 0.6432386040687561,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero La Chu\u00f1a - El Rey",
+        "target_date": "2026-01-28",
+        "label_goes_fire": 0,
+        "score": 0.0072122905403375626,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero La Chu\u00f1a - El Rey",
+        "target_date": "2026-01-29",
+        "label_goes_fire": 0,
+        "score": 0.5066402554512024,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero La Chu\u00f1a - El Rey",
+        "target_date": "2026-01-30",
+        "label_goes_fire": 0,
+        "score": 0.6158092617988586,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero La Chu\u00f1a - El Rey",
+        "target_date": "2026-01-31",
+        "label_goes_fire": 0,
+        "score": 0.10677601397037506,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Macuco - Salto Arrechea",
+        "target_date": "2026-01-01",
+        "label_goes_fire": 0,
+        "score": 2.4334335080311575e-07,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Macuco - Salto Arrechea",
+        "target_date": "2026-01-02",
+        "label_goes_fire": 0,
+        "score": 0.26359012722969055,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Macuco - Salto Arrechea",
+        "target_date": "2026-01-03",
+        "label_goes_fire": 0,
+        "score": 0.38426241278648376,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Macuco - Salto Arrechea",
+        "target_date": "2026-01-04",
+        "label_goes_fire": 0,
+        "score": 0.46613001823425293,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Macuco - Salto Arrechea",
+        "target_date": "2026-01-05",
+        "label_goes_fire": 0,
+        "score": 0.28486788272857666,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Macuco - Salto Arrechea",
+        "target_date": "2026-01-06",
+        "label_goes_fire": 0,
+        "score": 0.30749985575675964,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Macuco - Salto Arrechea",
+        "target_date": "2026-01-07",
+        "label_goes_fire": 0,
+        "score": 0.28110387921333313,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Macuco - Salto Arrechea",
+        "target_date": "2026-01-08",
+        "label_goes_fire": 0,
+        "score": 0.4187347888946533,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Macuco - Salto Arrechea",
+        "target_date": "2026-01-09",
+        "label_goes_fire": 0,
+        "score": 0.27770745754241943,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Macuco - Salto Arrechea",
+        "target_date": "2026-01-12",
+        "label_goes_fire": 0,
+        "score": 0.24449653923511505,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Macuco - Salto Arrechea",
+        "target_date": "2026-01-13",
+        "label_goes_fire": 0,
+        "score": 0.2786453664302826,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Macuco - Salto Arrechea",
+        "target_date": "2026-01-14",
+        "label_goes_fire": 0,
+        "score": 0.32805630564689636,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Macuco - Salto Arrechea",
+        "target_date": "2026-01-15",
+        "label_goes_fire": 0,
+        "score": 0.31598636507987976,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Macuco - Salto Arrechea",
+        "target_date": "2026-01-16",
+        "label_goes_fire": 0,
+        "score": 0.16328293085098267,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Macuco - Salto Arrechea",
+        "target_date": "2026-01-17",
+        "label_goes_fire": 0,
+        "score": 0.21527130901813507,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Macuco - Salto Arrechea",
+        "target_date": "2026-01-18",
+        "label_goes_fire": 0,
+        "score": 0.26377177238464355,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Macuco - Salto Arrechea",
+        "target_date": "2026-01-19",
+        "label_goes_fire": 0,
+        "score": 0.4271931052207947,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Macuco - Salto Arrechea",
+        "target_date": "2026-01-20",
+        "label_goes_fire": 0,
+        "score": 0.32881179451942444,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Macuco - Salto Arrechea",
+        "target_date": "2026-01-21",
+        "label_goes_fire": 0,
+        "score": 0.34628480672836304,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Macuco - Salto Arrechea",
+        "target_date": "2026-01-22",
+        "label_goes_fire": 0,
+        "score": 0.38103970885276794,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Macuco - Salto Arrechea",
+        "target_date": "2026-01-23",
+        "label_goes_fire": 0,
+        "score": 0.36140140891075134,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Macuco - Salto Arrechea",
+        "target_date": "2026-01-24",
+        "label_goes_fire": 0,
+        "score": 0.3623560070991516,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Macuco - Salto Arrechea",
+        "target_date": "2026-01-25",
+        "label_goes_fire": 0,
+        "score": 0.39209428429603577,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Macuco - Salto Arrechea",
+        "target_date": "2026-01-26",
+        "label_goes_fire": 0,
+        "score": 0.36224013566970825,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Macuco - Salto Arrechea",
+        "target_date": "2026-01-27",
+        "label_goes_fire": 0,
+        "score": 0.3465401232242584,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Macuco - Salto Arrechea",
+        "target_date": "2026-01-28",
+        "label_goes_fire": 0,
+        "score": 0.3755679428577423,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Macuco - Salto Arrechea",
+        "target_date": "2026-01-29",
+        "label_goes_fire": 0,
+        "score": 0.16504012048244476,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Macuco - Salto Arrechea",
+        "target_date": "2026-01-30",
+        "label_goes_fire": 0,
+        "score": 0.1683996468782425,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Macuco - Salto Arrechea",
+        "target_date": "2026-01-31",
+        "label_goes_fire": 0,
+        "score": 0.381469190120697,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "target_date": "2026-01-01",
+        "label_goes_fire": 0,
+        "score": 0.8635317087173462,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "target_date": "2026-01-02",
+        "label_goes_fire": 0,
+        "score": 0.8295813798904419,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "target_date": "2026-01-03",
+        "label_goes_fire": 0,
+        "score": 0.7079020142555237,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "target_date": "2026-01-04",
+        "label_goes_fire": 0,
+        "score": 0.729684591293335,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "target_date": "2026-01-05",
+        "label_goes_fire": 0,
+        "score": 0.8394405245780945,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "target_date": "2026-01-06",
+        "label_goes_fire": 0,
+        "score": 0.7976366281509399,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "target_date": "2026-01-07",
+        "label_goes_fire": 0,
+        "score": 0.8165960907936096,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "target_date": "2026-01-08",
+        "label_goes_fire": 0,
+        "score": 0.8024542331695557,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "target_date": "2026-01-09",
+        "label_goes_fire": 0,
+        "score": 0.8445001244544983,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "target_date": "2026-01-10",
+        "label_goes_fire": 0,
+        "score": 0.8015189170837402,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "target_date": "2026-01-11",
+        "label_goes_fire": 0,
+        "score": 0.8692108392715454,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "target_date": "2026-01-12",
+        "label_goes_fire": 0,
+        "score": 0.7695333957672119,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "target_date": "2026-01-13",
+        "label_goes_fire": 0,
+        "score": 0.7660366296768188,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "target_date": "2026-01-14",
+        "label_goes_fire": 1,
+        "score": 0.8633008599281311,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "target_date": "2026-01-15",
+        "label_goes_fire": 0,
+        "score": 0.8089008927345276,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "target_date": "2026-01-16",
+        "label_goes_fire": 0,
+        "score": 0.8437379598617554,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "target_date": "2026-01-17",
+        "label_goes_fire": 1,
+        "score": 0.8636455535888672,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "target_date": "2026-01-18",
+        "label_goes_fire": 0,
+        "score": 0.9910240173339844,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "target_date": "2026-01-19",
+        "label_goes_fire": 0,
+        "score": 0.8474275469779968,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "target_date": "2026-01-20",
+        "label_goes_fire": 0,
+        "score": 0.7875863909721375,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "target_date": "2026-01-21",
+        "label_goes_fire": 0,
+        "score": 0.8125693798065186,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "target_date": "2026-01-22",
+        "label_goes_fire": 0,
+        "score": 0.7253596186637878,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "target_date": "2026-01-23",
+        "label_goes_fire": 0,
+        "score": 0.3569314777851105,
+        "alert_at_0_5": false,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "target_date": "2026-01-24",
+        "label_goes_fire": 0,
+        "score": 0.6095566749572754,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "target_date": "2026-01-25",
+        "label_goes_fire": 0,
+        "score": 0.5387253761291504,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "target_date": "2026-01-26",
+        "label_goes_fire": 0,
+        "score": 0.8407984375953674,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "target_date": "2026-01-27",
+        "label_goes_fire": 0,
+        "score": 0.7972038388252258,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "target_date": "2026-01-28",
+        "label_goes_fire": 0,
+        "score": 0.7619951367378235,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "target_date": "2026-01-29",
+        "label_goes_fire": 0,
+        "score": 0.8142671585083008,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "target_date": "2026-01-30",
+        "label_goes_fire": 0,
+        "score": 0.831312894821167,
+        "alert_at_0_5": true,
+        "persistence": false
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "target_date": "2026-01-31",
+        "label_goes_fire": 0,
+        "score": 0.7847935557365417,
+        "alert_at_0_5": true,
+        "persistence": false
+      }
+    ]
+  },
+  "persistence_gated_candidate": {
+    "meaning": "Continuation-risk filter only: issues a forecast alert only if satellite history at issue time already reports active fire in the sector; it does not predict ignition.",
+    "validation_precision_floor": 0.8,
+    "validation_minimum_alerts": 5,
+    "threshold": null,
+    "validation": null,
+    "test": null,
+    "deployment_approved": false
+  },
+  "limitations": [
+    "GOES fire detections are satellite labels, not ignition events or verified route-safety outcomes.",
+    "Excluding sectors with any recent fire can remove fire-spread cases; the remaining positive rows may still be one or very few independent incidents.",
+    "Eight point samples and coarse GFS grid do not represent full trail geometry.",
+    "Nearby sectors and adjacent days can belong to the same physical fire; route-sector-days are not independent incidents.",
+    "This comparison does not establish event-level precision because there is no exhaustive independent negative-event registry.",
+    "Class-weighted logistic scores are not calibrated probabilities."
+  ]
+}

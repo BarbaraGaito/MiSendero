@@ -1,0 +1,220 @@
+{
+  "experiment_id": "snmf-reported-fire-starts-near-argentina-trail-centers-2023",
+  "meaning": "Inventory of reported positive event starts only; not a model evaluation.",
+  "sources": {
+    "official_source": "Sistema Nacional de Manejo del Fuego daily occurrence reports",
+    "event_extraction_sha256": "b82ddcb2c848fe854be9e1002fed72318165d8b1818b952b61cc9467b1cc0900",
+    "report_manifest_sha256": "71c14b6aafee792941c46319aa9c7ae2339d21ec8dbcc4a2d4f473c8c1fb2818",
+    "geography_sha256": "7e475b478db7bb678cc0a1539fdf484e0c8de0a9baa98916fb90f652f75ff834"
+  },
+  "report_coverage": {
+    "period": [
+      "2023-07-01",
+      "2024-01-01"
+    ],
+    "calendar_days": 184,
+    "downloaded_report_days": 119,
+    "dates_without_a_report_at_checked_paths": 65,
+    "downloaded_days_by_month": {
+      "2023-07": 19,
+      "2023-08": 15,
+      "2023-09": 20,
+      "2023-10": 18,
+      "2023-11": 21,
+      "2023-12": 26
+    },
+    "reports_with_zero_extracted_event_rows": 0,
+    "interpretation": "No report is an unknown observation. A PDF with zero extracted rows may reflect report content or parser failure and was not called an official fire-free day."
+  },
+  "spatial_protocol": {
+    "regions": [
+      "Sendero Macuco - Salto Arrechea",
+      "Refugio Frey desde Villa Catedral",
+      "Quebrada del Condorito - Balcon Norte",
+      "Sendero Namuncura",
+      "Cerro Ventana - Hueco de la Ventana",
+      "Bosque Tallado desde la plataforma del Piltriquitron",
+      "Sendero Che Roga - Mburucuyá",
+      "Sendero La Chuña - El Rey"
+    ],
+    "distance_measure": "Haversine between incident coordinates and fixed route-sector center",
+    "radii_km": [
+      10,
+      20
+    ],
+    "unit": "route-sector start day; multiple incident records on the same route/date are grouped"
+  },
+  "results": {
+    "10": {
+      "incident_records_within_radius": 2,
+      "unique_route_sector_start_days": 2,
+      "unique_route_sector_days_by_region": {
+        "Quebrada del Condorito - Balcon Norte": 1,
+        "Bosque Tallado desde la plataforma del Piltriquitron": 1
+      },
+      "route_sector_start_days": [
+        {
+          "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "target_date": "2023-12-19",
+          "source_incident_names": [
+            "Quema golondrinas"
+          ],
+          "nearest_reported_incident_km": 5.601
+        },
+        {
+          "route_sector": "Quebrada del Condorito - Balcon Norte",
+          "target_date": "2023-10-06",
+          "source_incident_names": [
+            "RIO DE LA SUELA"
+          ],
+          "nearest_reported_incident_km": 8.936
+        }
+      ]
+    },
+    "20": {
+      "incident_records_within_radius": 19,
+      "unique_route_sector_start_days": 15,
+      "unique_route_sector_days_by_region": {
+        "Sendero Che Roga - Mburucuyá": 2,
+        "Quebrada del Condorito - Balcon Norte": 6,
+        "Bosque Tallado desde la plataforma del Piltriquitron": 6,
+        "Sendero Namuncura": 1
+      },
+      "route_sector_start_days": [
+        {
+          "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "target_date": "2023-10-09",
+          "source_incident_names": [
+            "PEDREGOSO MARGEN ESTE"
+          ],
+          "nearest_reported_incident_km": 19.731
+        },
+        {
+          "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "target_date": "2023-10-10",
+          "source_incident_names": [
+            "INCENDIO FAMILIA WOODMAN -",
+            "RUTA 40 INCENDIO FAMILIA WOODMAN -"
+          ],
+          "nearest_reported_incident_km": 12.134
+        },
+        {
+          "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "target_date": "2023-10-12",
+          "source_incident_names": [
+            "EL VALLECITO"
+          ],
+          "nearest_reported_incident_km": 10.776
+        },
+        {
+          "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "target_date": "2023-10-13",
+          "source_incident_names": [
+            "CURRUMAHUIDA"
+          ],
+          "nearest_reported_incident_km": 17.728
+        },
+        {
+          "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "target_date": "2023-12-19",
+          "source_incident_names": [
+            "Quema golondrinas"
+          ],
+          "nearest_reported_incident_km": 5.601
+        },
+        {
+          "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "target_date": "2023-12-27",
+          "source_incident_names": [
+            "Lago Puelo Apicultor"
+          ],
+          "nearest_reported_incident_km": 10.628
+        },
+        {
+          "route_sector": "Quebrada del Condorito - Balcon Norte",
+          "target_date": "2023-08-28",
+          "source_incident_names": [
+            "CALERA\" LOMA ALTA",
+            "LOMA ALTA"
+          ],
+          "nearest_reported_incident_km": 19.681
+        },
+        {
+          "route_sector": "Quebrada del Condorito - Balcon Norte",
+          "target_date": "2023-09-11",
+          "source_incident_names": [
+            "TRES ARBOLES"
+          ],
+          "nearest_reported_incident_km": 12.707
+        },
+        {
+          "route_sector": "Quebrada del Condorito - Balcon Norte",
+          "target_date": "2023-10-03",
+          "source_incident_names": [
+            "EL RAYO"
+          ],
+          "nearest_reported_incident_km": 11.729
+        },
+        {
+          "route_sector": "Quebrada del Condorito - Balcon Norte",
+          "target_date": "2023-10-06",
+          "source_incident_names": [
+            "RIO DE LA SUELA"
+          ],
+          "nearest_reported_incident_km": 8.936
+        },
+        {
+          "route_sector": "Quebrada del Condorito - Balcon Norte",
+          "target_date": "2023-10-07",
+          "source_incident_names": [
+            "S271 (LA SUELA)"
+          ],
+          "nearest_reported_incident_km": 10.766
+        },
+        {
+          "route_sector": "Quebrada del Condorito - Balcon Norte",
+          "target_date": "2023-10-29",
+          "source_incident_names": [
+            "EA SAN BERNARDO"
+          ],
+          "nearest_reported_incident_km": 13.959
+        },
+        {
+          "route_sector": "Sendero Che Roga - Mburucuyá",
+          "target_date": "2023-08-02",
+          "source_incident_names": [
+            "CAÑADA FRAGOSA"
+          ],
+          "nearest_reported_incident_km": 15.57
+        },
+        {
+          "route_sector": "Sendero Che Roga - Mburucuyá",
+          "target_date": "2023-08-06",
+          "source_incident_names": [
+            "LÍMITE POTRERO 13"
+          ],
+          "nearest_reported_incident_km": 11.427
+        },
+        {
+          "route_sector": "Sendero Namuncura",
+          "target_date": "2023-12-27",
+          "source_incident_names": [
+            "Del Río",
+            "Diamante Oeste",
+            "La Trinidad"
+          ],
+          "nearest_reported_incident_km": 10.065
+        }
+      ]
+    }
+  },
+  "limitations": [
+    "Daily SNMF reports are jurisdiction-reported and not an exhaustive national event/no-event registry.",
+    "65 of 184 dates have no PDF at the checked paths; these are unknown, never negative.",
+    "The automated extraction has 34 report snapshot rows without coordinates and 0 reports with zero parsed event rows; original PDFs require review for those cases.",
+    "Event starts may be approximate and duplicate naming may remain; route-day aggregation avoids treating duplicate records at the same route/date as separate positives.",
+    "Route-sector centers do not represent the complete trail geometry."
+  ],
+  "synthetic_observations": 0,
+  "deployment_approved": false
+}

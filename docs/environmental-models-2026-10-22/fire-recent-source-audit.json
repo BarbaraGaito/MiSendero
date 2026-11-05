@@ -1,0 +1,140 @@
+{
+  "status": "acquired",
+  "source": "NASA MOD14A1.061 / Microsoft Planetary Computer",
+  "purpose": "recent_inference_inputs",
+  "effective_observation_period": [
+    "2026-07-24",
+    "2026-10-23"
+  ],
+  "source_documentation": "https://landweb.modaps.eosdis.nasa.gov/data/userguide/MODIS_C6_Fire_User_Guide_C.pdf",
+  "discovery": {
+    "collection": {
+      "url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/modis-14A1-061",
+      "retrieved_at": "2026-10-22T17:50:45.076014+00:00",
+      "sha256": "143896500331d3321f2b5d7d8ac189c4720b3df51b48e74e880e7fe48eefb628",
+      "bytes": 8131
+    },
+    "stac_license": "proprietary",
+    "searches": [
+      {
+        "url": "https://planetarycomputer.microsoft.com/api/stac/v1/search?collections=modis-14A1-061&query=%7B%22platform%22%3A+%7B%22eq%22%3A+%22terra%22%7D%2C+%22modis%3Ahorizontal-tile%22%3A+%7B%22eq%22%3A+12%7D%2C+%22modis%3Avertical-tile%22%3A+%7B%22eq%22%3A+11%7D%7D&datetime=2026-07-24T00%3A00%3A00Z%2F2026-10-22T23%3A59%3A59Z&limit=1000",
+        "retrieved_at": "2026-10-22T18:01:43.852029+00:00",
+        "sha256": "19dc6809007ddbf1076e4e404f1fc9468334c41210b11d2382936246055e68ed",
+        "bytes": 69509,
+        "tile": "h12v11",
+        "items": 11,
+        "earlier_revisions_not_used": []
+      },
+      {
+        "url": "https://planetarycomputer.microsoft.com/api/stac/v1/search?collections=modis-14A1-061&query=%7B%22platform%22%3A+%7B%22eq%22%3A+%22terra%22%7D%2C+%22modis%3Ahorizontal-tile%22%3A+%7B%22eq%22%3A+12%7D%2C+%22modis%3Avertical-tile%22%3A+%7B%22eq%22%3A+12%7D%7D&datetime=2026-07-24T00%3A00%3A00Z%2F2026-10-22T23%3A59%3A59Z&limit=1000",
+        "retrieved_at": "2026-10-22T18:01:45.200235+00:00",
+        "sha256": "dbdec0bbc5b8a009becda43be6342bce6b8b79fa23b6148be0336af35d44f2e3",
+        "bytes": 69432,
+        "tile": "h12v12",
+        "items": 11,
+        "earlier_revisions_not_used": []
+      },
+      {
+        "url": "https://planetarycomputer.microsoft.com/api/stac/v1/search?collections=modis-14A1-061&query=%7B%22platform%22%3A+%7B%22eq%22%3A+%22terra%22%7D%2C+%22modis%3Ahorizontal-tile%22%3A+%7B%22eq%22%3A+12%7D%2C+%22modis%3Avertical-tile%22%3A+%7B%22eq%22%3A+13%7D%7D&datetime=2026-07-24T00%3A00%3A00Z%2F2026-10-22T23%3A59%3A59Z&limit=1000",
+        "retrieved_at": "2026-10-22T18:01:46.501476+00:00",
+        "sha256": "9fe37f55181187cd41c62374acf94c6bea020dfba13228c0482bd6dd4372ba1b",
+        "bytes": 69245,
+        "tile": "h12v13",
+        "items": 11,
+        "earlier_revisions_not_used": []
+      },
+      {
+        "url": "https://planetarycomputer.microsoft.com/api/stac/v1/search?collections=modis-14A1-061&query=%7B%22platform%22%3A+%7B%22eq%22%3A+%22terra%22%7D%2C+%22modis%3Ahorizontal-tile%22%3A+%7B%22eq%22%3A+13%7D%2C+%22modis%3Avertical-tile%22%3A+%7B%22eq%22%3A+11%7D%7D&datetime=2026-07-24T00%3A00%3A00Z%2F2026-10-22T23%3A59%3A59Z&limit=1000",
+        "retrieved_at": "2026-10-22T18:01:47.876528+00:00",
+        "sha256": "5d57c957c608f998229d964596cd06be2c786960fe2efc4a9830ce856fea8d1a",
+        "bytes": 69498,
+        "tile": "h13v11",
+        "items": 11,
+        "earlier_revisions_not_used": []
+      },
+      {
+        "url": "https://planetarycomputer.microsoft.com/api/stac/v1/search?collections=modis-14A1-061&query=%7B%22platform%22%3A+%7B%22eq%22%3A+%22terra%22%7D%2C+%22modis%3Ahorizontal-tile%22%3A+%7B%22eq%22%3A+13%7D%2C+%22modis%3Avertical-tile%22%3A+%7B%22eq%22%3A+12%7D%7D&datetime=2026-07-24T00%3A00%3A00Z%2F2026-10-22T23%3A59%3A59Z&limit=1000",
+        "retrieved_at": "2026-10-22T18:01:49.287804+00:00",
+        "sha256": "17a6175d3915a94e08fd1f3c5fd34430d4e81a7d3983d19b745e2c75bdcbc46b",
+        "bytes": 69465,
+        "tile": "h13v12",
+        "items": 11,
+        "earlier_revisions_not_used": []
+      }
+    ]
+  },
+  "country": {
+    "url": "https://apis.datos.gob.ar/georef/api/v2.0/provincias.geojson",
+    "retrieved_at": "2026-10-22T17:46:40.598073+00:00",
+    "sha256": "b086852064c26813d9f607c82c91b4e74e18ea83fd21993ddedd473cf8495af5",
+    "bytes": 614706
+  },
+  "protocol_sha256": "21c731c5266eb569e16936c77b3d1f4bc78088f97b3f35fa1b01ae9588f75555",
+  "original_mask_qa_pairs": 55,
+  "original_bytes": 85058310,
+  "manifest_sha256": "b6dcfab8f656aa9fe1390de9b9c39d4561c113bc238cb44a94b1093ad9ed17f3",
+  "summary": {
+    "counts": {
+      "mask_5": 181091,
+      "label_0": 181091,
+      "mask_4": 77277,
+      "mask_3": 9673,
+      "mask_8": 2,
+      "label_1": 3,
+      "mask_9": 1
+    },
+    "exclusions": {
+      "invalid_cloud_water_low_confidence_or_missing_pixel_days": 86950,
+      "outside_argentina_or_border_buffer_pixel_days": 29656
+    },
+    "regions": {
+      "Sendero Che Roga - Mburucuyá": {
+        "sampled_pixel_days": 37044,
+        "label_0": 27472,
+        "label_1": 3
+      },
+      "Sendero La Chuña - El Rey": {
+        "sampled_pixel_days": 37044,
+        "label_0": 31125
+      },
+      "Quebrada del Condorito - Balcon Norte": {
+        "sampled_pixel_days": 37044,
+        "label_0": 28832
+      },
+      "Sendero Namuncura": {
+        "sampled_pixel_days": 37044,
+        "label_0": 23112
+      },
+      "Refugio Frey desde Villa Catedral": {
+        "sampled_pixel_days": 34440,
+        "label_0": 14797
+      },
+      "Bosque Tallado desde la plataforma del Piltriquitron": {
+        "sampled_pixel_days": 32844,
+        "label_0": 19227
+      },
+      "Sendero Macuco - Salto Arrechea": {
+        "sampled_pixel_days": 15540,
+        "label_0": 10485
+      },
+      "Cerro Ventana - Hueco de la Ventana": {
+        "sampled_pixel_days": 37044,
+        "label_0": 26041
+      }
+    },
+    "availability_delay_days": {
+      "median": 11.449803240740742,
+      "maximum": 69.46792824074075
+    },
+    "observations_file": "training\\data\\environmental\\private\\fire-recent-observations.csv.gz",
+    "observations_sha256": "dc545264e24b98efb1e287b1dda16f9fef0e0a5b44303c01fd69155761dd4f70"
+  },
+  "synthetic_observations": 0,
+  "limitations": [
+    "Only nominal/high-confidence detected fire vs valid observed non-fire land; not proof of absence of physical fire.",
+    "Daily layers package eight dates; full COG availability can lag by weeks.",
+    "Last-Modified is a conservative proxy for final-version availability, not a logged first-publication time.",
+    "Raster sampling does not establish wildfire cause, trail transitability, propagation or evacuation safety.",
+    "Source STAC license is preserved as returned; original COGs are not redistributed in Git."
+  ]
+}

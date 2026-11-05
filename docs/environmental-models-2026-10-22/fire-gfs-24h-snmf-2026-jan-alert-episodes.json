@@ -1,0 +1,371 @@
+{
+  "experiment_id": "fire-gfs-24h-snmf-2026-jan-alert-episodes",
+  "source": "docs/environmental-models-2026-10-22/goes-gfs-24h-snmf-daily-report-agreement-2026-jan.json",
+  "source_sha256": "99c3a805c2cb18c1617f5235363036d13f6596d41a15d7a8abda741eedd637af",
+  "protocol": {
+    "alert_rule": "Existing uncalibrated diagnostic threshold 0.5; this audit does not tune it.",
+    "episode_rule": "Consecutive calendar-day alerts for the same route sector form one streak. A missing/non-alert row splits a streak.",
+    "proxy_positive": "At least one day in the streak has a listed ACTIVO, CONTENIDO, or CONTROLADO SNMF incident within the existing 10 km center rule."
+  },
+  "model": {
+    "summary": {
+      "alert_episodes": 22,
+      "episodes_containing_nearby_listed_active_incident": 4,
+      "descriptive_episode_coincidence_fraction": 0.18181818181818182,
+      "wilson_95pct_descriptive_interval": [
+        0.07306884583422052,
+        0.38516607437126543
+      ],
+      "reported_alert_route_days_within_episodes": 133,
+      "average_reported_alert_days_per_episode": 6.045454545454546
+    },
+    "episodes": [
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "start_date": "2026-01-01",
+        "end_date": "2026-01-27",
+        "consecutive_reported_alert_days": 27,
+        "report_proxy_positive_days": 3,
+        "contains_nearby_listed_active_incident": true,
+        "nearby_listed_incident_aliases": [
+          {
+            "name": "Barda de La Loma",
+            "status": "CONTROLADO"
+          }
+        ]
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "start_date": "2026-01-30",
+        "end_date": "2026-01-31",
+        "consecutive_reported_alert_days": 2,
+        "report_proxy_positive_days": 0,
+        "contains_nearby_listed_active_incident": false,
+        "nearby_listed_incident_aliases": []
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "start_date": "2026-01-01",
+        "end_date": "2026-01-05",
+        "consecutive_reported_alert_days": 5,
+        "report_proxy_positive_days": 0,
+        "contains_nearby_listed_active_incident": false,
+        "nearby_listed_incident_aliases": []
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "start_date": "2026-01-08",
+        "end_date": "2026-01-22",
+        "consecutive_reported_alert_days": 15,
+        "report_proxy_positive_days": 0,
+        "contains_nearby_listed_active_incident": false,
+        "nearby_listed_incident_aliases": []
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "start_date": "2026-01-24",
+        "end_date": "2026-01-25",
+        "consecutive_reported_alert_days": 2,
+        "report_proxy_positive_days": 0,
+        "contains_nearby_listed_active_incident": false,
+        "nearby_listed_incident_aliases": []
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "start_date": "2026-01-27",
+        "end_date": "2026-01-28",
+        "consecutive_reported_alert_days": 2,
+        "report_proxy_positive_days": 0,
+        "contains_nearby_listed_active_incident": false,
+        "nearby_listed_incident_aliases": []
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "start_date": "2026-01-30",
+        "end_date": "2026-01-31",
+        "consecutive_reported_alert_days": 2,
+        "report_proxy_positive_days": 0,
+        "contains_nearby_listed_active_incident": false,
+        "nearby_listed_incident_aliases": []
+      },
+      {
+        "route_sector": "Quebrada del Condorito - Balcon Norte",
+        "start_date": "2026-01-01",
+        "end_date": "2026-01-07",
+        "consecutive_reported_alert_days": 7,
+        "report_proxy_positive_days": 0,
+        "contains_nearby_listed_active_incident": false,
+        "nearby_listed_incident_aliases": []
+      },
+      {
+        "route_sector": "Quebrada del Condorito - Balcon Norte",
+        "start_date": "2026-01-11",
+        "end_date": "2026-01-12",
+        "consecutive_reported_alert_days": 2,
+        "report_proxy_positive_days": 0,
+        "contains_nearby_listed_active_incident": false,
+        "nearby_listed_incident_aliases": []
+      },
+      {
+        "route_sector": "Quebrada del Condorito - Balcon Norte",
+        "start_date": "2026-01-23",
+        "end_date": "2026-01-23",
+        "consecutive_reported_alert_days": 1,
+        "report_proxy_positive_days": 0,
+        "contains_nearby_listed_active_incident": false,
+        "nearby_listed_incident_aliases": []
+      },
+      {
+        "route_sector": "Quebrada del Condorito - Balcon Norte",
+        "start_date": "2026-01-30",
+        "end_date": "2026-01-31",
+        "consecutive_reported_alert_days": 2,
+        "report_proxy_positive_days": 0,
+        "contains_nearby_listed_active_incident": false,
+        "nearby_listed_incident_aliases": []
+      },
+      {
+        "route_sector": "Refugio Frey desde Villa Catedral",
+        "start_date": "2026-01-01",
+        "end_date": "2026-01-10",
+        "consecutive_reported_alert_days": 10,
+        "report_proxy_positive_days": 5,
+        "contains_nearby_listed_active_incident": true,
+        "nearby_listed_incident_aliases": [
+          {
+            "name": "Cantera Eva Perón",
+            "status": "CONTENIDO"
+          },
+          {
+            "name": "Cantera Eva Perón",
+            "status": "CONTROLADO"
+          },
+          {
+            "name": "VERTEDERO MUNICIPAL",
+            "status": "CONTENIDO"
+          },
+          {
+            "name": "Vertedero Municipal",
+            "status": "ACTIVO"
+          },
+          {
+            "name": "Vertedero Municipal",
+            "status": "CONTENIDO"
+          }
+        ]
+      },
+      {
+        "route_sector": "Refugio Frey desde Villa Catedral",
+        "start_date": "2026-01-13",
+        "end_date": "2026-01-27",
+        "consecutive_reported_alert_days": 15,
+        "report_proxy_positive_days": 15,
+        "contains_nearby_listed_active_incident": true,
+        "nearby_listed_incident_aliases": [
+          {
+            "name": "Cantera Eva Perón",
+            "status": "CONTROLADO"
+          },
+          {
+            "name": "VERTEDERO MUNICIPAL",
+            "status": "CONTROLADO"
+          },
+          {
+            "name": "tres lagunas) VERTEDERO MUNICIPAL",
+            "status": "CONTROLADO"
+          }
+        ]
+      },
+      {
+        "route_sector": "Sendero La Chuña - El Rey",
+        "start_date": "2026-01-03",
+        "end_date": "2026-01-03",
+        "consecutive_reported_alert_days": 1,
+        "report_proxy_positive_days": 0,
+        "contains_nearby_listed_active_incident": false,
+        "nearby_listed_incident_aliases": []
+      },
+      {
+        "route_sector": "Sendero La Chuña - El Rey",
+        "start_date": "2026-01-06",
+        "end_date": "2026-01-07",
+        "consecutive_reported_alert_days": 2,
+        "report_proxy_positive_days": 0,
+        "contains_nearby_listed_active_incident": false,
+        "nearby_listed_incident_aliases": []
+      },
+      {
+        "route_sector": "Sendero La Chuña - El Rey",
+        "start_date": "2026-01-11",
+        "end_date": "2026-01-15",
+        "consecutive_reported_alert_days": 5,
+        "report_proxy_positive_days": 0,
+        "contains_nearby_listed_active_incident": false,
+        "nearby_listed_incident_aliases": []
+      },
+      {
+        "route_sector": "Sendero La Chuña - El Rey",
+        "start_date": "2026-01-23",
+        "end_date": "2026-01-26",
+        "consecutive_reported_alert_days": 4,
+        "report_proxy_positive_days": 0,
+        "contains_nearby_listed_active_incident": false,
+        "nearby_listed_incident_aliases": []
+      },
+      {
+        "route_sector": "Sendero La Chuña - El Rey",
+        "start_date": "2026-01-30",
+        "end_date": "2026-01-30",
+        "consecutive_reported_alert_days": 1,
+        "report_proxy_positive_days": 0,
+        "contains_nearby_listed_active_incident": false,
+        "nearby_listed_incident_aliases": []
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "start_date": "2026-01-01",
+        "end_date": "2026-01-22",
+        "consecutive_reported_alert_days": 22,
+        "report_proxy_positive_days": 4,
+        "contains_nearby_listed_active_incident": true,
+        "nearby_listed_incident_aliases": [
+          {
+            "name": "P.N. LIHUE CALEL",
+            "status": "CONTENIDO"
+          },
+          {
+            "name": "P.N. LIHUE CALEL",
+            "status": "CONTROLADO"
+          }
+        ]
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "start_date": "2026-01-24",
+        "end_date": "2026-01-24",
+        "consecutive_reported_alert_days": 1,
+        "report_proxy_positive_days": 0,
+        "contains_nearby_listed_active_incident": false,
+        "nearby_listed_incident_aliases": []
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "start_date": "2026-01-26",
+        "end_date": "2026-01-28",
+        "consecutive_reported_alert_days": 3,
+        "report_proxy_positive_days": 0,
+        "contains_nearby_listed_active_incident": false,
+        "nearby_listed_incident_aliases": []
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "start_date": "2026-01-30",
+        "end_date": "2026-01-31",
+        "consecutive_reported_alert_days": 2,
+        "report_proxy_positive_days": 0,
+        "contains_nearby_listed_active_incident": false,
+        "nearby_listed_incident_aliases": []
+      }
+    ]
+  },
+  "persistence": {
+    "summary": {
+      "alert_episodes": 8,
+      "episodes_containing_nearby_listed_active_incident": 1,
+      "descriptive_episode_coincidence_fraction": 0.125,
+      "wilson_95pct_descriptive_interval": [
+        0.02241749145005667,
+        0.4708881822128535
+      ],
+      "reported_alert_route_days_within_episodes": 23,
+      "average_reported_alert_days_per_episode": 2.875
+    },
+    "episodes": [
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "start_date": "2026-01-06",
+        "end_date": "2026-01-15",
+        "consecutive_reported_alert_days": 10,
+        "report_proxy_positive_days": 2,
+        "contains_nearby_listed_active_incident": true,
+        "nearby_listed_incident_aliases": [
+          {
+            "name": "Barda de La Loma",
+            "status": "CONTROLADO"
+          }
+        ]
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "start_date": "2026-01-20",
+        "end_date": "2026-01-23",
+        "consecutive_reported_alert_days": 4,
+        "report_proxy_positive_days": 0,
+        "contains_nearby_listed_active_incident": false,
+        "nearby_listed_incident_aliases": []
+      },
+      {
+        "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "start_date": "2026-01-25",
+        "end_date": "2026-01-27",
+        "consecutive_reported_alert_days": 3,
+        "report_proxy_positive_days": 0,
+        "contains_nearby_listed_active_incident": false,
+        "nearby_listed_incident_aliases": []
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "start_date": "2026-01-04",
+        "end_date": "2026-01-04",
+        "consecutive_reported_alert_days": 1,
+        "report_proxy_positive_days": 0,
+        "contains_nearby_listed_active_incident": false,
+        "nearby_listed_incident_aliases": []
+      },
+      {
+        "route_sector": "Cerro Ventana - Hueco de la Ventana",
+        "start_date": "2026-01-20",
+        "end_date": "2026-01-21",
+        "consecutive_reported_alert_days": 2,
+        "report_proxy_positive_days": 0,
+        "contains_nearby_listed_active_incident": false,
+        "nearby_listed_incident_aliases": []
+      },
+      {
+        "route_sector": "Sendero Che Roga - Mburucuyá",
+        "start_date": "2026-01-25",
+        "end_date": "2026-01-25",
+        "consecutive_reported_alert_days": 1,
+        "report_proxy_positive_days": 0,
+        "contains_nearby_listed_active_incident": false,
+        "nearby_listed_incident_aliases": []
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "start_date": "2026-01-15",
+        "end_date": "2026-01-15",
+        "consecutive_reported_alert_days": 1,
+        "report_proxy_positive_days": 0,
+        "contains_nearby_listed_active_incident": false,
+        "nearby_listed_incident_aliases": []
+      },
+      {
+        "route_sector": "Sendero Namuncura",
+        "start_date": "2026-01-18",
+        "end_date": "2026-01-18",
+        "consecutive_reported_alert_days": 1,
+        "report_proxy_positive_days": 0,
+        "contains_nearby_listed_active_incident": false,
+        "nearby_listed_incident_aliases": []
+      }
+    ]
+  },
+  "limitations": [
+    "This is an alert-streak coincidence with an incomplete daily-report proxy, not physical fire precision.",
+    "Adjacent daily reports can describe the same fire; different alert streaks can also describe one physical event.",
+    "No listed nearby active incident does not prove no fire; some dates/route sectors were excluded for missing reports or unknown incident status.",
+    "The 10 km rule is based on sector centers, not complete trail lines.",
+    "The 0.5 scores are uncalibrated and the test cohort is one month."
+  ],
+  "deployment_approved": false
+}

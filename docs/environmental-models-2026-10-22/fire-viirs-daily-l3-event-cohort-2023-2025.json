@@ -1,0 +1,485 @@
+{
+  "experiment_id": "viirs-daily-l3-snmf-route-event-cohort-2023-2025",
+  "status": "official_positive_event_cohort_granules_acquired_for_mask_audit",
+  "created_at_utc": "2026-10-23T21:12:36Z",
+  "purpose": "Select historical daily VIIRS L3 tiles around official SNMF event coordinates near mapped Argentine trekking routes.",
+  "selection": {
+    "route_buffer_km": 10.0,
+    "route_distance_method": "local equirectangular point-to-segment distance over the full route polyline",
+    "years": [
+      "2023",
+      "2024",
+      "2025"
+    ],
+    "same_start_date_route_deduplication_km": 1.0,
+    "candidate_event_records_within_buffer": 20,
+    "source_name_duplicate_records_collapsed": 4,
+    "selected_route_event_clusters": 16,
+    "by_year": {
+      "2023": 2,
+      "2024": 8,
+      "2025": 6
+    },
+    "by_route": {
+      "Bosque Tallado desde la plataforma del Piltriquitron": 9,
+      "Cerro Ventana - Hueco de la Ventana": 2,
+      "Quebrada del Condorito - Balcon Norte": 2,
+      "Refugio Frey desde Villa Catedral": 2,
+      "Sendero Namuncura": 1
+    }
+  },
+  "sources": {
+    "route_geometry_path": "training/data/environmental/private/fire-route-geometries.json",
+    "route_geometry_sha256": "d622e3bd3bae7c97df9152d5ae22fa9cf3136f2bbb0ee807703eaddc21d6610a",
+    "daily_route_tile_audit_sha256": "0598401758ec20d500b3f6ac587958aa4aa12325a49653400901fe0c64150489",
+    "snmf_event_report_sha256_by_year": {
+      "2023": "b82ddcb2c848fe854be9e1002fed72318165d8b1818b952b61cc9467b1cc0900",
+      "2024": "10c44e0b77d99d771c3256978f3d5c976b3dd05262ab122108aff0d4861e0bad",
+      "2025": "d8e95391641ccb7d884d7bbe88e3df6fff82251352a50154656f88096f4a87f4"
+    },
+    "existing_efire_2025_sha256": "0b65cd3a7f4b47ab49f226ab94f20d7809c55bbb5e558b92bc0ca01050a2fea1"
+  },
+  "cohort": [
+    {
+      "reported_start_date": "2023-10-06",
+      "report_date": "2023-10-09",
+      "route": "Quebrada del Condorito - Balcon Norte",
+      "route_geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74",
+      "distance_to_route_km": 7.385,
+      "incident_name": "RIO DE LA SUELA",
+      "province": "CÓRDOBA",
+      "status_in_source_snapshot": "CONTENIDO",
+      "latitude": -31.577166666666667,
+      "longitude": -64.66213888888889,
+      "source_name_variants_collapsed": [
+        "RIO DE LA SUELA"
+      ],
+      "source_records_collapsed": 1
+    },
+    {
+      "reported_start_date": "2023-12-19",
+      "report_date": "2023-12-19",
+      "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "route_geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa",
+      "distance_to_route_km": 5.193,
+      "incident_name": "Quema golondrinas",
+      "province": "Chubut",
+      "status_in_source_snapshot": "EXTINGUIDO",
+      "latitude": -42.01028055555555,
+      "longitude": -71.51638888888888,
+      "source_name_variants_collapsed": [
+        "Quema golondrinas"
+      ],
+      "source_records_collapsed": 1
+    },
+    {
+      "reported_start_date": "2024-01-06",
+      "report_date": "2024-01-06",
+      "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "route_geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa",
+      "distance_to_route_km": 7.226,
+      "incident_name": "El Eden (Las Golondrinas)",
+      "province": "Chubut",
+      "status_in_source_snapshot": "EXTINGUIDO",
+      "latitude": -42.018388888888886,
+      "longitude": -71.54127777777778,
+      "source_name_variants_collapsed": [
+        "El Eden (Las Golondrinas)"
+      ],
+      "source_records_collapsed": 1
+    },
+    {
+      "reported_start_date": "2024-01-26",
+      "report_date": "2024-01-27",
+      "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "route_geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa",
+      "distance_to_route_km": 8.58,
+      "incident_name": "Callejon Los Lupinos",
+      "province": "Chubut",
+      "status_in_source_snapshot": "EXTINGUIDO",
+      "latitude": -42.01,
+      "longitude": -71.57,
+      "source_name_variants_collapsed": [
+        "Callejon Los Lupinos"
+      ],
+      "source_records_collapsed": 1
+    },
+    {
+      "reported_start_date": "2024-01-30",
+      "report_date": "2024-01-31",
+      "route": "Sendero Namuncura",
+      "route_geometry_sha256": "9ffaf89538fec8fb40b3d760b8e8b8fbcc154794b28d438fa6b046429fc5d32c",
+      "distance_to_route_km": 4.609,
+      "incident_name": "Tranquerón",
+      "province": "La Pampa",
+      "status_in_source_snapshot": "CONTENIDO",
+      "latitude": -37.9716,
+      "longitude": -65.5632,
+      "source_name_variants_collapsed": [
+        "Tranquerón"
+      ],
+      "source_records_collapsed": 1
+    },
+    {
+      "reported_start_date": "2024-02-03",
+      "report_date": "2024-02-05",
+      "route": "Cerro Ventana - Hueco de la Ventana",
+      "route_geometry_sha256": "61e1a9b62ae9b691b29c437aed7792b3723c7af54f03feb2311d4322fd3f5066",
+      "distance_to_route_km": 7.999,
+      "incident_name": "Parque Provincial Ernesto",
+      "province": "Buenos Aires",
+      "status_in_source_snapshot": "EXTINGUIDO",
+      "latitude": -38.07401388888889,
+      "longitude": -61.92494444444444,
+      "source_name_variants_collapsed": [
+        "Parque Provincial Ernesto"
+      ],
+      "source_records_collapsed": 1
+    },
+    {
+      "reported_start_date": "2024-03-07",
+      "report_date": "2024-03-07",
+      "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "route_geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa",
+      "distance_to_route_km": 5.188,
+      "incident_name": "Lote 1 campo INTA",
+      "province": "Chubut",
+      "status_in_source_snapshot": "EXTINGUIDO",
+      "latitude": -42.0,
+      "longitude": -71.53,
+      "source_name_variants_collapsed": [
+        "Lote 1 campo INTA"
+      ],
+      "source_records_collapsed": 1
+    },
+    {
+      "reported_start_date": "2024-04-16",
+      "report_date": "2024-04-17",
+      "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "route_geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa",
+      "distance_to_route_km": 9.031,
+      "incident_name": "Camping",
+      "province": "Chubut",
+      "status_in_source_snapshot": "EXTINGUIDO",
+      "latitude": -42.0349,
+      "longitude": -71.54939999999999,
+      "source_name_variants_collapsed": [
+        "Camping"
+      ],
+      "source_records_collapsed": 1
+    },
+    {
+      "reported_start_date": "2024-09-15",
+      "report_date": "2024-09-15",
+      "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "route_geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa",
+      "distance_to_route_km": 5.376,
+      "incident_name": "Golondrinas RN 40",
+      "province": "Chubut",
+      "status_in_source_snapshot": "EXTINGUIDO",
+      "latitude": -42.00075,
+      "longitude": -71.53208333333333,
+      "source_name_variants_collapsed": [
+        "Golondrinas RN 40"
+      ],
+      "source_records_collapsed": 1
+    },
+    {
+      "reported_start_date": "2024-10-16",
+      "report_date": "2024-10-16",
+      "route": "Refugio Frey desde Villa Catedral",
+      "route_geometry_sha256": "9947df55746c5b8033b0955a9bdd8b2ddb61db1dad2621b1fc0d72fa1e21acdf",
+      "distance_to_route_km": 7.955,
+      "incident_name": "Dos Valles",
+      "province": "Río Negro",
+      "status_in_source_snapshot": "CONTROLADO",
+      "latitude": -41.17876388888889,
+      "longitude": -71.34405555555556,
+      "source_name_variants_collapsed": [
+        "Dos Valles"
+      ],
+      "source_records_collapsed": 1
+    },
+    {
+      "reported_start_date": "2025-10-08",
+      "report_date": "2025-10-08",
+      "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "route_geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa",
+      "distance_to_route_km": 4.321,
+      "incident_name": "Ruta 40 Control Policial",
+      "province": "Chubut",
+      "status_in_source_snapshot": "EXTINGUIDO",
+      "latitude": -41.99276666666667,
+      "longitude": -71.52387222222222,
+      "source_name_variants_collapsed": [
+        "Ruta 40 Control Policial"
+      ],
+      "source_records_collapsed": 1
+    },
+    {
+      "reported_start_date": "2025-10-08",
+      "report_date": "2025-10-08",
+      "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "route_geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa",
+      "distance_to_route_km": 9.515,
+      "incident_name": "Cerro Radal",
+      "province": "Chubut",
+      "status_in_source_snapshot": "EXTINGUIDO",
+      "latitude": -42.034275,
+      "longitude": -71.55907499999999,
+      "source_name_variants_collapsed": [
+        "Cerro Radal"
+      ],
+      "source_records_collapsed": 1
+    },
+    {
+      "reported_start_date": "2025-10-10",
+      "report_date": "2025-10-10",
+      "route": "Quebrada del Condorito - Balcon Norte",
+      "route_geometry_sha256": "e32d264c741314d2ab2ce3f1c7dc39a0522bd68d2f169de29df673c0e4021c74",
+      "distance_to_route_km": 3.533,
+      "incident_name": "Parque Nacional Quebrada del",
+      "province": "Córdoba",
+      "status_in_source_snapshot": "ACTIVO",
+      "latitude": -31.602061111111112,
+      "longitude": -64.72338888888889,
+      "source_name_variants_collapsed": [
+        "Parque Nacional Quebrada del",
+        "Parque Nacional Quebrada del Condorito, ex",
+        "Parque Nacional Quebrada del Condorito, ex La",
+        "Parque Nacional Quebrada del Condorito, ex La Pampilla"
+      ],
+      "source_records_collapsed": 4
+    },
+    {
+      "reported_start_date": "2025-11-17",
+      "report_date": "2025-11-18",
+      "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "route_geometry_sha256": "943d5295ae26d836263ab97bc40237870f91f42b4a88f14af8b73ed6fe17b7aa",
+      "distance_to_route_km": 7.2,
+      "incident_name": "Ternero Los fuegos",
+      "province": "Río Negro",
+      "status_in_source_snapshot": "EXTINGUIDO",
+      "latitude": -41.909955555555555,
+      "longitude": -71.51422777777778,
+      "source_name_variants_collapsed": [
+        "Ternero Los fuegos"
+      ],
+      "source_records_collapsed": 1
+    },
+    {
+      "reported_start_date": "2025-11-26",
+      "report_date": "2025-12-01",
+      "route": "Refugio Frey desde Villa Catedral",
+      "route_geometry_sha256": "9947df55746c5b8033b0955a9bdd8b2ddb61db1dad2621b1fc0d72fa1e21acdf",
+      "distance_to_route_km": 8.077,
+      "incident_name": "Ladera Norte Cerro",
+      "province": "Río Negro",
+      "status_in_source_snapshot": "CONTROLADO",
+      "latitude": -41.1387,
+      "longitude": -71.357,
+      "source_name_variants_collapsed": [
+        "Ladera Norte Cerro",
+        "Ladera Norte Cerro Otto"
+      ],
+      "source_records_collapsed": 2
+    },
+    {
+      "reported_start_date": "2025-12-11",
+      "report_date": "2025-12-11",
+      "route": "Cerro Ventana - Hueco de la Ventana",
+      "route_geometry_sha256": "61e1a9b62ae9b691b29c437aed7792b3723c7af54f03feb2311d4322fd3f5066",
+      "distance_to_route_km": 8.369,
+      "incident_name": "CERRO NAPOSTA /CERRO",
+      "province": "Buenos Aires",
+      "status_in_source_snapshot": "CONTENIDO",
+      "latitude": -38.13286111111111,
+      "longitude": -61.98330555555556,
+      "source_name_variants_collapsed": [
+        "CERRO NAPOSTA /CERRO"
+      ],
+      "source_records_collapsed": 1
+    }
+  ],
+  "existing_375m_same_day_event_coordinate_check": {
+    "source_report": "docs/environmental-models-2026-10-22/fire-viirs-snmf-event-route-pass-audit-2025.json",
+    "source_sha256": "0b65cd3a7f4b47ab49f226ab94f20d7809c55bbb5e558b92bc0ca01050a2fea1",
+    "selected_2025_events": 6,
+    "status_counts": {
+      "clear_land_without_detection_at_overpass": 1,
+      "no_matched_overpass_in_downloaded_cohort": 3,
+      "unknown_quality_or_nonland": 2
+    },
+    "events": [
+      {
+        "reported_start_date": "2025-10-08",
+        "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "incident_name": "Ruta 40 Control Policial",
+        "distance_to_route_km": 4.321,
+        "status": "unknown_quality_or_nonland",
+        "same_day_observations": [
+          {
+            "mask_status": "unknown_quality_or_nonland",
+            "mask_label": "cloud",
+            "distance_between_report_coordinates_km": 0.0,
+            "nearest_pixel_distance_km": 0.19423195652140018
+          }
+        ]
+      },
+      {
+        "reported_start_date": "2025-10-08",
+        "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "incident_name": "Cerro Radal",
+        "distance_to_route_km": 9.515,
+        "status": "unknown_quality_or_nonland",
+        "same_day_observations": [
+          {
+            "mask_status": "unknown_quality_or_nonland",
+            "mask_label": "cloud",
+            "distance_between_report_coordinates_km": 0.0,
+            "nearest_pixel_distance_km": 0.19346708256421816
+          }
+        ]
+      },
+      {
+        "reported_start_date": "2025-10-10",
+        "route": "Quebrada del Condorito - Balcon Norte",
+        "incident_name": "Parque Nacional Quebrada del",
+        "distance_to_route_km": 3.533,
+        "status": "no_matched_overpass_in_downloaded_cohort",
+        "same_day_observations": []
+      },
+      {
+        "reported_start_date": "2025-11-17",
+        "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "incident_name": "Ternero Los fuegos",
+        "distance_to_route_km": 7.2,
+        "status": "clear_land_without_detection_at_overpass",
+        "same_day_observations": [
+          {
+            "mask_status": "observed_clear_land",
+            "mask_label": "clear_land",
+            "distance_between_report_coordinates_km": 0.0,
+            "nearest_pixel_distance_km": 0.25181939022049155
+          }
+        ]
+      },
+      {
+        "reported_start_date": "2025-11-26",
+        "route": "Refugio Frey desde Villa Catedral",
+        "incident_name": "Ladera Norte Cerro",
+        "distance_to_route_km": 8.077,
+        "status": "no_matched_overpass_in_downloaded_cohort",
+        "same_day_observations": []
+      },
+      {
+        "reported_start_date": "2025-12-11",
+        "route": "Cerro Ventana - Hueco de la Ventana",
+        "incident_name": "CERRO NAPOSTA /CERRO",
+        "distance_to_route_km": 8.369,
+        "status": "no_matched_overpass_in_downloaded_cohort",
+        "same_day_observations": []
+      }
+    ],
+    "interpretation": "Exact-date I-band overpasses at the reported point do not establish whether a fire was active before or after the pass. Cloud/quality, no matching pass, and clear-land without detection are separate observation states, not fire/no-fire ground truth."
+  },
+  "interpretation": [
+    "These are official-report positive event candidates by reported coordinates and start dates; event times are only daily precision.",
+    "A route-buffer match does not prove the incident affected the trail or was detected by satellite.",
+    "The cohort contains positive events only; precision, specificity, false-alarm rate, and overall accuracy are not estimable from it.",
+    "No negative labels or synthetic observations are created. A VIIRS class-5 pixel can only mean observed clear-land non-detection in that composite.",
+    "Use later years as a temporal holdout after freezing any model or thresholds; do not randomly split adjacent days from one incident."
+  ],
+  "acquisition_plan": {
+    "daily_products": [
+      "VNP14A1.002",
+      "VJ114A1.002",
+      "VJ214A1.002"
+    ],
+    "event_dates": [
+      "2023-10-06",
+      "2023-12-19",
+      "2024-01-06",
+      "2024-01-26",
+      "2024-01-30",
+      "2024-02-03",
+      "2024-03-07",
+      "2024-04-16",
+      "2024-09-15",
+      "2024-10-16",
+      "2025-10-08",
+      "2025-10-10",
+      "2025-11-17",
+      "2025-11-26",
+      "2025-12-11"
+    ],
+    "event_route_tile_pairs": [
+      {
+        "date": "2023-10-06",
+        "tile": "h12v12"
+      },
+      {
+        "date": "2023-12-19",
+        "tile": "h12v13"
+      },
+      {
+        "date": "2024-01-06",
+        "tile": "h12v13"
+      },
+      {
+        "date": "2024-01-26",
+        "tile": "h12v13"
+      },
+      {
+        "date": "2024-01-30",
+        "tile": "h12v12"
+      },
+      {
+        "date": "2024-02-03",
+        "tile": "h13v12"
+      },
+      {
+        "date": "2024-03-07",
+        "tile": "h12v13"
+      },
+      {
+        "date": "2024-04-16",
+        "tile": "h12v13"
+      },
+      {
+        "date": "2024-09-15",
+        "tile": "h12v13"
+      },
+      {
+        "date": "2024-10-16",
+        "tile": "h12v13"
+      },
+      {
+        "date": "2025-10-08",
+        "tile": "h12v13"
+      },
+      {
+        "date": "2025-10-10",
+        "tile": "h12v12"
+      },
+      {
+        "date": "2025-11-17",
+        "tile": "h12v13"
+      },
+      {
+        "date": "2025-11-26",
+        "tile": "h12v13"
+      },
+      {
+        "date": "2025-12-11",
+        "tile": "h13v12"
+      }
+    ],
+    "unique_route_tile_date_pairs": 15,
+    "maximum_granules_before_deduplication": 45,
+    "downloaded_granules_in_acquisition_manifest": 45,
+    "downloaded_granules": 45
+  },
+  "synthetic_observations": 0,
+  "deployment_approved": false
+}

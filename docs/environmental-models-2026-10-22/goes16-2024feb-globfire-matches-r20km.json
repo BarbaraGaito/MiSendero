@@ -1,0 +1,68 @@
+{
+  "experiment_id": "fire-goes16-2024-feb-perimeter-test-vs-gwis-globfire",
+  "sources": {
+    "globfire_urls": [
+      "https://gwis.jrc.ec.europa.eu/downloads/country.profile/globfire_2024.gpkg.gz"
+    ],
+    "globfire_gpkg_sha256": "22380c739dd46a5f96385de36ff4154962c986d28b36c0a0e809d8d0b9b83930",
+    "globfire_gpkg_bytes": 486985728,
+    "goes_observations_sha256": "08e959aa27df5f3f855fa77909b2f173ffc57d6f7b43d328ec76f334828bbcc9",
+    "goes_positive_rows": 2,
+    "goes_observation_period": [
+      "2024-02-01",
+      "2024-02-14"
+    ]
+  },
+  "protocol": {
+    "site_center_radius_km": 20.0,
+    "pixel_to_perimeter_thresholds_km": [
+      2.5,
+      5,
+      10
+    ],
+    "date_uncertainty_margin_days": 3,
+    "globfire_algorithm": "2026 product from MCD64A1 C6.1 burned pixels; final event perimeters, initial/final dates; event merging by ST-DBSCAN; minimum four pixels (~86ha).",
+    "purpose": "Retrospective spatial-temporal coincidence audit of active-fire detections, not ignition prediction."
+  },
+  "eligible_route_sector_events": 2,
+  "events": [
+    {
+      "id": 20207456,
+      "initialdate": "2024-02-05T00:00:00.000",
+      "finaldate": "2024-02-10T00:00:00.000",
+      "area_ha": 473,
+      "nearest_region": "Refugio Frey desde Villa Catedral",
+      "center_distance_km": 16.249,
+      "goes_coincidences": [
+        {
+          "region": "Refugio Frey desde Villa Catedral",
+          "pixel_id": "G16:4699:2843",
+          "scan_start": "2024-02-05T18:00:20.200000+00:00",
+          "distance_km": 0.806,
+          "day_from_initial": 0
+        }
+      ]
+    },
+    {
+      "id": 20202076,
+      "initialdate": "2024-02-04T00:00:00.000",
+      "finaldate": "2024-02-05T00:00:00.000",
+      "area_ha": 129,
+      "nearest_region": "Cerro Ventana - Hueco de la Ventana",
+      "center_distance_km": 6.658,
+      "goes_coincidences": []
+    }
+  ],
+  "matched_events_by_distance_km": {
+    "2.5": 1,
+    "5": 1,
+    "10": 1
+  },
+  "limitations": [
+    "GlobFire is satellite-derived and is not independent ground truth.",
+    "Only the GlobFire 2024 layer was used in this cohort; no extrapolation to other years is supported.",
+    "The route cohort is fixed sample centers, not complete trail geometries.",
+    "A coincidence measures detection of active fire, not advance warning or ignition prediction.",
+    "A handful of events cannot support a reliable precision estimate."
+  ]
+}

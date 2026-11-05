@@ -1,0 +1,184 @@
+{
+  "experiment_id": "frozen-goes16-1-to-12h-models-vs-independent-inpe-reference-detections-2025-q1-test",
+  "interpretation": "External positive-event coincidence only. It does not estimate precision, calibrated probability, or ignition lead time.",
+  "protocol": {
+    "model": "fire-goes16-2025-q1",
+    "frozen_test_period": [
+      "2025-03-01",
+      "2025-04-01"
+    ],
+    "independent_target": "INPE reference-satellite hotspot within 10 km of a fixed route-sector center, grouped to one route-day; representative point is nearest to route center before looking at scores.",
+    "model_horizons_hours": [
+      1,
+      2,
+      3,
+      6,
+      12
+    ],
+    "scan_matching": "Each horizon is paired to a GOES scan start nearest the INPE detection time, with a 30-minute maximum offset.",
+    "alert_threshold": 0.5,
+    "spatial_scoring": {
+      "route_center_radius_km": 10.0,
+      "independent_point_radius_km": 5.0
+    },
+    "event_unit": "unique route-sector day; repeat satellite detections on that route/date are not counted as separate events."
+  },
+  "sources": {
+    "inpe_archive_sha256": "36d8b7bae6e92200b4e385e3a78784f5417083291c8743afbd8957fae3985654",
+    "goes_observations_sha256": "33960501bcc324c1e9440e7aeb5a80321b312fca386d828f606f3594f059116b",
+    "goes_availability_sha256": "c06221f800ce4d7b316dc7d5615266d1d6c432e678896d2f52420f24392c906a",
+    "model_sha256_by_horizon": {
+      "1": "efe2bf22cde84cee9cf35f060bf269101f08458896fe5c89081a7bc4202fe947",
+      "2": "5b736d229147208dbbd7307093d0f2acd541d4dd671fd5ad31c5fa715dc30ad0",
+      "3": "a7f5744dd8059a058d71214f544a0c99c58c4016e603f13e75af12ec2495e03a",
+      "6": "cba0f57a61af902128c97c7b990555e6d784cf2b70b73fe84188bce38bcfd647",
+      "12": "d61b1c3c5d4735f5387300a6726ec4942e45855eba1bd1a37a568391e6a5f8d4"
+    },
+    "training_report_sha256": "5956f9c000995e414a6f50bbac1a5f6ac512f711b928cf527b7b0f915307702d",
+    "protocol_sha256": "a15b02698f48605eb79f3da87107b28e9caa759b4f56fbdaf8664c6f616e298d"
+  },
+  "counts": {
+    "independent_inpe_route_days_in_test_period": 1,
+    "events_with_goes_model_coverage": 1,
+    "model_results_by_horizon": {
+      "1": {
+        "scored_events": 1,
+        "events_alerted_near_inpe_point_at_0_5": 0,
+        "events_alerted_in_route_buffer_at_0_5": 0,
+        "events_with_persistence_in_route_buffer": 0
+      },
+      "2": {
+        "scored_events": 1,
+        "events_alerted_near_inpe_point_at_0_5": 0,
+        "events_alerted_in_route_buffer_at_0_5": 0,
+        "events_with_persistence_in_route_buffer": 0
+      },
+      "3": {
+        "scored_events": 1,
+        "events_alerted_near_inpe_point_at_0_5": 0,
+        "events_alerted_in_route_buffer_at_0_5": 0,
+        "events_with_persistence_in_route_buffer": 0
+      },
+      "6": {
+        "scored_events": 1,
+        "events_alerted_near_inpe_point_at_0_5": 0,
+        "events_alerted_in_route_buffer_at_0_5": 0,
+        "events_with_persistence_in_route_buffer": 0
+      },
+      "12": {
+        "scored_events": 1,
+        "events_alerted_near_inpe_point_at_0_5": 0,
+        "events_alerted_in_route_buffer_at_0_5": 0,
+        "events_with_persistence_in_route_buffer": 0
+      }
+    }
+  },
+  "events": [
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "target_day_utc": "2025-03-20",
+      "independent_detection_records_within_10km": 1,
+      "representative_detection": {
+        "detection_id": "8d317b16-4e17-352e-881f-c9db4a9064fb",
+        "observed_at_utc": "2025-03-20T18:49:00Z",
+        "latitude": -27.96662,
+        "longitude": -57.95044,
+        "distance_to_route_center_km": 9.578752833994683
+      },
+      "goes_model": {
+        "status": "scored",
+        "target_scan_start_utc": "2025-03-20T19:00:20.300000+00:00",
+        "independent_detection_at_utc": "2025-03-20T18:49:00+00:00",
+        "scan_offset_minutes": 11.34,
+        "GOES_target_label_counts_at_nearest_scan": {
+          "route_center_10km": {
+            "valid_positive_GOES_pixels": 0,
+            "valid_negative_GOES_pixels": 13,
+            "unknown_GOES_pixels": 1
+          },
+          "INPE_point_5km": {
+            "valid_positive_GOES_pixels": 0,
+            "valid_negative_GOES_pixels": 3,
+            "unknown_GOES_pixels": 0
+          }
+        },
+        "horizons": {
+          "1": {
+            "status": "scored",
+            "issue_product_created_at_utc": "2025-03-20T18:10:04.600000+00:00",
+            "target_product_created_at_utc": "2025-03-20T19:10:05+00:00",
+            "route_pixels_with_usable_inputs_within_10km": 13,
+            "pixels_with_usable_inputs_within_5km_of_detection": 3,
+            "max_model_score_within_5km_of_detection": 0.00022264591825660318,
+            "model_alert_within_5km_of_detection_at_fixed_0_5": false,
+            "max_model_score_within_10km_of_route_center": 0.000237875574384816,
+            "model_alert_within_10km_of_route_center_at_fixed_0_5": false,
+            "persistence_alert_within_10km_of_route_center": false,
+            "threshold_origin": "Fixed diagnostic threshold 0.5 used in frozen GOES test reports; it is not calibrated as a probability."
+          },
+          "2": {
+            "status": "scored",
+            "issue_product_created_at_utc": "2025-03-20T17:10:04.400000+00:00",
+            "target_product_created_at_utc": "2025-03-20T19:10:05+00:00",
+            "route_pixels_with_usable_inputs_within_10km": 13,
+            "pixels_with_usable_inputs_within_5km_of_detection": 3,
+            "max_model_score_within_5km_of_detection": 0.00017825106624513865,
+            "model_alert_within_5km_of_detection_at_fixed_0_5": false,
+            "max_model_score_within_10km_of_route_center": 0.00018858678231481463,
+            "model_alert_within_10km_of_route_center_at_fixed_0_5": false,
+            "persistence_alert_within_10km_of_route_center": false,
+            "threshold_origin": "Fixed diagnostic threshold 0.5 used in frozen GOES test reports; it is not calibrated as a probability."
+          },
+          "3": {
+            "status": "scored",
+            "issue_product_created_at_utc": "2025-03-20T16:10:05+00:00",
+            "target_product_created_at_utc": "2025-03-20T19:10:05+00:00",
+            "route_pixels_with_usable_inputs_within_10km": 13,
+            "pixels_with_usable_inputs_within_5km_of_detection": 3,
+            "max_model_score_within_5km_of_detection": 6.03996113568428e-06,
+            "model_alert_within_5km_of_detection_at_fixed_0_5": false,
+            "max_model_score_within_10km_of_route_center": 6.404619853128679e-06,
+            "model_alert_within_10km_of_route_center_at_fixed_0_5": false,
+            "persistence_alert_within_10km_of_route_center": false,
+            "threshold_origin": "Fixed diagnostic threshold 0.5 used in frozen GOES test reports; it is not calibrated as a probability."
+          },
+          "6": {
+            "status": "scored",
+            "issue_product_created_at_utc": "2025-03-20T13:10:04.600000+00:00",
+            "target_product_created_at_utc": "2025-03-20T19:10:05+00:00",
+            "route_pixels_with_usable_inputs_within_10km": 13,
+            "pixels_with_usable_inputs_within_5km_of_detection": 3,
+            "max_model_score_within_5km_of_detection": 2.6269999509054287e-09,
+            "model_alert_within_5km_of_detection_at_fixed_0_5": false,
+            "max_model_score_within_10km_of_route_center": 2.7507940369986272e-09,
+            "model_alert_within_10km_of_route_center_at_fixed_0_5": false,
+            "persistence_alert_within_10km_of_route_center": false,
+            "threshold_origin": "Fixed diagnostic threshold 0.5 used in frozen GOES test reports; it is not calibrated as a probability."
+          },
+          "12": {
+            "status": "scored",
+            "issue_product_created_at_utc": "2025-03-20T07:10:03+00:00",
+            "target_product_created_at_utc": "2025-03-20T19:10:05+00:00",
+            "route_pixels_with_usable_inputs_within_10km": 13,
+            "pixels_with_usable_inputs_within_5km_of_detection": 3,
+            "max_model_score_within_5km_of_detection": 7.953482850098226e-08,
+            "model_alert_within_5km_of_detection_at_fixed_0_5": false,
+            "max_model_score_within_10km_of_route_center": 8.312284904832268e-08,
+            "model_alert_within_10km_of_route_center_at_fixed_0_5": false,
+            "persistence_alert_within_10km_of_route_center": false,
+            "threshold_origin": "Fixed diagnostic threshold 0.5 used in frozen GOES test reports; it is not calibrated as a probability."
+          }
+        }
+      }
+    }
+  ],
+  "limitations": [
+    "Only positive satellite observations are available in the INPE annual archive; no verified negative route-days means no event precision can be calculated.",
+    "The test subset may contain very few independent route-days; report counts rather than a generalizable performance estimate.",
+    "INPE records an active-fire point, not necessarily a wildfire or a new ignition; detection time is not exact ignition time.",
+    "INPE location, GOES pixel size, route-center radius, and scan-time mismatch introduce spatial and temporal uncertainty.",
+    "The GOES model predicts a future GOES fire mask, not fire ignition, spread, or route safety; class-weighted score 0.5 is not 50% probability."
+  ],
+  "synthetic_observations": 0,
+  "deployment_approved": false
+}

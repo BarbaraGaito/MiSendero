@@ -51,6 +51,12 @@
           "background": false
         }
       ],
+      [
+        "expo-sensors",
+        {
+          "motionPermission": "MiSendero lee el acelerómetro durante un recorrido, solo si activás la detección de caídas experimental. El procesamiento es local y los datos del sensor no se envían."
+        }
+      ],
       "expo-secure-store",
       "expo-font"
     ],

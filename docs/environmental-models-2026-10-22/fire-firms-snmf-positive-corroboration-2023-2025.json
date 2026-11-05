@@ -1,0 +1,130 @@
+{
+  "experiment_id": "firms-snmf-selected-positive-route-day-corroboration-2023-2025",
+  "status": "positive_event_corroboration_only_precision_not_estimable",
+  "cohort_selection": "FIRMS query dates were selected from SNMF-positive route-sector dates; +/-1-day satellite detections are descriptive and do not prove event identity or forecast lead time.",
+  "results_by_year": {
+    "2023": {
+      "period": [
+        "2023-01-01",
+        "2023-12-31"
+      ],
+      "sensor": "VIIRS_SNPP_SP",
+      "route_buffer_km": 20.0,
+      "snmf_positive_route_days_in_selected_cohort": 40,
+      "snmf_positive_route_sectors": 4,
+      "firms_query_blocks": 20,
+      "firms_candidate_detection_rows": 462,
+      "firms_unique_route_detection_days_in_selected_windows": 18,
+      "same_day_snmf_positive_route_days_with_firms_detection": 11,
+      "same_day_fraction_descriptive_only": 0.275,
+      "positive_route_days_with_detection_within_plus_minus_one_day": 18,
+      "confidence": {
+        "h": {
+          "detection_rows": 45,
+          "unique_route_detection_days": 11,
+          "same_day_positive_route_days_with_detection": 6
+        },
+        "n": {
+          "detection_rows": 382,
+          "unique_route_detection_days": 18,
+          "same_day_positive_route_days_with_detection": 11
+        },
+        "l": {
+          "detection_rows": 35,
+          "unique_route_detection_days": 9,
+          "same_day_positive_route_days_with_detection": 4
+        }
+      },
+      "negative_examples_created": 0,
+      "precision_estimable": false,
+      "data_sha256": "d1295b6a71662ea243d4a5cced6beea722c3fd83f8ff02233730366b74ffcf2c",
+      "snmf_events_sha256": "b82ddcb2c848fe854be9e1002fed72318165d8b1818b952b61cc9467b1cc0900",
+      "event_plan_sha256": "1fe42f40d1e21cba695d51d8cd4c9ad524e70900e70c9b8284387f4ae55acf92"
+    },
+    "2024": {
+      "period": [
+        "2024-01-01",
+        "2024-12-31"
+      ],
+      "sensor": "VIIRS_SNPP_SP",
+      "route_buffer_km": 20.0,
+      "snmf_positive_route_days_in_selected_cohort": 84,
+      "snmf_positive_route_sectors": 6,
+      "firms_query_blocks": 34,
+      "firms_candidate_detection_rows": 64,
+      "firms_unique_route_detection_days_in_selected_windows": 8,
+      "same_day_snmf_positive_route_days_with_firms_detection": 6,
+      "same_day_fraction_descriptive_only": 0.07142857142857142,
+      "positive_route_days_with_detection_within_plus_minus_one_day": 8,
+      "confidence": {
+        "h": {
+          "detection_rows": 6,
+          "unique_route_detection_days": 2,
+          "same_day_positive_route_days_with_detection": 2
+        },
+        "n": {
+          "detection_rows": 53,
+          "unique_route_detection_days": 8,
+          "same_day_positive_route_days_with_detection": 6
+        },
+        "l": {
+          "detection_rows": 5,
+          "unique_route_detection_days": 2,
+          "same_day_positive_route_days_with_detection": 2
+        }
+      },
+      "negative_examples_created": 0,
+      "precision_estimable": false,
+      "data_sha256": "f07154e9aa26b0eca88316419f41712a58fa1290bd4113e30b11389c0f6a34c1",
+      "snmf_events_sha256": "10c44e0b77d99d771c3256978f3d5c976b3dd05262ab122108aff0d4861e0bad",
+      "event_plan_sha256": "91d9e62bf5cde056bf12913da8e5f46293771332d202c7dc5cf8c1eb496aab67"
+    },
+    "2025": {
+      "period": [
+        "2025-01-01",
+        "2025-12-31"
+      ],
+      "sensor": "VIIRS_SNPP_SP",
+      "route_buffer_km": 20.0,
+      "snmf_positive_route_days_in_selected_cohort": 60,
+      "snmf_positive_route_sectors": 4,
+      "firms_query_blocks": 28,
+      "firms_candidate_detection_rows": 488,
+      "firms_unique_route_detection_days_in_selected_windows": 11,
+      "same_day_snmf_positive_route_days_with_firms_detection": 10,
+      "same_day_fraction_descriptive_only": 0.16666666666666666,
+      "positive_route_days_with_detection_within_plus_minus_one_day": 11,
+      "confidence": {
+        "h": {
+          "detection_rows": 45,
+          "unique_route_detection_days": 4,
+          "same_day_positive_route_days_with_detection": 4
+        },
+        "n": {
+          "detection_rows": 414,
+          "unique_route_detection_days": 10,
+          "same_day_positive_route_days_with_detection": 9
+        },
+        "l": {
+          "detection_rows": 29,
+          "unique_route_detection_days": 4,
+          "same_day_positive_route_days_with_detection": 4
+        }
+      },
+      "negative_examples_created": 0,
+      "precision_estimable": false,
+      "data_sha256": "fb2fe7b56b75247f4531595b7860983643ba9bf8458ee151305fc47692d8ebe8",
+      "snmf_events_sha256": "d8e95391641ccb7d884d7bbe88e3df6fff82251352a50154656f88096f4a87f4",
+      "event_plan_sha256": null
+    }
+  },
+  "limitations": [
+    "The cohort is conditioned on SNMF-positive route-days and cannot estimate precision, false alarms, or general performance.",
+    "SNMF reports have daily time precision; adjacent-day matches do not establish temporal ordering or a forecast lead.",
+    "A FIRMS hotspot near a route may be a separate incident; no incident-level identity adjudication was performed.",
+    "FIRMS active-fire detections do not contain complete observation coverage, so absence of a hotspot is unknown rather than a negative.",
+    "SNMF extraction can omit archive dates or coordinates; see the source event files and manifests."
+  ],
+  "synthetic_observations": 0,
+  "deployment_approved": false
+}

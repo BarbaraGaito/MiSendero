@@ -1,0 +1,1738 @@
+{
+  "experiment_id": "unified-fire-jma-geographic-region-holdout-forward-time-v1",
+  "status": "spatially_blocked_exploratory_evaluation_not_reliable_prediction",
+  "target": "Any source-preserved route-day detection/event evidence in the MOD14A1 + INPE Aqua/MODIS + SNMF/GFA union.",
+  "negative_definition": "At least 80% clear-land MOD14A1 route-corridor QA with no MODIS fire detection and no catalogued source event; not physical-fire absence.",
+  "forecast": "JMA GSM Previous Runs previous_day1 (24 h lead), aggregated at each route midpoint.",
+  "time_protocol": {
+    "train": [
+      "2022-01-01",
+      "2023-01-01"
+    ],
+    "validation": [
+      "2023-01-01",
+      "2024-01-01"
+    ],
+    "test": [
+      "2024-01-01",
+      "2027-01-01"
+    ]
+  },
+  "geography_protocol": {
+    "unit": "connected group of route polylines",
+    "grouping": "Route polylines sampled at 10 km intervals; groups connected when sampled positions are within 100 km. Every held-out group is excluded from that fold's train and validation.",
+    "groups": [
+      [
+        "aconquija-el-pozon",
+        "aconquija-puesto-chorizos",
+        "puertaCielo"
+      ],
+      [
+        "aguilas",
+        "condores"
+      ],
+      [
+        "alerces-alto-petiso",
+        "alerces-arroyo-hacha",
+        "alerces-cerro-cocinero",
+        "alerces-laguna-escondida",
+        "bosqueTallado",
+        "esquelCruz",
+        "frey"
+      ],
+      [
+        "bateaMirador",
+        "lanin-cara-sur-puerto-canoa",
+        "lanin-rosales-san-martin"
+      ],
+      [
+        "cerroAlto",
+        "namuncura"
+      ],
+      [
+        "condorito",
+        "condorito-secretos-pies",
+        "tabaquillo",
+        "uritorco"
+      ],
+      [
+        "costera",
+        "esmeralda",
+        "fuego-pampa-alta",
+        "hito"
+      ],
+      [
+        "el-rey-la-chuna",
+        "el-rey-laguna-patitos",
+        "sanBernardo"
+      ],
+      [
+        "encantadoMirador"
+      ],
+      [
+        "guanacos",
+        "miradoresQuijadas",
+        "quijadas-farallones"
+      ],
+      [
+        "leoncito-cerro"
+      ],
+      [
+        "macuco"
+      ],
+      [
+        "mburucuya-che-roga",
+        "mburucuya-tape-pora"
+      ],
+      [
+        "porito"
+      ],
+      [
+        "ventana"
+      ]
+    ],
+    "warning": "This is a route-neighborhood block, not an official ecoregion or province partition; routes beyond the block radius can still share broad weather/fire regimes."
+  },
+  "model": {
+    "algorithm": "same class-balanced logistic regression for every fold; weather, annual season terms, route effect.",
+    "threshold_policy": "0.5 is a fixed diagnostic only. A >=90% precision with >=5 validation alerts threshold is selected independently in each fold when possible; test outcomes are never used for threshold selection.",
+    "features": [
+      "temperature_mean",
+      "temperature_max",
+      "humidity_mean",
+      "humidity_min",
+      "wind_mean",
+      "wind_max",
+      "precipitation_sum",
+      "annual_sin",
+      "annual_cos"
+    ]
+  },
+  "source_provenance": {
+    "route_count": 41,
+    "modis_qa": {
+      "route_dates_before_qa_rule": 44979,
+      "route_dates_after_qa_rule": 29024,
+      "insufficient_qa_coverage": 15955
+    },
+    "inpe": {
+      "annual_archives": {
+        "2018": {
+          "path": "training/data/environmental/private/inpe-ams-satellite-reference/focos_ams_ref_2018.zip",
+          "sha256": "5cd46751c6e68dc730e206ed92faef69c1e0851770a44a4e899f3078d7ad6af3"
+        },
+        "2019": {
+          "path": "training/data/environmental/private/inpe-ams-satellite-reference/focos_ams_ref_2019.zip",
+          "sha256": "f1ed473194672423cd1ed3424523a4e562c7cbce7e60af6e967720c4ec1c7e87"
+        },
+        "2020": {
+          "path": "training/data/environmental/private/inpe-ams-satellite-reference/focos_ams_ref_2020.zip",
+          "sha256": "1a477dcf2d09449e9850e3f64a7e6f04b6822b996c7039468a55eeafea1d6928"
+        },
+        "2021": {
+          "path": "training/data/environmental/private/inpe-ams-satellite-reference/focos_ams_ref_2021.zip",
+          "sha256": "461fd9f64fc97f7a30bb5cbaad79f076caf22d003457362af8bd2e370c02021c"
+        },
+        "2022": {
+          "path": "training/data/environmental/private/inpe-ams-satellite-reference/focos_ams_ref_2022.zip",
+          "sha256": "9a866617bc3889c19046fd3853e450a5ec4d2ad7539b805a71930422bce4b197"
+        },
+        "2023": {
+          "path": "training/data/environmental/private/inpe-ams-satellite-reference/focos_ams_ref_2023.zip",
+          "sha256": "822365b3166ecf9e26db9444a8c74a995cc45338d495a4986de4c1bc6cc000e7"
+        },
+        "2024": {
+          "path": "training/data/environmental/private/inpe-ams-satellite-reference/focos_ams_ref_2024.zip",
+          "sha256": "fad2c6e8d09876c67c0c41a83906a5f4c2bcdfb44d9acb7f1d75f50014e67df2"
+        },
+        "2025": {
+          "path": "training/data/environmental/private/inpe-ams-satellite-reference/focos_ams_ref_2025.zip",
+          "sha256": "36d8b7bae6e92200b4e385e3a78784f5417083291c8743afbd8957fae3985654"
+        }
+      },
+      "argentina_detection_rows_screened": 302680,
+      "route_date_detections_within_5km": 81,
+      "unique_route_count_with_detection": 17,
+      "unique_detection_coordinates": 234
+    },
+    "unmapped_catalog_routes": {},
+    "label_sha256": "7f1458ad11b180a3ba9cae69eba626a1ec29986618db1340f0af4176b3c7e694",
+    "catalog_sha256": "cee4a40a94de7ee279851cb6fa6cd7c5ccfc44145c8bebc54cec9b8aa5d5ea46",
+    "unified_dataset": {
+      "path": "training/data/environmental/private/argentina-route-fire-evidence-jma-unified-all-41-2022-2026.csv.gz",
+      "sha256": "32771119c0f434054ebda31fa0bf195576885c276d6ac084ab27589f3a4f8893",
+      "rows": 28620,
+      "manifest_path": "training/data/environmental/private/argentina-route-fire-evidence-jma-unified-all-41-2022-2026-manifest.json",
+      "manifest_sha256": "e86eae792bfe2f48895313a94cb929a95616fb3862d60cabc51f5e0d6868a8dc",
+      "uncompressed_sha256": "baf9afa48b3f6593994f011f3bae28f32d84754e367889a4fb6a4130cb2cbb9d"
+    }
+  },
+  "fold_count": 15,
+  "scored_fold_count": 15,
+  "folds_with_positive_test_evidence": 7,
+  "folds_with_validation_threshold_meeting_gate": 0,
+  "folds_with_validation_max_precision_threshold": 15,
+  "unscored_test_routes": [],
+  "folds": [
+    {
+      "fold": 1,
+      "heldout_routes": [
+        "aconquija-el-pozon",
+        "aconquija-puesto-chorizos",
+        "puertaCielo"
+      ],
+      "region_radius_km": 100.0,
+      "counts": {
+        "train_route_days": 8152,
+        "train_positives": 23,
+        "validation_route_days": 8385,
+        "validation_positives": 49,
+        "test_route_days": 884,
+        "test_positives": 1,
+        "test_positive_dates": 1
+      },
+      "status": "scored",
+      "validation_threshold_90pct_precision_min_5_alerts": null,
+      "validation_max_precision_threshold_route_day": {
+        "threshold": 0.9099644282213446,
+        "validation_precision": 0.0641025641025641,
+        "validation_recall": 0.10204081632653061,
+        "validation_true_positives": 5,
+        "validation_alerts": 78,
+        "minimum_alerts": 5
+      },
+      "validation_max_precision_threshold_event_date": {
+        "threshold": 0.9215563727519258,
+        "validation_precision": 0.23529411764705882,
+        "validation_recall": 0.20512820512820512,
+        "validation_true_positives": 8,
+        "validation_alerts": 34,
+        "minimum_alerts": 5
+      },
+      "diagnostic_test_metrics_at_0_5": {
+        "prevalence": 0.0011312217194570137,
+        "threshold": 0.5,
+        "alerts": 373,
+        "true_positives": 1,
+        "false_positives": 372,
+        "false_negatives": 0,
+        "precision": 0.002680965147453083,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": 0.0005983298736131703,
+        "recall": 1.0,
+        "average_precision": 0.008064516129032258,
+        "brier": 0.2606592002325996,
+        "confusion_matrix_tn_fp_fn_tp": [
+          511,
+          372,
+          0,
+          1
+        ],
+        "observations": 884,
+        "positive_observations": 1
+      },
+      "diagnostic_test_metrics_at_validation_threshold": null,
+      "test_route_day_metrics_at_validation_max_precision": {
+        "prevalence": 0.0011312217194570137,
+        "threshold": 0.9099644282213446,
+        "alerts": 0,
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 1,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": null,
+        "recall": 0.0,
+        "average_precision": 0.008064516129032258,
+        "brier": 0.2606592002325996,
+        "confusion_matrix_tn_fp_fn_tp": [
+          883,
+          0,
+          1,
+          0
+        ],
+        "observations": 884,
+        "positive_observations": 1
+      },
+      "test_event_date_metrics_at_validation_max_precision": {
+        "prevalence": 0.0030959752321981426,
+        "threshold": 0.9215563727519258,
+        "alerts": 0,
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 1,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": null,
+        "recall": 0.0,
+        "average_precision": 0.015151515151515152,
+        "brier": 0.31271486172216584,
+        "confusion_matrix_tn_fp_fn_tp": [
+          322,
+          0,
+          1,
+          0
+        ],
+        "observations": 323,
+        "positive_observations": 1
+      }
+    },
+    {
+      "fold": 2,
+      "heldout_routes": [
+        "aguilas",
+        "condores"
+      ],
+      "region_radius_km": 100.0,
+      "counts": {
+        "train_route_days": 8612,
+        "train_positives": 28,
+        "validation_route_days": 8886,
+        "validation_positives": 54,
+        "test_route_days": 477,
+        "test_positives": 4,
+        "test_positive_dates": 2
+      },
+      "status": "scored",
+      "validation_threshold_90pct_precision_min_5_alerts": null,
+      "validation_max_precision_threshold_route_day": {
+        "threshold": 0.9407380434477092,
+        "validation_precision": 0.08333333333333333,
+        "validation_recall": 0.018518518518518517,
+        "validation_true_positives": 1,
+        "validation_alerts": 12,
+        "minimum_alerts": 5
+      },
+      "validation_max_precision_threshold_event_date": {
+        "threshold": 0.9356805401752829,
+        "validation_precision": 0.4117647058823529,
+        "validation_recall": 0.16279069767441862,
+        "validation_true_positives": 7,
+        "validation_alerts": 17,
+        "minimum_alerts": 5
+      },
+      "diagnostic_test_metrics_at_0_5": {
+        "prevalence": 0.008385744234800839,
+        "threshold": 0.5,
+        "alerts": 5,
+        "true_positives": 0,
+        "false_positives": 5,
+        "false_negatives": 4,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": 0.0,
+        "recall": 0.0,
+        "average_precision": 0.02106830505044049,
+        "brier": 0.04645788779065899,
+        "confusion_matrix_tn_fp_fn_tp": [
+          468,
+          5,
+          4,
+          0
+        ],
+        "observations": 477,
+        "positive_observations": 4
+      },
+      "diagnostic_test_metrics_at_validation_threshold": null,
+      "test_route_day_metrics_at_validation_max_precision": {
+        "prevalence": 0.008385744234800839,
+        "threshold": 0.9407380434477092,
+        "alerts": 0,
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 4,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": null,
+        "recall": 0.0,
+        "average_precision": 0.02106830505044049,
+        "brier": 0.04645788779065899,
+        "confusion_matrix_tn_fp_fn_tp": [
+          473,
+          0,
+          4,
+          0
+        ],
+        "observations": 477,
+        "positive_observations": 4
+      },
+      "test_event_date_metrics_at_validation_max_precision": {
+        "prevalence": 0.008333333333333333,
+        "threshold": 0.9356805401752829,
+        "alerts": 0,
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 2,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": null,
+        "recall": 0.0,
+        "average_precision": 0.025528455284552845,
+        "brier": 0.047492478798571394,
+        "confusion_matrix_tn_fp_fn_tp": [
+          238,
+          0,
+          2,
+          0
+        ],
+        "observations": 240,
+        "positive_observations": 2
+      }
+    },
+    {
+      "fold": 3,
+      "heldout_routes": [
+        "alerces-alto-petiso",
+        "alerces-arroyo-hacha",
+        "alerces-cerro-cocinero",
+        "alerces-laguna-escondida",
+        "bosqueTallado",
+        "esquelCruz",
+        "frey"
+      ],
+      "region_radius_km": 100.0,
+      "counts": {
+        "train_route_days": 7920,
+        "train_positives": 28,
+        "validation_route_days": 8109,
+        "validation_positives": 47,
+        "test_route_days": 1423,
+        "test_positives": 47,
+        "test_positive_dates": 32
+      },
+      "status": "scored",
+      "validation_threshold_90pct_precision_min_5_alerts": null,
+      "validation_max_precision_threshold_route_day": {
+        "threshold": 0.901171643948051,
+        "validation_precision": 0.07216494845360824,
+        "validation_recall": 0.14893617021276595,
+        "validation_true_positives": 7,
+        "validation_alerts": 97,
+        "minimum_alerts": 5
+      },
+      "validation_max_precision_threshold_event_date": {
+        "threshold": 0.9293374733910194,
+        "validation_precision": 0.35,
+        "validation_recall": 0.1891891891891892,
+        "validation_true_positives": 7,
+        "validation_alerts": 20,
+        "minimum_alerts": 5
+      },
+      "diagnostic_test_metrics_at_0_5": {
+        "prevalence": 0.03302881236823612,
+        "threshold": 0.5,
+        "alerts": 164,
+        "true_positives": 14,
+        "false_positives": 150,
+        "false_negatives": 33,
+        "precision": 0.08536585365853659,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": 0.0558673015544467,
+        "recall": 0.2978723404255319,
+        "average_precision": 0.0800191110331681,
+        "brier": 0.10240307047312196,
+        "confusion_matrix_tn_fp_fn_tp": [
+          1226,
+          150,
+          33,
+          14
+        ],
+        "observations": 1423,
+        "positive_observations": 47
+      },
+      "diagnostic_test_metrics_at_validation_threshold": null,
+      "test_route_day_metrics_at_validation_max_precision": {
+        "prevalence": 0.03302881236823612,
+        "threshold": 0.901171643948051,
+        "alerts": 0,
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 47,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": null,
+        "recall": 0.0,
+        "average_precision": 0.0800191110331681,
+        "brier": 0.10240307047312196,
+        "confusion_matrix_tn_fp_fn_tp": [
+          1376,
+          0,
+          47,
+          0
+        ],
+        "observations": 1423,
+        "positive_observations": 47
+      },
+      "test_event_date_metrics_at_validation_max_precision": {
+        "prevalence": 0.09142857142857143,
+        "threshold": 0.9293374733910194,
+        "alerts": 0,
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 32,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": null,
+        "recall": 0.0,
+        "average_precision": 0.2686526747989874,
+        "brier": 0.11879312092101878,
+        "confusion_matrix_tn_fp_fn_tp": [
+          318,
+          0,
+          32,
+          0
+        ],
+        "observations": 350,
+        "positive_observations": 32
+      }
+    },
+    {
+      "fold": 4,
+      "heldout_routes": [
+        "bateaMirador",
+        "lanin-cara-sur-puerto-canoa",
+        "lanin-rosales-san-martin"
+      ],
+      "region_radius_km": 100.0,
+      "counts": {
+        "train_route_days": 8437,
+        "train_positives": 25,
+        "validation_route_days": 8698,
+        "validation_positives": 52,
+        "test_route_days": 741,
+        "test_positives": 4,
+        "test_positive_dates": 4
+      },
+      "status": "scored",
+      "validation_threshold_90pct_precision_min_5_alerts": null,
+      "validation_max_precision_threshold_route_day": {
+        "threshold": 0.9368381662161073,
+        "validation_precision": 0.11538461538461539,
+        "validation_recall": 0.057692307692307696,
+        "validation_true_positives": 3,
+        "validation_alerts": 26,
+        "minimum_alerts": 5
+      },
+      "validation_max_precision_threshold_event_date": {
+        "threshold": 0.9455033116676018,
+        "validation_precision": 0.4166666666666667,
+        "validation_recall": 0.125,
+        "validation_true_positives": 5,
+        "validation_alerts": 12,
+        "minimum_alerts": 5
+      },
+      "diagnostic_test_metrics_at_0_5": {
+        "prevalence": 0.005398110661268556,
+        "threshold": 0.5,
+        "alerts": 50,
+        "true_positives": 2,
+        "false_positives": 48,
+        "false_negatives": 2,
+        "precision": 0.04,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": 0.013326282653439105,
+        "recall": 0.5,
+        "average_precision": 0.06296254678888268,
+        "brier": 0.06966701100055905,
+        "confusion_matrix_tn_fp_fn_tp": [
+          689,
+          48,
+          2,
+          2
+        ],
+        "observations": 741,
+        "positive_observations": 4
+      },
+      "diagnostic_test_metrics_at_validation_threshold": null,
+      "test_route_day_metrics_at_validation_max_precision": {
+        "prevalence": 0.005398110661268556,
+        "threshold": 0.9368381662161073,
+        "alerts": 0,
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 4,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": null,
+        "recall": 0.0,
+        "average_precision": 0.06296254678888268,
+        "brier": 0.06966701100055905,
+        "confusion_matrix_tn_fp_fn_tp": [
+          737,
+          0,
+          4,
+          0
+        ],
+        "observations": 741,
+        "positive_observations": 4
+      },
+      "test_event_date_metrics_at_validation_max_precision": {
+        "prevalence": 0.012861736334405145,
+        "threshold": 0.9455033116676018,
+        "alerts": 0,
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 4,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": null,
+        "recall": 0.0,
+        "average_precision": 0.07169647493683885,
+        "brier": 0.09539156473061579,
+        "confusion_matrix_tn_fp_fn_tp": [
+          307,
+          0,
+          4,
+          0
+        ],
+        "observations": 311,
+        "positive_observations": 4
+      }
+    },
+    {
+      "fold": 5,
+      "heldout_routes": [
+        "cerroAlto",
+        "namuncura"
+      ],
+      "region_radius_km": 100.0,
+      "counts": {
+        "train_route_days": 8449,
+        "train_positives": 26,
+        "validation_route_days": 8704,
+        "validation_positives": 54,
+        "test_route_days": 653,
+        "test_positives": 6,
+        "test_positive_dates": 3
+      },
+      "status": "scored",
+      "validation_threshold_90pct_precision_min_5_alerts": null,
+      "validation_max_precision_threshold_route_day": {
+        "threshold": 0.940951030080969,
+        "validation_precision": 0.1111111111111111,
+        "validation_recall": 0.018518518518518517,
+        "validation_true_positives": 1,
+        "validation_alerts": 9,
+        "minimum_alerts": 5
+      },
+      "validation_max_precision_threshold_event_date": {
+        "threshold": 0.9075547502963532,
+        "validation_precision": 0.3137254901960784,
+        "validation_recall": 0.37209302325581395,
+        "validation_true_positives": 16,
+        "validation_alerts": 51,
+        "minimum_alerts": 5
+      },
+      "diagnostic_test_metrics_at_0_5": {
+        "prevalence": 0.009188361408882083,
+        "threshold": 0.5,
+        "alerts": 102,
+        "true_positives": 4,
+        "false_positives": 98,
+        "false_negatives": 2,
+        "precision": 0.0392156862745098,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": 0.017725417080336058,
+        "recall": 0.6666666666666666,
+        "average_precision": 0.041814533761739235,
+        "brier": 0.11646030401030497,
+        "confusion_matrix_tn_fp_fn_tp": [
+          549,
+          98,
+          2,
+          4
+        ],
+        "observations": 653,
+        "positive_observations": 6
+      },
+      "diagnostic_test_metrics_at_validation_threshold": null,
+      "test_route_day_metrics_at_validation_max_precision": {
+        "prevalence": 0.009188361408882083,
+        "threshold": 0.940951030080969,
+        "alerts": 0,
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 6,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": null,
+        "recall": 0.0,
+        "average_precision": 0.041814533761739235,
+        "brier": 0.11646030401030497,
+        "confusion_matrix_tn_fp_fn_tp": [
+          647,
+          0,
+          6,
+          0
+        ],
+        "observations": 653,
+        "positive_observations": 6
+      },
+      "test_event_date_metrics_at_validation_max_precision": {
+        "prevalence": 0.009174311926605505,
+        "threshold": 0.9075547502963532,
+        "alerts": 0,
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 3,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": null,
+        "recall": 0.0,
+        "average_precision": 0.05216388549721882,
+        "brier": 0.12411181444802398,
+        "confusion_matrix_tn_fp_fn_tp": [
+          324,
+          0,
+          3,
+          0
+        ],
+        "observations": 327,
+        "positive_observations": 3
+      }
+    },
+    {
+      "fold": 6,
+      "heldout_routes": [
+        "condorito",
+        "condorito-secretos-pies",
+        "tabaquillo",
+        "uritorco"
+      ],
+      "region_radius_km": 100.0,
+      "counts": {
+        "train_route_days": 7847,
+        "train_positives": 28,
+        "validation_route_days": 8054,
+        "validation_positives": 47,
+        "test_route_days": 1310,
+        "test_positives": 0,
+        "test_positive_dates": 0
+      },
+      "status": "scored",
+      "validation_threshold_90pct_precision_min_5_alerts": null,
+      "validation_max_precision_threshold_route_day": {
+        "threshold": 0.9377126757514954,
+        "validation_precision": 0.09090909090909091,
+        "validation_recall": 0.02127659574468085,
+        "validation_true_positives": 1,
+        "validation_alerts": 11,
+        "minimum_alerts": 5
+      },
+      "validation_max_precision_threshold_event_date": {
+        "threshold": 0.9362032585467609,
+        "validation_precision": 0.45454545454545453,
+        "validation_recall": 0.13513513513513514,
+        "validation_true_positives": 5,
+        "validation_alerts": 11,
+        "minimum_alerts": 5
+      },
+      "diagnostic_test_metrics_at_0_5": {
+        "prevalence": 0.0,
+        "threshold": 0.5,
+        "alerts": 193,
+        "true_positives": 0,
+        "false_positives": 193,
+        "false_negatives": 0,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": 0.0,
+        "recall": 0.0,
+        "average_precision": null,
+        "brier": 0.12237284607837254,
+        "confusion_matrix_tn_fp_fn_tp": [
+          1117,
+          193,
+          0,
+          0
+        ],
+        "observations": 1310,
+        "positive_observations": 0
+      },
+      "diagnostic_test_metrics_at_validation_threshold": null,
+      "test_route_day_metrics_at_validation_max_precision": {
+        "prevalence": 0.0,
+        "threshold": 0.9377126757514954,
+        "alerts": 0,
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 0,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": null,
+        "recall": 0.0,
+        "average_precision": null,
+        "brier": 0.12237284607837254,
+        "confusion_matrix_tn_fp_fn_tp": [
+          1310,
+          0,
+          0,
+          0
+        ],
+        "observations": 1310,
+        "positive_observations": 0
+      },
+      "test_event_date_metrics_at_validation_max_precision": {
+        "prevalence": 0.0,
+        "threshold": 0.9362032585467609,
+        "alerts": 0,
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 0,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": null,
+        "recall": 0.0,
+        "average_precision": null,
+        "brier": 0.1701931636310961,
+        "confusion_matrix_tn_fp_fn_tp": [
+          370,
+          0,
+          0,
+          0
+        ],
+        "observations": 370,
+        "positive_observations": 0
+      }
+    },
+    {
+      "fold": 7,
+      "heldout_routes": [
+        "costera",
+        "esmeralda",
+        "fuego-pampa-alta",
+        "hito"
+      ],
+      "region_radius_km": 100.0,
+      "counts": {
+        "train_route_days": 8374,
+        "train_positives": 28,
+        "validation_route_days": 8642,
+        "validation_positives": 56,
+        "test_route_days": 769,
+        "test_positives": 0,
+        "test_positive_dates": 0
+      },
+      "status": "scored",
+      "validation_threshold_90pct_precision_min_5_alerts": null,
+      "validation_max_precision_threshold_route_day": {
+        "threshold": 0.9410919547284006,
+        "validation_precision": 0.08333333333333333,
+        "validation_recall": 0.017857142857142856,
+        "validation_true_positives": 1,
+        "validation_alerts": 12,
+        "minimum_alerts": 5
+      },
+      "validation_max_precision_threshold_event_date": {
+        "threshold": 0.9357830481955565,
+        "validation_precision": 0.4117647058823529,
+        "validation_recall": 0.1590909090909091,
+        "validation_true_positives": 7,
+        "validation_alerts": 17,
+        "minimum_alerts": 5
+      },
+      "diagnostic_test_metrics_at_0_5": {
+        "prevalence": 0.0,
+        "threshold": 0.5,
+        "alerts": 7,
+        "true_positives": 0,
+        "false_positives": 7,
+        "false_negatives": 0,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": 0.0,
+        "recall": 0.0,
+        "average_precision": null,
+        "brier": 0.017975491350277505,
+        "confusion_matrix_tn_fp_fn_tp": [
+          762,
+          7,
+          0,
+          0
+        ],
+        "observations": 769,
+        "positive_observations": 0
+      },
+      "diagnostic_test_metrics_at_validation_threshold": null,
+      "test_route_day_metrics_at_validation_max_precision": {
+        "prevalence": 0.0,
+        "threshold": 0.9410919547284006,
+        "alerts": 0,
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 0,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": null,
+        "recall": 0.0,
+        "average_precision": null,
+        "brier": 0.017975491350277505,
+        "confusion_matrix_tn_fp_fn_tp": [
+          769,
+          0,
+          0,
+          0
+        ],
+        "observations": 769,
+        "positive_observations": 0
+      },
+      "test_event_date_metrics_at_validation_max_precision": {
+        "prevalence": 0.0,
+        "threshold": 0.9357830481955565,
+        "alerts": 0,
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 0,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": null,
+        "recall": 0.0,
+        "average_precision": null,
+        "brier": 0.021619909223751243,
+        "confusion_matrix_tn_fp_fn_tp": [
+          231,
+          0,
+          0,
+          0
+        ],
+        "observations": 231,
+        "positive_observations": 0
+      }
+    },
+    {
+      "fold": 8,
+      "heldout_routes": [
+        "el-rey-la-chuna",
+        "el-rey-laguna-patitos",
+        "sanBernardo"
+      ],
+      "region_radius_km": 100.0,
+      "counts": {
+        "train_route_days": 8136,
+        "train_positives": 24,
+        "validation_route_days": 8409,
+        "validation_positives": 51,
+        "test_route_days": 957,
+        "test_positives": 1,
+        "test_positive_dates": 1
+      },
+      "status": "scored",
+      "validation_threshold_90pct_precision_min_5_alerts": null,
+      "validation_max_precision_threshold_route_day": {
+        "threshold": 0.960262001361635,
+        "validation_precision": 0.14285714285714285,
+        "validation_recall": 0.0196078431372549,
+        "validation_true_positives": 1,
+        "validation_alerts": 7,
+        "minimum_alerts": 5
+      },
+      "validation_max_precision_threshold_event_date": {
+        "threshold": 0.9361870828745962,
+        "validation_precision": 0.24242424242424243,
+        "validation_recall": 0.2,
+        "validation_true_positives": 8,
+        "validation_alerts": 33,
+        "minimum_alerts": 5
+      },
+      "diagnostic_test_metrics_at_0_5": {
+        "prevalence": 0.0010449320794148381,
+        "threshold": 0.5,
+        "alerts": 719,
+        "true_positives": 1,
+        "false_positives": 718,
+        "false_negatives": 0,
+        "precision": 0.0013908205841446453,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": 0.0003103424310175052,
+        "recall": 1.0,
+        "average_precision": 0.003472222222222222,
+        "brier": 0.4132953087165613,
+        "confusion_matrix_tn_fp_fn_tp": [
+          238,
+          718,
+          0,
+          1
+        ],
+        "observations": 957,
+        "positive_observations": 1
+      },
+      "diagnostic_test_metrics_at_validation_threshold": null,
+      "test_route_day_metrics_at_validation_max_precision": {
+        "prevalence": 0.0010449320794148381,
+        "threshold": 0.960262001361635,
+        "alerts": 0,
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 1,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": null,
+        "recall": 0.0,
+        "average_precision": 0.003472222222222222,
+        "brier": 0.4132953087165613,
+        "confusion_matrix_tn_fp_fn_tp": [
+          956,
+          0,
+          1,
+          0
+        ],
+        "observations": 957,
+        "positive_observations": 1
+      },
+      "test_event_date_metrics_at_validation_max_precision": {
+        "prevalence": 0.0029154518950437317,
+        "threshold": 0.9361870828745962,
+        "alerts": 5,
+        "true_positives": 0,
+        "false_positives": 5,
+        "false_negatives": 1,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": 0.0,
+        "recall": 0.0,
+        "average_precision": 0.008064516129032258,
+        "brier": 0.45701294939571985,
+        "confusion_matrix_tn_fp_fn_tp": [
+          337,
+          5,
+          1,
+          0
+        ],
+        "observations": 343,
+        "positive_observations": 1
+      }
+    },
+    {
+      "fold": 9,
+      "heldout_routes": [
+        "encantadoMirador"
+      ],
+      "region_radius_km": 100.0,
+      "counts": {
+        "train_route_days": 8745,
+        "train_positives": 26,
+        "validation_route_days": 9010,
+        "validation_positives": 56,
+        "test_route_days": 316,
+        "test_positives": 0,
+        "test_positive_dates": 0
+      },
+      "status": "scored",
+      "validation_threshold_90pct_precision_min_5_alerts": null,
+      "validation_max_precision_threshold_route_day": {
+        "threshold": 0.9497105742879355,
+        "validation_precision": 0.07692307692307693,
+        "validation_recall": 0.017857142857142856,
+        "validation_true_positives": 1,
+        "validation_alerts": 13,
+        "minimum_alerts": 5
+      },
+      "validation_max_precision_threshold_event_date": {
+        "threshold": 0.9449875507426619,
+        "validation_precision": 0.4375,
+        "validation_recall": 0.1590909090909091,
+        "validation_true_positives": 7,
+        "validation_alerts": 16,
+        "minimum_alerts": 5
+      },
+      "diagnostic_test_metrics_at_0_5": {
+        "prevalence": 0.0,
+        "threshold": 0.5,
+        "alerts": 226,
+        "true_positives": 0,
+        "false_positives": 226,
+        "false_negatives": 0,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": 0.0,
+        "recall": 0.0,
+        "average_precision": null,
+        "brier": 0.37575375104735576,
+        "confusion_matrix_tn_fp_fn_tp": [
+          90,
+          226,
+          0,
+          0
+        ],
+        "observations": 316,
+        "positive_observations": 0
+      },
+      "diagnostic_test_metrics_at_validation_threshold": null,
+      "test_route_day_metrics_at_validation_max_precision": {
+        "prevalence": 0.0,
+        "threshold": 0.9497105742879355,
+        "alerts": 0,
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 0,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": null,
+        "recall": 0.0,
+        "average_precision": null,
+        "brier": 0.37575375104735576,
+        "confusion_matrix_tn_fp_fn_tp": [
+          316,
+          0,
+          0,
+          0
+        ],
+        "observations": 316,
+        "positive_observations": 0
+      },
+      "test_event_date_metrics_at_validation_max_precision": {
+        "prevalence": 0.0,
+        "threshold": 0.9449875507426619,
+        "alerts": 0,
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 0,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": null,
+        "recall": 0.0,
+        "average_precision": null,
+        "brier": 0.37575375104735576,
+        "confusion_matrix_tn_fp_fn_tp": [
+          316,
+          0,
+          0,
+          0
+        ],
+        "observations": 316,
+        "positive_observations": 0
+      }
+    },
+    {
+      "fold": 10,
+      "heldout_routes": [
+        "guanacos",
+        "miradoresQuijadas",
+        "quijadas-farallones"
+      ],
+      "region_radius_km": 100.0,
+      "counts": {
+        "train_route_days": 8126,
+        "train_positives": 28,
+        "validation_route_days": 8331,
+        "validation_positives": 56,
+        "test_route_days": 1046,
+        "test_positives": 0,
+        "test_positive_dates": 0
+      },
+      "status": "scored",
+      "validation_threshold_90pct_precision_min_5_alerts": null,
+      "validation_max_precision_threshold_route_day": {
+        "threshold": 0.9478613565846347,
+        "validation_precision": 0.07692307692307693,
+        "validation_recall": 0.017857142857142856,
+        "validation_true_positives": 1,
+        "validation_alerts": 13,
+        "minimum_alerts": 5
+      },
+      "validation_max_precision_threshold_event_date": {
+        "threshold": 0.9454519134926741,
+        "validation_precision": 0.4,
+        "validation_recall": 0.09090909090909091,
+        "validation_true_positives": 4,
+        "validation_alerts": 10,
+        "minimum_alerts": 5
+      },
+      "diagnostic_test_metrics_at_0_5": {
+        "prevalence": 0.0,
+        "threshold": 0.5,
+        "alerts": 192,
+        "true_positives": 0,
+        "false_positives": 192,
+        "false_negatives": 0,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": 0.0,
+        "recall": 0.0,
+        "average_precision": null,
+        "brier": 0.12690585769289878,
+        "confusion_matrix_tn_fp_fn_tp": [
+          854,
+          192,
+          0,
+          0
+        ],
+        "observations": 1046,
+        "positive_observations": 0
+      },
+      "diagnostic_test_metrics_at_validation_threshold": null,
+      "test_route_day_metrics_at_validation_max_precision": {
+        "prevalence": 0.0,
+        "threshold": 0.9478613565846347,
+        "alerts": 0,
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 0,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": null,
+        "recall": 0.0,
+        "average_precision": null,
+        "brier": 0.12690585769289878,
+        "confusion_matrix_tn_fp_fn_tp": [
+          1046,
+          0,
+          0,
+          0
+        ],
+        "observations": 1046,
+        "positive_observations": 0
+      },
+      "test_event_date_metrics_at_validation_max_precision": {
+        "prevalence": 0.0,
+        "threshold": 0.9454519134926741,
+        "alerts": 0,
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 0,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": null,
+        "recall": 0.0,
+        "average_precision": null,
+        "brier": 0.13061443084891763,
+        "confusion_matrix_tn_fp_fn_tp": [
+          349,
+          0,
+          0,
+          0
+        ],
+        "observations": 349,
+        "positive_observations": 0
+      }
+    },
+    {
+      "fold": 11,
+      "heldout_routes": [
+        "leoncito-cerro"
+      ],
+      "region_radius_km": 100.0,
+      "counts": {
+        "train_route_days": 8718,
+        "train_positives": 28,
+        "validation_route_days": 8964,
+        "validation_positives": 56,
+        "test_route_days": 365,
+        "test_positives": 0,
+        "test_positive_dates": 0
+      },
+      "status": "scored",
+      "validation_threshold_90pct_precision_min_5_alerts": null,
+      "validation_max_precision_threshold_route_day": {
+        "threshold": 0.9444538084944012,
+        "validation_precision": 0.07692307692307693,
+        "validation_recall": 0.017857142857142856,
+        "validation_true_positives": 1,
+        "validation_alerts": 13,
+        "minimum_alerts": 5
+      },
+      "validation_max_precision_threshold_event_date": {
+        "threshold": 0.9454938254571861,
+        "validation_precision": 0.5,
+        "validation_recall": 0.09090909090909091,
+        "validation_true_positives": 4,
+        "validation_alerts": 8,
+        "minimum_alerts": 5
+      },
+      "diagnostic_test_metrics_at_0_5": {
+        "prevalence": 0.0,
+        "threshold": 0.5,
+        "alerts": 28,
+        "true_positives": 0,
+        "false_positives": 28,
+        "false_negatives": 0,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": 0.0,
+        "recall": 0.0,
+        "average_precision": null,
+        "brier": 0.13307993877349925,
+        "confusion_matrix_tn_fp_fn_tp": [
+          337,
+          28,
+          0,
+          0
+        ],
+        "observations": 365,
+        "positive_observations": 0
+      },
+      "diagnostic_test_metrics_at_validation_threshold": null,
+      "test_route_day_metrics_at_validation_max_precision": {
+        "prevalence": 0.0,
+        "threshold": 0.9444538084944012,
+        "alerts": 0,
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 0,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": null,
+        "recall": 0.0,
+        "average_precision": null,
+        "brier": 0.13307993877349925,
+        "confusion_matrix_tn_fp_fn_tp": [
+          365,
+          0,
+          0,
+          0
+        ],
+        "observations": 365,
+        "positive_observations": 0
+      },
+      "test_event_date_metrics_at_validation_max_precision": {
+        "prevalence": 0.0,
+        "threshold": 0.9454938254571861,
+        "alerts": 0,
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 0,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": null,
+        "recall": 0.0,
+        "average_precision": null,
+        "brier": 0.13307993877349925,
+        "confusion_matrix_tn_fp_fn_tp": [
+          365,
+          0,
+          0,
+          0
+        ],
+        "observations": 365,
+        "positive_observations": 0
+      }
+    },
+    {
+      "fold": 12,
+      "heldout_routes": [
+        "macuco"
+      ],
+      "region_radius_km": 100.0,
+      "counts": {
+        "train_route_days": 8754,
+        "train_positives": 28,
+        "validation_route_days": 9008,
+        "validation_positives": 56,
+        "test_route_days": 304,
+        "test_positives": 0,
+        "test_positive_dates": 0
+      },
+      "status": "scored",
+      "validation_threshold_90pct_precision_min_5_alerts": null,
+      "validation_max_precision_threshold_route_day": {
+        "threshold": 0.9494154355557529,
+        "validation_precision": 0.08333333333333333,
+        "validation_recall": 0.017857142857142856,
+        "validation_true_positives": 1,
+        "validation_alerts": 12,
+        "minimum_alerts": 5
+      },
+      "validation_max_precision_threshold_event_date": {
+        "threshold": 0.9431907754714806,
+        "validation_precision": 0.4666666666666667,
+        "validation_recall": 0.1590909090909091,
+        "validation_true_positives": 7,
+        "validation_alerts": 15,
+        "minimum_alerts": 5
+      },
+      "diagnostic_test_metrics_at_0_5": {
+        "prevalence": 0.0,
+        "threshold": 0.5,
+        "alerts": 282,
+        "true_positives": 0,
+        "false_positives": 282,
+        "false_negatives": 0,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": 0.0,
+        "recall": 0.0,
+        "average_precision": null,
+        "brier": 0.5206939160382756,
+        "confusion_matrix_tn_fp_fn_tp": [
+          22,
+          282,
+          0,
+          0
+        ],
+        "observations": 304,
+        "positive_observations": 0
+      },
+      "diagnostic_test_metrics_at_validation_threshold": null,
+      "test_route_day_metrics_at_validation_max_precision": {
+        "prevalence": 0.0,
+        "threshold": 0.9494154355557529,
+        "alerts": 3,
+        "true_positives": 0,
+        "false_positives": 3,
+        "false_negatives": 0,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": 0.0,
+        "recall": 0.0,
+        "average_precision": null,
+        "brier": 0.5206939160382756,
+        "confusion_matrix_tn_fp_fn_tp": [
+          301,
+          3,
+          0,
+          0
+        ],
+        "observations": 304,
+        "positive_observations": 0
+      },
+      "test_event_date_metrics_at_validation_max_precision": {
+        "prevalence": 0.0,
+        "threshold": 0.9431907754714806,
+        "alerts": 3,
+        "true_positives": 0,
+        "false_positives": 3,
+        "false_negatives": 0,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": 0.0,
+        "recall": 0.0,
+        "average_precision": null,
+        "brier": 0.5206939160382756,
+        "confusion_matrix_tn_fp_fn_tp": [
+          301,
+          3,
+          0,
+          0
+        ],
+        "observations": 304,
+        "positive_observations": 0
+      }
+    },
+    {
+      "fold": 13,
+      "heldout_routes": [
+        "mburucuya-che-roga",
+        "mburucuya-tape-pora"
+      ],
+      "region_radius_km": 100.0,
+      "counts": {
+        "train_route_days": 8664,
+        "train_positives": 16,
+        "validation_route_days": 8911,
+        "validation_positives": 41,
+        "test_route_days": 406,
+        "test_positives": 0,
+        "test_positive_dates": 0
+      },
+      "status": "scored",
+      "validation_threshold_90pct_precision_min_5_alerts": null,
+      "validation_max_precision_threshold_route_day": {
+        "threshold": 0.9112808644184938,
+        "validation_precision": 0.07792207792207792,
+        "validation_recall": 0.14634146341463414,
+        "validation_true_positives": 6,
+        "validation_alerts": 77,
+        "minimum_alerts": 5
+      },
+      "validation_max_precision_threshold_event_date": {
+        "threshold": 0.912286885441039,
+        "validation_precision": 0.2558139534883721,
+        "validation_recall": 0.3055555555555556,
+        "validation_true_positives": 11,
+        "validation_alerts": 43,
+        "minimum_alerts": 5
+      },
+      "diagnostic_test_metrics_at_0_5": {
+        "prevalence": 0.0,
+        "threshold": 0.5,
+        "alerts": 160,
+        "true_positives": 0,
+        "false_positives": 160,
+        "false_negatives": 0,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": 0.0,
+        "recall": 0.0,
+        "average_precision": null,
+        "brier": 0.2581151528555514,
+        "confusion_matrix_tn_fp_fn_tp": [
+          246,
+          160,
+          0,
+          0
+        ],
+        "observations": 406,
+        "positive_observations": 0
+      },
+      "diagnostic_test_metrics_at_validation_threshold": null,
+      "test_route_day_metrics_at_validation_max_precision": {
+        "prevalence": 0.0,
+        "threshold": 0.9112808644184938,
+        "alerts": 2,
+        "true_positives": 0,
+        "false_positives": 2,
+        "false_negatives": 0,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": 0.0,
+        "recall": 0.0,
+        "average_precision": null,
+        "brier": 0.2581151528555514,
+        "confusion_matrix_tn_fp_fn_tp": [
+          404,
+          2,
+          0,
+          0
+        ],
+        "observations": 406,
+        "positive_observations": 0
+      },
+      "test_event_date_metrics_at_validation_max_precision": {
+        "prevalence": 0.0,
+        "threshold": 0.912286885441039,
+        "alerts": 1,
+        "true_positives": 0,
+        "false_positives": 1,
+        "false_negatives": 0,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": 0.0,
+        "recall": 0.0,
+        "average_precision": null,
+        "brier": 0.25822391430906183,
+        "confusion_matrix_tn_fp_fn_tp": [
+          269,
+          1,
+          0,
+          0
+        ],
+        "observations": 270,
+        "positive_observations": 0
+      }
+    },
+    {
+      "fold": 14,
+      "heldout_routes": [
+        "porito"
+      ],
+      "region_radius_km": 100.0,
+      "counts": {
+        "train_route_days": 8712,
+        "train_positives": 28,
+        "validation_route_days": 8972,
+        "validation_positives": 56,
+        "test_route_days": 346,
+        "test_positives": 0,
+        "test_positive_dates": 0
+      },
+      "status": "scored",
+      "validation_threshold_90pct_precision_min_5_alerts": null,
+      "validation_max_precision_threshold_route_day": {
+        "threshold": 0.9433476126304237,
+        "validation_precision": 0.07692307692307693,
+        "validation_recall": 0.017857142857142856,
+        "validation_true_positives": 1,
+        "validation_alerts": 13,
+        "minimum_alerts": 5
+      },
+      "validation_max_precision_threshold_event_date": {
+        "threshold": 0.9372821407919383,
+        "validation_precision": 0.4375,
+        "validation_recall": 0.1590909090909091,
+        "validation_true_positives": 7,
+        "validation_alerts": 16,
+        "minimum_alerts": 5
+      },
+      "diagnostic_test_metrics_at_0_5": {
+        "prevalence": 0.0,
+        "threshold": 0.5,
+        "alerts": 54,
+        "true_positives": 0,
+        "false_positives": 54,
+        "false_negatives": 0,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": 0.0,
+        "recall": 0.0,
+        "average_precision": null,
+        "brier": 0.1124683348227075,
+        "confusion_matrix_tn_fp_fn_tp": [
+          292,
+          54,
+          0,
+          0
+        ],
+        "observations": 346,
+        "positive_observations": 0
+      },
+      "diagnostic_test_metrics_at_validation_threshold": null,
+      "test_route_day_metrics_at_validation_max_precision": {
+        "prevalence": 0.0,
+        "threshold": 0.9433476126304237,
+        "alerts": 0,
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 0,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": null,
+        "recall": 0.0,
+        "average_precision": null,
+        "brier": 0.1124683348227075,
+        "confusion_matrix_tn_fp_fn_tp": [
+          346,
+          0,
+          0,
+          0
+        ],
+        "observations": 346,
+        "positive_observations": 0
+      },
+      "test_event_date_metrics_at_validation_max_precision": {
+        "prevalence": 0.0,
+        "threshold": 0.9372821407919383,
+        "alerts": 0,
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 0,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": null,
+        "recall": 0.0,
+        "average_precision": null,
+        "brier": 0.1124683348227075,
+        "confusion_matrix_tn_fp_fn_tp": [
+          346,
+          0,
+          0,
+          0
+        ],
+        "observations": 346,
+        "positive_observations": 0
+      }
+    },
+    {
+      "fold": 15,
+      "heldout_routes": [
+        "ventana"
+      ],
+      "region_radius_km": 100.0,
+      "counts": {
+        "train_route_days": 8746,
+        "train_positives": 28,
+        "validation_route_days": 9005,
+        "validation_positives": 53,
+        "test_route_days": 303,
+        "test_positives": 2,
+        "test_positive_dates": 2
+      },
+      "status": "scored",
+      "validation_threshold_90pct_precision_min_5_alerts": null,
+      "validation_max_precision_threshold_route_day": {
+        "threshold": 0.9441951912495841,
+        "validation_precision": 0.07692307692307693,
+        "validation_recall": 0.018867924528301886,
+        "validation_true_positives": 1,
+        "validation_alerts": 13,
+        "minimum_alerts": 5
+      },
+      "validation_max_precision_threshold_event_date": {
+        "threshold": 0.9403908347808312,
+        "validation_precision": 0.38461538461538464,
+        "validation_recall": 0.12195121951219512,
+        "validation_true_positives": 5,
+        "validation_alerts": 13,
+        "minimum_alerts": 5
+      },
+      "diagnostic_test_metrics_at_0_5": {
+        "prevalence": 0.006600660066006601,
+        "threshold": 0.5,
+        "alerts": 43,
+        "true_positives": 0,
+        "false_positives": 43,
+        "false_negatives": 2,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": 0.0,
+        "recall": 0.0,
+        "average_precision": 0.01710063335679099,
+        "brier": 0.115245361658491,
+        "confusion_matrix_tn_fp_fn_tp": [
+          258,
+          43,
+          2,
+          0
+        ],
+        "observations": 303,
+        "positive_observations": 2
+      },
+      "diagnostic_test_metrics_at_validation_threshold": null,
+      "test_route_day_metrics_at_validation_max_precision": {
+        "prevalence": 0.006600660066006601,
+        "threshold": 0.9441951912495841,
+        "alerts": 0,
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 2,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": null,
+        "recall": 0.0,
+        "average_precision": 0.01710063335679099,
+        "brier": 0.115245361658491,
+        "confusion_matrix_tn_fp_fn_tp": [
+          301,
+          0,
+          2,
+          0
+        ],
+        "observations": 303,
+        "positive_observations": 2
+      },
+      "test_event_date_metrics_at_validation_max_precision": {
+        "prevalence": 0.006600660066006601,
+        "threshold": 0.9403908347808312,
+        "alerts": 0,
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 2,
+        "precision": 0.0,
+        "precision_wilson_one_sided_95_lower_bound_independent_days": null,
+        "recall": 0.0,
+        "average_precision": 0.01710063335679099,
+        "brier": 0.115245361658491,
+        "confusion_matrix_tn_fp_fn_tp": [
+          301,
+          0,
+          2,
+          0
+        ],
+        "observations": 303,
+        "positive_observations": 2
+      }
+    }
+  ],
+  "pooled_heldout_route_day_metrics_at_fixed_0_5": {
+    "prevalence": 0.006310679611650485,
+    "threshold": 0.5,
+    "alerts": 2598,
+    "true_positives": 22,
+    "false_positives": 2576,
+    "false_negatives": 43,
+    "precision": 0.008468052347959968,
+    "precision_wilson_one_sided_95_lower_bound_independent_days": 0.005980017454952983,
+    "recall": 0.3384615384615385,
+    "average_precision": 0.007841754155677297,
+    "brier": 0.16821405060040504,
+    "confusion_matrix_tn_fp_fn_tp": [
+      7659,
+      2576,
+      43,
+      22
+    ],
+    "observations": 10300,
+    "positive_observations": 65
+  },
+  "pooled_heldout_event_date_metrics_at_fixed_0_5": {
+    "prevalence": 0.10552763819095477,
+    "threshold": 0.5,
+    "alerts": 370,
+    "true_positives": 41,
+    "false_positives": 329,
+    "false_negatives": 1,
+    "precision": 0.11081081081081082,
+    "precision_wilson_one_sided_95_lower_bound_independent_days": 0.0867428262105635,
+    "recall": 0.9761904761904762,
+    "average_precision": 0.11101140409660737,
+    "brier": 0.48594025495859694,
+    "confusion_matrix_tn_fp_fn_tp": [
+      27,
+      329,
+      1,
+      41
+    ],
+    "event_dates": 398,
+    "positive_event_dates": 42
+  },
+  "pooled_heldout_event_date_metrics_at_fold_validation_max_precision_threshold": {
+    "event_dates": 398,
+    "positive_event_dates": 42,
+    "alerts": 7,
+    "true_positives": 0,
+    "false_positives": 7,
+    "false_negatives": 42,
+    "precision": 0.0,
+    "recall": 0.0,
+    "wilson_lower_95_descriptive": 0.0,
+    "threshold_policy": "Per-region cutoff maximized precision on 2023 validation dates with >=5 alerts; no >=90% precision threshold passed."
+  },
+  "pooled_event_date_wilson_lower_95_descriptive": 0.0867428262105635,
+  "limitations": [
+    "The positive target is heterogeneous evidence; lack of an entry is not proof that no fire occurred.",
+    "INPE's AMS reference detections use Aqua/MODIS and are not an independent sensor from MOD14A1.",
+    "MODIS clear QA creates observed no-detection labels for sampled pixels only; unresolved route corridor cells remain unobserved.",
+    "Weather is represented by one midpoint and the test archive has incomplete satellite periods in 2024-2026.",
+    "A 100 km route-neighborhood holdout is stronger than a random route-day split but does not establish transfer to unseen ecological or climatic regimes.",
+    "Wilson intervals are descriptive and ignore temporal autocorrelation and shared physical incidents.",
+    "This experiment does not establish calibrated fire probability, safe alert precision, or deployment readiness."
+  ],
+  "synthetic_observations": 0,
+  "model_artifact_written": false,
+  "deployment_approved": false
+}

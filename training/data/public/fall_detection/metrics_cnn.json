@@ -1,0 +1,204 @@
+{
+  "cnn_1d": {
+    "precision": 0.9368770764119602,
+    "recall": 0.986703988803359,
+    "specificity": 0.9841903810950241,
+    "f1": 0.9611451942740287,
+    "f2": 0.976319069380972,
+    "f1_macro": 0.9757995272994662,
+    "confusion_matrix": [
+      [
+        5914,
+        95
+      ],
+      [
+        19,
+        1410
+      ]
+    ],
+    "confusion_matrix_labels": [
+      "no_fall",
+      "fall"
+    ],
+    "tp": 1410,
+    "fp": 95,
+    "fn": 19,
+    "tn": 5914,
+    "pr_auc": 0.9956346776120785,
+    "bootstrap_95ci_by_participant": {
+      "precision": [
+        0.9094392928319189,
+        0.9641828934762687
+      ],
+      "recall": [
+        0.9783216783216783,
+        0.9936930623686054
+      ],
+      "specificity": [
+        0.9768805253782548,
+        0.9910465834926783
+      ],
+      "f1": [
+        0.9460775508132476,
+        0.9762546357489943
+      ],
+      "f1_macro": [
+        0.966231964083844,
+        0.9852509827100315
+      ],
+      "draws": 1000
+    },
+    "per_participant": {
+      "recall_mean": 0.9866243533079796,
+      "recall_min": 0.9166666666666666,
+      "recall_std": 0.020018908027009102,
+      "specificity_mean": 0.9854009013873024,
+      "specificity_min": 0.9217391304347826,
+      "specificity_std": 0.0198950230920686
+    },
+    "by_activity": {
+      "Walking": {
+        "windows": 1095,
+        "false_positive_rate": 0.0018264840182648401,
+        "false_positives": 2
+      },
+      "Running": {
+        "windows": 2088,
+        "false_positive_rate": 0.008141762452107279,
+        "false_positives": 17
+      },
+      "GoingUpS": {
+        "windows": 725,
+        "false_positive_rate": 0.002758620689655172,
+        "false_positives": 2
+      },
+      "GoingDownS": {
+        "windows": 834,
+        "false_positive_rate": 0.005995203836930456,
+        "false_positives": 5
+      },
+      "Jumping": {
+        "windows": 567,
+        "false_positive_rate": 0.03527336860670194,
+        "false_positives": 20
+      },
+      "SittingDown": {
+        "windows": 173,
+        "false_positive_rate": 0.09826589595375723,
+        "false_positives": 17
+      },
+      "StandingUpFS": {
+        "windows": 147,
+        "false_positive_rate": 0.0,
+        "false_positives": 0
+      },
+      "LyingDownFS": {
+        "windows": 224,
+        "false_positive_rate": 0.12946428571428573,
+        "false_positives": 29
+      },
+      "StandingUpFL": {
+        "windows": 156,
+        "false_positive_rate": 0.019230769230769232,
+        "false_positives": 3
+      },
+      "FallingForw": {
+        "windows": 179,
+        "recall": 0.9832402234636871,
+        "missed": 3
+      },
+      "FallingBack": {
+        "windows": 180,
+        "recall": 0.9944444444444445,
+        "missed": 1
+      },
+      "FallingRight": {
+        "windows": 179,
+        "recall": 0.994413407821229,
+        "missed": 1
+      },
+      "FallingLeft": {
+        "windows": 178,
+        "recall": 0.9943820224719101,
+        "missed": 1
+      },
+      "Syncope": {
+        "windows": 180,
+        "recall": 0.9833333333333333,
+        "missed": 3
+      },
+      "FallingBackSC": {
+        "windows": 176,
+        "recall": 0.9886363636363636,
+        "missed": 2
+      },
+      "FallingWithPS": {
+        "windows": 180,
+        "recall": 0.9777777777777777,
+        "missed": 4
+      },
+      "HittingObstacle": {
+        "windows": 177,
+        "recall": 0.9774011299435028,
+        "missed": 4
+      }
+    },
+    "by_pocket": {
+      "right": {
+        "windows": 3692,
+        "recall": 0.9832167832167832,
+        "specificity": 0.9845482028888143,
+        "precision": 0.9385847797062751,
+        "f1": 0.9603825136612022
+      },
+      "left": {
+        "windows": 3746,
+        "recall": 0.9901960784313726,
+        "specificity": 0.9838390501319261,
+        "precision": 0.9351851851851852,
+        "f1": 0.961904761904762
+      }
+    },
+    "selected_threshold_per_participant": {
+      "0": 0.46,
+      "1": 0.32,
+      "2": 0.39,
+      "3": 0.4,
+      "4": 0.39,
+      "5": 0.3,
+      "6": 0.39,
+      "7": 0.5,
+      "8": 0.71,
+      "9": 0.41,
+      "10": 0.51,
+      "11": 0.63,
+      "12": 0.76,
+      "13": 0.53,
+      "14": 0.3,
+      "15": 0.49,
+      "16": 0.32,
+      "17": 0.54,
+      "18": 0.83,
+      "19": 0.35,
+      "20": 0.57,
+      "21": 0.39,
+      "22": 0.51,
+      "23": 0.43,
+      "24": 0.56,
+      "25": 0.66,
+      "26": 0.63,
+      "27": 0.51,
+      "28": 0.45,
+      "29": 0.53
+    },
+    "architecture": {
+      "input": "2 x 61 (magnitude, cosine to pre-impact gravity)",
+      "parameters": 5905,
+      "epochs": 40,
+      "batch": 128,
+      "optimizer": "Adam lr 2e-3",
+      "loss": "BCE with class weight (no resampling)"
+    }
+  },
+  "elapsed_seconds": 5067.8
+}

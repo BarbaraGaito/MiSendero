@@ -1,0 +1,130 @@
+{
+  "experiment_id": "snmf-explicit-report-fire-weather-cohort-v1",
+  "status": "joined_but_insufficient_for_reliable_precision_claim",
+  "target": "SNMF-reported incident start within 10 km of route versus an explicit national no-fire SNMF report date; this is a report-evidence target, not universal physical fire/no-fire truth.",
+  "feature_source": "Open-Meteo previous-run JMA GSM forecast features for the full target UTC date, archived in advance; 24 valid hourly forecast values are aggregated to daily features.",
+  "features": [
+    "temperature_mean",
+    "temperature_max",
+    "humidity_mean",
+    "humidity_min",
+    "wind_mean",
+    "wind_max",
+    "precipitation_sum"
+  ],
+  "data": {
+    "source_positive_route_dates": 21,
+    "source_negative_route_dates": 256,
+    "label_overlap_route_dates": 0,
+    "forecast_rows_available": 7568,
+    "labels_without_complete_archived_forecast": 0,
+    "aligned_route_dates": 277,
+    "aligned_positive_route_dates": 21,
+    "aligned_positive_incident_dates": 20,
+    "aligned_negative_route_dates": 256,
+    "aligned_negative_report_dates": 32,
+    "temporal_holdout_2025_route_dates": 13,
+    "temporal_holdout_2025_positive_route_dates": 5,
+    "temporal_holdout_2025_negative_route_dates": 8,
+    "temporal_holdout_2025_negative_report_dates": 1,
+    "years": {
+      "2023": {
+        "aligned_route_dates": 34,
+        "positive_route_dates": 2,
+        "negative_route_dates": 32,
+        "positive_incident_dates": 2,
+        "negative_report_dates": 4,
+        "negative_report_date_groups": 4
+      },
+      "2024": {
+        "aligned_route_dates": 224,
+        "positive_route_dates": 8,
+        "negative_route_dates": 216,
+        "positive_incident_dates": 8,
+        "negative_report_dates": 27,
+        "negative_report_date_groups": 27
+      },
+      "2025": {
+        "aligned_route_dates": 13,
+        "positive_route_dates": 5,
+        "negative_route_dates": 8,
+        "positive_incident_dates": 5,
+        "negative_report_dates": 1,
+        "negative_report_date_groups": 1
+      },
+      "2026": {
+        "aligned_route_dates": 6,
+        "positive_route_dates": 6,
+        "negative_route_dates": 0,
+        "positive_incident_dates": 5,
+        "negative_report_dates": 0,
+        "negative_report_date_groups": 0
+      }
+    }
+  },
+  "all_positive_sources_union_diagnostic": {
+    "positive_route_dates_aligned": 44,
+    "positive_dates_aligned": 43,
+    "route_date_conflicts_with_explicit_no_fire_reports": 0,
+    "source_record_presence_counts_not_additive": {
+      "Global_Fire_Atlas": 9,
+      "INPE_AMS_AQUA_MODIS": 20,
+      "SNMF_daily_reports": 21
+    },
+    "temporal_holdout_2025_positive_route_dates": 11,
+    "temporal_holdout_2025_positive_dates": 11,
+    "by_year": {
+      "2023": {
+        "positive_route_dates": 14,
+        "positive_incident_dates": 14
+      },
+      "2024": {
+        "positive_route_dates": 13,
+        "positive_incident_dates": 13
+      },
+      "2025": {
+        "positive_route_dates": 11,
+        "positive_incident_dates": 11
+      },
+      "2026": {
+        "positive_route_dates": 6,
+        "positive_incident_dates": 5
+      }
+    },
+    "training_use": "diagnostic only; source targets are heterogeneous and a union can change the outcome definition"
+  },
+  "forecast_archive_files": [
+    "training/data/environmental/private/openmeteo-gfs-previous-runs-argentina-trails-jma_gsm-2023-07-01-2024-01-01.json.gz",
+    "training/data/environmental/private/openmeteo-gfs-previous-runs-argentina-trails-jma_gsm-2024-01-01-2025-01-01.json.gz",
+    "training/data/environmental/private/openmeteo-gfs-previous-runs-argentina-trails-jma_gsm-2025-01-01-2026-02-01.json.gz"
+  ],
+  "feature_issue_valid_alignment": "previous_day1 forecasts are matched by their valid UTC date to the reported incident start or negative bulletin date. The feature set uses no observed weather after issue time.",
+  "precision_evidence_gate": {
+    "measure": "event-level precision on an untouched temporal test set",
+    "one_sided_confidence": 0.95,
+    "target_lower_bound": 0.9,
+    "minimum_independent_alert_events_if_all_are_correct": 29,
+    "method": "Exact binomial lower bound; for zero false alerts, lower bound = 0.05^(1/n). Any false alert increases the sample size needed.",
+    "independence_unit": "fire episode, with alerts and repeated route-days for the same episode grouped together"
+  },
+  "source_sha256": {
+    "docs/environmental-models-2026-10-22/fire-unified-route-event-catalog.json": "f5d6cfac1588cb2483d84dfc047ebfef224854302b20a6a7296386258bc5589f",
+    "docs/environmental-models-2026-10-22/fire-snmf-national-no-fire-report-audit.json": "a57c45ee46b1bb97763432a9fa647fe9fc903b4550c427d4e46bb2be03a76396",
+    "training/data/environmental/private/openmeteo-gfs-previous-runs-argentina-trails-jma_gsm-2023-07-01-2024-01-01.json.gz": "53a83da0d4479fd6de05199f21ca47d98f0047ee848ad4085d2d30a400944009",
+    "training/data/environmental/private/openmeteo-gfs-previous-runs-argentina-trails-jma_gsm-2024-01-01-2025-01-01.json.gz": "e3c8aea0aca987df527dbc6fd9037d7274efd2ebab2cfbe8a12880e7f297b20e",
+    "training/data/environmental/private/openmeteo-gfs-previous-runs-argentina-trails-jma_gsm-2025-01-01-2026-02-01.json.gz": "9fbfb9954678882c15644d78b9483ed53dc3f0fbcd36385a6d94a8bee4a8d8ae"
+  },
+  "dataset_path": "training/data/environmental/private/fire-explicit-report-weather-cohort.csv.gz",
+  "dataset_sha256": "49246c5e93e20f28853a87d4ab0d8f80cfebe7fb0b1b98f7b18a0628de3113fb",
+  "negative_label_audit": "docs/environmental-models-2026-10-22/fire-snmf-national-no-fire-report-audit.json",
+  "limitations": [
+    "The 2025 negative holdout contains only one distinct official no-fire report date, so eight route rows do not provide eight independent negative dates.",
+    "The 2026 source cohort has positive events but no explicit no-fire report days in the current audit.",
+    "The cohort is small and clustered by dates; model fitting or hyperparameter tuning would overfit and cannot establish reliable precision.",
+    "An explicit SNMF no-fire report is a negative for the defined report target only; it does not establish absence of every physical or undetected fire.",
+    "No synthetic observations, oversampling, or imputed weather values are used."
+  ],
+  "synthetic_observations": 0,
+  "model_fitted": false,
+  "deployment_approved": false
+}

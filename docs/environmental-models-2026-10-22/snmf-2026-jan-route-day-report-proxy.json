@@ -1,0 +1,2089 @@
+{
+  "experiment_id": "snmf-reported-fire-route-day-proxy-2026",
+  "target": "Whether an SNMF report documents an incident starting on that date (even if first published later), or lists an active/unresolved incident in an available report issued on that date, within a fixed radius of a route-sector center.",
+  "source": "Official Argentine SNMF daily occurrence reports, parsed from PDFs and joined to fixed route-sector centers.",
+  "provenance": {
+    "event_extraction_sha256": "ba18284a722410e225906de6ea1ba35e72d5670496c45793363e901beb6efcca",
+    "report_manifest_sha256": "c9c25df1611fb3a053de47caf117d3b885e079eed190ebe590e6eb1ee75ad59d",
+    "geography_sha256": "7e475b478db7bb678cc0a1539fdf484e0c8de0a9baa98916fb90f652f75ff834",
+    "period": [
+      "2026-01-01",
+      "2026-02-01"
+    ],
+    "report_dates_with_pdf": 30,
+    "date_count": 31,
+    "route_sector_count": 8
+  },
+  "spatial_protocol": {
+    "distance": "Haversine from fixed route-sector center to reported incident coordinate",
+    "primary_radius_km": 10,
+    "sensitivity_radius_km": 20,
+    "active_statuses_included": [
+      "ACTIVO",
+      "CONTENIDO",
+      "CONTROLADO",
+      "GUARDIA DE CENIZAS",
+      "UNKNOWN"
+    ],
+    "reported_start_dates_are_used_retrospectively_even_if_first_listed_later": true
+  },
+  "results": {
+    "10": {
+      "route_days_with_known_status": 240,
+      "route_days_with_nearby_incident_reported": 31,
+      "route_days_without_nearby_incident_reported": 209,
+      "unknown_route_days_without_a_daily_pdf": 8,
+      "positive_route_days_documented_only_by_later_report": 0
+    },
+    "20": {
+      "route_days_with_known_status": 240,
+      "route_days_with_nearby_incident_reported": 53,
+      "route_days_without_nearby_incident_reported": 187,
+      "unknown_route_days_without_a_daily_pdf": 8,
+      "positive_route_days_documented_only_by_later_report": 0
+    }
+  },
+  "route_days": [
+    {
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "report_date": "2026-01-01",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "report_date": "2026-01-02",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "report_date": "2026-01-03",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "report_date": "2026-01-04",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "report_date": "2026-01-05",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "report_date": "2026-01-06",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "report_date": "2026-01-07",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "report_date": "2026-01-08",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "report_date": "2026-01-09",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "report_date": "2026-01-10",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "report_date": "2026-01-11",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "report_date": "2026-01-12",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "report_date": "2026-01-13",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "report_date": "2026-01-14",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "report_date": "2026-01-15",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "report_date": "2026-01-16",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "report_date": "2026-01-17",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "report_date": "2026-01-18",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "report_date": "2026-01-19",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "report_date": "2026-01-20",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "report_date": "2026-01-21",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "report_date": "2026-01-22",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "report_date": "2026-01-23",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "report_date": "2026-01-24",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "report_date": "2026-01-25",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "report_date": "2026-01-26",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "report_date": "2026-01-27",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "report_date": "2026-01-28",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "report_date": "2026-01-30",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Macuco - Salto Arrechea",
+      "report_date": "2026-01-31",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "report_date": "2026-01-01",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "report_date": "2026-01-02",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "report_date": "2026-01-03",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "report_date": "2026-01-04",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "report_date": "2026-01-05",
+      "label": 1,
+      "label_meaning": "SNMF_reported_incident_start_or_active_unresolved_incident_within_10km",
+      "nearby_incidents": [
+        {
+          "incident_name": "Cantera Eva Perón",
+          "province": "Río Negro",
+          "reported_start_date": "2026-01-05",
+          "status": "CONTENIDO",
+          "distance_km": 9.708,
+          "source": "same_date_daily_report_snapshot"
+        }
+      ]
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "report_date": "2026-01-06",
+      "label": 1,
+      "label_meaning": "SNMF_reported_incident_start_or_active_unresolved_incident_within_10km",
+      "nearby_incidents": [
+        {
+          "incident_name": "Cantera Eva Perón",
+          "province": "Río Negro",
+          "reported_start_date": "2026-01-05",
+          "status": "CONTENIDO",
+          "distance_km": 9.708,
+          "source": "same_date_daily_report_snapshot"
+        },
+        {
+          "incident_name": "Vertedero Municipal",
+          "province": "Río Negro",
+          "reported_start_date": "2026-01-06",
+          "status": "ACTIVO",
+          "distance_km": 9.084,
+          "source": "same_date_daily_report_snapshot"
+        },
+        {
+          "incident_name": "VERTEDERO MUNICIPAL",
+          "province": "Río Negro",
+          "reported_start_date": "2026-01-06",
+          "status": "CONTENIDO",
+          "distance_km": 9.284,
+          "source": "deduplicated_incident_reported_start_date"
+        },
+        {
+          "incident_name": "tres lagunas) VERTEDERO MUNICIPAL",
+          "province": "Río Negro",
+          "reported_start_date": "2026-01-06",
+          "status": "CONTROLADO",
+          "distance_km": 9.284,
+          "source": "deduplicated_incident_reported_start_date"
+        }
+      ]
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "report_date": "2026-01-07",
+      "label": 1,
+      "label_meaning": "SNMF_reported_incident_start_or_active_unresolved_incident_within_10km",
+      "nearby_incidents": [
+        {
+          "incident_name": "Cantera Eva Perón",
+          "province": "Río Negro",
+          "reported_start_date": "2026-01-05",
+          "status": "CONTROLADO",
+          "distance_km": 9.708,
+          "source": "same_date_daily_report_snapshot"
+        },
+        {
+          "incident_name": "Vertedero Municipal",
+          "province": "Río Negro",
+          "reported_start_date": "2026-01-06",
+          "status": "CONTENIDO",
+          "distance_km": 9.077,
+          "source": "same_date_daily_report_snapshot"
+        }
+      ]
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "report_date": "2026-01-08",
+      "label": 1,
+      "label_meaning": "SNMF_reported_incident_start_or_active_unresolved_incident_within_10km",
+      "nearby_incidents": [
+        {
+          "incident_name": "Cantera Eva Perón",
+          "province": "Río Negro",
+          "reported_start_date": "2026-01-05",
+          "status": "CONTROLADO",
+          "distance_km": 9.708,
+          "source": "same_date_daily_report_snapshot"
+        },
+        {
+          "incident_name": "VERTEDERO MUNICIPAL",
+          "province": "Río Negro",
+          "reported_start_date": "2026-01-06",
+          "status": "CONTENIDO",
+          "distance_km": 9.284,
+          "source": "same_date_daily_report_snapshot"
+        }
+      ]
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "report_date": "2026-01-09",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "report_date": "2026-01-10",
+      "label": 1,
+      "label_meaning": "SNMF_reported_incident_start_or_active_unresolved_incident_within_10km",
+      "nearby_incidents": [
+        {
+          "incident_name": "Cantera Eva Perón",
+          "province": "Río Negro",
+          "reported_start_date": "2026-01-05",
+          "status": "CONTROLADO",
+          "distance_km": 9.708,
+          "source": "same_date_daily_report_snapshot"
+        },
+        {
+          "incident_name": "VERTEDERO MUNICIPAL",
+          "province": "Río Negro",
+          "reported_start_date": "2026-01-06",
+          "status": "CONTENIDO",
+          "distance_km": 9.284,
+          "source": "same_date_daily_report_snapshot"
+        }
+      ]
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "report_date": "2026-01-11",
+      "label": 1,
+      "label_meaning": "SNMF_reported_incident_start_or_active_unresolved_incident_within_10km",
+      "nearby_incidents": [
+        {
+          "incident_name": "Cantera Eva Perón",
+          "province": "Río Negro",
+          "reported_start_date": "2026-01-05",
+          "status": "CONTROLADO",
+          "distance_km": 9.708,
+          "source": "same_date_daily_report_snapshot"
+        },
+        {
+          "incident_name": "VERTEDERO MUNICIPAL",
+          "province": "Río Negro",
+          "reported_start_date": "2026-01-06",
+          "status": "CONTROLADO",
+          "distance_km": 9.284,
+          "source": "same_date_daily_report_snapshot"
+        }
+      ]
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "report_date": "2026-01-12",
+      "label": 1,
+      "label_meaning": "SNMF_reported_incident_start_or_active_unresolved_incident_within_10km",
+      "nearby_incidents": [
+        {
+          "incident_name": "Cantera Eva Perón",
+          "province": "Río Negro",
+          "reported_start_date": "2026-01-05",
+          "status": "CONTROLADO",
+          "distance_km": 9.708,
+          "source": "same_date_daily_report_snapshot"
+        },
+        {
+          "incident_name": "VERTEDERO MUNICIPAL",
+          "province": "Río Negro",
+          "reported_start_date": "2026-01-06",
+          "status": "CONTROLADO",
+          "distance_km": 9.284,
+          "source": "same_date_daily_report_snapshot"
+        }
+      ]
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "report_date": "2026-01-13",
+      "label": 1,
+      "label_meaning": "SNMF_reported_incident_start_or_active_unresolved_incident_within_10km",
+      "nearby_incidents": [
+        {
+          "incident_name": "Cantera Eva Perón",
+          "province": "Río Negro",
+          "reported_start_date": "2026-01-05",
+          "status": "CONTROLADO",
+          "distance_km": 9.708,
+          "source": "same_date_daily_report_snapshot"
+        },
+        {
+          "incident_name": "VERTEDERO MUNICIPAL",
+          "province": "Río Negro",
+          "reported_start_date": "2026-01-06",
+          "status": "CONTROLADO",
+          "distance_km": 9.284,
+          "source": "same_date_daily_report_snapshot"
+        }
+      ]
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "report_date": "2026-01-14",
+      "label": 1,
+      "label_meaning": "SNMF_reported_incident_start_or_active_unresolved_incident_within_10km",
+      "nearby_incidents": [
+        {
+          "incident_name": "VERTEDERO MUNICIPAL",
+          "province": "Río Negro",
+          "reported_start_date": "2026-01-06",
+          "status": "CONTROLADO",
+          "distance_km": 9.284,
+          "source": "same_date_daily_report_snapshot"
+        }
+      ]
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "report_date": "2026-01-15",
+      "label": 1,
+      "label_meaning": "SNMF_reported_incident_start_or_active_unresolved_incident_within_10km",
+      "nearby_incidents": [
+        {
+          "incident_name": "VERTEDERO MUNICIPAL",
+          "province": "Río Negro",
+          "reported_start_date": "2026-01-06",
+          "status": "CONTROLADO",
+          "distance_km": 9.284,
+          "source": "same_date_daily_report_snapshot"
+        }
+      ]
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "report_date": "2026-01-16",
+      "label": 1,
+      "label_meaning": "SNMF_reported_incident_start_or_active_unresolved_incident_within_10km",
+      "nearby_incidents": [
+        {
+          "incident_name": "VERTEDERO MUNICIPAL",
+          "province": "Río Negro",
+          "reported_start_date": "2026-01-06",
+          "status": "CONTROLADO",
+          "distance_km": 9.284,
+          "source": "same_date_daily_report_snapshot"
+        }
+      ]
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "report_date": "2026-01-17",
+      "label": 1,
+      "label_meaning": "SNMF_reported_incident_start_or_active_unresolved_incident_within_10km",
+      "nearby_incidents": [
+        {
+          "incident_name": "VERTEDERO MUNICIPAL",
+          "province": "Río Negro",
+          "reported_start_date": "2026-01-06",
+          "status": "CONTROLADO",
+          "distance_km": 9.284,
+          "source": "same_date_daily_report_snapshot"
+        }
+      ]
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "report_date": "2026-01-18",
+      "label": 1,
+      "label_meaning": "SNMF_reported_incident_start_or_active_unresolved_incident_within_10km",
+      "nearby_incidents": [
+        {
+          "incident_name": "VERTEDERO MUNICIPAL",
+          "province": "Río Negro",
+          "reported_start_date": "2026-01-06",
+          "status": "CONTROLADO",
+          "distance_km": 9.284,
+          "source": "same_date_daily_report_snapshot"
+        }
+      ]
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "report_date": "2026-01-19",
+      "label": 1,
+      "label_meaning": "SNMF_reported_incident_start_or_active_unresolved_incident_within_10km",
+      "nearby_incidents": [
+        {
+          "incident_name": "VERTEDERO MUNICIPAL",
+          "province": "Río Negro",
+          "reported_start_date": "2026-01-06",
+          "status": "CONTROLADO",
+          "distance_km": 9.284,
+          "source": "same_date_daily_report_snapshot"
+        }
+      ]
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "report_date": "2026-01-20",
+      "label": 1,
+      "label_meaning": "SNMF_reported_incident_start_or_active_unresolved_incident_within_10km",
+      "nearby_incidents": [
+        {
+          "incident_name": "VERTEDERO MUNICIPAL",
+          "province": "Río Negro",
+          "reported_start_date": "2026-01-06",
+          "status": "CONTROLADO",
+          "distance_km": 9.284,
+          "source": "same_date_daily_report_snapshot"
+        }
+      ]
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "report_date": "2026-01-21",
+      "label": 1,
+      "label_meaning": "SNMF_reported_incident_start_or_active_unresolved_incident_within_10km",
+      "nearby_incidents": [
+        {
+          "incident_name": "VERTEDERO MUNICIPAL",
+          "province": "Río Negro",
+          "reported_start_date": "2026-01-06",
+          "status": "CONTROLADO",
+          "distance_km": 9.284,
+          "source": "same_date_daily_report_snapshot"
+        }
+      ]
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "report_date": "2026-01-22",
+      "label": 1,
+      "label_meaning": "SNMF_reported_incident_start_or_active_unresolved_incident_within_10km",
+      "nearby_incidents": [
+        {
+          "incident_name": "VERTEDERO MUNICIPAL",
+          "province": "Río Negro",
+          "reported_start_date": "2026-01-06",
+          "status": "CONTROLADO",
+          "distance_km": 9.284,
+          "source": "same_date_daily_report_snapshot"
+        }
+      ]
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "report_date": "2026-01-23",
+      "label": 1,
+      "label_meaning": "SNMF_reported_incident_start_or_active_unresolved_incident_within_10km",
+      "nearby_incidents": [
+        {
+          "incident_name": "VERTEDERO MUNICIPAL",
+          "province": "Río Negro",
+          "reported_start_date": "2026-01-06",
+          "status": "CONTROLADO",
+          "distance_km": 9.284,
+          "source": "same_date_daily_report_snapshot"
+        }
+      ]
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "report_date": "2026-01-24",
+      "label": 1,
+      "label_meaning": "SNMF_reported_incident_start_or_active_unresolved_incident_within_10km",
+      "nearby_incidents": [
+        {
+          "incident_name": "VERTEDERO MUNICIPAL",
+          "province": "Río Negro",
+          "reported_start_date": "2026-01-06",
+          "status": "CONTROLADO",
+          "distance_km": 9.284,
+          "source": "same_date_daily_report_snapshot"
+        }
+      ]
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "report_date": "2026-01-25",
+      "label": 1,
+      "label_meaning": "SNMF_reported_incident_start_or_active_unresolved_incident_within_10km",
+      "nearby_incidents": [
+        {
+          "incident_name": "VERTEDERO MUNICIPAL",
+          "province": "Río Negro",
+          "reported_start_date": "2026-01-06",
+          "status": "CONTROLADO",
+          "distance_km": 9.284,
+          "source": "same_date_daily_report_snapshot"
+        }
+      ]
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "report_date": "2026-01-26",
+      "label": 1,
+      "label_meaning": "SNMF_reported_incident_start_or_active_unresolved_incident_within_10km",
+      "nearby_incidents": [
+        {
+          "incident_name": "VERTEDERO MUNICIPAL",
+          "province": "Río Negro",
+          "reported_start_date": "2026-01-06",
+          "status": "CONTROLADO",
+          "distance_km": 9.284,
+          "source": "same_date_daily_report_snapshot"
+        }
+      ]
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "report_date": "2026-01-27",
+      "label": 1,
+      "label_meaning": "SNMF_reported_incident_start_or_active_unresolved_incident_within_10km",
+      "nearby_incidents": [
+        {
+          "incident_name": "tres lagunas) VERTEDERO MUNICIPAL",
+          "province": "Río Negro",
+          "reported_start_date": "2026-01-06",
+          "status": "CONTROLADO",
+          "distance_km": 9.284,
+          "source": "same_date_daily_report_snapshot"
+        }
+      ]
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "report_date": "2026-01-28",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "report_date": "2026-01-30",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Refugio Frey desde Villa Catedral",
+      "report_date": "2026-01-31",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "report_date": "2026-01-01",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "report_date": "2026-01-02",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "report_date": "2026-01-03",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "report_date": "2026-01-04",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "report_date": "2026-01-05",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "report_date": "2026-01-06",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "report_date": "2026-01-07",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "report_date": "2026-01-08",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "report_date": "2026-01-09",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "report_date": "2026-01-10",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "report_date": "2026-01-11",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "report_date": "2026-01-12",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "report_date": "2026-01-13",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "report_date": "2026-01-14",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "report_date": "2026-01-15",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "report_date": "2026-01-16",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "report_date": "2026-01-17",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "report_date": "2026-01-18",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "report_date": "2026-01-19",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "report_date": "2026-01-20",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "report_date": "2026-01-21",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "report_date": "2026-01-22",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "report_date": "2026-01-23",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "report_date": "2026-01-24",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "report_date": "2026-01-25",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "report_date": "2026-01-26",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "report_date": "2026-01-27",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "report_date": "2026-01-28",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "report_date": "2026-01-30",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Quebrada del Condorito - Balcon Norte",
+      "report_date": "2026-01-31",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "report_date": "2026-01-01",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "report_date": "2026-01-02",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "report_date": "2026-01-03",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "report_date": "2026-01-04",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "report_date": "2026-01-05",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "report_date": "2026-01-06",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "report_date": "2026-01-07",
+      "label": 1,
+      "label_meaning": "SNMF_reported_incident_start_or_active_unresolved_incident_within_10km",
+      "nearby_incidents": [
+        {
+          "incident_name": "P.N. LIHUE CALEL",
+          "province": "La Pampa",
+          "reported_start_date": "2026-01-07",
+          "status": "CONTENIDO",
+          "distance_km": 1.615,
+          "source": "same_date_daily_report_snapshot"
+        }
+      ]
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "report_date": "2026-01-08",
+      "label": 1,
+      "label_meaning": "SNMF_reported_incident_start_or_active_unresolved_incident_within_10km",
+      "nearby_incidents": [
+        {
+          "incident_name": "P.N. LIHUE CALEL",
+          "province": "La Pampa",
+          "reported_start_date": "2026-01-07",
+          "status": "CONTENIDO",
+          "distance_km": 1.615,
+          "source": "same_date_daily_report_snapshot"
+        }
+      ]
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "report_date": "2026-01-09",
+      "label": 1,
+      "label_meaning": "SNMF_reported_incident_start_or_active_unresolved_incident_within_10km",
+      "nearby_incidents": [
+        {
+          "incident_name": "P.N. LIHUE CALEL",
+          "province": "La Pampa",
+          "reported_start_date": "2026-01-07",
+          "status": "CONTROLADO",
+          "distance_km": 1.615,
+          "source": "same_date_daily_report_snapshot"
+        }
+      ]
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "report_date": "2026-01-10",
+      "label": 1,
+      "label_meaning": "SNMF_reported_incident_start_or_active_unresolved_incident_within_10km",
+      "nearby_incidents": [
+        {
+          "incident_name": "P.N. LIHUE CALEL",
+          "province": "La Pampa",
+          "reported_start_date": "2026-01-07",
+          "status": "CONTROLADO",
+          "distance_km": 1.615,
+          "source": "same_date_daily_report_snapshot"
+        }
+      ]
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "report_date": "2026-01-11",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "report_date": "2026-01-12",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "report_date": "2026-01-13",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "report_date": "2026-01-14",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "report_date": "2026-01-15",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "report_date": "2026-01-16",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "report_date": "2026-01-17",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "report_date": "2026-01-18",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "report_date": "2026-01-19",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "report_date": "2026-01-20",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "report_date": "2026-01-21",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "report_date": "2026-01-22",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "report_date": "2026-01-23",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "report_date": "2026-01-24",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "report_date": "2026-01-25",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "report_date": "2026-01-26",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "report_date": "2026-01-27",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "report_date": "2026-01-28",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "report_date": "2026-01-30",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Namuncura",
+      "report_date": "2026-01-31",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "report_date": "2026-01-01",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "report_date": "2026-01-02",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "report_date": "2026-01-03",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "report_date": "2026-01-04",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "report_date": "2026-01-05",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "report_date": "2026-01-06",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "report_date": "2026-01-07",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "report_date": "2026-01-08",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "report_date": "2026-01-09",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "report_date": "2026-01-10",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "report_date": "2026-01-11",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "report_date": "2026-01-12",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "report_date": "2026-01-13",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "report_date": "2026-01-14",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "report_date": "2026-01-15",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "report_date": "2026-01-16",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "report_date": "2026-01-17",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "report_date": "2026-01-18",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "report_date": "2026-01-19",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "report_date": "2026-01-20",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "report_date": "2026-01-21",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "report_date": "2026-01-22",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "report_date": "2026-01-23",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "report_date": "2026-01-24",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "report_date": "2026-01-25",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "report_date": "2026-01-26",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "report_date": "2026-01-27",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "report_date": "2026-01-28",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "report_date": "2026-01-30",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Cerro Ventana - Hueco de la Ventana",
+      "report_date": "2026-01-31",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "report_date": "2026-01-01",
+      "label": 1,
+      "label_meaning": "SNMF_reported_incident_start_or_active_unresolved_incident_within_10km",
+      "nearby_incidents": [
+        {
+          "incident_name": "Basural",
+          "province": "Chubut",
+          "reported_start_date": "2026-01-01",
+          "status": "EXTINGUIDO",
+          "distance_km": 9.832,
+          "source": "same_date_daily_report_snapshot"
+        }
+      ]
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "report_date": "2026-01-02",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "report_date": "2026-01-03",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "report_date": "2026-01-04",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "report_date": "2026-01-05",
+      "label": 1,
+      "label_meaning": "SNMF_reported_incident_start_or_active_unresolved_incident_within_10km",
+      "nearby_incidents": [
+        {
+          "incident_name": "Barda de La Loma",
+          "province": "Río Negro",
+          "reported_start_date": "2026-01-05",
+          "status": "CONTROLADO",
+          "distance_km": 6.29,
+          "source": "same_date_daily_report_snapshot"
+        }
+      ]
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "report_date": "2026-01-06",
+      "label": 1,
+      "label_meaning": "SNMF_reported_incident_start_or_active_unresolved_incident_within_10km",
+      "nearby_incidents": [
+        {
+          "incident_name": "Barda de La Loma",
+          "province": "Río Negro",
+          "reported_start_date": "2026-01-05",
+          "status": "CONTROLADO",
+          "distance_km": 6.29,
+          "source": "same_date_daily_report_snapshot"
+        }
+      ]
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "report_date": "2026-01-07",
+      "label": 1,
+      "label_meaning": "SNMF_reported_incident_start_or_active_unresolved_incident_within_10km",
+      "nearby_incidents": [
+        {
+          "incident_name": "Barda de La Loma",
+          "province": "Río Negro",
+          "reported_start_date": "2026-01-05",
+          "status": "CONTROLADO",
+          "distance_km": 6.29,
+          "source": "same_date_daily_report_snapshot"
+        }
+      ]
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "report_date": "2026-01-08",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "report_date": "2026-01-09",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "report_date": "2026-01-10",
+      "label": 1,
+      "label_meaning": "SNMF_reported_incident_start_or_active_unresolved_incident_within_10km",
+      "nearby_incidents": [
+        {
+          "incident_name": "Aeródromo El Bolsón",
+          "province": "Río Negro",
+          "reported_start_date": "2026-01-10",
+          "status": "EXTINGUIDO",
+          "distance_km": 5.996,
+          "source": "deduplicated_incident_reported_start_date"
+        }
+      ]
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "report_date": "2026-01-11",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "report_date": "2026-01-12",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "report_date": "2026-01-13",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "report_date": "2026-01-14",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "report_date": "2026-01-15",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "report_date": "2026-01-16",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "report_date": "2026-01-17",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "report_date": "2026-01-18",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "report_date": "2026-01-19",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "report_date": "2026-01-20",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "report_date": "2026-01-21",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "report_date": "2026-01-22",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "report_date": "2026-01-23",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "report_date": "2026-01-24",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "report_date": "2026-01-25",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "report_date": "2026-01-26",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "report_date": "2026-01-27",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "report_date": "2026-01-28",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "report_date": "2026-01-30",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "report_date": "2026-01-31",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "report_date": "2026-01-01",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "report_date": "2026-01-02",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "report_date": "2026-01-03",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "report_date": "2026-01-04",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "report_date": "2026-01-05",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "report_date": "2026-01-06",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "report_date": "2026-01-07",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "report_date": "2026-01-08",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "report_date": "2026-01-09",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "report_date": "2026-01-10",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "report_date": "2026-01-11",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "report_date": "2026-01-12",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "report_date": "2026-01-13",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "report_date": "2026-01-14",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "report_date": "2026-01-15",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "report_date": "2026-01-16",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "report_date": "2026-01-17",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "report_date": "2026-01-18",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "report_date": "2026-01-19",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "report_date": "2026-01-20",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "report_date": "2026-01-21",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "report_date": "2026-01-22",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "report_date": "2026-01-23",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "report_date": "2026-01-24",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "report_date": "2026-01-25",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "report_date": "2026-01-26",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "report_date": "2026-01-27",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "report_date": "2026-01-28",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "report_date": "2026-01-30",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero Che Roga - Mburucuyá",
+      "report_date": "2026-01-31",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "report_date": "2026-01-01",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "report_date": "2026-01-02",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "report_date": "2026-01-03",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "report_date": "2026-01-04",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "report_date": "2026-01-05",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "report_date": "2026-01-06",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "report_date": "2026-01-07",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "report_date": "2026-01-08",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "report_date": "2026-01-09",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "report_date": "2026-01-10",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "report_date": "2026-01-11",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "report_date": "2026-01-12",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "report_date": "2026-01-13",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "report_date": "2026-01-14",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "report_date": "2026-01-15",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "report_date": "2026-01-16",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "report_date": "2026-01-17",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "report_date": "2026-01-18",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "report_date": "2026-01-19",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "report_date": "2026-01-20",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "report_date": "2026-01-21",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "report_date": "2026-01-22",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "report_date": "2026-01-23",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "report_date": "2026-01-24",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "report_date": "2026-01-25",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "report_date": "2026-01-26",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "report_date": "2026-01-27",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "report_date": "2026-01-28",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "report_date": "2026-01-30",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    },
+    {
+      "route_sector": "Sendero La Chuña - El Rey",
+      "report_date": "2026-01-31",
+      "label": 0,
+      "label_meaning": "no_nearby_incident_listed_in_available_same_date_report",
+      "nearby_incidents": []
+    }
+  ],
+  "limitations": [
+    "A label of 0 means no nearby incident was listed in an available report. It is not proof that no physical fire occurred.",
+    "Dates without a PDF are unknown and are not included as negative examples.",
+    "SNMF reports contain jurisdiction-reported incidents and may omit unreported events.",
+    "Sector centers approximate trails; complete trail geometries were not used.",
+    "Daily report time is not a precise ignition time, so this proxy cannot measure forecast lead from ignition.",
+    "Repeated route-days from the same fire episode are correlated; episode-level grouping is required for confidence intervals."
+  ],
+  "synthetic_observations": 0,
+  "deployment_approved": false
+}

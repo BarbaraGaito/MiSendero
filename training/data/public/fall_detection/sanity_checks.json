@@ -1,0 +1,49 @@
+{
+  "protocol": "GroupKFold(6) by participant, Random Forest 200 trees; diagnostic only, not the reported result",
+  "prevalence": 0.19212153804786233,
+  "all_features": {
+    "features": 37,
+    "pr_auc": 0.9905359887843661,
+    "roc_auc": 0.9981437337811805
+  },
+  "without_orientation_change": {
+    "features": 34,
+    "pr_auc": 0.9770836704055432,
+    "roc_auc": 0.9928320139338461
+  },
+  "without_pre_impact_context": {
+    "features": 24,
+    "pr_auc": 0.9611713850185618,
+    "roc_auc": 0.9882751683065558
+  },
+  "without_post_impact": {
+    "features": 28,
+    "pr_auc": 0.9722896293284916,
+    "roc_auc": 0.9923168664311672
+  },
+  "without_peak_magnitude": {
+    "features": 30,
+    "pr_auc": 0.9935652775223103,
+    "roc_auc": 0.9982600160873689
+  },
+  "without_free_fall": {
+    "features": 32,
+    "pr_auc": 0.9909569112929648,
+    "roc_auc": 0.9977343292269434
+  },
+  "magnitude_peak_only": {
+    "features": 1,
+    "pr_auc": 0.548405621319163,
+    "roc_auc": 0.8589998137852703
+  },
+  "permuted_labels_pr_auc": {
+    "runs": [
+      0.19513614508521188,
+      0.18971648874526742,
+      0.1882126714584629,
+      0.18875742889720631,
+      0.19352028063612176
+    ],
+    "mean": 0.19106860296445408
+  }
+}

@@ -1,0 +1,1253 @@
+{
+  "experiment_id": "viirs-daily-l3-jma-2024-snmf-no-fire-cmr-gap-fill-noaa20-21",
+  "status": "independent_sensor_gap_fill_complete",
+  "created_at_utc": "2026-10-23T21:43:37Z",
+  "protocol": {
+    "purpose": "Fill two missing S-NPP daily-tile dates using same-day NOAA-20 and NOAA-21 VIIRS daily L3 products.",
+    "source_negative_label": "SNMF explicitly said no fires were reported nationally; administrative report only.",
+    "independent_observation": "NOAA-20 VJ114A1.002 and NOAA-21 VJ214A1.002 daily 1 km FireMask and QA.",
+    "spatial_unit": "10 km buffer around complete route polyline.",
+    "fire_mask_detection_classes": [
+      7,
+      8,
+      9
+    ],
+    "class5_qa_land_rule": "FireMask class 5 with QA bits 0-1 equal 10.",
+    "fixed_model_threshold": 0.1,
+    "threshold_is_calibrated_probability": false
+  },
+  "acquisition": {
+    "gap_dates": [
+      "2024-05-31",
+      "2024-07-10"
+    ],
+    "gap_route_days": 16,
+    "sensor_route_day_observations": 32,
+    "granules_verified": 20,
+    "bytes": 3970814,
+    "size_mb_decimal": 3.971,
+    "platform_products": [
+      "VJ114A1",
+      "VJ214A1"
+    ],
+    "sha256_by_granule_id": {
+      "VJ114A1.A2024152.h12v11.002.2024153075642": "8988c5af500e7d71ead1a0c8dfa2b2307d484b68b3422a6bda70cb25c9ce13a7",
+      "VJ114A1.A2024152.h12v12.002.2024153080009": "d6151fdd5d9a04eb14baaebb76ad90795cae959ea86ac4db297a06c433338bb8",
+      "VJ114A1.A2024152.h12v13.002.2024153075643": "8f6a2e131ba2638eeafbb0ead711fb5f90df90d13072e0ba1f5d6418ba576266",
+      "VJ114A1.A2024152.h13v11.002.2024153075643": "e3964440d3048a8852ea5bc51bb9d26f6f47215c63496c5b9b08cae536713c63",
+      "VJ114A1.A2024152.h13v12.002.2024153075642": "1f25eb31f3aa9ab4527775b52243a0042d2b753f390a419c2a7bdc03a78c4450",
+      "VJ214A1.A2024152.h12v11.002.2025303221230": "3abe98eebbb737748b78e12db349b0b5a6d8a491905779528860ba8830f608eb",
+      "VJ214A1.A2024152.h12v12.002.2025303221232": "6e4d223bf50972ab7815b0e2f3f0f9034245658225d105a8df4c552bfe56d6b0",
+      "VJ214A1.A2024152.h12v13.002.2025303221231": "6bcff5dc25ac56ed8d844cdb901567497c2b1e94a526af7fdd59d2182ec386df",
+      "VJ214A1.A2024152.h13v11.002.2025303221228": "49661e7a44e1a3818c4e02c7f6b6d9a442d1b73dfaf7c44a30aa535b01446c87",
+      "VJ214A1.A2024152.h13v12.002.2025303221227": "c97159798fa76a0589ffec1dfa8fcbf22d2bdf33125586238b51ca85d967e9d9",
+      "VJ114A1.A2024192.h12v11.002.2024193080114": "c09e4b53a0160b78f601359dfb1fa958d614c91ef44386c7db8d842eefcd5841",
+      "VJ114A1.A2024192.h12v12.002.2024193075746": "47d7655d01260df6b0bf17989f3167efb84388402c68fa56764600c56fef7c75",
+      "VJ114A1.A2024192.h12v13.002.2024193080753": "6a167505a9932e1807b5345f4dd9d630d7f34335caa1499230f2b1caeaf7b35b",
+      "VJ114A1.A2024192.h13v11.002.2024193075748": "32e2c0f9d2644c29ff833ea1f17da9a1625cb085b6862d0fbe2d91e849c38bd7",
+      "VJ114A1.A2024192.h13v12.002.2024193075419": "d3c15e1397541816f5772fa1d4f86ea3dbbca73aad1ff88e621a15f8cba904fb",
+      "VJ214A1.A2024192.h12v11.002.2025306141936": "be1882cec2b9ae8685f7c21dbe6888a1e034308d34c912f37a1f720cd7ab323d",
+      "VJ214A1.A2024192.h12v12.002.2025306141936": "532ad56f509c317d906f3ee0dc8821123ecc22b60976269d5c0919961dd2e373",
+      "VJ214A1.A2024192.h12v13.002.2025306140340": "5e467c08a834b9e2833e49513f94999d4c99300f8d75e88cb5cfb8e8e7c1211c",
+      "VJ214A1.A2024192.h13v11.002.2025306142010": "bfb15275702a9e0b33dc968a665c650f706f44c6ab4067c4af4416f23a8efba0",
+      "VJ214A1.A2024192.h13v12.002.2025306142009": "19296561f49dd820eaec65b24c6673ea11487027367e0ae6bb7e40b42f0a20a8"
+    }
+  },
+  "observations_by_sensor": {
+    "NOAA-20": {
+      "route_days": 16,
+      "route_days_with_fire_mask_7_9": 0,
+      "route_days_with_class5_qa_land_sample": 12
+    },
+    "NOAA-21": {
+      "route_days": 16,
+      "route_days_with_fire_mask_7_9": 0,
+      "route_days_with_class5_qa_land_sample": 14
+    }
+  },
+  "combined_gap_route_days": {
+    "route_days_with_any_sensor_fire_detection": 0,
+    "route_days_with_any_class5_qa_land_sample": 14,
+    "route_days_with_complete_fire_free_coverage": 0,
+    "route_day_results": [
+      {
+        "date": "2024-05-31",
+        "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "sensor_observations": [
+          "NOAA-20",
+          "NOAA-21"
+        ],
+        "any_sensor_detected_fire_mask_7_9": false,
+        "any_sensor_had_class5_qa_land_sample": true,
+        "any_sensor_had_complete_fire_free_coverage": false
+      },
+      {
+        "date": "2024-05-31",
+        "route": "Cerro Ventana - Hueco de la Ventana",
+        "sensor_observations": [
+          "NOAA-20",
+          "NOAA-21"
+        ],
+        "any_sensor_detected_fire_mask_7_9": false,
+        "any_sensor_had_class5_qa_land_sample": true,
+        "any_sensor_had_complete_fire_free_coverage": false
+      },
+      {
+        "date": "2024-05-31",
+        "route": "Quebrada del Condorito - Balcon Norte",
+        "sensor_observations": [
+          "NOAA-20",
+          "NOAA-21"
+        ],
+        "any_sensor_detected_fire_mask_7_9": false,
+        "any_sensor_had_class5_qa_land_sample": true,
+        "any_sensor_had_complete_fire_free_coverage": false
+      },
+      {
+        "date": "2024-05-31",
+        "route": "Refugio Frey desde Villa Catedral",
+        "sensor_observations": [
+          "NOAA-20",
+          "NOAA-21"
+        ],
+        "any_sensor_detected_fire_mask_7_9": false,
+        "any_sensor_had_class5_qa_land_sample": false,
+        "any_sensor_had_complete_fire_free_coverage": false
+      },
+      {
+        "date": "2024-05-31",
+        "route": "Sendero Che Roga - Mburucuyá",
+        "sensor_observations": [
+          "NOAA-20",
+          "NOAA-21"
+        ],
+        "any_sensor_detected_fire_mask_7_9": false,
+        "any_sensor_had_class5_qa_land_sample": true,
+        "any_sensor_had_complete_fire_free_coverage": false
+      },
+      {
+        "date": "2024-05-31",
+        "route": "Sendero La Chuña - El Rey",
+        "sensor_observations": [
+          "NOAA-20",
+          "NOAA-21"
+        ],
+        "any_sensor_detected_fire_mask_7_9": false,
+        "any_sensor_had_class5_qa_land_sample": true,
+        "any_sensor_had_complete_fire_free_coverage": false
+      },
+      {
+        "date": "2024-05-31",
+        "route": "Sendero Macuco - Salto Arrechea",
+        "sensor_observations": [
+          "NOAA-20",
+          "NOAA-21"
+        ],
+        "any_sensor_detected_fire_mask_7_9": false,
+        "any_sensor_had_class5_qa_land_sample": true,
+        "any_sensor_had_complete_fire_free_coverage": false
+      },
+      {
+        "date": "2024-05-31",
+        "route": "Sendero Namuncura",
+        "sensor_observations": [
+          "NOAA-20",
+          "NOAA-21"
+        ],
+        "any_sensor_detected_fire_mask_7_9": false,
+        "any_sensor_had_class5_qa_land_sample": true,
+        "any_sensor_had_complete_fire_free_coverage": false
+      },
+      {
+        "date": "2024-07-10",
+        "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "sensor_observations": [
+          "NOAA-20",
+          "NOAA-21"
+        ],
+        "any_sensor_detected_fire_mask_7_9": false,
+        "any_sensor_had_class5_qa_land_sample": true,
+        "any_sensor_had_complete_fire_free_coverage": false
+      },
+      {
+        "date": "2024-07-10",
+        "route": "Cerro Ventana - Hueco de la Ventana",
+        "sensor_observations": [
+          "NOAA-20",
+          "NOAA-21"
+        ],
+        "any_sensor_detected_fire_mask_7_9": false,
+        "any_sensor_had_class5_qa_land_sample": true,
+        "any_sensor_had_complete_fire_free_coverage": false
+      },
+      {
+        "date": "2024-07-10",
+        "route": "Quebrada del Condorito - Balcon Norte",
+        "sensor_observations": [
+          "NOAA-20",
+          "NOAA-21"
+        ],
+        "any_sensor_detected_fire_mask_7_9": false,
+        "any_sensor_had_class5_qa_land_sample": false,
+        "any_sensor_had_complete_fire_free_coverage": false
+      },
+      {
+        "date": "2024-07-10",
+        "route": "Refugio Frey desde Villa Catedral",
+        "sensor_observations": [
+          "NOAA-20",
+          "NOAA-21"
+        ],
+        "any_sensor_detected_fire_mask_7_9": false,
+        "any_sensor_had_class5_qa_land_sample": true,
+        "any_sensor_had_complete_fire_free_coverage": false
+      },
+      {
+        "date": "2024-07-10",
+        "route": "Sendero Che Roga - Mburucuyá",
+        "sensor_observations": [
+          "NOAA-20",
+          "NOAA-21"
+        ],
+        "any_sensor_detected_fire_mask_7_9": false,
+        "any_sensor_had_class5_qa_land_sample": true,
+        "any_sensor_had_complete_fire_free_coverage": false
+      },
+      {
+        "date": "2024-07-10",
+        "route": "Sendero La Chuña - El Rey",
+        "sensor_observations": [
+          "NOAA-20",
+          "NOAA-21"
+        ],
+        "any_sensor_detected_fire_mask_7_9": false,
+        "any_sensor_had_class5_qa_land_sample": true,
+        "any_sensor_had_complete_fire_free_coverage": false
+      },
+      {
+        "date": "2024-07-10",
+        "route": "Sendero Macuco - Salto Arrechea",
+        "sensor_observations": [
+          "NOAA-20",
+          "NOAA-21"
+        ],
+        "any_sensor_detected_fire_mask_7_9": false,
+        "any_sensor_had_class5_qa_land_sample": true,
+        "any_sensor_had_complete_fire_free_coverage": false
+      },
+      {
+        "date": "2024-07-10",
+        "route": "Sendero Namuncura",
+        "sensor_observations": [
+          "NOAA-20",
+          "NOAA-21"
+        ],
+        "any_sensor_detected_fire_mask_7_9": false,
+        "any_sensor_had_class5_qa_land_sample": true,
+        "any_sensor_had_complete_fire_free_coverage": false
+      }
+    ]
+  },
+  "full_2024_no_fire_cohort_after_gap_fill": {
+    "route_days_requested": 216,
+    "route_days_observed_by_s_npp": 200,
+    "missing_s_npp_route_days_now_observed_by_noaa20_or_noaa21": 16,
+    "route_days_with_at_least_one_viirs_fire_detection_across_available_platforms": 0,
+    "route_days_with_some_class5_qa_land_sample_across_available_platforms": 200,
+    "still_unobserved_route_days": 0
+  },
+  "fixed_threshold_alert_crosscheck": {
+    "alert_route_days": 1,
+    "alert_route_days_filled_by_noaa_gap_data": 1,
+    "alert_route_days_with_any_noaa_viirs_fire_detection": 0,
+    "alert_route_days_with_any_noaa_class5_qa_land_sample": 0,
+    "interpretation": "This is an independent sensor-detection crosscheck, not adjudicated fire truth or a predictive precision estimate."
+  },
+  "route_day_sensor_results": [
+    {
+      "date": "2024-05-31",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "fixed_diagnostic_alert_at_0_1": false,
+      "frozen_model_score": null,
+      "granule_id": "VJ114A1.A2024152.h12v11.002.2024153075642",
+      "tile": "h12v11",
+      "within_10km_full_route_polyline": {
+        "grid_sample_count": 412,
+        "fire_mask_class_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 32,
+          "4": 0,
+          "5": 380,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "fire_pixels_7_9": 0,
+        "clear_land_class5_pixels_with_qa_land": 380,
+        "any_viirs_fire_detection": false,
+        "interpretation": "Class 5 with QA land is a partially observed non-detection; it does not certify the route buffer as fire-free."
+      },
+      "granule_sha256": "8988c5af500e7d71ead1a0c8dfa2b2307d484b68b3422a6bda70cb25c9ce13a7",
+      "sensor": "NOAA-20",
+      "platform_product": "VJ114A1"
+    },
+    {
+      "date": "2024-05-31",
+      "route": "Sendero La Chuña - El Rey",
+      "fixed_diagnostic_alert_at_0_1": false,
+      "frozen_model_score": null,
+      "granule_id": "VJ114A1.A2024152.h12v11.002.2024153075642",
+      "tile": "h12v11",
+      "within_10km_full_route_polyline": {
+        "grid_sample_count": 406,
+        "fire_mask_class_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 41,
+          "5": 365,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "fire_pixels_7_9": 0,
+        "clear_land_class5_pixels_with_qa_land": 365,
+        "any_viirs_fire_detection": false,
+        "interpretation": "Class 5 with QA land is a partially observed non-detection; it does not certify the route buffer as fire-free."
+      },
+      "granule_sha256": "8988c5af500e7d71ead1a0c8dfa2b2307d484b68b3422a6bda70cb25c9ce13a7",
+      "sensor": "NOAA-20",
+      "platform_product": "VJ114A1"
+    },
+    {
+      "date": "2024-05-31",
+      "route": "Quebrada del Condorito - Balcon Norte",
+      "fixed_diagnostic_alert_at_0_1": false,
+      "frozen_model_score": null,
+      "granule_id": "VJ114A1.A2024152.h12v12.002.2024153080009",
+      "tile": "h12v12",
+      "within_10km_full_route_polyline": {
+        "grid_sample_count": 468,
+        "fire_mask_class_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 468,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "fire_pixels_7_9": 0,
+        "clear_land_class5_pixels_with_qa_land": 468,
+        "any_viirs_fire_detection": false,
+        "interpretation": "Class 5 with QA land is a partially observed non-detection; it does not certify the route buffer as fire-free."
+      },
+      "granule_sha256": "d6151fdd5d9a04eb14baaebb76ad90795cae959ea86ac4db297a06c433338bb8",
+      "sensor": "NOAA-20",
+      "platform_product": "VJ114A1"
+    },
+    {
+      "date": "2024-05-31",
+      "route": "Sendero Namuncura",
+      "fixed_diagnostic_alert_at_0_1": false,
+      "frozen_model_score": null,
+      "granule_id": "VJ114A1.A2024152.h12v12.002.2024153080009",
+      "tile": "h12v12",
+      "within_10km_full_route_polyline": {
+        "grid_sample_count": 375,
+        "fire_mask_class_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 230,
+          "5": 145,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "fire_pixels_7_9": 0,
+        "clear_land_class5_pixels_with_qa_land": 145,
+        "any_viirs_fire_detection": false,
+        "interpretation": "Class 5 with QA land is a partially observed non-detection; it does not certify the route buffer as fire-free."
+      },
+      "granule_sha256": "d6151fdd5d9a04eb14baaebb76ad90795cae959ea86ac4db297a06c433338bb8",
+      "sensor": "NOAA-20",
+      "platform_product": "VJ114A1"
+    },
+    {
+      "date": "2024-05-31",
+      "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "fixed_diagnostic_alert_at_0_1": false,
+      "frozen_model_score": null,
+      "granule_id": "VJ114A1.A2024152.h12v13.002.2024153075643",
+      "tile": "h12v13",
+      "within_10km_full_route_polyline": {
+        "grid_sample_count": 380,
+        "fire_mask_class_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 380,
+          "5": 0,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "fire_pixels_7_9": 0,
+        "clear_land_class5_pixels_with_qa_land": 0,
+        "any_viirs_fire_detection": false,
+        "interpretation": "Class 5 with QA land is a partially observed non-detection; it does not certify the route buffer as fire-free."
+      },
+      "granule_sha256": "8f6a2e131ba2638eeafbb0ead711fb5f90df90d13072e0ba1f5d6418ba576266",
+      "sensor": "NOAA-20",
+      "platform_product": "VJ114A1"
+    },
+    {
+      "date": "2024-05-31",
+      "route": "Refugio Frey desde Villa Catedral",
+      "fixed_diagnostic_alert_at_0_1": false,
+      "frozen_model_score": null,
+      "granule_id": "VJ114A1.A2024152.h12v13.002.2024153075643",
+      "tile": "h12v13",
+      "within_10km_full_route_polyline": {
+        "grid_sample_count": 524,
+        "fire_mask_class_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 524,
+          "5": 0,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "fire_pixels_7_9": 0,
+        "clear_land_class5_pixels_with_qa_land": 0,
+        "any_viirs_fire_detection": false,
+        "interpretation": "Class 5 with QA land is a partially observed non-detection; it does not certify the route buffer as fire-free."
+      },
+      "granule_sha256": "8f6a2e131ba2638eeafbb0ead711fb5f90df90d13072e0ba1f5d6418ba576266",
+      "sensor": "NOAA-20",
+      "platform_product": "VJ114A1"
+    },
+    {
+      "date": "2024-05-31",
+      "route": "Sendero Macuco - Salto Arrechea",
+      "fixed_diagnostic_alert_at_0_1": false,
+      "frozen_model_score": null,
+      "granule_id": "VJ114A1.A2024152.h13v11.002.2024153075643",
+      "tile": "h13v11",
+      "within_10km_full_route_polyline": {
+        "grid_sample_count": 441,
+        "fire_mask_class_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 36,
+          "4": 0,
+          "5": 405,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "fire_pixels_7_9": 0,
+        "clear_land_class5_pixels_with_qa_land": 405,
+        "any_viirs_fire_detection": false,
+        "interpretation": "Class 5 with QA land is a partially observed non-detection; it does not certify the route buffer as fire-free."
+      },
+      "granule_sha256": "e3964440d3048a8852ea5bc51bb9d26f6f47215c63496c5b9b08cae536713c63",
+      "sensor": "NOAA-20",
+      "platform_product": "VJ114A1"
+    },
+    {
+      "date": "2024-05-31",
+      "route": "Cerro Ventana - Hueco de la Ventana",
+      "fixed_diagnostic_alert_at_0_1": false,
+      "frozen_model_score": null,
+      "granule_id": "VJ114A1.A2024152.h13v12.002.2024153075642",
+      "tile": "h13v12",
+      "within_10km_full_route_polyline": {
+        "grid_sample_count": 417,
+        "fire_mask_class_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 417,
+          "5": 0,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "fire_pixels_7_9": 0,
+        "clear_land_class5_pixels_with_qa_land": 0,
+        "any_viirs_fire_detection": false,
+        "interpretation": "Class 5 with QA land is a partially observed non-detection; it does not certify the route buffer as fire-free."
+      },
+      "granule_sha256": "1f25eb31f3aa9ab4527775b52243a0042d2b753f390a419c2a7bdc03a78c4450",
+      "sensor": "NOAA-20",
+      "platform_product": "VJ114A1"
+    },
+    {
+      "date": "2024-05-31",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "fixed_diagnostic_alert_at_0_1": false,
+      "frozen_model_score": null,
+      "granule_id": "VJ214A1.A2024152.h12v11.002.2025303221230",
+      "tile": "h12v11",
+      "within_10km_full_route_polyline": {
+        "grid_sample_count": 412,
+        "fire_mask_class_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 51,
+          "4": 0,
+          "5": 361,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "fire_pixels_7_9": 0,
+        "clear_land_class5_pixels_with_qa_land": 361,
+        "any_viirs_fire_detection": false,
+        "interpretation": "Class 5 with QA land is a partially observed non-detection; it does not certify the route buffer as fire-free."
+      },
+      "granule_sha256": "3abe98eebbb737748b78e12db349b0b5a6d8a491905779528860ba8830f608eb",
+      "sensor": "NOAA-21",
+      "platform_product": "VJ214A1"
+    },
+    {
+      "date": "2024-05-31",
+      "route": "Sendero La Chuña - El Rey",
+      "fixed_diagnostic_alert_at_0_1": false,
+      "frozen_model_score": null,
+      "granule_id": "VJ214A1.A2024152.h12v11.002.2025303221230",
+      "tile": "h12v11",
+      "within_10km_full_route_polyline": {
+        "grid_sample_count": 406,
+        "fire_mask_class_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 406,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "fire_pixels_7_9": 0,
+        "clear_land_class5_pixels_with_qa_land": 406,
+        "any_viirs_fire_detection": false,
+        "interpretation": "Class 5 with QA land is a partially observed non-detection; it does not certify the route buffer as fire-free."
+      },
+      "granule_sha256": "3abe98eebbb737748b78e12db349b0b5a6d8a491905779528860ba8830f608eb",
+      "sensor": "NOAA-21",
+      "platform_product": "VJ214A1"
+    },
+    {
+      "date": "2024-05-31",
+      "route": "Quebrada del Condorito - Balcon Norte",
+      "fixed_diagnostic_alert_at_0_1": false,
+      "frozen_model_score": null,
+      "granule_id": "VJ214A1.A2024152.h12v12.002.2025303221232",
+      "tile": "h12v12",
+      "within_10km_full_route_polyline": {
+        "grid_sample_count": 468,
+        "fire_mask_class_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 468,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "fire_pixels_7_9": 0,
+        "clear_land_class5_pixels_with_qa_land": 468,
+        "any_viirs_fire_detection": false,
+        "interpretation": "Class 5 with QA land is a partially observed non-detection; it does not certify the route buffer as fire-free."
+      },
+      "granule_sha256": "6e4d223bf50972ab7815b0e2f3f0f9034245658225d105a8df4c552bfe56d6b0",
+      "sensor": "NOAA-21",
+      "platform_product": "VJ214A1"
+    },
+    {
+      "date": "2024-05-31",
+      "route": "Sendero Namuncura",
+      "fixed_diagnostic_alert_at_0_1": false,
+      "frozen_model_score": null,
+      "granule_id": "VJ214A1.A2024152.h12v12.002.2025303221232",
+      "tile": "h12v12",
+      "within_10km_full_route_polyline": {
+        "grid_sample_count": 375,
+        "fire_mask_class_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 373,
+          "5": 2,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "fire_pixels_7_9": 0,
+        "clear_land_class5_pixels_with_qa_land": 2,
+        "any_viirs_fire_detection": false,
+        "interpretation": "Class 5 with QA land is a partially observed non-detection; it does not certify the route buffer as fire-free."
+      },
+      "granule_sha256": "6e4d223bf50972ab7815b0e2f3f0f9034245658225d105a8df4c552bfe56d6b0",
+      "sensor": "NOAA-21",
+      "platform_product": "VJ214A1"
+    },
+    {
+      "date": "2024-05-31",
+      "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "fixed_diagnostic_alert_at_0_1": false,
+      "frozen_model_score": null,
+      "granule_id": "VJ214A1.A2024152.h12v13.002.2025303221231",
+      "tile": "h12v13",
+      "within_10km_full_route_polyline": {
+        "grid_sample_count": 380,
+        "fire_mask_class_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 1,
+          "4": 1,
+          "5": 378,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "fire_pixels_7_9": 0,
+        "clear_land_class5_pixels_with_qa_land": 378,
+        "any_viirs_fire_detection": false,
+        "interpretation": "Class 5 with QA land is a partially observed non-detection; it does not certify the route buffer as fire-free."
+      },
+      "granule_sha256": "6bcff5dc25ac56ed8d844cdb901567497c2b1e94a526af7fdd59d2182ec386df",
+      "sensor": "NOAA-21",
+      "platform_product": "VJ214A1"
+    },
+    {
+      "date": "2024-05-31",
+      "route": "Refugio Frey desde Villa Catedral",
+      "fixed_diagnostic_alert_at_0_1": false,
+      "frozen_model_score": null,
+      "granule_id": "VJ214A1.A2024152.h12v13.002.2025303221231",
+      "tile": "h12v13",
+      "within_10km_full_route_polyline": {
+        "grid_sample_count": 524,
+        "fire_mask_class_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 524,
+          "5": 0,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "fire_pixels_7_9": 0,
+        "clear_land_class5_pixels_with_qa_land": 0,
+        "any_viirs_fire_detection": false,
+        "interpretation": "Class 5 with QA land is a partially observed non-detection; it does not certify the route buffer as fire-free."
+      },
+      "granule_sha256": "6bcff5dc25ac56ed8d844cdb901567497c2b1e94a526af7fdd59d2182ec386df",
+      "sensor": "NOAA-21",
+      "platform_product": "VJ214A1"
+    },
+    {
+      "date": "2024-05-31",
+      "route": "Sendero Macuco - Salto Arrechea",
+      "fixed_diagnostic_alert_at_0_1": false,
+      "frozen_model_score": null,
+      "granule_id": "VJ214A1.A2024152.h13v11.002.2025303221228",
+      "tile": "h13v11",
+      "within_10km_full_route_polyline": {
+        "grid_sample_count": 441,
+        "fire_mask_class_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 38,
+          "4": 0,
+          "5": 403,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "fire_pixels_7_9": 0,
+        "clear_land_class5_pixels_with_qa_land": 403,
+        "any_viirs_fire_detection": false,
+        "interpretation": "Class 5 with QA land is a partially observed non-detection; it does not certify the route buffer as fire-free."
+      },
+      "granule_sha256": "49661e7a44e1a3818c4e02c7f6b6d9a442d1b73dfaf7c44a30aa535b01446c87",
+      "sensor": "NOAA-21",
+      "platform_product": "VJ214A1"
+    },
+    {
+      "date": "2024-05-31",
+      "route": "Cerro Ventana - Hueco de la Ventana",
+      "fixed_diagnostic_alert_at_0_1": false,
+      "frozen_model_score": null,
+      "granule_id": "VJ214A1.A2024152.h13v12.002.2025303221227",
+      "tile": "h13v12",
+      "within_10km_full_route_polyline": {
+        "grid_sample_count": 417,
+        "fire_mask_class_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 41,
+          "5": 376,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "fire_pixels_7_9": 0,
+        "clear_land_class5_pixels_with_qa_land": 376,
+        "any_viirs_fire_detection": false,
+        "interpretation": "Class 5 with QA land is a partially observed non-detection; it does not certify the route buffer as fire-free."
+      },
+      "granule_sha256": "c97159798fa76a0589ffec1dfa8fcbf22d2bdf33125586238b51ca85d967e9d9",
+      "sensor": "NOAA-21",
+      "platform_product": "VJ214A1"
+    },
+    {
+      "date": "2024-07-10",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "fixed_diagnostic_alert_at_0_1": false,
+      "frozen_model_score": null,
+      "granule_id": "VJ114A1.A2024192.h12v11.002.2024193080114",
+      "tile": "h12v11",
+      "within_10km_full_route_polyline": {
+        "grid_sample_count": 412,
+        "fire_mask_class_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 49,
+          "4": 0,
+          "5": 363,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "fire_pixels_7_9": 0,
+        "clear_land_class5_pixels_with_qa_land": 363,
+        "any_viirs_fire_detection": false,
+        "interpretation": "Class 5 with QA land is a partially observed non-detection; it does not certify the route buffer as fire-free."
+      },
+      "granule_sha256": "c09e4b53a0160b78f601359dfb1fa958d614c91ef44386c7db8d842eefcd5841",
+      "sensor": "NOAA-20",
+      "platform_product": "VJ114A1"
+    },
+    {
+      "date": "2024-07-10",
+      "route": "Sendero La Chuña - El Rey",
+      "fixed_diagnostic_alert_at_0_1": false,
+      "frozen_model_score": null,
+      "granule_id": "VJ114A1.A2024192.h12v11.002.2024193080114",
+      "tile": "h12v11",
+      "within_10km_full_route_polyline": {
+        "grid_sample_count": 406,
+        "fire_mask_class_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 406,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "fire_pixels_7_9": 0,
+        "clear_land_class5_pixels_with_qa_land": 406,
+        "any_viirs_fire_detection": false,
+        "interpretation": "Class 5 with QA land is a partially observed non-detection; it does not certify the route buffer as fire-free."
+      },
+      "granule_sha256": "c09e4b53a0160b78f601359dfb1fa958d614c91ef44386c7db8d842eefcd5841",
+      "sensor": "NOAA-20",
+      "platform_product": "VJ114A1"
+    },
+    {
+      "date": "2024-07-10",
+      "route": "Quebrada del Condorito - Balcon Norte",
+      "fixed_diagnostic_alert_at_0_1": true,
+      "frozen_model_score": 0.1268389772805304,
+      "granule_id": "VJ114A1.A2024192.h12v12.002.2024193075746",
+      "tile": "h12v12",
+      "within_10km_full_route_polyline": {
+        "grid_sample_count": 468,
+        "fire_mask_class_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 468,
+          "5": 0,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "fire_pixels_7_9": 0,
+        "clear_land_class5_pixels_with_qa_land": 0,
+        "any_viirs_fire_detection": false,
+        "interpretation": "Class 5 with QA land is a partially observed non-detection; it does not certify the route buffer as fire-free."
+      },
+      "granule_sha256": "47d7655d01260df6b0bf17989f3167efb84388402c68fa56764600c56fef7c75",
+      "sensor": "NOAA-20",
+      "platform_product": "VJ114A1"
+    },
+    {
+      "date": "2024-07-10",
+      "route": "Sendero Namuncura",
+      "fixed_diagnostic_alert_at_0_1": false,
+      "frozen_model_score": null,
+      "granule_id": "VJ114A1.A2024192.h12v12.002.2024193075746",
+      "tile": "h12v12",
+      "within_10km_full_route_polyline": {
+        "grid_sample_count": 375,
+        "fire_mask_class_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 110,
+          "5": 265,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "fire_pixels_7_9": 0,
+        "clear_land_class5_pixels_with_qa_land": 265,
+        "any_viirs_fire_detection": false,
+        "interpretation": "Class 5 with QA land is a partially observed non-detection; it does not certify the route buffer as fire-free."
+      },
+      "granule_sha256": "47d7655d01260df6b0bf17989f3167efb84388402c68fa56764600c56fef7c75",
+      "sensor": "NOAA-20",
+      "platform_product": "VJ114A1"
+    },
+    {
+      "date": "2024-07-10",
+      "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "fixed_diagnostic_alert_at_0_1": false,
+      "frozen_model_score": null,
+      "granule_id": "VJ114A1.A2024192.h12v13.002.2024193080753",
+      "tile": "h12v13",
+      "within_10km_full_route_polyline": {
+        "grid_sample_count": 380,
+        "fire_mask_class_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 1,
+          "4": 1,
+          "5": 378,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "fire_pixels_7_9": 0,
+        "clear_land_class5_pixels_with_qa_land": 378,
+        "any_viirs_fire_detection": false,
+        "interpretation": "Class 5 with QA land is a partially observed non-detection; it does not certify the route buffer as fire-free."
+      },
+      "granule_sha256": "6a167505a9932e1807b5345f4dd9d630d7f34335caa1499230f2b1caeaf7b35b",
+      "sensor": "NOAA-20",
+      "platform_product": "VJ114A1"
+    },
+    {
+      "date": "2024-07-10",
+      "route": "Refugio Frey desde Villa Catedral",
+      "fixed_diagnostic_alert_at_0_1": false,
+      "frozen_model_score": null,
+      "granule_id": "VJ114A1.A2024192.h12v13.002.2024193080753",
+      "tile": "h12v13",
+      "within_10km_full_route_polyline": {
+        "grid_sample_count": 524,
+        "fire_mask_class_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 57,
+          "4": 5,
+          "5": 462,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "fire_pixels_7_9": 0,
+        "clear_land_class5_pixels_with_qa_land": 462,
+        "any_viirs_fire_detection": false,
+        "interpretation": "Class 5 with QA land is a partially observed non-detection; it does not certify the route buffer as fire-free."
+      },
+      "granule_sha256": "6a167505a9932e1807b5345f4dd9d630d7f34335caa1499230f2b1caeaf7b35b",
+      "sensor": "NOAA-20",
+      "platform_product": "VJ114A1"
+    },
+    {
+      "date": "2024-07-10",
+      "route": "Sendero Macuco - Salto Arrechea",
+      "fixed_diagnostic_alert_at_0_1": false,
+      "frozen_model_score": null,
+      "granule_id": "VJ114A1.A2024192.h13v11.002.2024193075748",
+      "tile": "h13v11",
+      "within_10km_full_route_polyline": {
+        "grid_sample_count": 441,
+        "fire_mask_class_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 40,
+          "4": 8,
+          "5": 393,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "fire_pixels_7_9": 0,
+        "clear_land_class5_pixels_with_qa_land": 393,
+        "any_viirs_fire_detection": false,
+        "interpretation": "Class 5 with QA land is a partially observed non-detection; it does not certify the route buffer as fire-free."
+      },
+      "granule_sha256": "32e2c0f9d2644c29ff833ea1f17da9a1625cb085b6862d0fbe2d91e849c38bd7",
+      "sensor": "NOAA-20",
+      "platform_product": "VJ114A1"
+    },
+    {
+      "date": "2024-07-10",
+      "route": "Cerro Ventana - Hueco de la Ventana",
+      "fixed_diagnostic_alert_at_0_1": false,
+      "frozen_model_score": null,
+      "granule_id": "VJ114A1.A2024192.h13v12.002.2024193075419",
+      "tile": "h13v12",
+      "within_10km_full_route_polyline": {
+        "grid_sample_count": 417,
+        "fire_mask_class_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 417,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "fire_pixels_7_9": 0,
+        "clear_land_class5_pixels_with_qa_land": 417,
+        "any_viirs_fire_detection": false,
+        "interpretation": "Class 5 with QA land is a partially observed non-detection; it does not certify the route buffer as fire-free."
+      },
+      "granule_sha256": "d3c15e1397541816f5772fa1d4f86ea3dbbca73aad1ff88e621a15f8cba904fb",
+      "sensor": "NOAA-20",
+      "platform_product": "VJ114A1"
+    },
+    {
+      "date": "2024-07-10",
+      "route": "Sendero Che Roga - Mburucuyá",
+      "fixed_diagnostic_alert_at_0_1": false,
+      "frozen_model_score": null,
+      "granule_id": "VJ214A1.A2024192.h12v11.002.2025306141936",
+      "tile": "h12v11",
+      "within_10km_full_route_polyline": {
+        "grid_sample_count": 412,
+        "fire_mask_class_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 38,
+          "4": 0,
+          "5": 374,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "fire_pixels_7_9": 0,
+        "clear_land_class5_pixels_with_qa_land": 374,
+        "any_viirs_fire_detection": false,
+        "interpretation": "Class 5 with QA land is a partially observed non-detection; it does not certify the route buffer as fire-free."
+      },
+      "granule_sha256": "be1882cec2b9ae8685f7c21dbe6888a1e034308d34c912f37a1f720cd7ab323d",
+      "sensor": "NOAA-21",
+      "platform_product": "VJ214A1"
+    },
+    {
+      "date": "2024-07-10",
+      "route": "Sendero La Chuña - El Rey",
+      "fixed_diagnostic_alert_at_0_1": false,
+      "frozen_model_score": null,
+      "granule_id": "VJ214A1.A2024192.h12v11.002.2025306141936",
+      "tile": "h12v11",
+      "within_10km_full_route_polyline": {
+        "grid_sample_count": 406,
+        "fire_mask_class_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 406,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "fire_pixels_7_9": 0,
+        "clear_land_class5_pixels_with_qa_land": 406,
+        "any_viirs_fire_detection": false,
+        "interpretation": "Class 5 with QA land is a partially observed non-detection; it does not certify the route buffer as fire-free."
+      },
+      "granule_sha256": "be1882cec2b9ae8685f7c21dbe6888a1e034308d34c912f37a1f720cd7ab323d",
+      "sensor": "NOAA-21",
+      "platform_product": "VJ214A1"
+    },
+    {
+      "date": "2024-07-10",
+      "route": "Quebrada del Condorito - Balcon Norte",
+      "fixed_diagnostic_alert_at_0_1": true,
+      "frozen_model_score": 0.1268389772805304,
+      "granule_id": "VJ214A1.A2024192.h12v12.002.2025306141936",
+      "tile": "h12v12",
+      "within_10km_full_route_polyline": {
+        "grid_sample_count": 468,
+        "fire_mask_class_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 468,
+          "5": 0,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "fire_pixels_7_9": 0,
+        "clear_land_class5_pixels_with_qa_land": 0,
+        "any_viirs_fire_detection": false,
+        "interpretation": "Class 5 with QA land is a partially observed non-detection; it does not certify the route buffer as fire-free."
+      },
+      "granule_sha256": "532ad56f509c317d906f3ee0dc8821123ecc22b60976269d5c0919961dd2e373",
+      "sensor": "NOAA-21",
+      "platform_product": "VJ214A1"
+    },
+    {
+      "date": "2024-07-10",
+      "route": "Sendero Namuncura",
+      "fixed_diagnostic_alert_at_0_1": false,
+      "frozen_model_score": null,
+      "granule_id": "VJ214A1.A2024192.h12v12.002.2025306141936",
+      "tile": "h12v12",
+      "within_10km_full_route_polyline": {
+        "grid_sample_count": 375,
+        "fire_mask_class_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 375,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "fire_pixels_7_9": 0,
+        "clear_land_class5_pixels_with_qa_land": 375,
+        "any_viirs_fire_detection": false,
+        "interpretation": "Class 5 with QA land is a partially observed non-detection; it does not certify the route buffer as fire-free."
+      },
+      "granule_sha256": "532ad56f509c317d906f3ee0dc8821123ecc22b60976269d5c0919961dd2e373",
+      "sensor": "NOAA-21",
+      "platform_product": "VJ214A1"
+    },
+    {
+      "date": "2024-07-10",
+      "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "fixed_diagnostic_alert_at_0_1": false,
+      "frozen_model_score": null,
+      "granule_id": "VJ214A1.A2024192.h12v13.002.2025306140340",
+      "tile": "h12v13",
+      "within_10km_full_route_polyline": {
+        "grid_sample_count": 380,
+        "fire_mask_class_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 1,
+          "4": 5,
+          "5": 374,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "fire_pixels_7_9": 0,
+        "clear_land_class5_pixels_with_qa_land": 374,
+        "any_viirs_fire_detection": false,
+        "interpretation": "Class 5 with QA land is a partially observed non-detection; it does not certify the route buffer as fire-free."
+      },
+      "granule_sha256": "5e467c08a834b9e2833e49513f94999d4c99300f8d75e88cb5cfb8e8e7c1211c",
+      "sensor": "NOAA-21",
+      "platform_product": "VJ214A1"
+    },
+    {
+      "date": "2024-07-10",
+      "route": "Refugio Frey desde Villa Catedral",
+      "fixed_diagnostic_alert_at_0_1": false,
+      "frozen_model_score": null,
+      "granule_id": "VJ214A1.A2024192.h12v13.002.2025306140340",
+      "tile": "h12v13",
+      "within_10km_full_route_polyline": {
+        "grid_sample_count": 524,
+        "fire_mask_class_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 66,
+          "4": 65,
+          "5": 393,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "fire_pixels_7_9": 0,
+        "clear_land_class5_pixels_with_qa_land": 393,
+        "any_viirs_fire_detection": false,
+        "interpretation": "Class 5 with QA land is a partially observed non-detection; it does not certify the route buffer as fire-free."
+      },
+      "granule_sha256": "5e467c08a834b9e2833e49513f94999d4c99300f8d75e88cb5cfb8e8e7c1211c",
+      "sensor": "NOAA-21",
+      "platform_product": "VJ214A1"
+    },
+    {
+      "date": "2024-07-10",
+      "route": "Sendero Macuco - Salto Arrechea",
+      "fixed_diagnostic_alert_at_0_1": false,
+      "frozen_model_score": null,
+      "granule_id": "VJ214A1.A2024192.h13v11.002.2025306142010",
+      "tile": "h13v11",
+      "within_10km_full_route_polyline": {
+        "grid_sample_count": 441,
+        "fire_mask_class_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 35,
+          "4": 8,
+          "5": 398,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "fire_pixels_7_9": 0,
+        "clear_land_class5_pixels_with_qa_land": 398,
+        "any_viirs_fire_detection": false,
+        "interpretation": "Class 5 with QA land is a partially observed non-detection; it does not certify the route buffer as fire-free."
+      },
+      "granule_sha256": "bfb15275702a9e0b33dc968a665c650f706f44c6ab4067c4af4416f23a8efba0",
+      "sensor": "NOAA-21",
+      "platform_product": "VJ214A1"
+    },
+    {
+      "date": "2024-07-10",
+      "route": "Cerro Ventana - Hueco de la Ventana",
+      "fixed_diagnostic_alert_at_0_1": false,
+      "frozen_model_score": null,
+      "granule_id": "VJ214A1.A2024192.h13v12.002.2025306142009",
+      "tile": "h13v12",
+      "within_10km_full_route_polyline": {
+        "grid_sample_count": 417,
+        "fire_mask_class_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 417,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "fire_pixels_7_9": 0,
+        "clear_land_class5_pixels_with_qa_land": 417,
+        "any_viirs_fire_detection": false,
+        "interpretation": "Class 5 with QA land is a partially observed non-detection; it does not certify the route buffer as fire-free."
+      },
+      "granule_sha256": "19296561f49dd820eaec65b24c6673ea11487027367e0ae6bb7e40b42f0a20a8",
+      "sensor": "NOAA-21",
+      "platform_product": "VJ214A1"
+    }
+  ],
+  "sources": {
+    "docs/environmental-models-2026-10-22/fire-viirs-jma-2024-explicit-no-fire-all-routes.json": "a3fff92c1ded7bdb051f37b59cf712fc51d20dfd187654c3714be43ab552e835",
+    "docs/environmental-models-2026-10-22/fire-jma-2023-train-2024-test-snmf-report-proxy.json": "7cb87d51e85329ded9345dc61ce804a1d9db9f7e29a955c85f085add7e01bd0d",
+    "docs/environmental-models-2026-10-22/fire-snmf-national-no-fire-report-audit.json": "a57c45ee46b1bb97763432a9fa647fe9fc903b4550c427d4e46bb2be03a76396",
+    "docs/environmental-models-2026-10-22/fire-viirs-daily-l3-candidate-audit-2026-10-23.json": "0598401758ec20d500b3f6ac587958aa4aa12325a49653400901fe0c64150489",
+    "training/data/environmental/private/fire-route-geometries.json": "d622e3bd3bae7c97df9152d5ae22fa9cf3136f2bbb0ee807703eaddc21d6610a",
+    "training/data/environmental/private/viirs-daily-l3-jma-2024-cmr-gaps/acquisition-manifest.json": "8316d50a78520cb6a4899fe8d876de23a515ec8600200b9e61dd41cda6c9aa6f",
+    "docs/environmental-models-2026-10-22/fire-viirs-daily-l3-jma-2024-cmr-gap-fill-noaa20-21-manifest.json": "574ac56985ee99e2a1ddf56e0eeff4014d9de95b4d3f3f5aa2c6655f8d06e822"
+  },
+  "product_documentation": {
+    "nasa_viirs_active_fire_user_guide": "https://viirsland.gsfc.nasa.gov/PDF/VIIRS_activefire_User_Guide.pdf",
+    "nasa_vj114a1_file_specification": "https://ladsweb.modaps.eosdis.nasa.gov/filespec/VIIRS/1/VJ114A1",
+    "nasa_vj214a1_file_specification": "https://ladsweb.modaps.eosdis.nasa.gov/filespec/VIIRS/1/VJ214A1"
+  },
+  "synthetic_observations": 0,
+  "deployment_approved": false,
+  "limitations": [
+    "The administrative SNMF no-fire wording does not prove that no physical fire existed.",
+    "VIIRS classes 7-9 are thermal detections, not adjudicated wildfire truth.",
+    "NOAA-20/21 class 5 with QA land is partial observed clear land, not complete sensor coverage of a route buffer.",
+    "Daily 1 km composites can miss small, obscured, or between-overpass fires.",
+    "The three VIIRS platforms share an instrument family and algorithm lineage; their detections do not replace independent field-confirmed labels.",
+    "This selected set of report dates cannot estimate model precision, recall, calibration, or forecast skill.",
+    "The 0.1 model score cutoff is diagnostic and is not a calibrated probability."
+  ]
+}

@@ -1,0 +1,449 @@
+{
+  "experiment_id": "nasa-firms-nrt-independent-positive-crosscheck-of-inpe-prospective-window",
+  "status": "elapsed_window_nrt_positive_detection_crosscheck_no_route_matches",
+  "target_window_utc": [
+    "2026-10-22T18:00:00Z",
+    "2026-10-23T18:00:00Z"
+  ],
+  "source": {
+    "dataset": "NASA FIRMS VIIRS Near Real-Time area API",
+    "query_started_at_utc": "2026-10-23T18:02:30Z",
+    "query_completed_at_utc": "2026-10-23T18:02:55Z",
+    "target_window_ended_before_query_completed": true,
+    "sensors": [
+      "VIIRS_NOAA20_NRT",
+      "VIIRS_NOAA21_NRT",
+      "VIIRS_SNPP_NRT"
+    ],
+    "period_queried_utc_dates_inclusive": [
+      "2026-10-22",
+      "2026-10-23"
+    ],
+    "sensor_date_availability": {
+      "VIIRS_NOAA20_NRT": [
+        "2026-07-01",
+        "2026-10-23"
+      ],
+      "VIIRS_NOAA21_NRT": [
+        "2024-01-17",
+        "2026-10-23"
+      ],
+      "VIIRS_SNPP_NRT": [
+        "2026-07-01",
+        "2026-10-23"
+      ]
+    },
+    "query_archive_sha256": "468288cd735a87929adfcc0aa7562ac14682a9eaf61fe309daab9090f70c5a2c",
+    "geometry_sha256": "d622e3bd3bae7c97df9152d5ae22fa9cf3136f2bbb0ee807703eaddc21d6610a",
+    "availability_response_sha256": [
+      "aab642dd0602b9ef80792e1fa9211946355bfc85e5f21e69d3e520a69b4fcfb6"
+    ],
+    "raw_responses_verified": 24,
+    "raw_response_records": 0
+  },
+  "spatial_rule": "10 km from the full stored trail polyline, recomputed from each archived CSV response.",
+  "temporal_rule": "Exact check uses acquisition date/time UTC in [2026-10-22 18:00, 2026-10-23 18:00); all queries completed after this interval ended, and requested both UTC calendar dates.",
+  "summary": {
+    "route_sensor_queries": 24,
+    "query_errors": 0,
+    "raw_csv_records_all_areas": 0,
+    "route_matches_in_requested_dates": 0,
+    "route_matches_in_exact_forecast_window": 0,
+    "negative_labels_created": 0,
+    "synthetic_observations": 0,
+    "deployment_approved": false
+  },
+  "queries": [
+    {
+      "route": "Sendero Macuco - Salto Arrechea",
+      "sensor": "VIIRS_SNPP_NRT",
+      "requested_dates": [
+        "2026-10-22",
+        "2026-10-23"
+      ],
+      "source_date_availability": [
+        "2026-07-01",
+        "2026-10-23"
+      ],
+      "response_sha256": "2b11a44667d05367ecf77651b95fd3d34c545c7ec154856094b91245e41ae697",
+      "response_bytes": 122,
+      "response_rows": 0,
+      "matches_within_10km_of_full_route_for_requested_dates": 0
+    },
+    {
+      "route": "Sendero Macuco - Salto Arrechea",
+      "sensor": "VIIRS_NOAA20_NRT",
+      "requested_dates": [
+        "2026-10-22",
+        "2026-10-23"
+      ],
+      "source_date_availability": [
+        "2026-07-01",
+        "2026-10-23"
+      ],
+      "response_sha256": "2b11a44667d05367ecf77651b95fd3d34c545c7ec154856094b91245e41ae697",
+      "response_bytes": 122,
+      "response_rows": 0,
+      "matches_within_10km_of_full_route_for_requested_dates": 0
+    },
+    {
+      "route": "Sendero Macuco - Salto Arrechea",
+      "sensor": "VIIRS_NOAA21_NRT",
+      "requested_dates": [
+        "2026-10-22",
+        "2026-10-23"
+      ],
+      "source_date_availability": [
+        "2024-01-17",
+        "2026-10-23"
+      ],
+      "response_sha256": "2b11a44667d05367ecf77651b95fd3d34c545c7ec154856094b91245e41ae697",
+      "response_bytes": 122,
+      "response_rows": 0,
+      "matches_within_10km_of_full_route_for_requested_dates": 0
+    },
+    {
+      "route": "Refugio Frey desde Villa Catedral",
+      "sensor": "VIIRS_SNPP_NRT",
+      "requested_dates": [
+        "2026-10-22",
+        "2026-10-23"
+      ],
+      "source_date_availability": [
+        "2026-07-01",
+        "2026-10-23"
+      ],
+      "response_sha256": "2b11a44667d05367ecf77651b95fd3d34c545c7ec154856094b91245e41ae697",
+      "response_bytes": 122,
+      "response_rows": 0,
+      "matches_within_10km_of_full_route_for_requested_dates": 0
+    },
+    {
+      "route": "Refugio Frey desde Villa Catedral",
+      "sensor": "VIIRS_NOAA20_NRT",
+      "requested_dates": [
+        "2026-10-22",
+        "2026-10-23"
+      ],
+      "source_date_availability": [
+        "2026-07-01",
+        "2026-10-23"
+      ],
+      "response_sha256": "2b11a44667d05367ecf77651b95fd3d34c545c7ec154856094b91245e41ae697",
+      "response_bytes": 122,
+      "response_rows": 0,
+      "matches_within_10km_of_full_route_for_requested_dates": 0
+    },
+    {
+      "route": "Refugio Frey desde Villa Catedral",
+      "sensor": "VIIRS_NOAA21_NRT",
+      "requested_dates": [
+        "2026-10-22",
+        "2026-10-23"
+      ],
+      "source_date_availability": [
+        "2024-01-17",
+        "2026-10-23"
+      ],
+      "response_sha256": "2b11a44667d05367ecf77651b95fd3d34c545c7ec154856094b91245e41ae697",
+      "response_bytes": 122,
+      "response_rows": 0,
+      "matches_within_10km_of_full_route_for_requested_dates": 0
+    },
+    {
+      "route": "Quebrada del Condorito - Balcon Norte",
+      "sensor": "VIIRS_SNPP_NRT",
+      "requested_dates": [
+        "2026-10-22",
+        "2026-10-23"
+      ],
+      "source_date_availability": [
+        "2026-07-01",
+        "2026-10-23"
+      ],
+      "response_sha256": "2b11a44667d05367ecf77651b95fd3d34c545c7ec154856094b91245e41ae697",
+      "response_bytes": 122,
+      "response_rows": 0,
+      "matches_within_10km_of_full_route_for_requested_dates": 0
+    },
+    {
+      "route": "Quebrada del Condorito - Balcon Norte",
+      "sensor": "VIIRS_NOAA20_NRT",
+      "requested_dates": [
+        "2026-10-22",
+        "2026-10-23"
+      ],
+      "source_date_availability": [
+        "2026-07-01",
+        "2026-10-23"
+      ],
+      "response_sha256": "2b11a44667d05367ecf77651b95fd3d34c545c7ec154856094b91245e41ae697",
+      "response_bytes": 122,
+      "response_rows": 0,
+      "matches_within_10km_of_full_route_for_requested_dates": 0
+    },
+    {
+      "route": "Quebrada del Condorito - Balcon Norte",
+      "sensor": "VIIRS_NOAA21_NRT",
+      "requested_dates": [
+        "2026-10-22",
+        "2026-10-23"
+      ],
+      "source_date_availability": [
+        "2024-01-17",
+        "2026-10-23"
+      ],
+      "response_sha256": "2b11a44667d05367ecf77651b95fd3d34c545c7ec154856094b91245e41ae697",
+      "response_bytes": 122,
+      "response_rows": 0,
+      "matches_within_10km_of_full_route_for_requested_dates": 0
+    },
+    {
+      "route": "Sendero Namuncura",
+      "sensor": "VIIRS_SNPP_NRT",
+      "requested_dates": [
+        "2026-10-22",
+        "2026-10-23"
+      ],
+      "source_date_availability": [
+        "2026-07-01",
+        "2026-10-23"
+      ],
+      "response_sha256": "2b11a44667d05367ecf77651b95fd3d34c545c7ec154856094b91245e41ae697",
+      "response_bytes": 122,
+      "response_rows": 0,
+      "matches_within_10km_of_full_route_for_requested_dates": 0
+    },
+    {
+      "route": "Sendero Namuncura",
+      "sensor": "VIIRS_NOAA20_NRT",
+      "requested_dates": [
+        "2026-10-22",
+        "2026-10-23"
+      ],
+      "source_date_availability": [
+        "2026-07-01",
+        "2026-10-23"
+      ],
+      "response_sha256": "2b11a44667d05367ecf77651b95fd3d34c545c7ec154856094b91245e41ae697",
+      "response_bytes": 122,
+      "response_rows": 0,
+      "matches_within_10km_of_full_route_for_requested_dates": 0
+    },
+    {
+      "route": "Sendero Namuncura",
+      "sensor": "VIIRS_NOAA21_NRT",
+      "requested_dates": [
+        "2026-10-22",
+        "2026-10-23"
+      ],
+      "source_date_availability": [
+        "2024-01-17",
+        "2026-10-23"
+      ],
+      "response_sha256": "2b11a44667d05367ecf77651b95fd3d34c545c7ec154856094b91245e41ae697",
+      "response_bytes": 122,
+      "response_rows": 0,
+      "matches_within_10km_of_full_route_for_requested_dates": 0
+    },
+    {
+      "route": "Cerro Ventana - Hueco de la Ventana",
+      "sensor": "VIIRS_SNPP_NRT",
+      "requested_dates": [
+        "2026-10-22",
+        "2026-10-23"
+      ],
+      "source_date_availability": [
+        "2026-07-01",
+        "2026-10-23"
+      ],
+      "response_sha256": "2b11a44667d05367ecf77651b95fd3d34c545c7ec154856094b91245e41ae697",
+      "response_bytes": 122,
+      "response_rows": 0,
+      "matches_within_10km_of_full_route_for_requested_dates": 0
+    },
+    {
+      "route": "Cerro Ventana - Hueco de la Ventana",
+      "sensor": "VIIRS_NOAA20_NRT",
+      "requested_dates": [
+        "2026-10-22",
+        "2026-10-23"
+      ],
+      "source_date_availability": [
+        "2026-07-01",
+        "2026-10-23"
+      ],
+      "response_sha256": "2b11a44667d05367ecf77651b95fd3d34c545c7ec154856094b91245e41ae697",
+      "response_bytes": 122,
+      "response_rows": 0,
+      "matches_within_10km_of_full_route_for_requested_dates": 0
+    },
+    {
+      "route": "Cerro Ventana - Hueco de la Ventana",
+      "sensor": "VIIRS_NOAA21_NRT",
+      "requested_dates": [
+        "2026-10-22",
+        "2026-10-23"
+      ],
+      "source_date_availability": [
+        "2024-01-17",
+        "2026-10-23"
+      ],
+      "response_sha256": "2b11a44667d05367ecf77651b95fd3d34c545c7ec154856094b91245e41ae697",
+      "response_bytes": 122,
+      "response_rows": 0,
+      "matches_within_10km_of_full_route_for_requested_dates": 0
+    },
+    {
+      "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "sensor": "VIIRS_SNPP_NRT",
+      "requested_dates": [
+        "2026-10-22",
+        "2026-10-23"
+      ],
+      "source_date_availability": [
+        "2026-07-01",
+        "2026-10-23"
+      ],
+      "response_sha256": "2b11a44667d05367ecf77651b95fd3d34c545c7ec154856094b91245e41ae697",
+      "response_bytes": 122,
+      "response_rows": 0,
+      "matches_within_10km_of_full_route_for_requested_dates": 0
+    },
+    {
+      "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "sensor": "VIIRS_NOAA20_NRT",
+      "requested_dates": [
+        "2026-10-22",
+        "2026-10-23"
+      ],
+      "source_date_availability": [
+        "2026-07-01",
+        "2026-10-23"
+      ],
+      "response_sha256": "2b11a44667d05367ecf77651b95fd3d34c545c7ec154856094b91245e41ae697",
+      "response_bytes": 122,
+      "response_rows": 0,
+      "matches_within_10km_of_full_route_for_requested_dates": 0
+    },
+    {
+      "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "sensor": "VIIRS_NOAA21_NRT",
+      "requested_dates": [
+        "2026-10-22",
+        "2026-10-23"
+      ],
+      "source_date_availability": [
+        "2024-01-17",
+        "2026-10-23"
+      ],
+      "response_sha256": "2b11a44667d05367ecf77651b95fd3d34c545c7ec154856094b91245e41ae697",
+      "response_bytes": 122,
+      "response_rows": 0,
+      "matches_within_10km_of_full_route_for_requested_dates": 0
+    },
+    {
+      "route": "Sendero Che Roga - Mburucuyá",
+      "sensor": "VIIRS_SNPP_NRT",
+      "requested_dates": [
+        "2026-10-22",
+        "2026-10-23"
+      ],
+      "source_date_availability": [
+        "2026-07-01",
+        "2026-10-23"
+      ],
+      "response_sha256": "2b11a44667d05367ecf77651b95fd3d34c545c7ec154856094b91245e41ae697",
+      "response_bytes": 122,
+      "response_rows": 0,
+      "matches_within_10km_of_full_route_for_requested_dates": 0
+    },
+    {
+      "route": "Sendero Che Roga - Mburucuyá",
+      "sensor": "VIIRS_NOAA20_NRT",
+      "requested_dates": [
+        "2026-10-22",
+        "2026-10-23"
+      ],
+      "source_date_availability": [
+        "2026-07-01",
+        "2026-10-23"
+      ],
+      "response_sha256": "2b11a44667d05367ecf77651b95fd3d34c545c7ec154856094b91245e41ae697",
+      "response_bytes": 122,
+      "response_rows": 0,
+      "matches_within_10km_of_full_route_for_requested_dates": 0
+    },
+    {
+      "route": "Sendero Che Roga - Mburucuyá",
+      "sensor": "VIIRS_NOAA21_NRT",
+      "requested_dates": [
+        "2026-10-22",
+        "2026-10-23"
+      ],
+      "source_date_availability": [
+        "2024-01-17",
+        "2026-10-23"
+      ],
+      "response_sha256": "2b11a44667d05367ecf77651b95fd3d34c545c7ec154856094b91245e41ae697",
+      "response_bytes": 122,
+      "response_rows": 0,
+      "matches_within_10km_of_full_route_for_requested_dates": 0
+    },
+    {
+      "route": "Sendero La Chuña - El Rey",
+      "sensor": "VIIRS_SNPP_NRT",
+      "requested_dates": [
+        "2026-10-22",
+        "2026-10-23"
+      ],
+      "source_date_availability": [
+        "2026-07-01",
+        "2026-10-23"
+      ],
+      "response_sha256": "2b11a44667d05367ecf77651b95fd3d34c545c7ec154856094b91245e41ae697",
+      "response_bytes": 122,
+      "response_rows": 0,
+      "matches_within_10km_of_full_route_for_requested_dates": 0
+    },
+    {
+      "route": "Sendero La Chuña - El Rey",
+      "sensor": "VIIRS_NOAA20_NRT",
+      "requested_dates": [
+        "2026-10-22",
+        "2026-10-23"
+      ],
+      "source_date_availability": [
+        "2026-07-01",
+        "2026-10-23"
+      ],
+      "response_sha256": "2b11a44667d05367ecf77651b95fd3d34c545c7ec154856094b91245e41ae697",
+      "response_bytes": 122,
+      "response_rows": 0,
+      "matches_within_10km_of_full_route_for_requested_dates": 0
+    },
+    {
+      "route": "Sendero La Chuña - El Rey",
+      "sensor": "VIIRS_NOAA21_NRT",
+      "requested_dates": [
+        "2026-10-22",
+        "2026-10-23"
+      ],
+      "source_date_availability": [
+        "2024-01-17",
+        "2026-10-23"
+      ],
+      "response_sha256": "2b11a44667d05367ecf77651b95fd3d34c545c7ec154856094b91245e41ae697",
+      "response_bytes": 122,
+      "response_rows": 0,
+      "matches_within_10km_of_full_route_for_requested_dates": 0
+    }
+  ],
+  "exact_window_matches": [],
+  "limitations": [
+    "FIRMS NRT supplies active-fire detections only; an empty response does not prove a fire-free route or sensor coverage.",
+    "NRT observations are provisional and are later replaced by standard processing; they should be refreshed with standard data after the NASA processing lag for research conclusions.",
+    "This is one short prospective window, not an estimate of model precision, recall, calibration, or lead time.",
+    "The independent source checks positive fire detections; missing detections remain unknown."
+  ]
+}

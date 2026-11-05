@@ -1,0 +1,625 @@
+{
+  "source": "https://osf.io/vx4bk/",
+  "description": "https://datasets.simula.no/pmdata/",
+  "participants": 16,
+  "session_rows": 783,
+  "activity_tag_counts": {
+    "individual": 728,
+    "running": 402,
+    "team": 44,
+    "soccer": 12,
+    "endurance": 257,
+    "strength": 170
+  },
+  "activity_combinations": {
+    "['individual', 'running']": 349,
+    "['team', 'soccer']": 12,
+    "['individual', 'endurance']": 195,
+    "['individual', 'strength']": 119,
+    "['team', 'endurance']": 15,
+    "['individual', 'endurance', 'running']": 22,
+    "['team', 'running']": 8,
+    "['individual', 'strength', 'running']": 19,
+    "['individual', 'strength', 'endurance']": 19,
+    "['team', 'strength']": 7,
+    "['individual']": 1,
+    "['individual', 'strength', 'endurance', 'running']": 4,
+    "['team', 'strength', 'endurance']": 2,
+    " {}": 11
+  },
+  "original_RPE_counts": {
+    "7": 143,
+    "6": 167,
+    "8": 80,
+    "5": 148,
+    "4": 106,
+    "2": 12,
+    "1": 6,
+    "3": 71,
+    "9": 31,
+    "10": 8,
+    "": 11
+  },
+  "participants_with_explicit_walking_hiking_trekking": [],
+  "participant_audits": [
+    {
+      "person": "p01",
+      "session_rows": 34,
+      "activity_tags": {
+        "individual": 23,
+        "running": 22,
+        "team": 11,
+        "soccer": 11,
+        "endurance": 1
+      },
+      "activity_combinations": {
+        "['individual', 'running']": 22,
+        "['team', 'soccer']": 11,
+        "['individual', 'endurance']": 1
+      },
+      "original_RPE_counts": {
+        "7": 8,
+        "6": 18,
+        "8": 1,
+        "5": 7
+      },
+      "unspecified_activity_rows": 0,
+      "explicit_walking_hiking_trekking_rows": [],
+      "srpe_sha256": "e787bfc34ab7bcf157f60874a03270abd8b6fe93dc87590a5499a0dbc4a2d39f",
+      "srpe_bytes": 1993,
+      "srpe_download": "https://osf.io/download/2zmt4/",
+      "heart_rate_files_in_inventory": [
+        {
+          "id": "5e9a9d02d6973505e9bd98fe",
+          "size": 119634842,
+          "sha256": "4199b733fcd050cdc64bb8aad80d4c0e19116d2305d3024624323d6a24c2d65d"
+        }
+      ]
+    },
+    {
+      "person": "p02",
+      "session_rows": 97,
+      "activity_tags": {
+        "individual": 96,
+        "strength": 36,
+        "running": 33,
+        "endurance": 28,
+        "team": 1
+      },
+      "activity_combinations": {
+        "['individual', 'strength']": 36,
+        "['individual', 'running']": 33,
+        "['individual', 'endurance']": 27,
+        "['team', 'endurance']": 1
+      },
+      "original_RPE_counts": {
+        "7": 11,
+        "6": 13,
+        "4": 22,
+        "5": 24,
+        "8": 4,
+        "2": 8,
+        "1": 4,
+        "3": 11
+      },
+      "unspecified_activity_rows": 0,
+      "explicit_walking_hiking_trekking_rows": [],
+      "srpe_sha256": "1c7db476db505537de55264b788ece4bb30fb92a630fbb2190a0915e61cf23ca",
+      "srpe_bytes": 5884,
+      "srpe_download": "https://osf.io/download/yhr2d/",
+      "heart_rate_files_in_inventory": [
+        {
+          "id": "5e9a9cf8f1353505f8d53026",
+          "size": 112108992,
+          "sha256": "20a2aee41c4ffff7c72a5f6ea912b28c2f72040ba0821d6f109f1ee620e469a5"
+        }
+      ]
+    },
+    {
+      "person": "p03",
+      "session_rows": 2,
+      "activity_tags": {
+        "individual": 2,
+        "running": 2
+      },
+      "activity_combinations": {
+        "['individual', 'running']": 2
+      },
+      "original_RPE_counts": {
+        "5": 1,
+        "7": 1
+      },
+      "unspecified_activity_rows": 0,
+      "explicit_walking_hiking_trekking_rows": [],
+      "srpe_sha256": "d1a9be8bd0e7baee66c18dadb553cd021e4f7cf11b45aef0f742368b27e91c97",
+      "srpe_bytes": 180,
+      "srpe_download": "https://osf.io/download/xy827/",
+      "heart_rate_files_in_inventory": [
+        {
+          "id": "5e9a9cc843016605ffa04f52",
+          "size": 61475560,
+          "sha256": "f846d34b1594af02ba10ce4e263dca2c103fdba54f81be08a7c71270fad7a9b5"
+        }
+      ]
+    },
+    {
+      "person": "p04",
+      "session_rows": 85,
+      "activity_tags": {
+        "individual": 67,
+        "endurance": 25,
+        "strength": 26,
+        "running": 41,
+        "team": 18
+      },
+      "activity_combinations": {
+        "['individual', 'endurance']": 12,
+        "['individual', 'strength']": 19,
+        "['individual', 'running']": 29,
+        "['team', 'endurance']": 9,
+        "['individual', 'endurance', 'running']": 2,
+        "['team', 'running']": 7,
+        "['individual', 'strength', 'running']": 3,
+        "['individual', 'strength', 'endurance']": 2,
+        "['team', 'strength']": 2
+      },
+      "original_RPE_counts": {
+        "6": 29,
+        "9": 2,
+        "7": 16,
+        "8": 9,
+        "5": 21,
+        "4": 6,
+        "3": 2
+      },
+      "unspecified_activity_rows": 0,
+      "explicit_walking_hiking_trekking_rows": [],
+      "srpe_sha256": "74126bcd5e2133c32db681453a5c43fa3ca58d7aa345f857e363acaeb6c4aeb2",
+      "srpe_bytes": 5125,
+      "srpe_download": "https://osf.io/download/xjefg/",
+      "heart_rate_files_in_inventory": [
+        {
+          "id": "5e9a9cd6d6973505e9bd98c0",
+          "size": 119620987,
+          "sha256": "0fe76690b320f4ab4a8cc0d3007bdd58225ca921a4534aa80b017fe75b352ebf"
+        }
+      ]
+    },
+    {
+      "person": "p05",
+      "session_rows": 9,
+      "activity_tags": {
+        "individual": 9,
+        "running": 4,
+        "endurance": 4,
+        "strength": 2
+      },
+      "activity_combinations": {
+        "['individual', 'running']": 4,
+        "['individual', 'endurance']": 3,
+        "['individual', 'strength']": 1,
+        "['individual', 'strength', 'endurance']": 1
+      },
+      "original_RPE_counts": {
+        "3": 1,
+        "5": 4,
+        "9": 1,
+        "4": 2,
+        "6": 1
+      },
+      "unspecified_activity_rows": 0,
+      "explicit_walking_hiking_trekking_rows": [],
+      "srpe_sha256": "3b738ba8b931b2844aee5cfee4555ce6197c985317968f946c7c889fc026c642",
+      "srpe_bytes": 614,
+      "srpe_download": "https://osf.io/download/drvhb/",
+      "heart_rate_files_in_inventory": [
+        {
+          "id": "5e9a9ca843016605ffa04f1e",
+          "size": 104292322,
+          "sha256": "4d704ec65fb9a9f8eae540575662c4717c1cae33baebb3946f2a8a96578a65d7"
+        }
+      ]
+    },
+    {
+      "person": "p06",
+      "session_rows": 46,
+      "activity_tags": {
+        "individual": 46,
+        "running": 44,
+        "endurance": 2
+      },
+      "activity_combinations": {
+        "['individual', 'running']": 44,
+        "['individual', 'endurance']": 2
+      },
+      "original_RPE_counts": {
+        "8": 5,
+        "6": 10,
+        "5": 8,
+        "7": 7,
+        "4": 8,
+        "3": 6,
+        "9": 2
+      },
+      "unspecified_activity_rows": 0,
+      "explicit_walking_hiking_trekking_rows": [],
+      "srpe_sha256": "2c1b330fe07bf06f524fb237cd0fe583328ffcafb6d6708ac5b77155d624e8e1",
+      "srpe_bytes": 2780,
+      "srpe_download": "https://osf.io/download/g8cen/",
+      "heart_rate_files_in_inventory": [
+        {
+          "id": "5e9a9c9243016605ffa04ee6",
+          "size": 120155410,
+          "sha256": "c8cc1e59542094757059ebd164b07abdcf197b7111c7758c6066d20f2d650a45"
+        }
+      ]
+    },
+    {
+      "person": "p07",
+      "session_rows": 110,
+      "activity_tags": {
+        "individual": 108,
+        "endurance": 24,
+        "running": 85,
+        "team": 2,
+        "soccer": 1
+      },
+      "activity_combinations": {
+        "['individual', 'endurance']": 24,
+        "['individual', 'running']": 84,
+        "['team', 'running']": 1,
+        "['team', 'soccer']": 1
+      },
+      "original_RPE_counts": {
+        "3": 33,
+        "5": 20,
+        "6": 9,
+        "8": 13,
+        "4": 16,
+        "7": 12,
+        "9": 5,
+        "10": 2
+      },
+      "unspecified_activity_rows": 0,
+      "explicit_walking_hiking_trekking_rows": [],
+      "srpe_sha256": "171a7a483db07d6c57d923f23527cadd7ffc78d2a25e0f136cf24b92a42eb6da",
+      "srpe_bytes": 6603,
+      "srpe_download": "https://osf.io/download/uyd2s/",
+      "heart_rate_files_in_inventory": [
+        {
+          "id": "5e9a9c7743016605ffa04eab",
+          "size": 120459986,
+          "sha256": "96825b57b0e18591f7f2855d95abd6070722fac3fe293780d86b049208c8e5a3"
+        }
+      ]
+    },
+    {
+      "person": "p08",
+      "session_rows": 113,
+      "activity_tags": {
+        "individual": 113,
+        "endurance": 45,
+        "running": 63,
+        "strength": 11
+      },
+      "activity_combinations": {
+        "['individual', 'endurance']": 40,
+        "['individual', 'endurance', 'running']": 5,
+        "['individual', 'running']": 57,
+        "['individual', 'strength']": 10,
+        "['individual', 'strength', 'running']": 1
+      },
+      "original_RPE_counts": {
+        "5": 16,
+        "8": 19,
+        "6": 25,
+        "4": 18,
+        "2": 2,
+        "7": 22,
+        "9": 8,
+        "3": 3
+      },
+      "unspecified_activity_rows": 0,
+      "explicit_walking_hiking_trekking_rows": [],
+      "srpe_sha256": "9c63151086b4e2a1817309e7e1b5d151bc0d0999dac5d51cd1bda06f21ad4f2a",
+      "srpe_bytes": 6909,
+      "srpe_download": "https://osf.io/download/6qcfv/",
+      "heart_rate_files_in_inventory": [
+        {
+          "id": "5e9a9c5c4301660600a05468",
+          "size": 122871135,
+          "sha256": "d22e569db9dde72b6d8419b55a538108ce65452c397823f9cd4c0acd1214fdba"
+        }
+      ]
+    },
+    {
+      "person": "p09",
+      "session_rows": 3,
+      "activity_tags": {
+        "individual": 3,
+        "running": 2,
+        "endurance": 1
+      },
+      "activity_combinations": {
+        "['individual', 'running']": 2,
+        "['individual', 'endurance']": 1
+      },
+      "original_RPE_counts": {
+        "6": 1,
+        "9": 1,
+        "4": 1
+      },
+      "unspecified_activity_rows": 0,
+      "explicit_walking_hiking_trekking_rows": [],
+      "srpe_sha256": "87540ebfea2878c9a246e3b8d18473323707176dbe8c04fcc083faa66cf40e66",
+      "srpe_bytes": 242,
+      "srpe_download": "https://osf.io/download/h7e34/",
+      "heart_rate_files_in_inventory": [
+        {
+          "id": "5e9a9c2d43016605f8a08191",
+          "size": 99282085,
+          "sha256": "2d3c5d2695c46bfb727987f63744dcb08397c4ea0a8f35881df5fea325c3209e"
+        }
+      ]
+    },
+    {
+      "person": "p10",
+      "session_rows": 27,
+      "activity_tags": {
+        "individual": 27,
+        "strength": 14,
+        "endurance": 13,
+        "running": 14
+      },
+      "activity_combinations": {
+        "['individual', 'strength']": 2,
+        "['individual', 'endurance', 'running']": 2,
+        "['individual', 'strength', 'running']": 8,
+        "['individual', 'endurance']": 7,
+        "['individual', 'strength', 'endurance']": 4,
+        "['individual', 'running']": 4
+      },
+      "original_RPE_counts": {
+        "7": 2,
+        "3": 6,
+        "6": 5,
+        "5": 3,
+        "4": 8,
+        "1": 1,
+        "2": 2
+      },
+      "unspecified_activity_rows": 0,
+      "explicit_walking_hiking_trekking_rows": [],
+      "srpe_sha256": "f7a9fadac7efee5dffe2f442c8af6de1632cca76a28b214834f29163ac9fa86e",
+      "srpe_bytes": 1854,
+      "srpe_download": "https://osf.io/download/6z4tn/",
+      "heart_rate_files_in_inventory": [
+        {
+          "id": "5e9a9c0643016605ffa04db6",
+          "size": 82489636,
+          "sha256": "f7c93067563cdadd038c11e101aa7f425f3959148dbcd4e806e2f53216fcfe82"
+        }
+      ]
+    },
+    {
+      "person": "p11",
+      "session_rows": 30,
+      "activity_tags": {
+        "individual": 20,
+        "strength": 11,
+        "endurance": 23,
+        "running": 13,
+        "team": 10
+      },
+      "activity_combinations": {
+        "['individual', 'strength']": 3,
+        "['individual']": 1,
+        "['individual', 'endurance', 'running']": 11,
+        "['individual', 'strength', 'endurance']": 1,
+        "['individual', 'strength', 'endurance', 'running']": 2,
+        "['team', 'strength', 'endurance']": 2,
+        "['individual', 'endurance']": 2,
+        "['team', 'endurance']": 5,
+        "['team', 'strength']": 3
+      },
+      "original_RPE_counts": {
+        "7": 2,
+        "4": 5,
+        "8": 8,
+        "6": 3,
+        "5": 5,
+        "10": 3,
+        "3": 2,
+        "9": 2
+      },
+      "unspecified_activity_rows": 0,
+      "explicit_walking_hiking_trekking_rows": [],
+      "srpe_sha256": "65829c6e4b2a9b49c110fcdad015eef8ede140c365bf696e58a778ecd55971c5",
+      "srpe_bytes": 2018,
+      "srpe_download": "https://osf.io/download/xv5sj/",
+      "heart_rate_files_in_inventory": [
+        {
+          "id": "5e9a9bf94301660600a05377",
+          "size": 105299101,
+          "sha256": "2d5acc359883575639f21ef80aa575abfa2b8895bd309631a5c3062010580dd5"
+        }
+      ]
+    },
+    {
+      "person": "p12",
+      "session_rows": 40,
+      "activity_tags": {
+        "individual": 40,
+        "strength": 33,
+        "running": 14,
+        "endurance": 15
+      },
+      "activity_combinations": {
+        "['individual', 'strength']": 13,
+        "['individual', 'running']": 5,
+        "['individual', 'strength', 'running']": 7,
+        "['individual', 'strength', 'endurance']": 11,
+        "['individual', 'endurance']": 2,
+        "['individual', 'strength', 'endurance', 'running']": 2
+      },
+      "original_RPE_counts": {
+        "7": 19,
+        "5": 2,
+        "8": 11,
+        "6": 6,
+        "9": 2
+      },
+      "unspecified_activity_rows": 0,
+      "explicit_walking_hiking_trekking_rows": [],
+      "srpe_sha256": "f596bc7678dd43101c4a7e197a92b5e26b79588216c6b04a5c139ca6c2fe3228",
+      "srpe_bytes": 2731,
+      "srpe_download": "https://osf.io/download/6q5ht/",
+      "heart_rate_files_in_inventory": [
+        {
+          "id": "5e9a9bb9d6973505e9bd963a",
+          "size": 61036644,
+          "sha256": "4e2781666164834d533500a544ad7d5b30b020cd76533a8cfbb69a5b937990c1"
+        }
+      ]
+    },
+    {
+      "person": "p13",
+      "session_rows": 10,
+      "activity_tags": {
+        "individual": 10,
+        "running": 8,
+        "strength": 1,
+        "endurance": 2
+      },
+      "activity_combinations": {
+        "['individual', 'running']": 7,
+        "['individual', 'strength']": 1,
+        "['individual', 'endurance']": 1,
+        "['individual', 'endurance', 'running']": 1
+      },
+      "original_RPE_counts": {
+        "5": 2,
+        "3": 1,
+        "7": 5,
+        "9": 2
+      },
+      "unspecified_activity_rows": 0,
+      "explicit_walking_hiking_trekking_rows": [],
+      "srpe_sha256": "ab519606bfd5c14ff2e42a0eff79b76b945d660dce42bdd6b6575b5109ec3027",
+      "srpe_bytes": 668,
+      "srpe_download": "https://osf.io/download/2xrt9/",
+      "heart_rate_files_in_inventory": [
+        {
+          "id": "5e9a9b99f1353505f9d531fe",
+          "size": 48276478,
+          "sha256": "a342ec3dcb36ebffb970a6526f2d53480a230876bb02fd547a58733a72b5df1d"
+        }
+      ]
+    },
+    {
+      "person": "p14",
+      "session_rows": 62,
+      "activity_tags": {
+        "individual": 60,
+        "running": 49,
+        "strength": 13,
+        "endurance": 1,
+        "team": 2
+      },
+      "activity_combinations": {
+        "['individual', 'running']": 48,
+        "['individual', 'strength']": 11,
+        "['individual', 'endurance', 'running']": 1,
+        "['team', 'strength']": 2
+      },
+      "original_RPE_counts": {
+        "5": 22,
+        "6": 17,
+        "7": 9,
+        "8": 1,
+        "4": 10,
+        "3": 3
+      },
+      "unspecified_activity_rows": 0,
+      "explicit_walking_hiking_trekking_rows": [],
+      "srpe_sha256": "66a0b9a9441f0e5d8db1ce309cbdb1c2e40455efee8b9951368bd213eae8dc91",
+      "srpe_bytes": 3735,
+      "srpe_download": "https://osf.io/download/y2hm7/",
+      "heart_rate_files_in_inventory": [
+        {
+          "id": "5e9a9b94f1353505f9d531e5",
+          "size": 95226275,
+          "sha256": "dec90bac34d7042287176d29cb175b87dd203af86a29d57f590aefd2da2758d0"
+        }
+      ]
+    },
+    {
+      "person": "p15",
+      "session_rows": 104,
+      "activity_tags": {
+        "individual": 104,
+        "endurance": 73,
+        "running": 8,
+        "strength": 23
+      },
+      "activity_combinations": {
+        "['individual', 'endurance']": 73,
+        "['individual', 'running']": 8,
+        "['individual', 'strength']": 23
+      },
+      "original_RPE_counts": {
+        "8": 9,
+        "1": 1,
+        "7": 29,
+        "5": 13,
+        "9": 6,
+        "6": 30,
+        "3": 3,
+        "4": 10,
+        "10": 3
+      },
+      "unspecified_activity_rows": 0,
+      "explicit_walking_hiking_trekking_rows": [],
+      "srpe_sha256": "119e56cd45f833409759c188a36befcc7514feb2ae1af6e52cc208c2e2967064",
+      "srpe_bytes": 6407,
+      "srpe_download": "https://osf.io/download/p7gm3/",
+      "heart_rate_files_in_inventory": [
+        {
+          "id": "5e9a9b60d6973505e3be1765",
+          "size": 119029034,
+          "sha256": "1b471d4bc9e22efb80ad96baf24613088a5ceca9d871b2f5cd3d9770cf8f1bb1"
+        }
+      ]
+    },
+    {
+      "person": "p16",
+      "session_rows": 11,
+      "activity_tags": {},
+      "activity_combinations": {
+        " {}": 11
+      },
+      "original_RPE_counts": {
+        "": 11
+      },
+      "unspecified_activity_rows": 11,
+      "explicit_walking_hiking_trekking_rows": [],
+      "srpe_sha256": "e931d04b3ed7137d4dfe0badce8020772f24bac8c1054b97dac703fe87e0ae1d",
+      "srpe_bytes": 414,
+      "srpe_download": "https://osf.io/download/de9fu/",
+      "heart_rate_files_in_inventory": [
+        {
+          "id": "5e9a9b4643016605ffa04c79",
+          "size": 106259949,
+          "sha256": "82417c357da05602a7ff9002bf0005ad76b5c29b1c451e62f19bd71786620ff9"
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Session RPE describes effort for a completed session, not time-resolved fatigue during a hike.",
+    "Daily wellness fatigue and session RPE are different outcomes; do not copy daily ratings onto activity windows.",
+    "An inventory entry for heart rate does not establish temporal alignment, coverage, signal quality or outdoor location.",
+    "Activity labels are retained verbatim; generic endurance labels are not relabelled as trekking.",
+    "No heart-rate training or deployment was performed."
+  ]
+}

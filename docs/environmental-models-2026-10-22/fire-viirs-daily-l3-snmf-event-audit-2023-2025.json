@@ -1,0 +1,3420 @@
+{
+  "experiment_id": "viirs-daily-l3-snmf-route-events-2023-2025",
+  "status": "observed_masks_audited_positive_event_only_cohort",
+  "created_at_utc": "2026-10-23T21:12:37Z",
+  "target": "Independent positive-event corroboration and observed-mask coverage around Argentine trekking route corridors; not an ignition or advance fire-risk prediction.",
+  "protocol": {
+    "event_source": "Official SNMF reported events, deduplicated by date/route/coordinate cluster; 10 km route buffer.",
+    "products": "VNP14A1.002, VJ114A1.002, VJ214A1.002 daily 1 km VIIRS fire-mask composites.",
+    "spatial_coordinates": "Use the product's XDim/YDim projection-coordinate vectors with its sinusoidal projection and earth radius; nearest grid sample for incident point and full-polyline buffer extraction.",
+    "fire_label": "FireMask 7-9; confidence class retained separately.",
+    "observed_clear_non_detection": "FireMask 5 and QA land/water bits 0-1 equal 10 (land).",
+    "unknown_labels": "Mask classes 0-4 and 6, missing tiles, QA coast/water/missing, and incomplete coverage are not converted to negative labels.",
+    "independence": "Sensor products for one date/event and multiple report records may observe the same physical event; no precision confidence interval or model score is estimated."
+  },
+  "acquisition": {
+    "granules_expected_and_verified": 45,
+    "unique_event_dates": 15,
+    "unique_date_tile_pairs": 15,
+    "bytes_verified": 9282147,
+    "size_mb_decimal": 9.282,
+    "granule_sha256_by_id": {
+      "VJ114A1.A2023279.h12v12.002.2023280081955": "320ace393edfae5c1096f07343d39b6adf864d1601e6b98da64b76501baf1f7e",
+      "VJ214A1.A2023279.h12v12.002.2025277093953": "f9e41b7f9c7da8f0489bd1dcee6acecddccbea18638d582138864358509f1d67",
+      "VNP14A1.A2023279.h12v12.002.2023280084253": "063baaadb8efd7779f1ca2c9e9b384ff4042218e5bf6c0fb2e0a5921abb62481",
+      "VJ114A1.A2023353.h12v13.002.2023354065617": "ea37885ca40d698d9e160f88ed04132434d688798df78439b54dc727ed7a1e7e",
+      "VJ214A1.A2023353.h12v13.002.2025281101445": "4d8765e589fd690a83552c9092635daefd11774fd8fdda9022891902d2284af2",
+      "VNP14A1.A2023353.h12v13.002.2023354085424": "66408298267301109861088d01e0bb6112a0b207f8dfd5c600c30c7e46d6b775",
+      "VJ114A1.A2024006.h12v13.002.2024007075918": "328fdd2b615943bb3ded7d9ca25ba0757da3503451881f0b8939067a1002a3b0",
+      "VJ214A1.A2024006.h12v13.002.2025283013904": "77378d4e5e9233a7e807c60d1eccde50f6c3e8d25f46c857fb43fd4ac6afd89c",
+      "VNP14A1.A2024006.h12v13.002.2024007100440": "08ef1ea9bc42e0794cedc8547232130b81853c0ec7975a529e07ef612b714191",
+      "VJ114A1.A2024026.h12v13.002.2024027090312": "5915b503f18795c0a56b74089eee2c59028a9942680fb77c9a77786508b91812",
+      "VJ214A1.A2024026.h12v13.002.2025286173813": "8f0f2026efcaede3712974ae6affa8fac591c1e184d87576b407b50f03ac9a8d",
+      "VNP14A1.A2024026.h12v13.002.2024027095018": "2e617504d5dbe622731297d1d858405bc67d4e03a4dd766ca1ade1e7687b8099",
+      "VJ114A1.A2024030.h12v12.002.2024031074652": "5284db750342aa9ad5f9ff987d1b96b997d41dd2881c2c6e98a2207b8b120137",
+      "VJ214A1.A2024030.h12v12.002.2025286221617": "89dcfeb30f8b7dfb5bd479ff96a209fec04ea827e2d19c79db0d42a2d037beff",
+      "VNP14A1.A2024030.h12v12.002.2024036125425": "b84ea1401c5315ad37b076e4a8c02e554d997b6255f0a85b7c2413d2a68b73e8",
+      "VJ114A1.A2024034.h13v12.002.2024044030326": "bb8181399eac61d5cfe511206b5af6b977fa0ecb7aa501dde07a61ed8d58de35",
+      "VJ214A1.A2024034.h13v12.002.2025287024714": "c38ed59dcf4950273b6ea95e26131f03fa49d9e30979e5c6b8e0122f16ba5fe5",
+      "VNP14A1.A2024034.h13v12.002.2024038190253": "f73f772293ba3296dc485d934902d62b0d2df73711937b3a5895ca534dc11b01",
+      "VJ114A1.A2024067.h12v13.002.2024069025133": "19c5c605967ccc4bf65c2dba566c2175929814ab63a7e7f1698bd0a5780a75e3",
+      "VJ214A1.A2024067.h12v13.002.2025294125008": "56a506b524d2adaabca41ad90cd1ceb16d7419da77c1d50dd064500bd2477097",
+      "VNP14A1.A2024067.h12v13.002.2024068190715": "c21fe7beb2e2283686d43140e8d7e4977a9bc02197e9646ee02e35b774ba94fe",
+      "VJ114A1.A2024107.h12v13.002.2024108072622": "a5bfe630f1bbc59c5ef2a3f3af49eacc02d4f2750bd21f79255bfceec969a252",
+      "VJ214A1.A2024107.h12v13.002.2025297202058": "945db8b40acc2cc70cdd77c2ae49f675effd4ee5489d8161d3bc585b7d480230",
+      "VNP14A1.A2024107.h12v13.002.2024108095321": "b51086331b1544c22866f441590da197d8a0be6027bc95f71597ed13e9a74231",
+      "VJ114A1.A2024259.h12v13.002.2024260070633": "05c9228e9024087199aff3a5aa3830ebb79bb3dbe2d863a849798528d856f3e1",
+      "VJ214A1.A2024259.h12v13.002.2025310193028": "f81555c599c0169072c6dd7369c558fea5001b543947bd4db32c4bdf44866bb2",
+      "VNP14A1.A2024259.h12v13.002.2024260091102": "5089aad3906c1d6b1f856858ac8544ec3c556cb4b82969ee0931b853036e269c",
+      "VJ114A1.A2024290.h12v13.002.2024296172048": "78afd62e96968588190c7fb89155696656d6d8962bd0e0d3ba96159d7149fb3c",
+      "VJ214A1.A2024290.h12v13.002.2025312090026": "f975b01db0b65c63fd63fa6d4021377607781d48e6a14e49053b6b1e2455efc6",
+      "VNP14A1.A2024290.h12v13.002.2024295162745": "1fe2e2108f4e2bba85e6869a336424f653f3f0d5f6a24cd5c36cdb5eda4e3c1c",
+      "VJ114A1.A2025281.h12v13.002.2025282215958": "bf69ab38ed61444c89150d12e4759384d3427e7a0237a7bdc11d9bcac86ff14a",
+      "VJ214A1.A2025281.h12v13.002.2025342204008": "e6ebe9f4ae948a6ce70510a96390dde83de661746fcf614d1372bb98fef7d0ec",
+      "VNP14A1.A2025281.h12v13.002.2025282221502": "a95c8c6f0797db808f06e4e3d0606b06749b3fe00484bf8d4ada06cf8fb8922b",
+      "VJ114A1.A2025283.h12v12.002.2025284085333": "20d19d31f85008779794e43e5a5f0888c8947de205187168ef12c46e09487f3b",
+      "VJ214A1.A2025283.h12v12.002.2025342230950": "73fcdf251aace0add91861b11693394fc0be8b090430f8d0ff9528ac8a9c2243",
+      "VNP14A1.A2025283.h12v12.002.2025284120457": "3d5c98207a07c85e3cfaf8c47ca9bcf8c6edf3651cb119f6246c14d053b5c6b9",
+      "VJ114A1.A2025321.h12v13.002.2025325033924": "40bdab50c39c82978d8e37c79babfa19222e6b0c555a2232dc83745924e6da74",
+      "VJ214A1.A2025321.h12v13.002.2025345022816": "eba665f9d78edbb4b0153d109afe6e4b590d6d54a44a411ee48e5e85c52c8086",
+      "VNP14A1.A2025321.h12v13.002.2025322174336": "9df5972bd49aed309dd670e84e59a51d6a58b5615b481cb1ed610ff63a3956b6",
+      "VJ114A1.A2025330.h12v13.002.2025331100852": "7b19269b373fffdc7e819521234e4448d5d5cb9272267565eea1134afc2f05c7",
+      "VJ214A1.A2025330.h12v13.002.2025346030250": "a298a37910d2a69f4d45d99e4ff94b71cbf0047fb10dc0d743418decce0d630e",
+      "VNP14A1.A2025330.h12v13.002.2025331134249": "6a750bbba78e62380d7cfc78c5263a26d88c803cb74323a16776b89a41d69aa4",
+      "VJ114A1.A2025345.h13v12.002.2025346090304": "3ad5077a5b5acbb0dd44fcda0aa85cee08471f59859c139371fa0eea9c693f4b",
+      "VJ214A1.A2025345.h13v12.002.2025349062757": "e8bf271bb4fada14acef8794937e6a0683443dabb92dec6c3e922354146ad0b2",
+      "VNP14A1.A2025345.h13v12.002.2025350050836": "dc8348c0d36d69c91a32150f3da97808342930d7c989c5949226e0bdaaec71d5"
+    }
+  },
+  "coverage_by_sensor": {
+    "Suomi-NPP": {
+      "granule_event_observations": 16,
+      "event_point_cells_class5_land": 16,
+      "event_point_cells_fire": 0,
+      "event_points_within_10km_fire_pixels": 2,
+      "route_buffers_with_fire_pixels": 2,
+      "route_buffers_with_class5_land_pixels": 16
+    },
+    "NOAA-20": {
+      "granule_event_observations": 16,
+      "event_point_cells_class5_land": 16,
+      "event_point_cells_fire": 0,
+      "event_points_within_10km_fire_pixels": 1,
+      "route_buffers_with_fire_pixels": 1,
+      "route_buffers_with_class5_land_pixels": 16
+    },
+    "NOAA-21": {
+      "granule_event_observations": 16,
+      "event_point_cells_class5_land": 16,
+      "event_point_cells_fire": 0,
+      "event_points_within_10km_fire_pixels": 1,
+      "route_buffers_with_fire_pixels": 1,
+      "route_buffers_with_class5_land_pixels": 16
+    }
+  },
+  "selected_route_event_clusters": 16,
+  "route_date_positive_event_coincidence": {
+    "route_dates_with_snmf_event_cluster": 15,
+    "route_dates_with_same_day_viirs_fire_detection_within_10km_of_report_point": 2,
+    "descriptive_event_coincidence_fraction": 0.13333333333333333,
+    "route_dates_without_nearby_detection_are_not_negative_labels": 13,
+    "route_dates_with_all_event_point_cells_observed_class5_land_in_each_sensor": 15,
+    "route_date_results": [
+      {
+        "reported_start_date": "2023-10-06",
+        "route": "Quebrada del Condorito - Balcon Norte",
+        "snmf_event_clusters": 1,
+        "sensors_with_same_day_fire_detection_within_10km_of_reported_point": [],
+        "same_day_detection_coincidence": false,
+        "exact_event_point_cells_class5_land_all_sensors": true,
+        "interpretation": "No nearby VIIRS detection is not a verified no-fire label; this route-date is a positive-event corroboration result only."
+      },
+      {
+        "reported_start_date": "2023-12-19",
+        "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "snmf_event_clusters": 1,
+        "sensors_with_same_day_fire_detection_within_10km_of_reported_point": [],
+        "same_day_detection_coincidence": false,
+        "exact_event_point_cells_class5_land_all_sensors": true,
+        "interpretation": "No nearby VIIRS detection is not a verified no-fire label; this route-date is a positive-event corroboration result only."
+      },
+      {
+        "reported_start_date": "2024-01-06",
+        "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "snmf_event_clusters": 1,
+        "sensors_with_same_day_fire_detection_within_10km_of_reported_point": [],
+        "same_day_detection_coincidence": false,
+        "exact_event_point_cells_class5_land_all_sensors": true,
+        "interpretation": "No nearby VIIRS detection is not a verified no-fire label; this route-date is a positive-event corroboration result only."
+      },
+      {
+        "reported_start_date": "2024-01-26",
+        "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "snmf_event_clusters": 1,
+        "sensors_with_same_day_fire_detection_within_10km_of_reported_point": [],
+        "same_day_detection_coincidence": false,
+        "exact_event_point_cells_class5_land_all_sensors": true,
+        "interpretation": "No nearby VIIRS detection is not a verified no-fire label; this route-date is a positive-event corroboration result only."
+      },
+      {
+        "reported_start_date": "2024-01-30",
+        "route": "Sendero Namuncura",
+        "snmf_event_clusters": 1,
+        "sensors_with_same_day_fire_detection_within_10km_of_reported_point": [],
+        "same_day_detection_coincidence": false,
+        "exact_event_point_cells_class5_land_all_sensors": true,
+        "interpretation": "No nearby VIIRS detection is not a verified no-fire label; this route-date is a positive-event corroboration result only."
+      },
+      {
+        "reported_start_date": "2024-02-03",
+        "route": "Cerro Ventana - Hueco de la Ventana",
+        "snmf_event_clusters": 1,
+        "sensors_with_same_day_fire_detection_within_10km_of_reported_point": [
+          "NOAA-21",
+          "Suomi-NPP"
+        ],
+        "same_day_detection_coincidence": true,
+        "exact_event_point_cells_class5_land_all_sensors": true,
+        "interpretation": "No nearby VIIRS detection is not a verified no-fire label; this route-date is a positive-event corroboration result only."
+      },
+      {
+        "reported_start_date": "2024-03-07",
+        "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "snmf_event_clusters": 1,
+        "sensors_with_same_day_fire_detection_within_10km_of_reported_point": [],
+        "same_day_detection_coincidence": false,
+        "exact_event_point_cells_class5_land_all_sensors": true,
+        "interpretation": "No nearby VIIRS detection is not a verified no-fire label; this route-date is a positive-event corroboration result only."
+      },
+      {
+        "reported_start_date": "2024-04-16",
+        "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "snmf_event_clusters": 1,
+        "sensors_with_same_day_fire_detection_within_10km_of_reported_point": [],
+        "same_day_detection_coincidence": false,
+        "exact_event_point_cells_class5_land_all_sensors": true,
+        "interpretation": "No nearby VIIRS detection is not a verified no-fire label; this route-date is a positive-event corroboration result only."
+      },
+      {
+        "reported_start_date": "2024-09-15",
+        "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "snmf_event_clusters": 1,
+        "sensors_with_same_day_fire_detection_within_10km_of_reported_point": [],
+        "same_day_detection_coincidence": false,
+        "exact_event_point_cells_class5_land_all_sensors": true,
+        "interpretation": "No nearby VIIRS detection is not a verified no-fire label; this route-date is a positive-event corroboration result only."
+      },
+      {
+        "reported_start_date": "2024-10-16",
+        "route": "Refugio Frey desde Villa Catedral",
+        "snmf_event_clusters": 1,
+        "sensors_with_same_day_fire_detection_within_10km_of_reported_point": [],
+        "same_day_detection_coincidence": false,
+        "exact_event_point_cells_class5_land_all_sensors": true,
+        "interpretation": "No nearby VIIRS detection is not a verified no-fire label; this route-date is a positive-event corroboration result only."
+      },
+      {
+        "reported_start_date": "2025-10-08",
+        "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "snmf_event_clusters": 2,
+        "sensors_with_same_day_fire_detection_within_10km_of_reported_point": [],
+        "same_day_detection_coincidence": false,
+        "exact_event_point_cells_class5_land_all_sensors": true,
+        "interpretation": "No nearby VIIRS detection is not a verified no-fire label; this route-date is a positive-event corroboration result only."
+      },
+      {
+        "reported_start_date": "2025-10-10",
+        "route": "Quebrada del Condorito - Balcon Norte",
+        "snmf_event_clusters": 1,
+        "sensors_with_same_day_fire_detection_within_10km_of_reported_point": [
+          "NOAA-20",
+          "Suomi-NPP"
+        ],
+        "same_day_detection_coincidence": true,
+        "exact_event_point_cells_class5_land_all_sensors": true,
+        "interpretation": "No nearby VIIRS detection is not a verified no-fire label; this route-date is a positive-event corroboration result only."
+      },
+      {
+        "reported_start_date": "2025-11-17",
+        "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+        "snmf_event_clusters": 1,
+        "sensors_with_same_day_fire_detection_within_10km_of_reported_point": [],
+        "same_day_detection_coincidence": false,
+        "exact_event_point_cells_class5_land_all_sensors": true,
+        "interpretation": "No nearby VIIRS detection is not a verified no-fire label; this route-date is a positive-event corroboration result only."
+      },
+      {
+        "reported_start_date": "2025-11-26",
+        "route": "Refugio Frey desde Villa Catedral",
+        "snmf_event_clusters": 1,
+        "sensors_with_same_day_fire_detection_within_10km_of_reported_point": [],
+        "same_day_detection_coincidence": false,
+        "exact_event_point_cells_class5_land_all_sensors": true,
+        "interpretation": "No nearby VIIRS detection is not a verified no-fire label; this route-date is a positive-event corroboration result only."
+      },
+      {
+        "reported_start_date": "2025-12-11",
+        "route": "Cerro Ventana - Hueco de la Ventana",
+        "snmf_event_clusters": 1,
+        "sensors_with_same_day_fire_detection_within_10km_of_reported_point": [],
+        "same_day_detection_coincidence": false,
+        "exact_event_point_cells_class5_land_all_sensors": true,
+        "interpretation": "No nearby VIIRS detection is not a verified no-fire label; this route-date is a positive-event corroboration result only."
+      }
+    ],
+    "warning": "This is a selected positive-event corroboration fraction, not model precision, recall against all physical fires, or a rate of false negatives. Route-date observations are not guaranteed independent physical incidents."
+  },
+  "event_rows": [
+    {
+      "reported_start_date": "2023-10-06",
+      "route": "Quebrada del Condorito - Balcon Norte",
+      "incident_names": [
+        "RIO DE LA SUELA"
+      ],
+      "incident_status_in_source": "CONTENIDO",
+      "incident_coordinates": {
+        "latitude": -31.577166666666667,
+        "longitude": -64.66213888888889
+      },
+      "reported_point_distance_to_route_km": 7.385,
+      "incident_point_tile": "h12v12",
+      "incident_point_tile_in_acquisition": true,
+      "route_tile_count": 1,
+      "granules": [
+        {
+          "date": "2023-10-06",
+          "tile": "h12v12",
+          "product": "VJ114A1",
+          "sensor": "NOAA-20",
+          "granule_id": "VJ114A1.A2023279.h12v12.002.2023280081955",
+          "source": {
+            "path": "training/data/environmental/private/viirs-daily-l3-snmf-route-events-2023-2025/VJ114A1/2023/h12v12/VJ114A1.A2023279.h12v12.002.2023280081955.h5",
+            "sha256": "320ace393edfae5c1096f07343d39b6adf864d1601e6b98da64b76501baf1f7e",
+            "bytes": 218363
+          },
+          "event_point_nearest_grid_sample": {
+            "tile_contains_event_coordinate": true,
+            "row": 189,
+            "column": 589,
+            "mask_class": 5,
+            "qa": 2,
+            "land_water_bits": 2,
+            "observed_clear_land_without_detection": true,
+            "fire_detection": false,
+            "distance_from_event_to_sample_km": 0.3598
+          },
+          "within_10km_of_reported_event_point": {
+            "fire_pixels_7_9": 0,
+            "clear_land_class5_pixels": 361,
+            "nearest_fire_pixel_distance_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "within_10km_of_full_route_polyline": {
+            "grid_samples": 468,
+            "mask_class_counts": {
+              "0": 0,
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 468,
+              "6": 0,
+              "7": 0,
+              "8": 0,
+              "9": 0
+            },
+            "clear_land_class5_pixels": 468,
+            "fire_pixels_7_9": 0,
+            "nearest_fire_pixel_to_reported_event_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "daily_composite_window": "UTC date in RangeBeginningDate; 24-hour daily composite, not an exact ignition/pass time"
+        },
+        {
+          "date": "2023-10-06",
+          "tile": "h12v12",
+          "product": "VJ214A1",
+          "sensor": "NOAA-21",
+          "granule_id": "VJ214A1.A2023279.h12v12.002.2025277093953",
+          "source": {
+            "path": "training/data/environmental/private/viirs-daily-l3-snmf-route-events-2023-2025/VJ214A1/2023/h12v12/VJ214A1.A2023279.h12v12.002.2025277093953.h5",
+            "sha256": "f9e41b7f9c7da8f0489bd1dcee6acecddccbea18638d582138864358509f1d67",
+            "bytes": 211051
+          },
+          "event_point_nearest_grid_sample": {
+            "tile_contains_event_coordinate": true,
+            "row": 189,
+            "column": 589,
+            "mask_class": 5,
+            "qa": 6,
+            "land_water_bits": 2,
+            "observed_clear_land_without_detection": true,
+            "fire_detection": false,
+            "distance_from_event_to_sample_km": 0.3598
+          },
+          "within_10km_of_reported_event_point": {
+            "fire_pixels_7_9": 0,
+            "clear_land_class5_pixels": 361,
+            "nearest_fire_pixel_distance_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "within_10km_of_full_route_polyline": {
+            "grid_samples": 468,
+            "mask_class_counts": {
+              "0": 0,
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 468,
+              "6": 0,
+              "7": 0,
+              "8": 0,
+              "9": 0
+            },
+            "clear_land_class5_pixels": 468,
+            "fire_pixels_7_9": 0,
+            "nearest_fire_pixel_to_reported_event_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "daily_composite_window": "UTC date in RangeBeginningDate; 24-hour daily composite, not an exact ignition/pass time"
+        },
+        {
+          "date": "2023-10-06",
+          "tile": "h12v12",
+          "product": "VNP14A1",
+          "sensor": "Suomi-NPP",
+          "granule_id": "VNP14A1.A2023279.h12v12.002.2023280084253",
+          "source": {
+            "path": "training/data/environmental/private/viirs-daily-l3-snmf-route-events-2023-2025/VNP14A1/2023/h12v12/VNP14A1.A2023279.h12v12.002.2023280084253.h5",
+            "sha256": "063baaadb8efd7779f1ca2c9e9b384ff4042218e5bf6c0fb2e0a5921abb62481",
+            "bytes": 199719
+          },
+          "event_point_nearest_grid_sample": {
+            "tile_contains_event_coordinate": true,
+            "row": 189,
+            "column": 589,
+            "mask_class": 5,
+            "qa": 6,
+            "land_water_bits": 2,
+            "observed_clear_land_without_detection": true,
+            "fire_detection": false,
+            "distance_from_event_to_sample_km": 0.3598
+          },
+          "within_10km_of_reported_event_point": {
+            "fire_pixels_7_9": 0,
+            "clear_land_class5_pixels": 361,
+            "nearest_fire_pixel_distance_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "within_10km_of_full_route_polyline": {
+            "grid_samples": 468,
+            "mask_class_counts": {
+              "0": 0,
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 468,
+              "6": 0,
+              "7": 0,
+              "8": 0,
+              "9": 0
+            },
+            "clear_land_class5_pixels": 468,
+            "fire_pixels_7_9": 0,
+            "nearest_fire_pixel_to_reported_event_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "daily_composite_window": "UTC date in RangeBeginningDate; 24-hour daily composite, not an exact ignition/pass time"
+        }
+      ],
+      "summary_across_sensors_not_independent": {
+        "daily_l3_fire_pixels_within_10km_full_route": 0,
+        "daily_l3_class5_land_pixels_within_10km_full_route": 1404,
+        "daily_l3_fire_pixels_within_10km_reported_point": 0,
+        "sensors_with_fire_near_reported_point": [],
+        "interpretation": "Counts across sensors and nearby route-events can duplicate a single physical fire and are not independent trials."
+      }
+    },
+    {
+      "reported_start_date": "2023-12-19",
+      "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "incident_names": [
+        "Quema golondrinas"
+      ],
+      "incident_status_in_source": "EXTINGUIDO",
+      "incident_coordinates": {
+        "latitude": -42.01028055555555,
+        "longitude": -71.51638888888888
+      },
+      "reported_point_distance_to_route_km": 5.193,
+      "incident_point_tile": "h12v13",
+      "incident_point_tile_in_acquisition": true,
+      "route_tile_count": 1,
+      "granules": [
+        {
+          "date": "2023-12-19",
+          "tile": "h12v13",
+          "product": "VJ114A1",
+          "sensor": "NOAA-20",
+          "granule_id": "VJ114A1.A2023353.h12v13.002.2023354065617",
+          "source": {
+            "path": "training/data/environmental/private/viirs-daily-l3-snmf-route-events-2023-2025/VJ114A1/2023/h12v13/VJ114A1.A2023353.h12v13.002.2023354065617.h5",
+            "sha256": "ea37885ca40d698d9e160f88ed04132434d688798df78439b54dc727ed7a1e7e",
+            "bytes": 209241
+          },
+          "event_point_nearest_grid_sample": {
+            "tile_contains_event_coordinate": true,
+            "row": 241,
+            "column": 823,
+            "mask_class": 5,
+            "qa": 6,
+            "land_water_bits": 2,
+            "observed_clear_land_without_detection": true,
+            "fire_detection": false,
+            "distance_from_event_to_sample_km": 0.2797
+          },
+          "within_10km_of_reported_event_point": {
+            "fire_pixels_7_9": 0,
+            "clear_land_class5_pixels": 341,
+            "nearest_fire_pixel_distance_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "within_10km_of_full_route_polyline": {
+            "grid_samples": 380,
+            "mask_class_counts": {
+              "0": 0,
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 380,
+              "6": 0,
+              "7": 0,
+              "8": 0,
+              "9": 0
+            },
+            "clear_land_class5_pixels": 380,
+            "fire_pixels_7_9": 0,
+            "nearest_fire_pixel_to_reported_event_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "daily_composite_window": "UTC date in RangeBeginningDate; 24-hour daily composite, not an exact ignition/pass time"
+        },
+        {
+          "date": "2023-12-19",
+          "tile": "h12v13",
+          "product": "VJ214A1",
+          "sensor": "NOAA-21",
+          "granule_id": "VJ214A1.A2023353.h12v13.002.2025281101445",
+          "source": {
+            "path": "training/data/environmental/private/viirs-daily-l3-snmf-route-events-2023-2025/VJ214A1/2023/h12v13/VJ214A1.A2023353.h12v13.002.2025281101445.h5",
+            "sha256": "4d8765e589fd690a83552c9092635daefd11774fd8fdda9022891902d2284af2",
+            "bytes": 203224
+          },
+          "event_point_nearest_grid_sample": {
+            "tile_contains_event_coordinate": true,
+            "row": 241,
+            "column": 823,
+            "mask_class": 5,
+            "qa": 6,
+            "land_water_bits": 2,
+            "observed_clear_land_without_detection": true,
+            "fire_detection": false,
+            "distance_from_event_to_sample_km": 0.2797
+          },
+          "within_10km_of_reported_event_point": {
+            "fire_pixels_7_9": 0,
+            "clear_land_class5_pixels": 341,
+            "nearest_fire_pixel_distance_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "within_10km_of_full_route_polyline": {
+            "grid_samples": 380,
+            "mask_class_counts": {
+              "0": 0,
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 380,
+              "6": 0,
+              "7": 0,
+              "8": 0,
+              "9": 0
+            },
+            "clear_land_class5_pixels": 380,
+            "fire_pixels_7_9": 0,
+            "nearest_fire_pixel_to_reported_event_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "daily_composite_window": "UTC date in RangeBeginningDate; 24-hour daily composite, not an exact ignition/pass time"
+        },
+        {
+          "date": "2023-12-19",
+          "tile": "h12v13",
+          "product": "VNP14A1",
+          "sensor": "Suomi-NPP",
+          "granule_id": "VNP14A1.A2023353.h12v13.002.2023354085424",
+          "source": {
+            "path": "training/data/environmental/private/viirs-daily-l3-snmf-route-events-2023-2025/VNP14A1/2023/h12v13/VNP14A1.A2023353.h12v13.002.2023354085424.h5",
+            "sha256": "66408298267301109861088d01e0bb6112a0b207f8dfd5c600c30c7e46d6b775",
+            "bytes": 202571
+          },
+          "event_point_nearest_grid_sample": {
+            "tile_contains_event_coordinate": true,
+            "row": 241,
+            "column": 823,
+            "mask_class": 5,
+            "qa": 6,
+            "land_water_bits": 2,
+            "observed_clear_land_without_detection": true,
+            "fire_detection": false,
+            "distance_from_event_to_sample_km": 0.2797
+          },
+          "within_10km_of_reported_event_point": {
+            "fire_pixels_7_9": 0,
+            "clear_land_class5_pixels": 341,
+            "nearest_fire_pixel_distance_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "within_10km_of_full_route_polyline": {
+            "grid_samples": 380,
+            "mask_class_counts": {
+              "0": 0,
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 380,
+              "6": 0,
+              "7": 0,
+              "8": 0,
+              "9": 0
+            },
+            "clear_land_class5_pixels": 380,
+            "fire_pixels_7_9": 0,
+            "nearest_fire_pixel_to_reported_event_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "daily_composite_window": "UTC date in RangeBeginningDate; 24-hour daily composite, not an exact ignition/pass time"
+        }
+      ],
+      "summary_across_sensors_not_independent": {
+        "daily_l3_fire_pixels_within_10km_full_route": 0,
+        "daily_l3_class5_land_pixels_within_10km_full_route": 1140,
+        "daily_l3_fire_pixels_within_10km_reported_point": 0,
+        "sensors_with_fire_near_reported_point": [],
+        "interpretation": "Counts across sensors and nearby route-events can duplicate a single physical fire and are not independent trials."
+      }
+    },
+    {
+      "reported_start_date": "2024-01-06",
+      "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "incident_names": [
+        "El Eden (Las Golondrinas)"
+      ],
+      "incident_status_in_source": "EXTINGUIDO",
+      "incident_coordinates": {
+        "latitude": -42.018388888888886,
+        "longitude": -71.54127777777778
+      },
+      "reported_point_distance_to_route_km": 7.226,
+      "incident_point_tile": "h12v13",
+      "incident_point_tile_in_acquisition": true,
+      "route_tile_count": 1,
+      "granules": [
+        {
+          "date": "2024-01-06",
+          "tile": "h12v13",
+          "product": "VJ114A1",
+          "sensor": "NOAA-20",
+          "granule_id": "VJ114A1.A2024006.h12v13.002.2024007075918",
+          "source": {
+            "path": "training/data/environmental/private/viirs-daily-l3-snmf-route-events-2023-2025/VJ114A1/2024/h12v13/VJ114A1.A2024006.h12v13.002.2024007075918.h5",
+            "sha256": "328fdd2b615943bb3ded7d9ca25ba0757da3503451881f0b8939067a1002a3b0",
+            "bytes": 197659
+          },
+          "event_point_nearest_grid_sample": {
+            "tile_contains_event_coordinate": true,
+            "row": 242,
+            "column": 822,
+            "mask_class": 5,
+            "qa": 2,
+            "land_water_bits": 2,
+            "observed_clear_land_without_detection": true,
+            "fire_detection": false,
+            "distance_from_event_to_sample_km": 0.2616
+          },
+          "within_10km_of_reported_event_point": {
+            "fire_pixels_7_9": 0,
+            "clear_land_class5_pixels": 329,
+            "nearest_fire_pixel_distance_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "within_10km_of_full_route_polyline": {
+            "grid_samples": 380,
+            "mask_class_counts": {
+              "0": 0,
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 380,
+              "6": 0,
+              "7": 0,
+              "8": 0,
+              "9": 0
+            },
+            "clear_land_class5_pixels": 380,
+            "fire_pixels_7_9": 0,
+            "nearest_fire_pixel_to_reported_event_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "daily_composite_window": "UTC date in RangeBeginningDate; 24-hour daily composite, not an exact ignition/pass time"
+        },
+        {
+          "date": "2024-01-06",
+          "tile": "h12v13",
+          "product": "VJ214A1",
+          "sensor": "NOAA-21",
+          "granule_id": "VJ214A1.A2024006.h12v13.002.2025283013904",
+          "source": {
+            "path": "training/data/environmental/private/viirs-daily-l3-snmf-route-events-2023-2025/VJ214A1/2024/h12v13/VJ214A1.A2024006.h12v13.002.2025283013904.h5",
+            "sha256": "77378d4e5e9233a7e807c60d1eccde50f6c3e8d25f46c857fb43fd4ac6afd89c",
+            "bytes": 200739
+          },
+          "event_point_nearest_grid_sample": {
+            "tile_contains_event_coordinate": true,
+            "row": 242,
+            "column": 822,
+            "mask_class": 5,
+            "qa": 6,
+            "land_water_bits": 2,
+            "observed_clear_land_without_detection": true,
+            "fire_detection": false,
+            "distance_from_event_to_sample_km": 0.2616
+          },
+          "within_10km_of_reported_event_point": {
+            "fire_pixels_7_9": 0,
+            "clear_land_class5_pixels": 316,
+            "nearest_fire_pixel_distance_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "within_10km_of_full_route_polyline": {
+            "grid_samples": 380,
+            "mask_class_counts": {
+              "0": 0,
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 13,
+              "5": 367,
+              "6": 0,
+              "7": 0,
+              "8": 0,
+              "9": 0
+            },
+            "clear_land_class5_pixels": 367,
+            "fire_pixels_7_9": 0,
+            "nearest_fire_pixel_to_reported_event_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "daily_composite_window": "UTC date in RangeBeginningDate; 24-hour daily composite, not an exact ignition/pass time"
+        },
+        {
+          "date": "2024-01-06",
+          "tile": "h12v13",
+          "product": "VNP14A1",
+          "sensor": "Suomi-NPP",
+          "granule_id": "VNP14A1.A2024006.h12v13.002.2024007100440",
+          "source": {
+            "path": "training/data/environmental/private/viirs-daily-l3-snmf-route-events-2023-2025/VNP14A1/2024/h12v13/VNP14A1.A2024006.h12v13.002.2024007100440.h5",
+            "sha256": "08ef1ea9bc42e0794cedc8547232130b81853c0ec7975a529e07ef612b714191",
+            "bytes": 197906
+          },
+          "event_point_nearest_grid_sample": {
+            "tile_contains_event_coordinate": true,
+            "row": 242,
+            "column": 822,
+            "mask_class": 5,
+            "qa": 6,
+            "land_water_bits": 2,
+            "observed_clear_land_without_detection": true,
+            "fire_detection": false,
+            "distance_from_event_to_sample_km": 0.2616
+          },
+          "within_10km_of_reported_event_point": {
+            "fire_pixels_7_9": 0,
+            "clear_land_class5_pixels": 328,
+            "nearest_fire_pixel_distance_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "within_10km_of_full_route_polyline": {
+            "grid_samples": 380,
+            "mask_class_counts": {
+              "0": 0,
+              "1": 0,
+              "2": 0,
+              "3": 1,
+              "4": 0,
+              "5": 379,
+              "6": 0,
+              "7": 0,
+              "8": 0,
+              "9": 0
+            },
+            "clear_land_class5_pixels": 379,
+            "fire_pixels_7_9": 0,
+            "nearest_fire_pixel_to_reported_event_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "daily_composite_window": "UTC date in RangeBeginningDate; 24-hour daily composite, not an exact ignition/pass time"
+        }
+      ],
+      "summary_across_sensors_not_independent": {
+        "daily_l3_fire_pixels_within_10km_full_route": 0,
+        "daily_l3_class5_land_pixels_within_10km_full_route": 1126,
+        "daily_l3_fire_pixels_within_10km_reported_point": 0,
+        "sensors_with_fire_near_reported_point": [],
+        "interpretation": "Counts across sensors and nearby route-events can duplicate a single physical fire and are not independent trials."
+      }
+    },
+    {
+      "reported_start_date": "2024-01-26",
+      "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "incident_names": [
+        "Callejon Los Lupinos"
+      ],
+      "incident_status_in_source": "EXTINGUIDO",
+      "incident_coordinates": {
+        "latitude": -42.01,
+        "longitude": -71.57
+      },
+      "reported_point_distance_to_route_km": 8.58,
+      "incident_point_tile": "h12v13",
+      "incident_point_tile_in_acquisition": true,
+      "route_tile_count": 1,
+      "granules": [
+        {
+          "date": "2024-01-26",
+          "tile": "h12v13",
+          "product": "VJ114A1",
+          "sensor": "NOAA-20",
+          "granule_id": "VJ114A1.A2024026.h12v13.002.2024027090312",
+          "source": {
+            "path": "training/data/environmental/private/viirs-daily-l3-snmf-route-events-2023-2025/VJ114A1/2024/h12v13/VJ114A1.A2024026.h12v13.002.2024027090312.h5",
+            "sha256": "5915b503f18795c0a56b74089eee2c59028a9942680fb77c9a77786508b91812",
+            "bytes": 208329
+          },
+          "event_point_nearest_grid_sample": {
+            "tile_contains_event_coordinate": true,
+            "row": 241,
+            "column": 819,
+            "mask_class": 5,
+            "qa": 6,
+            "land_water_bits": 2,
+            "observed_clear_land_without_detection": true,
+            "fire_detection": false,
+            "distance_from_event_to_sample_km": 0.5765
+          },
+          "within_10km_of_reported_event_point": {
+            "fire_pixels_7_9": 0,
+            "clear_land_class5_pixels": 343,
+            "nearest_fire_pixel_distance_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "within_10km_of_full_route_polyline": {
+            "grid_samples": 380,
+            "mask_class_counts": {
+              "0": 0,
+              "1": 0,
+              "2": 0,
+              "3": 1,
+              "4": 1,
+              "5": 378,
+              "6": 0,
+              "7": 0,
+              "8": 0,
+              "9": 0
+            },
+            "clear_land_class5_pixels": 378,
+            "fire_pixels_7_9": 0,
+            "nearest_fire_pixel_to_reported_event_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "daily_composite_window": "UTC date in RangeBeginningDate; 24-hour daily composite, not an exact ignition/pass time"
+        },
+        {
+          "date": "2024-01-26",
+          "tile": "h12v13",
+          "product": "VJ214A1",
+          "sensor": "NOAA-21",
+          "granule_id": "VJ214A1.A2024026.h12v13.002.2025286173813",
+          "source": {
+            "path": "training/data/environmental/private/viirs-daily-l3-snmf-route-events-2023-2025/VJ214A1/2024/h12v13/VJ214A1.A2024026.h12v13.002.2025286173813.h5",
+            "sha256": "8f0f2026efcaede3712974ae6affa8fac591c1e184d87576b407b50f03ac9a8d",
+            "bytes": 207097
+          },
+          "event_point_nearest_grid_sample": {
+            "tile_contains_event_coordinate": true,
+            "row": 241,
+            "column": 819,
+            "mask_class": 5,
+            "qa": 6,
+            "land_water_bits": 2,
+            "observed_clear_land_without_detection": true,
+            "fire_detection": false,
+            "distance_from_event_to_sample_km": 0.5765
+          },
+          "within_10km_of_reported_event_point": {
+            "fire_pixels_7_9": 0,
+            "clear_land_class5_pixels": 342,
+            "nearest_fire_pixel_distance_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "within_10km_of_full_route_polyline": {
+            "grid_samples": 380,
+            "mask_class_counts": {
+              "0": 0,
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 1,
+              "5": 379,
+              "6": 0,
+              "7": 0,
+              "8": 0,
+              "9": 0
+            },
+            "clear_land_class5_pixels": 379,
+            "fire_pixels_7_9": 0,
+            "nearest_fire_pixel_to_reported_event_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "daily_composite_window": "UTC date in RangeBeginningDate; 24-hour daily composite, not an exact ignition/pass time"
+        },
+        {
+          "date": "2024-01-26",
+          "tile": "h12v13",
+          "product": "VNP14A1",
+          "sensor": "Suomi-NPP",
+          "granule_id": "VNP14A1.A2024026.h12v13.002.2024027095018",
+          "source": {
+            "path": "training/data/environmental/private/viirs-daily-l3-snmf-route-events-2023-2025/VNP14A1/2024/h12v13/VNP14A1.A2024026.h12v13.002.2024027095018.h5",
+            "sha256": "2e617504d5dbe622731297d1d858405bc67d4e03a4dd766ca1ade1e7687b8099",
+            "bytes": 208993
+          },
+          "event_point_nearest_grid_sample": {
+            "tile_contains_event_coordinate": true,
+            "row": 241,
+            "column": 819,
+            "mask_class": 5,
+            "qa": 6,
+            "land_water_bits": 2,
+            "observed_clear_land_without_detection": true,
+            "fire_detection": false,
+            "distance_from_event_to_sample_km": 0.5765
+          },
+          "within_10km_of_reported_event_point": {
+            "fire_pixels_7_9": 0,
+            "clear_land_class5_pixels": 342,
+            "nearest_fire_pixel_distance_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "within_10km_of_full_route_polyline": {
+            "grid_samples": 380,
+            "mask_class_counts": {
+              "0": 0,
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 15,
+              "5": 365,
+              "6": 0,
+              "7": 0,
+              "8": 0,
+              "9": 0
+            },
+            "clear_land_class5_pixels": 365,
+            "fire_pixels_7_9": 0,
+            "nearest_fire_pixel_to_reported_event_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "daily_composite_window": "UTC date in RangeBeginningDate; 24-hour daily composite, not an exact ignition/pass time"
+        }
+      ],
+      "summary_across_sensors_not_independent": {
+        "daily_l3_fire_pixels_within_10km_full_route": 0,
+        "daily_l3_class5_land_pixels_within_10km_full_route": 1122,
+        "daily_l3_fire_pixels_within_10km_reported_point": 0,
+        "sensors_with_fire_near_reported_point": [],
+        "interpretation": "Counts across sensors and nearby route-events can duplicate a single physical fire and are not independent trials."
+      }
+    },
+    {
+      "reported_start_date": "2024-01-30",
+      "route": "Sendero Namuncura",
+      "incident_names": [
+        "Tranquerón"
+      ],
+      "incident_status_in_source": "CONTENIDO",
+      "incident_coordinates": {
+        "latitude": -37.9716,
+        "longitude": -65.5632
+      },
+      "reported_point_distance_to_route_km": 4.609,
+      "incident_point_tile": "h12v12",
+      "incident_point_tile_in_acquisition": true,
+      "route_tile_count": 1,
+      "granules": [
+        {
+          "date": "2024-01-30",
+          "tile": "h12v12",
+          "product": "VJ114A1",
+          "sensor": "NOAA-20",
+          "granule_id": "VJ114A1.A2024030.h12v12.002.2024031074652",
+          "source": {
+            "path": "training/data/environmental/private/viirs-daily-l3-snmf-route-events-2023-2025/VJ114A1/2024/h12v12/VJ114A1.A2024030.h12v12.002.2024031074652.h5",
+            "sha256": "5284db750342aa9ad5f9ff987d1b96b997d41dd2881c2c6e98a2207b8b120137",
+            "bytes": 173457
+          },
+          "event_point_nearest_grid_sample": {
+            "tile_contains_event_coordinate": true,
+            "row": 957,
+            "column": 998,
+            "mask_class": 5,
+            "qa": 2,
+            "land_water_bits": 2,
+            "observed_clear_land_without_detection": true,
+            "fire_detection": false,
+            "distance_from_event_to_sample_km": 0.4016
+          },
+          "within_10km_of_reported_event_point": {
+            "fire_pixels_7_9": 0,
+            "clear_land_class5_pixels": 346,
+            "nearest_fire_pixel_distance_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "within_10km_of_full_route_polyline": {
+            "grid_samples": 375,
+            "mask_class_counts": {
+              "0": 0,
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 375,
+              "6": 0,
+              "7": 0,
+              "8": 0,
+              "9": 0
+            },
+            "clear_land_class5_pixels": 375,
+            "fire_pixels_7_9": 0,
+            "nearest_fire_pixel_to_reported_event_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "daily_composite_window": "UTC date in RangeBeginningDate; 24-hour daily composite, not an exact ignition/pass time"
+        },
+        {
+          "date": "2024-01-30",
+          "tile": "h12v12",
+          "product": "VJ214A1",
+          "sensor": "NOAA-21",
+          "granule_id": "VJ214A1.A2024030.h12v12.002.2025286221617",
+          "source": {
+            "path": "training/data/environmental/private/viirs-daily-l3-snmf-route-events-2023-2025/VJ214A1/2024/h12v12/VJ214A1.A2024030.h12v12.002.2025286221617.h5",
+            "sha256": "89dcfeb30f8b7dfb5bd479ff96a209fec04ea827e2d19c79db0d42a2d037beff",
+            "bytes": 170904
+          },
+          "event_point_nearest_grid_sample": {
+            "tile_contains_event_coordinate": true,
+            "row": 957,
+            "column": 998,
+            "mask_class": 5,
+            "qa": 2,
+            "land_water_bits": 2,
+            "observed_clear_land_without_detection": true,
+            "fire_detection": false,
+            "distance_from_event_to_sample_km": 0.4016
+          },
+          "within_10km_of_reported_event_point": {
+            "fire_pixels_7_9": 0,
+            "clear_land_class5_pixels": 346,
+            "nearest_fire_pixel_distance_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "within_10km_of_full_route_polyline": {
+            "grid_samples": 375,
+            "mask_class_counts": {
+              "0": 0,
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 375,
+              "6": 0,
+              "7": 0,
+              "8": 0,
+              "9": 0
+            },
+            "clear_land_class5_pixels": 375,
+            "fire_pixels_7_9": 0,
+            "nearest_fire_pixel_to_reported_event_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "daily_composite_window": "UTC date in RangeBeginningDate; 24-hour daily composite, not an exact ignition/pass time"
+        },
+        {
+          "date": "2024-01-30",
+          "tile": "h12v12",
+          "product": "VNP14A1",
+          "sensor": "Suomi-NPP",
+          "granule_id": "VNP14A1.A2024030.h12v12.002.2024036125425",
+          "source": {
+            "path": "training/data/environmental/private/viirs-daily-l3-snmf-route-events-2023-2025/VNP14A1/2024/h12v12/VNP14A1.A2024030.h12v12.002.2024036125425.h5",
+            "sha256": "b84ea1401c5315ad37b076e4a8c02e554d997b6255f0a85b7c2413d2a68b73e8",
+            "bytes": 173291
+          },
+          "event_point_nearest_grid_sample": {
+            "tile_contains_event_coordinate": true,
+            "row": 957,
+            "column": 998,
+            "mask_class": 5,
+            "qa": 6,
+            "land_water_bits": 2,
+            "observed_clear_land_without_detection": true,
+            "fire_detection": false,
+            "distance_from_event_to_sample_km": 0.4016
+          },
+          "within_10km_of_reported_event_point": {
+            "fire_pixels_7_9": 0,
+            "clear_land_class5_pixels": 346,
+            "nearest_fire_pixel_distance_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "within_10km_of_full_route_polyline": {
+            "grid_samples": 375,
+            "mask_class_counts": {
+              "0": 0,
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 375,
+              "6": 0,
+              "7": 0,
+              "8": 0,
+              "9": 0
+            },
+            "clear_land_class5_pixels": 375,
+            "fire_pixels_7_9": 0,
+            "nearest_fire_pixel_to_reported_event_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "daily_composite_window": "UTC date in RangeBeginningDate; 24-hour daily composite, not an exact ignition/pass time"
+        }
+      ],
+      "summary_across_sensors_not_independent": {
+        "daily_l3_fire_pixels_within_10km_full_route": 0,
+        "daily_l3_class5_land_pixels_within_10km_full_route": 1125,
+        "daily_l3_fire_pixels_within_10km_reported_point": 0,
+        "sensors_with_fire_near_reported_point": [],
+        "interpretation": "Counts across sensors and nearby route-events can duplicate a single physical fire and are not independent trials."
+      }
+    },
+    {
+      "reported_start_date": "2024-02-03",
+      "route": "Cerro Ventana - Hueco de la Ventana",
+      "incident_names": [
+        "Parque Provincial Ernesto"
+      ],
+      "incident_status_in_source": "EXTINGUIDO",
+      "incident_coordinates": {
+        "latitude": -38.07401388888889,
+        "longitude": -61.92494444444444
+      },
+      "reported_point_distance_to_route_km": 7.999,
+      "incident_point_tile": "h13v12",
+      "incident_point_tile_in_acquisition": true,
+      "route_tile_count": 1,
+      "granules": [
+        {
+          "date": "2024-02-03",
+          "tile": "h13v12",
+          "product": "VJ114A1",
+          "sensor": "NOAA-20",
+          "granule_id": "VJ114A1.A2024034.h13v12.002.2024044030326",
+          "source": {
+            "path": "training/data/environmental/private/viirs-daily-l3-snmf-route-events-2023-2025/VJ114A1/2024/h13v12/VJ114A1.A2024034.h13v12.002.2024044030326.h5",
+            "sha256": "bb8181399eac61d5cfe511206b5af6b977fa0ecb7aa501dde07a61ed8d58de35",
+            "bytes": 191014
+          },
+          "event_point_nearest_grid_sample": {
+            "tile_contains_event_coordinate": true,
+            "row": 969,
+            "column": 150,
+            "mask_class": 5,
+            "qa": 6,
+            "land_water_bits": 2,
+            "observed_clear_land_without_detection": true,
+            "fire_detection": false,
+            "distance_from_event_to_sample_km": 0.2911
+          },
+          "within_10km_of_reported_event_point": {
+            "fire_pixels_7_9": 0,
+            "clear_land_class5_pixels": 355,
+            "nearest_fire_pixel_distance_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "within_10km_of_full_route_polyline": {
+            "grid_samples": 417,
+            "mask_class_counts": {
+              "0": 0,
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 417,
+              "6": 0,
+              "7": 0,
+              "8": 0,
+              "9": 0
+            },
+            "clear_land_class5_pixels": 417,
+            "fire_pixels_7_9": 0,
+            "nearest_fire_pixel_to_reported_event_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "daily_composite_window": "UTC date in RangeBeginningDate; 24-hour daily composite, not an exact ignition/pass time"
+        },
+        {
+          "date": "2024-02-03",
+          "tile": "h13v12",
+          "product": "VJ214A1",
+          "sensor": "NOAA-21",
+          "granule_id": "VJ214A1.A2024034.h13v12.002.2025287024714",
+          "source": {
+            "path": "training/data/environmental/private/viirs-daily-l3-snmf-route-events-2023-2025/VJ214A1/2024/h13v12/VJ214A1.A2024034.h13v12.002.2025287024714.h5",
+            "sha256": "c38ed59dcf4950273b6ea95e26131f03fa49d9e30979e5c6b8e0122f16ba5fe5",
+            "bytes": 195889
+          },
+          "event_point_nearest_grid_sample": {
+            "tile_contains_event_coordinate": true,
+            "row": 969,
+            "column": 150,
+            "mask_class": 5,
+            "qa": 6,
+            "land_water_bits": 2,
+            "observed_clear_land_without_detection": true,
+            "fire_detection": false,
+            "distance_from_event_to_sample_km": 0.2911
+          },
+          "within_10km_of_reported_event_point": {
+            "fire_pixels_7_9": 2,
+            "clear_land_class5_pixels": 353,
+            "nearest_fire_pixel_distance_km": 0.888,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 1,
+              "9": 1
+            }
+          },
+          "within_10km_of_full_route_polyline": {
+            "grid_samples": 417,
+            "mask_class_counts": {
+              "0": 0,
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 415,
+              "6": 0,
+              "7": 0,
+              "8": 1,
+              "9": 1
+            },
+            "clear_land_class5_pixels": 415,
+            "fire_pixels_7_9": 2,
+            "nearest_fire_pixel_to_reported_event_km": 0.888,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 1,
+              "9": 1
+            }
+          },
+          "daily_composite_window": "UTC date in RangeBeginningDate; 24-hour daily composite, not an exact ignition/pass time"
+        },
+        {
+          "date": "2024-02-03",
+          "tile": "h13v12",
+          "product": "VNP14A1",
+          "sensor": "Suomi-NPP",
+          "granule_id": "VNP14A1.A2024034.h13v12.002.2024038190253",
+          "source": {
+            "path": "training/data/environmental/private/viirs-daily-l3-snmf-route-events-2023-2025/VNP14A1/2024/h13v12/VNP14A1.A2024034.h13v12.002.2024038190253.h5",
+            "sha256": "f73f772293ba3296dc485d934902d62b0d2df73711937b3a5895ca534dc11b01",
+            "bytes": 180326
+          },
+          "event_point_nearest_grid_sample": {
+            "tile_contains_event_coordinate": true,
+            "row": 969,
+            "column": 150,
+            "mask_class": 5,
+            "qa": 6,
+            "land_water_bits": 2,
+            "observed_clear_land_without_detection": true,
+            "fire_detection": false,
+            "distance_from_event_to_sample_km": 0.2911
+          },
+          "within_10km_of_reported_event_point": {
+            "fire_pixels_7_9": 4,
+            "clear_land_class5_pixels": 351,
+            "nearest_fire_pixel_distance_km": 0.888,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 1,
+              "9": 3
+            }
+          },
+          "within_10km_of_full_route_polyline": {
+            "grid_samples": 417,
+            "mask_class_counts": {
+              "0": 0,
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 413,
+              "6": 0,
+              "7": 0,
+              "8": 1,
+              "9": 3
+            },
+            "clear_land_class5_pixels": 413,
+            "fire_pixels_7_9": 4,
+            "nearest_fire_pixel_to_reported_event_km": 0.888,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 1,
+              "9": 3
+            }
+          },
+          "daily_composite_window": "UTC date in RangeBeginningDate; 24-hour daily composite, not an exact ignition/pass time"
+        }
+      ],
+      "summary_across_sensors_not_independent": {
+        "daily_l3_fire_pixels_within_10km_full_route": 6,
+        "daily_l3_class5_land_pixels_within_10km_full_route": 1245,
+        "daily_l3_fire_pixels_within_10km_reported_point": 6,
+        "sensors_with_fire_near_reported_point": [
+          "NOAA-21",
+          "Suomi-NPP"
+        ],
+        "interpretation": "Counts across sensors and nearby route-events can duplicate a single physical fire and are not independent trials."
+      }
+    },
+    {
+      "reported_start_date": "2024-03-07",
+      "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "incident_names": [
+        "Lote 1 campo INTA"
+      ],
+      "incident_status_in_source": "EXTINGUIDO",
+      "incident_coordinates": {
+        "latitude": -42.0,
+        "longitude": -71.53
+      },
+      "reported_point_distance_to_route_km": 5.188,
+      "incident_point_tile": "h12v13",
+      "incident_point_tile_in_acquisition": true,
+      "route_tile_count": 1,
+      "granules": [
+        {
+          "date": "2024-03-07",
+          "tile": "h12v13",
+          "product": "VJ114A1",
+          "sensor": "NOAA-20",
+          "granule_id": "VJ114A1.A2024067.h12v13.002.2024069025133",
+          "source": {
+            "path": "training/data/environmental/private/viirs-daily-l3-snmf-route-events-2023-2025/VJ114A1/2024/h12v13/VJ114A1.A2024067.h12v13.002.2024069025133.h5",
+            "sha256": "19c5c605967ccc4bf65c2dba566c2175929814ab63a7e7f1698bd0a5780a75e3",
+            "bytes": 224026
+          },
+          "event_point_nearest_grid_sample": {
+            "tile_contains_event_coordinate": true,
+            "row": 240,
+            "column": 821,
+            "mask_class": 5,
+            "qa": 6,
+            "land_water_bits": 2,
+            "observed_clear_land_without_detection": true,
+            "fire_detection": false,
+            "distance_from_event_to_sample_km": 0.1317
+          },
+          "within_10km_of_reported_event_point": {
+            "fire_pixels_7_9": 0,
+            "clear_land_class5_pixels": 331,
+            "nearest_fire_pixel_distance_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "within_10km_of_full_route_polyline": {
+            "grid_samples": 380,
+            "mask_class_counts": {
+              "0": 0,
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 380,
+              "6": 0,
+              "7": 0,
+              "8": 0,
+              "9": 0
+            },
+            "clear_land_class5_pixels": 380,
+            "fire_pixels_7_9": 0,
+            "nearest_fire_pixel_to_reported_event_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "daily_composite_window": "UTC date in RangeBeginningDate; 24-hour daily composite, not an exact ignition/pass time"
+        },
+        {
+          "date": "2024-03-07",
+          "tile": "h12v13",
+          "product": "VJ214A1",
+          "sensor": "NOAA-21",
+          "granule_id": "VJ214A1.A2024067.h12v13.002.2025294125008",
+          "source": {
+            "path": "training/data/environmental/private/viirs-daily-l3-snmf-route-events-2023-2025/VJ214A1/2024/h12v13/VJ214A1.A2024067.h12v13.002.2025294125008.h5",
+            "sha256": "56a506b524d2adaabca41ad90cd1ceb16d7419da77c1d50dd064500bd2477097",
+            "bytes": 215141
+          },
+          "event_point_nearest_grid_sample": {
+            "tile_contains_event_coordinate": true,
+            "row": 240,
+            "column": 821,
+            "mask_class": 5,
+            "qa": 6,
+            "land_water_bits": 2,
+            "observed_clear_land_without_detection": true,
+            "fire_detection": false,
+            "distance_from_event_to_sample_km": 0.1317
+          },
+          "within_10km_of_reported_event_point": {
+            "fire_pixels_7_9": 0,
+            "clear_land_class5_pixels": 331,
+            "nearest_fire_pixel_distance_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "within_10km_of_full_route_polyline": {
+            "grid_samples": 380,
+            "mask_class_counts": {
+              "0": 0,
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 380,
+              "6": 0,
+              "7": 0,
+              "8": 0,
+              "9": 0
+            },
+            "clear_land_class5_pixels": 380,
+            "fire_pixels_7_9": 0,
+            "nearest_fire_pixel_to_reported_event_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "daily_composite_window": "UTC date in RangeBeginningDate; 24-hour daily composite, not an exact ignition/pass time"
+        },
+        {
+          "date": "2024-03-07",
+          "tile": "h12v13",
+          "product": "VNP14A1",
+          "sensor": "Suomi-NPP",
+          "granule_id": "VNP14A1.A2024067.h12v13.002.2024068190715",
+          "source": {
+            "path": "training/data/environmental/private/viirs-daily-l3-snmf-route-events-2023-2025/VNP14A1/2024/h12v13/VNP14A1.A2024067.h12v13.002.2024068190715.h5",
+            "sha256": "c21fe7beb2e2283686d43140e8d7e4977a9bc02197e9646ee02e35b774ba94fe",
+            "bytes": 213105
+          },
+          "event_point_nearest_grid_sample": {
+            "tile_contains_event_coordinate": true,
+            "row": 240,
+            "column": 821,
+            "mask_class": 5,
+            "qa": 6,
+            "land_water_bits": 2,
+            "observed_clear_land_without_detection": true,
+            "fire_detection": false,
+            "distance_from_event_to_sample_km": 0.1317
+          },
+          "within_10km_of_reported_event_point": {
+            "fire_pixels_7_9": 0,
+            "clear_land_class5_pixels": 331,
+            "nearest_fire_pixel_distance_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "within_10km_of_full_route_polyline": {
+            "grid_samples": 380,
+            "mask_class_counts": {
+              "0": 0,
+              "1": 0,
+              "2": 0,
+              "3": 1,
+              "4": 0,
+              "5": 379,
+              "6": 0,
+              "7": 0,
+              "8": 0,
+              "9": 0
+            },
+            "clear_land_class5_pixels": 379,
+            "fire_pixels_7_9": 0,
+            "nearest_fire_pixel_to_reported_event_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "daily_composite_window": "UTC date in RangeBeginningDate; 24-hour daily composite, not an exact ignition/pass time"
+        }
+      ],
+      "summary_across_sensors_not_independent": {
+        "daily_l3_fire_pixels_within_10km_full_route": 0,
+        "daily_l3_class5_land_pixels_within_10km_full_route": 1139,
+        "daily_l3_fire_pixels_within_10km_reported_point": 0,
+        "sensors_with_fire_near_reported_point": [],
+        "interpretation": "Counts across sensors and nearby route-events can duplicate a single physical fire and are not independent trials."
+      }
+    },
+    {
+      "reported_start_date": "2024-04-16",
+      "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "incident_names": [
+        "Camping"
+      ],
+      "incident_status_in_source": "EXTINGUIDO",
+      "incident_coordinates": {
+        "latitude": -42.0349,
+        "longitude": -71.54939999999999
+      },
+      "reported_point_distance_to_route_km": 9.031,
+      "incident_point_tile": "h12v13",
+      "incident_point_tile_in_acquisition": true,
+      "route_tile_count": 1,
+      "granules": [
+        {
+          "date": "2024-04-16",
+          "tile": "h12v13",
+          "product": "VJ114A1",
+          "sensor": "NOAA-20",
+          "granule_id": "VJ114A1.A2024107.h12v13.002.2024108072622",
+          "source": {
+            "path": "training/data/environmental/private/viirs-daily-l3-snmf-route-events-2023-2025/VJ114A1/2024/h12v13/VJ114A1.A2024107.h12v13.002.2024108072622.h5",
+            "sha256": "a5bfe630f1bbc59c5ef2a3f3af49eacc02d4f2750bd21f79255bfceec969a252",
+            "bytes": 203849
+          },
+          "event_point_nearest_grid_sample": {
+            "tile_contains_event_coordinate": true,
+            "row": 244,
+            "column": 823,
+            "mask_class": 5,
+            "qa": 6,
+            "land_water_bits": 2,
+            "observed_clear_land_without_detection": true,
+            "fire_detection": false,
+            "distance_from_event_to_sample_km": 0.2858
+          },
+          "within_10km_of_reported_event_point": {
+            "fire_pixels_7_9": 0,
+            "clear_land_class5_pixels": 325,
+            "nearest_fire_pixel_distance_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "within_10km_of_full_route_polyline": {
+            "grid_samples": 380,
+            "mask_class_counts": {
+              "0": 0,
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 380,
+              "6": 0,
+              "7": 0,
+              "8": 0,
+              "9": 0
+            },
+            "clear_land_class5_pixels": 380,
+            "fire_pixels_7_9": 0,
+            "nearest_fire_pixel_to_reported_event_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "daily_composite_window": "UTC date in RangeBeginningDate; 24-hour daily composite, not an exact ignition/pass time"
+        },
+        {
+          "date": "2024-04-16",
+          "tile": "h12v13",
+          "product": "VJ214A1",
+          "sensor": "NOAA-21",
+          "granule_id": "VJ214A1.A2024107.h12v13.002.2025297202058",
+          "source": {
+            "path": "training/data/environmental/private/viirs-daily-l3-snmf-route-events-2023-2025/VJ214A1/2024/h12v13/VJ214A1.A2024107.h12v13.002.2025297202058.h5",
+            "sha256": "945db8b40acc2cc70cdd77c2ae49f675effd4ee5489d8161d3bc585b7d480230",
+            "bytes": 226878
+          },
+          "event_point_nearest_grid_sample": {
+            "tile_contains_event_coordinate": true,
+            "row": 244,
+            "column": 823,
+            "mask_class": 5,
+            "qa": 6,
+            "land_water_bits": 2,
+            "observed_clear_land_without_detection": true,
+            "fire_detection": false,
+            "distance_from_event_to_sample_km": 0.2858
+          },
+          "within_10km_of_reported_event_point": {
+            "fire_pixels_7_9": 0,
+            "clear_land_class5_pixels": 326,
+            "nearest_fire_pixel_distance_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "within_10km_of_full_route_polyline": {
+            "grid_samples": 380,
+            "mask_class_counts": {
+              "0": 0,
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 380,
+              "6": 0,
+              "7": 0,
+              "8": 0,
+              "9": 0
+            },
+            "clear_land_class5_pixels": 380,
+            "fire_pixels_7_9": 0,
+            "nearest_fire_pixel_to_reported_event_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "daily_composite_window": "UTC date in RangeBeginningDate; 24-hour daily composite, not an exact ignition/pass time"
+        },
+        {
+          "date": "2024-04-16",
+          "tile": "h12v13",
+          "product": "VNP14A1",
+          "sensor": "Suomi-NPP",
+          "granule_id": "VNP14A1.A2024107.h12v13.002.2024108095321",
+          "source": {
+            "path": "training/data/environmental/private/viirs-daily-l3-snmf-route-events-2023-2025/VNP14A1/2024/h12v13/VNP14A1.A2024107.h12v13.002.2024108095321.h5",
+            "sha256": "b51086331b1544c22866f441590da197d8a0be6027bc95f71597ed13e9a74231",
+            "bytes": 222790
+          },
+          "event_point_nearest_grid_sample": {
+            "tile_contains_event_coordinate": true,
+            "row": 244,
+            "column": 823,
+            "mask_class": 5,
+            "qa": 6,
+            "land_water_bits": 2,
+            "observed_clear_land_without_detection": true,
+            "fire_detection": false,
+            "distance_from_event_to_sample_km": 0.2858
+          },
+          "within_10km_of_reported_event_point": {
+            "fire_pixels_7_9": 0,
+            "clear_land_class5_pixels": 325,
+            "nearest_fire_pixel_distance_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "within_10km_of_full_route_polyline": {
+            "grid_samples": 380,
+            "mask_class_counts": {
+              "0": 0,
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 1,
+              "5": 379,
+              "6": 0,
+              "7": 0,
+              "8": 0,
+              "9": 0
+            },
+            "clear_land_class5_pixels": 379,
+            "fire_pixels_7_9": 0,
+            "nearest_fire_pixel_to_reported_event_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "daily_composite_window": "UTC date in RangeBeginningDate; 24-hour daily composite, not an exact ignition/pass time"
+        }
+      ],
+      "summary_across_sensors_not_independent": {
+        "daily_l3_fire_pixels_within_10km_full_route": 0,
+        "daily_l3_class5_land_pixels_within_10km_full_route": 1139,
+        "daily_l3_fire_pixels_within_10km_reported_point": 0,
+        "sensors_with_fire_near_reported_point": [],
+        "interpretation": "Counts across sensors and nearby route-events can duplicate a single physical fire and are not independent trials."
+      }
+    },
+    {
+      "reported_start_date": "2024-09-15",
+      "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "incident_names": [
+        "Golondrinas RN 40"
+      ],
+      "incident_status_in_source": "EXTINGUIDO",
+      "incident_coordinates": {
+        "latitude": -42.00075,
+        "longitude": -71.53208333333333
+      },
+      "reported_point_distance_to_route_km": 5.376,
+      "incident_point_tile": "h12v13",
+      "incident_point_tile_in_acquisition": true,
+      "route_tile_count": 1,
+      "granules": [
+        {
+          "date": "2024-09-15",
+          "tile": "h12v13",
+          "product": "VJ114A1",
+          "sensor": "NOAA-20",
+          "granule_id": "VJ114A1.A2024259.h12v13.002.2024260070633",
+          "source": {
+            "path": "training/data/environmental/private/viirs-daily-l3-snmf-route-events-2023-2025/VJ114A1/2024/h12v13/VJ114A1.A2024259.h12v13.002.2024260070633.h5",
+            "sha256": "05c9228e9024087199aff3a5aa3830ebb79bb3dbe2d863a849798528d856f3e1",
+            "bytes": 211923
+          },
+          "event_point_nearest_grid_sample": {
+            "tile_contains_event_coordinate": true,
+            "row": 240,
+            "column": 821,
+            "mask_class": 5,
+            "qa": 6,
+            "land_water_bits": 2,
+            "observed_clear_land_without_detection": true,
+            "fire_detection": false,
+            "distance_from_event_to_sample_km": 0.0927
+          },
+          "within_10km_of_reported_event_point": {
+            "fire_pixels_7_9": 0,
+            "clear_land_class5_pixels": 318,
+            "nearest_fire_pixel_distance_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "within_10km_of_full_route_polyline": {
+            "grid_samples": 380,
+            "mask_class_counts": {
+              "0": 0,
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 10,
+              "5": 370,
+              "6": 0,
+              "7": 0,
+              "8": 0,
+              "9": 0
+            },
+            "clear_land_class5_pixels": 370,
+            "fire_pixels_7_9": 0,
+            "nearest_fire_pixel_to_reported_event_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "daily_composite_window": "UTC date in RangeBeginningDate; 24-hour daily composite, not an exact ignition/pass time"
+        },
+        {
+          "date": "2024-09-15",
+          "tile": "h12v13",
+          "product": "VJ214A1",
+          "sensor": "NOAA-21",
+          "granule_id": "VJ214A1.A2024259.h12v13.002.2025310193028",
+          "source": {
+            "path": "training/data/environmental/private/viirs-daily-l3-snmf-route-events-2023-2025/VJ214A1/2024/h12v13/VJ214A1.A2024259.h12v13.002.2025310193028.h5",
+            "sha256": "f81555c599c0169072c6dd7369c558fea5001b543947bd4db32c4bdf44866bb2",
+            "bytes": 206885
+          },
+          "event_point_nearest_grid_sample": {
+            "tile_contains_event_coordinate": true,
+            "row": 240,
+            "column": 821,
+            "mask_class": 5,
+            "qa": 6,
+            "land_water_bits": 2,
+            "observed_clear_land_without_detection": true,
+            "fire_detection": false,
+            "distance_from_event_to_sample_km": 0.0927
+          },
+          "within_10km_of_reported_event_point": {
+            "fire_pixels_7_9": 0,
+            "clear_land_class5_pixels": 328,
+            "nearest_fire_pixel_distance_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "within_10km_of_full_route_polyline": {
+            "grid_samples": 380,
+            "mask_class_counts": {
+              "0": 0,
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 380,
+              "6": 0,
+              "7": 0,
+              "8": 0,
+              "9": 0
+            },
+            "clear_land_class5_pixels": 380,
+            "fire_pixels_7_9": 0,
+            "nearest_fire_pixel_to_reported_event_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "daily_composite_window": "UTC date in RangeBeginningDate; 24-hour daily composite, not an exact ignition/pass time"
+        },
+        {
+          "date": "2024-09-15",
+          "tile": "h12v13",
+          "product": "VNP14A1",
+          "sensor": "Suomi-NPP",
+          "granule_id": "VNP14A1.A2024259.h12v13.002.2024260091102",
+          "source": {
+            "path": "training/data/environmental/private/viirs-daily-l3-snmf-route-events-2023-2025/VNP14A1/2024/h12v13/VNP14A1.A2024259.h12v13.002.2024260091102.h5",
+            "sha256": "5089aad3906c1d6b1f856858ac8544ec3c556cb4b82969ee0931b853036e269c",
+            "bytes": 199909
+          },
+          "event_point_nearest_grid_sample": {
+            "tile_contains_event_coordinate": true,
+            "row": 240,
+            "column": 821,
+            "mask_class": 5,
+            "qa": 6,
+            "land_water_bits": 2,
+            "observed_clear_land_without_detection": true,
+            "fire_detection": false,
+            "distance_from_event_to_sample_km": 0.0927
+          },
+          "within_10km_of_reported_event_point": {
+            "fire_pixels_7_9": 0,
+            "clear_land_class5_pixels": 328,
+            "nearest_fire_pixel_distance_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "within_10km_of_full_route_polyline": {
+            "grid_samples": 380,
+            "mask_class_counts": {
+              "0": 0,
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 2,
+              "5": 378,
+              "6": 0,
+              "7": 0,
+              "8": 0,
+              "9": 0
+            },
+            "clear_land_class5_pixels": 378,
+            "fire_pixels_7_9": 0,
+            "nearest_fire_pixel_to_reported_event_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "daily_composite_window": "UTC date in RangeBeginningDate; 24-hour daily composite, not an exact ignition/pass time"
+        }
+      ],
+      "summary_across_sensors_not_independent": {
+        "daily_l3_fire_pixels_within_10km_full_route": 0,
+        "daily_l3_class5_land_pixels_within_10km_full_route": 1128,
+        "daily_l3_fire_pixels_within_10km_reported_point": 0,
+        "sensors_with_fire_near_reported_point": [],
+        "interpretation": "Counts across sensors and nearby route-events can duplicate a single physical fire and are not independent trials."
+      }
+    },
+    {
+      "reported_start_date": "2024-10-16",
+      "route": "Refugio Frey desde Villa Catedral",
+      "incident_names": [
+        "Dos Valles"
+      ],
+      "incident_status_in_source": "CONTROLADO",
+      "incident_coordinates": {
+        "latitude": -41.17876388888889,
+        "longitude": -71.34405555555556
+      },
+      "reported_point_distance_to_route_km": 7.955,
+      "incident_point_tile": "h12v13",
+      "incident_point_tile_in_acquisition": true,
+      "route_tile_count": 1,
+      "granules": [
+        {
+          "date": "2024-10-16",
+          "tile": "h12v13",
+          "product": "VJ114A1",
+          "sensor": "NOAA-20",
+          "granule_id": "VJ114A1.A2024290.h12v13.002.2024296172048",
+          "source": {
+            "path": "training/data/environmental/private/viirs-daily-l3-snmf-route-events-2023-2025/VJ114A1/2024/h12v13/VJ114A1.A2024290.h12v13.002.2024296172048.h5",
+            "sha256": "78afd62e96968588190c7fb89155696656d6d8962bd0e0d3ba96159d7149fb3c",
+            "bytes": 222009
+          },
+          "event_point_nearest_grid_sample": {
+            "tile_contains_event_coordinate": true,
+            "row": 141,
+            "column": 756,
+            "mask_class": 5,
+            "qa": 2,
+            "land_water_bits": 2,
+            "observed_clear_land_without_detection": true,
+            "fire_detection": false,
+            "distance_from_event_to_sample_km": 0.4286
+          },
+          "within_10km_of_reported_event_point": {
+            "fire_pixels_7_9": 0,
+            "clear_land_class5_pixels": 276,
+            "nearest_fire_pixel_distance_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "within_10km_of_full_route_polyline": {
+            "grid_samples": 524,
+            "mask_class_counts": {
+              "0": 0,
+              "1": 0,
+              "2": 0,
+              "3": 59,
+              "4": 0,
+              "5": 465,
+              "6": 0,
+              "7": 0,
+              "8": 0,
+              "9": 0
+            },
+            "clear_land_class5_pixels": 465,
+            "fire_pixels_7_9": 0,
+            "nearest_fire_pixel_to_reported_event_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "daily_composite_window": "UTC date in RangeBeginningDate; 24-hour daily composite, not an exact ignition/pass time"
+        },
+        {
+          "date": "2024-10-16",
+          "tile": "h12v13",
+          "product": "VJ214A1",
+          "sensor": "NOAA-21",
+          "granule_id": "VJ214A1.A2024290.h12v13.002.2025312090026",
+          "source": {
+            "path": "training/data/environmental/private/viirs-daily-l3-snmf-route-events-2023-2025/VJ214A1/2024/h12v13/VJ214A1.A2024290.h12v13.002.2025312090026.h5",
+            "sha256": "f975b01db0b65c63fd63fa6d4021377607781d48e6a14e49053b6b1e2455efc6",
+            "bytes": 222044
+          },
+          "event_point_nearest_grid_sample": {
+            "tile_contains_event_coordinate": true,
+            "row": 141,
+            "column": 756,
+            "mask_class": 5,
+            "qa": 2,
+            "land_water_bits": 2,
+            "observed_clear_land_without_detection": true,
+            "fire_detection": false,
+            "distance_from_event_to_sample_km": 0.4286
+          },
+          "within_10km_of_reported_event_point": {
+            "fire_pixels_7_9": 0,
+            "clear_land_class5_pixels": 272,
+            "nearest_fire_pixel_distance_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "within_10km_of_full_route_polyline": {
+            "grid_samples": 524,
+            "mask_class_counts": {
+              "0": 0,
+              "1": 0,
+              "2": 0,
+              "3": 66,
+              "4": 6,
+              "5": 452,
+              "6": 0,
+              "7": 0,
+              "8": 0,
+              "9": 0
+            },
+            "clear_land_class5_pixels": 452,
+            "fire_pixels_7_9": 0,
+            "nearest_fire_pixel_to_reported_event_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "daily_composite_window": "UTC date in RangeBeginningDate; 24-hour daily composite, not an exact ignition/pass time"
+        },
+        {
+          "date": "2024-10-16",
+          "tile": "h12v13",
+          "product": "VNP14A1",
+          "sensor": "Suomi-NPP",
+          "granule_id": "VNP14A1.A2024290.h12v13.002.2024295162745",
+          "source": {
+            "path": "training/data/environmental/private/viirs-daily-l3-snmf-route-events-2023-2025/VNP14A1/2024/h12v13/VNP14A1.A2024290.h12v13.002.2024295162745.h5",
+            "sha256": "1fe2e2108f4e2bba85e6869a336424f653f3f0d5f6a24cd5c36cdb5eda4e3c1c",
+            "bytes": 224366
+          },
+          "event_point_nearest_grid_sample": {
+            "tile_contains_event_coordinate": true,
+            "row": 141,
+            "column": 756,
+            "mask_class": 5,
+            "qa": 2,
+            "land_water_bits": 2,
+            "observed_clear_land_without_detection": true,
+            "fire_detection": false,
+            "distance_from_event_to_sample_km": 0.4286
+          },
+          "within_10km_of_reported_event_point": {
+            "fire_pixels_7_9": 0,
+            "clear_land_class5_pixels": 274,
+            "nearest_fire_pixel_distance_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "within_10km_of_full_route_polyline": {
+            "grid_samples": 524,
+            "mask_class_counts": {
+              "0": 0,
+              "1": 0,
+              "2": 0,
+              "3": 64,
+              "4": 6,
+              "5": 454,
+              "6": 0,
+              "7": 0,
+              "8": 0,
+              "9": 0
+            },
+            "clear_land_class5_pixels": 454,
+            "fire_pixels_7_9": 0,
+            "nearest_fire_pixel_to_reported_event_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "daily_composite_window": "UTC date in RangeBeginningDate; 24-hour daily composite, not an exact ignition/pass time"
+        }
+      ],
+      "summary_across_sensors_not_independent": {
+        "daily_l3_fire_pixels_within_10km_full_route": 0,
+        "daily_l3_class5_land_pixels_within_10km_full_route": 1371,
+        "daily_l3_fire_pixels_within_10km_reported_point": 0,
+        "sensors_with_fire_near_reported_point": [],
+        "interpretation": "Counts across sensors and nearby route-events can duplicate a single physical fire and are not independent trials."
+      }
+    },
+    {
+      "reported_start_date": "2025-10-08",
+      "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "incident_names": [
+        "Ruta 40 Control Policial"
+      ],
+      "incident_status_in_source": "EXTINGUIDO",
+      "incident_coordinates": {
+        "latitude": -41.99276666666667,
+        "longitude": -71.52387222222222
+      },
+      "reported_point_distance_to_route_km": 4.321,
+      "incident_point_tile": "h12v13",
+      "incident_point_tile_in_acquisition": true,
+      "route_tile_count": 1,
+      "granules": [
+        {
+          "date": "2025-10-08",
+          "tile": "h12v13",
+          "product": "VJ114A1",
+          "sensor": "NOAA-20",
+          "granule_id": "VJ114A1.A2025281.h12v13.002.2025282215958",
+          "source": {
+            "path": "training/data/environmental/private/viirs-daily-l3-snmf-route-events-2023-2025/VJ114A1/2025/h12v13/VJ114A1.A2025281.h12v13.002.2025282215958.h5",
+            "sha256": "bf69ab38ed61444c89150d12e4759384d3427e7a0237a7bdc11d9bcac86ff14a",
+            "bytes": 188700
+          },
+          "event_point_nearest_grid_sample": {
+            "tile_contains_event_coordinate": true,
+            "row": 239,
+            "column": 821,
+            "mask_class": 5,
+            "qa": 2,
+            "land_water_bits": 2,
+            "observed_clear_land_without_detection": true,
+            "fire_detection": false,
+            "distance_from_event_to_sample_km": 0.1829
+          },
+          "within_10km_of_reported_event_point": {
+            "fire_pixels_7_9": 0,
+            "clear_land_class5_pixels": 332,
+            "nearest_fire_pixel_distance_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "within_10km_of_full_route_polyline": {
+            "grid_samples": 380,
+            "mask_class_counts": {
+              "0": 0,
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 380,
+              "6": 0,
+              "7": 0,
+              "8": 0,
+              "9": 0
+            },
+            "clear_land_class5_pixels": 380,
+            "fire_pixels_7_9": 0,
+            "nearest_fire_pixel_to_reported_event_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "daily_composite_window": "UTC date in RangeBeginningDate; 24-hour daily composite, not an exact ignition/pass time"
+        },
+        {
+          "date": "2025-10-08",
+          "tile": "h12v13",
+          "product": "VJ214A1",
+          "sensor": "NOAA-21",
+          "granule_id": "VJ214A1.A2025281.h12v13.002.2025342204008",
+          "source": {
+            "path": "training/data/environmental/private/viirs-daily-l3-snmf-route-events-2023-2025/VJ214A1/2025/h12v13/VJ214A1.A2025281.h12v13.002.2025342204008.h5",
+            "sha256": "e6ebe9f4ae948a6ce70510a96390dde83de661746fcf614d1372bb98fef7d0ec",
+            "bytes": 192284
+          },
+          "event_point_nearest_grid_sample": {
+            "tile_contains_event_coordinate": true,
+            "row": 239,
+            "column": 821,
+            "mask_class": 5,
+            "qa": 6,
+            "land_water_bits": 2,
+            "observed_clear_land_without_detection": true,
+            "fire_detection": false,
+            "distance_from_event_to_sample_km": 0.1829
+          },
+          "within_10km_of_reported_event_point": {
+            "fire_pixels_7_9": 0,
+            "clear_land_class5_pixels": 332,
+            "nearest_fire_pixel_distance_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "within_10km_of_full_route_polyline": {
+            "grid_samples": 380,
+            "mask_class_counts": {
+              "0": 0,
+              "1": 0,
+              "2": 0,
+              "3": 1,
+              "4": 0,
+              "5": 379,
+              "6": 0,
+              "7": 0,
+              "8": 0,
+              "9": 0
+            },
+            "clear_land_class5_pixels": 379,
+            "fire_pixels_7_9": 0,
+            "nearest_fire_pixel_to_reported_event_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "daily_composite_window": "UTC date in RangeBeginningDate; 24-hour daily composite, not an exact ignition/pass time"
+        },
+        {
+          "date": "2025-10-08",
+          "tile": "h12v13",
+          "product": "VNP14A1",
+          "sensor": "Suomi-NPP",
+          "granule_id": "VNP14A1.A2025281.h12v13.002.2025282221502",
+          "source": {
+            "path": "training/data/environmental/private/viirs-daily-l3-snmf-route-events-2023-2025/VNP14A1/2025/h12v13/VNP14A1.A2025281.h12v13.002.2025282221502.h5",
+            "sha256": "a95c8c6f0797db808f06e4e3d0606b06749b3fe00484bf8d4ada06cf8fb8922b",
+            "bytes": 192361
+          },
+          "event_point_nearest_grid_sample": {
+            "tile_contains_event_coordinate": true,
+            "row": 239,
+            "column": 821,
+            "mask_class": 5,
+            "qa": 2,
+            "land_water_bits": 2,
+            "observed_clear_land_without_detection": true,
+            "fire_detection": false,
+            "distance_from_event_to_sample_km": 0.1829
+          },
+          "within_10km_of_reported_event_point": {
+            "fire_pixels_7_9": 0,
+            "clear_land_class5_pixels": 332,
+            "nearest_fire_pixel_distance_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "within_10km_of_full_route_polyline": {
+            "grid_samples": 380,
+            "mask_class_counts": {
+              "0": 0,
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 380,
+              "6": 0,
+              "7": 0,
+              "8": 0,
+              "9": 0
+            },
+            "clear_land_class5_pixels": 380,
+            "fire_pixels_7_9": 0,
+            "nearest_fire_pixel_to_reported_event_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "daily_composite_window": "UTC date in RangeBeginningDate; 24-hour daily composite, not an exact ignition/pass time"
+        }
+      ],
+      "summary_across_sensors_not_independent": {
+        "daily_l3_fire_pixels_within_10km_full_route": 0,
+        "daily_l3_class5_land_pixels_within_10km_full_route": 1139,
+        "daily_l3_fire_pixels_within_10km_reported_point": 0,
+        "sensors_with_fire_near_reported_point": [],
+        "interpretation": "Counts across sensors and nearby route-events can duplicate a single physical fire and are not independent trials."
+      }
+    },
+    {
+      "reported_start_date": "2025-10-08",
+      "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "incident_names": [
+        "Cerro Radal"
+      ],
+      "incident_status_in_source": "EXTINGUIDO",
+      "incident_coordinates": {
+        "latitude": -42.034275,
+        "longitude": -71.55907499999999
+      },
+      "reported_point_distance_to_route_km": 9.515,
+      "incident_point_tile": "h12v13",
+      "incident_point_tile_in_acquisition": true,
+      "route_tile_count": 1,
+      "granules": [
+        {
+          "date": "2025-10-08",
+          "tile": "h12v13",
+          "product": "VJ114A1",
+          "sensor": "NOAA-20",
+          "granule_id": "VJ114A1.A2025281.h12v13.002.2025282215958",
+          "source": {
+            "path": "training/data/environmental/private/viirs-daily-l3-snmf-route-events-2023-2025/VJ114A1/2025/h12v13/VJ114A1.A2025281.h12v13.002.2025282215958.h5",
+            "sha256": "bf69ab38ed61444c89150d12e4759384d3427e7a0237a7bdc11d9bcac86ff14a",
+            "bytes": 188700
+          },
+          "event_point_nearest_grid_sample": {
+            "tile_contains_event_coordinate": true,
+            "row": 244,
+            "column": 822,
+            "mask_class": 5,
+            "qa": 2,
+            "land_water_bits": 2,
+            "observed_clear_land_without_detection": true,
+            "fire_detection": false,
+            "distance_from_event_to_sample_km": 0.1441
+          },
+          "within_10km_of_reported_event_point": {
+            "fire_pixels_7_9": 0,
+            "clear_land_class5_pixels": 325,
+            "nearest_fire_pixel_distance_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "within_10km_of_full_route_polyline": {
+            "grid_samples": 380,
+            "mask_class_counts": {
+              "0": 0,
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 380,
+              "6": 0,
+              "7": 0,
+              "8": 0,
+              "9": 0
+            },
+            "clear_land_class5_pixels": 380,
+            "fire_pixels_7_9": 0,
+            "nearest_fire_pixel_to_reported_event_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "daily_composite_window": "UTC date in RangeBeginningDate; 24-hour daily composite, not an exact ignition/pass time"
+        },
+        {
+          "date": "2025-10-08",
+          "tile": "h12v13",
+          "product": "VJ214A1",
+          "sensor": "NOAA-21",
+          "granule_id": "VJ214A1.A2025281.h12v13.002.2025342204008",
+          "source": {
+            "path": "training/data/environmental/private/viirs-daily-l3-snmf-route-events-2023-2025/VJ214A1/2025/h12v13/VJ214A1.A2025281.h12v13.002.2025342204008.h5",
+            "sha256": "e6ebe9f4ae948a6ce70510a96390dde83de661746fcf614d1372bb98fef7d0ec",
+            "bytes": 192284
+          },
+          "event_point_nearest_grid_sample": {
+            "tile_contains_event_coordinate": true,
+            "row": 244,
+            "column": 822,
+            "mask_class": 5,
+            "qa": 6,
+            "land_water_bits": 2,
+            "observed_clear_land_without_detection": true,
+            "fire_detection": false,
+            "distance_from_event_to_sample_km": 0.1441
+          },
+          "within_10km_of_reported_event_point": {
+            "fire_pixels_7_9": 0,
+            "clear_land_class5_pixels": 323,
+            "nearest_fire_pixel_distance_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "within_10km_of_full_route_polyline": {
+            "grid_samples": 380,
+            "mask_class_counts": {
+              "0": 0,
+              "1": 0,
+              "2": 0,
+              "3": 1,
+              "4": 0,
+              "5": 379,
+              "6": 0,
+              "7": 0,
+              "8": 0,
+              "9": 0
+            },
+            "clear_land_class5_pixels": 379,
+            "fire_pixels_7_9": 0,
+            "nearest_fire_pixel_to_reported_event_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "daily_composite_window": "UTC date in RangeBeginningDate; 24-hour daily composite, not an exact ignition/pass time"
+        },
+        {
+          "date": "2025-10-08",
+          "tile": "h12v13",
+          "product": "VNP14A1",
+          "sensor": "Suomi-NPP",
+          "granule_id": "VNP14A1.A2025281.h12v13.002.2025282221502",
+          "source": {
+            "path": "training/data/environmental/private/viirs-daily-l3-snmf-route-events-2023-2025/VNP14A1/2025/h12v13/VNP14A1.A2025281.h12v13.002.2025282221502.h5",
+            "sha256": "a95c8c6f0797db808f06e4e3d0606b06749b3fe00484bf8d4ada06cf8fb8922b",
+            "bytes": 192361
+          },
+          "event_point_nearest_grid_sample": {
+            "tile_contains_event_coordinate": true,
+            "row": 244,
+            "column": 822,
+            "mask_class": 5,
+            "qa": 6,
+            "land_water_bits": 2,
+            "observed_clear_land_without_detection": true,
+            "fire_detection": false,
+            "distance_from_event_to_sample_km": 0.1441
+          },
+          "within_10km_of_reported_event_point": {
+            "fire_pixels_7_9": 0,
+            "clear_land_class5_pixels": 326,
+            "nearest_fire_pixel_distance_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "within_10km_of_full_route_polyline": {
+            "grid_samples": 380,
+            "mask_class_counts": {
+              "0": 0,
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 380,
+              "6": 0,
+              "7": 0,
+              "8": 0,
+              "9": 0
+            },
+            "clear_land_class5_pixels": 380,
+            "fire_pixels_7_9": 0,
+            "nearest_fire_pixel_to_reported_event_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "daily_composite_window": "UTC date in RangeBeginningDate; 24-hour daily composite, not an exact ignition/pass time"
+        }
+      ],
+      "summary_across_sensors_not_independent": {
+        "daily_l3_fire_pixels_within_10km_full_route": 0,
+        "daily_l3_class5_land_pixels_within_10km_full_route": 1139,
+        "daily_l3_fire_pixels_within_10km_reported_point": 0,
+        "sensors_with_fire_near_reported_point": [],
+        "interpretation": "Counts across sensors and nearby route-events can duplicate a single physical fire and are not independent trials."
+      }
+    },
+    {
+      "reported_start_date": "2025-10-10",
+      "route": "Quebrada del Condorito - Balcon Norte",
+      "incident_names": [
+        "Parque Nacional Quebrada del",
+        "Parque Nacional Quebrada del Condorito, ex",
+        "Parque Nacional Quebrada del Condorito, ex La",
+        "Parque Nacional Quebrada del Condorito, ex La Pampilla"
+      ],
+      "incident_status_in_source": "ACTIVO",
+      "incident_coordinates": {
+        "latitude": -31.602061111111112,
+        "longitude": -64.72338888888889
+      },
+      "reported_point_distance_to_route_km": 3.533,
+      "incident_point_tile": "h12v12",
+      "incident_point_tile_in_acquisition": true,
+      "route_tile_count": 1,
+      "granules": [
+        {
+          "date": "2025-10-10",
+          "tile": "h12v12",
+          "product": "VJ114A1",
+          "sensor": "NOAA-20",
+          "granule_id": "VJ114A1.A2025283.h12v12.002.2025284085333",
+          "source": {
+            "path": "training/data/environmental/private/viirs-daily-l3-snmf-route-events-2023-2025/VJ114A1/2025/h12v12/VJ114A1.A2025283.h12v12.002.2025284085333.h5",
+            "sha256": "20d19d31f85008779794e43e5a5f0888c8947de205187168ef12c46e09487f3b",
+            "bytes": 198281
+          },
+          "event_point_nearest_grid_sample": {
+            "tile_contains_event_coordinate": true,
+            "row": 192,
+            "column": 585,
+            "mask_class": 5,
+            "qa": 6,
+            "land_water_bits": 2,
+            "observed_clear_land_without_detection": true,
+            "fire_detection": false,
+            "distance_from_event_to_sample_km": 0.2938
+          },
+          "within_10km_of_reported_event_point": {
+            "fire_pixels_7_9": 13,
+            "clear_land_class5_pixels": 343,
+            "nearest_fire_pixel_distance_km": 1.624,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 3,
+              "9": 10
+            }
+          },
+          "within_10km_of_full_route_polyline": {
+            "grid_samples": 468,
+            "mask_class_counts": {
+              "0": 0,
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 455,
+              "6": 0,
+              "7": 0,
+              "8": 3,
+              "9": 10
+            },
+            "clear_land_class5_pixels": 455,
+            "fire_pixels_7_9": 13,
+            "nearest_fire_pixel_to_reported_event_km": 1.624,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 3,
+              "9": 10
+            }
+          },
+          "daily_composite_window": "UTC date in RangeBeginningDate; 24-hour daily composite, not an exact ignition/pass time"
+        },
+        {
+          "date": "2025-10-10",
+          "tile": "h12v12",
+          "product": "VJ214A1",
+          "sensor": "NOAA-21",
+          "granule_id": "VJ214A1.A2025283.h12v12.002.2025342230950",
+          "source": {
+            "path": "training/data/environmental/private/viirs-daily-l3-snmf-route-events-2023-2025/VJ214A1/2025/h12v12/VJ214A1.A2025283.h12v12.002.2025342230950.h5",
+            "sha256": "73fcdf251aace0add91861b11693394fc0be8b090430f8d0ff9528ac8a9c2243",
+            "bytes": 199845
+          },
+          "event_point_nearest_grid_sample": {
+            "tile_contains_event_coordinate": true,
+            "row": 192,
+            "column": 585,
+            "mask_class": 5,
+            "qa": 2,
+            "land_water_bits": 2,
+            "observed_clear_land_without_detection": true,
+            "fire_detection": false,
+            "distance_from_event_to_sample_km": 0.2938
+          },
+          "within_10km_of_reported_event_point": {
+            "fire_pixels_7_9": 0,
+            "clear_land_class5_pixels": 356,
+            "nearest_fire_pixel_distance_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "within_10km_of_full_route_polyline": {
+            "grid_samples": 468,
+            "mask_class_counts": {
+              "0": 0,
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 468,
+              "6": 0,
+              "7": 0,
+              "8": 0,
+              "9": 0
+            },
+            "clear_land_class5_pixels": 468,
+            "fire_pixels_7_9": 0,
+            "nearest_fire_pixel_to_reported_event_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "daily_composite_window": "UTC date in RangeBeginningDate; 24-hour daily composite, not an exact ignition/pass time"
+        },
+        {
+          "date": "2025-10-10",
+          "tile": "h12v12",
+          "product": "VNP14A1",
+          "sensor": "Suomi-NPP",
+          "granule_id": "VNP14A1.A2025283.h12v12.002.2025284120457",
+          "source": {
+            "path": "training/data/environmental/private/viirs-daily-l3-snmf-route-events-2023-2025/VNP14A1/2025/h12v12/VNP14A1.A2025283.h12v12.002.2025284120457.h5",
+            "sha256": "3d5c98207a07c85e3cfaf8c47ca9bcf8c6edf3651cb119f6246c14d053b5c6b9",
+            "bytes": 196782
+          },
+          "event_point_nearest_grid_sample": {
+            "tile_contains_event_coordinate": true,
+            "row": 192,
+            "column": 585,
+            "mask_class": 5,
+            "qa": 6,
+            "land_water_bits": 2,
+            "observed_clear_land_without_detection": true,
+            "fire_detection": false,
+            "distance_from_event_to_sample_km": 0.2938
+          },
+          "within_10km_of_reported_event_point": {
+            "fire_pixels_7_9": 13,
+            "clear_land_class5_pixels": 343,
+            "nearest_fire_pixel_distance_km": 0.896,
+            "fire_pixels_by_confidence": {
+              "7": 1,
+              "8": 1,
+              "9": 11
+            }
+          },
+          "within_10km_of_full_route_polyline": {
+            "grid_samples": 468,
+            "mask_class_counts": {
+              "0": 0,
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 455,
+              "6": 0,
+              "7": 1,
+              "8": 1,
+              "9": 11
+            },
+            "clear_land_class5_pixels": 455,
+            "fire_pixels_7_9": 13,
+            "nearest_fire_pixel_to_reported_event_km": 0.896,
+            "fire_pixels_by_confidence": {
+              "7": 1,
+              "8": 1,
+              "9": 11
+            }
+          },
+          "daily_composite_window": "UTC date in RangeBeginningDate; 24-hour daily composite, not an exact ignition/pass time"
+        }
+      ],
+      "summary_across_sensors_not_independent": {
+        "daily_l3_fire_pixels_within_10km_full_route": 26,
+        "daily_l3_class5_land_pixels_within_10km_full_route": 1378,
+        "daily_l3_fire_pixels_within_10km_reported_point": 26,
+        "sensors_with_fire_near_reported_point": [
+          "NOAA-20",
+          "Suomi-NPP"
+        ],
+        "interpretation": "Counts across sensors and nearby route-events can duplicate a single physical fire and are not independent trials."
+      }
+    },
+    {
+      "reported_start_date": "2025-11-17",
+      "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+      "incident_names": [
+        "Ternero Los fuegos"
+      ],
+      "incident_status_in_source": "EXTINGUIDO",
+      "incident_coordinates": {
+        "latitude": -41.909955555555555,
+        "longitude": -71.51422777777778
+      },
+      "reported_point_distance_to_route_km": 7.2,
+      "incident_point_tile": "h12v13",
+      "incident_point_tile_in_acquisition": true,
+      "route_tile_count": 1,
+      "granules": [
+        {
+          "date": "2025-11-17",
+          "tile": "h12v13",
+          "product": "VJ114A1",
+          "sensor": "NOAA-20",
+          "granule_id": "VJ114A1.A2025321.h12v13.002.2025325033924",
+          "source": {
+            "path": "training/data/environmental/private/viirs-daily-l3-snmf-route-events-2023-2025/VJ114A1/2025/h12v13/VJ114A1.A2025321.h12v13.002.2025325033924.h5",
+            "sha256": "40bdab50c39c82978d8e37c79babfa19222e6b0c555a2232dc83745924e6da74",
+            "bytes": 215018
+          },
+          "event_point_nearest_grid_sample": {
+            "tile_contains_event_coordinate": true,
+            "row": 229,
+            "column": 814,
+            "mask_class": 5,
+            "qa": 6,
+            "land_water_bits": 2,
+            "observed_clear_land_without_detection": true,
+            "fire_detection": false,
+            "distance_from_event_to_sample_km": 0.6112
+          },
+          "within_10km_of_reported_event_point": {
+            "fire_pixels_7_9": 0,
+            "clear_land_class5_pixels": 333,
+            "nearest_fire_pixel_distance_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "within_10km_of_full_route_polyline": {
+            "grid_samples": 380,
+            "mask_class_counts": {
+              "0": 0,
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 380,
+              "6": 0,
+              "7": 0,
+              "8": 0,
+              "9": 0
+            },
+            "clear_land_class5_pixels": 380,
+            "fire_pixels_7_9": 0,
+            "nearest_fire_pixel_to_reported_event_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "daily_composite_window": "UTC date in RangeBeginningDate; 24-hour daily composite, not an exact ignition/pass time"
+        },
+        {
+          "date": "2025-11-17",
+          "tile": "h12v13",
+          "product": "VJ214A1",
+          "sensor": "NOAA-21",
+          "granule_id": "VJ214A1.A2025321.h12v13.002.2025345022816",
+          "source": {
+            "path": "training/data/environmental/private/viirs-daily-l3-snmf-route-events-2023-2025/VJ214A1/2025/h12v13/VJ214A1.A2025321.h12v13.002.2025345022816.h5",
+            "sha256": "eba665f9d78edbb4b0153d109afe6e4b590d6d54a44a411ee48e5e85c52c8086",
+            "bytes": 215713
+          },
+          "event_point_nearest_grid_sample": {
+            "tile_contains_event_coordinate": true,
+            "row": 229,
+            "column": 814,
+            "mask_class": 5,
+            "qa": 6,
+            "land_water_bits": 2,
+            "observed_clear_land_without_detection": true,
+            "fire_detection": false,
+            "distance_from_event_to_sample_km": 0.6112
+          },
+          "within_10km_of_reported_event_point": {
+            "fire_pixels_7_9": 0,
+            "clear_land_class5_pixels": 290,
+            "nearest_fire_pixel_distance_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "within_10km_of_full_route_polyline": {
+            "grid_samples": 380,
+            "mask_class_counts": {
+              "0": 0,
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 21,
+              "5": 359,
+              "6": 0,
+              "7": 0,
+              "8": 0,
+              "9": 0
+            },
+            "clear_land_class5_pixels": 359,
+            "fire_pixels_7_9": 0,
+            "nearest_fire_pixel_to_reported_event_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "daily_composite_window": "UTC date in RangeBeginningDate; 24-hour daily composite, not an exact ignition/pass time"
+        },
+        {
+          "date": "2025-11-17",
+          "tile": "h12v13",
+          "product": "VNP14A1",
+          "sensor": "Suomi-NPP",
+          "granule_id": "VNP14A1.A2025321.h12v13.002.2025322174336",
+          "source": {
+            "path": "training/data/environmental/private/viirs-daily-l3-snmf-route-events-2023-2025/VNP14A1/2025/h12v13/VNP14A1.A2025321.h12v13.002.2025322174336.h5",
+            "sha256": "9df5972bd49aed309dd670e84e59a51d6a58b5615b481cb1ed610ff63a3956b6",
+            "bytes": 213758
+          },
+          "event_point_nearest_grid_sample": {
+            "tile_contains_event_coordinate": true,
+            "row": 229,
+            "column": 814,
+            "mask_class": 5,
+            "qa": 6,
+            "land_water_bits": 2,
+            "observed_clear_land_without_detection": true,
+            "fire_detection": false,
+            "distance_from_event_to_sample_km": 0.6112
+          },
+          "within_10km_of_reported_event_point": {
+            "fire_pixels_7_9": 0,
+            "clear_land_class5_pixels": 338,
+            "nearest_fire_pixel_distance_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "within_10km_of_full_route_polyline": {
+            "grid_samples": 380,
+            "mask_class_counts": {
+              "0": 0,
+              "1": 0,
+              "2": 0,
+              "3": 1,
+              "4": 0,
+              "5": 379,
+              "6": 0,
+              "7": 0,
+              "8": 0,
+              "9": 0
+            },
+            "clear_land_class5_pixels": 379,
+            "fire_pixels_7_9": 0,
+            "nearest_fire_pixel_to_reported_event_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "daily_composite_window": "UTC date in RangeBeginningDate; 24-hour daily composite, not an exact ignition/pass time"
+        }
+      ],
+      "summary_across_sensors_not_independent": {
+        "daily_l3_fire_pixels_within_10km_full_route": 0,
+        "daily_l3_class5_land_pixels_within_10km_full_route": 1118,
+        "daily_l3_fire_pixels_within_10km_reported_point": 0,
+        "sensors_with_fire_near_reported_point": [],
+        "interpretation": "Counts across sensors and nearby route-events can duplicate a single physical fire and are not independent trials."
+      }
+    },
+    {
+      "reported_start_date": "2025-11-26",
+      "route": "Refugio Frey desde Villa Catedral",
+      "incident_names": [
+        "Ladera Norte Cerro",
+        "Ladera Norte Cerro Otto"
+      ],
+      "incident_status_in_source": "CONTROLADO",
+      "incident_coordinates": {
+        "latitude": -41.1387,
+        "longitude": -71.357
+      },
+      "reported_point_distance_to_route_km": 8.077,
+      "incident_point_tile": "h12v13",
+      "incident_point_tile_in_acquisition": true,
+      "route_tile_count": 1,
+      "granules": [
+        {
+          "date": "2025-11-26",
+          "tile": "h12v13",
+          "product": "VJ114A1",
+          "sensor": "NOAA-20",
+          "granule_id": "VJ114A1.A2025330.h12v13.002.2025331100852",
+          "source": {
+            "path": "training/data/environmental/private/viirs-daily-l3-snmf-route-events-2023-2025/VJ114A1/2025/h12v13/VJ114A1.A2025330.h12v13.002.2025331100852.h5",
+            "sha256": "7b19269b373fffdc7e819521234e4448d5d5cb9272267565eea1134afc2f05c7",
+            "bytes": 217581
+          },
+          "event_point_nearest_grid_sample": {
+            "tile_contains_event_coordinate": true,
+            "row": 137,
+            "column": 751,
+            "mask_class": 5,
+            "qa": 6,
+            "land_water_bits": 2,
+            "observed_clear_land_without_detection": true,
+            "fire_detection": false,
+            "distance_from_event_to_sample_km": 0.5335
+          },
+          "within_10km_of_reported_event_point": {
+            "fire_pixels_7_9": 0,
+            "clear_land_class5_pixels": 211,
+            "nearest_fire_pixel_distance_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "within_10km_of_full_route_polyline": {
+            "grid_samples": 524,
+            "mask_class_counts": {
+              "0": 0,
+              "1": 0,
+              "2": 0,
+              "3": 59,
+              "4": 0,
+              "5": 465,
+              "6": 0,
+              "7": 0,
+              "8": 0,
+              "9": 0
+            },
+            "clear_land_class5_pixels": 465,
+            "fire_pixels_7_9": 0,
+            "nearest_fire_pixel_to_reported_event_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "daily_composite_window": "UTC date in RangeBeginningDate; 24-hour daily composite, not an exact ignition/pass time"
+        },
+        {
+          "date": "2025-11-26",
+          "tile": "h12v13",
+          "product": "VJ214A1",
+          "sensor": "NOAA-21",
+          "granule_id": "VJ214A1.A2025330.h12v13.002.2025346030250",
+          "source": {
+            "path": "training/data/environmental/private/viirs-daily-l3-snmf-route-events-2023-2025/VJ214A1/2025/h12v13/VJ214A1.A2025330.h12v13.002.2025346030250.h5",
+            "sha256": "a298a37910d2a69f4d45d99e4ff94b71cbf0047fb10dc0d743418decce0d630e",
+            "bytes": 225556
+          },
+          "event_point_nearest_grid_sample": {
+            "tile_contains_event_coordinate": true,
+            "row": 137,
+            "column": 751,
+            "mask_class": 5,
+            "qa": 6,
+            "land_water_bits": 2,
+            "observed_clear_land_without_detection": true,
+            "fire_detection": false,
+            "distance_from_event_to_sample_km": 0.5335
+          },
+          "within_10km_of_reported_event_point": {
+            "fire_pixels_7_9": 0,
+            "clear_land_class5_pixels": 203,
+            "nearest_fire_pixel_distance_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "within_10km_of_full_route_polyline": {
+            "grid_samples": 524,
+            "mask_class_counts": {
+              "0": 0,
+              "1": 0,
+              "2": 0,
+              "3": 62,
+              "4": 0,
+              "5": 462,
+              "6": 0,
+              "7": 0,
+              "8": 0,
+              "9": 0
+            },
+            "clear_land_class5_pixels": 462,
+            "fire_pixels_7_9": 0,
+            "nearest_fire_pixel_to_reported_event_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "daily_composite_window": "UTC date in RangeBeginningDate; 24-hour daily composite, not an exact ignition/pass time"
+        },
+        {
+          "date": "2025-11-26",
+          "tile": "h12v13",
+          "product": "VNP14A1",
+          "sensor": "Suomi-NPP",
+          "granule_id": "VNP14A1.A2025330.h12v13.002.2025331134249",
+          "source": {
+            "path": "training/data/environmental/private/viirs-daily-l3-snmf-route-events-2023-2025/VNP14A1/2025/h12v13/VNP14A1.A2025330.h12v13.002.2025331134249.h5",
+            "sha256": "6a750bbba78e62380d7cfc78c5263a26d88c803cb74323a16776b89a41d69aa4",
+            "bytes": 218815
+          },
+          "event_point_nearest_grid_sample": {
+            "tile_contains_event_coordinate": true,
+            "row": 137,
+            "column": 751,
+            "mask_class": 5,
+            "qa": 6,
+            "land_water_bits": 2,
+            "observed_clear_land_without_detection": true,
+            "fire_detection": false,
+            "distance_from_event_to_sample_km": 0.5335
+          },
+          "within_10km_of_reported_event_point": {
+            "fire_pixels_7_9": 0,
+            "clear_land_class5_pixels": 206,
+            "nearest_fire_pixel_distance_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "within_10km_of_full_route_polyline": {
+            "grid_samples": 524,
+            "mask_class_counts": {
+              "0": 0,
+              "1": 0,
+              "2": 0,
+              "3": 67,
+              "4": 0,
+              "5": 457,
+              "6": 0,
+              "7": 0,
+              "8": 0,
+              "9": 0
+            },
+            "clear_land_class5_pixels": 457,
+            "fire_pixels_7_9": 0,
+            "nearest_fire_pixel_to_reported_event_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "daily_composite_window": "UTC date in RangeBeginningDate; 24-hour daily composite, not an exact ignition/pass time"
+        }
+      ],
+      "summary_across_sensors_not_independent": {
+        "daily_l3_fire_pixels_within_10km_full_route": 0,
+        "daily_l3_class5_land_pixels_within_10km_full_route": 1384,
+        "daily_l3_fire_pixels_within_10km_reported_point": 0,
+        "sensors_with_fire_near_reported_point": [],
+        "interpretation": "Counts across sensors and nearby route-events can duplicate a single physical fire and are not independent trials."
+      }
+    },
+    {
+      "reported_start_date": "2025-12-11",
+      "route": "Cerro Ventana - Hueco de la Ventana",
+      "incident_names": [
+        "CERRO NAPOSTA /CERRO"
+      ],
+      "incident_status_in_source": "CONTENIDO",
+      "incident_coordinates": {
+        "latitude": -38.13286111111111,
+        "longitude": -61.98330555555556
+      },
+      "reported_point_distance_to_route_km": 8.369,
+      "incident_point_tile": "h13v12",
+      "incident_point_tile_in_acquisition": true,
+      "route_tile_count": 1,
+      "granules": [
+        {
+          "date": "2025-12-11",
+          "tile": "h13v12",
+          "product": "VJ114A1",
+          "sensor": "NOAA-20",
+          "granule_id": "VJ114A1.A2025345.h13v12.002.2025346090304",
+          "source": {
+            "path": "training/data/environmental/private/viirs-daily-l3-snmf-route-events-2023-2025/VJ114A1/2025/h13v12/VJ114A1.A2025345.h13v12.002.2025346090304.h5",
+            "sha256": "3ad5077a5b5acbb0dd44fcda0aa85cee08471f59859c139371fa0eea9c693f4b",
+            "bytes": 220528
+          },
+          "event_point_nearest_grid_sample": {
+            "tile_contains_event_coordinate": true,
+            "row": 976,
+            "column": 149,
+            "mask_class": 5,
+            "qa": 6,
+            "land_water_bits": 2,
+            "observed_clear_land_without_detection": true,
+            "fire_detection": false,
+            "distance_from_event_to_sample_km": 0.4212
+          },
+          "within_10km_of_reported_event_point": {
+            "fire_pixels_7_9": 0,
+            "clear_land_class5_pixels": 354,
+            "nearest_fire_pixel_distance_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "within_10km_of_full_route_polyline": {
+            "grid_samples": 417,
+            "mask_class_counts": {
+              "0": 0,
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 417,
+              "6": 0,
+              "7": 0,
+              "8": 0,
+              "9": 0
+            },
+            "clear_land_class5_pixels": 417,
+            "fire_pixels_7_9": 0,
+            "nearest_fire_pixel_to_reported_event_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "daily_composite_window": "UTC date in RangeBeginningDate; 24-hour daily composite, not an exact ignition/pass time"
+        },
+        {
+          "date": "2025-12-11",
+          "tile": "h13v12",
+          "product": "VJ214A1",
+          "sensor": "NOAA-21",
+          "granule_id": "VJ214A1.A2025345.h13v12.002.2025349062757",
+          "source": {
+            "path": "training/data/environmental/private/viirs-daily-l3-snmf-route-events-2023-2025/VJ214A1/2025/h13v12/VJ214A1.A2025345.h13v12.002.2025349062757.h5",
+            "sha256": "e8bf271bb4fada14acef8794937e6a0683443dabb92dec6c3e922354146ad0b2",
+            "bytes": 220988
+          },
+          "event_point_nearest_grid_sample": {
+            "tile_contains_event_coordinate": true,
+            "row": 976,
+            "column": 149,
+            "mask_class": 5,
+            "qa": 6,
+            "land_water_bits": 2,
+            "observed_clear_land_without_detection": true,
+            "fire_detection": false,
+            "distance_from_event_to_sample_km": 0.4212
+          },
+          "within_10km_of_reported_event_point": {
+            "fire_pixels_7_9": 0,
+            "clear_land_class5_pixels": 354,
+            "nearest_fire_pixel_distance_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "within_10km_of_full_route_polyline": {
+            "grid_samples": 417,
+            "mask_class_counts": {
+              "0": 0,
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 417,
+              "6": 0,
+              "7": 0,
+              "8": 0,
+              "9": 0
+            },
+            "clear_land_class5_pixels": 417,
+            "fire_pixels_7_9": 0,
+            "nearest_fire_pixel_to_reported_event_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "daily_composite_window": "UTC date in RangeBeginningDate; 24-hour daily composite, not an exact ignition/pass time"
+        },
+        {
+          "date": "2025-12-11",
+          "tile": "h13v12",
+          "product": "VNP14A1",
+          "sensor": "Suomi-NPP",
+          "granule_id": "VNP14A1.A2025345.h13v12.002.2025350050836",
+          "source": {
+            "path": "training/data/environmental/private/viirs-daily-l3-snmf-route-events-2023-2025/VNP14A1/2025/h13v12/VNP14A1.A2025345.h13v12.002.2025350050836.h5",
+            "sha256": "dc8348c0d36d69c91a32150f3da97808342930d7c989c5949226e0bdaaec71d5",
+            "bytes": 223239
+          },
+          "event_point_nearest_grid_sample": {
+            "tile_contains_event_coordinate": true,
+            "row": 976,
+            "column": 149,
+            "mask_class": 5,
+            "qa": 6,
+            "land_water_bits": 2,
+            "observed_clear_land_without_detection": true,
+            "fire_detection": false,
+            "distance_from_event_to_sample_km": 0.4212
+          },
+          "within_10km_of_reported_event_point": {
+            "fire_pixels_7_9": 0,
+            "clear_land_class5_pixels": 354,
+            "nearest_fire_pixel_distance_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "within_10km_of_full_route_polyline": {
+            "grid_samples": 417,
+            "mask_class_counts": {
+              "0": 0,
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 417,
+              "6": 0,
+              "7": 0,
+              "8": 0,
+              "9": 0
+            },
+            "clear_land_class5_pixels": 417,
+            "fire_pixels_7_9": 0,
+            "nearest_fire_pixel_to_reported_event_km": null,
+            "fire_pixels_by_confidence": {
+              "7": 0,
+              "8": 0,
+              "9": 0
+            }
+          },
+          "daily_composite_window": "UTC date in RangeBeginningDate; 24-hour daily composite, not an exact ignition/pass time"
+        }
+      ],
+      "summary_across_sensors_not_independent": {
+        "daily_l3_fire_pixels_within_10km_full_route": 0,
+        "daily_l3_class5_land_pixels_within_10km_full_route": 1251,
+        "daily_l3_fire_pixels_within_10km_reported_point": 0,
+        "sensors_with_fire_near_reported_point": [],
+        "interpretation": "Counts across sensors and nearby route-events can duplicate a single physical fire and are not independent trials."
+      }
+    }
+  ],
+  "sources": {
+    "docs/environmental-models-2026-10-22/fire-viirs-daily-l3-event-cohort-2023-2025.json": "270abe20744238c9bead77d3ef67aa70db470d552334303c50e201ff40573b48",
+    "training/data/environmental/private/viirs-daily-l3-snmf-route-events-2023-2025/acquisition-manifest.json": "1505b32b18ee4a9542e15992eadd464756ee957a0579bcc82ce70db0b90e4a9c",
+    "docs/environmental-models-2026-10-22/fire-viirs-daily-l3-acquisition-manifest-2023-2025.json": "e707ede9b624b88e5c32687f2c6e0ede01b6edda94a6e82d666bad0a7552d194",
+    "training/data/environmental/private/fire-route-geometries.json": "d622e3bd3bae7c97df9152d5ae22fa9cf3136f2bbb0ee807703eaddc21d6610a",
+    "docs/environmental-models-2026-10-22/fire-viirs-daily-l3-candidate-audit-2026-10-23.json": "0598401758ec20d500b3f6ac587958aa4aa12325a49653400901fe0c64150489"
+  },
+  "product_documentation": {
+    "nasa_viirs_active_fire_user_guide": "https://viirsland.gsfc.nasa.gov/PDF/VIIRS_activefire_User_Guide.pdf",
+    "nasa_laads_vnp14a1_hdf5_file_specification": "https://ladsweb.modaps.eosdis.nasa.gov/filespec/VIIRS/1/VNP14A1",
+    "doi_by_product": {
+      "VNP14A1": "https://doi.org/10.5067/VIIRS/VNP14A1.002",
+      "VJ114A1": "https://doi.org/10.5067/VIIRS/VJ114A1.002",
+      "VJ214A1": "https://doi.org/10.5067/VIIRS/VJ214A1.002"
+    }
+  },
+  "synthetic_observations": 0,
+  "deployment_approved": false,
+  "limitations": [
+    "The event cohort contains reported positives only; it cannot estimate alert precision, specificity, or false-alarm rate.",
+    "A daily composite has no exact overpass or ignition time and may include a fire detected before or after the reported start date.",
+    "An SNMF coordinate near a route is not proof the fire affected the trail; incident coordinates may be approximate.",
+    "Class 5 describes a clear-land non-detection in the composite cell, not proof of no physical fire in the wider route buffer.",
+    "Repeated satellite detections and product sensors are not independent physical-fire events."
+  ]
+}

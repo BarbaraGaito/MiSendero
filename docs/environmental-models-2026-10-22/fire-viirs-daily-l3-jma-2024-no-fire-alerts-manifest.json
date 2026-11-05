@@ -1,0 +1,233 @@
+{
+  "experiment_id": "viirs-daily-l3-jma-2024-explicit-no-fire-alerts",
+  "model_test_sha256": "7cb87d51e85329ded9345dc61ce804a1d9db9f7e29a955c85f085add7e01bd0d",
+  "no_fire_report_audit_sha256": "a57c45ee46b1bb97763432a9fa647fe9fc903b4550c427d4e46bb2be03a76396",
+  "route_tile_audit_sha256": "0598401758ec20d500b3f6ac587958aa4aa12325a49653400901fe0c64150489",
+  "cmr_response_sha256_by_date_tile": {
+    "2024-05-16:h12v12": "b3eb789892ec51afc702620dd76b5dc3ea97d5ce98f7998fd2ca80dbea26e4d8",
+    "2024-05-17:h12v12": "fced4a0a749f8bdd1b5a10e784c2ed4d1e902ffdc46323488281185b47ce4599",
+    "2024-05-18:h12v13": "7c7085b037b3a054da79e9e1ecd69ec83c4721c39c9a104b5cbd8b0b41d6a098",
+    "2024-05-29:h12v12": "400623b56885d6b1db66472dca77808d36dc987994c4c3d055ec5cf19a9f1bf0",
+    "2024-06-04:h12v12": "5a864a2317459bc416c867331466a9d325007ec571f5ee008379ab1f08a178e5",
+    "2024-06-16:h12v12": "01c172bb9acee1ae2319928e5f2cfb6b8ed97f6ed8e447dd14477459029165f1",
+    "2024-06-30:h12v11": "d31e4985ff7e4ba8d7f7916b342cef2206dc5402264450b69e65db508665d773",
+    "2024-06-30:h12v12": "0ebc1134695b212491e477ca53bc823f2857917f6e93e13684eea88cf44e549a",
+    "2024-07-03:h12v12": "f3e67add3675d5179b5a8f1438d217973046273afa2cda88755f52f2e561f1ef",
+    "2024-11-18:h12v12": "c75dfcf74572d31b67c288ee741d77e8c78c652a33bb01ecf7aa41df558f65d9"
+  },
+  "requested_date_tile_pairs": 11,
+  "unresolved_date_tile_pairs": [
+    {
+      "date": "2024-07-10",
+      "tile": "h12v12",
+      "product": "VNP14A1",
+      "routes": [
+        "Quebrada del Condorito - Balcon Norte"
+      ],
+      "reason": "NASA CMR returned no matching daily granule."
+    }
+  ],
+  "granules": [
+    {
+      "date": "2024-05-16",
+      "year": 2024,
+      "doy": 137,
+      "tile": "h12v12",
+      "product": "VNP14A1",
+      "granule_id": "VNP14A1.A2024137.h12v12.002.2024138095522",
+      "reported_size_mb": 0.18819522857666,
+      "cmr_updated": "2024-05-17T05:33:54.566Z",
+      "status": "downloaded",
+      "bytes": 197337,
+      "sha256": "30644381bc8a70566553c8e173a95a4d2ea386ffa4365163362844e3f62ec10e",
+      "route_alerts": [
+        {
+          "route": "Quebrada del Condorito - Balcon Norte",
+          "score": 0.16412650768496231,
+          "frozen_threshold": 0.1
+        }
+      ]
+    },
+    {
+      "date": "2024-05-17",
+      "year": 2024,
+      "doy": 138,
+      "tile": "h12v12",
+      "product": "VNP14A1",
+      "granule_id": "VNP14A1.A2024138.h12v12.002.2024139093639",
+      "reported_size_mb": 0.173216819763184,
+      "cmr_updated": "2024-05-18T08:09:34.831Z",
+      "status": "downloaded",
+      "bytes": 181631,
+      "sha256": "11ac5530b66db093228588239f210f64f0e605c32db6b9ded22eb2ec73f36cd1",
+      "route_alerts": [
+        {
+          "route": "Quebrada del Condorito - Balcon Norte",
+          "score": 0.10502458521459541,
+          "frozen_threshold": 0.1
+        }
+      ]
+    },
+    {
+      "date": "2024-05-18",
+      "year": 2024,
+      "doy": 139,
+      "tile": "h12v13",
+      "product": "VNP14A1",
+      "granule_id": "VNP14A1.A2024139.h12v13.002.2024141135544",
+      "reported_size_mb": 0.183205604553223,
+      "cmr_updated": "2024-05-20T09:02:11.737Z",
+      "status": "downloaded",
+      "bytes": 192105,
+      "sha256": "4a610fd4395a231b20a5550c974f1ecdc5825ffb888cc6383475c4cad981dd5f",
+      "route_alerts": [
+        {
+          "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+          "score": 0.15286807506074157,
+          "frozen_threshold": 0.1
+        }
+      ]
+    },
+    {
+      "date": "2024-05-29",
+      "year": 2024,
+      "doy": 150,
+      "tile": "h12v12",
+      "product": "VNP14A1",
+      "granule_id": "VNP14A1.A2024150.h12v12.002.2024167040144",
+      "reported_size_mb": 0.212212562561035,
+      "cmr_updated": "2024-06-15T14:02:23.534Z",
+      "status": "downloaded",
+      "bytes": 222521,
+      "sha256": "6d66b5afde82bd79bd69acdcb685c38419e9d1ac4dc671e32e19bf13613d359a",
+      "route_alerts": [
+        {
+          "route": "Quebrada del Condorito - Balcon Norte",
+          "score": 0.27380158313408454,
+          "frozen_threshold": 0.1
+        }
+      ]
+    },
+    {
+      "date": "2024-06-04",
+      "year": 2024,
+      "doy": 156,
+      "tile": "h12v12",
+      "product": "VNP14A1",
+      "granule_id": "VNP14A1.A2024156.h12v12.002.2024167094246",
+      "reported_size_mb": 0.217663764953613,
+      "cmr_updated": "2024-06-15T20:14:52.481Z",
+      "status": "downloaded",
+      "bytes": 228237,
+      "sha256": "e7561e5b0c8500a5f6c80a7f4753ade340f333b47b5dd16ba355d848983a46f8",
+      "route_alerts": [
+        {
+          "route": "Quebrada del Condorito - Balcon Norte",
+          "score": 0.41569371548181844,
+          "frozen_threshold": 0.1
+        }
+      ]
+    },
+    {
+      "date": "2024-06-16",
+      "year": 2024,
+      "doy": 168,
+      "tile": "h12v12",
+      "product": "VNP14A1",
+      "granule_id": "VNP14A1.A2024168.h12v12.002.2024169084024",
+      "reported_size_mb": 0.182927131652832,
+      "cmr_updated": "2024-06-18T07:02:34.448Z",
+      "status": "downloaded",
+      "bytes": 191813,
+      "sha256": "c6b424dfd80d4efd8e9e7662ba8354e9ef0f80236396c3e34f9e3c735b133425",
+      "route_alerts": [
+        {
+          "route": "Quebrada del Condorito - Balcon Norte",
+          "score": 0.21203771517555065,
+          "frozen_threshold": 0.1
+        }
+      ]
+    },
+    {
+      "date": "2024-06-30",
+      "year": 2024,
+      "doy": 182,
+      "tile": "h12v11",
+      "product": "VNP14A1",
+      "granule_id": "VNP14A1.A2024182.h12v11.002.2024183122340",
+      "reported_size_mb": 0.141726493835449,
+      "cmr_updated": "2024-07-01T07:30:17.806Z",
+      "status": "downloaded",
+      "bytes": 148611,
+      "sha256": "34fe4cf8b5843e852c2c39d6f38a3dbbbdd0ca5c260587d28a32266481130e2f",
+      "route_alerts": [
+        {
+          "route": "Sendero La Chuña - El Rey",
+          "score": 0.17219532266237805,
+          "frozen_threshold": 0.1
+        }
+      ]
+    },
+    {
+      "date": "2024-06-30",
+      "year": 2024,
+      "doy": 182,
+      "tile": "h12v12",
+      "product": "VNP14A1",
+      "granule_id": "VNP14A1.A2024182.h12v12.002.2024183122537",
+      "reported_size_mb": 0.187966346740723,
+      "cmr_updated": "2024-07-01T07:29:51.471Z",
+      "status": "downloaded",
+      "bytes": 197097,
+      "sha256": "19edcd8a407887ded232ab19df81e1a2c147c12f2ca597c0546fc3ab28a6e0df",
+      "route_alerts": [
+        {
+          "route": "Quebrada del Condorito - Balcon Norte",
+          "score": 0.8284147050339831,
+          "frozen_threshold": 0.1
+        }
+      ]
+    },
+    {
+      "date": "2024-07-03",
+      "year": 2024,
+      "doy": 185,
+      "tile": "h12v12",
+      "product": "VNP14A1",
+      "granule_id": "VNP14A1.A2024185.h12v12.002.2024186113239",
+      "reported_size_mb": 0.193512916564941,
+      "cmr_updated": "2024-07-04T06:45:49.206Z",
+      "status": "downloaded",
+      "bytes": 202913,
+      "sha256": "5a0a63eab5c7a771c4855e44022c80542434d10ec3f0cb998689d12c4a9580de",
+      "route_alerts": [
+        {
+          "route": "Quebrada del Condorito - Balcon Norte",
+          "score": 0.2863843357572202,
+          "frozen_threshold": 0.1
+        }
+      ]
+    },
+    {
+      "date": "2024-11-18",
+      "year": 2024,
+      "doy": 323,
+      "tile": "h12v12",
+      "product": "VNP14A1",
+      "granule_id": "VNP14A1.A2024323.h12v12.002.2024324085809",
+      "reported_size_mb": 0.18783950805664062,
+      "cmr_updated": "2024-11-19T03:01:29.643Z",
+      "status": "downloaded",
+      "bytes": 196964,
+      "sha256": "cf15c58c1019deb530d5f29879ea1853e9e0a52f62875fd2a0544c8ebfe38de4",
+      "route_alerts": [
+        {
+          "route": "Sendero Namuncura",
+          "score": 0.16601745326884074,
+          "frozen_threshold": 0.1
+        }
+      ]
+    }
+  ],
+  "synthetic_observations": 0
+}

@@ -1,0 +1,298 @@
+{
+  "experiment_id": "fire-goes19-2025q4-2026jan",
+  "protocol_sha256": "cbf6962e07ed4b19bfa6d78e45acec8823f8ff022d6381fa38bef465dc2628d9",
+  "temporal_split": {
+    "validation_start": "2025-12-01",
+    "test_start": "2026-01-01",
+    "test_end_exclusive": "2026-02-01"
+  },
+  "source_sha256": "07bdecf2b7d88ee94403ca97b4a7a9cbf67e4efeb5a9d5ad1b75151eaacad98b",
+  "availability_sha256": "d14059389e901c4003435fcb8e5a76a19fc1e6a08e98115e07faa72c5a5b24b6",
+  "rows_by_horizon": {
+    "1": {
+      "validation": {
+        "average_precision": 0.444861153728261,
+        "brier": 1.5056344636832364e-05,
+        "precision_at_0_5": 0.6875,
+        "recall_at_0_5": 0.6470588235294118,
+        "rows": 730589,
+        "positives": 17,
+        "persistence_baseline": {
+          "average_precision": 0.444861153728261,
+          "brier": 1.5056344949075336e-05,
+          "precision": 0.6875,
+          "recall": 0.6470588235294118
+        },
+        "training_prevalence_baseline": {
+          "average_precision": 1.9747541783682607e-05,
+          "brier": 2.3268367697865314e-05
+        }
+      },
+      "test": {
+        "average_precision": 0.37487453887567723,
+        "brier": 0.0001342344330623746,
+        "precision_at_0_5": 0.7027027027027027,
+        "recall_at_0_5": 0.19117647058823528,
+        "rows": 894307,
+        "positives": 136,
+        "persistence_baseline": {
+          "average_precision": 0.370604535872294,
+          "brier": 0.0001151729775121966,
+          "precision": 0.6299212598425197,
+          "recall": 0.5882352941176471
+        },
+        "training_prevalence_baseline": {
+          "average_precision": 1.9747541783682607e-05,
+          "brier": 0.00015206744151329197
+        }
+      },
+      "status": "trained_exploratory_with_sparse_partitions",
+      "sparse_positive_partitions": [
+        "validation"
+      ],
+      "positive_region_days_by_partition": {
+        "train": 5,
+        "validation": 5,
+        "test": 23
+      },
+      "region_day_caution": "A region-day is not an independent physical wildfire event; multiple regions may observe the same fire and adjacent days are correlated.",
+      "model_sha256": "1b12a5796112f68d46ba415faf21279c08ad33c1121ca53212371490ad3758df",
+      "model_path": "training/data/environmental/private/fire-goes19-2025q4-2026jan-models/logistic-1h.joblib",
+      "training_rows": 1417898,
+      "training_positives": 28,
+      "matched_pairs": 2929,
+      "note": "Class-weighted scores are not calibrated probabilities; repeated pixels and scenes are correlated."
+    },
+    "2": {
+      "validation": {
+        "average_precision": 2.27714571170766e-05,
+        "brier": 2.277145722473506e-05,
+        "precision_at_0_5": 0.0,
+        "recall_at_0_5": 0.0,
+        "rows": 702634,
+        "positives": 16,
+        "persistence_baseline": {
+          "average_precision": 0.2666780523952252,
+          "brier": 2.1348241047259314e-05,
+          "precision": 0.5333333333333333,
+          "recall": 0.5
+        },
+        "training_prevalence_baseline": {
+          "average_precision": 2.1290513461110673e-05,
+          "brier": 2.2770940771011485e-05
+        }
+      },
+      "test": {
+        "average_precision": 0.00014957486221854038,
+        "brier": 0.00014957485836930573,
+        "precision_at_0_5": 0.0,
+        "recall_at_0_5": 0.0,
+        "rows": 869130,
+        "positives": 130,
+        "persistence_baseline": {
+          "average_precision": 0.14656605732885775,
+          "brier": 0.0001783392587990289,
+          "precision": 0.39669421487603307,
+          "recall": 0.36923076923076925
+        },
+        "training_prevalence_baseline": {
+          "average_precision": 2.1290513461110673e-05,
+          "brier": 0.00014956894645326883
+        }
+      },
+      "status": "trained_exploratory_with_sparse_partitions",
+      "sparse_positive_partitions": [
+        "validation"
+      ],
+      "positive_region_days_by_partition": {
+        "train": 6,
+        "validation": 4,
+        "test": 25
+      },
+      "region_day_caution": "A region-day is not an independent physical wildfire event; multiple regions may observe the same fire and adjacent days are correlated.",
+      "model_sha256": "ec03e2ebceb5b36d730fe8ea7441624bf1fc2f40e3b2051f809be67c14c1db7d",
+      "model_path": "training/data/environmental/private/fire-goes19-2025q4-2026jan-models/logistic-2h.joblib",
+      "training_rows": 1362109,
+      "training_positives": 29,
+      "matched_pairs": 2927,
+      "note": "Class-weighted scores are not calibrated probabilities; repeated pixels and scenes are correlated."
+    },
+    "3": {
+      "validation": {
+        "average_precision": 0.18751901883303368,
+        "brier": 2.3407794287777506e-05,
+        "precision_at_0_5": 0.0,
+        "recall_at_0_5": 0.0,
+        "rows": 683533,
+        "positives": 16,
+        "persistence_baseline": {
+          "average_precision": 0.16072891558585006,
+          "brier": 2.6333768815843565e-05,
+          "precision": 0.42857142857142855,
+          "recall": 0.375
+        },
+        "training_prevalence_baseline": {
+          "average_precision": 2.1201456237165546e-05,
+          "brier": 2.3407251446057113e-05
+        },
+        "validation_selected_threshold": 4.243600120594339e-22,
+        "at_validation_precision_floor_0_80": {
+          "precision": 1.0,
+          "recall": 0.1875,
+          "predicted_positive_rows": 3
+        }
+      },
+      "test": {
+        "average_precision": 0.0001500633666012875,
+        "brier": 0.000150063366163522,
+        "precision_at_0_5": 0.0,
+        "recall_at_0_5": 0.0,
+        "rows": 852973,
+        "positives": 128,
+        "persistence_baseline": {
+          "average_precision": 0.07474863253691394,
+          "brier": 0.00021219897933463311,
+          "precision": 0.2809917355371901,
+          "recall": 0.265625
+        },
+        "training_prevalence_baseline": {
+          "average_precision": 2.1201456237165546e-05,
+          "brier": 0.0001500574529792345
+        },
+        "validation_selected_threshold": 4.243600120594339e-22,
+        "at_validation_precision_floor_0_80": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "predicted_positive_rows": 0
+        }
+      },
+      "status": "trained_exploratory_with_sparse_partitions",
+      "sparse_positive_partitions": [
+        "validation"
+      ],
+      "positive_region_days_by_partition": {
+        "train": 6,
+        "validation": 4,
+        "test": 24
+      },
+      "region_day_caution": "A region-day is not an independent physical wildfire event; multiple regions may observe the same fire and adjacent days are correlated.",
+      "model_sha256": "6e6d954a33be908ad148723a16c66cbef505b8c3b4d03c16542840cc33025af0",
+      "model_path": "training/data/environmental/private/fire-goes19-2025q4-2026jan-models/logistic-3h.joblib",
+      "training_rows": 1320664,
+      "training_positives": 28,
+      "matched_pairs": 2925,
+      "note": "Class-weighted scores are not calibrated probabilities; repeated pixels and scenes are correlated."
+    },
+    "6": {
+      "validation": {
+        "average_precision": 2.004895028322998e-05,
+        "brier": 2.0048950318596326e-05,
+        "precision_at_0_5": 0.0,
+        "recall_at_0_5": 0.0,
+        "rows": 648413,
+        "positives": 13,
+        "persistence_baseline": {
+          "average_precision": 0.049465971719998086,
+          "brier": 3.238676584214073e-05,
+          "precision": 0.21428571428571427,
+          "recall": 0.23076923076923078
+        },
+        "training_prevalence_baseline": {
+          "average_precision": 2.1213043410861567e-05,
+          "brier": 2.0048549677935335e-05
+        }
+      },
+      "test": {
+        "average_precision": 0.00017071963202602744,
+        "brier": 0.000170719635207206,
+        "precision_at_0_5": 0.0,
+        "recall_at_0_5": 0.0,
+        "rows": 820058,
+        "positives": 140,
+        "persistence_baseline": {
+          "average_precision": 0.03474709998566479,
+          "brier": 0.0002670542815264286,
+          "precision": 0.1937984496124031,
+          "recall": 0.17857142857142858
+        },
+        "training_prevalence_baseline": {
+          "average_precision": 2.1213043410861567e-05,
+          "brier": 0.00017071283905330774
+        }
+      },
+      "status": "trained_exploratory_with_sparse_partitions",
+      "sparse_positive_partitions": [
+        "validation"
+      ],
+      "positive_region_days_by_partition": {
+        "train": 6,
+        "validation": 4,
+        "test": 24
+      },
+      "region_day_caution": "A region-day is not an independent physical wildfire event; multiple regions may observe the same fire and adjacent days are correlated.",
+      "model_sha256": "83a33d27c7637ebe08ff1a946588db59b211e205ef0da2ffbb1560fefb827f57",
+      "model_path": "training/data/environmental/private/fire-goes19-2025q4-2026jan-models/logistic-6h.joblib",
+      "training_rows": 1225661,
+      "training_positives": 26,
+      "matched_pairs": 2919,
+      "note": "Class-weighted scores are not calibrated probabilities; repeated pixels and scenes are correlated."
+    },
+    "12": {
+      "validation": {
+        "average_precision": 2.1755466969540873e-05,
+        "brier": 1.9893821445293725e-05,
+        "precision_at_0_5": 0.0,
+        "recall_at_0_5": 0.0,
+        "rows": 604846,
+        "positives": 11,
+        "persistence_baseline": {
+          "average_precision": 1.818644745935329e-05,
+          "brier": 4.463946194568535e-05,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "training_prevalence_baseline": {
+          "average_precision": 1.6064787503023303e-05,
+          "brier": 1.8186121213923076e-05
+        }
+      },
+      "test": {
+        "average_precision": 0.0001650252996478614,
+        "brier": 0.00016502529615536332,
+        "precision_at_0_5": 0.0,
+        "recall_at_0_5": 0.0,
+        "rows": 787758,
+        "positives": 130,
+        "persistence_baseline": {
+          "average_precision": 0.014217278478018701,
+          "brier": 0.0002830818601651776,
+          "precision": 0.12195121951219512,
+          "recall": 0.11538461538461539
+        },
+        "training_prevalence_baseline": {
+          "average_precision": 1.6064787503023303e-05,
+          "brier": 0.00016502025553251603
+        }
+      },
+      "status": "trained_exploratory_with_sparse_partitions",
+      "sparse_positive_partitions": [
+        "train",
+        "validation"
+      ],
+      "positive_region_days_by_partition": {
+        "train": 7,
+        "validation": 4,
+        "test": 24
+      },
+      "region_day_caution": "A region-day is not an independent physical wildfire event; multiple regions may observe the same fire and adjacent days are correlated.",
+      "model_sha256": "ecc8b41e1b8fdfdd628cfdbe07d4ef514a207d902bdfd2c13aa9c5f5502ecc4e",
+      "model_path": "training/data/environmental/private/fire-goes19-2025q4-2026jan-models/logistic-12h.joblib",
+      "training_rows": 1120463,
+      "training_positives": 18,
+      "matched_pairs": 2907,
+      "note": "Class-weighted scores are not calibrated probabilities; repeated pixels and scenes are correlated."
+    }
+  },
+  "selection": "Exploratory only; no horizon authorized for app use.",
+  "deployment_approved": false
+}

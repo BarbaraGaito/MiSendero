@@ -1,0 +1,40 @@
+{
+  "status": "passed",
+  "report_sha256": "183455603dd6cf6266e86dfbf64dcf620e0e1238a9d3f4e4fe6b67ad3c38829b",
+  "pipeline_code_sha256": {
+    "environmental_sources.py": "ee29c22086eb0a4d2a30941cf3f1d60f85d18e424515206f6be1a6dc3529e691",
+    "train_environmental.py": "e78e9e455469f52dafbc82c3c336a8127502949b231cdead28297eac8840c622",
+    "predict_environmental.py": "df9cb55e2c5ed799f630d41e810d3ecc26b4ddb9cf254fa5c9822151cf95d304"
+  },
+  "checks": [
+    "raw hashes",
+    "target and input row identities",
+    "publication-aware causal joins",
+    "chronological partition counts",
+    "validation-only selection",
+    "four candidate MAE/RMSE",
+    "model hashes"
+  ],
+  "models": [
+    {
+      "series_id": 36964,
+      "horizon_hours": 3,
+      "verified_test_rows": 3578
+    },
+    {
+      "series_id": 36964,
+      "horizon_hours": 6,
+      "verified_test_rows": 3570
+    },
+    {
+      "series_id": 37019,
+      "horizon_hours": 3,
+      "verified_test_rows": 880
+    },
+    {
+      "series_id": 37019,
+      "horizon_hours": 6,
+      "verified_test_rows": 935
+    }
+  ]
+}

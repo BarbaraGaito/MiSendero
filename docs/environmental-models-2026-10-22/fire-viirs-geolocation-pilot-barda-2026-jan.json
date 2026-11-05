@@ -1,0 +1,123 @@
+{
+  "experiment_id": "viirs-geolocation-pilot-barda-2026-jan",
+  "status": "single_overpass_observation_screen_complete",
+  "acquisition_utc": "2026-01-07T04:24:00Z",
+  "route": "Bosque Tallado desde la plataforma del Piltriquitron",
+  "spatial_radius_km": 10.0,
+  "source": {
+    "fire_mask_product": "VNP14IMG Collection 2, 375 m active-fire mask",
+    "geolocation_product": "VNP03IMG, 375 m per-pixel terrain-corrected geolocation",
+    "fire_mask_granule": "VNP14IMG.A2026007.0424.002.2026013204154",
+    "geolocation_granule": "VNP03IMG.A2026007.0424.002.2026013152419.nc",
+    "fire_mask_sha256": "d511396a8516ebfb7da0607f96d3745ac02f204539a8d2b763af99c07ff94717",
+    "geolocation_sha256": "9ab190f5ce344647204e3e3c95ea8f92708cd33a40113708e29417bd94926de9",
+    "geolocation_downloaded_bytes": 149404450,
+    "geolocation_downloaded_size_mb": 149.4,
+    "fire_mask_manifest_sha256": "d98c68cc06ca79418354b14b56717ebaec6eedd4739b5d09d6b351e907b3bb17",
+    "geolocation_manifest_sha256": "8276bf14379e5e12575cdfe675e190c616a10f9b5e6794a7e33fd34152dc59ab",
+    "grid_shape": [
+      6464,
+      6400
+    ],
+    "pixels_within_search_bbox_and_valid_geolocation": 4309,
+    "geolocation_valid_rule": "quality_flag == 0, finite geolocation within valid lat/lon bounds",
+    "land_rule": "land_water_mask in {1,4,5,6}; ocean, coastline, and fill excluded",
+    "algorithm_qa_rule": "bits 0–6 zero; exclude bits 18, 19, and 22"
+  },
+  "summary": {
+    "geolocated_land_pixels_within_10km_of_route": 676,
+    "clear_land_class5_pixels_within_10km_of_route": 637,
+    "fire_class7_8_9_pixels_within_10km_of_route": 0,
+    "mask_class_counts_within_10km_of_route": {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 39,
+      "5": 637,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0
+    },
+    "qa_screened_fire_detections_within_20km_of_route": [
+      {
+        "latitude": -42.086571,
+        "longitude": -71.526176,
+        "mask_class": 8,
+        "algorithm_qa": 29952,
+        "land_water_mask": 1,
+        "distance_to_route_km": 13.245,
+        "line": 373,
+        "sample": 13
+      },
+      {
+        "latitude": -42.09013,
+        "longitude": -71.516304,
+        "mask_class": 8,
+        "algorithm_qa": 29952,
+        "land_water_mask": 1,
+        "distance_to_route_km": 13.412,
+        "line": 373,
+        "sample": 14
+      },
+      {
+        "latitude": -42.093369,
+        "longitude": -71.530449,
+        "mask_class": 8,
+        "algorithm_qa": 384,
+        "land_water_mask": 1,
+        "distance_to_route_km": 14.071,
+        "line": 374,
+        "sample": 13
+      },
+      {
+        "latitude": -42.10429,
+        "longitude": -71.499947,
+        "mask_class": 8,
+        "algorithm_qa": 384,
+        "land_water_mask": 1,
+        "distance_to_route_km": 14.728,
+        "line": 374,
+        "sample": 14
+      },
+      {
+        "latitude": -42.091049,
+        "longitude": -71.533531,
+        "mask_class": 8,
+        "algorithm_qa": 29952,
+        "land_water_mask": 1,
+        "distance_to_route_km": 13.907,
+        "line": 392,
+        "sample": 13
+      },
+      {
+        "latitude": -42.105621,
+        "longitude": -71.493614,
+        "mask_class": 8,
+        "algorithm_qa": 29952,
+        "land_water_mask": 1,
+        "distance_to_route_km": 14.823,
+        "line": 392,
+        "sample": 15
+      },
+      {
+        "latitude": -42.142464,
+        "longitude": -71.552902,
+        "mask_class": 8,
+        "algorithm_qa": 29952,
+        "land_water_mask": 1,
+        "distance_to_route_km": 19.837,
+        "line": 399,
+        "sample": 13
+      }
+    ]
+  },
+  "limitations": [
+    "A class-5 pixel is an observed clear-land non-detection at this satellite pass, not proof that no physical fire existed between passes or below the sensor detection threshold.",
+    "One overpass around one incident cannot estimate alert precision, recall, lead time, or calibration.",
+    "The route radius and mask QA filtering are descriptive evaluation rules; they do not change the trained model."
+  ],
+  "synthetic_observations": 0,
+  "deployment_approved": false
+}

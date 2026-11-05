@@ -1,0 +1,24 @@
+{
+  "status": "passed",
+  "report_sha256": "cffd0300fb6896e396e9cdfbdb408f0a057fdc719fc280f15716c837bcc64f75",
+  "original_cogs_verified": 880,
+  "partitions": {
+    "temporal_test": {
+      "verified_predictions": 341975,
+      "positive_observations": 31
+    },
+    "geographic_test": {
+      "verified_predictions": 188950,
+      "positive_observations": 3
+    }
+  },
+  "checks": [
+    "original COG hashes",
+    "qualified pixel/date labels",
+    "causal publication joins",
+    "temporal and entire-tile partitions",
+    "validation-only selection",
+    "probabilities, AP, Brier and confusion matrices",
+    "model hash"
+  ]
+}

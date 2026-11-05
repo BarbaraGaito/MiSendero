@@ -1,0 +1,719 @@
+{
+  "experiment_id": "goes19-frozen-model-full-trail-10km-sensitivity",
+  "status": "exploratory_unapproved",
+  "target": "Any nominal/high-quality GOES fire detection among sampled pixels within 10 km of the complete trail polyline during the target hour; not a physical-fire occurrence or ignition label.",
+  "protocol": {
+    "frozen_models_only": true,
+    "models_refit": false,
+    "radius_km": 10.0,
+    "geometry": "Complete local route polylines; each GOES sampled pixel retained only when its distance to the matching route polyline is at most 10 km.",
+    "sampled_core_pixels_by_route": {
+      "Bosque Tallado desde la plataforma del Piltriquitron": 11,
+      "Cerro Ventana - Hueco de la Ventana": 14,
+      "Quebrada del Condorito - Balcon Norte": 18,
+      "Refugio Frey desde Villa Catedral": 18,
+      "Sendero Che Roga - Mburucuyá": 16,
+      "Sendero La Chuña - El Rey": 18,
+      "Sendero Macuco - Salto Arrechea": 9,
+      "Sendero Namuncura": 12
+    },
+    "coverage_rule": "At least max(5, ceil(50% of sampled core pixels)) with known target labels, and at least max(3, ceil(25% of core pixels)) with usable recent history. Unknown pixels remain excluded.",
+    "temporal_split": {
+      "validation": [
+        "2025-12-01",
+        "2025-12-31"
+      ],
+      "test": [
+        "2026-01-01",
+        "2026-01-31"
+      ]
+    },
+    "threshold_gate": "Validation GOES proxy precision >= 80% with at least 5 route-hour alerts; maximize recall. If no threshold passes, 0.5 is diagnostic only."
+  },
+  "inputs": {
+    "goes_observations_sha256": "07bdecf2b7d88ee94403ca97b4a7a9cbf67e4efeb5a9d5ad1b75151eaacad98b",
+    "goes_availability_sha256": "d14059389e901c4003435fcb8e5a76a19fc1e6a08e98115e07faa72c5a5b24b6",
+    "training_report_sha256": "3900c35b3b156482f2bd50417f48680615ebc43bd7346e7ca3b79fd195f926bb",
+    "route_geometry_sha256": "d622e3bd3bae7c97df9152d5ae22fa9cf3136f2bbb0ee807703eaddc21d6610a",
+    "independent_snmf_event_audit_sha256": "279f0293f8b7a60a1b482634557591f9fb6882fc7c9c9dec4200eca21315a7d0",
+    "goes_episode_snmf_crosscheck_sha256": "3075c97a0c6631ec1d255778160d275701e6da5a357b45584983830aa373d903"
+  },
+  "results_by_horizon": {
+    "1": {
+      "matched_issue_target_scan_pairs": 2929,
+      "training_route_hours": 6618,
+      "training_positive_route_hours": 15,
+      "validation_route_hours": 3351,
+      "test_route_hours": 4170,
+      "validation_threshold": {
+        "selected": false,
+        "reason": "No validation threshold achieved route-sector-hour proxy precision >= 80% with at least 5 alerts.",
+        "best_validation_precision_with_at_least_minimum_alerts": {
+          "threshold": 1.7965749414795271e-34,
+          "alerts": 5,
+          "true_positive_alerts": 0,
+          "precision_proxy": 0.0,
+          "recall_proxy": 0.0
+        }
+      },
+      "selected_or_diagnostic_threshold": 0.5,
+      "validation": {
+        "route_sector_hours": 3351,
+        "positive_route_sector_hours": 0,
+        "prevalence": 0.0,
+        "average_precision": null,
+        "brier_score_class_weighted_scores_not_calibrated": 9.02138094099122e-71,
+        "threshold": 0.5,
+        "alerts": 0,
+        "true_positive_alerts": 0,
+        "precision_proxy": null,
+        "precision_exact_95ci_descriptive": null,
+        "recall_proxy": null,
+        "alert_episodes": {
+          "alert_episodes": 0,
+          "positive_alert_episodes": 0,
+          "precision_proxy": null,
+          "precision_exact_95ci_descriptive": null,
+          "episode_details": [],
+          "independence_warning": "Consecutive alerts were grouped by route and hour; distinct routes may still share one physical fire and this remains a GOES-label proxy."
+        },
+        "persistence_baseline": {
+          "alerts": 0,
+          "true_positive_alerts": 0,
+          "precision_proxy": null,
+          "precision_exact_95ci_descriptive": null,
+          "recall_proxy": null,
+          "alert_episodes": {
+            "alert_episodes": 0,
+            "positive_alert_episodes": 0,
+            "precision_proxy": null,
+            "precision_exact_95ci_descriptive": null,
+            "episode_details": null,
+            "independence_warning": "Consecutive alerts were grouped by route and hour; distinct routes may still share one physical fire and this remains a GOES-label proxy."
+          }
+        },
+        "prevalence_baseline_brier": 5.1372297919873184e-06
+      },
+      "test_at_fixed_0_5_diagnostic": {
+        "route_sector_hours": 4170,
+        "positive_route_sector_hours": 0,
+        "prevalence": 0.0,
+        "average_precision": null,
+        "brier_score_class_weighted_scores_not_calibrated": 0.0,
+        "threshold": 0.5,
+        "alerts": 0,
+        "true_positive_alerts": 0,
+        "precision_proxy": null,
+        "precision_exact_95ci_descriptive": null,
+        "recall_proxy": null,
+        "alert_episodes": {
+          "alert_episodes": 0,
+          "positive_alert_episodes": 0,
+          "precision_proxy": null,
+          "precision_exact_95ci_descriptive": null,
+          "episode_details": [],
+          "independence_warning": "Consecutive alerts were grouped by route and hour; distinct routes may still share one physical fire and this remains a GOES-label proxy."
+        },
+        "persistence_baseline": {
+          "alerts": 0,
+          "true_positive_alerts": 0,
+          "precision_proxy": null,
+          "precision_exact_95ci_descriptive": null,
+          "recall_proxy": null,
+          "alert_episodes": {
+            "alert_episodes": 0,
+            "positive_alert_episodes": 0,
+            "precision_proxy": null,
+            "precision_exact_95ci_descriptive": null,
+            "episode_details": null,
+            "independence_warning": "Consecutive alerts were grouped by route and hour; distinct routes may still share one physical fire and this remains a GOES-label proxy."
+          }
+        },
+        "prevalence_baseline_brier": 5.13722979198732e-06
+      },
+      "test_at_selected_or_diagnostic_threshold": {
+        "route_sector_hours": 4170,
+        "positive_route_sector_hours": 0,
+        "prevalence": 0.0,
+        "average_precision": null,
+        "brier_score_class_weighted_scores_not_calibrated": 0.0,
+        "threshold": 0.5,
+        "alerts": 0,
+        "true_positive_alerts": 0,
+        "precision_proxy": null,
+        "precision_exact_95ci_descriptive": null,
+        "recall_proxy": null,
+        "alert_episodes": {
+          "alert_episodes": 0,
+          "positive_alert_episodes": 0,
+          "precision_proxy": null,
+          "precision_exact_95ci_descriptive": null,
+          "episode_details": [],
+          "independence_warning": "Consecutive alerts were grouped by route and hour; distinct routes may still share one physical fire and this remains a GOES-label proxy."
+        },
+        "persistence_baseline": {
+          "alerts": 0,
+          "true_positive_alerts": 0,
+          "precision_proxy": null,
+          "precision_exact_95ci_descriptive": null,
+          "recall_proxy": null,
+          "alert_episodes": {
+            "alert_episodes": 0,
+            "positive_alert_episodes": 0,
+            "precision_proxy": null,
+            "precision_exact_95ci_descriptive": null,
+            "episode_details": null,
+            "independence_warning": "Consecutive alerts were grouped by route and hour; distinct routes may still share one physical fire and this remains a GOES-label proxy."
+          }
+        },
+        "prevalence_baseline_brier": 5.13722979198732e-06
+      },
+      "frozen_model_sha256": "1b12a5796112f68d46ba415faf21279c08ad33c1121ca53212371490ad3758df"
+    },
+    "2": {
+      "matched_issue_target_scan_pairs": 2927,
+      "training_route_hours": 6387,
+      "training_positive_route_hours": 14,
+      "validation_route_hours": 3221,
+      "test_route_hours": 4053,
+      "validation_threshold": {
+        "selected": false,
+        "reason": "No validation threshold achieved route-sector-hour proxy precision >= 80% with at least 5 alerts.",
+        "best_validation_precision_with_at_least_minimum_alerts": {
+          "threshold": 0.0,
+          "alerts": 3221,
+          "true_positive_alerts": 0,
+          "precision_proxy": 0.0,
+          "recall_proxy": 0.0
+        }
+      },
+      "selected_or_diagnostic_threshold": 0.5,
+      "validation": {
+        "route_sector_hours": 3221,
+        "positive_route_sector_hours": 0,
+        "prevalence": 0.0,
+        "average_precision": null,
+        "brier_score_class_weighted_scores_not_calibrated": 0.0,
+        "threshold": 0.5,
+        "alerts": 0,
+        "true_positive_alerts": 0,
+        "precision_proxy": null,
+        "precision_exact_95ci_descriptive": null,
+        "recall_proxy": null,
+        "alert_episodes": {
+          "alert_episodes": 0,
+          "positive_alert_episodes": 0,
+          "precision_proxy": null,
+          "precision_exact_95ci_descriptive": null,
+          "episode_details": [],
+          "independence_warning": "Consecutive alerts were grouped by route and hour; distinct routes may still share one physical fire and this remains a GOES-label proxy."
+        },
+        "persistence_baseline": {
+          "alerts": 0,
+          "true_positive_alerts": 0,
+          "precision_proxy": null,
+          "precision_exact_95ci_descriptive": null,
+          "recall_proxy": null,
+          "alert_episodes": {
+            "alert_episodes": 0,
+            "positive_alert_episodes": 0,
+            "precision_proxy": null,
+            "precision_exact_95ci_descriptive": null,
+            "episode_details": null,
+            "independence_warning": "Consecutive alerts were grouped by route and hour; distinct routes may still share one physical fire and this remains a GOES-label proxy."
+          }
+        },
+        "prevalence_baseline_brier": 4.804655338417048e-06
+      },
+      "test_at_fixed_0_5_diagnostic": {
+        "route_sector_hours": 4053,
+        "positive_route_sector_hours": 0,
+        "prevalence": 0.0,
+        "average_precision": null,
+        "brier_score_class_weighted_scores_not_calibrated": 0.0,
+        "threshold": 0.5,
+        "alerts": 0,
+        "true_positive_alerts": 0,
+        "precision_proxy": null,
+        "precision_exact_95ci_descriptive": null,
+        "recall_proxy": null,
+        "alert_episodes": {
+          "alert_episodes": 0,
+          "positive_alert_episodes": 0,
+          "precision_proxy": null,
+          "precision_exact_95ci_descriptive": null,
+          "episode_details": [],
+          "independence_warning": "Consecutive alerts were grouped by route and hour; distinct routes may still share one physical fire and this remains a GOES-label proxy."
+        },
+        "persistence_baseline": {
+          "alerts": 0,
+          "true_positive_alerts": 0,
+          "precision_proxy": null,
+          "precision_exact_95ci_descriptive": null,
+          "recall_proxy": null,
+          "alert_episodes": {
+            "alert_episodes": 0,
+            "positive_alert_episodes": 0,
+            "precision_proxy": null,
+            "precision_exact_95ci_descriptive": null,
+            "episode_details": null,
+            "independence_warning": "Consecutive alerts were grouped by route and hour; distinct routes may still share one physical fire and this remains a GOES-label proxy."
+          }
+        },
+        "prevalence_baseline_brier": 4.804655338417048e-06
+      },
+      "test_at_selected_or_diagnostic_threshold": {
+        "route_sector_hours": 4053,
+        "positive_route_sector_hours": 0,
+        "prevalence": 0.0,
+        "average_precision": null,
+        "brier_score_class_weighted_scores_not_calibrated": 0.0,
+        "threshold": 0.5,
+        "alerts": 0,
+        "true_positive_alerts": 0,
+        "precision_proxy": null,
+        "precision_exact_95ci_descriptive": null,
+        "recall_proxy": null,
+        "alert_episodes": {
+          "alert_episodes": 0,
+          "positive_alert_episodes": 0,
+          "precision_proxy": null,
+          "precision_exact_95ci_descriptive": null,
+          "episode_details": [],
+          "independence_warning": "Consecutive alerts were grouped by route and hour; distinct routes may still share one physical fire and this remains a GOES-label proxy."
+        },
+        "persistence_baseline": {
+          "alerts": 0,
+          "true_positive_alerts": 0,
+          "precision_proxy": null,
+          "precision_exact_95ci_descriptive": null,
+          "recall_proxy": null,
+          "alert_episodes": {
+            "alert_episodes": 0,
+            "positive_alert_episodes": 0,
+            "precision_proxy": null,
+            "precision_exact_95ci_descriptive": null,
+            "episode_details": null,
+            "independence_warning": "Consecutive alerts were grouped by route and hour; distinct routes may still share one physical fire and this remains a GOES-label proxy."
+          }
+        },
+        "prevalence_baseline_brier": 4.804655338417048e-06
+      },
+      "frozen_model_sha256": "ec03e2ebceb5b36d730fe8ea7441624bf1fc2f40e3b2051f809be67c14c1db7d"
+    },
+    "3": {
+      "matched_issue_target_scan_pairs": 2925,
+      "training_route_hours": 6205,
+      "training_positive_route_hours": 14,
+      "validation_route_hours": 3125,
+      "test_route_hours": 4005,
+      "validation_threshold": {
+        "selected": false,
+        "reason": "No validation threshold achieved route-sector-hour proxy precision >= 80% with at least 5 alerts.",
+        "best_validation_precision_with_at_least_minimum_alerts": {
+          "threshold": 0.0,
+          "alerts": 3125,
+          "true_positive_alerts": 0,
+          "precision_proxy": 0.0,
+          "recall_proxy": 0.0
+        }
+      },
+      "selected_or_diagnostic_threshold": 0.5,
+      "validation": {
+        "route_sector_hours": 3125,
+        "positive_route_sector_hours": 0,
+        "prevalence": 0.0,
+        "average_precision": null,
+        "brier_score_class_weighted_scores_not_calibrated": 0.0,
+        "threshold": 0.5,
+        "alerts": 0,
+        "true_positive_alerts": 0,
+        "precision_proxy": null,
+        "precision_exact_95ci_descriptive": null,
+        "recall_proxy": null,
+        "alert_episodes": {
+          "alert_episodes": 0,
+          "positive_alert_episodes": 0,
+          "precision_proxy": null,
+          "precision_exact_95ci_descriptive": null,
+          "episode_details": [],
+          "independence_warning": "Consecutive alerts were grouped by route and hour; distinct routes may still share one physical fire and this remains a GOES-label proxy."
+        },
+        "persistence_baseline": {
+          "alerts": 0,
+          "true_positive_alerts": 0,
+          "precision_proxy": null,
+          "precision_exact_95ci_descriptive": null,
+          "recall_proxy": null,
+          "alert_episodes": {
+            "alert_episodes": 0,
+            "positive_alert_episodes": 0,
+            "precision_proxy": null,
+            "precision_exact_95ci_descriptive": null,
+            "episode_details": null,
+            "independence_warning": "Consecutive alerts were grouped by route and hour; distinct routes may still share one physical fire and this remains a GOES-label proxy."
+          }
+        },
+        "prevalence_baseline_brier": 5.090641336397163e-06
+      },
+      "test_at_fixed_0_5_diagnostic": {
+        "route_sector_hours": 4005,
+        "positive_route_sector_hours": 0,
+        "prevalence": 0.0,
+        "average_precision": null,
+        "brier_score_class_weighted_scores_not_calibrated": 0.0,
+        "threshold": 0.5,
+        "alerts": 0,
+        "true_positive_alerts": 0,
+        "precision_proxy": null,
+        "precision_exact_95ci_descriptive": null,
+        "recall_proxy": null,
+        "alert_episodes": {
+          "alert_episodes": 0,
+          "positive_alert_episodes": 0,
+          "precision_proxy": null,
+          "precision_exact_95ci_descriptive": null,
+          "episode_details": [],
+          "independence_warning": "Consecutive alerts were grouped by route and hour; distinct routes may still share one physical fire and this remains a GOES-label proxy."
+        },
+        "persistence_baseline": {
+          "alerts": 0,
+          "true_positive_alerts": 0,
+          "precision_proxy": null,
+          "precision_exact_95ci_descriptive": null,
+          "recall_proxy": null,
+          "alert_episodes": {
+            "alert_episodes": 0,
+            "positive_alert_episodes": 0,
+            "precision_proxy": null,
+            "precision_exact_95ci_descriptive": null,
+            "episode_details": null,
+            "independence_warning": "Consecutive alerts were grouped by route and hour; distinct routes may still share one physical fire and this remains a GOES-label proxy."
+          }
+        },
+        "prevalence_baseline_brier": 5.090641336397163e-06
+      },
+      "test_at_selected_or_diagnostic_threshold": {
+        "route_sector_hours": 4005,
+        "positive_route_sector_hours": 0,
+        "prevalence": 0.0,
+        "average_precision": null,
+        "brier_score_class_weighted_scores_not_calibrated": 0.0,
+        "threshold": 0.5,
+        "alerts": 0,
+        "true_positive_alerts": 0,
+        "precision_proxy": null,
+        "precision_exact_95ci_descriptive": null,
+        "recall_proxy": null,
+        "alert_episodes": {
+          "alert_episodes": 0,
+          "positive_alert_episodes": 0,
+          "precision_proxy": null,
+          "precision_exact_95ci_descriptive": null,
+          "episode_details": [],
+          "independence_warning": "Consecutive alerts were grouped by route and hour; distinct routes may still share one physical fire and this remains a GOES-label proxy."
+        },
+        "persistence_baseline": {
+          "alerts": 0,
+          "true_positive_alerts": 0,
+          "precision_proxy": null,
+          "precision_exact_95ci_descriptive": null,
+          "recall_proxy": null,
+          "alert_episodes": {
+            "alert_episodes": 0,
+            "positive_alert_episodes": 0,
+            "precision_proxy": null,
+            "precision_exact_95ci_descriptive": null,
+            "episode_details": null,
+            "independence_warning": "Consecutive alerts were grouped by route and hour; distinct routes may still share one physical fire and this remains a GOES-label proxy."
+          }
+        },
+        "prevalence_baseline_brier": 5.090641336397163e-06
+      },
+      "frozen_model_sha256": "6e6d954a33be908ad148723a16c66cbef505b8c3b4d03c16542840cc33025af0"
+    },
+    "6": {
+      "matched_issue_target_scan_pairs": 2919,
+      "training_route_hours": 5794,
+      "training_positive_route_hours": 13,
+      "validation_route_hours": 2991,
+      "test_route_hours": 3854,
+      "validation_threshold": {
+        "selected": false,
+        "reason": "No validation threshold achieved route-sector-hour proxy precision >= 80% with at least 5 alerts.",
+        "best_validation_precision_with_at_least_minimum_alerts": {
+          "threshold": 0.0,
+          "alerts": 2991,
+          "true_positive_alerts": 0,
+          "precision_proxy": 0.0,
+          "recall_proxy": 0.0
+        }
+      },
+      "selected_or_diagnostic_threshold": 0.5,
+      "validation": {
+        "route_sector_hours": 2991,
+        "positive_route_sector_hours": 0,
+        "prevalence": 0.0,
+        "average_precision": null,
+        "brier_score_class_weighted_scores_not_calibrated": 0.0,
+        "threshold": 0.5,
+        "alerts": 0,
+        "true_positive_alerts": 0,
+        "precision_proxy": null,
+        "precision_exact_95ci_descriptive": null,
+        "recall_proxy": null,
+        "alert_episodes": {
+          "alert_episodes": 0,
+          "positive_alert_episodes": 0,
+          "precision_proxy": null,
+          "precision_exact_95ci_descriptive": null,
+          "episode_details": [],
+          "independence_warning": "Consecutive alerts were grouped by route and hour; distinct routes may still share one physical fire and this remains a GOES-label proxy."
+        },
+        "persistence_baseline": {
+          "alerts": 0,
+          "true_positive_alerts": 0,
+          "precision_proxy": null,
+          "precision_exact_95ci_descriptive": null,
+          "recall_proxy": null,
+          "alert_episodes": {
+            "alert_episodes": 0,
+            "positive_alert_episodes": 0,
+            "precision_proxy": null,
+            "precision_exact_95ci_descriptive": null,
+            "episode_details": null,
+            "independence_warning": "Consecutive alerts were grouped by route and hour; distinct routes may still share one physical fire and this remains a GOES-label proxy."
+          }
+        },
+        "prevalence_baseline_brier": 5.034191393879965e-06
+      },
+      "test_at_fixed_0_5_diagnostic": {
+        "route_sector_hours": 3854,
+        "positive_route_sector_hours": 0,
+        "prevalence": 0.0,
+        "average_precision": null,
+        "brier_score_class_weighted_scores_not_calibrated": 0.0,
+        "threshold": 0.5,
+        "alerts": 0,
+        "true_positive_alerts": 0,
+        "precision_proxy": null,
+        "precision_exact_95ci_descriptive": null,
+        "recall_proxy": null,
+        "alert_episodes": {
+          "alert_episodes": 0,
+          "positive_alert_episodes": 0,
+          "precision_proxy": null,
+          "precision_exact_95ci_descriptive": null,
+          "episode_details": [],
+          "independence_warning": "Consecutive alerts were grouped by route and hour; distinct routes may still share one physical fire and this remains a GOES-label proxy."
+        },
+        "persistence_baseline": {
+          "alerts": 0,
+          "true_positive_alerts": 0,
+          "precision_proxy": null,
+          "precision_exact_95ci_descriptive": null,
+          "recall_proxy": null,
+          "alert_episodes": {
+            "alert_episodes": 0,
+            "positive_alert_episodes": 0,
+            "precision_proxy": null,
+            "precision_exact_95ci_descriptive": null,
+            "episode_details": null,
+            "independence_warning": "Consecutive alerts were grouped by route and hour; distinct routes may still share one physical fire and this remains a GOES-label proxy."
+          }
+        },
+        "prevalence_baseline_brier": 5.034191393879966e-06
+      },
+      "test_at_selected_or_diagnostic_threshold": {
+        "route_sector_hours": 3854,
+        "positive_route_sector_hours": 0,
+        "prevalence": 0.0,
+        "average_precision": null,
+        "brier_score_class_weighted_scores_not_calibrated": 0.0,
+        "threshold": 0.5,
+        "alerts": 0,
+        "true_positive_alerts": 0,
+        "precision_proxy": null,
+        "precision_exact_95ci_descriptive": null,
+        "recall_proxy": null,
+        "alert_episodes": {
+          "alert_episodes": 0,
+          "positive_alert_episodes": 0,
+          "precision_proxy": null,
+          "precision_exact_95ci_descriptive": null,
+          "episode_details": [],
+          "independence_warning": "Consecutive alerts were grouped by route and hour; distinct routes may still share one physical fire and this remains a GOES-label proxy."
+        },
+        "persistence_baseline": {
+          "alerts": 0,
+          "true_positive_alerts": 0,
+          "precision_proxy": null,
+          "precision_exact_95ci_descriptive": null,
+          "recall_proxy": null,
+          "alert_episodes": {
+            "alert_episodes": 0,
+            "positive_alert_episodes": 0,
+            "precision_proxy": null,
+            "precision_exact_95ci_descriptive": null,
+            "episode_details": null,
+            "independence_warning": "Consecutive alerts were grouped by route and hour; distinct routes may still share one physical fire and this remains a GOES-label proxy."
+          }
+        },
+        "prevalence_baseline_brier": 5.034191393879966e-06
+      },
+      "frozen_model_sha256": "83a33d27c7637ebe08ff1a946588db59b211e205ef0da2ffbb1560fefb827f57"
+    },
+    "12": {
+      "matched_issue_target_scan_pairs": 2907,
+      "training_route_hours": 5302,
+      "training_positive_route_hours": 10,
+      "validation_route_hours": 2814,
+      "test_route_hours": 3725,
+      "validation_threshold": {
+        "selected": false,
+        "reason": "No validation threshold achieved route-sector-hour proxy precision >= 80% with at least 5 alerts.",
+        "best_validation_precision_with_at_least_minimum_alerts": {
+          "threshold": 1.2786626704671213e-31,
+          "alerts": 5,
+          "true_positive_alerts": 0,
+          "precision_proxy": 0.0,
+          "recall_proxy": 0.0
+        }
+      },
+      "selected_or_diagnostic_threshold": 0.5,
+      "validation": {
+        "route_sector_hours": 2814,
+        "positive_route_sector_hours": 0,
+        "prevalence": 0.0,
+        "average_precision": null,
+        "brier_score_class_weighted_scores_not_calibrated": 3.3938325905592168e-65,
+        "threshold": 0.5,
+        "alerts": 0,
+        "true_positive_alerts": 0,
+        "precision_proxy": null,
+        "precision_exact_95ci_descriptive": null,
+        "recall_proxy": null,
+        "alert_episodes": {
+          "alert_episodes": 0,
+          "positive_alert_episodes": 0,
+          "precision_proxy": null,
+          "precision_exact_95ci_descriptive": null,
+          "episode_details": [],
+          "independence_warning": "Consecutive alerts were grouped by route and hour; distinct routes may still share one physical fire and this remains a GOES-label proxy."
+        },
+        "persistence_baseline": {
+          "alerts": 0,
+          "true_positive_alerts": 0,
+          "precision_proxy": null,
+          "precision_exact_95ci_descriptive": null,
+          "recall_proxy": null,
+          "alert_episodes": {
+            "alert_episodes": 0,
+            "positive_alert_episodes": 0,
+            "precision_proxy": null,
+            "precision_exact_95ci_descriptive": null,
+            "episode_details": null,
+            "independence_warning": "Consecutive alerts were grouped by route and hour; distinct routes may still share one physical fire and this remains a GOES-label proxy."
+          }
+        },
+        "prevalence_baseline_brier": 3.5573004984062647e-06
+      },
+      "test_at_fixed_0_5_diagnostic": {
+        "route_sector_hours": 3725,
+        "positive_route_sector_hours": 0,
+        "prevalence": 0.0,
+        "average_precision": null,
+        "brier_score_class_weighted_scores_not_calibrated": 0.0,
+        "threshold": 0.5,
+        "alerts": 0,
+        "true_positive_alerts": 0,
+        "precision_proxy": null,
+        "precision_exact_95ci_descriptive": null,
+        "recall_proxy": null,
+        "alert_episodes": {
+          "alert_episodes": 0,
+          "positive_alert_episodes": 0,
+          "precision_proxy": null,
+          "precision_exact_95ci_descriptive": null,
+          "episode_details": [],
+          "independence_warning": "Consecutive alerts were grouped by route and hour; distinct routes may still share one physical fire and this remains a GOES-label proxy."
+        },
+        "persistence_baseline": {
+          "alerts": 0,
+          "true_positive_alerts": 0,
+          "precision_proxy": null,
+          "precision_exact_95ci_descriptive": null,
+          "recall_proxy": null,
+          "alert_episodes": {
+            "alert_episodes": 0,
+            "positive_alert_episodes": 0,
+            "precision_proxy": null,
+            "precision_exact_95ci_descriptive": null,
+            "episode_details": null,
+            "independence_warning": "Consecutive alerts were grouped by route and hour; distinct routes may still share one physical fire and this remains a GOES-label proxy."
+          }
+        },
+        "prevalence_baseline_brier": 3.5573004984062642e-06
+      },
+      "test_at_selected_or_diagnostic_threshold": {
+        "route_sector_hours": 3725,
+        "positive_route_sector_hours": 0,
+        "prevalence": 0.0,
+        "average_precision": null,
+        "brier_score_class_weighted_scores_not_calibrated": 0.0,
+        "threshold": 0.5,
+        "alerts": 0,
+        "true_positive_alerts": 0,
+        "precision_proxy": null,
+        "precision_exact_95ci_descriptive": null,
+        "recall_proxy": null,
+        "alert_episodes": {
+          "alert_episodes": 0,
+          "positive_alert_episodes": 0,
+          "precision_proxy": null,
+          "precision_exact_95ci_descriptive": null,
+          "episode_details": [],
+          "independence_warning": "Consecutive alerts were grouped by route and hour; distinct routes may still share one physical fire and this remains a GOES-label proxy."
+        },
+        "persistence_baseline": {
+          "alerts": 0,
+          "true_positive_alerts": 0,
+          "precision_proxy": null,
+          "precision_exact_95ci_descriptive": null,
+          "recall_proxy": null,
+          "alert_episodes": {
+            "alert_episodes": 0,
+            "positive_alert_episodes": 0,
+            "precision_proxy": null,
+            "precision_exact_95ci_descriptive": null,
+            "episode_details": null,
+            "independence_warning": "Consecutive alerts were grouped by route and hour; distinct routes may still share one physical fire and this remains a GOES-label proxy."
+          }
+        },
+        "prevalence_baseline_brier": 3.5573004984062642e-06
+      },
+      "frozen_model_sha256": "ecc8b41e1b8fdfdd628cfdbe07d4ef514a207d902bdfd2c13aa9c5f5502ecc4e"
+    }
+  },
+  "independent_near_route_event_check": {
+    "source": "Independent January SNMF event audit against frozen GOES model outputs.",
+    "incident_name": "Barda de La Loma",
+    "province": "Río Negro",
+    "reported_start_date": "2026-01-05",
+    "reported_status": "CONTROLADO",
+    "distance_to_trail_km": 5.939,
+    "valid_model_pixels_within_event_radius": 13,
+    "maximum_one_hour_model_score": 0.0,
+    "model_alert": false,
+    "interpretation": "SNMF reports a controlled incident near the route during the held-out January test; the frozen GOES model had valid pixel coverage but did not alert. The daily incident report does not establish ignition hour or GOES observational completeness."
+  },
+  "limitations": [
+    "This spatially restricted target remains GOES detection, not independently confirmed physical wildfire or ignition.",
+    "The frozen classifier was trained on broader pixels; this is a spatial transfer/sensitivity evaluation, not a newly fitted 10 km model.",
+    "Pixels within 10 km are sampled raster locations, not continuous coverage of the full corridor.",
+    "Adjacent route-hours and pixels are dependent; episode-level uncertainty remains wider than naive row counts suggest.",
+    "No operating threshold is approved for safety advice or app deployment."
+  ],
+  "synthetic_observations": 0,
+  "deployment_approved": false
+}

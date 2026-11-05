@@ -6,6 +6,7 @@ import { getAuthSession, clearAuthSession } from "./authSession";
 import { captureAccountContext, assertAccountContext, AccountContextChanged } from "./accountContext";
 import { eraseLocalAccountData, isAccountDeletionPending } from "./accountLifecycle";
 import type { RecommendationResponse, TrailPreferences } from "../backend/src/ai/contracts";
+import type { EnvironmentalBatch } from "../backend/src/contracts/environmental";
 
 const getApiUrl = () => {
   const configuredUrl = process.env.EXPO_PUBLIC_API_URL;
@@ -178,6 +179,9 @@ export const getNationalPark = (slug: string) => request<NationalPark>(`/nationa
 export const getTrailWeather = async (id: number): Promise<TrailWeather> => {
   return request<TrailWeather>(`/trails/${id}/weather`);
 };
+
+export const getTrailEnvironmental = (id: number): Promise<EnvironmentalBatch> =>
+  request<EnvironmentalBatch>(`/trails/${id}/environmental`, { timeoutMs: 5000 });
 
 export const getTrailReports = async (id: number): Promise<TrailReport[]> => {
   const session = await getAuthSession();

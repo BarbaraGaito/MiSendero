@@ -52,10 +52,18 @@ ejecutarlo manualmente.
    ```
    Health check: `curl http://localhost:3001/api/health`
 3. **App movil** (en otra terminal, desde la raiz del repo):
+   Requiere Node.js 22.13+ en la linea 22, 24.3+ en la linea 24, o 26+.
+   El proyecto usa **Expo SDK 58**; Expo Go debe ser compatible con ese SDK.
+
    ```bash
-   npm install
+   npm ci
    npx expo start --go
    ```
+
+   Despues de actualizar el repositorio, ejecutar nuevamente `npm ci` para
+   instalar las versiones de `package-lock.json`. No se comparte `node_modules`.
+   Si Expo solicita iniciar sesion, ejecutar `npx expo login` en la computadora.
+   En un iPhone, usar la misma cuenta en Expo Go y en la terminal.
 
    Escaneá el QR con el iPhone para abrir el proyecto en Expo Go. La computadora
    y el teléfono deben estar en la misma red. Si Metro ya estaba abierto,

@@ -1,5 +1,4 @@
 import { Ionicons } from "@expo/vector-icons";
-import { userMessage } from "../../services/userMessages";
 import { router, useLocalSearchParams } from "expo-router";
 import { randomUUID } from "expo-crypto";
 import { useEffect, useMemo, useRef, useState } from "react";

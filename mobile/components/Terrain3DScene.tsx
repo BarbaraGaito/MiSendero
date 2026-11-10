@@ -1,13 +1,11 @@
 import { GLView, ExpoWebGLRenderingContext } from "expo-gl";
 import { createTerrainRenderer, loadTerrainTexture } from "./terrainGraphics";
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
+import { MapInformationSheet } from "./MapInformationSheet";
 import * as THREE from "three";
 import { Coordinate } from "../../services/geoUtils";
-import {
-  clampTerrainScale,
-  getTerrainPerspectiveFov,
-} from "../../services/mapGestures";
+import { updateTerrainCamera, type NavigationView } from "./terrainCamera";
 import {
   TERRAIN_SCENE_HALF_SIZE as TERRAIN_HALF_SIZE,
   TerrainSceneModel,
@@ -57,13 +55,11 @@ type Terrain3DSceneProps = {
   showContours?: boolean;
   overlayTopInset?: number;
   overlayBottomInset?: number;
+  informationVisible?: boolean;
+  mapAttribution?: string;
+  onCloseInformation?: () => void;
+  onOpenAttributions?: () => void;
   onError?: (error: unknown) => void;
-};
-
-type NavigationView = {
-  anchor: THREE.Vector3;
-  direction: THREE.Vector3;
-  sightDirection: THREE.Vector3;
 };
 
 type SceneHandles = {
@@ -85,6 +81,8 @@ type SceneHandles = {
   rebuildId: number;
   markerGroup: THREE.Group;
   groundMesh: THREE.Mesh | null;
+  cancelTextureLoad: (() => void) | null;
+  hasRenderedSatelliteImage: boolean;
 };
 
 type SceneReadout = {
@@ -94,8 +92,7 @@ type SceneReadout = {
   labels: { x: number; y: number; text: string }[];
 };
 
-const DEFAULT_CAMERA_TARGET_Y = 0.58;
-const CAMERA_GROUND_CLEARANCE = 0.8;
+const SATELLITE_TEXTURE_TIMEOUT_MS = 20000;
 
 const clamp = (value: number, min: number, max: number) =>
   Math.max(min, Math.min(max, value));
@@ -160,8 +157,8 @@ const buildTerrainMesh = (model: TerrainSceneModel) => {
     vertexColors: true,
   });
   const terrain = new THREE.Mesh(geometry, material);
-  terrain.receiveShadow = true;
-  terrain.castShadow = true;
+  terrain.receiveShadow = false;
+  terrain.castShadow = false;
   terrain.name = "terrain-dem-surface";
 
   return terrain;
@@ -190,23 +187,37 @@ const getSatelliteTextureUrl = (model: TerrainSceneModel) => {
 const applySatelliteTexture = (
   terrain: THREE.Mesh,
   model: TerrainSceneModel,
-  onLoad: (texture: THREE.Texture) => void
+  onLoad: (texture: THREE.Texture) => void,
+  onError: () => void
 ) => {
+  let active = true;
+  const cancel = () => { active = false; clearTimeout(timeout); };
+  const timeout = setTimeout(() => {
+    if (!active) return;
+    cancel();
+    onError();
+  }, SATELLITE_TEXTURE_TIMEOUT_MS);
   void loadTerrainTexture(getSatelliteTextureUrl(model)).then((texture) => {
+      if (!active) { texture.dispose(); return; }
       texture.colorSpace = THREE.SRGBColorSpace;
-      texture.anisotropy = 4;
-      texture.generateMipmaps = true;
-      texture.minFilter = THREE.LinearMipmapLinearFilter;
+      texture.anisotropy = 1;
+      texture.generateMipmaps = false;
+      texture.minFilter = THREE.LinearFilter;
       texture.magFilter = THREE.LinearFilter;
       texture.needsUpdate = true;
-      const material = terrain.material as THREE.MeshStandardMaterial;
-      material.map = texture;
-      material.vertexColors = false;
-      material.color.set("#FFFFFF");
-      material.roughness = 0.94;
-      material.needsUpdate = true;
+      // Satellite colours must remain legible even on shaded DEM slopes.
+      // A photograph already contains its own lighting and terrain detail.
+      const oldMaterial = terrain.material as THREE.Material;
+      terrain.material = new THREE.MeshBasicMaterial({ map: texture, color: "#FFFFFF", toneMapped: false });
+      oldMaterial.dispose();
       onLoad(texture);
-    }).catch(() => undefined); // Sin imagen se conserva el tinte por altura.
+      cancel();
+    }).catch(() => {
+      if (!active) return;
+      cancel();
+      onError();
+    });
+  return cancel;
 };
 
 const buildTerrainSkirt = (model: TerrainSceneModel) => {
@@ -460,6 +471,7 @@ const updateTrackedPosition = (
   const model = handles.model;
   const terrainRoute = handles.terrainRoute;
   const userScenePoint = userCoordinate ? coordinateToTerrainScenePoint(model, userCoordinate) : null;
+  handles.navigationView = null;
   if (navigationMode) {
     const startPoint = userScenePoint ? toVector3(userScenePoint) : terrainRoute[0].clone();
     let nearestIndex = 0;
@@ -477,14 +489,7 @@ const updateTrackedPosition = (
         const deltaX = point.x - startPoint.x;
         const deltaZ = point.z - startPoint.z;
         return deltaX * deltaX + deltaZ * deltaZ > 0.0064;
-      }) || startPoint.clone().add(startPoint.clone().sub(terrainRoute[Math.max(0, nearestIndex - 1)]));
-    const sightPoint =
-      ahead.find((point, index) => {
-        if (index === 0) return false;
-        const deltaX = point.x - startPoint.x;
-        const deltaZ = point.z - startPoint.z;
-        return deltaX * deltaX + deltaZ * deltaZ > 0.64;
-      }) || terrainRoute[terrainRoute.length - 1];
+      }) || terrainRoute[Math.max(0, nearestIndex - 1)];
     const localDirection = nextPoint.clone().sub(startPoint);
     localDirection.y = 0;
     if (localDirection.lengthSq() < 0.000001) {
@@ -494,27 +499,20 @@ const updateTrackedPosition = (
     }
 
     const yAxis = new THREE.Vector3(0, 1, 0);
-    const sightDirection = sightPoint.clone().sub(startPoint);
-    if (sightDirection.lengthSq() < 0.000001) {
-      sightDirection.copy(localDirection);
-    } else {
-      sightDirection.normalize();
-    }
     handles.navigationView = {
       anchor: startPoint.applyAxisAngle(yAxis, handles.alignmentRotation),
       direction: localDirection.clone().applyAxisAngle(yAxis, handles.alignmentRotation),
-      sightDirection: sightDirection.applyAxisAngle(yAxis, handles.alignmentRotation),
     };
-  } else {
-    handles.navigationView = null;
   }
-  // Fuera de la grilla real no hay altura conocida: no se dibuja el marcador.
+  // The camera itself represents the traveller in first person. A floating
+  // GPS pin here would cover the view; outside the DEM there is no pin either.
   const scenePoint = userScenePoint;
   if (!scenePoint || navigationMode) return;
   const userPoint = toVector3(scenePoint);
   const markerGroup = new THREE.Group();
   markerGroup.name = "user-gps-marker";
-  markerGroup.add(makeUserMarker(userPoint), makeVerticalPin(userPoint, "#2376D9"));
+  markerGroup.position.copy(userPoint);
+  markerGroup.add(makeUserMarker(new THREE.Vector3()), makeVerticalPin(new THREE.Vector3(), "#2376D9"));
   handles.routeGroup.add(markerGroup);
   handles.trackedObject = markerGroup;
 };
@@ -648,6 +646,10 @@ export const Terrain3DScene = forwardRef<Terrain3DSceneHandle, Terrain3DScenePro
   showContours = false,
   overlayTopInset = 150,
   overlayBottomInset = 28,
+  informationVisible = false,
+  mapAttribution = "",
+  onCloseInformation,
+  onOpenAttributions,
   onError,
 }, ref) {
   const handlesRef = useRef<SceneHandles | null>(null);
@@ -655,7 +657,14 @@ export const Terrain3DScene = forwardRef<Terrain3DSceneHandle, Terrain3DScenePro
   const viewportRef = useRef(viewport);
   viewportRef.current = viewport;
   const [readout, setReadout] = useState<SceneReadout | null>(null);
-  const [hasSatelliteImage, setHasSatelliteImage] = useState(false);
+  const [satelliteTexture, setSatelliteTexture] = useState<{
+    model: TerrainSceneModel; status: "loading" | "ready" | "unavailable" | "idle";
+  }>({ model: terrain, status: satelliteTextureEnabled ? "loading" : "idle" });
+  const hasSatelliteImage = satelliteTextureEnabled && satelliteTexture.model === terrain && satelliteTexture.status === "ready";
+  const isTextureLoading = satelliteTextureEnabled && (satelliteTexture.model !== terrain ||
+    satelliteTexture.status === "loading" || satelliteTexture.status === "idle");
+  const isNavigationPreview = navigationMode && !focusCoordinate &&
+    (!userCoordinate || !coordinateToTerrainScenePoint(terrain, userCoordinate));
   const lastReadoutRef = useRef(0);
   const readoutSignatureRef = useRef("");
   const stations = useMemo(() => getTerrainRouteStations(terrain), [terrain]);
@@ -663,6 +672,8 @@ export const Terrain3DScene = forwardRef<Terrain3DSceneHandle, Terrain3DScenePro
   stationsRef.current = stations;
   const overlayTopRef = useRef(overlayTopInset);
   overlayTopRef.current = overlayTopInset;
+  const overlayBottomRef = useRef(overlayBottomInset);
+  overlayBottomRef.current = overlayBottomInset;
   const renderedFrameRef = useRef(false);
   const onErrorRef = useRef(onError);
   onErrorRef.current = onError;
@@ -670,6 +681,7 @@ export const Terrain3DScene = forwardRef<Terrain3DSceneHandle, Terrain3DScenePro
     const handles = handlesRef.current;
     handlesRef.current = null;
     if (!handles) return;
+    handles.cancelTextureLoad?.();
     cancelAnimationFrame(handles.animationFrame);
     // Cleanup must not prevent returning to the 2D map after a lost context.
     try {
@@ -818,6 +830,10 @@ export const Terrain3DScene = forwardRef<Terrain3DSceneHandle, Terrain3DScenePro
     const rebuildId = handles.rebuildId + 1;
     handles.rebuildId = rebuildId;
     const model = current.terrain;
+    handles.cancelTextureLoad?.();
+    handles.cancelTextureLoad = null;
+    handles.hasRenderedSatelliteImage = false;
+    setSatelliteTexture({ model, status: current.satelliteTextureEnabled ? "loading" : "idle" });
     clearGroup(handles.terrainGroup);
     clearGroup(handles.routeGroup);
     clearGroup(handles.weatherGroup);
@@ -843,16 +859,16 @@ export const Terrain3DScene = forwardRef<Terrain3DSceneHandle, Terrain3DScenePro
     handles.weatherGroup.add(buildSkyDome(weatherKind, isNight));
     addWeatherGraphics(handles.weatherGroup, weatherKind, model.maxHeight, current.weather);
     const terrain = buildTerrainMesh(model);
-    setHasSatelliteImage(false);
     handles.groundMesh = terrain;
     handles.terrainGroup.add(terrain);
     if (current.satelliteTextureEnabled) {
-      applySatelliteTexture(terrain, model, (texture) => {
+      handles.cancelTextureLoad = applySatelliteTexture(terrain, model, (texture) => {
         if (handlesRef.current !== handles || handles.rebuildId !== rebuildId) {
           texture.dispose();
-        } else {
-          texture.anisotropy = Math.min(8, handles.renderer.capabilities?.getMaxAnisotropy?.() ?? 4);
-          setHasSatelliteImage(true);
+        }
+      }, () => {
+        if (handlesRef.current === handles && handles.rebuildId === rebuildId) {
+          setSatelliteTexture({ model, status: "unavailable" });
         }
       });
     }
@@ -877,20 +893,20 @@ export const Terrain3DScene = forwardRef<Terrain3DSceneHandle, Terrain3DScenePro
     handles.terrainRoute = terrainRoute;
     const markerRoute = terrainRoute.map((point) => {
       const next = point.clone();
-      next.y += 0.025;
+      next.y += current.navigationMode ? 0.25 / model.metersPerUnit : 0.025;
       return next;
     });
 
     if (terrainRoute.length > 1) {
-      const trailOuterHalfWidth = current.navigationMode ? 0.026 : 0.045;
-      const trailInnerHalfWidth = current.navigationMode ? 0.014 : 0.025;
+      const trailOuterHalfWidth = current.navigationMode ? 2.5 / model.metersPerUnit : 0.045;
+      const trailInnerHalfWidth = current.navigationMode ? 1.3 / model.metersPerUnit : 0.025;
       handles.routeGroup.add(
         makeTerrainTrailRibbon(
           terrainRoute,
           model,
           trailOuterHalfWidth,
           "#F0643B",
-          0.012,
+          current.navigationMode ? 0.3 / model.metersPerUnit : 0.012,
           true
         )
       );
@@ -900,15 +916,15 @@ export const Terrain3DScene = forwardRef<Terrain3DSceneHandle, Terrain3DScenePro
           model,
           trailInnerHalfWidth,
           "#E6BC89",
-          0.018,
+          current.navigationMode ? 0.45 / model.metersPerUnit : 0.018,
           false
         )
       );
-      handles.routeGroup.add(buildTerrainRouteArrows(model, terrainRoute));
+      if (!current.navigationMode) handles.routeGroup.add(buildTerrainRouteArrows(model, terrainRoute));
     }
 
-    const endpointScale = current.navigationMode ? 0.74 : 1;
-    if (markerRoute[0]) {
+    const endpointScale = current.navigationMode ? Math.min(1, 3 / (0.76 * model.metersPerUnit)) : 1;
+    if (markerRoute[0] && !current.navigationMode) {
       handles.routeGroup.add(makeEndpointMarker(markerRoute[0], "start", endpointScale));
     }
 
@@ -945,69 +961,11 @@ export const Terrain3DScene = forwardRef<Terrain3DSceneHandle, Terrain3DScenePro
     alignmentRotation = 0
   ) => {
     const current = propsRef.current;
-    const scale = clampTerrainScale(current.viewScale);
-    const orbitAngle = current.viewOffset.x / 100;
-    const tilt = clamp(current.viewOffset.y / 120, -1.65, 1.65);
-    const focusPoint = current.focusCoordinate ? coordinateToTerrainScenePoint(current.terrain, current.focusCoordinate) : null;
-
-    if (current.navigationMode && navigationView && !focusPoint) {
-      const anchor = navigationView.anchor.clone();
-      const viewDirection = navigationView.direction
-        .clone()
-        .applyAxisAngle(new THREE.Vector3(0, 1, 0), orbitAngle);
-      const sightDirection = navigationView.sightDirection
-        .clone()
-        .applyAxisAngle(new THREE.Vector3(0, 1, 0), orbitAngle);
-      const eyeHeight = clamp(12 / current.terrain.metersPerUnit - tilt * 0.01, 0.005, 0.3);
-      const cameraPosition = anchor
-        .clone()
-        .addScaledVector(viewDirection, -0.045)
-        .add(new THREE.Vector3(0, eyeHeight, 0));
-      const lookTarget = cameraPosition
-        .clone()
-        .addScaledVector(sightDirection, 3.2)
-        .add(new THREE.Vector3(0, -0.1 - tilt * 0.28, 0));
-      camera.fov = getTerrainPerspectiveFov(scale);
-      camera.near = Math.max(0.0005, 0.5 / current.terrain.metersPerUnit);
-      camera.zoom = 1;
-      camera.position.copy(cameraPosition);
-      camera.lookAt(lookTarget);
-      camera.updateProjectionMatrix();
-      return;
-    }
-
-    // El relieve real puede ser mas alto que la vista por defecto: se eleva el
-    // objetivo con el relieve y la camara nunca queda debajo del terreno.
-    const model = current.terrain;
-    const targetY = focusPoint ? focusPoint.y + DEFAULT_CAMERA_TARGET_Y : Math.max(DEFAULT_CAMERA_TARGET_Y, model.maxHeight * 0.4);
-    const target = focusPoint
-      ? new THREE.Vector3(focusPoint.x, targetY, focusPoint.z).applyAxisAngle(new THREE.Vector3(0, 1, 0), alignmentRotation)
-      : new THREE.Vector3(0, targetY, 0);
-    const limitingHalfAngle = Math.min(43 * Math.PI / 360, Math.atan(Math.tan(43 * Math.PI / 360) * camera.aspect));
-    let routeRadius = 0;
-    model.route.forEach(point => { routeRadius = Math.max(routeRadius, Math.hypot(point.x, point.y - targetY, point.z)); });
-    const distance = focusPoint ? 8 : Math.max(8, routeRadius / Math.sin(limitingHalfAngle) * 1.12);
-    const pitch = clamp(0.55 - tilt * 0.2, 0.22, 1.05);
-    const radius = distance * Math.cos(pitch);
-    const height = targetY + distance * Math.sin(pitch);
-    const cameraX = target.x + Math.sin(orbitAngle) * radius;
-    const cameraZ = target.z + Math.cos(orbitAngle) * radius;
-    const groundY = getTerrainSceneHeight(
-      model,
-      cameraX * Math.cos(alignmentRotation) - cameraZ * Math.sin(alignmentRotation),
-      cameraX * Math.sin(alignmentRotation) + cameraZ * Math.cos(alignmentRotation)
-    );
-
-    camera.fov = 43;
-    camera.near = 0.03;
-    camera.zoom = scale;
-    camera.position.set(
-      cameraX,
-      Math.max(height, groundY + CAMERA_GROUND_CLEARANCE),
-      cameraZ
-    );
-    camera.lookAt(target);
-    camera.updateProjectionMatrix();
+    updateTerrainCamera(camera, current.terrain, {
+      viewOffset: current.viewOffset, viewScale: current.viewScale, navigationMode: current.navigationMode,
+      navigationView, alignmentRotation, focusCoordinate: current.focusCoordinate,
+      viewport: viewportRef.current, topInset: overlayTopRef.current, bottomInset: overlayBottomRef.current,
+    });
   }, []);
 
   const onContextCreate = useCallback(
@@ -1078,6 +1036,8 @@ export const Terrain3DScene = forwardRef<Terrain3DSceneHandle, Terrain3DScenePro
           rebuildId: 0,
           markerGroup,
           groundMesh: null,
+          cancelTextureLoad: null,
+          hasRenderedSatelliteImage: false,
         };
         rebuildScene();
         const precipitationDummy = new THREE.Object3D();
@@ -1127,6 +1087,11 @@ export const Terrain3DScene = forwardRef<Terrain3DSceneHandle, Terrain3DScenePro
             });
             handles.renderer.render(handles.scene, handles.camera);
             handles.gl.endFrameEXP?.();
+            if (!handles.hasRenderedSatelliteImage &&
+                (handles.groundMesh?.material as THREE.MeshStandardMaterial | undefined)?.map) {
+              handles.hasRenderedSatelliteImage = true;
+              setSatelliteTexture({ model: handles.model!, status: "ready" });
+            }
             const viewport = viewportRef.current;
             if (viewport.width > 0 && handles.groundMesh && Date.now() - lastReadoutRef.current > 180) {
               lastReadoutRef.current = Date.now();
@@ -1178,7 +1143,18 @@ export const Terrain3DScene = forwardRef<Terrain3DSceneHandle, Terrain3DScenePro
       {readout?.labels.map(label => <View key={label.text} style={[styles.routeLabel, { left: label.x - 30, top: label.y - 28 }]}>
         <Text style={styles.routeLabelText}>{label.text}</Text>
       </View>)}
-      <View style={[styles.readout, { bottom: overlayBottomInset }]}>
+    </View>
+    {isTextureLoading && <View pointerEvents="none" style={styles.textureLoading} accessibilityLiveRegion="polite">
+      <ActivityIndicator size="large" color="#0F4331" accessibilityLabel="Cargando imagen del terreno" />
+      <Text style={styles.textureLoadingText}>Cargando imagen del terreno…</Text>
+    </View>}
+    {isNavigationPreview && !isTextureLoading && <View pointerEvents="none" testID="terrain-preview-label"
+      style={[styles.previewLabel, { bottom: Math.max(12, overlayBottomInset) }]}>
+      <Text style={styles.previewLabelText}>Vista previa desde el inicio</Text>
+    </View>}
+    <MapInformationSheet visible={informationVisible} attribution={mapAttribution}
+      onClose={() => onCloseInformation?.()} onOpenAttributions={onOpenAttributions}>
+      <View style={styles.readout}>
         <View style={styles.readoutRow}>
           {readout ? <View>
             <Text style={styles.readoutText}>{readout.scaleMeters >= 1000 ? `${readout.scaleMeters / 1000} km` : `${readout.scaleMeters} m`} · en el centro</Text>
@@ -1187,11 +1163,11 @@ export const Terrain3DScene = forwardRef<Terrain3DSceneHandle, Terrain3DScenePro
           {readout && <View style={styles.readoutRow}><View style={{ transform: [{ rotate: `${readout.northDegrees}deg` }] }}><Text style={styles.northArrow}>↑</Text></View><Text style={styles.northArrow}> N</Text></View>}
         </View>
         <Text style={styles.readoutText}>Altura ×1 · {Math.round(terrain.minElevationMeters)}–{Math.round(terrain.maxElevationMeters)} m s. n. m.</Text>
-        {!navigationMode && <Text style={styles.readoutSubtle}>{hasSatelliteImage ? "Imagen satelital de referencia" : "Color por altitud"} · detalle ≈ {Math.round(Math.max(90, terrain.grid.cellSizeMeters))} m{showContours ? ` · curvas ${getTerrainContourInterval(terrain)} m` : ""}</Text>}
-        <Text numberOfLines={navigationMode ? 1 : 2} style={styles.readoutText}>{weather ? `Pronóstico: ${weather.condition} · ${weather.temperatureC} °C${weather.windKmh != null ? ` · viento ${weather.windKmh} km/h` : ""}${weather.observedAt ? ` · ${new Date(weather.observedAt).toLocaleTimeString("es-AR", { hour: "2-digit", minute: "2-digit" })}` : ""}` : "Clima sin datos"}</Text>
-        <Text numberOfLines={navigationMode ? 1 : 2} style={styles.readoutSubtle}>{groundLabels.length ? `Suelo reportado: ${groundLabels.join(" · ")} · ubicación aproximada` : "Suelo: sin reportes recientes"}</Text>
+        <Text style={styles.readoutSubtle}>{hasSatelliteImage ? "Imagen satelital de referencia" : satelliteTextureEnabled && satelliteTexture.status === "unavailable" ? "Imagen satelital no disponible · Color por altitud" : "Color por altitud"} · detalle ≈ {Math.round(Math.max(90, terrain.grid.cellSizeMeters))} m{showContours ? ` · curvas ${getTerrainContourInterval(terrain)} m` : ""}</Text>
+        <Text style={styles.readoutText}>{weather ? `Pronóstico: ${weather.condition} · ${weather.temperatureC} °C${weather.windKmh != null ? ` · viento ${weather.windKmh} km/h` : ""}${weather.observedAt ? ` · ${new Date(weather.observedAt).toLocaleTimeString("es-AR", { hour: "2-digit", minute: "2-digit" })}` : ""}` : "Clima sin datos"}</Text>
+        <Text style={styles.readoutSubtle}>{groundLabels.length ? `Suelo reportado: ${groundLabels.join(" · ")} · ubicación aproximada` : "Suelo: sin reportes recientes"}</Text>
       </View>
-    </View>
+    </MapInformationSheet>
   </View>;
 });
 
@@ -1199,10 +1175,16 @@ const styles = StyleSheet.create({
   canvas: {
     flex: 1,
   },
-  readout: { position: "absolute", bottom: 28, left: 12, right: 12, backgroundColor: "rgba(255,255,255,0.91)", borderRadius: 14, padding: 10, gap: 4 },
+  textureLoading: { position: "absolute", top: 0, right: 0, bottom: 0, left: 0, backgroundColor: "#EDF4EF", alignItems: "center",
+    justifyContent: "center", gap: 12, padding: 24 },
+  textureLoadingText: { color: "#23372D", fontSize: 14, fontWeight: "700", textAlign: "center" },
+  previewLabel: { position: "absolute", left: 16, maxWidth: "72%", backgroundColor: "rgba(255,255,255,0.92)",
+    borderRadius: 16, paddingHorizontal: 12, paddingVertical: 7 },
+  previewLabelText: { color: "#133F30", fontSize: 12, fontWeight: "700" },
+  readout: { backgroundColor: "#F2F6F2", borderRadius: 14, padding: 14, gap: 10 },
   readoutRow: { flexDirection: "row", alignItems: "center", justifyContent: "space-between" },
-  readoutText: { color: "#23372D", fontSize: 11, fontWeight: "700" },
-  readoutSubtle: { color: "#46554C", fontSize: 10, lineHeight: 14 },
+  readoutText: { color: "#23372D", fontSize: 14, lineHeight: 21, fontWeight: "700" },
+  readoutSubtle: { color: "#46554C", fontSize: 13, lineHeight: 20 },
   scaleBar: { height: 6, borderBottomWidth: 2, borderLeftWidth: 2, borderRightWidth: 2, borderColor: "#23372D", marginTop: 2 },
   northArrow: { color: "#23372D", fontWeight: "900", fontSize: 15 },
   routeLabel: { position: "absolute", paddingHorizontal: 6, paddingVertical: 3, borderRadius: 6, backgroundColor: "rgba(255,255,255,0.9)" },

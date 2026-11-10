@@ -6,11 +6,12 @@ jest.mock("../../../services/offlineMaps", () => ({
 }));
 
 import type { Coordinate } from "../../../services/geoUtils";
+import { encode } from "fast-png";
 import {
-  ElevationFetch,
   createTerrainGridCoordinates,
   clearTerrainElevationCache,
 } from "../../../services/terrainElevation";
+import { clearTerrainTileCache, type TerrainTileFetch } from "../../../services/terrainTiles";
 import * as terrainElevation from "../../../services/terrainElevation";
 import { mount } from "../../../testing/mobileHarness";
 import { loadTerrainElevationState, TerrainElevationState, useTerrainElevation } from "../useTerrainElevation";
@@ -20,15 +21,18 @@ const route: Coordinate[] = [
   [-41, -71],
 ];
 
+const png = encode({ width: 256, height: 256, channels: 3,
+  data: Uint8Array.from({ length: 256 * 256 * 3 }, (_, index) => [131, 232, 0][index % 3]) });
 const okFetch = () =>
-  jest.fn(async (input: string) => {
-    const count = new URL(input).searchParams.get("latitude")!.split(",").length;
+  jest.fn(async () => {
     return {
       ok: true,
       status: 200,
-      json: async () => ({ elevation: Array.from({ length: count }, (_, index) => 800 + index) }),
+      arrayBuffer: async () => new Uint8Array(png).buffer,
     };
-  }) as ElevationFetch;
+  }) as TerrainTileFetch;
+
+beforeEach(() => { clearTerrainElevationCache(); clearTerrainTileCache(); });
 
 test("the terrain hook handles an unexpected rejected load as unavailable", async () => {
   jest.spyOn(terrainElevation, "peekTerrainElevation").mockRejectedValueOnce(new Error("Cache unavailable"));
@@ -66,15 +70,15 @@ describe("loadTerrainElevationState", () => {
     expect(state.status).toBe("ready");
     if (state.status !== "ready") return;
     expect(state.data.grid.elevationsMeters).toHaveLength(createTerrainGridCoordinates(route)!.size ** 2);
-    expect(state.data.source.dataset).toBe("Copernicus DEM GLO-90");
+    expect(state.data.source.dataset).toBe("Mapzen Terrain Tiles");
   });
 
   test("un error del proveedor no se reemplaza por alturas de ejemplo", async () => {
     const fetchFn = jest.fn(async () => ({
       ok: false,
       status: 503,
-      json: async () => ({}),
-    })) as ElevationFetch;
+      arrayBuffer: async () => new ArrayBuffer(0),
+    })) as TerrainTileFetch;
 
     await expect(loadTerrainElevationState(1, route, false, fetchFn)).resolves.toEqual({
       status: "unavailable",

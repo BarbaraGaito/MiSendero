@@ -68,6 +68,32 @@ test("backgrounding or switching account prevents further points from the old ro
   Object.defineProperty(AppState, "currentState", { configurable: true, value: "background" });
   await act(async () => { appChange("background"); await flush(); }); expect(remove).toHaveBeenCalledTimes(1);
 });
+
+test("a rejected GPS jump does not discard the next valid fix", async () => {
+  await mount(RouteTrackingCoordinator);
+  const now = Date.now();
+  const emit = async (coordinate: number[], timestamp: number) => act(async () => {
+    fix({ coordinate, timestamp, accuracy: 5 }); await flush();
+  });
+  await emit([0, 0], now - 15000);
+  await emit([1, 1], now - 10000);
+  await emit([0, 0.0001], now - 5000);
+  expect(tracking.saveRouteTrackingPoint).toHaveBeenCalledTimes(2);
+  expect((tracking.saveRouteTrackingPoint as jest.Mock).mock.calls[1][0]).toEqual(expect.objectContaining({
+    longitude: 0.0001, distanceDeltaMeters: expect.any(Number),
+  }));
+  expect((tracking.saveRouteTrackingPoint as jest.Mock).mock.calls[1][0].distanceDeltaMeters).toBeGreaterThan(10);
+});
+
+test("GPS tracking retries after a temporary failure to start the native watcher", async () => {
+  (watchDeviceLocation as jest.Mock).mockRejectedValueOnce(new Error("location temporarily unavailable"));
+  await mount(RouteTrackingCoordinator);
+  expect(watchDeviceLocation).toHaveBeenCalledTimes(1);
+  await act(async () => { await jest.advanceTimersByTimeAsync(1000); await flush(); });
+  expect(watchDeviceLocation).toHaveBeenCalledTimes(2);
+  await act(async () => { fix({ coordinate: [0, 0], timestamp: Date.now(), accuracy: 5 }); await flush(); });
+  expect(tracking.saveRouteTrackingPoint).toHaveBeenCalledTimes(1);
+});
 test("the simulator advances in memory and never invokes the persistent GPS writer", async () => {
   (route.getActiveRouteSession as jest.Mock).mockResolvedValue({ ...outing, simulated: 1 });
   (route.getRouteSession as jest.Mock).mockResolvedValue({ ...outing, simulated: 1 });

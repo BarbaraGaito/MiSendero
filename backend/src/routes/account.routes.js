@@ -40,7 +40,7 @@ router.get("/me/data", async (req, res, next) => {
   try {
     const data = {};
     data.user = (await query("SELECT id, name, email, terms_version, terms_accepted_at, created_at FROM users WHERE id = $1", [req.userId])).rows[0];
-    for (const table of ["activities", "emergency_alerts", "trip_plans", "privacy_decisions", "report_flags", "report_blocks"]) {
+    for (const table of ["activities", "emergency_alerts", "trip_plans", "privacy_decisions", "report_flags", "report_blocks", "report_feedback"]) {
       data[table] = (await query(`SELECT * FROM ${table} WHERE user_id = $1`, [req.userId])).rows;
     }
     data.reports = (await query("SELECT * FROM trail_reports WHERE reporter_user_id = $1", [req.userId])).rows;

@@ -1,0 +1,144 @@
+{
+  "signature": {
+    "code_sha256": "8a6cf39318889a21bb4d61bdec580f831fcbf21815f4df8dfa4079902fb6533e",
+    "parent_signature": {
+      "code_sha256": "4a580a19ea44c8534a18e099573b90a614f29680ea7af7fc96c5c44f909fc96f",
+      "parent_signature": {
+        "code_sha256": "adc2ef176bdaa3f9e31e440aa9fc23f6566925aeb8aaeb932c546fbda2e5c6a9",
+        "parent_signature": {
+          "code_sha256": "9d52750abad6c9ced3701cd112d80771e043344043c862005469bf5d1bc83ac8",
+          "native_members": {
+            "native_dataset_sha256": "e4de1c4ccaa8239610bd62e93bc888c1260f1f891de32b9677052d3a0e3e4d00",
+            "member_specifications": {
+              "core": {
+                "features": [
+                  "prior_borg",
+                  "prior_age_minutes",
+                  "prior2_borg",
+                  "prior2_age_minutes",
+                  "prior_borg_slope",
+                  "prior_in_current_task",
+                  "prior_count_current_task",
+                  "elapsed_minutes",
+                  "cumulative_active_minutes",
+                  "task_order",
+                  "terrain_stairs",
+                  "terrain_ramp",
+                  "terrain_flat_trail"
+                ],
+                "algorithm": "mlp",
+                "target_mode": "change_from_prior",
+                "params": {
+                  "hidden_layer_sizes": [
+                    16,
+                    8
+                  ],
+                  "solver": "lbfgs",
+                  "alpha": 10.0,
+                  "max_iter": 1000
+                }
+              },
+              "cat": {
+                "id": "catboost-023",
+                "feature_set": "history_context",
+                "features": [
+                  "prior_borg",
+                  "prior_age_minutes",
+                  "prior2_borg",
+                  "prior2_age_minutes",
+                  "prior_borg_slope",
+                  "prior_in_current_task",
+                  "prior_count_current_task",
+                  "elapsed_minutes",
+                  "cumulative_active_minutes",
+                  "task_order",
+                  "task_feedback_first",
+                  "task_feedback_total_rise",
+                  "task_feedback_count",
+                  "task_feedback_rate_mean",
+                  "task_feedback_rate_median",
+                  "task_feedback_since_last_increase",
+                  "task_feedback_zero_fraction",
+                  "task_feedback_linear_extrapolation",
+                  "task_feedback_delta_1",
+                  "task_feedback_interval_1",
+                  "task_feedback_delta_2",
+                  "task_feedback_interval_2",
+                  "all_feedback_rate_mean",
+                  "all_feedback_positive_fraction",
+                  "completed_task_rise_mean",
+                  "completed_task_rate_mean",
+                  "previous_task_at_similar_elapsed_mean",
+                  "previous_task_at_similar_elapsed_last",
+                  "current_terrain"
+                ],
+                "depth": 3,
+                "l2_leaf_reg": 30.0,
+                "iterations": 900,
+                "target_mode": "change_from_prior",
+                "algorithm": "CatBoost_Ordered",
+                "learning_rate": 0.03,
+                "random_seed": 42
+              }
+            },
+            "cat_selection_sha256": "254d28707e034e4663ceca9e3017d97b32622d1e1379867ec489bd8bd28392d9",
+            "window_provenance_sha256": "4896cf8982169417980222abe8e94791a31ff7e7851ca7cfbcfc3083f2a5e7f0"
+          },
+          "public_real_data_policy_sha256": "fdfb112d20b1f22bae08032ed7d9f3d27ee784879674c32f8f65cc21fe69c028",
+          "source_dataset_sha256": "ff86974f65d53bdf351036c71ed53d99403a38cc7075ebe8efb42e35683b622a",
+          "source_provenance_sha256": "4369253ef0752ca81c27d27ebaf2d9fc347d0f5d2d85ebe61619f25c478b86ce",
+          "previous_selection_sha256": "5ecf2b48e40e1d4c0c6bfad0b486697070ddace95fa60bd61d60912d80709008",
+          "dependency_code_sha256": {
+            "fatigue_source_transitions.py": "bbbe4f330fc2121506d92f07b271c18d270a81c34f5df8755ec20c37010cdd5c",
+            "fatigue_worker_survey_priors.py": "96f126980610ff392f255529543c13b718a0372ca71043a67de8a84e0a4fca1d",
+            "fatigue_runner_real_observations.py": "9e2359bd61b59199f56003eca8c8e004f9785b0dab634c3ab567dc23be6c6747",
+            "fatigue_catboost.py": "8dac77d01b7a1ed0ef3308b63a8bf16587c1f65e6e4294b1ea8bf863cb58a1fe",
+            "fatigue_dynamics_experiment.py": "5337f883c2d861a0255a399d78b6cb159b0526e43a0d2b4091b5043ee103f596",
+            "fatigue_probability.py": "8321f0dc9313bd7207508ba417a90e9b2b80ec2fb45fe2591104e60fda66125c",
+            "fatigue_warm_sgd.py": "cd480a0fe2c31cc62d446525386b5c9be0adfae568ecdd1399fe85b571dd05b3"
+          },
+          "software_versions": {
+            "numpy": "2.5.4",
+            "pandas": "3.0.6",
+            "scipy": "1.18.1",
+            "scikit-learn": "1.9.1",
+            "catboost": "1.2.10",
+            "joblib": "1.6.0"
+          },
+          "worker_processes": 2
+        },
+        "combined_provenance_sha256": "2b1700cfdd853fac917c28936987a55af8ca9226595c09cf95e9cf03ba0af620",
+        "source_dataset_sha256": "f2c2b0c3a94aeadca7224c4932dc964bd26fbe753f8d47ece9ef81db8e3b2650",
+        "previous_selection_sha256": "ed30b83c810a7d4f20b7ce7217441db181ef938d03eb8404aa3ae3f7a888033c",
+        "public_real_data_policy_sha256": "fdfb112d20b1f22bae08032ed7d9f3d27ee784879674c32f8f65cc21fe69c028",
+        "dependency_code_sha256": {
+          "fatigue_combined_walking_sources.py": "dcae9aa55243c919491f93faf56fcc91e0ecaef7403e863bf6d135e3f2b71d63",
+          "walking_spe_transitions.py": "b7facf716833eebc5f969cfb7f9955503883c7ced202cbc5340c61fcb0508d62",
+          "fatigue_survey_prior_teachers.py": "9d52750abad6c9ced3701cd112d80771e043344043c862005469bf5d1bc83ac8"
+        },
+        "worker_processes": 2
+      },
+      "previous_verification_sha256": "87a52a46ad875746568afeb121988426b2440a249ac544ae83784f69d9faa95c",
+      "public_real_data_policy_sha256": "fdfb112d20b1f22bae08032ed7d9f3d27ee784879674c32f8f65cc21fe69c028",
+      "worker_processes": 2
+    },
+    "source_provenance_sha256": "ef7519e280edfd038e9bcd68754087f427ec604254a73ce624fded4ef0d84ab1",
+    "native_provenance_sha256": "3af46e6f72c1cf13259e8ccdcbf9d2ced7a64ac2ca5581606289f2495c12ca6d",
+    "input_verification_sha256": "8f368ba54daf6e74f5cc445d2bef2bbdd89f189b053a2f796df93f2f8ed75eb5",
+    "dependency_code_sha256": {
+      "cadence_lagged_rpe.py": "6b9e8949174bd57f9a50a3c62bc462970ea178246d8242818ef3beaa2f3e25f6",
+      "fatigue_cadence_native_inputs.py": "f0ad7348a8d556638872bb9ea065b9bfdaba7e454efba2e2c0d72f8bb517a254"
+    },
+    "worker_processes": 2
+  },
+  "algorithm": "svr",
+  "feature_set": "absolute",
+  "actual_source_fitting_rows": 851,
+  "actual_source_fitting_people": 123,
+  "native_labels_used_for_source_fitting": 0,
+  "reserved_source_rows": 206,
+  "reserved_source_mae": 1.2735474163953093,
+  "reserved_source_r2": 0.38496913820297485,
+  "reserved_source_used_for_selection": false,
+  "model_sha256": "a6a9968d47845d03377c1476a7b2adaf4dd92577ec3a8f8ce944b486d8eb72b5"
+}

@@ -1,0 +1,11 @@
+{
+  "preparation": "passed",
+  "preparation_code_sha256": "5ace8fa1e255306ea5539f82d550f42c40d1dfb511eb898051f2c0efe591ad9c",
+  "frozen_sources_sha256": {
+    "fatigue_cadence_ordered_residual.py": "835c00de8ae47cc46a903aa4d7e044e31943fd298b8719266f1eea4787cd7b5d",
+    "fatigue_public_change_gate.py": "069614cca612f2a669836c436025a433aad9efe0cd5c458286f9869bf5c8e053"
+  },
+  "model_code_sha256": "8f8d87a836f5dcf7e21090d6f2379cfdbffaa77059c7a942c6f3a79e3d91fbe6",
+  "historical_sources_modified": false,
+  "new_predictive_estimator_fits": 0
+}

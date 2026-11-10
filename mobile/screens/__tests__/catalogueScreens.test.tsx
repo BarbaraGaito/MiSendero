@@ -105,6 +105,37 @@ test("exploration filters actual loaded routes by query and difficulty", async (
   await act(async () => input.props.onChangeText("inexistente")); expect(text(tree)).toContain("Sin resultados");
 });
 
+test("advanced filters remain effective when collapsed and can be cleared", async () => {
+  const tree = await mount(Explore);
+  expect(text(tree)).not.toContain("0-5 km");
+  await press(tree, "Filtrar senderos");
+  await press(tree, "Alta");
+  expect(text(tree)).toContain("Ruta exigente");
+  expect(text(tree)).not.toContain(trail.name);
+  await press(tree, "Filtrar senderos");
+  expect(text(tree)).toContain("Alta");
+  expect(text(tree)).toContain("Ruta exigente");
+  await press(tree, "Filtrar senderos");
+  await press(tree, "Limpiar filtros");
+  expect(text(tree)).toContain(trail.name);
+});
+
+test("trail details disclose long content without hiding source precautions or weather risk", async () => {
+  const entry = require("../../../backend/src/data/catalogExpansion20261017").trails.find((item: any) => item.provenance.catalog_key === "moreno-belgrano-chico");
+  (trails.getTrailById as jest.Mock).mockResolvedValue({ ...trail, description: "Descripción extensa del paisaje y los accesos.",
+    provenance: { ...entry.provenance, precautions: "Requiere guía habilitado y registro previo.", source_notice: "Acceso sujeto a revisión del parque." } });
+  (trails.getTrailWeather as jest.Mock).mockResolvedValue({ condition: "Lluvia", temperature_c: 8, wind_kmh: 45, risk_level: "alto", rain_probability: 90 });
+  const tree = await mount(Detail);
+  expect(text(tree)).toContain("Riesgo meteorológico alto");
+  expect(text(tree)).toContain("Requiere guía habilitado y registro previo.");
+  expect(text(tree)).toContain("Acceso sujeto a revisión del parque.");
+  expect(text(tree)).not.toContain("Descripción extensa del paisaje");
+  await press(tree, "Sobre el recorrido");
+  expect(text(tree)).toContain("Descripción extensa del paisaje");
+  await press(tree, "Ver preparación y clima");
+  expect(text(tree)).toContain("90% de probabilidad de lluvia");
+});
+
 test("exploration puts loaded photos first and broken or missing photos last without losing routes", async () => {
   const catalog = [
     { ...trail, id: 1, name: "Sin foto", image_url: null },

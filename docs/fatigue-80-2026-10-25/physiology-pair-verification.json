@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "verification": "passed",
+  "audit_code_sha256": "456eef06f80fa7b63173cf6caf34c8ca7050c1b5d8ef8be8395b06bbd0715169",
+  "preparation_code_sha256": "9a6e0f854d1854a0525e996a98a27bc6ee0ac3aa255a4d15f47aa5b0ca50f45b",
+  "provenance_sha256": "797b786a48e7fc8edf7f9fa908a8c1c153b277ad3dfd0131201d974af9f1e669",
+  "windows_sha256": "7e8129179b2eb0cfd21b0c1e726cdb3de8531aae05abb60ca2f5c74d8cac1d61",
+  "cohort": {
+    "canonical_cases": 666,
+    "extra_fitting_only_cases": 56,
+    "original_training_cases": 487,
+    "original_test_cases": 179,
+    "original_training_people": 28,
+    "original_test_people": 12,
+    "native_dataset_sha256": "a9e346b1e8d0cf711406d1d0417d0db1afbf88757ab8c27efc70f4469dc39520",
+    "extra_dataset_sha256": "be1d5ec24f62553cd320f6583251d72d82b6fc41c7a9245fe05b27c344f8b37e"
+  },
+  "actual_raw_windows_independently_rebuilt": 2888,
+  "actual_report_references_verified": 722,
+  "cross_midnight_sessions_combined": 7,
+  "source_sessions": 44,
+  "current_targets_in_tensors": false,
+  "new_supervision_rows": 0,
+  "missing_cases_dropped": 0,
+  "interpolated_bins": 0,
+  "model_fitting_started": false,
+  "test_predictions_evaluated": false,
+  "coverage": {
+    "fast_current": {
+      "cases_with_any_observed_signal": 659,
+      "mean_fraction": 0.9127004742622375,
+      "cases_fully_missing": 63
+    },
+    "fast_prior": {
+      "cases_with_any_observed_signal": 706,
+      "mean_fraction": 0.9764962196350098,
+      "cases_fully_missing": 16
+    },
+    "slow_current": {
+      "cases_with_any_observed_signal": 659,
+      "mean_fraction": 0.570464015007019,
+      "cases_fully_missing": 63
+    },
+    "slow_prior": {
+      "cases_with_any_observed_signal": 706,
+      "mean_fraction": 0.6103813052177429,
+      "cases_fully_missing": 16
+    }
+  }
+}

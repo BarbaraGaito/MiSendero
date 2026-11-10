@@ -2,7 +2,7 @@ row_key,observed,predicted
 848352fc03c547c05fad87f8,hiking,hiking
 d1ffb80eb7c8005337de05c6,hiking,hiking
 396a6f20722dc383a92c976e,hiking,hiking
-a46234fd0d8b33be8fa4e3af,demanding_mountain_hiking,difficult_alpine_hiking
+a46234fd0d8b33be8fa4e3af,demanding_mountain_hiking,demanding_mountain_hiking
 ec2bf4a727572c0c11017e43,hiking,hiking
 0f7b9a1e8425d437033e4111,hiking,hiking
 c8a76f083a1ed7504e9148e2,hiking,hiking
@@ -33,7 +33,7 @@ ee27cd28c272817f66a5098b,hiking,hiking
 0e7bd07aaf749f01b273d333,hiking,hiking
 8b64291b1141dd0fa08419c2,hiking,hiking
 0dcc4b47f5c33ff85e9b2187,hiking,hiking
-32a32049879f25797c6e0bdb,mountain_hiking,mountain_hiking
+32a32049879f25797c6e0bdb,mountain_hiking,hiking
 a6f86d974fde08d8727b955f,hiking,hiking
 b72bbd6577f2787f384b912b,hiking,hiking
 a68d5acee98937f7f94be082,hiking,hiking

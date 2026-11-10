@@ -1,0 +1,223 @@
+{
+  "signature": {
+    "code_sha256": "764019e056aa6d693b261d8bceeeeae362b34afef671f96e209dcce8387b3f63",
+    "window_provenance_sha256": "4896cf8982169417980222abe8e94791a31ff7e7851ca7cfbcfc3083f2a5e7f0",
+    "source_npz_sha256": "480d99af7ae8142750040d922ad5088059e9d10120b711a96259ef6db6068a2b",
+    "native_npz_sha256": "b2866aec31c83c75b672df8e7d2595a80489e0448408b914e2eb6a4b8c80628b",
+    "member_fingerprint": {
+      "code_sha256": "a05438b846f09a563f339b79fff79a0031e2b38560d1982b2cffc777aec28aa4",
+      "phone_dataset_sha256": "e4de1c4ccaa8239610bd62e93bc888c1260f1f891de32b9677052d3a0e3e4d00",
+      "native_dataset_sha256": "a9e346b1e8d0cf711406d1d0417d0db1afbf88757ab8c27efc70f4469dc39520",
+      "cat_selection_sha256": "254d28707e034e4663ceca9e3017d97b32622d1e1379867ec489bd8bd28392d9",
+      "view_selection_sha256": "e8a1239d3f85890691c4a3bcb046301b7adb55354b5e537e08155bcf6051312e",
+      "view_dataset_sha256": "29a45957c40cd4a2e3d595e32bcaec12d513d96e144e421648773bf0520bbb2a",
+      "view_provenance_sha256": "c3084c8e3dae9235045e68450cc6085dbfc4f5aba1f0937e2fb77ac4595c39f6",
+      "member_specifications": {
+        "core": {
+          "features": [
+            "prior_borg",
+            "prior_age_minutes",
+            "prior2_borg",
+            "prior2_age_minutes",
+            "prior_borg_slope",
+            "prior_in_current_task",
+            "prior_count_current_task",
+            "elapsed_minutes",
+            "cumulative_active_minutes",
+            "task_order",
+            "terrain_stairs",
+            "terrain_ramp",
+            "terrain_flat_trail"
+          ],
+          "algorithm": "mlp",
+          "target_mode": "change_from_prior",
+          "params": {
+            "hidden_layer_sizes": [
+              16,
+              8
+            ],
+            "solver": "lbfgs",
+            "alpha": 10.0,
+            "max_iter": 1000
+          }
+        },
+        "cat": {
+          "id": "catboost-023",
+          "feature_set": "history_context",
+          "features": [
+            "prior_borg",
+            "prior_age_minutes",
+            "prior2_borg",
+            "prior2_age_minutes",
+            "prior_borg_slope",
+            "prior_in_current_task",
+            "prior_count_current_task",
+            "elapsed_minutes",
+            "cumulative_active_minutes",
+            "task_order",
+            "task_feedback_first",
+            "task_feedback_total_rise",
+            "task_feedback_count",
+            "task_feedback_rate_mean",
+            "task_feedback_rate_median",
+            "task_feedback_since_last_increase",
+            "task_feedback_zero_fraction",
+            "task_feedback_linear_extrapolation",
+            "task_feedback_delta_1",
+            "task_feedback_interval_1",
+            "task_feedback_delta_2",
+            "task_feedback_interval_2",
+            "all_feedback_rate_mean",
+            "all_feedback_positive_fraction",
+            "completed_task_rise_mean",
+            "completed_task_rate_mean",
+            "previous_task_at_similar_elapsed_mean",
+            "previous_task_at_similar_elapsed_last",
+            "current_terrain"
+          ],
+          "depth": 3,
+          "l2_leaf_reg": 30.0,
+          "iterations": 900,
+          "target_mode": "change_from_prior",
+          "algorithm": "CatBoost_Ordered",
+          "learning_rate": 0.03,
+          "random_seed": 42
+        },
+        "view": {
+          "id": "prior-view-009",
+          "algorithm": "mlp",
+          "feature_set": "observed_history_views",
+          "features": [
+            "prior_borg",
+            "prior_age_minutes",
+            "prior2_borg",
+            "prior2_age_minutes",
+            "prior_borg_slope",
+            "prior_in_current_task",
+            "prior_count_current_task",
+            "elapsed_minutes",
+            "cumulative_active_minutes",
+            "task_order",
+            "terrain_stairs",
+            "terrain_ramp",
+            "terrain_flat_trail"
+          ],
+          "view_policy": "prefix",
+          "view_mass": 0.6,
+          "target_mode": "change_from_prior",
+          "params": {
+            "hidden_layer_sizes": [
+              16,
+              8
+            ],
+            "solver": "lbfgs",
+            "alpha": 30.0,
+            "max_iter": 1000
+          }
+        }
+      },
+      "runtime_features": [
+        "prior_borg",
+        "prior_age_minutes",
+        "prior2_borg",
+        "prior2_age_minutes",
+        "prior_borg_slope",
+        "prior_in_current_task",
+        "prior_count_current_task",
+        "elapsed_minutes",
+        "cumulative_active_minutes",
+        "task_order",
+        "terrain_stairs",
+        "terrain_ramp",
+        "terrain_flat_trail",
+        "task_feedback_first",
+        "task_feedback_total_rise",
+        "task_feedback_count",
+        "task_feedback_rate_mean",
+        "task_feedback_rate_median",
+        "task_feedback_since_last_increase",
+        "task_feedback_zero_fraction",
+        "task_feedback_linear_extrapolation",
+        "task_feedback_delta_1",
+        "task_feedback_interval_1",
+        "task_feedback_delta_2",
+        "task_feedback_interval_2",
+        "all_feedback_rate_mean",
+        "all_feedback_positive_fraction",
+        "completed_task_rise_mean",
+        "completed_task_rate_mean",
+        "previous_task_at_similar_elapsed_mean",
+        "previous_task_at_similar_elapsed_last"
+      ],
+      "dependency_code_sha256": {
+        "fatigue_catboost.py": "8dac77d01b7a1ed0ef3308b63a8bf16587c1f65e6e4294b1ea8bf863cb58a1fe",
+        "fatigue_prior_view_training.py": "3d101e77234a4a659e07478a303f2eb8c74fd2d27cdd55d2e71d28e8102d68d3",
+        "fatigue_prior_views.py": "6613b15479bfde80dfc22fb4e9605ae76e5658c648b57c9931beabca374f6997",
+        "fatigue_probability.py": "8321f0dc9313bd7207508ba417a90e9b2b80ec2fb45fe2591104e60fda66125c",
+        "fatigue_dynamics_experiment.py": "5337f883c2d861a0255a399d78b6cb159b0526e43a0d2b4091b5043ee103f596",
+        "fatigue_phone_experiment.py": "c33c80dc5105338477cdabc6e7c55b7eb194ab67cd6598187817ddfb306979d6",
+        "fatigue_dynamics.py": "2d0f35500f5b6611479141c82fb778026f320a2c03795f5f28200cea9bfcc3d6",
+        "fatigue_warm_sgd.py": "cd480a0fe2c31cc62d446525386b5c9be0adfae568ecdd1399fe85b571dd05b3"
+      },
+      "software_versions": {
+        "numpy": "2.5.4",
+        "pandas": "3.0.6",
+        "scikit-learn": "1.9.1",
+        "catboost": "1.2.10",
+        "joblib": "1.6.0"
+      }
+    },
+    "dependency_code_sha256": {
+      "fatigue_runner_windows.py": "2fd23e102538e520b238d15ff965423fa2e2de0c2cc13e6c669012f0e81f753d",
+      "fatigue_dynamics_experiment.py": "5337f883c2d861a0255a399d78b6cb159b0526e43a0d2b4091b5043ee103f596",
+      "fatigue_catboost.py": "8dac77d01b7a1ed0ef3308b63a8bf16587c1f65e6e4294b1ea8bf863cb58a1fe"
+    },
+    "software_versions": {
+      "torch": "2.14.1+cpu",
+      "numpy": "2.5.4",
+      "pandas": "3.0.6",
+      "scikit-learn": "1.9.1",
+      "catboost": "1.2.10",
+      "joblib": "1.6.0"
+    }
+  },
+  "candidate": {
+    "id": "runner-encoder-004",
+    "epochs": 90,
+    "learning_rate": 0.003,
+    "weight_decay": 0.01,
+    "batch_size": 64,
+    "block_dropout_probability": 0.1,
+    "objective": "source_protocol_F_NF_BCE_only",
+    "random_seed": 42
+  },
+  "model_sha256": "fa67ead59e282d67db6b56b87936ab3307e231d22027ce7fb8eadd45851b646f",
+  "source_summary": {
+    "prepared_source_windows": 330,
+    "prepared_source_people": [
+      "006",
+      "007",
+      "008",
+      "011",
+      "012",
+      "013",
+      "014",
+      "015",
+      "017",
+      "018",
+      "019",
+      "020",
+      "021",
+      "022",
+      "023"
+    ],
+    "gradient_steps": 540,
+    "source_windows_used_for_gradient_updates": 330,
+    "person_and_condition_weight_total": 330.0,
+    "native_borg_targets_used": 0
+  },
+  "loss_endpoints": [
+    0.7003143007105047,
+    0.39449096303997616
+  ]
+}

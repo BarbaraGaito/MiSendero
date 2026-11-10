@@ -1,0 +1,372 @@
+{
+  "version": 1,
+  "implementation_code_sha256": "835c00de8ae47cc46a903aa4d7e044e31943fd298b8719266f1eea4787cd7b5d",
+  "plan": [
+    {
+      "id": "ordered-residual-000",
+      "algorithm": "previous_real_control",
+      "control_study": "previous",
+      "parent_candidate_id": "delta-regularization-000"
+    },
+    {
+      "id": "ordered-residual-001",
+      "algorithm": "previous_real_control",
+      "control_study": "previous",
+      "parent_candidate_id": "delta-regularization-001"
+    },
+    {
+      "id": "ordered-residual-002",
+      "algorithm": "previous_real_control",
+      "control_study": "previous",
+      "parent_candidate_id": "delta-regularization-006"
+    },
+    {
+      "id": "ordered-residual-003",
+      "algorithm": "previous_real_control",
+      "control_study": "previous",
+      "parent_candidate_id": "delta-regularization-008"
+    },
+    {
+      "id": "ordered-residual-004",
+      "algorithm": "previous_real_control",
+      "control_study": "previous",
+      "parent_candidate_id": "delta-regularization-011"
+    },
+    {
+      "id": "ordered-residual-005",
+      "algorithm": "previous_real_control",
+      "control_study": "previous",
+      "parent_candidate_id": "delta-regularization-013"
+    },
+    {
+      "id": "ordered-residual-006",
+      "algorithm": "previous_real_control",
+      "control_study": "full",
+      "parent_candidate_id": "cadence-full-delta-006"
+    },
+    {
+      "id": "ordered-residual-007",
+      "algorithm": "previous_real_control",
+      "control_study": "full",
+      "parent_candidate_id": "cadence-full-delta-007"
+    },
+    {
+      "id": "ordered-residual-008",
+      "algorithm": "previous_real_control",
+      "control_study": "full",
+      "parent_candidate_id": "cadence-full-delta-008"
+    },
+    {
+      "id": "ordered-residual-009",
+      "algorithm": "previous_real_control",
+      "control_study": "full",
+      "parent_candidate_id": "cadence-full-delta-009"
+    },
+    {
+      "id": "ordered-residual-010",
+      "algorithm": "previous_real_control",
+      "control_study": "full",
+      "parent_candidate_id": "cadence-full-delta-010"
+    },
+    {
+      "id": "ordered-residual-011",
+      "algorithm": "previous_real_control",
+      "control_study": "full",
+      "parent_candidate_id": "cadence-full-delta-011"
+    },
+    {
+      "id": "ordered-residual-012",
+      "algorithm": "previous_real_control",
+      "control_study": "full",
+      "parent_candidate_id": "cadence-full-delta-012"
+    },
+    {
+      "id": "ordered-residual-013",
+      "algorithm": "previous_real_control",
+      "control_study": "full",
+      "parent_candidate_id": "cadence-full-delta-013"
+    },
+    {
+      "id": "ordered-residual-014",
+      "algorithm": "previous_real_control",
+      "control_study": "scalar",
+      "parent_candidate_id": "recent-gate-006"
+    },
+    {
+      "id": "ordered-residual-015",
+      "algorithm": "previous_real_control",
+      "control_study": "scalar",
+      "parent_candidate_id": "recent-gate-007"
+    },
+    {
+      "id": "ordered-residual-016",
+      "algorithm": "previous_real_control",
+      "control_study": "scalar",
+      "parent_candidate_id": "recent-gate-008"
+    },
+    {
+      "id": "ordered-residual-017",
+      "algorithm": "previous_real_control",
+      "control_study": "scalar",
+      "parent_candidate_id": "recent-gate-009"
+    },
+    {
+      "id": "ordered-residual-018",
+      "algorithm": "cadence_ordered_residual",
+      "member": "core",
+      "auxiliary_weight": 0.0,
+      "epochs": 80,
+      "learning_rate": 0.003,
+      "weight_decay": 0.1,
+      "correction_penalty": 0.1,
+      "random_seed": 42,
+      "source_target": "actual_current_unequal_prior_original6to20",
+      "native_target": "original_integer_delta_cross_entropy_21",
+      "residual_coefficients": 3
+    },
+    {
+      "id": "ordered-residual-019",
+      "algorithm": "cadence_ordered_residual",
+      "member": "core",
+      "auxiliary_weight": 0.0,
+      "epochs": 80,
+      "learning_rate": 0.003,
+      "weight_decay": 0.1,
+      "correction_penalty": 1.0,
+      "random_seed": 42,
+      "source_target": "actual_current_unequal_prior_original6to20",
+      "native_target": "original_integer_delta_cross_entropy_21",
+      "residual_coefficients": 3
+    },
+    {
+      "id": "ordered-residual-020",
+      "algorithm": "cadence_ordered_residual",
+      "member": "core",
+      "auxiliary_weight": 0.1,
+      "epochs": 80,
+      "learning_rate": 0.003,
+      "weight_decay": 0.1,
+      "correction_penalty": 0.1,
+      "random_seed": 42,
+      "source_target": "actual_current_unequal_prior_original6to20",
+      "native_target": "original_integer_delta_cross_entropy_21",
+      "residual_coefficients": 3
+    },
+    {
+      "id": "ordered-residual-021",
+      "algorithm": "cadence_ordered_residual",
+      "member": "core",
+      "auxiliary_weight": 0.1,
+      "epochs": 80,
+      "learning_rate": 0.003,
+      "weight_decay": 0.1,
+      "correction_penalty": 1.0,
+      "random_seed": 42,
+      "source_target": "actual_current_unequal_prior_original6to20",
+      "native_target": "original_integer_delta_cross_entropy_21",
+      "residual_coefficients": 3
+    },
+    {
+      "id": "ordered-residual-022",
+      "algorithm": "cadence_ordered_residual",
+      "member": "cat",
+      "auxiliary_weight": 0.0,
+      "epochs": 80,
+      "learning_rate": 0.003,
+      "weight_decay": 0.1,
+      "correction_penalty": 0.1,
+      "random_seed": 42,
+      "source_target": "actual_current_unequal_prior_original6to20",
+      "native_target": "original_integer_delta_cross_entropy_21",
+      "residual_coefficients": 3
+    },
+    {
+      "id": "ordered-residual-023",
+      "algorithm": "cadence_ordered_residual",
+      "member": "cat",
+      "auxiliary_weight": 0.0,
+      "epochs": 80,
+      "learning_rate": 0.003,
+      "weight_decay": 0.1,
+      "correction_penalty": 1.0,
+      "random_seed": 42,
+      "source_target": "actual_current_unequal_prior_original6to20",
+      "native_target": "original_integer_delta_cross_entropy_21",
+      "residual_coefficients": 3
+    },
+    {
+      "id": "ordered-residual-024",
+      "algorithm": "cadence_ordered_residual",
+      "member": "cat",
+      "auxiliary_weight": 0.1,
+      "epochs": 80,
+      "learning_rate": 0.003,
+      "weight_decay": 0.1,
+      "correction_penalty": 0.1,
+      "random_seed": 42,
+      "source_target": "actual_current_unequal_prior_original6to20",
+      "native_target": "original_integer_delta_cross_entropy_21",
+      "residual_coefficients": 3
+    },
+    {
+      "id": "ordered-residual-025",
+      "algorithm": "cadence_ordered_residual",
+      "member": "cat",
+      "auxiliary_weight": 0.1,
+      "epochs": 80,
+      "learning_rate": 0.003,
+      "weight_decay": 0.1,
+      "correction_penalty": 1.0,
+      "random_seed": 42,
+      "source_target": "actual_current_unequal_prior_original6to20",
+      "native_target": "original_integer_delta_cross_entropy_21",
+      "residual_coefficients": 3
+    }
+  ],
+  "previous_verification_sha256": "93b0b815b0acb4113c4804f7405184a0fa5e760b1e9bc8bc4af50fa81def61a0",
+  "review_sha256": "27c13df8c7db8dc1a7d51f7a1e81ea0977cb55e770eca0ca913128902f95683c",
+  "input_verification_sha256": "b78618b8c30c84126670db145c3d01410fca23eec55821f468ad5e5fc62ff5a8",
+  "original_native_fit_cases": 487,
+  "original_native_test_cases": 179,
+  "source_actual_fit_pairs": 851,
+  "source_reserved_pairs": 206,
+  "shared_inputs": 11,
+  "native_private_inputs": 16,
+  "new_joint_network_fits": 40,
+  "new_native_base_fits_for_cv": 0,
+  "minimum_cv_for_new_test_evaluation": 0.65,
+  "test_used_for_selection": false,
+  "synthetic_rows": 0,
+  "coefficient_outputs": 3,
+  "logit_outputs": 21,
+  "last_layer_parameters": 27,
+  "full_residual_last_layer_parameters": 189,
+  "basis_convention": "column-centered reducedQR of[delta,delta squared,zero indicator],Q*sqrt21",
+  "basis": [
+    [
+      -1.6514456476895412,
+      -1.937766939407949,
+      0.27116566340353254
+    ],
+    [
+      -1.4863010829205865,
+      -1.3564368575855648,
+      0.12051807262379209
+    ],
+    [
+      -1.3211565181516325,
+      -0.8362994159550098,
+      -0.014271877021238734
+    ],
+    [
+      -1.1560119533826785,
+      -0.3773546145162849,
+      -0.13320418553155977
+    ],
+    [
+      -0.9908673886137246,
+      0.020397546730610006,
+      -0.23627885290717157
+    ],
+    [
+      -0.8257228238447702,
+      0.35695706778567493,
+      -0.3234958791480738
+    ],
+    [
+      -0.6605782590758162,
+      0.6323239486489097,
+      -0.3948552642542665
+    ],
+    [
+      -0.4954336943068623,
+      0.8464981893203146,
+      -0.4503570082257498
+    ],
+    [
+      -0.3302891295379081,
+      0.9994797897998898,
+      -0.4900011110625236
+    ],
+    [
+      -0.16514456476895406,
+      1.0912687500876346,
+      -0.5137875727645879
+    ],
+    [
+      0.0,
+      1.1218650701835495,
+      4.329136029775694
+    ],
+    [
+      0.16514456476895406,
+      1.0912687500876346,
+      -0.5137875727645879
+    ],
+    [
+      0.3302891295379081,
+      0.9994797897998896,
+      -0.49000111106252353
+    ],
+    [
+      0.4954336943068623,
+      0.8464981893203146,
+      -0.45035700822574976
+    ],
+    [
+      0.6605782590758162,
+      0.6323239486489098,
+      -0.39485526425426665
+    ],
+    [
+      0.8257228238447702,
+      0.3569570677856748,
+      -0.32349587914807376
+    ],
+    [
+      0.9908673886137246,
+      0.02039754673060988,
+      -0.23627885290717157
+    ],
+    [
+      1.1560119533826785,
+      -0.377354614516285,
+      -0.13320418553155983
+    ],
+    [
+      1.3211565181516325,
+      -0.8362994159550099,
+      -0.014271877021238609
+    ],
+    [
+      1.4863010829205865,
+      -1.356436857585565,
+      0.12051807262379226
+    ],
+    [
+      1.6514456476895405,
+      -1.9377669394079502,
+      0.27116566340353254
+    ]
+  ],
+  "basis_is_mathematical_class_geometry": true,
+  "penalty_convention": "lambda*mean of squared expanded centered21residual;equals mean row squared coefficient norm",
+  "penalties": [
+    0.1,
+    1.0
+  ],
+  "source_weights": [
+    0.0,
+    0.1
+  ],
+  "epochs": 80,
+  "learning_rate": 0.003,
+  "weight_decay": 0.1,
+  "controls": {
+    "native_global": 2,
+    "full_residual_same_penalties": 8,
+    "full_residual_stronger_penalties": 4,
+    "scalar_gates": 4
+  },
+  "rationale": "Strong shrinkage largely restored baseline decisions. A fixed three-dimensional output geometry retains zero/magnitude/dispersion shifts with fewer parameters. All other inputs, source head,normalization,base weights and optimizer stay fixed. Full-residual same-penalty controls and exact shared/source initialization allow a direct comparison. No synthetic observations,source current context or transformed targets. Refit all8new recipes in5personfolds and independently verify all26OOFmetrics/40fold artifacts and coefficient-chain gradients."
+}

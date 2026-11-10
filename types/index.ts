@@ -205,6 +205,10 @@ export interface TrailWeather {
   risk_level: "bajo" | "medio" | "alto";
   recommendation: string;
   source: string;
+  observed_at?: string | null;
+  wind_direction_degrees?: number | null;
+  cloud_cover_percent?: number | null;
+  is_day?: boolean | null;
 }
 
 export interface TrailReport {
@@ -220,6 +224,16 @@ export interface TrailReport {
   longitude: number | null;
   accuracy_meters?: number | null;
   route_progress_meters: number | null;
+  end_latitude?: number | null;
+  end_longitude?: number | null;
+  route_end_progress_meters?: number | null;
+  confirmation_count?: number;
+  cleared_count?: number;
+  unsure_count?: number;
+  last_confirmed_at?: string | null;
+  last_checked_at?: string | null;
+  community_status?: "reported" | "confirmed" | "disputed" | "resolved";
+  my_feedback?: ReportFeedbackValue | null;
   reporter_name?: string;
   observed_at?: string;
   received_at?: string;
@@ -229,6 +243,8 @@ export interface TrailReport {
   position_precision_meters?: number;
   created_at: string;
 }
+
+export type ReportFeedbackValue = "still_there" | "not_there" | "unsure";
 
 export interface RouteTrackingPoint {
   id?: number;

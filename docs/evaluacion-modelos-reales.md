@@ -2,6 +2,8 @@
 
 El proyecto evalúa cuatro tareas distintas: Borg observado en GeoFatigue, resultado AMS del estudio nocturno, dificultad de tramos OSM y dificultad publicada por APN. Cada tarea conserva sus etiquetas originales. Sus métricas no son intercambiables ni validan las categorías de fatiga/riesgo de la app durante trekking.
 
+La [optimización del 25/10/2026](ai-optimization-2026-10-25/README.md) amplía la selección a 76 configuraciones por tarea y documenta el antes/después sobre las mismas observaciones reservadas. La tabla del 21/10 que sigue conserva los resultados históricos anteriores a ese ajuste.
+
 ## Actualizar la evaluación sin volver a entrenar
 
 Desde la raíz del proyecto:

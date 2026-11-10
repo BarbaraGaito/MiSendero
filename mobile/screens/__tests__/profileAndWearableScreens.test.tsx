@@ -86,6 +86,11 @@ test("admin evaluation compares macro F1 with its baseline and discloses missing
   expect(content).toContain("F1 de referencia");
   expect(content).toContain("Accuracy balanceada");
   expect(content).toContain("Clases evaluadas");
+  expect(content).toContain("Fatiga Borg con calibración previa");
+  expect(content).toContain("Accuracy de Borg previa");
+  expect(content).toContain("F1 de Borg previa");
+  expect(content).toContain("Requiere Borg previa y contexto de actividad");
+  expect(content).toContain("Benchmark reutilizado");
   expect(content).toContain("Sin observaciones en test");
   expect(content).toContain("El test contiene un solo grupo");
   expect(content).toContain("no acredita validación para uso en campo");

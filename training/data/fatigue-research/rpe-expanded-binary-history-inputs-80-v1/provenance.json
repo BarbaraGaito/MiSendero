@@ -1,0 +1,102 @@
+{
+  "version": 1,
+  "dependencies_sha256": {
+    "preparation_code": "9bf8212d2d688daf929416bd32173e082e3040f9153ac2ea2401fb7ce08d0672",
+    "old_preparation_code": "fbd10806c3349ce7563d5ecc71dfcde4b9939d660efe22674938da9db2d60b8e",
+    "cadence_preparation_code": "395d19cb4952bd7cb22e1c1ea630428145f816c4d0043252ce6280a88475b22e",
+    "gait_preparation_code": "08d074214043baf4243b44bc9c9d076952d22c7e9758aac8a2e6b7b5c45c275b",
+    "old_provenance": "34a550f5342dba8ca70a5d5be90fb8e77a449ffa5f7b9bf27768f0d6cbe9f7e7",
+    "old_dataset": "57707f3de43d56877f27c79ffde68f3fb2f4f8c8cb9eeb6a7050990d7a530627",
+    "cadence_provenance": "d1717aa14a5e188be2ce336a1e3b408c6f0bf6cd334c8b4d8a6641c940828314",
+    "cadence_dataset": "aecb64e01ac01f86b9fe4bd3082d7e6d3d8de004a32c5e2573a54f4be8fe62e6",
+    "gait_provenance": "16e021c9c51eaabf43171dff0cef41b0cca7c9de70b9b63c670f677165b45ebd",
+    "gait_dataset": "ffbe48bf988920344073abd2044d019bc4d2b58033930ca59ef0d89c6f61b1e7",
+    "old_audit_code": "f1bf210ea132503303e35fe141e2f514902b3b736515aba04dbb8bb3bacd9e29",
+    "cadence_audit_code": "8e61bfa4d887573517696ef402b1429f92b86b2bd890f8d11543e96fc8b68893",
+    "gait_audit_code": "93219d7ac6ba15f21fd72cfccff8deba1dd5d9f8610bfe78654c9614604fe07d",
+    "public_real_data_policy": "fdfb112d20b1f22bae08032ed7d9f3d27ee784879674c32f8f65cc21fe69c028",
+    "old": "9f31d21dbb7c8360e6755da6adea91e87f122fbc02bd5ebd5a1b75897ebd9b01",
+    "cadence": "c44e8bfb91b4356085aff7dfd62849f618776271f891a4d50bdaee7692cedc30",
+    "gait_forecasting": "d1c8866c3606d9f4d17319968d59f80a4d210dd5a53792b24d3b613f35dc11d6"
+  },
+  "dataset_sha256": "532658d389ac90f31f4640d2e4fb1d93001a8725d3996d5df505df6f8a73d51d",
+  "fitting_actual_pairs": 3548,
+  "previous_four_domain_fitting_pairs": 2287,
+  "cadence_fitting_pairs": 851,
+  "additional_gait_fitting_pairs": 410,
+  "additional_gait_fitting_people": 19,
+  "gait_reserved_people_not_received": 5,
+  "actual_second_priors": 3042,
+  "stored_reserved_source_pairs": 518,
+  "domains": {
+    "cadence": {
+      "fitting_pairs": 851,
+      "fitting_people": 123,
+      "equal_pairs": 299,
+      "unequal_pairs": 552,
+      "actual_second_priors": 727,
+      "naturally_missing_second_priors": 124
+    },
+    "emap": {
+      "fitting_pairs": 248,
+      "fitting_people": 83,
+      "equal_pairs": 64,
+      "unequal_pairs": 184,
+      "actual_second_priors": 165,
+      "naturally_missing_second_priors": 83
+    },
+    "gait_forecasting": {
+      "fitting_pairs": 410,
+      "fitting_people": 19,
+      "equal_pairs": 158,
+      "unequal_pairs": 252,
+      "actual_second_priors": 388,
+      "naturally_missing_second_priors": 22
+    },
+    "resistance": {
+      "fitting_pairs": 866,
+      "fitting_people": 4,
+      "equal_pairs": 577,
+      "unequal_pairs": 289,
+      "actual_second_priors": 802,
+      "naturally_missing_second_priors": 64
+    },
+    "shoulder": {
+      "fitting_pairs": 920,
+      "fitting_people": 27,
+      "equal_pairs": 175,
+      "unequal_pairs": 745,
+      "actual_second_priors": 758,
+      "naturally_missing_second_priors": 162
+    },
+    "worker": {
+      "fitting_pairs": 253,
+      "fitting_people": 31,
+      "equal_pairs": 81,
+      "unequal_pairs": 172,
+      "actual_second_priors": 202,
+      "naturally_missing_second_priors": 51
+    }
+  },
+  "single_class_sts_fitting_pairs_excluded": 49,
+  "source_current_and_prior_values_unchanged": true,
+  "source_instrument_scales_converted": false,
+  "source_targets_pooled_as_native_borg": false,
+  "approved_shared_inputs": [
+    "actual_prior_rpe",
+    "actual_second_prior_rpe",
+    "actual_second_prior_missing_indicator"
+  ],
+  "source_specific_binary_heads_required": true,
+  "domain_specific_fitting_normalization_required": true,
+  "source_sensor_or_native_context_fabricated": false,
+  "source_ages_or_phases_assumed": false,
+  "synthetic_rows": 0,
+  "synthetic_targets": 0,
+  "new_native_borg_cases": 0,
+  "new_predictive_estimator_fits": 0,
+  "model_comparison_predeclared": false,
+  "native_training_cases": 487,
+  "native_test_cases": 179,
+  "scope": "Real source current/prior equality tasks share measured history structure. Original point values and domains remain separate. No source outcomes become native0-10labels,no invented sensor/context columns,ages,phase equivalence or extra history views. All native487/179cases are unchanged. The new corpus requires a separately predeclared model comparison and cannot be silently passed into the frozen851-pair physiology models."
+}

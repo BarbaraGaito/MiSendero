@@ -1,0 +1,52 @@
+{
+  "version": 1,
+  "dataset_sha256": "f2c2b0c3a94aeadca7224c4932dc964bd26fbe753f8d47ece9ef81db8e3b2650",
+  "dependencies_sha256": {
+    "combination_code": "dcae9aa55243c919491f93faf56fcc91e0ecaef7403e863bf6d135e3f2b71d63",
+    "previous_preparation_code": "96f126980610ff392f255529543c13b718a0372ca71043a67de8a84e0a4fca1d",
+    "walking_preparation_code": "b7facf716833eebc5f969cfb7f9955503883c7ced202cbc5340c61fcb0508d62",
+    "previous_provenance": "4369253ef0752ca81c27d27ebaf2d9fc347d0f5d2d85ebe61619f25c478b86ce",
+    "walking_provenance": "828771c3314ad53cc74344a5fb3058b43c686ddd8214a0f1c157ccf37fe5b2ad",
+    "previous_source_audit": "23b4e7c60bd36d59733ed462da8cff4d33aff4f24f6aa07ddb80f9b42e152a5a",
+    "walking_source_audit": "ea5c4153cf2e35328b14c8fe8c486bfb3d311a0227ac087f04af9e02e080fcaa",
+    "real_public_data_policy": "fdfb112d20b1f22bae08032ed7d9f3d27ee784879674c32f8f65cc21fe69c028"
+  },
+  "actual_source_targets": 458,
+  "source_counts": {
+    "sts": 49,
+    "walking_spe": 156,
+    "worker": 253
+  },
+  "walking_hr_cells_attached": 0,
+  "walking_participant_identity_invented": false,
+  "walking_source_cohort_clusters": 1,
+  "walking_person_disjoint_holdout_claimed": false,
+  "source_instruments": {
+    "worker": "Actual original Borg CR10",
+    "sts": "Actual original continuous Borg CR10",
+    "walking_spe": "Actual original SPE0-10; separate outcome, not relabeled as native Borg"
+  },
+  "source_feature_policy": {
+    "worker": [
+      "prior_borg",
+      "hr_last",
+      "hr_history_mean"
+    ],
+    "sts": [
+      "prior_borg",
+      "hr_last",
+      "hr_history_mean"
+    ],
+    "walking_spe": [
+      "prior_spe",
+      "prior2_spe",
+      "nominal_elapsed_minutes"
+    ]
+  },
+  "policy": "Union of original public rows only; no target pooling across unlike instruments. Unmeasured/inapplicable union fields stay missing. Walking contains no guessed HR or participant identities; its four conditions may have separate SPE heads within one conservative cohort. Nominal published protocol minutes are not invented wall-clock report timestamps. Source forward-pass representations may be native inputs, never new observed Borg labels. Original native487/179 cohorts remain unchanged.",
+  "native_target_merge": false,
+  "new_native_borg_targets": 0,
+  "synthetic_rows": 0,
+  "interpolated_targets": 0,
+  "model_fitting_started_at_preparation": false
+}

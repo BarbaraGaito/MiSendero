@@ -29,6 +29,13 @@ const createReportSchema = z.object({
   longitude: z.number().min(-180).max(180).nullish(),
   accuracy_meters: z.number().nonnegative().nullish(),
   route_progress_meters: z.number().nonnegative().nullish(),
-});
+  end_latitude: z.number().min(-90).max(90).nullish(),
+  end_longitude: z.number().min(-180).max(180).nullish(),
+  route_end_progress_meters: z.number().nonnegative().nullish(),
+}).refine(value => {
+  const section = [value.end_latitude, value.end_longitude, value.route_end_progress_meters];
+  return section.every(item => item == null) || (section.every(item => item != null) && value.latitude != null && value.longitude != null &&
+    value.route_progress_meters != null && value.route_end_progress_meters > value.route_progress_meters);
+}, "Elegí inicio y fin válidos para el tramo afectado");
 
 module.exports = { createTrailSchema, createReportSchema };

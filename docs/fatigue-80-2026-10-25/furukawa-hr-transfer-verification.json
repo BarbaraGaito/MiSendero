@@ -1,0 +1,915 @@
+{
+  "version": 1,
+  "verification": "passed",
+  "verified_at": "2026-10-27T22:48:09.102008+00:00",
+  "verification_code_sha256": "78a19fbc5ec329cd68ec315d8cabb10ea34bd4a39d1bc398c7db640718516f79",
+  "selection_sha256": "abbc9d9c5905a4cc701fbe0d15546278a6a76f54912e240d9f17adc635fea4f5",
+  "input_verification_sha256": "2b34b86604c6a74b112c069387ac22bcdb8aacb9f8f10f2308c6af3ee805684b",
+  "previous_verification_sha256": "0c5fd4e7c545c206613a9205b09ade3eba7748c28f2d8e3fd6a48b5adf5c4cb6",
+  "public_real_data_policy_sha256": "fdfb112d20b1f22bae08032ed7d9f3d27ee784879674c32f8f65cc21fe69c028",
+  "all_14_oof_recipes_recomputed": true,
+  "original_native_rows_and_targets_preserved": true,
+  "native_hr_cache_identities_and_available_values_independently_checked": 666,
+  "native_hr_provenance_sha256": "634530ad8d40f76e3957ccdcd6030455a647188faa72c9616562ec8792f73628",
+  "native_hr_verification_sha256": "639b4039658f9fb78688ffdad643153cc59746552426c0d48f1cd66aa5aff3b9",
+  "actual_source_function_refits": 4,
+  "source_function_refits": [
+    {
+      "algorithm": "ridge",
+      "source_task": "state",
+      "actual_source_target_calls": 1,
+      "actual_source_targets_observed": 252,
+      "actual_source_people": 12,
+      "actual_original_target_points_or_differences_and_weights_verified": true,
+      "reserved_source_targets_fitted": 0,
+      "native_source_labels_fitted": 0,
+      "fitting_only_source_statistics_verified": true
+    },
+    {
+      "algorithm": "ridge",
+      "source_task": "delta",
+      "actual_source_target_calls": 1,
+      "actual_source_targets_observed": 168,
+      "actual_source_people": 12,
+      "actual_original_target_points_or_differences_and_weights_verified": true,
+      "reserved_source_targets_fitted": 0,
+      "native_source_labels_fitted": 0,
+      "fitting_only_source_statistics_verified": true
+    },
+    {
+      "algorithm": "svr",
+      "source_task": "state",
+      "actual_source_target_calls": 1,
+      "actual_source_targets_observed": 252,
+      "actual_source_people": 12,
+      "actual_original_target_points_or_differences_and_weights_verified": true,
+      "reserved_source_targets_fitted": 0,
+      "native_source_labels_fitted": 0,
+      "fitting_only_source_statistics_verified": true
+    },
+    {
+      "algorithm": "svr",
+      "source_task": "delta",
+      "actual_source_target_calls": 1,
+      "actual_source_targets_observed": 168,
+      "actual_source_people": 12,
+      "actual_original_target_points_or_differences_and_weights_verified": true,
+      "reserved_source_targets_fitted": 0,
+      "native_source_labels_fitted": 0,
+      "fitting_only_source_statistics_verified": true
+    }
+  ],
+  "source_teacher_artifact_hashes": {
+    "ridge-state.json": "b2f8decedd3f679915619d01ab798bfb23ce6cc48f4b49c4a6d7106acd7b37f7",
+    "ridge-state.joblib": "07580e7cace0ec99ae9664974d279118f84ced92d12b7478c3781a083628c42a",
+    "ridge-delta.json": "44cf8847b1713a560f2702afbf36cdc551d5662f070a1b96bc0551cd6ea63a00",
+    "ridge-delta.joblib": "ab6079ff9f3cbf3ddfeeaf767cf6666080dd4a5fad9ab97485bbc1c14a3b50d3",
+    "svr-state.json": "3588df4ffb37cff20d855151e13505e54c4ce8a9c8c86c7893e85f991a2c5a03",
+    "svr-state.joblib": "bf916418946aa08634005178751c28681e57448f0adaf3548f2a10a3728ada2f",
+    "svr-delta.json": "0a620348ca06961bbd292cbca24160bf590cb1d6cfa56fcd3b013160b4a0e229",
+    "svr-delta.joblib": "13ebb0ebd577cdb202218ef9590deb87d4b71c4fcf46268d52e6fb3952b859ba"
+  },
+  "source_fitting_actual_state_targets": 252,
+  "source_fitting_actual_delta_targets": 168,
+  "source_fitting_people": 12,
+  "source_reserved_targets_not_fitted": 84,
+  "source_reserved_people": 4,
+  "actual_native_refits": 30,
+  "native_recipes_independently_refitted": [
+    "furukawa-hr-004",
+    "furukawa-hr-005",
+    "furukawa-hr-006",
+    "furukawa-hr-008",
+    "furukawa-hr-011",
+    "furukawa-hr-013"
+  ],
+  "native_refits": [
+    {
+      "candidate_id": "furukawa-hr-004",
+      "fold": 0,
+      "actual_native_rows_observed": 387,
+      "actual_native_delta_targets_observed": 387,
+      "native_estimator_target_calls": 1,
+      "source_functions_frozen": true,
+      "native_fitting_only_statistics_verified": true,
+      "actual_representation_values_independently_recomputed": false,
+      "optimizer_summary": {
+        "actual_native_fit_rows": 387,
+        "actual_native_fit_people": 26,
+        "actual_source_fitting_targets": 0,
+        "source_reserved_targets_not_fitted": 84,
+        "source_outcomes_pooled": false,
+        "source_teacher_frozen": true,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "convergence_warnings": []
+      },
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "furukawa-hr-004",
+      "fold": 1,
+      "actual_native_rows_observed": 395,
+      "actual_native_delta_targets_observed": 395,
+      "native_estimator_target_calls": 1,
+      "source_functions_frozen": true,
+      "native_fitting_only_statistics_verified": true,
+      "actual_representation_values_independently_recomputed": false,
+      "optimizer_summary": {
+        "actual_native_fit_rows": 395,
+        "actual_native_fit_people": 22,
+        "actual_source_fitting_targets": 0,
+        "source_reserved_targets_not_fitted": 84,
+        "source_outcomes_pooled": false,
+        "source_teacher_frozen": true,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "convergence_warnings": []
+      },
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "furukawa-hr-004",
+      "fold": 2,
+      "actual_native_rows_observed": 385,
+      "actual_native_delta_targets_observed": 385,
+      "native_estimator_target_calls": 1,
+      "source_functions_frozen": true,
+      "native_fitting_only_statistics_verified": true,
+      "actual_representation_values_independently_recomputed": false,
+      "optimizer_summary": {
+        "actual_native_fit_rows": 385,
+        "actual_native_fit_people": 21,
+        "actual_source_fitting_targets": 0,
+        "source_reserved_targets_not_fitted": 84,
+        "source_outcomes_pooled": false,
+        "source_teacher_frozen": true,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "convergence_warnings": []
+      },
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "furukawa-hr-004",
+      "fold": 3,
+      "actual_native_rows_observed": 385,
+      "actual_native_delta_targets_observed": 385,
+      "native_estimator_target_calls": 1,
+      "source_functions_frozen": true,
+      "native_fitting_only_statistics_verified": true,
+      "actual_representation_values_independently_recomputed": false,
+      "optimizer_summary": {
+        "actual_native_fit_rows": 385,
+        "actual_native_fit_people": 21,
+        "actual_source_fitting_targets": 0,
+        "source_reserved_targets_not_fitted": 84,
+        "source_outcomes_pooled": false,
+        "source_teacher_frozen": true,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "convergence_warnings": []
+      },
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "furukawa-hr-004",
+      "fold": 4,
+      "actual_native_rows_observed": 396,
+      "actual_native_delta_targets_observed": 396,
+      "native_estimator_target_calls": 1,
+      "source_functions_frozen": true,
+      "native_fitting_only_statistics_verified": true,
+      "actual_representation_values_independently_recomputed": false,
+      "optimizer_summary": {
+        "actual_native_fit_rows": 396,
+        "actual_native_fit_people": 22,
+        "actual_source_fitting_targets": 0,
+        "source_reserved_targets_not_fitted": 84,
+        "source_outcomes_pooled": false,
+        "source_teacher_frozen": true,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "convergence_warnings": []
+      },
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "furukawa-hr-005",
+      "fold": 0,
+      "actual_native_rows_observed": 387,
+      "actual_native_delta_targets_observed": 387,
+      "native_estimator_target_calls": 1,
+      "source_functions_frozen": true,
+      "native_fitting_only_statistics_verified": true,
+      "actual_representation_values_independently_recomputed": false,
+      "optimizer_summary": {
+        "actual_native_fit_rows": 387,
+        "actual_native_fit_people": 26,
+        "actual_source_fitting_targets": 0,
+        "source_reserved_targets_not_fitted": 84,
+        "source_outcomes_pooled": false,
+        "source_teacher_frozen": true,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "convergence_warnings": []
+      },
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "furukawa-hr-005",
+      "fold": 1,
+      "actual_native_rows_observed": 395,
+      "actual_native_delta_targets_observed": 395,
+      "native_estimator_target_calls": 1,
+      "source_functions_frozen": true,
+      "native_fitting_only_statistics_verified": true,
+      "actual_representation_values_independently_recomputed": false,
+      "optimizer_summary": {
+        "actual_native_fit_rows": 395,
+        "actual_native_fit_people": 22,
+        "actual_source_fitting_targets": 0,
+        "source_reserved_targets_not_fitted": 84,
+        "source_outcomes_pooled": false,
+        "source_teacher_frozen": true,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "convergence_warnings": []
+      },
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "furukawa-hr-005",
+      "fold": 2,
+      "actual_native_rows_observed": 385,
+      "actual_native_delta_targets_observed": 385,
+      "native_estimator_target_calls": 1,
+      "source_functions_frozen": true,
+      "native_fitting_only_statistics_verified": true,
+      "actual_representation_values_independently_recomputed": false,
+      "optimizer_summary": {
+        "actual_native_fit_rows": 385,
+        "actual_native_fit_people": 21,
+        "actual_source_fitting_targets": 0,
+        "source_reserved_targets_not_fitted": 84,
+        "source_outcomes_pooled": false,
+        "source_teacher_frozen": true,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "convergence_warnings": []
+      },
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "furukawa-hr-005",
+      "fold": 3,
+      "actual_native_rows_observed": 385,
+      "actual_native_delta_targets_observed": 385,
+      "native_estimator_target_calls": 1,
+      "source_functions_frozen": true,
+      "native_fitting_only_statistics_verified": true,
+      "actual_representation_values_independently_recomputed": false,
+      "optimizer_summary": {
+        "actual_native_fit_rows": 385,
+        "actual_native_fit_people": 21,
+        "actual_source_fitting_targets": 0,
+        "source_reserved_targets_not_fitted": 84,
+        "source_outcomes_pooled": false,
+        "source_teacher_frozen": true,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "convergence_warnings": []
+      },
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "furukawa-hr-005",
+      "fold": 4,
+      "actual_native_rows_observed": 396,
+      "actual_native_delta_targets_observed": 396,
+      "native_estimator_target_calls": 1,
+      "source_functions_frozen": true,
+      "native_fitting_only_statistics_verified": true,
+      "actual_representation_values_independently_recomputed": false,
+      "optimizer_summary": {
+        "actual_native_fit_rows": 396,
+        "actual_native_fit_people": 22,
+        "actual_source_fitting_targets": 0,
+        "source_reserved_targets_not_fitted": 84,
+        "source_outcomes_pooled": false,
+        "source_teacher_frozen": true,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "convergence_warnings": []
+      },
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "furukawa-hr-006",
+      "fold": 0,
+      "actual_native_rows_observed": 387,
+      "actual_native_delta_targets_observed": 387,
+      "native_estimator_target_calls": 1,
+      "source_functions_frozen": true,
+      "native_fitting_only_statistics_verified": true,
+      "actual_representation_values_independently_recomputed": true,
+      "optimizer_summary": {
+        "actual_native_fit_rows": 387,
+        "actual_native_fit_people": 26,
+        "actual_source_fitting_targets": 252,
+        "source_reserved_targets_not_fitted": 84,
+        "source_outcomes_pooled": false,
+        "source_teacher_frozen": true,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "convergence_warnings": []
+      },
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "furukawa-hr-006",
+      "fold": 1,
+      "actual_native_rows_observed": 395,
+      "actual_native_delta_targets_observed": 395,
+      "native_estimator_target_calls": 1,
+      "source_functions_frozen": true,
+      "native_fitting_only_statistics_verified": true,
+      "actual_representation_values_independently_recomputed": true,
+      "optimizer_summary": {
+        "actual_native_fit_rows": 395,
+        "actual_native_fit_people": 22,
+        "actual_source_fitting_targets": 252,
+        "source_reserved_targets_not_fitted": 84,
+        "source_outcomes_pooled": false,
+        "source_teacher_frozen": true,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "convergence_warnings": []
+      },
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "furukawa-hr-006",
+      "fold": 2,
+      "actual_native_rows_observed": 385,
+      "actual_native_delta_targets_observed": 385,
+      "native_estimator_target_calls": 1,
+      "source_functions_frozen": true,
+      "native_fitting_only_statistics_verified": true,
+      "actual_representation_values_independently_recomputed": true,
+      "optimizer_summary": {
+        "actual_native_fit_rows": 385,
+        "actual_native_fit_people": 21,
+        "actual_source_fitting_targets": 252,
+        "source_reserved_targets_not_fitted": 84,
+        "source_outcomes_pooled": false,
+        "source_teacher_frozen": true,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "convergence_warnings": []
+      },
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "furukawa-hr-006",
+      "fold": 3,
+      "actual_native_rows_observed": 385,
+      "actual_native_delta_targets_observed": 385,
+      "native_estimator_target_calls": 1,
+      "source_functions_frozen": true,
+      "native_fitting_only_statistics_verified": true,
+      "actual_representation_values_independently_recomputed": true,
+      "optimizer_summary": {
+        "actual_native_fit_rows": 385,
+        "actual_native_fit_people": 21,
+        "actual_source_fitting_targets": 252,
+        "source_reserved_targets_not_fitted": 84,
+        "source_outcomes_pooled": false,
+        "source_teacher_frozen": true,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "convergence_warnings": []
+      },
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "furukawa-hr-006",
+      "fold": 4,
+      "actual_native_rows_observed": 396,
+      "actual_native_delta_targets_observed": 396,
+      "native_estimator_target_calls": 1,
+      "source_functions_frozen": true,
+      "native_fitting_only_statistics_verified": true,
+      "actual_representation_values_independently_recomputed": true,
+      "optimizer_summary": {
+        "actual_native_fit_rows": 396,
+        "actual_native_fit_people": 22,
+        "actual_source_fitting_targets": 252,
+        "source_reserved_targets_not_fitted": 84,
+        "source_outcomes_pooled": false,
+        "source_teacher_frozen": true,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "convergence_warnings": []
+      },
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "furukawa-hr-008",
+      "fold": 0,
+      "actual_native_rows_observed": 387,
+      "actual_native_delta_targets_observed": 387,
+      "native_estimator_target_calls": 1,
+      "source_functions_frozen": true,
+      "native_fitting_only_statistics_verified": true,
+      "actual_representation_values_independently_recomputed": true,
+      "optimizer_summary": {
+        "actual_native_fit_rows": 387,
+        "actual_native_fit_people": 26,
+        "actual_source_fitting_targets": 168,
+        "source_reserved_targets_not_fitted": 84,
+        "source_outcomes_pooled": false,
+        "source_teacher_frozen": true,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "convergence_warnings": []
+      },
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "furukawa-hr-008",
+      "fold": 1,
+      "actual_native_rows_observed": 395,
+      "actual_native_delta_targets_observed": 395,
+      "native_estimator_target_calls": 1,
+      "source_functions_frozen": true,
+      "native_fitting_only_statistics_verified": true,
+      "actual_representation_values_independently_recomputed": true,
+      "optimizer_summary": {
+        "actual_native_fit_rows": 395,
+        "actual_native_fit_people": 22,
+        "actual_source_fitting_targets": 168,
+        "source_reserved_targets_not_fitted": 84,
+        "source_outcomes_pooled": false,
+        "source_teacher_frozen": true,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "convergence_warnings": []
+      },
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "furukawa-hr-008",
+      "fold": 2,
+      "actual_native_rows_observed": 385,
+      "actual_native_delta_targets_observed": 385,
+      "native_estimator_target_calls": 1,
+      "source_functions_frozen": true,
+      "native_fitting_only_statistics_verified": true,
+      "actual_representation_values_independently_recomputed": true,
+      "optimizer_summary": {
+        "actual_native_fit_rows": 385,
+        "actual_native_fit_people": 21,
+        "actual_source_fitting_targets": 168,
+        "source_reserved_targets_not_fitted": 84,
+        "source_outcomes_pooled": false,
+        "source_teacher_frozen": true,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "convergence_warnings": []
+      },
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "furukawa-hr-008",
+      "fold": 3,
+      "actual_native_rows_observed": 385,
+      "actual_native_delta_targets_observed": 385,
+      "native_estimator_target_calls": 1,
+      "source_functions_frozen": true,
+      "native_fitting_only_statistics_verified": true,
+      "actual_representation_values_independently_recomputed": true,
+      "optimizer_summary": {
+        "actual_native_fit_rows": 385,
+        "actual_native_fit_people": 21,
+        "actual_source_fitting_targets": 168,
+        "source_reserved_targets_not_fitted": 84,
+        "source_outcomes_pooled": false,
+        "source_teacher_frozen": true,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "convergence_warnings": []
+      },
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "furukawa-hr-008",
+      "fold": 4,
+      "actual_native_rows_observed": 396,
+      "actual_native_delta_targets_observed": 396,
+      "native_estimator_target_calls": 1,
+      "source_functions_frozen": true,
+      "native_fitting_only_statistics_verified": true,
+      "actual_representation_values_independently_recomputed": true,
+      "optimizer_summary": {
+        "actual_native_fit_rows": 396,
+        "actual_native_fit_people": 22,
+        "actual_source_fitting_targets": 168,
+        "source_reserved_targets_not_fitted": 84,
+        "source_outcomes_pooled": false,
+        "source_teacher_frozen": true,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "convergence_warnings": []
+      },
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "furukawa-hr-011",
+      "fold": 0,
+      "actual_native_rows_observed": 387,
+      "actual_native_delta_targets_observed": 387,
+      "native_estimator_target_calls": 1,
+      "source_functions_frozen": true,
+      "native_fitting_only_statistics_verified": true,
+      "actual_representation_values_independently_recomputed": true,
+      "optimizer_summary": {
+        "actual_native_fit_rows": 387,
+        "actual_native_fit_people": 26,
+        "actual_source_fitting_targets": 252,
+        "source_reserved_targets_not_fitted": 84,
+        "source_outcomes_pooled": false,
+        "source_teacher_frozen": true,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "convergence_warnings": []
+      },
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "furukawa-hr-011",
+      "fold": 1,
+      "actual_native_rows_observed": 395,
+      "actual_native_delta_targets_observed": 395,
+      "native_estimator_target_calls": 1,
+      "source_functions_frozen": true,
+      "native_fitting_only_statistics_verified": true,
+      "actual_representation_values_independently_recomputed": true,
+      "optimizer_summary": {
+        "actual_native_fit_rows": 395,
+        "actual_native_fit_people": 22,
+        "actual_source_fitting_targets": 252,
+        "source_reserved_targets_not_fitted": 84,
+        "source_outcomes_pooled": false,
+        "source_teacher_frozen": true,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "convergence_warnings": []
+      },
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "furukawa-hr-011",
+      "fold": 2,
+      "actual_native_rows_observed": 385,
+      "actual_native_delta_targets_observed": 385,
+      "native_estimator_target_calls": 1,
+      "source_functions_frozen": true,
+      "native_fitting_only_statistics_verified": true,
+      "actual_representation_values_independently_recomputed": true,
+      "optimizer_summary": {
+        "actual_native_fit_rows": 385,
+        "actual_native_fit_people": 21,
+        "actual_source_fitting_targets": 252,
+        "source_reserved_targets_not_fitted": 84,
+        "source_outcomes_pooled": false,
+        "source_teacher_frozen": true,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "convergence_warnings": []
+      },
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "furukawa-hr-011",
+      "fold": 3,
+      "actual_native_rows_observed": 385,
+      "actual_native_delta_targets_observed": 385,
+      "native_estimator_target_calls": 1,
+      "source_functions_frozen": true,
+      "native_fitting_only_statistics_verified": true,
+      "actual_representation_values_independently_recomputed": true,
+      "optimizer_summary": {
+        "actual_native_fit_rows": 385,
+        "actual_native_fit_people": 21,
+        "actual_source_fitting_targets": 252,
+        "source_reserved_targets_not_fitted": 84,
+        "source_outcomes_pooled": false,
+        "source_teacher_frozen": true,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "convergence_warnings": []
+      },
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "furukawa-hr-011",
+      "fold": 4,
+      "actual_native_rows_observed": 396,
+      "actual_native_delta_targets_observed": 396,
+      "native_estimator_target_calls": 1,
+      "source_functions_frozen": true,
+      "native_fitting_only_statistics_verified": true,
+      "actual_representation_values_independently_recomputed": true,
+      "optimizer_summary": {
+        "actual_native_fit_rows": 396,
+        "actual_native_fit_people": 22,
+        "actual_source_fitting_targets": 252,
+        "source_reserved_targets_not_fitted": 84,
+        "source_outcomes_pooled": false,
+        "source_teacher_frozen": true,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "convergence_warnings": []
+      },
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "furukawa-hr-013",
+      "fold": 0,
+      "actual_native_rows_observed": 387,
+      "actual_native_delta_targets_observed": 387,
+      "native_estimator_target_calls": 1,
+      "source_functions_frozen": true,
+      "native_fitting_only_statistics_verified": true,
+      "actual_representation_values_independently_recomputed": true,
+      "optimizer_summary": {
+        "actual_native_fit_rows": 387,
+        "actual_native_fit_people": 26,
+        "actual_source_fitting_targets": 168,
+        "source_reserved_targets_not_fitted": 84,
+        "source_outcomes_pooled": false,
+        "source_teacher_frozen": true,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "convergence_warnings": []
+      },
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "furukawa-hr-013",
+      "fold": 1,
+      "actual_native_rows_observed": 395,
+      "actual_native_delta_targets_observed": 395,
+      "native_estimator_target_calls": 1,
+      "source_functions_frozen": true,
+      "native_fitting_only_statistics_verified": true,
+      "actual_representation_values_independently_recomputed": true,
+      "optimizer_summary": {
+        "actual_native_fit_rows": 395,
+        "actual_native_fit_people": 22,
+        "actual_source_fitting_targets": 168,
+        "source_reserved_targets_not_fitted": 84,
+        "source_outcomes_pooled": false,
+        "source_teacher_frozen": true,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "convergence_warnings": []
+      },
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "furukawa-hr-013",
+      "fold": 2,
+      "actual_native_rows_observed": 385,
+      "actual_native_delta_targets_observed": 385,
+      "native_estimator_target_calls": 1,
+      "source_functions_frozen": true,
+      "native_fitting_only_statistics_verified": true,
+      "actual_representation_values_independently_recomputed": true,
+      "optimizer_summary": {
+        "actual_native_fit_rows": 385,
+        "actual_native_fit_people": 21,
+        "actual_source_fitting_targets": 168,
+        "source_reserved_targets_not_fitted": 84,
+        "source_outcomes_pooled": false,
+        "source_teacher_frozen": true,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "convergence_warnings": []
+      },
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "furukawa-hr-013",
+      "fold": 3,
+      "actual_native_rows_observed": 385,
+      "actual_native_delta_targets_observed": 385,
+      "native_estimator_target_calls": 1,
+      "source_functions_frozen": true,
+      "native_fitting_only_statistics_verified": true,
+      "actual_representation_values_independently_recomputed": true,
+      "optimizer_summary": {
+        "actual_native_fit_rows": 385,
+        "actual_native_fit_people": 21,
+        "actual_source_fitting_targets": 168,
+        "source_reserved_targets_not_fitted": 84,
+        "source_outcomes_pooled": false,
+        "source_teacher_frozen": true,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "convergence_warnings": []
+      },
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "furukawa-hr-013",
+      "fold": 4,
+      "actual_native_rows_observed": 396,
+      "actual_native_delta_targets_observed": 396,
+      "native_estimator_target_calls": 1,
+      "source_functions_frozen": true,
+      "native_fitting_only_statistics_verified": true,
+      "actual_representation_values_independently_recomputed": true,
+      "optimizer_summary": {
+        "actual_native_fit_rows": 396,
+        "actual_native_fit_people": 22,
+        "actual_source_fitting_targets": 168,
+        "source_reserved_targets_not_fitted": 84,
+        "source_outcomes_pooled": false,
+        "source_teacher_frozen": true,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "convergence_warnings": []
+      },
+      "reload_without_current_truth_or_ids": true
+    }
+  ],
+  "actual_source_and_native_estimator_targets_and_weights_observed": true,
+  "source_functions_frozen_during_native_fitting": true,
+  "source_and_native_preprocessing_fitting_only": true,
+  "natural_missing_representations_preserved": true,
+  "source_outcomes_pooled_or_converted_to_native": false,
+  "synthetic_rows": 0,
+  "artificial_history_views": 0,
+  "invented_source_times_or_rest_baselines": 0,
+  "best_source_by_member": {
+    "core": {
+      "candidate": {
+        "id": "furukawa-hr-006",
+        "algorithm": "furukawa_source_function",
+        "source_algorithm": "ridge",
+        "source_task": "state",
+        "member": "core"
+      },
+      "accuracy_mean": 0.6102688326166588,
+      "fold_accuracy": [
+        0.66,
+        0.5543478260869565,
+        0.5784313725490197,
+        0.5882352941176471,
+        0.6703296703296703
+      ],
+      "pooled_oof_accuracy": 0.6098562628336756
+    },
+    "cat": {
+      "candidate": {
+        "id": "furukawa-hr-013",
+        "algorithm": "furukawa_source_function",
+        "source_algorithm": "svr",
+        "source_task": "delta",
+        "member": "cat"
+      },
+      "accuracy_mean": 0.6259857601903638,
+      "fold_accuracy": [
+        0.68,
+        0.5760869565217391,
+        0.6176470588235294,
+        0.6078431372549019,
+        0.6483516483516484
+      ],
+      "pooled_oof_accuracy": 0.6262833675564682
+    }
+  },
+  "best_source_by_task_and_member": {
+    "state": {
+      "core": {
+        "candidate": {
+          "id": "furukawa-hr-006",
+          "algorithm": "furukawa_source_function",
+          "source_algorithm": "ridge",
+          "source_task": "state",
+          "member": "core"
+        },
+        "accuracy_mean": 0.6102688326166588,
+        "fold_accuracy": [
+          0.66,
+          0.5543478260869565,
+          0.5784313725490197,
+          0.5882352941176471,
+          0.6703296703296703
+        ],
+        "pooled_oof_accuracy": 0.6098562628336756
+      },
+      "cat": {
+        "candidate": {
+          "id": "furukawa-hr-011",
+          "algorithm": "furukawa_source_function",
+          "source_algorithm": "svr",
+          "source_task": "state",
+          "member": "cat"
+        },
+        "accuracy_mean": 0.6176618232577311,
+        "fold_accuracy": [
+          0.66,
+          0.5434782608695652,
+          0.6176470588235294,
+          0.6078431372549019,
+          0.6593406593406593
+        ],
+        "pooled_oof_accuracy": 0.6180698151950719
+      }
+    },
+    "delta": {
+      "core": {
+        "candidate": {
+          "id": "furukawa-hr-008",
+          "algorithm": "furukawa_source_function",
+          "source_algorithm": "ridge",
+          "source_task": "delta",
+          "member": "core"
+        },
+        "accuracy_mean": 0.6097794703165548,
+        "fold_accuracy": [
+          0.65,
+          0.5434782608695652,
+          0.5980392156862745,
+          0.5980392156862745,
+          0.6593406593406593
+        ],
+        "pooled_oof_accuracy": 0.6098562628336756
+      },
+      "cat": {
+        "candidate": {
+          "id": "furukawa-hr-013",
+          "algorithm": "furukawa_source_function",
+          "source_algorithm": "svr",
+          "source_task": "delta",
+          "member": "cat"
+        },
+        "accuracy_mean": 0.6259857601903638,
+        "fold_accuracy": [
+          0.68,
+          0.5760869565217391,
+          0.6176470588235294,
+          0.6078431372549019,
+          0.6483516483516484
+        ],
+        "pooled_oof_accuracy": 0.6262833675564682
+      }
+    }
+  },
+  "matched_measured_controls": {
+    "core": {
+      "candidate": {
+        "id": "furukawa-hr-004",
+        "algorithm": "native_measured_hr_control",
+        "member": "core"
+      },
+      "accuracy_mean": 0.5955646178203723,
+      "fold_accuracy": [
+        0.64,
+        0.532608695652174,
+        0.5686274509803921,
+        0.5882352941176471,
+        0.6483516483516484
+      ],
+      "pooled_oof_accuracy": 0.5954825462012321
+    },
+    "cat": {
+      "candidate": {
+        "id": "furukawa-hr-005",
+        "algorithm": "native_measured_hr_control",
+        "member": "cat"
+      },
+      "accuracy_mean": 0.6001016834827577,
+      "fold_accuracy": [
+        0.64,
+        0.5760869565217391,
+        0.5686274509803921,
+        0.5784313725490197,
+        0.6373626373626373
+      ],
+      "pooled_oof_accuracy": 0.5995893223819302
+    }
+  },
+  "best_source_cv_accuracy": 0.6259857601903638,
+  "winner_id": "furukawa-hr-001",
+  "best_cv_accuracy": 0.6379721574248428,
+  "new_test_gate_passed": false,
+  "new_test_evaluation": null,
+  "original_release_test_correct": 108,
+  "original_release_test_accuracy": 0.6033519553072626,
+  "achieved": false,
+  "scope": "Original runner experiment2pre-report HRand source-native Borgpoints preserved separately.4source functions independently refitted with actual252state or168delta targets and source-person weights. All14native exact487-case OOFrecipes recalculated,selected state/delta functions and matched measured controls independently refitted across5original person folds with true native estimator targets,fold statistics,frozen teachers and input-only reload.84source targets remain reserved; original179native test opened only for a sole frozenCVwinner above.65. No synthetic observations,source label conversion,assumed rest,guessed clocks or removed native cases."
+}

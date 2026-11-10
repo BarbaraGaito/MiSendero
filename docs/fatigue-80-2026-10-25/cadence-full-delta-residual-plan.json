@@ -1,0 +1,179 @@
+{
+  "version": 1,
+  "implementation_code_sha256": "6475ae3f4fa8cf4aefed93dd69184744c224977fbe52140462343e6e38032ac8",
+  "plan": [
+    {
+      "id": "cadence-full-delta-000",
+      "algorithm": "previous_real_control",
+      "parent_candidate_id": "recent-gate-000"
+    },
+    {
+      "id": "cadence-full-delta-001",
+      "algorithm": "previous_real_control",
+      "parent_candidate_id": "recent-gate-001"
+    },
+    {
+      "id": "cadence-full-delta-002",
+      "algorithm": "previous_real_control",
+      "parent_candidate_id": "recent-gate-006"
+    },
+    {
+      "id": "cadence-full-delta-003",
+      "algorithm": "previous_real_control",
+      "parent_candidate_id": "recent-gate-007"
+    },
+    {
+      "id": "cadence-full-delta-004",
+      "algorithm": "previous_real_control",
+      "parent_candidate_id": "recent-gate-008"
+    },
+    {
+      "id": "cadence-full-delta-005",
+      "algorithm": "previous_real_control",
+      "parent_candidate_id": "recent-gate-009"
+    },
+    {
+      "id": "cadence-full-delta-006",
+      "algorithm": "cadence_full_delta_residual",
+      "member": "core",
+      "auxiliary_weight": 0.0,
+      "epochs": 80,
+      "learning_rate": 0.003,
+      "weight_decay": 0.1,
+      "correction_penalty": 0.1,
+      "random_seed": 42,
+      "source_target": "actual_current_unequal_prior_original6to20",
+      "native_target": "original_integer_delta_cross_entropy_21",
+      "residual_outputs": 21
+    },
+    {
+      "id": "cadence-full-delta-007",
+      "algorithm": "cadence_full_delta_residual",
+      "member": "core",
+      "auxiliary_weight": 0.0,
+      "epochs": 80,
+      "learning_rate": 0.003,
+      "weight_decay": 0.1,
+      "correction_penalty": 1.0,
+      "random_seed": 42,
+      "source_target": "actual_current_unequal_prior_original6to20",
+      "native_target": "original_integer_delta_cross_entropy_21",
+      "residual_outputs": 21
+    },
+    {
+      "id": "cadence-full-delta-008",
+      "algorithm": "cadence_full_delta_residual",
+      "member": "core",
+      "auxiliary_weight": 0.1,
+      "epochs": 80,
+      "learning_rate": 0.003,
+      "weight_decay": 0.1,
+      "correction_penalty": 0.1,
+      "random_seed": 42,
+      "source_target": "actual_current_unequal_prior_original6to20",
+      "native_target": "original_integer_delta_cross_entropy_21",
+      "residual_outputs": 21
+    },
+    {
+      "id": "cadence-full-delta-009",
+      "algorithm": "cadence_full_delta_residual",
+      "member": "core",
+      "auxiliary_weight": 0.1,
+      "epochs": 80,
+      "learning_rate": 0.003,
+      "weight_decay": 0.1,
+      "correction_penalty": 1.0,
+      "random_seed": 42,
+      "source_target": "actual_current_unequal_prior_original6to20",
+      "native_target": "original_integer_delta_cross_entropy_21",
+      "residual_outputs": 21
+    },
+    {
+      "id": "cadence-full-delta-010",
+      "algorithm": "cadence_full_delta_residual",
+      "member": "cat",
+      "auxiliary_weight": 0.0,
+      "epochs": 80,
+      "learning_rate": 0.003,
+      "weight_decay": 0.1,
+      "correction_penalty": 0.1,
+      "random_seed": 42,
+      "source_target": "actual_current_unequal_prior_original6to20",
+      "native_target": "original_integer_delta_cross_entropy_21",
+      "residual_outputs": 21
+    },
+    {
+      "id": "cadence-full-delta-011",
+      "algorithm": "cadence_full_delta_residual",
+      "member": "cat",
+      "auxiliary_weight": 0.0,
+      "epochs": 80,
+      "learning_rate": 0.003,
+      "weight_decay": 0.1,
+      "correction_penalty": 1.0,
+      "random_seed": 42,
+      "source_target": "actual_current_unequal_prior_original6to20",
+      "native_target": "original_integer_delta_cross_entropy_21",
+      "residual_outputs": 21
+    },
+    {
+      "id": "cadence-full-delta-012",
+      "algorithm": "cadence_full_delta_residual",
+      "member": "cat",
+      "auxiliary_weight": 0.1,
+      "epochs": 80,
+      "learning_rate": 0.003,
+      "weight_decay": 0.1,
+      "correction_penalty": 0.1,
+      "random_seed": 42,
+      "source_target": "actual_current_unequal_prior_original6to20",
+      "native_target": "original_integer_delta_cross_entropy_21",
+      "residual_outputs": 21
+    },
+    {
+      "id": "cadence-full-delta-013",
+      "algorithm": "cadence_full_delta_residual",
+      "member": "cat",
+      "auxiliary_weight": 0.1,
+      "epochs": 80,
+      "learning_rate": 0.003,
+      "weight_decay": 0.1,
+      "correction_penalty": 1.0,
+      "random_seed": 42,
+      "source_target": "actual_current_unequal_prior_original6to20",
+      "native_target": "original_integer_delta_cross_entropy_21",
+      "residual_outputs": 21
+    }
+  ],
+  "previous_verification_sha256": "867a6742ea12fa8f8b4d3931c730edb82a0e27f1c0132a8f6bd0f3146eeac277",
+  "review_sha256": "34e9270d8074f64ad4490cbebae890ea384b254902b9214f043d295e4270f2f2",
+  "input_verification_sha256": "b78618b8c30c84126670db145c3d01410fca23eec55821f468ad5e5fc62ff5a8",
+  "original_native_fit_cases": 487,
+  "original_native_test_cases": 179,
+  "source_actual_fit_pairs": 851,
+  "source_reserved_pairs": 206,
+  "shared_inputs": 11,
+  "native_private_inputs": 16,
+  "new_joint_network_fits": 40,
+  "new_native_base_fits_for_cv": 0,
+  "minimum_cv_for_new_test_evaluation": 0.65,
+  "test_used_for_selection": false,
+  "synthetic_rows": 0,
+  "residual_outputs": 21,
+  "native_objective": "cross_entropy(log_base_probability + centered21residual,actual_current_minus_prior+10)",
+  "source_objective": "person-balanced BCE on actual unequal original6-20current/prior,one separate head",
+  "penalty_convention": "lambda*mean of squared centered residual across actual native rows and21outputs",
+  "penalties": [
+    0.1,
+    1.0
+  ],
+  "source_weights": [
+    0.0,
+    0.1
+  ],
+  "epochs": 80,
+  "learning_rate": 0.003,
+  "weight_decay": 0.1,
+  "architecture": "same11to8to8sharedencoder;corrector concat encoder8/context/21baseprobabilities to8to21;zero final layer",
+  "rationale": "Scalar gate improvements in binary loss did not improve exact Borg.56core/57Cat fitting cases cannot be corrected by any scalar gate with the fixed nonzero delta branch. Earlier full residuals used only two histories and continuous source heads. This comparison combines real prior physiology and recent private native context with21native outputs and an unchanged separate CADENCEbinary head. Six inherited global/scalar controls and matched source-zero/positive recipes isolate effects. Base weights remain immutable;nonzero delta probabilities may now change. No source recent context,current-bout HR,scale conversion or artificial training rows. Independent audit recomputes all14OOFmetrics/all40fold artifacts and refits all8new recipes."
+}

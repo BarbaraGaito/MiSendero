@@ -26,7 +26,6 @@ import { backfillOfflineTerrainGrid, getOfflineMapByTrailId, getOfflineTerrainGr
 import { parseRouteCoordinates } from "../geoUtils";
 import {
   OPEN_METEO_ELEVATION_ATTRIBUTION,
-  TERRAIN_GRID_SIZE,
   clearTerrainElevationCache,
   createTerrainGridCoordinates,
   getTerrainElevation,
@@ -105,7 +104,7 @@ test("legacy DEM grids keep their real source and geometry readable", async () =
   const saved = await storeLegacyTerrain();
 
   expect(saved?.status).toBe("disponible");
-  expect(saved?.terrain?.grid.size).toBe(TERRAIN_GRID_SIZE);
+  expect(saved?.terrain?.grid.size).toBe(createTerrainGridCoordinates(route)!.size);
   expect(saved?.terrain?.grid.elevationsMeters).toEqual(expectedGridElevations());
   expect(saved?.terrain).toMatchObject({
     version: 1,

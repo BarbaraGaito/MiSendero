@@ -1,0 +1,726 @@
+{
+  "version": 1,
+  "status": "complete",
+  "selection_sha256": "65246d068ccde9841c98183dffb7a651bf93128a1708191c9de3287fe9dc4bad",
+  "verification_sha256": "de77dd7db01702f0a92b4f9eaaddff95a63933025502122b551632fc5f0610d4",
+  "input_verification_sha256": "8362480a473a6969b5a6111b7fea5c840c048368b56a5c94f186edb3ecff1b37",
+  "configurations": 34,
+  "inherited_controls": 6,
+  "new_measured_controls": 4,
+  "new_source_representation_configurations": 24,
+  "source_fitting_targets": 976,
+  "source_fitting_people": 124,
+  "source_reserved_targets": 238,
+  "source_reserved_people": 32,
+  "source_functions_refitted_during_selection": false,
+  "source_original_scale": "6-20",
+  "native_original_scale": "0-10",
+  "session_baselines": {
+    "session_mean": "session_rest_mean_hr_bpm",
+    "session_lowest": "session_rest_lowest_minute_hr_bpm"
+  },
+  "original_native_cases": 666,
+  "observed_session_baselines": 636,
+  "natural_missing_session_baselines": 30,
+  "source_verification_refits": 6,
+  "native_verification_refits": 25,
+  "public_real_data_policy_sha256": "fdfb112d20b1f22bae08032ed7d9f3d27ee784879674c32f8f65cc21fe69c028",
+  "winner_id": "cadence-rest-001",
+  "best_cv_accuracy": 0.6379721574248428,
+  "best_source_id": "cadence-rest-033",
+  "best_source_cv_accuracy": 0.6214878352678864,
+  "best_source_by_member": {
+    "core": {
+      "candidate": {
+        "id": "cadence-rest-026",
+        "algorithm": "session_rest_source_representation",
+        "baseline": "session_lowest",
+        "source_algorithm": "svr",
+        "source_feature_set": "absolute",
+        "member": "core",
+        "representation": "current_state"
+      },
+      "accuracy_mean": 0.6204205802722427
+    },
+    "cat": {
+      "candidate": {
+        "id": "cadence-rest-033",
+        "algorithm": "session_rest_source_representation",
+        "baseline": "session_lowest",
+        "source_algorithm": "random_forest",
+        "source_feature_set": "relative",
+        "member": "cat",
+        "representation": "current_and_change"
+      },
+      "accuracy_mean": 0.6214878352678864
+    }
+  },
+  "paired_session_baseline_comparison": {
+    "session_mean": {
+      "candidate": {
+        "id": "cadence-rest-021",
+        "algorithm": "session_rest_source_representation",
+        "baseline": "session_mean",
+        "source_algorithm": "random_forest",
+        "source_feature_set": "relative",
+        "member": "cat",
+        "representation": "current_and_change"
+      },
+      "accuracy_mean": 0.5933906298305276
+    },
+    "session_lowest": {
+      "candidate": {
+        "id": "cadence-rest-033",
+        "algorithm": "session_rest_source_representation",
+        "baseline": "session_lowest",
+        "source_algorithm": "random_forest",
+        "source_feature_set": "relative",
+        "member": "cat",
+        "representation": "current_and_change"
+      },
+      "accuracy_mean": 0.6214878352678864
+    }
+  },
+  "matching_measured_controls": {
+    "core": {
+      "candidate": {
+        "id": "cadence-rest-008",
+        "algorithm": "session_rest_measured_control",
+        "baseline": "session_lowest",
+        "member": "core"
+      },
+      "accuracy_mean": 0.6018885547530048
+    },
+    "cat": {
+      "candidate": {
+        "id": "cadence-rest-009",
+        "algorithm": "session_rest_measured_control",
+        "baseline": "session_lowest",
+        "member": "cat"
+      },
+      "accuracy_mean": 0.6095100006557808
+    }
+  },
+  "convergence_warning_folds": [],
+  "results": [
+    {
+      "candidate": {
+        "id": "cadence-rest-000",
+        "algorithm": "previous_real_control",
+        "parent_candidate_id": "cadence-assoc-000"
+      },
+      "accuracy_mean": 0.6082057277760603,
+      "fold_accuracy": [
+        0.64,
+        0.5652173913043478,
+        0.5882352941176471,
+        0.5882352941176471,
+        0.6593406593406593
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-rest-001",
+        "algorithm": "previous_real_control",
+        "parent_candidate_id": "cadence-assoc-001"
+      },
+      "accuracy_mean": 0.6379721574248428,
+      "fold_accuracy": [
+        0.67,
+        0.5652173913043478,
+        0.6274509803921569,
+        0.6568627450980392,
+        0.6703296703296703
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-rest-002",
+        "algorithm": "previous_real_control",
+        "parent_candidate_id": "cadence-assoc-004"
+      },
+      "accuracy_mean": 0.6022994856805599,
+      "fold_accuracy": [
+        0.64,
+        0.5760869565217391,
+        0.5588235294117647,
+        0.5882352941176471,
+        0.6483516483516484
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-rest-003",
+        "algorithm": "previous_real_control",
+        "parent_candidate_id": "cadence-assoc-005"
+      },
+      "accuracy_mean": 0.6139056050513851,
+      "fold_accuracy": [
+        0.66,
+        0.5760869565217391,
+        0.6078431372549019,
+        0.5882352941176471,
+        0.6373626373626373
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-rest-004",
+        "algorithm": "previous_real_control",
+        "parent_candidate_id": "cadence-assoc-022"
+      },
+      "accuracy_mean": 0.6141665120897858,
+      "fold_accuracy": [
+        0.66,
+        0.5652173913043478,
+        0.5882352941176471,
+        0.5980392156862745,
+        0.6593406593406593
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-rest-005",
+        "algorithm": "previous_real_control",
+        "parent_candidate_id": "cadence-assoc-029"
+      },
+      "accuracy_mean": 0.6263421488996936,
+      "fold_accuracy": [
+        0.65,
+        0.5760869565217391,
+        0.6078431372549019,
+        0.6274509803921569,
+        0.6703296703296703
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-rest-006",
+        "algorithm": "session_rest_measured_control",
+        "baseline": "session_mean",
+        "member": "core"
+      },
+      "accuracy_mean": 0.6001016834827577,
+      "fold_accuracy": [
+        0.64,
+        0.5760869565217391,
+        0.5686274509803921,
+        0.5784313725490197,
+        0.6373626373626373
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-rest-007",
+        "algorithm": "session_rest_measured_control",
+        "baseline": "session_mean",
+        "member": "cat"
+      },
+      "accuracy_mean": 0.6079448207376597,
+      "fold_accuracy": [
+        0.64,
+        0.5760869565217391,
+        0.5882352941176471,
+        0.5980392156862745,
+        0.6373626373626373
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-rest-008",
+        "algorithm": "session_rest_measured_control",
+        "baseline": "session_lowest",
+        "member": "core"
+      },
+      "accuracy_mean": 0.6018885547530048,
+      "fold_accuracy": [
+        0.65,
+        0.5652173913043478,
+        0.5686274509803921,
+        0.5882352941176471,
+        0.6373626373626373
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-rest-009",
+        "algorithm": "session_rest_measured_control",
+        "baseline": "session_lowest",
+        "member": "cat"
+      },
+      "accuracy_mean": 0.6095100006557808,
+      "fold_accuracy": [
+        0.66,
+        0.5760869565217391,
+        0.5882352941176471,
+        0.6078431372549019,
+        0.6153846153846154
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-rest-010",
+        "algorithm": "session_rest_source_representation",
+        "baseline": "session_mean",
+        "source_algorithm": "ridge",
+        "source_feature_set": "absolute",
+        "member": "core",
+        "representation": "current_state"
+      },
+      "accuracy_mean": 0.6022841591486092,
+      "fold_accuracy": [
+        0.63,
+        0.5652173913043478,
+        0.5882352941176471,
+        0.5686274509803921,
+        0.6593406593406593
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-rest-011",
+        "algorithm": "session_rest_source_representation",
+        "baseline": "session_mean",
+        "source_algorithm": "ridge",
+        "source_feature_set": "absolute",
+        "member": "cat",
+        "representation": "current_and_change"
+      },
+      "accuracy_mean": 0.603786234226132,
+      "fold_accuracy": [
+        0.64,
+        0.5760869565217391,
+        0.5882352941176471,
+        0.5882352941176471,
+        0.6263736263736264
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-rest-012",
+        "algorithm": "session_rest_source_representation",
+        "baseline": "session_mean",
+        "source_algorithm": "ridge",
+        "source_feature_set": "relative",
+        "member": "core",
+        "representation": "current_state"
+      },
+      "accuracy_mean": 0.6001494617914056,
+      "fold_accuracy": [
+        0.64,
+        0.5543478260869565,
+        0.5784313725490197,
+        0.5686274509803921,
+        0.6593406593406593
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-rest-013",
+        "algorithm": "session_rest_source_representation",
+        "baseline": "session_mean",
+        "source_algorithm": "ridge",
+        "source_feature_set": "relative",
+        "member": "cat",
+        "representation": "current_and_change"
+      },
+      "accuracy_mean": 0.6016907525552027,
+      "fold_accuracy": [
+        0.66,
+        0.5652173913043478,
+        0.5686274509803921,
+        0.5882352941176471,
+        0.6263736263736264
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-rest-014",
+        "algorithm": "session_rest_source_representation",
+        "baseline": "session_mean",
+        "source_algorithm": "svr",
+        "source_feature_set": "absolute",
+        "member": "core",
+        "representation": "current_state"
+      },
+      "accuracy_mean": 0.6101665120897858,
+      "fold_accuracy": [
+        0.64,
+        0.5652173913043478,
+        0.5882352941176471,
+        0.5980392156862745,
+        0.6593406593406593
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-rest-015",
+        "algorithm": "session_rest_source_representation",
+        "baseline": "session_mean",
+        "source_algorithm": "svr",
+        "source_feature_set": "absolute",
+        "member": "cat",
+        "representation": "current_and_change"
+      },
+      "accuracy_mean": 0.6139141676737585,
+      "fold_accuracy": [
+        0.65,
+        0.5543478260869565,
+        0.5980392156862745,
+        0.6078431372549019,
+        0.6593406593406593
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-rest-016",
+        "algorithm": "session_rest_source_representation",
+        "baseline": "session_mean",
+        "source_algorithm": "svr",
+        "source_feature_set": "relative",
+        "member": "core",
+        "representation": "current_state"
+      },
+      "accuracy_mean": 0.6079925990463075,
+      "fold_accuracy": [
+        0.64,
+        0.5543478260869565,
+        0.5882352941176471,
+        0.5980392156862745,
+        0.6593406593406593
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-rest-017",
+        "algorithm": "session_rest_source_representation",
+        "baseline": "session_mean",
+        "source_algorithm": "svr",
+        "source_feature_set": "relative",
+        "member": "cat",
+        "representation": "current_and_change"
+      },
+      "accuracy_mean": 0.6110053118237262,
+      "fold_accuracy": [
+        0.65,
+        0.5543478260869565,
+        0.5980392156862745,
+        0.6372549019607843,
+        0.6153846153846154
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-rest-018",
+        "algorithm": "session_rest_source_representation",
+        "baseline": "session_mean",
+        "source_algorithm": "random_forest",
+        "source_feature_set": "absolute",
+        "member": "core",
+        "representation": "current_state"
+      },
+      "accuracy_mean": 0.611929494205709,
+      "fold_accuracy": [
+        0.65,
+        0.5652173913043478,
+        0.5980392156862745,
+        0.5980392156862745,
+        0.6483516483516484
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-rest-019",
+        "algorithm": "session_rest_source_representation",
+        "baseline": "session_mean",
+        "source_algorithm": "random_forest",
+        "source_feature_set": "absolute",
+        "member": "cat",
+        "representation": "current_and_change"
+      },
+      "accuracy_mean": 0.599919207816906,
+      "fold_accuracy": [
+        0.66,
+        0.5869565217391305,
+        0.5490196078431373,
+        0.5882352941176471,
+        0.6153846153846154
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-rest-020",
+        "algorithm": "session_rest_source_representation",
+        "baseline": "session_mean",
+        "source_algorithm": "random_forest",
+        "source_feature_set": "relative",
+        "member": "core",
+        "representation": "current_state"
+      },
+      "accuracy_mean": 0.6064427456601369,
+      "fold_accuracy": [
+        0.63,
+        0.5652173913043478,
+        0.5882352941176471,
+        0.5784313725490197,
+        0.6703296703296703
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-rest-021",
+        "algorithm": "session_rest_source_representation",
+        "baseline": "session_mean",
+        "source_algorithm": "random_forest",
+        "source_feature_set": "relative",
+        "member": "cat",
+        "representation": "current_and_change"
+      },
+      "accuracy_mean": 0.5933906298305276,
+      "fold_accuracy": [
+        0.61,
+        0.5760869565217391,
+        0.5980392156862745,
+        0.5784313725490197,
+        0.6043956043956044
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-rest-022",
+        "algorithm": "session_rest_source_representation",
+        "baseline": "session_lowest",
+        "source_algorithm": "ridge",
+        "source_feature_set": "absolute",
+        "member": "core",
+        "representation": "current_state"
+      },
+      "accuracy_mean": 0.6125382273310662,
+      "fold_accuracy": [
+        0.63,
+        0.5760869565217391,
+        0.5882352941176471,
+        0.5980392156862745,
+        0.6703296703296703
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-rest-023",
+        "algorithm": "session_rest_source_representation",
+        "baseline": "session_lowest",
+        "source_algorithm": "ridge",
+        "source_feature_set": "absolute",
+        "member": "cat",
+        "representation": "current_and_change"
+      },
+      "accuracy_mean": 0.6057470185398575,
+      "fold_accuracy": [
+        0.64,
+        0.5760869565217391,
+        0.5882352941176471,
+        0.5980392156862745,
+        0.6263736263736264
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-rest-024",
+        "algorithm": "session_rest_source_representation",
+        "baseline": "session_lowest",
+        "source_algorithm": "ridge",
+        "source_feature_set": "relative",
+        "member": "core",
+        "representation": "current_state"
+      },
+      "accuracy_mean": 0.606418856505813,
+      "fold_accuracy": [
+        0.63,
+        0.5760869565217391,
+        0.5686274509803921,
+        0.5980392156862745,
+        0.6593406593406593
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-rest-025",
+        "algorithm": "session_rest_source_representation",
+        "baseline": "session_lowest",
+        "source_algorithm": "ridge",
+        "source_feature_set": "relative",
+        "member": "cat",
+        "representation": "current_and_change"
+      },
+      "accuracy_mean": 0.607707802853583,
+      "fold_accuracy": [
+        0.64,
+        0.5760869565217391,
+        0.5882352941176471,
+        0.6078431372549019,
+        0.6263736263736264
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-rest-026",
+        "algorithm": "session_rest_source_representation",
+        "baseline": "session_lowest",
+        "source_algorithm": "svr",
+        "source_feature_set": "absolute",
+        "member": "core",
+        "representation": "current_state"
+      },
+      "accuracy_mean": 0.6204205802722427,
+      "fold_accuracy": [
+        0.64,
+        0.5760869565217391,
+        0.6078431372549019,
+        0.6078431372549019,
+        0.6703296703296703
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-rest-027",
+        "algorithm": "session_rest_source_representation",
+        "baseline": "session_lowest",
+        "source_algorithm": "svr",
+        "source_feature_set": "absolute",
+        "member": "cat",
+        "representation": "current_and_change"
+      },
+      "accuracy_mean": 0.6133531379106827,
+      "fold_accuracy": [
+        0.64,
+        0.5760869565217391,
+        0.6176470588235294,
+        0.6176470588235294,
+        0.6153846153846154
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-rest-028",
+        "algorithm": "session_rest_source_representation",
+        "baseline": "session_lowest",
+        "source_algorithm": "svr",
+        "source_feature_set": "relative",
+        "member": "core",
+        "representation": "current_state"
+      },
+      "accuracy_mean": 0.6100079255782581,
+      "fold_accuracy": [
+        0.66,
+        0.5652173913043478,
+        0.5882352941176471,
+        0.5882352941176471,
+        0.6483516483516484
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-rest-029",
+        "algorithm": "session_rest_source_representation",
+        "baseline": "session_lowest",
+        "source_algorithm": "svr",
+        "source_feature_set": "relative",
+        "member": "cat",
+        "representation": "current_and_change"
+      },
+      "accuracy_mean": 0.6143796408195386,
+      "fold_accuracy": [
+        0.66,
+        0.5760869565217391,
+        0.5686274509803921,
+        0.6078431372549019,
+        0.6593406593406593
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-rest-030",
+        "algorithm": "session_rest_source_representation",
+        "baseline": "session_lowest",
+        "source_algorithm": "random_forest",
+        "source_feature_set": "absolute",
+        "member": "core",
+        "representation": "current_state"
+      },
+      "accuracy_mean": 0.6077555811622308,
+      "fold_accuracy": [
+        0.64,
+        0.5543478260869565,
+        0.5980392156862745,
+        0.5980392156862745,
+        0.6483516483516484
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-rest-031",
+        "algorithm": "session_rest_source_representation",
+        "baseline": "session_lowest",
+        "source_algorithm": "random_forest",
+        "source_feature_set": "absolute",
+        "member": "cat",
+        "representation": "current_and_change"
+      },
+      "accuracy_mean": 0.5969950254349231,
+      "fold_accuracy": [
+        0.65,
+        0.5760869565217391,
+        0.5686274509803921,
+        0.6078431372549019,
+        0.5824175824175825
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-rest-032",
+        "algorithm": "session_rest_source_representation",
+        "baseline": "session_lowest",
+        "source_algorithm": "random_forest",
+        "source_feature_set": "relative",
+        "member": "core",
+        "representation": "current_state"
+      },
+      "accuracy_mean": 0.6059687098919835,
+      "fold_accuracy": [
+        0.63,
+        0.5652173913043478,
+        0.5882352941176471,
+        0.5980392156862745,
+        0.6483516483516484
+      ]
+    },
+    {
+      "candidate": {
+        "id": "cadence-rest-033",
+        "algorithm": "session_rest_source_representation",
+        "baseline": "session_lowest",
+        "source_algorithm": "random_forest",
+        "source_feature_set": "relative",
+        "member": "cat",
+        "representation": "current_and_change"
+      },
+      "accuracy_mean": 0.6214878352678864,
+      "fold_accuracy": [
+        0.66,
+        0.5869565217391305,
+        0.6372549019607843,
+        0.6078431372549019,
+        0.6153846153846154
+      ]
+    }
+  ],
+  "original_training_cases": 487,
+  "original_test_cases": 179,
+  "new_test_gate_passed": false,
+  "test_used_for_selection": false,
+  "retained_test_correct": 108,
+  "retained_test_accuracy": 0.6033519553072626,
+  "target_accuracy": 0.8,
+  "achieved": false,
+  "scope": "Actual public source/native rows only. First-task session mean/lowest completed minute; native posture not assumed seated. Source6-20 association outputs remain computed features; no changed native labels, fabricated histories, synthetic examples, case removal or native test tuning."
+}

@@ -253,6 +253,35 @@ export const getRouteStart = (
   fallbackCenter: Coordinate
 ) => route[0] || fallbackCenter;
 
+export const coordinateAtRouteProgress = (route: Coordinate[], progress: number): Coordinate | null => {
+  if (route.length < 2 || !Number.isFinite(progress) || progress < 0) return null;
+  let remaining = progress;
+  for (let index = 1; index < route.length; index += 1) {
+    const start = route[index - 1], end = route[index];
+    const length = getDistanceMeters(start, end);
+    if (remaining <= length) {
+      const fraction = length > 0 ? remaining / length : 0;
+      return [start[0] + (end[0] - start[0]) * fraction, start[1] + (end[1] - start[1]) * fraction];
+    }
+    remaining -= length;
+  }
+  return remaining < 0.01 ? route.at(-1)! : null;
+};
+
+export const getRouteSectionCoordinates = (route: Coordinate[], startMeters: number, endMeters: number): Coordinate[] => {
+  const start = Math.min(startMeters, endMeters), end = Math.max(startMeters, endMeters);
+  const first = coordinateAtRouteProgress(route, start), last = coordinateAtRouteProgress(route, end);
+  if (!first || !last || start === end) return [];
+  const points: Coordinate[] = [first];
+  let progress = 0;
+  for (let index = 1; index < route.length; index += 1) {
+    progress += getDistanceMeters(route[index - 1], route[index]);
+    if (progress > start && progress < end) points.push(route[index]);
+  }
+  points.push(last);
+  return points;
+};
+
 export const formatKilometers = (kilometers: number) =>
   `${kilometers.toLocaleString("es-AR", { maximumFractionDigits: 2, useGrouping: false })} km`;
 

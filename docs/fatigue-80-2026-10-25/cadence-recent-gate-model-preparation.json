@@ -1,0 +1,9 @@
+{
+  "preparation": "passed",
+  "preparation_code_sha256": "44e7f88af0b06482528e218660683454c4cce60ac42e1ed688b563517e6c5766",
+  "frozen_parent_code_sha256": "9ac66f249fc04b8f023eca674839478ff438a7280db8778dfa91c1082ab1ab3d",
+  "model_code_sha256": "2db00f3cf805ef84234d7cc941ada487bcc024d18cd0d16c218f1cfc765de198",
+  "parent_modified": false,
+  "new_predictive_estimator_fits": 0,
+  "new_test_predictions_computed": 0
+}

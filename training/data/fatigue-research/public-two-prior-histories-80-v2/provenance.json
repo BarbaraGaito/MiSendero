@@ -1,0 +1,2080 @@
+{
+  "version": 2,
+  "dependencies_sha256": {
+    "preparation_code": "adf50ab03da68bd10a0fe29364eed88ad774481edbbad3c1f478dd5de2db2d6e",
+    "previous_chain_preparation_code": "df95b3e3bd651bea76bfc9a121aae6577773496ddccc80413d4c2feb32caa669",
+    "previous_chain_provenance": "14e3ef11c9fb901f81be6ca499c826db3d309c46da959365e663abb6dc85e6e4",
+    "previous_chain_dataset": "1920a574ca72e9fa93e78644eabc083535c97d89160a14a0f7bebb6ed1951c44",
+    "original_worker_survey": "279a8cf186b7d6c3579557429cc99bc000ef267220ea6bddb44b7a2bb65093d7",
+    "original_worker_pair_provenance": "4369253ef0752ca81c27d27ebaf2d9fc347d0f5d2d85ebe61619f25c478b86ce",
+    "original_emap_review": "cfc3351b5136cc0ca6e48e3a8e237a1d2727250cacb59da9ea32ccfdb4489360",
+    "parent_source_input_audit": "b6a600708051308b1a06b9b46d780411ec16356a929454d1a389f7bb400da48b",
+    "public_real_data_policy": "fdfb112d20b1f22bae08032ed7d9f3d27ee784879674c32f8f65cc21fe69c028"
+  },
+  "dataset_sha256": "10a81be53e05242d79f8cdad6edac98aed091232bf5ae4db46a7f7497e5694e2",
+  "actual_current_pairs_preserved": 607,
+  "actual_fitting_current_pairs": 550,
+  "reserved_emap_current_pairs": 57,
+  "worker_second_priors_recovered_from_original_cells": 202,
+  "previous_chain_worker_second_priors_preserved": 200,
+  "additional_raw_cells_beyond_chain": [
+    {
+      "row_key": "6c3ee4886f87318652b3d839",
+      "worksheet_row": 16,
+      "current_repetition": 3,
+      "actual_second_prior": 5.0,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 1] ?",
+      "original_cell": "D16"
+    },
+    {
+      "row_key": "9674c83149c2596daa64a8b1",
+      "worksheet_row": 16,
+      "current_repetition": 5,
+      "actual_second_prior": 8.0,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 3] ?",
+      "original_cell": "L16"
+    }
+  ],
+  "emap_actual_second_priors_preserved": 203,
+  "sts_unavailable_second_priors_preserved": 49,
+  "actual_second_priors": 405,
+  "fitting_actual_second_priors": 367,
+  "reserved_actual_second_priors": 38,
+  "naturally_unavailable_second_priors": 202,
+  "new_independent_current_observations": 0,
+  "original_current_targets_and_other_columns_preserved": true,
+  "source_targets_pooled_across_instruments": false,
+  "common_history_features": [
+    "public_ordered_actual_prior_rpe",
+    "public_ordered_actual_second_prior_rpe"
+  ],
+  "worker_original_second_prior_lineage": [
+    {
+      "row_key": "b0b26d239f41ce46da2c40fa",
+      "group_key": "92fdf8b458b1745476ef5864",
+      "worksheet_row": 6,
+      "current_repetition": 2,
+      "original_second_prior_column": "What is your physical fatigue level currently [Pre-experiment] ?",
+      "original_second_prior_cell": "B6",
+      "actual_second_prior": 2.0,
+      "second_prior_row_key": "3261484fd82ddecf9aba08c8"
+    },
+    {
+      "row_key": "360c02bdd6b90f0dc77d1108",
+      "group_key": "92fdf8b458b1745476ef5864",
+      "worksheet_row": 6,
+      "current_repetition": 3,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 1] ?",
+      "original_second_prior_cell": "D6",
+      "actual_second_prior": 5.0,
+      "second_prior_row_key": "f840948da833eebab4f1c8b0"
+    },
+    {
+      "row_key": "4736182599a0b47a8f552dda",
+      "group_key": "92fdf8b458b1745476ef5864",
+      "worksheet_row": 6,
+      "current_repetition": 4,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 2] ?",
+      "original_second_prior_cell": "H6",
+      "actual_second_prior": 7.0,
+      "second_prior_row_key": "b0b26d239f41ce46da2c40fa"
+    },
+    {
+      "row_key": "e3fe98d46eb39f26888485bc",
+      "group_key": "92fdf8b458b1745476ef5864",
+      "worksheet_row": 6,
+      "current_repetition": 5,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 3] ?",
+      "original_second_prior_cell": "L6",
+      "actual_second_prior": 8.0,
+      "second_prior_row_key": "360c02bdd6b90f0dc77d1108"
+    },
+    {
+      "row_key": "9bceecd0c8a95825640138cc",
+      "group_key": "fc04fbb67bb9ce0fb861ddcd",
+      "worksheet_row": 21,
+      "current_repetition": 2,
+      "original_second_prior_column": "What is your physical fatigue level currently [Pre-experiment] ?",
+      "original_second_prior_cell": "B21",
+      "actual_second_prior": 2.0,
+      "second_prior_row_key": "36ae1371b4092bdaad31d334"
+    },
+    {
+      "row_key": "8c0b6c4c0c9ddb8e8399ce04",
+      "group_key": "fc04fbb67bb9ce0fb861ddcd",
+      "worksheet_row": 21,
+      "current_repetition": 3,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 1] ?",
+      "original_second_prior_cell": "D21",
+      "actual_second_prior": 3.0,
+      "second_prior_row_key": "09b60b76083ac79c22f3b508"
+    },
+    {
+      "row_key": "5418f057b26ddccc49475f03",
+      "group_key": "fc04fbb67bb9ce0fb861ddcd",
+      "worksheet_row": 21,
+      "current_repetition": 4,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 2] ?",
+      "original_second_prior_cell": "H21",
+      "actual_second_prior": 5.0,
+      "second_prior_row_key": "9bceecd0c8a95825640138cc"
+    },
+    {
+      "row_key": "04a6e81bb60c718152b1bc62",
+      "group_key": "fc04fbb67bb9ce0fb861ddcd",
+      "worksheet_row": 21,
+      "current_repetition": 5,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 3] ?",
+      "original_second_prior_cell": "L21",
+      "actual_second_prior": 5.0,
+      "second_prior_row_key": "8c0b6c4c0c9ddb8e8399ce04"
+    },
+    {
+      "row_key": "9cd22980ac5570b81937b89c",
+      "group_key": "6842c6355ff36d71fa2ad22c",
+      "worksheet_row": 12,
+      "current_repetition": 2,
+      "original_second_prior_column": "What is your physical fatigue level currently [Pre-experiment] ?",
+      "original_second_prior_cell": "B12",
+      "actual_second_prior": 1.0,
+      "second_prior_row_key": "e24e3983fbcc9e93fdd86e7e"
+    },
+    {
+      "row_key": "29f9a875bea9af36058f2daf",
+      "group_key": "6842c6355ff36d71fa2ad22c",
+      "worksheet_row": 12,
+      "current_repetition": 3,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 1] ?",
+      "original_second_prior_cell": "D12",
+      "actual_second_prior": 2.0,
+      "second_prior_row_key": "27552d66af2ab72a02d695c1"
+    },
+    {
+      "row_key": "b2e7418b68b09ec88d639e69",
+      "group_key": "6842c6355ff36d71fa2ad22c",
+      "worksheet_row": 12,
+      "current_repetition": 4,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 2] ?",
+      "original_second_prior_cell": "H12",
+      "actual_second_prior": 3.0,
+      "second_prior_row_key": "9cd22980ac5570b81937b89c"
+    },
+    {
+      "row_key": "507003db9148b0fe9c9c78c3",
+      "group_key": "6842c6355ff36d71fa2ad22c",
+      "worksheet_row": 12,
+      "current_repetition": 5,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 3] ?",
+      "original_second_prior_cell": "L12",
+      "actual_second_prior": 2.0,
+      "second_prior_row_key": "29f9a875bea9af36058f2daf"
+    },
+    {
+      "row_key": "03b7256755e84059c38ad103",
+      "group_key": "58dd0dd3da062c6c032b48f3",
+      "worksheet_row": 17,
+      "current_repetition": 2,
+      "original_second_prior_column": "What is your physical fatigue level currently [Pre-experiment] ?",
+      "original_second_prior_cell": "B17",
+      "actual_second_prior": 6.0,
+      "second_prior_row_key": "3923393df5198ac75e664ff5"
+    },
+    {
+      "row_key": "e32bc445fc54fa79d08a25d4",
+      "group_key": "58dd0dd3da062c6c032b48f3",
+      "worksheet_row": 17,
+      "current_repetition": 3,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 1] ?",
+      "original_second_prior_cell": "D17",
+      "actual_second_prior": 6.0,
+      "second_prior_row_key": "892b67a07c56857b3f287689"
+    },
+    {
+      "row_key": "7987df61ef6578856c22230d",
+      "group_key": "58dd0dd3da062c6c032b48f3",
+      "worksheet_row": 17,
+      "current_repetition": 4,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 2] ?",
+      "original_second_prior_cell": "H17",
+      "actual_second_prior": 6.0,
+      "second_prior_row_key": "03b7256755e84059c38ad103"
+    },
+    {
+      "row_key": "afbbb53a681037696047b672",
+      "group_key": "58dd0dd3da062c6c032b48f3",
+      "worksheet_row": 17,
+      "current_repetition": 5,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 3] ?",
+      "original_second_prior_cell": "L17",
+      "actual_second_prior": 8.0,
+      "second_prior_row_key": "e32bc445fc54fa79d08a25d4"
+    },
+    {
+      "row_key": "6c3ee4886f87318652b3d839",
+      "group_key": "58dd0dd3da062c6c032b48f3",
+      "worksheet_row": 16,
+      "current_repetition": 3,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 1] ?",
+      "original_second_prior_cell": "D16",
+      "actual_second_prior": 5.0,
+      "second_prior_row_key": "1b83c6576e09de3b0cec12e8"
+    },
+    {
+      "row_key": "9674c83149c2596daa64a8b1",
+      "group_key": "58dd0dd3da062c6c032b48f3",
+      "worksheet_row": 16,
+      "current_repetition": 5,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 3] ?",
+      "original_second_prior_cell": "L16",
+      "actual_second_prior": 8.0,
+      "second_prior_row_key": "6c3ee4886f87318652b3d839"
+    },
+    {
+      "row_key": "46ee264b4d0e5a563903a159",
+      "group_key": "7ada21953dc1bc115fada15d",
+      "worksheet_row": 22,
+      "current_repetition": 2,
+      "original_second_prior_column": "What is your physical fatigue level currently [Pre-experiment] ?",
+      "original_second_prior_cell": "B22",
+      "actual_second_prior": 0.0,
+      "second_prior_row_key": "d3c33a803b05c99792389e72"
+    },
+    {
+      "row_key": "ee2b8f27b0ea03857e449320",
+      "group_key": "7ada21953dc1bc115fada15d",
+      "worksheet_row": 22,
+      "current_repetition": 3,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 1] ?",
+      "original_second_prior_cell": "D22",
+      "actual_second_prior": 1.0,
+      "second_prior_row_key": "bd31eaa469574b3265219ac7"
+    },
+    {
+      "row_key": "69e0ee04c1c34911de318350",
+      "group_key": "7ada21953dc1bc115fada15d",
+      "worksheet_row": 22,
+      "current_repetition": 4,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 2] ?",
+      "original_second_prior_cell": "H22",
+      "actual_second_prior": 1.0,
+      "second_prior_row_key": "46ee264b4d0e5a563903a159"
+    },
+    {
+      "row_key": "765bef206261c7f8cca47956",
+      "group_key": "7ada21953dc1bc115fada15d",
+      "worksheet_row": 22,
+      "current_repetition": 5,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 3] ?",
+      "original_second_prior_cell": "L22",
+      "actual_second_prior": 2.0,
+      "second_prior_row_key": "ee2b8f27b0ea03857e449320"
+    },
+    {
+      "row_key": "9450d8f660e65eecb93577c2",
+      "group_key": "23f5ef1ddd93ca949611d331",
+      "worksheet_row": 24,
+      "current_repetition": 2,
+      "original_second_prior_column": "What is your physical fatigue level currently [Pre-experiment] ?",
+      "original_second_prior_cell": "B24",
+      "actual_second_prior": 0.0,
+      "second_prior_row_key": "8b389da5fccadab7c84f4edc"
+    },
+    {
+      "row_key": "ca70a19880ee2d58592c28f7",
+      "group_key": "23f5ef1ddd93ca949611d331",
+      "worksheet_row": 24,
+      "current_repetition": 3,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 1] ?",
+      "original_second_prior_cell": "D24",
+      "actual_second_prior": 4.0,
+      "second_prior_row_key": "8cea8d6dfb4010e8292d4b2e"
+    },
+    {
+      "row_key": "b82233b43fe893070f2ab1fb",
+      "group_key": "23f5ef1ddd93ca949611d331",
+      "worksheet_row": 24,
+      "current_repetition": 4,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 2] ?",
+      "original_second_prior_cell": "H24",
+      "actual_second_prior": 5.0,
+      "second_prior_row_key": "9450d8f660e65eecb93577c2"
+    },
+    {
+      "row_key": "b8e146f4a5f3e20be1bb1928",
+      "group_key": "23f5ef1ddd93ca949611d331",
+      "worksheet_row": 24,
+      "current_repetition": 5,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 3] ?",
+      "original_second_prior_cell": "L24",
+      "actual_second_prior": 6.0,
+      "second_prior_row_key": "ca70a19880ee2d58592c28f7"
+    },
+    {
+      "row_key": "74d5c9280ab2bd767bdd996d",
+      "group_key": "f28ccbae0b4d2d21e0ba44df",
+      "worksheet_row": 27,
+      "current_repetition": 2,
+      "original_second_prior_column": "What is your physical fatigue level currently [Pre-experiment] ?",
+      "original_second_prior_cell": "B27",
+      "actual_second_prior": 0.0,
+      "second_prior_row_key": "311141d77bba976872362e86"
+    },
+    {
+      "row_key": "dde5aa8f119d856a67c70016",
+      "group_key": "f28ccbae0b4d2d21e0ba44df",
+      "worksheet_row": 27,
+      "current_repetition": 3,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 1] ?",
+      "original_second_prior_cell": "D27",
+      "actual_second_prior": 1.0,
+      "second_prior_row_key": "e2bfbf9169eab0507046d103"
+    },
+    {
+      "row_key": "0dbbe26b5f8cd29ed34f90b6",
+      "group_key": "f28ccbae0b4d2d21e0ba44df",
+      "worksheet_row": 27,
+      "current_repetition": 4,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 2] ?",
+      "original_second_prior_cell": "H27",
+      "actual_second_prior": 1.0,
+      "second_prior_row_key": "74d5c9280ab2bd767bdd996d"
+    },
+    {
+      "row_key": "4b4f7aaeb90afa5ef05bea90",
+      "group_key": "f28ccbae0b4d2d21e0ba44df",
+      "worksheet_row": 27,
+      "current_repetition": 5,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 3] ?",
+      "original_second_prior_cell": "L27",
+      "actual_second_prior": 1.0,
+      "second_prior_row_key": "dde5aa8f119d856a67c70016"
+    },
+    {
+      "row_key": "d5c8399af4ed39b0add57bfd",
+      "group_key": "f28ccbae0b4d2d21e0ba44df",
+      "worksheet_row": 28,
+      "current_repetition": 2,
+      "original_second_prior_column": "What is your physical fatigue level currently [Pre-experiment] ?",
+      "original_second_prior_cell": "B28",
+      "actual_second_prior": 0.0,
+      "second_prior_row_key": "79c25d7efc49bff0b1d74359"
+    },
+    {
+      "row_key": "afa5c39e0de45999c5cb0886",
+      "group_key": "f28ccbae0b4d2d21e0ba44df",
+      "worksheet_row": 28,
+      "current_repetition": 3,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 1] ?",
+      "original_second_prior_cell": "D28",
+      "actual_second_prior": 1.0,
+      "second_prior_row_key": "270b074990229fc8dbe6686a"
+    },
+    {
+      "row_key": "37bfbbfb2c981a59b901d83b",
+      "group_key": "f28ccbae0b4d2d21e0ba44df",
+      "worksheet_row": 28,
+      "current_repetition": 4,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 2] ?",
+      "original_second_prior_cell": "H28",
+      "actual_second_prior": 1.0,
+      "second_prior_row_key": "d5c8399af4ed39b0add57bfd"
+    },
+    {
+      "row_key": "a799975910836f98322fd076",
+      "group_key": "f28ccbae0b4d2d21e0ba44df",
+      "worksheet_row": 28,
+      "current_repetition": 5,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 3] ?",
+      "original_second_prior_cell": "L28",
+      "actual_second_prior": 1.0,
+      "second_prior_row_key": "afa5c39e0de45999c5cb0886"
+    },
+    {
+      "row_key": "4c4972e3d626750e973a18a9",
+      "group_key": "374e1fa1d7af89f947afc6a5",
+      "worksheet_row": 30,
+      "current_repetition": 2,
+      "original_second_prior_column": "What is your physical fatigue level currently [Pre-experiment] ?",
+      "original_second_prior_cell": "B30",
+      "actual_second_prior": 5.0,
+      "second_prior_row_key": "6d2580bd613def5b0db0bc76"
+    },
+    {
+      "row_key": "7a7d47a11bd03488b6156e8f",
+      "group_key": "374e1fa1d7af89f947afc6a5",
+      "worksheet_row": 30,
+      "current_repetition": 3,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 1] ?",
+      "original_second_prior_cell": "D30",
+      "actual_second_prior": 5.0,
+      "second_prior_row_key": "59a606cb3da9de31c82a857d"
+    },
+    {
+      "row_key": "d340a63d4bad48d650f4d5e9",
+      "group_key": "374e1fa1d7af89f947afc6a5",
+      "worksheet_row": 30,
+      "current_repetition": 4,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 2] ?",
+      "original_second_prior_cell": "H30",
+      "actual_second_prior": 6.0,
+      "second_prior_row_key": "4c4972e3d626750e973a18a9"
+    },
+    {
+      "row_key": "b887b822750b1fc77b46e77b",
+      "group_key": "374e1fa1d7af89f947afc6a5",
+      "worksheet_row": 30,
+      "current_repetition": 5,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 3] ?",
+      "original_second_prior_cell": "L30",
+      "actual_second_prior": 6.0,
+      "second_prior_row_key": "7a7d47a11bd03488b6156e8f"
+    },
+    {
+      "row_key": "65c49f9a05d39b9bcf26fb18",
+      "group_key": "4f0eef73bea756e3871d9f0e",
+      "worksheet_row": 31,
+      "current_repetition": 2,
+      "original_second_prior_column": "What is your physical fatigue level currently [Pre-experiment] ?",
+      "original_second_prior_cell": "B31",
+      "actual_second_prior": 1.0,
+      "second_prior_row_key": "bea2b90284f86dbdc763b331"
+    },
+    {
+      "row_key": "cae97dc65230f496564a27fa",
+      "group_key": "4f0eef73bea756e3871d9f0e",
+      "worksheet_row": 31,
+      "current_repetition": 3,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 1] ?",
+      "original_second_prior_cell": "D31",
+      "actual_second_prior": 3.0,
+      "second_prior_row_key": "1739894df98764dcfa653499"
+    },
+    {
+      "row_key": "51f6732b24bf284cfe18a094",
+      "group_key": "4f0eef73bea756e3871d9f0e",
+      "worksheet_row": 31,
+      "current_repetition": 4,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 2] ?",
+      "original_second_prior_cell": "H31",
+      "actual_second_prior": 5.0,
+      "second_prior_row_key": "65c49f9a05d39b9bcf26fb18"
+    },
+    {
+      "row_key": "988fe8590827f845a85fe285",
+      "group_key": "4f0eef73bea756e3871d9f0e",
+      "worksheet_row": 31,
+      "current_repetition": 5,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 3] ?",
+      "original_second_prior_cell": "L31",
+      "actual_second_prior": 6.0,
+      "second_prior_row_key": "cae97dc65230f496564a27fa"
+    },
+    {
+      "row_key": "fd882e90489eb228b7d86d38",
+      "group_key": "4f0eef73bea756e3871d9f0e",
+      "worksheet_row": 32,
+      "current_repetition": 2,
+      "original_second_prior_column": "What is your physical fatigue level currently [Pre-experiment] ?",
+      "original_second_prior_cell": "B32",
+      "actual_second_prior": 1.0,
+      "second_prior_row_key": "f1d1b164c2df5dd6ccecf56c"
+    },
+    {
+      "row_key": "b7b3896292d23a2964336f99",
+      "group_key": "4f0eef73bea756e3871d9f0e",
+      "worksheet_row": 32,
+      "current_repetition": 3,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 1] ?",
+      "original_second_prior_cell": "D32",
+      "actual_second_prior": 5.0,
+      "second_prior_row_key": "573d94cfb5feb121ff00b5b4"
+    },
+    {
+      "row_key": "d95b22b35d9fdc682e1a367e",
+      "group_key": "4f0eef73bea756e3871d9f0e",
+      "worksheet_row": 32,
+      "current_repetition": 4,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 2] ?",
+      "original_second_prior_cell": "H32",
+      "actual_second_prior": 8.0,
+      "second_prior_row_key": "fd882e90489eb228b7d86d38"
+    },
+    {
+      "row_key": "26180965084508ad26045188",
+      "group_key": "4f0eef73bea756e3871d9f0e",
+      "worksheet_row": 32,
+      "current_repetition": 5,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 3] ?",
+      "original_second_prior_cell": "L32",
+      "actual_second_prior": 8.0,
+      "second_prior_row_key": "b7b3896292d23a2964336f99"
+    },
+    {
+      "row_key": "7672a1d5b152e62ce904d8c3",
+      "group_key": "723f4bcb876ef6357a7ef2bc",
+      "worksheet_row": 33,
+      "current_repetition": 2,
+      "original_second_prior_column": "What is your physical fatigue level currently [Pre-experiment] ?",
+      "original_second_prior_cell": "B33",
+      "actual_second_prior": 1.0,
+      "second_prior_row_key": "b4783f5aef13a62ba56e7daa"
+    },
+    {
+      "row_key": "8fa7a9d0cdfb8c8cae37f76f",
+      "group_key": "723f4bcb876ef6357a7ef2bc",
+      "worksheet_row": 33,
+      "current_repetition": 3,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 1] ?",
+      "original_second_prior_cell": "D33",
+      "actual_second_prior": 2.0,
+      "second_prior_row_key": "d7edbf08972f18f38d6c1d09"
+    },
+    {
+      "row_key": "c32a00db425f7217979e7a8c",
+      "group_key": "723f4bcb876ef6357a7ef2bc",
+      "worksheet_row": 33,
+      "current_repetition": 4,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 2] ?",
+      "original_second_prior_cell": "H33",
+      "actual_second_prior": 2.0,
+      "second_prior_row_key": "7672a1d5b152e62ce904d8c3"
+    },
+    {
+      "row_key": "c843da2400df46ce5dcc5286",
+      "group_key": "723f4bcb876ef6357a7ef2bc",
+      "worksheet_row": 33,
+      "current_repetition": 5,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 3] ?",
+      "original_second_prior_cell": "L33",
+      "actual_second_prior": 3.0,
+      "second_prior_row_key": "8fa7a9d0cdfb8c8cae37f76f"
+    },
+    {
+      "row_key": "9340b6512b4e041c7f3cb33d",
+      "group_key": "5bb25e2b2293d572ca51fbf5",
+      "worksheet_row": 35,
+      "current_repetition": 2,
+      "original_second_prior_column": "What is your physical fatigue level currently [Pre-experiment] ?",
+      "original_second_prior_cell": "B35",
+      "actual_second_prior": 3.0,
+      "second_prior_row_key": "9eecc5aa705297245062f880"
+    },
+    {
+      "row_key": "aa968840cbc1e5ef2c959775",
+      "group_key": "5bb25e2b2293d572ca51fbf5",
+      "worksheet_row": 35,
+      "current_repetition": 3,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 1] ?",
+      "original_second_prior_cell": "D35",
+      "actual_second_prior": 3.0,
+      "second_prior_row_key": "8551a8cb8f1a0a41660918e1"
+    },
+    {
+      "row_key": "1978b3ab9fd6a29bd48e73b9",
+      "group_key": "5bb25e2b2293d572ca51fbf5",
+      "worksheet_row": 35,
+      "current_repetition": 4,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 2] ?",
+      "original_second_prior_cell": "H35",
+      "actual_second_prior": 4.0,
+      "second_prior_row_key": "9340b6512b4e041c7f3cb33d"
+    },
+    {
+      "row_key": "b1f06a2a7a83500e468a54d8",
+      "group_key": "5bb25e2b2293d572ca51fbf5",
+      "worksheet_row": 35,
+      "current_repetition": 5,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 3] ?",
+      "original_second_prior_cell": "L35",
+      "actual_second_prior": 4.0,
+      "second_prior_row_key": "aa968840cbc1e5ef2c959775"
+    },
+    {
+      "row_key": "65e97749a7411adfabeb0976",
+      "group_key": "173d99f4c18fa8a03297f284",
+      "worksheet_row": 42,
+      "current_repetition": 2,
+      "original_second_prior_column": "What is your physical fatigue level currently [Pre-experiment] ?",
+      "original_second_prior_cell": "B42",
+      "actual_second_prior": 3.0,
+      "second_prior_row_key": "ead71e747b94dadcd25ad454"
+    },
+    {
+      "row_key": "56d5232d58d7740caab4bd2e",
+      "group_key": "173d99f4c18fa8a03297f284",
+      "worksheet_row": 42,
+      "current_repetition": 3,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 1] ?",
+      "original_second_prior_cell": "D42",
+      "actual_second_prior": 4.0,
+      "second_prior_row_key": "45f8c9d3f0a824be3d7a6477"
+    },
+    {
+      "row_key": "33a1eccaf3ccbf50f0f90e1a",
+      "group_key": "173d99f4c18fa8a03297f284",
+      "worksheet_row": 42,
+      "current_repetition": 4,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 2] ?",
+      "original_second_prior_cell": "H42",
+      "actual_second_prior": 5.0,
+      "second_prior_row_key": "65e97749a7411adfabeb0976"
+    },
+    {
+      "row_key": "8aa3403d8a4572553b439f88",
+      "group_key": "173d99f4c18fa8a03297f284",
+      "worksheet_row": 42,
+      "current_repetition": 5,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 3] ?",
+      "original_second_prior_cell": "L42",
+      "actual_second_prior": 5.0,
+      "second_prior_row_key": "56d5232d58d7740caab4bd2e"
+    },
+    {
+      "row_key": "1476811265296d67bdc14a76",
+      "group_key": "173d99f4c18fa8a03297f284",
+      "worksheet_row": 41,
+      "current_repetition": 2,
+      "original_second_prior_column": "What is your physical fatigue level currently [Pre-experiment] ?",
+      "original_second_prior_cell": "B41",
+      "actual_second_prior": 1.0,
+      "second_prior_row_key": "90249b8d265bb3b000b7c7e0"
+    },
+    {
+      "row_key": "6f22ec35b94ed35dbd717b9e",
+      "group_key": "173d99f4c18fa8a03297f284",
+      "worksheet_row": 41,
+      "current_repetition": 3,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 1] ?",
+      "original_second_prior_cell": "D41",
+      "actual_second_prior": 4.0,
+      "second_prior_row_key": "83161d6e07c24e463f655c02"
+    },
+    {
+      "row_key": "ac9ae2178f6b79689692c7cd",
+      "group_key": "173d99f4c18fa8a03297f284",
+      "worksheet_row": 41,
+      "current_repetition": 4,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 2] ?",
+      "original_second_prior_cell": "H41",
+      "actual_second_prior": 6.0,
+      "second_prior_row_key": "1476811265296d67bdc14a76"
+    },
+    {
+      "row_key": "6d79cbff8708c43bb82fe8ff",
+      "group_key": "173d99f4c18fa8a03297f284",
+      "worksheet_row": 41,
+      "current_repetition": 5,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 3] ?",
+      "original_second_prior_cell": "L41",
+      "actual_second_prior": 7.0,
+      "second_prior_row_key": "6f22ec35b94ed35dbd717b9e"
+    },
+    {
+      "row_key": "43f3110f2f89683fa31c38f5",
+      "group_key": "97e31c6efca06aecd47b25ab",
+      "worksheet_row": 43,
+      "current_repetition": 2,
+      "original_second_prior_column": "What is your physical fatigue level currently [Pre-experiment] ?",
+      "original_second_prior_cell": "B43",
+      "actual_second_prior": 0.0,
+      "second_prior_row_key": "4f58c6c6940ff657496f998d"
+    },
+    {
+      "row_key": "bbb1fed178cdcbb1fb03dc2d",
+      "group_key": "97e31c6efca06aecd47b25ab",
+      "worksheet_row": 43,
+      "current_repetition": 3,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 1] ?",
+      "original_second_prior_cell": "D43",
+      "actual_second_prior": 1.0,
+      "second_prior_row_key": "7542e771cc7589d058fd11bb"
+    },
+    {
+      "row_key": "6aceaeee3699efa9fae54283",
+      "group_key": "97e31c6efca06aecd47b25ab",
+      "worksheet_row": 43,
+      "current_repetition": 4,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 2] ?",
+      "original_second_prior_cell": "H43",
+      "actual_second_prior": 1.0,
+      "second_prior_row_key": "43f3110f2f89683fa31c38f5"
+    },
+    {
+      "row_key": "e2741ab08980c50d2a544f42",
+      "group_key": "97e31c6efca06aecd47b25ab",
+      "worksheet_row": 43,
+      "current_repetition": 5,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 3] ?",
+      "original_second_prior_cell": "L43",
+      "actual_second_prior": 1.0,
+      "second_prior_row_key": "bbb1fed178cdcbb1fb03dc2d"
+    },
+    {
+      "row_key": "1bf31ea35b6ed0e91e48ff9f",
+      "group_key": "97e31c6efca06aecd47b25ab",
+      "worksheet_row": 44,
+      "current_repetition": 2,
+      "original_second_prior_column": "What is your physical fatigue level currently [Pre-experiment] ?",
+      "original_second_prior_cell": "B44",
+      "actual_second_prior": 0.0,
+      "second_prior_row_key": "1f59e3903f85520641b47d1f"
+    },
+    {
+      "row_key": "48e7cb2bd3a3d6d4f5332d1a",
+      "group_key": "97e31c6efca06aecd47b25ab",
+      "worksheet_row": 44,
+      "current_repetition": 3,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 1] ?",
+      "original_second_prior_cell": "D44",
+      "actual_second_prior": 2.0,
+      "second_prior_row_key": "85ac8b7c0ccdd6d615c80ec3"
+    },
+    {
+      "row_key": "de9799fd8c5665b4db447491",
+      "group_key": "97e31c6efca06aecd47b25ab",
+      "worksheet_row": 44,
+      "current_repetition": 4,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 2] ?",
+      "original_second_prior_cell": "H44",
+      "actual_second_prior": 2.0,
+      "second_prior_row_key": "1bf31ea35b6ed0e91e48ff9f"
+    },
+    {
+      "row_key": "4dadc2c95cfc8d5259d39543",
+      "group_key": "97e31c6efca06aecd47b25ab",
+      "worksheet_row": 44,
+      "current_repetition": 5,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 3] ?",
+      "original_second_prior_cell": "L44",
+      "actual_second_prior": 3.0,
+      "second_prior_row_key": "48e7cb2bd3a3d6d4f5332d1a"
+    },
+    {
+      "row_key": "3f9ef28c1e30d5989222e291",
+      "group_key": "54678a86be6d65576fbccc88",
+      "worksheet_row": 46,
+      "current_repetition": 2,
+      "original_second_prior_column": "What is your physical fatigue level currently [Pre-experiment] ?",
+      "original_second_prior_cell": "B46",
+      "actual_second_prior": 1.0,
+      "second_prior_row_key": "8dcd00565cc290425dd3b7b7"
+    },
+    {
+      "row_key": "bda13619c9638017cdaf68ad",
+      "group_key": "54678a86be6d65576fbccc88",
+      "worksheet_row": 46,
+      "current_repetition": 3,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 1] ?",
+      "original_second_prior_cell": "D46",
+      "actual_second_prior": 3.0,
+      "second_prior_row_key": "e97d9f0d4ac3e95940eb7b32"
+    },
+    {
+      "row_key": "32e04d89d5c261ae696ddd81",
+      "group_key": "54678a86be6d65576fbccc88",
+      "worksheet_row": 46,
+      "current_repetition": 4,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 2] ?",
+      "original_second_prior_cell": "H46",
+      "actual_second_prior": 3.0,
+      "second_prior_row_key": "3f9ef28c1e30d5989222e291"
+    },
+    {
+      "row_key": "1e2b3dfba6facd1919b83abf",
+      "group_key": "54678a86be6d65576fbccc88",
+      "worksheet_row": 46,
+      "current_repetition": 5,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 3] ?",
+      "original_second_prior_cell": "L46",
+      "actual_second_prior": 5.0,
+      "second_prior_row_key": "bda13619c9638017cdaf68ad"
+    },
+    {
+      "row_key": "ad05fe3892eb93792e78eed8",
+      "group_key": "54678a86be6d65576fbccc88",
+      "worksheet_row": 45,
+      "current_repetition": 2,
+      "original_second_prior_column": "What is your physical fatigue level currently [Pre-experiment] ?",
+      "original_second_prior_cell": "B45",
+      "actual_second_prior": 1.0,
+      "second_prior_row_key": "91821456d5c2766a8c0cb825"
+    },
+    {
+      "row_key": "fe821a9141e90c4a931cabda",
+      "group_key": "54678a86be6d65576fbccc88",
+      "worksheet_row": 45,
+      "current_repetition": 3,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 1] ?",
+      "original_second_prior_cell": "D45",
+      "actual_second_prior": 3.0,
+      "second_prior_row_key": "1386421cc41a5da991efc9b7"
+    },
+    {
+      "row_key": "7229dcdf948ccc432d06a583",
+      "group_key": "54678a86be6d65576fbccc88",
+      "worksheet_row": 45,
+      "current_repetition": 4,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 2] ?",
+      "original_second_prior_cell": "H45",
+      "actual_second_prior": 4.0,
+      "second_prior_row_key": "ad05fe3892eb93792e78eed8"
+    },
+    {
+      "row_key": "8c5210c0d5717d050ce3033c",
+      "group_key": "54678a86be6d65576fbccc88",
+      "worksheet_row": 45,
+      "current_repetition": 5,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 3] ?",
+      "original_second_prior_cell": "L45",
+      "actual_second_prior": 5.0,
+      "second_prior_row_key": "fe821a9141e90c4a931cabda"
+    },
+    {
+      "row_key": "5d9fb65be661abd3dd281bf4",
+      "group_key": "a0183228844c86669139fbf1",
+      "worksheet_row": 51,
+      "current_repetition": 2,
+      "original_second_prior_column": "What is your physical fatigue level currently [Pre-experiment] ?",
+      "original_second_prior_cell": "B51",
+      "actual_second_prior": 1.0,
+      "second_prior_row_key": "a0973f6ff181124c327ea584"
+    },
+    {
+      "row_key": "cdfcbceb5cb045a5e08966fa",
+      "group_key": "a0183228844c86669139fbf1",
+      "worksheet_row": 51,
+      "current_repetition": 3,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 1] ?",
+      "original_second_prior_cell": "D51",
+      "actual_second_prior": 5.0,
+      "second_prior_row_key": "1f5d2e5cc1389611fa5a1b54"
+    },
+    {
+      "row_key": "dc219c95b690a2909a41faab",
+      "group_key": "a0183228844c86669139fbf1",
+      "worksheet_row": 51,
+      "current_repetition": 4,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 2] ?",
+      "original_second_prior_cell": "H51",
+      "actual_second_prior": 6.0,
+      "second_prior_row_key": "5d9fb65be661abd3dd281bf4"
+    },
+    {
+      "row_key": "1e827a27e9a67e1fbff8820f",
+      "group_key": "a0183228844c86669139fbf1",
+      "worksheet_row": 51,
+      "current_repetition": 5,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 3] ?",
+      "original_second_prior_cell": "L51",
+      "actual_second_prior": 7.0,
+      "second_prior_row_key": "cdfcbceb5cb045a5e08966fa"
+    },
+    {
+      "row_key": "81839c7a4b06670b0161f788",
+      "group_key": "a0183228844c86669139fbf1",
+      "worksheet_row": 52,
+      "current_repetition": 2,
+      "original_second_prior_column": "What is your physical fatigue level currently [Pre-experiment] ?",
+      "original_second_prior_cell": "B52",
+      "actual_second_prior": 2.0,
+      "second_prior_row_key": "cacf3bb78fc291d92cf0699a"
+    },
+    {
+      "row_key": "2058da2c7f276315a9b85179",
+      "group_key": "a0183228844c86669139fbf1",
+      "worksheet_row": 52,
+      "current_repetition": 3,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 1] ?",
+      "original_second_prior_cell": "D52",
+      "actual_second_prior": 4.0,
+      "second_prior_row_key": "1d5409b9c2b5239725369fce"
+    },
+    {
+      "row_key": "e3e6faab1bb53bd960750f05",
+      "group_key": "a0183228844c86669139fbf1",
+      "worksheet_row": 52,
+      "current_repetition": 4,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 2] ?",
+      "original_second_prior_cell": "H52",
+      "actual_second_prior": 5.0,
+      "second_prior_row_key": "81839c7a4b06670b0161f788"
+    },
+    {
+      "row_key": "94ecc7e3ff34c6b57e360d7f",
+      "group_key": "a0183228844c86669139fbf1",
+      "worksheet_row": 52,
+      "current_repetition": 5,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 3] ?",
+      "original_second_prior_cell": "L52",
+      "actual_second_prior": 6.0,
+      "second_prior_row_key": "2058da2c7f276315a9b85179"
+    },
+    {
+      "row_key": "76387dc3ca836ef00d55f721",
+      "group_key": "f37d0f4952361a739ca2780a",
+      "worksheet_row": 54,
+      "current_repetition": 2,
+      "original_second_prior_column": "What is your physical fatigue level currently [Pre-experiment] ?",
+      "original_second_prior_cell": "B54",
+      "actual_second_prior": 3.0,
+      "second_prior_row_key": "f267b956ab45daeb79a66acc"
+    },
+    {
+      "row_key": "f51912ce2fee24bd40a86119",
+      "group_key": "f37d0f4952361a739ca2780a",
+      "worksheet_row": 54,
+      "current_repetition": 3,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 1] ?",
+      "original_second_prior_cell": "D54",
+      "actual_second_prior": 4.0,
+      "second_prior_row_key": "c06d57c1abc3ad381187c180"
+    },
+    {
+      "row_key": "2856b2cbf443a50deee3f37a",
+      "group_key": "f37d0f4952361a739ca2780a",
+      "worksheet_row": 54,
+      "current_repetition": 4,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 2] ?",
+      "original_second_prior_cell": "H54",
+      "actual_second_prior": 6.0,
+      "second_prior_row_key": "76387dc3ca836ef00d55f721"
+    },
+    {
+      "row_key": "008d17b5acad7408d2bfe2e4",
+      "group_key": "f37d0f4952361a739ca2780a",
+      "worksheet_row": 54,
+      "current_repetition": 5,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 3] ?",
+      "original_second_prior_cell": "L54",
+      "actual_second_prior": 7.0,
+      "second_prior_row_key": "f51912ce2fee24bd40a86119"
+    },
+    {
+      "row_key": "cfa449046ee2ddf9fd2710f4",
+      "group_key": "f37d0f4952361a739ca2780a",
+      "worksheet_row": 53,
+      "current_repetition": 2,
+      "original_second_prior_column": "What is your physical fatigue level currently [Pre-experiment] ?",
+      "original_second_prior_cell": "B53",
+      "actual_second_prior": 1.0,
+      "second_prior_row_key": "2befdba9a51c9a29d0ee35ec"
+    },
+    {
+      "row_key": "e2068678b6622c705213044f",
+      "group_key": "f37d0f4952361a739ca2780a",
+      "worksheet_row": 53,
+      "current_repetition": 3,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 1] ?",
+      "original_second_prior_cell": "D53",
+      "actual_second_prior": 4.0,
+      "second_prior_row_key": "4e5dd5fe09d98aa6e37a3a80"
+    },
+    {
+      "row_key": "0cea73d7793d0149a853ddfa",
+      "group_key": "f37d0f4952361a739ca2780a",
+      "worksheet_row": 53,
+      "current_repetition": 4,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 2] ?",
+      "original_second_prior_cell": "H53",
+      "actual_second_prior": 4.0,
+      "second_prior_row_key": "cfa449046ee2ddf9fd2710f4"
+    },
+    {
+      "row_key": "44b1f3d6c6e6237c8933ded6",
+      "group_key": "f37d0f4952361a739ca2780a",
+      "worksheet_row": 53,
+      "current_repetition": 5,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 3] ?",
+      "original_second_prior_cell": "L53",
+      "actual_second_prior": 5.0,
+      "second_prior_row_key": "e2068678b6622c705213044f"
+    },
+    {
+      "row_key": "5927a9689e9b91ae2e80f50c",
+      "group_key": "047d29045d04919bef2e0efd",
+      "worksheet_row": 55,
+      "current_repetition": 2,
+      "original_second_prior_column": "What is your physical fatigue level currently [Pre-experiment] ?",
+      "original_second_prior_cell": "B55",
+      "actual_second_prior": 2.0,
+      "second_prior_row_key": "658ceefeedee1cad37329b66"
+    },
+    {
+      "row_key": "58c23b99808e36155496522e",
+      "group_key": "047d29045d04919bef2e0efd",
+      "worksheet_row": 55,
+      "current_repetition": 3,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 1] ?",
+      "original_second_prior_cell": "D55",
+      "actual_second_prior": 6.0,
+      "second_prior_row_key": "be9cda89e6986a9e0ff3cabd"
+    },
+    {
+      "row_key": "02cd5d5bfef2a83d99b98d0d",
+      "group_key": "047d29045d04919bef2e0efd",
+      "worksheet_row": 55,
+      "current_repetition": 4,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 2] ?",
+      "original_second_prior_cell": "H55",
+      "actual_second_prior": 6.0,
+      "second_prior_row_key": "5927a9689e9b91ae2e80f50c"
+    },
+    {
+      "row_key": "c34861a7757cf9a10172d5d0",
+      "group_key": "047d29045d04919bef2e0efd",
+      "worksheet_row": 55,
+      "current_repetition": 5,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 3] ?",
+      "original_second_prior_cell": "L55",
+      "actual_second_prior": 7.0,
+      "second_prior_row_key": "58c23b99808e36155496522e"
+    },
+    {
+      "row_key": "3643d9823be986bdb11305c9",
+      "group_key": "047d29045d04919bef2e0efd",
+      "worksheet_row": 56,
+      "current_repetition": 2,
+      "original_second_prior_column": "What is your physical fatigue level currently [Pre-experiment] ?",
+      "original_second_prior_cell": "B56",
+      "actual_second_prior": 3.0,
+      "second_prior_row_key": "142c2520a3d700f0538891cb"
+    },
+    {
+      "row_key": "ca8e810f5574c398fe58f731",
+      "group_key": "047d29045d04919bef2e0efd",
+      "worksheet_row": 56,
+      "current_repetition": 3,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 1] ?",
+      "original_second_prior_cell": "D56",
+      "actual_second_prior": 4.0,
+      "second_prior_row_key": "38827d63e76979255187bc80"
+    },
+    {
+      "row_key": "ecc9fe41d0d0bcc2e0d4213b",
+      "group_key": "047d29045d04919bef2e0efd",
+      "worksheet_row": 56,
+      "current_repetition": 4,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 2] ?",
+      "original_second_prior_cell": "H56",
+      "actual_second_prior": 5.0,
+      "second_prior_row_key": "3643d9823be986bdb11305c9"
+    },
+    {
+      "row_key": "dadcf3287c90d8f56c21c7eb",
+      "group_key": "047d29045d04919bef2e0efd",
+      "worksheet_row": 56,
+      "current_repetition": 5,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 3] ?",
+      "original_second_prior_cell": "L56",
+      "actual_second_prior": 6.0,
+      "second_prior_row_key": "ca8e810f5574c398fe58f731"
+    },
+    {
+      "row_key": "15be6e8e85046f38454b9568",
+      "group_key": "7f90c44cc1452e3274f295b4",
+      "worksheet_row": 58,
+      "current_repetition": 2,
+      "original_second_prior_column": "What is your physical fatigue level currently [Pre-experiment] ?",
+      "original_second_prior_cell": "B58",
+      "actual_second_prior": 0.0,
+      "second_prior_row_key": "c38b26503c935360fb7829be"
+    },
+    {
+      "row_key": "2ac7ea38422a3cdf03ee9d22",
+      "group_key": "7f90c44cc1452e3274f295b4",
+      "worksheet_row": 58,
+      "current_repetition": 3,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 1] ?",
+      "original_second_prior_cell": "D58",
+      "actual_second_prior": 2.0,
+      "second_prior_row_key": "139d44a884e625798417deaf"
+    },
+    {
+      "row_key": "28f380e56e11065e6d395a29",
+      "group_key": "7f90c44cc1452e3274f295b4",
+      "worksheet_row": 58,
+      "current_repetition": 4,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 2] ?",
+      "original_second_prior_cell": "H58",
+      "actual_second_prior": 3.0,
+      "second_prior_row_key": "15be6e8e85046f38454b9568"
+    },
+    {
+      "row_key": "c16fc98bcf59bb3e703ddb5d",
+      "group_key": "7f90c44cc1452e3274f295b4",
+      "worksheet_row": 58,
+      "current_repetition": 5,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 3] ?",
+      "original_second_prior_cell": "L58",
+      "actual_second_prior": 3.0,
+      "second_prior_row_key": "2ac7ea38422a3cdf03ee9d22"
+    },
+    {
+      "row_key": "9b2e440a315b2024b2ea1e9c",
+      "group_key": "dd2740e52f525cdecacd245c",
+      "worksheet_row": 63,
+      "current_repetition": 2,
+      "original_second_prior_column": "What is your physical fatigue level currently [Pre-experiment] ?",
+      "original_second_prior_cell": "B63",
+      "actual_second_prior": 4.0,
+      "second_prior_row_key": "87a1759840dcdab39a48eb67"
+    },
+    {
+      "row_key": "995ef7802e12edad0ff6083c",
+      "group_key": "dd2740e52f525cdecacd245c",
+      "worksheet_row": 63,
+      "current_repetition": 3,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 1] ?",
+      "original_second_prior_cell": "D63",
+      "actual_second_prior": 7.0,
+      "second_prior_row_key": "58bbcd7cc72e4de3eb9dce27"
+    },
+    {
+      "row_key": "e5aa08197b244e261396984f",
+      "group_key": "dd2740e52f525cdecacd245c",
+      "worksheet_row": 63,
+      "current_repetition": 4,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 2] ?",
+      "original_second_prior_cell": "H63",
+      "actual_second_prior": 9.0,
+      "second_prior_row_key": "9b2e440a315b2024b2ea1e9c"
+    },
+    {
+      "row_key": "55abb322a2cebba117dcda40",
+      "group_key": "dd2740e52f525cdecacd245c",
+      "worksheet_row": 63,
+      "current_repetition": 5,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 3] ?",
+      "original_second_prior_cell": "L63",
+      "actual_second_prior": 8.0,
+      "second_prior_row_key": "995ef7802e12edad0ff6083c"
+    },
+    {
+      "row_key": "84a167f1eacb044ac4eb15dd",
+      "group_key": "dd2740e52f525cdecacd245c",
+      "worksheet_row": 62,
+      "current_repetition": 2,
+      "original_second_prior_column": "What is your physical fatigue level currently [Pre-experiment] ?",
+      "original_second_prior_cell": "B62",
+      "actual_second_prior": 2.0,
+      "second_prior_row_key": "62b8b96eb762e586b70db0ec"
+    },
+    {
+      "row_key": "719b623005a648bb0f36c5d1",
+      "group_key": "dd2740e52f525cdecacd245c",
+      "worksheet_row": 62,
+      "current_repetition": 3,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 1] ?",
+      "original_second_prior_cell": "D62",
+      "actual_second_prior": 7.0,
+      "second_prior_row_key": "ce67942b66832392b22c994d"
+    },
+    {
+      "row_key": "6902ca6a0247b746f2ee9cd7",
+      "group_key": "dd2740e52f525cdecacd245c",
+      "worksheet_row": 62,
+      "current_repetition": 4,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 2] ?",
+      "original_second_prior_cell": "H62",
+      "actual_second_prior": 8.0,
+      "second_prior_row_key": "84a167f1eacb044ac4eb15dd"
+    },
+    {
+      "row_key": "401e386e271f0fa3687f6825",
+      "group_key": "dd2740e52f525cdecacd245c",
+      "worksheet_row": 62,
+      "current_repetition": 5,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 3] ?",
+      "original_second_prior_cell": "L62",
+      "actual_second_prior": 7.0,
+      "second_prior_row_key": "719b623005a648bb0f36c5d1"
+    },
+    {
+      "row_key": "7fbd591f3d6ec1afafa46e93",
+      "group_key": "f80c4f1f122d017c5205df7d",
+      "worksheet_row": 60,
+      "current_repetition": 2,
+      "original_second_prior_column": "What is your physical fatigue level currently [Pre-experiment] ?",
+      "original_second_prior_cell": "B60",
+      "actual_second_prior": 2.0,
+      "second_prior_row_key": "b40185723093e95fc50f0955"
+    },
+    {
+      "row_key": "07ac74365bc294483e2180a9",
+      "group_key": "f80c4f1f122d017c5205df7d",
+      "worksheet_row": 60,
+      "current_repetition": 3,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 1] ?",
+      "original_second_prior_cell": "D60",
+      "actual_second_prior": 3.0,
+      "second_prior_row_key": "27fe9b24afcde7e874f90f03"
+    },
+    {
+      "row_key": "13aea1b34ac56ea514864146",
+      "group_key": "f80c4f1f122d017c5205df7d",
+      "worksheet_row": 60,
+      "current_repetition": 4,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 2] ?",
+      "original_second_prior_cell": "H60",
+      "actual_second_prior": 3.0,
+      "second_prior_row_key": "7fbd591f3d6ec1afafa46e93"
+    },
+    {
+      "row_key": "c4245ce9e6b290eb47ab407d",
+      "group_key": "f80c4f1f122d017c5205df7d",
+      "worksheet_row": 60,
+      "current_repetition": 5,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 3] ?",
+      "original_second_prior_cell": "L60",
+      "actual_second_prior": 5.0,
+      "second_prior_row_key": "07ac74365bc294483e2180a9"
+    },
+    {
+      "row_key": "c8254077184757fc154266f5",
+      "group_key": "f80c4f1f122d017c5205df7d",
+      "worksheet_row": 61,
+      "current_repetition": 2,
+      "original_second_prior_column": "What is your physical fatigue level currently [Pre-experiment] ?",
+      "original_second_prior_cell": "B61",
+      "actual_second_prior": 4.0,
+      "second_prior_row_key": "05bcfee6463f5adba2c31214"
+    },
+    {
+      "row_key": "e9389d8474017996b957c045",
+      "group_key": "f80c4f1f122d017c5205df7d",
+      "worksheet_row": 61,
+      "current_repetition": 3,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 1] ?",
+      "original_second_prior_cell": "D61",
+      "actual_second_prior": 5.0,
+      "second_prior_row_key": "9c1a48bc0392479933d3a264"
+    },
+    {
+      "row_key": "56d5068b6d802cfeee5b4466",
+      "group_key": "f80c4f1f122d017c5205df7d",
+      "worksheet_row": 61,
+      "current_repetition": 4,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 2] ?",
+      "original_second_prior_cell": "H61",
+      "actual_second_prior": 5.0,
+      "second_prior_row_key": "c8254077184757fc154266f5"
+    },
+    {
+      "row_key": "ca643d27a68de974f7ead8bc",
+      "group_key": "f80c4f1f122d017c5205df7d",
+      "worksheet_row": 61,
+      "current_repetition": 5,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 3] ?",
+      "original_second_prior_cell": "L61",
+      "actual_second_prior": 5.0,
+      "second_prior_row_key": "e9389d8474017996b957c045"
+    },
+    {
+      "row_key": "9def8df82bb8084654e8afad",
+      "group_key": "b5016870e01d8de9893daaac",
+      "worksheet_row": 64,
+      "current_repetition": 2,
+      "original_second_prior_column": "What is your physical fatigue level currently [Pre-experiment] ?",
+      "original_second_prior_cell": "B64",
+      "actual_second_prior": 0.0,
+      "second_prior_row_key": "5dae0bb6f0431e4c6f842590"
+    },
+    {
+      "row_key": "612138ca84706933d2299601",
+      "group_key": "b5016870e01d8de9893daaac",
+      "worksheet_row": 64,
+      "current_repetition": 3,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 1] ?",
+      "original_second_prior_cell": "D64",
+      "actual_second_prior": 4.0,
+      "second_prior_row_key": "b3999aaaa890aba4c0dccf23"
+    },
+    {
+      "row_key": "dac11d9474c7384461505740",
+      "group_key": "b5016870e01d8de9893daaac",
+      "worksheet_row": 64,
+      "current_repetition": 4,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 2] ?",
+      "original_second_prior_cell": "H64",
+      "actual_second_prior": 6.0,
+      "second_prior_row_key": "9def8df82bb8084654e8afad"
+    },
+    {
+      "row_key": "8bc4447e2bf3c115e75937cb",
+      "group_key": "b5016870e01d8de9893daaac",
+      "worksheet_row": 64,
+      "current_repetition": 5,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 3] ?",
+      "original_second_prior_cell": "L64",
+      "actual_second_prior": 7.0,
+      "second_prior_row_key": "612138ca84706933d2299601"
+    },
+    {
+      "row_key": "cb16780ea123996100eed9eb",
+      "group_key": "3e662c6ac9e635eec466cfb8",
+      "worksheet_row": 69,
+      "current_repetition": 2,
+      "original_second_prior_column": "What is your physical fatigue level currently [Pre-experiment] ?",
+      "original_second_prior_cell": "B69",
+      "actual_second_prior": 2.0,
+      "second_prior_row_key": "a7daa28e76d1a32dd354d4ef"
+    },
+    {
+      "row_key": "345b76ceac0d72c70e81e4b6",
+      "group_key": "3e662c6ac9e635eec466cfb8",
+      "worksheet_row": 69,
+      "current_repetition": 3,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 1] ?",
+      "original_second_prior_cell": "D69",
+      "actual_second_prior": 3.0,
+      "second_prior_row_key": "70ddfa2efb73bfa69959de50"
+    },
+    {
+      "row_key": "d9b8b5fdf0c29ae641c01475",
+      "group_key": "3e662c6ac9e635eec466cfb8",
+      "worksheet_row": 69,
+      "current_repetition": 4,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 2] ?",
+      "original_second_prior_cell": "H69",
+      "actual_second_prior": 4.0,
+      "second_prior_row_key": "cb16780ea123996100eed9eb"
+    },
+    {
+      "row_key": "5f6dc86aa104c1a1e3fefcff",
+      "group_key": "3e662c6ac9e635eec466cfb8",
+      "worksheet_row": 69,
+      "current_repetition": 5,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 3] ?",
+      "original_second_prior_cell": "L69",
+      "actual_second_prior": 5.0,
+      "second_prior_row_key": "345b76ceac0d72c70e81e4b6"
+    },
+    {
+      "row_key": "d181410abfb2c2b2d49658b9",
+      "group_key": "3e662c6ac9e635eec466cfb8",
+      "worksheet_row": 70,
+      "current_repetition": 2,
+      "original_second_prior_column": "What is your physical fatigue level currently [Pre-experiment] ?",
+      "original_second_prior_cell": "B70",
+      "actual_second_prior": 0.0,
+      "second_prior_row_key": "3d9c9be791e7b61c3ca5f3af"
+    },
+    {
+      "row_key": "b7be5a2e22fb28216e6d3923",
+      "group_key": "3e662c6ac9e635eec466cfb8",
+      "worksheet_row": 70,
+      "current_repetition": 3,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 1] ?",
+      "original_second_prior_cell": "D70",
+      "actual_second_prior": 0.0,
+      "second_prior_row_key": "7204a3e653bf616a4d0a6e1e"
+    },
+    {
+      "row_key": "f0fc1c2a920bab343c560f96",
+      "group_key": "3e662c6ac9e635eec466cfb8",
+      "worksheet_row": 70,
+      "current_repetition": 4,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 2] ?",
+      "original_second_prior_cell": "H70",
+      "actual_second_prior": 1.0,
+      "second_prior_row_key": "d181410abfb2c2b2d49658b9"
+    },
+    {
+      "row_key": "1486f4b19cee13d0fccfe3d3",
+      "group_key": "3e662c6ac9e635eec466cfb8",
+      "worksheet_row": 70,
+      "current_repetition": 5,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 3] ?",
+      "original_second_prior_cell": "L70",
+      "actual_second_prior": 2.0,
+      "second_prior_row_key": "b7be5a2e22fb28216e6d3923"
+    },
+    {
+      "row_key": "7fe15f1d8d10a1e54cf33498",
+      "group_key": "7b2ef80fcd9538c63c7b9550",
+      "worksheet_row": 91,
+      "current_repetition": 2,
+      "original_second_prior_column": "What is your physical fatigue level currently [Pre-experiment] ?",
+      "original_second_prior_cell": "B91",
+      "actual_second_prior": 2.0,
+      "second_prior_row_key": "d8651c350a242d986de259e8"
+    },
+    {
+      "row_key": "24235647c30d9f78e2479fc1",
+      "group_key": "7b2ef80fcd9538c63c7b9550",
+      "worksheet_row": 91,
+      "current_repetition": 3,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 1] ?",
+      "original_second_prior_cell": "D91",
+      "actual_second_prior": 4.0,
+      "second_prior_row_key": "779d9c64d2590cb76700276f"
+    },
+    {
+      "row_key": "7ea67352c723ff34cccd3950",
+      "group_key": "7b2ef80fcd9538c63c7b9550",
+      "worksheet_row": 91,
+      "current_repetition": 4,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 2] ?",
+      "original_second_prior_cell": "H91",
+      "actual_second_prior": 5.0,
+      "second_prior_row_key": "7fe15f1d8d10a1e54cf33498"
+    },
+    {
+      "row_key": "4e45f3eaf4da158cb8a7bfe5",
+      "group_key": "7b2ef80fcd9538c63c7b9550",
+      "worksheet_row": 91,
+      "current_repetition": 5,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 3] ?",
+      "original_second_prior_cell": "L91",
+      "actual_second_prior": 6.0,
+      "second_prior_row_key": "24235647c30d9f78e2479fc1"
+    },
+    {
+      "row_key": "c3950177bdea03b4aaf3d3e2",
+      "group_key": "8e76bd00c9c1eb48a8f30026",
+      "worksheet_row": 75,
+      "current_repetition": 2,
+      "original_second_prior_column": "What is your physical fatigue level currently [Pre-experiment] ?",
+      "original_second_prior_cell": "B75",
+      "actual_second_prior": 2.0,
+      "second_prior_row_key": "3d251bd378dab4f43bf7c036"
+    },
+    {
+      "row_key": "b195cb36dfa854f8e6e0eddc",
+      "group_key": "8e76bd00c9c1eb48a8f30026",
+      "worksheet_row": 75,
+      "current_repetition": 3,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 1] ?",
+      "original_second_prior_cell": "D75",
+      "actual_second_prior": 3.0,
+      "second_prior_row_key": "153c8708a94a8dd9049a06d8"
+    },
+    {
+      "row_key": "9ced8ef3a20b692cd461e708",
+      "group_key": "8e76bd00c9c1eb48a8f30026",
+      "worksheet_row": 75,
+      "current_repetition": 4,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 2] ?",
+      "original_second_prior_cell": "H75",
+      "actual_second_prior": 4.0,
+      "second_prior_row_key": "c3950177bdea03b4aaf3d3e2"
+    },
+    {
+      "row_key": "b45677a140ea9cbf3841d74b",
+      "group_key": "8e76bd00c9c1eb48a8f30026",
+      "worksheet_row": 75,
+      "current_repetition": 5,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 3] ?",
+      "original_second_prior_cell": "L75",
+      "actual_second_prior": 5.0,
+      "second_prior_row_key": "b195cb36dfa854f8e6e0eddc"
+    },
+    {
+      "row_key": "d9136724ddea3df1aefc05e5",
+      "group_key": "8e76bd00c9c1eb48a8f30026",
+      "worksheet_row": 74,
+      "current_repetition": 2,
+      "original_second_prior_column": "What is your physical fatigue level currently [Pre-experiment] ?",
+      "original_second_prior_cell": "B74",
+      "actual_second_prior": 1.0,
+      "second_prior_row_key": "e9b2897985b456b898f5b640"
+    },
+    {
+      "row_key": "20c197a795b110d61fceb801",
+      "group_key": "8e76bd00c9c1eb48a8f30026",
+      "worksheet_row": 74,
+      "current_repetition": 3,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 1] ?",
+      "original_second_prior_cell": "D74",
+      "actual_second_prior": 3.0,
+      "second_prior_row_key": "2718120a62c7e34b1935c922"
+    },
+    {
+      "row_key": "6a15ef13131eec613b353c70",
+      "group_key": "8e76bd00c9c1eb48a8f30026",
+      "worksheet_row": 74,
+      "current_repetition": 4,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 2] ?",
+      "original_second_prior_cell": "H74",
+      "actual_second_prior": 3.0,
+      "second_prior_row_key": "d9136724ddea3df1aefc05e5"
+    },
+    {
+      "row_key": "5ee74529608aae029e51398b",
+      "group_key": "8e76bd00c9c1eb48a8f30026",
+      "worksheet_row": 74,
+      "current_repetition": 5,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 3] ?",
+      "original_second_prior_cell": "L74",
+      "actual_second_prior": 4.0,
+      "second_prior_row_key": "20c197a795b110d61fceb801"
+    },
+    {
+      "row_key": "2fa005a06175aef61e8e7d52",
+      "group_key": "84a276eda979ae2a9e60b0e9",
+      "worksheet_row": 76,
+      "current_repetition": 2,
+      "original_second_prior_column": "What is your physical fatigue level currently [Pre-experiment] ?",
+      "original_second_prior_cell": "B76",
+      "actual_second_prior": 0.0,
+      "second_prior_row_key": "5860725a5bead08c99cace7a"
+    },
+    {
+      "row_key": "ac43db8d05339b4912affcba",
+      "group_key": "84a276eda979ae2a9e60b0e9",
+      "worksheet_row": 76,
+      "current_repetition": 3,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 1] ?",
+      "original_second_prior_cell": "D76",
+      "actual_second_prior": 4.0,
+      "second_prior_row_key": "05723e487837d6072c6e002c"
+    },
+    {
+      "row_key": "0ab301ce8cab08596337e564",
+      "group_key": "84a276eda979ae2a9e60b0e9",
+      "worksheet_row": 76,
+      "current_repetition": 4,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 2] ?",
+      "original_second_prior_cell": "H76",
+      "actual_second_prior": 5.0,
+      "second_prior_row_key": "2fa005a06175aef61e8e7d52"
+    },
+    {
+      "row_key": "39076a1cdfcab5b9e1f12cce",
+      "group_key": "84a276eda979ae2a9e60b0e9",
+      "worksheet_row": 76,
+      "current_repetition": 5,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 3] ?",
+      "original_second_prior_cell": "L76",
+      "actual_second_prior": 6.0,
+      "second_prior_row_key": "ac43db8d05339b4912affcba"
+    },
+    {
+      "row_key": "3017509946fc7c93ad829c9c",
+      "group_key": "84a276eda979ae2a9e60b0e9",
+      "worksheet_row": 77,
+      "current_repetition": 2,
+      "original_second_prior_column": "What is your physical fatigue level currently [Pre-experiment] ?",
+      "original_second_prior_cell": "B77",
+      "actual_second_prior": 2.0,
+      "second_prior_row_key": "a57e04e829e653314d7d83be"
+    },
+    {
+      "row_key": "e8801c9cdbcdb2de64555748",
+      "group_key": "84a276eda979ae2a9e60b0e9",
+      "worksheet_row": 77,
+      "current_repetition": 3,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 1] ?",
+      "original_second_prior_cell": "D77",
+      "actual_second_prior": 5.0,
+      "second_prior_row_key": "3951bf9ffad1732b16583e00"
+    },
+    {
+      "row_key": "7f77e96086767b8150fccd35",
+      "group_key": "84a276eda979ae2a9e60b0e9",
+      "worksheet_row": 77,
+      "current_repetition": 4,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 2] ?",
+      "original_second_prior_cell": "H77",
+      "actual_second_prior": 6.0,
+      "second_prior_row_key": "3017509946fc7c93ad829c9c"
+    },
+    {
+      "row_key": "92048858d54dc8b52d5e07bd",
+      "group_key": "84a276eda979ae2a9e60b0e9",
+      "worksheet_row": 77,
+      "current_repetition": 5,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 3] ?",
+      "original_second_prior_cell": "L77",
+      "actual_second_prior": 7.0,
+      "second_prior_row_key": "e8801c9cdbcdb2de64555748"
+    },
+    {
+      "row_key": "3cb40b0f7fb3a8c3777e6e55",
+      "group_key": "220f7e024e9fd856c1d300a0",
+      "worksheet_row": 79,
+      "current_repetition": 2,
+      "original_second_prior_column": "What is your physical fatigue level currently [Pre-experiment] ?",
+      "original_second_prior_cell": "B79",
+      "actual_second_prior": 5.0,
+      "second_prior_row_key": "756005c3c5f26fbd59b4d77a"
+    },
+    {
+      "row_key": "7ce46758db35c766efa92c88",
+      "group_key": "220f7e024e9fd856c1d300a0",
+      "worksheet_row": 79,
+      "current_repetition": 3,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 1] ?",
+      "original_second_prior_cell": "D79",
+      "actual_second_prior": 6.0,
+      "second_prior_row_key": "54994a3cdc548e3301fa3cf6"
+    },
+    {
+      "row_key": "cee901418f456c7924a230b5",
+      "group_key": "220f7e024e9fd856c1d300a0",
+      "worksheet_row": 79,
+      "current_repetition": 4,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 2] ?",
+      "original_second_prior_cell": "H79",
+      "actual_second_prior": 7.0,
+      "second_prior_row_key": "3cb40b0f7fb3a8c3777e6e55"
+    },
+    {
+      "row_key": "0006f22c83fa55dbe406189c",
+      "group_key": "220f7e024e9fd856c1d300a0",
+      "worksheet_row": 79,
+      "current_repetition": 5,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 3] ?",
+      "original_second_prior_cell": "L79",
+      "actual_second_prior": 7.0,
+      "second_prior_row_key": "7ce46758db35c766efa92c88"
+    },
+    {
+      "row_key": "b9985c9f722d08f153d8d64f",
+      "group_key": "220f7e024e9fd856c1d300a0",
+      "worksheet_row": 78,
+      "current_repetition": 2,
+      "original_second_prior_column": "What is your physical fatigue level currently [Pre-experiment] ?",
+      "original_second_prior_cell": "B78",
+      "actual_second_prior": 5.0,
+      "second_prior_row_key": "5fea89fa85b18e44f986cc5a"
+    },
+    {
+      "row_key": "3a041df2bc55a0af49c5a7de",
+      "group_key": "220f7e024e9fd856c1d300a0",
+      "worksheet_row": 78,
+      "current_repetition": 3,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 1] ?",
+      "original_second_prior_cell": "D78",
+      "actual_second_prior": 6.0,
+      "second_prior_row_key": "b56eeddf934c8cb8d8edd9ce"
+    },
+    {
+      "row_key": "389041971e2f4ee8b44ef9b3",
+      "group_key": "220f7e024e9fd856c1d300a0",
+      "worksheet_row": 78,
+      "current_repetition": 4,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 2] ?",
+      "original_second_prior_cell": "H78",
+      "actual_second_prior": 6.0,
+      "second_prior_row_key": "b9985c9f722d08f153d8d64f"
+    },
+    {
+      "row_key": "f9e25c886647fcf39d7d8ab2",
+      "group_key": "220f7e024e9fd856c1d300a0",
+      "worksheet_row": 78,
+      "current_repetition": 5,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 3] ?",
+      "original_second_prior_cell": "L78",
+      "actual_second_prior": 7.0,
+      "second_prior_row_key": "3a041df2bc55a0af49c5a7de"
+    },
+    {
+      "row_key": "ab475f3c64822e3619c8c17f",
+      "group_key": "8a18b6307f784e13381a7a7f",
+      "worksheet_row": 80,
+      "current_repetition": 2,
+      "original_second_prior_column": "What is your physical fatigue level currently [Pre-experiment] ?",
+      "original_second_prior_cell": "B80",
+      "actual_second_prior": 1.0,
+      "second_prior_row_key": "713ce3e545f55cfb29353376"
+    },
+    {
+      "row_key": "b1b943737561dc98e018573a",
+      "group_key": "8a18b6307f784e13381a7a7f",
+      "worksheet_row": 80,
+      "current_repetition": 3,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 1] ?",
+      "original_second_prior_cell": "D80",
+      "actual_second_prior": 1.0,
+      "second_prior_row_key": "71832793f1290b39fa4ccfdf"
+    },
+    {
+      "row_key": "df74285cd5a8f02ff637b636",
+      "group_key": "8a18b6307f784e13381a7a7f",
+      "worksheet_row": 80,
+      "current_repetition": 4,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 2] ?",
+      "original_second_prior_cell": "H80",
+      "actual_second_prior": 1.0,
+      "second_prior_row_key": "ab475f3c64822e3619c8c17f"
+    },
+    {
+      "row_key": "d24b3967abf6c6611d0ef61b",
+      "group_key": "8a18b6307f784e13381a7a7f",
+      "worksheet_row": 80,
+      "current_repetition": 5,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 3] ?",
+      "original_second_prior_cell": "L80",
+      "actual_second_prior": 1.0,
+      "second_prior_row_key": "b1b943737561dc98e018573a"
+    },
+    {
+      "row_key": "a474f913632609a00b07cde0",
+      "group_key": "8a18b6307f784e13381a7a7f",
+      "worksheet_row": 81,
+      "current_repetition": 2,
+      "original_second_prior_column": "What is your physical fatigue level currently [Pre-experiment] ?",
+      "original_second_prior_cell": "B81",
+      "actual_second_prior": 0.0,
+      "second_prior_row_key": "a855f86c0e4dcbdbe3a5f818"
+    },
+    {
+      "row_key": "9b7e9cf9cdcfff2c279b3173",
+      "group_key": "8a18b6307f784e13381a7a7f",
+      "worksheet_row": 81,
+      "current_repetition": 3,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 1] ?",
+      "original_second_prior_cell": "D81",
+      "actual_second_prior": 0.0,
+      "second_prior_row_key": "788f3c90b152910288ee16e8"
+    },
+    {
+      "row_key": "053e1241a85f0741d666fd71",
+      "group_key": "8a18b6307f784e13381a7a7f",
+      "worksheet_row": 81,
+      "current_repetition": 4,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 2] ?",
+      "original_second_prior_cell": "H81",
+      "actual_second_prior": 1.0,
+      "second_prior_row_key": "a474f913632609a00b07cde0"
+    },
+    {
+      "row_key": "e96634c4dd400994bebb3315",
+      "group_key": "8a18b6307f784e13381a7a7f",
+      "worksheet_row": 81,
+      "current_repetition": 5,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 3] ?",
+      "original_second_prior_cell": "L81",
+      "actual_second_prior": 1.0,
+      "second_prior_row_key": "9b7e9cf9cdcfff2c279b3173"
+    },
+    {
+      "row_key": "e74f4022329caaa95ecf92fc",
+      "group_key": "3fd42d6cb3d04ea5f7050230",
+      "worksheet_row": 83,
+      "current_repetition": 2,
+      "original_second_prior_column": "What is your physical fatigue level currently [Pre-experiment] ?",
+      "original_second_prior_cell": "B83",
+      "actual_second_prior": 4.0,
+      "second_prior_row_key": "e536bacbebccba82adc5e3b4"
+    },
+    {
+      "row_key": "010cfa18ddf119e20155a237",
+      "group_key": "3fd42d6cb3d04ea5f7050230",
+      "worksheet_row": 83,
+      "current_repetition": 3,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 1] ?",
+      "original_second_prior_cell": "D83",
+      "actual_second_prior": 6.0,
+      "second_prior_row_key": "3a1e39f886d525c8779d8a87"
+    },
+    {
+      "row_key": "5c97a2e7ed551cef029076c0",
+      "group_key": "3fd42d6cb3d04ea5f7050230",
+      "worksheet_row": 83,
+      "current_repetition": 4,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 2] ?",
+      "original_second_prior_cell": "H83",
+      "actual_second_prior": 7.0,
+      "second_prior_row_key": "e74f4022329caaa95ecf92fc"
+    },
+    {
+      "row_key": "99eb5790e7b2e990e4554077",
+      "group_key": "3fd42d6cb3d04ea5f7050230",
+      "worksheet_row": 83,
+      "current_repetition": 5,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 3] ?",
+      "original_second_prior_cell": "L83",
+      "actual_second_prior": 8.0,
+      "second_prior_row_key": "010cfa18ddf119e20155a237"
+    },
+    {
+      "row_key": "a20224f2c66a2942c7937c6b",
+      "group_key": "3fd42d6cb3d04ea5f7050230",
+      "worksheet_row": 82,
+      "current_repetition": 2,
+      "original_second_prior_column": "What is your physical fatigue level currently [Pre-experiment] ?",
+      "original_second_prior_cell": "B82",
+      "actual_second_prior": 2.0,
+      "second_prior_row_key": "64385ab136fd3e25b1fcb258"
+    },
+    {
+      "row_key": "3d0785c4c9f47adbe2d19dfa",
+      "group_key": "3fd42d6cb3d04ea5f7050230",
+      "worksheet_row": 82,
+      "current_repetition": 3,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 1] ?",
+      "original_second_prior_cell": "D82",
+      "actual_second_prior": 3.0,
+      "second_prior_row_key": "253c8d01c94d4569b810746d"
+    },
+    {
+      "row_key": "548e7f3e4e06506ae2e3e63d",
+      "group_key": "3fd42d6cb3d04ea5f7050230",
+      "worksheet_row": 82,
+      "current_repetition": 4,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 2] ?",
+      "original_second_prior_cell": "H82",
+      "actual_second_prior": 4.0,
+      "second_prior_row_key": "a20224f2c66a2942c7937c6b"
+    },
+    {
+      "row_key": "4abdbca8490307d4ecaa9b36",
+      "group_key": "3fd42d6cb3d04ea5f7050230",
+      "worksheet_row": 82,
+      "current_repetition": 5,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 3] ?",
+      "original_second_prior_cell": "L82",
+      "actual_second_prior": 5.0,
+      "second_prior_row_key": "3d0785c4c9f47adbe2d19dfa"
+    },
+    {
+      "row_key": "9c975fb04ed9a31aa26d1725",
+      "group_key": "793c22cb803d343f1ce39722",
+      "worksheet_row": 84,
+      "current_repetition": 2,
+      "original_second_prior_column": "What is your physical fatigue level currently [Pre-experiment] ?",
+      "original_second_prior_cell": "B84",
+      "actual_second_prior": 2.0,
+      "second_prior_row_key": "6c138580fc48e81f55762204"
+    },
+    {
+      "row_key": "72801ab34eb69d054104de4d",
+      "group_key": "793c22cb803d343f1ce39722",
+      "worksheet_row": 84,
+      "current_repetition": 3,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 1] ?",
+      "original_second_prior_cell": "D84",
+      "actual_second_prior": 4.0,
+      "second_prior_row_key": "2563d665e6e04dd7390719a1"
+    },
+    {
+      "row_key": "10f2e5e53bde19de6bde46f2",
+      "group_key": "793c22cb803d343f1ce39722",
+      "worksheet_row": 84,
+      "current_repetition": 4,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 2] ?",
+      "original_second_prior_cell": "H84",
+      "actual_second_prior": 5.0,
+      "second_prior_row_key": "9c975fb04ed9a31aa26d1725"
+    },
+    {
+      "row_key": "5528c694cef807420f6c709b",
+      "group_key": "793c22cb803d343f1ce39722",
+      "worksheet_row": 84,
+      "current_repetition": 5,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 3] ?",
+      "original_second_prior_cell": "L84",
+      "actual_second_prior": 5.0,
+      "second_prior_row_key": "72801ab34eb69d054104de4d"
+    },
+    {
+      "row_key": "9cefbe14307079ef6c816305",
+      "group_key": "793c22cb803d343f1ce39722",
+      "worksheet_row": 85,
+      "current_repetition": 2,
+      "original_second_prior_column": "What is your physical fatigue level currently [Pre-experiment] ?",
+      "original_second_prior_cell": "B85",
+      "actual_second_prior": 2.0,
+      "second_prior_row_key": "8e8356ab56dd09588425cbd7"
+    },
+    {
+      "row_key": "09d5ab25a09c283c0ca997df",
+      "group_key": "793c22cb803d343f1ce39722",
+      "worksheet_row": 85,
+      "current_repetition": 3,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 1] ?",
+      "original_second_prior_cell": "D85",
+      "actual_second_prior": 5.0,
+      "second_prior_row_key": "076e28f0f474fd85d6bbb1a1"
+    },
+    {
+      "row_key": "985f9caccae7cac4ec410ef7",
+      "group_key": "793c22cb803d343f1ce39722",
+      "worksheet_row": 85,
+      "current_repetition": 4,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 2] ?",
+      "original_second_prior_cell": "H85",
+      "actual_second_prior": 6.0,
+      "second_prior_row_key": "9cefbe14307079ef6c816305"
+    },
+    {
+      "row_key": "d2453db905c741d17b7e1a6a",
+      "group_key": "793c22cb803d343f1ce39722",
+      "worksheet_row": 85,
+      "current_repetition": 5,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 3] ?",
+      "original_second_prior_cell": "L85",
+      "actual_second_prior": 7.0,
+      "second_prior_row_key": "09d5ab25a09c283c0ca997df"
+    },
+    {
+      "row_key": "c26ebb6d68e15f698b9746e4",
+      "group_key": "d907cf62264c20d739c73f2e",
+      "worksheet_row": 86,
+      "current_repetition": 2,
+      "original_second_prior_column": "What is your physical fatigue level currently [Pre-experiment] ?",
+      "original_second_prior_cell": "B86",
+      "actual_second_prior": 1.0,
+      "second_prior_row_key": "58d7598e1a17f142686130e9"
+    },
+    {
+      "row_key": "0fb30c66d514a568798730a3",
+      "group_key": "d907cf62264c20d739c73f2e",
+      "worksheet_row": 86,
+      "current_repetition": 3,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 1] ?",
+      "original_second_prior_cell": "D86",
+      "actual_second_prior": 2.0,
+      "second_prior_row_key": "0b893ac7acd17c3ea587aa2c"
+    },
+    {
+      "row_key": "425494a21ed2edbf4cc13eec",
+      "group_key": "d907cf62264c20d739c73f2e",
+      "worksheet_row": 86,
+      "current_repetition": 4,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 2] ?",
+      "original_second_prior_cell": "H86",
+      "actual_second_prior": 2.0,
+      "second_prior_row_key": "c26ebb6d68e15f698b9746e4"
+    },
+    {
+      "row_key": "853c99bf27da47e3a724117d",
+      "group_key": "d907cf62264c20d739c73f2e",
+      "worksheet_row": 86,
+      "current_repetition": 5,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 3] ?",
+      "original_second_prior_cell": "L86",
+      "actual_second_prior": 3.0,
+      "second_prior_row_key": "0fb30c66d514a568798730a3"
+    },
+    {
+      "row_key": "3ea51ac0ec3da9c2b96bb910",
+      "group_key": "d907cf62264c20d739c73f2e",
+      "worksheet_row": 87,
+      "current_repetition": 2,
+      "original_second_prior_column": "What is your physical fatigue level currently [Pre-experiment] ?",
+      "original_second_prior_cell": "B87",
+      "actual_second_prior": 1.0,
+      "second_prior_row_key": "9e3189a29ab66fc06baa3bd2"
+    },
+    {
+      "row_key": "d3b7cf1cb854548c71266a28",
+      "group_key": "d907cf62264c20d739c73f2e",
+      "worksheet_row": 87,
+      "current_repetition": 3,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 1] ?",
+      "original_second_prior_cell": "D87",
+      "actual_second_prior": 3.0,
+      "second_prior_row_key": "f1e8eda5249499f903b3e233"
+    },
+    {
+      "row_key": "0e5b9fae462c419f9417dcb1",
+      "group_key": "d907cf62264c20d739c73f2e",
+      "worksheet_row": 87,
+      "current_repetition": 4,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 2] ?",
+      "original_second_prior_cell": "H87",
+      "actual_second_prior": 4.0,
+      "second_prior_row_key": "3ea51ac0ec3da9c2b96bb910"
+    },
+    {
+      "row_key": "82fa7f7003b878e8cfbaab53",
+      "group_key": "d907cf62264c20d739c73f2e",
+      "worksheet_row": 87,
+      "current_repetition": 5,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 3] ?",
+      "original_second_prior_cell": "L87",
+      "actual_second_prior": 5.0,
+      "second_prior_row_key": "d3b7cf1cb854548c71266a28"
+    },
+    {
+      "row_key": "f8e8a52531753d90d2e52156",
+      "group_key": "b2e7de1871616ee33a1316d5",
+      "worksheet_row": 89,
+      "current_repetition": 2,
+      "original_second_prior_column": "What is your physical fatigue level currently [Pre-experiment] ?",
+      "original_second_prior_cell": "B89",
+      "actual_second_prior": 0.0,
+      "second_prior_row_key": "328ace96cada091a4a9c9f28"
+    },
+    {
+      "row_key": "2f7bb3d60d0956efcfc88936",
+      "group_key": "b2e7de1871616ee33a1316d5",
+      "worksheet_row": 89,
+      "current_repetition": 3,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 1] ?",
+      "original_second_prior_cell": "D89",
+      "actual_second_prior": 3.0,
+      "second_prior_row_key": "8e7343350a440867f889762b"
+    },
+    {
+      "row_key": "66016ea5487326d358ac9e3d",
+      "group_key": "b2e7de1871616ee33a1316d5",
+      "worksheet_row": 89,
+      "current_repetition": 4,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 2] ?",
+      "original_second_prior_cell": "H89",
+      "actual_second_prior": 5.0,
+      "second_prior_row_key": "f8e8a52531753d90d2e52156"
+    },
+    {
+      "row_key": "37d035e030b397d2e9654e1c",
+      "group_key": "b2e7de1871616ee33a1316d5",
+      "worksheet_row": 89,
+      "current_repetition": 5,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 3] ?",
+      "original_second_prior_cell": "L89",
+      "actual_second_prior": 6.0,
+      "second_prior_row_key": "2f7bb3d60d0956efcfc88936"
+    },
+    {
+      "row_key": "e7a9bd5207208267897d7e76",
+      "group_key": "b2e7de1871616ee33a1316d5",
+      "worksheet_row": 90,
+      "current_repetition": 2,
+      "original_second_prior_column": "What is your physical fatigue level currently [Pre-experiment] ?",
+      "original_second_prior_cell": "B90",
+      "actual_second_prior": 1.0,
+      "second_prior_row_key": "a8411385a0199b383f6f485f"
+    },
+    {
+      "row_key": "857df9c993feafc035aff2a4",
+      "group_key": "b2e7de1871616ee33a1316d5",
+      "worksheet_row": 90,
+      "current_repetition": 3,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 1] ?",
+      "original_second_prior_cell": "D90",
+      "actual_second_prior": 2.0,
+      "second_prior_row_key": "4f625b6de53023ca7eb424d0"
+    },
+    {
+      "row_key": "8afb0b29e9e8620f205cabd6",
+      "group_key": "b2e7de1871616ee33a1316d5",
+      "worksheet_row": 90,
+      "current_repetition": 4,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 2] ?",
+      "original_second_prior_cell": "H90",
+      "actual_second_prior": 2.0,
+      "second_prior_row_key": "e7a9bd5207208267897d7e76"
+    },
+    {
+      "row_key": "f762d80bd4f0132abb99df90",
+      "group_key": "b2e7de1871616ee33a1316d5",
+      "worksheet_row": 90,
+      "current_repetition": 5,
+      "original_second_prior_column": "What is your physical fatigue level currently [REP 3] ?",
+      "original_second_prior_cell": "L90",
+      "actual_second_prior": 4.0,
+      "second_prior_row_key": "857df9c993feafc035aff2a4"
+    }
+  ],
+  "synthetic_rows": 0,
+  "imputed_targets": 0,
+  "second_priors_filled_when_unobserved": 0,
+  "invented_source_times_or_sensor_joins": 0,
+  "native_targets_added": 0,
+  "model_fitting_started_at_preparation": false,
+  "scope": "Same607original current pairs,550fitting/57reserved. Direct original-cell extraction recovers202actual Worker second priors,including2not recoverable from the earlier pair-chain snapshot;200already observed values and203EMAPsecond priors are preserved. All current labels, other original columns and source partitions unchanged. Separate source outcomes only; no new current measurements, generated examples, imputed targets or guessed clocks/phases/sensors."
+}

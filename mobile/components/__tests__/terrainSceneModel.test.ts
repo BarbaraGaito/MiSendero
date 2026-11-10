@@ -124,4 +124,12 @@ describe("terrainSceneModel", () => {
       getTerrainWeatherKind({ condition: "Despejado", rainProbability: 0, temperatureC: 15 })
     ).toBe("clear");
   });
+  test("high rain probability does not produce rain when the current model says clear", () => {
+    const forecast = { condition: "Despejado", rainProbability: 95, temperatureC: 15 };
+    expect(getTerrainWeatherKind(forecast)).toBe("clear");
+    expect(getTerrainWeatherKind({ ...forecast, condition: "Parcialmente nublado" })).toBe("partly-cloudy");
+    expect(getTerrainWeatherKind({ ...forecast, condition: "Llovizna leve" })).toBe("rain");
+    expect(getTerrainWeatherKind({ ...forecast, condition: "Niebla" })).toBe("fog");
+    expect(getTerrainWeatherKind({ ...forecast, condition: "Condición a confirmar" })).toBeNull();
+  });
 });

@@ -1,0 +1,245 @@
+{
+  "verification": "passed",
+  "verification_code_sha256": "d6723fec7f312e2cc6a807390e537c0e6f46a6e5f4f9d088c9ccd403e4da7782",
+  "selection_sha256": "a71108a8c67b2cd37202411627fe9e040ef914d2c5e682d1a1e78fff1fd711e1",
+  "previous_verification_sha256": "c9f10c2831722d7f52b6a0242b7e9bf27e5d1cef2926fdfd16e142b835217783",
+  "proposal_sha256": "e25dfa8ec786b9204a7070849289c314b74f13ee777dc84e80671b721da1ba8d",
+  "test_gate_sha256": "dca4889257f5000a2e8596f88b22d86b33434bd647c46de94e0db1eda7a887e1",
+  "native_base_cache_artifact_hashes": {
+    "cat-fold-0.joblib": "d8fdf31aef5ec19c9604ea40720c0dc8ca60872f4a2d9ef0921beeda50281574",
+    "cat-fold-0.json": "82a44f1a01c720d24bf5dd3d5a3882e0142810d7d2ce73a933e32671b6bfee63",
+    "cat-fold-1.joblib": "eb66c0def793b4ba0db79a1408c808af39d1320408be5b7f48cebedfe0a0f064",
+    "cat-fold-1.json": "9bb1e8abd17984eec54f243e33bc52674534fa35c498b645afa583ce55af05d1",
+    "cat-fold-2.joblib": "efda14e81aa0851b5492b7f92afb63b4ab61cd567680848c84462e8a871b00e3",
+    "cat-fold-2.json": "843eff646683fb7172bbe360f3268007f26f8a3f9ffe2204f42eae24049eecf1",
+    "cat-fold-3.joblib": "ed0334609f6ee8579f5e7968b409aa00b31a81cdf229fa2acca818c9e9104dd5",
+    "cat-fold-3.json": "f54b0ad770b9e595525037047ac4c3bf83d722fc1a0ae44b4f320e06d9f53eae",
+    "cat-fold-4.joblib": "499b5d46048ae89eafab910bc0d8dca095769a7cc09553b2d1d648ae11f89778",
+    "cat-fold-4.json": "d0761547d2e1364c99c119faff535d8b4ac537aa93cd958d00f62720f7e00c6e",
+    "core-fold-0.joblib": "f47c103868bd65cf4a49b1488a45c636fe765617883c69eeea9989a3a86ebd3c",
+    "core-fold-0.json": "4f90288ccad3a77e94225d825f361965b0be243d82a5faf44bf59aa346db7cab",
+    "core-fold-1.joblib": "3a19555bf3ce4245e3f2f724839f679b2862b699324748e88734a72f5575e054",
+    "core-fold-1.json": "d2f60e3db8970fed57eddc26909337dff4cf5bba4208496481f9818e595db6e5",
+    "core-fold-2.joblib": "106a7d32cff24f762057afd92c4e63d5b6a785c125412ef895ef168c1c921635",
+    "core-fold-2.json": "c717b070bf74f0b667e42fe4cb13c1f82f1b92931fb904a2499ab61a4c455633",
+    "core-fold-3.joblib": "03691b1925fe0e6f364af93ee89af43c5ee1aec31f8356db7a5b338369f64b4b",
+    "core-fold-3.json": "c402ac0c52dbeab2732305f3c3bbdff858d1dc8a791568d76d984b3e742a43fe",
+    "core-fold-4.joblib": "fa26dcc1b37f38fcc0c9074ce335ba471bf2ca96bdeaa10f3f96efcb216f09fd",
+    "core-fold-4.json": "87e3c56d78208b498a7665d4b30183717aaf860d36694452394506e71a05cbc3"
+  },
+  "all_36_oof_recipes_recomputed": true,
+  "independent_preprocessor_refits": 170,
+  "independent_fold_comparisons": 170,
+  "actual_prior_query_links_verified_including_repeated_recipes": 80402,
+  "memory_free_population_artifact_reloads": 20,
+  "fold_audits": [
+    {
+      "member": "core",
+      "fold": 0,
+      "recipes_independently_recomputed": 17,
+      "actual_fitting_rows": 387,
+      "actual_validation_rows": 100,
+      "preprocessing_fitting_people_only": true,
+      "query_labels_excluded_from_inference": true,
+      "support_times_and_actual_labels_verified": true,
+      "base_weights_unchanged": true
+    },
+    {
+      "member": "core",
+      "fold": 1,
+      "recipes_independently_recomputed": 17,
+      "actual_fitting_rows": 395,
+      "actual_validation_rows": 92,
+      "preprocessing_fitting_people_only": true,
+      "query_labels_excluded_from_inference": true,
+      "support_times_and_actual_labels_verified": true,
+      "base_weights_unchanged": true
+    },
+    {
+      "member": "core",
+      "fold": 2,
+      "recipes_independently_recomputed": 17,
+      "actual_fitting_rows": 385,
+      "actual_validation_rows": 102,
+      "preprocessing_fitting_people_only": true,
+      "query_labels_excluded_from_inference": true,
+      "support_times_and_actual_labels_verified": true,
+      "base_weights_unchanged": true
+    },
+    {
+      "member": "core",
+      "fold": 3,
+      "recipes_independently_recomputed": 17,
+      "actual_fitting_rows": 385,
+      "actual_validation_rows": 102,
+      "preprocessing_fitting_people_only": true,
+      "query_labels_excluded_from_inference": true,
+      "support_times_and_actual_labels_verified": true,
+      "base_weights_unchanged": true
+    },
+    {
+      "member": "core",
+      "fold": 4,
+      "recipes_independently_recomputed": 17,
+      "actual_fitting_rows": 396,
+      "actual_validation_rows": 91,
+      "preprocessing_fitting_people_only": true,
+      "query_labels_excluded_from_inference": true,
+      "support_times_and_actual_labels_verified": true,
+      "base_weights_unchanged": true
+    },
+    {
+      "member": "cat",
+      "fold": 0,
+      "recipes_independently_recomputed": 17,
+      "actual_fitting_rows": 387,
+      "actual_validation_rows": 100,
+      "preprocessing_fitting_people_only": true,
+      "query_labels_excluded_from_inference": true,
+      "support_times_and_actual_labels_verified": true,
+      "base_weights_unchanged": true
+    },
+    {
+      "member": "cat",
+      "fold": 1,
+      "recipes_independently_recomputed": 17,
+      "actual_fitting_rows": 395,
+      "actual_validation_rows": 92,
+      "preprocessing_fitting_people_only": true,
+      "query_labels_excluded_from_inference": true,
+      "support_times_and_actual_labels_verified": true,
+      "base_weights_unchanged": true
+    },
+    {
+      "member": "cat",
+      "fold": 2,
+      "recipes_independently_recomputed": 17,
+      "actual_fitting_rows": 385,
+      "actual_validation_rows": 102,
+      "preprocessing_fitting_people_only": true,
+      "query_labels_excluded_from_inference": true,
+      "support_times_and_actual_labels_verified": true,
+      "base_weights_unchanged": true
+    },
+    {
+      "member": "cat",
+      "fold": 3,
+      "recipes_independently_recomputed": 17,
+      "actual_fitting_rows": 385,
+      "actual_validation_rows": 102,
+      "preprocessing_fitting_people_only": true,
+      "query_labels_excluded_from_inference": true,
+      "support_times_and_actual_labels_verified": true,
+      "base_weights_unchanged": true
+    },
+    {
+      "member": "cat",
+      "fold": 4,
+      "recipes_independently_recomputed": 17,
+      "actual_fitting_rows": 396,
+      "actual_validation_rows": 91,
+      "preprocessing_fitting_people_only": true,
+      "query_labels_excluded_from_inference": true,
+      "support_times_and_actual_labels_verified": true,
+      "base_weights_unchanged": true
+    }
+  ],
+  "best_positive_by_member": {
+    "core": {
+      "candidate": {
+        "id": "transition-memory-009",
+        "algorithm": "causal_transition_memory",
+        "member": "core",
+        "retrieval_features": "clock",
+        "bandwidth": 2.0,
+        "strength": 0.25,
+        "scope": "session",
+        "recency_minutes": 10.0,
+        "mass_shrinkage": 1.0
+      },
+      "accuracy_mean": 0.6081818386217364,
+      "fold_accuracy": [
+        0.64,
+        0.5760869565217391,
+        0.5980392156862745,
+        0.5784313725490197,
+        0.6483516483516484
+      ]
+    },
+    "cat": {
+      "candidate": {
+        "id": "transition-memory-028",
+        "algorithm": "causal_transition_memory",
+        "member": "cat",
+        "retrieval_features": "physiology",
+        "bandwidth": 0.5,
+        "strength": 0.25,
+        "scope": "task",
+        "recency_minutes": 10.0,
+        "mass_shrinkage": 1.0
+      },
+      "accuracy_mean": 0.6220335384990117,
+      "fold_accuracy": [
+        0.66,
+        0.5543478260869565,
+        0.6176470588235294,
+        0.6078431372549019,
+        0.6703296703296703
+      ]
+    }
+  },
+  "best_positive_cv_accuracy": 0.6220335384990117,
+  "matched_zero_memory_controls": {
+    "core": {
+      "candidate": {
+        "id": "transition-memory-002",
+        "algorithm": "causal_transition_memory",
+        "member": "core",
+        "retrieval_features": "clock",
+        "bandwidth": 0.5,
+        "strength": 0.0,
+        "scope": "session",
+        "recency_minutes": 10.0,
+        "mass_shrinkage": 1.0
+      },
+      "accuracy_mean": 0.6082057277760603,
+      "fold_accuracy": [
+        0.64,
+        0.5652173913043478,
+        0.5882352941176471,
+        0.5882352941176471,
+        0.6593406593406593
+      ]
+    },
+    "cat": {
+      "candidate": {
+        "id": "transition-memory-003",
+        "algorithm": "causal_transition_memory",
+        "member": "cat",
+        "retrieval_features": "clock",
+        "bandwidth": 0.5,
+        "strength": 0.0,
+        "scope": "session",
+        "recency_minutes": 10.0,
+        "mass_shrinkage": 1.0
+      },
+      "accuracy_mean": 0.6379721574248428,
+      "fold_accuracy": [
+        0.67,
+        0.5652173913043478,
+        0.6274509803921569,
+        0.6568627450980392,
+        0.6703296703296703
+      ]
+    }
+  },
+  "best_cv_accuracy": 0.6379721574248428,
+  "new_native_base_fits": 0,
+  "synthetic_rows": 0,
+  "preprocessing_fit_people_only": true,
+  "current_and_future_labels_excluded": true,
+  "actual_metadata_independently_resolved": true,
+  "new_test_gate_passed": false,
+  "new_test_evaluation": null,
+  "original_native_cases_preserved": true
+}

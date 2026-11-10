@@ -1,0 +1,97 @@
+{
+  "version": 1,
+  "source_history_screening": {
+    "source_dataset_sha256": "736345ba4967632ebf6dcd4143b289b88d262749cd64727be38621a8b1b819d4",
+    "source_provenance_sha256": "dd40a9785cc362ffaa3d8a6202c300a973155eea48bfa5c932429fbb365f01fd",
+    "source_fitting_reports": 187,
+    "source_fitting_reports_with_actual_1_to_15_min_prior": 49,
+    "source_people_with_eligible_prior": 45,
+    "source_prior_age_min": 1.0007333358116668,
+    "source_prior_age_max": 1.4705333312366666,
+    "native_training_prior_age_median": 5.0,
+    "native_training_queries_with_prior_at_most_1_point_5_minutes": 5,
+    "source_targets_added_by_this_stage": 0,
+    "decision": "Do not claim a new comparable 5-minute walking-history cohort from the 187 STS fitting reports. The 49 eligible priors span about 1.0-1.47 minutes; most native queries use a 5-minute prior. STS remains in the earlier source-specific supervised experiments; no STS scale or target was changed."
+  },
+  "input_augmentation": {
+    "source_provenance_sha256": "c3084c8e3dae9235045e68450cc6085dbfc4f5aba1f0937e2fb77ac4595c39f6",
+    "alternative_input_views": 6672,
+    "unique_original_training_targets": 487,
+    "targets_with_alternatives": 456,
+    "new_measured_borg_targets": 0,
+    "native_target_scale_unchanged": true,
+    "test_cases_unchanged": 179,
+    "original_report_total_weight": 1,
+    "selection_sha256": "e8a1239d3f85890691c4a3bcb046301b7adb55354b5e537e08155bcf6051312e",
+    "completed_search_configurations": 31,
+    "winner": {
+      "id": "prior-view-009",
+      "algorithm": "mlp",
+      "feature_set": "observed_history_views",
+      "features": [
+        "prior_borg",
+        "prior_age_minutes",
+        "prior2_borg",
+        "prior2_age_minutes",
+        "prior_borg_slope",
+        "prior_in_current_task",
+        "prior_count_current_task",
+        "elapsed_minutes",
+        "cumulative_active_minutes",
+        "task_order",
+        "terrain_stairs",
+        "terrain_ramp",
+        "terrain_flat_trail"
+      ],
+      "view_policy": "prefix",
+      "view_mass": 0.6,
+      "target_mode": "change_from_prior",
+      "params": {
+        "hidden_layer_sizes": [
+          16,
+          8
+        ],
+        "solver": "lbfgs",
+        "alpha": 30.0,
+        "max_iter": 1000
+      }
+    },
+    "cv_accuracy": 0.6308554003541216,
+    "pooled_oof_accuracy": 0.6303901437371663,
+    "new_test_evaluation": false,
+    "minimum_cv_for_new_test_evaluation": 0.65
+  },
+  "post_selection_matched_control": {
+    "report_sha256": "eb8b5b7b4bae134ee1b5913a7526c4e17f76c10e3160ec83cbedc02ab6489324",
+    "original_31_recipe_search_member": false,
+    "same_network_hyperparameters_without_views": true,
+    "cv_accuracy": 0.611929494205709,
+    "selected_view_cv_minus_matched_control": 0.018925906148412608,
+    "view_fixes_control_errors": 28,
+    "view_spoils_control_correct": 19,
+    "test_evaluated": false
+  },
+  "deployment_approved": false,
+  "goal_achieved": false,
+  "interpretation": "The 31-recipe view search is frozen. One additional no-view recipe was fitted afterward as a diagnostic, with unchanged native query denominators. Its comparison is descriptive post-selection evidence, not fresh confirmation of generalization and not a held-out improvement.",
+  "independent_verification": {
+    "checkpoint_sha256": "74d33a7f82c8876f14b945237fe51b286fac6eafe45b0dceb1edae2482066141",
+    "checkpoint_verified_at": "2026-10-26T19:17:57.922498+00:00",
+    "result": {
+      "alternative_input_views": 6672,
+      "unique_training_targets_with_views": 456,
+      "unique_training_targets_total": 487,
+      "new_observed_borg_targets": 0,
+      "heldout_people_used_for_augmentation": false,
+      "all_666_original_feature_rows_reconstructed": true,
+      "all_views_reconstructed_from_raw_reports": true,
+      "all_report_weight_totals_verified": true,
+      "winner_grouped_folds_refitted": 5,
+      "winner_id": "prior-view-009",
+      "best_cv_accuracy": 0.6308554003541216,
+      "minimum_cv_for_new_test_evaluation": 0.65,
+      "new_test_gate_passed": false,
+      "verification_code_sha256": "a91aa32b2c562936cd9bcfa634b3e32dc3f37eb87843e45984362decd28e0078"
+    }
+  }
+}

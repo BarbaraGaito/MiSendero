@@ -1,0 +1,364 @@
+{
+  "version": 1,
+  "status": "complete",
+  "selection_sha256": "56bb488f32203df5d423c3cda11d218f4f3550a5c728a0e931288522edc88c69",
+  "verification_sha256": "f1d068b6ccadc25f947f3fbab8384ce616012be13589d51870855eaee0a75a5e",
+  "input_verification_sha256": "9f31d21dbb7c8360e6755da6adea91e87f122fbc02bd5ebd5a1b75897ebd9b01",
+  "configurations": 10,
+  "new_joint_network_fits": 30,
+  "independent_joint_refits": 20,
+  "new_native_base_fits": 0,
+  "source_fitting_targets": 2336,
+  "source_fitting_actual_second_priors": 1927,
+  "source_reserved_targets": 312,
+  "best_positive_by_member": {
+    "core": {
+      "candidate": {
+        "id": "shoulder-joint-005",
+        "algorithm": "joint_original_shoulder_history_residual",
+        "member": "core",
+        "previous_candidate_id": "resistance-joint-011",
+        "auxiliary_weight": 0.1,
+        "resistance_weight": 0.1,
+        "shoulder_weight": 0.1,
+        "correction_penalty": 10.0,
+        "epochs": 80,
+        "learning_rate": 0.003,
+        "weight_decay": 0.1,
+        "random_seed": 42,
+        "base_probability_floor": 0.0001,
+        "source_target": "separate_original_continuous_current_minus_actual_prior",
+        "native_target": "original_integer_delta_class"
+      },
+      "accuracy_mean": 0.6199141676737585,
+      "fold_accuracy": [
+        0.68,
+        0.5543478260869565,
+        0.5980392156862745,
+        0.6078431372549019,
+        0.6593406593406593
+      ]
+    },
+    "cat": {
+      "candidate": {
+        "id": "shoulder-joint-008",
+        "algorithm": "joint_original_shoulder_history_residual",
+        "member": "cat",
+        "previous_candidate_id": "resistance-joint-020",
+        "auxiliary_weight": 1.0,
+        "resistance_weight": 0.1,
+        "shoulder_weight": 0.1,
+        "correction_penalty": 10.0,
+        "epochs": 80,
+        "learning_rate": 0.003,
+        "weight_decay": 0.1,
+        "random_seed": 42,
+        "base_probability_floor": 0.0001,
+        "source_target": "separate_original_continuous_current_minus_actual_prior",
+        "native_target": "original_integer_delta_class"
+      },
+      "accuracy_mean": 0.6279551071264626,
+      "fold_accuracy": [
+        0.67,
+        0.5543478260869565,
+        0.6274509803921569,
+        0.6176470588235294,
+        0.6703296703296703
+      ]
+    }
+  },
+  "matched_zero_new_source_controls": {
+    "core": {
+      "candidate": {
+        "id": "shoulder-joint-004",
+        "algorithm": "joint_original_shoulder_history_residual",
+        "member": "core",
+        "previous_candidate_id": "resistance-joint-011",
+        "auxiliary_weight": 0.1,
+        "resistance_weight": 0.1,
+        "shoulder_weight": 0.0,
+        "correction_penalty": 10.0,
+        "epochs": 80,
+        "learning_rate": 0.003,
+        "weight_decay": 0.1,
+        "random_seed": 42,
+        "base_probability_floor": 0.0001,
+        "source_target": "separate_original_continuous_current_minus_actual_prior",
+        "native_target": "original_integer_delta_class"
+      },
+      "accuracy_mean": 0.6199141676737585,
+      "fold_accuracy": [
+        0.68,
+        0.5543478260869565,
+        0.5980392156862745,
+        0.6078431372549019,
+        0.6593406593406593
+      ]
+    },
+    "cat": {
+      "candidate": {
+        "id": "shoulder-joint-007",
+        "algorithm": "joint_original_shoulder_history_residual",
+        "member": "cat",
+        "previous_candidate_id": "resistance-joint-020",
+        "auxiliary_weight": 1.0,
+        "resistance_weight": 0.1,
+        "shoulder_weight": 0.0,
+        "correction_penalty": 10.0,
+        "epochs": 80,
+        "learning_rate": 0.003,
+        "weight_decay": 0.1,
+        "random_seed": 42,
+        "base_probability_floor": 0.0001,
+        "source_target": "separate_original_continuous_current_minus_actual_prior",
+        "native_target": "original_integer_delta_class"
+      },
+      "accuracy_mean": 0.6299158914401881,
+      "fold_accuracy": [
+        0.67,
+        0.5543478260869565,
+        0.6274509803921569,
+        0.6274509803921569,
+        0.6703296703296703
+      ]
+    }
+  },
+  "winner_id": "shoulder-joint-001",
+  "best_cv_accuracy": 0.6379721574248428,
+  "results": [
+    {
+      "candidate": {
+        "id": "shoulder-joint-000",
+        "algorithm": "previous_real_control",
+        "parent_study": "schedule",
+        "parent_candidate_id": "catboost-schedule-000"
+      },
+      "accuracy_mean": 0.6082057277760603,
+      "fold_accuracy": [
+        0.64,
+        0.5652173913043478,
+        0.5882352941176471,
+        0.5882352941176471,
+        0.6593406593406593
+      ]
+    },
+    {
+      "candidate": {
+        "id": "shoulder-joint-001",
+        "algorithm": "previous_real_control",
+        "parent_study": "schedule",
+        "parent_candidate_id": "catboost-schedule-001"
+      },
+      "accuracy_mean": 0.6379721574248428,
+      "fold_accuracy": [
+        0.67,
+        0.5652173913043478,
+        0.6274509803921569,
+        0.6568627450980392,
+        0.6703296703296703
+      ]
+    },
+    {
+      "candidate": {
+        "id": "shoulder-joint-002",
+        "algorithm": "previous_real_control",
+        "parent_study": "resistance",
+        "parent_candidate_id": "resistance-joint-011"
+      },
+      "accuracy_mean": 0.6199141676737585,
+      "fold_accuracy": [
+        0.68,
+        0.5543478260869565,
+        0.5980392156862745,
+        0.6078431372549019,
+        0.6593406593406593
+      ]
+    },
+    {
+      "candidate": {
+        "id": "shoulder-joint-003",
+        "algorithm": "previous_real_control",
+        "parent_study": "resistance",
+        "parent_candidate_id": "resistance-joint-020"
+      },
+      "accuracy_mean": 0.6299158914401881,
+      "fold_accuracy": [
+        0.67,
+        0.5543478260869565,
+        0.6274509803921569,
+        0.6274509803921569,
+        0.6703296703296703
+      ]
+    },
+    {
+      "candidate": {
+        "id": "shoulder-joint-004",
+        "algorithm": "joint_original_shoulder_history_residual",
+        "member": "core",
+        "previous_candidate_id": "resistance-joint-011",
+        "auxiliary_weight": 0.1,
+        "resistance_weight": 0.1,
+        "shoulder_weight": 0.0,
+        "correction_penalty": 10.0,
+        "epochs": 80,
+        "learning_rate": 0.003,
+        "weight_decay": 0.1,
+        "random_seed": 42,
+        "base_probability_floor": 0.0001,
+        "source_target": "separate_original_continuous_current_minus_actual_prior",
+        "native_target": "original_integer_delta_class"
+      },
+      "accuracy_mean": 0.6199141676737585,
+      "fold_accuracy": [
+        0.68,
+        0.5543478260869565,
+        0.5980392156862745,
+        0.6078431372549019,
+        0.6593406593406593
+      ]
+    },
+    {
+      "candidate": {
+        "id": "shoulder-joint-005",
+        "algorithm": "joint_original_shoulder_history_residual",
+        "member": "core",
+        "previous_candidate_id": "resistance-joint-011",
+        "auxiliary_weight": 0.1,
+        "resistance_weight": 0.1,
+        "shoulder_weight": 0.1,
+        "correction_penalty": 10.0,
+        "epochs": 80,
+        "learning_rate": 0.003,
+        "weight_decay": 0.1,
+        "random_seed": 42,
+        "base_probability_floor": 0.0001,
+        "source_target": "separate_original_continuous_current_minus_actual_prior",
+        "native_target": "original_integer_delta_class"
+      },
+      "accuracy_mean": 0.6199141676737585,
+      "fold_accuracy": [
+        0.68,
+        0.5543478260869565,
+        0.5980392156862745,
+        0.6078431372549019,
+        0.6593406593406593
+      ]
+    },
+    {
+      "candidate": {
+        "id": "shoulder-joint-006",
+        "algorithm": "joint_original_shoulder_history_residual",
+        "member": "core",
+        "previous_candidate_id": "resistance-joint-011",
+        "auxiliary_weight": 0.1,
+        "resistance_weight": 0.1,
+        "shoulder_weight": 1.0,
+        "correction_penalty": 10.0,
+        "epochs": 80,
+        "learning_rate": 0.003,
+        "weight_decay": 0.1,
+        "random_seed": 42,
+        "base_probability_floor": 0.0001,
+        "source_target": "separate_original_continuous_current_minus_actual_prior",
+        "native_target": "original_integer_delta_class"
+      },
+      "accuracy_mean": 0.6159141676737585,
+      "fold_accuracy": [
+        0.66,
+        0.5543478260869565,
+        0.5980392156862745,
+        0.6078431372549019,
+        0.6593406593406593
+      ]
+    },
+    {
+      "candidate": {
+        "id": "shoulder-joint-007",
+        "algorithm": "joint_original_shoulder_history_residual",
+        "member": "cat",
+        "previous_candidate_id": "resistance-joint-020",
+        "auxiliary_weight": 1.0,
+        "resistance_weight": 0.1,
+        "shoulder_weight": 0.0,
+        "correction_penalty": 10.0,
+        "epochs": 80,
+        "learning_rate": 0.003,
+        "weight_decay": 0.1,
+        "random_seed": 42,
+        "base_probability_floor": 0.0001,
+        "source_target": "separate_original_continuous_current_minus_actual_prior",
+        "native_target": "original_integer_delta_class"
+      },
+      "accuracy_mean": 0.6299158914401881,
+      "fold_accuracy": [
+        0.67,
+        0.5543478260869565,
+        0.6274509803921569,
+        0.6274509803921569,
+        0.6703296703296703
+      ]
+    },
+    {
+      "candidate": {
+        "id": "shoulder-joint-008",
+        "algorithm": "joint_original_shoulder_history_residual",
+        "member": "cat",
+        "previous_candidate_id": "resistance-joint-020",
+        "auxiliary_weight": 1.0,
+        "resistance_weight": 0.1,
+        "shoulder_weight": 0.1,
+        "correction_penalty": 10.0,
+        "epochs": 80,
+        "learning_rate": 0.003,
+        "weight_decay": 0.1,
+        "random_seed": 42,
+        "base_probability_floor": 0.0001,
+        "source_target": "separate_original_continuous_current_minus_actual_prior",
+        "native_target": "original_integer_delta_class"
+      },
+      "accuracy_mean": 0.6279551071264626,
+      "fold_accuracy": [
+        0.67,
+        0.5543478260869565,
+        0.6274509803921569,
+        0.6176470588235294,
+        0.6703296703296703
+      ]
+    },
+    {
+      "candidate": {
+        "id": "shoulder-joint-009",
+        "algorithm": "joint_original_shoulder_history_residual",
+        "member": "cat",
+        "previous_candidate_id": "resistance-joint-020",
+        "auxiliary_weight": 1.0,
+        "resistance_weight": 0.1,
+        "shoulder_weight": 1.0,
+        "correction_penalty": 10.0,
+        "epochs": 80,
+        "learning_rate": 0.003,
+        "weight_decay": 0.1,
+        "random_seed": 42,
+        "base_probability_floor": 0.0001,
+        "source_target": "separate_original_continuous_current_minus_actual_prior",
+        "native_target": "original_integer_delta_class"
+      },
+      "accuracy_mean": 0.6240335384990117,
+      "fold_accuracy": [
+        0.67,
+        0.5543478260869565,
+        0.6274509803921569,
+        0.5980392156862745,
+        0.6703296703296703
+      ]
+    }
+  ],
+  "real_tests_code_sha256": "9be043bf31f2fd1cf879cd27d2f0125020241b218a2e56c58a7ef98d23efae31",
+  "real_tests_log_sha256": "9acac2761516dcd4f027e9d726c3f7b58e32d9159d8edc45391a1f48e7db75e5",
+  "new_test_evaluation": null,
+  "retained_test_correct": 108,
+  "fitting_only_range_diagnostic_sha256": "88718297ac55d626de61945a0de238f846c18f90e87b6ce946ad915732d7a526",
+  "retained_test_accuracy": 0.6033519553072626,
+  "target_accuracy": 0.8,
+  "achieved": false
+}

@@ -1,5 +1,7 @@
 # Auditoría de evaluación real — actualizada al 15/10/2026
 
+Los resultados de esta página corresponden al entrenamiento histórico del 15/10. La [optimización del 25/10/2026](ai-optimization-2026-10-25/README.md) conserva datos, etiquetas y particiones y publica por separado los resultados posteriores y la evidencia de selección.
+
 Requisito confirmado: mediciones de fuentes públicas y etiquetas publicadas u observadas independientemente de los predictores. No se permiten datos sintéticos en el repositorio: el pipeline no tiene data augmentation y la evaluación contiene cero filas sintéticas en entrenamiento, validación y test.
 
 ## Fuentes incorporadas

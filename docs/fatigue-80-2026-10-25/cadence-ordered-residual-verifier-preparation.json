@@ -1,0 +1,18 @@
+{
+  "preparation": "passed",
+  "preparation_code_sha256": "0faa82af2d6b7f821d4bb639e4aff60653acc817a6e862d67c9739e4c7f8a881",
+  "frozen_sources_sha256": {
+    "audit_fatigue_cadence_delta_regularization.py": "523f9dd43c98e0522dad9f54a8e41d37c1401b647c1e263012643a0037ad6808",
+    "evaluate_fatigue_cadence_delta_regularization.py": "cb6d0f06abd2e3d6224feb8908b7e3ae2b30705d9fc454af94cee9799d4da9b1",
+    "test_fatigue_cadence_delta_regularization.py": "a4b0eb7bebda1ca4c9c5c02c042e0da2cf85c4001cacf1632af538b879c86116"
+  },
+  "derived_files_sha256": {
+    "audit_fatigue_cadence_ordered_residual.py": "4c0c3795bb531b6fc74f7020a9a7cbfdfbcd16e4c113852af8483fa14b25409d",
+    "evaluate_fatigue_cadence_ordered_residual.py": "987527a42bc76351541459abd540cc5dec05779d8e4527aba29a7949b8efbf11",
+    "test_fatigue_cadence_ordered_residual.py": "00fe03d1119c4bf833c66f1f3cbac366e285766d346871b272fc04d969b3dcdd"
+  },
+  "historical_sources_modified": false,
+  "new_predictive_estimator_fits": 0,
+  "new_test_predictions_computed": 0,
+  "changes": "Independent fixed-basis span/orthonormality,manual3coefficient expansion and actual coefficient-chain gradient. Shared initialization matches the full residual. All26OOFrecipes/40fold artifacts and40independent refits;80actual native/source loss/backward checks. Seven real-public-data tests and original179qualified-test path."
+}

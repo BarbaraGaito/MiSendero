@@ -1,0 +1,179 @@
+{
+  "version": 1,
+  "implementation_code_sha256": "07db6826dbde004ba0e59c8649cf476f20d5139bdfa69164cbd6635de1e075cd",
+  "plan": [
+    {
+      "id": "delta-regularization-000",
+      "algorithm": "previous_real_control",
+      "parent_candidate_id": "cadence-full-delta-000"
+    },
+    {
+      "id": "delta-regularization-001",
+      "algorithm": "previous_real_control",
+      "parent_candidate_id": "cadence-full-delta-001"
+    },
+    {
+      "id": "delta-regularization-002",
+      "algorithm": "previous_real_control",
+      "parent_candidate_id": "cadence-full-delta-007"
+    },
+    {
+      "id": "delta-regularization-003",
+      "algorithm": "previous_real_control",
+      "parent_candidate_id": "cadence-full-delta-009"
+    },
+    {
+      "id": "delta-regularization-004",
+      "algorithm": "previous_real_control",
+      "parent_candidate_id": "cadence-full-delta-011"
+    },
+    {
+      "id": "delta-regularization-005",
+      "algorithm": "previous_real_control",
+      "parent_candidate_id": "cadence-full-delta-013"
+    },
+    {
+      "id": "delta-regularization-006",
+      "algorithm": "cadence_delta_regularization",
+      "member": "core",
+      "auxiliary_weight": 0.0,
+      "epochs": 80,
+      "learning_rate": 0.003,
+      "weight_decay": 0.1,
+      "correction_penalty": 10.0,
+      "random_seed": 42,
+      "source_target": "actual_current_unequal_prior_original6to20",
+      "native_target": "original_integer_delta_cross_entropy_21",
+      "residual_outputs": 21
+    },
+    {
+      "id": "delta-regularization-007",
+      "algorithm": "cadence_delta_regularization",
+      "member": "core",
+      "auxiliary_weight": 0.0,
+      "epochs": 80,
+      "learning_rate": 0.003,
+      "weight_decay": 0.1,
+      "correction_penalty": 100.0,
+      "random_seed": 42,
+      "source_target": "actual_current_unequal_prior_original6to20",
+      "native_target": "original_integer_delta_cross_entropy_21",
+      "residual_outputs": 21
+    },
+    {
+      "id": "delta-regularization-008",
+      "algorithm": "cadence_delta_regularization",
+      "member": "core",
+      "auxiliary_weight": 0.1,
+      "epochs": 80,
+      "learning_rate": 0.003,
+      "weight_decay": 0.1,
+      "correction_penalty": 10.0,
+      "random_seed": 42,
+      "source_target": "actual_current_unequal_prior_original6to20",
+      "native_target": "original_integer_delta_cross_entropy_21",
+      "residual_outputs": 21
+    },
+    {
+      "id": "delta-regularization-009",
+      "algorithm": "cadence_delta_regularization",
+      "member": "core",
+      "auxiliary_weight": 0.1,
+      "epochs": 80,
+      "learning_rate": 0.003,
+      "weight_decay": 0.1,
+      "correction_penalty": 100.0,
+      "random_seed": 42,
+      "source_target": "actual_current_unequal_prior_original6to20",
+      "native_target": "original_integer_delta_cross_entropy_21",
+      "residual_outputs": 21
+    },
+    {
+      "id": "delta-regularization-010",
+      "algorithm": "cadence_delta_regularization",
+      "member": "cat",
+      "auxiliary_weight": 0.0,
+      "epochs": 80,
+      "learning_rate": 0.003,
+      "weight_decay": 0.1,
+      "correction_penalty": 10.0,
+      "random_seed": 42,
+      "source_target": "actual_current_unequal_prior_original6to20",
+      "native_target": "original_integer_delta_cross_entropy_21",
+      "residual_outputs": 21
+    },
+    {
+      "id": "delta-regularization-011",
+      "algorithm": "cadence_delta_regularization",
+      "member": "cat",
+      "auxiliary_weight": 0.0,
+      "epochs": 80,
+      "learning_rate": 0.003,
+      "weight_decay": 0.1,
+      "correction_penalty": 100.0,
+      "random_seed": 42,
+      "source_target": "actual_current_unequal_prior_original6to20",
+      "native_target": "original_integer_delta_cross_entropy_21",
+      "residual_outputs": 21
+    },
+    {
+      "id": "delta-regularization-012",
+      "algorithm": "cadence_delta_regularization",
+      "member": "cat",
+      "auxiliary_weight": 0.1,
+      "epochs": 80,
+      "learning_rate": 0.003,
+      "weight_decay": 0.1,
+      "correction_penalty": 10.0,
+      "random_seed": 42,
+      "source_target": "actual_current_unequal_prior_original6to20",
+      "native_target": "original_integer_delta_cross_entropy_21",
+      "residual_outputs": 21
+    },
+    {
+      "id": "delta-regularization-013",
+      "algorithm": "cadence_delta_regularization",
+      "member": "cat",
+      "auxiliary_weight": 0.1,
+      "epochs": 80,
+      "learning_rate": 0.003,
+      "weight_decay": 0.1,
+      "correction_penalty": 100.0,
+      "random_seed": 42,
+      "source_target": "actual_current_unequal_prior_original6to20",
+      "native_target": "original_integer_delta_cross_entropy_21",
+      "residual_outputs": 21
+    }
+  ],
+  "previous_verification_sha256": "a6a524108260ae8b494a6c8442ad9fdb8739bddffac14a206f3f4fecd1455f47",
+  "diagnostic_sha256": "e4bf16644b9ca285f20e5d915eb6e6bad9fd1c7ee93d424c686bf2a68acf7f2c",
+  "frozen_full_delta_implementation_sha256": "6475ae3f4fa8cf4aefed93dd69184744c224977fbe52140462343e6e38032ac8",
+  "input_verification_sha256": "b78618b8c30c84126670db145c3d01410fca23eec55821f468ad5e5fc62ff5a8",
+  "original_native_fit_cases": 487,
+  "original_native_test_cases": 179,
+  "source_actual_fit_pairs": 851,
+  "source_reserved_pairs": 206,
+  "shared_inputs": 11,
+  "native_private_inputs": 16,
+  "new_joint_network_fits": 40,
+  "new_native_base_fits_for_cv": 0,
+  "minimum_cv_for_new_test_evaluation": 0.65,
+  "test_used_for_selection": false,
+  "synthetic_rows": 0,
+  "residual_outputs": 21,
+  "penalty_convention": "lambda*mean of squared centered residual across actual native rows and21outputs",
+  "penalties": [
+    10.0,
+    100.0
+  ],
+  "source_weights": [
+    0.0,
+    0.1
+  ],
+  "epochs": 80,
+  "learning_rate": 0.003,
+  "weight_decay": 0.1,
+  "architecture_changed": false,
+  "native_or_source_objective_changed": false,
+  "rationale": "All8study58recipes reduced fit NLL but increased validation NLL. Penalty1 beat.1 in all4member/source comparisons. Freeze all other data/normalization/architecture/optimizer choices and test10/100. Six inherited controls contain global MLP/Cat and all4matching penalty1variants. Native labels remain exact original Borg0-10;the851source pairs keep their original6-20change predicate and separate head. No synthetic or transformed targets. Independently refit all8new recipes in all5personfolds and recompute all14OOFmetrics."
+}

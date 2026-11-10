@@ -1,0 +1,125 @@
+{
+  "version": 1,
+  "implementation_code_sha256": "069614cca612f2a669836c436025a433aad9efe0cd5c458286f9869bf5c8e053",
+  "plan": [
+    {
+      "id": "public-change-gate-000",
+      "algorithm": "previous_real_control",
+      "parent_candidate_id": "observed-change-000"
+    },
+    {
+      "id": "public-change-gate-001",
+      "algorithm": "previous_real_control",
+      "parent_candidate_id": "observed-change-001"
+    },
+    {
+      "id": "public-change-gate-002",
+      "algorithm": "previous_real_control",
+      "parent_candidate_id": "observed-change-005"
+    },
+    {
+      "id": "public-change-gate-003",
+      "algorithm": "previous_real_control",
+      "parent_candidate_id": "observed-change-007"
+    },
+    {
+      "id": "public-change-gate-004",
+      "algorithm": "joint_public_binary_change_gate",
+      "member": "core",
+      "auxiliary_weight": 0.0,
+      "epochs": 80,
+      "learning_rate": 0.003,
+      "weight_decay": 0.1,
+      "correction_penalty": 10.0,
+      "random_seed": 42,
+      "source_target": "actual_current_unequal_actual_prior_on_original_instrument",
+      "native_target": "original_integer_delta_distribution_with_frozen_nonzero_conditional"
+    },
+    {
+      "id": "public-change-gate-005",
+      "algorithm": "joint_public_binary_change_gate",
+      "member": "core",
+      "auxiliary_weight": 0.1,
+      "epochs": 80,
+      "learning_rate": 0.003,
+      "weight_decay": 0.1,
+      "correction_penalty": 10.0,
+      "random_seed": 42,
+      "source_target": "actual_current_unequal_actual_prior_on_original_instrument",
+      "native_target": "original_integer_delta_distribution_with_frozen_nonzero_conditional"
+    },
+    {
+      "id": "public-change-gate-006",
+      "algorithm": "joint_public_binary_change_gate",
+      "member": "core",
+      "auxiliary_weight": 1.0,
+      "epochs": 80,
+      "learning_rate": 0.003,
+      "weight_decay": 0.1,
+      "correction_penalty": 10.0,
+      "random_seed": 42,
+      "source_target": "actual_current_unequal_actual_prior_on_original_instrument",
+      "native_target": "original_integer_delta_distribution_with_frozen_nonzero_conditional"
+    },
+    {
+      "id": "public-change-gate-007",
+      "algorithm": "joint_public_binary_change_gate",
+      "member": "cat",
+      "auxiliary_weight": 0.0,
+      "epochs": 80,
+      "learning_rate": 0.003,
+      "weight_decay": 0.1,
+      "correction_penalty": 10.0,
+      "random_seed": 42,
+      "source_target": "actual_current_unequal_actual_prior_on_original_instrument",
+      "native_target": "original_integer_delta_distribution_with_frozen_nonzero_conditional"
+    },
+    {
+      "id": "public-change-gate-008",
+      "algorithm": "joint_public_binary_change_gate",
+      "member": "cat",
+      "auxiliary_weight": 0.1,
+      "epochs": 80,
+      "learning_rate": 0.003,
+      "weight_decay": 0.1,
+      "correction_penalty": 10.0,
+      "random_seed": 42,
+      "source_target": "actual_current_unequal_actual_prior_on_original_instrument",
+      "native_target": "original_integer_delta_distribution_with_frozen_nonzero_conditional"
+    },
+    {
+      "id": "public-change-gate-009",
+      "algorithm": "joint_public_binary_change_gate",
+      "member": "cat",
+      "auxiliary_weight": 1.0,
+      "epochs": 80,
+      "learning_rate": 0.003,
+      "weight_decay": 0.1,
+      "correction_penalty": 10.0,
+      "random_seed": 42,
+      "source_target": "actual_current_unequal_actual_prior_on_original_instrument",
+      "native_target": "original_integer_delta_distribution_with_frozen_nonzero_conditional"
+    }
+  ],
+  "previous_verification_sha256": "8202b2fa4367176afb7915cd1b8adaf509b2468248c2a5b087f0e3fc63545134",
+  "source_change_review_sha256": "e988b31c7e3a2f0c858937e94b8188ef8fa744d52b9a9aa70a1b3af43765a492",
+  "native_stage_diagnostic_sha256": "cfa372e2f10ef72ec7b88281a765ea057c2f381ffc864e5d8d25bf91e0d28187",
+  "source_fitting_pairs": 2287,
+  "source_counts": {
+    "emap": 248,
+    "resistance": 866,
+    "shoulder": 920,
+    "worker": 253
+  },
+  "excluded_single_class_sts_pairs": 49,
+  "source_reserved_pairs_not_fitted": 312,
+  "original_native_fit_cases": 487,
+  "original_native_test_cases": 179,
+  "new_joint_network_fits": 30,
+  "new_native_base_fits_for_selection": 0,
+  "minimum_cv_for_new_test_evaluation": 0.65,
+  "test_used_for_selection": false,
+  "synthetic_rows": 0,
+  "independent_refit_policy": "Best positive-source recipe per member plus its matching zero-source control in all5personfolds;verify all30saved fold artifacts and all10OOFmetrics.",
+  "rationale": "Study53factorization did not beat the flat native controls. Its fitting-only diagnostic identified native change detection around72percent CV versus conditional magnitude around79percent. Investigate binary auxiliary supervision distinct from previous continuous source-delta heads. Preserve the stronger original flat native base distributions and freeze their relative nonzero delta probabilities. Correct only logitP(change),using inner-person OOF fitting offsets and a shared actual-two-prior encoder plus genuine native13feature context. Four separate source heads learn actual equality/inequality on each original instrument; rates/scales/protocols remain distinct. No source native-context rows,times,phases,scale conversion or missing classes are invented. Source-only gradients must reach the shared encoder; weights0/.1/1 use identical initialization,80epochs,penalty10and matched zero-source controls. Final scoring remains exact native Borg0-10on original487/179cases; binary component accuracy cannot satisfy80percent."
+}

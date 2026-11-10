@@ -1,4 +1,5 @@
 import fatigueMetricsJson from "./models/fatigueMetrics.json";
+import calibratedFatigueMetricsJson from "./models/calibratedFatigueMetrics.json";
 import riskMetricsJson from "./models/riskMetrics.json";
 import routeDifficultyMetricsJson from "./models/routeDifficultyMetrics.json";
 import apnRouteDifficultyMetricsJson from "./models/apnRouteDifficultyMetrics.json";
@@ -29,6 +30,7 @@ export interface AiCrossValidationSummary {
 }
 
 export interface AiTrainingMetrics {
+  previous_borg_baseline?: AiMetricSummary & { strategy: string };
   evaluation_details?: {
     version: number;
     model: AiMetricSummary & { balanced_accuracy: number };
@@ -90,9 +92,10 @@ export interface AiTrainingMetrics {
     warnings: string[];
   };
   hyperparameters: {
-    n_estimators: number;
-    max_depth: number;
-    min_samples_leaf: number;
+    algorithm?: "random_forest" | "extra_trees" | "logistic_regression" | "sgd" | "mlp";
+    n_estimators?: number;
+    max_depth?: number | null;
+    min_samples_leaf?: number;
     selection_method: "cross_validated" | "fallback_too_few_rows";
     cv_folds: number | null;
     cv_f1_macro_mean: number | null;
@@ -101,6 +104,7 @@ export interface AiTrainingMetrics {
 
 export const adminAiModelMetrics: AiTrainingMetrics[] = [
   fatigueMetricsJson,
+  calibratedFatigueMetricsJson,
   riskMetricsJson,
   routeDifficultyMetricsJson,
   apnRouteDifficultyMetricsJson,

@@ -1,0 +1,5 @@
+# Official PyPI wheels selected for the existing research environment.
+# Install with --no-deps --require-hashes --only-binary=:all:.
+catboost==1.2.10 --hash=sha256:6b8a7ef11d7a89fc547760cfafeee895011a4b92cc1f60d00235ef80a71158ed
+graphviz==0.21 --hash=sha256:54f33de9f4f911d7e84e4191749cac8cc5653f815b06738c54db9a15ab8b1e42
+plotly==7.1.0 --hash=sha256:dbb7fa18afce40d0a8e80d1bf162eceb3faa0ce5a77fe741ad09a74cf78f53f3

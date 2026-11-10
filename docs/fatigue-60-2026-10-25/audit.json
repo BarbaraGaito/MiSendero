@@ -1,0 +1,50 @@
+{
+  "objective": "accuracy >= 0.60 on exact native Borg ratings for the original fatigue task",
+  "target_accuracy": 0.6,
+  "feature_sets": {
+    "multisensor-v1": {
+      "rows": 666,
+      "predictors": 86,
+      "labels_identical_to_original": true
+    },
+    "raw-v1": {
+      "rows": 666,
+      "predictors": 304,
+      "labels_identical_to_original": true
+    }
+  },
+  "experiments": {
+    "multisensor-v1": {
+      "completed_candidates": 64,
+      "status": "complete",
+      "best_cv_accuracy": 0.4040143147560028,
+      "original_test_evaluated": false
+    },
+    "transfer-v1": {
+      "completed_candidates": 36,
+      "status": "complete",
+      "best_cv_accuracy": 0.41152513982181504,
+      "original_test_evaluated": false
+    },
+    "ordinal-v1": {
+      "completed_candidates": 60,
+      "status": "complete",
+      "best_cv_accuracy": 0.3998573770645382,
+      "original_test_evaluated": false
+    },
+    "raw-v1": {
+      "completed_candidates": 2,
+      "status": "running",
+      "best_cv_accuracy": 0.3435300675454128,
+      "original_test_evaluated": false
+    }
+  },
+  "additional_data": {
+    "rows": 307,
+    "participants": 39,
+    "survey_labels_verified": true
+  },
+  "published_accuracy": 0.31843575418994413,
+  "achieved": false,
+  "interpretation": "Training CV improvements do not satisfy the goal. Completion requires an actual model with >=60% exact Borg accuracy verified on the original held-out task, without easier labels or denominators."
+}

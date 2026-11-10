@@ -1,0 +1,353 @@
+{
+  "version": 1,
+  "verified_at": "2026-10-27T13:43:50.704439+00:00",
+  "verification_code_sha256": "4135357db1658222a39931886892f87597e31644ed8908013ffeeef73f116cec",
+  "selection_sha256": "f7edb25d7306d45b74d090a5dcc77c6a91cb44a6c9d50266b47fffb1c2458dbe",
+  "input_verification_sha256": "8f368ba54daf6e74f5cc445d2bef2bbdd89f189b053a2f796df93f2f8ed75eb5",
+  "public_real_data_policy_sha256": "fdfb112d20b1f22bae08032ed7d9f3d27ee784879674c32f8f65cc21fe69c028",
+  "all_16_oof_recipes_recomputed": true,
+  "actual_source_regressors_independently_refitted": [
+    {
+      "algorithm": "ridge",
+      "feature_set": "absolute",
+      "actual_source_targets_observed": 851,
+      "reserved_source_mae": 1.2538488507493388,
+      "reserved_source_r2": 0.4043687949989285,
+      "reserved_used_for_selection": false
+    },
+    {
+      "algorithm": "ridge",
+      "feature_set": "relative",
+      "actual_source_targets_observed": 851,
+      "reserved_source_mae": 1.2307684194167152,
+      "reserved_source_r2": 0.43449257186979884,
+      "reserved_used_for_selection": false
+    },
+    {
+      "algorithm": "svr",
+      "feature_set": "absolute",
+      "actual_source_targets_observed": 851,
+      "reserved_source_mae": 1.2735474163953093,
+      "reserved_source_r2": 0.38496913820297485,
+      "reserved_used_for_selection": false
+    },
+    {
+      "algorithm": "svr",
+      "feature_set": "relative",
+      "actual_source_targets_observed": 851,
+      "reserved_source_mae": 1.2757559740701179,
+      "reserved_source_r2": 0.39895701597731736,
+      "reserved_used_for_selection": false
+    },
+    {
+      "algorithm": "random_forest",
+      "feature_set": "absolute",
+      "actual_source_targets_observed": 851,
+      "reserved_source_mae": 1.3033609324560465,
+      "reserved_source_r2": 0.38807804844655647,
+      "reserved_used_for_selection": false
+    },
+    {
+      "algorithm": "random_forest",
+      "feature_set": "relative",
+      "actual_source_targets_observed": 851,
+      "reserved_source_mae": 1.280182358619342,
+      "reserved_source_r2": 0.40622350186586087,
+      "reserved_used_for_selection": false
+    }
+  ],
+  "actual_source_target_calls_observed": 6,
+  "source_fitting_targets": 851,
+  "source_fitting_people": 123,
+  "source_reserved_targets": 206,
+  "source_reserved_people": 32,
+  "source_targets_original6to20_unchanged": true,
+  "equal_total_source_weight_per_person": true,
+  "source_current_bout_hr_excluded": true,
+  "exact_source_report_clocks_invented": false,
+  "native_prior_hr_and_baseline_missing_cases_preserved": true,
+  "source_and_native_baseline_definitions_remain_distinct": true,
+  "best_source_candidate_id": "cadence-transfer-014",
+  "best_source_cv_accuracy": 0.6036037585602803,
+  "best_measured_control_id": "cadence-transfer-003",
+  "best_measured_control_cv": 0.5989012675304235,
+  "matching_measured_control_id": "cadence-transfer-002",
+  "matching_measured_control_cv": 0.5939192078169061,
+  "native_recipes_independently_refitted": [
+    "cadence-transfer-002",
+    "cadence-transfer-003",
+    "cadence-transfer-014"
+  ],
+  "actual_native_refits": [
+    {
+      "candidate_id": "cadence-transfer-002",
+      "fold": 0,
+      "actual_native_rows_observed": 387,
+      "actual_estimator_targets_observed": 387,
+      "optimizer_summary": {
+        "convergence_warnings": [],
+        "actual_native_fit_rows": 387,
+        "actual_auxiliary_source_targets": 0,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "iterations": 952,
+        "fitting_loss": 0.9332277989123045,
+        "maximum_iterations": 5000
+      },
+      "source_parameters_frozen": true,
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "cadence-transfer-002",
+      "fold": 1,
+      "actual_native_rows_observed": 395,
+      "actual_estimator_targets_observed": 395,
+      "optimizer_summary": {
+        "convergence_warnings": [],
+        "actual_native_fit_rows": 395,
+        "actual_auxiliary_source_targets": 0,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "iterations": 1500,
+        "fitting_loss": 0.9039129430506533,
+        "maximum_iterations": 5000
+      },
+      "source_parameters_frozen": true,
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "cadence-transfer-002",
+      "fold": 2,
+      "actual_native_rows_observed": 385,
+      "actual_estimator_targets_observed": 385,
+      "optimizer_summary": {
+        "convergence_warnings": [],
+        "actual_native_fit_rows": 385,
+        "actual_auxiliary_source_targets": 0,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "iterations": 830,
+        "fitting_loss": 0.9093965722238929,
+        "maximum_iterations": 5000
+      },
+      "source_parameters_frozen": true,
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "cadence-transfer-002",
+      "fold": 3,
+      "actual_native_rows_observed": 385,
+      "actual_estimator_targets_observed": 385,
+      "optimizer_summary": {
+        "convergence_warnings": [],
+        "actual_native_fit_rows": 385,
+        "actual_auxiliary_source_targets": 0,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "iterations": 906,
+        "fitting_loss": 0.8610616951013401,
+        "maximum_iterations": 5000
+      },
+      "source_parameters_frozen": true,
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "cadence-transfer-002",
+      "fold": 4,
+      "actual_native_rows_observed": 396,
+      "actual_estimator_targets_observed": 396,
+      "optimizer_summary": {
+        "convergence_warnings": [],
+        "actual_native_fit_rows": 396,
+        "actual_auxiliary_source_targets": 0,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "iterations": 559,
+        "fitting_loss": 0.9265114763137906,
+        "maximum_iterations": 5000
+      },
+      "source_parameters_frozen": true,
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "cadence-transfer-003",
+      "fold": 0,
+      "actual_native_rows_observed": 387,
+      "actual_estimator_targets_observed": 387,
+      "optimizer_summary": {
+        "convergence_warnings": [],
+        "actual_native_fit_rows": 387,
+        "actual_auxiliary_source_targets": 0,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0
+      },
+      "source_parameters_frozen": true,
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "cadence-transfer-003",
+      "fold": 1,
+      "actual_native_rows_observed": 395,
+      "actual_estimator_targets_observed": 395,
+      "optimizer_summary": {
+        "convergence_warnings": [],
+        "actual_native_fit_rows": 395,
+        "actual_auxiliary_source_targets": 0,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0
+      },
+      "source_parameters_frozen": true,
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "cadence-transfer-003",
+      "fold": 2,
+      "actual_native_rows_observed": 385,
+      "actual_estimator_targets_observed": 385,
+      "optimizer_summary": {
+        "convergence_warnings": [],
+        "actual_native_fit_rows": 385,
+        "actual_auxiliary_source_targets": 0,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0
+      },
+      "source_parameters_frozen": true,
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "cadence-transfer-003",
+      "fold": 3,
+      "actual_native_rows_observed": 385,
+      "actual_estimator_targets_observed": 385,
+      "optimizer_summary": {
+        "convergence_warnings": [],
+        "actual_native_fit_rows": 385,
+        "actual_auxiliary_source_targets": 0,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0
+      },
+      "source_parameters_frozen": true,
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "cadence-transfer-003",
+      "fold": 4,
+      "actual_native_rows_observed": 396,
+      "actual_estimator_targets_observed": 396,
+      "optimizer_summary": {
+        "convergence_warnings": [],
+        "actual_native_fit_rows": 396,
+        "actual_auxiliary_source_targets": 0,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0
+      },
+      "source_parameters_frozen": true,
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "cadence-transfer-014",
+      "fold": 0,
+      "actual_native_rows_observed": 387,
+      "actual_estimator_targets_observed": 387,
+      "optimizer_summary": {
+        "convergence_warnings": [],
+        "actual_native_fit_rows": 387,
+        "actual_auxiliary_source_targets": 851,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "iterations": 668,
+        "fitting_loss": 0.9316382457657628,
+        "maximum_iterations": 5000
+      },
+      "source_parameters_frozen": true,
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "cadence-transfer-014",
+      "fold": 1,
+      "actual_native_rows_observed": 395,
+      "actual_estimator_targets_observed": 395,
+      "optimizer_summary": {
+        "convergence_warnings": [],
+        "actual_native_fit_rows": 395,
+        "actual_auxiliary_source_targets": 851,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "iterations": 891,
+        "fitting_loss": 0.9030291074677725,
+        "maximum_iterations": 5000
+      },
+      "source_parameters_frozen": true,
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "cadence-transfer-014",
+      "fold": 2,
+      "actual_native_rows_observed": 385,
+      "actual_estimator_targets_observed": 385,
+      "optimizer_summary": {
+        "convergence_warnings": [],
+        "actual_native_fit_rows": 385,
+        "actual_auxiliary_source_targets": 851,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "iterations": 492,
+        "fitting_loss": 0.9081109645952811,
+        "maximum_iterations": 5000
+      },
+      "source_parameters_frozen": true,
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "cadence-transfer-014",
+      "fold": 3,
+      "actual_native_rows_observed": 385,
+      "actual_estimator_targets_observed": 385,
+      "optimizer_summary": {
+        "convergence_warnings": [],
+        "actual_native_fit_rows": 385,
+        "actual_auxiliary_source_targets": 851,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "iterations": 729,
+        "fitting_loss": 0.8602366019259309,
+        "maximum_iterations": 5000
+      },
+      "source_parameters_frozen": true,
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "cadence-transfer-014",
+      "fold": 4,
+      "actual_native_rows_observed": 396,
+      "actual_estimator_targets_observed": 396,
+      "optimizer_summary": {
+        "convergence_warnings": [],
+        "actual_native_fit_rows": 396,
+        "actual_auxiliary_source_targets": 851,
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "iterations": 581,
+        "fitting_loss": 0.9239987512521814,
+        "maximum_iterations": 5000
+      },
+      "source_parameters_frozen": true,
+      "reload_without_current_truth_or_ids": true
+    }
+  ],
+  "actual_native_target_calls_observed": 15,
+  "actual_native_rows_and_delta_targets_verified": true,
+  "artificial_history_fitting_disabled": true,
+  "source_weights_frozen_during_native_fitting": true,
+  "convergence_warning_folds_in_grid": [],
+  "winner_id": "cadence-transfer-001",
+  "best_cv_accuracy": 0.6379721574248428,
+  "new_test_gate_passed": false,
+  "original_training_cases": 487,
+  "original_test_cases": 179,
+  "best_verified_test_correct": 108,
+  "best_verified_test_accuracy": 0.6033519553072626,
+  "target_accuracy": 0.8,
+  "achieved": false,
+  "scope": "Real public original rows only. Source6-20 targets supervise separate fixed functions of completed earlier-bout physiology; their predictions are computed inputs, never native labels. All original native487/179 cases and labels retained. Reserved source people only yield descriptive diagnostics; native CV selects. No synthetic examples, invented clocks, target conversion, changed denominator or native test tuning."
+}

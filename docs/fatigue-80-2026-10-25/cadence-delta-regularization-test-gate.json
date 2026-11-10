@@ -1,0 +1,11 @@
+{
+  "evaluator_code_sha256": "cb6d0f06abd2e3d6224feb8908b7e3ae2b30705d9fc454af94cee9799d4da9b1",
+  "selection_sha256": "53055ac67196fbe3491523105fa96094420de524b7553a99a222a71e3a397153",
+  "winner_id": "delta-regularization-001",
+  "best_cv_accuracy": 0.6379721574248428,
+  "minimum_cv_for_new_test_evaluation": 0.65,
+  "gate_passed": false,
+  "new_test_evaluation": null,
+  "pretest_verifier_code_sha256": "523f9dd43c98e0522dad9f54a8e41d37c1401b647c1e263012643a0037ad6808",
+  "pretest_winner_fold_artifacts_verified": 0
+}

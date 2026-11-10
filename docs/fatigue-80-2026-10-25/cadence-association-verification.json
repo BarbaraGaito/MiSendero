@@ -1,0 +1,684 @@
+{
+  "version": 1,
+  "verified_at": "2026-10-27T16:34:34.692951+00:00",
+  "verification_code_sha256": "796f22d4b8e885eef08ff8c1558d8842762080d7c3f547d67847f59e85cd009d",
+  "selection_sha256": "6ff009600ae258586d477c9ec19313dee2c66f1e965b51a0c2a704173f5ca7c1",
+  "input_verification_sha256": "639b4039658f9fb78688ffdad643153cc59746552426c0d48f1cd66aa5aff3b9",
+  "previous_verification_sha256": "2ef3bcce4b51873ed3ad91d0208f09df3bfe6b578775a3123fbeff671d9a8af0",
+  "public_real_data_policy_sha256": "fdfb112d20b1f22bae08032ed7d9f3d27ee784879674c32f8f65cc21fe69c028",
+  "all_30_oof_recipes_recomputed": true,
+  "actual_source_functions_independently_refitted": [
+    {
+      "algorithm": "ridge",
+      "feature_set": "absolute",
+      "actual_source_targets_observed": 976,
+      "source_fitting_people": 124,
+      "reserved_source_mae": 1.267216872264332,
+      "reserved_source_r2": 0.4816193675117225,
+      "reserved_source_used_for_selection": false,
+      "task": "Retrospective concurrent source association, not pre-RPE forecasting"
+    },
+    {
+      "algorithm": "ridge",
+      "feature_set": "relative",
+      "actual_source_targets_observed": 976,
+      "source_fitting_people": 124,
+      "reserved_source_mae": 1.244220525305854,
+      "reserved_source_r2": 0.5035541522694847,
+      "reserved_source_used_for_selection": false,
+      "task": "Retrospective concurrent source association, not pre-RPE forecasting"
+    },
+    {
+      "algorithm": "svr",
+      "feature_set": "absolute",
+      "actual_source_targets_observed": 976,
+      "source_fitting_people": 124,
+      "reserved_source_mae": 1.2567621393263826,
+      "reserved_source_r2": 0.48985697117297167,
+      "reserved_source_used_for_selection": false,
+      "task": "Retrospective concurrent source association, not pre-RPE forecasting"
+    },
+    {
+      "algorithm": "svr",
+      "feature_set": "relative",
+      "actual_source_targets_observed": 976,
+      "source_fitting_people": 124,
+      "reserved_source_mae": 1.2685955453873463,
+      "reserved_source_r2": 0.48711580374022057,
+      "reserved_source_used_for_selection": false,
+      "task": "Retrospective concurrent source association, not pre-RPE forecasting"
+    },
+    {
+      "algorithm": "random_forest",
+      "feature_set": "absolute",
+      "actual_source_targets_observed": 976,
+      "source_fitting_people": 124,
+      "reserved_source_mae": 1.2804353360288305,
+      "reserved_source_r2": 0.47292530126945387,
+      "reserved_source_used_for_selection": false,
+      "task": "Retrospective concurrent source association, not pre-RPE forecasting"
+    },
+    {
+      "algorithm": "random_forest",
+      "feature_set": "relative",
+      "actual_source_targets_observed": 976,
+      "source_fitting_people": 124,
+      "reserved_source_mae": 1.2207005565647593,
+      "reserved_source_r2": 0.501015914667299,
+      "reserved_source_used_for_selection": false,
+      "task": "Retrospective concurrent source association, not pre-RPE forecasting"
+    }
+  ],
+  "actual_source_target_calls_observed": 6,
+  "source_fitting_targets": 976,
+  "source_fitting_people": 124,
+  "source_reserved_targets": 238,
+  "source_reserved_people": 32,
+  "source_task_is_retrospective_association": true,
+  "source_pre_rpe_forecast_claim_approved": false,
+  "native_query_inputs_past_only_by_independent_raw_window_audit": true,
+  "source6to20_targets_remain_separate": true,
+  "native_rows_and_delta_targets_verified_at_actual_fitter": true,
+  "source_state_and_difference_independently_verified": true,
+  "all_original_native_rows_and_labels_preserved": true,
+  "natural_missing_inputs_preserved": true,
+  "native_preprocessing_fitting_people_only": true,
+  "source_functions_frozen_during_native_fitting": true,
+  "artificial_history_fitting_disabled": true,
+  "best_source_candidate_id": "cadence-assoc-029",
+  "best_source_cv_accuracy": 0.6263421488996936,
+  "best_source_by_member": {
+    "core": {
+      "candidate": {
+        "id": "cadence-assoc-022",
+        "algorithm": "retrospective_source_association",
+        "source_algorithm": "random_forest",
+        "source_feature_set": "absolute",
+        "representation": "current_state",
+        "member": "core"
+      },
+      "accuracy_mean": 0.6141665120897858
+    },
+    "cat": {
+      "candidate": {
+        "id": "cadence-assoc-029",
+        "algorithm": "retrospective_source_association",
+        "source_algorithm": "random_forest",
+        "source_feature_set": "relative",
+        "representation": "current_and_change",
+        "member": "cat"
+      },
+      "accuracy_mean": 0.6263421488996936
+    }
+  },
+  "paired_current_change_comparison": {
+    "current_state": {
+      "candidate": {
+        "id": "cadence-assoc-027",
+        "algorithm": "retrospective_source_association",
+        "source_algorithm": "random_forest",
+        "source_feature_set": "relative",
+        "representation": "current_state",
+        "member": "cat"
+      },
+      "accuracy_mean": 0.6202227780744405
+    },
+    "current_and_change": {
+      "candidate": {
+        "id": "cadence-assoc-029",
+        "algorithm": "retrospective_source_association",
+        "source_algorithm": "random_forest",
+        "source_feature_set": "relative",
+        "representation": "current_and_change",
+        "member": "cat"
+      },
+      "accuracy_mean": 0.6263421488996936
+    }
+  },
+  "measured_physiology_controls": {
+    "core": {
+      "candidate_id": "cadence-assoc-004",
+      "accuracy_mean": 0.6022994856805599
+    },
+    "cat": {
+      "candidate_id": "cadence-assoc-005",
+      "accuracy_mean": 0.6139056050513851
+    }
+  },
+  "native_recipes_independently_refitted": [
+    "cadence-assoc-004",
+    "cadence-assoc-005",
+    "cadence-assoc-022",
+    "cadence-assoc-027",
+    "cadence-assoc-029"
+  ],
+  "actual_native_refits": [
+    {
+      "candidate_id": "cadence-assoc-004",
+      "fold": 0,
+      "actual_native_rows_observed": 387,
+      "actual_native_delta_targets_observed": 387,
+      "optimizer_summary": {
+        "convergence_warnings": [],
+        "actual_native_fit_rows": 387,
+        "actual_auxiliary_source_targets": 0,
+        "source_fitting_performed_here": false,
+        "model_feature_count": 16,
+        "natural_missing_representation_rows": {},
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "iterations": 400,
+        "fitting_loss": 0.9364458304079737,
+        "maximum_iterations": 5000
+      },
+      "source_functions_frozen": true,
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "cadence-assoc-004",
+      "fold": 1,
+      "actual_native_rows_observed": 395,
+      "actual_native_delta_targets_observed": 395,
+      "optimizer_summary": {
+        "convergence_warnings": [],
+        "actual_native_fit_rows": 395,
+        "actual_auxiliary_source_targets": 0,
+        "source_fitting_performed_here": false,
+        "model_feature_count": 16,
+        "natural_missing_representation_rows": {},
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "iterations": 805,
+        "fitting_loss": 0.9065307607299123,
+        "maximum_iterations": 5000
+      },
+      "source_functions_frozen": true,
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "cadence-assoc-004",
+      "fold": 2,
+      "actual_native_rows_observed": 385,
+      "actual_native_delta_targets_observed": 385,
+      "optimizer_summary": {
+        "convergence_warnings": [],
+        "actual_native_fit_rows": 385,
+        "actual_auxiliary_source_targets": 0,
+        "source_fitting_performed_here": false,
+        "model_feature_count": 16,
+        "natural_missing_representation_rows": {},
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "iterations": 372,
+        "fitting_loss": 0.9064337897628678,
+        "maximum_iterations": 5000
+      },
+      "source_functions_frozen": true,
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "cadence-assoc-004",
+      "fold": 3,
+      "actual_native_rows_observed": 385,
+      "actual_native_delta_targets_observed": 385,
+      "optimizer_summary": {
+        "convergence_warnings": [],
+        "actual_native_fit_rows": 385,
+        "actual_auxiliary_source_targets": 0,
+        "source_fitting_performed_here": false,
+        "model_feature_count": 16,
+        "natural_missing_representation_rows": {},
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "iterations": 844,
+        "fitting_loss": 0.8632048851787286,
+        "maximum_iterations": 5000
+      },
+      "source_functions_frozen": true,
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "cadence-assoc-004",
+      "fold": 4,
+      "actual_native_rows_observed": 396,
+      "actual_native_delta_targets_observed": 396,
+      "optimizer_summary": {
+        "convergence_warnings": [],
+        "actual_native_fit_rows": 396,
+        "actual_auxiliary_source_targets": 0,
+        "source_fitting_performed_here": false,
+        "model_feature_count": 16,
+        "natural_missing_representation_rows": {},
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "iterations": 599,
+        "fitting_loss": 0.927187740399669,
+        "maximum_iterations": 5000
+      },
+      "source_functions_frozen": true,
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "cadence-assoc-005",
+      "fold": 0,
+      "actual_native_rows_observed": 387,
+      "actual_native_delta_targets_observed": 387,
+      "optimizer_summary": {
+        "convergence_warnings": [],
+        "actual_native_fit_rows": 387,
+        "actual_auxiliary_source_targets": 0,
+        "source_fitting_performed_here": false,
+        "model_feature_count": 32,
+        "natural_missing_representation_rows": {},
+        "synthetic_rows": 0,
+        "artificial_history_views": 0
+      },
+      "source_functions_frozen": true,
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "cadence-assoc-005",
+      "fold": 1,
+      "actual_native_rows_observed": 395,
+      "actual_native_delta_targets_observed": 395,
+      "optimizer_summary": {
+        "convergence_warnings": [],
+        "actual_native_fit_rows": 395,
+        "actual_auxiliary_source_targets": 0,
+        "source_fitting_performed_here": false,
+        "model_feature_count": 32,
+        "natural_missing_representation_rows": {},
+        "synthetic_rows": 0,
+        "artificial_history_views": 0
+      },
+      "source_functions_frozen": true,
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "cadence-assoc-005",
+      "fold": 2,
+      "actual_native_rows_observed": 385,
+      "actual_native_delta_targets_observed": 385,
+      "optimizer_summary": {
+        "convergence_warnings": [],
+        "actual_native_fit_rows": 385,
+        "actual_auxiliary_source_targets": 0,
+        "source_fitting_performed_here": false,
+        "model_feature_count": 32,
+        "natural_missing_representation_rows": {},
+        "synthetic_rows": 0,
+        "artificial_history_views": 0
+      },
+      "source_functions_frozen": true,
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "cadence-assoc-005",
+      "fold": 3,
+      "actual_native_rows_observed": 385,
+      "actual_native_delta_targets_observed": 385,
+      "optimizer_summary": {
+        "convergence_warnings": [],
+        "actual_native_fit_rows": 385,
+        "actual_auxiliary_source_targets": 0,
+        "source_fitting_performed_here": false,
+        "model_feature_count": 32,
+        "natural_missing_representation_rows": {},
+        "synthetic_rows": 0,
+        "artificial_history_views": 0
+      },
+      "source_functions_frozen": true,
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "cadence-assoc-005",
+      "fold": 4,
+      "actual_native_rows_observed": 396,
+      "actual_native_delta_targets_observed": 396,
+      "optimizer_summary": {
+        "convergence_warnings": [],
+        "actual_native_fit_rows": 396,
+        "actual_auxiliary_source_targets": 0,
+        "source_fitting_performed_here": false,
+        "model_feature_count": 32,
+        "natural_missing_representation_rows": {},
+        "synthetic_rows": 0,
+        "artificial_history_views": 0
+      },
+      "source_functions_frozen": true,
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "cadence-assoc-022",
+      "fold": 0,
+      "actual_native_rows_observed": 387,
+      "actual_native_delta_targets_observed": 387,
+      "optimizer_summary": {
+        "convergence_warnings": [],
+        "actual_native_fit_rows": 387,
+        "actual_auxiliary_source_targets": 976,
+        "source_fitting_performed_here": false,
+        "model_feature_count": 14,
+        "natural_missing_representation_rows": {
+          "cadence_association_computed_source_state6to20": 4
+        },
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "iterations": 372,
+        "fitting_loss": 0.9400810262240631,
+        "maximum_iterations": 5000
+      },
+      "source_functions_frozen": true,
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "cadence-assoc-022",
+      "fold": 1,
+      "actual_native_rows_observed": 395,
+      "actual_native_delta_targets_observed": 395,
+      "optimizer_summary": {
+        "convergence_warnings": [],
+        "actual_native_fit_rows": 395,
+        "actual_auxiliary_source_targets": 976,
+        "source_fitting_performed_here": false,
+        "model_feature_count": 14,
+        "natural_missing_representation_rows": {
+          "cadence_association_computed_source_state6to20": 4
+        },
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "iterations": 1907,
+        "fitting_loss": 0.9116132144865938,
+        "maximum_iterations": 5000
+      },
+      "source_functions_frozen": true,
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "cadence-assoc-022",
+      "fold": 2,
+      "actual_native_rows_observed": 385,
+      "actual_native_delta_targets_observed": 385,
+      "optimizer_summary": {
+        "convergence_warnings": [],
+        "actual_native_fit_rows": 385,
+        "actual_auxiliary_source_targets": 976,
+        "source_fitting_performed_here": false,
+        "model_feature_count": 14,
+        "natural_missing_representation_rows": {
+          "cadence_association_computed_source_state6to20": 4
+        },
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "iterations": 468,
+        "fitting_loss": 0.9138833113453851,
+        "maximum_iterations": 5000
+      },
+      "source_functions_frozen": true,
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "cadence-assoc-022",
+      "fold": 3,
+      "actual_native_rows_observed": 385,
+      "actual_native_delta_targets_observed": 385,
+      "optimizer_summary": {
+        "convergence_warnings": [],
+        "actual_native_fit_rows": 385,
+        "actual_auxiliary_source_targets": 976,
+        "source_fitting_performed_here": false,
+        "model_feature_count": 14,
+        "natural_missing_representation_rows": {
+          "cadence_association_computed_source_state6to20": 4
+        },
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "iterations": 721,
+        "fitting_loss": 0.8705243823156874,
+        "maximum_iterations": 5000
+      },
+      "source_functions_frozen": true,
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "cadence-assoc-022",
+      "fold": 4,
+      "actual_native_rows_observed": 396,
+      "actual_native_delta_targets_observed": 396,
+      "optimizer_summary": {
+        "convergence_warnings": [],
+        "actual_native_fit_rows": 396,
+        "actual_auxiliary_source_targets": 976,
+        "source_fitting_performed_here": false,
+        "model_feature_count": 14,
+        "natural_missing_representation_rows": {
+          "cadence_association_computed_source_state6to20": 0
+        },
+        "synthetic_rows": 0,
+        "artificial_history_views": 0,
+        "iterations": 326,
+        "fitting_loss": 0.9321466394382238,
+        "maximum_iterations": 5000
+      },
+      "source_functions_frozen": true,
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "cadence-assoc-027",
+      "fold": 0,
+      "actual_native_rows_observed": 387,
+      "actual_native_delta_targets_observed": 387,
+      "optimizer_summary": {
+        "convergence_warnings": [],
+        "actual_native_fit_rows": 387,
+        "actual_auxiliary_source_targets": 976,
+        "source_fitting_performed_here": false,
+        "model_feature_count": 30,
+        "natural_missing_representation_rows": {
+          "cadence_association_computed_source_state6to20": 4
+        },
+        "synthetic_rows": 0,
+        "artificial_history_views": 0
+      },
+      "source_functions_frozen": true,
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "cadence-assoc-027",
+      "fold": 1,
+      "actual_native_rows_observed": 395,
+      "actual_native_delta_targets_observed": 395,
+      "optimizer_summary": {
+        "convergence_warnings": [],
+        "actual_native_fit_rows": 395,
+        "actual_auxiliary_source_targets": 976,
+        "source_fitting_performed_here": false,
+        "model_feature_count": 30,
+        "natural_missing_representation_rows": {
+          "cadence_association_computed_source_state6to20": 4
+        },
+        "synthetic_rows": 0,
+        "artificial_history_views": 0
+      },
+      "source_functions_frozen": true,
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "cadence-assoc-027",
+      "fold": 2,
+      "actual_native_rows_observed": 385,
+      "actual_native_delta_targets_observed": 385,
+      "optimizer_summary": {
+        "convergence_warnings": [],
+        "actual_native_fit_rows": 385,
+        "actual_auxiliary_source_targets": 976,
+        "source_fitting_performed_here": false,
+        "model_feature_count": 30,
+        "natural_missing_representation_rows": {
+          "cadence_association_computed_source_state6to20": 4
+        },
+        "synthetic_rows": 0,
+        "artificial_history_views": 0
+      },
+      "source_functions_frozen": true,
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "cadence-assoc-027",
+      "fold": 3,
+      "actual_native_rows_observed": 385,
+      "actual_native_delta_targets_observed": 385,
+      "optimizer_summary": {
+        "convergence_warnings": [],
+        "actual_native_fit_rows": 385,
+        "actual_auxiliary_source_targets": 976,
+        "source_fitting_performed_here": false,
+        "model_feature_count": 30,
+        "natural_missing_representation_rows": {
+          "cadence_association_computed_source_state6to20": 4
+        },
+        "synthetic_rows": 0,
+        "artificial_history_views": 0
+      },
+      "source_functions_frozen": true,
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "cadence-assoc-027",
+      "fold": 4,
+      "actual_native_rows_observed": 396,
+      "actual_native_delta_targets_observed": 396,
+      "optimizer_summary": {
+        "convergence_warnings": [],
+        "actual_native_fit_rows": 396,
+        "actual_auxiliary_source_targets": 976,
+        "source_fitting_performed_here": false,
+        "model_feature_count": 30,
+        "natural_missing_representation_rows": {
+          "cadence_association_computed_source_state6to20": 0
+        },
+        "synthetic_rows": 0,
+        "artificial_history_views": 0
+      },
+      "source_functions_frozen": true,
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "cadence-assoc-029",
+      "fold": 0,
+      "actual_native_rows_observed": 387,
+      "actual_native_delta_targets_observed": 387,
+      "optimizer_summary": {
+        "convergence_warnings": [],
+        "actual_native_fit_rows": 387,
+        "actual_auxiliary_source_targets": 976,
+        "source_fitting_performed_here": false,
+        "model_feature_count": 31,
+        "natural_missing_representation_rows": {
+          "cadence_association_computed_source_state6to20": 4,
+          "cadence_association_computed_source_state_difference": 6
+        },
+        "synthetic_rows": 0,
+        "artificial_history_views": 0
+      },
+      "source_functions_frozen": true,
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "cadence-assoc-029",
+      "fold": 1,
+      "actual_native_rows_observed": 395,
+      "actual_native_delta_targets_observed": 395,
+      "optimizer_summary": {
+        "convergence_warnings": [],
+        "actual_native_fit_rows": 395,
+        "actual_auxiliary_source_targets": 976,
+        "source_fitting_performed_here": false,
+        "model_feature_count": 31,
+        "natural_missing_representation_rows": {
+          "cadence_association_computed_source_state6to20": 4,
+          "cadence_association_computed_source_state_difference": 6
+        },
+        "synthetic_rows": 0,
+        "artificial_history_views": 0
+      },
+      "source_functions_frozen": true,
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "cadence-assoc-029",
+      "fold": 2,
+      "actual_native_rows_observed": 385,
+      "actual_native_delta_targets_observed": 385,
+      "optimizer_summary": {
+        "convergence_warnings": [],
+        "actual_native_fit_rows": 385,
+        "actual_auxiliary_source_targets": 976,
+        "source_fitting_performed_here": false,
+        "model_feature_count": 31,
+        "natural_missing_representation_rows": {
+          "cadence_association_computed_source_state6to20": 4,
+          "cadence_association_computed_source_state_difference": 4
+        },
+        "synthetic_rows": 0,
+        "artificial_history_views": 0
+      },
+      "source_functions_frozen": true,
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "cadence-assoc-029",
+      "fold": 3,
+      "actual_native_rows_observed": 385,
+      "actual_native_delta_targets_observed": 385,
+      "optimizer_summary": {
+        "convergence_warnings": [],
+        "actual_native_fit_rows": 385,
+        "actual_auxiliary_source_targets": 976,
+        "source_fitting_performed_here": false,
+        "model_feature_count": 31,
+        "natural_missing_representation_rows": {
+          "cadence_association_computed_source_state6to20": 4,
+          "cadence_association_computed_source_state_difference": 6
+        },
+        "synthetic_rows": 0,
+        "artificial_history_views": 0
+      },
+      "source_functions_frozen": true,
+      "reload_without_current_truth_or_ids": true
+    },
+    {
+      "candidate_id": "cadence-assoc-029",
+      "fold": 4,
+      "actual_native_rows_observed": 396,
+      "actual_native_delta_targets_observed": 396,
+      "optimizer_summary": {
+        "convergence_warnings": [],
+        "actual_native_fit_rows": 396,
+        "actual_auxiliary_source_targets": 976,
+        "source_fitting_performed_here": false,
+        "model_feature_count": 31,
+        "natural_missing_representation_rows": {
+          "cadence_association_computed_source_state6to20": 0,
+          "cadence_association_computed_source_state_difference": 2
+        },
+        "synthetic_rows": 0,
+        "artificial_history_views": 0
+      },
+      "source_functions_frozen": true,
+      "reload_without_current_truth_or_ids": true
+    }
+  ],
+  "actual_native_target_calls_observed": 25,
+  "convergence_warning_folds_in_grid": [],
+  "winner_id": "cadence-assoc-001",
+  "best_cv_accuracy": 0.6379721574248428,
+  "new_test_gate_passed": false,
+  "original_training_cases": 487,
+  "original_test_cases": 179,
+  "best_verified_test_correct": 108,
+  "best_verified_test_accuracy": 0.6033519553072626,
+  "target_accuracy": 0.8,
+  "achieved": false,
+  "scope": "Original public concurrent source6-20 physiology/RPE association and native exact0-10 person-held targets remain distinct. All native query sensors were actually completed before the query. Source states/differences are computed inputs, not measured labels or new rows. No synthetic data, source/target scale conversion, invented source clocks, artificial histories, case filtering, changed denominator or native test tuning."
+}

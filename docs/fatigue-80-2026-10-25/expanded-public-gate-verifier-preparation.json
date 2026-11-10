@@ -1,0 +1,16 @@
+{
+  "preparation": "passed",
+  "preparation_code_sha256": "a49b0e4dddd0df7e64892d833c4231e3ccf0d1ccab296c251edc2c62e1572657",
+  "frozen_sources_sha256": {
+    "audit_fatigue_public_change_gate.py": "ba8003db12b8287c1a2cc2175c0053c19cf8475e1f955badcedc7cb772372402",
+    "evaluate_fatigue_public_change_gate.py": "f80f17171d878b09e0cfe4ff0442b074a11fe54d8591bd3a39870f75fd583c46"
+  },
+  "derived_files_sha256": {
+    "audit_fatigue_expanded_public_gate.py": "2e978d511bc1cb846e6f1778e62c264a927fecd56920221fa14d2181861b6cab",
+    "evaluate_fatigue_expanded_public_gate.py": "59966a78cb63de83ff6e999a36324114b3fecede82e485b5b44aa19ef48ecc56"
+  },
+  "historical_sources_modified": false,
+  "new_predictive_estimator_fits": 0,
+  "new_test_predictions_computed": 0,
+  "changes": "Independent six-head weighted BCE/loss/gradient,including gait-only encoder gradient and inactive-source exclusion. All24OOFmetrics/80fold artifacts and80independent refits with80actual backward steps each. Matched legacy/total-mass/native-only controls;original179qualified-test path."
+}

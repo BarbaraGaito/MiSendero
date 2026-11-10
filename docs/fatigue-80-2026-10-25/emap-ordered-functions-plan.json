@@ -1,0 +1,52 @@
+{
+  "version": 1,
+  "predeclared_at": "2026-10-27T17:45:10.150175+00:00",
+  "implementation_code_sha256": "76f84c44b60ef2a2b9d858e911324bbc0b6321be852ce2e79be15fd4c648b189",
+  "preceding_study_required_complete_and_audited": "emap-ordered-history-transfer-80-v1",
+  "fitting_context_diagnostic_sha256": "536a27bd39d088a689d9f6824fe9bb58dc2122544886cf94d0824bdcab73e124",
+  "planned_configurations_including_controls": 10,
+  "inherited_controls": 4,
+  "planned_native_recipes": 6,
+  "planned_new_native_folds": 30,
+  "source_algorithms": [
+    "ridge",
+    "svr",
+    "random_forest"
+  ],
+  "native_members": [
+    "core",
+    "cat"
+  ],
+  "source_order_functions": {
+    "T2": {
+      "actual_fitting_targets": 83,
+      "features": [
+        "prior_borg"
+      ]
+    },
+    "T3": {
+      "actual_fitting_targets": 83,
+      "features": [
+        "prior_borg",
+        "prior2_borg"
+      ]
+    },
+    "T4": {
+      "actual_fitting_targets": 82,
+      "features": [
+        "prior_borg",
+        "prior2_borg"
+      ]
+    }
+  },
+  "worker_sts_inclusion_rule": "Fixed separately for each native member from its best new preceding audited native CV recipe. Existing source functions remain frozen.",
+  "control_rule": "Preceding original core/global Cat controls and best new source recipe for each native member.",
+  "native_phase_assignment_performed": false,
+  "source_labels_changed": false,
+  "source_or_native_fitting_started": false,
+  "synthetic_rows": 0,
+  "original_native_training_cases": 487,
+  "original_native_test_cases": 179,
+  "minimum_cv_for_original_test_evaluation": 0.65,
+  "target_accuracy": 0.8
+}

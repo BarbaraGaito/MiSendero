@@ -165,7 +165,7 @@ export default function RestBreakScreen() {
         )}
       </Card>
 
-      <Card tone="orange">
+      <Card tone="secondary">
         <Text style={styles.cardTitle}>Sugerencia</Text>
         <Text style={styles.cardText}>
           Aprovecha la pausa para revisar agua, abrigo y senal antes de seguir.

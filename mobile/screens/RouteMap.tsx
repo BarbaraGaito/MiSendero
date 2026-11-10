@@ -6,10 +6,12 @@ import * as Network from "expo-network";
 import { router, useLocalSearchParams } from "expo-router";
 import { useScreenFocused } from "../hooks/useScreenFocused";
 import { ReportActions } from "../components/ReportActions";
+import { ReportFeedbackControls } from "../components/ReportFeedbackControls";
+import { buildReportRouteRanges, getUpcomingReport, isActiveReport } from "../../services/reportExperience";
 import { OfflineConnectionBanner } from "../components/OfflineConnectionBanner";
 import { useIsOffline } from "../../services/ConnectivityProvider";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Modal, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Modal, Pressable, ScrollView, StyleSheet, Text, View, Vibration } from "react-native";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import { getTrailById, getTrailReports, getTrailWeather } from "../../services/trailRepository";
 import { getOfflineMapByTrailId, getVerifiedOfflineMapByTrailId } from "../../services/offlineMaps";
@@ -153,11 +155,18 @@ export default function Screen04RouteMap() {
   const [trail, setTrail] = useState<Trail | null>(null);
   const [weather, setWeather] = useState<TrailWeather | null>(null);
   const [reports, setReports] = useState<TrailReport[]>([]);
+  const [showAllReports, setShowAllReports] = useState(false);
   const [isWifiConnected, setIsWifiConnected] = useState(false);
   const [hasInternetConnection, setHasInternetConnection] = useState(false);
   const [isContextLoading, setIsContextLoading] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [isMapInteracting, setIsMapInteracting] = useState(false);
+  const [mapFooterHeight, setMapFooterHeight] = useState(250);
+  const [focusedReportId, setFocusedReportId] = useState<number | null>(null);
+  const [dismissedReportKey, setDismissedReportKey] = useState<string | null>(null);
+  const [proximityHeight, setProximityHeight] = useState(110);
+  const navigationProgressRef = useRef<{ context: string; progress: number | null; direction: 1 | -1 }>({ context: "", progress: null, direction: 1 });
+  const announcedReportsRef = useRef(new Set<string>());
   const [isDownloaded, setIsDownloaded] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [wearableRuntime, setWearableRuntime] =
@@ -192,7 +201,7 @@ export default function Screen04RouteMap() {
         setIsDownloaded(context.isDownloaded);
         setError(null);
 
-        if (!context.hasWifi) {
+        if (!context.hasInternet) {
           setWeather(null);
           return;
         }
@@ -230,6 +239,41 @@ export default function Screen04RouteMap() {
       isMounted = false;
     };
   }, [trailId, offline]);
+
+  // Refresh on return from a report and while the map is in the foreground.
+  useEffect(() => {
+    if (!isFocused || !trail || trail.id !== trailId || !hasInternetConnection || offline === "1" || isOffline) return;
+    let active = true;
+    let refreshing = false;
+    const refresh = async () => {
+      if (refreshing) return;
+      refreshing = true;
+      try {
+        const fresh = await getTrailReports(trailId);
+        if (active) setReports(fresh);
+      } catch { /* Keep the last reports when the connection drops. */ }
+      finally { refreshing = false; }
+    };
+    void refresh();
+    const timer = setInterval(() => { void refresh(); }, 30000);
+    return () => { active = false; clearInterval(timer); };
+  }, [isFocused, trail?.id, trailId, hasInternetConnection, offline, isOffline]);
+
+  useEffect(() => {
+    if (!isFocused || !trail || !hasInternetConnection || isOffline || offline === "1") return;
+    let active = true;
+    const timer = setInterval(() => {
+      void getTrailWeather(trailId).then(value => { if (active) setWeather(value); }).catch(() => { if (active) setWeather(null); });
+    }, 15 * 60 * 1000);
+    return () => { active = false; clearInterval(timer); };
+  }, [isFocused, trail?.id, trailId, hasInternetConnection, isOffline, offline]);
+
+  const reportAtCoordinate = ({ coordinate, perspective }: { coordinate: Coordinate; perspective: boolean }) => {
+    router.push({ pathname: "/reportar-terreno", params: {
+      id: String(trailId), ...(isActiveRoute ? { startedAt: String(startedAtMs) } : {}),
+      latitude: String(coordinate[0]), longitude: String(coordinate[1]), perspective: perspective ? "1" : "0",
+    } });
+  };
 
   const refreshWearableMetrics = useCallback(async () => {
     const state = await getRouteSession(trailId, startedAtMs);
@@ -349,6 +393,27 @@ export default function Screen04RouteMap() {
     !isTestingLocation &&
     routeDeviationMeters !== null &&
     routeDeviationMeters > ROUTE_DEVIATION_WARNING_METERS;
+  const reportRanges = useMemo(() => buildReportRouteRanges(reports, trailId, routePoints), [reports, trailId, routePoints]);
+  const progressContext = `${trailId}:${startedAtMs}`;
+  const previousNavigation = navigationProgressRef.current;
+  const previousProgress = previousNavigation.context === progressContext ? previousNavigation.progress : null;
+  const direction: 1 | -1 = previousProgress != null && traveledMeters != null && Math.abs(traveledMeters - previousProgress) >= 10
+    ? traveledMeters >= previousProgress ? 1 : -1 : previousNavigation.context === progressContext ? previousNavigation.direction : 1;
+  useEffect(() => {
+    const previous = navigationProgressRef.current;
+    const keepAnchor = previous.context === progressContext && previous.progress != null && traveledMeters != null && Math.abs(traveledMeters - previous.progress) < 10;
+    navigationProgressRef.current = { context: progressContext, progress: keepAnchor ? previous.progress : traveledMeters, direction };
+  }, [progressContext, traveledMeters, direction]);
+  const upcomingReport = useMemo(() => getUpcomingReport(reportRanges, traveledMeters, direction), [reportRanges, traveledMeters, direction]);
+  const upcomingKey = upcomingReport ? `${progressContext}:${upcomingReport.report.id}:${upcomingReport.occurrence}:${direction}` : null;
+  const showUpcomingReport = Boolean(upcomingReport && isActiveRoute && isFocused && !isPaused && !isOffRoute &&
+    !isLoading && (location?.accuracy == null || location.accuracy <= 80) && dismissedReportKey !== upcomingKey);
+  useEffect(() => {
+    if (!showUpcomingReport || !upcomingReport || !upcomingKey || announcedReportsRef.current.has(upcomingKey) || isTestingLocation) return;
+    announcedReportsRef.current.add(upcomingKey);
+    if (upcomingReport.report.blocks_path || ["Alta", "Critica"].includes(upcomingReport.report.severity)) Vibration.vibrate(180);
+  }, [showUpcomingReport, upcomingKey, upcomingReport, isTestingLocation]);
+  const refreshReports = async () => setReports(await getTrailReports(trailId));
   const simulateWearableScenario = async (scenario: WearableSimulationScenario) => {
     if (isSimulatingWearable) return;
 
@@ -380,9 +445,10 @@ export default function Screen04RouteMap() {
   const testingBannerTop = activeBannerTop + primaryBannerHeight + 10;
   const testingBannerHeight = isTestingLocation ? 158 : 0;
   const mapControlsTop =
-    activeBannerTop + primaryBannerHeight + testingBannerHeight + 18;
-  const hasBlockingReport = reports.some((report) => report.blocks_path);
-  const severeReports = reports.filter((report) =>
+    activeBannerTop + primaryBannerHeight + testingBannerHeight + 18 + (showUpcomingReport ? proximityHeight + 8 : 0);
+  const proximityTop = activeBannerTop + primaryBannerHeight + testingBannerHeight + 10;
+  const hasBlockingReport = reports.some((report) => isActiveReport(report) && report.blocks_path);
+  const severeReports = reports.filter(isActiveReport).filter((report) =>
     ["Alta", "Critica"].includes(report.severity)
   ).length;
   const simulatedWearableLabel = wearableRuntime?.latestSample?.simulated ? " (simulado)" : "";
@@ -399,11 +465,17 @@ export default function Screen04RouteMap() {
         <TrailMap
           offlineOnly={offline === "1"}
           trail={trail}
+          reports={reports}
+          focusedReportId={focusedReportId}
+          onReportClosed={() => setFocusedReportId(null)}
+          onReportsChanged={refreshReports}
+          onReportCoordinate={reportAtCoordinate}
           weather={weather}
           fitRoute
           immersive
           initialPerspective={false}
           navigationMode
+          bottomOverlayInset={mapFooterHeight + 8}
           showDetailsCard={false}
           showMapNotices={false}
           controlsTopOffset={mapControlsTop}
@@ -421,6 +493,21 @@ export default function Screen04RouteMap() {
             </Text>
           </View>
         </View>
+        {showUpcomingReport && upcomingReport ? <View accessibilityLiveRegion="polite" onLayout={event => setProximityHeight(event.nativeEvent.layout.height)}
+          style={[styles.proximityBanner, { top: proximityTop }]}>
+          <View style={styles.proximityHeader}>
+            <Ionicons name="warning" size={22} color={upcomingReport.report.blocks_path ? colors.danger : colors.orange} />
+            <View style={{ flex: 1 }}>
+              <Text accessibilityRole="alert" style={styles.proximityTitle}>{upcomingReport.report.blocks_path ? "Aviso de paso bloqueado" : "Aviso en tu recorrido"}</Text>
+              <Text style={styles.proximityBody}>{upcomingReport.distanceMeters === 0 ? "Entrando en la zona reportada" : `A unos ${formatDistance(upcomingReport.distanceMeters)} por el sendero`} · ubicación aproximada</Text>
+            </View>
+          </View>
+          <Text style={styles.proximityBody}>{upcomingReport.report.issue_summary}</Text>
+          <View style={styles.proximityActions}>
+            <Pressable accessibilityRole="button" onPress={() => setFocusedReportId(upcomingReport.report.id)} style={styles.proximityButton}><Text style={styles.proximityButtonText}>Ver aviso</Text></Pressable>
+            <Pressable accessibilityRole="button" accessibilityLabel="Ocultar aviso cercano" onPress={() => setDismissedReportKey(upcomingKey)} style={styles.proximityButton}><Text style={styles.proximityButtonText}>Ocultar</Text></Pressable>
+          </View>
+        </View> : null}
 
         {isLoading || error ? (
           <View style={[styles.activeStatus, { top: activeBannerTop }]}>
@@ -586,7 +673,7 @@ export default function Screen04RouteMap() {
           />
         ) : null}
 
-        <View style={[styles.activeFooter, { paddingBottom: Math.max(16, insets.bottom + 10) }]}>
+        <View onLayout={event => setMapFooterHeight(event.nativeEvent.layout.height)} style={[styles.activeFooter, { paddingBottom: Math.max(16, insets.bottom + 10) }]}>
           {wearableRuntime?.prediction && wearableRuntime.latestSample ? (
             <View
               style={[
@@ -794,6 +881,9 @@ export default function Screen04RouteMap() {
         <TrailMap
           offlineOnly={offline === "1"}
           trail={trail}
+          reports={reports}
+          onReportsChanged={refreshReports}
+          onReportCoordinate={reportAtCoordinate}
           weather={weather}
           allowSatellite={hasInternetConnection}
           onInteractionChange={setIsMapInteracting}
@@ -897,7 +987,7 @@ export default function Screen04RouteMap() {
             <Text style={styles.loadingText}>Cargando reportes del sendero...</Text>
           ) : reports.length > 0 ? (
             <View style={styles.reportList}>
-              {reports.slice(0, 3).map((report) => (
+              {(showAllReports ? reports : reports.slice(0, 3)).map((report) => (
                 <View key={report.id} style={styles.reportItem}>
                   <View style={styles.reportIcon}>
                     <Ionicons
@@ -925,10 +1015,14 @@ export default function Screen04RouteMap() {
                         {report.details}
                       </Text>
                     ) : null}
+                    <ReportFeedbackControls report={report} onChanged={refreshReports} />
                     <ReportActions report={report} onChanged={async () => setReports(await getTrailReports(trailId))} />
                   </View>
                 </View>
               ))}
+              {reports.length > 3 ? <PrimaryButton tone="secondary"
+                label={showAllReports ? "Ver menos reportes" : `Ver todos los reportes (${reports.length})`}
+                onPress={() => setShowAllReports(value => !value)} /> : null}
             </View>
           ) : (
             <Text style={styles.loadingText}>
@@ -1191,6 +1285,14 @@ function WearableChip({ label, value }: { label: string; value: string }) {
 }
 
 const styles = StyleSheet.create({
+  proximityBanner: { position: "absolute", left: 14, right: 14, borderRadius: 17, padding: 12, gap: 6,
+    backgroundColor: "#FFF7E5", borderColor: "#E5C37E", borderWidth: 1, zIndex: 15 },
+  proximityHeader: { flexDirection: "row", alignItems: "center", gap: 8 },
+  proximityTitle: { fontSize: 14, fontWeight: "800", color: colors.ink },
+  proximityBody: { fontSize: 12, lineHeight: 17, color: colors.ink },
+  proximityActions: { flexDirection: "row", gap: 8 },
+  proximityButton: { minHeight: 44, paddingHorizontal: 15, borderRadius: 12, backgroundColor: "#FFFFFF", justifyContent: "center" },
+  proximityButtonText: { color: colors.greenDark, fontWeight: "800", fontSize: 12 },
   activeShell: {
     backgroundColor: colors.softer,
     flex: 1,

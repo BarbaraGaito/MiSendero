@@ -1,0 +1,218 @@
+{
+  "selection_used_test": false,
+  "holdout_used_for_publication": true,
+  "datasets_combined": false,
+  "models": {
+    "apn_route_difficulty": {
+      "algorithm": "random_forest",
+      "rows": 52,
+      "publication_decision": "published_candidate",
+      "test_rows": 13,
+      "test_groups": 1,
+      "before": {
+        "accuracy": 0.7692307692307693,
+        "precision_macro": 0.75,
+        "recall_macro": 0.4583333333333333,
+        "f1_macro": 0.5416666666666666,
+        "precision_weighted": 1.0,
+        "recall_weighted": 0.7692307692307693,
+        "f1_weighted": 0.8333333333333334,
+        "support": 13
+      },
+      "after": {
+        "accuracy": 0.8461538461538461,
+        "precision_macro": 0.5416666666666666,
+        "recall_macro": 0.5416666666666666,
+        "f1_macro": 0.5416666666666666,
+        "precision_weighted": 0.8461538461538461,
+        "recall_weighted": 0.8461538461538461,
+        "f1_weighted": 0.8461538461538461,
+        "support": 13
+      },
+      "delta": {
+        "accuracy": 0.07692307692307687,
+        "precision_macro": -0.20833333333333337,
+        "recall_macro": 0.08333333333333331,
+        "f1_macro": 0.0
+      },
+      "cv_before": 0.2223418534080299,
+      "cv_after": 0.26944444444444443,
+      "corrected": 1,
+      "regressed": 0,
+      "unchanged_holdout_verified": true,
+      "uncertainty": {
+        "independent_groups": 1,
+        "intervals": null,
+        "reason": "One held-out group cannot estimate variation across independent groups."
+      }
+    },
+    "fatigue": {
+      "algorithm": "random_forest",
+      "rows": 666,
+      "publication_decision": "published_candidate",
+      "test_rows": 179,
+      "test_groups": 12,
+      "before": {
+        "accuracy": 0.24022346368715083,
+        "precision_macro": 0.19479883824248143,
+        "recall_macro": 0.24985261651928317,
+        "f1_macro": 0.19037124516271817,
+        "precision_weighted": 0.291638819740472,
+        "recall_weighted": 0.24022346368715083,
+        "f1_weighted": 0.24572388434594963,
+        "support": 179
+      },
+      "after": {
+        "accuracy": 0.31843575418994413,
+        "precision_macro": 0.20448882434769533,
+        "recall_macro": 0.2089293422626756,
+        "f1_macro": 0.1990222026892181,
+        "precision_weighted": 0.3114580944150461,
+        "recall_weighted": 0.31843575418994413,
+        "f1_weighted": 0.3052561789265925,
+        "support": 179
+      },
+      "delta": {
+        "accuracy": 0.0782122905027933,
+        "precision_macro": 0.009689986105213905,
+        "recall_macro": -0.04092327425660758,
+        "f1_macro": 0.008650957526499942
+      },
+      "cv_before": 0.17619695386711626,
+      "cv_after": 0.21032933004721807,
+      "corrected": 28,
+      "regressed": 14,
+      "unchanged_holdout_verified": true,
+      "uncertainty": {
+        "method": "paired_percentile_cluster_bootstrap",
+        "seed": 42,
+        "repetitions": 2000,
+        "independent_groups": 12,
+        "confidence_level": 0.95,
+        "intervals": {
+          "accuracy_delta": [
+            0.022346368715083775,
+            0.1292317336380371
+          ],
+          "f1_macro_delta": [
+            -0.0419660379834847,
+            0.044415894179391985
+          ]
+        },
+        "interpretation": "Descriptive uncertainty on the already published holdout; does not replace new external validation."
+      }
+    },
+    "physio_risk": {
+      "algorithm": "extra_trees",
+      "rows": 24,
+      "publication_decision": "retained_incumbent",
+      "test_rows": 8,
+      "test_groups": 8,
+      "before": {
+        "accuracy": 0.625,
+        "precision_macro": 0.6333333333333333,
+        "recall_macro": 0.625,
+        "f1_macro": 0.6190476190476191,
+        "precision_weighted": 0.6333333333333333,
+        "recall_weighted": 0.625,
+        "f1_weighted": 0.6190476190476191,
+        "support": 8
+      },
+      "after": {
+        "accuracy": 0.5,
+        "precision_macro": 0.5,
+        "recall_macro": 0.5,
+        "f1_macro": 0.5,
+        "precision_weighted": 0.5,
+        "recall_weighted": 0.5,
+        "f1_weighted": 0.5,
+        "support": 8
+      },
+      "delta": {
+        "accuracy": -0.125,
+        "precision_macro": -0.1333333333333333,
+        "recall_macro": -0.125,
+        "f1_macro": -0.11904761904761907
+      },
+      "cv_before": 0.6666666666666666,
+      "cv_after": 0.7333333333333332,
+      "corrected": 0,
+      "regressed": 1,
+      "unchanged_holdout_verified": true,
+      "uncertainty": {
+        "method": "paired_percentile_cluster_bootstrap",
+        "seed": 42,
+        "repetitions": 2000,
+        "independent_groups": 8,
+        "confidence_level": 0.95,
+        "intervals": {
+          "accuracy_delta": [
+            -0.375,
+            0.0
+          ],
+          "f1_macro_delta": [
+            -0.4000000000000001,
+            0.0
+          ]
+        },
+        "interpretation": "Descriptive uncertainty on the already published holdout; does not replace new external validation."
+      }
+    },
+    "route_difficulty": {
+      "algorithm": "random_forest",
+      "rows": 288,
+      "publication_decision": "published_candidate",
+      "test_rows": 49,
+      "test_groups": 2,
+      "before": {
+        "accuracy": 0.9591836734693877,
+        "precision_macro": 0.32978723404255317,
+        "recall_macro": 0.25,
+        "f1_macro": 0.27598566308243727,
+        "precision_weighted": 0.9596178897090751,
+        "recall_weighted": 0.9591836734693877,
+        "f1_weighted": 0.9558920342330481,
+        "support": 49
+      },
+      "after": {
+        "accuracy": 0.9591836734693877,
+        "precision_macro": 0.3263888888888889,
+        "recall_macro": 0.3333333333333333,
+        "f1_macro": 0.32978723404255317,
+        "precision_weighted": 0.9200680272108844,
+        "recall_weighted": 0.9591836734693877,
+        "f1_weighted": 0.939209726443769,
+        "support": 49
+      },
+      "delta": {
+        "accuracy": 0.0,
+        "precision_macro": -0.003398345153664273,
+        "recall_macro": 0.08333333333333331,
+        "f1_macro": 0.053801570960115896
+      },
+      "cv_before": 0.10568729516097936,
+      "cv_after": 0.14818841289429524,
+      "corrected": 1,
+      "regressed": 1,
+      "unchanged_holdout_verified": true,
+      "uncertainty": {
+        "method": "paired_percentile_cluster_bootstrap",
+        "seed": 42,
+        "repetitions": 2000,
+        "independent_groups": 2,
+        "confidence_level": 0.95,
+        "intervals": {
+          "accuracy_delta": [
+            -0.02083333333333326,
+            1.0
+          ],
+          "f1_macro_delta": [
+            -0.11286509570655076,
+            0.16666666666666666
+          ]
+        },
+        "interpretation": "Descriptive uncertainty on the already published holdout; does not replace new external validation."
+      }
+    }
+  }
+}

@@ -6,7 +6,8 @@ if (!Number.isInteger(REPORT_STALE_AFTER_DAYS) || REPORT_STALE_AFTER_DAYS < 1 ||
 
 const cleanupStaleReports = async () => {
   const { rowCount } = await query(
-    `DELETE FROM trail_reports WHERE COALESCE(observed_at, created_at) <= now() - ($1 || ' days')::interval`,
+    `DELETE FROM trail_reports WHERE COALESCE(observed_at, created_at) <= now() - ($1 || ' days')::interval
+      AND id NOT IN (SELECT report_id FROM report_feedback WHERE last_seen_at > now() - ($1 || ' days')::interval)`,
     [REPORT_STALE_AFTER_DAYS]
   );
 

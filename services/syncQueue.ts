@@ -3,11 +3,11 @@ import { randomUUID } from "expo-crypto";
 import * as Network from "expo-network";
 import { db, initDB } from "../database/database";
 import { getAuthSession } from "./authSession";
-import { createActivity, createEmergencyAlert, createTrailReport, getTrailReports, closeTripPlan, recordPrivacyDecision } from "./api";
+import { createActivity, createEmergencyAlert, createTrailReport, getTrailReports, closeTripPlan, recordPrivacyDecision, sendReportFeedback } from "./api";
 import { isAccountDeletionPending } from "./accountLifecycle";
 import { refreshOfflineTrailReports, getOfflineMaps } from "./offlineMaps";
 
-export type PendingEntityType = "trail_report" | "activity" | "emergency_alert" | "trip_check_in" | "privacy_decision";
+export type PendingEntityType = "trail_report" | "report_feedback" | "activity" | "emergency_alert" | "trip_check_in" | "privacy_decision";
 export type PendingStatus = "pending" | "syncing" | "synced" | "failed" | "abandoned";
 
 // After this many failed attempts, an operation stops being retried automatically
@@ -235,6 +235,11 @@ const dispatchOperation = async (
   token: string
 ): Promise<number | null> => {
   switch (operation.entityType) {
+    case "report_feedback": {
+      const payload = operation.payload as { reportId: number; feedback: "still_there" | "not_there" | "unsure"; observed_at: string };
+      await sendReportFeedback(payload.reportId, payload.feedback, payload.observed_at, token);
+      return payload.reportId;
+    }
     case "privacy_decision": {
       await recordPrivacyDecision(operation.payload, token);
       return null;

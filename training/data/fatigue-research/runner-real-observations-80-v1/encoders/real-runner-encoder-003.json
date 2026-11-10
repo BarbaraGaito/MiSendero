@@ -1,0 +1,145 @@
+{
+  "signature": {
+    "code_sha256": "9e2359bd61b59199f56003eca8c8e004f9785b0dab634c3ab567dc23be6c6747",
+    "native_dataset_sha256": "e4de1c4ccaa8239610bd62e93bc888c1260f1f891de32b9677052d3a0e3e4d00",
+    "member_specifications": {
+      "core": {
+        "features": [
+          "prior_borg",
+          "prior_age_minutes",
+          "prior2_borg",
+          "prior2_age_minutes",
+          "prior_borg_slope",
+          "prior_in_current_task",
+          "prior_count_current_task",
+          "elapsed_minutes",
+          "cumulative_active_minutes",
+          "task_order",
+          "terrain_stairs",
+          "terrain_ramp",
+          "terrain_flat_trail"
+        ],
+        "algorithm": "mlp",
+        "target_mode": "change_from_prior",
+        "params": {
+          "hidden_layer_sizes": [
+            16,
+            8
+          ],
+          "solver": "lbfgs",
+          "alpha": 10.0,
+          "max_iter": 1000
+        }
+      },
+      "cat": {
+        "id": "catboost-023",
+        "feature_set": "history_context",
+        "features": [
+          "prior_borg",
+          "prior_age_minutes",
+          "prior2_borg",
+          "prior2_age_minutes",
+          "prior_borg_slope",
+          "prior_in_current_task",
+          "prior_count_current_task",
+          "elapsed_minutes",
+          "cumulative_active_minutes",
+          "task_order",
+          "task_feedback_first",
+          "task_feedback_total_rise",
+          "task_feedback_count",
+          "task_feedback_rate_mean",
+          "task_feedback_rate_median",
+          "task_feedback_since_last_increase",
+          "task_feedback_zero_fraction",
+          "task_feedback_linear_extrapolation",
+          "task_feedback_delta_1",
+          "task_feedback_interval_1",
+          "task_feedback_delta_2",
+          "task_feedback_interval_2",
+          "all_feedback_rate_mean",
+          "all_feedback_positive_fraction",
+          "completed_task_rise_mean",
+          "completed_task_rate_mean",
+          "previous_task_at_similar_elapsed_mean",
+          "previous_task_at_similar_elapsed_last",
+          "current_terrain"
+        ],
+        "depth": 3,
+        "l2_leaf_reg": 30.0,
+        "iterations": 900,
+        "target_mode": "change_from_prior",
+        "algorithm": "CatBoost_Ordered",
+        "learning_rate": 0.03,
+        "random_seed": 42
+      }
+    },
+    "cat_selection_sha256": "254d28707e034e4663ceca9e3017d97b32622d1e1379867ec489bd8bd28392d9",
+    "window_provenance_sha256": "4896cf8982169417980222abe8e94791a31ff7e7851ca7cfbcfc3083f2a5e7f0",
+    "public_real_data_policy_sha256": "fdfb112d20b1f22bae08032ed7d9f3d27ee784879674c32f8f65cc21fe69c028",
+    "source_receipt_sha256": "ce056fab8cc7202cb62e090258755f41ad5f176fd08f397543012280276fb79d",
+    "source_npz_sha256": "480d99af7ae8142750040d922ad5088059e9d10120b711a96259ef6db6068a2b",
+    "native_npz_sha256": "b2866aec31c83c75b672df8e7d2595a80489e0448408b914e2eb6a4b8c80628b",
+    "previous_selection_sha256": "5ecf2b48e40e1d4c0c6bfad0b486697070ddace95fa60bd61d60912d80709008",
+    "dependency_code_sha256": {
+      "fatigue_runner_transfer.py": "764019e056aa6d693b261d8bceeeeae362b34afef671f96e209dcce8387b3f63",
+      "fatigue_runner_windows.py": "2fd23e102538e520b238d15ff965423fa2e2de0c2cc13e6c669012f0e81f753d",
+      "fatigue_catboost.py": "8dac77d01b7a1ed0ef3308b63a8bf16587c1f65e6e4294b1ea8bf863cb58a1fe",
+      "fatigue_probability.py": "8321f0dc9313bd7207508ba417a90e9b2b80ec2fb45fe2591104e60fda66125c",
+      "fatigue_warm_sgd.py": "cd480a0fe2c31cc62d446525386b5c9be0adfae568ecdd1399fe85b571dd05b3",
+      "fatigue_dynamics_experiment.py": "5337f883c2d861a0255a399d78b6cb159b0526e43a0d2b4091b5043ee103f596"
+    },
+    "software_versions": {
+      "torch": "2.14.1+cpu",
+      "numpy": "2.5.4",
+      "pandas": "3.0.6",
+      "scikit-learn": "1.9.1",
+      "catboost": "1.2.10",
+      "joblib": "1.6.0"
+    },
+    "worker_processes": 2
+  },
+  "candidate": {
+    "id": "real-runner-encoder-003",
+    "epochs": 90,
+    "learning_rate": 0.001,
+    "weight_decay": 0.01,
+    "batch_size": 64,
+    "random_seed": 42,
+    "objective": "original_source_F_NF_protocol_BCE",
+    "artificial_input_transformations": false
+  },
+  "model_sha256": "48844f94db68ed9bd0046371e76214331621e0f877490bac8f8e112d622207c4",
+  "source_summary": {
+    "prepared_source_windows": 330,
+    "prepared_source_people": [
+      "006",
+      "007",
+      "008",
+      "011",
+      "012",
+      "013",
+      "014",
+      "015",
+      "017",
+      "018",
+      "019",
+      "020",
+      "021",
+      "022",
+      "023"
+    ],
+    "gradient_steps": 540,
+    "source_windows_used_for_gradient_updates": 330,
+    "person_and_condition_weight_total": 330.0,
+    "native_borg_targets_used": 0,
+    "artificial_sensor_rows": 0,
+    "artificial_history_rows": 0,
+    "source_input_masking": false,
+    "every_epoch_uses_each_original_window_once": true
+  },
+  "loss_endpoints": [
+    0.7000501574891986,
+    0.5182264660343979
+  ]
+}

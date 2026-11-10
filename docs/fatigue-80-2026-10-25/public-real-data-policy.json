@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "user_constraint_received_on": "2026-10-26",
+  "constraint": "Only real observations from public datasets. No synthetic data.",
+  "applies_to_all_further_fitting_and_model_selection": true,
+  "permitted_inputs": "Measured public sensor observations, actual earlier public self-reports, deterministic causal summaries of those measurements, ordinary preprocessing fitted on training participants, and forward-pass representations from models fitted solely on those public observations. Computed representations are not new measured examples or labels.",
+  "prohibited": [
+    "Invented or generated sensor observations",
+    "Invented, interpolated, pseudo-labeled or assumed-zero Borg targets",
+    "SMOTE, mixup and artificial extra training examples",
+    "Artificial history views or simulated missing-report training rows",
+    "Adoption of pretrained model weights whose documented pretraining used synthetic datasets"
+  ],
+  "historical_research": "Earlier studies remain archived for traceability. Families that fitted artificial history views or simulated missing sensor blocks are ineligible for further fitting or adoption under this constraint. Those transformations did not create real observations or new Borg measurements and never replaced the retained original real-report test model. Families are conservatively archived as a whole even when they also contain a real-data-only control.",
+  "archive_only_studies_with_artificial_input_training": [
+    "prior-view-augmentation-80-v1",
+    "view-probability-ensemble-80-v1",
+    "conditional-native-borg-80-v1",
+    "gaussian-process-80-v1",
+    "initialization-ensemble-80-v1",
+    "runner-supervised-transfer-80-v1",
+    "runner-anchor-transfer-80-v1",
+    "compact-physiology-80-v1",
+    "temporal-transfer-80-v1",
+    "tabular-transfer-80-v1"
+  ],
+  "additional_archival_reason": {
+    "tabular-transfer-80-v1": "The previously evaluated TabPFN v2 publicly available weights were pretrained on synthetic tabular tasks. They are excluded from further fitting/adoption under the new user constraint.",
+    "tabpfn_pretraining_primary_source": "https://www.nature.com/articles/s41586-024-08328-6"
+  },
+  "active_study": {
+    "directory": "source-transition-teachers-80-v1",
+    "native_fitting_original_reports": 487,
+    "original_reserved_test_reports": 179,
+    "auxiliary_source_actual_transition_targets": 249,
+    "source_names": ["WorkerFatigue", "STS"],
+    "teacher_targets": "Each is one actually observed source current Borg, paired with an actually observed earlier Borg from that same source session. They are subsets of existing audited public reports, not newly generated measurements.",
+    "native_fitting_models": ["Original-report MLP", "Original-report CatBoost"],
+    "artificial_history_views_used_for_fitting": false,
+    "synthetic_sensor_rows": 0,
+    "synthetic_target_rows": 0,
+    "auxiliary_predictions_are_observed_labels": false
+  }
+}

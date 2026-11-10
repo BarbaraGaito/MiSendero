@@ -1,0 +1,52 @@
+{
+  "review": "passed",
+  "review_code_sha256": "281ced33038d5a96e0b32260247fca19569693eaec5ddde8b11eae0191903ee9",
+  "selection_sha256": "537669595638e45149a73c5a9665b82ff6834e211efe56bed0194be3d12e2e5b",
+  "verification_sha256": "44efc040fcfa845bf0b389838ffc6bacd7b123c213536648004f7646630577f9",
+  "native_recent_input_verification_sha256": "639b4039658f9fb78688ffdad643153cc59746552426c0d48f1cd66aa5aff3b9",
+  "native_recent_provenance_sha256": "634530ad8d40f76e3957ccdcd6030455a647188faa72c9616562ec8792f73628",
+  "native_recent_dataset_sha256": "6eb86a4960866f0bd5ce3d57436b03fb51c59bf78cf466ee7268b38b36b0a23f",
+  "original_fitting_queries": 487,
+  "original_fitting_people": 28,
+  "paired_oof_comparisons": {
+    "core": {
+      "global_correct": 296,
+      "measured_zero_source_correct": 297,
+      "source_positive_correct": 296,
+      "source_corrected_vs_measured": 2,
+      "source_spoiled_vs_measured": 3,
+      "source_corrected_vs_global": 4,
+      "source_spoiled_vs_global": 4
+    },
+    "cat": {
+      "global_correct": 311,
+      "measured_zero_source_correct": 307,
+      "source_positive_correct": 309,
+      "source_corrected_vs_measured": 2,
+      "source_spoiled_vs_measured": 0,
+      "source_corrected_vs_global": 0,
+      "source_spoiled_vs_global": 2
+    }
+  },
+  "candidate_native_private_features": [
+    "current_hr_bpm",
+    "current_minus_prior_hr_bpm",
+    "current_over_prior_hr_ratio"
+  ],
+  "fitting_missing_counts": {
+    "current_hr_bpm": 0,
+    "current_minus_prior_hr_bpm": 2,
+    "current_over_prior_hr_ratio": 2
+  },
+  "current_hr_completed_before_query": true,
+  "prior_hr_completed_before_genuine_prior_report": true,
+  "source_current_bout_hr_to_be_introduced": false,
+  "source_private_native_context_to_be_fabricated": false,
+  "source_or_native_targets_to_be_rescaled": false,
+  "new_predictive_estimator_fits": 0,
+  "new_test_predictions_computed": 0,
+  "test_labels_inspected": false,
+  "synthetic_rows": 0,
+  "model_comparison_predeclared": false,
+  "interpretation": "The new shared encoder uses actual prior physiology,while its native-private context remains the old13history/context inputs. Recent native HR and deterministic change from genuine prior HR are already measured and causally available on fitting queries. A distinct comparison can add those3native-private inputs,with matched source-zero/source controls and unchanged shared source inputs/weights. They must not be fabricated for the source domain. Paired error counts are fitting-participant diagnostics;current-state availability does not establish improved accuracy. All179original test cases remain outside this review."
+}

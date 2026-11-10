@@ -1,0 +1,7995 @@
+{
+  "code_sha256": "4dac2688f3c9b6ffda5ccfbf61db2546abc1455877de6590597aafa41297ea58",
+  "selection_sha256": "ad935540c8a6ebf5924156c248214ea95e0df7e2e6fc145d5541e10d8707e118",
+  "source_signature": {
+    "code_sha256": "a05438b846f09a563f339b79fff79a0031e2b38560d1982b2cffc777aec28aa4",
+    "phone_dataset_sha256": "e4de1c4ccaa8239610bd62e93bc888c1260f1f891de32b9677052d3a0e3e4d00",
+    "native_dataset_sha256": "a9e346b1e8d0cf711406d1d0417d0db1afbf88757ab8c27efc70f4469dc39520",
+    "cat_selection_sha256": "254d28707e034e4663ceca9e3017d97b32622d1e1379867ec489bd8bd28392d9",
+    "view_selection_sha256": "e8a1239d3f85890691c4a3bcb046301b7adb55354b5e537e08155bcf6051312e",
+    "view_dataset_sha256": "29a45957c40cd4a2e3d595e32bcaec12d513d96e144e421648773bf0520bbb2a",
+    "view_provenance_sha256": "c3084c8e3dae9235045e68450cc6085dbfc4f5aba1f0937e2fb77ac4595c39f6",
+    "member_specifications": {
+      "core": {
+        "features": [
+          "prior_borg",
+          "prior_age_minutes",
+          "prior2_borg",
+          "prior2_age_minutes",
+          "prior_borg_slope",
+          "prior_in_current_task",
+          "prior_count_current_task",
+          "elapsed_minutes",
+          "cumulative_active_minutes",
+          "task_order",
+          "terrain_stairs",
+          "terrain_ramp",
+          "terrain_flat_trail"
+        ],
+        "algorithm": "mlp",
+        "target_mode": "change_from_prior",
+        "params": {
+          "hidden_layer_sizes": [
+            16,
+            8
+          ],
+          "solver": "lbfgs",
+          "alpha": 10.0,
+          "max_iter": 1000
+        }
+      },
+      "cat": {
+        "id": "catboost-023",
+        "feature_set": "history_context",
+        "features": [
+          "prior_borg",
+          "prior_age_minutes",
+          "prior2_borg",
+          "prior2_age_minutes",
+          "prior_borg_slope",
+          "prior_in_current_task",
+          "prior_count_current_task",
+          "elapsed_minutes",
+          "cumulative_active_minutes",
+          "task_order",
+          "task_feedback_first",
+          "task_feedback_total_rise",
+          "task_feedback_count",
+          "task_feedback_rate_mean",
+          "task_feedback_rate_median",
+          "task_feedback_since_last_increase",
+          "task_feedback_zero_fraction",
+          "task_feedback_linear_extrapolation",
+          "task_feedback_delta_1",
+          "task_feedback_interval_1",
+          "task_feedback_delta_2",
+          "task_feedback_interval_2",
+          "all_feedback_rate_mean",
+          "all_feedback_positive_fraction",
+          "completed_task_rise_mean",
+          "completed_task_rate_mean",
+          "previous_task_at_similar_elapsed_mean",
+          "previous_task_at_similar_elapsed_last",
+          "current_terrain"
+        ],
+        "depth": 3,
+        "l2_leaf_reg": 30.0,
+        "iterations": 900,
+        "target_mode": "change_from_prior",
+        "algorithm": "CatBoost_Ordered",
+        "learning_rate": 0.03,
+        "random_seed": 42
+      },
+      "view": {
+        "id": "prior-view-009",
+        "algorithm": "mlp",
+        "feature_set": "observed_history_views",
+        "features": [
+          "prior_borg",
+          "prior_age_minutes",
+          "prior2_borg",
+          "prior2_age_minutes",
+          "prior_borg_slope",
+          "prior_in_current_task",
+          "prior_count_current_task",
+          "elapsed_minutes",
+          "cumulative_active_minutes",
+          "task_order",
+          "terrain_stairs",
+          "terrain_ramp",
+          "terrain_flat_trail"
+        ],
+        "view_policy": "prefix",
+        "view_mass": 0.6,
+        "target_mode": "change_from_prior",
+        "params": {
+          "hidden_layer_sizes": [
+            16,
+            8
+          ],
+          "solver": "lbfgs",
+          "alpha": 30.0,
+          "max_iter": 1000
+        }
+      }
+    },
+    "runtime_features": [
+      "prior_borg",
+      "prior_age_minutes",
+      "prior2_borg",
+      "prior2_age_minutes",
+      "prior_borg_slope",
+      "prior_in_current_task",
+      "prior_count_current_task",
+      "elapsed_minutes",
+      "cumulative_active_minutes",
+      "task_order",
+      "terrain_stairs",
+      "terrain_ramp",
+      "terrain_flat_trail",
+      "task_feedback_first",
+      "task_feedback_total_rise",
+      "task_feedback_count",
+      "task_feedback_rate_mean",
+      "task_feedback_rate_median",
+      "task_feedback_since_last_increase",
+      "task_feedback_zero_fraction",
+      "task_feedback_linear_extrapolation",
+      "task_feedback_delta_1",
+      "task_feedback_interval_1",
+      "task_feedback_delta_2",
+      "task_feedback_interval_2",
+      "all_feedback_rate_mean",
+      "all_feedback_positive_fraction",
+      "completed_task_rise_mean",
+      "completed_task_rate_mean",
+      "previous_task_at_similar_elapsed_mean",
+      "previous_task_at_similar_elapsed_last"
+    ],
+    "dependency_code_sha256": {
+      "fatigue_catboost.py": "8dac77d01b7a1ed0ef3308b63a8bf16587c1f65e6e4294b1ea8bf863cb58a1fe",
+      "fatigue_prior_view_training.py": "3d101e77234a4a659e07478a303f2eb8c74fd2d27cdd55d2e71d28e8102d68d3",
+      "fatigue_prior_views.py": "6613b15479bfde80dfc22fb4e9605ae76e5658c648b57c9931beabca374f6997",
+      "fatigue_probability.py": "8321f0dc9313bd7207508ba417a90e9b2b80ec2fb45fe2591104e60fda66125c",
+      "fatigue_dynamics_experiment.py": "5337f883c2d861a0255a399d78b6cb159b0526e43a0d2b4091b5043ee103f596",
+      "fatigue_phone_experiment.py": "c33c80dc5105338477cdabc6e7c55b7eb194ab67cd6598187817ddfb306979d6",
+      "fatigue_dynamics.py": "2d0f35500f5b6611479141c82fb778026f320a2c03795f5f28200cea9bfcc3d6",
+      "fatigue_warm_sgd.py": "cd480a0fe2c31cc62d446525386b5c9be0adfae568ecdd1399fe85b571dd05b3"
+    },
+    "software_versions": {
+      "numpy": "2.5.4",
+      "pandas": "3.0.6",
+      "scikit-learn": "1.9.1",
+      "catboost": "1.2.10",
+      "joblib": "1.6.0"
+    }
+  },
+  "scipy_version": "1.18.1",
+  "conditions": [
+    {
+      "kind": "arithmetic",
+      "temperature": 0.75
+    },
+    {
+      "kind": "arithmetic",
+      "temperature": 1.0
+    },
+    {
+      "kind": "arithmetic",
+      "temperature": 1.5
+    },
+    {
+      "kind": "geometric",
+      "temperature": 1.0
+    }
+  ],
+  "optimistic_margin_tolerance": 1e-07,
+  "version": 1,
+  "post_selection_diagnostic": true,
+  "uses_actual_training_outcomes": true,
+  "test_outcomes_used": false,
+  "model_accuracy": null,
+  "goal_score": false,
+  "runtime_use_permitted": false,
+  "oracle_weights_retained": false,
+  "native_training_cases": 487,
+  "point_member_oracle_cases": 347,
+  "frozen_grid_oracle_cases": 348,
+  "optimistic_possible_cases": 348,
+  "solver_failures_counted_optimistically": 0,
+  "case_diagnostics": [
+    {
+      "row_key": "3e7b824fcb87a8b906fe32e0",
+      "maximum_margins": [
+        -0.08534397432766042,
+        -0.05765902751186068,
+        -0.032552751813624235,
+        -0.22394577086793874
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "1fb6ee53ca4cd0eda1cb40ef",
+      "maximum_margins": [
+        0.4609970273262611,
+        0.32173435750345525,
+        0.1819889748563067,
+        0.932017095063766
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "de69af7f03e6342c4760475b",
+      "maximum_margins": [
+        0.10539555321752436,
+        0.07605659666879233,
+        0.044547596971185766,
+        0.16175205902486167
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "e33aaa59d05d5f19f18b33d9",
+      "maximum_margins": [
+        -0.09988397244580433,
+        -0.07041297868632723,
+        -0.03976545937561049,
+        -0.15824125682171097
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "8def1b66b252c10800fdb407",
+      "maximum_margins": [
+        0.8776976581362339,
+        0.7609385330785714,
+        0.5387800572743944,
+        2.0673486972225206
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "4848dc793d982c4298ea70e7",
+      "maximum_margins": [
+        -0.23438980503592705,
+        -0.1708308864472582,
+        -0.10129890137479347,
+        -0.3662732661845203
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "959e7565d7d6cf54e902ec07",
+      "maximum_margins": [
+        0.03247389576374837,
+        0.024724616592899804,
+        0.02276778168149282,
+        0.4409732846185597
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "f7eb0d17b9438b4da72baed2",
+      "maximum_margins": [
+        0.6405535324900837,
+        0.47939832601911253,
+        0.2870400896239572,
+        1.3854981720127058
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "7395ffe9849e137739e74bc1",
+      "maximum_margins": [
+        0.41606000638942925,
+        0.30909918463061076,
+        0.18832761995755148,
+        0.6836471930181984
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "d2e4745b9ce55ec495ffcf32",
+      "maximum_margins": [
+        -0.025419791902251854,
+        -0.018798947930191434,
+        -0.011826228328238597,
+        -0.038350018162969346
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "615e22edc0263c12c9141b30",
+      "maximum_margins": [
+        0.46142791736981353,
+        0.3508424655145084,
+        0.22191329019763995,
+        0.7548919998529358
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "0f0fd610251d98cf2e8b6741",
+      "maximum_margins": [
+        -0.25713633845937617,
+        -0.18842690024821918,
+        -0.11343408220559142,
+        -0.40232854477495017
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "0058ccfc177b8c08d4cccb86",
+      "maximum_margins": [
+        0.6017188633269032,
+        0.4676836299064707,
+        0.3007543605832009,
+        1.0590340462696513
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "11984666edb6677b1674174f",
+      "maximum_margins": [
+        0.15708939090198912,
+        0.10569417952530069,
+        0.05984556295186266,
+        0.4482918710836401
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "05e63a311467e203d6fffc27",
+      "maximum_margins": [
+        0.023722193541895364,
+        0.016935234046676018,
+        0.00976291164912757,
+        0.03657286486525857
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "54c2b6118ec23ae3374494b6",
+      "maximum_margins": [
+        0.7808315502325913,
+        0.6386176947818768,
+        0.41610893730207277,
+        1.5975406979048075
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "6ab9cfc59f5c609d35c54c89",
+      "maximum_margins": [
+        0.0038916968354617,
+        0.0026601292249873176,
+        0.0014474676360900496,
+        0.006462797151489785
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "c5b5267bbe9de6199656e93e",
+      "maximum_margins": [
+        0.42367618685642305,
+        0.2981806719908714,
+        0.17111393654505133,
+        0.8127536015077838
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "a8c13ca10519f47744f7d12f",
+      "maximum_margins": [
+        0.24329698804884375,
+        0.17527721361083493,
+        0.10636818152948108,
+        0.397869853606469
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "c44c6e8c09fb119f5d32953c",
+      "maximum_margins": [
+        0.504964629533189,
+        0.38908912794002687,
+        0.2520871330474106,
+        0.8387695180669994
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "9cb6eeed118d2cad6a24fc67",
+      "maximum_margins": [
+        0.7803985543920089,
+        0.6463057421984493,
+        0.4368231003429952,
+        1.5788660233072007
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "46a3ac2badf698202b5d23b4",
+      "maximum_margins": [
+        -0.31472339790892034,
+        -0.22823247074230477,
+        -0.1417338594200711,
+        -1.2902850942981123
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "6fa8017c88c3fe1407f5ae14",
+      "maximum_margins": [
+        0.4965484385045853,
+        0.3691864921526523,
+        0.21943237107603109,
+        1.2674767288587976
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "58633c14f1db55901f1d54d5",
+      "maximum_margins": [
+        0.4899363317567661,
+        0.3539177375118857,
+        0.2177479483268413,
+        0.9004193988494539
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "b40c29a77067746c27c060b3",
+      "maximum_margins": [
+        0.332646832368985,
+        0.24783501390023532,
+        0.15221291459798664,
+        0.5236779240691316
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "1c15ae9a76a548b0c0813100",
+      "maximum_margins": [
+        0.31791677585699035,
+        0.23706599551009194,
+        0.14611564947206224,
+        0.49778602996030263
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "5e9e62f0e5815274f3dec871",
+      "maximum_margins": [
+        0.19877160759217682,
+        0.1481984198692335,
+        0.09404954357579837,
+        0.3033466188913163
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "125887974794f8af8a5a994c",
+      "maximum_margins": [
+        0.329988968356459,
+        0.24927951612701305,
+        0.16067429299766461,
+        0.5156748087064297
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "05c86c2c6e4861573ca9cfe8",
+      "maximum_margins": [
+        -0.09795384965628919,
+        -0.07026426075485115,
+        -0.04306339284926092,
+        -0.3712716154997216
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "6aceddb5bbe46e79940290de",
+      "maximum_margins": [
+        -0.19086933090852048,
+        -0.13076459893424883,
+        -0.07518702419537338,
+        -0.5791657893831732
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "6714fc8bfcf3e1ca57bda0dd",
+      "maximum_margins": [
+        0.8829153256984306,
+        0.7680219094101005,
+        0.5463900686039427,
+        2.102700410916651
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "a2faf89d53af24d2f6d1cb27",
+      "maximum_margins": [
+        0.837968290428094,
+        0.7121074747704996,
+        0.49442361344031527,
+        1.8332110675114082
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "2fd5db10f48240c2f8eb42bb",
+      "maximum_margins": [
+        0.3531676365401347,
+        0.244070602092718,
+        0.13803575781630095,
+        0.6840329505266495
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "c6bf282d82797a9452f86546",
+      "maximum_margins": [
+        -0.38508312127768396,
+        -0.31299895572791603,
+        -0.20424277670931873,
+        -1.425030794669538
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "1d4f1f318be03ff16a9bb3c6",
+      "maximum_margins": [
+        0.6570780611028779,
+        0.5278390887418616,
+        0.3614650770881803,
+        1.183386333578178
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "4806bb9216920e5503a63654",
+      "maximum_margins": [
+        0.7127853044123096,
+        0.5822612971782537,
+        0.4054571130761532,
+        1.3411499520730574
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "1509ed283ad2eae28129aa6f",
+      "maximum_margins": [
+        -0.06887891618081948,
+        -0.03590316809907204,
+        -0.01135670602677559,
+        0.10470133517902247
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "a8f0a7fad063eb063906fdee",
+      "maximum_margins": [
+        0.34167341226016046,
+        0.2586760667248685,
+        0.16802769086564018,
+        0.5354195334256717
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "36c86052f2eecb043a8db49c",
+      "maximum_margins": [
+        -0.20195283453825125,
+        -0.14632326891386493,
+        -0.08745039367629143,
+        -0.3160789882576518
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "dfa4ff2471cdf7559d1adcee",
+      "maximum_margins": [
+        0.40776414008665013,
+        0.30469528572654386,
+        0.192600134889643,
+        0.6664726552691619
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "5c7238c52fc5486f19b06293",
+      "maximum_margins": [
+        0.37605997014548714,
+        0.2831641373002736,
+        0.1819521228073379,
+        0.5995294560655929
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "39417ef1e049dba0ed6416f1",
+      "maximum_margins": [
+        -0.4108906177054579,
+        -0.3140418969382092,
+        -0.20672477684747653,
+        -0.6566528363389919
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "59e05913e5088db2f3a165b8",
+      "maximum_margins": [
+        -0.05604239640968828,
+        -0.03901110024922322,
+        -0.02160550977346304,
+        -0.09005051261804653
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "522feb8e4fbf3f0370dc7e5f",
+      "maximum_margins": [
+        0.3337986417069587,
+        0.2435795128160153,
+        0.14317170241891314,
+        0.5338333455891306
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "471bfe67ed8714230644a903",
+      "maximum_margins": [
+        0.8275913001323321,
+        0.6928718759728225,
+        0.46404958144902403,
+        1.7983770074697887
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "db297b639b597127698b37c8",
+      "maximum_margins": [
+        0.9007137020629814,
+        0.7846986651923298,
+        0.5468214722627245,
+        2.265334079627479
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "f7887f0e088d242905f2bb9c",
+      "maximum_margins": [
+        -0.31196269394393117,
+        -0.22029102184391633,
+        -0.13288183047390323,
+        -1.1281696108850123
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "aa0436cf9cd5f7510d97dd93",
+      "maximum_margins": [
+        0.22221782044208022,
+        0.1580685114789802,
+        0.09093039844612999,
+        0.35763081577657874
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "9eb5a0a172e9f239d5c67cef",
+      "maximum_margins": [
+        0.00038071931953681526,
+        0.00025953240747411677,
+        0.00014009922807683983,
+        0.0006306469095272993
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "ef795b359b72c88a5283b0d3",
+      "maximum_margins": [
+        0.8002284066292797,
+        0.6672558597931209,
+        0.4535431602357093,
+        1.6619483830984687
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "647eb277ed085d9d12343cc9",
+      "maximum_margins": [
+        0.4332755447815769,
+        0.3044625800933082,
+        0.17520914031614757,
+        0.9398491577602264
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "73096671910ce24a53afa4f6",
+      "maximum_margins": [
+        -0.14606204453586596,
+        -0.09599783307945309,
+        -0.051981366948294694,
+        -0.3670819430123804
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "03dc1b3954b05df045f87a4d",
+      "maximum_margins": [
+        0.7495377180634506,
+        0.6076832753895156,
+        0.39687387162112486,
+        1.4808631181901235
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "b6200b5865abdb53e017eb49",
+      "maximum_margins": [
+        0.012533016669018182,
+        0.008582646591769993,
+        0.004652143344756499,
+        0.020576188983697397
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "db407ad00574214255587ef3",
+      "maximum_margins": [
+        0.09940056392496804,
+        0.06998092667888223,
+        0.039220193494450606,
+        0.1571495520255004
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "65e7b0d6f19d69ce0472e547",
+      "maximum_margins": [
+        -0.12821255574289392,
+        -0.09101064625375044,
+        -0.0516035687755102,
+        -0.20140312108094693
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "1b64e27818b690c4b32380cb",
+      "maximum_margins": [
+        0.7371887937647853,
+        0.5966354464991835,
+        0.3915489433246354,
+        1.4328722767356177
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "ad9a6992888c895192c39b9e",
+      "maximum_margins": [
+        -0.1407119409368207,
+        -0.09200921560854636,
+        -0.049351673658653006,
+        -0.3256178444091742
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "bd8bd1dc8c160c637cadf62c",
+      "maximum_margins": [
+        -0.005921050607915146,
+        -0.004110246482962376,
+        -0.0023379392094707296,
+        -0.010042508100127745
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "ecce815d211b90b241af6034",
+      "maximum_margins": [
+        0.45626584865088526,
+        0.33609828658776597,
+        0.19684606602698979,
+        0.7614020819912648
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "f4f98bb125758f22110c369d",
+      "maximum_margins": [
+        0.6262119120762563,
+        0.47791238397473357,
+        0.28698034053836646,
+        1.1387694041760072
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "e3e9900ab31f85fd61580257",
+      "maximum_margins": [
+        0.5081228934055081,
+        0.37661223749512485,
+        0.23576172735734752,
+        0.8675739203454236
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "88ab3749cd1d720ad7c486f8",
+      "maximum_margins": [
+        0.4234070827085202,
+        0.30088881065201517,
+        0.1739915166078056,
+        0.7799159409602341
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "9d6a9ee93bfd5a4c78f096fe",
+      "maximum_margins": [
+        0.036032883930236514,
+        0.0242393985622108,
+        0.01289651466099534,
+        0.06159748817595956
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "ef3f6c2612aa4fd9d111bc6c",
+      "maximum_margins": [
+        0.7191249393222188,
+        0.5792455002249991,
+        0.3788068824768698,
+        1.3739832089749606
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "f1b62b4c47696077b3422819",
+      "maximum_margins": [
+        -0.18553636100634674,
+        -0.1337124438973351,
+        -0.07759878310227364,
+        -0.28951357407938694
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "97acf8c24ac72beef1fd8296",
+      "maximum_margins": [
+        0.5014274920313444,
+        0.3555631841183165,
+        0.2048472535790527,
+        1.067929678471478
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "52da7215357cb513e922c86e",
+      "maximum_margins": [
+        0.5897082989049022,
+        0.43204179863282033,
+        0.2525389833055356,
+        1.2084974237584092
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "f6ef60486fba0710d8152f18",
+      "maximum_margins": [
+        -0.3660182781747387,
+        -0.2801705135808749,
+        -0.17274979013411965,
+        -1.2160200178436247
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "10a0e8470d65773fa26da07d",
+      "maximum_margins": [
+        -0.13646215493059988,
+        -0.09719542454907043,
+        -0.056023751489512,
+        -0.2142814173177907
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "3e8ca4cbc0532fe3c9b867a5",
+      "maximum_margins": [
+        0.2611655720152984,
+        0.191826621956806,
+        0.11653353049717063,
+        0.408239759015693
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "9a4270e35ac5df98351a571d",
+      "maximum_margins": [
+        0.28751341974483235,
+        0.21239031432177657,
+        0.13009612644212387,
+        0.45043012882463007
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "04c4a9df602c5713e0a6165f",
+      "maximum_margins": [
+        0.5830864146102903,
+        0.4238504618283726,
+        0.2488690622617769,
+        1.3007081123479178
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "a92ef6225ca18330004cf22c",
+      "maximum_margins": [
+        0.09665575120498876,
+        0.06798747377353587,
+        0.039163834670705056,
+        0.15780984793769326
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "3cf9a5dfc4ab3dbfcbe54346",
+      "maximum_margins": [
+        -0.025009969161635115,
+        -0.017195608003769236,
+        -0.009342806497676437,
+        -0.04073774558456833
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "303b89c690a7556e8965b63b",
+      "maximum_margins": [
+        0.8537026319246522,
+        0.7270074056782243,
+        0.4996420093251359,
+        1.9291745805228477
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "6cf58512aa90faac2ba3c0d7",
+      "maximum_margins": [
+        -0.19174094594686147,
+        -0.1303191337460766,
+        -0.07583044936136848,
+        -0.6027790468083989
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "84ace41cd0d6e7df5884e50d",
+      "maximum_margins": [
+        0.5137644123786143,
+        0.3828707237007478,
+        0.2299386933313684,
+        0.8950536481760007
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "4361a0b5c88907bd7bdcf5ac",
+      "maximum_margins": [
+        0.6823289092553028,
+        0.5432590338914935,
+        0.35097063328098793,
+        1.2628361072538723
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "2582a1bcb0789c1b1235b23d",
+      "maximum_margins": [
+        0.65973936277997,
+        0.5284260451783783,
+        0.35714974556921014,
+        1.1926498344255227
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "b6e09c487e8f0b123fbfdca1",
+      "maximum_margins": [
+        0.2430499718261554,
+        0.1675292821751671,
+        0.0954634987319562,
+        0.44727351036670493
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "57d90487a67ef7fb93afdda1",
+      "maximum_margins": [
+        0.5012139834024107,
+        0.3756913326719342,
+        0.22776009465857133,
+        0.9637963100292678
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "49e8825400d00b043d351f27",
+      "maximum_margins": [
+        0.2731453794693124,
+        0.19923418098416418,
+        0.11918080534477765,
+        0.4317777102364371
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "f8ada0a56c3fff1884373288",
+      "maximum_margins": [
+        0.2241827679500279,
+        0.1638071073705898,
+        0.0988465423225986,
+        0.34884423556658595
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "d64c7de8f01fb9e40c088371",
+      "maximum_margins": [
+        0.21291574362598253,
+        0.15914216079433552,
+        0.10167015079839054,
+        0.32533927338271174
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "ad8feb0f061c6485ddd54fab",
+      "maximum_margins": [
+        0.34312124933567123,
+        0.2598846620570024,
+        0.16852512924816138,
+        0.5376674631978255
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "4fd1b9de1a9ce832be676194",
+      "maximum_margins": [
+        -0.23475465585977434,
+        -0.17162017486219971,
+        -0.10260761362549814,
+        -0.365828177443391
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "8b6e6574ce6c1c72e599002c",
+      "maximum_margins": [
+        -0.13991282696245863,
+        -0.09528078597201917,
+        -0.055781024496883214,
+        -0.4503966874120655
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "f3a8047c6d07ca724311c9ef",
+      "maximum_margins": [
+        0.6622447874865147,
+        0.5199303566184393,
+        0.3294296290513518,
+        1.2203337042966287
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "dc77df8ef1fb7f63e06de51d",
+      "maximum_margins": [
+        0.5960011065030343,
+        0.4669629502523958,
+        0.3012233003670414,
+        1.0355426732249486
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "6780dc9dbdb9066bf8c3d108",
+      "maximum_margins": [
+        0.6726714747097728,
+        0.5384426254217839,
+        0.35467528861145475,
+        1.22835906924406
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "f029ad15fa3f91f5784e711f",
+      "maximum_margins": [
+        -0.20309339034840712,
+        -0.15231214079391073,
+        -0.0921577200011349,
+        -0.7810422500710371
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "f7e5a3eeb74ab87e41da42a6",
+      "maximum_margins": [
+        0.5427531666958427,
+        0.39788475894050335,
+        0.23229748551149798,
+        1.015258196032112
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "0bd4b133da214d87cffaa29f",
+      "maximum_margins": [
+        0.20250975096846102,
+        0.14714561372223622,
+        0.08735489752463016,
+        0.31472060291851134
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "407940c77e2b3f391fe1adad",
+      "maximum_margins": [
+        -0.11060850800897487,
+        -0.07815910159788991,
+        -0.04411390388649267,
+        -0.1746099641492984
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "ba0b1a85e4ecd1f3d104133c",
+      "maximum_margins": [
+        0.8953837907274697,
+        0.7841319965728826,
+        0.5609258270696733,
+        2.1973323970291587
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "a4d402f4fb1773ae28263ceb",
+      "maximum_margins": [
+        0.039188804324752496,
+        0.026488107534033162,
+        0.015302840349908753,
+        0.1158269587407434
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "c09b29fe076cba963de8a736",
+      "maximum_margins": [
+        0.6123238838882006,
+        0.4657387645245298,
+        0.2847023753834044,
+        1.1410553826796912
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "83bbf2cef10a30095f1af06d",
+      "maximum_margins": [
+        -0.029039886691985872,
+        -0.019486085045882007,
+        -0.010408511106781593,
+        -0.05030860277069171
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "5bffc7398fd6ac971e78c779",
+      "maximum_margins": [
+        0.04141195602530956,
+        0.028582589185109364,
+        0.015674031581493997,
+        0.06729835178364396
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "9dba9b9e67d2e8e202184289",
+      "maximum_margins": [
+        0.4271015300420931,
+        0.3233953085056774,
+        0.20159172836499428,
+        0.6885440122531726
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "20d317efa290641ff64c82b9",
+      "maximum_margins": [
+        0.5409755361811411,
+        0.41538945801415783,
+        0.2612656804325768,
+        0.9182876424453155
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "686a82563ef9b203a582d4cd",
+      "maximum_margins": [
+        -0.23535782192189902,
+        -0.1720859081348749,
+        -0.10291107396902766,
+        -0.3667739561151703
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "09f90b406c500fd75ef80f78",
+      "maximum_margins": [
+        -0.1391225831509283,
+        -0.09475574759683497,
+        -0.055483501209668135,
+        -0.4481332586933333
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "69b2a1fea12071291d89c80a",
+      "maximum_margins": [
+        0.7284002201479365,
+        0.5811507973411576,
+        0.3720263293798465,
+        1.4335431524715783
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "215abb8928b504776c7733d9",
+      "maximum_margins": [
+        0.46634552721578365,
+        0.35513821018693004,
+        0.22252226704065292,
+        0.762972905055348
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "37476a5dd6b31b6a5c0a0027",
+      "maximum_margins": [
+        0.5657087715418287,
+        0.4400451599785609,
+        0.28134754791022343,
+        0.9663800625419473
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "3ebb2b0750a7f52c2fd33899",
+      "maximum_margins": [
+        0.29835097672557026,
+        0.20518465654320756,
+        0.1164302735592567,
+        0.5957749246208951
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "e52985a739fe54e25c2f5393",
+      "maximum_margins": [
+        0.016365742106431325,
+        0.011115299818304225,
+        0.005986258172844927,
+        0.02751445037988487
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "b29634b351a641b5f7cd4f32",
+      "maximum_margins": [
+        0.6584469375734787,
+        0.5267316614048787,
+        0.35488686943280634,
+        1.1899427420268118
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "dc64f7bc312604379d9bf2de",
+      "maximum_margins": [
+        0.8150538472175143,
+        0.6844439812880272,
+        0.4685297317113044,
+        1.7251971966505772
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "c6dbc6426e0a396af5756079",
+      "maximum_margins": [
+        -0.19597594428228668,
+        -0.12909844121490807,
+        -0.0719081872732773,
+        -0.506147325692746
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "0dd73eb8e98269192f06c2f3",
+      "maximum_margins": [
+        -0.15012405935408296,
+        -0.09867070887889945,
+        -0.05262747660832803,
+        -0.30729595637005325
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "68fea8c220b23e80a6f959f3",
+      "maximum_margins": [
+        0.637436783324412,
+        0.4994096918533874,
+        0.3167970804033217,
+        1.145782658983371
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "d8c93b1fa4c3d80a82e8803d",
+      "maximum_margins": [
+        0.44975386421390157,
+        0.33991027023906634,
+        0.21182977336141995,
+        0.7348479286354215
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "19a5d22e4f373d661e8169f5",
+      "maximum_margins": [
+        -0.11660273239667884,
+        -0.08613439645994131,
+        -0.053235163549433584,
+        -0.17658019900363064
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "9ba9b03110dec1e755ffa490",
+      "maximum_margins": [
+        0.6693475743559237,
+        0.5325430728781009,
+        0.34935983510203084,
+        1.2249658004806507
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "058519401f1940d58964a0f6",
+      "maximum_margins": [
+        -0.46139686381514267,
+        -0.3511622320680608,
+        -0.22243048121175663,
+        -0.7555457443641834
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "40f8d2c7454488689b06f91b",
+      "maximum_margins": [
+        0.8498225140488036,
+        0.7227485367660758,
+        0.506321767757262,
+        1.9147423556352745
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "9ad558cc9b5459a953f4611f",
+      "maximum_margins": [
+        -0.15247225704023473,
+        -0.10818085450051776,
+        -0.06602762953547861,
+        -0.5619219403705495
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "09c8004fdce66d862f8fc17f",
+      "maximum_margins": [
+        0.2883399340951886,
+        0.21154674841271603,
+        0.12844273340985518,
+        0.4562726283295562
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "000aeb2db567b3968ed8cea9",
+      "maximum_margins": [
+        0.07739513749237431,
+        0.05666725281041862,
+        0.034107116558634076,
+        0.11724585330556736
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "08796ac605a1281c56ed3a48",
+      "maximum_margins": [
+        0.9337812264323692,
+        0.8414308465988678,
+        0.6271991664864469,
+        2.567767504600966
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "0e202a5826ea9f9e82b26f0a",
+      "maximum_margins": [
+        0.8635976296722776,
+        0.7401434114565237,
+        0.5156266997049166,
+        1.9861178991815414
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "0725a42ee2a06f8f691e9869",
+      "maximum_margins": [
+        0.29835097672557026,
+        0.20518465654320756,
+        0.1164302735592567,
+        0.5957749246208951
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "93c50ff32b1ef34146ad7a36",
+      "maximum_margins": [
+        0.016365742106431325,
+        0.011115299818304225,
+        0.005986258172844927,
+        0.02751445037988487
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "aacaa23eb1a5d5838f428e82",
+      "maximum_margins": [
+        0.6584469375734787,
+        0.5267316614048787,
+        0.35488686943280634,
+        1.1899427420268118
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "e3006545bf52cba22f47f7ae",
+      "maximum_margins": [
+        -0.3357907296102172,
+        -0.2482889251974022,
+        -0.14999134374402445,
+        -0.533551147782286
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "f18e070d5f10d6486b761c29",
+      "maximum_margins": [
+        0.524637764055645,
+        0.3729660747830999,
+        0.21399935431902176,
+        1.0738958737933557
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "d6a4985656f9bf2688c45a17",
+      "maximum_margins": [
+        0.6781165191256099,
+        0.5096953772586914,
+        0.3041172008933335,
+        1.5207936641484823
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "6f6d9cca732f53b474d6e7fd",
+      "maximum_margins": [
+        -0.3785122436305975,
+        -0.2985778674832658,
+        -0.19030691688899087,
+        -1.3147026720964652
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "a05a21a0e82a3c7635e31556",
+      "maximum_margins": [
+        0.3048486821723439,
+        0.22820287590807198,
+        0.14600055993611116,
+        0.48193214889562797
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "f3899bb2fdadf237f032e7d8",
+      "maximum_margins": [
+        -0.14610969128281692,
+        -0.10732304993538677,
+        -0.06574119999057099,
+        -0.22277721508104953
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "4be9e731c1ec7720e915c426",
+      "maximum_margins": [
+        -0.5000129193037339,
+        -0.3841572181127149,
+        -0.24740234847215908,
+        -0.8301507479451242
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "ec5b49e51bf4cf91a006986d",
+      "maximum_margins": [
+        -0.5869998428866938,
+        -0.4614082729193229,
+        -0.30777496190866493,
+        -1.0143243450206743
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "17823b8fab45d516735d2ff0",
+      "maximum_margins": [
+        0.48077250216356154,
+        0.33739013262238093,
+        0.19308079663787406,
+        1.0270271008475949
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "3e58b94cd73e976a3abd0951",
+      "maximum_margins": [
+        -0.3683989430105546,
+        -0.28145893630944424,
+        -0.1731235459359418,
+        -1.1975370567641503
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "5c59c3cb5ae7517a5f3e35c6",
+      "maximum_margins": [
+        -0.29037216656482284,
+        -0.21255528246942756,
+        -0.12686767410714,
+        -0.4588572933180607
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "e543685dd2149e004b07ece1",
+      "maximum_margins": [
+        0.8233522967771058,
+        0.6990369327922897,
+        0.5010051539333453,
+        1.7579566464412941
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "f94393ccc8e79b765c091e75",
+      "maximum_margins": [
+        -0.23208597538256612,
+        -0.15536522085704335,
+        -0.088203098819197,
+        -0.5955904904778034
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "6c23c09666a61d35bbb965b7",
+      "maximum_margins": [
+        0.5120335796179932,
+        0.3814536903855937,
+        0.22941263561735908,
+        0.8936677141214808
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "ea73bcb3f4e84fd604c37367",
+      "maximum_margins": [
+        0.6431889381479643,
+        0.5074760952305963,
+        0.3266478447967114,
+        1.15522191685711
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "40aff1e6bc6274db230f0eca",
+      "maximum_margins": [
+        0.7000111081771074,
+        0.5629711859996547,
+        0.36962269300518186,
+        1.3090871869293803
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "e650ced9d85b457d52159419",
+      "maximum_margins": [
+        0.6366712692582188,
+        0.5025935612517513,
+        0.32405555258706625,
+        1.1357456052281383
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "bd60abccd67c46e501581ba6",
+      "maximum_margins": [
+        0.36462304271204393,
+        0.2559804604428824,
+        0.14847347319817886,
+        0.7966129459893178
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "f845408b5a31b1681e650c27",
+      "maximum_margins": [
+        0.5872645359787215,
+        0.4301037700831415,
+        0.2513330037010689,
+        1.1987467011719801
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "136dc33d5d0939af4de48c0d",
+      "maximum_margins": [
+        0.3434682075124365,
+        0.2531784975817024,
+        0.15298771245679754,
+        0.5492770006249139
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "78f59b8b45c411427e9ad6f1",
+      "maximum_margins": [
+        0.4400453260116108,
+        0.33180044344878545,
+        0.20586038011146457,
+        0.7164466150371538
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "713e9dcd223dccae0e6abff6",
+      "maximum_margins": [
+        0.1143876238649893,
+        0.08434255427617948,
+        0.05189002099286105,
+        0.1733370266358173
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "2d5f81def138eac602b72e3e",
+      "maximum_margins": [
+        0.5132158863570834,
+        0.39340410078649996,
+        0.24984607229107741,
+        0.8579937287994285
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "f1134dad0fc7ce9d5d82f54c",
+      "maximum_margins": [
+        0.44989630261768476,
+        0.3409584828065287,
+        0.21415916405091118,
+        0.7329575078571948
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "d4c36fdab286aa8c40fd96c0",
+      "maximum_margins": [
+        0.3827550106362533,
+        0.26832351949364397,
+        0.15519569751319112,
+        0.7691727992235372
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "3b39773acc4ded6dda5f84ff",
+      "maximum_margins": [
+        0.07576253893963375,
+        0.050211747383829275,
+        0.026459739819793326,
+        0.1367593333142958
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "108b7b2ac40486c524785b37",
+      "maximum_margins": [
+        -0.09685522399085633,
+        -0.06813791466648039,
+        -0.03814823987722815,
+        -0.15323031977708534
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "827e419ad2f1c00508247cc0",
+      "maximum_margins": [
+        0.9272631529121883,
+        0.8327354094391017,
+        0.6210023745149574,
+        2.4845774317472156
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "3697e8f4cdbebfa3cdc7c315",
+      "maximum_margins": [
+        0.4234070827085202,
+        0.30088881065201517,
+        0.1739915166078056,
+        0.7799159409602341
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "bf945f6c775707abb44623b4",
+      "maximum_margins": [
+        0.2657981652141636,
+        0.19019082577956792,
+        0.11122218502482978,
+        0.4379152625207746
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "837843cb1b791ff4b1952caa",
+      "maximum_margins": [
+        0.5482973575722979,
+        0.42422494484447604,
+        0.26939913871796184,
+        0.9293683631646772
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "285043cc60c01643c33de657",
+      "maximum_margins": [
+        0.7658879679064284,
+        0.6294072003493038,
+        0.4204939269805939,
+        1.5266507724059084
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "b8667210f0823bc3372261ae",
+      "maximum_margins": [
+        0.6337055390799129,
+        0.4977443614478183,
+        0.316763699902272,
+        1.1309490377791511
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "268a13d9394129a5c285118d",
+      "maximum_margins": [
+        -0.22548895891353907,
+        -0.14961954691268997,
+        -0.08397261859800698,
+        -0.5987255771194462
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "6b52cfa89c898b83a34e409b",
+      "maximum_margins": [
+        0.5269176673195949,
+        0.3869818409820062,
+        0.22728266015803306,
+        0.9580628005611023
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "62079f5bf559bdef107fda7d",
+      "maximum_margins": [
+        0.19228935355240984,
+        0.14004081857823708,
+        0.08391427344109659,
+        0.29752487113784276
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "09478883e70a220893512ac7",
+      "maximum_margins": [
+        0.17680014597817717,
+        0.13012443281994207,
+        0.07942597541682833,
+        0.2703133928795758
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "1286f1511deead1621741578",
+      "maximum_margins": [
+        0.47786008706528704,
+        0.3632906609527071,
+        0.22862318910186336,
+        0.7881219956145069
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "42fda4d5a028fef17886da2b",
+      "maximum_margins": [
+        0.24952565237278163,
+        0.18737369064390408,
+        0.12078305720141691,
+        0.3831973079813348
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "112f4ff8221ce1f3dc450e57",
+      "maximum_margins": [
+        0.536653117086783,
+        0.41317182120975193,
+        0.2629017044725438,
+        0.906669470633225
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "90ec07879c9c5b668e197dae",
+      "maximum_margins": [
+        -0.16607980721732335,
+        -0.11866286939291185,
+        -0.0729299583452851,
+        -0.6416465976044117
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "7d249d086c04cf88c493db8e",
+      "maximum_margins": [
+        0.46602011464835463,
+        0.3454047336630122,
+        0.206570469478778,
+        0.7871750426424549
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "e57b277e5d34402e87b63cd6",
+      "maximum_margins": [
+        -0.10086718896130853,
+        -0.07104393628999761,
+        -0.039839409590303354,
+        -0.15940695289255036
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "79f0416e64a50f533712ae9d",
+      "maximum_margins": [
+        0.933425214837431,
+        0.8422160913685157,
+        0.6315569226955831,
+        2.5567991312716583
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "8805d307a639eef4fdc86959",
+      "maximum_margins": [
+        -0.23208597538256612,
+        -0.15536522085704335,
+        -0.088203098819197,
+        -0.5955904904778034
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "56d00eee107dfabc0be7174c",
+      "maximum_margins": [
+        0.5120335796179932,
+        0.3814536903855937,
+        0.22941263561735908,
+        0.8936677141214808
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "844c0094b0fec82019a63340",
+      "maximum_margins": [
+        0.6431889381479643,
+        0.5074760952305963,
+        0.3266478447967114,
+        1.15522191685711
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "e5424d064d5af1cdd14cf175",
+      "maximum_margins": [
+        0.7000111081771074,
+        0.5629711859996547,
+        0.36962269300518186,
+        1.3090871869293803
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "71e807eff8f69b2b2d790a1e",
+      "maximum_margins": [
+        0.5832423611215459,
+        0.45433807888675287,
+        0.28942859243742547,
+        1.007161013616269
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "ad1052e6e914c81bf3096611",
+      "maximum_margins": [
+        0.1570922024865223,
+        0.10511646502510238,
+        0.05902083538969349,
+        0.3726885587541222
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "e5c7dcf9650a33ea38ce8671",
+      "maximum_margins": [
+        0.23104166448706204,
+        0.16781700482364748,
+        0.10045699627731791,
+        0.3638762986523054
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "b2ca0f830d4ca06cbedb9be4",
+      "maximum_margins": [
+        0.6530711627729591,
+        0.5183276294889052,
+        0.33670377218645253,
+        1.1776928224820713
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "83c8f9550310ffa71502ebfc",
+      "maximum_margins": [
+        0.7806160530641572,
+        0.6450728745789215,
+        0.4330398720848675,
+        1.582529691310531
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "384a7835238b347db5d160c3",
+      "maximum_margins": [
+        0.37583643057150307,
+        0.26513369136387716,
+        0.15487288705893706,
+        0.829582910627024
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "3e902b44574fbe2fb0b3a75b",
+      "maximum_margins": [
+        0.5668846828613643,
+        0.41196792847172503,
+        0.23976006765961377,
+        1.1741667223247514
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "a9ad58a70a99bf96303668a3",
+      "maximum_margins": [
+        -0.06429183098257285,
+        -0.042819065913,
+        -0.022691808983530903,
+        -0.11399529259581198
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "ae4a0663a1b2c2607948480f",
+      "maximum_margins": [
+        0.45930880106335403,
+        0.34867573177921307,
+        0.2170615270281554,
+        0.750226342565053
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "801b842384677eda4e8b3e0e",
+      "maximum_margins": [
+        0.546523569126485,
+        0.4211732772982782,
+        0.26644388343967534,
+        0.9282211308719694
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "9bf6c893ce141d5b7d15c172",
+      "maximum_margins": [
+        0.28494547481314997,
+        0.2145639046400148,
+        0.13839168079999903,
+        0.4405766230317071
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "0a37b75ab96ff863308b65bc",
+      "maximum_margins": [
+        -0.20595111528054816,
+        -0.14920137570161296,
+        -0.08754826836018048,
+        -0.32117876115010546
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "980f12f5bc03e9fe87c6449c",
+      "maximum_margins": [
+        -0.16796492331549506,
+        -0.11961939382520159,
+        -0.07326843733430455,
+        -0.6405402639193418
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "c1b680b83ac2ce7181e56527",
+      "maximum_margins": [
+        0.019930594803583834,
+        0.013492656949286974,
+        0.0072343836756249,
+        0.03354958684814069
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "fc756a0b02656a476cf3d50d",
+      "maximum_margins": [
+        0.7125372908453521,
+        0.5727391283864318,
+        0.37593057181846845,
+        1.3525626449530896
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "e5fe0586acbaeba249ca9d3f",
+      "maximum_margins": [
+        0.8667132008835873,
+        0.7476194728601838,
+        0.5301391886538135,
+        1.9954503098324907
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "1e858662ceacf4d64f4e63cf",
+      "maximum_margins": [
+        0.8561543107715077,
+        0.733696053189378,
+        0.51546222428193,
+        1.9342257693902907
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "f6de8c7033b2ea8fe633ec1b",
+      "maximum_margins": [
+        0.29835097672557026,
+        0.20518465654320756,
+        0.1164302735592567,
+        0.5957749246208951
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "2abba7a207ba8cdb1743d63c",
+      "maximum_margins": [
+        0.231167757918796,
+        0.16508321349260702,
+        0.09610773177220461,
+        0.374851943319239
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "5166e272b4b0973fa08043d4",
+      "maximum_margins": [
+        0.5277564897506271,
+        0.4079962903358783,
+        0.2646906223941791,
+        0.8863912811836647
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "910ab8261f720faa07644618",
+      "maximum_margins": [
+        0.8706485158215314,
+        0.7519415312001063,
+        0.5302257238263027,
+        2.020598363979124
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "dbca3cd2f3c40ab52eda4a13",
+      "maximum_margins": [
+        0.3893994196497974,
+        0.269848183193326,
+        0.15330630050916622,
+        0.7887339061412155
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "f40d91bad950d7b441f693f0",
+      "maximum_margins": [
+        0.6781165191256099,
+        0.5096953772586914,
+        0.3041172008933335,
+        1.5207936641484823
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "622bf35493445eb799950776",
+      "maximum_margins": [
+        0.3046640485921902,
+        0.22366946437687713,
+        0.13501136287136317,
+        0.48303954645478875
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "78e8edfa193487f06870c33d",
+      "maximum_margins": [
+        0.41153090216413957,
+        0.30954019153828755,
+        0.1924413238935468,
+        0.6631065825642699
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "c17d69302cf48e159e3befe1",
+      "maximum_margins": [
+        -0.1071554437482628,
+        -0.07913190358203565,
+        -0.04891084195472056,
+        -0.16216506574718892
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "0dbc10072b9d2b688def6669",
+      "maximum_margins": [
+        -0.42181353833546475,
+        -0.31808180267171415,
+        -0.19890333190192772,
+        -0.6826485144401673
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "da621866292b3db7aec5782b",
+      "maximum_margins": [
+        0.8157671857180052,
+        0.6845570795851167,
+        0.4753120851702145,
+        1.7350337353792948
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "ee5801f1c8733291566dc418",
+      "maximum_margins": [
+        0.3923864982258247,
+        0.27769450756890857,
+        0.16362829995996947,
+        0.8592616336754902
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "1da8bffcd21f5b24c2a963b3",
+      "maximum_margins": [
+        0.07296874370383105,
+        0.04879021180879306,
+        0.02594466508765797,
+        0.1289438295422004
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "5c338a1f3882bd5e1d97c27b",
+      "maximum_margins": [
+        0.6866934643460545,
+        0.5520458405521877,
+        0.37115436644046074,
+        1.2709657810270025
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "9064546d2b3f6165576cc2d8",
+      "maximum_margins": [
+        0.9152632896132783,
+        0.8150437925644914,
+        0.5992441255740266,
+        2.3574356337722047
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "6a2a87cd298a5b8cebcadac3",
+      "maximum_margins": [
+        0.3500111590886367,
+        0.2479920575947432,
+        0.14550197595172865,
+        0.6009115219399853
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "5c6722b9509c637d3f327c4d",
+      "maximum_margins": [
+        -0.43299875345663685,
+        -0.35384551474245995,
+        -0.23486679007900407,
+        -1.6057105637789442
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "bff19e9341e2d78a2e834119",
+      "maximum_margins": [
+        -0.34613589097465325,
+        -0.2565450412548439,
+        -0.1556296838339803,
+        -0.5509041152663176
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "68adfc929ab6c2a35aae3321",
+      "maximum_margins": [
+        -0.4327562582648902,
+        -0.3274585282113649,
+        -0.20562017648761638,
+        -0.7019770795964336
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "70fc47e4a46e95c47d2e0b68",
+      "maximum_margins": [
+        -0.3485668634679015,
+        -0.251526559817406,
+        -0.1549870359161926,
+        -1.3275650382088215
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "6dc950df0184658bccad4d91",
+      "maximum_margins": [
+        0.36041829987000207,
+        0.2665992120136481,
+        0.16344601140272202,
+        0.5794113715600968
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "5da40956e5e351538c258ac5",
+      "maximum_margins": [
+        -0.18522829493883602,
+        -0.13203670251683475,
+        -0.0763366324811886,
+        -0.2843274061795772
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "1237d54c6830db3b60c86c5b",
+      "maximum_margins": [
+        0.32894206738173287,
+        0.24302855542262108,
+        0.14861099218575324,
+        0.5227297769475107
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "8e95e5254ca60fab2f55621c",
+      "maximum_margins": [
+        0.05325676317916167,
+        0.03869793516804265,
+        0.023524621472913287,
+        0.08130646603731562
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "94e82de4c74131e63c4a1e06",
+      "maximum_margins": [
+        0.45187764501775124,
+        0.34402242895611496,
+        0.22136116071161405,
+        0.7382887373493646
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "2c3c9a52676d343c5f46dd93",
+      "maximum_margins": [
+        0.0957153967591623,
+        0.06958439360804836,
+        0.04294366953450418,
+        0.14749327546029245
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "3f3cc0c883f487f3775fc905",
+      "maximum_margins": [
+        -0.18080089074416764,
+        -0.13674455139087832,
+        -0.08830382962292485,
+        -0.8585892740312533
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "963effb4a49396450e8beace",
+      "maximum_margins": [
+        0.513481677436811,
+        0.3653550506736808,
+        0.20824115248650168,
+        1.069447423036586
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "0df022540b6b7f9a8480febe",
+      "maximum_margins": [
+        0.03844061668368526,
+        0.025844508785775933,
+        0.01378224682269824,
+        0.06590879761040958
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "b231f1e28243e9413a76ee6b",
+      "maximum_margins": [
+        0.7495851228261984,
+        0.6126012824179996,
+        0.40838871103668656,
+        1.4690156764808224
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "6c40dbec7fa737ba5929fb0b",
+      "maximum_margins": [
+        0.6842350850700543,
+        0.5512402725445353,
+        0.3747529882468245,
+        1.2639938313345835
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "98eb3614d0743787b797388d",
+      "maximum_margins": [
+        -0.22548895891353907,
+        -0.14961954691268997,
+        -0.08397261859800698,
+        -0.5987255771194462
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "845c5e9d1d15eae688e5f4f5",
+      "maximum_margins": [
+        0.5269176673195949,
+        0.3869818409820062,
+        0.22728266015803306,
+        0.9580628005611023
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "cc0d39ab4c2e6a738da16d98",
+      "maximum_margins": [
+        0.2061126791486927,
+        0.150340391942975,
+        0.09026787557463939,
+        0.31937531806312425
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "8dd817f9422109227782bcb4",
+      "maximum_margins": [
+        0.26412920610732593,
+        0.19569239370232266,
+        0.12014874159527422,
+        0.40919237794241914
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "c3390fa20de7e9a6ab7a7d43",
+      "maximum_margins": [
+        0.4845550487321068,
+        0.36897188782934254,
+        0.2326590596151858,
+        0.8011057507022048
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "1ac0c58183b8f55e4fff7f86",
+      "maximum_margins": [
+        0.24952565237278163,
+        0.18737369064390408,
+        0.12078305720141691,
+        0.3831973079813348
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "943810a386d902eb7d2b3f1a",
+      "maximum_margins": [
+        0.46835051915121034,
+        0.3555986060831976,
+        0.22324361962480765,
+        0.7688446570062475
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "0a7514fac9df1d62db81591d",
+      "maximum_margins": [
+        -0.16646302801163448,
+        -0.11885731936658223,
+        -0.07299878101877111,
+        -0.6414221689051951
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "bd1fdc38f7178b3212fb27dc",
+      "maximum_margins": [
+        0.017540955924790602,
+        0.011885179148381164,
+        0.006377284506514702,
+        0.029464010866163015
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "46a2cc92fefde1b330b8b2b9",
+      "maximum_margins": [
+        -0.1531895705471802,
+        -0.1095092804608806,
+        -0.06295846918383946,
+        -0.23978232074646666
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "efff2252822adb6c8353086a",
+      "maximum_margins": [
+        0.8901518415868442,
+        0.7776255410227321,
+        0.5612038770061936,
+        2.158979264805002
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "4b3185347c9fa5e9548c56c1",
+      "maximum_margins": [
+        0.8232687756021758,
+        0.6937218345836816,
+        0.4811098832098164,
+        1.7662161052581633
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "700b1494ab72c81f8bc0729b",
+      "maximum_margins": [
+        0.3500111590886367,
+        0.2479920575947432,
+        0.14550197595172865,
+        0.6009115219399853
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "891048b502809e6a73852d0d",
+      "maximum_margins": [
+        0.27884208005297284,
+        0.20639242760006793,
+        0.12832340706897366,
+        0.43613569772673866
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "4427b6acc5d9163085d8a2d8",
+      "maximum_margins": [
+        -0.20058712513644728,
+        -0.14340010006707998,
+        -0.08227827715748942,
+        -0.31742625995370666
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "ace21c34a4a0c623aecb76f1",
+      "maximum_margins": [
+        0.885655999380492,
+        0.7730268554459809,
+        0.5599909609732083,
+        2.122115860518834
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "688facdfcabb89fd135e36b0",
+      "maximum_margins": [
+        0.21902983151976105,
+        0.14530771709504375,
+        0.08132059256856428,
+        0.5525879988545284
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "d9b1d99e4d9bb42eb050b6b0",
+      "maximum_margins": [
+        0.6484957301807814,
+        0.48757856045036585,
+        0.2968280440560589,
+        1.3424250411031187
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "14473b94e6b5b61e4b5d9e29",
+      "maximum_margins": [
+        -0.004472894926046245,
+        -0.0030177772933697167,
+        -0.0016248402254845362,
+        -0.007709621451131188
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "159e0dd8d7e65d625ccc5976",
+      "maximum_margins": [
+        0.6951266555250044,
+        0.5595186572974711,
+        0.3738976713411674,
+        1.2948949732406057
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "35d15afe5a1e39a88d306c7c",
+      "maximum_margins": [
+        0.3798508567806412,
+        0.28657919499803824,
+        0.18128747378136872,
+        0.6033084280917325
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "d59184d85673af39f827ee33",
+      "maximum_margins": [
+        0.30524585734477344,
+        0.22403233069039208,
+        0.13391616604246948,
+        0.4833617669292094
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "8187e7ff3fae470c678209c5",
+      "maximum_margins": [
+        0.3302287614666715,
+        0.24382718569953227,
+        0.14706689049478366,
+        0.5243904125478956
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "4ea3c08b778460c3d7cc6f8c",
+      "maximum_margins": [
+        -0.17821090001993145,
+        -0.1273692376471912,
+        -0.07826474550380175,
+        -0.6668130300397566
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "a4994dbcdb138e40cb87e381",
+      "maximum_margins": [
+        0.3159270475364955,
+        0.23410060669623428,
+        0.14533147180660944,
+        0.49954183579422284
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "729eb0cfaf7c1127779a4ee2",
+      "maximum_margins": [
+        0.6513754291479958,
+        0.5204327168756337,
+        0.35183587382103665,
+        1.171302770812519
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "f40c05c3529685ba0848920b",
+      "maximum_margins": [
+        0.8311121878431771,
+        0.7037529764690547,
+        0.4915183327745809,
+        1.8019587069249812
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "204c80e6179e84bbae023c33",
+      "maximum_margins": [
+        0.29835097672557026,
+        0.20518465654320756,
+        0.1164302735592567,
+        0.5957749246208951
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "1e587c2bc31e31c63140ee09",
+      "maximum_margins": [
+        0.231167757918796,
+        0.16508321349260702,
+        0.09610773177220461,
+        0.374851943319239
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "4b374e8dd65376bc70761156",
+      "maximum_margins": [
+        0.5277564897506271,
+        0.4079962903358783,
+        0.2646906223941791,
+        0.8863912811836647
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "dfa67cdde0114496a076ce9f",
+      "maximum_margins": [
+        0.8706485158215314,
+        0.7519415312001063,
+        0.5302257238263027,
+        2.020598363979124
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "bf413d566927677484b4d0fc",
+      "maximum_margins": [
+        -0.2524935270893016,
+        -0.17155672063700686,
+        -0.09882989258613373,
+        -0.7503829483838123
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "eb8455de34e530b0263c08cd",
+      "maximum_margins": [
+        -0.1784670562642156,
+        -0.12304182290283122,
+        -0.07121860856126963,
+        -0.6122282876364975
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "553196e2340fda2404191e5d",
+      "maximum_margins": [
+        0.6367040674469483,
+        0.4768135984816294,
+        0.29120196547180693,
+        1.2799828030788571
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "cebb06c4e8c7e67a4112e41e",
+      "maximum_margins": [
+        0.30779670277288557,
+        0.2261024900823086,
+        0.13657470340169942,
+        0.48819259817124716
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "b9b0cba0088582c0c419f3ce",
+      "maximum_margins": [
+        -0.17450002639599438,
+        -0.1243985118343871,
+        -0.07119853118592323,
+        -0.2755736831346872
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "13e2c1f1e9ce1aa389dc395e",
+      "maximum_margins": [
+        0.7623905368818732,
+        0.6268648724159072,
+        0.4233746514752259,
+        1.513393221670943
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "b1464277e3ad5cc58838ab32",
+      "maximum_margins": [
+        -0.3720669483381363,
+        -0.2773802446184416,
+        -0.17005156638042335,
+        -0.595059739679413
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "c1353088e48d3e547b05eec3",
+      "maximum_margins": [
+        0.3923864982258247,
+        0.27769450756890857,
+        0.16362829995996947,
+        0.8592616336754902
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "f0ca680f443376f4dca0290a",
+      "maximum_margins": [
+        0.07105512246582607,
+        0.05118828870337294,
+        0.030179470190850377,
+        0.10953206753328293
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "454e7c4c73e9a186915554b5",
+      "maximum_margins": [
+        0.5622263038741243,
+        0.43549507244568225,
+        0.2806993630452425,
+        0.964920456957137
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "da402d9cb15c168168f0cd63",
+      "maximum_margins": [
+        -0.16282425545705953,
+        -0.11574428831908545,
+        -0.06586288118655903,
+        -0.25741056610473034
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "f4dd8a1520a9061a62708401",
+      "maximum_margins": [
+        -0.13857237981261458,
+        -0.09299465308073601,
+        -0.053485149626325446,
+        -0.40905209217181016
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "88442957e50895d4d5c9af0b",
+      "maximum_margins": [
+        0.7395030850669646,
+        0.5924969238434549,
+        0.37840625729354904,
+        1.4609462930306878
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "2c38f573bff79ea4114bbb8b",
+      "maximum_margins": [
+        0.5722280878756879,
+        0.4454494503748398,
+        0.285026432640002,
+        0.9816210959690475
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "d7354bb26001d609be12d48e",
+      "maximum_margins": [
+        0.7387619877865499,
+        0.60313006649223,
+        0.40359680294854355,
+        1.4288229866011177
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "d3117e41657ead6bc7abeeb0",
+      "maximum_margins": [
+        0.737387937124258,
+        0.5960737273292266,
+        0.3891017711370308,
+        1.4369153341627585
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "541421829e3e2c16bfb9e9c4",
+      "maximum_margins": [
+        -0.09329925187118648,
+        -0.06606703707599654,
+        -0.03729698672413445,
+        -0.14096897583655998
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "934eecdecc02bd1386bcf5a8",
+      "maximum_margins": [
+        -0.663921239827872,
+        -0.608313273615441,
+        -0.5120601874386749,
+        -5.228054432855714
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "7af25fb719365dbc796217d7",
+      "maximum_margins": [
+        0.4852693304538074,
+        0.3516308981669065,
+        0.2098910831753731,
+        1.024765241421207
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "c968e0b404aeadcba9709ac3",
+      "maximum_margins": [
+        -0.04594043753848209,
+        -0.03288669330347449,
+        -0.019173580803971246,
+        -0.07114150482464554
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "9100ff34423250c0d85ae137",
+      "maximum_margins": [
+        0.6739438326375529,
+        0.5379222724639461,
+        0.350884846118285,
+        1.2341102632111762
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "47a50857ed68eb85e57c13ed",
+      "maximum_margins": [
+        0.885136324995581,
+        0.7701849531756346,
+        0.5460032778091382,
+        2.119404885776899
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "14c7ae2b3c91a3bf848f71d5",
+      "maximum_margins": [
+        0.3531676365401347,
+        0.244070602092718,
+        0.13803575781630095,
+        0.6840329505266495
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "9cbfbf08ab4ecdb50f897bd4",
+      "maximum_margins": [
+        0.19726188133246475,
+        0.14156921386624355,
+        0.0826057075215823,
+        0.3113654800694463
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "7a1e162ea87cc00e94eeb5dc",
+      "maximum_margins": [
+        -0.11570766769142954,
+        -0.08190397571838753,
+        -0.04640200467542255,
+        -0.18260223661612063
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "ad8f0778608e77e4015076e3",
+      "maximum_margins": [
+        0.8517229473713501,
+        0.7294695439822235,
+        0.5128319357378022,
+        1.9062678874831498
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "c25805eec4512b228684f7ce",
+      "maximum_margins": [
+        -0.17210473140724566,
+        -0.11362688869433904,
+        -0.06373815022297818,
+        -0.4559938869419877
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "38217c6353ed2442f338db5f",
+      "maximum_margins": [
+        -0.13553871548620072,
+        -0.0890079302607924,
+        -0.04746217345916037,
+        -0.2840171173102177
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "a2e863275a34f0af496ac0b6",
+      "maximum_margins": [
+        0.7699910233406201,
+        0.6295744968589194,
+        0.4150372768630153,
+        1.554535751477074
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "5f9aaa82166caf4878f5d4d1",
+      "maximum_margins": [
+        0.45193831191176914,
+        0.3418390201041453,
+        0.21334869461728884,
+        0.7388115124989132
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "1bf2aaaaf5a1ac79fdcdd884",
+      "maximum_margins": [
+        0.19123427909164736,
+        0.14036261319240928,
+        0.08970529103011621,
+        0.29899577498359253
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "d3a2c06625b971a0ddffec8f",
+      "maximum_margins": [
+        0.27458120165735495,
+        0.2064327895342173,
+        0.13286301823436975,
+        0.42392615754704466
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "ac2fe265028c05019de278a0",
+      "maximum_margins": [
+        0.35696696256386456,
+        0.2707870137425554,
+        0.17578045303611167,
+        0.5615287580336056
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "4626d4e144df9f222528e580",
+      "maximum_margins": [
+        0.48423114353961527,
+        0.35080500396932063,
+        0.2093902559952569,
+        1.0239436484163793
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "d2c03be60c3448c29acc20dd",
+      "maximum_margins": [
+        -0.04511191005290688,
+        -0.03225174227132921,
+        -0.018768667535684402,
+        -0.06997331086352099
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "1a37d0dea2df8c409cc35d4f",
+      "maximum_margins": [
+        -0.008497572744007809,
+        -0.005829680063202003,
+        -0.003173873214442846,
+        -0.01398996746447001
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "fdde86bae790193c2f8d5968",
+      "maximum_margins": [
+        0.9341041746899548,
+        0.844749281910114,
+        0.6359006499756555,
+        2.556389058956594
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "a7c81f51a67d5b79783b2754",
+      "maximum_margins": [
+        0.42367618685642305,
+        0.2981806719908714,
+        0.17111393654505133,
+        0.8127536015077838
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "8c704d7f83f69a5a304184ab",
+      "maximum_margins": [
+        0.0016838683852635206,
+        0.0011423827360378391,
+        0.0006139515583764021,
+        0.0028267836274974423
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "4b0d4aa31b8bad5e30de8233",
+      "maximum_margins": [
+        0.6042290170897551,
+        0.47491884702452336,
+        0.31630117584182166,
+        1.0674217793919554
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "31d7ac3ec578c36cc1e5dec7",
+      "maximum_margins": [
+        0.686050070929231,
+        0.5542596672139994,
+        0.3786906795448923,
+        1.2642376808801234
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "b3637a358834945bd707f15d",
+      "maximum_margins": [
+        0.2430499718261554,
+        0.1675292821751671,
+        0.0954634987319562,
+        0.44727351036670493
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "fc28fd6281302a215f14c056",
+      "maximum_margins": [
+        0.49760310986785217,
+        0.3572392957849511,
+        0.21595577026029728,
+        0.9637963100292678
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "660d0d43d750c0e15de55b71",
+      "maximum_margins": [
+        0.2731453794693124,
+        0.19923418098416418,
+        0.11918080534477765,
+        0.4317777102364371
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "20993921fff11dc867f31d6e",
+      "maximum_margins": [
+        -0.03432047314213815,
+        -0.025313592734460544,
+        -0.015797864470283418,
+        -0.051841308449723233
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "a826eeb67e00859beeff1180",
+      "maximum_margins": [
+        -0.24766712652856465,
+        -0.18164484429700922,
+        -0.10965618901601515,
+        -0.3861981201277933
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "03d2796595e73b67f411638a",
+      "maximum_margins": [
+        -0.33010051186795564,
+        -0.24663350808882295,
+        -0.15422095243233558,
+        -0.5195197380161085
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "eea238bb0ffdbbb141c97001",
+      "maximum_margins": [
+        0.41399784153208574,
+        0.3167827986092069,
+        0.20860907300041792,
+        0.6618313838482787
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "8893759feb0b5732e91edb10",
+      "maximum_margins": [
+        0.672761910868712,
+        0.5012615427995573,
+        0.2972670275352365,
+        1.5016518713505747
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "c83fedac9c742e941ce9ade6",
+      "maximum_margins": [
+        0.13036587961383267,
+        0.0925136252565843,
+        0.053615991000317165,
+        0.20865066274981625
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "f859e78c8d03b0fc0867ba8d",
+      "maximum_margins": [
+        0.43893758634582986,
+        0.3331981593429101,
+        0.21171661649290752,
+        0.7124760089522777
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "2b18ec734d1feff28eb9c7c6",
+      "maximum_margins": [
+        0.6194692881291338,
+        0.49012576885463277,
+        0.32628814561859754,
+        1.0911631583138977
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "8f1655330339ec363353f7ed",
+      "maximum_margins": [
+        0.3500111590886367,
+        0.2479920575947432,
+        0.14550197595172865,
+        0.6009115219399853
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "76dd6788242f88844a0a7409",
+      "maximum_margins": [
+        0.27884208005297284,
+        0.20639242760006793,
+        0.12832340706897366,
+        0.43613569772673866
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "92dcd345213f7c6ef2c4fcf2",
+      "maximum_margins": [
+        0.7283502706624326,
+        0.5920247798224135,
+        0.39791240650017806,
+        1.397208780980877
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "3407c81300130599c7b633b9",
+      "maximum_margins": [
+        0.8156464076503802,
+        0.685885254950541,
+        0.4760061919497516,
+        1.7285497967097507
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "1f75638f3dad2ff136b3f917",
+      "maximum_margins": [
+        0.21902983151976105,
+        0.14530771709504375,
+        0.08132059256856428,
+        0.5525879988545284
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "f1fe724432f44980199122e1",
+      "maximum_margins": [
+        0.6484957301807814,
+        0.48757856045036585,
+        0.2968280440560589,
+        1.3424250411031187
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "f2b869d0f86e3708a89c51c8",
+      "maximum_margins": [
+        0.3884332207118076,
+        0.29149910674665636,
+        0.1823157179996321,
+        0.6217211727713456
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "c9b2eced16aa098e7a5a0379",
+      "maximum_margins": [
+        0.2317074890555596,
+        0.1718317258106361,
+        0.10696862003970714,
+        0.35666372775497546
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "9990680be3bdb3a7ce9a8751",
+      "maximum_margins": [
+        0.27597651951493174,
+        0.20111547558712722,
+        0.11896193545591288,
+        0.4361256747869914
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "f1ed16e8b9e52176f23b61cf",
+      "maximum_margins": [
+        -0.17967108655311542,
+        -0.1332973739478287,
+        -0.08332258575899382,
+        -0.2737746518547599
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "676000ec743598f5a3dbe555",
+      "maximum_margins": [
+        0.6831113259954394,
+        0.5475644486355509,
+        0.3637561280354799,
+        1.260262833797256
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "9f99759d67a03e564cdab63b",
+      "maximum_margins": [
+        -0.10055353507666964,
+        -0.06842971137268658,
+        -0.039910747922268924,
+        -0.303377590946285
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "7bbfcc7e0c03cc4c0a2b19d6",
+      "maximum_margins": [
+        0.6733642515419741,
+        0.5329144304722122,
+        0.3455513073046254,
+        1.2455836693221558
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "af4ef3e4bde3c0ee5cf70eec",
+      "maximum_margins": [
+        0.5112681359582033,
+        0.39445087416892094,
+        0.25481557131586163,
+        0.8505607784787864
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "6b8ff5f6c5a764c1dcddbae2",
+      "maximum_margins": [
+        0.8459986109861386,
+        0.7235475693536884,
+        0.5139340313489767,
+        1.8741151933309794
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "e091272aefbe96d6cb638706",
+      "maximum_margins": [
+        -0.20057032670685082,
+        -0.13746989170965868,
+        -0.08058289181575254,
+        -0.6224010299875034
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "55b916e9d66abc19337e40d5",
+      "maximum_margins": [
+        -0.15512142004097385,
+        -0.10957177589396161,
+        -0.061886988296678824,
+        -0.24709062382633007
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "82764b8a39e7427b434ec8e0",
+      "maximum_margins": [
+        0.8319064042179027,
+        0.7007686918172567,
+        0.48298849445169323,
+        1.8204980930540833
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "bc9afed6abb9cb7b908cf7c0",
+      "maximum_margins": [
+        0.8182192220240052,
+        0.6957736980907631,
+        0.5057083668817637,
+        1.7294901633362803
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "ab200a71e22d17cdbfa93b2a",
+      "maximum_margins": [
+        0.21902983151976105,
+        0.14530771709504375,
+        0.08132059256856428,
+        0.5525879988545284
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "b69e653c3b8d8d833cc65727",
+      "maximum_margins": [
+        0.6484957301807814,
+        0.48757856045036585,
+        0.2968280440560589,
+        1.3424250411031187
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "46f5e18181931a348267d2e2",
+      "maximum_margins": [
+        0.3595308382254607,
+        0.26649715334495455,
+        0.16364781597788314,
+        0.5755805299365133
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "3c89cccc6531915f39ea82a0",
+      "maximum_margins": [
+        0.17888369960340855,
+        0.12720052772710644,
+        0.07409874012169804,
+        0.28388193716592613
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "12b4e648aedf5c9170e8a163",
+      "maximum_margins": [
+        0.27597651951493174,
+        0.20111547558712722,
+        0.11896193545591288,
+        0.4361256747869914
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "bbab5b60bc1f1f19a9fd7adf",
+      "maximum_margins": [
+        0.01272678706548902,
+        0.009366654511917594,
+        0.005790399049079742,
+        0.019212563200423194
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "5571db931bb66ce911cdf94b",
+      "maximum_margins": [
+        0.636038276004368,
+        0.5016653539300417,
+        0.3267433589128383,
+        1.136482640179029
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "9b6c18fca850fbf0c3e23c22",
+      "maximum_margins": [
+        -0.17805507527208225,
+        -0.12729768329604638,
+        -0.07824664164026804,
+        -0.6670794260467872
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "b8c45ac101654a462c2488a7",
+      "maximum_margins": [
+        0.3190543910689347,
+        0.2365239565547117,
+        0.14690521751190616,
+        0.5047915764406132
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "856c153aa0f373b07cc52148",
+      "maximum_margins": [
+        0.05209174847389986,
+        0.03837842736774866,
+        0.02375750048673919,
+        0.07867039330330261
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "693c143eab2ca775cae3067e",
+      "maximum_margins": [
+        0.914626571531127,
+        0.8145503856375279,
+        0.6055450447639031,
+        2.3545669249919405
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "aa23541d346742a9245a2324",
+      "maximum_margins": [
+        -0.13857237981261458,
+        -0.09299465308073601,
+        -0.053485149626325446,
+        -0.40905209217181016
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "1fba5f778def111814d8b2ab",
+      "maximum_margins": [
+        -0.36113582379696124,
+        -0.27446022012973165,
+        -0.16872619665599609,
+        -1.1673670643356073
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "15fbd2083b4718c92bd67e96",
+      "maximum_margins": [
+        0.640129556237004,
+        0.5118169807222885,
+        0.348517020875212,
+        1.1450809195838045
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "d2ed6f4c45f8fe49a48d8ed3",
+      "maximum_margins": [
+        0.7022268069199132,
+        0.5716872696749054,
+        0.39640864079326227,
+        1.3094419259712629
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "1ab5656ce74a14a656b0e92d",
+      "maximum_margins": [
+        -0.17210473140724566,
+        -0.11362688869433904,
+        -0.06373815022297818,
+        -0.4559938869419877
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "708f971f1f2af93626864451",
+      "maximum_margins": [
+        0.5977279055921179,
+        0.44779695141150333,
+        0.2688969185196591,
+        1.1413174742278596
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "7ede01ad1220b2e959a2acb8",
+      "maximum_margins": [
+        0.24051982030428914,
+        0.1743820336664813,
+        0.10367714793238625,
+        0.37876648411370173
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "2a9826219bc5b1b6099c69ff",
+      "maximum_margins": [
+        0.25017809764383725,
+        0.18539664376402498,
+        0.11430864696398096,
+        0.3865277565110582
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "a4142c7dd97f576f1e4d7e5f",
+      "maximum_margins": [
+        0.3868360847241296,
+        0.29101526576636894,
+        0.18263287465389616,
+        0.6170422463087653
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "e77e31aeea2903a6a3007268",
+      "maximum_margins": [
+        -0.22024956195829376,
+        -0.16358361348511385,
+        -0.10216249587306342,
+        -0.33777063395028284
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "d0d556f8bff2659f413007ce",
+      "maximum_margins": [
+        0.5969526759390137,
+        0.4669801190049393,
+        0.3048996690474092,
+        1.0408459452931376
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "b5c2df538d29c4e7614e9e8f",
+      "maximum_margins": [
+        0.5755276555214814,
+        0.41647840082844195,
+        0.24270902986811135,
+        1.2314057590412548
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "78cc3a94b92bacc03a9d8d2b",
+      "maximum_margins": [
+        -0.10102036453694058,
+        -0.06683762925881687,
+        -0.03539003045688388,
+        -0.1894828037780094
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "c00811181179e9218316fbae",
+      "maximum_margins": [
+        -0.008497572744007809,
+        -0.005829680063202003,
+        -0.003173873214442846,
+        -0.01398996746447001
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "dde1bedfd255d56c3aba1006",
+      "maximum_margins": [
+        0.872442951867878,
+        0.7545161816930901,
+        0.5336946204155355,
+        2.032052770506654
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "60658d82e10a411034dd7bff",
+      "maximum_margins": [
+        0.3531676365401347,
+        0.244070602092718,
+        0.13803575781630095,
+        0.6840329505266495
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "ff0c80fa9ddcd3f3e22567e1",
+      "maximum_margins": [
+        0.19726188133246475,
+        0.14156921386624355,
+        0.0826057075215823,
+        0.3113654800694463
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "fafd6875b168f06c2d0d7f51",
+      "maximum_margins": [
+        0.5406338264885915,
+        0.41865800617970045,
+        0.26726857149514466,
+        0.9117041518564735
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "083e1c0cb121c395f8743659",
+      "maximum_margins": [
+        0.7748289398016812,
+        0.6395834016308938,
+        0.42993103365568464,
+        1.5588437139980607
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "64e41305c56b83ded12728d6",
+      "maximum_margins": [
+        -0.17210473140724566,
+        -0.11362688869433904,
+        -0.06373815022297818,
+        -0.4559938869419877
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "46472058ad390caa344ae7ee",
+      "maximum_margins": [
+        -0.13553871548620072,
+        -0.0890079302607924,
+        -0.04746217345916037,
+        -0.2840171173102177
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "ee3e0e1f7611c44a977c600c",
+      "maximum_margins": [
+        -0.060821599862019626,
+        -0.04079449375953731,
+        -0.021798874047744443,
+        -0.10669584473339322
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "6430a326b8b1187a6c57f450",
+      "maximum_margins": [
+        0.47354429266115616,
+        0.3596490939936555,
+        0.2232542344083926,
+        0.778646308086364
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "1cb04d1a9abe9e7994c4a868",
+      "maximum_margins": [
+        0.5410732005133405,
+        0.41773743035936484,
+        0.26620564242605005,
+        0.9150248426451084
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "8d2709b093704fb6b05ffc55",
+      "maximum_margins": [
+        0.27458120165735495,
+        0.2064327895342173,
+        0.13286301823436975,
+        0.42392615754704466
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "ec4e48ef2b8e571a4a870925",
+      "maximum_margins": [
+        0.35696696256386456,
+        0.2707870137425554,
+        0.17578045303611167,
+        0.5615287580336056
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "6e39cf59ff2fe3faa883dac0",
+      "maximum_margins": [
+        -0.10140064789648065,
+        -0.06851741558033111,
+        -0.03975254785178339,
+        -0.3086384974967946
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "c3eef06bb870152a79fb03a2",
+      "maximum_margins": [
+        0.7253335232940621,
+        0.5785317064213983,
+        0.368319544630879,
+        1.4125086879533792
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "6f4614a5030a4bce6a30b8ac",
+      "maximum_margins": [
+        0.6998111148009203,
+        0.5636951685377695,
+        0.3722287331298638,
+        1.3074389188494802
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "79fbeb1dde068143c680f68c",
+      "maximum_margins": [
+        0.8668867330235905,
+        0.7471971296696422,
+        0.5257263683042543,
+        1.996744155742269
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "eb2362709cba095f49abe5ff",
+      "maximum_margins": [
+        0.3531676365401347,
+        0.244070602092718,
+        0.13803575781630095,
+        0.6840329505266495
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "ec7d3bd7643aac3891de6e0c",
+      "maximum_margins": [
+        0.012491481365854595,
+        0.008511874114359441,
+        0.004601735670356877,
+        0.020870534626358683
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "1482e2666736faaa8d7d05e9",
+      "maximum_margins": [
+        0.6396276937793768,
+        0.5038198945029625,
+        0.34186005699016403,
+        1.1464435525857868
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "ea8b20ae05ce4ddbad9f7232",
+      "maximum_margins": [
+        0.7022268069199132,
+        0.5716872696749054,
+        0.39640864079326227,
+        1.3094419259712629
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "68dcf095ba9ffd5867692372",
+      "maximum_margins": [
+        -0.17210473140724566,
+        -0.11362688869433904,
+        -0.06373815022297818,
+        -0.4559938869419877
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "2b9c00ae124d83fc0a29116f",
+      "maximum_margins": [
+        0.5977279055921179,
+        0.44779695141150333,
+        0.2688969185196591,
+        1.1413174742278596
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "bbc188ffa638d1a1d016b2ea",
+      "maximum_margins": [
+        0.291628240836378,
+        0.212539203328301,
+        0.1268438867027772,
+        0.4632049027271683
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "10723609d2ad579a25dd5313",
+      "maximum_margins": [
+        0.09974173336376158,
+        0.07032425598747372,
+        0.03978384209449931,
+        0.15805209843692047
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "0818673b17ccd3419a5c0e6e",
+      "maximum_margins": [
+        0.14283125190143953,
+        0.10545152866630586,
+        0.0650060317820727,
+        0.2170010716771653
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "324329c204897fdb92ac39be",
+      "maximum_margins": [
+        0.5029064185053307,
+        0.3857034176663499,
+        0.24617714966492998,
+        0.835822324207184
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "1d8f3e65952aefb0c7eeed4f",
+      "maximum_margins": [
+        0.38085717869865593,
+        0.2874088387347926,
+        0.18587586407556467,
+        0.6048446858389586
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "63a7c8195d089e6b5d59000b",
+      "maximum_margins": [
+        0.5442029715878614,
+        0.39103108651517615,
+        0.22715858815063628,
+        1.1560759705896988
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "3149fe7536250f0d2a3c0464",
+      "maximum_margins": [
+        -0.10102036453694058,
+        -0.06683762925881687,
+        -0.03539003045688388,
+        -0.1894828037780094
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "d2977d0f92202ce1a2a95dee",
+      "maximum_margins": [
+        0.40598125931275003,
+        0.3064590449213639,
+        0.19043276807018805,
+        0.6499162223183388
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "b45665f066228c454da56d3b",
+      "maximum_margins": [
+        0.7984189361557661,
+        0.6630540248387986,
+        0.4446519461561719,
+        1.6572009808673231
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "ab1bb84452bbe25cc6ddc271",
+      "maximum_margins": [
+        -0.19174094594686147,
+        -0.1303191337460766,
+        -0.07583044936136848,
+        -0.6027790468083989
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "c45032aaddbb03751f413716",
+      "maximum_margins": [
+        0.5137644123786143,
+        0.3828707237007478,
+        0.2299386933313684,
+        0.8950536481760007
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "da018a16463ffcd2b96b2eff",
+      "maximum_margins": [
+        0.6823289092553028,
+        0.5432590338914935,
+        0.35097063328098793,
+        1.2628361072538723
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "21718f154098d52453bfefa6",
+      "maximum_margins": [
+        0.65973936277997,
+        0.5284260451783783,
+        0.35714974556921014,
+        1.1926498344255227
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "e53ed59593e08ef9b5ac13dc",
+      "maximum_margins": [
+        0.24398836837664362,
+        0.16837985892994184,
+        0.09595619836843655,
+        0.44460459703564936
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "f0b1e579dc0ffe79f66a658e",
+      "maximum_margins": [
+        0.5938674529470509,
+        0.454244516222298,
+        0.2798826886992609,
+        1.060189695452758
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "bed3f7aeaa56a65640877470",
+      "maximum_margins": [
+        0.23088412828826188,
+        0.16832623136729152,
+        0.1010053425014219,
+        0.3610016469647319
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "a6369f49ec019d68f28b0b1e",
+      "maximum_margins": [
+        0.14778878055938105,
+        0.10765096049700412,
+        0.06485693657160219,
+        0.22728849928738803
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "6ac99842780150e6a0a45830",
+      "maximum_margins": [
+        0.09261460673382693,
+        0.06835069714746927,
+        0.0421983439171742,
+        0.14002318447885465
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "334598eada34318820048f8e",
+      "maximum_margins": [
+        -0.279255915276607,
+        -0.20628811615090675,
+        -0.12599456718983093,
+        -0.43644631356475116
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "5c90528e86f4b7de3b51a777",
+      "maximum_margins": [
+        0.6270068180332807,
+        0.4921942636790052,
+        0.32033904494498117,
+        1.1169872997309955
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "80d7e2c1f5bcf3c78ae2fec8",
+      "maximum_margins": [
+        0.39239220002435105,
+        0.2740794578318536,
+        0.15629630138623424,
+        0.7685818099209915
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "f2d18fb34b8a18621a0ec0b5",
+      "maximum_margins": [
+        0.1037031521631826,
+        0.07448014962076543,
+        0.04382628597921856,
+        0.16144622396876007
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "32c23bafd1e60886599cc774",
+      "maximum_margins": [
+        0.4442282915717932,
+        0.3375323195363931,
+        0.2146833781140972,
+        0.7223525770787003
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "bc397999a88bebade85dc65a",
+      "maximum_margins": [
+        0.6431294621800347,
+        0.5105313510944249,
+        0.3336466256958905,
+        1.1498911458883296
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "b65296a0f082fc02cb85c80c",
+      "maximum_margins": [
+        0.29835097672557026,
+        0.20518465654320756,
+        0.1164302735592567,
+        0.5957749246208951
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "18ebd17cec8efb50b4025a9a",
+      "maximum_margins": [
+        0.231167757918796,
+        0.16508321349260702,
+        0.09610773177220461,
+        0.374851943319239
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "638cc6e10cc6c84d36c25945",
+      "maximum_margins": [
+        0.5277564897506271,
+        0.4079962903358783,
+        0.2646906223941791,
+        0.8863912811836647
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "bb8f0e8d06e69661845ac9b3",
+      "maximum_margins": [
+        -0.22777742639660942,
+        -0.16437234705939952,
+        -0.09560483670150782,
+        -0.3588399452670441
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "2148ec44ea6240c0026c2522",
+      "maximum_margins": [
+        -0.19597594428228668,
+        -0.12909844121490807,
+        -0.0719081872732773,
+        -0.506147325692746
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "587b826af02002cc2944b9a1",
+      "maximum_margins": [
+        -0.15012405935408296,
+        -0.09867070887889945,
+        -0.05262747660832803,
+        -0.30729595637005325
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "d10966ec1eb45934a05e41cd",
+      "maximum_margins": [
+        0.6119197289779937,
+        0.4761098130955207,
+        0.30010354788060917,
+        1.082325215717403
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "9b0909b7695facb02b93a1f1",
+      "maximum_margins": [
+        -0.17957029515918027,
+        -0.12819749424990096,
+        -0.07386903494848418,
+        -0.28352654765713936
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "b220b55e15252159850acd81",
+      "maximum_margins": [
+        -0.38877156535724877,
+        -0.2909644563570615,
+        -0.18003868881806534,
+        -0.6240692984606078
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "8d91801035a830a976bf0707",
+      "maximum_margins": [
+        -0.5000129193037339,
+        -0.3841572181127149,
+        -0.24740234847215908,
+        -0.8301507479451242
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "45f4880e7f5a111601e74a8d",
+      "maximum_margins": [
+        -0.5846739822581235,
+        -0.45929140761528797,
+        -0.3061391294877789,
+        -1.0090650205534164
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "ad9a7b42db92dacd7b8abee3",
+      "maximum_margins": [
+        0.4954748681648671,
+        0.3492712907475295,
+        0.20026974801162606,
+        1.0506110886523947
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "c0f6f451677cccf27372b4cb",
+      "maximum_margins": [
+        0.07296874370383105,
+        0.04879021180879306,
+        0.02594466508765797,
+        0.1289438295422004
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "4f4b230b41c48acda2e91b06",
+      "maximum_margins": [
+        0.6866934643460545,
+        0.5520458405521877,
+        0.37115436644046074,
+        1.2709657810270025
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "7d38e44f39b664096bbaabcf",
+      "maximum_margins": [
+        -0.27547361657732955,
+        -0.20095682999234477,
+        -0.11894640551964292,
+        -0.43474555973707474
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "f99bb022da5f4ee79dd6b1e2",
+      "maximum_margins": [
+        -0.19174094594686147,
+        -0.1303191337460766,
+        -0.07583044936136848,
+        -0.6027790468083989
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "f7329dc99da25b379f8a3960",
+      "maximum_margins": [
+        0.1051569125475818,
+        0.07553089736402596,
+        0.044615372370040374,
+        0.16398470683123323
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "1cb259a05f226430553f319f",
+      "maximum_margins": [
+        -0.02823616365969328,
+        -0.01939009579394846,
+        -0.010572335544343114,
+        -0.0462718781976017
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "51806f808948b39b5b816aae",
+      "maximum_margins": [
+        0.8661861072619651,
+        0.7465567730319798,
+        0.52619468512492,
+        1.9925597125759387
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "476d0ec5d481dac9d0afcdfd",
+      "maximum_margins": [
+        -0.1381652616750898,
+        -0.09430421992157423,
+        -0.052888599927539026,
+        -0.24932987850623
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "ccabc3008d52f488d766b9bb",
+      "maximum_margins": [
+        -0.29712792704158786,
+        -0.21395879703462017,
+        -0.12577448905555896,
+        -0.9136030292093815
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "fc9a17d2bcd1c689150c7c7b",
+      "maximum_margins": [
+        0.2527707893698835,
+        0.1841392129719917,
+        0.1110458793927187,
+        0.39773947564013457
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "1f246881e295ae9e9901737f",
+      "maximum_margins": [
+        0.20333029816747072,
+        0.15178733556530827,
+        0.09685946412652419,
+        0.3103619433095678
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "aadccce4cf79f1b115edd04b",
+      "maximum_margins": [
+        0.31351599111963857,
+        0.23681803760281062,
+        0.1535191079900492,
+        0.48769594033285213
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "f7466de5106215586b56d853",
+      "maximum_margins": [
+        -0.27667509791621286,
+        -0.20426395418711418,
+        -0.12464052017949989,
+        -0.43230674151548587
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "b09dc6c25647d47df5c86eff",
+      "maximum_margins": [
+        0.8281264806744747,
+        0.6998347512147808,
+        0.4904416815613364,
+        1.7906666388494799
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "972c81de530c6032e90c78f7",
+      "maximum_margins": [
+        0.37278689753156447,
+        0.2619370010149803,
+        0.15140672362555324,
+        0.720230433434661
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "976328da275e44615a658ca8",
+      "maximum_margins": [
+        0.049057514050931283,
+        0.035360970603572295,
+        0.02088859663185727,
+        0.07550403073299217
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "8d7bb158aefd7767a5d28eff",
+      "maximum_margins": [
+        0.4732714396955148,
+        0.36259707503567284,
+        0.23028062313742004,
+        0.7742945457214011
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "d89adaa931d4d6191c4489b7",
+      "maximum_margins": [
+        0.8259635787444165,
+        0.6986897063719764,
+        0.48433534595819133,
+        1.7725335417523536
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "0f513ea96ffb3ce36a71dfa3",
+      "maximum_margins": [
+        -0.20057032670685082,
+        -0.13746989170965868,
+        -0.08058289181575254,
+        -0.6224010299875034
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "d6f2a41daf74f3d32f1492e6",
+      "maximum_margins": [
+        0.4940888473755445,
+        0.3798594794425138,
+        0.2466103489231377,
+        0.8177096220544229
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "8603a695d915e30a6ebcc928",
+      "maximum_margins": [
+        -0.29596019300292875,
+        -0.2167080232678591,
+        -0.12882746932621703,
+        -0.4682401151436001
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "3469bc21d83afed8a6e2c177",
+      "maximum_margins": [
+        0.8896895929154104,
+        0.777702508217009,
+        0.5629569949732787,
+        2.1538607598033295
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "9b3ee6c061301e11f863c677",
+      "maximum_margins": [
+        0.8036057422747435,
+        0.6792325442479873,
+        0.4911795815518672,
+        1.664962695099005
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "1262e9abccb47f2a373fc529",
+      "maximum_margins": [
+        -0.40181604295586487,
+        -0.309862552053782,
+        -0.20923333833913144,
+        -2.365592019988016
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "2597e51893d2bc0fe2d68ac2",
+      "maximum_margins": [
+        0.12312107496343472,
+        0.090679577177123,
+        0.056373877069782696,
+        0.18742354280759088
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "763fa9ec4c43fce6eb982b37",
+      "maximum_margins": [
+        0.3665180882811892,
+        0.27088502038846807,
+        0.16637620901266414,
+        0.5900738831031741
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "6bdaec93a366029818f3b04b",
+      "maximum_margins": [
+        0.3325746785281404,
+        0.24591826649490606,
+        0.1505419095887987,
+        0.528740660236582
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "1e42984e7f989544447142e0",
+      "maximum_margins": [
+        0.3875895372619408,
+        0.29026871602849413,
+        0.18071086926748892,
+        0.6219694608447474
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "05a6e42171b6aad18456704c",
+      "maximum_margins": [
+        -0.28519988995678425,
+        -0.2116031824071698,
+        -0.13158414950191788,
+        -0.44431903045229004
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "071f5a541b27a251d567748c",
+      "maximum_margins": [
+        0.5805691110187374,
+        0.4512297763938492,
+        0.2950033800599839,
+        1.0082611158711008
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "e3513403f0be005c87402bb7",
+      "maximum_margins": [
+        0.6123795254331448,
+        0.4546346745002305,
+        0.28007114647455345,
+        1.3815054191271754
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "97c99ef7f4e8add085fa5f25",
+      "maximum_margins": [
+        -0.35066966372152886,
+        -0.2734023783685954,
+        -0.172242488354574,
+        -1.2059177860940051
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "e2c7248b0bb2dae745178e3b",
+      "maximum_margins": [
+        -0.6313899690754358,
+        -0.5723014958052796,
+        -0.4651301960621873,
+        -5.036707973077447
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "419f519cadf9f51b39c10b1c",
+      "maximum_margins": [
+        0.7886733239236464,
+        0.6615008854018063,
+        0.4722694813831533,
+        1.6051777981664375
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "d9f3c24b63a8e2e71abd967e",
+      "maximum_margins": [
+        -0.16400194155946207,
+        -0.11007586624665544,
+        -0.06308950266145463,
+        -0.44942602258288766
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "ed5f3718cc7c29724cc66e13",
+      "maximum_margins": [
+        0.5269022410329305,
+        0.396275281585029,
+        0.24369408188247044,
+        0.9131844856942756
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "69a4a2ba8e1f22bef4a87837",
+      "maximum_margins": [
+        -0.19312110792455844,
+        -0.13779388601199932,
+        -0.07884666021731446,
+        -0.3058400413011384
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "a8186d8c259dd74493de1eef",
+      "maximum_margins": [
+        0.8744402841273959,
+        0.7575506214513517,
+        0.5432415806432469,
+        2.0480678428614745
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "44575e8736ec299c9d70c988",
+      "maximum_margins": [
+        0.21902983151976105,
+        0.14530771709504375,
+        0.08227875312230964,
+        0.5525879988545284
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "3a98559dbb54a92c9ac381b4",
+      "maximum_margins": [
+        -0.21589442945458148,
+        -0.14889102542313698,
+        -0.08479294113286834,
+        -0.6215499221576009
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "2e66ba5b86abca5ad13e1e74",
+      "maximum_margins": [
+        0.17854580048466678,
+        0.13005390527301025,
+        0.07870456417469379,
+        0.276227613967158
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "bd01802ac7a774a9b852cc58",
+      "maximum_margins": [
+        0.4009345078087004,
+        0.3013402241214454,
+        0.18834389757352354,
+        0.6438061320934778
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "9e984f330371d946bd9f01f1",
+      "maximum_margins": [
+        0.33316625464160116,
+        0.24621995704039612,
+        0.14940014978613148,
+        0.5293686087234422
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "e91fe6921e24a7b4650a3d05",
+      "maximum_margins": [
+        -0.1409539403106248,
+        -0.10414430978319439,
+        -0.06466323341037877,
+        -0.2141085157540058
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "6501acab7bbfaceb68ca61bd",
+      "maximum_margins": [
+        -0.4246948236504913,
+        -0.3208297697829341,
+        -0.20208843367293988,
+        -0.6875698257521652
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "1bb6abb6bafec81079f797bc",
+      "maximum_margins": [
+        -0.1563978251272228,
+        -0.10498691732505622,
+        -0.060316103391702486,
+        -0.3637781934091012
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "a9656333371b7cbbf8ce6120",
+      "maximum_margins": [
+        -0.09844926647887758,
+        -0.0653896034101974,
+        -0.03471511309503239,
+        -0.1798546354586935
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "a5903c6d187b22c2ebf56e42",
+      "maximum_margins": [
+        0.28567434832067234,
+        0.21152476067841014,
+        0.13065508157522537,
+        0.4469424622598328
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "78e49b9f2e80ee3c86fa52e1",
+      "maximum_margins": [
+        0.701197664034539,
+        0.5585899834632746,
+        0.3563792516803912,
+        1.3209215420058618
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "7e6bc98364df6323f21dc6e6",
+      "maximum_margins": [
+        -0.2524935270893016,
+        -0.17155672063700686,
+        -0.09882989258613373,
+        -0.7503829483838123
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "09fb7e33af80e68a5bec9cb2",
+      "maximum_margins": [
+        0.8224906576920292,
+        0.6764022761357456,
+        0.44047396751092316,
+        1.8712850630093714
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "69c3e1eb3d80ca0ef6e96936",
+      "maximum_margins": [
+        0.5232895397502538,
+        0.3887253245691168,
+        0.23202774280437355,
+        0.9225016520000209
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "e5118bef71cb97c2353c2f4a",
+      "maximum_margins": [
+        0.06574315547395632,
+        0.04564459267612825,
+        0.025242283557529166,
+        0.10617209266184524
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "d1b98d7e6de602300064116a",
+      "maximum_margins": [
+        -0.19049097524495212,
+        -0.1363041035894207,
+        -0.07842351346009985,
+        -0.3004619724967572
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "de0e5a31bfadc99280844461",
+      "maximum_margins": [
+        0.7672626447676737,
+        0.6315616518933495,
+        0.42636769395073415,
+        1.5321799873873132
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "b69878a0a8bba9ba2b266742",
+      "maximum_margins": [
+        -0.3720669483381363,
+        -0.2773802446184416,
+        -0.17005156638042335,
+        -0.595059739679413
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "3060cae4959ffb237f920619",
+      "maximum_margins": [
+        0.6924563451201223,
+        0.527026245562513,
+        0.3288590353307894,
+        1.5755909871610314
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "be1a4f052972dcd7dcfac920",
+      "maximum_margins": [
+        0.08392479863011826,
+        0.06082733737732976,
+        0.036653067624317526,
+        0.12889808336939723
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "8ab29314c7a2cf67554392c5",
+      "maximum_margins": [
+        -0.19722075956995688,
+        -0.14087435584533992,
+        -0.08076681923497908,
+        -0.3122089996793429
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "ae1bd81500b14762086d50dd",
+      "maximum_margins": [
+        0.8877445525643772,
+        0.7742551008116247,
+        0.5576562923761388,
+        2.1423545536061184
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "6c7b94d361408ded5d2a304c",
+      "maximum_margins": [
+        -0.0885813019827118,
+        -0.060237239024761,
+        -0.03515495767274357,
+        -0.279236022239
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "8e9858901060afa4c6321457",
+      "maximum_margins": [
+        0.7801924628087336,
+        0.6334950176108636,
+        0.4099814204885547,
+        1.6272940793884274
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "62919a3abd928bbc4d5b844d",
+      "maximum_margins": [
+        -0.0815645773491463,
+        -0.056843407938209134,
+        -0.03150112540002731,
+        -0.1310320137420813
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "93ec868e7db2587cffeb550f",
+      "maximum_margins": [
+        0.944022374610149,
+        0.8610541218365744,
+        0.6559130384815829,
+        2.685831092929813
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "3d0942d68e18bc10e5bee73f",
+      "maximum_margins": [
+        -0.16400194155946207,
+        -0.11007586624665544,
+        -0.06308950266145463,
+        -0.44942602258288766
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "60f9e7d421ad259195f6fd5d",
+      "maximum_margins": [
+        0.5269022410329305,
+        0.396275281585029,
+        0.24369408188247044,
+        0.9131844856942756
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "e3571dd31478081d5e661049",
+      "maximum_margins": [
+        0.8089129071954668,
+        0.6768286011972494,
+        0.4664903799539004,
+        1.7035496515378803
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "a9b5c32c1d49feaea4530723",
+      "maximum_margins": [
+        -0.2548828103641916,
+        -0.18475140519733096,
+        -0.10814928870472851,
+        -0.4024935431533071
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "61d133472435119e10812a9b",
+      "maximum_margins": [
+        0.21902983151976105,
+        0.14530771709504375,
+        0.08159037735795388,
+        0.5525879988545284
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "4a291d5c1940ffe0d8d25add",
+      "maximum_margins": [
+        -0.13383643812413892,
+        -0.08860690393292375,
+        -0.048318867679116945,
+        -0.32223324845599244
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "d7ef46a71cee5b226223b211",
+      "maximum_margins": [
+        0.8227123574208908,
+        0.6927744592609822,
+        0.48096267985246804,
+        1.767148067424297
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "fdc959fdd30efc120c5b47c2",
+      "maximum_margins": [
+        -0.43273665807317985,
+        -0.36930116560314896,
+        -0.24741310989492138,
+        -1.682269055884925
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "f909afacb88ab5888ef3427b",
+      "maximum_margins": [
+        -0.07306215350554329,
+        -0.053483785958801155,
+        -0.03271860852299491,
+        -0.11098876068088837
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "079733ec37c2078441abc9b1",
+      "maximum_margins": [
+        0.4046139466074454,
+        0.30422326450352166,
+        0.19041210059297398,
+        0.651764201653922
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "d8912b2aa564e8335424a62d",
+      "maximum_margins": [
+        0.4350301407340005,
+        0.3339445747408207,
+        0.22026685422281256,
+        0.700376575424265
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "0e1dc42b56705935645384a6",
+      "maximum_margins": [
+        -0.17805507527208225,
+        -0.12729768329604638,
+        -0.07824664164026804,
+        -0.6670794260467872
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "27f7367b28ac1e344a77b83d",
+      "maximum_margins": [
+        0.023379161045707253,
+        0.016964347502607946,
+        0.010238453774645384,
+        0.035722086632877126
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    },
+    {
+      "row_key": "4bae5c6a162d7493e213e52e",
+      "maximum_margins": [
+        -0.29270600159466614,
+        -0.2141780394057728,
+        -0.12745012374110648,
+        -0.4630228548692389
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": false
+    },
+    {
+      "row_key": "243fb1c1d2e65801e62f094e",
+      "maximum_margins": [
+        0.8778689145880139,
+        0.7615270823689068,
+        0.5456919806814858,
+        2.0714661767342433
+      ],
+      "solver_status": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "potentially_reachable_optimistic": true
+    }
+  ],
+  "scope": "Only the frozen OOF score vectors of these three members, with any nonnegative per-case weights summing to one, arithmetic temperatures 0.75/1/1.5 or geometric T=1, plus their three original point controls. Actual outcomes are used to pose an oracle optimization; ties and near-zero margins are accepted optimistically. This is a numerical representational diagnostic, not a trained router, a rigorous data-wide ceiling, test accuracy, deployment approval or proof that other models cannot reach 80%."
+}

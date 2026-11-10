@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "selection_sha256": "734061df908ff5556ef83e643ae0df0a009dfc0e83f842ec342c0c33d9b10981",
+  "diagnostic_code_sha256": "fd93a285d01dcce914198eb920c2646e00434d17d0c96cdeef00a4b6f8a44bff",
+  "current_training_outcomes_used_for_calculations": false,
+  "reserved_test_outcomes_used": false,
+  "model_accuracy": null,
+  "used_as_goal_score": false,
+  "model_weights_changed": false,
+  "sources": {
+    "core": {
+      "original_training_queries": 487,
+      "source_model_sha256": [
+        "4a390d234e5b0273f476907b21f6218c261cbc9afcda11406d8068e92faea5b3",
+        "e9e1920abf6970a285a37fa740fcc922b81404616b33f9a0f5cdd67b0e99cf45",
+        "a528996eb2683ee69695ecb08be86e1fcd23ac0984578547d703a778e5e24817",
+        "b288d893a45dd17f8b07271a364402d4c01232aced6f607757915b847fb5b24f",
+        "dc24fce973d8f150b9ee1eebde886aa160c6fc7c4f45d735b8a220f1c86d5308"
+      ],
+      "invalid_destination_probability_mass_mean": 0.0004478618782832399,
+      "invalid_destination_probability_mass_p95": 0.0022053898408933522,
+      "invalid_destination_probability_mass_max": 0.006048271844966475,
+      "unclipped_delta_argmax_outside_native_range": 0,
+      "condition_only_changed_point_decisions": 0
+    },
+    "view": {
+      "original_training_queries": 487,
+      "source_model_sha256": [
+        "d4e3d8fc1e4627ef8c8b2838615e732664160865a3f2df1688ef6a5f2d675b2c",
+        "432c9dfdb8c8cc5b8c6543613cf6ab0997693c85fdf9ca2050093d7bef1631d8",
+        "430e176f9190084635eb86e5f4d9886f5f9cddb5a99b7d8a721024fa071f3b83",
+        "e5c8a9479bb10ced77f75dce77c71eb80f3af559b640e2bcece038c473d9fd90",
+        "fbbcd19b020cfe0efbc63c9984c928a8d865d1eb6f0f9126517c5f418b71f795"
+      ],
+      "invalid_destination_probability_mass_mean": 0.008048041383799867,
+      "invalid_destination_probability_mass_p95": 0.033133980019738725,
+      "invalid_destination_probability_mass_max": 0.03768332962802053,
+      "unclipped_delta_argmax_outside_native_range": 0,
+      "condition_only_changed_point_decisions": 0
+    }
+  },
+  "scope": "Ten fixed fitting-only MLP source states on the original 487 OOF feature rows. This only describes impossible-destination probability mass before fine-tuning; it does not establish a data-wide performance bound or assess the reserved test."
+}

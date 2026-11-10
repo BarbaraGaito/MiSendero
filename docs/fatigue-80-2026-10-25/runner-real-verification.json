@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "verified_at": "2026-10-27T00:50:22.885437+00:00",
+  "parent_verification_sha256": "ccd748ebcab56e094c4bdef031be74bb0476301ce7d24764bc7a5f32207cbdf7",
+  "selection_sha256": "d21c37e0bf21a3f05ffe9f876e6404ee97fa29ca8cc823e33a204f46a3a3a52f",
+  "verification_code_sha256": "f10714beb743bb012f81c3e3c76718c19dc1540efde3b6781490c16a2d08c16a",
+  "public_real_data_policy_sha256": "fdfb112d20b1f22bae08032ed7d9f3d27ee784879674c32f8f65cc21fe69c028",
+  "real_public_source_windows_reconstructed": 330,
+  "real_native_causal_windows_reconstructed": 666,
+  "source_encoders_independently_refitted": 5,
+  "source_batch_verification": {
+    "real-runner-encoder-000": {
+      "verified_unmodified_batches": 0,
+      "verified_actual_window_visits": 0
+    },
+    "real-runner-encoder-001": {
+      "verified_unmodified_batches": 180,
+      "verified_actual_window_visits": 9900
+    },
+    "real-runner-encoder-002": {
+      "verified_unmodified_batches": 180,
+      "verified_actual_window_visits": 9900
+    },
+    "real-runner-encoder-003": {
+      "verified_unmodified_batches": 540,
+      "verified_actual_window_visits": 29700
+    },
+    "real-runner-encoder-004": {
+      "verified_unmodified_batches": 540,
+      "verified_actual_window_visits": 29700
+    }
+  },
+  "artificial_input_masking_disabled_during_source_refits": true,
+  "original_native_fitting_reports_and_labels_checked": true,
+  "all_17_oof_recipes_recomputed": true,
+  "inherited_controls_reproduced": 2,
+  "best_new_source_trained_id": "real-runner-005",
+  "best_new_source_trained_cv_accuracy": 0.6302790440590952,
+  "matched_untrained_encoder_id": "real-runner-002",
+  "matched_untrained_encoder_cv_accuracy": 0.5777300431878436,
+  "native_recipes_independently_refitted": [
+    "real-runner-005",
+    "real-runner-002"
+  ],
+  "grouped_folds_per_native_refit": 5,
+  "winner_id": "real-runner-001",
+  "best_cv_accuracy": 0.6379721574248428,
+  "new_test_gate_passed": false,
+  "original_training_cases": 487,
+  "original_test_cases": 179,
+  "best_verified_test_correct": 108,
+  "best_verified_test_accuracy": 0.6033519553072626,
+  "target_accuracy": 0.8,
+  "achieved": false,
+  "scope": "Only actual public observations and original participant-held native Borg. Every source training batch is checked against its original unmodified input rows; source F/NF is auxiliary protocol supervision, never new observed Borg. No archived augmented-input fitter is executed."
+}

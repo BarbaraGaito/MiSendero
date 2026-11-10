@@ -1,0 +1,56 @@
+{
+  "review": "passed",
+  "review_code_sha256": "3c0297a53105359129add082be1831440ef00ccceaae2e6eb7a6aa7b345c5432",
+  "selection_sha256": "955584b56563bedfe3424bccd535f6d026aef401acc48c959368ee419a11cb9c",
+  "verification_sha256": "867a6742ea12fa8f8b4d3931c730edb82a0e27f1c0132a8f6bd0f3146eeac277",
+  "implementation_sha256": {
+    "fatigue_two_history_joint.py": "1a2068118936af6feb888d5c68ee3ee7bc1f2480c48930a26ebf7c33a854100c",
+    "fatigue_domain_aligned_history.py": "14ac4503d08c946b998986cce07357cfa5b0cf6f083b62a0168a665ee45d024e",
+    "fatigue_cadence_binary_gate.py": "9ac66f249fc04b8f023eca674839478ff438a7280db8778dfa91c1082ab1ab3d",
+    "fatigue_cadence_recent_gate.py": "2db00f3cf805ef84234d7cc941ada487bcc024d18cd0d16c218f1cfc765de198"
+  },
+  "native_fitting_queries": 487,
+  "native_fitting_people": 28,
+  "gate_restriction": {
+    "core": {
+      "native_fitting_queries": 487,
+      "zero_branch_correct": 229,
+      "fixed_nonzero_branch_correct": 202,
+      "unreachable_by_any_binary_gate": 56,
+      "optimistic_label_informed_gate_choice_count": 431,
+      "optimistic_choice_is_not_achieved_accuracy": true,
+      "interpretation": "A binary gate can only select unchanged Borg or the frozen most likely nonzero delta. These fitting-only counts use truth to describe that restriction;they are not model predictions or evidence of80percent."
+    },
+    "cat": {
+      "native_fitting_queries": 487,
+      "zero_branch_correct": 229,
+      "fixed_nonzero_branch_correct": 201,
+      "unreachable_by_any_binary_gate": 57,
+      "optimistic_label_informed_gate_choice_count": 430,
+      "optimistic_choice_is_not_achieved_accuracy": true,
+      "interpretation": "A binary gate can only select unchanged Borg or the frozen most likely nonzero delta. These fitting-only counts use truth to describe that restriction;they are not model predictions or evidence of80percent."
+    }
+  },
+  "previous_full_delta_work": {
+    "native_objective": "21-delta cross-entropy residual on frozen native logits",
+    "shared_features": "two actual Borg histories with domain normalization",
+    "native_context_features": 13,
+    "external_objectives": "separate original-scale continuous delta heads",
+    "recent_native_context_or_shared_prior_hr_included": false
+  },
+  "proposed_distinct_work": {
+    "native_objective": "21-delta cross-entropy residual on frozen native logits",
+    "shared_features": "six actual histories/prior-HR numerics plus five real availability flags",
+    "native_context_features": 16,
+    "external_objective": "separate CADENCE851 actual-change binary head",
+    "source_current_hr_or_native_private_context_added": false,
+    "base_classifier_weights_to_remain_frozen": true,
+    "nonzero_delta_residuals_may_change": true
+  },
+  "model_comparison_predeclared": false,
+  "new_predictive_estimator_fits": 0,
+  "new_test_predictions_computed": 0,
+  "test_labels_inspected": false,
+  "synthetic_rows": 0,
+  "interpretation": "Earlier full-delta residuals existed and must not be presented as a new general method. The distinct comparison combines the now-audited measured prior physiology and native recent context with a full native residual and a separate original-scale-independent source binary head. Study57slightly improved binary validation BCE without improving exact Borg. This motivates a matched comparison against its scalar gate,not a claim of expected or guaranteed improvement. Predeclare source-zero controls and penalties before fitting;retain original487/179and.65CVtestgate."
+}

@@ -1,0 +1,88 @@
+{
+  "version": 1,
+  "source": "https://data.mendeley.com/datasets/8zt9g9g64c/1",
+  "doi": "10.17632/8zt9g9g64c.1",
+  "contributors": [
+    "Jonathan Silva",
+    "Mateus Silva",
+    "Ricardo A.R. Oliveira"
+  ],
+  "license": {
+    "id": "01d9c749-3c4d-4431-9df3-620b2dcfe144",
+    "short_name": "CC BY 4.0",
+    "full_name": "Creative Commons Attribution 4.0 International",
+    "description": "You can share, copy and modify this dataset so long as you give appropriate credit, provide a link to the CC BY license, and indicate if changes were made, but you may not do so in a way that suggests the rights holder has endorsed you or your use of the dataset. Note that further permission may be required for any content within the dataset that is identified as belonging to a third party.",
+    "url": "http://creativecommons.org/licenses/by/4.0",
+    "category": "Creative",
+    "customer_id": null
+  },
+  "initial_native_target_eligibility_sha256": "ac5aa1e7a70ead3c5a1deb410237d285d4e305a7f4eb84e2f84a7224e53fdb3d",
+  "initial_audit_status": "Historical native-target audit preceded the signal download. Its f-level-to-CR10 exclusion still applies.",
+  "native_target_merge": false,
+  "f_level_read_for_model_or_supervision": false,
+  "fitting_people": [
+    "subject_01",
+    "subject_03",
+    "subject_04",
+    "subject_05",
+    "subject_06",
+    "subject_07",
+    "subject_08",
+    "subject_10"
+  ],
+  "reserved_people": [
+    "subject_02",
+    "subject_09"
+  ],
+  "reserved_trace_files_downloaded": false,
+  "downloaded_traces": 32,
+  "downloaded_bytes": 718190042,
+  "inventory_sha256": "2dd544d066acb2a599c8d6c2020b59ee20d06a9c042f94c2ca5cccdb144b888b",
+  "publisher_verified_receipt_sha256": "76865db34e30bb7f01aaea5506ba2fa270996377d78d74a2e68db0b8c58a9cd3",
+  "bin_provenance_sha256": "b63f166f6e5a563728bfd91b0c912f203c3e3e326267a2c68ace6a5f2f0fbeae",
+  "temporal_provenance_sha256": "876d0daa664fcbed431b701c91efdebee54927685ad40136aef6d0d1b874b290",
+  "temporal_selection_sha256": "1509e61663094ff31903178fd01d152614259a2252bea1950baab7ec6c1148ec",
+  "source_export_rows": 568074,
+  "identical_consecutive_export_rows": 455121,
+  "observed_100ms_bins": 113575,
+  "unlabelled_overlapping_windows": 842,
+  "new_native_borg_reports": 0,
+  "native_query_cases_preserved": 666,
+  "native_queries_with_any_signal": 579,
+  "pretraining_encoders_completed": 4,
+  "native_cv_candidates_completed": 37,
+  "native_best_cv_accuracy": 0.6082057277760603,
+  "native_cv_winner": "temporal-transfer-000",
+  "fresh_native_test_evaluation": false,
+  "minimum_cv_for_new_test_evaluation": 0.65,
+  "gap_interpolation": false,
+  "changes": "Observed phone channels were aggregated into complete 100 ms bins and normalized in past-only 25.6 s windows. Repeated export values and overlapping windows are not counted as independent readings or Borg questionnaires. Masked reconstruction uses only observed signal targets. No source date/timezone or questionnaire clock alignment inferred.",
+  "deployment_approved": false,
+  "native_window_lineage_clock_note": "The frozen window manifest field latest_used_bin_end_ns is a conservative causal upper bound from the available current-task trace, not proof that the bin lies inside the last 25.6 s window. It may predate an empty recent window. The actual query tensors and observation masks are reconstructed from the original source bins; no samples outside the selected past-only window enter the model.",
+  "independent_verification": {
+    "checkpoint_sha256": "74d33a7f82c8876f14b945237fe51b286fac6eafe45b0dceb1edae2482066141",
+    "checkpoint_verified_at": "2026-10-26T19:17:57.922498+00:00",
+    "result": {
+      "publisher_verified_fitting_traces": 32,
+      "raw_source_bytes": 718190042,
+      "source_people": 8,
+      "source_export_rows": 568074,
+      "identical_consecutive_export_rows": 455121,
+      "observed_100ms_bins": 113575,
+      "unlabelled_source_windows": 842,
+      "unchanged_native_queries": 666,
+      "native_queries_with_any_signal": 579,
+      "source_borg_targets_used": 0,
+      "f_level_used": false,
+      "reserved_people_used": false,
+      "raw_bin_and_window_values_independently_reconstructed": true,
+      "source_encoders_refitted_independently": 4,
+      "native_oof_variants_refitted": [
+        "temporal-transfer-000",
+        "temporal-transfer-004"
+      ],
+      "minimum_cv_for_new_test_evaluation": 0.65,
+      "new_test_gate_passed": false
+    }
+  }
+}

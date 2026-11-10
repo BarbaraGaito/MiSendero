@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "verification": "passed",
+  "audit_code_sha256": "0b4e1090d9d8a6b5e2850d2791333af377b9242036995cef6c7d7284cb12b006",
+  "source_provenance_sha256": "ef7519e280edfd038e9bcd68754087f427ec604254a73ce624fded4ef0d84ab1",
+  "native_provenance_sha256": "3af46e6f72c1cf13259e8ccdcbf9d2ced7a64ac2ca5581606289f2495c12ca6d",
+  "source_dataset_sha256": "047ed208557e36e7dfa8296d60ed07414cc299fb4bd9758a43914113ccf74572",
+  "native_input_dataset_sha256": "7ffc90f8743bee42fdfc462a9f173c6227b904ecc487ce01370ac6b4a9918bc2",
+  "actual_source_current_prior_cells_verified": 1057,
+  "actual_source_fitting_targets": 851,
+  "actual_source_reserved_targets": 206,
+  "original_source_people_partitioned_before_eligibility": {
+    "fitting": 124,
+    "reserved": 32
+  },
+  "eligible_source_people": {
+    "fitting": 123,
+    "reserved": 32
+  },
+  "source_targets_remain_original_borg6to20": true,
+  "current_bout_hr_excluded": true,
+  "unknown_report_clocks_not_invented": true,
+  "older_cohort_excluded": true,
+  "actual_native_cases_independently_rebuilt": 666,
+  "native_observed_minute_visits_rebuilt": 3874,
+  "original_native_training_cases": 487,
+  "original_native_test_cases": 179,
+  "native_cases_dropped": 0,
+  "native_missing_counts": {
+    "lag_hr_bpm": 3,
+    "baseline_hr_bpm": 8,
+    "hr_delta_baseline": 11,
+    "hr_ratio_baseline": 11
+  },
+  "native_cross_midnight_sessions": 7,
+  "real_missing_prior_hr_recovered": 2,
+  "current_native_targets_in_input_cache": false,
+  "native_target_merge_approved": false,
+  "model_fitting_started": false,
+  "synthetic_values": 0,
+  "interpolated_inputs": 0,
+  "scope": "Only measured public source/native observations. Native lag HR ends before actual previous Borg; baseline minutes end before task start. Source uses completed preceding-bout HR and measured seated baseline, with original6-20 targets. Different baseline definitions retained explicitly. Whole-person source reservation and all original native487/179 cases preserved."
+}

@@ -1,0 +1,25 @@
+# Fuentes públicas nuevas con esfuerzo momentáneo
+
+Revisión acotada del 27 de octubre de 2026. Se buscaron fuentes distintas de las ya inspeccionadas en este proyecto. Estos candidatos todavía no añaden etiquetas de entrenamiento ni cambian los 487/179 casos nativos. No es una búsqueda exhaustiva.
+
+## 1. WSD4FEDSRM: rotación de hombro — prioridad para inspección de originales
+
+El [artículo primario de Yasar y colaboradores](https://www.nature.com/articles/s41597-024-03254-8) describe 34 personas sanas, seis condiciones de rotación interna/externa y **Borg 6–20 antes y cada diez segundos durante el ejercicio**, hasta agotamiento declarado de 20. Se registran PPG de dedo a 200 Hz, EMG e IMU. El archivo `Borg data/borg_data.csv` contiene `before_task`, columnas temporales `10_sec` a `250_sec`, `end_of_trial` y `length_of_trial_(sec)`.
+
+La columna `task_order` identifica una condición en un orden fijo; **no establece el orden real de ejecución**. Solo son admisibles antecedentes dentro de la misma persona y ejercicio. Hay que verificar celdas originales, faltantes, fin de ensayo, terminales duplicados y correspondencia temporal PPG antes de preparar cualquier entrada. La intensidad local de hombro y su instrumento deben conservar una salida auxiliar propia, sin convertirse en Borg nativa 0–10. El PPG no constituye por sí solo una frecuencia cardíaca ya verificada.
+
+Los [metadatos oficiales de Zenodo 8415066](https://zenodo.org/api/records/8415066) se consultaron mediante una petición pública limitada a 2 MB: acceso `open`, licencia **CC BY 4.0**, un archivo `WSD4FEDSRM.zip`, **392.734.892 bytes**, MD5 oficial **`1e5d9db1a0e3a53a4ef27bcd4464b60a`**. [Registro de datos](https://zenodo.org/records/8415066). Después se completó la recuperación original: tamaño y MD5 coinciden; SHA-256 **`e718c1e928a4a12a68477ceef8bb216c2af3233b7755cab4fd6b82cdf6bd406c`**. El recibo queda en `training/data/raw/fatigue-research/wsd4fedsrm-8415066-v1/receipt.json`.
+
+La [inspección de originales](wsd4fedsrm-original-inspection.json) terminó con código 0. Contó 204 filas de tarea de 34 personas y seis condiciones: **1.719 celdas Borg no vacías**, separadas en 204 previas, **1.311 reportes con reloj explícito de columna dentro de la duración registrada**, y 204 terminales. Hay 3.789 celdas temporales vacías, sin valores poblados después del final ni fuera del instrumento. Solo los reportes temporales aportan 1.107 pares ordenados y 904 objetivos con dos antecedentes temporales. Los terminales quedan separados y no se suman como reportes temporales adicionales por suposición. Los 170 campos de persona vacíos se conservan y se vinculan únicamente al bloque explícito que contiene exactamente las seis condiciones documentadas. Eso no establece un orden entre tareas.
+
+El README original confirma la licencia. Se leyó además `description.txt` original, de 16.266 bytes, que documenta las columnas y advierte que `task_order` no expresa ejecución real. Ningún CSV de sensores, código o modelo suministrado fue leído o ejecutado. Todavía no hay unión temporal de PPG, partición de participantes, adaptador, entrenamiento ni auditoría independiente de elegibilidad de entradas.
+
+## 2. BBEX: levantamiento repetido — candidato con pulso y Borg durante la tarea
+
+El [artículo primario de Kim y colaboradores](https://softrobotics.snu.ac.kr/publications/KimJI_ScienceRobotics_2024.pdf) describe 11 hombres, levantamientos simétricos/asimétricos, con/sin exotraje, cuatro experimentos por persona separados una semana. Se realizaron hasta treinta levantamientos de 5,5 kg cada ocho segundos. El pulso se midió en brazo con Wahoo Ticker Fit al final de cada intervalo; Borg se comunicó cada tres intervalos, **cada 24 segundos**. Tras alcanzar Borg 20 dejaban de pedir nuevas respuestas: no se pueden considerar como observados eventuales valores posteriores rellenados.
+
+El [registro primario Dryad](https://datadryad.org/dataset/doi:10.5061/dryad.fbg79cp45) enumera 2,53 GB en seis ZIP y README público. Identifica hojas `HR` y `RPE` originales en `Heart Rate_final.xlsx` y `RPE_final.xlsx`, además de hojas filtradas y promedios inicial/medio/final. **Usar solo las hojas originales**, tras comprobar sus marcas de observación y tiempos; los promedios no son nuevas respuestas. La página confirma Borg 6–20. La licencia específica y cuál ZIP contiene los workbooks quedan pendientes de verificación en metadatos oficiales; el texto recuperado del registro no muestra el campo de licencia.
+
+No se descargaron sus archivos ni se inspeccionaron sus celdas. Aunque su protocolo es adecuado para una tarea auxiliar, todavía no hay preparación de entradas verificada, conteo de respuestas reales ni unión causal pulso/Borg verificada.
+
+La siguiente acción prioritaria es auditar por otra vía la semántica temporal y las celdas WSD4FEDSRM antes de preparar entradas. Se conservarán los faltantes naturales, las tres clases de columna y las diferencias de instrumento/tarea. La recuperación e inspección inicial no demuestran una mejora de accuracy.

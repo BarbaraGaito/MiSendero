@@ -1,0 +1,69 @@
+{
+  "version": 1,
+  "status": "complete",
+  "completed_recipes": 8,
+  "selection_sha256": "8d19b08d76ee3225e93a785961cc34aef7640a07f1c48cd91fe1e00713442463",
+  "code_sha256": "2971a2a55818a10bfe1457ee6e2895e900de9320770fbe31a31b2b17259c56f8",
+  "winner": {
+    "id": "anchor-transfer-001",
+    "algorithm": "parent_control",
+    "parent_candidate_id": "runner-transfer-001",
+    "member": "cat"
+  },
+  "best_cv_accuracy": 0.6379721574248428,
+  "best_new_source_trained_recipe": {
+    "id": "anchor-transfer-006",
+    "algorithm": "paired_frozen_runner_features",
+    "member": "core",
+    "alpha": 30.0,
+    "encoder": {
+      "id": "runner-encoder-001",
+      "epochs": 30,
+      "learning_rate": 0.001,
+      "weight_decay": 0.01,
+      "batch_size": 64,
+      "block_dropout_probability": 0.1,
+      "objective": "source_protocol_F_NF_BCE_only",
+      "random_seed": 42
+    },
+    "matched_current_only_recipe": "runner-transfer-006"
+  },
+  "best_new_source_trained_cv_accuracy": 0.6103097720693629,
+  "original_native_training_cases": 487,
+  "original_native_test_cases": 179,
+  "new_native_borg_targets": 0,
+  "source_protocol_states_are_native_borg_labels": false,
+  "fresh_test_evaluation": false,
+  "retained_best_verified_test_correct": 108,
+  "retained_best_verified_test_accuracy": 0.6033519553072626,
+  "target_accuracy": 0.8,
+  "goal_achieved": false,
+  "independent_verification": {
+    "report_sha256": "b9f38cf3369203ea4a060694714c69319743f40e3bd244af9169c8a33c47f29f",
+    "result": {
+      "version": 1,
+      "verified_at": "2026-10-26T21:57:08.026053+00:00",
+      "source_parent_verification_sha256": "665a13cbaa128f19f5f64a070cc9e052dd8edc3c82d1768dbb964eac01827853",
+      "selection_sha256": "8d19b08d76ee3225e93a785961cc34aef7640a07f1c48cd91fe1e00713442463",
+      "verification_code_sha256": "e90f1a72f99b84c5ff10253b1b393af7a48a484a5843c0e81681056be624c38c",
+      "prior_sensor_windows_independently_reconstructed": 666,
+      "both_windows_with_observations": 463,
+      "original_training_cases": 487,
+      "original_test_cases": 179,
+      "all_8_oof_recipes_recomputed": true,
+      "inherited_point_controls_reproduced": 2,
+      "best_new_paired_recipe_id": "anchor-transfer-006",
+      "best_new_paired_cv_accuracy": 0.6103097720693629,
+      "best_new_paired_grouped_folds_refitted": 5,
+      "source_weights_remain_frozen": true,
+      "winner_id": "anchor-transfer-001",
+      "best_cv_accuracy": 0.6379721574248428,
+      "new_test_gate_passed": false,
+      "best_verified_test_correct": 108,
+      "best_verified_test_accuracy": 0.6033519553072626,
+      "target_accuracy": 0.8,
+      "achieved": false,
+      "scope": "Exact native Borg on the same original cases. Earlier source fitting is referenced through its unchanged independent verification. All prior sensor windows and the best new paired learner are rebuilt. No source protocol accuracy or subset accuracy is the native goal score."
+    }
+  }
+}

@@ -1,0 +1,197 @@
+{
+  "schema_version": 1,
+  "model": "physio_risk",
+  "source": {
+    "source": "Narang / PretermBirth_Hypoxia_NocturnalSpO2_AMS",
+    "url": "https://zenodo.org/records/11505046",
+    "version": "v2",
+    "license": "CC-BY-4.0",
+    "scope": "AMS observado tras exposici\u00f3n nocturna a hipoxia controlada equivalente a 4200 m, en 24 participantes. Eval\u00faa ese estudio; falta validar alertas durante caminatas.",
+    "label_definition": "Published MOR_AMS+ binary outcome; no HR/SpO2 threshold-derived targets.",
+    "transformations": "Published Mean_HR and Mean_SpO2 retained; drop missing rows; rename binary outcomes only; no imputation or simulated trekking context.",
+    "raw_files": [
+      {
+        "path": "training/data/raw/public_audit/11505046/ResearchData.xlsx",
+        "sha256": "9e673a2e4d9496a4d7daa6aa8c29b1415381ae16683f3a32ce55769b25f665d6",
+        "bytes": 18522
+      }
+    ]
+  },
+  "features": [
+    "mean_hr",
+    "mean_spo2"
+  ],
+  "rows": 24,
+  "synthetic_base_rows": 0,
+  "dataset_sha256": "2f65627570900236be56476e810e977b0f13c78ebb66787186282a46882d09e0",
+  "lineage": [
+    {
+      "group_key": "afd8b6e0ec141c52b034d0b3",
+      "row_key": "bf140bc680ed88ed4c9cc48f",
+      "lineage": {
+        "worksheet_row": 2
+      }
+    },
+    {
+      "group_key": "b419672c7bec58b63c955252",
+      "row_key": "83c35e4af30c645532d90c53",
+      "lineage": {
+        "worksheet_row": 3
+      }
+    },
+    {
+      "group_key": "31e10d14a9011941d9aa7e43",
+      "row_key": "04754a6355140a28b41dc820",
+      "lineage": {
+        "worksheet_row": 4
+      }
+    },
+    {
+      "group_key": "79d1371d085364ad514ef4d9",
+      "row_key": "2d044ab4e94cd63e5785041b",
+      "lineage": {
+        "worksheet_row": 5
+      }
+    },
+    {
+      "group_key": "3843008dabcf1c07bb513c26",
+      "row_key": "e8e7b9003de5a9f03b9c18c8",
+      "lineage": {
+        "worksheet_row": 6
+      }
+    },
+    {
+      "group_key": "5c0924c0c1298757550ee8f2",
+      "row_key": "62e8879f84c2db606ad20f64",
+      "lineage": {
+        "worksheet_row": 7
+      }
+    },
+    {
+      "group_key": "9fe226f60c3bba18acd89e73",
+      "row_key": "5077679ce215d306ee6df53b",
+      "lineage": {
+        "worksheet_row": 8
+      }
+    },
+    {
+      "group_key": "69d5b417febca2752312eb2f",
+      "row_key": "f6cd376ec3d9cca213b49a1e",
+      "lineage": {
+        "worksheet_row": 9
+      }
+    },
+    {
+      "group_key": "763eb210d164f6186d1f7e56",
+      "row_key": "378b00af9dc25962ef6e17a6",
+      "lineage": {
+        "worksheet_row": 10
+      }
+    },
+    {
+      "group_key": "c6b4baccf0d148beaa546faf",
+      "row_key": "3c52775b13973fd4e6dbeab4",
+      "lineage": {
+        "worksheet_row": 11
+      }
+    },
+    {
+      "group_key": "7b4da5f61974f554bdc60679",
+      "row_key": "abd50404ca7c787f27ecc138",
+      "lineage": {
+        "worksheet_row": 12
+      }
+    },
+    {
+      "group_key": "ffe6e542142862617ac0d0a6",
+      "row_key": "f96145d59dcf9feda9f61245",
+      "lineage": {
+        "worksheet_row": 13
+      }
+    },
+    {
+      "group_key": "bcb730dbcda5dee4dcd7fc2a",
+      "row_key": "76516e563875c3904c7eee02",
+      "lineage": {
+        "worksheet_row": 14
+      }
+    },
+    {
+      "group_key": "a40156aab41e317e192f5d99",
+      "row_key": "3051bf7af54be16cc3ef9c2c",
+      "lineage": {
+        "worksheet_row": 15
+      }
+    },
+    {
+      "group_key": "cd480101ae7373d6895c8e8a",
+      "row_key": "bdf70cc1cab359d3ce3fdebd",
+      "lineage": {
+        "worksheet_row": 16
+      }
+    },
+    {
+      "group_key": "35d779b53736538a80418944",
+      "row_key": "f2e2566e91e08b435c3b2546",
+      "lineage": {
+        "worksheet_row": 17
+      }
+    },
+    {
+      "group_key": "d8ae2d4c52041cc673368042",
+      "row_key": "9b0f69a1b5a244bdfd946d0c",
+      "lineage": {
+        "worksheet_row": 18
+      }
+    },
+    {
+      "group_key": "f49ee8748ce6f2b4cc5b6a7e",
+      "row_key": "514d2fc39fdd08249ef7b6f7",
+      "lineage": {
+        "worksheet_row": 19
+      }
+    },
+    {
+      "group_key": "f15fa229d257ba950fce4b4c",
+      "row_key": "679fb3d72b7ccf2159cde7ec",
+      "lineage": {
+        "worksheet_row": 20
+      }
+    },
+    {
+      "group_key": "c17206f08b09c47ece0bb550",
+      "row_key": "cd6919fe7630afec7ed8dd2d",
+      "lineage": {
+        "worksheet_row": 21
+      }
+    },
+    {
+      "group_key": "edcf711eabdcce06cd03dd0f",
+      "row_key": "34ff8bbfd80913dc3ec77dbf",
+      "lineage": {
+        "worksheet_row": 22
+      }
+    },
+    {
+      "group_key": "238ab31464ae3c4db118302d",
+      "row_key": "3115352d3ef8658f7408c94a",
+      "lineage": {
+        "worksheet_row": 23
+      }
+    },
+    {
+      "group_key": "10d9258b30492ac0a0d7905a",
+      "row_key": "fda7dd3edb7a2131c300bd36",
+      "lineage": {
+        "worksheet_row": 24
+      }
+    },
+    {
+      "group_key": "6889dad3ee55f1431fb24e0e",
+      "row_key": "8045f4a000199bade83bc2c4",
+      "lineage": {
+        "worksheet_row": 25
+      }
+    }
+  ]
+}

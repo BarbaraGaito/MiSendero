@@ -1,0 +1,73 @@
+{
+  "version": 1,
+  "verified_at": "2026-10-25T19:53:20.938832+00:00",
+  "achieved": true,
+  "objective": "accuracy >= 0.60 on exact native Borg for all original 179 test responses",
+  "accuracy": 0.6033519553072626,
+  "correct": 108,
+  "test_rows": 179,
+  "train_rows": 487,
+  "train_participants": 28,
+  "test_participants": 12,
+  "cv_accuracy_mean": 0.6082057277760603,
+  "test_f1_macro": 0.318634612188879,
+  "previous_borg_baseline": {
+    "accuracy": 0.43575418994413406,
+    "precision_macro": 0.35802806261210335,
+    "recall_macro": 0.3388026115298843,
+    "f1_macro": 0.33507791952479793,
+    "precision_weighted": 0.5350645340449098,
+    "recall_weighted": 0.43575418994413406,
+    "f1_weighted": 0.4769346752654284,
+    "support": 179
+  },
+  "sensor_only_accuracy_unchanged": 0.31843575418994413,
+  "checks": {
+    "original_source_hashes": true,
+    "all_666_original_native_labels": true,
+    "all_13_inputs_reconstructed_from_original_past_reports_and_task_metadata": true,
+    "all_60_candidate_oof_scores_recomputed": true,
+    "winner_cv_refitted": true,
+    "independent_train_only_refit_matches_all_666_predictions_and_probabilities": true,
+    "saved_model_loaded_in_fresh_process": true,
+    "portable_json_matches_all_666_rows": true,
+    "current_label_mutation_does_not_affect_prediction": true,
+    "invalid_calibration_rejected": true,
+    "saved_test_predictions_match_portable_artifact": true,
+    "admin_snapshot_exact": true
+  },
+  "inputs": {
+    "required": "Observed prior Borg aged 1-15 minutes in same session, older feedback if available, and elapsed/task/terrain context",
+    "sensor_only": false,
+    "feature_order": [
+      "prior_borg",
+      "prior_age_minutes",
+      "prior2_borg",
+      "prior2_age_minutes",
+      "prior_borg_slope",
+      "prior_in_current_task",
+      "prior_count_current_task",
+      "elapsed_minutes",
+      "cumulative_active_minutes",
+      "task_order",
+      "terrain_stairs",
+      "terrain_ramp",
+      "terrain_flat_trail"
+    ]
+  },
+  "limitations": [
+    "Reused published benchmark; descriptive research, not fresh external confirmation.",
+    "Requires real recent user feedback and study activity context; not autonomous sensor inference.",
+    "Macro F1 remains low and below copying the previous Borg; exact accuracy alone does not establish per-class performance.",
+    "No field deployment approval; independent prospective evaluation remains required."
+  ],
+  "deployment_approved": false,
+  "evidence_sha256": {
+    "selection": "29e42f0354f8f4207dcb8d2444c0385bc607786a62a48a73b16edeed90a8671f",
+    "metrics": "92df244adb25f5a5fcb2096e7645aa80ed19830b3f2dd11d4d50a3524efeabbb",
+    "fitted_model": "1de3afe3135ff9cf00518857c0b6c4efa22f199eb4fe3a1d5269bbe2056f6a95",
+    "portable_model": "d1cd12e0f934561a00536696da567a8fa92a5d4dd8cefa38d9f01ca24ec8f21b",
+    "test_predictions": "9d67a63edcb5f53cfb43eade149568599145f1da1e138ed1fc5d088a389850be",
+    "verifier": "c5aba380a38165a348461247459875b147f2572caf8e1084191076efcc567ea0"
+  }
+}

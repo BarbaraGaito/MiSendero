@@ -1,0 +1,147 @@
+{
+  "signature": {
+    "code_sha256": "76f84c44b60ef2a2b9d858e911324bbc0b6321be852ce2e79be15fd4c648b189",
+    "parent_signature": {
+      "code_sha256": "aa1b8e6b93a2645929cb6af3bf75f86a5757e8287a8350679f15526d0c75f8f8",
+      "source_provenance_sha256": "1e6e850b60298e8ce19d6fb4ae36000e2da5d88548166d69c88446b13a4a628b",
+      "source_dataset_sha256": "73a0cdce8f70e54adcb2f622817181060a2486e0b78e2f270141b554ea1a018d",
+      "source_input_verification_sha256": "b6a600708051308b1a06b9b46d780411ec16356a929454d1a389f7bb400da48b",
+      "previous_selection_sha256": "65246d068ccde9841c98183dffb7a651bf93128a1708191c9de3287fe9dc4bad",
+      "previous_verification_sha256": "de77dd7db01702f0a92b4f9eaaddff95a63933025502122b551632fc5f0610d4",
+      "native_dataset_sha256": "e4de1c4ccaa8239610bd62e93bc888c1260f1f891de32b9677052d3a0e3e4d00",
+      "native_specifications": {
+        "core": {
+          "features": [
+            "prior_borg",
+            "prior_age_minutes",
+            "prior2_borg",
+            "prior2_age_minutes",
+            "prior_borg_slope",
+            "prior_in_current_task",
+            "prior_count_current_task",
+            "elapsed_minutes",
+            "cumulative_active_minutes",
+            "task_order",
+            "terrain_stairs",
+            "terrain_ramp",
+            "terrain_flat_trail"
+          ],
+          "algorithm": "mlp",
+          "target_mode": "change_from_prior",
+          "params": {
+            "hidden_layer_sizes": [
+              16,
+              8
+            ],
+            "solver": "lbfgs",
+            "alpha": 10.0,
+            "max_iter": 1000
+          }
+        },
+        "cat": {
+          "id": "catboost-023",
+          "feature_set": "history_context",
+          "features": [
+            "prior_borg",
+            "prior_age_minutes",
+            "prior2_borg",
+            "prior2_age_minutes",
+            "prior_borg_slope",
+            "prior_in_current_task",
+            "prior_count_current_task",
+            "elapsed_minutes",
+            "cumulative_active_minutes",
+            "task_order",
+            "task_feedback_first",
+            "task_feedback_total_rise",
+            "task_feedback_count",
+            "task_feedback_rate_mean",
+            "task_feedback_rate_median",
+            "task_feedback_since_last_increase",
+            "task_feedback_zero_fraction",
+            "task_feedback_linear_extrapolation",
+            "task_feedback_delta_1",
+            "task_feedback_interval_1",
+            "task_feedback_delta_2",
+            "task_feedback_interval_2",
+            "all_feedback_rate_mean",
+            "all_feedback_positive_fraction",
+            "completed_task_rise_mean",
+            "completed_task_rate_mean",
+            "previous_task_at_similar_elapsed_mean",
+            "previous_task_at_similar_elapsed_last",
+            "current_terrain"
+          ],
+          "depth": 3,
+          "l2_leaf_reg": 30.0,
+          "iterations": 900,
+          "target_mode": "change_from_prior",
+          "algorithm": "CatBoost_Ordered",
+          "learning_rate": 0.03,
+          "random_seed": 42
+        }
+      },
+      "native_catboost_selection_sha256": "254d28707e034e4663ceca9e3017d97b32622d1e1379867ec489bd8bd28392d9",
+      "public_real_data_policy_sha256": "fdfb112d20b1f22bae08032ed7d9f3d27ee784879674c32f8f65cc21fe69c028",
+      "dependency_code_sha256": {
+        "fatigue_emap_history_inputs.py": "63d0f54e5b5a936ed34bf6c4d4ddc8982bf4d4586edb0f92cf73e542a9285c20",
+        "fatigue_catboost.py": "8dac77d01b7a1ed0ef3308b63a8bf16587c1f65e6e4294b1ea8bf863cb58a1fe",
+        "fatigue_dynamics_experiment.py": "5337f883c2d861a0255a399d78b6cb159b0526e43a0d2b4091b5043ee103f596",
+        "fatigue_warm_sgd.py": "cd480a0fe2c31cc62d446525386b5c9be0adfae568ecdd1399fe85b571dd05b3",
+        "fatigue_probability.py": "8321f0dc9313bd7207508ba417a90e9b2b80ec2fb45fe2591104e60fda66125c"
+      },
+      "software_versions": {
+        "numpy": "2.5.4",
+        "pandas": "3.0.6",
+        "scipy": "1.18.1",
+        "scikit-learn": "1.9.1",
+        "catboost": "1.2.10",
+        "joblib": "1.6.0"
+      },
+      "worker_processes": 2
+    },
+    "previous_selection_sha256": "844055184004e0fef6f5f49d523c7785910d6b4af13e9b6818818bce2ebbfae2",
+    "previous_verification_sha256": "f379c4108e3f5456536b2072efe95c21227a3627f529b1df16c754393ba76c56",
+    "fitting_context_diagnostic_sha256": "536a27bd39d088a689d9f6824fe9bb58dc2122544886cf94d0824bdcab73e124",
+    "predeclared_plan_sha256": "f3891f0067890fe33c0c3ae6ff9ea081f5809667a500ead5b1dc37479cdd465c",
+    "public_real_data_policy_sha256": "fdfb112d20b1f22bae08032ed7d9f3d27ee784879674c32f8f65cc21fe69c028",
+    "worker_processes": 2
+  },
+  "algorithm": "random_forest",
+  "model_sha256": "4500e87c79c67a62a5a4ac0a27dcb992593fa7ecd6f043551652deb9ce8a163d",
+  "source_fitting_counts": {
+    "T2": 83,
+    "T3": 83,
+    "T4": 82
+  },
+  "source_reserved_scores_used_for_model_selection": false,
+  "reserved_scores": {
+    "T2": {
+      "reserved_actual_pairs": 19,
+      "mae_descriptive_only": 0.9044142955694957
+    },
+    "T3": {
+      "reserved_actual_pairs": 19,
+      "mae_descriptive_only": 1.4589550096105524
+    },
+    "T4": {
+      "reserved_actual_pairs": 19,
+      "mae_descriptive_only": 1.6277933896703036
+    }
+  },
+  "native_targets_used_for_source_fitting": 0,
+  "synthetic_rows": 0,
+  "source_features": {
+    "T2": [
+      "prior_borg"
+    ],
+    "T3": [
+      "prior_borg",
+      "prior2_borg"
+    ],
+    "T4": [
+      "prior_borg",
+      "prior2_borg"
+    ]
+  }
+}

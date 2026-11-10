@@ -26,7 +26,7 @@ export default function TrailElevationScreen() {
       if (!Number.isInteger(trailId) || trailId <= 0) throw new Error("invalid-trail");
       const loadedTrail = await getTrailById(trailId);
       let elevation = loadedTrail.elevation;
-      if (!elevation?.points?.length) {
+      if ((elevation?.points?.length ?? 0) < 2) {
         const route = parseRouteCoordinates(loadedTrail.route_coordinates);
         if (route.length >= 2) {
           const network = await Network.getNetworkStateAsync().catch(() => null);

@@ -69,6 +69,14 @@ ejecutarlo manualmente.
    y el teléfono deben estar en la misma red. Si Metro ya estaba abierto,
    reinicialo con `npx expo start --go --clear`.
 
+   Para probar el recomendador con el backend local, configurá
+   `MISENDERO_BACKEND_BIND=0.0.0.0` y
+   `MISENDERO_BACKEND_NODE_ENV=development` en `.env`. Después de actualizar
+   el código del backend, reconstruí su contenedor con
+   `docker compose up --build -d --no-deps backend`. La ruta
+   `/api/ai/recommend-trail` debe responder `401` sin sesión; un `404`
+   indica que sigue ejecutándose una imagen anterior.
+
    Expo Go usa una base temporal en memoria: los datos locales se reinician al
    recargar o cerrar completamente el proyecto. Permite probar las pantallas y
    la API sin SQLCipher. Las builds de desarrollo propias y de distribución

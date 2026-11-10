@@ -73,6 +73,7 @@ export default function HistoryScreen() {
     <AppScreen activeTab="actividad">
       <TopBar title="Historial local" onBack={() => router.back()} />
       <ScreenTitle
+        showLogo={false}
         eyebrow="Actividad"
         title="Historial"
         subtitle="Recorridos finalizados y guardados en este dispositivo."

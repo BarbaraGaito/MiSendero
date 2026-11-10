@@ -118,6 +118,7 @@ type TrailMapProps = {
     routeProgressMeters: number;
     perspective: boolean;
   }) => void;
+  reportSelectionActive?: boolean;
   onInteractionChange?: (isInteracting: boolean) => void;
   navigationMode?: boolean;
   offlineOnly?: boolean;
@@ -442,6 +443,7 @@ export function TrailMap({
   onSelectCoordinate,
   onSelectionRejected,
   onReportCoordinate,
+  reportSelectionActive = false,
   onInteractionChange,
   navigationMode = false,
   offlineOnly = false,
@@ -468,12 +470,11 @@ export function TrailMap({
   const [cachedTiles, setCachedTiles] = useState<MapTile[]>([]);
   const [tileUriOverrides, setTileUriOverrides] = useState<Record<string, string>>({});
   const [isTileLoading, setIsTileLoading] = useState(false);
-  const [isChoosingReportLocation, setIsChoosingReportLocation] = useState(false);
   const [activeReportId, setActiveReportId] = useState<number | null>(null);
   const [selectionError, setSelectionError] = useState<string | null>(null);
   const terrainSceneRef = useRef<Terrain3DSceneHandle | null>(null);
   const lastFocusedReportRef = useRef<number | null>(null);
-  const isSelecting = Boolean(onSelectCoordinate || (isChoosingReportLocation && onReportCoordinate));
+  const isSelecting = Boolean(onSelectCoordinate || (reportSelectionActive && onReportCoordinate));
   const centerRef = useRef(activeCenter);
   const zoomRef = useRef(activeZoom);
   const maxZoomRef = useRef(MAX_ZOOM_BY_LAYER.terrain);
@@ -593,9 +594,13 @@ export function TrailMap({
 
   useEffect(() => {
     setActiveReportId(null);
-    setIsChoosingReportLocation(false);
     setSelectionError(null);
   }, [trail?.id]);
+
+  useEffect(() => {
+    setSelectionError(null);
+    if (reportSelectionActive) setActiveReportId(null);
+  }, [reportSelectionActive]);
 
   useEffect(() => {
     centerRef.current = activeCenter;
@@ -898,7 +903,6 @@ export function TrailMap({
     if (onSelectCoordinate) onSelectCoordinate(selection);
     else {
       onReportCoordinate?.({ ...selection, perspective: isPerspectiveRef.current });
-      setIsChoosingReportLocation(false);
     }
   };
 
@@ -994,7 +998,6 @@ export function TrailMap({
   const selectionHintTop =
     floatingNoticeTop + locationNoticeOffset + testingNoticeOffset;
   const terrainOverlayTop = controlsTopOffset + 96;
-  const reportControlsOffset = offline && showMapNotices && onReportCoordinate ? 50 : 0;
 
   const onLayout = (event: LayoutChangeEvent) => {
     const { width, height } = event.nativeEvent.layout;
@@ -1316,21 +1319,13 @@ export function TrailMap({
       {reportMarkers.length > 0 && !activeReport && !isSelecting ? (
         <Pressable accessibilityRole="button" accessibilityLabel="Ver advertencias del sendero"
           onPress={() => openReport(reportMarkers[0].report.id)}
-          style={[styles.reportBadge, { top: controlsTopOffset + 100 + reportControlsOffset }]}>
+          style={[styles.reportBadge, { top: controlsTopOffset + 100 }]}>
           <Ionicons name="warning" size={18} color={colors.danger} />
           <Text style={styles.reportBadgeText}>{reportMarkers.length} {reportMarkers.length === 1 ? "advertencia" : "advertencias"}</Text>
         </Pressable>
       ) : null}
-      {onReportCoordinate && route.length > 1 ? (
-        <Pressable accessibilityRole="button" accessibilityState={{ selected: isChoosingReportLocation }}
-          onPress={() => { setIsChoosingReportLocation(value => !value); setActiveReportId(null); setSelectionError(null); }}
-          style={[styles.reportBadge, { top: controlsTopOffset + 50 + reportControlsOffset, left: offline ? 12 : 94 }]}>
-          <Ionicons name={isChoosingReportLocation ? "close" : "pin-outline"} size={18} color={colors.greenDark} />
-          <Text style={styles.reportBadgeText}>{isChoosingReportLocation ? "Cancelar" : "Reportar punto"}</Text>
-        </Pressable>
-      ) : null}
       {activeReport && !isSelecting ? (
-        <View style={[styles.reportCard, immersive ? { top: controlsTopOffset + 100 + reportControlsOffset } : { bottom: 24 }]}>
+        <View style={[styles.reportCard, immersive ? { top: controlsTopOffset + 100 } : { bottom: 24 }]}>
           <View style={styles.reportCardHeader}>
             <Ionicons name="warning" size={20} color={activeReport.color} />
             <Text style={styles.reportTitle} numberOfLines={2}>{activeReport.report.issue_summary}</Text>
@@ -1535,7 +1530,7 @@ export function TrailMap({
       {isSelecting ? (
         <View
           pointerEvents="none"
-          style={[styles.selectionHint, { top: selectionHintTop }]}
+          style={[styles.selectionHint, { top: selectionHintTop, right: navigationMode ? 70 : 12 }]}
         >
           <Ionicons name="pin-outline" size={14} color={colors.greenDark} />
           <Text style={styles.selectionHintText}>{selectionError || "Tocá sobre el sendero para ubicar el reporte"}</Text>

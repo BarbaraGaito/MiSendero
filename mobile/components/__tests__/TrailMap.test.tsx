@@ -107,6 +107,20 @@ test("a selected point is snapped to the route, distant points and dragged taps 
     surface(tree).props.onTouchEnd({ nativeEvent: { touches: [], locationX: 200, locationY: 240 } });
   }); expect(select).not.toHaveBeenCalled();
 });
+test("the 2D route accepts report points only after the live Reporte action activates selection", async () => {
+  const report = jest.fn();
+  const tree = await mount(TrailMap, { trail, fitRoute: true, navigationMode: true, onReportCoordinate: report });
+  await layout(tree);
+  await tap(tree, 160, 240);
+  expect(report).not.toHaveBeenCalled();
+  expect(text(tree)).not.toContain("Reportar punto");
+  await act(async () => { tree.update(<TrailMap trail={trail} fitRoute navigationMode
+    onReportCoordinate={report} reportSelectionActive />); await flush(); });
+  expect(text(tree)).toMatch(/sobre el sendero para ubicar el reporte/);
+  await tap(tree, 160, 240);
+  expect(report).toHaveBeenCalledWith(expect.objectContaining({ perspective: false,
+    routeProgressMeters: expect.any(Number) }));
+});
 test("pan and pinch gestures finish interactions and update scale in both map modes", async () => {
   const interacting = jest.fn(); const tree = await mount(TrailMap, { trail, fitRoute: true, onInteractionChange: interacting }); await layout(tree);
   const one = { nativeEvent: { touches: [{ pageX: 0, pageY: 0 }] } };
@@ -175,16 +189,17 @@ test("warnings are drawn at their map position, inspectable, and remain availabl
   expect(text(tree)).toMatch(/1\s+advertencia/);
 });
 
-test("3D report selection uses the actual terrain hit, snaps to the route, and ignores a pinch ending as one finger", async () => {
+test("the live report picker has no extra map button, uses the terrain hit and ignores a pinch", async () => {
   const report = jest.fn();
-  const tree = await mount(TrailMap, { trail, initialPerspective: true, onReportCoordinate: report });
+  const tree = await mount(TrailMap, { trail, initialPerspective: true, navigationMode: true,
+    onReportCoordinate: report, reportSelectionActive: true });
   await layout(tree);
-  await press(tree, "Reportar punto");
+  expect(text(tree)).not.toContain("Reportar punto");
+  expect(text(tree)).toMatch(/sobre el sendero para ubicar el reporte/);
   mockPick3D.mockReturnValue({ coordinate: [-41.001, -71] });
   await tap(tree, 160, 240);
   expect(mockPick3D).toHaveBeenCalledWith(0, 0);
   expect(report).toHaveBeenCalledWith(expect.objectContaining({ coordinate: [-41.001, -71], perspective: true, routeProgressMeters: expect.any(Number) }));
-  await press(tree, "Reportar punto");
   report.mockClear();
   await act(async () => {
     surface(tree).props.onTouchStart({ nativeEvent: { touches: [{}, {}], locationX: 160, locationY: 240 } });

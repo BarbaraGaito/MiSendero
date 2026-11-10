@@ -14,6 +14,7 @@ import {
 } from "../components/MiSenderoUI";
 import { ExpandableSection } from "../components/ExpandableSection";
 import { TrailMetrics } from "../components/TrailMetrics";
+import { TrailSkeleton } from "../components/TrailSkeleton";
 import { getTrailById, getTrailReports, getTrailWeather } from "../../services/trailRepository";
 import {
   getVerifiedOfflineMapByTrailId,
@@ -129,13 +130,7 @@ export default function Screen03TrailDetail() {
           { paddingBottom: Math.max(28, insets.bottom + 24) },
         ]}
       >
-        {isLoading ? (
-          <StatusNotice
-            isLoading
-            message="Consultando informacion, clima y disponibilidad offline."
-            title="Cargando sendero"
-          />
-        ) : null}
+        {isLoading ? <TrailSkeleton variant="detail" /> : null}
         {error ? (
           <StatusNotice
             actionLabel="Reintentar"
@@ -146,7 +141,7 @@ export default function Screen03TrailDetail() {
           />
         ) : null}
 
-        {trail ? (
+        {!isLoading && !error && trail ? (
           <TrailDetailContent
             key={trail.id}
             downloadMap={downloadMap}

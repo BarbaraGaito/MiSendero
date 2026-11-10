@@ -1,8 +1,6 @@
 import { StyleProp, StyleSheet, Text, TextStyle, View, ViewStyle } from "react-native";
 import Svg, { G, Path } from "react-native-svg";
 
-import { colors } from "./MiSenderoUI";
-
 type LogoTone = "light" | "dark";
 type LogoLayout = "stacked" | "horizontal";
 
@@ -19,7 +17,7 @@ type MiSenderoLogoProps = {
 const brandColors = {
   lightGreen: "#D8F0BD",
   neutral: "#DFDFDF",
-  darkGreen: colors.primaryDark,
+  darkGreen: "#0F4331",
   leafGreen: "#53906F",
 };
 
@@ -47,7 +45,8 @@ export function MiSenderoLogo({
   const wordmarkColor = isLight ? brandColors.lightGreen : brandColors.darkGreen;
 
   return (
-    <View style={[styles.container, layout === "horizontal" ? styles.row : styles.column, style]}>
+    <View accessible accessibilityRole="image" accessibilityLabel="Logo de MiSendero" testID="misendero-logo"
+      style={[styles.container, layout === "horizontal" ? styles.row : styles.column, style]}>
       <Svg width={markSize} height={markSize} viewBox="0 0 1254 1254">
         <G transform="translate(0 1254) scale(0.1 -0.1)" fill={secondaryFill}>
           <Path d={leafPath} />

@@ -1,5 +1,6 @@
 import { GLView, ExpoWebGLRenderingContext } from "expo-gl";
-import { createTerrainRenderer, loadTerrainTexture } from "./terrainGraphics";
+import { createTerrainRenderer } from "./terrainGraphics";
+import { createTerrainImagery } from "./terrainImagery";
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import * as THREE from "three";
@@ -82,7 +83,7 @@ type SceneHandles = {
   model: TerrainSceneModel | null;
   terrainRoute: THREE.Vector3[];
   trackedObject: THREE.Object3D | null;
-  rebuildId: number;
+  imagery: ReturnType<typeof createTerrainImagery> | null;
   markerGroup: THREE.Group;
   groundMesh: THREE.Mesh | null;
 };
@@ -96,6 +97,8 @@ type SceneReadout = {
 
 const DEFAULT_CAMERA_TARGET_Y = 0.58;
 const CAMERA_GROUND_CLEARANCE = 0.8;
+const NAVIGATION_EYE_HEIGHT_METERS = 12;
+const NAVIGATION_CAMERA_SETBACK_METERS = 5;
 
 const clamp = (value: number, min: number, max: number) =>
   Math.max(min, Math.min(max, value));
@@ -165,48 +168,6 @@ const buildTerrainMesh = (model: TerrainSceneModel) => {
   terrain.name = "terrain-dem-surface";
 
   return terrain;
-};
-
-const getSatelliteTextureUrl = (model: TerrainSceneModel) => {
-  const { north, south, east, west } = model.grid.bounds;
-  // Export Map adjusts its extent to the requested image aspect ratio. Matching
-  // the geographic rectangle keeps imagery registered with the DEM and route.
-  const span = Math.max(east - west, north - south);
-  const width = Math.max(1, Math.round(2048 * (east - west) / span));
-  const height = Math.max(1, Math.round(2048 * (north - south) / span));
-  const params = new URLSearchParams({
-    bbox: `${west},${south},${east},${north}`,
-    bboxSR: "4326",
-    imageSR: "4326",
-    size: `${width},${height}`,
-    format: "jpg",
-    transparent: "false",
-    f: "image",
-  });
-
-  return `https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/export?${params.toString()}`;
-};
-
-const applySatelliteTexture = (
-  terrain: THREE.Mesh,
-  model: TerrainSceneModel,
-  onLoad: (texture: THREE.Texture) => void
-) => {
-  void loadTerrainTexture(getSatelliteTextureUrl(model)).then((texture) => {
-      texture.colorSpace = THREE.SRGBColorSpace;
-      texture.anisotropy = 4;
-      texture.generateMipmaps = true;
-      texture.minFilter = THREE.LinearMipmapLinearFilter;
-      texture.magFilter = THREE.LinearFilter;
-      texture.needsUpdate = true;
-      const material = terrain.material as THREE.MeshStandardMaterial;
-      material.map = texture;
-      material.vertexColors = false;
-      material.color.set("#FFFFFF");
-      material.roughness = 0.94;
-      material.needsUpdate = true;
-      onLoad(texture);
-    }).catch(() => undefined); // Sin imagen se conserva el tinte por altura.
 };
 
 const buildTerrainSkirt = (model: TerrainSceneModel) => {
@@ -462,6 +423,7 @@ const updateTrackedPosition = (
   const userScenePoint = userCoordinate ? coordinateToTerrainScenePoint(model, userCoordinate) : null;
   if (navigationMode) {
     const startPoint = userScenePoint ? toVector3(userScenePoint) : terrainRoute[0].clone();
+    handles.imagery?.updatePosition(startPoint.x, startPoint.z);
     let nearestIndex = 0;
     if (userScenePoint) {
       let nearestDistance = Infinity;
@@ -673,6 +635,7 @@ export const Terrain3DScene = forwardRef<Terrain3DSceneHandle, Terrain3DScenePro
     cancelAnimationFrame(handles.animationFrame);
     // Cleanup must not prevent returning to the 2D map after a lost context.
     try {
+      handles.imagery?.dispose();
       clearGroup(handles.terrainGroup);
       clearGroup(handles.routeGroup);
       clearGroup(handles.weatherGroup);
@@ -815,9 +778,9 @@ export const Terrain3DScene = forwardRef<Terrain3DSceneHandle, Terrain3DScenePro
     if (!handles) return;
 
     const current = propsRef.current;
-    const rebuildId = handles.rebuildId + 1;
-    handles.rebuildId = rebuildId;
     const model = current.terrain;
+    handles.imagery?.dispose();
+    handles.imagery = null;
     clearGroup(handles.terrainGroup);
     clearGroup(handles.routeGroup);
     clearGroup(handles.weatherGroup);
@@ -847,14 +810,13 @@ export const Terrain3DScene = forwardRef<Terrain3DSceneHandle, Terrain3DScenePro
     handles.groundMesh = terrain;
     handles.terrainGroup.add(terrain);
     if (current.satelliteTextureEnabled) {
-      applySatelliteTexture(terrain, model, (texture) => {
-        if (handlesRef.current !== handles || handles.rebuildId !== rebuildId) {
-          texture.dispose();
-        } else {
-          texture.anisotropy = Math.min(8, handles.renderer.capabilities?.getMaxAnisotropy?.() ?? 4);
-          setHasSatelliteImage(true);
-        }
-      });
+      handles.imagery = createTerrainImagery(
+        terrain.material,
+        model,
+        handles.renderer.capabilities?.getMaxAnisotropy?.() ?? 1,
+        current.navigationMode,
+        () => setHasSatelliteImage(true)
+      );
     }
     handles.terrainGroup.add(buildTerrainSkirt(model));
     if (current.showContours) handles.terrainGroup.add(buildTerrainContours(model));
@@ -951,22 +913,27 @@ export const Terrain3DScene = forwardRef<Terrain3DSceneHandle, Terrain3DScenePro
     const focusPoint = current.focusCoordinate ? coordinateToTerrainScenePoint(current.terrain, current.focusCoordinate) : null;
 
     if (current.navigationMode && navigationView && !focusPoint) {
-      const anchor = navigationView.anchor.clone();
-      const viewDirection = navigationView.direction
-        .clone()
-        .applyAxisAngle(new THREE.Vector3(0, 1, 0), orbitAngle);
+      const model = current.terrain;
+      const yAxis = new THREE.Vector3(0, 1, 0);
+      const viewDirection = navigationView.direction.clone().applyAxisAngle(yAxis, orbitAngle);
       const sightDirection = navigationView.sightDirection
         .clone()
-        .applyAxisAngle(new THREE.Vector3(0, 1, 0), orbitAngle);
-      const eyeHeight = clamp(12 / current.terrain.metersPerUnit - tilt * 0.01, 0.005, 0.3);
-      const cameraPosition = anchor
+        .applyAxisAngle(yAxis, orbitAngle);
+      const cameraPosition = navigationView.anchor
         .clone()
-        .addScaledVector(viewDirection, -0.045)
-        .add(new THREE.Vector3(0, eyeHeight, 0));
+        .addScaledVector(viewDirection, -NAVIGATION_CAMERA_SETBACK_METERS / model.metersPerUnit);
+      const localCamera = cameraPosition.clone().applyAxisAngle(yAxis, -alignmentRotation);
+      const groundY = getTerrainSceneHeight(model, localCamera.x, localCamera.z);
+      cameraPosition.y = groundY + NAVIGATION_EYE_HEIGHT_METERS / model.metersPerUnit;
+
+      // Mantiene suelo visible en el centro incluso al mirar cuesta arriba.
+      const trailPitch = Math.min(0.17, Math.asin(clamp(sightDirection.y, -1, 1)));
+      const pitch = clamp(trailPitch - 0.30 - tilt * 0.24, -1.48, 0.23);
+      const lookDirection = sightDirection.setY(0).normalize().multiplyScalar(Math.cos(pitch));
+      lookDirection.y = Math.sin(pitch);
       const lookTarget = cameraPosition
         .clone()
-        .addScaledVector(sightDirection, 3.2)
-        .add(new THREE.Vector3(0, -0.1 - tilt * 0.28, 0));
+        .add(lookDirection);
       camera.fov = getTerrainPerspectiveFov(scale);
       camera.near = Math.max(0.0005, 0.5 / current.terrain.metersPerUnit);
       camera.zoom = 1;
@@ -1075,7 +1042,7 @@ export const Terrain3DScene = forwardRef<Terrain3DSceneHandle, Terrain3DScenePro
           model: null,
           terrainRoute: [],
           trackedObject: null,
-          rebuildId: 0,
+          imagery: null,
           markerGroup,
           groundMesh: null,
         };

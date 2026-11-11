@@ -160,6 +160,79 @@ test("satellite exports match the geographic aspect ratio instead of shifting th
   expect(url.searchParams.get("imageSR")).toBe("4326");
 });
 
+test.each([0, 600])("navigation keeps nearby ground in view with a %i m drop per row", async (drop) => {
+  const elevationsMeters = grid.elevationsMeters.map((_, index) => (2 - Math.floor(index / 3)) * drop);
+  const model = buildTerrainSceneModel({ ...grid, elevationsMeters } as never, [[0.7, 0.5], [0.3, 0.5]])!;
+  const { gpu } = await mount({ terrain: model, navigationMode: true });
+  const [scene, camera] = gpu.render.mock.calls.at(-1);
+  scene.updateMatrixWorld(true);
+  const below = new THREE.Raycaster(camera.position, new THREE.Vector3(0, -1, 0));
+  const ray = new THREE.Raycaster(camera.position, camera.getWorldDirection(new THREE.Vector3()));
+  const mesh = scene.getObjectByName("terrain-dem-surface");
+  const [clearance] = below.intersectObject(mesh, false);
+  const [ground] = ray.intersectObject(mesh, false);
+  expect(clearance.distance * model.metersPerUnit).toBeCloseTo(12);
+  expect(ground.distance * model.metersPerUnit).toBeLessThan(60);
+  expect(loadTerrainTexture).not.toHaveBeenCalled();
+});
+
+test("navigation loads detail for the current area, discarding stale requests and retaining the base image", async () => {
+  let resolveStart!: (texture: THREE.Texture) => void;
+  const base = new THREE.Texture();
+  const stale = new THREE.Texture();
+  const detail = new THREE.Texture();
+  const disposeStale = jest.spyOn(stale, "dispose");
+  const disposeDetail = jest.spyOn(detail, "dispose");
+  const loadTexture = loadTerrainTexture as jest.Mock;
+  loadTexture.mockResolvedValueOnce(base)
+    .mockReturnValueOnce(new Promise(resolve => { resolveStart = resolve; }))
+    .mockResolvedValueOnce(detail);
+
+  const { gpu } = await mount({ navigationMode: true, satelliteTextureEnabled: true });
+  const [scene] = gpu.render.mock.calls.at(-1);
+  const ground = scene.getObjectByName("terrain-dem-surface") as THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
+  const updatePosition = (coordinate: [number, number]) => renderer.act(async () => screen.update(
+    <Terrain3DScene terrain={terrain} viewOffset={{ x: 0, y: 0 }} viewScale={1}
+      navigationMode userCoordinate={coordinate} satelliteTextureEnabled />
+  ));
+  expect(ground.material.map).toBe(base);
+  expect(loadTexture).toHaveBeenCalledTimes(2);
+  await updatePosition([0.98, 0.02]);
+  await updatePosition([0.25, 0.65]);
+  expect(loadTexture).toHaveBeenCalledTimes(2);
+  await renderer.act(async () => { resolveStart(stale); });
+  expect(disposeStale).toHaveBeenCalledTimes(1);
+  expect(loadTexture).toHaveBeenCalledTimes(3);
+
+  const request = new URL(loadTexture.mock.calls[2][0]);
+  const [west, south, east, north] = request.searchParams.get("bbox")!.split(",").map(Number);
+  expect(request.searchParams.get("size")).toBe("1024,1024");
+  expect(east - west).toBeCloseTo(384 / grid.sideLengthMeters);
+  expect(west).toBeLessThan(0.65);
+  expect(east).toBeGreaterThan(0.65);
+  expect(south).toBeLessThan(0.25);
+  expect(north).toBeGreaterThan(0.25);
+  const shader = { ...THREE.ShaderLib.standard, uniforms: {} } as Parameters<typeof ground.material.onBeforeCompile>[0];
+  ground.material.onBeforeCompile(shader, gpu);
+  expect(shader.uniforms.terrainDetailMap.value).toBe(detail);
+  const [u, v, width, height] = shader.uniforms.terrainDetailBounds.value.toArray();
+  expect(u).toBeCloseTo(west);
+  expect(v).toBeCloseTo(south);
+  expect(u + width).toBeCloseTo(east);
+  expect(v + height).toBeCloseTo(north);
+  expect(detail.minFilter).toBe(THREE.LinearMipmapLinearFilter);
+
+  await updatePosition([0.251, 0.651]);
+  expect(loadTexture).toHaveBeenCalledTimes(3);
+  loadTexture.mockRejectedValueOnce(new Error("Imagery unavailable"));
+  await updatePosition([0.8, 0.8]);
+  expect(loadTexture).toHaveBeenCalledTimes(4);
+  expect(ground.material.map).toBe(base);
+  expect(shader.uniforms.terrainDetailMap.value).toBe(detail);
+  await renderer.act(async () => screen.unmount()); screen = null;
+  expect(disposeDetail).toHaveBeenCalledTimes(1);
+});
+
 test("night, fog and probability-only forecasts use their actual atmospheric states", async () => {
   const { gpu } = await mount({ weather: { condition: "Niebla", temperatureC: 4, rainProbability: 95, isDay: false } });
   const [scene] = gpu.render.mock.calls.at(-1);

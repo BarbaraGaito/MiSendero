@@ -22,6 +22,7 @@ import { getTrails } from "../../services/trailRepository";
 import { formatKilometers } from "../../services/geoUtils";
 import { getOfflineMaps } from "../../services/offlineMaps";
 import { Trail } from "../../types";
+import { TrailSkeleton } from "../components/TrailSkeleton";
 
 export default function OfflineMapsSearchScreen() {
   const [query, setQuery] = useState("");
@@ -96,7 +97,7 @@ export default function OfflineMapsSearchScreen() {
 
       <ScrollView showsVerticalScrollIndicator={false}>
         {error ? <Text style={styles.statusText}>{error}</Text> : null}
-        {isLoading ? <Text style={styles.statusText}>Cargando rutas...</Text> : null}
+        {isLoading ? <TrailSkeleton variant="list" count={2} /> : null}
 
         {!isLoading && visibleTrails.length === 0 ? (
           <Card>

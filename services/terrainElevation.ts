@@ -110,9 +110,9 @@ export type TerrainElevationGrid = Omit<TerrainGridGeometry, "coordinates"> & {
 };
 
 export type TerrainElevationSource = {
-  provider: "Open-Meteo";
-  dataset: "Copernicus DEM GLO-90";
-  resolutionMeters: 90;
+  provider: "Open-Meteo" | "AWS Terrain Tiles";
+  dataset: "Copernicus DEM GLO-90" | "Mapzen Terrain Tiles";
+  resolutionMeters: number;
   endpoint: string;
   attribution: string;
   fetchedAt: string;

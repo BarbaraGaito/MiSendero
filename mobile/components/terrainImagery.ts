@@ -5,6 +5,7 @@ import { TERRAIN_SCENE_HALF_SIZE, TerrainSceneModel } from "./terrainSceneModel"
 
 const DETAIL_SIDE_METERS = 384;
 const DETAIL_IMAGE_PIXELS = 1024;
+const SATELLITE_TEXTURE_TIMEOUT_MS = 20000;
 
 function getSatelliteTextureUrl({ north, south, east, west }: TerrainGridBounds, pixels: number) {
   // Export Map adjusts the extent to match the image's aspect ratio.
@@ -23,7 +24,7 @@ function getSatelliteTextureUrl({ north, south, east, west }: TerrainGridBounds,
   return `https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/export?${params.toString()}`;
 }
 
-function prepareTexture(texture: THREE.Texture, anisotropy: number) {
+function prepareDetailTexture(texture: THREE.Texture, anisotropy: number) {
   texture.colorSpace = THREE.SRGBColorSpace;
   texture.anisotropy = anisotropy;
   texture.generateMipmaps = true;
@@ -32,7 +33,7 @@ function prepareTexture(texture: THREE.Texture, anisotropy: number) {
   texture.needsUpdate = true;
 }
 
-function addTerrainDetailShader(material: THREE.MeshStandardMaterial) {
+function addTerrainDetailShader(material: THREE.MeshBasicMaterial) {
   const detailMap = { value: null as THREE.Texture | null };
   const detailBounds = { value: new THREE.Vector4(0, 0, 1, 1) };
   const detailEnabled = { value: false };
@@ -63,30 +64,49 @@ function addTerrainDetailShader(material: THREE.MeshStandardMaterial) {
 }
 
 export function createTerrainImagery(
-  material: THREE.MeshStandardMaterial,
+  terrain: THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial | THREE.MeshBasicMaterial>,
   model: TerrainSceneModel,
   maxAnisotropy: number,
   navigationMode: boolean,
-  onBaseLoad: () => void
+  onUnavailable: () => void
 ) {
   const { bounds, sideLengthMeters } = model.grid;
+  // La fotografía ya contiene su propia iluminación.
+  const material = new THREE.MeshBasicMaterial({ toneMapped: false });
   const detail = navigationMode ? addTerrainDetailShader(material) : null;
-  const anisotropy = Math.max(1, Math.min(navigationMode ? 16 : 8, maxAnisotropy));
+  const anisotropy = Math.max(1, Math.min(16, maxAnisotropy));
   let disposed = false;
 
+  const dispose = () => {
+    if (disposed) return;
+    disposed = true;
+    clearTimeout(timeout);
+    detail?.detailMap.value?.dispose();
+    if (terrain.material !== material) material.dispose();
+  };
+  const unavailable = () => {
+    if (disposed) return;
+    dispose();
+    onUnavailable();
+  };
+  const timeout = setTimeout(unavailable, SATELLITE_TEXTURE_TIMEOUT_MS);
   void loadTerrainTexture(getSatelliteTextureUrl(bounds, 2048)).then((texture) => {
     if (disposed) {
       texture.dispose();
       return;
     }
-    prepareTexture(texture, anisotropy);
+    clearTimeout(timeout);
+    texture.colorSpace = THREE.SRGBColorSpace;
+    texture.anisotropy = 1;
+    texture.generateMipmaps = false;
+    texture.minFilter = THREE.LinearFilter;
+    texture.magFilter = THREE.LinearFilter;
+    texture.needsUpdate = true;
+    const previousMaterial = terrain.material;
     material.map = texture;
-    material.vertexColors = false;
-    material.color.set("#FFFFFF");
-    material.roughness = 0.94;
-    material.needsUpdate = true;
-    onBaseLoad();
-  }).catch(() => undefined); // El tinte por altura sigue visible si falla la imagen.
+    terrain.material = material;
+    previousMaterial.dispose();
+  }).catch(unavailable);
 
   const detailSize = Math.min(1, DETAIL_SIDE_METERS / sideLengthMeters);
   const halfSize = detailSize / 2;
@@ -107,7 +127,7 @@ export function createTerrainImagery(
         texture.dispose();
         return;
       }
-      prepareTexture(texture, anisotropy);
+      prepareDetailTexture(texture, anisotropy);
       detail.detailMap.value?.dispose();
       detail.detailMap.value = texture;
       detail.detailBounds.value.set(target.centerU - halfSize, target.centerV - halfSize, detailSize, detailSize);
@@ -144,9 +164,6 @@ export function createTerrainImagery(
       area = { url, centerU, centerV };
       void loadDetail();
     },
-    dispose() {
-      disposed = true;
-      detail?.detailMap.value?.dispose();
-    },
+    dispose,
   };
 }

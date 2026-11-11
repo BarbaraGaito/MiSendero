@@ -14,6 +14,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { OfflineConnectionBanner } from "./OfflineConnectionBanner";
+import { MiSenderoLogo } from "./MiSenderoLogo";
 
 export const typography = {
   regular: "BricolageGrotesque_400Regular",
@@ -133,16 +134,19 @@ export function ScreenTitle({
   eyebrow,
   title,
   subtitle,
+  showLogo = true,
 }: {
   eyebrow?: string;
   title: string;
   subtitle?: string;
+  showLogo?: boolean;
 }) {
   return (
     <View style={styles.screenTitle}>
-      {eyebrow ? (
-        <Text style={styles.eyebrow}>{eyebrow}</Text>
-      ) : null}
+      <View style={styles.screenTitleBrandRow}>
+        {showLogo ? <MiSenderoLogo tone="dark" markSize={24} showWordmark={false} /> : null}
+        {eyebrow ? <Text style={[styles.eyebrow, styles.eyebrowInline]}>{eyebrow}</Text> : null}
+      </View>
 
       <Text accessibilityRole="header" style={styles.screenTitleText}>
         {title}
@@ -183,14 +187,16 @@ export function TopBar({
         </Pressable>
       ) : (
         <View style={styles.mark}>
-          <Ionicons name="leaf-outline" size={22} color={colors.green} />
+          <MiSenderoLogo tone="dark" markSize={29} showWordmark={false} />
         </View>
       )}
       <View style={styles.topText}>
         <Text style={styles.title}>{title}</Text>
         {subtitle ? <Text style={styles.subtitle}>{subtitle}</Text> : null}
       </View>
-      <Pressable
+      {onBack ? <View style={styles.mark}>
+        <MiSenderoLogo tone="dark" markSize={29} showWordmark={false} />
+      </View> : <Pressable
         accessibilityLabel="Notificaciones"
         accessibilityRole="button"
         hitSlop={10}
@@ -200,7 +206,7 @@ export function TopBar({
         ]}
       >
         <Ionicons name="notifications-outline" size={21} color={colors.ink} />
-      </Pressable>
+      </Pressable>}
     </View>
   );
 }
@@ -586,10 +592,6 @@ export const styles = StyleSheet.create({
   },
   mark: {
     alignItems: "center",
-    backgroundColor: colors.mint,
-    borderColor: colors.border,
-    borderRadius: 16,
-    borderWidth: 1,
     height: 44,
     justifyContent: "center",
     width: 44,
@@ -830,6 +832,18 @@ cardGreen: {
 
 screenTitle: {
   marginBottom: 22,
+},
+
+screenTitleBrandRow: {
+  alignItems: "center",
+  flexDirection: "row",
+  gap: 7,
+  marginBottom: 4,
+  minHeight: 24,
+},
+
+eyebrowInline: {
+  marginBottom: 0,
 },
 
 eyebrow: {

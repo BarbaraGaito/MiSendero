@@ -28,6 +28,7 @@ import {
   WearableSimulationScenario,
 } from "../../types";
 import { TrailMap } from "../components/TrailMap";
+import { MiSenderoLogo } from "../components/MiSenderoLogo";
 import { useDeviceLocation } from "../hooks/useDeviceLocation";
 import { DeviceLocation } from "../../services/deviceLocation";
 import {
@@ -163,6 +164,7 @@ export default function Screen04RouteMap() {
   const [isMapInteracting, setIsMapInteracting] = useState(false);
   const [mapFooterHeight, setMapFooterHeight] = useState(250);
   const [focusedReportId, setFocusedReportId] = useState<number | null>(null);
+  const [isChoosingReportLocation, setIsChoosingReportLocation] = useState(false);
   const [dismissedReportKey, setDismissedReportKey] = useState<string | null>(null);
   const [proximityHeight, setProximityHeight] = useState(110);
   const navigationProgressRef = useRef<{ context: string; progress: number | null; direction: 1 | -1 }>({ context: "", progress: null, direction: 1 });
@@ -181,6 +183,8 @@ export default function Screen04RouteMap() {
   const [lastGpsRecordedAt, setLastGpsRecordedAt] = useState<number | null>(null);
   const [simulatedLiveLocation, setSimulatedLiveLocation] = useState<DeviceLocation | null>(null);
   const trackedDistanceMetersRef = useRef(0);
+
+  useEffect(() => { setIsChoosingReportLocation(false); }, [trailId, startedAtMs, isActiveRoute]);
 
   useEffect(() => {
     let isMounted = true;
@@ -269,6 +273,7 @@ export default function Screen04RouteMap() {
   }, [isFocused, trail?.id, trailId, hasInternetConnection, isOffline, offline]);
 
   const reportAtCoordinate = ({ coordinate, perspective }: { coordinate: Coordinate; perspective: boolean }) => {
+    setIsChoosingReportLocation(false);
     router.push({ pathname: "/reportar-terreno", params: {
       id: String(trailId), ...(isActiveRoute ? { startedAt: String(startedAtMs) } : {}),
       latitude: String(coordinate[0]), longitude: String(coordinate[1]), perspective: perspective ? "1" : "0",
@@ -470,6 +475,7 @@ export default function Screen04RouteMap() {
           onReportClosed={() => setFocusedReportId(null)}
           onReportsChanged={refreshReports}
           onReportCoordinate={reportAtCoordinate}
+          reportSelectionActive={isChoosingReportLocation}
           weather={weather}
           fitRoute
           immersive
@@ -487,10 +493,13 @@ export default function Screen04RouteMap() {
             <Ionicons name="chevron-back" size={22} color={colors.ink} />
           </Pressable>
           <View style={styles.activeTitleBox}>
-            <Text style={styles.activeEyebrow}>{isPaused ? "Ruta en pausa" : `En curso · ${Math.floor(activeSeconds / 60)} min activos`}</Text>
-            <Text numberOfLines={1} style={styles.activeTitle}>
-              {trail?.name || "Mapa del recorrido"}
-            </Text>
+            <View style={styles.activeTitleCopy}>
+              <Text style={styles.activeEyebrow}>{isPaused ? "Ruta en pausa" : `En curso · ${Math.floor(activeSeconds / 60)} min activos`}</Text>
+              <Text numberOfLines={1} style={styles.activeTitle}>
+                {trail?.name || "Mapa del recorrido"}
+              </Text>
+            </View>
+            <MiSenderoLogo tone="dark" markSize={28} showWordmark={false} />
           </View>
         </View>
         {showUpcomingReport && upcomingReport ? <View accessibilityLiveRegion="polite" onLayout={event => setProximityHeight(event.nativeEvent.layout.height)}
@@ -814,16 +823,19 @@ export default function Screen04RouteMap() {
               <Text style={styles.activeActionText}>{isPaused ? "Reanudar" : "Pausa"}</Text>
             </Pressable>
             <Pressable
-              onPress={() =>
-                router.push({
-                  pathname: "/reportar-terreno",
-                  params: { id: String(trailId), startedAt: String(startedAtMs) },
-                })
-              }
-              style={styles.activeAction}
+              accessibilityRole="button"
+              accessibilityLabel={isChoosingReportLocation ? "Cancelar selección del reporte" : "Seleccionar punto para reportar"}
+              accessibilityState={{ selected: isChoosingReportLocation }}
+              disabled={routePoints.length < 2}
+              onPress={() => {
+                setFocusedReportId(null);
+                setIsChoosingReportLocation(value => !value);
+              }}
+              style={[styles.activeAction, isChoosingReportLocation && styles.activeActionSelected,
+                routePoints.length < 2 && { opacity: 0.5 }]}
             >
-              <Ionicons name="megaphone-outline" size={20} color={colors.greenDark} />
-              <Text style={styles.activeActionText}>Reporte</Text>
+              <Ionicons name={isChoosingReportLocation ? "close-outline" : "megaphone-outline"} size={20} color={colors.greenDark} />
+              <Text style={styles.activeActionText}>{isChoosingReportLocation ? "Cancelar" : "Reporte"}</Text>
             </Pressable>
             <Pressable
               onPress={() =>
@@ -883,7 +895,6 @@ export default function Screen04RouteMap() {
           trail={trail}
           reports={reports}
           onReportsChanged={refreshReports}
-          onReportCoordinate={reportAtCoordinate}
           weather={weather}
           allowSatellite={hasInternetConnection}
           onInteractionChange={setIsMapInteracting}
@@ -1315,12 +1326,16 @@ const styles = StyleSheet.create({
     width: 42,
   },
   activeTitleBox: {
+    alignItems: "center",
     backgroundColor: "rgba(255,255,255,0.96)",
     borderRadius: 18,
     flex: 1,
+    flexDirection: "row",
+    gap: 8,
     paddingHorizontal: 14,
     paddingVertical: 8,
   },
+  activeTitleCopy: { flex: 1, minWidth: 0 },
   activeEyebrow: {
     color: colors.green,
     fontSize: 11,

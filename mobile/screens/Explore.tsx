@@ -13,6 +13,7 @@ import {
 import { getTrails } from "../../services/trailRepository";
 import { formatKilometers } from "../../services/geoUtils";
 import { Trail } from "../../types";
+import { TrailSkeleton } from "../components/TrailSkeleton";
 
 export default function Screen02Explore() {
   const [trails, setTrails] = useState<Trail[]>([]);
@@ -56,7 +57,7 @@ export default function Screen02Explore() {
           </Text>
         </View>
 
-        {isLoading ? <Text style={styles.statusText}>Cargando senderos...</Text> : null}
+        {isLoading ? <TrailSkeleton variant="list" count={2} /> : null}
         {error ? <Text style={styles.statusText}>{error}</Text> : null}
 
         {trails.map((trail, index) => (

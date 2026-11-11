@@ -3,6 +3,7 @@ backend/.backend-dev*.log
 backend/data/*.sqlite
 backend/data/*.sqlite3
 *.sql
+!backend/migrations/*.sql
 __pycache__/
 *.pyc
 

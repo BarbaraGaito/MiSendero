@@ -3,6 +3,7 @@ jest.mock("../../../services/api", () => ({ getTrailById: jest.fn(), getTrailRep
 jest.mock("../../../services/trailRepository", () => ({ getTrailById: jest.fn() }));
 jest.mock("expo-network", () => ({ getNetworkStateAsync: jest.fn(), addNetworkStateListener: jest.fn(() => ({ remove: jest.fn() })) }));
 jest.mock("../../../services/offlineMaps", () => ({ saveOfflineTrailMap: jest.fn(), getOfflineMaps: jest.fn(), deleteOfflineMap: jest.fn(), getVerifiedOfflineMapByTrailId: jest.fn() }));
+jest.mock("../../hooks/useTerrainElevation", () => ({ loadTerrainElevationState: jest.fn() }));
 import { useLocalSearchParams, router } from "expo-router";
 import { Linking } from "react-native";
 import { mount, press, text, act, flush } from "../../../testing/mobileHarness";
@@ -12,12 +13,15 @@ import * as maps from "../../../services/offlineMaps";
 import * as Network from "expo-network";
 import { ConnectivityProvider } from "../../../services/ConnectivityProvider";
 import { getTrailById } from "../../../services/trailRepository";
+import { loadTerrainElevationState } from "../../hooks/useTerrainElevation";
 import Download from "../offline-flow/OfflineDownload21Screen";
 import Downloaded from "../offline-flow/OfflineDownloadedMaps23Screen";
 import Elevation from "../TrailElevationScreen";
 const saved = { id: 3, trail, name: trail.name, status: "disponible", totalTiles: 4, downloadedTiles: 4, sizeMb: 8, updatedAt: Date.UTC(2026, 9, 16), verifiedAt: Date.UTC(2026, 9, 16) };
 const elevation = { source: "Copernicus DEM", source_url: "https://example.test/dem", min_m: 100, max_m: 200, ascent_m: 100, descent_m: 0, distance_m: 1000, resolution_m: 90, points: [{ distance_m: 0, elevation_m: 100 }, { distance_m: 500, elevation_m: 150 }, { distance_m: 1000, elevation_m: 200 }] };
 beforeEach(() => {
+  (loadTerrainElevationState as jest.Mock).mockReset();
+  (loadTerrainElevationState as jest.Mock).mockResolvedValue({ status: "unavailable", reason: "offline" });
   (Network.getNetworkStateAsync as jest.Mock).mockResolvedValue({ isConnected: false });
   (useLocalSearchParams as jest.Mock).mockReturnValue({ id: "7" }); (api.getTrailById as jest.Mock).mockResolvedValue(trail); (api.getTrailReports as jest.Mock).mockResolvedValue([]);
   (maps.saveOfflineTrailMap as jest.Mock).mockResolvedValue({ ...saved, terrain: {} }); (maps.getOfflineMaps as jest.Mock).mockResolvedValue([saved]); (maps.deleteOfflineMap as jest.Mock).mockResolvedValue(undefined); (maps.getVerifiedOfflineMapByTrailId as jest.Mock).mockResolvedValue(saved);
@@ -78,6 +82,7 @@ test("download list distinguishes unreadable storage, incomplete tiles and faile
 });
 test("elevation profile exposes measured extrema, keyboard-adjustable samples and touch selection within bounds", async () => {
   jest.spyOn(Linking, "openURL").mockResolvedValue(undefined); const tree = await mount(Elevation); expect(text(tree)).toContain("Subida acumulada"); expect(text(tree)).toContain("200 m");
+  expect(loadTerrainElevationState).not.toHaveBeenCalled();
   const chart = () => tree.root.findAll((node: any) => node.props.accessibilityRole === "adjustable")[0];
   await act(async () => chart().props.onAccessibilityAction({ nativeEvent: { actionName: "increment" } })); expect(chart().props.accessibilityValue.now).toBe(1);
   await act(async () => chart().props.onAccessibilityAction({ nativeEvent: { actionName: "decrement" } })); expect(chart().props.accessibilityValue.now).toBe(0);
@@ -86,6 +91,24 @@ test("elevation profile exposes measured extrema, keyboard-adjustable samples an
   await act(async () => surface.props.onResponderGrant({ nativeEvent: { locationX: 999 } })); expect(chart().props.accessibilityValue.now).toBe(2);
   await act(async () => surface.props.onResponderMove({ nativeEvent: { locationX: -50 } })); expect(chart().props.accessibilityValue.now).toBe(0);
   await press(tree, "Copernicus DEM"); expect(Linking.openURL).toHaveBeenCalledWith(elevation.source_url);
+});
+test("missing server altimetry uses the measured terrain grid and shows a profile", async () => {
+  (Network.getNetworkStateAsync as jest.Mock).mockResolvedValue({ isConnected: true, isInternetReachable: true });
+  (getTrailById as jest.Mock).mockResolvedValue({ ...trail, elevation: null });
+  (loadTerrainElevationState as jest.Mock).mockResolvedValue({ status: "ready", data: {
+    grid: { size: 3, center: [-41.001, -71.0005],
+      bounds: { north: -40.999, south: -41.003, west: -71.002, east: -70.999 },
+      sideLengthMeters: 450, cellSizeMeters: 225,
+      elevationsMeters: [300, 300, 300, 200, 200, 200, 100, 100, 100],
+      minElevationMeters: 100, maxElevationMeters: 300 },
+    source: { provider: "AWS Terrain Tiles", dataset: "Mapzen Terrain Tiles", resolutionMeters: 90,
+      endpoint: "https://example.test/terrain", attribution: "Terrain tiles", fetchedAt: "2026-11-10T12:00:00.000Z" },
+  } });
+  const tree = await mount(Elevation);
+  expect(loadTerrainElevationState).toHaveBeenCalledWith(7, expect.any(Array), false);
+  expect(text(tree)).toContain("Subida acumulada");
+  expect(text(tree)).toContain("Mapzen Terrain Tiles");
+  expect(text(tree)).not.toContain("Perfil no disponible");
 });
 test("unavailable elevation offers retry and rejects an invalid trail identifier without requesting data", async () => {
   (getTrailById as jest.Mock).mockResolvedValueOnce({ ...trail, elevation: null }); const tree = await mount(Elevation); expect(text(tree)).toContain("Perfil no disponible"); await press(tree, "Reintentar"); expect(text(tree)).toContain("Subida acumulada");

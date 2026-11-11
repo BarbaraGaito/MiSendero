@@ -56,6 +56,7 @@ const fillReport = async (tree: any, issue = "Barro", passage = "Con precaución
 test("route preview shows weather and blocking reports and offers the actual trail download/start", async () => {
   (repository.getTrailReports as jest.Mock).mockResolvedValue([{ id: 1, user_id: 99, blocks_path: true, severity: "Alta", issue_summary: "Puente cerrado", trail_state: "No transitable", route_progress_meters: 1000, details: "Crece el río", observed_at: "invalid", created_at: "2026-10-16T10:00:00Z" }]);
   const tree = await mount(Route); expect(text(tree)).toContain("Puente cerrado"); expect(text(tree)).toContain("Riesgo medio"); expect(text(tree)).toContain("Abrigo");
+  expect(tree.root.findByType("TrailMap").props.onReportCoordinate).toBeUndefined();
   await press(tree, "Descargar mapa"); expect(router.push).toHaveBeenLastCalledWith({ pathname: "/offline-descarga", params: { id: "7" } });
   await press(tree, "Iniciar recorrido"); expect(router.push).toHaveBeenLastCalledWith({ pathname: "/trail-start", params: { id: "7" } });
 });
@@ -157,7 +158,15 @@ test("a distant GPS fix cannot submit; a validated map choice can and local pers
 test("a point chosen on the 3D route opens the form with the same validated location", async () => {
   active();
   const route = await mount(Route);
+  expect(route.root.findByType("TrailMap").props.reportSelectionActive).toBe(false);
+  await press(route, "Reporte");
+  expect(route.root.findByType("TrailMap").props.reportSelectionActive).toBe(true);
+  expect(router.push).not.toHaveBeenCalled();
+  await press(route, "Cancelar");
+  expect(route.root.findByType("TrailMap").props.reportSelectionActive).toBe(false);
+  await press(route, "Reporte");
   await act(async () => route.root.findByType("TrailMap").props.onReportCoordinate({ coordinate: [-41.001, -71], perspective: true, routeProgressMeters: 111 }));
+  expect(route.root.findByType("TrailMap").props.reportSelectionActive).toBe(false);
   expect(router.push).toHaveBeenLastCalledWith({ pathname: "/reportar-terreno", params: {
     id: "7", startedAt: String(startedAt), latitude: "-41.001", longitude: "-71", perspective: "1",
   } });

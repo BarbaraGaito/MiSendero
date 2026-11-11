@@ -2,12 +2,11 @@ import { useEffect, useState } from "react";
 import { Coordinate } from "../../services/geoUtils";
 import { getOfflineTerrainGrid } from "../../services/offlineMaps";
 import {
-  ElevationFetch,
   TerrainGridData,
   createTerrainGridCoordinates,
-  getTerrainElevation,
   peekTerrainElevation,
 } from "../../services/terrainElevation";
+import { getTerrainTileGrid, peekTerrainTileGrid, type TerrainTileFetch } from "../../services/terrainTiles";
 
 export type TerrainUnavailableReason = "no-route" | "offline" | "provider-error";
 
@@ -23,13 +22,13 @@ export const loadTerrainElevationState = async (
   trailKey: string | number,
   route: readonly Coordinate[],
   offline: boolean,
-  fetchFn?: ElevationFetch
+  fetchFn?: TerrainTileFetch
 ): Promise<TerrainElevationState> => {
   if (!createTerrainGridCoordinates(route)) {
     return { status: "unavailable", reason: "no-route" };
   }
 
-  const cachedData = await peekTerrainElevation(trailKey, route);
+  const cachedData = await (peekTerrainTileGrid(trailKey, route) ?? peekTerrainElevation(trailKey, route));
   if (cachedData) return { status: "ready", data: cachedData };
 
   const trailId = typeof trailKey === "number" ? trailKey : null;
@@ -40,12 +39,12 @@ export const loadTerrainElevationState = async (
     const target = createTerrainGridCoordinates(route)!;
     if (offline || saved.grid.size >= target.size) return { status: "ready", data: saved };
     // Keep older downloads usable if the higher-detail online request fails.
-    const upgraded = await getTerrainElevation(trailKey, route, { fetchFn });
+    const upgraded = await getTerrainTileGrid(trailKey, route, fetchFn);
     return { status: "ready", data: upgraded ?? saved };
   }
   if (offline) return { status: "unavailable", reason: "offline" };
 
-  const data = await getTerrainElevation(trailKey, route, { fetchFn });
+  const data = await getTerrainTileGrid(trailKey, route, fetchFn);
   if (!data) return { status: "unavailable", reason: "provider-error" };
 
   // Online 3D uses the session cache; it does not enlarge downloaded 2D maps.

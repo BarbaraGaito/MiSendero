@@ -23,6 +23,8 @@ import { useTerrainElevation } from "../../hooks/useTerrainElevation";
 import { resolveCachedTileUri } from "../../../services/mapTileCache";
 import { readBasicOfflineMap } from "../../../services/basicOfflineMap";
 import { TrailMap } from "../TrailMap";
+import { OPEN_METEO_ELEVATION_ATTRIBUTION } from "../../../services/terrainElevation";
+import { TERRAIN_TILES_ATTRIBUTION } from "../../../services/terrainTiles";
 import { trail } from "../../../testing/fixtures";
 import { act, mount, press, text, flush } from "../../../testing/mobileHarness";
 let gestures: any;
@@ -32,7 +34,11 @@ const grid = { size: 3, center: [-41.001, -71.0005], bounds: { north: -40.99, so
 beforeEach(() => {
   (useNetworkState as jest.Mock).mockReturnValue({ isConnected: true, isInternetReachable: true });
   (useDeviceLocation as jest.Mock).mockReturnValue({ location: { coordinate: [-41, -71], accuracy: 5 }, permissionDenied: false, error: null, isTestingLocation: false });
-  (useTerrainElevation as jest.Mock).mockReturnValue({ status: "ready", data: { grid } });
+  (useTerrainElevation as jest.Mock).mockReturnValue({ status: "ready", data: { grid, source: {
+    provider: "Open-Meteo", dataset: "Copernicus DEM GLO-90", resolutionMeters: 90,
+    endpoint: "https://api.open-meteo.com/v1/elevation", fetchedAt: "2026-11-10",
+    attribution: OPEN_METEO_ELEVATION_ATTRIBUTION,
+  } } });
   (resolveCachedTileUri as jest.Mock).mockResolvedValue(null);
   (readBasicOfflineMap as jest.Mock).mockResolvedValue(null);
   mockPick3D.mockReset();
@@ -43,6 +49,40 @@ const layout = async (tree: any) => act(async () => { surface(tree).props.onLayo
 const tap = async (tree: any, x: number, y: number) => act(async () => {
   surface(tree).props.onTouchStart({ nativeEvent: { touches: [{}], locationX: x, locationY: y } });
   surface(tree).props.onTouchEnd({ nativeEvent: { touches: [], locationX: x, locationY: y } }); await flush();
+});
+
+test("the information button reveals 3D details and links to the actual map sources", async () => {
+  (useTerrainElevation as jest.Mock).mockReturnValue({ status: "ready", data: { grid, source: {
+    provider: "AWS Terrain Tiles", dataset: "Mapzen Terrain Tiles", resolutionMeters: 90,
+    endpoint: "https://s3.amazonaws.com/elevation-tiles-prod/terrarium", fetchedAt: "2026-11-10",
+    attribution: TERRAIN_TILES_ATTRIBUTION,
+  } } });
+  const tree = await mount(TrailMap, { trail, initialPerspective: true });
+  expect(text(tree)).not.toContain("Mapzen Terrain Tiles");
+  expect(text(tree)).not.toContain("Open-Meteo");
+  expect(tree.root.findByType("Terrain3DScene").props.informationVisible).toBe(false);
+  await press(tree, "Información del mapa");
+  let scene = tree.root.findByType("Terrain3DScene");
+  expect(scene.props.informationVisible).toBe(true);
+  expect(scene.props.mapAttribution).toContain("Mapzen Terrain Tiles");
+  await act(async () => scene.props.onCloseInformation());
+  expect(tree.root.findByType("Terrain3DScene").props.informationVisible).toBe(false);
+  await press(tree, "Información del mapa");
+  scene = tree.root.findByType("Terrain3DScene");
+  await act(async () => scene.props.onOpenAttributions());
+  expect(tree.root.findByType("Terrain3DScene").props.informationVisible).toBe(false);
+  expect(router.push).toHaveBeenCalledWith({ pathname: "/atribuciones", params: { trailId: String(trail.id) } });
+});
+
+test("information can be opened and dismissed while the 3D terrain is still loading", async () => {
+  (useTerrainElevation as jest.Mock).mockReturnValue({ status: "loading" });
+  const tree = await mount(TrailMap, { trail, initialPerspective: true });
+  expect(text(tree)).not.toContain("Fuentes y copyright");
+  await press(tree, "Información del mapa");
+  expect(text(tree)).toContain("Fuentes y copyright");
+  expect(text(tree)).toContain("Esri World Imagery");
+  await press(tree, "Cerrar información del mapa");
+  expect(text(tree)).not.toContain("Fuentes y copyright");
 });
 test("2D route uses local tile files where available and switches visible source layers", async () => {
   (resolveCachedTileUri as jest.Mock).mockResolvedValue("file:///saved-tile.png");
@@ -67,6 +107,20 @@ test("a selected point is snapped to the route, distant points and dragged taps 
     surface(tree).props.onTouchEnd({ nativeEvent: { touches: [], locationX: 200, locationY: 240 } });
   }); expect(select).not.toHaveBeenCalled();
 });
+test("the 2D route accepts report points only after the live Reporte action activates selection", async () => {
+  const report = jest.fn();
+  const tree = await mount(TrailMap, { trail, fitRoute: true, navigationMode: true, onReportCoordinate: report });
+  await layout(tree);
+  await tap(tree, 160, 240);
+  expect(report).not.toHaveBeenCalled();
+  expect(text(tree)).not.toContain("Reportar punto");
+  await act(async () => { tree.update(<TrailMap trail={trail} fitRoute navigationMode
+    onReportCoordinate={report} reportSelectionActive />); await flush(); });
+  expect(text(tree)).toMatch(/sobre el sendero para ubicar el reporte/);
+  await tap(tree, 160, 240);
+  expect(report).toHaveBeenCalledWith(expect.objectContaining({ perspective: false,
+    routeProgressMeters: expect.any(Number) }));
+});
 test("pan and pinch gestures finish interactions and update scale in both map modes", async () => {
   const interacting = jest.fn(); const tree = await mount(TrailMap, { trail, fitRoute: true, onInteractionChange: interacting }); await layout(tree);
   const one = { nativeEvent: { touches: [{ pageX: 0, pageY: 0 }] } };
@@ -80,7 +134,7 @@ test("pan and pinch gestures finish interactions and update scale in both map mo
   expect(tree.root.findAllByType("Terrain3DScene")).toHaveLength(1);
   expect(text(tree)).not.toContain("LECTURA DEL TERRENO");
   expect(text(tree)).not.toContain("ESCALA REAL");
-  expect(text(tree)).toContain("Open-Meteo");
+  expect(tree.root.findByType("Terrain3DScene").props.mapAttribution).toContain("Open-Meteo");
   await act(async () => { gestures.onPanResponderGrant(pinch(100)); gestures.onPanResponderMove(pinch(150), { dx: 0, dy: 0 }); });
   await act(async () => gestures.onPanResponderRelease({}, { dx: 0, dy: 0 }));
   expect(tree.root.findByType("Terrain3DScene").props.viewScale).toBe(1.5);
@@ -135,16 +189,17 @@ test("warnings are drawn at their map position, inspectable, and remain availabl
   expect(text(tree)).toMatch(/1\s+advertencia/);
 });
 
-test("3D report selection uses the actual terrain hit, snaps to the route, and ignores a pinch ending as one finger", async () => {
+test("the live report picker has no extra map button, uses the terrain hit and ignores a pinch", async () => {
   const report = jest.fn();
-  const tree = await mount(TrailMap, { trail, initialPerspective: true, onReportCoordinate: report });
+  const tree = await mount(TrailMap, { trail, initialPerspective: true, navigationMode: true,
+    onReportCoordinate: report, reportSelectionActive: true });
   await layout(tree);
-  await press(tree, "Reportar punto");
+  expect(text(tree)).not.toContain("Reportar punto");
+  expect(text(tree)).toMatch(/sobre el sendero para ubicar el reporte/);
   mockPick3D.mockReturnValue({ coordinate: [-41.001, -71] });
   await tap(tree, 160, 240);
   expect(mockPick3D).toHaveBeenCalledWith(0, 0);
   expect(report).toHaveBeenCalledWith(expect.objectContaining({ coordinate: [-41.001, -71], perspective: true, routeProgressMeters: expect.any(Number) }));
-  await press(tree, "Reportar punto");
   report.mockClear();
   await act(async () => {
     surface(tree).props.onTouchStart({ nativeEvent: { touches: [{}, {}], locationX: 160, locationY: 240 } });

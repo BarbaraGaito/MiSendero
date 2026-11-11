@@ -1,9 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import {
-  Animated,
-  Easing,
   FlatList,
   ImageBackground,
   ListRenderItem,
@@ -28,6 +26,7 @@ import { DistanceFilter, filterTrails, TrailAreaFilter } from "../../services/tr
 import { Trail } from "../../types";
 import { initDB } from "../../database/database";
 import { getFavoriteTrailIds } from "../../services/favoriteTrails";
+import { TrailSkeleton } from "../components/TrailSkeleton";
 
 const ROUTES_PAGE_SIZE = 6;
 const DIFFICULTY_FILTERS = ["Todas", "Baja", "Media", "Alta"];
@@ -98,8 +97,6 @@ export default function ExploreRoutesScreen() {
       })),
     [visibleTrails]
   );
-  const isSearchingRoutes = isLoading;
-
   const loadRoutes = useCallback(async () => {
     setIsLoading(true);
     setError(null);
@@ -171,7 +168,6 @@ export default function ExploreRoutesScreen() {
             error={error}
             filteredCount={filteredTrails.length}
             isLoading={isLoading}
-            isSearchingRoutes={isSearchingRoutes}
             visibleCount={visibleRouteItems.length}
           />
         }
@@ -432,13 +428,7 @@ function RoutesResultStatus({
         <Text style={styles.sectionTitle}>Senderos disponibles</Text>
         <Text style={styles.resultsCount}>{filteredCount} rutas</Text>
       </View>
-      {isLoading ? (
-        <StatusNotice
-          isLoading
-          message="Estamos trayendo senderos y preparando las imagenes."
-          title="Cargando senderos"
-        />
-      ) : null}
+      {isLoading ? <TrailSkeleton variant="list" count={3} /> : null}
       {error ? (
         <StatusNotice
           actionLabel="Reintentar"
@@ -474,18 +464,15 @@ function ExploreRoutesFooter({
   error,
   filteredCount,
   isLoading,
-  isSearchingRoutes,
   visibleCount,
 }: {
   error: string | null;
   filteredCount: number;
   isLoading: boolean;
-  isSearchingRoutes: boolean;
   visibleCount: number;
 }) {
   return (
     <>
-      {isSearchingRoutes ? <RoutesLoader /> : null}
       {visibleCount < filteredCount ? (
         <Text style={styles.statusText}>Cargando mas rutas...</Text>
       ) : null}
@@ -561,52 +548,6 @@ function RouteCard({
         </Text>
       </View>
     </Pressable>
-  );
-}
-
-function RoutesLoader() {
-  const progress = useRef(new Animated.Value(0)).current;
-
-  useEffect(() => {
-    const animation = Animated.loop(
-      Animated.timing(progress, {
-        duration: 1400,
-        easing: Easing.inOut(Easing.cubic),
-        toValue: 1,
-        useNativeDriver: true,
-      })
-    );
-
-    animation.start();
-
-    return () => animation.stop();
-  }, [progress]);
-
-  const translateX = progress.interpolate({
-    inputRange: [0, 1],
-    outputRange: [-28, 252],
-  });
-
-  return (
-    <View style={styles.routesLoader}>
-      <View style={styles.routesProgressTrack}>
-        <Animated.View
-          style={[
-            styles.routesProgressFill,
-            { transform: [{ translateX }] },
-          ]}
-        />
-        <Animated.View
-          style={[
-            styles.routesHiker,
-            { transform: [{ translateX }] },
-          ]}
-        >
-          <Ionicons name="walk-outline" size={18} color={colors.white} />
-        </Animated.View>
-      </View>
-      <Text style={styles.routesLoaderText}>Buscando rutas</Text>
-    </View>
   );
 }
 
@@ -735,53 +676,6 @@ const styles = StyleSheet.create({
   },
   pressed: {
     opacity: 0.72,
-  },
-  routesLoader: {
-    alignItems: "center",
-    backgroundColor: colors.surface,
-    borderColor: colors.border,
-    borderRadius: 22,
-    borderWidth: 1,
-    gap: 10,
-    justifyContent: "center",
-    marginBottom: 14,
-    minHeight: 96,
-    paddingHorizontal: 18,
-  },
-  routesLoaderText: {
-    color: colors.greenDark,
-    fontSize: 14,
-    fontWeight: "900",
-  },
-  routesProgressTrack: {
-    backgroundColor: colors.mint,
-    borderRadius: 999,
-    height: 14,
-    maxWidth: 280,
-    overflow: "hidden",
-    position: "relative",
-    width: "100%",
-  },
-  routesProgressFill: {
-    backgroundColor: colors.green,
-    borderRadius: 999,
-    height: "100%",
-    left: 0,
-    opacity: 0.82,
-    position: "absolute",
-    top: 0,
-    width: 84,
-  },
-  routesHiker: {
-    alignItems: "center",
-    backgroundColor: colors.green,
-    borderRadius: 999,
-    height: 28,
-    justifyContent: "center",
-    left: 0,
-    position: "absolute",
-    top: -7,
-    width: 28,
   },
   imageBox: {
     height: 126,

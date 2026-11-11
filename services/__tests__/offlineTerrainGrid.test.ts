@@ -20,6 +20,8 @@ jest.mock("../mapTileCache", () => ({
 }));
 
 import { db } from "../../database/connection";
+import { encode } from "fast-png";
+import { clearTerrainTileCache } from "../terrainTiles";
 import * as tiles from "../mapTileCache";
 import * as auth from "../authSession";
 import { backfillOfflineTerrainGrid, getOfflineMapByTrailId, getOfflineTerrainGrid, saveOfflineTrailMap } from "../offlineMaps";
@@ -58,7 +60,11 @@ const movedRoute = parseRouteCoordinates(movedRouteJson);
 const providerElevation = (latitude: string, longitude: string) =>
   Math.round((Math.abs(Number(latitude) * 7919 + Number(longitude) * 104729) % 3000) * 10) / 10;
 
+const terrainPng = encode({ width: 256, height: 256, channels: 3,
+  data: Uint8Array.from({ length: 256 * 256 * 3 }, (_, index) => [131, 232, 0][index % 3]) });
 const providerFetch = jest.fn(async (input: string) => {
+  if (input.endsWith(".png")) return { ok: true, status: 200,
+    arrayBuffer: async () => new Uint8Array(terrainPng).buffer };
   const url = new URL(input);
   const longitudes = url.searchParams.get("longitude")!.split(",");
   const elevation = url.searchParams
@@ -68,6 +74,7 @@ const providerFetch = jest.fn(async (input: string) => {
   return { ok: true, status: 200, json: async () => ({ elevation }) };
 });
 const fetchMock = jest.fn();
+beforeEach(clearTerrainTileCache);
 
 const expectedGridElevations = (coordinates = route) =>
   createTerrainGridCoordinates(coordinates)!.coordinates.map(([latitude, longitude]) =>
@@ -208,6 +215,7 @@ test("viewing 3D online does not add terrain to a basic downloaded map", async (
   expect((await getOfflineMapByTrailId(7))?.reports).toEqual([]);
 
   clearTerrainElevationCache();
+  clearTerrainTileCache();
   fetchMock.mockClear();
   await expect(loadTerrainElevationState(7, route, true)).resolves.toEqual({ status: "unavailable", reason: "offline" });
   expect(fetchMock).not.toHaveBeenCalled();

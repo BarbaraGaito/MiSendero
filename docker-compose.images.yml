@@ -22,14 +22,14 @@ services:
     env_file:
       - .env
     environment:
-      NODE_ENV: production
+      NODE_ENV: ${MISENDERO_BACKEND_NODE_ENV:-production}
       PORT: 3001
       DATABASE_URL: postgres://${POSTGRES_USER:-misendero}:${POSTGRES_PASSWORD:?POSTGRES_PASSWORD must be set in .env}@db:5432/${POSTGRES_DB:-misendero}
       CORS_ORIGIN: ${CORS_ORIGIN:-http://localhost:8081,http://localhost:19006,http://localhost:3001}
       REPORT_STALE_AFTER_DAYS: ${REPORT_STALE_AFTER_DAYS:-30}
       LOG_LEVEL: ${LOG_LEVEL:-info}
     ports:
-      - "127.0.0.1:3001:3001"
+      - "${MISENDERO_BACKEND_BIND:-127.0.0.1}:3001:3001"
     depends_on:
       db:
         condition: service_healthy

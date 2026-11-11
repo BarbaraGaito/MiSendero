@@ -36,7 +36,6 @@ import {
   clampTerrainScale,
   getPinchZoomDelta,
 } from "../../services/mapGestures";
-import { OPEN_METEO_ELEVATION_ATTRIBUTION } from "../../services/terrainElevation";
 import { useDeviceLocation } from "../hooks/useDeviceLocation";
 import {
   TerrainElevationState,
@@ -48,6 +47,7 @@ import { Terrain3DScene, Terrain3DSceneHandle, TerrainMapMarker } from "./Terrai
 import { buildTerrainSceneModel, coordinateToTerrainScenePoint } from "./terrainSceneModel";
 import { BasicOfflineMap, containsMapCoordinate, readBasicOfflineMap } from "../../services/basicOfflineMap";
 import { BasicMapLayer } from "./BasicMapLayer";
+import { MapInformationSheet } from "./MapInformationSheet";
 
 type MapLayer = "standard" | "terrain" | "satellite";
 
@@ -118,6 +118,7 @@ type TrailMapProps = {
     routeProgressMeters: number;
     perspective: boolean;
   }) => void;
+  reportSelectionActive?: boolean;
   onInteractionChange?: (isInteracting: boolean) => void;
   navigationMode?: boolean;
   offlineOnly?: boolean;
@@ -442,6 +443,7 @@ export function TrailMap({
   onSelectCoordinate,
   onSelectionRejected,
   onReportCoordinate,
+  reportSelectionActive = false,
   onInteractionChange,
   navigationMode = false,
   offlineOnly = false,
@@ -455,7 +457,9 @@ export function TrailMap({
   const layer = offline ? "standard" : selectedLayer;
   const [perspectiveEnabled, setIsPerspective] = useState(initialPerspective);
   const [terrainRenderFailed, setTerrainRenderFailed] = useState(false);
+  const [isMapInformationVisible, setIsMapInformationVisible] = useState(false);
   const isPerspective = !offline && perspectiveEnabled;
+  useEffect(() => { setIsMapInformationVisible(false); }, [trail?.id, isPerspective]);
   const [activeZoom, setActiveZoom] = useState(trail?.map_zoom || DEFAULT_ZOOM);
   const [activeCenter, setActiveCenter] = useState<Coordinate>(DEFAULT_CENTER);
   const [panOffset, setPanOffset] = useState({ x: 0, y: 0 });
@@ -466,12 +470,11 @@ export function TrailMap({
   const [cachedTiles, setCachedTiles] = useState<MapTile[]>([]);
   const [tileUriOverrides, setTileUriOverrides] = useState<Record<string, string>>({});
   const [isTileLoading, setIsTileLoading] = useState(false);
-  const [isChoosingReportLocation, setIsChoosingReportLocation] = useState(false);
   const [activeReportId, setActiveReportId] = useState<number | null>(null);
   const [selectionError, setSelectionError] = useState<string | null>(null);
   const terrainSceneRef = useRef<Terrain3DSceneHandle | null>(null);
   const lastFocusedReportRef = useRef<number | null>(null);
-  const isSelecting = Boolean(onSelectCoordinate || (isChoosingReportLocation && onReportCoordinate));
+  const isSelecting = Boolean(onSelectCoordinate || (reportSelectionActive && onReportCoordinate));
   const centerRef = useRef(activeCenter);
   const zoomRef = useRef(activeZoom);
   const maxZoomRef = useRef(MAX_ZOOM_BY_LAYER.terrain);
@@ -546,6 +549,12 @@ export function TrailMap({
         : null,
     [terrainElevation, route]
   );
+  const terrainAttribution = `${terrainElevation.status === "ready" ? terrainElevation.data.source.attribution : "Elevación no disponible"}${allowSatellite && !offline ? " · Imagen: Esri World Imagery" : ""}`;
+  const closeMapInformation = () => setIsMapInformationVisible(false);
+  const openMapAttributions = () => {
+    closeMapInformation();
+    router.push(trail ? { pathname: "/atribuciones", params: { trailId: String(trail.id) } } : "/atribuciones");
+  };
   const savedZooms = useMemo(() => trail ? [...new Set(getOfflineTilePlanForTrail(trail).map((tile) => tile.zoom))] : [], [trail]);
   const maxZoom = offline && !basicMap && savedZooms.length ? Math.max(...savedZooms) : MAX_ZOOM_BY_LAYER[layer];
   const minZoom = offline && !basicMap && savedZooms.length ? Math.min(...savedZooms) : MIN_ZOOM;
@@ -585,9 +594,13 @@ export function TrailMap({
 
   useEffect(() => {
     setActiveReportId(null);
-    setIsChoosingReportLocation(false);
     setSelectionError(null);
   }, [trail?.id]);
+
+  useEffect(() => {
+    setSelectionError(null);
+    if (reportSelectionActive) setActiveReportId(null);
+  }, [reportSelectionActive]);
 
   useEffect(() => {
     centerRef.current = activeCenter;
@@ -890,7 +903,6 @@ export function TrailMap({
     if (onSelectCoordinate) onSelectCoordinate(selection);
     else {
       onReportCoordinate?.({ ...selection, perspective: isPerspectiveRef.current });
-      setIsChoosingReportLocation(false);
     }
   };
 
@@ -986,7 +998,6 @@ export function TrailMap({
   const selectionHintTop =
     floatingNoticeTop + locationNoticeOffset + testingNoticeOffset;
   const terrainOverlayTop = controlsTopOffset + 96;
-  const reportControlsOffset = offline && showMapNotices && onReportCoordinate ? 50 : 0;
 
   const onLayout = (event: LayoutChangeEvent) => {
     const { width, height } = event.nativeEvent.layout;
@@ -1077,6 +1088,10 @@ export function TrailMap({
                 showContours={terrainStyle === "relief"}
                 overlayTopInset={controlsTopOffset + 150}
                 overlayBottomInset={bottomOverlayInset}
+                informationVisible={isMapInformationVisible}
+                mapAttribution={terrainAttribution}
+                onCloseInformation={closeMapInformation}
+                onOpenAttributions={openMapAttributions}
                 onError={() => {
                   setTerrainRenderFailed(true);
                   setIsPerspective(false);
@@ -1304,21 +1319,13 @@ export function TrailMap({
       {reportMarkers.length > 0 && !activeReport && !isSelecting ? (
         <Pressable accessibilityRole="button" accessibilityLabel="Ver advertencias del sendero"
           onPress={() => openReport(reportMarkers[0].report.id)}
-          style={[styles.reportBadge, { top: controlsTopOffset + 100 + reportControlsOffset }]}>
+          style={[styles.reportBadge, { top: controlsTopOffset + 100 }]}>
           <Ionicons name="warning" size={18} color={colors.danger} />
           <Text style={styles.reportBadgeText}>{reportMarkers.length} {reportMarkers.length === 1 ? "advertencia" : "advertencias"}</Text>
         </Pressable>
       ) : null}
-      {onReportCoordinate && route.length > 1 ? (
-        <Pressable accessibilityRole="button" accessibilityState={{ selected: isChoosingReportLocation }}
-          onPress={() => { setIsChoosingReportLocation(value => !value); setActiveReportId(null); setSelectionError(null); }}
-          style={[styles.reportBadge, { top: controlsTopOffset + 50 + reportControlsOffset, left: offline ? 12 : 94 }]}>
-          <Ionicons name={isChoosingReportLocation ? "close" : "pin-outline"} size={18} color={colors.greenDark} />
-          <Text style={styles.reportBadgeText}>{isChoosingReportLocation ? "Cancelar" : "Reportar punto"}</Text>
-        </Pressable>
-      ) : null}
       {activeReport && !isSelecting ? (
-        <View style={[styles.reportCard, immersive ? { top: controlsTopOffset + 100 + reportControlsOffset } : { bottom: 24 }]}>
+        <View style={[styles.reportCard, immersive ? { top: controlsTopOffset + 100 } : { bottom: 24 }]}>
           <View style={styles.reportCardHeader}>
             <Ionicons name="warning" size={20} color={activeReport.color} />
             <Text style={styles.reportTitle} numberOfLines={2}>{activeReport.report.issue_summary}</Text>
@@ -1422,6 +1429,7 @@ export function TrailMap({
         accessibilityState={{ selected: isPerspective }}
         onPress={() => {
           setTerrainRenderFailed(false);
+          closeMapInformation();
           setIsPerspective((current) => !current);
         }}
         style={[
@@ -1484,12 +1492,24 @@ export function TrailMap({
         </View>
       ) : null}
 
-      <Text style={styles.attribution} accessibilityRole="link" accessibilityLabel="Fuentes y licencias del mapa"
-        onPress={() => router.push(trail ? { pathname: "/atribuciones", params: { trailId: String(trail.id) } } : "/atribuciones")}>
-        {isPerspective
-          ? `${OPEN_METEO_ELEVATION_ATTRIBUTION}${allowSatellite && !offline ? " · Imagen: Esri World Imagery" : ""}`
-          : showBasicMap && basicMap ? basicMap.attribution : getMapAttribution(layer)}
-      </Text>
+      {isPerspective ? <>
+        <Pressable accessibilityRole="button" accessibilityLabel="Información del mapa"
+          accessibilityHint="Muestra los datos del relieve y las fuentes del mapa"
+          accessibilityState={{ expanded: isMapInformationVisible }}
+          onTouchStart={event => event.stopPropagation()}
+          onTouchEnd={event => event.stopPropagation()}
+          onPress={() => setIsMapInformationVisible(true)}
+          style={[styles.informationButton, { bottom: Math.max(12, bottomOverlayInset) }]}>
+          <Ionicons name="information-circle-outline" size={25} color={colors.greenDark} />
+        </Pressable>
+        {!terrainModel && <MapInformationSheet visible={isMapInformationVisible} attribution={terrainAttribution}
+          onClose={closeMapInformation} onOpenAttributions={openMapAttributions}>
+          <Text style={styles.informationMessage}>{getTerrainUnavailableMessage(terrainElevation)}</Text>
+        </MapInformationSheet>}
+      </> : <Text style={styles.attribution} accessibilityRole="link" accessibilityLabel="Fuentes y licencias del mapa"
+        onPress={openMapAttributions}>
+        {showBasicMap && basicMap ? basicMap.attribution : getMapAttribution(layer)}
+      </Text>}
 
       {showLocationNotice ? (
         <View style={[styles.locationWarning, { top: floatingNoticeTop }]}>
@@ -1510,7 +1530,7 @@ export function TrailMap({
       {isSelecting ? (
         <View
           pointerEvents="none"
-          style={[styles.selectionHint, { top: selectionHintTop }]}
+          style={[styles.selectionHint, { top: selectionHintTop, right: navigationMode ? 70 : 12 }]}
         >
           <Ionicons name="pin-outline" size={14} color={colors.greenDark} />
           <Text style={styles.selectionHintText}>{selectionError || "Tocá sobre el sendero para ubicar el reporte"}</Text>
@@ -1521,6 +1541,11 @@ export function TrailMap({
 }
 
 const styles = StyleSheet.create({
+  informationButton: { position: "absolute", right: 12, width: 44, height: 44, borderRadius: 22,
+    alignItems: "center", justifyContent: "center", backgroundColor: "rgba(255,255,255,0.96)",
+    borderWidth: 1, borderColor: colors.line, zIndex: 7,
+    shadowColor: colors.ink, shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.12, shadowRadius: 6, elevation: 3 },
+  informationMessage: { color: colors.muted, fontSize: 14, lineHeight: 21 },
   reportMarker: {
     position: "absolute", width: 34, height: 34, borderRadius: 17,
     borderBottomLeftRadius: 4, alignItems: "center", justifyContent: "center",

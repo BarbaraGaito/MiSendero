@@ -25,6 +25,7 @@ import {
 } from "../components/MiSenderoUI";
 import { ExpandableSection } from "../components/ExpandableSection";
 import { TrailMetrics } from "../components/TrailMetrics";
+import { MiSenderoLogo } from "../components/MiSenderoLogo";
 import {
   ExperienceProfile,
   getExperienceProfile,
@@ -111,6 +112,8 @@ export default function HomeScreen() {
         showsVerticalScrollIndicator={false}
       >
           <View style={styles.hero}>
+            <MiSenderoLogo layout="horizontal" tone="dark" markSize={30} wordmarkSize={21}
+              style={styles.brandLogo} />
             <Text style={styles.title}>Buen día, {userName}</Text>
             <Text style={styles.subtitle}>
               Encontrá un camino para tu próxima salida.
@@ -249,6 +252,7 @@ const styles = StyleSheet.create({
   hero: {
     gap: 12,
   },
+  brandLogo: { alignSelf: "flex-start", gap: 0, marginBottom: 3 },
   title: {
     fontFamily: typography.extraBold,
     color: colors.ink,

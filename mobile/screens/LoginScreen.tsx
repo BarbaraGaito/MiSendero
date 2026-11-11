@@ -14,6 +14,7 @@ import {
 } from "../../services/legalConsent";
 import { getExperienceProfile } from "../../services/experienceProfile";
 import { colors } from "../components/MiSenderoUI";
+import { MiSenderoLogo } from "../components/MiSenderoLogo";
 
 const getFormError = (
   isRegister: boolean,
@@ -117,7 +118,8 @@ export default function LoginScreen() {
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
         <View style={styles.header}>
-          <Text style={styles.brand}>MiSendero</Text>
+          <MiSenderoLogo layout="horizontal" tone="dark" markSize={36} wordmarkSize={25}
+            style={styles.brand} />
           <Text style={styles.title}>
             {isRegister ? "Crea tu cuenta" : "Bienvenida de nuevo"}
           </Text>
@@ -273,9 +275,7 @@ const styles = StyleSheet.create({
     marginBottom: 28,
   },
   brand: {
-    color: colors.green,
-    fontSize: 16,
-    fontWeight: "900",
+    alignSelf: "flex-start",
     marginBottom: 16,
   },
   title: {

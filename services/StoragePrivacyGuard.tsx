@@ -7,7 +7,7 @@ export function StoragePrivacyGuard({children}: PropsWithChildren) {
   const [error,setError]=useState(false);
   useEffect(() => {
     let mounted=true;
-    const change=(state:string) => {
+    const change=(state:typeof AppState.currentState) => {
       if (state !== 'active') {
         setCovered(true);
         void suspendProtectedStorage().catch(() => { if(mounted) setError(true); });

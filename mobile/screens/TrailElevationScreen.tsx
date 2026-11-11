@@ -1,10 +1,14 @@
 import { useCallback, useEffect, useState } from "react";
 import { router, useLocalSearchParams } from "expo-router";
+import * as Network from "expo-network";
 import { ScrollView, StyleSheet, Text } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { ScreenShell, StatusNotice, TopBar, colors } from "../components/MiSenderoUI";
 import ElevationProfile from "../components/ElevationProfile";
 import { getTrailById } from "../../services/trailRepository";
+import { parseRouteCoordinates } from "../../services/geoUtils";
+import { loadTerrainElevationState } from "../hooks/useTerrainElevation";
+import { trailElevationFromTerrain } from "../../services/trailElevationFromTerrain";
 import { Trail } from "../../types";
 
 export default function TrailElevationScreen() {
@@ -20,7 +24,20 @@ export default function TrailElevationScreen() {
     try {
       const trailId = Number(id);
       if (!Number.isInteger(trailId) || trailId <= 0) throw new Error("invalid-trail");
-      setTrail(await getTrailById(trailId));
+      const loadedTrail = await getTrailById(trailId);
+      let elevation = loadedTrail.elevation;
+      if ((elevation?.points?.length ?? 0) < 2) {
+        const route = parseRouteCoordinates(loadedTrail.route_coordinates);
+        if (route.length >= 2) {
+          const network = await Network.getNetworkStateAsync().catch(() => null);
+          const offline = network?.isConnected === false || network?.isInternetReachable === false;
+          const terrain = await loadTerrainElevationState(trailId, route, offline).catch(() => null);
+          if (terrain?.status === "ready") {
+            elevation = trailElevationFromTerrain(trailId, route, terrain.data);
+          }
+        }
+      }
+      setTrail({ ...loadedTrail, elevation });
     } catch {
       setError("No pudimos consultar la altimetria de este sendero.");
     } finally {

@@ -17,7 +17,7 @@ export default function ElevationProfile({ elevation, onRetry }: {
     return (
       <View style={styles.section}>
         <Text style={styles.title}>Altimetria</Text>
-        <Text style={styles.meta}>Perfil no disponible. Conectate para consultar la elevacion de esta ruta.</Text>
+        <Text style={styles.meta}>Perfil no disponible. Revisá la conexión y reintentá.</Text>
         <Pressable accessibilityRole="button" onPress={onRetry} style={styles.retry}>
           <Ionicons name="refresh-outline" size={18} color={colors.green} />
           <Text style={styles.link}>Reintentar</Text>

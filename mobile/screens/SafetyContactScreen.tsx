@@ -149,6 +149,7 @@ export default function SafetyContactScreen() {
           style={styles.scrollView}
         >
           <ScreenTitle
+            showLogo={false}
             eyebrow="Contacto de seguridad"
             title="Contacto de seguridad"
             subtitle="Esta persona queda disponible para tus alertas SOS durante el recorrido."

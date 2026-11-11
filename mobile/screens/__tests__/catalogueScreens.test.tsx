@@ -105,6 +105,30 @@ test("exploration filters actual loaded routes by query and difficulty", async (
   await act(async () => input.props.onChangeText("inexistente")); expect(text(tree)).toContain("Sin resultados");
 });
 
+test("route search shows skeleton cards until the catalog finishes loading", async () => {
+  let resolveTrails!: (value: typeof trail[]) => void;
+  (trails.getTrails as jest.Mock).mockReturnValue(new Promise((resolve) => { resolveTrails = resolve; }));
+  const tree = await mount(Explore);
+  expect(tree.root.findAll((node: any) => node.props.testID === "trail-skeleton-list").length).toBeGreaterThan(0);
+  expect(text(tree)).not.toContain(trail.name);
+
+  await act(async () => { resolveTrails([trail]); await flush(); });
+  expect(tree.root.findAll((node: any) => node.props.testID === "trail-skeleton-list")).toHaveLength(0);
+  expect(text(tree)).toContain(trail.name);
+});
+
+test("trail detail shows its content skeleton until the selected trail loads", async () => {
+  let resolveTrail!: (value: typeof trail) => void;
+  (trails.getTrailById as jest.Mock).mockReturnValue(new Promise((resolve) => { resolveTrail = resolve; }));
+  const tree = await mount(Detail);
+  expect(tree.root.findAll((node: any) => node.props.testID === "trail-skeleton-detail").length).toBeGreaterThan(0);
+  expect(text(tree)).not.toContain(trail.name);
+
+  await act(async () => { resolveTrail(trail); await flush(); });
+  expect(tree.root.findAll((node: any) => node.props.testID === "trail-skeleton-detail")).toHaveLength(0);
+  expect(text(tree)).toContain(trail.name);
+});
+
 test("advanced filters remain effective when collapsed and can be cleared", async () => {
   const tree = await mount(Explore);
   expect(text(tree)).not.toContain("0-5 km");

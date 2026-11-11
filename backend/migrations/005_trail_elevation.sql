@@ -1,0 +1,1 @@
+ALTER TABLE trails ADD COLUMN IF NOT EXISTS elevation JSONB;

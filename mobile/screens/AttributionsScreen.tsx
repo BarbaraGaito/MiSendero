@@ -30,6 +30,7 @@ export default function AttributionsScreen() {
     }
     return () => { active = false; };
   }, [trailId]);
+  const photo = trail?.provenance?.photo;
   return <ScreenShell>
     <TopBar title="Fuentes y licencias" onBack={() => router.back()} />
     <ScrollView contentContainerStyle={{ paddingBottom: 30 }}>
@@ -38,10 +39,10 @@ export default function AttributionsScreen() {
         <Text>Cartografía: {trail.provenance.mapping.source} · {trail.provenance.mapping.license}</Text>
         <PrimaryButton label="Fuente del trazado" tone="secondary" onPress={() => { void Linking.openURL(trail.provenance!.mapping!.source_url); }} />
       </Card> : null}
-      {trail?.provenance?.photo ? <Card>
-        <Text>Fotografía: {trail.provenance.photo.author} · {trail.provenance.photo.license}</Text>
-        {trail.provenance.photo.context ? <Text>{trail.provenance.photo.context}</Text> : null}
-        <PrimaryButton label="Fuente de la fotografía" tone="secondary" onPress={() => { void Linking.openURL(trail.provenance!.photo.page_url); }} />
+      {photo ? <Card>
+        <Text>Fotografía: {photo.author} · {photo.license}</Text>
+        {photo.context ? <Text>{photo.context}</Text> : null}
+        <PrimaryButton label="Fuente de la fotografía" tone="secondary" onPress={() => { void Linking.openURL(photo.page_url); }} />
       </Card> : null}
       <Card><Text>{TERRAIN_TILES_ATTRIBUTION}</Text><Text>El relieve 3D usa mosaicos DEM reales. La fuente y el detalle disponible pueden variar según la zona; la interpolación no agrega precisión al relevamiento original.</Text></Card>
       <Card><Text>{OPEN_METEO_ELEVATION_ATTRIBUTION}</Text><Text>Los perfiles y las grillas antiguas pueden usar alturas de Open-Meteo/Copernicus. Las entidades responsables del programa Copernicus no asumen responsabilidad por el uso de WorldDEM-90. El uso de estos datos no implica que respalden MiSendero.</Text></Card>

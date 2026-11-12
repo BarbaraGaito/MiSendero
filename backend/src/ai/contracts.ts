@@ -17,7 +17,7 @@ export interface TrailRecommendation {
   trailTypes: TrailType[];
   difficulty: Exclude<Difficulty, "cualquiera">;
   duration: string;
-  durationMinutes: number;
+  durationMinutes: number | null;
   routeType: "out_and_back" | "loop" | "point_to_point" | "unknown";
   distanceKm: number;
   description: string;
@@ -31,6 +31,7 @@ export interface TrailRecommendation {
   terrain?: string[] | null;
   durationIsEstimated?: boolean;
   preferenceAdjustments?: string[];
+  exceedsExperience?: true;
 }
 export interface RecommendationResponse {
   status: "ok" | "no_results" | "clarification" | "out_of_scope";

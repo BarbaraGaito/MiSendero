@@ -36,7 +36,8 @@ function validRecommendation(value: unknown): boolean {
     (value.imageUrl === null || isHttps(value.imageUrl)) &&
     Array.isArray(value.trailTypes) && value.trailTypes.length > 0 && value.trailTypes.every((t: unknown) => typeof t === "string" && ["naturaleza", "montaña", "cascadas", "lagos", "bosques", "miradores"].includes(t)) &&
     typeof value.difficulty === "string" && ["facil", "moderada", "dificil"].includes(value.difficulty) &&
-    isText(value.duration, 100) && typeof value.durationMinutes === "number" && Number.isFinite(value.durationMinutes) && value.durationMinutes > 0 &&
+    isText(value.duration, 100) && ((typeof value.durationMinutes === "number" && Number.isFinite(value.durationMinutes) && value.durationMinutes > 0) ||
+      (value.durationMinutes === null && value.durationScopeVerified === false)) &&
     typeof value.routeType === "string" && ["out_and_back", "loop", "point_to_point", "unknown"].includes(value.routeType) &&
     typeof value.distanceKm === "number" && Number.isFinite(value.distanceKm) && value.distanceKm > 0 &&
     isText(value.description, 2000) && isText(value.explanation, 1500) &&
@@ -45,6 +46,7 @@ function validRecommendation(value: unknown): boolean {
     (value.catalogVerification === undefined || ["verified", "partial", "catalog_only"].includes(String(value.catalogVerification))) &&
     (value.ascentM == null || (typeof value.ascentM === "number" && Number.isFinite(value.ascentM) && value.ascentM >= 0)) &&
     (value.durationScopeVerified === undefined || typeof value.durationScopeVerified === "boolean") &&
+    (value.exceedsExperience === undefined || value.exceedsExperience === true) &&
     (value.dataWarnings === undefined || (Array.isArray(value.dataWarnings) && value.dataWarnings.length > 0 && value.dataWarnings.length <= 3 && value.dataWarnings.every((v: unknown) => isText(v, 300)))) &&
     Array.isArray(value.sources) && value.sources.every((s: unknown) => isRecord(s) && isText(s.title, 200) && isHttps(s.url)) &&
     ((value.sources.length > 0 && typeof value.checkedAt === "string" && /^\d{4}-\d{2}-\d{2}$/.test(value.checkedAt)) ||

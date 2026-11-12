@@ -12,6 +12,8 @@
     "db:elevation": "node src/backfillElevation.js",
     "db:catalog:preview": "node scripts/importCatalogExpansion.js --dry-run --local-only",
     "db:catalog:apply": "node scripts/importCatalogExpansion.js --apply --local-only",
+    "db:catalog:beginner:preview": "node scripts/importBeginnerCatalog.js --dry-run --local-only",
+    "db:catalog:beginner:apply": "node scripts/importBeginnerCatalog.js --apply --local-only",
     "db:catalog:media:preview": "node scripts/updateCatalogExpansionMedia.js --dry-run --local-only",
     "db:catalog:media:apply": "node scripts/updateCatalogExpansionMedia.js --apply --local-only",
     "catalog:export": "node scripts/exportCatalogFeatures.js",

@@ -49,6 +49,7 @@ type RequestOptions = {
   body?: unknown;
   token?: string;
   timeoutMs?: number;
+  unpublishedTrailDuration?: boolean;
 };
 export class ApiError extends Error {
   constructor(message: string, public readonly status: number, public readonly code?: string, public readonly retryAfterMs?: number) { super(message); }
@@ -64,6 +65,7 @@ async function request<T>(path: string, options: RequestOptions = {}): Promise<T
     }
   }
   const headers: Record<string, string> = {};
+  if (options.unpublishedTrailDuration) headers["X-MiSendero-Unpublished-Duration"] = "1";
 
   if (options.body) {
     headers["Content-Type"] = "application/json";
@@ -163,10 +165,10 @@ export const getTrails = async (): Promise<Trail[]> => {
 };
 
 export const recommendTrail = (preferences: TrailPreferences, token: string) =>
-  request<RecommendationResponse>("/ai/recommend-trail", { method: "POST", body: preferences, token, timeoutMs: 25000 });
+  request<RecommendationResponse>("/ai/recommend-trail", { method: "POST", body: preferences, token, timeoutMs: 25000, unpublishedTrailDuration: true });
 
 export const getTrailRecommendationDestinations = (token: string) =>
-  request<{ destinations: string[] }>("/ai/destinations", { token });
+  request<{ destinations: string[] }>("/ai/destinations", { token, unpublishedTrailDuration: true });
 
 export const getTrailById = async (id: number): Promise<Trail> => {
   return request<Trail>(`/trails/${id}`);

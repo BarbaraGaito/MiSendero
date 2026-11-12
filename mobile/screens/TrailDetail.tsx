@@ -191,9 +191,13 @@ function TrailDetailContent({
       <Text style={styles.location}>{trail.location}</Text>
       <TrailStats trail={trail} />
       {trail.provenance ? <Text style={styles.routeMetadata}>
-        {trail.provenance.route_type === "out_and_back" ? "Ida y vuelta" : trail.provenance.route_type === "loop" ? "Circuito completo" : "Solo ida; coordinar el regreso"}
-        {["planning_estimate", "round_trip_from_official_one_way"].includes(trail.provenance.duration_basis) ? ". Tiempo total orientativo calculado; no publicado como ida y vuelta." : "."}
+        {trail.provenance.route_type === "out_and_back" ? "Ida y vuelta" : trail.provenance.route_type === "loop" ? "Circuito completo" : trail.provenance.route_type === "point_to_point" ? "Solo ida; coordiná el regreso" : "Tipo de recorrido a confirmar"}
+        {!trail.duration ? ". Duración total a confirmar."
+          : trail.provenance.duration_basis === "round_trip_from_official_one_way" ? ". Tiempo total orientativo calculado; no publicado como ida y vuelta."
+          : trail.provenance.duration_basis === "planning_estimate" ? ". Tiempo orientativo de planificación."
+          : ["official_reference", "catalog_record_unconfirmed", "unconfirmed"].includes(trail.provenance.duration_basis) ? ". Confirmá el alcance del tiempo indicado." : "."}
       </Text> : null}
+      {!hasGeometry && trail.provenance?.mapping_pending_reason ? <Text style={styles.routeMetadata}>Ficha informativa sin navegación GPS ni mapa descargable.</Text> : null}
       <FavoriteButton
         isFavorite={isFavorite}
         onPress={toggleFavorite}
@@ -244,6 +248,7 @@ function TrailCover({
 }) {
   const [imageFailed, setImageFailed] = useState(false);
   const hasImage = Boolean(trail.image_url) && !imageFailed;
+  const photo = trail.provenance?.photo;
   return (
     <>
     <ImageBackground
@@ -270,10 +275,9 @@ function TrailCover({
           <Text style={styles.coverBadgeMeta}>({ratingSummary.reviewCount})</Text>
         </Pressable>
       ) : null}
-      {hasImage && trail.provenance?.photo && (
+      {hasImage && photo && (
         <Pressable accessibilityLabel="Creditos de la foto" accessibilityRole="button" hitSlop={8}
           onPress={() => {
-            const photo = trail.provenance!.photo;
             Alert.alert("Creditos de la foto", `${photo.author} - ${photo.license}${photo.context ? `\n${photo.context}` : ""}`, [
               { text: "Cerrar", style: "cancel" },
               { text: "Ver fuente", onPress: () => { void Linking.openURL(photo.page_url).catch(() => Alert.alert("No se pudo abrir la foto")); } },

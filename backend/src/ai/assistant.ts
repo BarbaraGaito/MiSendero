@@ -17,7 +17,7 @@ function explain(candidate: Candidate, preferences: TrailPreferences, reasons: s
     destination: `Está en ${candidate.location}, dentro del destino que elegiste.`,
     landscape: wanted.length ? `Combina ${wanted.join(" y ")}, en línea con la experiencia que buscás.`
       : `Te permite descubrir un entorno de ${candidate.trailTypes.join(" y ")}${landscapeFits(candidate, preferences) ? "" : "; no tiene documentados los paisajes que seleccionaste"}.`,
-    duration: `Su duración registrada es ${candidate.duration}${candidate.durationScopeVerified === false ? "; el tiempo total de la ficha no está confirmado" : candidate.routeType === "out_and_back" ? " e incluye ida y vuelta" : candidate.routeType === "loop" ? " para el circuito completo" : candidate.routeType === "point_to_point" ? " para el trayecto de ida; necesitás coordinar el regreso" : " para el recorrido completo"}${preferences.duration !== "cualquiera" && candidate.durationScopeVerified !== false ? candidateDurationFits(candidate, preferences.duration) ? ", dentro del tiempo que seleccionaste" : ", fuera del rango que seleccionaste" : ""}.${candidate.durationIsEstimated ? " Es un tiempo orientativo de planificación." : ""}`,
+    duration: candidate.durationMinutes === null ? "La fuente no publica una duración total para este recorrido." : `Su duración registrada es ${candidate.duration}${candidate.durationScopeVerified === false ? "; el tiempo total de la ficha no está confirmado" : candidate.routeType === "out_and_back" ? " e incluye ida y vuelta" : candidate.routeType === "loop" ? " para el circuito completo" : candidate.routeType === "point_to_point" ? " para el trayecto de ida; necesitás coordinar el regreso" : " para el recorrido completo"}${preferences.duration !== "cualquiera" && candidate.durationScopeVerified !== false ? candidateDurationFits(candidate, preferences.duration) ? ", dentro del tiempo que seleccionaste" : ", fuera del rango que seleccionaste" : ""}.${candidate.durationIsEstimated ? " Es un tiempo orientativo de planificación." : ""}`,
     difficulty: `Su dificultad es ${labels[candidate.difficulty]}${preferences.difficulty !== "cualquiera" ? candidate.difficulty === preferences.difficulty ? " y coincide con la que elegiste" : ", diferente de la que elegiste" : ""}. ${experienceFits(candidate, preferences) ? `Está dentro del nivel de dificultad considerado para tu perfil ${preferences.experience || "principiante"}.` : `Supera el nivel considerado para tu perfil ${preferences.experience || "principiante"}. Es una alternativa del destino, no una indicación de que sea adecuada para tu experiencia.`}`,
   };
   const facts = `Distancia registrada: ${candidate.distanceKm} km. ${candidate.ascentM == null ? "Desnivel de ascenso no documentado." : `Desnivel de ascenso estimado: ${candidate.ascentM} m.`}`;
@@ -44,21 +44,24 @@ export async function recommendTrail(preferences: TrailPreferences, rows: Catalo
   const selected = candidates.slice().sort((a, b) =>
     difficultyRank[a.difficulty] - difficultyRank[b.difficulty] ||
     Number(a.durationScopeVerified === false) - Number(b.durationScopeVerified === false) ||
-    (a.durationScopeVerified !== false && b.durationScopeVerified !== false ? a.durationMinutes - b.durationMinutes : 0) ||
+    (a.durationScopeVerified !== false && b.durationScopeVerified !== false && a.durationMinutes !== null && b.durationMinutes !== null ? a.durationMinutes - b.durationMinutes : 0) ||
     a.distanceKm - b.distanceKm || a.trailId - b.trailId)[0];
   const reasons = ["destination", "landscape", "duration", "difficulty"];
   const adjustments: string[] = [];
   if (!landscapeFits(selected, preferences)) adjustments.push(`Este sendero tiene otros paisajes: ${selected.trailTypes.join(", ")}. No tiene documentados los que seleccionaste.`);
-  if (!candidateDurationFits(selected, preferences.duration)) adjustments.push(selected.durationScopeVerified === false
+  if (!candidateDurationFits(selected, preferences.duration)) adjustments.push(selected.durationMinutes === null
+    ? "No hay un tiempo total publicado para comprobar que se ajuste al rango que elegiste."
+    : selected.durationScopeVerified === false
     ? `La ficha indica ${selected.duration}, pero el tiempo total del recorrido no está confirmado. No podemos asegurar que se ajuste al rango que elegiste.`
     : `Dura aproximadamente ${selected.duration}, fuera del rango elegido. Revisá si disponés de ese tiempo antes de elegirlo.`);
   const grades = { facil: "fácil", moderada: "moderada", dificil: "difícil" };
   const gradeRank = { facil: 0, moderada: 1, dificil: 2 };
   if (preferences.difficulty !== "cualquiera" && selected.difficulty !== preferences.difficulty) adjustments.push(`Su dificultad es ${grades[selected.difficulty]}, ${gradeRank[selected.difficulty] > gradeRank[preferences.difficulty] ? "mayor" : "menor"} que la seleccionada (${grades[preferences.difficulty]}). Revisá esa exigencia antes de elegirlo.`);
-  if (!experienceFits(selected, preferences)) adjustments.push(`No hay senderos dentro del nivel considerado para tu perfil ${preferences.experience || "principiante"} en este destino. Esta alternativa es de dificultad ${grades[selected.difficulty]} y supera ese nivel; no la consideres adecuada para tu experiencia sin asesoramiento profesional.`);
+  const exceedsExperience = !experienceFits(selected, preferences);
+  if (exceedsExperience) adjustments.push(`No hay senderos dentro del nivel considerado para tu perfil ${preferences.experience || "principiante"} en este destino. Esta alternativa es de dificultad ${grades[selected.difficulty]} y supera ese nivel; no la consideres adecuada para tu experiencia sin asesoramiento profesional.`);
   const alternative = !landscapeFits(selected, preferences) || !candidateDurationFits(selected, preferences.duration) ||
-    (preferences.difficulty !== "cualquiera" && selected.difficulty !== preferences.difficulty) || !experienceFits(selected, preferences);
-  return responseSchema.parse({ status: "ok", message: alternative ? "No encontramos una coincidencia exacta; te sugerimos otro sendero en el destino que elegiste" : "¡Encontramos un sendero para vos!",
+    (preferences.difficulty !== "cualquiera" && selected.difficulty !== preferences.difficulty) || exceedsExperience;
+  return responseSchema.parse({ status: "ok", message: exceedsExperience ? "No hay senderos de tu nivel en este destino." : alternative ? "No encontramos una coincidencia exacta; te sugerimos otro sendero en el destino que elegiste" : "¡Encontramos un sendero para vos!",
     ranking: { method: "catalog", modelVersion: null },
-    recommendation: { ...selected, ...(adjustments.length ? { preferenceAdjustments: adjustments } : {}), explanation: explain(selected, preferences, reasons) } });
+    recommendation: { ...selected, ...(exceedsExperience ? { exceedsExperience: true } : {}), ...(adjustments.length ? { preferenceAdjustments: adjustments } : {}), explanation: explain(selected, preferences, reasons) } });
 }

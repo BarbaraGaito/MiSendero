@@ -32,6 +32,7 @@ ENV PATH="/opt/trail-ml/bin:${PATH}"
 COPY --from=dependencies /app/node_modules ./node_modules
 COPY package*.json ./
 COPY migrations ./migrations
+COPY scripts/catalogImportRuntime.js scripts/importBeginnerCatalog.js scripts/importCatalogExpansion.js ./scripts/
 COPY src ./src
 COPY ml ./ml
 COPY --from=build /app/dist ./dist

@@ -43,6 +43,18 @@ test("one question per stage, retained answers and one final recommendation with
   await press(tree, "Ver sendero"); expect(router.push).toHaveBeenCalledWith({ pathname: "/trail-detail", params: { id: "22" } });
   await press(tree, "Buscar otro sendero"); expect(tree.root.findByType(TextInput).props.value).toBe("El Chaltén");
 });
+test("a route above the saved level is shown as an informational alternative", async () => {
+  (findRecommendedTrail as jest.Mock).mockResolvedValue({ ...success, message: "No hay senderos de tu nivel en este destino.",
+    recommendation: { ...recommendation, difficulty: "dificil", exceedsExperience: true,
+      preferenceAdjustments: ["Esta alternativa supera tu nivel."] } });
+  const tree = await mount(Discover);
+  await fill(tree); await press(tree, "Encontrar mi sendero");
+  expect(text(tree)).toContain("Sin opciones para tu nivel");
+  expect(text(tree)).toContain("SUPERA TU NIVEL");
+  expect(text(tree)).not.toContain("TU PRÓXIMA CAMINATA");
+  await press(tree, "Ver ficha");
+  expect(router.push).toHaveBeenCalledWith({ pathname: "/trail-detail", params: { id: "22" } });
+});
 test("any experience is exclusive and multiple specific experiences are retained", async () => {
   const tree = await mount(Discover);
   await act(async () => tree.root.findByType(TextInput).props.onChangeText("Córdoba"));

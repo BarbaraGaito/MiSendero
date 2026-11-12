@@ -1,0 +1,85 @@
+{
+  "scope": "Unweighted functional grid, not observed demand or satisfaction",
+  "input": {
+    "url": "https://18-218-87-168.sslip.io/api/trails",
+    "retrievedAt": "2026-11-12T17:04:29.571Z",
+    "sha256": "1f504cfeaeeff90109e9df6679a48627eca9e7e5e63f08c3cb8d7cba79d1a1ce",
+    "mode": "public_snapshot",
+    "algorithm": "repository_checkout"
+  },
+  "catalogRecords": 51,
+  "durationCoverage": {
+    "knownTotal": 36,
+    "knownOneWay": 4,
+    "unknownOrConflicting": 11,
+    "estimated": 12
+  },
+  "destinations": 38,
+  "statuses": {
+    "ok": 19152
+  },
+  "cases": {
+    "total": 19152,
+    "outsideDestination": 0,
+    "exact": 1410,
+    "alternatives": 17742,
+    "durationMismatch": 11984,
+    "landscapeMismatch": 9612,
+    "difficultyMismatch": 9226,
+    "exceedsExperience": 5040,
+    "adjustmentPresenceMismatch": 0,
+    "experienceFlagMismatch": 0
+  },
+  "byExperience": {
+    "principiante": {
+      "total": 6384,
+      "exact": 236,
+      "exceedsExperience": 3528,
+      "destinationsWithoutFit": [
+        "Capilla del Monte, Cordoba",
+        "Cerro Piltriquitron, El Bolson, Rio Negro",
+        "Ciudad de Salta, Salta",
+        "Esquel, Chubut",
+        "Parque Nacional El Leoncito, San Juan",
+        "Parque Nacional Iguazu, Misiones",
+        "Parque Nacional Lanin, Neuquen",
+        "Parque Nacional Lanín, Huechulafquen, Neuquén",
+        "Parque Nacional Nahuel Huapi, Rio Negro",
+        "Parque Nacional Perito Moreno, Santa Cruz",
+        "Parque Nacional Tierra del Fuego, Tierra del Fuego",
+        "Parque Nacional Tierra del Fuego, Ushuaia, Tierra del Fuego",
+        "Parque Provincial Aconcagua, Mendoza",
+        "Parque Provincial Ernesto Tornquist, Buenos Aires",
+        "Parque Provincial Ischigualasto, San Juan",
+        "Reserva Florofaunistica, Villa de Merlo, San Luis",
+        "Sierra de San Javier, Tucuman",
+        "Sierra de la Ventana, Buenos Aires",
+        "Tilcara, Jujuy",
+        "Valle de Tierra Mayor, Tierra del Fuego",
+        "Villa Pehuenia, Neuquen"
+      ]
+    },
+    "intermedio": {
+      "total": 6384,
+      "exact": 499,
+      "exceedsExperience": 1512,
+      "destinationsWithoutFit": [
+        "Capilla del Monte, Cordoba",
+        "Parque Nacional El Leoncito, San Juan",
+        "Parque Nacional Lanin, Neuquen",
+        "Parque Nacional Lanín, Huechulafquen, Neuquén",
+        "Parque Provincial Ernesto Tornquist, Buenos Aires",
+        "Parque Provincial Ischigualasto, San Juan",
+        "Reserva Florofaunistica, Villa de Merlo, San Luis",
+        "Sierra de la Ventana, Buenos Aires",
+        "Villa Pehuenia, Neuquen"
+      ]
+    },
+    "avanzado": {
+      "total": 6384,
+      "exact": 675,
+      "exceedsExperience": 0,
+      "destinationsWithoutFit": []
+    }
+  }
+}

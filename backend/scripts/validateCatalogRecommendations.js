@@ -10,17 +10,23 @@ const legacy = require("../src/data/legacyTrails");
 const additional = require("../src/data/additionalTrails");
 const { trails } = require("../src/data/catalogExpansion20261017");
 const { applyReviewedFacts } = require("../src/data/reviewedTrailFacts");
+const { trails: beginnerTrails, reviewCerroLeoncito } = require("../src/data/beginnerCatalog20261112");
 const { cachedElevation, geometryHash, sampleRoute, accumulatedElevation } = require("../src/trailElevation");
 const references = require("../src/data/recommendationElevation20261021.json");
 const snapshot = require("../../training/data/trail-ranking/catalog.json");
 
-function repositoryRows() {
-  return [...legacy.map(applyReviewedFacts), ...additional, ...trails].map(t => {
+function repositoryRows({ includeBeginner = true } = {}) {
+  const baseline = [...legacy.map(applyReviewedFacts), ...additional, ...trails].map(t => {
     const previous = snapshot.candidates.find(c => c.name === t.name);
     assert.ok(previous, `No real snapshot ID for ${t.name}`);
     return { ...t, id: previous.trailId,
       verified_ascent_m: cachedElevation(t)?.ascent_m ?? previous.ascentM ?? null };
   });
+  if (!includeBeginner) return baseline;
+  // The old export predates this batch. Preview IDs are only used by the local audit;
+  // the real database assigns IDs itself and preserves the earlier ones.
+  const maxId = Math.max(...snapshot.candidates.map(c => c.trailId));
+  return [...baseline.map(reviewCerroLeoncito), ...beginnerTrails.map((trail, i) => ({ ...trail, id: maxId + i + 1 }))];
 }
 
 function validateElevationEvidence() {
@@ -53,7 +59,8 @@ function validateElevationEvidence() {
 }
 
 async function runValidation() {
-  const rows = repositoryRows();
+  // Reproduce the original documented source-conformance suite on its original catalog.
+  const rows = repositoryRows({ includeBeginner: false });
   const catalog = verifiedCatalog(rows);
   assert.equal(catalog.length, rows.length);
   const results = [];

@@ -83,7 +83,7 @@ export default function DiscoverTrailScreen() {
         <Pressable accessibilityRole="button" accessibilityLabel="Volver" onPress={() => router.back()} style={styles.back}>
           <Text style={styles.backText}>‹ Volver</Text>
         </Pressable>
-        <ScreenTitle eyebrow={result ? "ELEGIDO PARA VOS" : "TU PRÓXIMA CAMINATA"} title={result ? "Tu próximo sendero" : "Descubrí tu sendero"} subtitle={result ? undefined : "Cuatro respuestas para encontrar un recorrido para vos."} />
+        <ScreenTitle eyebrow={result?.recommendation?.exceedsExperience ? "RESULTADO DE BÚSQUEDA" : result ? "ELEGIDO PARA VOS" : "TU PRÓXIMA CAMINATA"} title={result?.recommendation?.exceedsExperience ? "Sin opciones para tu nivel" : result ? "Tu próximo sendero" : "Descubrí tu sendero"} subtitle={result ? undefined : "Cuatro respuestas para encontrar un recorrido para vos."} />
         {offline ? <Text accessibilityLiveRegion="polite" style={styles.notice}>Necesitás Internet para generar recomendaciones nuevas. Los mapas descargados siguen disponibles sin conexión.</Text> : null}
         {!profileReady ? <Card>
           {profileError ? <>

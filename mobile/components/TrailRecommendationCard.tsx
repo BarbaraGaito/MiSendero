@@ -10,13 +10,14 @@ import type { TrailRecommendation } from "../../services/trailAssistant";
 export function TrailRecommendationCard({ trail, onRestart }: { trail: TrailRecommendation; onRestart: () => void }) {
   const [imageFailed, setImageFailed] = useState(false);
   const difficulty = { facil: "Fácil", moderada: "Moderada", dificil: "Difícil" }[trail.difficulty];
-  const durationScope = trail.durationScopeVerified === false ? "Duración estimada; confirmar si incluye el regreso."
+  const durationScope = trail.durationMinutes === null ? "La fuente no publica el tiempo total."
+    : trail.durationScopeVerified === false ? "Tiempo de referencia: confirmar si incluye el regreso."
     : trail.routeType === "out_and_back" ? "Tiempo estimado de ida y vuelta."
     : trail.routeType === "loop" ? "Tiempo estimado del circuito completo."
     : trail.routeType === "point_to_point" ? "Tiempo estimado de solo ida." : "Tiempo estimado del recorrido.";
   return <Card style={styles.card}>
     {trail.imageUrl && !imageFailed ? <Image accessibilityLabel={`Paisaje de ${trail.name}`} source={{ uri: trail.imageUrl }} style={styles.image} onError={() => setImageFailed(true)} /> : null}
-    <View style={styles.badge}><Ionicons name="compass-outline" size={15} color={colors.greenDark} /><Text style={styles.badgeText}>TU PRÓXIMA CAMINATA</Text></View>
+    <View style={styles.badge}><Ionicons name={trail.exceedsExperience ? "warning-outline" : "compass-outline"} size={15} color={trail.exceedsExperience ? colors.warning : colors.greenDark} /><Text style={[styles.badgeText, trail.exceedsExperience && styles.outsideProfile]}>{trail.exceedsExperience ? "SUPERA TU NIVEL" : trail.preferenceAdjustments?.length ? "ALTERNATIVA EN EL DESTINO" : "TU PRÓXIMA CAMINATA"}</Text></View>
     <Text accessibilityRole="header" style={styles.title}>{trail.name}</Text>
     <View style={styles.locationRow}><Ionicons name="location-outline" size={16} color={colors.muted} /><Text style={styles.location}>{trail.location}</Text></View>
     <TrailMetrics items={[
@@ -26,8 +27,8 @@ export function TrailRecommendationCard({ trail, onRestart }: { trail: TrailReco
     ]} />
     <Text style={styles.note}>{durationScope}</Text>
     {trail.preferenceAdjustments?.length ? <View accessibilityRole="alert" style={styles.alternative}>
-      <Text style={styles.subtitle}>Te sugerimos una alternativa en este destino</Text>
-      <Text style={styles.body}>No encontramos un sendero que coincida con todo lo que elegiste.</Text>
+      <Text style={styles.subtitle}>{trail.exceedsExperience ? "Esta ficha es solo para consultar" : "Te sugerimos una alternativa en este destino"}</Text>
+      {!trail.exceedsExperience && <Text style={styles.body}>No encontramos un sendero que coincida con todo lo que elegiste.</Text>}
       {trail.preferenceAdjustments.map((adjustment) => <Text key={adjustment} style={styles.body}>• {adjustment}</Text>)}
     </View> : null}
     {trail.routeType === "point_to_point" || trail.dataWarnings?.length ? <View style={styles.warning}>
@@ -37,7 +38,7 @@ export function TrailRecommendationCard({ trail, onRestart }: { trail: TrailReco
         {trail.dataWarnings?.map(warning => <Text key={warning} style={styles.note}>{warning}</Text>)}
       </View>
     </View> : null}
-    <PrimaryButton label="Ver sendero" icon="trail-sign-outline" onPress={() => router.push({ pathname: "/trail-detail", params: { id: String(trail.trailId) } })} />
+    <PrimaryButton label={trail.exceedsExperience ? "Ver ficha" : "Ver sendero"} icon="trail-sign-outline" onPress={() => router.push({ pathname: "/trail-detail", params: { id: String(trail.trailId) } })} />
     <View style={styles.details}>
       <ExpandableSection title="¿Por qué este sendero?" icon="sparkles-outline" tone="info">
         <Text style={styles.body}>{trail.explanation}</Text>
@@ -62,6 +63,7 @@ const styles = StyleSheet.create({
   image: { width: "100%", height: 190, borderRadius: 18, marginBottom: 18 },
   badge: { flexDirection: "row", alignItems: "center", gap: 6, marginBottom: 10 },
   badgeText: { fontFamily: typography.medium, color: colors.greenDark, fontSize: 11, letterSpacing: 1 },
+  outsideProfile: { color: colors.warning },
   title: { fontFamily: typography.extraBold, fontSize: 26, lineHeight: 32, color: colors.ink },
   subtitle: { fontFamily: typography.bold, fontSize: 16, lineHeight: 22, color: colors.greenDark },
   locationRow: { flexDirection: "row", alignItems: "center", gap: 5, marginTop: 8 },

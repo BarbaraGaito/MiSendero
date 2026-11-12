@@ -14,12 +14,15 @@ const options = { windowMs: 15 * 60 * 1000, standardHeaders: "draft-8", legacyHe
 const ipLimiter = rateLimit({ ...options, limit: 30 });
 const accountLimiter = rateLimit({ ...options, limit: 10, keyGenerator: (req) => String(req.userId) });
 let activeRequests = 0;
-const catalogRows = async () => {
+const catalogRows = async (req) => {
   const { rows } = await query({ text: "SELECT * FROM trails ORDER BY id", query_timeout: 5000 });
-  return rows.map((row) => ({ ...row, verified_ascent_m: cachedElevation(row)?.ascent_m ?? null }));
+  // Previously released clients require numeric durationMinutes in recommendation responses.
+  const supportsUnknownDuration = req.get("X-MiSendero-Unpublished-Duration") === "1";
+  return rows.filter(row => supportsUnknownDuration || row.duration !== null)
+    .map(row => ({ ...row, verified_ascent_m: cachedElevation(row)?.ascent_m ?? null }));
 };
-router.get("/destinations", requireAuth, rateLimit({ ...options, limit: 60 }), async (_req, res, next) => {
-  try { res.set("Cache-Control", "no-store").json({ destinations: catalogDestinations(verifiedCatalog(await catalogRows())) }); }
+router.get("/destinations", requireAuth, rateLimit({ ...options, limit: 60 }), async (req, res, next) => {
+  try { res.set("Cache-Control", "no-store").json({ destinations: catalogDestinations(verifiedCatalog(await catalogRows(req))) }); }
   catch (error) { next(error); }
 });
 router.post("/recommend-trail", ipLimiter, requireAuth, accountLimiter, express.json({ limit: "2kb" }), async (req, res, next) => {
@@ -30,7 +33,7 @@ router.post("/recommend-trail", ipLimiter, requireAuth, accountLimiter, express.
   if (activeRequests >= 4) return res.status(503).json({ message: "El asistente está ocupado. Intentá nuevamente en un momento." });
   activeRequests++;
   try {
-    const rows = await catalogRows();
+    const rows = await catalogRows(req);
     const result = await recommendTrail(parsed.data, rows);
     res.json(result);
   } catch (error) {

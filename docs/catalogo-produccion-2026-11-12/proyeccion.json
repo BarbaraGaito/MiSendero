@@ -1,0 +1,152 @@
+{
+  "scope": "Unweighted functional grid, not observed demand or satisfaction",
+  "input": {
+    "url": "https://18-218-87-168.sslip.io/api/trails",
+    "retrievedAt": "2026-11-12T17:04:29.571Z",
+    "sha256": "1f504cfeaeeff90109e9df6679a48627eca9e7e5e63f08c3cb8d7cba79d1a1ce",
+    "mode": "projected_changes_on_public_snapshot",
+    "algorithm": "repository_checkout"
+  },
+  "importProjection": {
+    "insert": [
+      "Senda de la Baliza - Tierra del Fuego",
+      "Laguna Negra - Tierra del Fuego",
+      "Sendero Verde - Iguazú",
+      "Sendero Claro Oscuro - Parque Tornquist",
+      "Cascada de los Duendes - Lago Gutiérrez",
+      "Cascada El Rincón - El Leoncito",
+      "Mirador Lago Volcán - Perito Moreno",
+      "Sendero El Bosque - Puerto Canoa",
+      "Rincón de las Aves - Laguna La Zeta",
+      "Cerro San Bernardo - Ala Delta",
+      "Sendero El Funicular - Cuarto puente"
+    ],
+    "review": [
+      {
+        "name": "Cerro Leoncito - El Leoncito",
+        "durationBefore": "3 h",
+        "durationAfter": "3 a 4 h",
+        "basis": "official_round_trip"
+      },
+      {
+        "name": "Laguna del Tesoro - Aconquija",
+        "durationBefore": "10 a 12 h",
+        "durationAfter": "10 a 12 h",
+        "basis": "official_one_way_only"
+      },
+      {
+        "name": "Campo de Piedra Pomez",
+        "durationBefore": "1 a 2 h",
+        "durationAfter": "1 a 2 h",
+        "basis": "not_documented"
+      },
+      {
+        "name": "Caminata al Cerro Morado",
+        "durationBefore": "3 h",
+        "durationAfter": "3 h",
+        "basis": "official_total_itinerary"
+      },
+      {
+        "name": "Ascenso Cerro Tres Picos",
+        "durationBefore": "8 a 10 h",
+        "durationAfter": "8 a 10 h",
+        "basis": "not_documented"
+      },
+      {
+        "name": "Sendero El Mollar - El Palmar",
+        "durationBefore": "30 a 45 min",
+        "durationAfter": "30 a 45 min",
+        "basis": "not_documented"
+      },
+      {
+        "name": "Lahuan Solitario - Puerto Chucao",
+        "durationBefore": "1 h 30 min",
+        "durationAfter": "1 h 30 min",
+        "basis": "official_round_trip"
+      },
+      {
+        "name": "Garganta del Diablo - Quebrada de las Conchas",
+        "durationBefore": "30 a 45 min",
+        "durationAfter": "30 a 45 min",
+        "basis": "not_documented"
+      },
+      {
+        "name": "Garganta del Diablo de Tilcara",
+        "durationBefore": "1 h 30 min a 2 h",
+        "durationAfter": "1 h 30 min a 2 h",
+        "basis": "different_itinerary_scope"
+      },
+      {
+        "name": "Volcan Lanin - Base a Refugio BIM",
+        "durationBefore": "6 a 8 h",
+        "durationAfter": "6 a 8 h",
+        "basis": "not_documented"
+      },
+      {
+        "name": "Sendero a Confluencia",
+        "durationBefore": "4 a 5 h",
+        "durationAfter": "4 a 5 h",
+        "basis": "conflicting_sources"
+      }
+    ]
+  },
+  "catalogRecords": 62,
+  "durationCoverage": {
+    "knownTotal": 44,
+    "knownOneWay": 5,
+    "unknownOrConflicting": 13,
+    "estimated": 14
+  },
+  "destinations": 38,
+  "statuses": {
+    "ok": 19152
+  },
+  "cases": {
+    "total": 19152,
+    "outsideDestination": 0,
+    "exact": 1825,
+    "alternatives": 17327,
+    "durationMismatch": 11788,
+    "landscapeMismatch": 9531,
+    "difficultyMismatch": 8680,
+    "exceedsExperience": 2352,
+    "adjustmentPresenceMismatch": 0,
+    "experienceFlagMismatch": 0
+  },
+  "byExperience": {
+    "principiante": {
+      "total": 6384,
+      "exact": 392,
+      "exceedsExperience": 1512,
+      "destinationsWithoutFit": [
+        "Capilla del Monte, Cordoba",
+        "Cerro Piltriquitron, El Bolson, Rio Negro",
+        "Parque Provincial Aconcagua, Mendoza",
+        "Parque Provincial Ischigualasto, San Juan",
+        "Reserva Florofaunistica, Villa de Merlo, San Luis",
+        "Sierra de la Ventana, Buenos Aires",
+        "Tilcara, Jujuy",
+        "Valle de Tierra Mayor, Tierra del Fuego",
+        "Villa Pehuenia, Neuquen"
+      ]
+    },
+    "intermedio": {
+      "total": 6384,
+      "exact": 630,
+      "exceedsExperience": 840,
+      "destinationsWithoutFit": [
+        "Capilla del Monte, Cordoba",
+        "Parque Provincial Ischigualasto, San Juan",
+        "Reserva Florofaunistica, Villa de Merlo, San Luis",
+        "Sierra de la Ventana, Buenos Aires",
+        "Villa Pehuenia, Neuquen"
+      ]
+    },
+    "avanzado": {
+      "total": 6384,
+      "exact": 803,
+      "exceedsExperience": 0,
+      "destinationsWithoutFit": []
+    }
+  }
+}

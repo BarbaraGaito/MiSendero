@@ -7,7 +7,7 @@ export function featuresFor(preferences: TrailPreferences, candidate: Candidate)
   const desired = preferences.trailTypes.filter((t) => t !== "cualquiera");
   const center = ({ "menos-1": 30, "1-2": 90, "2-4": 180, "4-6": 300, "mas-6": 480, cualquiera: null } as const)[preferences.duration];
   // Declared preference reference points, never estimates of missing trail attributes.
-  const proximity = center === null || candidate.durationScopeVerified === false ? null : 1 / (1 + Math.abs(candidate.durationMinutes - center) / center);
+  const proximity = center === null || candidate.durationScopeVerified === false || candidate.durationMinutes === null ? null : 1 / (1 + Math.abs(candidate.durationMinutes - center) / center);
   const terrain = (tag: string) => candidate.terrain == null ? null : Number(candidate.terrain.includes(tag));
   return [1, desired.length ? desired.filter((t) => candidate.trailTypes.includes(t)).length / desired.length : 1,
     proximity, candidate.durationScopeVerified === false ? null : candidate.durationMinutes, candidate.distanceKm,

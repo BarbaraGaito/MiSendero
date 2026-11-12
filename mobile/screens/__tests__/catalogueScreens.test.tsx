@@ -1,6 +1,7 @@
 import "../../../testing/mobileSetup";
 jest.mock("../../../database/database", () => ({ initDB: jest.fn().mockResolvedValue(undefined) }));
 jest.mock("../../../services/trailRepository", () => ({ getTrails: jest.fn(), getTrailById: jest.fn(), getTrailReports: jest.fn(), getTrailWeather: jest.fn() }));
+jest.mock("../../../services/terrainTiles", () => ({ TERRAIN_TILES_ATTRIBUTION: "Mapzen Terrain Tiles" }));
 jest.mock("../../../services/offlineMaps", () => ({ getOfflineMaps: jest.fn(), deleteOfflineMap: jest.fn(), getVerifiedOfflineMapByTrailId: jest.fn(), saveOfflineTrailMap: jest.fn() }));
 jest.mock("../../../database/sessionsRepository", () => ({ getRecentSessions: jest.fn(), getSessions: jest.fn(), getSessionsSummary: jest.fn(), getTrailRatingSummary: jest.fn(), getTrailReviews: jest.fn() }));
 jest.mock("../../../services/favoriteTrails", () => ({ getFavoriteTrailIds: jest.fn(), isTrailFavorite: jest.fn(), setTrailFavorite: jest.fn() }));
@@ -238,6 +239,14 @@ test("a documented circuit without GPS shows its facts and source without offeri
   expect(content).toContain("Consultá el recorrido");
   expect(content).toContain("Fuentes del recorrido");
   expect(content).not.toContain("Solo ida; coordinar el regreso");
+  expect(tree.root.findAll((node: any) => ["Ver ruta", "Descargar mapa"].includes(node.props.label))).toHaveLength(0);
+});
+test("a beginner catalog entry shows an unpublished duration and no GPS actions", async () => {
+  const entry = require("../../../backend/src/data/beginnerCatalog20261112").trails.find((item: any) => item.provenance.catalog_key === "leoncito-cascada-rincon");
+  (trails.getTrailById as jest.Mock).mockResolvedValue({ ...trail, ...entry, id: 7 });
+  const tree = await mount(Detail);
+  expect(text(tree)).toContain("Duración total a confirmar");
+  expect(text(tree)).toContain("Ficha informativa sin navegación GPS");
   expect(tree.root.findAll((node: any) => ["Ver ruta", "Descargar mapa"].includes(node.props.label))).toHaveLength(0);
 });
 test("the enriched circuit displays its real image, source and map actions without the pending-GPS notice", async () => {

@@ -125,17 +125,17 @@ export interface TrailElevation {
 
 export interface TrailProvenance {
   checked_at: string;
-  route_type: "out_and_back" | "point_to_point" | "loop";
+  route_type: "out_and_back" | "point_to_point" | "loop" | "unknown";
   access: string;
   precautions: string;
   duration_basis: string;
   official_distance_km: number | null;
-  distance_basis: "mapped_geometry" | "official_itinerary" | "round_trip_from_official_one_way";
+  distance_basis: "mapped_geometry" | "official_itinerary" | "round_trip_from_official_one_way" | "official_one_way";
   sources: { title: string; url: string }[];
   mapping: { source: string; source_url: string; license: string; retrieved_at: string; note?: string; scope?: string; navigation_ready?: boolean; distance_km?: number } | null;
   mapping_pending_reason?: string | null;
   source_notice?: string | null;
-  photo: { author: string; page_url: string; license: string; license_url: string; context: string | null };
+  photo: { author: string; page_url: string; license: string; license_url: string; context: string | null } | null;
 }
 
 export interface Trail {

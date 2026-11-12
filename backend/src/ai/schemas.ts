@@ -14,7 +14,7 @@ export const recommendationSchema = z.object({
   trailId: z.number().int().positive(), name: z.string().min(1).max(200),
   location: z.string().min(1).max(200), imageUrl: z.url().nullable(),
   trailTypes: z.array(trailTypeSchema).min(1), difficulty: z.enum(["facil", "moderada", "dificil"]),
-  duration: z.string().min(1), durationMinutes: z.number().positive(),
+  duration: z.string().min(1), durationMinutes: z.number().positive().nullable(),
   routeType: z.enum(["out_and_back", "loop", "point_to_point", "unknown"]),
   distanceKm: z.number().positive(), description: z.string().min(1).max(2000),
   explanation: z.string().min(1).max(1500),
@@ -27,7 +27,9 @@ export const recommendationSchema = z.object({
   terrain: z.array(z.enum(["rocky", "steep", "boardwalk", "mud", "sand"])).nullable().optional(),
   durationIsEstimated: z.boolean().optional(),
   preferenceAdjustments: z.array(z.string().min(1).max(300)).min(1).max(4).optional(),
-}).strict().refine(v => (v.sources.length > 0 && v.checkedAt !== null) ||
+  exceedsExperience: z.literal(true).optional(),
+}).strict().refine(v => v.durationMinutes !== null || v.durationScopeVerified === false)
+  .refine(v => (v.sources.length > 0 && v.checkedAt !== null) ||
   (v.catalogVerification === "catalog_only" && v.dataWarnings?.length && v.durationScopeVerified === false));
 export const responseSchema = z.object({
   status: z.enum(["ok", "no_results", "clarification", "out_of_scope"]),

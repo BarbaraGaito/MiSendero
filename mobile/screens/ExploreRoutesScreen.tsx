@@ -1,115 +1,67 @@
 import { Ionicons } from "@expo/vector-icons";
-import { router } from "expo-router";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { router, useFocusEffect } from "expo-router";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
-  FlatList,
-  ImageBackground,
-  ListRenderItem,
-  Pressable,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
+  FlatList, ImageBackground, Pressable, StyleSheet, Text, View, useWindowDimensions,
+  type ListRenderItem,
 } from "react-native";
-import {
-  AppScreen,
-  Card,
-  ScreenTitle,
-  StatusNotice,
-  colors,
-  typography,
-} from "../components/MiSenderoUI";
-import { ExpandableSection } from "../components/ExpandableSection";
+import { AppScreen, StatusNotice, colors, typography } from "../components/MiSenderoUI";
+import { defaultCatalogFilters, TrailCatalogFilters } from "../components/TrailCatalogFilters";
+import { TrailSkeleton } from "../components/TrailSkeleton";
 import { getTrails } from "../../services/trailRepository";
 import { formatKilometers } from "../../services/geoUtils";
-import { DistanceFilter, filterTrails, TrailAreaFilter } from "../../services/trailFilters";
-import { Trail } from "../../types";
-import { initDB } from "../../database/database";
+import { filterTrails } from "../../services/trailFilters";
 import { getFavoriteTrailIds } from "../../services/favoriteTrails";
-import { TrailSkeleton } from "../components/TrailSkeleton";
+import { initDB } from "../../database/database";
+import type { Trail } from "../../types";
 
 const ROUTES_PAGE_SIZE = 6;
-const DIFFICULTY_FILTERS = ["Todas", "Baja", "Media", "Alta"];
-const AREA_FILTERS: { id: TrailAreaFilter; label: string }[] = [
-  { id: "all", label: "Todos" },
-  { id: "national_parks", label: "Parques nacionales" },
-  { id: "other_trails", label: "Otros senderos" },
-];
-const DISTANCE_FILTERS = [
-  { id: "Todas", label: "Todas" },
-  { id: "Corta", label: "0-5 km" },
-  { id: "Media", label: "5-10 km" },
-  { id: "Larga", label: "+10 km" },
-  { id: "Sin dato", label: "Sin dato" },
-] as const;
 
-type RouteListItem = {
-  trail: Trail;
-  image: string;
-};
+type RouteListItem = { trail: Trail; image: string };
 type PhotoStatus = "loaded" | "failed";
 
 export default function ExploreRoutesScreen() {
+  const { width } = useWindowDimensions();
+  const wide = width >= 840;
   const [trails, setTrails] = useState<Trail[]>([]);
   const [favoriteTrailIds, setFavoriteTrailIds] = useState<number[]>([]);
-  const [activeFilter, setActiveFilter] = useState("Todas");
-  const [activeDistanceFilter, setActiveDistanceFilter] = useState<DistanceFilter>("Todas");
-  const [activeAreaFilter, setActiveAreaFilter] = useState<TrailAreaFilter>("all");
+  const [filters, setFilters] = useState(defaultCatalogFilters);
+  const [filtersExpanded, setFiltersExpanded] = useState(false);
+  const [favoritesOnly, setFavoritesOnly] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [visibleCount, setVisibleCount] = useState(ROUTES_PAGE_SIZE);
   const [photoStatuses, setPhotoStatuses] = useState<Record<string, PhotoStatus>>({});
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const routeList = useRef<FlatList<RouteListItem>>(null);
 
-  const hasActiveFilters =
-    activeFilter !== "Todas" || activeDistanceFilter !== "Todas" || activeAreaFilter !== "all" || searchQuery.trim().length > 0;
-  const favoriteIdSet = useMemo(
-    () => new Set(favoriteTrailIds),
-    [favoriteTrailIds]
-  );
-  const filteredTrails = useMemo(
-    () => {
-      const photoRank = (trail: Trail) => {
-        const url = trail.image_url?.trim();
-        if (!url || photoStatuses[url] === "failed") return 2;
-        return photoStatuses[url] === "loaded" ? 0 : 1;
-      };
-      return filterTrails(
-        trails,
-        favoriteTrailIds,
-        searchQuery,
-        activeFilter,
-        activeDistanceFilter,
-        activeAreaFilter
-      ).sort((a, b) => photoRank(a) - photoRank(b));
-    },
-    [activeAreaFilter, activeDistanceFilter, activeFilter, favoriteTrailIds, searchQuery, trails, photoStatuses]
-  );
-  const visibleTrails = useMemo(
-    () => filteredTrails.slice(0, visibleCount),
-    [filteredTrails, visibleCount]
-  );
-  const visibleRouteItems = useMemo(
-    () =>
-      visibleTrails.map((trail) => ({
-        trail,
-        image: trail.image_url?.trim() || "",
-      })),
-    [visibleTrails]
-  );
+  const hasActiveFilters = filters.area !== "all" || filters.distance !== "Todas" ||
+    filters.difficulty !== "Todas" || favoritesOnly || searchQuery.trim().length > 0;
+  const favoriteIdSet = useMemo(() => new Set(favoriteTrailIds), [favoriteTrailIds]);
+  const filteredTrails = useMemo(() => {
+    const photoRank = (trail: Trail) => {
+      const url = trail.image_url?.trim();
+      if (!url || photoStatuses[url] === "failed") return 2;
+      return photoStatuses[url] === "loaded" ? 0 : 1;
+    };
+    const matches = filterTrails(trails, [], searchQuery, filters.difficulty, filters.distance, filters.area);
+    return (favoritesOnly ? matches.filter((trail) => favoriteIdSet.has(trail.id)) : matches)
+      .sort((a, b) => photoRank(a) - photoRank(b));
+  }, [favoriteIdSet, favoritesOnly, filters, searchQuery, trails, photoStatuses]);
+
+  const visibleRouteItems = useMemo(() => filteredTrails.slice(0, visibleCount).map((trail) => ({
+    trail,
+    image: trail.image_url?.trim() || "",
+  })), [filteredTrails, visibleCount]);
+
   const loadRoutes = useCallback(async () => {
     setIsLoading(true);
     setError(null);
-
     try {
       await initDB();
-      const [trailList, favoriteIds] = await Promise.all([
-        getTrails(),
-        getFavoriteTrailIds(),
-      ]);
+      const trailList = await getTrails();
       setTrails(trailList);
       setPhotoStatuses({});
-      setFavoriteTrailIds(favoriteIds);
     } catch {
       setError("No pudimos cargar los senderos en este momento.");
     } finally {
@@ -118,17 +70,25 @@ export default function ExploreRoutesScreen() {
   }, []);
 
   useEffect(() => {
-    loadRoutes();
+    void loadRoutes();
   }, [loadRoutes]);
+
+  useFocusEffect(useCallback(() => {
+    let active = true;
+    void initDB().then(getFavoriteTrailIds).then((ids) => {
+      if (active) setFavoriteTrailIds(ids);
+    }).catch(() => {
+      // A local favorites read should not prevent browsing the catalog.
+    });
+    return () => { active = false; };
+  }, []));
 
   useEffect(() => {
     setVisibleCount(ROUTES_PAGE_SIZE);
-  }, [activeAreaFilter, activeDistanceFilter, activeFilter, searchQuery]);
+  }, [favoritesOnly, filters, searchQuery]);
 
   const loadMoreRoutes = useCallback(() => {
-    setVisibleCount((currentCount) =>
-      Math.min(filteredTrails.length, currentCount + ROUTES_PAGE_SIZE)
-    );
+    setVisibleCount((current) => Math.min(filteredTrails.length, current + ROUTES_PAGE_SIZE));
   }, [filteredTrails.length]);
 
   const markPhotoStatus = useCallback((imageUrl: string, status: PhotoStatus) => {
@@ -136,12 +96,11 @@ export default function ExploreRoutesScreen() {
     setPhotoStatuses(current => current[imageUrl] === status ? current : { ...current, [imageUrl]: status });
   }, []);
 
-  const clearFilters = useCallback(() => {
-    setActiveFilter("Todas");
-    setActiveDistanceFilter("Todas");
-    setActiveAreaFilter("all");
+  const resetSearch = () => {
+    setFilters(defaultCatalogFilters);
+    setFavoritesOnly(false);
     setSearchQuery("");
-  }, []);
+  };
 
   const renderRoute: ListRenderItem<RouteListItem> = useCallback(
     ({ item }) => (
@@ -151,590 +110,246 @@ export default function ExploreRoutesScreen() {
         isFavorite={favoriteIdSet.has(item.trail.id)}
         onPhotoStatus={markPhotoStatus}
         trail={item.trail}
+        wide={wide}
       />
     ),
-    [favoriteIdSet, markPhotoStatus, photoStatuses]
+    [favoriteIdSet, markPhotoStatus, photoStatuses, wide]
   );
 
+  const resultCount = filteredTrails.length;
+  const showResults = !isLoading && !error;
+
   return (
-    <AppScreen activeTab="explorar">
+    <AppScreen activeTab="explorar" maxContentWidth={wide ? 1060 : undefined}>
       <FlatList
+        ref={routeList}
+        key={wide ? "grid" : "list"}
+        numColumns={wide ? 2 : 1}
+        columnWrapperStyle={wide ? styles.cardRow : undefined}
         contentContainerStyle={styles.listContent}
-        data={visibleRouteItems}
+        data={showResults ? visibleRouteItems : []}
         initialNumToRender={ROUTES_PAGE_SIZE}
+        keyboardShouldPersistTaps="handled"
+        keyboardDismissMode="on-drag"
         keyExtractor={(item) => String(item.trail.id)}
-        ListFooterComponent={
-          <ExploreRoutesFooter
-            error={error}
-            filteredCount={filteredTrails.length}
-            isLoading={isLoading}
-            visibleCount={visibleRouteItems.length}
-          />
-        }
-        ListHeaderComponent={
-          <ExploreRoutesHeader
-            activeAreaFilter={activeAreaFilter}
-            activeDistanceFilter={activeDistanceFilter}
-            activeFilter={activeFilter}
-            error={error}
-            filteredCount={filteredTrails.length}
-            hasActiveFilters={hasActiveFilters}
-            isLoading={isLoading}
-            onClearFilters={clearFilters}
-            onRetry={loadRoutes}
-            searchQuery={searchQuery}
-            setActiveDistanceFilter={setActiveDistanceFilter}
-            setActiveAreaFilter={setActiveAreaFilter}
-            setActiveFilter={setActiveFilter}
-            setSearchQuery={setSearchQuery}
-          />
-        }
-        maxToRenderPerBatch={4}
-        onEndReached={loadMoreRoutes}
-        onEndReachedThreshold={0.45}
-        removeClippedSubviews
+        ListHeaderComponent={(
+          <View style={styles.header}>
+            <View style={styles.intro}>
+              <View style={styles.eyebrowRow}>
+                <Ionicons aria-hidden accessible={false} name="compass-outline" color={colors.green} size={17} />
+                <Text style={styles.eyebrow}>Explorá MiSendero</Text>
+              </View>
+              <Text accessibilityRole="header" style={[styles.title, wide && styles.titleWide]}>
+                Encontrá tu próximo sendero
+              </Text>
+              <Text style={styles.subtitle}>
+                Buscá por nombre o lugar y encontrá rutas para tu próxima salida.
+              </Text>
+            </View>
+
+            <TrailCatalogFilters
+              filters={filters} setFilters={setFilters}
+              query={searchQuery} setQuery={setSearchQuery}
+              favoritesOnly={favoritesOnly} onToggleFavorites={() => setFavoritesOnly((current) => !current)}
+              expanded={filtersExpanded} onToggleExpanded={() => setFiltersExpanded((current) => !current)}
+              onViewResults={() => {
+                setFiltersExpanded(false);
+                routeList.current?.scrollToOffset({ offset: 0, animated: true });
+              }}
+            />
+
+            {!hasActiveFilters && !filtersExpanded ? <CatalogShortcuts /> : null}
+
+            <View style={styles.results}>
+              <View style={styles.resultsHeading}>
+                <Text accessibilityRole="header" style={styles.sectionTitle}>Senderos</Text>
+                {showResults ? (
+                  <Text accessibilityLiveRegion="polite" aria-live="polite" style={styles.resultsCount}>
+                    {resultCount === 1 ? "1 resultado" : `${resultCount} resultados`}
+                  </Text>
+                ) : null}
+              </View>
+              {isLoading ? <TrailSkeleton variant="list" count={wide ? 2 : 3} /> : null}
+              {error ? (
+                <StatusNotice actionLabel="Reintentar" message={error} onAction={loadRoutes}
+                  title="No se pudo cargar" tone="error" />
+              ) : null}
+              {showResults && resultCount === 0 ? (
+                <StatusNotice
+                  actionLabel={hasActiveFilters ? "Restablecer búsqueda" : undefined}
+                  message={getEmptyMessage(hasActiveFilters, favoritesOnly, favoriteTrailIds.length)}
+                  onAction={hasActiveFilters ? resetSearch : undefined}
+                  title={hasActiveFilters ? "Sin resultados" : "Sin senderos disponibles"}
+                />
+              ) : null}
+            </View>
+          </View>
+        )}
+        ListFooterComponent={showResults && resultCount > 0 ? (
+          <View style={styles.footer}>
+            {visibleRouteItems.length < resultCount ? (
+              <Pressable accessibilityRole="button" onPress={loadMoreRoutes}
+                style={({ pressed }) => [styles.moreButton, pressed && styles.pressed]}>
+                <Text style={styles.moreLabel}>Ver más senderos</Text>
+                <Ionicons aria-hidden accessible={false} name="chevron-down" size={17} color={colors.green} />
+              </Pressable>
+            ) : null}
+            <StatusNotice title="Antes de salir"
+              message="Si vas a una zona con poca señal, descargá el mapa del sendero con anticipación." />
+          </View>
+        ) : null}
+        maxToRenderPerBatch={ROUTES_PAGE_SIZE}
         renderItem={renderRoute}
         showsVerticalScrollIndicator={false}
-        updateCellsBatchingPeriod={80}
         windowSize={5}
       />
     </AppScreen>
   );
 }
 
-function ExploreRoutesHeader({
-  activeAreaFilter,
-  activeDistanceFilter,
-  activeFilter,
-  error,
-  filteredCount,
-  hasActiveFilters,
-  isLoading,
-  onClearFilters,
-  onRetry,
-  searchQuery,
-  setActiveDistanceFilter,
-  setActiveAreaFilter,
-  setActiveFilter,
-  setSearchQuery,
-}: {
-  activeAreaFilter: TrailAreaFilter;
-  activeDistanceFilter: DistanceFilter;
-  activeFilter: string;
-  error: string | null;
-  filteredCount: number;
-  hasActiveFilters: boolean;
-  isLoading: boolean;
-  onClearFilters: () => void;
-  onRetry: () => void;
-  searchQuery: string;
-  setActiveDistanceFilter: (filter: DistanceFilter) => void;
-  setActiveAreaFilter: (filter: TrailAreaFilter) => void;
-  setActiveFilter: (filter: string) => void;
-  setSearchQuery: (query: string) => void;
-}) {
+function getEmptyMessage(hasFilters: boolean, favoritesOnly: boolean, favoriteCount: number) {
+  if (favoritesOnly && !favoriteCount) return "Todavía no guardaste senderos en favoritos.";
+  if (hasFilters) return "Probá con menos filtros o buscá por otro nombre o lugar.";
+  return "Cuando haya senderos disponibles, van a aparecer acá.";
+}
+
+function CatalogShortcuts() {
   return (
-    <View>
-      <ScreenTitle
-        eyebrow="Explorar rutas"
-        title="Encontrá tu próxima ruta"
-        subtitle="Buscá por nombre o lugar."
-      />
-      <RouteSearchBox searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+    <View style={styles.shortcuts}>
       <Pressable accessibilityRole="button" onPress={() => router.push("/descubri-tu-sendero")}
-        style={{ padding: 18, borderRadius: 18, backgroundColor: colors.mint, marginBottom: 16 }}>
-        <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
-          <Ionicons name="compass-outline" size={24} color={colors.greenDark} />
-          <View style={{ flex: 1 }}>
-            <Text style={{ fontFamily: typography.bold, color: colors.greenDark, fontSize: 18 }}>Descubrí tu sendero</Text>
-            <Text style={{ fontFamily: typography.regular, color: colors.muted, fontSize: 14, lineHeight: 20, marginTop: 4 }}>Una recomendación según tus preferencias.</Text>
-          </View>
-          <Ionicons name="chevron-forward" size={18} color={colors.greenDark} />
-        </View>
+        style={({ pressed }) => [styles.shortcut, styles.recommendation, pressed && styles.pressed]}>
+        <Ionicons aria-hidden accessible={false} name="sparkles-outline" size={19} color={colors.green} />
+        <Text style={styles.shortcutText}>Descubrí tu sendero</Text>
+        <Ionicons aria-hidden accessible={false} name="chevron-forward" size={16} color={colors.green} />
       </Pressable>
       <Pressable accessibilityRole="button" onPress={() => router.push("/parques-nacionales")}
-        style={{ flexDirection: "row", alignItems: "center", gap: 8, minHeight: 44, marginBottom: 14 }}>
-        <Ionicons name="shield-checkmark-outline" size={21} color={colors.greenDark} />
-        <Text style={{ flex: 1, fontSize: 15, fontWeight: "700", color: colors.greenDark }}>Parques Nacionales</Text>
-        <Ionicons name="chevron-forward" size={18} color={colors.greenDark} />
+        style={({ pressed }) => [styles.shortcut, pressed && styles.pressed]}>
+        <Ionicons aria-hidden accessible={false} name="shield-checkmark-outline" size={19} color={colors.green} />
+        <Text style={styles.shortcutText}>Parques Nacionales</Text>
+        <Ionicons aria-hidden accessible={false} name="chevron-forward" size={16} color={colors.green} />
       </Pressable>
-      <ExpandableSection title="Filtrar senderos" icon="options-outline" summary={[
-        activeAreaFilter !== "all" ? AREA_FILTERS.find(filter => filter.id === activeAreaFilter)?.label : null,
-        activeFilter !== "Todas" ? activeFilter : null,
-        activeDistanceFilter !== "Todas" ? DISTANCE_FILTERS.find(filter => filter.id === activeDistanceFilter)?.label : null,
-      ].filter(Boolean).join(" · ") || "Tipo de sendero, dificultad y distancia"}>
-        <RouteFilters
-          activeAreaFilter={activeAreaFilter}
-          activeDistanceFilter={activeDistanceFilter}
-          activeFilter={activeFilter}
-          hasActiveFilters={hasActiveFilters}
-          onClearFilters={onClearFilters}
-          setActiveDistanceFilter={setActiveDistanceFilter}
-          setActiveAreaFilter={setActiveAreaFilter}
-          setActiveFilter={setActiveFilter}
-        />
-      </ExpandableSection>
-      <RoutesResultStatus
-        error={error}
-        filteredCount={filteredCount}
-        hasActiveFilters={hasActiveFilters}
-        isLoading={isLoading}
-        onClearFilters={onClearFilters}
-        onRetry={onRetry}
-      />
     </View>
   );
 }
 
-function RouteSearchBox({
-  searchQuery,
-  setSearchQuery,
-}: {
-  searchQuery: string;
-  setSearchQuery: (query: string) => void;
-}) {
-  return (
-    <View style={styles.searchBox}>
-      <Ionicons name="search-outline" size={18} color={colors.muted} />
-      <TextInput
-        accessibilityLabel="Buscar rutas por zona o nombre"
-        onChangeText={setSearchQuery}
-        placeholder="Buscar por zona o nombre"
-        placeholderTextColor={colors.muted}
-        returnKeyType="search"
-        style={styles.searchInput}
-        value={searchQuery}
-      />
-      {searchQuery.trim().length > 0 ? (
-        <Pressable
-          accessibilityLabel="Limpiar busqueda"
-          accessibilityRole="button"
-          hitSlop={8}
-          onPress={() => setSearchQuery("")}
-          style={({ pressed }) => [
-            styles.clearSearchButton,
-            pressed && styles.pressed,
-          ]}
-        >
-          <Ionicons name="close" size={16} color={colors.greenDark} />
-        </Pressable>
-      ) : null}
-    </View>
-  );
-}
-
-function RouteFilters({
-  activeAreaFilter,
-  activeDistanceFilter,
-  activeFilter,
-  hasActiveFilters,
-  onClearFilters,
-  setActiveDistanceFilter,
-  setActiveAreaFilter,
-  setActiveFilter,
-}: {
-  activeAreaFilter: TrailAreaFilter;
-  activeDistanceFilter: DistanceFilter;
-  activeFilter: string;
-  hasActiveFilters: boolean;
-  onClearFilters: () => void;
-  setActiveDistanceFilter: (filter: DistanceFilter) => void;
-  setActiveAreaFilter: (filter: TrailAreaFilter) => void;
-  setActiveFilter: (filter: string) => void;
-}) {
-  return (
-    <>
-      <Text style={styles.filterLabel}>Tipo de sendero</Text>
-      <View style={styles.filterRow}>
-        {AREA_FILTERS.map((filter) => (
-          <FilterButton key={filter.id} label={filter.label}
-            isActive={activeAreaFilter === filter.id} onPress={() => setActiveAreaFilter(filter.id)} />
-        ))}
-      </View>
-      <Text style={styles.filterLabel}>Dificultad</Text>
-      <View style={styles.filterRow}>
-        {[...DIFFICULTY_FILTERS, "Favoritas"].map((filter) => (
-          <FilterButton
-            isActive={activeFilter === filter}
-            key={filter}
-            label={filter}
-            onPress={() => setActiveFilter(filter)}
-          />
-        ))}
-      </View>
-      <Text style={styles.filterLabel}>Distancia</Text>
-      <View style={styles.filterRow}>
-        {DISTANCE_FILTERS.map((filter) => (
-          <FilterButton
-            isActive={activeDistanceFilter === filter.id}
-            key={filter.id}
-            label={filter.label}
-            onPress={() => setActiveDistanceFilter(filter.id)}
-          />
-        ))}
-      </View>
-      {hasActiveFilters ? (
-        <Pressable onPress={onClearFilters} style={styles.clearFiltersButton}>
-          <Ionicons name="refresh-outline" size={16} color={colors.greenDark} />
-          <Text style={styles.clearFiltersText}>Limpiar filtros</Text>
-        </Pressable>
-      ) : null}
-    </>
-  );
-}
-
-function FilterButton({
-  isActive,
-  label,
-  onPress,
-}: {
-  isActive: boolean;
-  label: string;
-  onPress: () => void;
-}) {
-  return (
-    <Pressable
-      accessibilityRole="button"
-      accessibilityState={{ selected: isActive }}
-      aria-pressed={isActive}
-      onPress={onPress}
-      style={({ pressed }) => pressed && styles.pressed}
-    >
-      <Text style={isActive ? styles.filterActive : styles.filter}>{label}</Text>
-    </Pressable>
-  );
-}
-
-function RoutesResultStatus({
-  error,
-  filteredCount,
-  hasActiveFilters,
-  isLoading,
-  onClearFilters,
-  onRetry,
-}: {
-  error: string | null;
-  filteredCount: number;
-  hasActiveFilters: boolean;
-  isLoading: boolean;
-  onClearFilters: () => void;
-  onRetry: () => void;
-}) {
-  const emptyState = getRoutesEmptyState(hasActiveFilters);
-
-  return (
-    <>
-      <View style={styles.resultsHeader}>
-        <Text style={styles.sectionTitle}>Senderos disponibles</Text>
-        <Text style={styles.resultsCount}>{filteredCount} rutas</Text>
-      </View>
-      {isLoading ? <TrailSkeleton variant="list" count={3} /> : null}
-      {error ? (
-        <StatusNotice
-          actionLabel="Reintentar"
-          message={error}
-          onAction={onRetry}
-          title="No se pudo cargar"
-          tone="error"
-        />
-      ) : null}
-      {!isLoading && !error && filteredCount === 0 ? (
-        <StatusNotice
-          actionLabel={emptyState.actionLabel}
-          message={emptyState.message}
-          onAction={emptyState.hasAction ? onClearFilters : undefined}
-          title={emptyState.title}
-          tone="info"
-        />
-      ) : null}
-    </>
-  );
-}
-
-const getRoutesEmptyState = (hasActiveFilters: boolean) => ({
-  actionLabel: hasActiveFilters ? "Limpiar filtros" : undefined,
-  hasAction: hasActiveFilters,
-  message: hasActiveFilters
-    ? "Proba con menos filtros o una busqueda mas amplia."
-    : "Cuando haya senderos disponibles, apareceran en esta lista.",
-  title: hasActiveFilters ? "Sin resultados" : "Sin senderos disponibles",
-});
-
-function ExploreRoutesFooter({
-  error,
-  filteredCount,
-  isLoading,
-  visibleCount,
-}: {
-  error: string | null;
-  filteredCount: number;
-  isLoading: boolean;
-  visibleCount: number;
-}) {
-  return (
-    <>
-      {visibleCount < filteredCount ? (
-        <Text style={styles.statusText}>Cargando mas rutas...</Text>
-      ) : null}
-      {!isLoading && !error ? <SafetyTipCard /> : null}
-    </>
-  );
-}
-
-function SafetyTipCard() {
-  return (
-    <Card tone="green">
-      <Text style={styles.cardTitle}>Tip de seguridad</Text>
-      <Text style={styles.cardText}>
-        Descarga el mapa antes de salir si la zona tiene poca senal.
-      </Text>
-    </Card>
-  );
-}
-
-function RouteCard({
-  trail,
-  image,
-  imageFailed,
-  isFavorite,
-  onPhotoStatus,
-}: {
+function RouteCard({ trail, image, imageFailed, isFavorite, onPhotoStatus, wide }: {
   trail: Trail;
   image: string;
   imageFailed: boolean;
   isFavorite: boolean;
   onPhotoStatus: (imageUrl: string, status: PhotoStatus) => void;
+  wide: boolean;
 }) {
-  const distance = trail.distance_km ? formatKilometers(trail.distance_km) : "Distancia a confirmar";
+  const distance = trail.distance_km == null ? "Distancia a confirmar" : formatKilometers(trail.distance_km);
+  const showPhoto = Boolean(image) && !imageFailed;
 
   return (
     <Pressable
       accessibilityLabel={`Ver detalle de ${trail.name}`}
+      accessibilityHint={`${trail.location}. ${trail.difficulty}. ${distance}.`}
       accessibilityRole="button"
-      style={({ pressed }) => [
-        styles.routeCard,
-        pressed && styles.pressed,
-      ]}
-      onPress={() =>
-        router.push({
-          pathname: "/trail-detail",
-          params: { id: String(trail.id) },
-        })
-      }
+      style={({ pressed }) => [styles.routeCard, wide && styles.routeCardWide, pressed && styles.pressed]}
+      onPress={() => router.push({ pathname: "/trail-detail", params: { id: String(trail.id) } })}
     >
       <ImageBackground
         fadeDuration={0}
-        imageStyle={styles.image}
         onError={() => onPhotoStatus(image, "failed")}
         onLoad={() => onPhotoStatus(image, "loaded")}
-        source={image && !imageFailed ? { uri: image } : undefined}
+        source={showPhoto ? { uri: image } : undefined}
         style={styles.imageBox}
       >
-        {(!image || imageFailed) && <Text style={{ color: colors.muted }}>Foto no disponible</Text>}
-        <View style={styles.badge}>
-          <Text style={styles.badgeText}>{trail.difficulty}</Text>
-        </View>
-        {isFavorite ? (
-          <View style={styles.favoriteBadge}>
-            <Ionicons name="star" size={15} color={colors.primary} />
+        {!showPhoto ? (
+          <View style={styles.photoFallback}>
+            <Ionicons aria-hidden accessible={false} name="image-outline" size={23} color={colors.muted} />
+            <Text style={styles.photoFallbackText}>Foto no disponible</Text>
           </View>
         ) : null}
+        <View style={styles.imageBadges}>
+          <View style={styles.badge}><Text style={styles.badgeText}>{trail.difficulty}</Text></View>
+          {isFavorite ? (
+            <View style={styles.favoriteBadge}>
+              <Ionicons aria-hidden accessible={false} name="star" size={16} color={colors.green} />
+            </View>
+          ) : null}
+        </View>
       </ImageBackground>
       <View style={styles.routeBody}>
-        <Text style={styles.routeTitle}>{trail.name}</Text>
-        <Text style={styles.routePlace}>{trail.location}</Text>
-        <Text style={styles.routeMeta}>
-          {distance} - {trail.duration || "Duracion a confirmar"}
-        </Text>
+        <View style={styles.routeHeading}>
+          <View style={styles.routeCopy}>
+            <Text style={styles.routeTitle}>{trail.name}</Text>
+            <Text style={styles.routePlace}>{trail.location}</Text>
+          </View>
+          <Ionicons aria-hidden accessible={false} name="chevron-forward" size={19} color={colors.green} />
+        </View>
+        <View style={styles.routeMeta}>
+          <View style={styles.metric}>
+            <Ionicons aria-hidden accessible={false} name="walk-outline" size={16} color={colors.green} />
+            <Text style={styles.metricText}>{distance}</Text>
+          </View>
+          <View style={styles.metric}>
+            <Ionicons aria-hidden accessible={false} name="time-outline" size={16} color={colors.green} />
+            <Text style={styles.metricText}>{trail.duration || "Duración a confirmar"}</Text>
+          </View>
+        </View>
       </View>
     </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
-  listContent: {
-    paddingBottom: 118,
+  listContent: { paddingBottom: 20, paddingTop: 12 },
+  header: { gap: 18, marginBottom: 12 },
+  intro: { gap: 7, paddingBottom: 2 },
+  eyebrowRow: { alignItems: "center", flexDirection: "row", gap: 7 },
+  eyebrow: { color: colors.green, fontFamily: typography.bold, fontSize: 12, letterSpacing: 1, textTransform: "uppercase" },
+  title: { color: colors.ink, fontFamily: typography.extraBold, fontSize: 33, letterSpacing: -0.9, lineHeight: 36 },
+  titleWide: { fontSize: 46, letterSpacing: -1.5, lineHeight: 51 },
+  subtitle: { color: colors.muted, fontFamily: typography.regular, fontSize: 15, lineHeight: 22 },
+  shortcuts: { flexDirection: "row", flexWrap: "wrap", gap: 8 },
+  shortcut: {
+    alignItems: "center", backgroundColor: colors.surface, borderColor: colors.line, borderRadius: 13,
+    borderWidth: 1, flexBasis: 150, flexDirection: "row", flexGrow: 1, gap: 8, minHeight: 46,
+    paddingHorizontal: 11, paddingVertical: 8,
   },
-  searchBox: {
-    alignItems: "center",
-    backgroundColor: colors.surface,
-    borderColor: colors.border,
-    borderRadius: 16,
-    borderWidth: 1,
-    flexDirection: "row",
-    gap: 8,
-    minHeight: 48,
-    marginBottom: 14,
-    paddingHorizontal: 12,
-  },
-  searchInput: {
-    fontFamily: typography.regular,
-    color: colors.ink,
-    flex: 1,
-    fontSize: 14,
-    minWidth: 0,
-    paddingVertical: 8,
-  },
-  clearSearchButton: {
-    alignItems: "center",
-    backgroundColor: colors.primarySoft,
-    borderRadius: 999,
-    height: 28,
-    justifyContent: "center",
-    width: 28,
-  },
-  filterLabel: {
-    fontFamily: typography.medium,
-    color: colors.ink,
-    fontSize: 13,
-    fontWeight: "500",
-    marginBottom: 8,
-  },
-  filterRow: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    gap: 8,
-    marginBottom: 14,
-  },
-  filter: {
-    fontFamily: typography.medium,
-    backgroundColor: colors.surface,
-    borderColor: colors.border,
-    borderRadius: 999,
-    borderWidth: 1,
-    color: colors.muted,
-    fontSize: 13,
-    fontWeight: "500",
-    paddingHorizontal: 14,
-    paddingVertical: 8,
-  },
-  filterActive: {
-    fontFamily: typography.medium,
-    backgroundColor: colors.primary,
-    borderColor: colors.primary,
-    borderRadius: 999,
-    borderWidth: 1,
-    color: colors.surface,
-    fontSize: 13,
-    fontWeight: "500",
-    paddingHorizontal: 14,
-    paddingVertical: 8,
-  },
-  clearFiltersButton: {
-    alignItems: "center",
-    alignSelf: "flex-start",
-    backgroundColor: colors.primarySoft,
-    borderRadius: 999,
-    flexDirection: "row",
-    gap: 6,
-    marginBottom: 16,
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-  },
-  clearFiltersText: {
-    color: colors.greenDark,
-    fontSize: 13,
-    fontWeight: "900",
-  },
-  resultsHeader: {
-    alignItems: "center",
-    flexDirection: "row",
-    gap: 10,
-    justifyContent: "space-between",
-    marginBottom: 12,
-  },
-  sectionTitle: {
-    color: colors.ink,
-    flex: 1,
-    fontSize: 18,
-    fontWeight: "800",
-  },
-  resultsCount: {
-    color: colors.muted,
-    flexShrink: 0,
-    fontSize: 12,
-    fontWeight: "900",
-  },
-  statusText: {
-    color: colors.muted,
-    fontSize: 14,
-    fontWeight: "700",
-    marginBottom: 14,
-  },
+  recommendation: { backgroundColor: colors.soft },
+  shortcutText: { color: colors.green, flex: 1, fontFamily: typography.bold, fontSize: 14, lineHeight: 19 },
+  results: { borderTopColor: colors.line, borderTopWidth: 1, gap: 10, paddingTop: 14 },
+  resultsHeading: { alignItems: "center", flexDirection: "row", flexWrap: "wrap", gap: 8, justifyContent: "space-between" },
+  sectionTitle: { color: colors.ink, fontFamily: typography.extraBold, fontSize: 21, lineHeight: 27 },
+  resultsCount: { color: colors.muted, fontFamily: typography.medium, fontSize: 14, lineHeight: 20 },
+  cardRow: { justifyContent: "space-between" },
   routeCard: {
-    backgroundColor: colors.surface,
-    borderColor: colors.border,
-    borderRadius: 22,
-    borderWidth: 1,
-    marginBottom: 14,
-    overflow: "hidden",
+    backgroundColor: colors.surface, borderColor: colors.line, borderRadius: 19,
+    borderWidth: 1, marginBottom: 14, overflow: "hidden",
   },
-  routeCardHidden: {
-    height: 0,
-    marginBottom: 0,
-    opacity: 0,
-  },
-  pressed: {
-    opacity: 0.72,
-  },
-  imageBox: {
-    height: 126,
-    padding: 12,
-  },
-  image: {
-    borderTopLeftRadius: 22,
-    borderTopRightRadius: 22,
-  },
-  badge: {
-    alignSelf: "flex-start",
-    backgroundColor: "rgba(255,255,255,0.9)",
-    borderRadius: 999,
-    paddingHorizontal: 10,
-    paddingVertical: 6,
-  },
-  badgeText: {
-    color: colors.primary,
-    fontSize: 12,
-    fontWeight: "800",
-  },
+  routeCardWide: { width: "49.2%" },
+  pressed: { opacity: 0.78 },
+  imageBox: { backgroundColor: colors.soft, height: 148 },
+  imageBadges: { alignItems: "flex-start", flexDirection: "row", gap: 6, justifyContent: "space-between", padding: 12 },
+  photoFallback: { ...StyleSheet.absoluteFill, alignItems: "center", gap: 4, justifyContent: "center", paddingTop: 23 },
+  photoFallbackText: { color: colors.muted, fontFamily: typography.regular, fontSize: 13, lineHeight: 18 },
+  badge: { backgroundColor: colors.white, borderRadius: 999, paddingHorizontal: 10, paddingVertical: 6, flexShrink: 1 },
+  badgeText: { color: colors.green, fontFamily: typography.bold, fontSize: 12, lineHeight: 17 },
   favoriteBadge: {
-    alignItems: "center",
-    alignSelf: "flex-end",
-    backgroundColor: colors.white,
-    borderRadius: 999,
-    height: 32,
-    justifyContent: "center",
-    marginTop: -30,
-    width: 32,
+    alignItems: "center", backgroundColor: colors.mint, borderRadius: 999,
+    height: 31, justifyContent: "center", width: 31,
   },
-  routeBody: {
-    gap: 3,
-    padding: 14,
+  routeBody: { flex: 1, gap: 12, justifyContent: "space-between", padding: 14 },
+  routeHeading: { alignItems: "center", flexDirection: "row", gap: 10 },
+  routeCopy: { flex: 1, gap: 4, minWidth: 0 },
+  routeTitle: { color: colors.ink, fontFamily: typography.extraBold, fontSize: 18, lineHeight: 23 },
+  routePlace: { color: colors.muted, fontFamily: typography.regular, fontSize: 14, lineHeight: 19 },
+  routeMeta: { flexDirection: "row", flexWrap: "wrap", gap: 6 },
+  metric: {
+    alignItems: "center", backgroundColor: colors.soft, borderRadius: 8, flexDirection: "row",
+    gap: 5, maxWidth: "100%", paddingHorizontal: 8, paddingVertical: 5,
   },
-  routeTitle: {
-    color: colors.ink,
-    fontSize: 17,
-    fontWeight: "800",
+  metricText: { color: colors.green, flexShrink: 1, fontFamily: typography.medium, fontSize: 13, lineHeight: 18 },
+  footer: { gap: 16, paddingTop: 4 },
+  moreButton: {
+    alignItems: "center", alignSelf: "center", backgroundColor: colors.surface, borderColor: colors.border,
+    borderRadius: 13, borderWidth: 1, flexDirection: "row", gap: 8, justifyContent: "center", minHeight: 46,
+    paddingHorizontal: 16,
   },
-  routePlace: {
-    color: colors.muted,
-    fontSize: 13,
-    fontWeight: "500",
-  },
-  routeMeta: {
-    color: colors.primary,
-    fontSize: 13,
-    fontWeight: "800",
-    marginTop: 6,
-  },
-  cardTitle: {
-    color: colors.ink,
-    fontSize: 16,
-    fontWeight: "800",
-  },
-  cardText: {
-    color: colors.muted,
-    fontSize: 14,
-    lineHeight: 20,
-  },
+  moreLabel: { color: colors.green, fontFamily: typography.bold, fontSize: 15, lineHeight: 21 },
 });

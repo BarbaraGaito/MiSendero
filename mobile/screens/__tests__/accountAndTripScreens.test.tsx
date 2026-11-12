@@ -44,23 +44,25 @@ beforeEach(() => {
 });
 test("login validates required fields, preserves a failed attempt and authenticates the entered account", async () => {
   const tree = await mount(Login);
-  await expect(press(tree, "Iniciar sesion")).rejects.toThrow("disabled"); expect(api.loginUser).not.toHaveBeenCalled();
-  await fill(tree, "Email", user.email); await fill(tree, "Contrasena", "password-test");
-  await press(tree, "Mostrar contrasena"); expect(tree.root.findAllByType(TextInput).find((node: any) => node.props.accessibilityLabel === "Contrasena").props.secureTextEntry).toBe(false);
-  (api.loginUser as jest.Mock).mockRejectedValueOnce(new Error("Credenciales inválidas")); await press(tree, "Iniciar sesion"); expect(text(tree)).toContain("Credenciales inválidas");
-  await press(tree, "Iniciar sesion"); expect(api.loginUser).toHaveBeenLastCalledWith(user.email, "password-test"); expect(auth.saveAuthSession).toHaveBeenCalledWith(session, { deletionRetryLogin: true }); expect(router.replace).toHaveBeenCalledWith("/inicio");
+  await press(tree, "Iniciar sesión"); expect(text(tree)).toContain("Completá todos los campos"); expect(api.loginUser).not.toHaveBeenCalled();
+  await fill(tree, "Correo electrónico", user.email); await fill(tree, "Contraseña", "password-test");
+  expect(text(tree)).not.toContain("Completá todos los campos");
+  await press(tree, "Mostrar contraseña"); expect(tree.root.findAllByType(TextInput).find((node: any) => node.props.accessibilityLabel === "Contraseña").props.secureTextEntry).toBe(false);
+  (api.loginUser as jest.Mock).mockRejectedValueOnce(new Error("Credenciales inválidas")); await press(tree, "Iniciar sesión"); expect(text(tree)).toContain("Credenciales inválidas");
+  await press(tree, "Iniciar sesión"); expect(api.loginUser).toHaveBeenLastCalledWith(user.email, "password-test"); expect(auth.saveAuthSession).toHaveBeenCalledWith(session, { deletionRetryLogin: true }); expect(router.replace).toHaveBeenCalledWith("/inicio");
 });
 test("registration requires terms acceptance independently of physiological or analytics choices", async () => {
   const tree = await mount(Login); await press(tree, "Crear una cuenta nueva");
-  await fill(tree, "Nombre", "Ana"); await fill(tree, "Email", user.email); await fill(tree, "Contrasena", "password-test");
-  await expect(press(tree, "Crear cuenta")).rejects.toThrow("disabled");
+  await fill(tree, "Nombre", "Ana"); await fill(tree, "Correo electrónico", user.email); await fill(tree, "Contraseña", "password-test");
+  await press(tree, "Crear cuenta");
+  expect(text(tree)).toContain("Aceptá los términos y condiciones"); expect(api.registerUser).not.toHaveBeenCalled();
   const checkbox = tree.root.findAll((node: any) => node.props.accessibilityRole === "checkbox" && typeof node.props.onPress === "function")[0];
   await act(async () => checkbox.props.onPress()); await press(tree, "Crear cuenta");
   expect(api.registerUser).toHaveBeenCalledWith("Ana", user.email, "password-test", "2026-10-16"); expect(router.replace).toHaveBeenCalledWith("/onboarding-experiencia");
 });
 test("a fresh login for pending deletion returns to the profile instead of resuming uploads", async () => {
   (isAccountDeletionPending as jest.Mock).mockResolvedValue(true); const tree = await mount(Login);
-  await fill(tree, "Email", user.email); await fill(tree, "Contrasena", "password-test"); await press(tree, "Iniciar sesion"); expect(router.replace).toHaveBeenCalledWith("/perfil");
+  await fill(tree, "Correo electrónico", user.email); await fill(tree, "Contraseña", "password-test"); await press(tree, "Iniciar sesión"); expect(router.replace).toHaveBeenCalledWith("/perfil");
 });
 test("emergency contact can be edited offline and is saved with all entered values", async () => {
   const tree = await mount(Contact); expect(text(tree)).toContain("localmente");

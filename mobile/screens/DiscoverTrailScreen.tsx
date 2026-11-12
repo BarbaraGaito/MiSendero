@@ -1,7 +1,6 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, type ComponentRef } from "react";
 import { userMessage } from "../../services/userMessages";
 import { ActivityIndicator, KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
-import type { ScrollViewInstance } from "react-native";
 import { router, useFocusEffect } from "expo-router";
 import { useNetworkState } from "expo-network";
 import { Card, PrimaryButton, ScreenShell, ScreenTitle, colors, typography } from "../components/MiSenderoUI";
@@ -45,7 +44,7 @@ export default function DiscoverTrailScreen() {
   }, [offline]);
   const mounted = useRef(true);
   const inFlight = useRef(false);
-  const scroll = useRef<ScrollViewInstance>(null);
+  const scroll = useRef<ComponentRef<typeof ScrollView>>(null);
   useEffect(() => { mounted.current = true; return () => { mounted.current = false; }; }, []);
   useFocusEffect(useCallback(() => {
     let active = true;

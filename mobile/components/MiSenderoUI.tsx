@@ -68,15 +68,17 @@ export function ScreenShell({
   children,
   footer,
   style,
+  maxContentWidth,
 }: {
   children: ReactNode;
   footer?: ReactNode;
   style?: ViewStyle;
+  maxContentWidth?: number;
 }) {
   return (
     <SafeAreaView edges={["top", "bottom"]} style={[styles.shell, style]}>
       <OfflineConnectionBanner />
-      <View style={styles.content}>{children}</View>
+      <View style={[styles.content, maxContentWidth ? { maxWidth: maxContentWidth } : null]}>{children}</View>
       {footer ? <View style={styles.footerShell}>{footer}</View> : null}
     </SafeAreaView>
   );
@@ -86,13 +88,16 @@ export function AppScreen({
   children,
   activeTab,
   withBottomNav = true,
+  maxContentWidth,
 }: {
   children: ReactNode;
   activeTab?: BottomTab;
   withBottomNav?: boolean;
+  maxContentWidth?: number;
 }) {
   return (
     <ScreenShell
+      maxContentWidth={maxContentWidth}
       footer={
         withBottomNav && activeTab ? (
           <BottomNav active={activeTab} />
@@ -508,7 +513,7 @@ export function StatusNotice({
         {isLoading ? (
           <ActivityIndicator color={iconColor} size="small" />
         ) : (
-          <Ionicons name={iconName} size={21} color={iconColor} />
+          <Ionicons aria-hidden accessible={false} name={iconName} size={21} color={iconColor} />
         )}
       </View>
       <View style={styles.statusBody}>
@@ -923,7 +928,7 @@ statusNotice: {
   borderRadius: 18,
   borderWidth: 1,
   flexDirection: "row",
-  gap: 10,
+  gap: 12,
   marginBottom: 14,
   padding: 14,
 },
@@ -955,6 +960,7 @@ statusIcon: {
 
 statusBody: {
   flex: 1,
+  gap: 5,
   minWidth: 0,
 },
 
@@ -962,7 +968,7 @@ statusTitle: {
   color: colors.ink,
   fontSize: 14,
   fontWeight: "900",
-  marginBottom: 3,
+  lineHeight: 20,
 },
 
 statusMessage: {
@@ -974,7 +980,8 @@ statusMessage: {
 
 statusAction: {
   alignSelf: "flex-start",
-  marginTop: 10,
+  justifyContent: "center",
+  minHeight: 40,
 },
 
 statusActionText: {

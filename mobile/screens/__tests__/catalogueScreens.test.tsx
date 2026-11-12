@@ -129,19 +129,26 @@ test("trail detail shows its content skeleton until the selected trail loads", a
   expect(text(tree)).toContain(trail.name);
 });
 
-test("advanced filters remain effective when collapsed and can be cleared", async () => {
+test("catalog filters can be removed when collapsed and combined with favorites", async () => {
   const tree = await mount(Explore);
-  expect(text(tree)).not.toContain("0-5 km");
+  expect(text(tree)).not.toContain("Hasta 5 km");
   await press(tree, "Filtrar senderos");
   await press(tree, "Alta");
+  await press(tree, "Más de 10 km");
   expect(text(tree)).toContain("Ruta exigente");
   expect(text(tree)).not.toContain(trail.name);
-  await press(tree, "Filtrar senderos");
-  expect(text(tree)).toContain("Alta");
-  expect(text(tree)).toContain("Ruta exigente");
-  await press(tree, "Filtrar senderos");
-  await press(tree, "Limpiar filtros");
+  await press(tree, "Ver resultados");
+  expect(text(tree)).toContain("Dificultad: Alta");
+  expect(text(tree)).toContain("1 resultado");
+  await press(tree, "Favoritos");
+  expect(text(tree)).toContain("Sin resultados");
+  await press(tree, "Quitar filtro: Más de 10 km");
+  expect(text(tree)).toContain("Sin resultados");
+  await press(tree, "Quitar filtro: Dificultad: Alta");
   expect(text(tree)).toContain(trail.name);
+  expect(text(tree)).not.toContain("Ruta exigente");
+  await press(tree, "Favoritos");
+  expect(text(tree)).toContain("Ruta exigente");
 });
 
 test("trail details disclose long content without hiding source precautions or weather risk", async () => {
@@ -196,7 +203,7 @@ test("a broken first-page photo is demoted behind the entire catalog before pagi
   const broken = tree.root.findAllByType(ImageBackground).find((node: any) => node.props.source?.uri === catalog[0].image_url)!;
   await act(async () => broken.props.onError());
   expect(ids()).toEqual([2, 3, 4, 5, 6, 7]);
-  await act(async () => tree.root.findByType(FlatList).props.onEndReached());
+  await press(tree, "Ver más senderos");
   expect(ids()).toEqual([2, 3, 4, 5, 6, 7, 8, 1]);
 });
 test("activity cards distinguish pending, interrupted and completed outings and offer the local history", async () => {

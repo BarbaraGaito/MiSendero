@@ -1,9 +1,11 @@
 import { GLView, ExpoWebGLRenderingContext } from "expo-gl";
+import { Ionicons } from "@expo/vector-icons";
 import { createTerrainRenderer } from "./terrainGraphics";
 import { createTerrainImagery } from "./terrainImagery";
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from "react";
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 import { MapInformationSheet } from "./MapInformationSheet";
+import { colors } from "./MiSenderoUI";
 import * as THREE from "three";
 import { Coordinate } from "../../services/geoUtils";
 import { updateTerrainCamera, type NavigationView } from "./terrainCamera";
@@ -1077,6 +1079,9 @@ export const Terrain3DScene = forwardRef<Terrain3DSceneHandle, Terrain3DScenePro
   );
 
   const groundLabels = [...new Set(markers.map(marker => getReportedGroundKind(marker.issueSummary ?? "")?.label).filter(Boolean))];
+  const imageryLabel = hasSatelliteImage ? "Imagen satelital de referencia"
+    : satelliteTextureEnabled && satelliteTexture.status === "unavailable" ? "Imagen satelital no disponible · Color por altitud"
+      : "Color por altitud";
   return <View style={styles.canvas} testID="terrain-scene-viewport" onLayout={event => setViewport(event.nativeEvent.layout)}>
     <GLView style={styles.canvas} onContextCreate={onContextCreate} />
     <View pointerEvents="none" style={StyleSheet.absoluteFill}>
@@ -1095,17 +1100,31 @@ export const Terrain3DScene = forwardRef<Terrain3DSceneHandle, Terrain3DScenePro
     <MapInformationSheet visible={informationVisible} attribution={mapAttribution}
       onClose={() => onCloseInformation?.()} onOpenAttributions={onOpenAttributions}>
       <View style={styles.readout}>
-        <View style={styles.readoutRow}>
-          {readout ? <View>
-            <Text style={styles.readoutText}>{readout.scaleMeters >= 1000 ? `${readout.scaleMeters / 1000} km` : `${readout.scaleMeters} m`} · en el centro</Text>
-            <View style={[styles.scaleBar, { width: Math.max(1, viewport.width * readout.scaleFraction) }]} />
-          </View> : <Text style={styles.readoutText}>Relieve a escala real</Text>}
-          {readout && <View style={styles.readoutRow}><View style={{ transform: [{ rotate: `${readout.northDegrees}deg` }] }}><Text style={styles.northArrow}>↑</Text></View><Text style={styles.northArrow}> N</Text></View>}
+        <View style={styles.readoutItem}>
+          <Ionicons aria-hidden accessible={false} name="map-outline" size={19} color={colors.green} />
+          <View style={styles.readoutCopy}>
+            <View style={styles.readoutScale}>
+              {readout ? <View style={styles.readoutCopy}>
+                <Text style={styles.readoutText}>{readout.scaleMeters >= 1000 ? `${readout.scaleMeters / 1000} km` : `${readout.scaleMeters} m`} · en el centro</Text>
+                <View style={[styles.scaleBar, { width: Math.max(1, viewport.width * readout.scaleFraction) }]} />
+              </View> : <Text style={styles.readoutText}>Relieve a escala real</Text>}
+              {readout && <View style={styles.readoutScale} accessibilityLabel="Norte">
+                <View style={{ transform: [{ rotate: `${readout.northDegrees}deg` }] }}><Text style={styles.northArrow}>↑</Text></View>
+                <Text style={styles.northArrow}>N</Text>
+              </View>}
+            </View>
+            <Text style={styles.readoutText}>Altura ×1 · {Math.round(terrain.minElevationMeters)}–{Math.round(terrain.maxElevationMeters)} m s. n. m.</Text>
+            <Text style={styles.readoutSubtle}>{imageryLabel} · detalle ≈ {Math.round(Math.max(90, terrain.grid.cellSizeMeters))} m{showContours ? ` · curvas ${getTerrainContourInterval(terrain)} m` : ""}</Text>
+          </View>
         </View>
-        <Text style={styles.readoutText}>Altura ×1 · {Math.round(terrain.minElevationMeters)}–{Math.round(terrain.maxElevationMeters)} m s. n. m.</Text>
-        <Text style={styles.readoutSubtle}>{hasSatelliteImage ? "Imagen satelital de referencia" : satelliteTextureEnabled && satelliteTexture.status === "unavailable" ? "Imagen satelital no disponible · Color por altitud" : "Color por altitud"} · detalle ≈ {Math.round(Math.max(90, terrain.grid.cellSizeMeters))} m{showContours ? ` · curvas ${getTerrainContourInterval(terrain)} m` : ""}</Text>
-        <Text style={styles.readoutText}>{weather ? `Pronóstico: ${weather.condition} · ${weather.temperatureC} °C${weather.windKmh != null ? ` · viento ${weather.windKmh} km/h` : ""}${weather.observedAt ? ` · ${new Date(weather.observedAt).toLocaleTimeString("es-AR", { hour: "2-digit", minute: "2-digit" })}` : ""}` : "Clima sin datos"}</Text>
-        <Text style={styles.readoutSubtle}>{groundLabels.length ? `Suelo reportado: ${groundLabels.join(" · ")} · ubicación aproximada` : "Suelo: sin reportes recientes"}</Text>
+        <View style={styles.readoutItem}>
+          <Ionicons aria-hidden accessible={false} name="partly-sunny-outline" size={19} color={colors.green} />
+          <Text style={[styles.readoutCopy, styles.readoutText]}>{weather ? `Pronóstico: ${weather.condition} · ${weather.temperatureC} °C${weather.windKmh != null ? ` · viento ${weather.windKmh} km/h` : ""}${weather.observedAt ? ` · ${new Date(weather.observedAt).toLocaleTimeString("es-AR", { hour: "2-digit", minute: "2-digit" })}` : ""}` : "Clima sin datos"}</Text>
+        </View>
+        <View style={styles.readoutItem}>
+          <Ionicons aria-hidden accessible={false} name="walk-outline" size={19} color={colors.green} />
+          <Text style={[styles.readoutCopy, styles.readoutSubtle]}>{groundLabels.length ? `Suelo reportado: ${groundLabels.join(" · ")} · ubicación aproximada` : "Suelo: sin reportes recientes"}</Text>
+        </View>
       </View>
     </MapInformationSheet>
   </View>;
@@ -1121,8 +1140,10 @@ const styles = StyleSheet.create({
   previewLabel: { position: "absolute", left: 16, maxWidth: "72%", backgroundColor: "rgba(255,255,255,0.92)",
     borderRadius: 16, paddingHorizontal: 12, paddingVertical: 7 },
   previewLabelText: { color: "#133F30", fontSize: 12, fontWeight: "700" },
-  readout: { backgroundColor: "#F2F6F2", borderRadius: 14, padding: 14, gap: 10 },
-  readoutRow: { flexDirection: "row", alignItems: "center", justifyContent: "space-between" },
+  readout: { backgroundColor: "#F2F6F2", borderRadius: 14, padding: 12, gap: 6 },
+  readoutItem: { flexDirection: "row", alignItems: "flex-start", gap: 8 },
+  readoutCopy: { flex: 1, minWidth: 0 },
+  readoutScale: { flexDirection: "row", alignItems: "center", gap: 6 },
   readoutText: { color: "#23372D", fontSize: 14, lineHeight: 21, fontWeight: "700" },
   readoutSubtle: { color: "#46554C", fontSize: 13, lineHeight: 20 },
   scaleBar: { height: 6, borderBottomWidth: 2, borderLeftWidth: 2, borderRightWidth: 2, borderColor: "#23372D", marginTop: 2 },

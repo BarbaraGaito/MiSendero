@@ -18,6 +18,7 @@ import {
   colors,
   trailImages,
 } from "../components/MiSenderoUI";
+import { surfaceShadows } from "../components/surfaceShadows";
 import { getTrails } from "../../services/trailRepository";
 import { formatKilometers } from "../../services/geoUtils";
 import { getOfflineMaps } from "../../services/offlineMaps";
@@ -197,6 +198,7 @@ const styles = StyleSheet.create({
     marginBottom: 18,
   },
   searchBox: {
+    ...surfaceShadows.card,
     alignItems: "center",
     backgroundColor: colors.white,
     borderRadius: 18,
@@ -204,9 +206,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     height: 54,
     paddingHorizontal: 14,
-    shadowColor: "#000",
-    shadowOpacity: 0.05,
-    shadowRadius: 10,
   },
   input: {
     color: colors.ink,

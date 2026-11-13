@@ -3,6 +3,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { Modal, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { colors, typography } from "./MiSenderoUI";
+import { surfaceShadows } from "./surfaceShadows";
 
 type MapInformationSheetProps = {
   visible: boolean;
@@ -44,7 +45,7 @@ export function MapInformationSheet({ visible, attribution, onClose, onOpenAttri
 
 const styles = StyleSheet.create({
   backdrop: { flex: 1, justifyContent: "flex-end", backgroundColor: "rgba(20,36,28,0.38)" },
-  sheet: { maxHeight: "80%", backgroundColor: colors.white, borderTopLeftRadius: 24, borderTopRightRadius: 24 },
+  sheet: { ...surfaceShadows.floating, maxHeight: "80%", backgroundColor: colors.white, borderTopLeftRadius: 24, borderTopRightRadius: 24 },
   header: { flexDirection: "row", alignItems: "center", paddingLeft: 24, paddingRight: 12, paddingTop: 16, paddingBottom: 8 },
   title: { flex: 1, fontFamily: typography.extraBold, fontSize: 21, color: colors.ink },
   close: { width: 44, height: 44, alignItems: "center", justifyContent: "center", borderRadius: 22 },

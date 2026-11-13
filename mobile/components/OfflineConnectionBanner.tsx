@@ -2,6 +2,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { Pressable, StyleSheet, Text, type StyleProp, type ViewStyle } from "react-native";
 import { useIsOffline } from "../../services/ConnectivityProvider";
+import { surfaceShadows } from "./surfaceShadows";
 
 export function OfflineConnectionBanner({ style }: { style?: StyleProp<ViewStyle> }) {
   const offline = useIsOffline();
@@ -23,7 +24,8 @@ export function OfflineConnectionBanner({ style }: { style?: StyleProp<ViewStyle
 
 const styles = StyleSheet.create({
   banner: {
-    backgroundColor: "#FFF1D3", borderColor: "#E8D09C", borderWidth: 1,
+    ...surfaceShadows.card,
+    backgroundColor: "#FFF1D3",
     borderRadius: 14, flexDirection: "row", alignItems: "center", gap: 8,
     minHeight: 48, paddingHorizontal: 12, paddingVertical: 10,
     marginHorizontal: 20, marginBottom: 12,

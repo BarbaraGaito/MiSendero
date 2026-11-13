@@ -29,6 +29,7 @@ import {
 } from "../../types";
 import { TrailMap } from "../components/TrailMap";
 import { MiSenderoLogo } from "../components/MiSenderoLogo";
+import { surfaceShadows } from "../components/surfaceShadows";
 import { useDeviceLocation } from "../hooks/useDeviceLocation";
 import { DeviceLocation } from "../../services/deviceLocation";
 import {
@@ -504,14 +505,14 @@ export default function Screen04RouteMap() {
         </View>
         {showUpcomingReport && upcomingReport ? <View accessibilityLiveRegion="polite" onLayout={event => setProximityHeight(event.nativeEvent.layout.height)}
           style={[styles.proximityBanner, { top: proximityTop }]}>
-          <View style={styles.proximityHeader}>
-            <Ionicons name="warning" size={22} color={upcomingReport.report.blocks_path ? colors.danger : colors.orange} />
-            <View style={{ flex: 1 }}>
+          <View style={styles.proximityContent}>
+            <Ionicons aria-hidden accessible={false} name="warning" size={22} color={upcomingReport.report.blocks_path ? colors.danger : colors.orange} />
+            <View style={styles.proximityCopy}>
               <Text accessibilityRole="alert" style={styles.proximityTitle}>{upcomingReport.report.blocks_path ? "Aviso de paso bloqueado" : "Aviso en tu recorrido"}</Text>
               <Text style={styles.proximityBody}>{upcomingReport.distanceMeters === 0 ? "Entrando en la zona reportada" : `A unos ${formatDistance(upcomingReport.distanceMeters)} por el sendero`} · ubicación aproximada</Text>
+              <Text style={styles.proximityBody}>{upcomingReport.report.issue_summary}</Text>
             </View>
           </View>
-          <Text style={styles.proximityBody}>{upcomingReport.report.issue_summary}</Text>
           <View style={styles.proximityActions}>
             <Pressable accessibilityRole="button" onPress={() => setFocusedReportId(upcomingReport.report.id)} style={styles.proximityButton}><Text style={styles.proximityButtonText}>Ver aviso</Text></Pressable>
             <Pressable accessibilityRole="button" accessibilityLabel="Ocultar aviso cercano" onPress={() => setDismissedReportKey(upcomingKey)} style={styles.proximityButton}><Text style={styles.proximityButtonText}>Ocultar</Text></Pressable>
@@ -900,16 +901,11 @@ export default function Screen04RouteMap() {
           onInteractionChange={setIsMapInteracting}
         />
 
-        <InfoCard style={styles.progressCard}>
-          <View style={styles.progressText}>
-            <Text style={styles.cardTitle}>Ruta lista</Text>
-            <Text style={styles.cardText}>
-              Usa Terreno para ver curvas de nivel o 3D para revisar la ruta con relieve.
-            </Text>
-          </View>
-          <View style={styles.downloadBadge}>
-            <Ionicons name="map-outline" size={24} color={colors.green} />
-          </View>
+        <InfoCard style={styles.progressCard} icon="map-outline">
+          <Text style={styles.cardTitle}>Ruta lista</Text>
+          <Text style={styles.cardText}>
+            Usa Terreno para ver curvas de nivel o 3D para revisar la ruta con relieve.
+          </Text>
         </InfoCard>
 
         {isWifiConnected ? (
@@ -1277,11 +1273,11 @@ function WeatherMetric({
 }) {
   return (
     <View style={styles.weatherMetric}>
-      <Ionicons name={icon} size={18} color={colors.green} />
-      <Text style={styles.weatherLabel}>{label}</Text>
-      <Text style={styles.weatherValue}>
-        {value}
-      </Text>
+      <Ionicons aria-hidden accessible={false} name={icon} size={18} color={colors.green} />
+      <View style={styles.weatherMetricCopy}>
+        <Text style={styles.weatherLabel}>{label}</Text>
+        <Text style={styles.weatherValue}>{value}</Text>
+      </View>
     </View>
   );
 }
@@ -1296,9 +1292,10 @@ function WearableChip({ label, value }: { label: string; value: string }) {
 }
 
 const styles = StyleSheet.create({
-  proximityBanner: { position: "absolute", left: 14, right: 14, borderRadius: 17, padding: 12, gap: 6,
-    backgroundColor: "#FFF7E5", borderColor: "#E5C37E", borderWidth: 1, zIndex: 15 },
-  proximityHeader: { flexDirection: "row", alignItems: "center", gap: 8 },
+  proximityBanner: { ...surfaceShadows.floating, position: "absolute", left: 14, right: 14, borderRadius: 17, padding: 12, gap: 6,
+    backgroundColor: "#FFF7E5", zIndex: 15 },
+  proximityContent: { flexDirection: "row", alignItems: "flex-start", gap: 8 },
+  proximityCopy: { flex: 1, minWidth: 0, gap: 2 },
   proximityTitle: { fontSize: 14, fontWeight: "800", color: colors.ink },
   proximityBody: { fontSize: 12, lineHeight: 17, color: colors.ink },
   proximityActions: { flexDirection: "row", gap: 8 },
@@ -1318,6 +1315,7 @@ const styles = StyleSheet.create({
     zIndex: 20,
   },
   activeIconButton: {
+    ...surfaceShadows.floating,
     alignItems: "center",
     backgroundColor: "rgba(255,255,255,0.96)",
     borderRadius: 18,
@@ -1326,6 +1324,7 @@ const styles = StyleSheet.create({
     width: 42,
   },
   activeTitleBox: {
+    ...surfaceShadows.floating,
     alignItems: "center",
     backgroundColor: "rgba(255,255,255,0.96)",
     borderRadius: 18,
@@ -1348,6 +1347,7 @@ const styles = StyleSheet.create({
     marginTop: 1,
   },
   activeStatus: {
+    ...surfaceShadows.floating,
     backgroundColor: "rgba(255,255,255,0.94)",
     borderRadius: 16,
     left: 14,
@@ -1358,11 +1358,10 @@ const styles = StyleSheet.create({
     zIndex: 20,
   },
   deviationBanner: {
+    ...surfaceShadows.floating,
     alignItems: "center",
     backgroundColor: "rgba(255,244,242,0.97)",
-    borderColor: "rgba(216,76,63,0.24)",
     borderRadius: 18,
-    borderWidth: 1,
     flexDirection: "row",
     gap: 10,
     left: 14,
@@ -1398,10 +1397,9 @@ const styles = StyleSheet.create({
     fontWeight: "900",
   },
   testingBanner: {
+    ...surfaceShadows.floating,
     backgroundColor: "rgba(223,243,231,0.97)",
-    borderColor: "rgba(13,122,69,0.24)",
     borderRadius: 16,
-    borderWidth: 1,
     left: 14,
     paddingHorizontal: 12,
     paddingVertical: 9,
@@ -1446,9 +1444,7 @@ const styles = StyleSheet.create({
   testingScenarioButton: {
     alignItems: "center",
     backgroundColor: "rgba(255,255,255,0.78)",
-    borderColor: colors.border,
     borderRadius: 12,
-    borderWidth: 1,
     flexBasis: "22%",
     flexDirection: "row",
     flexGrow: 1,
@@ -1460,7 +1456,6 @@ const styles = StyleSheet.create({
   },
   testingScenarioButtonSelected: {
     backgroundColor: colors.green,
-    borderColor: colors.green,
   },
   testingScenarioButtonDisabled: {
     opacity: 0.68,
@@ -1481,9 +1476,7 @@ const styles = StyleSheet.create({
   },
   wearableAnalysisPanel: {
     backgroundColor: "rgba(255,255,255,0.96)",
-    borderColor: colors.border,
     borderRadius: 16,
-    borderWidth: 1,
     marginBottom: 10,
     paddingHorizontal: 12,
     paddingVertical: 10,
@@ -1502,11 +1495,10 @@ const styles = StyleSheet.create({
     width: 36,
   },
   wearableBanner: {
+    ...surfaceShadows.floating,
     alignItems: "center",
     backgroundColor: "rgba(255,255,255,0.96)",
-    borderColor: colors.border,
     borderRadius: 16,
-    borderWidth: 1,
     flexDirection: "row",
     gap: 9,
     left: 14,
@@ -1518,11 +1510,9 @@ const styles = StyleSheet.create({
   },
   wearableBannerCaution: {
     backgroundColor: "rgba(255,244,216,0.97)",
-    borderColor: "rgba(217,119,6,0.24)",
   },
   wearableBannerHigh: {
     backgroundColor: "rgba(255,244,242,0.97)",
-    borderColor: "rgba(216,76,63,0.24)",
   },
   wearableText: {
     flex: 1,
@@ -1553,10 +1543,8 @@ const styles = StyleSheet.create({
     marginTop: 9,
   },
   wearableChip: {
-    backgroundColor: colors.page,
-    borderColor: colors.border,
+    backgroundColor: colors.soft,
     borderRadius: 12,
-    borderWidth: 1,
     flex: 1,
     minWidth: 0,
     paddingHorizontal: 8,
@@ -1592,17 +1580,13 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
   },
   wearablePanel: {
+    ...surfaceShadows.floating,
     backgroundColor: "rgba(255,255,255,0.98)",
-    borderColor: colors.border,
     borderRadius: 18,
-    borderWidth: 1,
     left: 14,
     padding: 12,
     position: "absolute",
     right: 14,
-    shadowColor: "#000",
-    shadowOpacity: 0.12,
-    shadowRadius: 16,
     zIndex: 22,
   },
   wearablePanelHeader: {
@@ -1645,10 +1629,8 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   wearableMetricItem: {
-    backgroundColor: colors.page,
-    borderColor: colors.line,
+    backgroundColor: colors.soft,
     borderRadius: 12,
-    borderWidth: 1,
     flexBasis: "47%",
     flexGrow: 1,
     minHeight: 54,
@@ -1670,9 +1652,7 @@ const styles = StyleSheet.create({
   wearableWarningBox: {
     alignItems: "flex-start",
     backgroundColor: colors.primarySoft,
-    borderColor: colors.border,
     borderRadius: 14,
-    borderWidth: 1,
     flexDirection: "row",
     gap: 8,
     marginTop: 10,
@@ -1680,11 +1660,9 @@ const styles = StyleSheet.create({
   },
   wearableWarningCaution: {
     backgroundColor: "rgba(255,244,216,0.97)",
-    borderColor: "rgba(217,119,6,0.24)",
   },
   wearableWarningHigh: {
     backgroundColor: "rgba(255,244,242,0.97)",
-    borderColor: "rgba(216,76,63,0.24)",
   },
   wearableWarningText: {
     flex: 1,
@@ -1916,27 +1894,21 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   progressCard: {
-    alignItems: "flex-start",
-    flexDirection: "row",
-    gap: 12,
-    marginBottom: 16,
+    marginBottom: 12,
     marginTop: 2,
   },
   previewCard: {
-    marginBottom: 16,
+    marginBottom: 12,
+    padding: 14,
   },
   sectionHeader: {
     alignItems: "flex-start",
     flexDirection: "row",
     gap: 12,
     justifyContent: "space-between",
-    marginBottom: 14,
+    marginBottom: 10,
   },
   sectionHeaderText: {
-    flex: 1,
-    minWidth: 0,
-  },
-  progressText: {
     flex: 1,
     minWidth: 0,
   },
@@ -1951,16 +1923,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 21,
     marginTop: 4,
-  },
-  downloadBadge: {
-    alignItems: "center",
-    backgroundColor: colors.soft,
-    borderRadius: 20,
-    flexShrink: 0,
-    height: 48,
-    justifyContent: "center",
-    marginTop: 3,
-    width: 48,
   },
   riskBadge: {
     alignSelf: "flex-start",
@@ -2002,25 +1964,28 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   weatherMetric: {
-    backgroundColor: colors.page,
-    borderColor: colors.border,
+    alignItems: "center",
+    backgroundColor: colors.soft,
     borderRadius: 14,
-    borderWidth: 1,
     flexBasis: "47%",
+    flexDirection: "row",
     flexGrow: 1,
-    minHeight: 92,
-    minWidth: 126,
-    padding: 11,
+    gap: 8,
+    minWidth: 110,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+  },
+  weatherMetricCopy: {
+    flex: 1,
+    minWidth: 0,
   },
   weatherLabel: {
     color: colors.muted,
     fontSize: 11,
     fontWeight: "800",
-    marginTop: 6,
   },
   weatherValue: {
     color: colors.ink,
-    flexShrink: 1,
     fontSize: 13,
     fontWeight: "900",
     lineHeight: 17,
@@ -2045,9 +2010,7 @@ const styles = StyleSheet.create({
   reportItem: {
     alignItems: "flex-start",
     backgroundColor: colors.page,
-    borderColor: colors.border,
     borderRadius: 14,
-    borderWidth: 1,
     flexDirection: "row",
     gap: 10,
     padding: 11,

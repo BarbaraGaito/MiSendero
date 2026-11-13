@@ -595,9 +595,7 @@ const styles = StyleSheet.create({
   },
   scenarioButton: {
     backgroundColor: "rgba(255,255,255,0.74)",
-    borderColor: "rgba(217,119,6,0.22)",
     borderRadius: 16,
-    borderWidth: 1,
     flexBasis: "47%",
     flexGrow: 1,
     minHeight: 116,
@@ -606,7 +604,6 @@ const styles = StyleSheet.create({
   },
   scenarioButtonSelected: {
     backgroundColor: colors.green,
-    borderColor: colors.green,
   },
   scenarioTitle: {
     color: colors.ink,
@@ -717,16 +714,14 @@ const styles = StyleSheet.create({
   },
   providerItem: {
     alignItems: "flex-start",
-    borderColor: colors.border,
+    backgroundColor: colors.soft,
     borderRadius: 16,
-    borderWidth: 1,
     flexDirection: "row",
     gap: 10,
     padding: 12,
   },
   providerItemSelected: {
     backgroundColor: colors.green,
-    borderColor: colors.green,
   },
   providerText: {
     flex: 1,
@@ -756,10 +751,8 @@ const styles = StyleSheet.create({
     marginTop: 12,
   },
   metricBox: {
-    backgroundColor: colors.page,
-    borderColor: colors.border,
+    backgroundColor: colors.soft,
     borderRadius: 14,
-    borderWidth: 1,
     flexBasis: "47%",
     flexGrow: 1,
     minWidth: 120,

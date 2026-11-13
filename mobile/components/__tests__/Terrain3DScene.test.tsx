@@ -55,10 +55,10 @@ test("a changed model rebuilds geometries; an outside-grid user receives no inve
   const { gpu } = await mount({ userCoordinate: [0.5, 0.5] });
   const scene = gpu.render.mock.calls[0][0], group = scene.children[2];
   expect(group.getObjectByName("user-gps-marker")).toBeDefined();
-  await renderer.act(async () => screen.update(<Terrain3DScene terrain={terrain} viewOffset={{ x: 20, y: 200 }} viewScale={2} satelliteTextureEnabled={false} userCoordinate={[5, 5]} />));
+  await renderer.act(async () => screen.update(<Terrain3DScene terrain={terrain} viewOffset={{ x: 20, y: 200 }} viewScale={8} satelliteTextureEnabled={false} userCoordinate={[5, 5]} />));
   expect(group.getObjectByName("user-gps-marker")).toBeUndefined();
   await renderer.act(async () => frame?.(100));
-  expect(gpu.render.mock.calls.at(-1)[1].zoom).toBe(1.9); // public maximum zoom
+  expect(gpu.render.mock.calls.at(-1)[1].zoom).toBe(6); // public maximum zoom
 });
 test("late satellite images are disposed after scene replacement", async () => {
   let accept!: (texture: THREE.Texture) => void;

@@ -15,6 +15,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { OfflineConnectionBanner } from "./OfflineConnectionBanner";
 import { MiSenderoLogo } from "./MiSenderoLogo";
+import { surfaceShadows } from "./surfaceShadows";
 
 export const typography = {
   regular: "BricolageGrotesque_400Regular",
@@ -418,8 +419,22 @@ export function TrailCard({
   );
 }
 
-export function InfoCard({ children, style }: { children: ReactNode; style?: ViewStyle }) {
-  return <View style={[styles.infoCard, style]}>{children}</View>;
+export function InfoCard({ children, style, icon, iconColor = colors.green }: {
+  children: ReactNode;
+  style?: ViewStyle;
+  icon?: IconName;
+  iconColor?: string;
+}) {
+  return (
+    <View style={[styles.infoCard, icon && styles.infoCardRow, style]}>
+      {icon ? <>
+        <View style={styles.infoCardIcon}>
+          <Ionicons aria-hidden accessible={false} name={icon} size={21} color={iconColor} />
+        </View>
+        <View style={styles.infoCardContent}>{children}</View>
+      </> : children}
+    </View>
+  );
 }
 
 export function Metric({
@@ -574,18 +589,12 @@ export const styles = StyleSheet.create({
     marginBottom: 20,
   },
   iconButton: {
+    ...surfaceShadows.card,
     alignItems: "center",
     backgroundColor: colors.white,
-    borderColor: colors.line,
     borderRadius: 16,
-    borderWidth: 1,
-    elevation: 2,
     height: 44,
     justifyContent: "center",
-    shadowColor: colors.ink,
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.07,
-    shadowRadius: 9,
     width: 44,
   },
   pressed: {
@@ -623,36 +632,22 @@ export const styles = StyleSheet.create({
   primaryButton: {
     alignItems: "center",
     backgroundColor: colors.green,
-    borderColor: colors.green,
     borderRadius: 17,
-    borderWidth: 1,
-    elevation: 2,
     flexDirection: "row",
     gap: 8,
     justifyContent: "center",
     minHeight: 52,
     paddingHorizontal: 18,
-    shadowColor: colors.greenDark,
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.14,
-    shadowRadius: 8,
   },
   dangerButton: {
     backgroundColor: colors.danger,
-    borderColor: colors.danger,
-    shadowColor: colors.danger,
   },
   lightButton: {
     backgroundColor: colors.mint,
-    borderColor: colors.border,
-    elevation: 0,
-    shadowOpacity: 0,
   },
   secondaryButton: {
+    ...surfaceShadows.card,
     backgroundColor: colors.white,
-    borderColor: colors.green,
-    elevation: 0,
-    shadowOpacity: 0,
   },
   primaryLabel: {
     color: colors.white,
@@ -669,13 +664,11 @@ export const styles = StyleSheet.create({
     color: colors.greenDark,
   },
   bottomNav: {
+    ...surfaceShadows.floating,
     alignItems: "center",
     alignSelf: "stretch",
     backgroundColor: colors.white,
-    borderColor: colors.line,
     borderRadius: 24,
-    borderWidth: 1,
-    elevation: 6,
     flexDirection: "row",
     gap: 4,
     justifyContent: "space-between",
@@ -684,10 +677,6 @@ export const styles = StyleSheet.create({
     marginTop: 6,
     paddingHorizontal: 6,
     paddingVertical: 6,
-    shadowColor: colors.ink,
-    shadowOffset: { width: 0, height: 5 },
-    shadowOpacity: 0.11,
-    shadowRadius: 16,
   },
   navItem: {
     alignItems: "center",
@@ -729,16 +718,10 @@ export const styles = StyleSheet.create({
     color: colors.greenDark,
   },
   trailCard: {
+    ...surfaceShadows.card,
     backgroundColor: colors.white,
-    borderColor: colors.line,
     borderRadius: 22,
-    borderWidth: 1,
-    elevation: 3,
     marginBottom: 16,
-    shadowColor: colors.ink,
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.08,
-    shadowRadius: 12,
   },
   surfacePressed: {
     opacity: 0.88,
@@ -750,15 +733,13 @@ export const styles = StyleSheet.create({
     padding: 14,
   },
   trailImageRadius: {
-    borderTopLeftRadius: 21,
-    borderTopRightRadius: 21,
+    borderTopLeftRadius: 22,
+    borderTopRightRadius: 22,
   },
   trailBadge: {
     alignSelf: "flex-start",
     backgroundColor: "rgba(255,255,255,0.94)",
-    borderColor: "rgba(255,255,255,0.72)",
     borderRadius: 12,
-    borderWidth: 1,
     paddingHorizontal: 11,
     paddingVertical: 6,
   },
@@ -769,8 +750,6 @@ export const styles = StyleSheet.create({
     fontWeight: "700",
   },
   trailBody: {
-    borderBottomLeftRadius: 21,
-    borderBottomRightRadius: 21,
     padding: 16,
   },
   cardTitle: {
@@ -796,9 +775,7 @@ export const styles = StyleSheet.create({
   statPill: {
     alignItems: "center",
     backgroundColor: colors.soft,
-    borderColor: colors.line,
     borderRadius: 12,
-    borderWidth: 1,
     flexDirection: "row",
     gap: 5,
     paddingHorizontal: 10,
@@ -810,26 +787,38 @@ export const styles = StyleSheet.create({
     fontWeight: "700",
   },
   infoCard: {
+    ...surfaceShadows.card,
     backgroundColor: colors.white,
-    borderColor: colors.line,
     borderRadius: 20,
-    borderWidth: 1,
-    elevation: 2,
     padding: 18,
-    shadowColor: colors.ink,
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.06,
-    shadowRadius: 10,
+  },
+  infoCardRow: {
+    alignItems: "flex-start",
+    flexDirection: "row",
+    gap: 10,
+    paddingHorizontal: 14,
+    paddingVertical: 12,
+  },
+  infoCardIcon: {
+    alignItems: "center",
+    backgroundColor: colors.soft,
+    borderRadius: 12,
+    flexShrink: 0,
+    height: 36,
+    justifyContent: "center",
+    width: 36,
+  },
+  infoCardContent: {
+    flex: 1,
+    minWidth: 0,
   },
   card: {
-  backgroundColor: colors.white,
-  borderRadius: 22,
-  padding: 18,
-  marginBottom: 16,
-  shadowColor: "#000",
-  shadowOpacity: 0.05,
-  shadowRadius: 12,
-},
+    ...surfaceShadows.card,
+    backgroundColor: colors.white,
+    borderRadius: 22,
+    padding: 18,
+    marginBottom: 16,
+  },
 
 cardGreen: {
   backgroundColor: colors.mint,
@@ -922,11 +911,10 @@ settingValue: {
   fontWeight: "700",
 },
 statusNotice: {
+  ...surfaceShadows.card,
   alignItems: "flex-start",
   backgroundColor: colors.white,
-  borderColor: colors.border,
   borderRadius: 18,
-  borderWidth: 1,
   flexDirection: "row",
   gap: 12,
   marginBottom: 14,
@@ -935,17 +923,14 @@ statusNotice: {
 
 statusNoticeError: {
   backgroundColor: "#FFF4F2",
-  borderColor: "#F2B8B2",
 },
 
 statusNoticeWarning: {
   backgroundColor: colors.orangeSoft,
-  borderColor: "#F7D48A",
 },
 
 statusNoticeSuccess: {
   backgroundColor: colors.mint,
-  borderColor: colors.border,
 },
 
 statusIcon: {

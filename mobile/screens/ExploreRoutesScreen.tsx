@@ -6,7 +6,8 @@ import {
   type ListRenderItem,
 } from "react-native";
 import { AppScreen, StatusNotice, colors, typography } from "../components/MiSenderoUI";
-import { defaultCatalogFilters, TrailCatalogFilters } from "../components/TrailCatalogFilters";
+import { surfaceShadows } from "../components/surfaceShadows";
+import { defaultCatalogFilters, TrailCatalogFilters, type CatalogFilters } from "../components/TrailCatalogFilters";
 import { TrailSkeleton } from "../components/TrailSkeleton";
 import { getTrails } from "../../services/trailRepository";
 import { formatKilometers } from "../../services/geoUtils";
@@ -26,8 +27,7 @@ export default function ExploreRoutesScreen() {
   const [trails, setTrails] = useState<Trail[]>([]);
   const [favoriteTrailIds, setFavoriteTrailIds] = useState<number[]>([]);
   const [filters, setFilters] = useState(defaultCatalogFilters);
-  const [filtersExpanded, setFiltersExpanded] = useState(false);
-  const [favoritesOnly, setFavoritesOnly] = useState(false);
+  const [filterDraft, setFilterDraft] = useState<CatalogFilters | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [visibleCount, setVisibleCount] = useState(ROUTES_PAGE_SIZE);
   const [photoStatuses, setPhotoStatuses] = useState<Record<string, PhotoStatus>>({});
@@ -35,6 +35,7 @@ export default function ExploreRoutesScreen() {
   const [error, setError] = useState<string | null>(null);
   const routeList = useRef<FlatList<RouteListItem>>(null);
 
+  const { favoritesOnly } = filters;
   const hasActiveFilters = filters.area !== "all" || filters.distance !== "Todas" ||
     filters.difficulty !== "Todas" || favoritesOnly || searchQuery.trim().length > 0;
   const favoriteIdSet = useMemo(() => new Set(favoriteTrailIds), [favoriteTrailIds]);
@@ -85,7 +86,7 @@ export default function ExploreRoutesScreen() {
 
   useEffect(() => {
     setVisibleCount(ROUTES_PAGE_SIZE);
-  }, [favoritesOnly, filters, searchQuery]);
+  }, [filters, searchQuery]);
 
   const loadMoreRoutes = useCallback(() => {
     setVisibleCount((current) => Math.min(filteredTrails.length, current + ROUTES_PAGE_SIZE));
@@ -98,7 +99,7 @@ export default function ExploreRoutesScreen() {
 
   const resetSearch = () => {
     setFilters(defaultCatalogFilters);
-    setFavoritesOnly(false);
+    setFilterDraft(null);
     setSearchQuery("");
   };
 
@@ -150,15 +151,15 @@ export default function ExploreRoutesScreen() {
             <TrailCatalogFilters
               filters={filters} setFilters={setFilters}
               query={searchQuery} setQuery={setSearchQuery}
-              favoritesOnly={favoritesOnly} onToggleFavorites={() => setFavoritesOnly((current) => !current)}
-              expanded={filtersExpanded} onToggleExpanded={() => setFiltersExpanded((current) => !current)}
-              onViewResults={() => {
-                setFiltersExpanded(false);
+              draft={filterDraft} setDraft={setFilterDraft}
+              onApply={(nextFilters) => {
+                setFilters(nextFilters);
+                setFilterDraft(null);
                 routeList.current?.scrollToOffset({ offset: 0, animated: true });
               }}
             />
 
-            {!hasActiveFilters && !filtersExpanded ? <CatalogShortcuts /> : null}
+            {!hasActiveFilters && filterDraft === null ? <CatalogShortcuts /> : null}
 
             <View style={styles.results}>
               <View style={styles.resultsHeading}>
@@ -241,12 +242,15 @@ function RouteCard({ trail, image, imageFailed, isFavorite, onPhotoStatus, wide 
   wide: boolean;
 }) {
   const distance = trail.distance_km == null ? "Distancia a confirmar" : formatKilometers(trail.distance_km);
+  const difficulty = trail.difficulty?.trim().toLowerCase();
+  const difficultyLabel = `Dificultad ${difficulty || "a confirmar"}`;
+  const aiEstimated = Boolean(difficulty) && trail.provenance?.difficulty_source === "ai";
   const showPhoto = Boolean(image) && !imageFailed;
 
   return (
     <Pressable
       accessibilityLabel={`Ver detalle de ${trail.name}`}
-      accessibilityHint={`${trail.location}. ${trail.difficulty}. ${distance}.`}
+      accessibilityHint={`${trail.location}. ${difficultyLabel}${aiEstimated ? ", estimada con IA" : ""}. ${distance}.`}
       accessibilityRole="button"
       style={({ pressed }) => [styles.routeCard, wide && styles.routeCardWide, pressed && styles.pressed]}
       onPress={() => router.push({ pathname: "/trail-detail", params: { id: String(trail.id) } })}
@@ -265,7 +269,10 @@ function RouteCard({ trail, image, imageFailed, isFavorite, onPhotoStatus, wide 
           </View>
         ) : null}
         <View style={styles.imageBadges}>
-          <View style={styles.badge}><Text style={styles.badgeText}>{trail.difficulty}</Text></View>
+          <View style={styles.badge}>
+            <Text style={styles.badgeText}>{difficultyLabel}</Text>
+            {aiEstimated ? <Text style={styles.badgeSource}>Estimada con IA</Text> : null}
+          </View>
           {isFavorite ? (
             <View style={styles.favoriteBadge}>
               <Ionicons aria-hidden accessible={false} name="star" size={16} color={colors.green} />
@@ -307,8 +314,9 @@ const styles = StyleSheet.create({
   subtitle: { color: colors.muted, fontFamily: typography.regular, fontSize: 15, lineHeight: 22 },
   shortcuts: { flexDirection: "row", flexWrap: "wrap", gap: 8 },
   shortcut: {
-    alignItems: "center", backgroundColor: colors.surface, borderColor: colors.line, borderRadius: 13,
-    borderWidth: 1, flexBasis: 150, flexDirection: "row", flexGrow: 1, gap: 8, minHeight: 46,
+    ...surfaceShadows.card,
+    alignItems: "center", backgroundColor: colors.surface, borderRadius: 13,
+    flexBasis: 150, flexDirection: "row", flexGrow: 1, gap: 8, minHeight: 46,
     paddingHorizontal: 11, paddingVertical: 8,
   },
   recommendation: { backgroundColor: colors.soft },
@@ -319,17 +327,18 @@ const styles = StyleSheet.create({
   resultsCount: { color: colors.muted, fontFamily: typography.medium, fontSize: 14, lineHeight: 20 },
   cardRow: { justifyContent: "space-between" },
   routeCard: {
-    backgroundColor: colors.surface, borderColor: colors.line, borderRadius: 19,
-    borderWidth: 1, marginBottom: 14, overflow: "hidden",
+    ...surfaceShadows.card,
+    backgroundColor: colors.surface, borderRadius: 19, marginBottom: 14,
   },
   routeCardWide: { width: "49.2%" },
   pressed: { opacity: 0.78 },
-  imageBox: { backgroundColor: colors.soft, height: 148 },
+  imageBox: { backgroundColor: colors.soft, borderTopLeftRadius: 19, borderTopRightRadius: 19, height: 148, overflow: "hidden" },
   imageBadges: { alignItems: "flex-start", flexDirection: "row", gap: 6, justifyContent: "space-between", padding: 12 },
   photoFallback: { ...StyleSheet.absoluteFill, alignItems: "center", gap: 4, justifyContent: "center", paddingTop: 23 },
   photoFallbackText: { color: colors.muted, fontFamily: typography.regular, fontSize: 13, lineHeight: 18 },
-  badge: { backgroundColor: colors.white, borderRadius: 999, paddingHorizontal: 10, paddingVertical: 6, flexShrink: 1 },
+  badge: { backgroundColor: colors.white, borderRadius: 12, paddingHorizontal: 10, paddingVertical: 6, flexShrink: 1 },
   badgeText: { color: colors.green, fontFamily: typography.bold, fontSize: 12, lineHeight: 17 },
+  badgeSource: { color: colors.muted, fontFamily: typography.medium, fontSize: 12, lineHeight: 16 },
   favoriteBadge: {
     alignItems: "center", backgroundColor: colors.mint, borderRadius: 999,
     height: 31, justifyContent: "center", width: 31,
@@ -347,8 +356,9 @@ const styles = StyleSheet.create({
   metricText: { color: colors.green, flexShrink: 1, fontFamily: typography.medium, fontSize: 13, lineHeight: 18 },
   footer: { gap: 16, paddingTop: 4 },
   moreButton: {
-    alignItems: "center", alignSelf: "center", backgroundColor: colors.surface, borderColor: colors.border,
-    borderRadius: 13, borderWidth: 1, flexDirection: "row", gap: 8, justifyContent: "center", minHeight: 46,
+    ...surfaceShadows.card,
+    alignItems: "center", alignSelf: "center", backgroundColor: colors.surface,
+    borderRadius: 13, flexDirection: "row", gap: 8, justifyContent: "center", minHeight: 46,
     paddingHorizontal: 16,
   },
   moreLabel: { color: colors.green, fontFamily: typography.bold, fontSize: 15, lineHeight: 21 },

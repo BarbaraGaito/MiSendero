@@ -128,6 +128,7 @@ export interface TrailProvenance {
   route_type: "out_and_back" | "point_to_point" | "loop" | "unknown";
   access: string;
   precautions: string;
+  difficulty_source?: "published" | "ai";
   duration_basis: string;
   official_distance_km: number | null;
   distance_basis: "mapped_geometry" | "official_itinerary" | "round_trip_from_official_one_way" | "official_one_way";

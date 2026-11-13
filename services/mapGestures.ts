@@ -1,5 +1,6 @@
 export const MIN_TERRAIN_SCALE = 0.4;
-export const MAX_TERRAIN_SCALE = 1.9;
+export const MAX_TERRAIN_SCALE = 6;
+export const TERRAIN_ZOOM_STEP = 1.28;
 
 export const clampTerrainScale = (scale: number) =>
   Math.max(MIN_TERRAIN_SCALE, Math.min(MAX_TERRAIN_SCALE, scale));
@@ -11,7 +12,8 @@ export const getTerrainPerspectiveFov = (scale: number) => {
     return 43 + ((1 - normalizedScale) / (1 - MIN_TERRAIN_SCALE)) * 33;
   }
 
-  return 43 - ((normalizedScale - 1) / (MAX_TERRAIN_SCALE - 1)) * 12;
+  const halfFov = 43 * Math.PI / 360;
+  return Math.atan(Math.tan(halfFov) / normalizedScale) * 360 / Math.PI;
 };
 
 export const getPinchZoomDelta = (ratio: number) => {

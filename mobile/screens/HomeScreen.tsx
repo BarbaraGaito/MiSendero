@@ -23,6 +23,7 @@ import {
   colors,
   typography,
 } from "../components/MiSenderoUI";
+import { surfaceShadows } from "../components/surfaceShadows";
 import { ExpandableSection } from "../components/ExpandableSection";
 import { TrailMetrics } from "../components/TrailMetrics";
 import { MiSenderoLogo } from "../components/MiSenderoLogo";
@@ -296,25 +297,17 @@ const styles = StyleSheet.create({
     fontWeight: "700",
   },
   routeCard: {
+    ...surfaceShadows.card,
     backgroundColor: colors.surface,
-    borderColor: colors.border,
     borderRadius: 24,
-    borderWidth: 1,
-    elevation: 3,
-    overflow: "hidden",
-    shadowColor: colors.ink,
-    shadowOffset: { width: 0, height: 12 },
-    shadowOpacity: 0.05,
-    shadowRadius: 24,
   },
   pressed: {
     opacity: 0.72,
   },
   emptyCard: {
+    ...surfaceShadows.card,
     backgroundColor: colors.surface,
-    borderColor: colors.border,
     borderRadius: 24,
-    borderWidth: 1,
     gap: 8,
     padding: 18,
   },
@@ -334,6 +327,8 @@ const styles = StyleSheet.create({
   },
   mapPreview: {
     backgroundColor: colors.primary,
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
     height: 220,
     justifyContent: "space-between",
     overflow: "hidden",

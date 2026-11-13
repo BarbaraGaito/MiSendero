@@ -55,8 +55,8 @@ export function ReportFeedbackControls({ report, onChanged, onRecorded, observed
 const styles = StyleSheet.create({
   container: { gap: 7 }, meta: { color: colors.muted, fontSize: 12, lineHeight: 17 },
   options: { flexDirection: "row", flexWrap: "wrap", gap: 6 },
-  button: { minHeight: 44, borderRadius: 13, backgroundColor: colors.page, borderColor: colors.border, borderWidth: 1, paddingHorizontal: 10, justifyContent: "center" },
-  selected: { backgroundColor: colors.green, borderColor: colors.green },
+  button: { minHeight: 44, borderRadius: 13, backgroundColor: colors.soft, paddingHorizontal: 10, justifyContent: "center" },
+  selected: { backgroundColor: colors.green },
   label: { color: colors.greenDark, fontSize: 12, fontWeight: "800" },
   selectedLabel: { color: colors.white }, busy: { opacity: 0.6 }, error: { color: colors.danger, fontSize: 12 },
 });

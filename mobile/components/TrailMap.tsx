@@ -33,6 +33,7 @@ import {
 import {
   MAX_TERRAIN_SCALE,
   MIN_TERRAIN_SCALE,
+  TERRAIN_ZOOM_STEP,
   clampTerrainScale,
   getPinchZoomDelta,
 } from "../../services/mapGestures";
@@ -41,7 +42,8 @@ import {
   TerrainElevationState,
   useTerrainElevation,
 } from "../hooks/useTerrainElevation";
-import { colors } from "./MiSenderoUI";
+import { colors, InfoCard } from "./MiSenderoUI";
+import { surfaceShadows } from "./surfaceShadows";
 import { ReportFeedbackControls } from "./ReportFeedbackControls";
 import { Terrain3DScene, Terrain3DSceneHandle, TerrainMapMarker } from "./Terrain3DScene";
 import { buildTerrainSceneModel, coordinateToTerrainScenePoint } from "./terrainSceneModel";
@@ -759,7 +761,7 @@ export function TrailMap({
   const changeZoom = (delta: number) => {
     if (isPerspective) {
       setTerrainScale((currentScale) =>
-        Number(clampTerrainScale(currentScale + delta * 0.16).toFixed(2))
+        Number(clampTerrainScale(currentScale * TERRAIN_ZOOM_STEP ** delta).toFixed(2))
       );
       return;
     }
@@ -1326,20 +1328,24 @@ export function TrailMap({
       ) : null}
       {activeReport && !isSelecting ? (
         <View style={[styles.reportCard, immersive ? { top: controlsTopOffset + 100 } : { bottom: 24 }]}>
-          <View style={styles.reportCardHeader}>
-            <Ionicons name="warning" size={20} color={activeReport.color} />
-            <Text style={styles.reportTitle} numberOfLines={2}>{activeReport.report.issue_summary}</Text>
-            <Pressable accessibilityRole="button" accessibilityLabel="Cerrar advertencia" hitSlop={8} onPress={() => { setActiveReportId(null); onReportClosed?.(); }}>
-              <Ionicons name="close" size={22} color={colors.ink} />
-            </Pressable>
+          <View style={styles.reportCardRow}>
+            <Ionicons aria-hidden accessible={false} name="warning" size={20} color={activeReport.color} />
+            <View style={styles.reportCardCopy}>
+              <View style={styles.reportCardHeader}>
+                <Text style={styles.reportTitle} numberOfLines={2}>{activeReport.report.issue_summary}</Text>
+                <Pressable accessibilityRole="button" accessibilityLabel="Cerrar advertencia" hitSlop={8} onPress={() => { setActiveReportId(null); onReportClosed?.(); }}>
+                  <Ionicons name="close" size={22} color={colors.ink} />
+                </Pressable>
+              </View>
+              <Text style={styles.reportDescription}>{activeReport.report.trail_state} · Riesgo {activeReport.report.severity}{activeReport.report.blocks_path ? " · Bloquea el paso" : ""}</Text>
+              <Text style={styles.reportDescription}>
+                {activeReport.precisionMeters > 0 ? `Ubicación aproximada · margen ${activeReport.precisionMeters} m` : "Ubicación del reporte"}
+                {activeReport.report.route_progress_meters != null ? ` · km ${(activeReport.report.route_progress_meters / 1000).toLocaleString("es-AR", { maximumFractionDigits: 1 })}` : ""}
+                {activeReport.report.route_end_progress_meters != null ? activeReport.report.route_end_progress_meters === activeReport.report.route_progress_meters ? " · tramo aproximado" : ` a km ${(activeReport.report.route_end_progress_meters / 1000).toLocaleString("es-AR", { maximumFractionDigits: 1 })}` : ""}
+              </Text>
+              {offline ? <Text style={styles.reportDescription}>Guardado sin conexión</Text> : null}
+            </View>
           </View>
-          <Text style={styles.reportDescription}>{activeReport.report.trail_state} · Riesgo {activeReport.report.severity}{activeReport.report.blocks_path ? " · Bloquea el paso" : ""}</Text>
-          <Text style={styles.reportDescription}>
-            {activeReport.precisionMeters > 0 ? `Ubicación aproximada · margen ${activeReport.precisionMeters} m` : "Ubicación del reporte"}
-            {activeReport.report.route_progress_meters != null ? ` · km ${(activeReport.report.route_progress_meters / 1000).toLocaleString("es-AR", { maximumFractionDigits: 1 })}` : ""}
-            {activeReport.report.route_end_progress_meters != null ? activeReport.report.route_end_progress_meters === activeReport.report.route_progress_meters ? " · tramo aproximado" : ` a km ${(activeReport.report.route_end_progress_meters / 1000).toLocaleString("es-AR", { maximumFractionDigits: 1 })}` : ""}
-          </Text>
-          {offline ? <Text style={styles.reportDescription}>Guardado sin conexión</Text> : null}
           <ReportFeedbackControls report={activeReport.report} onChanged={onReportsChanged} />
           {reportMarkers.length > 1 ? <Pressable accessibilityRole="button" accessibilityLabel="Ver siguiente advertencia"
             onPress={() => openReport(reportMarkers[(reportMarkers.indexOf(activeReport) + 1) % reportMarkers.length].report.id)}>
@@ -1462,6 +1468,8 @@ export function TrailMap({
         ]}
       >
         <Pressable
+          accessibilityRole="button"
+          accessibilityLabel="Acercar mapa"
           onPress={() => changeZoom(1)}
           disabled={isZoomInDisabled}
           style={[styles.zoomButton, isZoomInDisabled && styles.disabledControl]}
@@ -1470,6 +1478,8 @@ export function TrailMap({
         </Pressable>
         <View style={styles.zoomDivider} />
         <Pressable
+          accessibilityRole="button"
+          accessibilityLabel="Alejar mapa"
           onPress={() => changeZoom(-1)}
           disabled={isZoomOutDisabled}
           style={[styles.zoomButton, isZoomOutDisabled && styles.disabledControl]}
@@ -1483,13 +1493,13 @@ export function TrailMap({
       </View>
 
       {showDetailsCard && !isPerspective && !activeReport ? (
-        <View style={styles.mapCard}>
+        <InfoCard style={styles.mapCard} icon="map-outline">
           <Text style={styles.mapLabel}>{trail?.name || "Mapa del recorrido"}</Text>
           <Text style={styles.mapMeta}>
             {trail?.distance_km ? formatKilometers(trail.distance_km) : "Distancia a confirmar"} -{" "}
             {trail?.difficulty || "Dificultad a confirmar"}
           </Text>
-        </View>
+        </InfoCard>
       ) : null}
 
       {isPerspective ? <>
@@ -1541,29 +1551,32 @@ export function TrailMap({
 }
 
 const styles = StyleSheet.create({
-  informationButton: { position: "absolute", right: 12, width: 44, height: 44, borderRadius: 22,
+  informationButton: { ...surfaceShadows.floating, position: "absolute", right: 12, width: 44, height: 44, borderRadius: 22,
     alignItems: "center", justifyContent: "center", backgroundColor: "rgba(255,255,255,0.96)",
-    borderWidth: 1, borderColor: colors.line, zIndex: 7,
-    shadowColor: colors.ink, shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.12, shadowRadius: 6, elevation: 3 },
+    zIndex: 7 },
   informationMessage: { color: colors.muted, fontSize: 14, lineHeight: 21 },
   reportMarker: {
     position: "absolute", width: 34, height: 34, borderRadius: 17,
     borderBottomLeftRadius: 4, alignItems: "center", justifyContent: "center",
     borderColor: "#FFFFFF", borderWidth: 2, zIndex: 6,
   },
-  terrainStyleControl: { position: "absolute", left: 88, right: 64, backgroundColor: "rgba(255,255,255,0.94)", borderRadius: 14,
+  terrainStyleControl: { ...surfaceShadows.floating, position: "absolute", left: 88, right: 64, backgroundColor: "rgba(255,255,255,0.94)", borderRadius: 14,
     padding: 4, flexDirection: "row", justifyContent: "center", zIndex: 6 },
   terrainStyleButton: { flex: 1, paddingHorizontal: 5, paddingVertical: 8, alignItems: "center", borderRadius: 12 },
   reportBadge: {
+    ...surfaceShadows.floating,
     position: "absolute", left: 12, right: 64, alignSelf: "flex-start", flexDirection: "row",
     alignItems: "center", gap: 6, backgroundColor: "rgba(255,255,255,0.96)",
     borderRadius: 14, paddingHorizontal: 10, minHeight: 44, zIndex: 7,
   },
   reportBadgeText: { color: colors.greenDark, fontWeight: "800", fontSize: 12 },
   reportCard: {
-    position: "absolute", left: 12, right: 64, padding: 12, gap: 8,
+    ...surfaceShadows.floating,
+    position: "absolute", left: 12, right: 64, padding: 12, gap: 6,
     backgroundColor: "rgba(255,255,255,0.98)", borderRadius: 16, zIndex: 8,
   },
+  reportCardRow: { flexDirection: "row", alignItems: "flex-start", gap: 8 },
+  reportCardCopy: { flex: 1, minWidth: 0, gap: 3 },
   reportCardHeader: { flexDirection: "row", alignItems: "center", gap: 7 },
   reportTitle: { flex: 1, color: colors.ink, fontWeight: "800", fontSize: 14 },
   reportDescription: { color: colors.ink, fontSize: 12, lineHeight: 17 },
@@ -1612,6 +1625,7 @@ const styles = StyleSheet.create({
     zIndex: 8,
   },
   mapLoaderPill: {
+    ...surfaceShadows.floating,
     alignItems: "center",
     backgroundColor: "rgba(255,255,255,0.95)",
     borderRadius: 18,
@@ -1619,9 +1633,6 @@ const styles = StyleSheet.create({
     gap: 8,
     paddingHorizontal: 14,
     paddingVertical: 10,
-    shadowColor: "#000",
-    shadowOpacity: 0.12,
-    shadowRadius: 12,
   },
   mapLoaderPillCompact: {
     borderRadius: 999,
@@ -1666,11 +1677,10 @@ const styles = StyleSheet.create({
     zIndex: 5,
   },
   terrain3dPill: {
+    ...surfaceShadows.card,
     alignItems: "center",
     backgroundColor: "rgba(255,255,255,0.86)",
-    borderColor: "rgba(13,122,69,0.16)",
     borderRadius: 14,
-    borderWidth: 1,
     flexDirection: "row",
     gap: 7,
     maxWidth: 210,
@@ -1692,6 +1702,7 @@ const styles = StyleSheet.create({
     fontWeight: "900",
   },
   layerControl: {
+    ...surfaceShadows.floating,
     backgroundColor: "rgba(255,255,255,0.94)",
     borderRadius: 16,
     flexDirection: "row",
@@ -1718,9 +1729,9 @@ const styles = StyleSheet.create({
     color: colors.white,
   },
   zoomControl: {
+    ...surfaceShadows.floating,
     backgroundColor: "rgba(255,255,255,0.94)",
     borderRadius: 18,
-    overflow: "hidden",
     position: "absolute",
     right: 12,
     zIndex: 6,
@@ -1740,6 +1751,7 @@ const styles = StyleSheet.create({
     opacity: 0.38,
   },
   perspectiveButton: {
+    ...surfaceShadows.floating,
     alignItems: "center",
     backgroundColor: "rgba(255,255,255,0.94)",
     borderRadius: 16,
@@ -1860,11 +1872,11 @@ const styles = StyleSheet.create({
     zIndex: 7,
   },
   mapCard: {
+    ...surfaceShadows.floating,
     backgroundColor: "rgba(255,255,255,0.95)",
     borderRadius: 18,
     bottom: 14,
     left: 14,
-    padding: 14,
     position: "absolute",
     right: 14,
     zIndex: 5,
@@ -1894,6 +1906,7 @@ const styles = StyleSheet.create({
     zIndex: 5,
   },
   locationWarning: {
+    ...surfaceShadows.floating,
     alignItems: "center",
     backgroundColor: "rgba(255,255,255,0.94)",
     borderRadius: 14,
@@ -1913,11 +1926,10 @@ const styles = StyleSheet.create({
     fontWeight: "900",
   },
   testingBadge: {
+    ...surfaceShadows.card,
     alignItems: "center",
     backgroundColor: "rgba(223,243,231,0.96)",
-    borderColor: "rgba(13,122,69,0.24)",
     borderRadius: 14,
-    borderWidth: 1,
     flexDirection: "row",
     gap: 5,
     left: 12,

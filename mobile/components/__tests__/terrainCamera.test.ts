@@ -16,7 +16,7 @@ const base = { viewOffset: { x: 0, y: 0 }, viewScale: 1, navigationMode: true,
   alignmentRotation: 0, viewport: { width: 393, height: 852 }, topInset: 320, bottomInset: 260 };
 const camera = () => new THREE.PerspectiveCamera(43, 393 / 852, 0.03, 1500);
 
-test.each([0.4, 1, 1.9])("first-person camera stays over the trail and looks forward at zoom %s", scale => {
+test.each([0.4, 1, 6])("first-person camera stays over the trail and looks forward at zoom %s", scale => {
   for (const rotation of [0, Math.PI / 3, Math.PI / 2]) {
     for (const offset of [-180, 0, 180]) {
       const point = coordinateToTerrainScenePoint(model, [0.5, 0.5])!;

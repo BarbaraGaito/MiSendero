@@ -6,6 +6,7 @@ import { Image, Pressable, ScrollView, StyleSheet, Text, View } from "react-nati
 import { getNationalParks, ParkResult } from "../../services/nationalParks";
 import { NationalPark } from "../../types";
 import { AppScreen, colors, TopBar, StatusNotice as SharedStatusNotice } from "../components/MiSenderoUI";
+import { surfaceShadows } from "../components/surfaceShadows";
 
 export default function NationalParksScreen() {
   const [result, setResult] = useState<ParkResult<NationalPark[]> | null>(null);
@@ -54,8 +55,8 @@ const styles = StyleSheet.create({
   content: { paddingBottom: 120, width: "100%", maxWidth: 720, alignSelf: "center" },
   title: { fontSize: 26, fontWeight: "800", color: colors.ink, marginBottom: 8 },
   subtitle: { fontSize: 14, lineHeight: 21, color: colors.muted, marginBottom: 20 },
-  item: { borderWidth: 1, borderColor: colors.line, borderRadius: 8, overflow: "hidden", backgroundColor: colors.white, marginBottom: 18 },
-  image: { width: "100%", height: 160, backgroundColor: colors.soft },
+  item: { ...surfaceShadows.card, borderRadius: 18, backgroundColor: colors.white, marginBottom: 18 },
+  image: { width: "100%", height: 160, borderTopLeftRadius: 18, borderTopRightRadius: 18, backgroundColor: colors.soft },
   placeholder: { alignItems: "center", justifyContent: "center" },
   itemBody: { padding: 16, gap: 8 },
   name: { fontSize: 18, lineHeight: 25, fontWeight: "800", color: colors.ink },

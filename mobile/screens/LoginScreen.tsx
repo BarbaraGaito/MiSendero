@@ -18,6 +18,7 @@ import {
 } from "../../services/legalConsent";
 import { getExperienceProfile } from "../../services/experienceProfile";
 import { colors, typography } from "../components/MiSenderoUI";
+import { surfaceShadows } from "../components/surfaceShadows";
 import { MiSenderoLogo } from "../components/MiSenderoLogo";
 
 const getFormError = (
@@ -292,21 +293,21 @@ const styles = StyleSheet.create({
   scrollContent: { flexGrow: 1, justifyContent: "center", padding: 16 },
   scrollWide: { padding: 32 },
   container: {
+    ...surfaceShadows.floating,
     alignSelf: "center",
     backgroundColor: colors.white,
     borderRadius: 28,
-    borderColor: colors.line,
-    borderWidth: 1,
     maxWidth: 480,
-    overflow: "hidden",
     width: "100%",
   },
   containerWide: { flexDirection: "row", maxWidth: 1000 },
   brandPanel: {
-    backgroundColor: colors.green, overflow: "hidden", paddingHorizontal: 22,
+    backgroundColor: colors.green, borderTopLeftRadius: 28, borderTopRightRadius: 28,
+    overflow: "hidden", paddingHorizontal: 22,
     paddingVertical: 16, position: "relative",
   },
   brandPanelWide: {
+    borderBottomLeftRadius: 28, borderTopRightRadius: 0,
     flex: 1, gap: 44, minHeight: 520, padding: 36, paddingBottom: 142,
   },
   brand: { alignSelf: "flex-start" },
@@ -340,8 +341,8 @@ const styles = StyleSheet.create({
   },
   passwordToggle: { alignItems: "center", justifyContent: "center", minHeight: 44, width: 44 },
   errorBox: {
-    alignItems: "flex-start", backgroundColor: "#FFF4F2", borderColor: "#F2B8B2", borderRadius: 12,
-    borderWidth: 1, flexDirection: "row", gap: 9, padding: 11,
+    alignItems: "flex-start", backgroundColor: "#FFF4F2", borderRadius: 12,
+    flexDirection: "row", gap: 9, padding: 11,
   },
   error: { color: colors.danger, flex: 1, fontFamily: typography.medium, fontSize: 14, lineHeight: 20 },
   termsBox: { backgroundColor: colors.page, borderRadius: 12, paddingHorizontal: 12 },

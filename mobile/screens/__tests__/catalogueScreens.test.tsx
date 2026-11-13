@@ -106,6 +106,20 @@ test("exploration filters actual loaded routes by query and difficulty", async (
   await act(async () => input.props.onChangeText("inexistente")); expect(text(tree)).toContain("Sin resultados");
 });
 
+test("the catalog identifies difficulty and only credits AI when the trail records that source", async () => {
+  const [published] = require("../../../backend/src/data/catalogExpansion20261017").trails;
+  (trails.getTrails as jest.Mock).mockResolvedValue([
+    { ...trail, difficulty: "Baja" },
+    { ...trail, id: 8, difficulty: "Media", provenance: { ...published.provenance, difficulty_source: "ai" } },
+    { ...trail, id: 9, difficulty: "Alta", provenance: published.provenance },
+  ]);
+  const tree = await mount(Explore);
+  expect(text(tree)).toContain("Dificultad baja");
+  expect(text(tree)).toContain("Dificultad media Estimada con IA");
+  expect(text(tree)).toContain("Dificultad alta");
+  expect(text(tree).match(/Estimada con IA/g)).toHaveLength(1);
+});
+
 test("route search shows skeleton cards until the catalog finishes loading", async () => {
   let resolveTrails!: (value: typeof trail[]) => void;
   (trails.getTrails as jest.Mock).mockReturnValue(new Promise((resolve) => { resolveTrails = resolve; }));
@@ -130,25 +144,36 @@ test("trail detail shows its content skeleton until the selected trail loads", a
   expect(text(tree)).toContain(trail.name);
 });
 
-test("catalog filters can be removed when collapsed and combined with favorites", async () => {
+test("catalog filters apply together and favorites are available inside the panel", async () => {
   const tree = await mount(Explore);
-  expect(text(tree)).not.toContain("Hasta 5 km");
+  expect(text(tree)).not.toContain("Favoritos");
   await press(tree, "Filtrar senderos");
+  await press(tree, "Dificultad");
   await press(tree, "Alta");
+  await press(tree, "Distancia");
   await press(tree, "Más de 10 km");
   expect(text(tree)).toContain("Ruta exigente");
+  expect(text(tree)).toContain(trail.name);
+  await press(tree, "Aplicar");
   expect(text(tree)).not.toContain(trail.name);
-  await press(tree, "Ver resultados");
   expect(text(tree)).toContain("Dificultad: Alta");
   expect(text(tree)).toContain("1 resultado");
+  await press(tree, "Filtrar senderos");
   await press(tree, "Favoritos");
+  await press(tree, "Filtrar senderos");
+  expect(text(tree)).toContain("Ruta exigente");
+  await press(tree, "Filtrar senderos");
+  await press(tree, "Favoritos");
+  await press(tree, "Aplicar");
   expect(text(tree)).toContain("Sin resultados");
   await press(tree, "Quitar filtro: Más de 10 km");
   expect(text(tree)).toContain("Sin resultados");
   await press(tree, "Quitar filtro: Dificultad: Alta");
   expect(text(tree)).toContain(trail.name);
   expect(text(tree)).not.toContain("Ruta exigente");
-  await press(tree, "Favoritos");
+  await press(tree, "Filtrar senderos");
+  await press(tree, "Limpiar filtros");
+  await press(tree, "Aplicar");
   expect(text(tree)).toContain("Ruta exigente");
 });
 

@@ -187,7 +187,10 @@ function TrailDetailContent({
   return (
     <>
       <TrailCover ratingSummary={ratingSummary} trail={trail} />
-      <Text accessibilityRole="header" style={styles.title}>{trail.name}</Text>
+      <View style={styles.titleRow}>
+        <Text accessibilityRole="header" style={styles.title}>{trail.name}</Text>
+        <FavoriteButton isFavorite={isFavorite} onPress={toggleFavorite} />
+      </View>
       <Text style={styles.location}>{trail.location}</Text>
       <TrailStats trail={trail} />
       {trail.provenance ? <Text style={styles.routeMetadata}>
@@ -198,10 +201,6 @@ function TrailDetailContent({
           : ["official_reference", "catalog_record_unconfirmed", "unconfirmed"].includes(trail.provenance.duration_basis) ? ". Confirmá el alcance del tiempo indicado." : "."}
       </Text> : null}
       {!hasGeometry && trail.provenance?.mapping_pending_reason ? <Text style={styles.routeMetadata}>Ficha informativa sin navegación GPS ni mapa descargable.</Text> : null}
-      <FavoriteButton
-        isFavorite={isFavorite}
-        onPress={toggleFavorite}
-      />
       {weather?.risk_level === "alto" || weather?.risk_level === "medio" ? <StatusNotice
         title={`Riesgo meteorológico ${weather.risk_level}`}
         message={`${weather.condition}, viento ${weather.wind_kmh} km/h. Considerá postergar o elegir una ruta más corta.`}
@@ -231,8 +230,8 @@ function TrailDetailContent({
       {hasGeometry ? <OfflineMapCard
         downloadMessage={downloadMessage}
         isDownloaded={isDownloaded}
-      /> : <InfoCard style={styles.card}>
-        <Text style={styles.cardTitle}>Consultá el recorrido</Text>
+      /> : <InfoCard style={styles.mapInfoCard} icon="map-outline">
+        <Text style={styles.mapInfoTitle}>Consultá el recorrido</Text>
         <Text style={styles.body}>Podés ver la información del sendero y sus accesos en la fuente del recorrido.</Text>
       </InfoCard>}
     </>
@@ -322,13 +321,12 @@ function FavoriteButton({
       ]}
     >
       <Ionicons
+        aria-hidden
+        accessible={false}
         name={isFavorite ? "star" : "star-outline"}
-        size={18}
+        size={22}
         color={colors.greenDark}
       />
-      <Text style={styles.favoriteText}>
-        {isFavorite ? "Ruta favorita" : "Guardar como favorita"}
-      </Text>
     </Pressable>
   );
 }
@@ -416,26 +414,15 @@ function OfflineMapCard({
   isDownloaded: boolean;
 }) {
   return (
-    <InfoCard style={styles.offlineCard}>
-      <View style={styles.offlineHeader}>
-        <View style={styles.offlineIcon}>
-          <Ionicons
-            name={isDownloaded ? "checkmark-circle-outline" : "download-outline"}
-            size={24}
-            color={colors.green}
-          />
-        </View>
-        <View style={styles.offlineText}>
-          <Text style={styles.cardTitle}>
-            {isDownloaded ? "Mapa sin conexion descargado" : "Mapa sin conexion"}
-          </Text>
-          <Text style={styles.body}>
-            {isDownloaded
-              ? "Esta ruta y sus reportes ya estan disponibles aunque no tengas internet."
-              : "Guarda esta ruta y sus reportes para verla aunque no tengas internet."}
-          </Text>
-        </View>
-      </View>
+    <InfoCard style={styles.mapInfoCard} icon={isDownloaded ? "checkmark-circle-outline" : "download-outline"}>
+      <Text style={styles.mapInfoTitle}>
+        {isDownloaded ? "Mapa sin conexion descargado" : "Mapa sin conexion"}
+      </Text>
+      <Text style={styles.body}>
+        {isDownloaded
+          ? "Esta ruta y sus reportes ya estan disponibles aunque no tengas internet."
+          : "Guarda esta ruta y sus reportes para verla aunque no tengas internet."}
+      </Text>
       {downloadMessage ? (
         <Text style={styles.downloadStatus}>{downloadMessage}</Text>
       ) : null}
@@ -676,7 +663,14 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: "800",
   },
+  titleRow: {
+    alignItems: "flex-start",
+    flexDirection: "row",
+    gap: 10,
+  },
   title: {
+    flex: 1,
+    minWidth: 0,
     fontFamily: typography.extraBold,
     color: colors.ink,
     fontSize: 30,
@@ -689,8 +683,15 @@ const styles = StyleSheet.create({
     fontSize: 15,
     marginTop: 6,
   },
-  card: {
+  mapInfoCard: {
     marginTop: 16,
+  },
+  mapInfoTitle: {
+    fontFamily: typography.bold,
+    color: colors.ink,
+    fontSize: 16,
+    lineHeight: 21,
+    marginBottom: 3,
   },
   cardTitle: {
     fontFamily: typography.bold,
@@ -699,32 +700,12 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     marginBottom: 10,
   },
-  offlineCard: {
-    marginTop: 16,
-  },
-  offlineHeader: {
-    alignItems: "flex-start",
-    flexDirection: "row",
-    gap: 12,
-    marginBottom: 14,
-  },
-  offlineIcon: {
-    alignItems: "center",
-    backgroundColor: colors.primarySoft,
-    borderRadius: 18,
-    height: 42,
-    justifyContent: "center",
-    width: 42,
-  },
-  offlineText: {
-    flex: 1,
-  },
   downloadStatus: {
     color: colors.greenDark,
     fontSize: 13,
     fontWeight: "800",
     lineHeight: 18,
-    marginBottom: 12,
+    marginTop: 5,
   },
   body: {
     fontFamily: typography.regular,
@@ -757,24 +738,14 @@ const styles = StyleSheet.create({
   },
   favoriteButton: {
     alignItems: "center",
-    alignSelf: "flex-start",
-    backgroundColor: colors.primarySoft,
-    borderColor: colors.border,
-    borderRadius: 999,
-    borderWidth: 1,
-    flexDirection: "row",
-    gap: 7,
-    marginTop: 16,
-    paddingHorizontal: 13,
-    paddingVertical: 9,
+    backgroundColor: colors.soft,
+    borderRadius: 22,
+    flexShrink: 0,
+    height: 44,
+    justifyContent: "center",
+    width: 44,
   },
   favoriteButtonActive: {
     backgroundColor: colors.mint,
-    borderColor: colors.primary,
-  },
-  favoriteText: {
-    color: colors.greenDark,
-    fontSize: 13,
-    fontWeight: "900",
   },
 });

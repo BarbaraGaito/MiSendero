@@ -1039,10 +1039,8 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   syncMetric: {
-    backgroundColor: colors.page,
-    borderColor: colors.border,
+    backgroundColor: colors.soft,
     borderRadius: 12,
-    borderWidth: 1,
     flexBasis: "47%",
     flexGrow: 1,
     minWidth: 118,
@@ -1111,10 +1109,8 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   aiMetric: {
-    backgroundColor: colors.white,
-    borderColor: colors.border,
+    backgroundColor: colors.soft,
     borderRadius: 12,
-    borderWidth: 1,
     flexBasis: "30%",
     flexGrow: 1,
     minWidth: 94,

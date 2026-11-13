@@ -22,6 +22,7 @@ import { useDeviceLocation } from "../../hooks/useDeviceLocation";
 import { useTerrainElevation } from "../../hooks/useTerrainElevation";
 import { resolveCachedTileUri } from "../../../services/mapTileCache";
 import { readBasicOfflineMap } from "../../../services/basicOfflineMap";
+import { MAX_TERRAIN_SCALE } from "../../../services/mapGestures";
 import { TrailMap } from "../TrailMap";
 import { OPEN_METEO_ELEVATION_ATTRIBUTION } from "../../../services/terrainElevation";
 import { TERRAIN_TILES_ATTRIBUTION } from "../../../services/terrainTiles";
@@ -143,6 +144,29 @@ test("pan and pinch gestures finish interactions and update scale in both map mo
   expect(tree.root.findByType("Terrain3DScene").props.viewOffset).toEqual({ x: 20, y: 30 });
   await act(async () => gestures.onPanResponderTerminate()); expect(interacting).toHaveBeenLastCalledWith(false);
 });
+
+test("3D zoom buttons and pinch both reach the expanded range", async () => {
+  const tree = await mount(TrailMap, { trail, initialPerspective: true, navigationMode: true });
+  const scale = () => tree.root.findByType("Terrain3DScene").props.viewScale;
+  const zoomIn = () => tree.root.findAll((node: any) => node.props.accessibilityLabel === "Acercar mapa" && node.props.onPress)[0];
+
+  for (let step = 0; step < 8; step++) await press(tree, "Acercar mapa");
+  expect(scale()).toBe(MAX_TERRAIN_SCALE);
+  expect(zoomIn().props.disabled).toBe(true);
+  await press(tree, "Alejar mapa");
+  expect(scale()).toBeGreaterThan(4);
+  expect(zoomIn().props.disabled).toBe(false);
+
+  const pinch = (distance: number) => ({ nativeEvent: { touches: [{ pageX: 0, pageY: 0 }, { pageX: distance, pageY: 0 }] } });
+  await act(async () => {
+    gestures.onPanResponderGrant(pinch(100));
+    gestures.onPanResponderMove(pinch(160), { dx: 0, dy: 0 });
+    gestures.onPanResponderRelease({}, { dx: 0, dy: 0 });
+  });
+  expect(scale()).toBe(MAX_TERRAIN_SCALE);
+  expect(zoomIn().props.disabled).toBe(true);
+});
+
 test.each(["offline", "no-route", "provider-error"])("missing DEM data (%s) never produces a fabricated 3D surface", async (reason) => {
   (useTerrainElevation as jest.Mock).mockReturnValue({ status: "unavailable", reason });
   const tree = await mount(TrailMap, { trail, initialPerspective: true }); expect(text(tree)).toContain("Relieve 3D no disponible"); expect(tree.root.findAllByType("Terrain3DScene")).toHaveLength(0);

@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Platform, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import type { DistanceFilter, TrailAreaFilter } from "../../services/trailFilters";
 import { colors, typography } from "./MiSenderoUI";
+import { surfaceShadows } from "./surfaceShadows";
 
 const areas = [
   { id: "all", label: "Todos" },
@@ -27,29 +28,32 @@ export type CatalogFilters = {
   area: TrailAreaFilter;
   difficulty: (typeof difficulties)[number]["id"];
   distance: DistanceFilter;
+  favoritesOnly: boolean;
 };
 
-export const defaultCatalogFilters: CatalogFilters = { area: "all", difficulty: "Todas", distance: "Todas" };
+export const defaultCatalogFilters: CatalogFilters = {
+  area: "all", difficulty: "Todas", distance: "Todas", favoritesOnly: false,
+};
 
 export function TrailCatalogFilters({
-  filters, setFilters, query, setQuery, favoritesOnly, onToggleFavorites, expanded, onToggleExpanded, onViewResults,
+  filters, setFilters, query, setQuery, draft, setDraft, onApply,
 }: {
   filters: CatalogFilters;
   setFilters: (filters: CatalogFilters) => void;
   query: string;
   setQuery: (query: string) => void;
-  favoritesOnly: boolean;
-  onToggleFavorites: () => void;
-  expanded: boolean;
-  onToggleExpanded: () => void;
-  onViewResults: () => void;
+  draft: CatalogFilters | null;
+  setDraft: (draft: CatalogFilters | null) => void;
+  onApply: (filters: CatalogFilters) => void;
 }) {
   const [searchFocused, setSearchFocused] = useState(false);
+  const expanded = draft !== null;
   const activeFilters = ([
     { key: "area", label: areas.find((area) => area.id === filters.area)?.label },
     { key: "difficulty", label: `Dificultad: ${filters.difficulty}` },
     { key: "distance", label: distances.find((distance) => distance.id === filters.distance)?.label },
   ] as const).filter(({ key }) => filters[key] !== defaultCatalogFilters[key]);
+  const activeCount = activeFilters.length + Number(filters.favoritesOnly);
 
   return (
     <View style={styles.filters}>
@@ -78,81 +82,104 @@ export function TrailCatalogFilters({
         <Pressable
           accessibilityRole="button"
           accessibilityLabel="Filtrar senderos"
-          accessibilityHint={activeFilters.length ? `${activeFilters.length} filtros activos` : undefined}
+          accessibilityHint={activeCount ? `${activeCount} ${activeCount === 1 ? "filtro activo" : "filtros activos"}` : undefined}
           accessibilityState={{ expanded }}
           aria-expanded={expanded}
-          onPress={onToggleExpanded}
+          onPress={() => setDraft(expanded ? null : filters)}
           style={({ pressed }) => [
-            styles.filterTrigger, (expanded || activeFilters.length > 0) && styles.triggerActive,
+            styles.filterTrigger, (expanded || activeCount > 0) && styles.triggerActive,
             pressed && styles.pressed,
           ]}
         >
           <Ionicons aria-hidden accessible={false} name="options-outline" size={19} color={colors.green} />
           <Text style={styles.triggerLabel}>Filtros</Text>
-          {activeFilters.length > 0 ? (
-            <View style={styles.filterBadge}><Text style={styles.filterBadgeText}>{activeFilters.length}</Text></View>
+          {activeCount > 0 ? (
+            <View style={styles.filterBadge}><Text style={styles.filterBadgeText}>{activeCount}</Text></View>
           ) : null}
         </Pressable>
       </View>
 
-      {expanded ? (
-        <View style={styles.panel}>
-          <View style={styles.panelHeading}>
-            <Text accessibilityRole="header" style={styles.panelTitle}>Ajustá tu búsqueda</Text>
-            {activeFilters.length ? (
-              <Pressable accessibilityRole="button" onPress={() => setFilters(defaultCatalogFilters)}
-                style={({ pressed }) => [styles.reset, pressed && styles.pressed]}>
-                <Text style={styles.resetLabel}>Limpiar filtros</Text>
-              </Pressable>
-            ) : null}
-          </View>
-          <FilterGroup title="Tipo de sendero" options={areas} value={filters.area}
-            onChange={(area) => setFilters({ ...filters, area })} />
-          <FilterGroup title="Dificultad" options={difficulties} value={filters.difficulty}
-            onChange={(difficulty) => setFilters({ ...filters, difficulty })} />
-          <FilterGroup title="Distancia" options={distances} value={filters.distance}
-            onChange={(distance) => setFilters({ ...filters, distance })} />
-          <Pressable accessibilityRole="button" onPress={onViewResults}
-            style={({ pressed }) => [styles.viewResults, pressed && styles.pressed]}>
-            <Text style={styles.viewResultsLabel}>Ver resultados</Text>
-            <Ionicons aria-hidden accessible={false} name="arrow-forward" size={17} color={colors.white} />
-          </Pressable>
+      {draft ? <FilterPanel filters={draft} setFilters={setDraft} onApply={() => onApply(draft)} /> : null}
+
+      {!expanded && activeFilters.length > 0 ? (
+        <View style={styles.chipRow}>
+          {activeFilters.map(({ key, label }) => (
+            <Pressable key={key} accessibilityRole="button" accessibilityLabel={`Quitar filtro: ${label}`}
+              onPress={() => setFilters({ ...filters, [key]: defaultCatalogFilters[key] })}
+              style={({ pressed }) => [styles.chip, styles.activeChip, pressed && styles.pressed]}>
+              <Text style={[styles.chipLabel, styles.activeChipLabel]}>{label}</Text>
+              <Ionicons aria-hidden accessible={false} name="close" size={15} color={colors.green} />
+            </Pressable>
+          ))}
         </View>
       ) : null}
+    </View>
+  );
+}
 
-      <View style={styles.chipRow}>
-        <Pressable
-          accessibilityRole="button" accessibilityState={{ selected: favoritesOnly }} aria-pressed={favoritesOnly}
-          onPress={onToggleFavorites}
-          style={({ pressed }) => [styles.chip, favoritesOnly && styles.chipSelected, pressed && styles.pressed]}
-        >
-          <Ionicons aria-hidden accessible={false} name={favoritesOnly ? "star" : "star-outline"} size={16}
-            color={favoritesOnly ? colors.white : colors.green} />
-          <Text style={[styles.chipLabel, favoritesOnly && styles.chipLabelSelected]}>Favoritos</Text>
-        </Pressable>
-        {!expanded && activeFilters.map(({ key, label }) => (
-          <Pressable key={key} accessibilityRole="button" accessibilityLabel={`Quitar filtro: ${label}`}
-            onPress={() => setFilters({ ...filters, [key]: defaultCatalogFilters[key] })}
-            style={({ pressed }) => [styles.chip, styles.activeChip, pressed && styles.pressed]}>
-            <Text style={[styles.chipLabel, styles.activeChipLabel]}>{label}</Text>
-            <Ionicons aria-hidden accessible={false} name="close" size={15} color={colors.green} />
+function FilterPanel({ filters, setFilters, onApply }: {
+  filters: CatalogFilters;
+  setFilters: (filters: CatalogFilters) => void;
+  onApply: () => void;
+}) {
+  const [openGroup, setOpenGroup] = useState<"area" | "difficulty" | "distance" | null>(null);
+  const toggleGroup = (group: typeof openGroup) => setOpenGroup((current) => current === group ? null : group);
+  const hasSelection = filters.area !== defaultCatalogFilters.area || filters.difficulty !== defaultCatalogFilters.difficulty ||
+    filters.distance !== defaultCatalogFilters.distance || filters.favoritesOnly;
+
+  return (
+    <View style={styles.panel}>
+      <FilterGroup title="Tipo de sendero" options={areas} value={filters.area}
+        expanded={openGroup === "area"} onToggle={() => toggleGroup("area")}
+        onChange={(area) => { setFilters({ ...filters, area }); setOpenGroup(null); }} />
+      <FilterGroup title="Dificultad" options={difficulties} value={filters.difficulty}
+        expanded={openGroup === "difficulty"} onToggle={() => toggleGroup("difficulty")}
+        onChange={(difficulty) => { setFilters({ ...filters, difficulty }); setOpenGroup(null); }} />
+      <FilterGroup title="Distancia" options={distances} value={filters.distance}
+        expanded={openGroup === "distance"} onToggle={() => toggleGroup("distance")}
+        onChange={(distance) => { setFilters({ ...filters, distance }); setOpenGroup(null); }} />
+      <Pressable accessibilityRole="checkbox" accessibilityLabel="Favoritos" accessibilityState={{ checked: filters.favoritesOnly }}
+        onPress={() => setFilters({ ...filters, favoritesOnly: !filters.favoritesOnly })}
+        style={({ pressed }) => [styles.filterRow, pressed && styles.pressed]}>
+        <Ionicons aria-hidden accessible={false} name={filters.favoritesOnly ? "star" : "star-outline"} size={17} color={colors.green} />
+        <Text style={[styles.rowLabel, styles.favoriteLabel]}>Favoritos</Text>
+        <Ionicons aria-hidden accessible={false} name={filters.favoritesOnly ? "checkbox" : "square-outline"} size={19} color={colors.green} />
+      </Pressable>
+      <View style={styles.panelActions}>
+        {hasSelection ? (
+          <Pressable accessibilityRole="button" onPress={() => { setFilters(defaultCatalogFilters); setOpenGroup(null); }}
+            style={({ pressed }) => [styles.reset, pressed && styles.pressed]}>
+            <Text style={styles.resetLabel}>Limpiar filtros</Text>
           </Pressable>
-        ))}
+        ) : null}
+        <Pressable accessibilityRole="button" onPress={onApply}
+          style={({ pressed }) => [styles.apply, pressed && styles.pressed]}>
+          <Text style={styles.applyLabel}>Aplicar</Text>
+        </Pressable>
       </View>
     </View>
   );
 }
 
-function FilterGroup<T extends string>({ title, options, value, onChange }: {
+function FilterGroup<T extends string>({ title, options, value, expanded, onToggle, onChange }: {
   title: string;
   options: readonly { id: T; label: string }[];
   value: T;
+  expanded: boolean;
+  onToggle: () => void;
   onChange: (id: T) => void;
 }) {
+  const selectedLabel = options.find(({ id }) => id === value)?.label;
   return (
     <View style={styles.group}>
-      <Text style={styles.groupLabel}>{title}</Text>
-      <View style={styles.chipRow}>
+      <Pressable accessibilityRole="button" accessibilityLabel={title} accessibilityState={{ expanded }}
+        accessibilityValue={{ text: selectedLabel }} onPress={onToggle}
+        style={({ pressed }) => [styles.filterRow, pressed && styles.pressed]}>
+        <Text style={styles.rowLabel}>{title}</Text>
+        <Text style={styles.rowValue}>{selectedLabel}</Text>
+        <Ionicons aria-hidden accessible={false} name={expanded ? "chevron-up" : "chevron-down"} size={16} color={colors.green} />
+      </Pressable>
+      {expanded ? <View style={[styles.chipRow, styles.options]}>
         {options.map(({ id, label }) => (
           <Pressable key={id} accessibilityRole="button" accessibilityState={{ selected: id === value }}
             aria-pressed={id === value} onPress={() => onChange(id)}
@@ -161,7 +188,7 @@ function FilterGroup<T extends string>({ title, options, value, onChange }: {
             <Text style={[styles.chipLabel, id === value && styles.chipLabelSelected]}>{label}</Text>
           </Pressable>
         ))}
-      </View>
+      </View> : null}
     </View>
   );
 }
@@ -180,10 +207,11 @@ const styles = StyleSheet.create({
   },
   clearSearch: { alignItems: "center", justifyContent: "center", minHeight: 44, width: 40 },
   filterTrigger: {
-    alignItems: "center", backgroundColor: colors.surface, borderColor: colors.border, borderRadius: 14,
-    borderWidth: 1, flexDirection: "row", gap: 6, justifyContent: "center", minHeight: 52, paddingHorizontal: 12,
+    ...surfaceShadows.card,
+    alignItems: "center", backgroundColor: colors.surface, borderRadius: 14,
+    flexDirection: "row", gap: 6, justifyContent: "center", minHeight: 52, paddingHorizontal: 12,
   },
-  triggerActive: { backgroundColor: colors.primarySoft, borderColor: colors.green },
+  triggerActive: { backgroundColor: colors.primarySoft },
   triggerLabel: { color: colors.green, fontFamily: typography.bold, fontSize: 15, lineHeight: 21 },
   filterBadge: {
     alignItems: "center", backgroundColor: colors.green, borderRadius: 999, justifyContent: "center",
@@ -191,29 +219,34 @@ const styles = StyleSheet.create({
   },
   filterBadgeText: { color: colors.white, fontFamily: typography.bold, fontSize: 12, lineHeight: 16 },
   panel: {
-    backgroundColor: colors.surface, borderColor: colors.line, borderRadius: 18, borderWidth: 1,
-    gap: 14, paddingHorizontal: 15, paddingVertical: 14,
+    ...surfaceShadows.card,
+    backgroundColor: colors.surface, borderRadius: 18,
+    gap: 4, padding: 8,
   },
-  panelHeading: { alignItems: "center", flexDirection: "row", flexWrap: "wrap", columnGap: 8, justifyContent: "space-between" },
-  panelTitle: { color: colors.ink, fontFamily: typography.extraBold, fontSize: 18, lineHeight: 24 },
-  reset: { justifyContent: "center", minHeight: 44 },
-  resetLabel: { color: colors.green, fontFamily: typography.bold, fontSize: 14, textDecorationLine: "underline" },
-  group: { gap: 6 },
-  groupLabel: { color: colors.ink, fontFamily: typography.bold, fontSize: 14, lineHeight: 20 },
+  filterRow: { alignItems: "center", backgroundColor: colors.softer, borderRadius: 10, flexDirection: "row",
+    gap: 8, minHeight: 44, paddingHorizontal: 10, paddingVertical: 6 },
+  rowLabel: { color: colors.ink, flexShrink: 1, fontFamily: typography.bold, fontSize: 14, lineHeight: 20 },
+  favoriteLabel: { flex: 1 },
+  rowValue: { color: colors.greenDark, flex: 1, fontFamily: typography.medium, fontSize: 14, lineHeight: 20, textAlign: "right" },
+  group: { gap: 4 },
+  options: { paddingHorizontal: 4, paddingBottom: 4 },
   chipRow: { alignItems: "center", flexDirection: "row", flexWrap: "wrap", gap: 7 },
   chip: {
-    alignItems: "center", backgroundColor: colors.surface, borderColor: colors.border, borderRadius: 999,
-    borderWidth: 1, flexDirection: "row", gap: 5, maxWidth: "100%", minHeight: 44, paddingHorizontal: 12,
+    alignItems: "center", backgroundColor: colors.soft, borderRadius: 999,
+    flexDirection: "row", gap: 5, maxWidth: "100%", minHeight: 44, paddingHorizontal: 12,
   },
-  chipSelected: { backgroundColor: colors.green, borderColor: colors.green },
-  activeChip: { backgroundColor: colors.primarySoft, borderColor: colors.primarySoft },
+  chipSelected: { backgroundColor: colors.green },
+  activeChip: { backgroundColor: colors.primarySoft },
   chipLabel: { color: colors.muted, flexShrink: 1, fontFamily: typography.medium, fontSize: 14, lineHeight: 19 },
   chipLabelSelected: { color: colors.white },
   activeChipLabel: { color: colors.green },
-  viewResults: {
-    alignItems: "center", alignSelf: "flex-start", backgroundColor: colors.green, borderRadius: 12,
-    flexDirection: "row", gap: 8, justifyContent: "center", minHeight: 44, paddingHorizontal: 14,
+  panelActions: { alignItems: "center", flexDirection: "row", flexWrap: "wrap", gap: 8, justifyContent: "flex-end", marginTop: 4 },
+  reset: { justifyContent: "center", minHeight: 44, paddingHorizontal: 10 },
+  resetLabel: { color: colors.green, fontFamily: typography.bold, fontSize: 14, lineHeight: 20 },
+  apply: {
+    alignItems: "center", backgroundColor: colors.green, borderRadius: 10, justifyContent: "center",
+    minHeight: 44, paddingHorizontal: 18, paddingVertical: 6,
   },
-  viewResultsLabel: { color: colors.white, fontFamily: typography.bold, fontSize: 14, lineHeight: 20 },
+  applyLabel: { color: colors.white, fontFamily: typography.bold, fontSize: 14, lineHeight: 20 },
   pressed: { opacity: 0.75 },
 });

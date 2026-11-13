@@ -310,56 +310,36 @@ export default function Screen05TrailStart() {
           {!mapReady && <PrimaryButton label="Revisar descarga offline" tone="secondary" onPress={() => router.push({ pathname: "/trail-detail", params: { id: String(trailId) } })} />}
         </InfoCard>
 
-        <InfoCard style={styles.warning}>
-          <Ionicons name="alert-circle-outline" size={24} color={colors.danger} />
-          <View style={styles.warningText}>
-            <Text style={styles.warningTitle}>Recordatorio</Text>
-            <Text style={styles.warningBody}>
-              El seguimiento GPS de esta versión funciona con la app abierta en primer plano. Bloquear el teléfono o cerrarla puede interrumpir el registro; no completa esos tramos por estimación.
-            </Text>
-          </View>
+        <InfoCard style={styles.warningCard} icon="alert-circle-outline" iconColor={colors.danger}>
+          <Text style={styles.warningTitle}>Recordatorio</Text>
+          <Text style={styles.warningBody}>
+            El seguimiento GPS de esta versión funciona con la app abierta en primer plano. Bloquear el teléfono o cerrarla puede interrumpir el registro; no completa esos tramos por estimación.
+          </Text>
         </InfoCard>
 
         {isTestingLocation ? (
-          <InfoCard style={styles.locationCard}>
-            <Ionicons name="flask-outline" size={24} color={colors.green} />
-            <View style={styles.warningText}>
-              <Text style={styles.warningTitle}>Modo prueba: no se envía plan de salida</Text>
-              <Text style={styles.warningBody}>
-                El recorrido es simulado: no se envía SMS ni avisos a tu contacto.
-              </Text>
-            </View>
+          <InfoCard style={styles.statusCard} icon="flask-outline">
+            <Text style={styles.warningTitle}>Modo prueba: no se envía plan de salida</Text>
+            <Text style={styles.warningBody}>
+              El recorrido es simulado: no se envía SMS ni avisos a tu contacto.
+            </Text>
           </InfoCard>
         ) : (
           <PrimaryButton label={departureReady ? "Revisar plan de regreso" : "Enviar plan de regreso por SMS"} tone="secondary" onPress={() => router.push({ pathname: "/plan-salida", params: { id: String(trailId) } })} />
         )}
 
-        <InfoCard style={hasSafetyContact ? styles.contactReady : styles.contactRequired}>
-          <Ionicons
-            name={hasSafetyContact ? "shield-checkmark-outline" : "shield-outline"}
-            size={24}
-            color={hasSafetyContact ? colors.green : colors.danger}
-          />
-          <View style={styles.warningText}>
-            <Text style={styles.warningTitle}>Contacto de emergencia</Text>
-            <Text style={styles.warningBody}>
-              {contactStatusText}
-            </Text>
-          </View>
+        <InfoCard style={hasSafetyContact ? styles.statusCard : styles.warningCard}
+          icon={hasSafetyContact ? "shield-checkmark-outline" : "shield-outline"}
+          iconColor={hasSafetyContact ? colors.green : colors.danger}>
+          <Text style={styles.warningTitle}>Contacto de emergencia</Text>
+          <Text style={styles.warningBody}>{contactStatusText}</Text>
         </InfoCard>
 
-        <InfoCard style={isFarFromStart ? styles.startWarning : styles.locationCard}>
-          <Ionicons
-            name={isFarFromStart ? "warning-outline" : "navigate-outline"}
-            size={24}
-            color={isFarFromStart ? colors.danger : colors.green}
-          />
-          <View style={styles.warningText}>
-            <Text style={styles.warningTitle}>Ubicacion de inicio</Text>
-            <Text style={styles.warningBody}>
-              {locationStatusText}
-            </Text>
-          </View>
+        <InfoCard style={isFarFromStart ? styles.warningCard : styles.statusCard}
+          icon={isFarFromStart ? "warning-outline" : "navigate-outline"}
+          iconColor={isFarFromStart ? colors.danger : colors.green}>
+          <Text style={styles.warningTitle}>Ubicacion de inicio</Text>
+          <Text style={styles.warningBody}>{locationStatusText}</Text>
         </InfoCard>
 
         <View style={styles.footer}>
@@ -435,48 +415,14 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: "700",
   },
-  warning: {
-    alignItems: "center",
+  warningCard: {
     alignSelf: "stretch",
     backgroundColor: "#FFF4F2",
-    flexDirection: "row",
-    gap: 12,
-    marginTop: 16,
+    marginTop: 12,
   },
-  locationCard: {
-    alignItems: "center",
+  statusCard: {
     alignSelf: "stretch",
-    backgroundColor: colors.white,
-    flexDirection: "row",
-    gap: 12,
-    marginTop: 16,
-  },
-  startWarning: {
-    alignItems: "center",
-    alignSelf: "stretch",
-    backgroundColor: "#FFF4F2",
-    flexDirection: "row",
-    gap: 12,
-    marginTop: 16,
-  },
-  contactReady: {
-    alignItems: "center",
-    alignSelf: "stretch",
-    backgroundColor: colors.white,
-    flexDirection: "row",
-    gap: 12,
-    marginTop: 16,
-  },
-  contactRequired: {
-    alignItems: "center",
-    alignSelf: "stretch",
-    backgroundColor: "#FFF4F2",
-    flexDirection: "row",
-    gap: 12,
-    marginTop: 16,
-  },
-  warningText: {
-    flex: 1,
+    marginTop: 12,
   },
   warningTitle: {
     color: colors.ink,

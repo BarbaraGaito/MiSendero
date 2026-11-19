@@ -91,7 +91,9 @@ test("the actual webhook adapter authenticates and deduplicates retries, recordi
     const first = fetchMock.mock.calls[0][1], second = fetchMock.mock.calls[1][1];
     expect(first.headers.Authorization).toBe("Bearer test-channel-only"); expect(first.headers["Idempotency-Key"]).toBe(second.headers["Idempotency-Key"]);
     expect(JSON.parse(first.body)).toMatchObject({ event: "trip_return_unconfirmed", contact: { phone: body.contact_phone }, grace_minutes: 30 });
-    expect(JSON.parse(first.body).message).toContain("Esto no confirma un accidente");
+    const message = JSON.parse(first.body).message;
+    expect(message).toContain("no confirma un accidente");
+    expect(message.length).toBeLessThanOrEqual(160); expect(message).toMatch(/^[A-Za-z0-9 .,()'+;:-]*$/);
     expect((await query("SELECT * FROM trip_notifications")).rows[0].status).toBe("accepted");
   } finally { fetchMock.mockRestore(); }
 });

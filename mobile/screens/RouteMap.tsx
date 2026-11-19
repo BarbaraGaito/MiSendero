@@ -31,6 +31,7 @@ import { TrailMap } from "../components/TrailMap";
 import { MiSenderoLogo } from "../components/MiSenderoLogo";
 import { surfaceShadows } from "../components/surfaceShadows";
 import { useDeviceLocation } from "../hooks/useDeviceLocation";
+import { useFallDetection } from "../hooks/useFallDetection";
 import { DeviceLocation } from "../../services/deviceLocation";
 import {
   Coordinate,
@@ -352,6 +353,19 @@ export default function Screen04RouteMap() {
     isTestingLocation,
   } = useDeviceLocation(isActiveRoute, simulatedStartLocation);
   const location = isTestingLocation ? simulatedLiveLocation ?? deviceLocation : deviceLocation;
+  const [isFallCheckVisible, setIsFallCheckVisible] = useState(false);
+  useFallDetection(isActiveRoute && isFocused && !isPaused && !isFallCheckVisible, () => {
+    Vibration.vibrate([0, 500, 250, 500]);
+    setIsFallCheckVisible(true);
+  });
+  const openSosAfterFall = () => {
+    setIsFallCheckVisible(false);
+    router.push({
+      pathname: "/confirmar-sos",
+      params: { id: String(trailId), startedAt: String(startedAtMs), sendSms: "1",
+        ...(isTestingLocation ? { simulated: "1" } : {}) },
+    });
+  };
 
   useEffect(() => {
     trackedDistanceMetersRef.current = trackedDistanceMeters;
@@ -673,6 +687,13 @@ export default function Screen04RouteMap() {
           }
           simulated={Boolean(wearableRuntime?.latestSample?.simulated) || isTestingLocation}
           title={wearableRuntime?.prediction?.title && `${wearableRuntime.prediction.title}${simulatedWearableLabel}`}
+        />
+
+        <FallCheckModal
+          isVisible={isFallCheckVisible}
+          onOk={() => setIsFallCheckVisible(false)}
+          onSendSos={openSosAfterFall}
+          simulated={isTestingLocation}
         />
 
         {showWearablePanel ? (
@@ -1189,6 +1210,58 @@ function CriticalWearableModal({
               <Text style={styles.criticalModalPrimaryText}>
                 {simulated ? "Probar SOS (no se envía)" : "Enviar mensaje de ayuda"}
               </Text>
+            </Pressable>
+          </View>
+        </View>
+      </View>
+    </Modal>
+  );
+}
+
+export const FALL_CHECK_SECONDS = 30;
+
+function FallCheckModal({
+  isVisible,
+  onOk,
+  onSendSos,
+  simulated,
+}: {
+  isVisible: boolean;
+  onOk: () => void;
+  onSendSos: () => void;
+  simulated: boolean;
+}) {
+  const [secondsLeft, setSecondsLeft] = useState(FALL_CHECK_SECONDS);
+  const sendSos = useRef(onSendSos);
+  sendSos.current = onSendSos;
+  useEffect(() => {
+    if (!isVisible) { setSecondsLeft(FALL_CHECK_SECONDS); return; }
+    const timer = setInterval(() => setSecondsLeft((value) => value - 1), 1000);
+    return () => clearInterval(timer);
+  }, [isVisible]);
+  // Without an answer, open the SOS so the message to the contact is ready to send.
+  useEffect(() => { if (isVisible && secondsLeft <= 0) sendSos.current(); }, [isVisible, secondsLeft]);
+  return (
+    <Modal animationType="fade" transparent visible={isVisible}>
+      <View style={styles.criticalModalOverlay}>
+        <View style={styles.criticalModalCard}>
+          <View style={styles.criticalModalIcon}>
+            <Ionicons name="alert-circle-outline" size={34} color={colors.danger} />
+          </View>
+          <Text accessibilityRole="alert" style={styles.criticalModalTitle}>¿Estás bien?</Text>
+          <Text style={styles.criticalModalBody}>
+            {`Detectamos un posible golpe seguido de inmovilidad. Si no respondés en ${Math.max(0, secondsLeft)} s, se abre el SOS con el mensaje para tu contacto.`}
+          </Text>
+          {simulated ? (
+            <Text style={styles.criticalModalBody}>Modo prueba: el SOS no se envía.</Text>
+          ) : null}
+          <View style={styles.criticalModalActions}>
+            <Pressable accessibilityRole="button" onPress={onSendSos} style={styles.criticalModalPrimary}>
+              <Ionicons name="alert-circle-outline" size={18} color={colors.white} />
+              <Text style={styles.criticalModalPrimaryText}>Pedir ayuda</Text>
+            </Pressable>
+            <Pressable accessibilityRole="button" onPress={onOk} style={styles.fallModalSecondary}>
+              <Text style={styles.fallModalSecondaryText}>Estoy bien</Text>
             </Pressable>
           </View>
         </View>
@@ -1836,6 +1909,19 @@ const styles = StyleSheet.create({
   },
   criticalModalPrimaryText: {
     color: colors.white,
+    fontSize: 15,
+    fontWeight: "900",
+  },
+  fallModalSecondary: {
+    alignItems: "center",
+    borderColor: colors.ink,
+    borderRadius: 17,
+    borderWidth: 1.5,
+    justifyContent: "center",
+    minHeight: 50,
+  },
+  fallModalSecondaryText: {
+    color: colors.ink,
     fontSize: 15,
     fontWeight: "900",
   },

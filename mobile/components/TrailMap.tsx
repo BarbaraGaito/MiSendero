@@ -38,6 +38,7 @@ import {
   getPinchZoomDelta,
 } from "../../services/mapGestures";
 import { useDeviceLocation } from "../hooks/useDeviceLocation";
+import { usePremiumPlan } from "../hooks/usePremiumPlan";
 import {
   TerrainElevationState,
   useTerrainElevation,
@@ -455,8 +456,10 @@ export function TrailMap({
   const offline = offlineOnly || network.isConnected === false || network.isInternetReachable === false;
   const [basicMap, setBasicMap] = useState<BasicOfflineMap | null>(null);
   const [layout, setLayout] = useState({ width: 0, height: 0 });
-  const [selectedLayer, setLayer] = useState<MapLayer>("terrain");
-  const layer = offline ? "standard" : selectedLayer;
+  const premiumLayers = usePremiumPlan();
+  const satelliteAvailable = allowSatellite && premiumLayers;
+  const [selectedLayer, setLayer] = useState<MapLayer>("standard");
+  const layer = offline || !premiumLayers ? "standard" : selectedLayer;
   const [perspectiveEnabled, setIsPerspective] = useState(initialPerspective);
   const [terrainRenderFailed, setTerrainRenderFailed] = useState(false);
   const [isMapInformationVisible, setIsMapInformationVisible] = useState(false);
@@ -551,7 +554,7 @@ export function TrailMap({
         : null,
     [terrainElevation, route]
   );
-  const terrainAttribution = `${terrainElevation.status === "ready" ? terrainElevation.data.source.attribution : "Elevación no disponible"}${allowSatellite && !offline ? " · Imagen: Esri World Imagery" : ""}`;
+  const terrainAttribution = `${terrainElevation.status === "ready" ? terrainElevation.data.source.attribution : "Elevación no disponible"}${satelliteAvailable && !offline ? " · Imagen: Esri World Imagery" : ""}`;
   const closeMapInformation = () => setIsMapInformationVisible(false);
   const openMapAttributions = () => {
     closeMapInformation();
@@ -623,10 +626,10 @@ export function TrailMap({
   }, [activeZoom, maxZoom]);
 
   useEffect(() => {
-    if (!allowSatellite && layer === "satellite") {
+    if (!satelliteAvailable && layer === "satellite") {
       setLayer("terrain");
     }
-  }, [allowSatellite, layer]);
+  }, [satelliteAvailable, layer]);
 
   const panResponder = useMemo(
     () =>
@@ -1117,7 +1120,7 @@ export function TrailMap({
                   source: weather.source,
                 } : null}
                 navigationMode={navigationMode}
-                satelliteTextureEnabled={allowSatellite && !offline && terrainStyle === "natural"}
+                satelliteTextureEnabled={satelliteAvailable && !offline && terrainStyle === "natural"}
               />
               {!onReportCoordinate && reportMarkers.length === 0 && <View
                 pointerEvents="none"
@@ -1393,7 +1396,7 @@ export function TrailMap({
             Mapa
           </Text>
         </Pressable>
-        {!offline && <Pressable
+        {!offline && premiumLayers && <Pressable
           onPress={() => setLayer("terrain")}
           style={[styles.layerButton, layer === "terrain" && styles.layerButtonActive]}
         >
@@ -1401,7 +1404,7 @@ export function TrailMap({
             Terreno
           </Text>
         </Pressable>}
-        {allowSatellite && !offline ? (
+        {satelliteAvailable && !offline ? (
           <Pressable
             onPress={() => setLayer("satellite")}
             style={[styles.layerButton, layer === "satellite" && styles.layerButtonActive]}
@@ -1414,8 +1417,8 @@ export function TrailMap({
         </View>
       ) : null}
       {isPerspective ? <View style={[styles.terrainStyleControl, { top: controlsTopOffset }]}>
-        {([ ["natural", "Imagen"], ["relief", "Relieve"] ] as const).map(([value, label]) => <Pressable key={value}
-          accessibilityRole="button" accessibilityLabel={value === "natural" ? "Ver imagen satelital 3D" : "Ver relieve con curvas de nivel"}
+        {([ ["natural", satelliteAvailable ? "Imagen" : "Sombreado"], ["relief", "Relieve"] ] as const).map(([value, label]) => <Pressable key={value}
+          accessibilityRole="button" accessibilityLabel={value === "relief" ? "Ver relieve con curvas de nivel" : satelliteAvailable ? "Ver imagen satelital 3D" : "Ver relieve sombreado 3D"}
           accessibilityState={{ selected: terrainStyle === value }} onPress={() => setTerrainStyle(value)}
           style={[styles.terrainStyleButton, terrainStyle === value && styles.layerButtonActive]}>
           <Text style={[styles.layerLabel, terrainStyle === value && styles.layerLabelActive]}>{label}</Text>

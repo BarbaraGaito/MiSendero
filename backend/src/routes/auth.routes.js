@@ -46,7 +46,7 @@ router.post("/logout", requireAuth, async (req, res, next) => {
 router.get("/me", requireAuth, async (req, res, next) => {
   try {
     const { rows } = await query(
-      `SELECT id, name, email, role, terms_version, terms_accepted_at, created_at
+      `SELECT id, name, email, role, plan, terms_version, terms_accepted_at, created_at
        FROM users WHERE id = $1`,
       [req.userId]
     );
@@ -83,7 +83,7 @@ router.post("/register", validateBody(registerSchema), async (req, res, next) =>
       `
         INSERT INTO users (name, email, password_hash, role, terms_version, terms_accepted_at, terms_text)
         VALUES ($1, $2, $3, $4, $5, $6, $7)
-        RETURNING id, name, email, role, terms_version, terms_accepted_at
+        RETURNING id, name, email, role, plan, terms_version, terms_accepted_at
       `,
       [name, normalizedEmail, passwordHash, role, String(accepted_terms_version), termsAcceptedAt, JSON.stringify(require("../terms.json"))]
     );
@@ -120,6 +120,7 @@ router.post("/login", validateBody(loginSchema), async (req, res, next) => {
         name: user.name,
         email: user.email,
         role: user.role,
+        plan: user.plan,
         terms_version: user.terms_version,
         terms_accepted_at: user.terms_accepted_at,
         created_at: user.created_at,

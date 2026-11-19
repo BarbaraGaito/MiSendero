@@ -1,5 +1,6 @@
 export type FatigueLevel = "bajo" | "medio" | "alto";
 export type UserRole = "admin" | "user";
+export type UserPlan = "free" | "premium";
 
 export interface WatchData {
   hr: number;
@@ -274,6 +275,7 @@ export interface Profile {
     name: string;
     email: string;
     role?: UserRole;
+    plan?: UserPlan;
     terms_version?: string | null;
     terms_accepted_at?: string | null;
     created_at?: string;
@@ -289,6 +291,7 @@ export interface AuthUser {
   name: string;
   email: string;
   role?: UserRole;
+  plan?: UserPlan;
   terms_version?: string | null;
   terms_accepted_at?: string | null;
   created_at?: string;

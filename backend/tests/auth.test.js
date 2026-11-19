@@ -28,6 +28,7 @@ describe("auth", () => {
     expect(response.status).toBe(201);
     expect(response.body.token).toBeTruthy();
     expect(response.body.user.role).toBe("user");
+    expect(response.body.user.plan).toBe("free");
     expect(response.body.user.password_hash).toBeUndefined();
   });
 
@@ -119,6 +120,7 @@ describe("auth", () => {
 
     expect(withToken.status).toBe(200);
     expect(withToken.body.user.email).toBe("ana@misendero.app");
+    expect(login.body.user.plan).toBe("free"); expect(withToken.body.user.plan).toBe("free");
     expect(withToken.body.stats).toEqual({ completed_routes: 0, total_distance_km: 0 });
   });
 

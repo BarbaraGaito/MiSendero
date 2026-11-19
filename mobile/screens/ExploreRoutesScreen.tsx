@@ -198,7 +198,7 @@ export default function ExploreRoutesScreen() {
             <StatusNotice title="Antes de salir"
               message="Si vas a una zona con poca señal, descargá el mapa del sendero con anticipación." />
           </View>
-        ) : null}
+        ) : undefined}
         maxToRenderPerBatch={ROUTES_PAGE_SIZE}
         renderItem={renderRoute}
         showsVerticalScrollIndicator={false}

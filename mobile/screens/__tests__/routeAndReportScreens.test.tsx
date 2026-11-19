@@ -6,6 +6,7 @@ jest.mock("../../../services/routeSession", () => ({ ensureRouteSession: jest.fn
 jest.mock("../../../services/routeTracking", () => ({ getRouteTrackingSummary: jest.fn() }));
 jest.mock("../../../services/wearableMetrics", () => ({ getWearableRuntimeStatus: jest.fn(), syncNativeWearableSampleWithStatus: jest.fn(), createDevelopmentMetricSequence: jest.fn() }));
 jest.mock("../../hooks/useDeviceLocation", () => ({ useDeviceLocation: jest.fn() }));
+jest.mock("../../hooks/useFallDetection", () => ({ useFallDetection: jest.fn() }));
 jest.mock("../../../services/authSession", () => ({ getAuthSession: jest.fn() }));
 jest.mock("../../../services/api", () => ({ createTrailReport: jest.fn() }));
 jest.mock("../../../services/syncQueue", () => ({ isOnline: jest.fn(), enqueue: jest.fn(), runSync: jest.fn().mockResolvedValue({ processed: 0, failed: 0 }) }));
@@ -26,6 +27,7 @@ import { getRouteTrackingSummary } from "../../../services/routeTracking";
 import { getAuthSession } from "../../../services/authSession";
 import { createTrailReport } from "../../../services/api";
 import { useDeviceLocation } from "../../hooks/useDeviceLocation";
+import { useFallDetection } from "../../hooks/useFallDetection";
 import { DepartureMessageRequiredError } from "../../../services/departureMessages";
 import Route from "../RouteMap";
 import Report from "../ReportTerrainScreen";
@@ -95,6 +97,22 @@ test("active route pauses durably before navigating and passes measured distance
   await press(tree, "Pausa"); expect(sessions.pauseRouteSession).toHaveBeenCalledWith(7, startedAt); expect(router.push).toHaveBeenCalledWith(expect.objectContaining({ pathname: "/descanso", params: expect.objectContaining({ traveledMeters: "123" }) }));
   await press(tree, "Terminar ruta Guardar actividad y dejar opinion"); expect(router.push).toHaveBeenLastCalledWith(expect.objectContaining({ pathname: "/recorrido-finalizado", params: expect.objectContaining({ traveledMeters: "123", endedLatitude: "-41" }) }));
   await press(tree, "SOS"); expect(router.push).toHaveBeenLastCalledWith({ pathname: "/confirmar-sos", params: { id: "7", startedAt: String(startedAt), sendSms: "1" } });
+});
+test("a possible fall asks for confirmation and opens the SOS when there is no answer", async () => {
+  active(); const vibrate = jest.spyOn(Vibration, "vibrate").mockImplementation(() => {});
+  const tree = await mount(Route);
+  const detection = () => (useFallDetection as jest.Mock).mock.calls.filter(([enabled]) => enabled).at(-1)?.[1];
+  expect(detection()).toBeDefined();
+  await act(async () => { detection()(); await flush(); });
+  expect(vibrate).toHaveBeenCalled(); expect(text(tree)).toContain("¿Estás bien?");
+  expect((useFallDetection as jest.Mock).mock.calls.at(-1)?.[0]).toBe(false);
+  await press(tree, "Estoy bien"); expect(text(tree)).not.toContain("¿Estás bien?");
+  expect(router.push).not.toHaveBeenCalledWith(expect.objectContaining({ pathname: "/confirmar-sos" }));
+  await act(async () => { detection()(); await flush(); });
+  await act(async () => { for (let second = 0; second < 30; second++) jest.advanceTimersByTime(1000); await flush(); });
+  expect(router.push).toHaveBeenLastCalledWith({ pathname: "/confirmar-sos", params: { id: "7", startedAt: String(startedAt), sendSms: "1" } });
+  expect(text(tree)).not.toContain("¿Estás bien?");
+  vibrate.mockRestore();
 });
 test("resume, failed pause and departure precondition are kept distinct", async () => {
   active(); (sessions.getRouteSession as jest.Mock).mockResolvedValue({ state: "paused" }); const paused = await mount(Route); await press(paused, "Reanudar"); expect(sessions.resumeRouteSession).toHaveBeenCalledWith(7, startedAt);

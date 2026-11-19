@@ -5,7 +5,7 @@ import { utf8Bytes } from "../../services/passwordPolicy";
 import { router } from "expo-router";
 import {
   ActivityIndicator, KeyboardAvoidingView, Platform, Pressable, ScrollView,
-  StyleSheet, Text, TextInput, View, useWindowDimensions,
+  StyleSheet, Text, TextInput, View, useWindowDimensions, type TextInputInstance,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Svg, { Circle, Path } from "react-native-svg";
@@ -67,8 +67,8 @@ export default function LoginScreen() {
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const emailInput = useRef<TextInput>(null);
-  const passwordInput = useRef<TextInput>(null);
+  const emailInput = useRef<TextInputInstance>(null);
+  const passwordInput = useRef<TextInputInstance>(null);
 
   const isRegister = mode === "register";
   const buttonLabel = isRegister ? "Crear cuenta" : "Iniciar sesión";

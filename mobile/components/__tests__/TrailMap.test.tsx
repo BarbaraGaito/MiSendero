@@ -2,6 +2,7 @@ import "../../../testing/mobileSetup";
 jest.mock("expo-network", () => ({ useNetworkState: jest.fn() }));
 jest.mock("../../hooks/useDeviceLocation", () => ({ useDeviceLocation: jest.fn() }));
 jest.mock("../../hooks/useTerrainElevation", () => ({ useTerrainElevation: jest.fn() }));
+jest.mock("../../hooks/usePremiumPlan", () => ({ usePremiumPlan: jest.fn() }));
 jest.mock("../Terrain3DScene", () => {
   const React = require("react");
   return { Terrain3DScene: React.forwardRef((props: any, ref: any) => {
@@ -20,6 +21,7 @@ import { useNetworkState } from "expo-network";
 import { router } from "expo-router";
 import { useDeviceLocation } from "../../hooks/useDeviceLocation";
 import { useTerrainElevation } from "../../hooks/useTerrainElevation";
+import { usePremiumPlan } from "../../hooks/usePremiumPlan";
 import { resolveCachedTileUri } from "../../../services/mapTileCache";
 import { readBasicOfflineMap } from "../../../services/basicOfflineMap";
 import { MAX_TERRAIN_SCALE } from "../../../services/mapGestures";
@@ -33,6 +35,7 @@ const mockPick3D = jest.fn();
 const route = [[-41, -71], [-41.001, -71], [-41.002, -71.001]];
 const grid = { size: 3, center: [-41.001, -71.0005], bounds: { north: -40.99, south: -41.01, west: -71.01, east: -70.99 }, sideLengthMeters: 1440, cellSizeMeters: 720, elevationsMeters: [100,110,120,130,140,150,160,170,180], minElevationMeters: 100, maxElevationMeters: 180 };
 beforeEach(() => {
+  (usePremiumPlan as jest.Mock).mockReturnValue(true);
   (useNetworkState as jest.Mock).mockReturnValue({ isConnected: true, isInternetReachable: true });
   (useDeviceLocation as jest.Mock).mockReturnValue({ location: { coordinate: [-41, -71], accuracy: 5 }, permissionDenied: false, error: null, isTestingLocation: false });
   (useTerrainElevation as jest.Mock).mockReturnValue({ status: "ready", data: { grid, source: {
@@ -96,6 +99,16 @@ test("2D route uses local tile files where available and switches visible source
   await act(async () => credits.props.onPress());
   expect(router.push).toHaveBeenCalledWith({ pathname: "/atribuciones", params: { trailId: String(trail.id) } });
   await press(tree, "Terreno"); expect(text(tree)).toContain(trail.name);
+});
+test("free accounts open the base map and cannot request the per-tile Esri layers", async () => {
+  (usePremiumPlan as jest.Mock).mockReturnValue(false);
+  const tree = await mount(TrailMap, { trail, fitRoute: true }); await layout(tree);
+  expect(text(tree)).toContain("OpenStreetMap");
+  expect(text(tree)).not.toContain("Terreno"); expect(text(tree)).not.toContain("Satelite");
+  expect(tree.root.findAllByType(Image).some((node: any) => String(node.props.source?.uri).includes("arcgisonline"))).toBe(false);
+  const perspective = await mount(TrailMap, { trail, initialPerspective: true });
+  expect(text(perspective)).toContain("Sombreado"); expect(text(perspective)).not.toContain("Esri World Imagery");
+  expect(perspective.root.findByType("Terrain3DScene" as any).props.satelliteTextureEnabled).toBe(false);
 });
 test("a selected point is snapped to the route, distant points and dragged taps are rejected", async () => {
   const select = jest.fn(), reject = jest.fn(); const tree = await mount(TrailMap, { trail, fitRoute: true, onSelectCoordinate: select, onSelectionRejected: reject, selectionToleranceMeters: 80 });

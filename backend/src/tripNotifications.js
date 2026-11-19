@@ -6,6 +6,21 @@ const isNotificationChannelConfigured = () => {
   } catch { return false; }
 };
 
+// One SMS segment: at most 160 characters of the GSM-7 alphabet, so accents
+// are stripped (they would switch the whole message to 70-character UCS-2).
+const SMS_SEGMENT = 160;
+const gsmText = (value, max) => String(value || "").normalize("NFD").replace(/[̀-ͯ]/g, "")
+  .replace(/[^A-Za-z0-9 .,()'-]/g, "").replace(/\s+/g, " ").trim().slice(0, max).trim();
+const buildOverdueMessage = (plan) => {
+  const time = new Intl.DateTimeFormat("es-AR", { timeZone: "America/Argentina/Buenos_Aires", hour: "2-digit", minute: "2-digit", hourCycle: "h23" })
+    .format(new Date(plan.expected_return_at));
+  const name = gsmText(plan.user_name, 18) || "Tu contacto";
+  const text = (trail) => `MiSendero: ${name} no confirmo su regreso de ${trail}. Hora prevista ${time} (+${plan.grace_minutes} min). ` +
+    "Puede estar sin senal; no confirma un accidente.";
+  // The trail name takes whatever room the fixed text leaves in the segment.
+  return text(gsmText(plan.trail_name, SMS_SEGMENT - text("").length) || "su salida");
+};
+
 // The receiver must durably deduplicate Idempotency-Key before forwarding to
 // SMS/push. HTTP acceptance is deliberately never represented as delivery.
 const sendTripNotification = async (plan, notificationId) => {
@@ -19,7 +34,7 @@ const sendTripNotification = async (plan, notificationId) => {
       event: "trip_return_unconfirmed", notification_id: `trip-overdue-${notificationId}`,
       contact: { name: plan.contact_name, phone: plan.contact_phone },
       expected_return_at: plan.expected_return_at, grace_minutes: plan.grace_minutes,
-      message: `${plan.user_name} no confirmó el regreso de ${plan.trail_name || "su salida"} en MiSendero. Hora prevista: ${new Date(plan.expected_return_at).toISOString()}; margen: ${plan.grace_minutes} min. Puede estar sin señal. Esto no confirma un accidente. Intentá contactarlo y seguí el acuerdo previo de la salida.`,
+      message: buildOverdueMessage(plan),
     }),
   });
   if (!response.ok) throw new Error(`notification-channel-http-${response.status}`);
@@ -80,4 +95,4 @@ async function sendUnderAccountLock(claim, send, timestamp) {
   } catch (error) {await client.query("ROLLBACK");throw error;}
   finally {client.release();}
 }
-module.exports = { isNotificationChannelConfigured, processTripNotifications };
+module.exports = { buildOverdueMessage, isNotificationChannelConfigured, processTripNotifications };

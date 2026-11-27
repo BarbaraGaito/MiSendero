@@ -16,6 +16,10 @@ export const applyLocalRetention = async (now = Date.now()) => withWriteTransact
   if (!Number.isFinite(now)) throw new Error("Invalid retention clock");
   const health = await tx.runAsync(`DELETE FROM wearable_metric_samples
     WHERE retention_eligible_at IS NOT NULL AND retention_eligible_at <= ? AND created_at <= ?`, [now-7*DAY,now-7*DAY]);
+  for (const table of ["fatigue_checkins", "field_model_assessments"]) {
+    const exists = await tx.getFirstAsync("SELECT name FROM sqlite_master WHERE type = 'table' AND name = ?", [table]);
+    if (exists) await tx.runAsync(`DELETE FROM ${table} WHERE created_at <= ?`, [now-7*DAY]);
+  }
   const points = await tx.runAsync(`DELETE FROM route_tracking_points
     WHERE retention_eligible_at IS NOT NULL AND retention_eligible_at <= ? AND created_at <= ?
     AND EXISTS (SELECT 1 FROM sessions s WHERE s.user_id IS route_tracking_points.user_id

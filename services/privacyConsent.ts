@@ -2,6 +2,7 @@ import { AccountContext, captureAccountContext, assertAccountContext } from "./a
 import { getAuthSession } from "./authSession";
 import { db } from "../database/connection";
 import { wearableTablesSql } from "../database/wearableSchema";
+import { fieldAssessmentsSql } from "../database/fieldAssessmentsSchema";
 import { initDB } from "../database/database";
 import * as Crypto from "expo-crypto";
 export { default as privacyNotices } from "../backend/src/privacyNotices.json";
@@ -106,6 +107,9 @@ export const clearSensitiveLocalData = async (ownerId?: number) => {
   const userId = ownerId ?? (await getAuthSession())?.user.id;
   if (!userId) return;
   await db.execAsync(wearableTablesSql);
+  await db.execAsync(fieldAssessmentsSql);
+  await db.runAsync("DELETE FROM fatigue_checkins WHERE user_id = ?", [userId]);
+  await db.runAsync("DELETE FROM field_model_assessments WHERE user_id = ?", [userId]);
   await db.runAsync("DELETE FROM wearable_metric_samples WHERE user_id = ?", [userId]);
   await db.runAsync("DELETE FROM wearable_connections WHERE user_id = ?", [userId]);
 };

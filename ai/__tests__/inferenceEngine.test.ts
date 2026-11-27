@@ -12,22 +12,22 @@ const forest = (deploymentApproved: boolean): RandomForestModel => ({
 });
 
 describe("public ground-truth deployment policy", () => {
-  test("live measurements abstain because no fatigue model is approved", () => {
+  test("instant pulse cannot replace a complete window and previous Borg", () => {
     const prediction = predictFatigue({ hr: 150, speedKmh: 2, elapsedMinutes: 90 });
     expect(prediction.label).toBe("sin_datos");
-    expect(prediction.status).toBe("model_not_approved");
+    expect(prediction.status).toBe("missing_inputs");
     expect(prediction.confidence).toBe(0);
     expect(prediction.distances).toEqual({});
-    expect(prediction.reason).toContain("validación aprobada");
+    expect(prediction.reason).toContain("Faltan");
   });
 
-  test("live measurements abstain because no risk model is approved", () => {
+  test("risk during a walk cannot substitute for a morning rest control", () => {
     const prediction = predictPhysioRisk({ hr: 170, spo2: 90, speedKmh: 1.5,
       elapsedMinutes: 150, elevationGainM: 900, fatigue: "alto" });
     expect(prediction.label).toBe("sin_datos");
     expect(prediction.confidence).toBe(0);
     expect(prediction.distances).toEqual({});
-    expect(prediction.reason).toContain("validación aprobada");
+    expect(prediction.reason).toContain("otro momento");
   });
 
   test("forests run only with deployment approval and complete inputs", () => {

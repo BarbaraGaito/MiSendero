@@ -1,0 +1,80 @@
+{
+  "model": {
+    "average_precision": 0.29616900065412655,
+    "roc_auc": 0.7784664830119377,
+    "brier": 0.10676099149613004,
+    "sensitivity": 1.0,
+    "specificity": 0.0,
+    "f2": 0.4265402843601896,
+    "confusion_labels": [
+      0,
+      1
+    ],
+    "confusion_matrix": [
+      [
+        0,
+        121
+      ],
+      [
+        0,
+        18
+      ]
+    ],
+    "calibration_bins": [
+      {
+        "n": 103,
+        "predicted": 0.1487888159754929,
+        "observed": 0.07766990291262135
+      },
+      {
+        "n": 36,
+        "predicted": 0.23348389609781872,
+        "observed": 0.2777777777777778
+      }
+    ]
+  },
+  "baseline": {
+    "average_precision": 0.12949640287769784,
+    "roc_auc": 0.5,
+    "brier": 0.11455657167649116,
+    "sensitivity": 0.0,
+    "specificity": 1.0,
+    "f2": 0.0,
+    "confusion_labels": [
+      0,
+      1
+    ],
+    "confusion_matrix": [
+      [
+        121,
+        0
+      ],
+      [
+        18,
+        0
+      ]
+    ],
+    "calibration_bins": [
+      {
+        "n": 139,
+        "predicted": 0.17226890756302524,
+        "observed": 0.12949640287769784
+      }
+    ]
+  },
+  "paired_improvement_95ci": {
+    "replicates": 2000,
+    "lower": 0.07014328071995214,
+    "upper": 0.3489575033771784
+  },
+  "observations": 139,
+  "people": 30,
+  "runtime_eligible": true,
+  "clinical_or_general_field_approved": false,
+  "reason": "Supera la referencia en el alcance público evaluado; estimación orientativa del prototipo.",
+  "coverage": {
+    "fixed_test_rows": 139,
+    "scored_rows": 139,
+    "abstentions": 0
+  }
+}

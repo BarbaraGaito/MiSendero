@@ -64,6 +64,9 @@ import {
   adminAiModelMetrics,
   AiTrainingMetrics,
 } from "../../ai/modelMetrics";
+import fatigueFieldEvaluation from "../../training/data/field-ai/v1/fatigue/evaluation/metrics.json";
+import amsFieldEvaluation from "../../training/data/field-ai/v1/ams/evaluation/metrics.json";
+import fieldDelivery from "../../training/data/field-ai/v1/delivery.json";
 
 const emptySessionsSummary: SessionsSummary = {
   totalDistance: 0,
@@ -755,6 +758,18 @@ function AdminAiMetricsCard({ isAdmin }: { isAdmin: boolean }) {
         parques o regiones. Estas métricas describen cada tarea y población;
         falta validar el uso durante salidas y calibrar las probabilidades.
       </Text>
+      <View style={styles.aiModelBlock}>
+        <Text style={styles.aiModelTitle}>Prototipo Borg · fatigue-v1</Text>
+        <Text style={styles.privacyText}>MAE {fatigueFieldEvaluation.model.mae.toFixed(3)} frente a {fatigueFieldEvaluation.baseline.mae.toFixed(3)} al repetir el Borg previo. Test: {fatigueFieldEvaluation.observations} observaciones, {fatigueFieldEvaluation.people} personas; test histórico reutilizado.</Text>
+        <Text style={styles.privacyText}>Mejora de MAE, IC 95 % por participante: {fatigueFieldEvaluation.paired_improvement_95ci.lower.toFixed(3)} a {fatigueFieldEvaluation.paired_improvement_95ci.upper.toFixed(3)}. Entradas dentro del rango: {fieldDelivery.fatigue.within_training_ranges}/{fieldDelivery.fatigue.fixed_test_rows}.</Text>
+        <Text style={styles.aiWarningText}>Estimación orientativa con pulso y Borg anterior. No acredita transferencia general a trekking.</Text>
+      </View>
+      <View style={styles.aiModelBlock}>
+        <Text style={styles.aiModelTitle}>Prototipo altura · ams-v1</Text>
+        <Text style={styles.privacyText}>Average precision {amsFieldEvaluation.model.average_precision.toFixed(3)} frente a {amsFieldEvaluation.baseline.average_precision.toFixed(3)}. Brier {amsFieldEvaluation.model.brier.toFixed(3)} frente a {amsFieldEvaluation.baseline.brier.toFixed(3)}. Test: {amsFieldEvaluation.observations} observaciones, {amsFieldEvaluation.people} personas; equipos separados.</Text>
+        <Text style={styles.privacyText}>Mejora de average precision, IC 95 % por participante: {amsFieldEvaluation.paired_improvement_95ci.lower.toFixed(3)} a {amsFieldEvaluation.paired_improvement_95ci.upper.toFixed(3)}. Entradas dentro del rango: {fieldDelivery.ams.within_training_ranges}/{fieldDelivery.ams.fixed_test_rows}.</Text>
+        <Text style={styles.aiWarningText}>Umbral fijado: 18 verdaderos positivos y 121 falsos positivos, sin decisiones negativas. Clasificación binaria deshabilitada; solo puntuación orientativa del control matutino. Sin aprobación clínica ni general de campo.</Text>
+      </View>
       {adminAiModelMetrics.map((metrics) => (
         <AiModelMetricBlock key={metrics.dataset.name} metrics={metrics} />
       ))}

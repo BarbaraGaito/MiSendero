@@ -23,6 +23,7 @@ export const eraseLocalAccountData = async (userId: number) => {
   const stores: Record<string, string> = {
     pending_operations: "user_id", sessions: "user_id", route_tracking_points: "user_id",
     route_runtime: "user_id", wearable_metric_samples: "user_id", wearable_connections: "user_id",
+    fatigue_checkins: "user_id", field_model_assessments: "user_id",
     emergency_contacts: "user_id", saved_trip_plans: "user_id", departure_messages: "user_id",
     user_favorite_trails: "user_id", offline_maps: "user_id", privacy_decision_events: "user_id",
     user_privacy_preferences: "id", user_app_preferences: "id", user_experience_profile: "id",

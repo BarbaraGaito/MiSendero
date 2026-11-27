@@ -1,0 +1,104 @@
+{
+  "schema_version": 1,
+  "id": "ams-v1",
+  "task": "ams",
+  "scope": "ams_morning_next_ascent",
+  "scope_description": "Estimación orientativa de síntomas compatibles con AMS en el próximo control de ascenso, desde un control matinal en reposo; cohorte Boos de trekking en Nepal. No diagnóstico ni predicción continua durante la marcha.",
+  "input_features": [
+    "hr",
+    "spo2",
+    "altitude_m"
+  ],
+  "imputation": [
+    72.0,
+    91.0,
+    3619.0
+  ],
+  "required_features": [
+    "hr",
+    "spo2",
+    "altitude_m"
+  ],
+  "input_ranges": {
+    "hr": [
+      43.0,
+      116.0
+    ],
+    "spo2": [
+      66.0,
+      99.0
+    ],
+    "altitude_m": [
+      2430.0,
+      4600.0
+    ]
+  },
+  "runtime_eligible": true,
+  "eligibility_reason": "Supera la referencia en el alcance público evaluado; estimación orientativa del prototipo.",
+  "clinical_or_general_field_approved": false,
+  "historical_test_reused": false,
+  "dataset_sha256": "fbe5a0d94cd4fd4b97f635e7d8566e80d0afad86c381f0e4f93c21e70be2922e",
+  "selection_sha256": "85059119278416b25c6feb0c19790819ffa59881909df3f33a30d4a80d2b971c",
+  "protocol_sha256": "cc16433133a1c2b23b55ab48bee052e524690ee566e07a2270f303b60cf6191d",
+  "calibration": {
+    "coef": 0.24408888918615987,
+    "intercept": -1.626804214618328
+  },
+  "threshold": 0.08976347442601294,
+  "classifier": {
+    "type": "scaled_classifier_json",
+    "version": 1,
+    "feature_order": [
+      "hr",
+      "spo2",
+      "altitude_m",
+      "hr_missing",
+      "spo2_missing",
+      "altitude_m_missing"
+    ],
+    "classes": [
+      "AMS+",
+      "AMS-"
+    ],
+    "algorithm": "sgd",
+    "evaluation_validity": {
+      "real_public_ground_truth": true,
+      "deployment_approved": false,
+      "reason": "Estimación orientativa de síntomas compatibles con AMS en el próximo control de ascenso, desde un control matinal en reposo; cohorte Boos de trekking en Nepal. No diagnóstico ni predicción continua durante la marcha."
+    },
+    "scaler": {
+      "mean": [
+        73.1218487394958,
+        90.2016806722689,
+        3537.3949579831933,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        12.949070630574523,
+        6.691999276613669,
+        744.0633581779051,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "linear": {
+      "coef": [
+        [
+          -0.15402605026735067,
+          0.8092813378256084,
+          -0.6314054215497232,
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "intercept": [
+        -0.0743174393642083
+      ],
+      "multiclass": "ovr"
+    }
+  }
+}

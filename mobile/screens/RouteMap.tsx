@@ -6,6 +6,7 @@ import * as Network from "expo-network";
 import { router, useLocalSearchParams } from "expo-router";
 import { useScreenFocused } from "../hooks/useScreenFocused";
 import { ReportActions } from "../components/ReportActions";
+import { FieldAssessmentPanel } from "../components/FieldAssessmentPanel";
 import { ReportFeedbackControls } from "../components/ReportFeedbackControls";
 import { buildReportRouteRanges, getUpcomingReport, isActiveReport } from "../../services/reportExperience";
 import { OfflineConnectionBanner } from "../components/OfflineConnectionBanner";
@@ -705,6 +706,7 @@ export default function Screen04RouteMap() {
         ) : null}
 
         <View onLayout={event => setMapFooterHeight(event.nativeEvent.layout.height)} style={[styles.activeFooter, { paddingBottom: Math.max(16, insets.bottom + 10) }]}>
+          <FieldAssessmentPanel trailId={trailId} startedAt={startedAtMs} simulated={isTestingLocation} compact />
           {wearableRuntime?.prediction && wearableRuntime.latestSample ? (
             <View
               style={[

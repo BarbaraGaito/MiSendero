@@ -1,11 +1,10 @@
 import { FatigueLevel } from "../types";
 import { OfflinePrediction, RandomForestModel } from "./modelTypes";
+import { fatigueInputs, predictFieldModel, type BorgCheckin, type FieldPrediction } from "./fieldInference";
+import { fieldModels, amsBinaryDecisionSupported } from "./fieldRegistry";
 
-// No fatigue or physiological-risk model has deployment approval. The public
-// research forests (training/data/public) use other labels and time scales, and
-// the former prototype forests trained on rule-generated targets were removed.
-const NO_APPROVED_MODEL =
-  "No hay un modelo con validación aprobada con mediciones y etiquetas públicas reales para este uso.";
+// Legacy research forests retain their approval gate. Scoped public-data models
+// use the separate registry and causal input contract below.
 
 const unavailable = (reason: string, status: "model_not_approved" | "missing_inputs" = "model_not_approved"): OfflinePrediction =>
   ({ status, label: "sin_datos", confidence: 0, distances: {}, reason });
@@ -24,7 +23,7 @@ export const predictRandomForest = (
   if (model.feature_order.some((feature) => !Number.isFinite(input[feature]))) {
     return unavailable("Faltan variables requeridas por el modelo.", "missing_inputs");
   }
-  const featureValues = model.feature_order.map((feature) => input[feature]);
+  const featureValues = model.feature_order.map((feature) => Math.fround(input[feature]));
   const classCount = model.classes.length;
   const summedProbabilities = new Array(classCount).fill(0);
 
@@ -65,17 +64,37 @@ export const predictRandomForest = (
   };
 };
 
-export const predictFatigue = (_input: {
+const legacyPrediction = (result: FieldPrediction): OfflinePrediction => ({
+  status: result.status === "available" ? "available" : result.status === "not_eligible" ? "model_not_approved" : "missing_inputs",
+  label: result.label ?? "sin_datos", confidence: 0, distances: {}, reason: result.reason,
+});
+
+export const predictFatigue = (input: {
   hr: number;
   speedKmh: number;
   elapsedMinutes: number;
-}): OfflinePrediction => unavailable(NO_APPROVED_MODEL);
+  checkins?: BorgCheckin[];
+  assessedAt?: number;
+  completedMinuteHr?: number;
+}): OfflinePrediction => {
+  const now = input.assessedAt ?? Date.now();
+  return legacyPrediction(predictFieldModel(fieldModels.fatigue, "fatigue", fatigueInputs(input.completedMinuteHr ?? null, input.checkins ?? [], now), "fatigue_recent_borg", now));
+};
 
-export const predictPhysioRisk = (_input: {
+export const predictPhysioRisk = (input: {
   hr: number;
   spo2?: number | null;
   speedKmh: number;
   elapsedMinutes: number;
   elevationGainM?: number | null;
   fatigue: FatigueLevel;
-}): OfflinePrediction => unavailable(NO_APPROVED_MODEL);
+  altitudeM?: number;
+  morningRestConfirmed?: boolean;
+  assessedAt?: number;
+}): OfflinePrediction => {
+  const result = predictFieldModel(fieldModels.ams, "ams", {
+  hr: input.hr, spo2: input.spo2, altitude_m: input.altitudeM,
+  }, input.morningRestConfirmed === true ? "ams_morning_next_ascent" : "unsupported", input.assessedAt ?? Date.now());
+  if (result.status === "available" && !amsBinaryDecisionSupported) return unavailable("El control de altura ofrece una puntuación orientativa, sin clasificación binaria validada.");
+  return legacyPrediction(result);
+};

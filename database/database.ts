@@ -4,6 +4,7 @@ import type { SessionRow } from "../types";
 import { persistActivityOutbox } from "./activityOutbox";
 import { installRetentionPolicy } from "./dataRetention";
 import { wearableStorageSql } from "./wearableSchema";
+import { fieldAssessmentsSql } from "./fieldAssessmentsSchema";
 
 export { db };
 
@@ -157,6 +158,7 @@ const runInitDB = async () => {
     );
 
     ${wearableStorageSql}
+    ${fieldAssessmentsSql}
 
     CREATE TABLE IF NOT EXISTS offline_maps (
       id INTEGER PRIMARY KEY AUTOINCREMENT,

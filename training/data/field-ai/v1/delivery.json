@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "run": "v1",
+  "policy": "Conservative delivery restrictions applied after the frozen scientific evaluation; no threshold retuning.",
+  "fatigue": {
+    "fixed_test_rows": 179,
+    "within_training_ranges": 177,
+    "outside_scope": 2,
+    "outside_scope_features": { "prior_age_minutes": 1, "hr": 1 },
+    "clinical_or_general_field_approved": false,
+    "historical_test_reused": true
+  },
+  "ams": {
+    "fixed_test_rows": 139,
+    "within_training_ranges": 138,
+    "outside_scope": 1,
+    "outside_scope_features": { "hr": 1 },
+    "binary_decisions_enabled": false,
+    "reason": "Frozen threshold yields 18 true positives, 121 false positives and zero negative decisions on held-out data. Only an informational score is exposed.",
+    "clinical_or_general_field_approved": false
+  },
+  "limits": "Counts replay input eligibility on complete public observations; they do not estimate field availability, wearable quality or clinical usefulness. No hardware verification was performed by this run."
+}

@@ -87,6 +87,10 @@ test("admin evaluation compares macro F1 with its baseline and discloses missing
   expect(content).toContain("Accuracy balanceada");
   expect(content).toContain("Clases evaluadas");
   expect(content).toContain("Fatiga Borg con calibración previa");
+  expect(content).toContain("Prototipo Borg · fatigue-v1");
+  expect(content).toContain("Prototipo altura · ams-v1");
+  expect(content).toContain("Clasificación binaria deshabilitada");
+  expect(content).toContain("test histórico reutilizado");
   expect(content).toContain("Accuracy de Borg previa");
   expect(content).toContain("F1 de Borg previa");
   expect(content).toContain("Requiere Borg previa y contexto de actividad");

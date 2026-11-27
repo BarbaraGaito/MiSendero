@@ -5,6 +5,8 @@ export interface DeviceLocation {
   coordinate: Coordinate;
   accuracy: number | null;
   timestamp: number;
+  altitudeM?: number | null;
+  altitudeAccuracyM?: number | null;
 }
 
 export const toDeviceLocation = (
@@ -13,6 +15,8 @@ export const toDeviceLocation = (
   coordinate: [location.coords.latitude, location.coords.longitude],
   accuracy: location.coords.accuracy ?? null,
   timestamp: location.timestamp,
+  altitudeM: location.coords.altitude ?? null,
+  altitudeAccuracyM: location.coords.altitudeAccuracy ?? null,
 });
 
 export const requestLocationPermission = async () => {

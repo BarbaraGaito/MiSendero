@@ -28,6 +28,7 @@ import {
   colors,
 } from "../components/MiSenderoUI";
 import { useDeviceLocation } from "../hooks/useDeviceLocation";
+import { FieldAssessmentPanel } from "../components/FieldAssessmentPanel";
 
 const getSimulatedStartLocation = (trail: Trail | null) => {
   if (!trail) return null;
@@ -342,6 +343,7 @@ export default function Screen05TrailStart() {
           <Text style={styles.warningBody}>{locationStatusText}</Text>
         </InfoCard>
 
+        <FieldAssessmentPanel trailId={trailId} morning simulated={isTestingLocation} />
         <View style={styles.footer}>
           <PrimaryButton
             label={

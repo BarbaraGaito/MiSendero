@@ -16,6 +16,7 @@
     "validate:privacy": "py training/python/validate_datasets.py",
     "typecheck": "tsc --noEmit",
     "train:ai": "node scripts/train-ai.js",
+    "ai:field": "node scripts/field-ai.cjs",
     "train:route-difficulty": "node scripts/train-ai.js --model route_difficulty",
     "train:apn-difficulty": "node scripts/train-ai.js --model apn_route_difficulty",
     "test": "jest",

@@ -10,6 +10,7 @@ const renderer = require("react-test-renderer");
 jest.mock("expo-router", () => ({
   router: { push: jest.fn(), dismissTo: jest.fn() },
   useLocalSearchParams: () => ({ id: "7", startedAt: "100000", totalMeters: "5000", routeProgressMeters: "800" }),
+  useFocusEffect: jest.fn(),
 }));
 jest.mock("@expo/vector-icons", () => ({ Ionicons: () => null }));
 jest.mock("react-native-safe-area-context", () => ({

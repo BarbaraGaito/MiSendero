@@ -1,0 +1,243 @@
+{
+  "schema_version": 1,
+  "research_date": "2026-11-27",
+  "purpose": "Fuentes publicas adicionales para investigar fatiga y riesgo en MiSendero",
+  "snapshot_stage": "Auditoria de descubrimiento previa al entrenamiento field-ai v1",
+  "training_started_at_discovery_snapshot": false,
+  "existing_models_or_approvals_changed_at_discovery_snapshot": false,
+  "followup_evidence": "training/data/field-ai/v1: GeoFatigue causal y Boos de proxima etapa, sin combinar escalas incompatibles. Boos utiliza 377 pares de visitas despues de las exclusiones; el umbral binario de AMS queda suprimido por especificidad nula en test.",
+  "sources": [
+    {
+      "id": "boos_nepal_2018",
+      "priority": "alta_para_auditoria_de_riesgo",
+      "url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0197147",
+      "data_url": "https://doi.org/10.1371/journal.pone.0197147.s001",
+      "license": "CC BY, segun el articulo",
+      "repository_history": "No localizada en las busquedas de referencias del codigo Python o documentos Markdown anteriores",
+      "file_downloaded_and_parsed": true,
+      "sha256": "a4ab34ac465809f0010b1310fda44c497fd4ccf2e7cbf79bc5b8bad0d1b4e11a",
+      "participants": 80,
+      "person_visit_rows": 800,
+      "unique_person_visit_keys": 799,
+      "complete_hr_spo2_altitude_lls_headache_native_ams_rows": 773,
+      "complete_future_target_hr_spo2_altitude_rows": 695,
+      "duplicate_person_visit_keys": 1,
+      "next_altitude_target_compared_after_excluding_ambiguous_keys": 692,
+      "next_altitude_target_disagreements": 39,
+      "available_inputs": [
+        "pulso",
+        "SpO2",
+        "altitud",
+        "medicacion",
+        "cuestionarios"
+      ],
+      "observed_outcomes": [
+        "LLS",
+        "dolor de cabeza",
+        "AMS-C",
+        "indicadores AMS publicados"
+      ],
+      "recommended_use": "Auditar primero identidad de visitas, criterios de las etiquetas y orden temporal; separar por persona y expedicion para evaluar riesgo en altitud. Puede aportar mediciones y sintomas durante una expedicion real.",
+      "limitations": [
+        "Evaluaciones matinales en reposo, no senal continua durante marcha",
+        "Cabeceras repetidas: conservar posiciones y documentar el contrato de columnas",
+        "No usar la columna de AMS futuro hasta explicar sus discrepancias con la visita siguiente",
+        "Un par persona-visita repetido debe quedar en cuarentena hasta aclarar su identidad",
+        "La fatiga aislada no se puede reconstruir a partir del total LLS"
+      ]
+    },
+    {
+      "id": "pham_altitude_2022",
+      "priority": "media_para_puntuacion_de_sintomas",
+      "url": "https://datadryad.org/dataset/doi:10.6086/D1XM45",
+      "public_mirror": "https://zenodo.org/records/6990105",
+      "repository_history": "Fuente ya documentada; ahora se descargo y verifico el CSV original mediante su checksum publicado",
+      "file_downloaded_and_parsed": true,
+      "published_md5_verified": true,
+      "participants": 15,
+      "observation_rows": 105,
+      "complete_hr_spo2_symptom_score_rows": 89,
+      "available_inputs": [
+        "pulso",
+        "SpO2",
+        "etapa de exposicion"
+      ],
+      "observed_outcomes": [
+        "AMS Total Score"
+      ],
+      "recommended_use": "Benchmark separado de puntuacion de sintomas y cambio temporal en exposicion real a altitud.",
+      "limitations": [
+        "No contiene el item de dolor de cabeza necesario para reproducir un diagnostico clinico completo",
+        "No equiparar automaticamente la puntuacion a MOR_AMS+ del estudio nocturno actual",
+        "Las visitas repetidas no son participantes independientes"
+      ]
+    },
+    {
+      "id": "soccermon_2022",
+      "priority": "alta_para_modelo_separado_de_fatiga_acumulada",
+      "url": "https://zenodo.org/records/10033832",
+      "descriptor": "https://doi.org/10.1038/s41597-024-03386-x",
+      "license": "CC BY 4.0",
+      "repository_history": "No localizado en las referencias previas del codigo Python o documentos Markdown",
+      "subjective_archive_downloaded_and_checksum_verified": true,
+      "subjective_players": 50,
+      "calendar_days_in_fatigue_table": 731,
+      "observed_fatigue_cells": 16992,
+      "native_fatigue_values": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "available_inputs": [
+        "duracion y carga por sesion",
+        "historial de fatiga",
+        "sueno",
+        "bienestar"
+      ],
+      "observed_outcomes": [
+        "fatiga diaria",
+        "esfuerzo reportado por sesion"
+      ],
+      "recommended_use": "Entrenar y evaluar otra tarea de fatiga acumulada o recuperacion diaria; comparar transferencia con modelos basados en historial.",
+      "limitations": [
+        "Poblacion de futbol femenino de elite, no trekking",
+        "No convertir las etiquetas diarias en observaciones por minuto",
+        "Las etiquetas 1-5 no equivalen a Borg 0-10",
+        "Los archivos objetivos de sensores, de aproximadamente 99 GB comprimidos, no se descargaron; su emparejamiento aun requiere auditoria"
+      ]
+    },
+    {
+      "id": "consumer_optical_hr_2024",
+      "priority": "media_para_calidad_del_pulso",
+      "url": "https://zenodo.org/records/13767292",
+      "license": "CC BY 4.0",
+      "metadata_verified": true,
+      "raw_data_downloaded": false,
+      "available_inputs": [
+        "pulso optico de Garmin y Polar a 1 Hz"
+      ],
+      "reference": [
+        "ECG simultaneo"
+      ],
+      "recommended_use": "Evaluar error y calidad del pulso que entra al modelo antes de interpretar sus salidas.",
+      "limitations": [
+        "La ficha describe referencia de pulso, no etiquetas de fatiga o AMS",
+        "No suma casos supervisados a esos modelos",
+        "Referencia ECG y pulso del reloj no deben tratarse como mediciones equivalentes sin comprobar sus errores"
+      ]
+    },
+    {
+      "id": "cycling_effort_2026_v1",
+      "priority": "baja_para_tarea_auxiliar_de_esfuerzo",
+      "url": "https://zenodo.org/records/19328889",
+      "supplementary_v2": "https://zenodo.org/records/21506163",
+      "license": "CC BY 4.0",
+      "file_downloaded_and_checksum_verified": true,
+      "participant_rows_in_effort_sheet": 18,
+      "observed_outcomes": [
+        "esfuerzo percibido",
+        "dolor",
+        "fatiga mental",
+        "tiempo hasta agotamiento"
+      ],
+      "recommended_use": "Comparacion auxiliar de dinamica de autorreportes conservando escala y protocolo originales.",
+      "limitations": [
+        "La version 1 contiene el workbook crudo inspeccionado; la version 2 publica suplementos distintos",
+        "No hay hoja de pulso en el workbook inspeccionado",
+        "No es entrenamiento directo para HR y fatiga Borg durante caminata",
+        "El tiempo relativo hasta agotamiento puede depender del final futuro de la prueba: no usarlo como entrada prospectiva"
+      ]
+    },
+    {
+      "id": "margherita_renal_2020",
+      "priority": "condicionada_no_combinar_directamente",
+      "url": "https://zenodo.org/records/4289128",
+      "repository_history": "Fuente ya documentada con fallos de integridad previos; ahora su checksum y workbook se verificaron",
+      "file_downloaded_and_checksum_verified": true,
+      "participants": 18,
+      "available_inputs": [
+        "HR en decubito y de pie",
+        "saturacion de oxigeno en analisis de gases sanguineos"
+      ],
+      "observed_outcomes": [
+        "LLS total",
+        "LLS funcional",
+        "AMS definido por el estudio"
+      ],
+      "exact_subject_period_time_matches_between_hr_oxygen_score": 0,
+      "recommended_use": "Referencia de exposicion a altitud solo despues de definir y justificar la alineacion temporal.",
+      "limitations": [
+        "SATO2 del analisis de sangre no es automaticamente SpO2 de un reloj",
+        "El resultado AMS usa LLS funcional >=2, distinto al de otras cohortes",
+        "La union exacta por persona, periodo y hora no produce registros completos",
+        "El diccionario tiene unidades de HR inconsistentes que requieren aclaracion",
+        "Ascenso pasivo y reposo; no ejercicio durante la medicion"
+      ]
+    },
+    {
+      "id": "whamap_v3_2026",
+      "priority": "fuente_previamente_explorada",
+      "url": "https://data.mendeley.com/datasets/8zt9g9g64c/3",
+      "license": "CC BY 4.0",
+      "participants": 10,
+      "repository_history": "La version 1 ya tiene adaptadores y ensayos; verificar diferencias de la version 3 antes de repetir trabajo",
+      "recommended_use": "Investigar movimiento del telefono y subidas con etiquetas nativas separadas; verificar cambios y hashes entre versiones.",
+      "limitations": [
+        "La nueva version no implica nuevas personas",
+        "La etiqueta 0-4 no equivale a Borg 0-10",
+        "No anuncia HR ni SpO2"
+      ]
+    },
+    {
+      "id": "treadmill_cr10_2026",
+      "priority": "no_disponible_actualmente",
+      "url": "https://zenodo.org/records/23208045",
+      "access": "embargoed",
+      "embargo_until": "2027-04-07",
+      "recommended_use": "Candidata futura para caminata con carga, HR, RR y Borg CR10.",
+      "limitations": [
+        "No hay archivos publicos disponibles en la fecha de investigacion",
+        "La descripcion indica CC BY-NC 4.0 y el campo de licencia indica CC BY 4.0; aclarar condiciones antes de reutilizar",
+        "Una etiqueta mantenida hasta la siguiente respuesta no son nuevas respuestas observadas"
+      ]
+    },
+    {
+      "id": "mount_jade_2022",
+      "priority": "no_apto_para_sensor_model_actual",
+      "url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0275870",
+      "data_url": "https://doi.org/10.1371/journal.pone.0275870.s001",
+      "file_downloaded_and_parsed": true,
+      "study_participants": 25,
+      "finding": "El suplemento inspeccionado contiene EEG, LLAMS y dolor de cabeza; no las columnas de pulso y SpO2 necesarias.",
+      "recommended_use": "Referencia metodologica; no sumar sus participantes al modelo de pulso/SpO2."
+    },
+    {
+      "id": "sprint_400m_2026",
+      "priority": "requiere_etiquetas_y_licencia",
+      "url": "https://www.mdpi.com/2306-5354/13/11/1299",
+      "data_url": "https://github.com/cclim-research/Kinematic-data-400m-running-",
+      "sample_downloaded_and_parsed": true,
+      "finding": "El workbook Features_S1 inspeccionado aporta rasgos de IMU por distancia; no se encontraron etiquetas Borg en esa muestra. El inventario revisado contiene diez workbooks Features y codigo, sin un archivo de licencia.",
+      "recommended_use": "No incorporarlo como dataset supervisado hasta encontrar las respuestas originales y las condiciones de reutilizacion."
+    },
+    {
+      "id": "walk_march_dryad_2024",
+      "priority": "solo_agregados",
+      "url": "https://datadryad.org/dataset/doi:10.5061/dryad.31zcrjdv2",
+      "finding": "Los archivos anunciados son tablas de medias, desviaciones y comparaciones, no registros individuales de las personas.",
+      "recommended_use": "Referencia de protocolo; no convertir los estadisticos agregados en filas de entrenamiento."
+    }
+  ],
+  "combination_rules": [
+    "Conservar medicion y etiqueta de la misma persona y momento; no juntar columnas fisiologicas de personas de cohortes distintas.",
+    "Separar tareas y salidas cuando cambian escala, definicion clinica o resolucion temporal. Una escala numerica parecida no prueba equivalencia.",
+    "Separar entrenamiento y prueba por persona; para generalizacion entre estudios, reservar una cohorte completa antes de ajustar.",
+    "Normalizacion, imputacion y seleccion de variables deben ajustarse solo con entrenamiento; las entradas faltantes no son mediciones nuevas.",
+    "No usar LLS, dolor de cabeza, AMS posterior ni tiempo final como predictores cuando constituyen la etiqueta o revelan el futuro.",
+    "No sumar visitas o ventanas como personas; no fabricar etiquetas fisiologicas a partir de umbrales de los mismos sensores.",
+    "La busqueda y descarga verificadas no son resultados de entrenamiento, mejora predictiva ni aprobacion para inferencia de campo."
+  ],
+  "local_evidence_directory": "training/data/raw/fatigue-research/dataset-search-2026-11-27-v1"
+}

@@ -8,6 +8,7 @@ import { getTrailById } from "../../services/trailRepository";
 import { getWearableRuntimeStatus } from "../../services/wearableMetrics";
 import { Trail, WearableRuntimeStatus } from "../../types";
 import { AppScreen, Card, PrimaryButton, ScreenTitle, colors } from "../components/MiSenderoUI";
+import { FieldAssessmentPanel } from "../components/FieldAssessmentPanel";
 
 const getFallbackRouteTotalMeters = (trail: Trail | null) =>
   trail?.distance_km ? trail.distance_km * 1000 : 0;
@@ -165,6 +166,7 @@ export default function RestBreakScreen() {
         )}
       </Card>
 
+      <FieldAssessmentPanel trailId={trailId} startedAt={startedAtMs} morning />
       <Card tone="secondary">
         <Text style={styles.cardTitle}>Sugerencia</Text>
         <Text style={styles.cardText}>

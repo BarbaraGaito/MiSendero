@@ -1,5 +1,6 @@
-﻿import { Platform } from "react-native";
+import { Platform } from "react-native";
 import { WearableMetricSample, WearableProvider } from "../types";
+import type { NativeFieldSamples } from "./fieldSensorWindow";
 
 type HealthKitModule = typeof import("@kingstinct/react-native-healthkit");
 type HealthConnectModule = typeof import("react-native-health-connect");
@@ -436,3 +437,31 @@ export const getNativeWearableBridge = () =>
     : Platform.OS === "android"
       ? androidHealthConnectBridge
       : unavailableBridge;
+
+/** Foreground reads only. The caller checks account, consent and existing link. */
+export const readNativeFieldSamples = async (startAt: number, endAt: number): Promise<NativeFieldSamples | null> => {
+  if (!Number.isFinite(startAt) || !Number.isFinite(endAt) || startAt >= endAt || endAt-startAt > 300000) return null;
+  const healthKit = getHealthKit();
+  if (healthKit) {
+    try {
+      const options = { filter: { date: { startDate: new Date(startAt), endDate: new Date(endAt), strictStartDate: true, strictEndDate: true } }, ascending: true, limit: 10000 };
+      const [pulse, oxygen] = await Promise.all([
+        healthKit.queryQuantitySamples("HKQuantityTypeIdentifierHeartRate", { ...options, unit: "count/min" }),
+        healthKit.queryQuantitySamples("HKQuantityTypeIdentifierOxygenSaturation", { ...options, unit: "%" }),
+      ]);
+      if (pulse.length >= options.limit || oxygen.length >= options.limit) return null;
+      return { provider: "apple_healthkit", heartRate: pulse.map(row => ({ value: row.quantity, recordedAt: toTimestamp(row.endDate) })),
+        oxygen: oxygen.map(row => ({ value: row.quantity, recordedAt: toTimestamp(row.endDate) })) };
+    } catch { return null; }
+  }
+  const healthConnect = getHealthConnect();
+  if (!healthConnect) return null;
+  try {
+    if (!await healthConnect.initialize()) return null;
+    const options = { timeRangeFilter: { operator: "between" as const, startTime: new Date(startAt).toISOString(), endTime: new Date(endAt).toISOString() }, ascendingOrder: true, pageSize: 1000 };
+    const [pulse, oxygen] = await Promise.all([healthConnect.readRecords("HeartRate", options), healthConnect.readRecords("OxygenSaturation", options)]);
+    if (pulse.pageToken || oxygen.pageToken) return null; // Never call a truncated page a complete window.
+    return { provider: "android_health_connect", heartRate: pulse.records.flatMap(record => record.samples.map(row => ({ value: row.beatsPerMinute, recordedAt: Date.parse(row.time) }))),
+      oxygen: oxygen.records.map(row => ({ value: row.percentage, recordedAt: Date.parse(row.time) })) };
+  } catch { return null; }
+};
